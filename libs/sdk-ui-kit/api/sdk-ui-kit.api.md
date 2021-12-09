@@ -27,7 +27,6 @@ import { PureComponent } from 'react';
 import { default as React_2 } from 'react';
 import { ReactNode } from 'react';
 import { ShareStatus } from '@gooddata/sdk-backend-spi';
-import { WithIntlProps } from 'react-intl';
 import { WrappedComponentProps } from 'react-intl';
 
 // @internal (undocumented)
@@ -210,7 +209,9 @@ export interface CheckboxProps {
 export type Color = string;
 
 // @internal (undocumented)
-export const ColorPicker: React_2.FC<WithIntlProps<IColorPickerProps & WrappedComponentProps<"intl">>> & {
+export const ColorPicker: React_2.ForwardRefExoticComponent<Pick<IColorPickerProps & WrappedComponentProps<"intl">, "onCancel" | "onSubmit" | "initialRgbColor"> & {
+    forwardedRef?: React_2.Ref<any>;
+} & React_2.RefAttributes<any>> & {
     WrappedComponent: React_2.ComponentType<IColorPickerProps & WrappedComponentProps<"intl">>;
 };
 
@@ -384,7 +385,9 @@ export class ExportDialogBase extends DialogBase<IExportDialogBaseProps> {
 }
 
 // @internal (undocumented)
-export const FilterLabel: React_2.FC<WithIntlProps<IFilterLabelProps & WrappedComponentProps<"intl">>> & {
+export const FilterLabel: React_2.ForwardRefExoticComponent<Pick<IFilterLabelProps & WrappedComponentProps<"intl">, "title" | "selection" | "isAllSelected" | "isDate" | "selectionSize" | "noData"> & {
+    forwardedRef?: React_2.Ref<any>;
+} & React_2.RefAttributes<any>> & {
     WrappedComponent: React_2.ComponentType<IFilterLabelProps & WrappedComponentProps<"intl">>;
 };
 
@@ -530,12 +533,16 @@ export const HeaderBadge: React_2.FC<IHeaderBadgeProps>;
 export const HeaderBadgeWithModal: React_2.FC<IHeaderBadgeWithModalProps>;
 
 // @internal (undocumented)
-export const HeaderDataMenu: React_2.FC<WithIntlProps<IHeaderDataMenuProps>> & {
+export const HeaderDataMenu: React_2.ForwardRefExoticComponent<Pick<IHeaderDataMenuProps, "className" | "onMenuItemClick" | "dataMenuItems"> & {
+    forwardedRef?: React_2.Ref<any>;
+} & React_2.RefAttributes<any>> & {
     WrappedComponent: React_2.ComponentType<IHeaderDataMenuProps>;
 };
 
 // @internal (undocumented)
-export const HeaderWorkspacePicker: React_2.FC<WithIntlProps<IHeaderWorkspacePickerProps>> & {
+export const HeaderWorkspacePicker: React_2.ForwardRefExoticComponent<Pick<IHeaderWorkspacePickerProps, "className" | "onSelect" | "isLoading" | "onScrollEnd" | "searchString" | "onSearch" | "showSearch" | "workspaces" | "selectedWorkspace" | "totalWorkspacesCount" | "onOpen" | "projectPickerFooter" | "isRenamingProjectToWorkspaceEnabled"> & {
+    forwardedRef?: React_2.Ref<any>;
+} & React_2.RefAttributes<any>> & {
     WrappedComponent: React_2.ComponentType<IHeaderWorkspacePickerProps>;
 };
 
@@ -2374,7 +2381,9 @@ export interface InputWithNumberFormatState {
 }
 
 // @internal (undocumented)
-export const InsightListItem: React_2.FC<WithIntlProps<IInsightListItemProps & WrappedComponentProps<"intl">>> & {
+export const InsightListItem: React_2.ForwardRefExoticComponent<Pick<IInsightListItemProps & WrappedComponentProps<"intl">, "title" | "type" | "updated" | "width" | "isSelected" | "onClick" | "isLoading" | "isLocked" | "onDelete"> & {
+    forwardedRef?: React_2.Ref<any>;
+} & React_2.RefAttributes<any>> & {
     WrappedComponent: React_2.ComponentType<IInsightListItemProps & WrappedComponentProps<"intl">>;
 };
 
@@ -2997,7 +3006,9 @@ export const Messages: React_2.FC<IMessagesProps>;
 export type MessageType = "success" | "progress" | "error" | "warning";
 
 // @internal (undocumented)
-export const MultiSelectList: React_2.FC<WithIntlProps<IMultiSelectListProps<unknown>>> & {
+export const MultiSelectList: React_2.ForwardRefExoticComponent<Pick<IMultiSelectListProps<unknown>, "height" | "width" | "tagName" | "isSelected" | "items" | "itemsCount" | "itemHeight" | "renderItem" | "onScrollEnd" | "isMobile" | "isInverted" | "isSearching" | "selectAllCheckbox" | "selectedItems" | "filteredItemsCount" | "maxSelectionSize" | "onSelectAll" | "onSelectNone"> & {
+    forwardedRef?: React_2.Ref<any>;
+} & React_2.RefAttributes<any>> & {
     WrappedComponent: React_2.ComponentType<IMultiSelectListProps<unknown>>;
 };
 
