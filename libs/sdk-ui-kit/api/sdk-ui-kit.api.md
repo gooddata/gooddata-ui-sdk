@@ -621,8 +621,6 @@ export interface IAppHeaderProps {
     // (undocumented)
     helpRedirectUrl?: string;
     // (undocumented)
-    intl?: IntlShape;
-    // (undocumented)
     logoHref?: string;
     // (undocumented)
     logoTitle?: string;

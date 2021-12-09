@@ -1,6 +1,6 @@
 // (C) 2007-2021 GoodData Corporation
 import React, { Component, createRef } from "react";
-import { WrappedComponentProps, injectIntl, FormattedMessage, IntlProvider } from "react-intl";
+import { WrappedComponentProps, injectIntl, FormattedMessage } from "react-intl";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import cx from "classnames";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
@@ -68,14 +68,6 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
     }
 
     public render() {
-        const { intl } = this.props;
-        if (intl) {
-            return <IntlProvider {...intl}>{this.renderMain()}</IntlProvider>;
-        }
-        return this.renderMain();
-    }
-
-    private renderMain() {
         const { logoUrl, logoTitle, workspacePicker } = this.props;
 
         this.createStyles();
