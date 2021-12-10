@@ -206,7 +206,7 @@ export function anyDashboardEventHandler(handler: DashboardEventHandler["handler
 export function anyEventHandler(handler: DashboardEventHandler["handler"]): DashboardEventHandler;
 
 // @alpha (undocumented)
-export type AttributeFilterComponentProvider = (filter: IDashboardAttributeFilter) => CustomDashboardAttributeFilterComponent | undefined;
+export type AttributeFilterComponentProvider = (filter: IDashboardAttributeFilter) => CustomDashboardAttributeFilterComponent;
 
 // @alpha (undocumented)
 export interface AttributeFilterSelection {
@@ -2026,7 +2026,7 @@ export interface IDashboardCustomComponentProps {
     // @alpha
     ButtonBarComponent?: CustomButtonBarComponent;
     // @alpha
-    DashboardAttributeFilterComponentProvider?: AttributeFilterComponentProvider;
+    DashboardAttributeFilterComponentProvider?: OptionalAttributeFilterComponentProvider;
     // @alpha
     DashboardDateFilterComponent?: CustomDashboardDateFilterComponent;
     // @alpha
@@ -2035,9 +2035,9 @@ export interface IDashboardCustomComponentProps {
     FilterBarComponent?: CustomFilterBarComponent;
     InsightComponentProvider?: OptionalInsightComponentProvider;
     // @alpha
-    InsightMenuButtonComponentProvider?: InsightMenuButtonComponentProvider;
+    InsightMenuButtonComponentProvider?: OptionalInsightMenuButtonComponentProvider;
     // @alpha
-    InsightMenuComponentProvider?: InsightMenuComponentProvider;
+    InsightMenuComponentProvider?: OptionalInsightMenuComponentProvider;
     KpiComponentProvider?: OptionalKpiComponentProvider;
     // @alpha
     LayoutComponent?: CustomDashboardLayoutComponent;
@@ -2558,10 +2558,10 @@ export type InsightDateDatasets = {
 };
 
 // @alpha (undocumented)
-export type InsightMenuButtonComponentProvider = (insight: IInsight, widget: IInsightWidget) => CustomDashboardInsightMenuButtonComponent | undefined;
+export type InsightMenuButtonComponentProvider = (insight: IInsight, widget: IInsightWidget) => CustomDashboardInsightMenuButtonComponent;
 
 // @alpha (undocumented)
-export type InsightMenuComponentProvider = (insight: IInsight, widget: IInsightWidget) => CustomDashboardInsightMenuComponent | undefined;
+export type InsightMenuComponentProvider = (insight: IInsight, widget: IInsightWidget) => CustomDashboardInsightMenuComponent;
 
 // @alpha (undocumented)
 export type InsightMenuItemsProvider = (insight: IInsight, widget: IInsightWidget, defaultItems: IInsightMenuItem[], closeMenu: () => void) => IInsightMenuItem[];
@@ -3169,8 +3169,17 @@ export type OnFiredDashboardViewDrillEvent = (event: IDashboardDrillEvent) => Re
 // @alpha (undocumented)
 export type OnWidgetDrill = (drillEvent: IDashboardDrillEvent, drillContext: DashboardDrillContext) => void;
 
+// @alpha (undocumented)
+export type OptionalAttributeFilterComponentProvider = OptionalProvider<AttributeFilterComponentProvider>;
+
 // @public (undocumented)
 export type OptionalInsightComponentProvider = OptionalProvider<InsightComponentProvider>;
+
+// @alpha (undocumented)
+export type OptionalInsightMenuButtonComponentProvider = OptionalProvider<InsightMenuButtonComponentProvider>;
+
+// @alpha (undocumented)
+export type OptionalInsightMenuComponentProvider = OptionalProvider<InsightMenuComponentProvider>;
 
 // @public (undocumented)
 export type OptionalKpiComponentProvider = OptionalProvider<KpiComponentProvider>;

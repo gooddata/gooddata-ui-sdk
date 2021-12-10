@@ -1,15 +1,8 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import React, { createContext, useContext } from "react";
 import { IErrorProps, ILoadingProps, UnexpectedSdkError } from "@gooddata/sdk-ui";
 
 import { CustomDashboardLayoutComponent } from "../layout/types";
-import {
-    CustomDashboardInsightComponent,
-    CustomDashboardInsightMenuButtonComponent,
-    CustomDashboardInsightMenuComponent,
-    CustomDashboardKpiComponent,
-    CustomDashboardWidgetComponent,
-} from "../widget/types";
 import {
     CustomButtonBarComponent,
     CustomMenuButtonComponent,
@@ -17,16 +10,17 @@ import {
     CustomTopBarComponent,
 } from "../topBar/types";
 import { CustomScheduledEmailDialogComponent } from "../scheduledEmail/types";
-import {
-    CustomDashboardAttributeFilterComponent,
-    CustomDashboardDateFilterComponent,
-    CustomFilterBarComponent,
-} from "../filterBar/types";
-import { IDashboardAttributeFilter, IInsightWidget, IKpiWidget, ILegacyKpi } from "@gooddata/sdk-backend-spi";
+import { CustomDashboardDateFilterComponent, CustomFilterBarComponent } from "../filterBar/types";
 import { CustomSaveAsDialogComponent } from "../saveAs/types";
-import { IInsight } from "@gooddata/sdk-model";
-import { ExtendedDashboardWidget } from "../../model";
 import { CustomShareDialogComponent } from "../shareDialog/types";
+import {
+    AttributeFilterComponentProvider,
+    InsightComponentProvider,
+    InsightMenuButtonComponentProvider,
+    InsightMenuComponentProvider,
+    KpiComponentProvider,
+    WidgetComponentProvider,
+} from "./types";
 
 /**
  * @internal
@@ -35,17 +29,11 @@ interface IDashboardComponentsContext {
     ErrorComponent: React.ComponentType<IErrorProps>;
     LoadingComponent: React.ComponentType<ILoadingProps>;
     LayoutComponent: CustomDashboardLayoutComponent;
-    WidgetComponentProvider: (widget: ExtendedDashboardWidget) => CustomDashboardWidgetComponent;
-    InsightComponentProvider: (insight: IInsight, widget: IInsightWidget) => CustomDashboardInsightComponent;
-    InsightMenuButtonComponentProvider: (
-        insight: IInsight,
-        widget: IInsightWidget,
-    ) => CustomDashboardInsightMenuButtonComponent;
-    InsightMenuComponentProvider: (
-        insight: IInsight,
-        widget: IInsightWidget,
-    ) => CustomDashboardInsightMenuComponent;
-    KpiComponentProvider: (kpi: ILegacyKpi, widget: IKpiWidget) => CustomDashboardKpiComponent;
+    WidgetComponentProvider: WidgetComponentProvider;
+    InsightComponentProvider: InsightComponentProvider;
+    InsightMenuButtonComponentProvider: InsightMenuButtonComponentProvider;
+    InsightMenuComponentProvider: InsightMenuComponentProvider;
+    KpiComponentProvider: KpiComponentProvider;
     ButtonBarComponent: CustomButtonBarComponent;
     MenuButtonComponent: CustomMenuButtonComponent;
     TitleComponent: CustomTitleComponent;
@@ -53,9 +41,7 @@ interface IDashboardComponentsContext {
     ScheduledEmailDialogComponent: CustomScheduledEmailDialogComponent;
     ShareDialogComponent: CustomShareDialogComponent;
     SaveAsDialogComponent: CustomSaveAsDialogComponent;
-    DashboardAttributeFilterComponentProvider: (
-        filter: IDashboardAttributeFilter,
-    ) => CustomDashboardAttributeFilterComponent;
+    DashboardAttributeFilterComponentProvider: AttributeFilterComponentProvider;
     DashboardDateFilterComponent: CustomDashboardDateFilterComponent;
     FilterBarComponent: CustomFilterBarComponent;
 }

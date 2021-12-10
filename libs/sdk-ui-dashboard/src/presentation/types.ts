@@ -1,5 +1,6 @@
 // (C) 2021 GoodData Corporation
 export * from "./dashboard/types";
+export * from "./dashboardContexts/types";
 export * from "./drill/types";
 export * from "./filterBar/types";
 export * from "./layout/types";
