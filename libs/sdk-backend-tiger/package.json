@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-tiger",
-    "version": "8.8.0-alpha.23",
+    "version": "8.8.0-alpha.24",
     "author": "GoodData",
     "description": "GoodData Backend SPI implementation for the Tiger platform",
     "repository": {
@@ -47,10 +47,10 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/api-client-tiger": "^8.8.0-alpha.23",
-        "@gooddata/sdk-backend-base": "^8.8.0-alpha.23",
-        "@gooddata/sdk-backend-spi": "^8.8.0-alpha.23",
-        "@gooddata/sdk-model": "^8.8.0-alpha.23",
+        "@gooddata/api-client-tiger": "^8.8.0-alpha.24",
+        "@gooddata/sdk-backend-base": "^8.8.0-alpha.24",
+        "@gooddata/sdk-backend-spi": "^8.8.0-alpha.24",
+        "@gooddata/sdk-model": "^8.8.0-alpha.24",
         "axios": "^0.21.4",
         "date-fns": "^2.22.1",
         "http-status-codes": "^2.1.4",
@@ -63,7 +63,7 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^2.1.0",
-        "@gooddata/reference-workspace": "^8.8.0-alpha.23",
+        "@gooddata/reference-workspace": "^8.8.0-alpha.24",
         "@microsoft/api-documenter": "^7.12.13",
         "@microsoft/api-extractor": "^7.18.4",
         "@types/jest": "^27.0.1",
