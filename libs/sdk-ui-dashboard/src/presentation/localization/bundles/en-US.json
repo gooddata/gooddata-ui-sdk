@@ -638,9 +638,20 @@
         "comment": "Error popup. Insight cannot be exported to the file because of wrong setting of filters, measures or attributes.",
         "limit": 0
     },
+    "options.menu.unsupported.error.renaming_measure|insight": {
+        "value": "The insight cannot be exported at the moment. Try applying different filters, or using different metrics or attributes.",
+        "comment": "Error popup. Insight cannot be exported to the file because of wrong setting of filters, metrics or attributes.",
+        "limit": 0
+    },
     "options.menu.unsupported.error|report": {
         "value": "The report cannot be exported at the moment. Try applying different filters, or using different measures or attributes.",
         "comment": "Error popup. Report cannot be exported to the file because of wrong setting of filters, measures or attributes.",
+        "limit": 0,
+        "translate": false
+    },
+    "options.menu.unsupported.error.renaming_measure|report": {
+        "value": "The report cannot be exported at the moment. Try applying different filters, or using different metrics or attributes.",
+        "comment": "Error popup. Report cannot be exported to the file because of wrong setting of filters, metrics or attributes.",
         "limit": 0,
         "translate": false
     },

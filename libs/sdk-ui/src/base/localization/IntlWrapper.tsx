@@ -3,7 +3,7 @@ import React, { useMemo } from "react";
 import { IntlProvider } from "react-intl";
 import { translationUtils } from "@gooddata/util";
 import { DefaultLocale } from "./Locale";
-import { pickCorrectInsightWording } from "./TranslationsCustomizationProvider/utils";
+import { pickCorrectWording } from "./TranslationsCustomizationProvider/utils";
 
 import enUS from "./bundles/en-US.json";
 import deDE from "./bundles/de-DE.json";
@@ -57,7 +57,7 @@ export const IntlWrapper: React.FC<IIntlWrapperProps> = ({ locale = DefaultLocal
     const settings = window.gdSettings as IWorkspaceSettings;
 
     const messages = useMemo(
-        () => pickCorrectInsightWording(messagesMap[locale], settings),
+        () => pickCorrectWording(messagesMap[locale], settings),
         [locale, settings, messagesMap],
     );
 

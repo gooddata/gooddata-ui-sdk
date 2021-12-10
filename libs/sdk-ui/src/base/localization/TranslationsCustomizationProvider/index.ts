@@ -8,4 +8,9 @@ export {
     ITranslationsCustomizationProviderProps,
     TranslationsCustomizationProvider,
 } from "./TranslationsCustomizationProvider";
-export { pickCorrectInsightWording, removeAllInsightToReportTranslations } from "./utils";
+export {
+    pickCorrectInsightWording,
+    pickCorrectMetricWording,
+    pickCorrectWording,
+    removeAllInsightToReportTranslations,
+} from "./utils";

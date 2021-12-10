@@ -5,7 +5,7 @@ import { useBackend } from "../../react/BackendContext";
 import { useWorkspace } from "../../react/WorkspaceContext";
 import { TranslationsCustomizationContextProvider } from "./Context";
 import { getWorkspaceSettingsLoader } from "./workspaceSettingsLoader";
-import { pickCorrectInsightWording } from "./utils";
+import { pickCorrectWording } from "./utils";
 
 declare global {
     interface Window {
@@ -63,7 +63,7 @@ const defaultTranslationsParam: ITranslationsCustomizationProviderProps["transla
  */
 export const TranslationsCustomizationProvider: React.FC<ITranslationsCustomizationProviderProps> = ({
     render,
-    customize = pickCorrectInsightWording,
+    customize = pickCorrectWording,
     translations: translationsParam = defaultTranslationsParam,
     backend: backendParam,
     workspace: workspaceParam,

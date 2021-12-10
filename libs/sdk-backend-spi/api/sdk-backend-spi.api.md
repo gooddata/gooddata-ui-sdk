@@ -1388,6 +1388,7 @@ export interface ISettings {
     enableKPIDashboardScheduleRecipients?: boolean;
     enableMultipleDates?: boolean;
     enablePushpinGeoChart?: boolean;
+    enableRenamingMeasureToMetric?: boolean;
     enableSectionHeaders?: boolean;
     enableTableColumnsAutoResizing?: boolean;
     enableTableColumnsGrowToFit?: boolean;
@@ -2110,14 +2111,7 @@ export function layoutWidgetsWithPaths<TWidget extends IDashboardWidget>(layout:
 export type ListedDashboardAvailability = "full" | "viaLink";
 
 // @public
-export type MetadataObject =
-    IAttributeMetadataObject
-    | IAttributeDisplayFormMetadataObject
-    | IFactMetadataObject
-    | IMeasureMetadataObject
-    | IDataSetMetadataObject
-    | IVariableMetadataObject
-    | IDashboardMetadataObject;
+export type MetadataObject = IAttributeMetadataObject | IAttributeDisplayFormMetadataObject | IFactMetadataObject | IMeasureMetadataObject | IDataSetMetadataObject | IVariableMetadataObject | IDashboardMetadataObject;
 
 // @public
 export const metadataObjectId: (metadataObject: MetadataObject) => string;

@@ -187,6 +187,11 @@ export interface ISettings {
     enableAnalyticalDashboardPermissions?: boolean;
 
     [key: string]: number | boolean | string | object | undefined;
+
+    /**
+     * Enable renaming measure to metric
+     */
+    enableRenamingMeasureToMetric?: boolean;
 }
 
 /**
