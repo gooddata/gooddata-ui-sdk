@@ -8,7 +8,7 @@ export const EditModeMessage: React.FC = () => (
             <FormattedMessage
                 id="dateFilterDropdown.setDefault"
                 values={{
-                    br: <br />,
+                    nbsp: <>&nbsp;</>,
                 }}
             />
         </div>
