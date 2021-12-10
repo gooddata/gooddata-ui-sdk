@@ -83,7 +83,7 @@
     "filtering": "Filtrage…",
     "dateFilterDropdown.title": "Plage de dates",
     "dateFilterDropdown.buttonTitle": "Plage de dates",
-    "dateFilterDropdown.setDefault": "Définissez le filtre de date par défaut pour les&nbsp;lecteurs :",
+    "dateFilterDropdown.setDefault": "Définissez le filtre de date par défaut pour les{nbsp}lecteurs :",
     "filters.thisDay.title": "Aujourd'hui",
     "filters.lastDay.title": "Hier",
     "filters.nextDay.title": "Demain",

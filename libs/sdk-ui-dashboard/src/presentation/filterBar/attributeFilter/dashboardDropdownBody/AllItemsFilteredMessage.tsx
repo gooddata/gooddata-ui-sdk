@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
 import { ArrowOffsets, Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
-import { FormattedHTMLMessage, FormattedMessage } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 export interface IItemsFilteredMessageProps {
     parentFilterTitles: ReadonlyArray<string>;
@@ -23,9 +23,12 @@ export const AllItemsFilteredMessage: React.FC<IItemsFilteredMessageProps> = ({ 
                     alignPoints={bubbleAlignPoints}
                     arrowOffsets={bubbleArrowOffsets}
                 >
-                    <FormattedHTMLMessage
+                    <FormattedMessage
                         id="attributesDropdown.itemsFiltered.tooltip"
-                        values={{ filters: parentFilterTitles.join(", ") }}
+                        values={{
+                            filters: parentFilterTitles.join(", "),
+                            strong: (chunks: string) => <strong>{chunks}</strong>,
+                        }}
                     />
                 </Bubble>
             </BubbleHoverTrigger>

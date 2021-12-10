@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
-import { FormattedHTMLMessage } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import { BubbleHoverTrigger, Bubble, IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 interface ICompactContentErrorProps {
@@ -16,9 +16,9 @@ export const CompactContentError: React.FC<ICompactContentErrorProps> = ({ class
         <BubbleHoverTrigger>
             <div className={`info-label-icon ${className}`} />
             <Bubble alignPoints={bubbleAlignPoints}>
-                <FormattedHTMLMessage id={headline} />
+                <FormattedMessage id={headline} />
                 <br />
-                <FormattedHTMLMessage id={text} />
+                <FormattedMessage id={text} />
             </Bubble>
         </BubbleHoverTrigger>
     );

@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { PureComponent } from "react";
 import cx from "classnames";
-import { FormattedHTMLMessage, injectIntl, WrappedComponentProps } from "react-intl";
+import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
 import { ResponsiveText } from "@gooddata/sdk-ui-kit";
 import { ISeparators } from "@gooddata/sdk-ui";
 
@@ -89,7 +89,7 @@ class KpiPop extends PureComponent<IKpiPopProps & WrappedComponentProps> {
                     </ResponsiveText>
                 </div>
                 <dd>
-                    <FormattedHTMLMessage id="kpiPop.change" />
+                    <FormattedMessage id="kpiPop.change" />
                 </dd>
             </dl>
         );

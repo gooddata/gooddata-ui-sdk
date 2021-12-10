@@ -83,7 +83,7 @@
     "filtering": "Filtrando…",
     "dateFilterDropdown.title": "Rango de fechas",
     "dateFilterDropdown.buttonTitle": "Rango de fechas",
-    "dateFilterDropdown.setDefault": "Establecer filtro de fecha predeterminado para&nbsp;lectores:",
+    "dateFilterDropdown.setDefault": "Establecer filtro de fecha predeterminado para{nbsp}lectores:",
     "filters.thisDay.title": "Hoy",
     "filters.lastDay.title": "Ayer",
     "filters.nextDay.title": "Mañana",

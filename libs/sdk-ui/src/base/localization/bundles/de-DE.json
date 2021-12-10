@@ -83,7 +83,7 @@
     "filtering": "Wird gefiltert…",
     "dateFilterDropdown.title": "Datumsbereich",
     "dateFilterDropdown.buttonTitle": "Datumsbereich",
-    "dateFilterDropdown.setDefault": "Standarddatumsfilter festlegen für&nbsp;Betrachter:",
+    "dateFilterDropdown.setDefault": "Standarddatumsfilter festlegen für{nbsp}Betrachter:",
     "filters.thisDay.title": "Heute",
     "filters.lastDay.title": "Gestern",
     "filters.nextDay.title": "Morgen",

@@ -1,6 +1,6 @@
 // (C) 2007-2021 GoodData Corporation
 import React from "react";
-import { FormattedHTMLMessage } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import { Typography, BubbleHoverTrigger, Bubble, IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 interface INoDataErrorProps {
@@ -17,14 +17,14 @@ export const NoDataError: React.FC<INoDataErrorProps> = ({ fullContent }) => {
                     <>
                         <div className="info-label-icon-empty" />
                         <Typography tagName="p">
-                            <FormattedHTMLMessage id="visualization.empty.headline" />
+                            <FormattedMessage id="visualization.empty.headline" />
                         </Typography>
                     </>
                 ) : (
                     <BubbleHoverTrigger>
                         <div className="info-label-icon-empty" />
                         <Bubble alignPoints={bubbleAlignPoints}>
-                            <FormattedHTMLMessage id="visualization.empty.headline" />
+                            <FormattedMessage id="visualization.empty.headline" />
                         </Bubble>
                     </BubbleHoverTrigger>
                 )}

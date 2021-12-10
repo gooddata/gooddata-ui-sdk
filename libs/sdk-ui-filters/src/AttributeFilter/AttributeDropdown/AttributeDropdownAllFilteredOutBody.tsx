@@ -2,7 +2,7 @@
 import React from "react";
 import { AttributeDropdownButtons } from "./AttributeDropdownButtons";
 import { BubbleHoverTrigger, Bubble } from "@gooddata/sdk-ui-kit";
-import { FormattedMessage, FormattedHTMLMessage } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 /**
  * @internal
@@ -26,9 +26,12 @@ export const AttributeDropdownAllFilteredOutBody: React.FC<{
                         alignPoints={[{ align: "bc tc" }]}
                         arrowOffsets={{ "bc tc": [0, 15] }}
                     >
-                        <FormattedHTMLMessage
+                        <FormattedMessage
                             id="attributesDropdown.itemsFiltered.tooltip"
-                            values={{ filters: parentFilterTitles.join(", ") }}
+                            values={{
+                                filters: parentFilterTitles.join(", "),
+                                strong: (chunks: string) => <strong>{chunks}</strong>,
+                            }}
                         />
                     </Bubble>
                 </BubbleHoverTrigger>

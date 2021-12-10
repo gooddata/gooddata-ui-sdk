@@ -401,7 +401,7 @@
         "limit": 0
     },
     "kpiAlertDialog.invalidNumber": {
-        "value": "<strong>This number is not valid.</strong><br />Double-check it and try again.",
+        "value": "<strong>This number is not valid.</strong>{br}Double-check it and try again.",
         "comment": "Do not translate HTML markup enclosed in <>.",
         "limit": 0
     },
@@ -756,6 +756,71 @@
     "dashboard.shareDialog.removeAccessCreatorTooltip": {
         "value": "The user that created this dashboard. Creators cannot be removed.",
         "comment": "Text of the tooltip shown above disabled button that removes user dashboard access right. Shown in the case when user cannot be removed because he is the creator of the dashboard.",
+        "limit": 0
+    },
+    "attributesDropdown.placeholder": {
+        "value": "Search attributes…",
+        "comment": "Use '…' as one character, not 3 dots ('...').",
+        "limit": 0
+    },
+    "attributesDropdown.noData": {
+        "value": "This attribute does not have any value.",
+        "comment": "",
+        "limit": 0
+    },
+    "attributesDropdown.configuration": {
+        "value": "Configuration",
+        "comment": "Configuration button label in attribute filter dropdown",
+        "limit": 0
+    },
+    "attributesDropdown.itemsFiltered": {
+        "value": "Items are filtered",
+        "comment": "This message is displayed when attribute elements are being filtered out by parent filters",
+        "limit": 0
+    },
+    "attributesDropdown.allItemsFiltered": {
+        "value": "All items are filtered out",
+        "comment": "This message is displayed when there are no items available because they were filtered out by parent filters",
+        "limit": 0
+    },
+    "attributesDropdown.itemsFiltered.tooltip": {
+        "value": "Items are filtered by: <strong>{filters}</strong>",
+        "comment": "Do not translate HTML markup enclosed in <> and {filters} placeholder as it will be replaced by list of filter names.",
+        "limit": 0
+    },
+    "attributesDropdown.save": {
+        "value": "Save",
+        "comment": "Save button label in attribute filter dropdown configuration",
+        "limit": 0
+    },
+    "attributesDropdown.filterBy": {
+        "value": "Filter by",
+        "comment": "Filter section label in attribute filter dropdown configuration",
+        "limit": 0
+    },
+    "attributesDropdown.displayValuesAs": {
+        "value": "Display values as",
+        "comment": "Filter section label in attribute filter dropdown configuration. Displayed before dropdown button that changes form of the attribute used in insight. For example 'Display as: Shortened name'.",
+        "limit": 0
+    },
+    "attributesDropdown.attributeNameWithData": {
+        "value": "with data of",
+        "comment": "Will be used in sentence between two nouns. For instance 'Filter by AttributeX with data of MetricY'",
+        "limit": 0
+    },
+    "attributesDropdown.noConnectionMessage": {
+        "value": "<strong>{childTitle}</strong> cannot be filtered by <strong>{parentTitle}</strong>. There is no connection between the filter attributes in the data model.",
+        "comment": "Do not translate HTML markup enclosed in <> and placeholders enclosed in {}.",
+        "limit": 0
+    },
+    "attributesDropdown.filterConfiguredMessage": {
+        "value": "<strong>{parentTitle}</strong> is already filtered by <strong>{childTitle}</strong> filter directly or through other filters.",
+        "comment": "Do not translate HTML markup enclosed in <> and placeholders enclosed in {}.",
+        "limit": 0
+    },
+    "attributesDropdown.removeTooltip": {
+        "value": "Remove from dashboard",
+        "comment": "Tooltip text of button for deleting filter",
         "limit": 0
     }
 }

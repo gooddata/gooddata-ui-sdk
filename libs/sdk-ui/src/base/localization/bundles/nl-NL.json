@@ -83,7 +83,7 @@
     "filtering": "Filteren...",
     "dateFilterDropdown.title": "Datumbereik",
     "dateFilterDropdown.buttonTitle": "Datumbereik",
-    "dateFilterDropdown.setDefault": "Standaarddatumfilter instellen voor&nbsp;Kijkers:",
+    "dateFilterDropdown.setDefault": "Standaarddatumfilter instellen voor{nbsp}Kijkers:",
     "filters.thisDay.title": "Vandaag",
     "filters.lastDay.title": "Gisteren",
     "filters.nextDay.title": "Morgen",

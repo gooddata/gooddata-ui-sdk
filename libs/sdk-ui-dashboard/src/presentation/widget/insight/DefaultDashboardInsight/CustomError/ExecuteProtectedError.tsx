@@ -1,6 +1,6 @@
 // (C) 2007-2021 GoodData Corporation
 import React from "react";
-import { FormattedHTMLMessage } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import { Typography } from "@gooddata/sdk-ui-kit";
 
 import { CompactContentError } from "./CompactContentError";
@@ -16,10 +16,10 @@ export const ExecuteProtectedError: React.FC<IExecuteProtectedErrorProps> = ({ f
             {fullContent ? (
                 <div className="info-label-icon gd-icon-warning">
                     <Typography tagName="h2">
-                        <FormattedHTMLMessage id="visualization.execute_protected_report.headline" />
+                        <FormattedMessage id="visualization.execute_protected_report.headline" />
                     </Typography>
                     <Typography tagName="h2">
-                        <FormattedHTMLMessage id="visualization.execute_protected_report.text" />
+                        <FormattedMessage id="visualization.execute_protected_report.text" />
                     </Typography>
                 </div>
             ) : (
