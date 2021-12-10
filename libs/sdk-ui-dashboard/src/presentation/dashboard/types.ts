@@ -1,16 +1,8 @@
 // (C) 2021 GoodData Corporation
 import React, { ComponentType } from "react";
-import {
-    IAnalyticalBackend,
-    IDashboard,
-    IDashboardAttributeFilter,
-    IInsightWidget,
-    IKpiWidget,
-    ILegacyKpi,
-    ITheme,
-    IWorkspacePermissions,
-} from "@gooddata/sdk-backend-spi";
-import { IInsight, ObjRef } from "@gooddata/sdk-model";
+import { ReactReduxContextValue } from "react-redux";
+import { IAnalyticalBackend, IDashboard, ITheme, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
+import { ObjRef } from "@gooddata/sdk-model";
 import { IErrorProps, ILoadingProps } from "@gooddata/sdk-ui";
 
 import {
@@ -19,13 +11,8 @@ import {
     DashboardEventHandler,
     DashboardModelCustomizationFns,
     DashboardState,
-    ExtendedDashboardWidget,
 } from "../../model";
-import {
-    CustomDashboardAttributeFilterComponent,
-    CustomDashboardDateFilterComponent,
-    CustomFilterBarComponent,
-} from "../filterBar";
+import { CustomDashboardDateFilterComponent, CustomFilterBarComponent } from "../filterBar";
 import { CustomDashboardLayoutComponent } from "../layout";
 import { CustomScheduledEmailDialogComponent } from "../scheduledEmail";
 import {
@@ -35,90 +22,17 @@ import {
     CustomTopBarComponent,
     IMenuButtonConfiguration,
 } from "../topBar";
-import {
-    CustomDashboardInsightComponent,
-    CustomDashboardInsightMenuButtonComponent,
-    CustomDashboardInsightMenuComponent,
-    CustomDashboardKpiComponent,
-    CustomDashboardWidgetComponent,
-    IInsightMenuItem,
-} from "../widget";
 import { CustomSaveAsDialogComponent } from "../saveAs";
 import { CustomShareDialogComponent } from "../shareDialog";
-import { ReactReduxContextValue } from "react-redux";
-
-/**
- * @public
- */
-export type OptionalProvider<T> = T extends (...args: infer TArgs) => infer TRes
-    ? (...args: TArgs) => TRes | undefined
-    : never;
-
-/**
- * @public
- */
-export type WidgetComponentProvider = (widget: ExtendedDashboardWidget) => CustomDashboardWidgetComponent;
-
-/**
- * @public
- */
-export type OptionalWidgetComponentProvider = OptionalProvider<WidgetComponentProvider>;
-
-/**
- * @public
- */
-export type InsightComponentProvider = (
-    insight: IInsight,
-    widget: IInsightWidget,
-) => CustomDashboardInsightComponent;
-
-/**
- * @public
- */
-export type OptionalInsightComponentProvider = OptionalProvider<InsightComponentProvider>;
-
-/**
- * @alpha
- */
-export type InsightMenuButtonComponentProvider = (
-    insight: IInsight,
-    widget: IInsightWidget,
-) => CustomDashboardInsightMenuButtonComponent | undefined;
-
-/**
- * @alpha
- */
-export type InsightMenuComponentProvider = (
-    insight: IInsight,
-    widget: IInsightWidget,
-) => CustomDashboardInsightMenuComponent | undefined;
-
-/**
- * @alpha
- */
-export type InsightMenuItemsProvider = (
-    insight: IInsight,
-    widget: IInsightWidget,
-    defaultItems: IInsightMenuItem[],
-    closeMenu: () => void,
-) => IInsightMenuItem[];
-
-/**
- * @public
- */
-export type KpiComponentProvider = (kpi: ILegacyKpi, widget: IKpiWidget) => CustomDashboardKpiComponent;
-
-/**
- * @public
- */
-export type OptionalKpiComponentProvider = OptionalProvider<KpiComponentProvider>;
-
-/**
- * @alpha
- */
-export type AttributeFilterComponentProvider = (
-    filter: IDashboardAttributeFilter,
-) => CustomDashboardAttributeFilterComponent | undefined;
+import {
+    InsightMenuItemsProvider,
+    OptionalAttributeFilterComponentProvider,
+    OptionalInsightComponentProvider,
+    OptionalInsightMenuButtonComponentProvider,
+    OptionalInsightMenuComponentProvider,
+    OptionalKpiComponentProvider,
+    OptionalWidgetComponentProvider,
+} from "../dashboardContexts";
 
 /**
  * These props allow you to specify custom components or custom component providers that the Dashboard
@@ -205,7 +119,7 @@ export interface IDashboardCustomComponentProps {
      *
      * @alpha
      */
-    InsightMenuButtonComponentProvider?: InsightMenuButtonComponentProvider;
+    InsightMenuButtonComponentProvider?: OptionalInsightMenuButtonComponentProvider;
 
     /**
      * Optionally specify function to obtain custom component to use for rendering an insight menu.
@@ -218,7 +132,7 @@ export interface IDashboardCustomComponentProps {
      *
      * @alpha
      */
-    InsightMenuComponentProvider?: InsightMenuComponentProvider;
+    InsightMenuComponentProvider?: OptionalInsightMenuComponentProvider;
 
     /**
      * Optionally specify function to obtain custom component to use for rendering a KPI.
@@ -303,7 +217,7 @@ export interface IDashboardCustomComponentProps {
      *
      * @alpha
      */
-    DashboardAttributeFilterComponentProvider?: AttributeFilterComponentProvider;
+    DashboardAttributeFilterComponentProvider?: OptionalAttributeFilterComponentProvider;
 
     /**
      * Optionally specify component to use for rendering the date filters.
