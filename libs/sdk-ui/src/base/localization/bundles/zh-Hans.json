@@ -226,6 +226,7 @@
     "shareDialog.share.grantee.add.empty.selection": "未选择用户或组。",
     "shareDialog.share.grantee.add.info": "添加用户和组",
     "shareDialog.share.grantee.add.search.placeholder": "搜索用户和组",
+    "shareDialog.share.grantee.add.search.error.message": "无法加载用户和组。请稍后再试。",
     "shareDialog.share.grantee.add.search.no.matching.items": "没有匹配的用户或组。",
     "shareDialog.share.grantee.item.you": "{userName}（您）",
     "shareDialog.share.grantee.item.users.count": "{granteeCount} 个用户",
@@ -233,7 +234,5 @@
     "shareDialog.share.grantee.item.user.all": "全部用户",
     "shareDialog.share.grantee.item.user.inactive": "非活跃用户",
     "shareDialog.share.grantee.item.user.inactive.description": "用户已从此工作区中删除",
-    "shareDialog.share.grantee.item.remove.access": "删除对此控制面板的访问权限。",
-    "shareDialog.share.grantee.item.owner.remove.access": "创建此控制面板的用户。无法删除创建人。",
     "shareDialog.share.grantee.item.remove.selection": "从选择中删除。"
 }

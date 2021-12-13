@@ -226,6 +226,7 @@
     "shareDialog.share.grantee.add.empty.selection": "Kein Benutzer und keine Gruppe ausgewählt.",
     "shareDialog.share.grantee.add.info": "Benutzer und Gruppen hinzufügen",
     "shareDialog.share.grantee.add.search.placeholder": "Benutzer und Gruppen suchen",
+    "shareDialog.share.grantee.add.search.error.message": "Fehler beim Laden von Benutzern und Gruppen. Bitte später erneut versuchen.",
     "shareDialog.share.grantee.add.search.no.matching.items": "Keine passenden Benutzer oder Gruppen.",
     "shareDialog.share.grantee.item.you": "{userName} (Sie)",
     "shareDialog.share.grantee.item.users.count": "{granteeCount} Benutzer",
@@ -233,7 +234,5 @@
     "shareDialog.share.grantee.item.user.all": "Alle Benutzer",
     "shareDialog.share.grantee.item.user.inactive": "Inaktiver Benutzer",
     "shareDialog.share.grantee.item.user.inactive.description": "Der Benutzer wurde von diesem Workspace gelöscht.",
-    "shareDialog.share.grantee.item.remove.access": "Entfernt den Zugriff auf dieses Dashboard.",
-    "shareDialog.share.grantee.item.owner.remove.access": "Benutzer, die dieses Dashboard erstellt haben. Der Ersteller kann nicht entfernt werden.",
     "shareDialog.share.grantee.item.remove.selection": "Von Auswahl entfernen."
 }

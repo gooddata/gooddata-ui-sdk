@@ -226,6 +226,7 @@
     "shareDialog.share.grantee.add.empty.selection": "Nenhum utilizador ou grupo selecionado.",
     "shareDialog.share.grantee.add.info": "Adicionar utilizadores e grupos",
     "shareDialog.share.grantee.add.search.placeholder": "Procurar utilizadores e grupos",
+    "shareDialog.share.grantee.add.search.error.message": "Falha ao carregar utilizadores e grupos. Tente mais tarde.",
     "shareDialog.share.grantee.add.search.no.matching.items": "Nenhuns utilizadores ou grupos correspondentes.",
     "shareDialog.share.grantee.item.you": "{userName} (O Utilizador)",
     "shareDialog.share.grantee.item.users.count": "{granteeCount} utilizadores",
@@ -233,7 +234,5 @@
     "shareDialog.share.grantee.item.user.all": "Todos os utilizadores",
     "shareDialog.share.grantee.item.user.inactive": "Utilizador inativo",
     "shareDialog.share.grantee.item.user.inactive.description": "O utilizador foi eliminado desta área de trabalho",
-    "shareDialog.share.grantee.item.remove.access": "Remover acesso a este dashboard.",
-    "shareDialog.share.grantee.item.owner.remove.access": "Utilizadores que criaram este dashboard. Não é possível remover o criador.",
     "shareDialog.share.grantee.item.remove.selection": "Remover da seleção."
 }

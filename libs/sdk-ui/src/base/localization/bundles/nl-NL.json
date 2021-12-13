@@ -226,6 +226,7 @@
     "shareDialog.share.grantee.add.empty.selection": "Geen gebruiker of groep geselecteerd.",
     "shareDialog.share.grantee.add.info": "Gebruikers en groepen toevoegen",
     "shareDialog.share.grantee.add.search.placeholder": "Gebruikers en groepen zoeken",
+    "shareDialog.share.grantee.add.search.error.message": "Laden van gebruikers en groepen mislukt. Probeer het later opnieuw.",
     "shareDialog.share.grantee.add.search.no.matching.items": "Geen matchende gebruikers of groepen.",
     "shareDialog.share.grantee.item.you": "{userName} (u)",
     "shareDialog.share.grantee.item.users.count": "{granteeCount} gebruikers",
@@ -233,7 +234,5 @@
     "shareDialog.share.grantee.item.user.all": "Alle gebruikers",
     "shareDialog.share.grantee.item.user.inactive": "Inactieve gebruiker",
     "shareDialog.share.grantee.item.user.inactive.description": "Gebruiker is verwijderd uit deze werkruimte",
-    "shareDialog.share.grantee.item.remove.access": "Verwijder de toegang tot dit dashboard.",
-    "shareDialog.share.grantee.item.owner.remove.access": "Gebruikers die dit dashboard hebben gemaakt. Maker kan niet worden verwijderd.",
     "shareDialog.share.grantee.item.remove.selection": "Verwijderen uit sectie."
 }
