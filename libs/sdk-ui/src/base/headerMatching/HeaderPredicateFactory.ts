@@ -9,9 +9,14 @@ import {
 } from "./MappingHeader";
 import { IMeasureDescriptor, isMeasureDescriptor, isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import {
+    attributeDisplayFormRef,
+    attributeLocalId,
     IMeasure,
     isArithmeticMeasure,
+    isAttribute,
     isIdentifierRef,
+    isObjRef,
+    isSimpleMeasure,
     measureArithmeticOperands,
     measureIdentifier,
     measureLocalId,
@@ -294,6 +299,39 @@ export function objRefMatch(objRef: ObjRef): IHeaderPredicate {
 }
 
 /**
+ * Creates a new predicate that returns true for any header that belongs to either attribute or measure matching
+ * the provided object.
+ *
+ * If the object is empty or is not attribute, simple measure or object reference, the function returns predicate
+ * that is always falsy.
+ *
+ * @param obj - the object to be checked
+ *
+ * @public
+ */
+export function objMatch(obj: any): IHeaderPredicate {
+    if (!obj) {
+        return alwaysFalsePredicate;
+    }
+
+    if (isAttribute(obj)) {
+        return (header, context) =>
+            localIdentifierMatch(attributeLocalId(obj))(header, context) ||
+            objRefMatch(attributeDisplayFormRef(obj))(header, context);
+    }
+
+    if (isSimpleMeasure(obj)) {
+        return localIdentifierMatch(measureLocalId(obj));
+    }
+
+    if (isObjRef(obj)) {
+        return objRefMatch(obj);
+    }
+
+    return alwaysFalsePredicate;
+}
+
+/**
  * Creates a new predicate that returns true of any arithmetic measure where measure with the provided URI
  * is used as an operand.
  *
@@ -334,4 +372,5 @@ export const HeaderPredicates = {
     localIdentifierMatch,
     uriMatch,
     objRefMatch,
+    objMatch,
 };

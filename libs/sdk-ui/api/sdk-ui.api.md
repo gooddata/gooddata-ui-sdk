@@ -471,6 +471,7 @@ export const HeaderPredicates: {
     localIdentifierMatch: typeof localIdentifierMatch;
     uriMatch: typeof uriMatch;
     objRefMatch: typeof objRefMatch;
+    objMatch: typeof objMatch;
 };
 
 // @public (undocumented)
@@ -1462,6 +1463,9 @@ export type NullableFilterOrPlaceholder = FilterOrPlaceholder | ValueOrPlacehold
 
 // @public
 export type NullableFiltersOrPlaceholders = Array<FilterOrMultiValuePlaceholder | ValueOrMultiValuePlaceholder<INullableFilter> | ValueOrMultiValuePlaceholder<IFilter | null> | ValueOrMultiValuePlaceholder<IDateFilter | null> | ValueOrMultiValuePlaceholder<IMeasureFilter | null> | ValueOrMultiValuePlaceholder<IAttributeFilter | null> | ValueOrMultiValuePlaceholder<IAbsoluteDateFilter | null> | ValueOrMultiValuePlaceholder<IRelativeDateFilter | null> | ValueOrMultiValuePlaceholder<IPositiveAttributeFilter | null> | ValueOrMultiValuePlaceholder<INegativeAttributeFilter | null> | ValueOrMultiValuePlaceholder<IMeasureValueFilter | null> | ValueOrMultiValuePlaceholder<IRankingFilter | null>>;
+
+// @public
+export function objMatch(obj: any): IHeaderPredicate;
 
 // @public
 export function objRefMatch(objRef: ObjRef): IHeaderPredicate;
