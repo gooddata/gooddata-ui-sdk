@@ -633,23 +633,23 @@
         "comment": "Export to file with XLSX extension.",
         "limit": 0
     },
-    "options.menu.unsupported.error|insight": {
+    "options.menu.unsupported.error._measure|insight": {
         "value": "The insight cannot be exported at the moment. Try applying different filters, or using different measures or attributes.",
         "comment": "Error popup. Insight cannot be exported to the file because of wrong setting of filters, measures or attributes.",
         "limit": 0
     },
-    "options.menu.unsupported.error.renaming_measure|insight": {
+    "options.menu.unsupported.error._metric|insight": {
         "value": "The insight cannot be exported at the moment. Try applying different filters, or using different metrics or attributes.",
         "comment": "Error popup. Insight cannot be exported to the file because of wrong setting of filters, metrics or attributes.",
         "limit": 0
     },
-    "options.menu.unsupported.error|report": {
+    "options.menu.unsupported.error._measure|report": {
         "value": "The report cannot be exported at the moment. Try applying different filters, or using different measures or attributes.",
         "comment": "Error popup. Report cannot be exported to the file because of wrong setting of filters, measures or attributes.",
         "limit": 0,
         "translate": false
     },
-    "options.menu.unsupported.error.renaming_measure|report": {
+    "options.menu.unsupported.error._metric|report": {
         "value": "The report cannot be exported at the moment. Try applying different filters, or using different metrics or attributes.",
         "comment": "Error popup. Report cannot be exported to the file because of wrong setting of filters, metrics or attributes.",
         "limit": 0,

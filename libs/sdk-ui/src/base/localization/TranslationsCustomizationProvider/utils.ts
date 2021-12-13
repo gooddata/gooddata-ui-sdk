@@ -45,8 +45,8 @@ const pickCorrectMetricWordingInner = (
 ): Record<string, string> => {
     const modifiedTranslations = {};
     Object.keys(translations).forEach((key) => {
-        if (key.includes(".renaming_measure")) {
-            const newKey = getNewKey(key, isEnabledRenamingMeasureToMetric ? ".renaming_measure" : "");
+        if (key.includes("._metric") || key.includes("._measure")) {
+            const newKey = getNewKey(key, isEnabledRenamingMeasureToMetric ? "._metric" : "._measure");
             modifiedTranslations[newKey] = translations[key];
         }
     });

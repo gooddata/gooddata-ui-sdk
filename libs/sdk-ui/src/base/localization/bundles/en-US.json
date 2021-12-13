@@ -59,23 +59,23 @@
         "comment": "Total of type 'Rollup' where 'Total' is hint and synonym. Showed in menu before adding to table.",
         "limit": 0
     },
-    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf|insight": {
+    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf._measure|insight": {
         "value": "Rollup (Total) aggregation is not available when filtering the insight by measure value. To use Rollup (Total), remove all measure value filters from the filter bar.",
         "comment": "The tooltip that is shown in pivot's table totals menu when rollup (native) total is disabled because measure value filters are configured for the pivot.",
         "limit": 0
     },
-    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf.renaming_measure|insight": {
+    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf._metric|insight": {
         "value": "Rollup (Total) aggregation is not available when filtering the insight by metric value. To use Rollup (Total), remove all metric value filters from the filter bar.",
         "comment": "The tooltip that is shown in pivot's table totals menu when rollup (native) total is disabled because metric value filters are configured for the pivot.",
         "limit": 0
     },
-    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf|report": {
+    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf._measure|report": {
         "value": "Rollup (Total) aggregation is not available when filtering the report by measure value. To use Rollup (Total), remove all measure value filters from the filter bar.",
         "comment": "The tooltip that is shown in pivot's table totals menu when rollup (native) total is disabled because measure value filters are configured for the pivot.",
         "limit": 0,
         "translate": false
     },
-    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf.renaming_measure|report": {
+    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf._metric|report": {
         "value": "Rollup (Total) aggregation is not available when filtering the report by metric value. To use Rollup (Total), remove all metric value filters from the filter bar.",
         "comment": "The tooltip that is shown in pivot's table totals menu when rollup (native) total is disabled because metric value filters are configured for the pivot.",
         "limit": 0,
