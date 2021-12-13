@@ -72,12 +72,16 @@ export const AddGranteeSelect: React.FC<IAddGranteeSelectProps> = (props) => {
 
     const onKeyDownCallback: KeyboardEventHandler<HTMLInputElement> = useCallback((e) => {
         const target = e.target as HTMLInputElement;
+        // react-select has default behavior on space and tab key  - open menu / select first option etc.
+        // We need disable this behavior for space key by set e.preventDefault when input is empty and for tab key completely
 
-        if (e.code === "Space" && !target.value) {
+        //space
+        if (e.keyCode === 32 && !target.value) {
             e.preventDefault();
         }
 
-        if (e.code === "Tab") {
+        // tab
+        if (e.keyCode === 9) {
             e.preventDefault();
         }
     }, []);
