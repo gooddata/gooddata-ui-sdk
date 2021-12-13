@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { IHeaderPredicate } from "../HeaderPredicate";
 import * as headerPredicateFactory from "../HeaderPredicateFactory";
 import {
@@ -7,6 +7,7 @@ import {
     attributeHeaderItem,
     attributeDescriptor,
 } from "./HeaderPredicateFactory.fixtures";
+import { attributeDisplayFormRef, newAttribute, uriRef } from "@gooddata/sdk-model";
 
 describe("uriMatch", () => {
     describe("measure headers", () => {
@@ -658,5 +659,39 @@ describe("attributeItemNameMatch", () => {
         const predicate = headerPredicateFactory.attributeItemNameMatch("attributeItemName");
 
         expect(predicate(measureDescriptors.uriBasedMeasure, context)).toBe(false);
+    });
+});
+
+describe("objRefMatch tests", () => {
+    it("should match predicate when attribute objRef matches - identifier match scenario", () => {
+        const attributeObjRef = attributeDisplayFormRef(newAttribute("attributeIdentifier"));
+
+        const predicate = headerPredicateFactory.objRefMatch(attributeObjRef);
+
+        expect(predicate(attributeDescriptor, context)).toBe(true);
+    });
+
+    it("should match predicate when attribute objRef matches - uri match scenario", () => {
+        const attributeObjRef = attributeDisplayFormRef(newAttribute(uriRef("/attributeUri")));
+
+        const predicate = headerPredicateFactory.objRefMatch(attributeObjRef);
+
+        expect(predicate(attributeDescriptor, context)).toBe(true);
+    });
+
+    it("should match predicate when attribute objRef matches - identifier match negative scenario", () => {
+        const attributeObjRef = attributeDisplayFormRef(newAttribute("otherAttributeIdentifier"));
+
+        const predicate = headerPredicateFactory.objRefMatch(attributeObjRef);
+
+        expect(predicate(attributeDescriptor, context)).toBe(false);
+    });
+
+    it("should match predicate when attribute objRef matches - uri match negative scenario", () => {
+        const attributeObjRef = attributeDisplayFormRef(newAttribute(uriRef("/otherAttributeUri")));
+
+        const predicate = headerPredicateFactory.objRefMatch(attributeObjRef);
+
+        expect(predicate(attributeDescriptor, context)).toBe(false);
     });
 });
