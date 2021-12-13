@@ -11,11 +11,13 @@ import { IMeasureDescriptor, isMeasureDescriptor, isResultAttributeHeader } from
 import {
     IMeasure,
     isArithmeticMeasure,
+    isIdentifierRef,
     measureArithmeticOperands,
     measureIdentifier,
     measureLocalId,
     measureMasterIdentifier,
     measureUri,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import { DataViewFacade } from "../results/facade";
 
@@ -280,6 +282,18 @@ export function localIdentifierMatch(localIdOrMeasure: string | IMeasure): IHead
 }
 
 /**
+ * Creates a new predicate that returns true for any header that belongs to either attribute or measure with the
+ * provided object reference.
+ *
+ * @public
+ */
+export function objRefMatch(objRef: ObjRef): IHeaderPredicate {
+    return isIdentifierRef(objRef)
+        ? HeaderPredicates.identifierMatch(objRef.identifier)
+        : HeaderPredicates.uriMatch(objRef.uri);
+}
+
+/**
  * Creates a new predicate that returns true of any arithmetic measure where measure with the provided URI
  * is used as an operand.
  *
@@ -319,4 +333,5 @@ export const HeaderPredicates = {
     identifierMatch,
     localIdentifierMatch,
     uriMatch,
+    objRefMatch,
 };
