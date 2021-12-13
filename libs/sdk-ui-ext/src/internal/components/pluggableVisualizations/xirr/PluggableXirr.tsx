@@ -1,6 +1,6 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
-import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
+import { IExecutionFactory, IPreparedExecution, ISettings } from "@gooddata/sdk-backend-spi";
 import {
     attributeLocalId,
     bucketAttributes,
@@ -56,6 +56,10 @@ export class PluggableXirr extends AbstractPluggableVisualization {
 
     public unmount(): void {
         unmountComponentsAtNodes([this.element, this.configPanelElement]);
+    }
+
+    public getExecution() {
+        return {} as IPreparedExecution;
     }
 
     public getExtendedReferencePoint = async (

@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { IAnalyticalBackend, IExecutionFactory, ISettings, ITheme } from "@gooddata/sdk-backend-spi";
 import {
     IInsight,
@@ -275,5 +275,30 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         drillDownContext: IDrillDownContext,
     ): IInsight {
         return this.visualization.getInsightWithDrillDownApplied(sourceVisualization, drillDownContext);
+    }
+
+    public getExecution() {
+        this.setupVisualization(this.props);
+        this.updateVisualization();
+
+        return this.visualization.getExecution(
+            {
+                locale: this.props.locale,
+                dateFormat: this.props.dateFormat,
+                dimensions: {
+                    width: this.props.width,
+                    height: this.props.height,
+                },
+                custom: {
+                    drillableItems: this.props.drillableItems,
+                    totalsEditAllowed: this.props.totalsEditAllowed,
+                },
+                config: this.props.config,
+                theme: this.props.theme,
+                executionConfig: this.props.executionConfig,
+            },
+            this.props.insight,
+            this.executionFactory,
+        );
     }
 }

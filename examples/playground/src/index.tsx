@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 // this line is to avoid the TS2580 error. We do have the required dependencies but the error still happens.
 declare const require: any;
 if (process.env.WDYR === "true") {
@@ -11,18 +11,44 @@ if (process.env.WDYR === "true") {
 }
 import "babel-polyfill";
 import React from "react";
-import ReactDOM from "react-dom";
 
-import "@gooddata/sdk-ui-filters/styles/css/main.css";
-import "@gooddata/sdk-ui-charts/styles/css/main.css";
-import "@gooddata/sdk-ui-pivot/styles/css/main.css";
-import "@gooddata/sdk-ui-kit/styles/css/main.css";
-import "@gooddata/sdk-ui-ext/styles/css/main.css";
-import "@gooddata/sdk-ui-dashboard/styles/css/main.css";
+import bearFactory, { BearToBackendConvertors, BearTokenAuthProvider } from "@gooddata/sdk-backend-bear";
+import { BaseVisualization, FullVisualizationCatalog } from "@gooddata/sdk-ui-ext/esm/internal";
+import { IBaseVisualizationProps } from "@gooddata/sdk-ui-ext/esm/internal/components/BaseVisualization";
 
-import { App } from "./App";
+(async function getAfmExecution() {
+    // this will be part of the request
+    const token = "";
+    const projectId = "";
+    const insightUri = "";
 
-const root = document.createElement("div");
-root.className = "root";
-document.body.appendChild(root);
-ReactDOM.render(<App />, root);
+    const backend = bearFactory().withAuthentication(new BearTokenAuthProvider(token));
+    const insight = await backend.workspace(projectId).insights().getInsight({ uri: insightUri });
+    const visualizationClasses = await backend.workspace(projectId).insights().getVisualizationClasses();
+
+    const visualizationClass = visualizationClasses.find(
+        ({ visualizationClass }) => visualizationClass.url === insight.insight.visualizationUrl,
+    )!;
+
+    const props: IBaseVisualizationProps = {
+        backend,
+        insight,
+        projectId,
+        visualizationClass,
+        visualizationCatalog: FullVisualizationCatalog,
+        onError: () => {},
+        onLoadingChanged: () => {},
+        pushData: () => {},
+        renderer: () => {},
+    };
+
+    const visualization = new BaseVisualization(props);
+    const preparedExecution = visualization.getExecution();
+
+    const afmExecution = BearToBackendConvertors.toAfmExecution(preparedExecution.definition);
+    const executionResult = await preparedExecution.execute();
+
+    console.log(afmExecution);
+    console.log(executionResult);
+    // how to get executionResponse or polling link?
+})();

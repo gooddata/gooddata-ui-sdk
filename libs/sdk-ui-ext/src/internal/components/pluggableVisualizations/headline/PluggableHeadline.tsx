@@ -1,6 +1,6 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
-import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
+import { IExecutionFactory, IPreparedExecution, ISettings } from "@gooddata/sdk-backend-spi";
 import { bucketIsEmpty, IInsightDefinition, insightBucket, insightHasDataDefined } from "@gooddata/sdk-model";
 
 import { BucketNames } from "@gooddata/sdk-ui";
@@ -66,6 +66,10 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
 
     public unmount(): void {
         unmountComponentsAtNodes([this.element, this.configPanelElement]);
+    }
+
+    public getExecution() {
+        return {} as IPreparedExecution;
     }
 
     public getExtendedReferencePoint(

@@ -1,7 +1,13 @@
 // (C) 2019-2021 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
 import isEmpty from "lodash/isEmpty";
-import { IAnalyticalBackend, IExecutionFactory, ISettings, ITheme } from "@gooddata/sdk-backend-spi";
+import {
+    IAnalyticalBackend,
+    IExecutionFactory,
+    IPreparedExecution,
+    ISettings,
+    ITheme,
+} from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
     IInsight,
@@ -373,6 +379,12 @@ export interface IVisualization {
         referencePoint: IReferencePoint,
         previousReferencePoint?: IReferencePoint,
     ): Promise<IExtendedReferencePoint>;
+
+    getExecution(
+        options: IVisProps,
+        insight: IInsightDefinition,
+        executionFactory: IExecutionFactory,
+    ): IPreparedExecution;
 
     /**
      * Called when the Drill Down is performed, used to get the Drill Down target {@link IInsight} instance.

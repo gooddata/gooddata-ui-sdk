@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import {
     addIntersectionFiltersToInsight,
@@ -10,7 +10,12 @@ import flatMap from "lodash/flatMap";
 import isNil from "lodash/isNil";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
-import { IBackendCapabilities, IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
+import {
+    IBackendCapabilities,
+    IExecutionFactory,
+    IPreparedExecution,
+    ISettings,
+} from "@gooddata/sdk-backend-spi";
 import {
     bucketAttribute,
     IDimension,
@@ -130,6 +135,10 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
 
     public unmount(): void {
         unmountComponentsAtNodes([this.element, this.configPanelElement]);
+    }
+
+    public getExecution() {
+        return {} as IPreparedExecution;
     }
 
     public getExtendedReferencePoint(

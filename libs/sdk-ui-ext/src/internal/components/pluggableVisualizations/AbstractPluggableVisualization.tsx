@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import {
     IBucketItem,
@@ -17,7 +17,7 @@ import {
 } from "../../interfaces/Visualization";
 import { findDerivedBucketItem, hasDerivedBucketItems, isDerivedBucketItem } from "../../utils/bucketHelper";
 import { IInsight, IInsightDefinition, insightHasDataDefined, insightProperties } from "@gooddata/sdk-model";
-import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
     DefaultLocale,
     GoodDataSdkError,
@@ -83,6 +83,12 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
     public abstract getExtendedReferencePoint(
         referencePoint: IReferencePoint,
     ): Promise<IExtendedReferencePoint>;
+
+    public abstract getExecution(
+        options: IVisProps,
+        insight: IInsightDefinition,
+        executionFactory: IExecutionFactory,
+    ): IPreparedExecution;
 
     //
     // Templated implementation of update contract
