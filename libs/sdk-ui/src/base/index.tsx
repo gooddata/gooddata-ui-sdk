@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 /*
  *
@@ -210,6 +210,7 @@ export {
     localIdentifierMatch,
     uriMatch,
     objRefMatch,
+    objMatch,
 } from "./headerMatching/HeaderPredicateFactory";
 
 /*
