@@ -16,10 +16,13 @@ export const ExecuteProtectedError: React.FC<IExecuteProtectedErrorProps> = ({ f
             {fullContent ? (
                 <div className="info-label-icon gd-icon-warning">
                     <Typography tagName="h2">
-                        <FormattedMessage id="visualization.execute_protected_report.headline" />
+                        <FormattedMessage
+                            id="visualization.execute_protected_report.headline"
+                            tagName="span"
+                        />
                     </Typography>
                     <Typography tagName="h2">
-                        <FormattedMessage id="visualization.execute_protected_report.text" />
+                        <FormattedMessage id="visualization.execute_protected_report.text" tagName="span" />
                     </Typography>
                 </div>
             ) : (

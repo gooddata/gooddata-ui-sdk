@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import React from "react";
 import { RankingFilterOperator } from "@gooddata/sdk-model";
 import { FormattedMessage } from "react-intl";
@@ -31,6 +31,7 @@ export const Preview: React.FC<IPreviewProps> = ({ operator, value, measure, att
     <div className="gd-rf-preview s-rf-preview">
         <FormattedMessage
             id={getPreviewTemplate(operator, attribute)}
+            tagName="span"
             values={{
                 measure: measure.title,
                 attribute: attribute?.title,
