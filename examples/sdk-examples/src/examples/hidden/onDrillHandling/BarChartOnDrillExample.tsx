@@ -3,7 +3,7 @@ import React from "react";
 import { BarChart } from "@gooddata/sdk-ui-charts";
 import { measureIdentifier, modifyAttribute, modifyMeasure } from "@gooddata/sdk-model";
 import { IDrillableItemIdentifier } from "@gooddata/sdk-ui";
-import { Md } from "../../../md";
+import * as Md from "../../../md/full";
 import { useOnDrillExample } from "./useOnDrillExample";
 
 const TotalSales = modifyMeasure(Md.$TotalSales, (m) =>

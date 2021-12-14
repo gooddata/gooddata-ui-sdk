@@ -11,7 +11,7 @@ import {
     modifySimpleMeasure,
     newAbsoluteDateFilter,
 } from "@gooddata/sdk-model";
-import { Md } from "../../md";
+import * as Md from "../../md/full";
 
 const totalSalesProfit = modifySimpleMeasure(Md.$TotalSales, (m) => m.title("Total sales"));
 const grossProfit = modifySimpleMeasure(Md.$GrossProfit, (m) => m.title("Gross profit"));

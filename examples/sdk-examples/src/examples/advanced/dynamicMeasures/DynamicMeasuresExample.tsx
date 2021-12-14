@@ -9,7 +9,7 @@ import sdk from "@gooddata/api-client-bear";
 import { Layout } from "../../../components/Layout";
 import { SidebarItem } from "../../../components/SidebarItem";
 import { workspace } from "../../../constants/fixtures";
-import { Md } from "../../../md";
+import * as Md from "../../../md/full";
 
 const franchiseFeesTag = "franchise_fees";
 

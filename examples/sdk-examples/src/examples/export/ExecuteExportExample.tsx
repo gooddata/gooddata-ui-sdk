@@ -3,7 +3,7 @@ import React from "react";
 import { modifyMeasure, newAbsoluteDateFilter } from "@gooddata/sdk-model";
 
 import { ExampleWithExport } from "./ExampleWithExport";
-import { Md } from "../../md";
+import * as Md from "../../md/full";
 import { Execute, ErrorComponent, LoadingComponent } from "@gooddata/sdk-ui";
 
 const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) =>

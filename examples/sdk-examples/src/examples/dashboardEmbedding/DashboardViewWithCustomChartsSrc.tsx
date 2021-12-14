@@ -5,7 +5,7 @@ import { DashboardView, useDashboardWidgetExecution } from "@gooddata/sdk-ui-ext
 import { idRef, newPositiveAttributeFilter, ObjRef } from "@gooddata/sdk-model";
 import { useDataView, IErrorProps, ILoadingProps } from "@gooddata/sdk-ui";
 import { MAPBOX_TOKEN } from "../../constants/fixtures";
-import { Md } from "../../md";
+import * as Md from "../../md/full";
 
 const dashboardRef = idRef("aeO5PVgShc0T");
 const config = { mapboxToken: MAPBOX_TOKEN };

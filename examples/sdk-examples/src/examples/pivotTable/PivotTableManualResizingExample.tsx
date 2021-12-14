@@ -9,7 +9,7 @@ import {
     newWidthForSelectedColumns,
     newAttributeColumnLocator,
 } from "@gooddata/sdk-ui-pivot";
-import { Md } from "../../md";
+import * as Md from "../../md/full";
 import { workspace } from "../../constants/fixtures";
 import { modifyAttribute, modifyMeasure } from "@gooddata/sdk-model";
 

@@ -4,7 +4,7 @@ import { Execute, LoadingComponent, ErrorComponent } from "@gooddata/sdk-ui";
 import { ResponsiveContainer, BarChart, CartesianGrid, XAxis, YAxis, Legend, Bar } from "recharts";
 import { modifyAttribute, modifyMeasure } from "@gooddata/sdk-model";
 
-import { Md } from "../../md";
+import * as Md from "../../md/full";
 
 const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) =>
     m.format("#,##0").localId("franchiseFeesAdRoyalty"),

@@ -4,7 +4,7 @@ import { IMeasureValueFilter, measureLocalId, modifyAttribute, modifyMeasure } f
 import { MeasureValueFilter } from "@gooddata/sdk-ui-filters";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 
-import { Md } from "../../../md";
+import * as Md from "../../../md/full";
 
 const FranchisedSales = modifyMeasure(Md.$FranchisedSales, (m) =>
     m.format("#,##0").title("Franchise Sales").localId("franchiseSales"),

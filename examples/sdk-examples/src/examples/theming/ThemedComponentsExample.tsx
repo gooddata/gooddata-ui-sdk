@@ -9,7 +9,7 @@ import { BarChart } from "@gooddata/sdk-ui-charts";
 
 import { DateFilterComponentExample } from "../dateFilter/DateFilterComponentExample";
 import { customTheme } from "../../constants/customTheme";
-import { Md } from "../../md";
+import * as Md from "../../md/full";
 
 const TotalSales = modifyMeasure(Md.$TotalSales, (m) => m.format("#,##0").alias("$ Total Sales"));
 

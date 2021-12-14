@@ -2,7 +2,7 @@
 import React from "react";
 import { Treemap } from "@gooddata/sdk-ui-charts";
 import { modifyMeasure } from "@gooddata/sdk-model";
-import { Md } from "../../md";
+import * as Md from "../../md/full";
 
 const numberOfChecks = modifyMeasure(Md.NrChecks, (m) =>
     m.localId("numOfChecks").format("#,##0").alias("# Checks").title("Number of Checks"),

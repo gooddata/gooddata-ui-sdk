@@ -1,7 +1,7 @@
 // (C) 2007-2021 GoodData Corporation
 import React from "react";
 import { AttributeElements } from "@gooddata/sdk-ui-filters";
-import { Md } from "../../../md";
+import * as Md from "../../../md/full";
 import { CustomLoading } from "../../../components/CustomLoading";
 import { CustomError } from "../../../components/CustomError";
 import { EmployeeProfile } from "./EmployeeProfile";

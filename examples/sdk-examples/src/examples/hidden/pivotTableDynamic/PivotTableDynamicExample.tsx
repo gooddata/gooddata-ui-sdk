@@ -16,7 +16,7 @@ import {
     modifyAttribute,
 } from "@gooddata/sdk-model";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
-import { Md } from "../../../md";
+import * as Md from "../../../md/full";
 import { createColumnTotal } from "../../../utils/helpers";
 import { ElementWithParam } from "./ElementWithParam";
 import { workspace } from "../../../constants/fixtures";

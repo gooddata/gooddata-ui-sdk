@@ -9,7 +9,7 @@ import {
     modifyMeasure,
     modifyAttribute,
 } from "@gooddata/sdk-model";
-import { Md } from "../../md";
+import * as Md from "../../md/full";
 
 const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) =>
     m.format("#,##0").localId("franchiseFees").title("Franchise Fees"),

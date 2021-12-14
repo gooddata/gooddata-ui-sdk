@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { BarChart, ColumnChart, PieChart } from "@gooddata/sdk-ui";
 import { modifySimpleMeasure } from "@gooddata/sdk-model";
-import { Md } from "../../../md";
+import * as Md from "../../../md/full";
 
 const TotalSales = modifySimpleMeasure(Md.$TotalSales, (m) => m.aggregation("sum").localId("totalSales"));
 const franchiseFeesMeasures = [

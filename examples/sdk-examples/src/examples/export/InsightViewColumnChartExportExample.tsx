@@ -4,7 +4,7 @@ import React from "react";
 import { InsightView } from "@gooddata/sdk-ui-ext";
 import { newAbsoluteDateFilter } from "@gooddata/sdk-model";
 import { ExampleWithExport } from "./ExampleWithExport";
-import { Md } from "../../md";
+import * as Md from "../../md/full";
 
 const filters = [newAbsoluteDateFilter(Md.DateDatasets.Date.ref, "2017-01-01", "2017-12-31")];
 

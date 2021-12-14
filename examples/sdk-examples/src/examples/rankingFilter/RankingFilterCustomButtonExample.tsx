@@ -17,7 +17,7 @@ import {
     RankingFilterDropdown,
 } from "@gooddata/sdk-ui-filters";
 import classNames from "classnames";
-import { Md } from "../../md";
+import * as Md from "../../md/full";
 
 const TotalSales = modifyMeasure(Md.$TotalSales, (m) =>
     m.format("#,##0").alias("$ Total Sales").title("Total Sales").localId("totalSales"),

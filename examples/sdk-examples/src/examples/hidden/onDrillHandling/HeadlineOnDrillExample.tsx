@@ -3,7 +3,7 @@ import React from "react";
 import { Headline } from "@gooddata/sdk-ui-charts";
 import { measureIdentifier, modifyMeasure } from "@gooddata/sdk-model";
 
-import { Md } from "../../../md";
+import * as Md from "../../../md/full";
 import { useOnDrillExample } from "./useOnDrillExample";
 
 const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) =>

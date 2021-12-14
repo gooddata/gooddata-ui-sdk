@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 
 import { InsightView } from "@gooddata/sdk-ui-ext";
-import { Md } from "../../../md";
+import * as Md from "../../../md/full";
 
 export class InsightViewDualAxisBarChartExample extends Component {
     public render(): React.ReactNode {

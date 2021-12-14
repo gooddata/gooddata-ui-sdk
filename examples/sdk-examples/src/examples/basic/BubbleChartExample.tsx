@@ -1,7 +1,7 @@
 // (C) 2007-2021 GoodData Corporation
 import React from "react";
 import { BubbleChart } from "@gooddata/sdk-ui-charts";
-import { Md } from "../../md";
+import * as Md from "../../md/full";
 import { modifyMeasure } from "@gooddata/sdk-model";
 
 const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) =>

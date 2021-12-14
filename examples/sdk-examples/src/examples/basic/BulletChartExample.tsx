@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { BulletChart } from "@gooddata/sdk-ui-charts";
 import { modifyAttribute, modifyMeasure } from "@gooddata/sdk-model";
 
-import { Md } from "../../md";
+import * as Md from "../../md/full";
 
 const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) =>
     m.format("#,##0").localId("franchiseFeesAdRoyalty"),

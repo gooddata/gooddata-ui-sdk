@@ -3,7 +3,7 @@ import React, { useMemo, useState } from "react";
 import { DashboardView, mergeFiltersWithDashboard } from "@gooddata/sdk-ui-ext";
 import { idRef, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 import { IDashboard } from "@gooddata/sdk-backend-spi";
-import { Md } from "../../md";
+import * as Md from "../../md/full";
 import { MAPBOX_TOKEN } from "../../constants/fixtures";
 
 const dashboardRef = idRef("aeO5PVgShc0T");

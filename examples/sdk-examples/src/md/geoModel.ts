@@ -1,5 +1,5 @@
-// (C) 2020 GoodData Corporation
-import { Md } from "./index";
+// (C) 2020-2021 GoodData Corporation
+import * as Md from "./full";
 import { modifySimpleMeasure } from "@gooddata/sdk-model";
 import { workspace } from "../constants/fixtures";
 import { HeaderPredicates } from "@gooddata/sdk-ui";

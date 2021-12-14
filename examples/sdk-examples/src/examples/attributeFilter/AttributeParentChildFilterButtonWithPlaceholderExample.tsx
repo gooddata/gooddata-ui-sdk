@@ -17,7 +17,7 @@ import {
     modifyMeasure,
     newNegativeAttributeFilter,
 } from "@gooddata/sdk-model";
-import { Md } from "../../md";
+import * as Md from "../../md/full";
 
 const locationIdAttributeIdentifier = "attr.restaurantlocation.locationid";
 const TotalSales = modifyMeasure(Md.$TotalSales, (m) =>

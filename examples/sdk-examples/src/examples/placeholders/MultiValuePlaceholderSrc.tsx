@@ -4,7 +4,7 @@ import xor from "lodash/xor";
 import { PlaceholdersProvider, newPlaceholder } from "@gooddata/sdk-ui";
 import { BarChart } from "@gooddata/sdk-ui-charts";
 import { IMeasure, measureIdentifier, measureTitle, modifyMeasure } from "@gooddata/sdk-model";
-import { Md } from "../../md";
+import * as Md from "../../md/full";
 
 const totalSalesProfit = modifyMeasure(Md.$TotalSales, (m) => m.title("Total sales"));
 const grossProfit = modifyMeasure(Md.$GrossProfit, (m) => m.title("Gross profit"));

@@ -4,7 +4,7 @@ import React from "react";
 import { MeasureValueFilter } from "@gooddata/sdk-ui-filters";
 import { IMeasureValueFilter, measureLocalId, modifyAttribute, modifyMeasure } from "@gooddata/sdk-model";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { Md } from "../../../md";
+import * as Md from "../../../md/full";
 
 const FranchisedSalesAsPercent = modifyMeasure(Md.$FranchisedSales, (m) =>
     m.format("#,##0%").title("Franchise Sales").localId("franchiseSalesAsPercentage"),

@@ -3,7 +3,7 @@
 import React from "react";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
 import { newPopMeasure } from "@gooddata/sdk-model";
-import { Md } from "../../md";
+import * as Md from "../../md/full";
 
 const totalSalesYearAgo = newPopMeasure(Md.$TotalSales, Md.DateDatasets.Date.Year.ref, (m) =>
     m.alias("$ Total Sales - SP year ago"),

@@ -7,7 +7,7 @@ import {
     modifyMeasure,
     modifyAttribute,
 } from "@gooddata/sdk-model";
-import { Md } from "../../../md";
+import * as Md from "../../../md/full";
 import { IMeasureValueFilterState } from "./MeasureValueFilterExample";
 
 const TotalSales = modifyMeasure(Md.$TotalSales, (m) =>

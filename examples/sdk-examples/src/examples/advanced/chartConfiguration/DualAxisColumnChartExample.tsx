@@ -1,7 +1,7 @@
 // (C) 2007-2021 GoodData Corporation
 import React from "react";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
-import { Md } from "../../../md";
+import * as Md from "../../../md/full";
 import { measureLocalId, modifyMeasure, modifyAttribute } from "@gooddata/sdk-model";
 
 const TotalCosts = modifyMeasure(Md.$TotalCosts, (m) =>

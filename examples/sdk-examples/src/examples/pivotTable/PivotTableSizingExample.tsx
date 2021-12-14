@@ -2,7 +2,7 @@
 import React from "react";
 import { PivotTable, DefaultColumnWidth } from "@gooddata/sdk-ui-pivot";
 
-import { Md } from "../../md";
+import * as Md from "../../md/full";
 import { modifyAttribute, modifyMeasure } from "@gooddata/sdk-model";
 
 const FranchisedSales = modifyMeasure(Md.$FranchisedSales, (m) =>
