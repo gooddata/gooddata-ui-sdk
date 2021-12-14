@@ -7,8 +7,8 @@ import {
     IDashboardDateFilter,
     isProtectedDataError,
 } from "@gooddata/sdk-backend-spi";
-
 import { ToastMessages, useToastMessage } from "@gooddata/sdk-ui-kit";
+import compact from "lodash/compact";
 
 import {
     changeAttributeFilterSelection,
@@ -16,6 +16,7 @@ import {
     clearDateFilterSelection,
     exportDashboardToPdf,
     renameDashboard,
+    selectCanCreateAnalyticalDashboard,
     selectDashboardRef,
     selectDashboardShareInfo,
     selectDashboardTitle,
@@ -180,17 +181,19 @@ export const DashboardHeader = (): JSX.Element => {
     }, [exportDashboard, dashboardRef]);
 
     const isReadOnly = useDashboardSelector(selectIsReadOnly);
+    const canCreateDashboard = useDashboardSelector(selectCanCreateAnalyticalDashboard);
 
     const defaultMenuItems = useMemo<IMenuButtonItem[]>(() => {
         if (!dashboardRef) {
             return [];
         }
 
+        const isSaveAsVisible = canCreateDashboard;
         const isSaveAsDisabled = isEmptyLayout || !dashboardRef || isReadOnly;
         const isScheduledEmailingDisabled = isReadOnly;
 
-        return [
-            {
+        return compact([
+            isSaveAsVisible && {
                 type: "button",
                 itemId: "save_as_menu_item", // careful, also a s- class selector, do not change
                 disabled: isSaveAsDisabled,
@@ -215,7 +218,7 @@ export const DashboardHeader = (): JSX.Element => {
                 itemName: intl.formatMessage({ id: "options.menu.schedule.email" }),
                 onClick: defaultOnScheduleEmailing,
             },
-        ];
+        ]);
     }, [defaultOnScheduleEmailing, defaultOnExportToPdf, dashboardRef, isReadOnly]);
 
     const onScheduleEmailingError = useCallback(() => {
