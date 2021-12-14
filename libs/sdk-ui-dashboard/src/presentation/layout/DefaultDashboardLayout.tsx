@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
 import {
     isWidget,
@@ -100,12 +100,19 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
     const { ErrorComponent } = useDashboardComponentsContext({ ErrorComponent: CustomError });
     const isExport = useDashboardSelector(selectIsExport);
 
-    const getInsightByRef = (insightRef: ObjRef): IInsight | undefined => {
-        return insights.get(insightRef);
-    };
+    const getInsightByRef = useCallback(
+        (insightRef: ObjRef): IInsight | undefined => {
+            return insights.get(insightRef);
+        },
+        [insights],
+    );
 
     const transformedLayout = useMemo(() => {
-        const layoutWithRefs = DashboardLayoutBuilder.for(layout)
+        if (isExport) {
+            return getDashboardLayoutForExport(layout);
+        }
+
+        return DashboardLayoutBuilder.for(layout)
             .modifySections((section) =>
                 section
                     .modifyItems(polluteWidgetRefsWithBothIdAndUri(getInsightByRef))
@@ -115,8 +122,7 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
                     ),
             )
             .build();
-        return isExport ? getDashboardLayoutForExport(layout) : layoutWithRefs;
-    }, [layout, isExport]);
+    }, [layout, isExport, getInsightByRef]);
 
     const widgetRenderer = useCallback<IDashboardLayoutWidgetRenderer<ExtendedDashboardWidget>>(
         (renderProps) => {
@@ -175,14 +181,18 @@ function polluteWidgetRefsWithBothIdAndUri<TWidget = IDashboardWidget>(
             }
             if (isInsightWidget(updatedContent)) {
                 const insight = getInsightByRef(updatedContent.insight);
-                updatedContent = {
-                    ...updatedContent,
-                    insight: {
-                        ...updatedContent.insight,
-                        uri: insightUri(insight!),
-                        identifier: insightId(insight!),
-                    },
-                };
+                // sometimes this seems to be called sooner than insights are loaded leading to invariant errors
+                // since the behavior is nearly impossible to replicate reliably, let's be defensive here
+                if (insight) {
+                    updatedContent = {
+                        ...updatedContent,
+                        insight: {
+                            ...updatedContent.insight,
+                            uri: insightUri(insight),
+                            identifier: insightId(insight),
+                        },
+                    };
+                }
             }
 
             return updatedContent;
