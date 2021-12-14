@@ -7,4 +7,5 @@ import { ShareStatus } from "@gooddata/sdk-backend-spi";
  */
 export interface IShareStatusProps {
     shareStatus: ShareStatus;
+    isUnderStrictControl: boolean;
 }

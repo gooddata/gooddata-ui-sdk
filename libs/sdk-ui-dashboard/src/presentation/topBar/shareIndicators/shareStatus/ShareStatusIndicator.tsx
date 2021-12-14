@@ -16,8 +16,13 @@ export const ShareStatusIndicator = (props: IShareStatusProps): JSX.Element => {
     } else {
         icon = "gd-icon-invisible";
         text = "header.shareStatus.private.text";
-        tooltip = "header.shareStatus.private.tooltip";
+        if (props.isUnderStrictControl) {
+            tooltip = "header.shareStatus.private.strict.tooltip";
+        } else {
+            tooltip = "header.shareStatus.private.not.strict.tooltip";
+        }
     }
+
     return (
         <div className="s-share-status gd-share-status">
             <BubbleHoverTrigger>
