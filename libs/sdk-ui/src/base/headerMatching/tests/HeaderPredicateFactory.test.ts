@@ -662,7 +662,7 @@ describe("attributeItemNameMatch", () => {
     });
 });
 
-describe("objRefMatch tests", () => {
+describe("objMatch tests", () => {
     it("should return false - empty input", () => {
         const predicate = headerPredicateFactory.objMatch(undefined);
         expect(predicate(attributeDescriptor, context)).toBe(false);
@@ -712,6 +712,40 @@ describe("objRefMatch tests", () => {
         const attributeObjRef = attributeDisplayFormRef(newAttribute(uriRef("/otherAttributeUri")));
 
         const predicate = headerPredicateFactory.objMatch(attributeObjRef);
+
+        expect(predicate(attributeDescriptor, context)).toBe(false);
+    });
+});
+
+describe("objRefMatch tests", () => {
+    it("objRefMatch - should match predicate when attribute objRef matches - identifier match scenario", () => {
+        const attributeObjRef = attributeDisplayFormRef(newAttribute("attributeIdentifier"));
+
+        const predicate = headerPredicateFactory.objRefMatch(attributeObjRef);
+
+        expect(predicate(attributeDescriptor, context)).toBe(true);
+    });
+
+    it("objRefMatch - should match predicate when attribute objRef matches - uri match scenario", () => {
+        const attributeObjRef = attributeDisplayFormRef(newAttribute(uriRef("/attributeUri")));
+
+        const predicate = headerPredicateFactory.objRefMatch(attributeObjRef);
+
+        expect(predicate(attributeDescriptor, context)).toBe(true);
+    });
+
+    it("objRefMatch - should match predicate when attribute objRef matches - identifier match negative scenario", () => {
+        const attributeObjRef = attributeDisplayFormRef(newAttribute("otherAttributeIdentifier"));
+
+        const predicate = headerPredicateFactory.objRefMatch(attributeObjRef);
+
+        expect(predicate(attributeDescriptor, context)).toBe(false);
+    });
+
+    it("objRefMatch - should match predicate when attribute objRef matches - uri match negative scenario", () => {
+        const attributeObjRef = attributeDisplayFormRef(newAttribute(uriRef("/otherAttributeUri")));
+
+        const predicate = headerPredicateFactory.objRefMatch(attributeObjRef);
 
         expect(predicate(attributeDescriptor, context)).toBe(false);
     });
