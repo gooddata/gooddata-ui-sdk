@@ -1,12 +1,14 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import React from "react";
+import { IntlShape } from "react-intl";
 import { mount, ReactWrapper } from "enzyme";
 import noop from "lodash/noop";
 
 import { RepeatTypeSelect, IRepeatTypeSelectProps } from "../RepeatTypeSelect";
-import { getDayName, getWeek } from "../../../utils/datetime";
+import { getIntlDayName, getWeek } from "../../../utils/datetime";
 import { REPEAT_TYPES } from "../../../constants";
 import { IntlWrapper } from "../../../../../localization/IntlWrapper";
+import { createInternalIntl } from "../../../../../localization/createInternalIntl";
 
 import {
     getDropdownTitle,
@@ -17,10 +19,11 @@ import {
 } from "./testUtils";
 
 describe("RepeatTypeSelect", () => {
+    const intl: IntlShape = createInternalIntl();
     const now = new Date();
     const titleTypeDaily = "Daily";
-    const titleTypeWeekly = `Weekly on ${getDayName(now)}`;
-    const titleTypeMonthly = `Monthly on the ${TEXT_INDEX[getWeek(now)]} ${getDayName(now)}`;
+    const titleTypeWeekly = `Weekly on ${getIntlDayName(intl, now)}`;
+    const titleTypeMonthly = `Monthly on the ${TEXT_INDEX[getWeek(now)]} ${getIntlDayName(intl, now)}`;
     const titleTypeCustom = "Custom";
 
     function renderComponent(customProps: Partial<IRepeatTypeSelectProps> = {}): ReactWrapper {

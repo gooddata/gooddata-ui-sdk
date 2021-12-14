@@ -1,11 +1,11 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import * as React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { Dropdown, DropdownList, DropdownButton, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
 
 import { IDropdownItem } from "../../interfaces";
 import { DEFAULT_DROPDOWN_ALIGN_POINTS, DEFAULT_DROPDOWN_ZINDEX, REPEAT_TYPES } from "../../constants";
-import { getDayName, getWeek } from "../../utils/datetime";
+import { getWeek, getIntlDayName } from "../../utils/datetime";
 
 const DROPDOWN_WIDTH = 199;
 
@@ -63,7 +63,7 @@ class RenderRepeatTypeSelect extends React.PureComponent<IRepeatTypeSelectProps>
             title: intl.formatMessage(
                 { id: `dialogs.schedule.email.repeats.types.${repeatType}` },
                 {
-                    day: getDayName(startDate),
+                    day: getIntlDayName(intl, startDate),
                     week: getWeek(startDate),
                 },
             ),
