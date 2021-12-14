@@ -1,6 +1,13 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 02 Dec 2021 08:24:11 GMT and should not be manually modified.
+This log was last generated on Tue, 14 Dec 2021 13:31:37 GMT and should not be manually modified.
+
+## 8.7.1
+Tue, 14 Dec 2021 13:31:37 GMT
+
+### Updates
+
+- Fixed bug with dashboardPluginHosts validation
 
 ## 8.7.0
 Thu, 02 Dec 2021 08:24:11 GMT

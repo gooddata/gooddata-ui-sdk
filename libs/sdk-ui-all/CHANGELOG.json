@@ -2,6 +2,18 @@
   "name": "@gooddata/sdk-ui-all",
   "entries": [
     {
+      "version": "8.7.1",
+      "tag": "@gooddata/sdk-ui-all_v8.7.1",
+      "date": "Tue, 14 Dec 2021 13:31:37 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fixed bug with dashboardPluginHosts validation"
+          }
+        ]
+      }
+    },
+    {
       "version": "8.7.0",
       "tag": "@gooddata/sdk-ui-all_v8.7.0",
       "date": "Thu, 02 Dec 2021 08:24:11 GMT",
