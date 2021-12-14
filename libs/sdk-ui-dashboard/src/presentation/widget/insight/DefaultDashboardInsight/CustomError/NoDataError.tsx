@@ -17,14 +17,14 @@ export const NoDataError: React.FC<INoDataErrorProps> = ({ fullContent }) => {
                     <>
                         <div className="info-label-icon-empty" />
                         <Typography tagName="p">
-                            <FormattedMessage id="visualization.empty.headline" />
+                            <FormattedMessage id="visualization.empty.headline" tagName="span" />
                         </Typography>
                     </>
                 ) : (
                     <BubbleHoverTrigger>
                         <div className="info-label-icon-empty" />
                         <Bubble alignPoints={bubbleAlignPoints}>
-                            <FormattedMessage id="visualization.empty.headline" />
+                            <FormattedMessage id="visualization.empty.headline" tagName="span" />
                         </Bubble>
                     </BubbleHoverTrigger>
                 )}

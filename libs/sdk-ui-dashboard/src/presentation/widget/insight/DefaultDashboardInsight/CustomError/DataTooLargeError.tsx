@@ -16,10 +16,10 @@ export const DataTooLargeError: React.FC<IDataTooLargeErrorProps> = ({ fullConte
             {fullContent ? (
                 <div className="info-label-icon gd-icon-rain">
                     <Typography tagName="h2">
-                        <FormattedMessage id="visualization.dataTooLarge.headline" />
+                        <FormattedMessage id="visualization.dataTooLarge.headline" tagName="span" />
                     </Typography>
                     <Typography tagName="p">
-                        <FormattedMessage id="visualization.dataTooLarge.text" />
+                        <FormattedMessage id="visualization.dataTooLarge.text" tagName="span" />
                     </Typography>
                 </div>
             ) : (

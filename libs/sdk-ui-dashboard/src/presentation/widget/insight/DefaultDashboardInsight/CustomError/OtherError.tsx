@@ -16,10 +16,10 @@ export const OtherError: React.FC<IErrorProps> = ({ fullContent }) => {
             {fullContent ? (
                 <div className="info-label-icon gd-icon-warning">
                     <Typography tagName="h2">
-                        <FormattedMessage id="visualization.error.headline" />
+                        <FormattedMessage id="visualization.error.headline" tagName="span" />
                     </Typography>
                     <Typography tagName="p">
-                        <FormattedMessage id="visualization.error.text" />
+                        <FormattedMessage id="visualization.error.text" tagName="span" />
                     </Typography>
                 </div>
             ) : (
