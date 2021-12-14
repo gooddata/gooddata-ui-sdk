@@ -743,9 +743,14 @@
         "comment": "Share indicator text when dashboard is private",
         "limit": 0
     },
-    "header.shareStatus.private.tooltip": {
+    "header.shareStatus.private.strict.tooltip": {
         "value": "Only you can view and edit this dashboard.",
-        "comment": "Shown when hovering over share indicator of private dashboard.",
+        "comment": "Shown when hovering over share indicator of private dashboard and strict access.",
+        "limit": 0
+    },
+    "header.shareStatus.private.not.strict.tooltip": {
+        "value": "The creator can edit this dashboard. Other users with appropriate user roles can edit this dashboard when they drill to it.",
+        "comment": "Shown when hovering over share indicator of private dashboard and not strict access.",
         "limit": 0
     },
     "dashboard.shareDialog.removeAccessGranteeTooltip": {

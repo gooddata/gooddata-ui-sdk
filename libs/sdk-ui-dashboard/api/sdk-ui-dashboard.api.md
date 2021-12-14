@@ -2904,6 +2904,8 @@ export interface IShareProps {
 // @alpha (undocumented)
 export interface IShareStatusProps {
     // (undocumented)
+    isUnderStrictControl: boolean;
+    // (undocumented)
     shareStatus: ShareStatus;
 }
 

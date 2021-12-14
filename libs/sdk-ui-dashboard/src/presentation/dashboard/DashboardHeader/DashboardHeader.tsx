@@ -24,6 +24,7 @@ import {
     selectIsReadOnly,
     selectIsSaveAsDialogOpen,
     selectIsScheduleEmailDialogOpen,
+    selectPersistedDashboard,
     uiActions,
     useDashboardCommandProcessing,
     useDashboardDispatch,
@@ -116,6 +117,7 @@ export const DashboardHeader = (): JSX.Element => {
     const isSaveAsDialogOpen = useDashboardSelector(selectIsSaveAsDialogOpen);
     const openSaveAsDialog = () => dispatch(uiActions.openSaveAsDialog());
     const closeSaveAsDialog = () => dispatch(uiActions.closeSaveAsDialog());
+    const persistedDashboard = useDashboardSelector(selectPersistedDashboard);
 
     const lastExportMessageId = useRef("");
     const { run: exportDashboard } = useDashboardCommandProcessing({
@@ -277,6 +279,7 @@ export const DashboardHeader = (): JSX.Element => {
                 }}
                 shareStatusProps={{
                     shareStatus: shareInfo.shareStatus,
+                    isUnderStrictControl: !!persistedDashboard?.isUnderStrictControl,
                 }}
                 lockedStatusProps={{
                     isLocked: !!shareInfo.isLocked,
