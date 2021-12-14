@@ -3,7 +3,7 @@
 import React from "react";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
 import { modifyAttribute, newAttributeSort } from "@gooddata/sdk-model";
-import { Md } from "../../md";
+import * as Md from "../../md/full";
 
 const LocationCity = modifyAttribute(Md.LocationCity, (a) => a.localId("locationCity"));
 

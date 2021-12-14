@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { BarChart, IChartConfig } from "@gooddata/sdk-ui-charts";
 import { modifyMeasure } from "@gooddata/sdk-model";
-import { Md } from "../../../md";
+import * as Md from "../../../md/full";
 import { CUSTOM_COLOR_PALETTE } from "../../../constants/colors";
 
 interface IBarChartDynamicExampleState {

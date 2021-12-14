@@ -3,7 +3,7 @@
 import React, { Component } from "react";
 import { Headline } from "@gooddata/sdk-ui-charts";
 import { modifyMeasure, newPreviousPeriodMeasure, newRelativeDateFilter } from "@gooddata/sdk-model";
-import { Md } from "../../md";
+import * as Md from "../../md/full";
 import { OnLoadingChanged, OnError } from "@gooddata/sdk-ui";
 
 const TotalSales = modifyMeasure(Md.$TotalSales, (m) =>

@@ -4,7 +4,7 @@ import { ColumnChart } from "@gooddata/sdk-ui-charts";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import { ErrorComponent } from "@gooddata/sdk-ui";
-import { Md } from "../../../md";
+import * as Md from "../../../md/full";
 import { modifyAttribute, modifyMeasure, newAbsoluteDateFilter } from "@gooddata/sdk-model";
 
 const TotalSales = modifyMeasure(Md.$TotalSales, (m) => m.format("#,##0").alias("$ Total Sales"));

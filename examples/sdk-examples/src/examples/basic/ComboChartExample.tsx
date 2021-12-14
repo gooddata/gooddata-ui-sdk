@@ -2,7 +2,7 @@
 import React from "react";
 import { ComboChart } from "@gooddata/sdk-ui-charts";
 import { modifyMeasure } from "@gooddata/sdk-model";
-import { Md } from "../../md";
+import * as Md from "../../md/full";
 
 const FranchiseFeesInitialFranchiseFee = modifyMeasure(Md.$FranchiseFeesInitialFranchiseFee, (m) =>
     m.format("#,##0").localId("franchiseFeesInitialFranchiseFee"),

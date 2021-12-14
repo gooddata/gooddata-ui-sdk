@@ -9,7 +9,7 @@ import {
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
 import { modifyMeasure } from "@gooddata/sdk-model";
 
-import { Md } from "../../../md";
+import * as Md from "../../../md/full";
 import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
 
 const TotalSales = modifyMeasure(Md.$TotalSales, (m) => m.format("#,##0").alias("$ Total Sales"));

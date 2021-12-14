@@ -5,7 +5,7 @@ import { modifyMeasure, newRelativeDateFilter } from "@gooddata/sdk-model";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import { ErrorComponent } from "@gooddata/sdk-ui";
-import { Md } from "../../../md";
+import * as Md from "../../../md/full";
 import { IDatePickerState } from "./DatePickerExample";
 
 const TotalSales = modifyMeasure(Md.$TotalSales, (m) => m.format("#,##0").alias("$ Total Sales"));

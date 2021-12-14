@@ -11,7 +11,7 @@ import {
     modifyMeasure,
     newNegativeAttributeFilter,
 } from "@gooddata/sdk-model";
-import { Md } from "../../md";
+import * as Md from "../../md/full";
 import { AttributeFilterButton } from "@gooddata/sdk-ui-filters";
 
 const TotalSales = modifyMeasure(Md.$TotalSales, (m) =>

@@ -12,7 +12,7 @@ import {
     modifyAttribute,
     modifyMeasure,
 } from "@gooddata/sdk-model";
-import { Md } from "../../md";
+import * as Md from "../../md/full";
 import { workspace } from "../../constants/fixtures";
 
 const LocationState = modifyAttribute(Md.LocationState, (a) => a.localId("locationState"));

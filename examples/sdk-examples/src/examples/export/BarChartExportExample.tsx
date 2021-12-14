@@ -4,7 +4,7 @@ import { BarChart } from "@gooddata/sdk-ui-charts";
 import { modifyMeasure, newAbsoluteDateFilter } from "@gooddata/sdk-model";
 
 import { ExampleWithExport } from "./ExampleWithExport";
-import { Md } from "../../md";
+import * as Md from "../../md/full";
 
 const TotalSales = modifyMeasure(Md.$TotalSales, (m) => m.format("#,##0").alias("$ Total Sales"));
 

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { HeaderPredicates, IDrillEvent } from "@gooddata/sdk-ui";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { measureIdentifier, measureLocalId, modifyMeasure, newArithmeticMeasure } from "@gooddata/sdk-model";
-import { Md } from "../../md";
+import * as Md from "../../md/full";
 
 const NrRestaurants = modifyMeasure(Md.NrRestaurants, (m) =>
     m.format("#,##0").localId("numberOfRestaurants"),

@@ -11,7 +11,7 @@ import {
     modifyAttribute,
 } from "@gooddata/sdk-model";
 import { workspace } from "../../constants/fixtures";
-import { Md } from "../../md";
+import * as Md from "../../md/full";
 import { EmployeeProfile } from "./EmployeeProfile";
 
 const AvgDailyTotalSales = modifyMeasure(Md.$AvgDailyTotalSales, (m) =>

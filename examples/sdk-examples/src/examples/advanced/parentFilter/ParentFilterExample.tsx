@@ -10,7 +10,7 @@ import {
     modifyMeasure,
 } from "@gooddata/sdk-model";
 import Select from "react-select";
-import { Md } from "../../../md";
+import * as Md from "../../../md/full";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 
 const locationIdAttributeIdentifier = "attr.restaurantlocation.locationid";

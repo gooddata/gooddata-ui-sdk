@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { AttributeFilter } from "@gooddata/sdk-ui-filters";
 import { idRef, newPositiveAttributeFilter, newNegativeAttributeFilter, uriRef } from "@gooddata/sdk-model";
-import { Md } from "../../md";
+import * as Md from "../../md/full";
 import { workspace } from "../../constants/fixtures";
 
 const EmployeeNameIdentifier = "label.employee.employeename";

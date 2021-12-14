@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { PieChart } from "@gooddata/sdk-ui-charts";
 import { modifyMeasure } from "@gooddata/sdk-model";
-import { Md } from "../../../md";
+import * as Md from "../../../md/full";
 
 const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) =>
     m.format("#,##0").localId("franchiseFeesAdRoyalty"),

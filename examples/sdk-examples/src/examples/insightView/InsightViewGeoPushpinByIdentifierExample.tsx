@@ -3,7 +3,7 @@ import React from "react";
 
 import { InsightView } from "@gooddata/sdk-ui-ext";
 
-import { Md } from "../../md";
+import * as Md from "../../md/full";
 import { MAPBOX_TOKEN } from "../../constants/fixtures";
 
 export const InsightViewGeoPushpinByIdentifierExample: React.FC = () => {

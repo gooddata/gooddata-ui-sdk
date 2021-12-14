@@ -1,7 +1,7 @@
 // (C) 2007-2021 GoodData Corporation
 import React from "react";
 import { PieChart, IChartConfig } from "@gooddata/sdk-ui-charts";
-import { Md } from "../../../md";
+import * as Md from "../../../md/full";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { measureLocalId, modifyMeasure } from "@gooddata/sdk-model";
 

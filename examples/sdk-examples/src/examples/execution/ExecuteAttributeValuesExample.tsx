@@ -5,7 +5,7 @@ import toPairs from "lodash/toPairs";
 import groupBy from "lodash/groupBy";
 
 import { workspace } from "../../constants/fixtures";
-import { Md } from "../../md";
+import * as Md from "../../md/full";
 import { useBackend } from "../../context/auth";
 
 const getAttributeHeaderItemName = (x: any) => x.attributeHeaderItem.name;

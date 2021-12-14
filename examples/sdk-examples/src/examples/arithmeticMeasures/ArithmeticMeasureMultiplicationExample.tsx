@@ -2,7 +2,7 @@
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { modifyMeasure, newArithmeticMeasure, newMeasure } from "@gooddata/sdk-model";
-import { Md } from "../../md";
+import * as Md from "../../md/full";
 
 const averageRestaurantDailyCostsIdentifier = "aaQJzQzoeKwZ";
 const NrRestaurants = modifyMeasure(Md.NrRestaurants, (m) =>
