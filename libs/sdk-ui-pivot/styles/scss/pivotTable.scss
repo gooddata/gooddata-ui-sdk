@@ -53,10 +53,12 @@ $subtotal-odd-background-color: var(
 
     // TODO really calculate disabled-foreground-color and chip-background-color, now here only because of foreground-color being a CSS variable
     // TODO really calculate modal-overlay-background-color, now here only because of background-color being a CSS variable
+    // we must use the borders-critical: true with border-color: transparent so that the positioning of headers is the same as in ag-grid 22
     .ag-theme-balham {
         @include ag-theme-balham(
             (
                 borders: false,
+                borders-critical: true,
                 border-color: transparent,
                 foreground-color: $custom-foreground-color,
                 disabled-foreground-color: null,
