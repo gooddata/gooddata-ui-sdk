@@ -11,6 +11,7 @@
     "license": "MIT",
     "main": "dist/gooddata-node.js",
     "module": "esm/gooddata-browser.js",
+    "es2015": "esm/gooddata-browser.js",
     "browser": "dist/gooddata-browser.js",
     "typings": "esm/gooddata-browser.d.ts",
     "sideEffects": false,

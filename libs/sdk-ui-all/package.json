@@ -11,6 +11,7 @@
     "license": "LicenseRef-LICENSE",
     "main": "dist/index.js",
     "module": "esm/index.js",
+    "es2015": "esm/index.js",
     "browser": "dist/index.js",
     "typings": "esm/index.d.ts",
     "sideEffects": false,
