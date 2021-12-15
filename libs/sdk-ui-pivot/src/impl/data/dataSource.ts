@@ -102,6 +102,15 @@ export class AgGridDatasource implements IDatasource {
         this.config.onPageLoaded(dv);
         successCallback(rowData, lastRow);
 
+        /**
+         * In version 25 ag-grid has much better logic that detects which cells need to be refreshed.
+         * Unfortunately, this breaks row grouping because cells outside of the currently loaded page are not redrawn.
+         * This is a problem, because the newly loaded page might change the grouping status of cells outside of the loaded page.
+         * So we force a cell refresh to redraw all the cells with the up-to-date grouping CSS classes.
+         * This basically reverts the improved logic in the new ag-grid and behaves very closely to ag-grid 22.
+         */
+        this.gridApiProvider()?.refreshCells({ force: true, suppressFlash: true });
+
         // set totals
         if (areTotalsChanged(this.gridApiProvider(), rowTotals)) {
             this.gridApiProvider()?.setPinnedBottomRowData(rowTotals);
