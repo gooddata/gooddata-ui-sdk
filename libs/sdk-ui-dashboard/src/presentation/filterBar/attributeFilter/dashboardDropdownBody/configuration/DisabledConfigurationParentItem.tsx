@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
 import { ArrowOffsets, Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
-import { FormattedHTMLMessage } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import { stringUtils } from "@gooddata/util/dist";
 import cx from "classnames";
 
@@ -45,9 +45,10 @@ export const DisabledConfigurationParentItem: React.FC<IDisabledConfigurationPar
             >
                 {hasConnectingAttributes ? (
                     <div>
-                        <FormattedHTMLMessage
+                        <FormattedMessage
                             id="attributesDropdown.filterConfiguredMessage"
                             values={{
+                                strong: (chunks: string) => <strong>{chunks}</strong>,
                                 childTitle: attributeFilterTitle,
                                 parentTitle: itemTitle,
                             }}
@@ -55,9 +56,10 @@ export const DisabledConfigurationParentItem: React.FC<IDisabledConfigurationPar
                     </div>
                 ) : (
                     <div>
-                        <FormattedHTMLMessage
+                        <FormattedMessage
                             id="attributesDropdown.noConnectionMessage"
                             values={{
+                                strong: (chunks: string) => <strong>{chunks}</strong>,
                                 childTitle: attributeFilterTitle,
                                 parentTitle: itemTitle,
                             }}
