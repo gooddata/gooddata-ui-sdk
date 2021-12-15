@@ -3,6 +3,8 @@ import isDate from "lodash/isDate";
 import format from "date-fns/format";
 
 import { PLATFORM_DATE_FORMAT } from "../constants";
+import { IntlShape } from "react-intl";
+import capitalize from "lodash/capitalize";
 
 export function convertDateToPlatformDateString(date: Date): string;
 export function convertDateToPlatformDateString(date: Date | undefined | null): string | undefined | null {
@@ -31,6 +33,10 @@ export function getDate(date: Date): number {
 
 export function getDayName(date: Date): string {
     return format(date, "eeee");
+}
+
+export function getIntlDayName(intl: IntlShape, startDate: Date): string {
+    return capitalize(intl.formatDate(startDate, { weekday: "long" }));
 }
 
 export function convertSun2MonWeekday(dayIndex: number): number {
