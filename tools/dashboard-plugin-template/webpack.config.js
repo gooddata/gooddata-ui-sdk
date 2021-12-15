@@ -208,9 +208,6 @@ module.exports = (_env, argv) => {
                             requiredVersion: deps["react-dom"],
                         },
                         // add all the packages that absolutely need to be shared and singletons because of contexts
-                        "react-intl": {
-                            singleton: true,
-                        },
                         ...gooddataSharePackagesEntries,
                     },
                 }),
