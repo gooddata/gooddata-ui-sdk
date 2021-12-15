@@ -391,6 +391,26 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
     }
 }
 
+.gd-mobile-dropdown-content {
+    .gd-attribute-filter-overlay {
+        max-width: none;
+    }
+
+    .gd-attribute-filter-actions {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: flex;
+        align-items: stretch;
+
+        .gd-button {
+            text-align: center;
+            flex: 1;
+        }
+    }
+}
+
 /* hide IE10+ eraser */
 ::-ms-clear {
     display: none;

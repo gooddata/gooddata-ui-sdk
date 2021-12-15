@@ -1,5 +1,5 @@
-// (C) 2019 GoodData Corporation
-import React, { useCallback } from "react";
+// (C) 2019-2021 GoodData Corporation
+import React, { useCallback, useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 import { IAttributeElement } from "@gooddata/sdk-backend-spi";
 import { LegacyInvertableList, LoadingMask } from "@gooddata/sdk-ui-kit";
@@ -8,6 +8,7 @@ import { AttributeFilterItem } from "./AttributeFilterItem";
 import { AttributeListItem, isNonEmptyListItem } from "./types";
 
 const ITEM_HEIGHT = 28;
+const MOBILE_LIST_ITEM_HEIGHT = 40;
 export const MAX_SELECTION_SIZE = 500;
 const VISIBLE_ITEMS_COUNT = 10;
 
@@ -32,6 +33,7 @@ interface IAttributeDropdownListProps {
 
     onSelect: (selectedItems: IAttributeElement[], isInverted: boolean) => void;
     onRangeChange: (searchString: string, from: number, to: number) => void;
+    isMobile?: boolean;
 }
 
 export const AttributeDropdownList: React.FC<IAttributeDropdownListProps> = ({
@@ -45,6 +47,7 @@ export const AttributeDropdownList: React.FC<IAttributeDropdownListProps> = ({
     onSelect,
     onSearch,
     searchString,
+    isMobile,
 }) => {
     if (error) {
         return <ListError />;
@@ -54,6 +57,8 @@ export const AttributeDropdownList: React.FC<IAttributeDropdownListProps> = ({
         const isSelectionByUri = !!selectedItems[0]?.uri;
         return isNonEmptyListItem(i) ? (isSelectionByUri ? i.uri : i.title) : "empty";
     }, []);
+
+    const itemHeight = useMemo(() => (isMobile ? MOBILE_LIST_ITEM_HEIGHT : ITEM_HEIGHT), [isMobile]);
 
     return (
         <LegacyInvertableList
@@ -70,8 +75,8 @@ export const AttributeDropdownList: React.FC<IAttributeDropdownListProps> = ({
             searchString={searchString}
             rowItem={<AttributeFilterItem />}
             maxSelectionSize={MAX_SELECTION_SIZE}
-            itemHeight={ITEM_HEIGHT}
-            height={ITEM_HEIGHT * VISIBLE_ITEMS_COUNT}
+            itemHeight={itemHeight}
+            height={itemHeight * VISIBLE_ITEMS_COUNT}
             onRangeChange={onRangeChange}
             onSelect={onSelect}
             getItemKey={getItemKey}
