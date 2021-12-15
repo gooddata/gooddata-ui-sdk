@@ -812,7 +812,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         ) : hasNoData ? (
             <NoData noDataLabel={props.intl.formatMessage({ id: "attributesDropdown.noData" })} />
         ) : (
-            <AttributeDropdownBody {...bodyProps} />
+            <AttributeDropdownBody {...bodyProps} isMobile={bodyProps.isFullWidth} />
         );
     }
 

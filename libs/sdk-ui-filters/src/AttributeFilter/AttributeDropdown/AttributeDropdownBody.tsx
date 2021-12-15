@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import React from "react";
 
 import { AttributeDropdownList } from "./AttributeDropdownList";
@@ -79,6 +79,7 @@ export const AttributeDropdownBody: React.FC<IAttributeDropdownBodyExtendedProps
     onCloseButtonClicked,
     parentFilterTitles,
     showItemsFilteredMessage,
+    isMobile,
 }) => {
     return (
         <div className="gd-attribute-filter-overlay">
@@ -93,6 +94,7 @@ export const AttributeDropdownBody: React.FC<IAttributeDropdownBodyExtendedProps
                 onSearch={onSearch}
                 searchString={searchString}
                 onSelect={onSelect}
+                isMobile={isMobile}
             />
             <AttributeDropdownItemsFilteredBody
                 parentFilterTitles={parentFilterTitles}
