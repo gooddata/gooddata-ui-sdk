@@ -1,5 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 import { IAttributeElement } from "@gooddata/sdk-backend-spi";
 import { LegacyInvertableList, LoadingMask } from "@gooddata/sdk-ui-kit";
@@ -58,7 +58,7 @@ export const AttributeDropdownList: React.FC<IAttributeDropdownListProps> = ({
         return isNonEmptyListItem(i) ? (isSelectionByUri ? i.uri : i.title) : "empty";
     }, []);
 
-    const itemHeight = useMemo(() => (isMobile ? MOBILE_LIST_ITEM_HEIGHT : ITEM_HEIGHT), [isMobile]);
+    const itemHeight = isMobile ? MOBILE_LIST_ITEM_HEIGHT : ITEM_HEIGHT;
 
     return (
         <LegacyInvertableList
