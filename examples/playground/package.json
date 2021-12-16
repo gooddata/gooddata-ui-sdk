@@ -91,7 +91,8 @@
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
         "ts-invariant": "^0.7.3",
-        "tslib": "^2.0.0"
+        "tslib": "^2.0.0",
+        "@reduxjs/toolkit": "^1.5.1"
     },
     "config": {
         "eslint": "-c .eslintrc.js --ext ts,tsx src/"

@@ -208,7 +208,7 @@
     },
     {
       "name": "@reduxjs/toolkit",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@storybook/addon-actions",
