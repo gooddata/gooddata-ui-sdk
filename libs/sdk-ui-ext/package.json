@@ -29,7 +29,8 @@
         "esm/**/*.d.ts",
         "esm/**/*.map",
         "esm/**/*.svg",
-        "styles"
+        "styles",
+        "NOTICE"
     ],
     "config": {
         "eslint": "-c .eslintrc.js --ext ts,tsx src/"

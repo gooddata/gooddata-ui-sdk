@@ -24,7 +24,8 @@
         "esm/**/*.json",
         "esm/**/*.d.ts",
         "esm/**/*.map",
-        "styles"
+        "styles",
+        "NOTICE"
     ],
     "config": {
         "eslint": "-c .eslintrc.js --ext ts src/"
