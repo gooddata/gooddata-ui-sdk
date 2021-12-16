@@ -1005,6 +1005,7 @@ export interface IUser {
     fullName?: string;
     lastName?: string;
     login: string;
+    organizationName?: string;
     ref: ObjRef;
 }
 

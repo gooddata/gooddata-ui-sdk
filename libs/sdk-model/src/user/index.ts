@@ -40,6 +40,11 @@ export interface IUser {
      * Last name - when backend implementations supports it.
      */
     lastName?: string;
+
+    /**
+     * Organization name - when backend implementations supports it.
+     */
+    organizationName?: string;
 }
 
 /**

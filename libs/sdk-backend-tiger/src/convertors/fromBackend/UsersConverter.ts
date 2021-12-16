@@ -1,10 +1,10 @@
 // (C) 2019-2021 GoodData Corporation
-import { IUser } from "@gooddata/sdk-backend-spi";
-import { uriRef } from "@gooddata/sdk-model";
+import { IUser, uriRef } from "@gooddata/sdk-model";
 
 export interface IUserProfile {
     name: string;
     userId: string;
+    organizationName: string;
     links: {
         user: string;
         organization: string;
@@ -16,11 +16,12 @@ export interface IUserProfile {
  * as a container for full name and lastname will be an empty string
  */
 export const convertUser = (user: IUserProfile): IUser => {
-    const { name, userId, links } = user;
+    const { name, userId, links, organizationName } = user;
 
     return {
         ref: uriRef(links!.user!),
         login: userId!,
         fullName: name,
+        organizationName: organizationName,
     };
 };
