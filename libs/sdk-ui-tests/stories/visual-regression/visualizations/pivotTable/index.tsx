@@ -61,7 +61,7 @@ const PivotTableTest = (config: Partial<IPivotTableProps> = {}) => (
 storiesOf(`${CustomStories}/Pivot Table`, module).add("table with resizing", () =>
     withScreenshot(
         <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
-            <PivotTableTest />,
+            <PivotTableTest />
         </ScreenshotReadyWrapper>,
     ),
 );
@@ -70,7 +70,7 @@ storiesOf(`${CustomStories}/Pivot Table`, module).add("themed", () =>
     withScreenshot(
         wrapWithTheme(
             <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
-                <PivotTableTest />,
+                <PivotTableTest />
             </ScreenshotReadyWrapper>,
         ),
         {
@@ -84,7 +84,7 @@ storiesOf(`${CustomStories}/Pivot Table`, module).add("themed", () =>
 storiesOf(`${CustomStories}/Pivot Table`, module).add("drill underline style", () =>
     withMultipleScreenshots(
         <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
-            <PivotTableTest drillableItems={[AmountMeasurePredicate]} />,
+            <PivotTableTest drillableItems={[AmountMeasurePredicate]} />
         </ScreenshotReadyWrapper>,
         {
             "standard cell": {
@@ -102,7 +102,7 @@ storiesOf(`${CustomStories}/Pivot Table`, module).add("drill underline style", (
 storiesOf(`${CustomStories}/Pivot Table`, module).add("auto-resizing of all columns", () =>
     withMultipleScreenshots(
         <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
-            <PivotTableTest />,
+            <PivotTableTest />
         </ScreenshotReadyWrapper>,
         {
             "initial viewport": {},
@@ -125,7 +125,6 @@ storiesOf(`${CustomStories}/Pivot Table`, module).add("auto-resizing of visible 
                     },
                 }}
             />
-            ,
         </ScreenshotReadyWrapper>,
         {
             "initial viewport": {},
@@ -167,7 +166,6 @@ storiesOf(`${CustomStories}/Pivot Table`, module).add(
                         },
                     }}
                 />
-                ,
             </ScreenshotReadyWrapper>,
             {
                 "initial viewport": {},

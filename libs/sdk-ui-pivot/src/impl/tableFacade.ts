@@ -310,6 +310,7 @@ export class TableFacade {
         invariant(this.columnApi);
 
         const columns = this.columnApi.getAllColumns();
+        invariant(columns);
         this.resetColumnsWidthToDefault(resizingConfig, columns);
         this.clearFittedColumns();
 
@@ -320,7 +321,7 @@ export class TableFacade {
             const columnIds = agColIds(columns);
 
             setColumnMaxWidth(this.columnApi, columnIds, undefined);
-            gridApi.sizeColumnsToFit();
+            this.sizeColumnsToFitWithoutColumnReset(resizingConfig);
             setColumnMaxWidthIf(
                 this.columnApi,
                 columnIds,
@@ -339,6 +340,7 @@ export class TableFacade {
         invariant(this.columnApi);
 
         const columns = this.columnApi.getAllColumns();
+        invariant(columns);
 
         columns.forEach((col) => {
             const id = agColId(col);
@@ -372,6 +374,7 @@ export class TableFacade {
             this.growToFit(resizingConfig); // calls resetColumnsWidthToDefault internally too
         } else {
             const columns = this.columnApi.getAllColumns();
+            invariant(columns);
             this.resetColumnsWidthToDefault(resizingConfig, columns);
         }
     };
@@ -407,6 +410,7 @@ export class TableFacade {
                 this.shouldPerformAutoresize()
             ) {
                 const columns = this.columnApi!.getAllColumns();
+                invariant(columns);
                 this.resetColumnsWidthToDefault(resizingConfig, columns);
             }
             this.resizing = false;
@@ -587,7 +591,9 @@ export class TableFacade {
 
     private getAllMeasureColumns = () => {
         invariant(this.columnApi);
-        return this.columnApi.getAllColumns().filter((col) => isMeasureColumn(col));
+        const columns = this.columnApi.getAllColumns();
+        invariant(columns);
+        return columns.filter((col) => isMeasureColumn(col));
     };
 
     private isAllMeasureResizeOperation(resizingConfig: ColumnResizingConfig, columns: Column[]): boolean {
@@ -596,6 +602,91 @@ export class TableFacade {
 
     private isWeakMeasureResizeOperation(resizingConfig: ColumnResizingConfig, columns: Column[]): boolean {
         return resizingConfig.isAltKeyPressed && columns.length === 1 && isMeasureColumn(columns[0]);
+    }
+
+    /**
+     * Do what ag-grid used to do in sizeColumnsToFit in version 22.
+     *
+     * In ag-grid 25 the sizeColumnsToFit unfortunately calls resetWidth on all columns at the start, which in effect
+     * resets all of our autosizing values and makes the growToFit unusable with defaultWidth: "autoresizeAll".
+     * There is no parameter or other way to opt-out of this newly added reset.
+     *
+     * So we use the same logic as ag-grid 22 did in order to make both growToFit and autoresizeAll work together.
+     * Ideally, this would not be needed and we should devise some other way of working around the fact
+     * that ag-grid 25 resets column widths here.
+     *
+     * The comments in code are original from the ag-grid 22 code base.
+     */
+    private sizeColumnsToFitWithoutColumnReset(resizingConfig: ColumnResizingConfig): void {
+        invariant(this.columnApi);
+        const source = "sizeColumnsToFit";
+        const gridWidth = resizingConfig.clientWidth;
+        // avoid divide by zero
+        const allDisplayedColumns = this.columnApi?.getAllDisplayedColumns();
+        if (gridWidth <= 0 || !allDisplayedColumns.length) {
+            return;
+        }
+
+        let colsToSpread: Column[] = [];
+        const colsToNotSpread: Column[] = [];
+        allDisplayedColumns.forEach(function (column) {
+            if (column.getColDef().suppressSizeToFit === true) {
+                colsToNotSpread.push(column);
+            } else {
+                colsToSpread.push(column);
+            }
+        });
+
+        let finishedResizing = false;
+        function moveToNotSpread(column: Column) {
+            colsToSpread = colsToSpread.filter((col) => col != column);
+            colsToNotSpread.push(column);
+        }
+
+        while (!finishedResizing) {
+            finishedResizing = true;
+            const availablePixels = gridWidth - this.getWidthOfColsInList(colsToNotSpread);
+            if (availablePixels <= 0) {
+                // no width, set everything to minimum
+                colsToSpread.forEach(function (column) {
+                    column.setMinimum(source);
+                });
+            } else {
+                const scale = availablePixels / this.getWidthOfColsInList(colsToSpread);
+                // we set the pixels for the last col based on what's left, as otherwise
+                // we could be a pixel or two short or extra because of rounding errors.
+                let pixelsForLastCol = availablePixels;
+                // backwards through loop, as we are removing items as we go
+                for (let i = colsToSpread.length - 1; i >= 0; i--) {
+                    const column = colsToSpread[i];
+                    const newWidth = Math.round(column.getActualWidth() * scale);
+                    if (newWidth < column.getMinWidth()!) {
+                        column.setMinimum(source);
+                        moveToNotSpread(column);
+                        finishedResizing = false;
+                    } else if (column.isGreaterThanMax(newWidth)) {
+                        column.setActualWidth(column.getMaxWidth()!, source);
+                        moveToNotSpread(column);
+                        finishedResizing = false;
+                    } else {
+                        const onLastCol = i === 0;
+                        if (onLastCol) {
+                            column.setActualWidth(pixelsForLastCol, source);
+                        } else {
+                            column.setActualWidth(newWidth, source);
+                        }
+                    }
+                    pixelsForLastCol -= newWidth;
+                }
+            }
+        }
+        // DANGER: using ag-grid internals
+        (this.columnApi as any).columnController.setLeftValues(source);
+        (this.columnApi as any).columnController.updateBodyWidths();
+    }
+
+    private getWidthOfColsInList(columnList: Column[]) {
+        return columnList.reduce((width, col) => width + col.getActualWidth(), 0);
     }
 
     public onColumnsManualResized = (resizingConfig: ColumnResizingConfig, columns: Column[]): void => {
@@ -794,10 +885,11 @@ export class TableFacade {
         return this.resizing;
     };
 
-    public setTooltipFields = () => {
+    public setTooltipFields = (): void => {
         invariant(this.columnApi);
 
         const columns = this.columnApi.getAllColumns();
+        invariant(columns);
         columns.forEach((col) => {
             const colDef = col.getColDef();
             colDef.tooltipField = colDef.field;

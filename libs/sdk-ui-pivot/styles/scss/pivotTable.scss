@@ -3,34 +3,18 @@
 @import "~@gooddata/sdk-ui-kit/styles/scss/Button/_variables";
 @import "~@gooddata/sdk-ui-kit/styles/scss/mixins";
 
-$ag-icons-path: "~@ag-grid-community/all-modules/dist/styles/ag-theme-balham/icons/";
-
 $custom-foreground-color: var(--gd-table-valueColor, var(--gd-palette-complementary-8, $gd-color-text));
 $custom-secondary-foreground-color: var(
     --gd-table-valueColor,
     var(--gd-palette-complementary-8, $gd-color-text)
 );
 
-$border-color: transparent;
-$font-size: 12px;
-$font-family: $gd-font-primary;
-$foreground-color: $custom-foreground-color;
 $default-background: $default-gd-color-white;
 $custom-background-color: var(
     --gd-table-backgroundColor,
     var(--gd-palette-complementary-0, $default-background)
 );
-$header-background-color: $default-gd-color-white;
-$odd-row-background-color: transparent;
-$primary-color: transparent;
-$secondary-foreground-color: $custom-secondary-foreground-color;
-$secondary-font-weight: normal;
-$hover-color: var(
-    --gd-table-hoverBackgroundColor,
-    var(--gd-palette-complementary-1, transparentize($default-gd-color-label, 0.9))
-);
 
-$cell-horizontal-border: none;
 $cell-border: 1px dashed transparent;
 $cell-border-color: var(
     --gd-table-gridColor,
@@ -62,26 +46,62 @@ $subtotal-odd-background-color: var(
     var(--gd-palette-complementary-1, #f7f8f9)
 );
 
+@import "~@ag-grid-community/all-modules/dist/styles/ag-theme-balham/sass/ag-theme-balham-mixin";
+
 .gd-table-component {
     @import "~@ag-grid-community/all-modules/dist/styles/ag-grid";
-    @import "~@ag-grid-community/all-modules/dist/styles/ag-theme-balham/sass/ag-theme-balham";
 
+    // TODO really calculate disabled-foreground-color and chip-background-color, now here only because of foreground-color being a CSS variable
+    // TODO really calculate modal-overlay-background-color, now here only because of background-color being a CSS variable
+    // we must use the borders-critical: true with border-color: transparent so that the positioning of headers is the same as in ag-grid 22
     .ag-theme-balham {
-        font-family: gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
-    }
+        @include ag-theme-balham(
+            (
+                borders: false,
+                borders-critical: true,
+                border-color: transparent,
+                foreground-color: $custom-foreground-color,
+                disabled-foreground-color: null,
+                chip-background-color: null,
+                font-size: 12px,
+                font-family: $gd-font-primary,
+                background-color: $custom-background-color,
+                modal-overlay-background-color: $custom-background-color,
+                odd-row-background-color: transparent,
+                secondary-foreground-color: $custom-secondary-foreground-color,
+                row-hover-color:
+                    var(
+                        --gd-table-hoverBackgroundColor,
+                        var(--gd-palette-complementary-1, transparentize($default-gd-color-label, 0.9))
+                    ),
+                cell-horizontal-border: none,
+                header-background-color: $custom-background-color,
+                header-foreground-color: $header-label-color,
+                header-cell-hover-background-color: $header-hover-background-color,
+                suppress-css-var-overrides: true,
+            )
+        );
 
-    .ag-theme-balham .ag-header {
-        font-family: gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
+        .ag-filter-toolpanel-header,
+        .ag-filter-toolpanel-search,
+        .ag-status-bar,
+        .ag-header-row {
+            font-weight: normal;
+        }
+
+        .ag-numeric-cell {
+            text-align: right;
+        }
+
+        .ag-header-group-cell.ag-header-group-cell-no-group:not(.ag-header-cell-moving):hover,
+        .ag-header-group-cell:not(.ag-column-resizing)
+            + .ag-header-group-cell.ag-header-group-cell-no-group:not(.ag-header-cell-moving):hover {
+            // prevent empty header cells from being highlighted on hover
+            background-color: $custom-background-color;
+        }
     }
 
     .gd-table {
-        // TODO remove once css variables can modify theme
-        background-color: $custom-background-color;
-        // TODO remove once css variables can modify theme
-        .ag-row-even {
-            background-color: $custom-background-color;
-        }
-
         .ag-root-wrapper {
             text-align: left;
         }
@@ -111,8 +131,6 @@ $subtotal-odd-background-color: var(
 
         .ag-header {
             border-bottom: none;
-            // stylelint-disable-next-line declaration-no-important
-            background-color: $custom-background-color !important; // TODO remove once css variables can modify theme
         }
 
         .ag-cell {
@@ -202,6 +220,7 @@ $subtotal-odd-background-color: var(
                 display: block;
                 width: $header-cell-resize-width / 2;
                 margin-right: $header-cell-resize-width / 2;
+                margin-top: 8px;
                 border-right: 1px solid $gd-palette-primary-base;
                 text-indent: $header-cell-resize-width / 2;
                 height: 16px;

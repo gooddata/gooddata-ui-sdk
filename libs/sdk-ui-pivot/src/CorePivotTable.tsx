@@ -644,7 +644,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             return;
         }
 
-        const sortItems = this.internal.table.createSortItems(event.columnApi.getAllColumns());
+        const sortItems = this.internal.table.createSortItems(event.columnApi.getAllColumns()!);
 
         // eslint-disable-next-line no-console
         console.debug("onSortChanged", sortItems);

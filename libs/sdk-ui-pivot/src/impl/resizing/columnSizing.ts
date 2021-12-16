@@ -60,6 +60,9 @@ export const AUTO_SIZED_MAX_WIDTH = 500;
 export const SORT_ICON_WIDTH = 12;
 const COLUMN_RESIZE_CHUNK_SIZE = 50;
 
+// Data for the setColumnWidths bulk operation
+type ColumnsResizeSpec = Parameters<ColumnApi["setColumnWidths"]>[0][0];
+
 //
 //
 //
@@ -589,9 +592,9 @@ export function syncSuppressSizeToFitOnColumns(
         return;
     }
 
-    const columns: Column[] = columnApi.getAllColumns();
+    const columns = columnApi.getAllColumns();
 
-    columns.forEach((col) => {
+    columns?.forEach((col) => {
         const resizedColumn = resizedColumnsStore.getManuallyResizedColumn(col);
         resizedColumn
             ? (col.getColDef().suppressSizeToFit = !resizedColumn.allowGrowToFit)
@@ -610,20 +613,24 @@ export function resetColumnsWidthToDefault(
     autoResizedColumns: IResizedColumns,
     defaultWidth: number,
 ): void {
-    columns.forEach((col) => {
+    const resizeData: ColumnsResizeSpec[] = columns.reduce((acc: ColumnsResizeSpec[], col) => {
         const id = agColId(col);
 
         if (resizedColumnsStore.isColumnManuallyResized(col)) {
             const manuallyResizedColumn = resizedColumnsStore.getManuallyResizedColumn(col);
             if (manuallyResizedColumn) {
-                columnApi.setColumnWidth(col, manuallyResizedColumn.width);
+                acc.push({ key: col, newWidth: manuallyResizedColumn.width });
             }
         } else if (isColumnAutoResized(autoResizedColumns, id)) {
-            columnApi.setColumnWidth(col, autoResizedColumns[id].width);
+            acc.push({ key: col, newWidth: autoResizedColumns[id].width });
         } else {
-            columnApi.setColumnWidth(col, defaultWidth);
+            acc.push({ key: col, newWidth: defaultWidth });
         }
-    });
+
+        return acc;
+    }, []);
+
+    columnApi.setColumnWidths(resizeData);
 }
 
 export function resizeAllMeasuresColumns(
@@ -634,13 +641,18 @@ export function resizeAllMeasuresColumns(
     const columnWidth = column.getActualWidth();
     const allColumns = columnApi.getAllColumns();
 
-    allColumns.forEach((col) => {
-        if (isMeasureColumn(col)) {
-            columnApi.setColumnWidth(col, columnWidth);
-        }
+    const resizeData = allColumns?.filter(isMeasureColumn).map((col): ColumnsResizeSpec => {
+        return {
+            key: col,
+            newWidth: columnWidth,
+        };
     });
 
-    resizedColumnsStore.addAllMeasureColumn(columnWidth, allColumns);
+    if (resizeData?.length) {
+        columnApi.setColumnWidths(resizeData);
+    }
+
+    resizedColumnsStore.addAllMeasureColumn(columnWidth, allColumns ?? []);
 }
 
 export function resizeWeakMeasureColumns(
@@ -649,11 +661,11 @@ export function resizeWeakMeasureColumns(
     resizedColumnsStore: ResizedColumnsStore,
     column: Column,
 ): void {
-    const allColumns: Column[] = columnApi.getAllColumns();
+    const allColumns = columnApi.getAllColumns();
 
     resizedColumnsStore.addWeekMeasureColumn(column);
 
-    allColumns.forEach((col) => {
+    allColumns?.forEach((col) => {
         const colDesc = tableDescriptor.getCol(col);
         const weakColumnWidth = resizedColumnsStore.getMatchedWeakMeasuresColumnWidth(colDesc);
 
@@ -842,7 +854,7 @@ function getDisplayedRowData(gridApi: GridApi): IGridRow[] {
     const rowCount = gridApi.getDisplayedRowCount();
     const rowData: IGridRow[] = [];
     for (let index = 0; index < rowCount; index++) {
-        const item: IGridRow = gridApi.getDisplayedRowAtIndex(index).data;
+        const item: IGridRow = gridApi.getDisplayedRowAtIndex(index)?.data;
         if (item) {
             rowData.push(item);
         }
@@ -904,16 +916,19 @@ export async function autoresizeAllColumns(
         for (const ch of chunks) {
             await new Promise<void>((resolve) => {
                 setTimeout(() => {
-                    ch.forEach((column: Column) => {
+                    const resizeData: ColumnsResizeSpec[] = ch.reduce((acc: ColumnsResizeSpec[], column) => {
                         const columnDef = column.getColDef();
                         const colId = agColId(columnDef);
                         const autoResizedColumn = autoResizedColumns[colId];
 
                         if (colId && autoResizedColumn && autoResizedColumn.width) {
-                            // TODO https://jira.intgdc.com/browse/RAIL-3489 - After upgrade of aggrid to 23.1 or newer consider usage of columnApi.setColumnWidths with improved performance
-                            columnApi.setColumnWidth(colId, autoResizedColumn.width);
+                            acc.push({ key: colId, newWidth: autoResizedColumn.width });
                         }
-                    });
+
+                        return acc;
+                    }, []);
+
+                    columnApi.setColumnWidths(resizeData);
                     resolve();
                 });
             });
@@ -941,7 +956,7 @@ export function getAutoResizedColumns(
 ): IResizedColumns {
     const { containerRef, columnAutoresizeOption, clientWidth } = resizingConfig;
     if (tableDescriptor && gridApi && columnApi && execution && containerRef) {
-        const columns = columnApi.getPrimaryColumns();
+        const columns = columnApi.getPrimaryColumns() ?? [];
         const { headerFont, rowFont, subtotalFont, totalFont } = getTableFonts(containerRef);
         const canvas = document.createElement("canvas");
         const context = canvas.getContext("2d");

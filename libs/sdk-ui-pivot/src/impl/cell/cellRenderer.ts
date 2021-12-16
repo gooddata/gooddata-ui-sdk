@@ -9,7 +9,7 @@ import { agColId } from "../structure/tableDescriptorTypes";
 function hasTotalForCurrentColumn(params: ICellRendererParams): boolean {
     const row = params.data as IGridTotalsRow;
 
-    if (!row || !row.calculatedForColumns) {
+    if (!row || !row.calculatedForColumns || !params.colDef) {
         return false;
     }
 
@@ -30,7 +30,7 @@ export function createCellRenderer(): (params: ICellRendererParams) => string {
         const formattedValue =
             isRowTotalOrSubtotal && !isActiveRowTotal && !params.value
                 ? "" // inactive row total cells should be really empty (no "-") when they have no value (RAIL-1525)
-                : escape(params.formatValue(params.value));
+                : escape(params.formatValue!(params.value));
         const className = params.node.rowPinned === "top" ? "gd-sticky-header-value" : VALUE_CLASS;
 
         return `<span class="${className}">${formattedValue || ""}</span>`;

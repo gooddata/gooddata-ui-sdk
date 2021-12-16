@@ -223,7 +223,7 @@ To do filtered backstopjs execution in this project, you can follow these steps:
 4.  Run `./run-backstop.sh test --filter="<regex>"` where regex is regular expression to filter tests by.
 
     Backstop will filter based on the scenario label. The scenarios are automatically created for the storybook
-    stories. The scenario label is contatenation of story kind and the story name: `${storyKind} - ${storyName}`
+    stories. The scenario label is concatenation of story kind and the story name: `${storyKind} - ${storyName}`
 
     Note: one of the results of `backstop-prepare` command is the `backstop/stories.json` file that contains a dump
     of all stories to screenshot. You can find the storyKind and storyName there.
@@ -240,7 +240,7 @@ To do filtered backstopjs execution in this project, you can follow these steps:
 >
 > For instance if you run `backstop-prepare` this builds the storybook and extracts stories together with their
 > backstop-specific configuration. If you are debugging some custom stories and changing their backstop configuration
-> only, you do not have to do lenghty builds and can run just the `story-extractor` and then run the backstop tests.
+> only, you do not have to do lengthy builds and can run just the `story-extractor` and then run the backstop tests.
 
 #### Inspecting production storybook build
 

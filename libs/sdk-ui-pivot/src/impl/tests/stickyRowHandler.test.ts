@@ -64,8 +64,6 @@ describe("stickyRowHandler", () => {
             addPinnedTopRowClass: jest.fn(),
             removePinnedTopRowClass: jest.fn(),
             setPinnedTopRowStyle: jest.fn(),
-            getPinnedTopRowCellElement: jest.fn(),
-            getPinnedTopRowCellElementWrapper: jest.fn(),
         };
     }
 
