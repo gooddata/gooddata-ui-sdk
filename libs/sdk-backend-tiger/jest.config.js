@@ -2,4 +2,5 @@
 const base = require("../../common/config/jest/jest.config.base.js");
 module.exports = {
     ...base,
+    testRegex: "(/src).*\\.test\\.tsx?$",
 };

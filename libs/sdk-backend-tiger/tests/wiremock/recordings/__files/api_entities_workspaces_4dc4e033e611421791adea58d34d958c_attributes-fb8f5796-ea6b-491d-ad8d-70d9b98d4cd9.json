@@ -1,0 +1,3527 @@
+{
+    "data": [
+        {
+            "attributes": { "title": "Account", "description": "Account", "tags": ["Account"] },
+            "id": "attr.f_account.account",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/attr.f_account.account"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "f_account", "type": "dataset" } },
+                "labels": {
+                    "data": [
+                        { "id": "label.f_account.account.accountid", "type": "label" },
+                        { "id": "label.f_account.account", "type": "label" }
+                    ]
+                }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": { "title": "Account Id", "description": "Account", "tags": ["Account"] },
+            "id": "f_account.id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/f_account.id"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "f_account", "type": "dataset" } },
+                "labels": { "data": [{ "id": "f_account.id", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": { "title": "Activity", "description": "Activity", "tags": ["Activity"] },
+            "id": "attr.f_activity.activity",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/attr.f_activity.activity"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "f_activity", "type": "dataset" } },
+                "labels": {
+                    "data": [
+                        { "id": "label.f_activity.activity", "type": "label" },
+                        { "id": "label.f_activity.activity.name", "type": "label" }
+                    ]
+                }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": { "title": "Activity Type", "description": "Activity Type", "tags": ["Activity"] },
+            "id": "f_activity.activitytype_id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/f_activity.activitytype_id"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "f_activity", "type": "dataset" } },
+                "labels": { "data": [{ "id": "f_activity.activitytype_id", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": { "title": "Activity Id", "description": "Activity Id", "tags": ["Activity"] },
+            "id": "f_activity.id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/f_activity.id"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "f_activity", "type": "dataset" } },
+                "labels": { "data": [{ "id": "f_activity.id", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": { "title": "Is Closed?", "description": "Is Closed?", "tags": ["Activity"] },
+            "id": "f_activity.isclosed_id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/f_activity.isclosed_id"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "f_activity", "type": "dataset" } },
+                "labels": { "data": [{ "id": "f_activity.isclosed_id", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": { "title": "Is Task?", "description": "Is Task?", "tags": ["Activity"] },
+            "id": "f_activity.istask_id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/f_activity.istask_id"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "f_activity", "type": "dataset" } },
+                "labels": { "data": [{ "id": "f_activity.istask_id", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": { "title": "Priority", "description": "Priority", "tags": ["Activity"] },
+            "id": "f_activity.priority_id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/f_activity.priority_id"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "f_activity", "type": "dataset" } },
+                "labels": { "data": [{ "id": "f_activity.priority_id", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": { "title": "Status", "description": "Status", "tags": ["Activity"] },
+            "id": "f_activity.status_id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/f_activity.status_id"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "f_activity", "type": "dataset" } },
+                "labels": { "data": [{ "id": "f_activity.status_id", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": { "title": "Opportunity", "description": "Opportunity", "tags": ["Opportunity"] },
+            "id": "attr.f_opportunity.opportunity",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/attr.f_opportunity.opportunity"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "f_opportunity", "type": "dataset" } },
+                "labels": {
+                    "data": [
+                        { "id": "label.f_opportunity.opportunity", "type": "label" },
+                        { "id": "label.f_opportunity.opportunity.opportunity", "type": "label" },
+                        { "id": "label.f_opportunity.opportunity.sfdcurl", "type": "label" }
+                    ]
+                }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Opportunity Id",
+                "description": "Opportunity Id",
+                "tags": ["Opportunity"]
+            },
+            "id": "f_opportunity.id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/f_opportunity.id"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "f_opportunity", "type": "dataset" } },
+                "labels": { "data": [{ "id": "f_opportunity.id", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Opp. Snapshot",
+                "description": "Opp. Snapshot",
+                "tags": ["OpportunitySnapshot"]
+            },
+            "id": "attr.f_opportunitysnapshot.oppsnapshot",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/attr.f_opportunitysnapshot.oppsnapshot"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "f_opportunitysnapshot", "type": "dataset" } },
+                "labels": { "data": [{ "id": "label.f_opportunitysnapshot.oppsnapshot", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Forecast Category",
+                "description": "Forecast Category",
+                "tags": ["OpportunitySnapshot"]
+            },
+            "id": "f_opportunitysnapshot.forecastcategory_id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/f_opportunitysnapshot.forecastcategory_id"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "f_opportunitysnapshot", "type": "dataset" } },
+                "labels": { "data": [{ "id": "f_opportunitysnapshot.forecastcategory_id", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Opp. Snapshot Id",
+                "description": "Opp. Snapshot Id",
+                "tags": ["OpportunitySnapshot"]
+            },
+            "id": "f_opportunitysnapshot.id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/f_opportunitysnapshot.id"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "f_opportunitysnapshot", "type": "dataset" } },
+                "labels": { "data": [{ "id": "f_opportunitysnapshot.id", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": { "title": "Sales Rep", "description": "", "tags": ["owner"] },
+            "id": "attr.f_owner.salesrep",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/attr.f_owner.salesrep"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "f_owner", "type": "dataset" } },
+                "labels": {
+                    "data": [
+                        { "id": "label.f_owner.salesrep", "type": "label" },
+                        { "id": "label.f_owner.salesrep.owner", "type": "label" }
+                    ]
+                }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": { "title": "Department", "description": "Department", "tags": ["owner"] },
+            "id": "f_owner.department_id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/f_owner.department_id"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "f_owner", "type": "dataset" } },
+                "labels": { "data": [{ "id": "f_owner.department_id", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": { "title": "Owner Id", "description": "Id", "tags": ["owner"] },
+            "id": "f_owner.id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/f_owner.id"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "f_owner", "type": "dataset" } },
+                "labels": { "data": [{ "id": "f_owner.id", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": { "title": "Region", "description": "Region", "tags": ["owner"] },
+            "id": "f_owner.region_id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/f_owner.region_id"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "f_owner", "type": "dataset" } },
+                "labels": { "data": [{ "id": "f_owner.region_id", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": { "title": "Product", "description": "Product", "tags": ["product"] },
+            "id": "attr.f_product.product",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/attr.f_product.product"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "f_product", "type": "dataset" } },
+                "labels": {
+                    "data": [
+                        { "id": "label.f_product.product", "type": "label" },
+                        { "id": "label.f_product.product.productid", "type": "label" }
+                    ]
+                }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": { "title": "Product Id", "description": "Product", "tags": ["product"] },
+            "id": "f_product.id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/f_product.id"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "f_product", "type": "dataset" } },
+                "labels": { "data": [{ "id": "f_product.id", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": { "title": "Stage Name", "description": "Stage Name", "tags": ["Stage"] },
+            "id": "attr.f_stage.stagename",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/attr.f_stage.stagename"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "f_stage", "type": "dataset" } },
+                "labels": {
+                    "data": [
+                        { "id": "label.f_stage.stagename", "type": "label" },
+                        { "id": "label.f_stage.stagename.order", "type": "label" },
+                        { "id": "label.f_stage.stagename.stagename", "type": "label" }
+                    ]
+                }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": { "title": "Stage Id", "description": "Stage Id", "tags": ["Stage"] },
+            "id": "f_stage.id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/f_stage.id"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "f_stage", "type": "dataset" } },
+                "labels": { "data": [{ "id": "f_stage.id", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": { "title": "Is Active?", "description": "Is Active?", "tags": ["Stage"] },
+            "id": "f_stage.isactive_id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/f_stage.isactive_id"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "f_stage", "type": "dataset" } },
+                "labels": { "data": [{ "id": "f_stage.isactive_id", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": { "title": "Is Closed?", "description": "Is Closed?", "tags": ["Stage"] },
+            "id": "f_stage.isclosed_id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/f_stage.isclosed_id"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "f_stage", "type": "dataset" } },
+                "labels": { "data": [{ "id": "f_stage.isclosed_id", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": { "title": "Is Won?", "description": "Is Won?", "tags": ["Stage"] },
+            "id": "f_stage.iswon_id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/f_stage.iswon_id"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "f_stage", "type": "dataset" } },
+                "labels": { "data": [{ "id": "f_stage.iswon_id", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": { "title": "Status", "description": "Status", "tags": ["Stage"] },
+            "id": "f_stage.status_id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/f_stage.status_id"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "f_stage", "type": "dataset" } },
+                "labels": { "data": [{ "id": "f_stage.status_id", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Stage History",
+                "description": "Stage History",
+                "tags": ["stagehistory"]
+            },
+            "id": "attr.f_stagehistory.stagehistory",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/attr.f_stagehistory.stagehistory"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "f_stagehistory", "type": "dataset" } },
+                "labels": { "data": [{ "id": "label.f_stagehistory.stagehistory", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Stage History Id",
+                "description": "Stage History Id",
+                "tags": ["stagehistory"]
+            },
+            "id": "f_stagehistory.id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/f_stagehistory.id"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "f_stagehistory", "type": "dataset" } },
+                "labels": { "data": [{ "id": "f_stagehistory.id", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": { "title": "Timeline", "description": "Timeline", "tags": ["Timeline"] },
+            "id": "f_timeline.id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/f_timeline.id"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "f_timeline", "type": "dataset" } },
+                "labels": { "data": [{ "id": "f_timeline.id", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Activity - Minute",
+                "description": "Minute",
+                "tags": ["Activity"],
+                "granularity": "MINUTE"
+            },
+            "id": "dt_activity_timestamp.minute",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_activity_timestamp.minute"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_activity_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_activity_timestamp.minute", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Activity - Hour",
+                "description": "Hour",
+                "tags": ["Activity"],
+                "granularity": "HOUR"
+            },
+            "id": "dt_activity_timestamp.hour",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_activity_timestamp.hour"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_activity_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_activity_timestamp.hour", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Activity - Date",
+                "description": "Date",
+                "tags": ["Activity"],
+                "granularity": "DAY"
+            },
+            "id": "dt_activity_timestamp.day",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_activity_timestamp.day"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_activity_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_activity_timestamp.day", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Activity - Week/Year",
+                "description": "Week and Year (W52/2020)",
+                "tags": ["Activity"],
+                "granularity": "WEEK"
+            },
+            "id": "dt_activity_timestamp.week",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_activity_timestamp.week"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_activity_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_activity_timestamp.week", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Activity - Month/Year",
+                "description": "Month and Year (12/2020)",
+                "tags": ["Activity"],
+                "granularity": "MONTH"
+            },
+            "id": "dt_activity_timestamp.month",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_activity_timestamp.month"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_activity_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_activity_timestamp.month", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Activity - Quarter/Year",
+                "description": "Quarter and Year (Q1/2020)",
+                "tags": ["Activity"],
+                "granularity": "QUARTER"
+            },
+            "id": "dt_activity_timestamp.quarter",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_activity_timestamp.quarter"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_activity_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_activity_timestamp.quarter", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Activity - Year",
+                "description": "Year",
+                "tags": ["Activity"],
+                "granularity": "YEAR"
+            },
+            "id": "dt_activity_timestamp.year",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_activity_timestamp.year"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_activity_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_activity_timestamp.year", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Activity - Minute of Hour",
+                "description": "Generic Minute of the Hour(MI1-MI60)",
+                "tags": ["Activity"],
+                "granularity": "MINUTE_OF_HOUR"
+            },
+            "id": "dt_activity_timestamp.minuteOfHour",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_activity_timestamp.minuteOfHour"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_activity_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_activity_timestamp.minuteOfHour", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Activity - Hour of Day",
+                "description": "Generic Hour of the Day(H1-H24)",
+                "tags": ["Activity"],
+                "granularity": "HOUR_OF_DAY"
+            },
+            "id": "dt_activity_timestamp.hourOfDay",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_activity_timestamp.hourOfDay"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_activity_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_activity_timestamp.hourOfDay", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Activity - Day of Week",
+                "description": "Generic Day of the Week (D1-D7)",
+                "tags": ["Activity"],
+                "granularity": "DAY_OF_WEEK"
+            },
+            "id": "dt_activity_timestamp.dayOfWeek",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_activity_timestamp.dayOfWeek"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_activity_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_activity_timestamp.dayOfWeek", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Activity - Day of Month",
+                "description": "Generic Day of the Month (D1-D31)",
+                "tags": ["Activity"],
+                "granularity": "DAY_OF_MONTH"
+            },
+            "id": "dt_activity_timestamp.dayOfMonth",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_activity_timestamp.dayOfMonth"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_activity_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_activity_timestamp.dayOfMonth", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Activity - Day of Year",
+                "description": "Generic Day of the Year (D1-D366)",
+                "tags": ["Activity"],
+                "granularity": "DAY_OF_YEAR"
+            },
+            "id": "dt_activity_timestamp.dayOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_activity_timestamp.dayOfYear"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_activity_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_activity_timestamp.dayOfYear", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Activity - Week of Year",
+                "description": "Generic Week (W1-W53)",
+                "tags": ["Activity"],
+                "granularity": "WEEK_OF_YEAR"
+            },
+            "id": "dt_activity_timestamp.weekOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_activity_timestamp.weekOfYear"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_activity_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_activity_timestamp.weekOfYear", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Activity - Month of Year",
+                "description": "Generic Month (M1-M12)",
+                "tags": ["Activity"],
+                "granularity": "MONTH_OF_YEAR"
+            },
+            "id": "dt_activity_timestamp.monthOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_activity_timestamp.monthOfYear"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_activity_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_activity_timestamp.monthOfYear", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Activity - Quarter of Year",
+                "description": "Generic Quarter (Q1-Q4)",
+                "tags": ["Activity"],
+                "granularity": "QUARTER_OF_YEAR"
+            },
+            "id": "dt_activity_timestamp.quarterOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_activity_timestamp.quarterOfYear"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_activity_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_activity_timestamp.quarterOfYear", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Minute",
+                "description": "Minute",
+                "tags": ["Closed"],
+                "granularity": "MINUTE"
+            },
+            "id": "dt_closedate_timestamp.minute",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.minute"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_closedate_timestamp.minute", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Hour",
+                "description": "Hour",
+                "tags": ["Closed"],
+                "granularity": "HOUR"
+            },
+            "id": "dt_closedate_timestamp.hour",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.hour"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_closedate_timestamp.hour", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Date",
+                "description": "Date",
+                "tags": ["Closed"],
+                "granularity": "DAY"
+            },
+            "id": "dt_closedate_timestamp.day",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.day"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_closedate_timestamp.day", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Week/Year",
+                "description": "Week and Year (W52/2020)",
+                "tags": ["Closed"],
+                "granularity": "WEEK"
+            },
+            "id": "dt_closedate_timestamp.week",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.week"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_closedate_timestamp.week", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Month/Year",
+                "description": "Month and Year (12/2020)",
+                "tags": ["Closed"],
+                "granularity": "MONTH"
+            },
+            "id": "dt_closedate_timestamp.month",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.month"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_closedate_timestamp.month", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Quarter/Year",
+                "description": "Quarter and Year (Q1/2020)",
+                "tags": ["Closed"],
+                "granularity": "QUARTER"
+            },
+            "id": "dt_closedate_timestamp.quarter",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.quarter"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_closedate_timestamp.quarter", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Year",
+                "description": "Year",
+                "tags": ["Closed"],
+                "granularity": "YEAR"
+            },
+            "id": "dt_closedate_timestamp.year",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.year"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_closedate_timestamp.year", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Minute of Hour",
+                "description": "Generic Minute of the Hour(MI1-MI60)",
+                "tags": ["Closed"],
+                "granularity": "MINUTE_OF_HOUR"
+            },
+            "id": "dt_closedate_timestamp.minuteOfHour",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.minuteOfHour"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_closedate_timestamp.minuteOfHour", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Hour of Day",
+                "description": "Generic Hour of the Day(H1-H24)",
+                "tags": ["Closed"],
+                "granularity": "HOUR_OF_DAY"
+            },
+            "id": "dt_closedate_timestamp.hourOfDay",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.hourOfDay"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_closedate_timestamp.hourOfDay", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Day of Week",
+                "description": "Generic Day of the Week (D1-D7)",
+                "tags": ["Closed"],
+                "granularity": "DAY_OF_WEEK"
+            },
+            "id": "dt_closedate_timestamp.dayOfWeek",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.dayOfWeek"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_closedate_timestamp.dayOfWeek", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Day of Month",
+                "description": "Generic Day of the Month (D1-D31)",
+                "tags": ["Closed"],
+                "granularity": "DAY_OF_MONTH"
+            },
+            "id": "dt_closedate_timestamp.dayOfMonth",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.dayOfMonth"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_closedate_timestamp.dayOfMonth", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Day of Year",
+                "description": "Generic Day of the Year (D1-D366)",
+                "tags": ["Closed"],
+                "granularity": "DAY_OF_YEAR"
+            },
+            "id": "dt_closedate_timestamp.dayOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.dayOfYear"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_closedate_timestamp.dayOfYear", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Week of Year",
+                "description": "Generic Week (W1-W53)",
+                "tags": ["Closed"],
+                "granularity": "WEEK_OF_YEAR"
+            },
+            "id": "dt_closedate_timestamp.weekOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.weekOfYear"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_closedate_timestamp.weekOfYear", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Month of Year",
+                "description": "Generic Month (M1-M12)",
+                "tags": ["Closed"],
+                "granularity": "MONTH_OF_YEAR"
+            },
+            "id": "dt_closedate_timestamp.monthOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.monthOfYear"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_closedate_timestamp.monthOfYear", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Quarter of Year",
+                "description": "Generic Quarter (Q1-Q4)",
+                "tags": ["Closed"],
+                "granularity": "QUARTER_OF_YEAR"
+            },
+            "id": "dt_closedate_timestamp.quarterOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.quarterOfYear"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_closedate_timestamp.quarterOfYear", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Created - Minute",
+                "description": "Minute",
+                "tags": ["Created"],
+                "granularity": "MINUTE"
+            },
+            "id": "dt_oppcreated_timestamp.minute",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_oppcreated_timestamp.minute"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_oppcreated_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_oppcreated_timestamp.minute", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Created - Hour",
+                "description": "Hour",
+                "tags": ["Created"],
+                "granularity": "HOUR"
+            },
+            "id": "dt_oppcreated_timestamp.hour",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_oppcreated_timestamp.hour"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_oppcreated_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_oppcreated_timestamp.hour", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Created - Date",
+                "description": "Date",
+                "tags": ["Created"],
+                "granularity": "DAY"
+            },
+            "id": "dt_oppcreated_timestamp.day",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_oppcreated_timestamp.day"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_oppcreated_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_oppcreated_timestamp.day", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Created - Week/Year",
+                "description": "Week and Year (W52/2020)",
+                "tags": ["Created"],
+                "granularity": "WEEK"
+            },
+            "id": "dt_oppcreated_timestamp.week",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_oppcreated_timestamp.week"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_oppcreated_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_oppcreated_timestamp.week", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Created - Month/Year",
+                "description": "Month and Year (12/2020)",
+                "tags": ["Created"],
+                "granularity": "MONTH"
+            },
+            "id": "dt_oppcreated_timestamp.month",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_oppcreated_timestamp.month"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_oppcreated_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_oppcreated_timestamp.month", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Created - Quarter/Year",
+                "description": "Quarter and Year (Q1/2020)",
+                "tags": ["Created"],
+                "granularity": "QUARTER"
+            },
+            "id": "dt_oppcreated_timestamp.quarter",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_oppcreated_timestamp.quarter"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_oppcreated_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_oppcreated_timestamp.quarter", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Created - Year",
+                "description": "Year",
+                "tags": ["Created"],
+                "granularity": "YEAR"
+            },
+            "id": "dt_oppcreated_timestamp.year",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_oppcreated_timestamp.year"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_oppcreated_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_oppcreated_timestamp.year", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Created - Minute of Hour",
+                "description": "Generic Minute of the Hour(MI1-MI60)",
+                "tags": ["Created"],
+                "granularity": "MINUTE_OF_HOUR"
+            },
+            "id": "dt_oppcreated_timestamp.minuteOfHour",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_oppcreated_timestamp.minuteOfHour"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_oppcreated_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_oppcreated_timestamp.minuteOfHour", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Created - Hour of Day",
+                "description": "Generic Hour of the Day(H1-H24)",
+                "tags": ["Created"],
+                "granularity": "HOUR_OF_DAY"
+            },
+            "id": "dt_oppcreated_timestamp.hourOfDay",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_oppcreated_timestamp.hourOfDay"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_oppcreated_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_oppcreated_timestamp.hourOfDay", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Created - Day of Week",
+                "description": "Generic Day of the Week (D1-D7)",
+                "tags": ["Created"],
+                "granularity": "DAY_OF_WEEK"
+            },
+            "id": "dt_oppcreated_timestamp.dayOfWeek",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_oppcreated_timestamp.dayOfWeek"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_oppcreated_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_oppcreated_timestamp.dayOfWeek", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Created - Day of Month",
+                "description": "Generic Day of the Month (D1-D31)",
+                "tags": ["Created"],
+                "granularity": "DAY_OF_MONTH"
+            },
+            "id": "dt_oppcreated_timestamp.dayOfMonth",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_oppcreated_timestamp.dayOfMonth"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_oppcreated_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_oppcreated_timestamp.dayOfMonth", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Created - Day of Year",
+                "description": "Generic Day of the Year (D1-D366)",
+                "tags": ["Created"],
+                "granularity": "DAY_OF_YEAR"
+            },
+            "id": "dt_oppcreated_timestamp.dayOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_oppcreated_timestamp.dayOfYear"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_oppcreated_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_oppcreated_timestamp.dayOfYear", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Created - Week of Year",
+                "description": "Generic Week (W1-W53)",
+                "tags": ["Created"],
+                "granularity": "WEEK_OF_YEAR"
+            },
+            "id": "dt_oppcreated_timestamp.weekOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_oppcreated_timestamp.weekOfYear"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_oppcreated_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_oppcreated_timestamp.weekOfYear", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Created - Month of Year",
+                "description": "Generic Month (M1-M12)",
+                "tags": ["Created"],
+                "granularity": "MONTH_OF_YEAR"
+            },
+            "id": "dt_oppcreated_timestamp.monthOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_oppcreated_timestamp.monthOfYear"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_oppcreated_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_oppcreated_timestamp.monthOfYear", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Created - Quarter of Year",
+                "description": "Generic Quarter (Q1-Q4)",
+                "tags": ["Created"],
+                "granularity": "QUARTER_OF_YEAR"
+            },
+            "id": "dt_oppcreated_timestamp.quarterOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_oppcreated_timestamp.quarterOfYear"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_oppcreated_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_oppcreated_timestamp.quarterOfYear", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Snapshot - Minute",
+                "description": "Minute",
+                "tags": ["Snapshot"],
+                "granularity": "MINUTE"
+            },
+            "id": "dt_snapshotdate_timestamp.minute",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_snapshotdate_timestamp.minute"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_snapshotdate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_snapshotdate_timestamp.minute", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Snapshot - Hour",
+                "description": "Hour",
+                "tags": ["Snapshot"],
+                "granularity": "HOUR"
+            },
+            "id": "dt_snapshotdate_timestamp.hour",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_snapshotdate_timestamp.hour"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_snapshotdate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_snapshotdate_timestamp.hour", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Snapshot - Date",
+                "description": "Date",
+                "tags": ["Snapshot"],
+                "granularity": "DAY"
+            },
+            "id": "dt_snapshotdate_timestamp.day",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_snapshotdate_timestamp.day"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_snapshotdate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_snapshotdate_timestamp.day", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Snapshot - Week/Year",
+                "description": "Week and Year (W52/2020)",
+                "tags": ["Snapshot"],
+                "granularity": "WEEK"
+            },
+            "id": "dt_snapshotdate_timestamp.week",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_snapshotdate_timestamp.week"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_snapshotdate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_snapshotdate_timestamp.week", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Snapshot - Month/Year",
+                "description": "Month and Year (12/2020)",
+                "tags": ["Snapshot"],
+                "granularity": "MONTH"
+            },
+            "id": "dt_snapshotdate_timestamp.month",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_snapshotdate_timestamp.month"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_snapshotdate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_snapshotdate_timestamp.month", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Snapshot - Quarter/Year",
+                "description": "Quarter and Year (Q1/2020)",
+                "tags": ["Snapshot"],
+                "granularity": "QUARTER"
+            },
+            "id": "dt_snapshotdate_timestamp.quarter",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_snapshotdate_timestamp.quarter"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_snapshotdate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_snapshotdate_timestamp.quarter", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Snapshot - Year",
+                "description": "Year",
+                "tags": ["Snapshot"],
+                "granularity": "YEAR"
+            },
+            "id": "dt_snapshotdate_timestamp.year",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_snapshotdate_timestamp.year"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_snapshotdate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_snapshotdate_timestamp.year", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Snapshot - Minute of Hour",
+                "description": "Generic Minute of the Hour(MI1-MI60)",
+                "tags": ["Snapshot"],
+                "granularity": "MINUTE_OF_HOUR"
+            },
+            "id": "dt_snapshotdate_timestamp.minuteOfHour",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_snapshotdate_timestamp.minuteOfHour"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_snapshotdate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_snapshotdate_timestamp.minuteOfHour", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Snapshot - Hour of Day",
+                "description": "Generic Hour of the Day(H1-H24)",
+                "tags": ["Snapshot"],
+                "granularity": "HOUR_OF_DAY"
+            },
+            "id": "dt_snapshotdate_timestamp.hourOfDay",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_snapshotdate_timestamp.hourOfDay"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_snapshotdate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_snapshotdate_timestamp.hourOfDay", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Snapshot - Day of Week",
+                "description": "Generic Day of the Week (D1-D7)",
+                "tags": ["Snapshot"],
+                "granularity": "DAY_OF_WEEK"
+            },
+            "id": "dt_snapshotdate_timestamp.dayOfWeek",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_snapshotdate_timestamp.dayOfWeek"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_snapshotdate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_snapshotdate_timestamp.dayOfWeek", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Snapshot - Day of Month",
+                "description": "Generic Day of the Month (D1-D31)",
+                "tags": ["Snapshot"],
+                "granularity": "DAY_OF_MONTH"
+            },
+            "id": "dt_snapshotdate_timestamp.dayOfMonth",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_snapshotdate_timestamp.dayOfMonth"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_snapshotdate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_snapshotdate_timestamp.dayOfMonth", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Snapshot - Day of Year",
+                "description": "Generic Day of the Year (D1-D366)",
+                "tags": ["Snapshot"],
+                "granularity": "DAY_OF_YEAR"
+            },
+            "id": "dt_snapshotdate_timestamp.dayOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_snapshotdate_timestamp.dayOfYear"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_snapshotdate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_snapshotdate_timestamp.dayOfYear", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Snapshot - Week of Year",
+                "description": "Generic Week (W1-W53)",
+                "tags": ["Snapshot"],
+                "granularity": "WEEK_OF_YEAR"
+            },
+            "id": "dt_snapshotdate_timestamp.weekOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_snapshotdate_timestamp.weekOfYear"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_snapshotdate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_snapshotdate_timestamp.weekOfYear", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Snapshot - Month of Year",
+                "description": "Generic Month (M1-M12)",
+                "tags": ["Snapshot"],
+                "granularity": "MONTH_OF_YEAR"
+            },
+            "id": "dt_snapshotdate_timestamp.monthOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_snapshotdate_timestamp.monthOfYear"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_snapshotdate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_snapshotdate_timestamp.monthOfYear", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Snapshot - Quarter of Year",
+                "description": "Generic Quarter (Q1-Q4)",
+                "tags": ["Snapshot"],
+                "granularity": "QUARTER_OF_YEAR"
+            },
+            "id": "dt_snapshotdate_timestamp.quarterOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_snapshotdate_timestamp.quarterOfYear"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_snapshotdate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_snapshotdate_timestamp.quarterOfYear", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Timeline - Minute",
+                "description": "Minute",
+                "tags": ["Timeline"],
+                "granularity": "MINUTE"
+            },
+            "id": "dt_timeline_timestamp.minute",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_timeline_timestamp.minute"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_timeline_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_timeline_timestamp.minute", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Timeline - Hour",
+                "description": "Hour",
+                "tags": ["Timeline"],
+                "granularity": "HOUR"
+            },
+            "id": "dt_timeline_timestamp.hour",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_timeline_timestamp.hour"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_timeline_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_timeline_timestamp.hour", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Timeline - Date",
+                "description": "Date",
+                "tags": ["Timeline"],
+                "granularity": "DAY"
+            },
+            "id": "dt_timeline_timestamp.day",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_timeline_timestamp.day"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_timeline_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_timeline_timestamp.day", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Timeline - Week/Year",
+                "description": "Week and Year (W52/2020)",
+                "tags": ["Timeline"],
+                "granularity": "WEEK"
+            },
+            "id": "dt_timeline_timestamp.week",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_timeline_timestamp.week"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_timeline_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_timeline_timestamp.week", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Timeline - Month/Year",
+                "description": "Month and Year (12/2020)",
+                "tags": ["Timeline"],
+                "granularity": "MONTH"
+            },
+            "id": "dt_timeline_timestamp.month",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_timeline_timestamp.month"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_timeline_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_timeline_timestamp.month", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Timeline - Quarter/Year",
+                "description": "Quarter and Year (Q1/2020)",
+                "tags": ["Timeline"],
+                "granularity": "QUARTER"
+            },
+            "id": "dt_timeline_timestamp.quarter",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_timeline_timestamp.quarter"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_timeline_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_timeline_timestamp.quarter", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Timeline - Year",
+                "description": "Year",
+                "tags": ["Timeline"],
+                "granularity": "YEAR"
+            },
+            "id": "dt_timeline_timestamp.year",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_timeline_timestamp.year"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_timeline_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_timeline_timestamp.year", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Timeline - Minute of Hour",
+                "description": "Generic Minute of the Hour(MI1-MI60)",
+                "tags": ["Timeline"],
+                "granularity": "MINUTE_OF_HOUR"
+            },
+            "id": "dt_timeline_timestamp.minuteOfHour",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_timeline_timestamp.minuteOfHour"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_timeline_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_timeline_timestamp.minuteOfHour", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Timeline - Hour of Day",
+                "description": "Generic Hour of the Day(H1-H24)",
+                "tags": ["Timeline"],
+                "granularity": "HOUR_OF_DAY"
+            },
+            "id": "dt_timeline_timestamp.hourOfDay",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_timeline_timestamp.hourOfDay"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_timeline_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_timeline_timestamp.hourOfDay", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Timeline - Day of Week",
+                "description": "Generic Day of the Week (D1-D7)",
+                "tags": ["Timeline"],
+                "granularity": "DAY_OF_WEEK"
+            },
+            "id": "dt_timeline_timestamp.dayOfWeek",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_timeline_timestamp.dayOfWeek"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_timeline_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_timeline_timestamp.dayOfWeek", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Timeline - Day of Month",
+                "description": "Generic Day of the Month (D1-D31)",
+                "tags": ["Timeline"],
+                "granularity": "DAY_OF_MONTH"
+            },
+            "id": "dt_timeline_timestamp.dayOfMonth",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_timeline_timestamp.dayOfMonth"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_timeline_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_timeline_timestamp.dayOfMonth", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Timeline - Day of Year",
+                "description": "Generic Day of the Year (D1-D366)",
+                "tags": ["Timeline"],
+                "granularity": "DAY_OF_YEAR"
+            },
+            "id": "dt_timeline_timestamp.dayOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_timeline_timestamp.dayOfYear"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_timeline_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_timeline_timestamp.dayOfYear", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Timeline - Week of Year",
+                "description": "Generic Week (W1-W53)",
+                "tags": ["Timeline"],
+                "granularity": "WEEK_OF_YEAR"
+            },
+            "id": "dt_timeline_timestamp.weekOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_timeline_timestamp.weekOfYear"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_timeline_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_timeline_timestamp.weekOfYear", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Timeline - Month of Year",
+                "description": "Generic Month (M1-M12)",
+                "tags": ["Timeline"],
+                "granularity": "MONTH_OF_YEAR"
+            },
+            "id": "dt_timeline_timestamp.monthOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_timeline_timestamp.monthOfYear"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_timeline_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_timeline_timestamp.monthOfYear", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Timeline - Quarter of Year",
+                "description": "Generic Quarter (Q1-Q4)",
+                "tags": ["Timeline"],
+                "granularity": "QUARTER_OF_YEAR"
+            },
+            "id": "dt_timeline_timestamp.quarterOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_timeline_timestamp.quarterOfYear"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_timeline_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_timeline_timestamp.quarterOfYear", "type": "label" }] }
+            },
+            "type": "attribute"
+        }
+    ],
+    "included": [
+        {
+            "attributes": {
+                "title": "Activity",
+                "description": "",
+                "tags": ["Activity"],
+                "grain": [{ "id": "f_activity.id", "type": "attribute" }],
+                "referenceProperties": [
+                    {
+                        "identifier": { "id": "f_account", "type": "dataset" },
+                        "multivalue": false,
+                        "sourceColumns": ["accountid_id"]
+                    },
+                    {
+                        "identifier": { "id": "f_owner", "type": "dataset" },
+                        "multivalue": false,
+                        "sourceColumns": ["ownerid_id"]
+                    },
+                    {
+                        "identifier": { "id": "dt_activity_timestamp", "type": "dataset" },
+                        "multivalue": false,
+                        "sourceColumns": ["dt_activity_timestamp"]
+                    },
+                    {
+                        "identifier": { "id": "f_opportunity", "type": "dataset" },
+                        "multivalue": false,
+                        "sourceColumns": ["opportunityid_id"]
+                    }
+                ],
+                "dataSourceTableId": "pg_staging-goodsales:f_activity",
+                "type": "NORMAL"
+            },
+            "id": "f_activity",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/datasets/f_activity"
+            },
+            "type": "dataset"
+        },
+        {
+            "attributes": {
+                "title": "Snapshot - Day of Year",
+                "description": "Generic Day of the Year (D1-D366)",
+                "tags": ["Snapshot"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_snapshotdate_timestamp.dayOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_snapshotdate_timestamp.dayOfYear"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Day of Week",
+                "description": "Generic Day of the Week (D1-D7)",
+                "tags": ["Closed"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_closedate_timestamp.dayOfWeek",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfWeek"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Is Closed?",
+                "description": "Isclosed id",
+                "tags": ["Stage"],
+                "primary": true,
+                "sourceColumn": "ls__isclosed_id__nm_isclosed"
+            },
+            "id": "f_stage.isclosed_id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/f_stage.isclosed_id"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Activity - Day of Week",
+                "description": "Generic Day of the Week (D1-D7)",
+                "tags": ["Activity"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_activity_timestamp.dayOfWeek",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_activity_timestamp.dayOfWeek"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Snapshot - Minute",
+                "description": "Minute",
+                "tags": ["Snapshot"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_snapshotdate_timestamp.minute",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_snapshotdate_timestamp.minute"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Timeline - Week/Year",
+                "description": "Week and Year (W52/2020)",
+                "tags": ["Timeline"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_timeline_timestamp.week",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_timeline_timestamp.week"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Timeline - Minute of Hour",
+                "description": "Generic Minute of the Hour(MI1-MI60)",
+                "tags": ["Timeline"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_timeline_timestamp.minuteOfHour",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_timeline_timestamp.minuteOfHour"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Product Name",
+                "description": "",
+                "tags": ["product"],
+                "primary": true,
+                "sourceColumn": "ls__id__nm_name"
+            },
+            "id": "label.f_product.product",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_product.product"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Created - Quarter of Year",
+                "description": "Generic Quarter (Q1-Q4)",
+                "tags": ["Created"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_oppcreated_timestamp.quarterOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_oppcreated_timestamp.quarterOfYear"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Product Id",
+                "description": "Id",
+                "tags": ["product"],
+                "primary": true,
+                "sourceColumn": "id"
+            },
+            "id": "f_product.id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/f_product.id"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Account",
+                "description": "",
+                "tags": ["Account"],
+                "grain": [{ "id": "f_account.id", "type": "attribute" }],
+                "dataSourceTableId": "pg_staging-goodsales:f_account",
+                "type": "NORMAL"
+            },
+            "id": "f_account",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/datasets/f_account"
+            },
+            "type": "dataset"
+        },
+        {
+            "attributes": {
+                "title": "Activity - Day of Month",
+                "description": "Generic Day of the Month (D1-D31)",
+                "tags": ["Activity"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_activity_timestamp.dayOfMonth",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_activity_timestamp.dayOfMonth"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Created - Day of Month",
+                "description": "Generic Day of the Month (D1-D31)",
+                "tags": ["Created"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_oppcreated_timestamp.dayOfMonth",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_oppcreated_timestamp.dayOfMonth"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Owner Id",
+                "description": "Id",
+                "tags": ["owner"],
+                "primary": true,
+                "sourceColumn": "id"
+            },
+            "id": "f_owner.id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/f_owner.id"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Timeline - Year",
+                "description": "Year",
+                "tags": ["Timeline"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_timeline_timestamp.year",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_timeline_timestamp.year"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Snapshot - Hour of Day",
+                "description": "Generic Hour of the Day(H1-H24)",
+                "tags": ["Snapshot"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_snapshotdate_timestamp.hourOfDay",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_snapshotdate_timestamp.hourOfDay"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Timeline - Month of Year",
+                "description": "Generic Month (M1-M12)",
+                "tags": ["Timeline"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_timeline_timestamp.monthOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_timeline_timestamp.monthOfYear"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Snapshot - Day of Month",
+                "description": "Generic Day of the Month (D1-D31)",
+                "tags": ["Snapshot"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_snapshotdate_timestamp.dayOfMonth",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_snapshotdate_timestamp.dayOfMonth"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Week of Year",
+                "description": "Generic Week (W1-W53)",
+                "tags": ["Closed"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_closedate_timestamp.weekOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.weekOfYear"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": { "title": "Timeline", "description": "", "tags": ["Timeline"], "type": "DATE" },
+            "id": "dt_timeline_timestamp",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/datasets/dt_timeline_timestamp"
+            },
+            "type": "dataset"
+        },
+        {
+            "attributes": {
+                "title": "Created - Day of Week",
+                "description": "Generic Day of the Week (D1-D7)",
+                "tags": ["Created"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_oppcreated_timestamp.dayOfWeek",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_oppcreated_timestamp.dayOfWeek"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Stage Name",
+                "description": "",
+                "tags": ["Stage"],
+                "primary": true,
+                "sourceColumn": "ls__id__nm_stagename"
+            },
+            "id": "label.f_stage.stagename",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_stage.stagename"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Snapshot - Month/Year",
+                "description": "Month and Year (12/2020)",
+                "tags": ["Snapshot"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_snapshotdate_timestamp.month",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_snapshotdate_timestamp.month"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Timeline - Week of Year",
+                "description": "Generic Week (W1-W53)",
+                "tags": ["Timeline"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_timeline_timestamp.weekOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_timeline_timestamp.weekOfYear"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Activity - Month of Year",
+                "description": "Generic Month (M1-M12)",
+                "tags": ["Activity"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_activity_timestamp.monthOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_activity_timestamp.monthOfYear"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Activity - Hour",
+                "description": "Hour",
+                "tags": ["Activity"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_activity_timestamp.hour",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_activity_timestamp.hour"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Year",
+                "description": "Year",
+                "tags": ["Closed"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_closedate_timestamp.year",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.year"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Activity Id",
+                "description": "Id",
+                "tags": ["Activity"],
+                "primary": true,
+                "sourceColumn": "id"
+            },
+            "id": "f_activity.id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/f_activity.id"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Stage History",
+                "description": "",
+                "tags": ["stagehistory"],
+                "primary": true,
+                "sourceColumn": "ls__id__nm_id"
+            },
+            "id": "label.f_stagehistory.stagehistory",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_stagehistory.stagehistory"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Snapshot - Minute of Hour",
+                "description": "Generic Minute of the Hour(MI1-MI60)",
+                "tags": ["Snapshot"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_snapshotdate_timestamp.minuteOfHour",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_snapshotdate_timestamp.minuteOfHour"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Snapshot - Date",
+                "description": "Date",
+                "tags": ["Snapshot"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_snapshotdate_timestamp.day",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_snapshotdate_timestamp.day"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Activity - Day of Year",
+                "description": "Generic Day of the Year (D1-D366)",
+                "tags": ["Activity"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_activity_timestamp.dayOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_activity_timestamp.dayOfYear"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Order",
+                "description": "",
+                "tags": ["Stage"],
+                "primary": false,
+                "sourceColumn": "ls__id__nm_order"
+            },
+            "id": "label.f_stage.stagename.order",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_stage.stagename.order"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Name",
+                "description": "",
+                "tags": ["Account"],
+                "primary": true,
+                "sourceColumn": "ls__id__nm_name"
+            },
+            "id": "label.f_account.account",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_account.account"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Stage Id",
+                "description": "Id",
+                "tags": ["Stage"],
+                "primary": true,
+                "sourceColumn": "id"
+            },
+            "id": "f_stage.id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/f_stage.id"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Timeline - Quarter of Year",
+                "description": "Generic Quarter (Q1-Q4)",
+                "tags": ["Timeline"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_timeline_timestamp.quarterOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_timeline_timestamp.quarterOfYear"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Activity - Year",
+                "description": "Year",
+                "tags": ["Activity"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_activity_timestamp.year",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_activity_timestamp.year"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Created - Week/Year",
+                "description": "Week and Year (W52/2020)",
+                "tags": ["Created"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_oppcreated_timestamp.week",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_oppcreated_timestamp.week"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Quarter/Year",
+                "description": "Quarter and Year (Q1/2020)",
+                "tags": ["Closed"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_closedate_timestamp.quarter",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.quarter"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Activity - Minute of Hour",
+                "description": "Generic Minute of the Hour(MI1-MI60)",
+                "tags": ["Activity"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_activity_timestamp.minuteOfHour",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_activity_timestamp.minuteOfHour"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Created - Minute of Hour",
+                "description": "Generic Minute of the Hour(MI1-MI60)",
+                "tags": ["Created"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_oppcreated_timestamp.minuteOfHour",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_oppcreated_timestamp.minuteOfHour"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Status",
+                "description": "Status id",
+                "tags": ["Activity"],
+                "primary": true,
+                "sourceColumn": "ls__status_id__nm_status"
+            },
+            "id": "f_activity.status_id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/f_activity.status_id"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Opportunity",
+                "description": "",
+                "tags": ["Opportunity"],
+                "primary": false,
+                "sourceColumn": "ls__id__nm_id"
+            },
+            "id": "label.f_opportunity.opportunity.opportunity",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_opportunity.opportunity.opportunity"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Owner",
+                "description": "",
+                "tags": ["owner"],
+                "primary": false,
+                "sourceColumn": "ls__id__nm_id"
+            },
+            "id": "label.f_owner.salesrep.owner",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_owner.salesrep.owner"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Month of Year",
+                "description": "Generic Month (M1-M12)",
+                "tags": ["Closed"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_closedate_timestamp.monthOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.monthOfYear"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Snapshot - Day of Week",
+                "description": "Generic Day of the Week (D1-D7)",
+                "tags": ["Snapshot"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_snapshotdate_timestamp.dayOfWeek",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_snapshotdate_timestamp.dayOfWeek"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Opp. Snapshot",
+                "description": "",
+                "tags": ["OpportunitySnapshot"],
+                "primary": true,
+                "sourceColumn": "ls__id__nm_id"
+            },
+            "id": "label.f_opportunitysnapshot.oppsnapshot",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_opportunitysnapshot.oppsnapshot"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Forecast Category",
+                "description": "Forecastcategory id",
+                "tags": ["OpportunitySnapshot"],
+                "primary": true,
+                "sourceColumn": "ls__forecastcategory_id__nm_forecastcategory"
+            },
+            "id": "f_opportunitysnapshot.forecastcategory_id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/f_opportunitysnapshot.forecastcategory_id"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Snapshot - Month of Year",
+                "description": "Generic Month (M1-M12)",
+                "tags": ["Snapshot"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_snapshotdate_timestamp.monthOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_snapshotdate_timestamp.monthOfYear"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Opportunity Name",
+                "description": "",
+                "tags": ["Opportunity"],
+                "primary": true,
+                "sourceColumn": "ls__id__nm_name"
+            },
+            "id": "label.f_opportunity.opportunity",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_opportunity.opportunity"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": { "title": "Snapshot", "description": "", "tags": ["Snapshot"], "type": "DATE" },
+            "id": "dt_snapshotdate_timestamp",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/datasets/dt_snapshotdate_timestamp"
+            },
+            "type": "dataset"
+        },
+        {
+            "attributes": { "title": "Created", "description": "", "tags": ["Created"], "type": "DATE" },
+            "id": "dt_oppcreated_timestamp",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/datasets/dt_oppcreated_timestamp"
+            },
+            "type": "dataset"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Quarter of Year",
+                "description": "Generic Quarter (Q1-Q4)",
+                "tags": ["Closed"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_closedate_timestamp.quarterOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.quarterOfYear"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Created - Minute",
+                "description": "Minute",
+                "tags": ["Created"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_oppcreated_timestamp.minute",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_oppcreated_timestamp.minute"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Activity - Week/Year",
+                "description": "Week and Year (W52/2020)",
+                "tags": ["Activity"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_activity_timestamp.week",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_activity_timestamp.week"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Created - Date",
+                "description": "Date",
+                "tags": ["Created"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_oppcreated_timestamp.day",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_oppcreated_timestamp.day"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Activity - Minute",
+                "description": "Minute",
+                "tags": ["Activity"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_activity_timestamp.minute",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_activity_timestamp.minute"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Activity - Quarter/Year",
+                "description": "Quarter and Year (Q1/2020)",
+                "tags": ["Activity"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_activity_timestamp.quarter",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_activity_timestamp.quarter"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Hour",
+                "description": "Hour",
+                "tags": ["Closed"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_closedate_timestamp.hour",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.hour"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Timeline - Minute",
+                "description": "Minute",
+                "tags": ["Timeline"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_timeline_timestamp.minute",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_timeline_timestamp.minute"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Is Task?",
+                "description": "Istask id",
+                "tags": ["Activity"],
+                "primary": true,
+                "sourceColumn": "ls__istask_id__nm_istask"
+            },
+            "id": "f_activity.istask_id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/f_activity.istask_id"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "owner",
+                "description": "",
+                "tags": ["owner"],
+                "grain": [{ "id": "f_owner.id", "type": "attribute" }],
+                "dataSourceTableId": "pg_staging-goodsales:f_owner",
+                "type": "NORMAL"
+            },
+            "id": "f_owner",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/datasets/f_owner"
+            },
+            "type": "dataset"
+        },
+        {
+            "attributes": {
+                "title": "Account Id",
+                "description": "Id",
+                "tags": ["Account"],
+                "primary": true,
+                "sourceColumn": "id"
+            },
+            "id": "f_account.id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/f_account.id"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Snapshot - Hour",
+                "description": "Hour",
+                "tags": ["Snapshot"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_snapshotdate_timestamp.hour",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_snapshotdate_timestamp.hour"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Is Active?",
+                "description": "Isactive id",
+                "tags": ["Stage"],
+                "primary": true,
+                "sourceColumn": "ls__isactive_id__nm_isactive"
+            },
+            "id": "f_stage.isactive_id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/f_stage.isactive_id"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Date",
+                "description": "Date",
+                "tags": ["Closed"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_closedate_timestamp.day",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.day"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Created - Hour of Day",
+                "description": "Generic Hour of the Day(H1-H24)",
+                "tags": ["Created"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_oppcreated_timestamp.hourOfDay",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_oppcreated_timestamp.hourOfDay"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Timeline",
+                "description": "Id",
+                "tags": ["Timeline"],
+                "primary": true,
+                "sourceColumn": "id"
+            },
+            "id": "f_timeline.id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/f_timeline.id"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Stage Name",
+                "description": "",
+                "tags": ["Stage"],
+                "primary": false,
+                "sourceColumn": "ls__id__nm_name"
+            },
+            "id": "label.f_stage.stagename.stagename",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_stage.stagename.stagename"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Snapshot - Week of Year",
+                "description": "Generic Week (W1-W53)",
+                "tags": ["Snapshot"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_snapshotdate_timestamp.weekOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_snapshotdate_timestamp.weekOfYear"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Created - Hour",
+                "description": "Hour",
+                "tags": ["Created"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_oppcreated_timestamp.hour",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_oppcreated_timestamp.hour"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Activity - Week of Year",
+                "description": "Generic Week (W1-W53)",
+                "tags": ["Activity"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_activity_timestamp.weekOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_activity_timestamp.weekOfYear"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "SFDC URL",
+                "description": "",
+                "tags": ["Opportunity"],
+                "primary": false,
+                "sourceColumn": "ls__id__nm_url"
+            },
+            "id": "label.f_opportunity.opportunity.sfdcurl",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_opportunity.opportunity.sfdcurl"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Timeline - Day of Month",
+                "description": "Generic Day of the Month (D1-D31)",
+                "tags": ["Timeline"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_timeline_timestamp.dayOfMonth",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_timeline_timestamp.dayOfMonth"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Created - Year",
+                "description": "Year",
+                "tags": ["Created"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_oppcreated_timestamp.year",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_oppcreated_timestamp.year"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Created - Week of Year",
+                "description": "Generic Week (W1-W53)",
+                "tags": ["Created"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_oppcreated_timestamp.weekOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_oppcreated_timestamp.weekOfYear"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Snapshot - Year",
+                "description": "Year",
+                "tags": ["Snapshot"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_snapshotdate_timestamp.year",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_snapshotdate_timestamp.year"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "product",
+                "description": "",
+                "tags": ["product"],
+                "grain": [{ "id": "f_product.id", "type": "attribute" }],
+                "dataSourceTableId": "pg_staging-goodsales:f_product",
+                "type": "NORMAL"
+            },
+            "id": "f_product",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/datasets/f_product"
+            },
+            "type": "dataset"
+        },
+        {
+            "attributes": {
+                "title": "Timeline - Month/Year",
+                "description": "Month and Year (12/2020)",
+                "tags": ["Timeline"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_timeline_timestamp.month",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_timeline_timestamp.month"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Timeline - Day of Year",
+                "description": "Generic Day of the Year (D1-D366)",
+                "tags": ["Timeline"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_timeline_timestamp.dayOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_timeline_timestamp.dayOfYear"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Subject",
+                "description": "",
+                "tags": ["Activity"],
+                "primary": true,
+                "sourceColumn": "ls__id__nm_subject"
+            },
+            "id": "label.f_activity.activity.name",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_activity.activity.name"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Account",
+                "description": "",
+                "tags": ["Account"],
+                "primary": false,
+                "sourceColumn": "ls__id__nm_id"
+            },
+            "id": "label.f_account.account.accountid",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_account.account.accountid"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Created - Month of Year",
+                "description": "Generic Month (M1-M12)",
+                "tags": ["Created"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_oppcreated_timestamp.monthOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_oppcreated_timestamp.monthOfYear"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Created - Month/Year",
+                "description": "Month and Year (12/2020)",
+                "tags": ["Created"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_oppcreated_timestamp.month",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_oppcreated_timestamp.month"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Created - Quarter/Year",
+                "description": "Quarter and Year (Q1/2020)",
+                "tags": ["Created"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_oppcreated_timestamp.quarter",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_oppcreated_timestamp.quarter"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": { "title": "Activity", "description": "", "tags": ["Activity"], "type": "DATE" },
+            "id": "dt_activity_timestamp",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/datasets/dt_activity_timestamp"
+            },
+            "type": "dataset"
+        },
+        {
+            "attributes": {
+                "title": "Opportunity",
+                "description": "",
+                "tags": ["Opportunity"],
+                "grain": [{ "id": "f_opportunity.id", "type": "attribute" }],
+                "referenceProperties": [
+                    {
+                        "identifier": { "id": "dt_oppcreated_timestamp", "type": "dataset" },
+                        "multivalue": false,
+                        "sourceColumns": ["dt_oppcreated_timestamp"]
+                    }
+                ],
+                "dataSourceTableId": "pg_staging-goodsales:f_opportunity",
+                "type": "NORMAL"
+            },
+            "id": "f_opportunity",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/datasets/f_opportunity"
+            },
+            "type": "dataset"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Day of Month",
+                "description": "Generic Day of the Month (D1-D31)",
+                "tags": ["Closed"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_closedate_timestamp.dayOfMonth",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfMonth"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Is Closed?",
+                "description": "Isclosed id",
+                "tags": ["Activity"],
+                "primary": true,
+                "sourceColumn": "ls__isclosed_id__nm_isclosed"
+            },
+            "id": "f_activity.isclosed_id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/f_activity.isclosed_id"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Activity - Quarter of Year",
+                "description": "Generic Quarter (Q1-Q4)",
+                "tags": ["Activity"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_activity_timestamp.quarterOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_activity_timestamp.quarterOfYear"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Created - Day of Year",
+                "description": "Generic Day of the Year (D1-D366)",
+                "tags": ["Created"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_oppcreated_timestamp.dayOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_oppcreated_timestamp.dayOfYear"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Snapshot - Quarter/Year",
+                "description": "Quarter and Year (Q1/2020)",
+                "tags": ["Snapshot"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_snapshotdate_timestamp.quarter",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_snapshotdate_timestamp.quarter"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Minute of Hour",
+                "description": "Generic Minute of the Hour(MI1-MI60)",
+                "tags": ["Closed"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_closedate_timestamp.minuteOfHour",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.minuteOfHour"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Timeline - Date",
+                "description": "Date",
+                "tags": ["Timeline"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_timeline_timestamp.day",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_timeline_timestamp.day"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Region",
+                "description": "Region id",
+                "tags": ["owner"],
+                "primary": true,
+                "sourceColumn": "ls__region_id__nm_region"
+            },
+            "id": "f_owner.region_id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/f_owner.region_id"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Stage",
+                "description": "",
+                "tags": ["Stage"],
+                "grain": [{ "id": "f_stage.id", "type": "attribute" }],
+                "dataSourceTableId": "pg_staging-goodsales:f_stage",
+                "type": "NORMAL"
+            },
+            "id": "f_stage",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/datasets/f_stage"
+            },
+            "type": "dataset"
+        },
+        {
+            "attributes": {
+                "title": "Snapshot - Week/Year",
+                "description": "Week and Year (W52/2020)",
+                "tags": ["Snapshot"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_snapshotdate_timestamp.week",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_snapshotdate_timestamp.week"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Timeline",
+                "description": "",
+                "tags": ["Timeline"],
+                "grain": [{ "id": "f_timeline.id", "type": "attribute" }],
+                "referenceProperties": [
+                    {
+                        "identifier": { "id": "dt_timeline_timestamp", "type": "dataset" },
+                        "multivalue": false,
+                        "sourceColumns": ["dt_timeline_timestamp"]
+                    }
+                ],
+                "dataSourceTableId": "pg_staging-goodsales:f_timeline",
+                "type": "NORMAL"
+            },
+            "id": "f_timeline",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/datasets/f_timeline"
+            },
+            "type": "dataset"
+        },
+        {
+            "attributes": {
+                "title": "Owner Name",
+                "description": "",
+                "tags": ["owner"],
+                "primary": true,
+                "sourceColumn": "ls__id__nm_name"
+            },
+            "id": "label.f_owner.salesrep",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_owner.salesrep"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Activity - Hour of Day",
+                "description": "Generic Hour of the Day(H1-H24)",
+                "tags": ["Activity"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_activity_timestamp.hourOfDay",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_activity_timestamp.hourOfDay"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Timeline - Quarter/Year",
+                "description": "Quarter and Year (Q1/2020)",
+                "tags": ["Timeline"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_timeline_timestamp.quarter",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_timeline_timestamp.quarter"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Product",
+                "description": "",
+                "tags": ["product"],
+                "primary": false,
+                "sourceColumn": "ls__id__nm_id"
+            },
+            "id": "label.f_product.product.productid",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_product.product.productid"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Activity Type",
+                "description": "Activitytype id",
+                "tags": ["Activity"],
+                "primary": true,
+                "sourceColumn": "ls__activitytype_id__nm_activitytype"
+            },
+            "id": "f_activity.activitytype_id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/f_activity.activitytype_id"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Is Won?",
+                "description": "Iswon id",
+                "tags": ["Stage"],
+                "primary": true,
+                "sourceColumn": "ls__iswon_id__nm_iswon"
+            },
+            "id": "f_stage.iswon_id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/f_stage.iswon_id"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Activity - Date",
+                "description": "Date",
+                "tags": ["Activity"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_activity_timestamp.day",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_activity_timestamp.day"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "OpportunitySnapshot",
+                "description": "",
+                "tags": ["OpportunitySnapshot"],
+                "grain": [{ "id": "f_opportunitysnapshot.id", "type": "attribute" }],
+                "referenceProperties": [
+                    {
+                        "identifier": { "id": "dt_closedate_timestamp", "type": "dataset" },
+                        "multivalue": false,
+                        "sourceColumns": ["dt_closedate_timestamp"]
+                    },
+                    {
+                        "identifier": { "id": "f_account", "type": "dataset" },
+                        "multivalue": false,
+                        "sourceColumns": ["accountid_id"]
+                    },
+                    {
+                        "identifier": { "id": "f_owner", "type": "dataset" },
+                        "multivalue": false,
+                        "sourceColumns": ["ownerid_id"]
+                    },
+                    {
+                        "identifier": { "id": "dt_snapshotdate_timestamp", "type": "dataset" },
+                        "multivalue": false,
+                        "sourceColumns": ["dt_snapshotdate_timestamp"]
+                    },
+                    {
+                        "identifier": { "id": "f_opportunity", "type": "dataset" },
+                        "multivalue": false,
+                        "sourceColumns": ["opportunityid_id"]
+                    },
+                    {
+                        "identifier": { "id": "f_stage", "type": "dataset" },
+                        "multivalue": false,
+                        "sourceColumns": ["stage_id"]
+                    },
+                    {
+                        "identifier": { "id": "f_product", "type": "dataset" },
+                        "multivalue": false,
+                        "sourceColumns": ["productid_id"]
+                    }
+                ],
+                "dataSourceTableId": "pg_staging-goodsales:f_opportunitysnapshot",
+                "type": "NORMAL"
+            },
+            "id": "f_opportunitysnapshot",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/datasets/f_opportunitysnapshot"
+            },
+            "type": "dataset"
+        },
+        {
+            "attributes": {
+                "title": "Activity",
+                "description": "",
+                "tags": ["Activity"],
+                "primary": false,
+                "sourceColumn": "ls__id__nm_id"
+            },
+            "id": "label.f_activity.activity",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_activity.activity"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Priority",
+                "description": "Priority id",
+                "tags": ["Activity"],
+                "primary": true,
+                "sourceColumn": "ls__priority_id__nm_priority"
+            },
+            "id": "f_activity.priority_id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/f_activity.priority_id"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Department",
+                "description": "Department id",
+                "tags": ["owner"],
+                "primary": true,
+                "sourceColumn": "ls__department_id__nm_department"
+            },
+            "id": "f_owner.department_id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/f_owner.department_id"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Week/Year",
+                "description": "Week and Year (W52/2020)",
+                "tags": ["Closed"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_closedate_timestamp.week",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.week"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": { "title": "Closed", "description": "", "tags": ["Closed"], "type": "DATE" },
+            "id": "dt_closedate_timestamp",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/datasets/dt_closedate_timestamp"
+            },
+            "type": "dataset"
+        },
+        {
+            "attributes": {
+                "title": "stagehistory",
+                "description": "",
+                "tags": ["stagehistory"],
+                "grain": [{ "id": "f_stagehistory.id", "type": "attribute" }],
+                "referenceProperties": [
+                    {
+                        "identifier": { "id": "f_account", "type": "dataset" },
+                        "multivalue": false,
+                        "sourceColumns": ["accountid_id"]
+                    },
+                    {
+                        "identifier": { "id": "f_opportunity", "type": "dataset" },
+                        "multivalue": false,
+                        "sourceColumns": ["opportunityid_id"]
+                    },
+                    {
+                        "identifier": { "id": "f_stage", "type": "dataset" },
+                        "multivalue": false,
+                        "sourceColumns": ["stage_id"]
+                    },
+                    {
+                        "identifier": { "id": "f_product", "type": "dataset" },
+                        "multivalue": false,
+                        "sourceColumns": ["productid_id"]
+                    }
+                ],
+                "dataSourceTableId": "pg_staging-goodsales:f_stagehistory",
+                "type": "NORMAL"
+            },
+            "id": "f_stagehistory",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/datasets/f_stagehistory"
+            },
+            "type": "dataset"
+        },
+        {
+            "attributes": {
+                "title": "Stage History Id",
+                "description": "Id",
+                "tags": ["stagehistory"],
+                "primary": true,
+                "sourceColumn": "id"
+            },
+            "id": "f_stagehistory.id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/f_stagehistory.id"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Opp. Snapshot Id",
+                "description": "Id",
+                "tags": ["OpportunitySnapshot"],
+                "primary": true,
+                "sourceColumn": "id"
+            },
+            "id": "f_opportunitysnapshot.id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/f_opportunitysnapshot.id"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Timeline - Hour",
+                "description": "Hour",
+                "tags": ["Timeline"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_timeline_timestamp.hour",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_timeline_timestamp.hour"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Minute",
+                "description": "Minute",
+                "tags": ["Closed"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_closedate_timestamp.minute",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.minute"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Opportunity Id",
+                "description": "Id",
+                "tags": ["Opportunity"],
+                "primary": true,
+                "sourceColumn": "id"
+            },
+            "id": "f_opportunity.id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/f_opportunity.id"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Snapshot - Quarter of Year",
+                "description": "Generic Quarter (Q1-Q4)",
+                "tags": ["Snapshot"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_snapshotdate_timestamp.quarterOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_snapshotdate_timestamp.quarterOfYear"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Activity - Month/Year",
+                "description": "Month and Year (12/2020)",
+                "tags": ["Activity"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_activity_timestamp.month",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_activity_timestamp.month"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Timeline - Hour of Day",
+                "description": "Generic Hour of the Day(H1-H24)",
+                "tags": ["Timeline"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_timeline_timestamp.hourOfDay",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_timeline_timestamp.hourOfDay"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Hour of Day",
+                "description": "Generic Hour of the Day(H1-H24)",
+                "tags": ["Closed"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_closedate_timestamp.hourOfDay",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.hourOfDay"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Day of Year",
+                "description": "Generic Day of the Year (D1-D366)",
+                "tags": ["Closed"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_closedate_timestamp.dayOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfYear"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Status",
+                "description": "Status id",
+                "tags": ["Stage"],
+                "primary": true,
+                "sourceColumn": "ls__status_id__nm_status"
+            },
+            "id": "f_stage.status_id",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/f_stage.status_id"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Month/Year",
+                "description": "Month and Year (12/2020)",
+                "tags": ["Closed"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_closedate_timestamp.month",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.month"
+            },
+            "type": "label"
+        },
+        {
+            "attributes": {
+                "title": "Timeline - Day of Week",
+                "description": "Generic Day of the Week (D1-D7)",
+                "tags": ["Timeline"],
+                "primary": true,
+                "sourceColumn": ""
+            },
+            "id": "dt_timeline_timestamp.dayOfWeek",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_timeline_timestamp.dayOfWeek"
+            },
+            "type": "label"
+        }
+    ],
+    "links": {
+        "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes?include=labels,datasets&page=0&size=250",
+        "next": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes?include=labels,datasets&page=1&size=250"
+    }
+}

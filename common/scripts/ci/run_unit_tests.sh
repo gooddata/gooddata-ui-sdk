@@ -23,9 +23,16 @@ start_wiremocks () {
   _WIREMOCK_START="${WIREMOCK_DIR}/start_wiremock.sh"
   _WIREMOCK_STOP="${WIREMOCK_DIR}/stop_wiremock.sh"
 
+  TIGER_WIREMOCK_DIR="${DIR}/../../../libs/sdk-backend-tiger/tests/wiremock"
+  _TIGER_WIREMOCK_START="${TIGER_WIREMOCK_DIR}/start_wiremock.sh"
+  _TIGER_WIREMOCK_STOP="${TIGER_WIREMOCK_DIR}/stop_wiremock.sh"
+
   docker network create ${WIREMOCK_NET} || { echo "Network creation failed" && exit 1 ; }
 
+  echo "Starting wiremock server for bear integrated tests"
   $_WIREMOCK_START detached
+  echo "Starting wiremock server for tiger integrated tests"
+  $_TIGER_WIREMOCK_START detached
 }
 
 #
@@ -33,6 +40,7 @@ start_wiremocks () {
 #
 stop_wiremocks () {
   $_WIREMOCK_STOP
+  $_TIGER_WIREMOCK_STOP
 
   docker network rm ${WIREMOCK_NET}
 }

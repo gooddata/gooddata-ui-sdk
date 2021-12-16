@@ -1,0 +1,147 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`tiger insights should load empty insights for out-of-range page 1`] = `
+InMemoryPaging {
+  "allItems": Array [
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "identifier": "bb512c36-4627-4dd8-8b92-3ef5d364e8f5",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "e7ffd6fe32b04f2eb28eac903f3df8eb",
+                  "title": "# of Activities",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+        ],
+        "filters": Array [],
+        "identifier": "2ec4862e-4559-42d9-a628-fd4e80c16d59",
+        "isLocked": false,
+        "properties": Object {
+          "sortItems": Array [],
+        },
+        "ref": Object {
+          "identifier": "2ec4862e-4559-42d9-a628-fd4e80c16d59",
+          "type": "insight",
+        },
+        "sorts": Array [],
+        "tags": undefined,
+        "title": "Insight Activities",
+        "uri": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/visualizationObjects/2ec4862e-4559-42d9-a628-fd4e80c16d59",
+        "visualizationUrl": "local:column",
+      },
+    },
+  ],
+  "items": Array [],
+  "limit": 50,
+  "offset": 1,
+  "totalCount": 1,
+}
+`;
+
+exports[`tiger insights should load insights 1`] = `
+InMemoryPaging {
+  "allItems": Array [
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "identifier": "bb512c36-4627-4dd8-8b92-3ef5d364e8f5",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "e7ffd6fe32b04f2eb28eac903f3df8eb",
+                  "title": "# of Activities",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+        ],
+        "filters": Array [],
+        "identifier": "2ec4862e-4559-42d9-a628-fd4e80c16d59",
+        "isLocked": false,
+        "properties": Object {
+          "sortItems": Array [],
+        },
+        "ref": Object {
+          "identifier": "2ec4862e-4559-42d9-a628-fd4e80c16d59",
+          "type": "insight",
+        },
+        "sorts": Array [],
+        "tags": undefined,
+        "title": "Insight Activities",
+        "uri": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/visualizationObjects/2ec4862e-4559-42d9-a628-fd4e80c16d59",
+        "visualizationUrl": "local:column",
+      },
+    },
+  ],
+  "items": Array [
+    Object {
+      "insight": Object {
+        "buckets": Array [
+          Object {
+            "items": Array [
+              Object {
+                "measure": Object {
+                  "definition": Object {
+                    "measureDefinition": Object {
+                      "filters": Array [],
+                      "item": Object {
+                        "identifier": "bb512c36-4627-4dd8-8b92-3ef5d364e8f5",
+                        "type": "measure",
+                      },
+                    },
+                  },
+                  "localIdentifier": "e7ffd6fe32b04f2eb28eac903f3df8eb",
+                  "title": "# of Activities",
+                },
+              },
+            ],
+            "localIdentifier": "measures",
+          },
+        ],
+        "filters": Array [],
+        "identifier": "2ec4862e-4559-42d9-a628-fd4e80c16d59",
+        "isLocked": false,
+        "properties": Object {
+          "sortItems": Array [],
+        },
+        "ref": Object {
+          "identifier": "2ec4862e-4559-42d9-a628-fd4e80c16d59",
+          "type": "insight",
+        },
+        "sorts": Array [],
+        "tags": undefined,
+        "title": "Insight Activities",
+        "uri": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/visualizationObjects/2ec4862e-4559-42d9-a628-fd4e80c16d59",
+        "visualizationUrl": "local:column",
+      },
+    },
+  ],
+  "limit": 50,
+  "offset": 0,
+  "totalCount": 1,
+}
+`;

@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { AxiosInstance, AxiosResponse } from "axios";
 import invariant from "ts-invariant";
 import {

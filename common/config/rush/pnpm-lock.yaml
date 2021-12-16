@@ -21805,7 +21805,7 @@ packages:
     dev: false
 
   file:projects/sdk-backend-tiger.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-YuIiXztF1pToroMAAmWtLPZ8tfJBARbJESAoxzq28laNBfE8zcmCXuE+0wcYEn6XUa951EE4qnkiCnri4HQhsA==, tarball: file:projects/sdk-backend-tiger.tgz}
+    resolution: {integrity: sha512-S6sH6fFH95bQw7D8GQjXAapMYfHOIsfIZ9CMZ5zhUf5SiFEwJZD6gcsCnSArUE/3Q0g86VZ0JYyBM+NlZ5yEEw==, tarball: file:projects/sdk-backend-tiger.tgz}
     id: file:projects/sdk-backend-tiger.tgz
     name: '@rush-temp/sdk-backend-tiger'
     version: 0.0.0
@@ -21823,6 +21823,7 @@ packages:
       concurrently: 6.4.0
       date-fns: 2.27.0
       dependency-cruiser: 10.8.0
+      dotenv: 10.0.0
       eslint: 8.3.0
       eslint-plugin-header: 3.1.1_eslint@8.3.0
       eslint-plugin-import: 2.25.3_eslint@8.3.0

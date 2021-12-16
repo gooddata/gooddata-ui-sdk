@@ -1,0 +1,9 @@
+{
+    "request": {
+        "method": "ANY",
+        "urlPattern": "/api/.*"
+    },
+    "response": {
+        "proxyBaseUrl": "https://staging.anywhere.gooddata.com"
+    }
+}

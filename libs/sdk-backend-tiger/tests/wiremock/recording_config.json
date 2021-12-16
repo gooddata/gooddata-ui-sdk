@@ -1,0 +1,26 @@
+{
+    "targetBaseUrl": "https://staging.anywhere.gooddata.com",
+    "filters": {
+        "urlPathPattern": "/api/.*",
+        "method": "ANY",
+        "allowNonProxied": true
+    },
+    "captureHeaders": {
+        "Accept": {},
+        "Content-Type": {
+            "caseInsensitive": true
+        }
+    },
+    "requestBodyPattern": {
+        "matcher": "equalToJson",
+        "ignoreArrayOrder": false,
+        "ignoreExtraElements": false
+    },
+    "extractBodyCriteria": {
+        "textSizeThreshold": "2048",
+        "binarySizeThreshold": "10240"
+    },
+    "outputFormat": "FULL",
+    "persist": true,
+    "repeatsAsScenarios": false
+}
