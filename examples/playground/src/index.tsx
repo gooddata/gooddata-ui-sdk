@@ -1,5 +1,7 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 // this line is to avoid the TS2580 error. We do have the required dependencies but the error still happens.
+import { uriRef } from "@gooddata/sdk-model";
+
 declare const require: any;
 if (process.env.WDYR === "true") {
     // we do not want to fetch this dependency while the functionality is disabled
@@ -11,18 +13,33 @@ if (process.env.WDYR === "true") {
 }
 import "babel-polyfill";
 import React from "react";
-import ReactDOM from "react-dom";
+import { getInsightExecution } from "./getInsightExecution";
+import { getWidgetExecution } from "./getWidgetExecution";
 
-import "@gooddata/sdk-ui-filters/styles/css/main.css";
-import "@gooddata/sdk-ui-charts/styles/css/main.css";
-import "@gooddata/sdk-ui-pivot/styles/css/main.css";
-import "@gooddata/sdk-ui-kit/styles/css/main.css";
-import "@gooddata/sdk-ui-ext/styles/css/main.css";
-import "@gooddata/sdk-ui-dashboard/styles/css/main.css";
+const token = "";
+const projectId = "p0j47iyr6cwpyrzs8ab4aib0p1ufbiie";
+const insightUri = "/gdc/md/p0j47iyr6cwpyrzs8ab4aib0p1ufbiie/obj/75567";
 
-import { App } from "./App";
+const widgetUri = "/gdc/md/p0j47iyr6cwpyrzs8ab4aib0p1ufbiie/obj/75720";
+const filterContextUri = "/gdc/md/p0j47iyr6cwpyrzs8ab4aib0p1ufbiie/obj/75725";
+const dashboardUri = "/gdc/md/p0j47iyr6cwpyrzs8ab4aib0p1ufbiie/obj/75726";
 
-const root = document.createElement("div");
-root.className = "root";
-document.body.appendChild(root);
-ReactDOM.render(<App />, root);
+// this is just a cookie hack for the playground - it will not be used like this in node
+document.cookie = `GDCAuthSST=${token};path=/gdc/account`;
+
+(async () => {
+    try {
+        await getInsightExecution(token, projectId, insightUri);
+    } catch (e) {
+        console.log("insight", e);
+    }
+
+    console.log('#############################################')
+
+    try {
+        await getWidgetExecution(token, projectId, uriRef(dashboardUri), uriRef(widgetUri), uriRef(filterContextUri));
+    } catch (e) {
+        console.log("widget", e);
+    }
+
+})();
