@@ -1,0 +1,16 @@
+.gd-dynamic-select {
+    position: relative;
+    display: inline-flex;
+    flex-wrap: wrap;
+}
+.gd-dynamic-select .gd-dynamic-select-input-wrapper {
+    display: inline-flex;
+}
+.gd-dynamic-select .gd-input-field {
+    flex: 1 1 auto;
+    overflow: hidden;
+    border-radius: 3px 0 0 3px;
+}
+.gd-dynamic-select-menu {
+    width: 100%;
+}

@@ -1,0 +1,210 @@
+meta.foundation-version {
+    font-family: "/5.5.3/";
+}
+
+meta.foundation-mq-small {
+    font-family: "/only screen/";
+    width: 0;
+}
+
+meta.foundation-mq-small-only {
+    font-family: "/only screen and (max-width: 40em)/";
+    width: 0;
+}
+
+meta.foundation-mq-medium {
+    font-family: "/only screen and (min-width:40.0625em)/";
+    width: 40.0625em;
+}
+
+meta.foundation-mq-medium-only {
+    font-family: "/only screen and (min-width:40.0625em) and (max-width:64em)/";
+    width: 40.0625em;
+}
+
+meta.foundation-mq-large {
+    font-family: "/only screen and (min-width:64.0625em)/";
+    width: 64.0625em;
+}
+
+meta.foundation-mq-large-only {
+    font-family: "/only screen and (min-width:64.0625em) and (max-width:90em)/";
+    width: 64.0625em;
+}
+
+meta.foundation-mq-xlarge {
+    font-family: "/only screen and (min-width:90.0625em)/";
+    width: 90.0625em;
+}
+
+meta.foundation-mq-xlarge-only {
+    font-family: "/only screen and (min-width:90.0625em) and (max-width:120em)/";
+    width: 90.0625em;
+}
+
+meta.foundation-mq-xxlarge {
+    font-family: "/only screen and (min-width:120.0625em)/";
+    width: 120.0625em;
+}
+
+meta.foundation-data-attribute-namespace {
+    font-family: false;
+}
+
+/* allow vendor prefixes and disable max length */
+/* allow vendor prefixes and disable max length */
+.gd-viz-tooltip {
+    position: relative;
+    border-radius: 3px;
+    font-family: gdcustomfont, "Avenir", "Helvetica Neue", arial, sans-serif;
+    color: var(
+        --gd-chart-tooltipLabelColor,
+        var(--gd-palette-complementary-6, var(--gd-palette-complementary-9, #000))
+    );
+    background-color: var(
+        --gd-chart-tooltipBackgroundColor,
+        var(--gd-palette-complementary-0, rgba(255, 255, 255, 0.95))
+    );
+}
+
+.gd-viz-tooltip-stroke {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 0;
+    border-top: 3px solid var(--gd-palette-complementary-3, #848484);
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.gd-viz-tooltip-content {
+    display: block;
+    padding: 10px 9px 9px;
+    border-radius: 3px;
+    border: 1px solid;
+    border-color: var(
+        --gd-chart-tooltipBorderColor,
+        var(--gd-palette-complementary-3, rgba(201, 213, 224, 0.7))
+    );
+    box-shadow: 0 1px 3px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.1)),
+        0 2px 9px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.15));
+    line-height: 1.3;
+    white-space: normal;
+}
+@media only screen and (max-width: 480px) {
+    .gd-viz-tooltip-content {
+        max-width: none;
+    }
+}
+
+.gd-viz-tooltip-item {
+    display: block;
+    margin-bottom: 10px;
+}
+.gd-viz-tooltip-item:last-child {
+    margin-bottom: 0;
+}
+
+.gd-viz-tooltip-title {
+    display: block;
+    overflow: hidden;
+    font-size: 12px;
+    font-weight: normal;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: left;
+    color: var(--gd-chart-tooltipLabelColor, var(--gd-palette-complementary-7, #6d7680));
+}
+
+.gd-viz-tooltip-value-wraper {
+    padding-right: 1em;
+}
+
+.gd-viz-tooltip-value {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    font-size: 14px;
+    line-height: 1.3em;
+    max-height: 2.6em;
+    text-align: justify;
+    margin-right: -1em;
+    padding-right: 1em;
+    word-wrap: break-word;
+    color: var(--gd-chart-tooltipValueColor, var(--gd-palette-complementary-9, #000));
+}
+.gd-viz-tooltip-value::before {
+    content: "...";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+.gd-viz-tooltip-value::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    width: 1em;
+    height: 1em;
+    margin-top: 0.2em;
+    background: var(
+        --gd-chart-tooltipBackgroundColor,
+        var(--gd-palette-complementary-0, rgba(255, 255, 255, 0.95))
+    );
+}
+
+.gd-viz-tooltip-value-max-content {
+    display: block;
+    visibility: hidden;
+    overflow: hidden;
+    height: 0;
+    white-space: nowrap;
+    font-size: 14px;
+    font-weight: normal;
+    text-align: left;
+}
+
+.multiline-supported .gd-viz-tooltip-value-wraper {
+    padding-right: 0;
+}
+
+.multiline-supported .gd-viz-tooltip-value {
+    margin: 0;
+    padding: 0;
+    line-height: 1.3em;
+    text-align: left;
+    max-height: 2.6em;
+}
+.multiline-supported .gd-viz-tooltip-value.clamp-two-line {
+    display: flex;
+    /*! autoprefixer: ignore next */
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+.multiline-supported .gd-viz-tooltip-value::before {
+    content: none;
+}
+.multiline-supported .gd-viz-tooltip-value::after {
+    content: none;
+}
+
+.highcharts-tooltip-container {
+    /* stylelint-disable declaration-no-important */
+    z-index: 3005 !important;
+}
+.highcharts-tooltip-container g.highcharts-tooltip {
+    visibility: hidden;
+}
+
+.gd-viz-tooltip-interaction {
+    white-space: nowrap;
+    color: var(--gd-palette-complementary-6, #94a1ad);
+    font-size: 12px;
+    text-align: left;
+    border-top: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+    padding-top: 9px;
+}
+
+.gd-viz-tooltip-drilling-point {
+    cursor: pointer;
+}

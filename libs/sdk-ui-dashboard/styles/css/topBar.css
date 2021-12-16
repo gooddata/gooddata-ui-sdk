@@ -1,0 +1,185 @@
+meta.foundation-version {
+    font-family: "/5.5.3/";
+}
+
+meta.foundation-mq-small {
+    font-family: "/only screen/";
+    width: 0;
+}
+
+meta.foundation-mq-small-only {
+    font-family: "/only screen and (max-width: 40em)/";
+    width: 0;
+}
+
+meta.foundation-mq-medium {
+    font-family: "/only screen and (min-width:40.0625em)/";
+    width: 40.0625em;
+}
+
+meta.foundation-mq-medium-only {
+    font-family: "/only screen and (min-width:40.0625em) and (max-width:64em)/";
+    width: 40.0625em;
+}
+
+meta.foundation-mq-large {
+    font-family: "/only screen and (min-width:64.0625em)/";
+    width: 64.0625em;
+}
+
+meta.foundation-mq-large-only {
+    font-family: "/only screen and (min-width:64.0625em) and (max-width:90em)/";
+    width: 64.0625em;
+}
+
+meta.foundation-mq-xlarge {
+    font-family: "/only screen and (min-width:90.0625em)/";
+    width: 90.0625em;
+}
+
+meta.foundation-mq-xlarge-only {
+    font-family: "/only screen and (min-width:90.0625em) and (max-width:120em)/";
+    width: 90.0625em;
+}
+
+meta.foundation-mq-xxlarge {
+    font-family: "/only screen and (min-width:120.0625em)/";
+    width: 120.0625em;
+}
+
+meta.foundation-data-attribute-namespace {
+    font-family: false;
+}
+
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+/* allow vendor prefixes and disable max length */
+/* allow vendor prefixes and disable max length */
+/* ==========================================================================
+   Variables, mixins, silent classes etc.
+   ========================================================================== */
+.dash-header {
+    min-height: 1px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 48px;
+    border-bottom: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+    border-bottom-color: var(--gd-dashboards-title-borderColor, var(--gd-palette-complementary-3, #dde4eb));
+    background: var(--gd-dashboards-title-backgroundColor, var(--gd-palette-complementary-0, #fff));
+}
+.dash-header::after {
+    content: ".";
+    display: block;
+    visibility: hidden;
+    clear: both;
+    height: 0;
+    font-size: 0;
+}
+.dash-header .dash-control-buttons {
+    flex: 0 0 auto;
+    margin-left: auto;
+    padding-left: 20px;
+    text-align: right;
+}
+.dash-header .dash-control-buttons .cancel-button {
+    margin-right: 10px;
+}
+
+.dash-control-buttons {
+    flex: 0 0 auto;
+    margin: 0 10px 0 auto;
+    padding-left: 20px;
+    text-align: right;
+}
+
+.dash-header-inner {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    overflow: hidden;
+    margin-left: 15px;
+}
+.dash-header-inner .gd-locked-status,
+.dash-header-inner .gd-share-status {
+    align-self: flex-end;
+}
+.dash-header-inner .gd-locked-status {
+    padding-bottom: 2px;
+    margin-left: 5px;
+}
+.dash-header-inner .gd-share-status {
+    padding-bottom: 4px;
+}
+
+.dash-title-wrapper {
+    display: block;
+    overflow: hidden;
+    margin-right: 5px;
+}
+
+.dash-title {
+    overflow: hidden;
+    width: auto;
+    height: 40px;
+    max-width: 100%;
+    padding: 4px 10px 2px 8px;
+    border: 1px solid transparent;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 32px;
+    text-overflow: ellipsis;
+    vertical-align: top;
+    color: var(--gd-dashboards-title-color, var(--gd-palette-complementary-8, #464e56));
+}
+.dash-title,
+.dash-title textarea {
+    white-space: nowrap;
+}
+.dash-title::placeholder,
+.dash-title textarea::placeholder {
+    color: var(--gd-palette-complementary-6, inherit);
+}
+.dash-title.editable {
+    min-width: 76px;
+}
+.dash-title.editable:hover,
+.dash-title.is-editing {
+    border-color: var(--gd-palette-complementary-4, rgba(177, 193, 209, 0.5));
+}
+.dash-title.placeholder {
+    color: var(--gd-palette-complementary-6, #94a1ad);
+}
+
+.dash-header-options-button {
+    flex: 0 0 auto;
+    text-align: center;
+}
+@media only screen and (max-width: 320px), only screen and (max-width: 640px) {
+    .dash-header-options-button {
+        width: 45px;
+        align-self: stretch;
+        padding: 0;
+        border-radius: 0;
+        border-width: 0 0 0 1px;
+        font-size: 20px;
+        background: var(--gd-dashboards-title-backgroundColor, var(--gd-palette-complementary-0, #fff));
+        border-color: var(--gd-dashboards-title-borderColor, var(--gd-palette-complementary-3, #dde4eb));
+    }
+    .dash-header-options-button,
+    .dash-header-options-button:hover,
+    .dash-header-options-button:active,
+    .dash-header-options-button:focus {
+        box-shadow: none;
+    }
+}
+@media only screen and (min-width: 641px) {
+    .dash-header-options-button {
+        margin-right: 10px;
+    }
+}
+
+.overlay-wrapper {
+    z-index: 5001;
+}

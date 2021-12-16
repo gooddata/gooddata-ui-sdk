@@ -1,0 +1,207 @@
+meta.foundation-version {
+    font-family: "/5.5.3/";
+}
+
+meta.foundation-mq-small {
+    font-family: "/only screen/";
+    width: 0;
+}
+
+meta.foundation-mq-small-only {
+    font-family: "/only screen and (max-width: 40em)/";
+    width: 0;
+}
+
+meta.foundation-mq-medium {
+    font-family: "/only screen and (min-width:40.0625em)/";
+    width: 40.0625em;
+}
+
+meta.foundation-mq-medium-only {
+    font-family: "/only screen and (min-width:40.0625em) and (max-width:64em)/";
+    width: 40.0625em;
+}
+
+meta.foundation-mq-large {
+    font-family: "/only screen and (min-width:64.0625em)/";
+    width: 64.0625em;
+}
+
+meta.foundation-mq-large-only {
+    font-family: "/only screen and (min-width:64.0625em) and (max-width:90em)/";
+    width: 64.0625em;
+}
+
+meta.foundation-mq-xlarge {
+    font-family: "/only screen and (min-width:90.0625em)/";
+    width: 90.0625em;
+}
+
+meta.foundation-mq-xlarge-only {
+    font-family: "/only screen and (min-width:90.0625em) and (max-width:120em)/";
+    width: 90.0625em;
+}
+
+meta.foundation-mq-xxlarge {
+    font-family: "/only screen and (min-width:120.0625em)/";
+    width: 120.0625em;
+}
+
+meta.foundation-data-attribute-namespace {
+    font-family: false;
+}
+
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+/* allow vendor prefixes and disable max length */
+/* allow vendor prefixes and disable max length */
+/* ==========================================================================
+   Variables, mixins, silent classes etc.
+   ========================================================================== */
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+.gd-dialog.gd-drill-modal-dialog {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-width: 100vw;
+    width: calc(100vw - 10 * (1vw + 1vh - 1vmin));
+    height: calc(100vh - 10 * (1vw + 1vh - 1vmin));
+    padding: 20px;
+    background-color: var(--gd-palette-complementary-0, #fff);
+}
+@media only screen and (max-width: 640px) {
+    .gd-dialog.gd-drill-modal-dialog {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: auto;
+        height: auto;
+        border-radius: 0;
+    }
+}
+
+.gd-drill-modal-dialog-header {
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    height: 38px;
+    margin: 0 0 20px;
+    background-color: var(--gd-palette-complementary-0, #fff);
+}
+.gd-drill-modal-dialog-header .gd-drill-reset-button {
+    margin: 0 10px 0 0;
+}
+.gd-drill-modal-dialog-header .gd-drill-title {
+    font-weight: 400;
+    font-size: 17px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0 20px 0 0;
+    padding: 4px;
+    line-height: 23px;
+    white-space: nowrap;
+}
+.gd-drill-modal-dialog-header .gd-drill-close-button {
+    top: -5px;
+    right: -5px;
+}
+.gd-drill-modal-dialog .gd-drill-modal-dialog-header .gd-drill-close-button {
+    position: absolute;
+}
+
+.gd-drill-modal-dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    color: var(--gd-palette-complementary-5, #b1c1d1);
+    margin-top: 20px;
+    padding-top: 18px;
+}
+.gd-drill-modal-dialog-footer .export-drilled-insight {
+    position: relative;
+}
+.gd-drill-modal-dialog-footer .export-drilled-insight .export-menu-toggle-button {
+    border: none;
+    box-shadow: none;
+    line-height: 20px;
+}
+.gd-drill-modal-dialog-footer .export-drilled-insight .export-menu-toggle-button::before {
+    top: 8px;
+    font-size: 16px;
+}
+
+.gd-drill-modal-dialog-footer.gd-drill-modal-dialog-footer-with-border {
+    border-top: 1px solid var(--gd-modal-title-lineColor, var(--gd-palette-complementary-3, #dde4eb));
+}
+
+.gd-drill-modal-dialog-content {
+    background-color: var(--gd-palette-complementary-0, #fff);
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.gd-drill-modal-dialog-content .gd-drill-modal-dialog-content-base {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.gd-drill-modal-dialog-content .visualization-uri-root {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+}
+.gd-drill-modal-dialog-content .visualization-uri-root .headline {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.gd-drill-modal-dialog-content .visualization-uri-root .headline .headline-primary-item {
+    color: var(--gd-palette-complementary-9, #000);
+}
+.gd-drill-modal-dialog-content .visualization-uri-root .headline .headline-secondary-item {
+    border-left-color: rgba(176, 190, 202, 0.5);
+}
+.gd-drill-modal-dialog-content .visualization-uri-root .headline .headline-compare-section,
+.gd-drill-modal-dialog-content .visualization-uri-root .headline .headline-compare-section-item,
+.gd-drill-modal-dialog-content .visualization-uri-root .headline .headline-value--empty {
+    color: var(--gd-palette-complementary-6, #94a1ad);
+}
+.gd-drill-modal-dialog-content .gd-loading-equalizer-wrap,
+.gd-drill-modal-dialog-content .gd-drill-modal-error {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--gd-palette-complementary-0, #fff);
+}
+.gd-drill-modal-dialog-content .gd-loading-equalizer-wrap {
+    z-index: 3;
+}
+.gd-drill-modal-dialog-content .gd-loading-equalizer-wrap .gd-loading-equalizer {
+    margin: auto 0;
+}
+.gd-drill-modal-dialog-content .gd-drill-modal-error {
+    position: absolute;
+    z-index: 4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.gd-drill-modal-dialog-content .info-label {
+    height: auto;
+}
+
+/* stylelint-disable declaration-no-important */
+.highcharts-tooltip-container {
+    z-index: 5001 !important;
+}

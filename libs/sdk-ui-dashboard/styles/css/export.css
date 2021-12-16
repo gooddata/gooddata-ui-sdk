@@ -1,0 +1,21 @@
+.export-mode * {
+    transition: none !important;
+    /* stylelint-disable-line declaration-no-important */
+}
+
+.export-mode .gd-fluidlayout-row {
+    display: block !important;
+    /* stylelint-disable-line declaration-no-important */
+    page-break-inside: avoid;
+}
+.export-mode .gd-fluidlayout-row .gd-fluidlayout-column {
+    display: inline-block;
+    vertical-align: top;
+}
+.export-mode .gd-fluidlayout-row .gd-fluidlayout-column .dash-item {
+    min-height: inherit;
+}
+
+.export-mode .gd-row-header-view .description .more-link.active {
+    display: none;
+}

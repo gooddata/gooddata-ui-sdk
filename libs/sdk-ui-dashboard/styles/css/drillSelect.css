@@ -1,0 +1,147 @@
+meta.foundation-version {
+    font-family: "/5.5.3/";
+}
+
+meta.foundation-mq-small {
+    font-family: "/only screen/";
+    width: 0;
+}
+
+meta.foundation-mq-small-only {
+    font-family: "/only screen and (max-width: 40em)/";
+    width: 0;
+}
+
+meta.foundation-mq-medium {
+    font-family: "/only screen and (min-width:40.0625em)/";
+    width: 40.0625em;
+}
+
+meta.foundation-mq-medium-only {
+    font-family: "/only screen and (min-width:40.0625em) and (max-width:64em)/";
+    width: 40.0625em;
+}
+
+meta.foundation-mq-large {
+    font-family: "/only screen and (min-width:64.0625em)/";
+    width: 64.0625em;
+}
+
+meta.foundation-mq-large-only {
+    font-family: "/only screen and (min-width:64.0625em) and (max-width:90em)/";
+    width: 64.0625em;
+}
+
+meta.foundation-mq-xlarge {
+    font-family: "/only screen and (min-width:90.0625em)/";
+    width: 90.0625em;
+}
+
+meta.foundation-mq-xlarge-only {
+    font-family: "/only screen and (min-width:90.0625em) and (max-width:120em)/";
+    width: 90.0625em;
+}
+
+meta.foundation-mq-xxlarge {
+    font-family: "/only screen and (min-width:120.0625em)/";
+    width: 120.0625em;
+}
+
+meta.foundation-data-attribute-namespace {
+    font-family: false;
+}
+
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+/* allow vendor prefixes and disable max length */
+/* allow vendor prefixes and disable max length */
+/* ==========================================================================
+   Variables, mixins, silent classes etc.
+   ========================================================================== */
+.gd-drill-modal-picker-overlay-mask {
+    position: absolute;
+    z-index: 5002;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+}
+
+.gd-drill-modal-picker-dropdown {
+    overflow: hidden;
+    max-width: 170px;
+    width: 204px;
+    background-color: var(--gd-palette-complementary-0, #fff);
+    border-radius: 3px;
+    border: 1px solid var(--gd-palette-complementary-3, #ccd8e2);
+    box-shadow: 0 1px 3px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.1)),
+        0 2px 9px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.15));
+}
+.gd-drill-modal-picker-dropdown .gd-drill-modal-picker-title {
+    font-weight: 400;
+    font-size: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 10px 10px 0 10px;
+    line-height: 16px;
+    white-space: nowrap;
+    color: var(--gd-palette-complementary-6, #94a1ad);
+    text-transform: uppercase;
+}
+.gd-drill-modal-picker-dropdown .gd-drill-modal-picker-body {
+    max-height: 160px;
+    overflow-y: auto;
+    padding: 0 0 10px 0;
+}
+.gd-drill-modal-picker-dropdown .gd-drill-modal-picker-list-item {
+    display: flex;
+    align-items: center;
+    height: 27px;
+    padding: 0 10px;
+    cursor: pointer;
+    text-decoration: none;
+}
+.gd-drill-modal-picker-selector-list .gd-drill-modal-picker-dropdown .gd-drill-modal-picker-list-item {
+    padding: 4px 10px;
+}
+.gd-drill-modal-picker-dropdown .gd-drill-modal-picker-list-item p {
+    font-family: gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
+    font-size: 12px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    color: var(--gd-palette-complementary-8, #464e56);
+}
+.gd-drill-modal-picker-dropdown .gd-drill-modal-picker-list-item p span {
+    color: var(--gd-palette-complementary-5, #b0beca);
+}
+.gd-drill-modal-picker-dropdown .gd-drill-modal-picker-list-item .gd-drill-modal-picker-icon-wrapper {
+    height: 100%;
+}
+.gd-drill-modal-picker-dropdown .gd-drill-modal-picker-list-item svg {
+    margin-left: 4px;
+    margin-right: 4px;
+    width: 12px;
+    height: 100%;
+}
+.gd-drill-modal-picker-dropdown .gd-drill-modal-picker-list-item:hover,
+.gd-drill-modal-picker-dropdown .gd-drill-modal-picker-list-item:focus {
+    background: var(--gd-palette-complementary-2, #ebeff4);
+}
+.gd-drill-modal-picker-dropdown .gd-drill-modal-picker-list-item:hover span,
+.gd-drill-modal-picker-dropdown .gd-drill-modal-picker-list-item:focus span {
+    color: var(--gd-palette-complementary-9);
+}
+
+.gd-drill-to-url-modal-picker {
+    padding: 2px 0 0 10px;
+}
+
+.gd-drill-modal-wrapper-mask {
+    position: relative;
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}

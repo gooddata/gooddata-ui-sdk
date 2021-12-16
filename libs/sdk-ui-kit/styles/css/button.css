@@ -1,0 +1,1239 @@
+meta.foundation-version {
+    font-family: "/5.5.3/";
+}
+
+meta.foundation-mq-small {
+    font-family: "/only screen/";
+    width: 0;
+}
+
+meta.foundation-mq-small-only {
+    font-family: "/only screen and (max-width: 40em)/";
+    width: 0;
+}
+
+meta.foundation-mq-medium {
+    font-family: "/only screen and (min-width:40.0625em)/";
+    width: 40.0625em;
+}
+
+meta.foundation-mq-medium-only {
+    font-family: "/only screen and (min-width:40.0625em) and (max-width:64em)/";
+    width: 40.0625em;
+}
+
+meta.foundation-mq-large {
+    font-family: "/only screen and (min-width:64.0625em)/";
+    width: 64.0625em;
+}
+
+meta.foundation-mq-large-only {
+    font-family: "/only screen and (min-width:64.0625em) and (max-width:90em)/";
+    width: 64.0625em;
+}
+
+meta.foundation-mq-xlarge {
+    font-family: "/only screen and (min-width:90.0625em)/";
+    width: 90.0625em;
+}
+
+meta.foundation-mq-xlarge-only {
+    font-family: "/only screen and (min-width:90.0625em) and (max-width:120em)/";
+    width: 90.0625em;
+}
+
+meta.foundation-mq-xxlarge {
+    font-family: "/only screen and (min-width:120.0625em)/";
+    width: 120.0625em;
+}
+
+meta.foundation-data-attribute-namespace {
+    font-family: false;
+}
+
+/* allow vendor prefixes and disable max length */
+/* allow vendor prefixes and disable max length */
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+/* ==========================================================================
+   Silent classes - more clever mixins
+   ========================================================================== */
+.gd-button-primary,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"],
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"],
+.gd-button-secondary,
+.gd-button-positive,
+.gd-button-negative,
+.gd-button-action {
+    position: relative;
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 14px;
+    border: 1px solid transparent;
+    outline: 0;
+    font: 400 14px/20px gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    text-align: left;
+    border-radius: var(--gd-button-borderRadius, 3px);
+    text-transform: var(--gd-button-textCapitalization, none);
+    -moz-transition-property: all;
+    -webkit-transition-property: all;
+    transition-property: all;
+    -moz-transition-duration: 0.25s;
+    -webkit-transition-duration: 0.25s;
+    transition-duration: 0.25s;
+    -moz-transition-timing-function: ease-in-out;
+    -webkit-transition-timing-function: ease-in-out;
+    transition-timing-function: ease-in-out;
+}
+.gd-button-primary::before,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"]::before,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"]::before,
+.gd-button-secondary::before,
+.gd-button-positive::before,
+.gd-button-negative::before,
+.gd-button-action::before,
+.gd-button-primary::after,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"]::after,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"]::after,
+.gd-button-secondary::after,
+.gd-button-positive::after,
+.gd-button-negative::after,
+.gd-button-action::after {
+    position: absolute;
+    top: 50%;
+    height: 20px;
+    line-height: 20px;
+    color: var(--gd-palette-complementary-5, #b0beca);
+    transform: translateY(-50%);
+    font-size: 18px;
+    text-align: center;
+    -moz-transition-property: color;
+    -webkit-transition-property: color;
+    transition-property: color;
+    -moz-transition-duration: 0.25s;
+    -webkit-transition-duration: 0.25s;
+    transition-duration: 0.25s;
+    -moz-transition-timing-function: ease-in-out;
+    -webkit-transition-timing-function: ease-in-out;
+    transition-timing-function: ease-in-out;
+}
+.gd-button-primary::before,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"]::before,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"]::before,
+.gd-button-secondary::before,
+.gd-button-positive::before,
+.gd-button-negative::before,
+.gd-button-action::before {
+    left: 10px;
+    margin-right: 0.5em;
+}
+.gd-button-primary::after,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"]::after,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"]::after,
+.gd-button-secondary::after,
+.gd-button-positive::after,
+.gd-button-negative::after,
+.gd-button-action::after {
+    right: 7px;
+    margin-left: 0.5em;
+}
+.gd-button-primary .gd-button-text,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"] .gd-button-text,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"] .gd-button-text,
+.gd-button-secondary .gd-button-text,
+.gd-button-positive .gd-button-text,
+.gd-button-negative .gd-button-text,
+.gd-button-action .gd-button-text,
+.gd-button-primary .gd-button-icon,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"] .gd-button-icon,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"] .gd-button-icon,
+.gd-button-secondary .gd-button-icon,
+.gd-button-positive .gd-button-icon,
+.gd-button-negative .gd-button-icon,
+.gd-button-action .gd-button-icon {
+    position: relative;
+    display: block;
+    justify-content: space-between;
+    align-items: center;
+}
+.gd-button-primary .gd-button-text,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"] .gd-button-text,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"] .gd-button-text,
+.gd-button-secondary .gd-button-text,
+.gd-button-positive .gd-button-text,
+.gd-button-negative .gd-button-text,
+.gd-button-action .gd-button-text {
+    top: 1px;
+    flex: 1 1 auto;
+    overflow: hidden;
+    width: 100%;
+    text-overflow: ellipsis;
+}
+
+.gd-button-primary .gd-button-icon,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"] .gd-button-icon,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"] .gd-button-icon,
+.gd-button-secondary .gd-button-icon,
+.gd-button-positive .gd-button-icon,
+.gd-button-negative .gd-button-icon,
+.gd-button-action .gd-button-icon {
+    flex: 0 0 auto;
+    width: 18px;
+    height: 18px;
+    margin: 0 0.5em;
+    line-height: 18px;
+    color: var(--gd-palette-complementary-5, #b0beca);
+    font-size: 18px;
+    text-align: center;
+    text-decoration: none;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.gd-button-primary .gd-button-icon::before,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"] .gd-button-icon::before,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"] .gd-button-icon::before,
+.gd-button-secondary .gd-button-icon::before,
+.gd-button-positive .gd-button-icon::before,
+.gd-button-negative .gd-button-icon::before,
+.gd-button-action .gd-button-icon::before,
+.gd-button-primary .gd-button-icon::after,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"] .gd-button-icon::after,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"] .gd-button-icon::after,
+.gd-button-secondary .gd-button-icon::after,
+.gd-button-positive .gd-button-icon::after,
+.gd-button-negative .gd-button-icon::after,
+.gd-button-action .gd-button-icon::after {
+    color: inherit;
+    -moz-transition-property: color;
+    -webkit-transition-property: color;
+    transition-property: color;
+    -moz-transition-duration: 0.25s;
+    -webkit-transition-duration: 0.25s;
+    transition-duration: 0.25s;
+    -moz-transition-timing-function: ease-in-out;
+    -webkit-transition-timing-function: ease-in-out;
+    transition-timing-function: ease-in-out;
+}
+.gd-button-primary:not(.gd-button-link):not(.gd-button-link-dimmed) .gd-button-icon:first-child,
+.gd-button-link.gd-button-icon-only:not(.gd-button-link):not(.gd-button-link-dimmed)[class*="gd-icon-"]
+    .gd-button-icon:first-child,
+.gd-button-icon-only.gd-button-link-dimmed:not(.gd-button-link):not(.gd-button-link-dimmed)[class*="gd-icon-"]
+    .gd-button-icon:first-child,
+.gd-button-secondary:not(.gd-button-link):not(.gd-button-link-dimmed) .gd-button-icon:first-child,
+.gd-button-positive:not(.gd-button-link):not(.gd-button-link-dimmed) .gd-button-icon:first-child,
+.gd-button-negative:not(.gd-button-link):not(.gd-button-link-dimmed) .gd-button-icon:first-child,
+.gd-button-action:not(.gd-button-link):not(.gd-button-link-dimmed) .gd-button-icon:first-child {
+    margin-left: -4px;
+}
+.gd-button-primary:not(.gd-button-link):not(.gd-button-link-dimmed) .gd-button-icon:last-child,
+.gd-button-link.gd-button-icon-only:not(.gd-button-link):not(.gd-button-link-dimmed)[class*="gd-icon-"]
+    .gd-button-icon:last-child,
+.gd-button-icon-only.gd-button-link-dimmed:not(.gd-button-link):not(.gd-button-link-dimmed)[class*="gd-icon-"]
+    .gd-button-icon:last-child,
+.gd-button-secondary:not(.gd-button-link):not(.gd-button-link-dimmed) .gd-button-icon:last-child,
+.gd-button-positive:not(.gd-button-link):not(.gd-button-link-dimmed) .gd-button-icon:last-child,
+.gd-button-negative:not(.gd-button-link):not(.gd-button-link-dimmed) .gd-button-icon:last-child,
+.gd-button-action:not(.gd-button-link):not(.gd-button-link-dimmed) .gd-button-icon:last-child {
+    margin-right: -4px;
+}
+.gd-button-primary:not(.gd-button-link):not(.gd-button-link-dimmed) .gd-button-icon:only-child,
+.gd-button-link.gd-button-icon-only:not(.gd-button-link):not(.gd-button-link-dimmed)[class*="gd-icon-"]
+    .gd-button-icon:only-child,
+.gd-button-icon-only.gd-button-link-dimmed:not(.gd-button-link):not(.gd-button-link-dimmed)[class*="gd-icon-"]
+    .gd-button-icon:only-child,
+.gd-button-secondary:not(.gd-button-link):not(.gd-button-link-dimmed) .gd-button-icon:only-child,
+.gd-button-positive:not(.gd-button-link):not(.gd-button-link-dimmed) .gd-button-icon:only-child,
+.gd-button-negative:not(.gd-button-link):not(.gd-button-link-dimmed) .gd-button-icon:only-child,
+.gd-button-action:not(.gd-button-link):not(.gd-button-link-dimmed) .gd-button-icon:only-child {
+    width: 19px;
+    height: 17px;
+    line-height: 17px;
+    margin-right: -9px;
+    margin-left: -9px;
+    font-size: 16px;
+}
+.gd-button-primary:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed):active::before,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"]:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed):active::before,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"]:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed):active::before,
+.gd-button-secondary:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed):active::before,
+.gd-button-positive:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed):active::before,
+.gd-button-negative:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed):active::before,
+.gd-button-action:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed):active::before,
+.gd-button-primary:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed):active::after,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"]:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed):active::after,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"]:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed):active::after,
+.gd-button-secondary:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed):active::after,
+.gd-button-positive:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed):active::after,
+.gd-button-negative:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed):active::after,
+.gd-button-action:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed):active::after {
+    top: calc(50% + 1px);
+}
+.gd-button-primary:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed):active .gd-button-text,
+.gd-button-link.gd-button-icon-only:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed):active[class*="gd-icon-"]
+    .gd-button-text,
+.gd-button-icon-only.gd-button-link-dimmed:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed):active[class*="gd-icon-"]
+    .gd-button-text,
+.gd-button-secondary:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed):active .gd-button-text,
+.gd-button-positive:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed):active .gd-button-text,
+.gd-button-negative:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed):active .gd-button-text,
+.gd-button-action:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed):active .gd-button-text {
+    top: 2px;
+}
+.gd-button-primary:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed):active .gd-button-icon,
+.gd-button-link.gd-button-icon-only:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed):active[class*="gd-icon-"]
+    .gd-button-icon,
+.gd-button-icon-only.gd-button-link-dimmed:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed):active[class*="gd-icon-"]
+    .gd-button-icon,
+.gd-button-secondary:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed):active .gd-button-icon,
+.gd-button-positive:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed):active .gd-button-icon,
+.gd-button-negative:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed):active .gd-button-icon,
+.gd-button-action:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed):active .gd-button-icon {
+    margin-top: 2px;
+}
+.gd-button-primary:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed) .gd-button-icon:only-child,
+.gd-button-link.gd-button-icon-only:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed)[class*="gd-icon-"]
+    .gd-button-icon:only-child,
+.gd-button-icon-only.gd-button-link-dimmed:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed)[class*="gd-icon-"]
+    .gd-button-icon:only-child,
+.gd-button-secondary:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed)
+    .gd-button-icon:only-child,
+.gd-button-positive:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed)
+    .gd-button-icon:only-child,
+.gd-button-negative:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed)
+    .gd-button-icon:only-child,
+.gd-button-action:not(.disabled):not(.gd-button-link):not(.gd-button-link-dimmed) .gd-button-icon:only-child {
+    color: var(--gd-palette-complementary-7, #778491);
+}
+.gd-button-primary:hover::before,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"]:hover::before,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"]:hover::before,
+.gd-button-secondary:hover::before,
+.gd-button-positive:hover::before,
+.gd-button-negative:hover::before,
+.gd-button-action:hover::before,
+.gd-button-primary:hover::after,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"]:hover::after,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"]:hover::after,
+.gd-button-secondary:hover::after,
+.gd-button-positive:hover::after,
+.gd-button-negative:hover::after,
+.gd-button-action:hover::after,
+.gd-button-primary:hover .gd-button-icon,
+.gd-button-link.gd-button-icon-only:hover[class*="gd-icon-"] .gd-button-icon,
+.gd-button-icon-only.gd-button-link-dimmed:hover[class*="gd-icon-"] .gd-button-icon,
+.gd-button-secondary:hover .gd-button-icon,
+.gd-button-positive:hover .gd-button-icon,
+.gd-button-negative:hover .gd-button-icon,
+.gd-button-action:hover .gd-button-icon {
+    color: var(--gd-palette-primary-base, #14b2e2);
+}
+.gd-button-primary[class*="gd-icon-"],
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"],
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"],
+.gd-button-secondary[class*="gd-icon-"],
+.gd-button-positive[class*="gd-icon-"],
+.gd-button-negative[class*="gd-icon-"],
+.gd-button-action[class*="gd-icon-"] {
+    padding-left: 37px;
+}
+.gd-button-primary[class*="gd-icon-"].gd-icon-right,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"].gd-icon-right,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"].gd-icon-right,
+.gd-button-secondary[class*="gd-icon-"].gd-icon-right,
+.gd-button-positive[class*="gd-icon-"].gd-icon-right,
+.gd-button-negative[class*="gd-icon-"].gd-icon-right,
+.gd-button-action[class*="gd-icon-"].gd-icon-right {
+    padding-left: 11px;
+    padding-right: 32px;
+}
+
+.gd-button-primary .ss-icon,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"] .ss-icon,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"] .ss-icon,
+.gd-button-secondary .ss-icon,
+.gd-button-positive .ss-icon,
+.gd-button-negative .ss-icon,
+.gd-button-action .ss-icon {
+    vertical-align: middle;
+}
+
+/* Basic button variants
+   ========================================================================== */
+/* disable max length */
+.gd-button + .gd-button {
+    margin-left: 10px;
+}
+
+.gd-button-primary,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"],
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"],
+.gd-button-secondary {
+    box-shadow: var(--gd-button-dropShadow, 0 1px 1px 0) var(--gd-shadow-color, rgba(20, 56, 93, 0.15));
+    color: var(--gd-palette-complementary-7, #778491);
+    background: var(--gd-palette-complementary-0, #fcfcfd);
+    border-color: var(--gd-palette-complementary-4, #ccd8e2);
+}
+.gd-button-primary:hover,
+.gd-button-link.gd-button-icon-only:hover[class*="gd-icon-"],
+.gd-button-icon-only.gd-button-link-dimmed:hover[class*="gd-icon-"],
+.gd-button-secondary:hover {
+    box-shadow: 0 1px 1px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.15)),
+        inset 0 -1px 0 0 var(--gd-shadow-color, rgba(177, 193, 209, 0.6));
+    color: var(--gd-palette-complementary-8, #464e56);
+    background: var(--gd-palette-complementary-1, #f5f8fa);
+    border-color: var(--gd-palette-complementary-4, rgba(31, 52, 73, 0.2));
+}
+.gd-button-primary:focus,
+.gd-button-link.gd-button-icon-only:focus[class*="gd-icon-"],
+.gd-button-icon-only.gd-button-link-dimmed:focus[class*="gd-icon-"],
+.gd-button-primary.is-focus,
+.is-focus.gd-button-link.gd-button-icon-only[class*="gd-icon-"],
+.is-focus.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"],
+.gd-button-secondary:focus,
+.gd-button-secondary.is-focus {
+    box-shadow: var(--gd-button-dropShadow, 0 0 3px 1px) rgba(69, 199, 239, 0),
+        var(--gd-button-dropShadow, 0 1px 2px 0) var(--gd-shadow-color, rgba(20, 56, 93, 0.15)),
+        inset 0 -1px 0 0 var(--gd-shadow-color, rgba(177, 193, 209, 0.6));
+    border-color: var(--gd-palette-primary-base-t25, rgba(20, 178, 226, 0.75));
+}
+.gd-button-primary:active,
+.gd-button-link.gd-button-icon-only:active[class*="gd-icon-"],
+.gd-button-icon-only.gd-button-link-dimmed:active[class*="gd-icon-"],
+.gd-button-primary.is-active,
+.is-active.gd-button-link.gd-button-icon-only[class*="gd-icon-"],
+.is-active.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"],
+.gd-button-secondary:active,
+.gd-button-secondary.is-active {
+    box-shadow: inset 0 1px 0 0 var(--gd-shadow-color, rgba(177, 193, 209, 0.65));
+    color: var(--gd-palette-complementary-8, #464e56);
+    border-color: var(--gd-palette-complementary-5, #b1c1d1);
+    background: var(--gd-palette-complementary-2, #ecf0f5);
+    /* Old browsers */
+    background-image: -webkit-linear-gradient(
+        top,
+        var(--gd-palette-complementary-2, #dee6ef),
+        var(--gd-palette-complementary-2, #ecf0f5)
+    );
+    /* Chrome 10+, Saf5.1+ */
+    background-image: -moz-linear-gradient(
+        top,
+        var(--gd-palette-complementary-2, #dee6ef),
+        var(--gd-palette-complementary-2, #ecf0f5)
+    );
+    /* FF3.6 */
+    background-image: -ms-linear-gradient(
+        top,
+        var(--gd-palette-complementary-2, #dee6ef),
+        var(--gd-palette-complementary-2, #ecf0f5)
+    );
+    /* IE10 */
+    background-image: linear-gradient(
+        to top,
+        var(--gd-palette-complementary-2, #dee6ef),
+        var(--gd-palette-complementary-2, #ecf0f5)
+    );
+}
+
+.gd-button-positive,
+.gd-button-negative,
+.gd-button-action {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: var(--gd-palette-complementary-0, #fff);
+}
+.gd-button-positive[class*="gd-icon-"],
+.gd-button-positive .gd-button-icon,
+.gd-button-negative[class*="gd-icon-"],
+.gd-button-negative .gd-button-icon,
+.gd-button-action[class*="gd-icon-"],
+.gd-button-action .gd-button-icon {
+    color: var(--gd-palette-complementary-0, #fff);
+}
+.gd-button-positive[class*="gd-icon-"]::before,
+.gd-button-positive[class*="gd-icon-"]::after,
+.gd-button-positive[class*="gd-icon-"] .gd-button-icon,
+.gd-button-positive[class*="gd-icon-"]:hover::before,
+.gd-button-positive[class*="gd-icon-"]:hover::after,
+.gd-button-positive[class*="gd-icon-"]:hover .gd-button-icon,
+.gd-button-positive .gd-button-icon::before,
+.gd-button-positive .gd-button-icon::after,
+.gd-button-positive .gd-button-icon .gd-button-icon,
+.gd-button-positive .gd-button-icon:hover::before,
+.gd-button-positive .gd-button-icon:hover::after,
+.gd-button-positive .gd-button-icon:hover .gd-button-icon,
+.gd-button-negative[class*="gd-icon-"]::before,
+.gd-button-negative[class*="gd-icon-"]::after,
+.gd-button-negative[class*="gd-icon-"] .gd-button-icon,
+.gd-button-negative[class*="gd-icon-"]:hover::before,
+.gd-button-negative[class*="gd-icon-"]:hover::after,
+.gd-button-negative[class*="gd-icon-"]:hover .gd-button-icon,
+.gd-button-negative .gd-button-icon::before,
+.gd-button-negative .gd-button-icon::after,
+.gd-button-negative .gd-button-icon .gd-button-icon,
+.gd-button-negative .gd-button-icon:hover::before,
+.gd-button-negative .gd-button-icon:hover::after,
+.gd-button-negative .gd-button-icon:hover .gd-button-icon,
+.gd-button-action[class*="gd-icon-"]::before,
+.gd-button-action[class*="gd-icon-"]::after,
+.gd-button-action[class*="gd-icon-"] .gd-button-icon,
+.gd-button-action[class*="gd-icon-"]:hover::before,
+.gd-button-action[class*="gd-icon-"]:hover::after,
+.gd-button-action[class*="gd-icon-"]:hover .gd-button-icon,
+.gd-button-action .gd-button-icon::before,
+.gd-button-action .gd-button-icon::after,
+.gd-button-action .gd-button-icon .gd-button-icon,
+.gd-button-action .gd-button-icon:hover::before,
+.gd-button-action .gd-button-icon:hover::after,
+.gd-button-action .gd-button-icon:hover .gd-button-icon {
+    color: var(--gd-palette-complementary-0, #fff);
+}
+
+.gd-button-positive,
+.gd-button-negative,
+.gd-button-action,
+.gd-button-primary,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"],
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"] {
+    font-weight: 700;
+}
+
+.gd-button-positive {
+    box-shadow: var(--gd-button-dropShadow, 0 1px 1px 0) var(--gd-shadow-color, rgba(20, 56, 93, 0.09));
+    background: var(--gd-palette-success-base, #00c18d);
+}
+.gd-button-positive:hover {
+    box-shadow: 0 1px 1px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.15)),
+        inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
+    background: var(--gd-palette-success-base-d06, #00a277);
+}
+.gd-button-positive:focus {
+    box-shadow: var(--gd-button-dropShadow, 0 0 3px 1px)
+            var(--gd-palette-success-focus, rgba(0, 224, 163, 0.5)),
+        var(--gd-button-dropShadow, 0 1px 1px 0) var(--gd-shadow-color, rgba(20, 56, 93, 0.15)),
+        inset 0 -2px 0 0 rgba(0, 0, 0, 0.15);
+}
+.gd-button-positive:active,
+.gd-button-positive.is-active {
+    box-shadow: inset 0 2px 0 0 rgba(0, 0, 0, 0.15);
+    background: var(--gd-palette-success-base-d06, #00a277);
+    /* Old browsers */
+    background-image: -webkit-linear-gradient(
+        top,
+        var(--gd-palette-success-base-d12, #008460),
+        var(--gd-palette-success-base-d06, #00a277)
+    );
+    /* Chrome 10+, Saf5.1+ */
+    background-image: -moz-linear-gradient(
+        top,
+        var(--gd-palette-success-base-d12, #008460),
+        var(--gd-palette-success-base-d06, #00a277)
+    );
+    /* FF3.6 */
+    background-image: -ms-linear-gradient(
+        top,
+        var(--gd-palette-success-base-d12, #008460),
+        var(--gd-palette-success-base-d06, #00a277)
+    );
+    /* IE10 */
+    background-image: linear-gradient(
+        to top,
+        var(--gd-palette-success-base-d12, #008460),
+        var(--gd-palette-success-base-d06, #00a277)
+    );
+}
+
+.gd-button-negative {
+    box-shadow: var(--gd-button-dropShadow, 0 1px 1px 0) var(--gd-shadow-color, rgba(20, 56, 93, 0.09));
+    background: var(--gd-palette-error-base, #e54d42);
+}
+.gd-button-negative:hover {
+    box-shadow: 0 1px 1px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.15)),
+        inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
+    background: var(--gd-palette-error-base-d10, #d62a1e);
+}
+.gd-button-negative:focus {
+    box-shadow: var(--gd-button-dropShadow, 0 0 3px 1px)
+            var(--gd-palette-error-focus, rgba(235, 119, 111, 0.6)),
+        var(--gd-button-dropShadow, 0 1px 1px 0) var(--gd-shadow-color, rgba(20, 56, 93, 0.15)),
+        inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
+}
+.gd-button-negative:active,
+.gd-button-negative.is-active {
+    box-shadow: inset 0 2px 0 0 rgba(0, 0, 0, 0.15);
+    background: var(--gd-palette-error-base-d10, #d62a1e);
+    /* Old browsers */
+    background-image: -webkit-linear-gradient(
+        top,
+        var(--gd-palette-error-base-d20, #aa2117),
+        var(--gd-palette-error-base-d10, #d62a1e)
+    );
+    /* Chrome 10+, Saf5.1+ */
+    background-image: -moz-linear-gradient(
+        top,
+        var(--gd-palette-error-base-d20, #aa2117),
+        var(--gd-palette-error-base-d10, #d62a1e)
+    );
+    /* FF3.6 */
+    background-image: -ms-linear-gradient(
+        top,
+        var(--gd-palette-error-base-d20, #aa2117),
+        var(--gd-palette-error-base-d10, #d62a1e)
+    );
+    /* IE10 */
+    background-image: linear-gradient(
+        to top,
+        var(--gd-palette-error-base-d20, #aa2117),
+        var(--gd-palette-error-base-d10, #d62a1e)
+    );
+}
+
+.gd-button-action {
+    box-shadow: var(--gd-button-dropShadow, 1px 1px 0) var(--gd-shadow-color, rgba(20, 56, 93, 0.09));
+    background: var(--gd-palette-primary-base, #14b2e2);
+}
+.gd-button-action:hover {
+    box-shadow: 0 1px 1px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.15)),
+        inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
+    background: var(--gd-palette-primary-base-d06, #129cc6);
+}
+.gd-button-action:focus {
+    box-shadow: var(--gd-button-dropShadow, 0 0 3px 1px)
+            var(--gd-palette-primary-focus, rgba(41, 190, 236, 0.6)),
+        var(--gd-button-dropShadow, 0 1px 1px 0) var(--gd-shadow-color, rgba(20, 56, 93, 0.15)),
+        inset 0 -1px 0 0 rgba(0, 0, 0, 0.15);
+}
+.gd-button-action:active,
+.gd-button-action.is-active {
+    box-shadow: inset 0 2px 0 0 rgba(0, 0, 0, 0.15);
+    background: var(--gd-palette-primary-base-d06, #129cc6);
+    /* Old browsers */
+    background-image: -webkit-linear-gradient(
+        top,
+        var(--gd-palette-primary-base-d12, #0f86aa),
+        var(--gd-palette-primary-base-d06, #129cc6)
+    );
+    /* Chrome 10+, Saf5.1+ */
+    background-image: -moz-linear-gradient(
+        top,
+        var(--gd-palette-primary-base-d12, #0f86aa),
+        var(--gd-palette-primary-base-d06, #129cc6)
+    );
+    /* FF3.6 */
+    background-image: -ms-linear-gradient(
+        top,
+        var(--gd-palette-primary-base-d12, #0f86aa),
+        var(--gd-palette-primary-base-d06, #129cc6)
+    );
+    /* IE10 */
+    background-image: linear-gradient(
+        to top,
+        var(--gd-palette-primary-base-d12, #0f86aa),
+        var(--gd-palette-primary-base-d06, #129cc6)
+    );
+}
+
+/* Button links
+   ========================================================================== */
+.gd-button-link[class*="gd-icon-"],
+.gd-button-link-dimmed[class*="gd-icon-"] {
+    position: relative;
+    padding-left: 32px;
+}
+
+.gd-button-link[class*="gd-icon-"].gd-icon-right,
+.gd-button-link-dimmed[class*="gd-icon-"].gd-icon-right {
+    padding-left: 11px;
+    padding-right: 30px;
+}
+.gd-button-link[class*="gd-icon-"].gd-icon-right::after,
+.gd-button-link-dimmed[class*="gd-icon-"].gd-icon-right::after {
+    position: absolute;
+    right: 5px;
+    font-size: 18px;
+}
+
+.gd-button-link,
+.gd-button-link-dimmed {
+    box-sizing: border-box;
+    display: inline-flex;
+    padding: 0 6px;
+    border: 1px solid transparent;
+    font: 400 14px/30px gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
+    vertical-align: middle;
+    color: var(--gd-palette-primary-base, #14b2e2);
+    background: none;
+    cursor: pointer;
+    -moz-transition-property: all;
+    -webkit-transition-property: all;
+    transition-property: all;
+    -moz-transition-duration: 0.25s;
+    -webkit-transition-duration: 0.25s;
+    transition-duration: 0.25s;
+    -moz-transition-timing-function: ease-in-out;
+    -webkit-transition-timing-function: ease-in-out;
+    transition-timing-function: ease-in-out;
+}
+.gd-button-link > span,
+.gd-button-link-dimmed > span {
+    text-decoration: none;
+}
+.gd-button-link::before,
+.gd-button-link-dimmed::before,
+.gd-button-link::after,
+.gd-button-link-dimmed::after {
+    position: absolute;
+    top: 50%;
+    width: 20px;
+    transform: translateY(-50%);
+    font-size: 18px;
+    text-align: center;
+    -moz-transition-property: color;
+    -webkit-transition-property: color;
+    transition-property: color;
+    -moz-transition-duration: 0.25s;
+    -webkit-transition-duration: 0.25s;
+    transition-duration: 0.25s;
+    -moz-transition-timing-function: ease-in-out;
+    -webkit-transition-timing-function: ease-in-out;
+    transition-timing-function: ease-in-out;
+}
+.gd-button-link::before,
+.gd-button-link-dimmed::before,
+.gd-button-link::after,
+.gd-button-link-dimmed::after,
+.gd-button-link .gd-button-icon,
+.gd-button-link-dimmed .gd-button-icon {
+    color: var(--gd-palette-primary-base, #14b2e2);
+}
+.gd-button-link::before,
+.gd-button-link-dimmed::before {
+    left: 6px;
+}
+.gd-button-link::after,
+.gd-button-link-dimmed::after {
+    right: 6px;
+}
+
+.gd-button-link .gd-button-icon,
+.gd-button-link-dimmed .gd-button-icon {
+    width: 20px;
+    margin: 0 6px;
+    font-size: 18px;
+}
+.gd-button-link .gd-button-icon:first-child,
+.gd-button-link-dimmed .gd-button-icon:first-child {
+    margin-left: 0;
+}
+.gd-button-link .gd-button-icon:last-child,
+.gd-button-link-dimmed .gd-button-icon:last-child {
+    margin-right: 0;
+}
+.gd-button-link .gd-button-icon:only-child,
+.gd-button-link-dimmed .gd-button-icon:only-child {
+    position: relative;
+    left: -3px;
+}
+.gd-button-link:hover,
+.gd-button-link-dimmed:hover,
+.gd-button-link:active,
+.gd-button-link-dimmed:active,
+.gd-button-link.is-active,
+.is-active.gd-button-link-dimmed {
+    color: var(--gd-palette-complementary-8, #464e56);
+}
+.gd-button-link:hover::after,
+.gd-button-link-dimmed:hover::after,
+.gd-button-link:hover::before,
+.gd-button-link-dimmed:hover::before,
+.gd-button-link:hover .gd-button-icon,
+.gd-button-link-dimmed:hover .gd-button-icon,
+.gd-button-link:active::after,
+.gd-button-link-dimmed:active::after,
+.gd-button-link:active::before,
+.gd-button-link-dimmed:active::before,
+.gd-button-link:active .gd-button-icon,
+.gd-button-link-dimmed:active .gd-button-icon,
+.gd-button-link.is-active::after,
+.is-active.gd-button-link-dimmed::after,
+.gd-button-link.is-active::before,
+.is-active.gd-button-link-dimmed::before,
+.gd-button-link.is-active .gd-button-icon,
+.is-active.gd-button-link-dimmed .gd-button-icon {
+    color: var(--gd-palette-primary-base, #14b2e2);
+}
+.gd-button-link:focus,
+.gd-button-link-dimmed:focus {
+    box-shadow: var(--gd-button-dropShadow, 0 0 3px 0)
+        var(--gd-palette-primary-base-t80, rgba(20, 178, 226, 0.2));
+    color: var(--gd-palette-primary-base, #14b2e2);
+    border-color: var(--gd-palette-primary-base-t70, rgba(20, 178, 226, 0.3));
+    border-radius: 2px;
+}
+.gd-button-link:hover .gd-button-text,
+.gd-button-link-dimmed:hover .gd-button-text,
+.gd-button-link:focus .gd-button-text,
+.gd-button-link-dimmed:focus .gd-button-text,
+.gd-button-link:active .gd-button-text,
+.gd-button-link-dimmed:active .gd-button-text,
+.gd-button-link.is-active .gd-button-text,
+.is-active.gd-button-link-dimmed .gd-button-text {
+    text-decoration: underline;
+}
+
+.gd-button-link-dimmed {
+    color: var(--gd-palette-complementary-7, #778491);
+}
+.gd-button-link-dimmed::before,
+.gd-button-link-dimmed::after,
+.gd-button-link-dimmed .gd-button-icon {
+    color: var(--gd-palette-complementary-5, #b0beca);
+}
+.gd-button-link-dimmed.is-active,
+.gd-button-link-dimmed:hover,
+.gd-button-link-dimmed:focus,
+.gd-button-link-dimmed:active {
+    color: var(--gd-palette-complementary-8, #000);
+}
+.gd-button-link-dimmed .gd-button-text {
+    text-decoration: underline;
+}
+
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"],
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"] {
+    width: 31px;
+    height: 29px;
+    line-height: 27px;
+}
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"],
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"],
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"]:hover,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"]:hover,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"]:focus,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"]:focus,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"]:active,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"]:active {
+    border: 0;
+    box-shadow: none;
+    background: none;
+    padding-left: 0;
+}
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"].gd-button-small::before,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"].gd-button-small::before {
+    font-size: 16px;
+}
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"]::before,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"]::before,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"] .gd-button-icon,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"] .gd-button-icon {
+    color: var(--gd-palette-complementary-7, #6d7680);
+}
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"]:active::before,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"]:active::before,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"]:active .gd-button-icon,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"]:active .gd-button-icon {
+    color: var(--gd-palette-primary-base-d06, #129cc6);
+}
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"]:focus::before,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"]:focus::before,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"]:focus .gd-button-icon,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"]:focus .gd-button-icon,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"]:hover::before,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"]:hover::before,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"]:hover .gd-button-icon,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"]:hover .gd-button-icon {
+    color: var(--gd-palette-primary-base, #14b2e2);
+}
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"].disabled::before,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"].disabled::before,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"].disabled .gd-button-icon,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"].disabled .gd-button-icon,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"].disabled:hover::before,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"].disabled:hover::before,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"].disabled:hover .gd-button-icon,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"].disabled:hover .gd-button-icon,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"].disabled:focus::before,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"].disabled:focus::before,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"].disabled:focus .gd-button-icon,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"].disabled:focus .gd-button-icon,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"].disabled:active::before,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"].disabled:active::before,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"].disabled:active .gd-button-icon,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"].disabled:active .gd-button-icon {
+    color: var(--gd-palette-complementary-5, #b0beca);
+}
+
+:not(button).gd-button-link,
+.gd-button-link-dimmed:not(button),
+:not(button).gd-button-link-dimmed {
+    line-height: 0.8;
+}
+:not(button).gd-button-link:focus,
+.gd-button-link-dimmed:not(button):focus,
+:not(button).gd-button-link-dimmed:focus {
+    outline: none;
+    box-shadow: none;
+    border-color: transparent;
+}
+
+.button-dropdown {
+    font-weight: 400;
+}
+.button-dropdown:not(.customizable) {
+    border-radius: 3px;
+    text-transform: "none";
+}
+.button-dropdown::after,
+.button-dropdown::before,
+.button-dropdown .gd-button-icon {
+    color: var(--gd-palette-complementary-6, #94a1ad);
+}
+.button-dropdown:focus::after,
+.button-dropdown:focus::before,
+.button-dropdown:focus .gd-button-icon,
+.button-dropdown:hover::after,
+.button-dropdown:hover::before,
+.button-dropdown:hover .gd-button-icon,
+.button-dropdown:active::after,
+.button-dropdown:active::before,
+.button-dropdown:active .gd-button-icon,
+.button-dropdown.is-active::after,
+.button-dropdown.is-active::before,
+.button-dropdown.is-active .gd-button-icon {
+    color: var(--gd-palette-complementary-7, #6d7680);
+}
+
+/* Button sizes
+   ========================================================================== */
+.gd-button-small {
+    height: 27px;
+    padding: 0 11px;
+    line-height: 25px;
+    font-size: 12px;
+}
+.gd-button-small[class*="gd-icon-"] {
+    padding-left: 32px;
+}
+.gd-button-small[class*="gd-icon-"]::before,
+.gd-button-small[class*="gd-icon-"]::after {
+    width: 18px;
+    font-size: 15px;
+    -moz-transition-property: color;
+    -webkit-transition-property: color;
+    transition-property: color;
+    -moz-transition-duration: 0.25s;
+    -webkit-transition-duration: 0.25s;
+    transition-duration: 0.25s;
+    -moz-transition-timing-function: ease-in-out;
+    -webkit-transition-timing-function: ease-in-out;
+    transition-timing-function: ease-in-out;
+}
+.gd-button-small[class*="gd-icon-"]::before {
+    left: 9px;
+}
+.gd-button-small[class*="gd-icon-"]::after {
+    right: 7px;
+}
+.gd-button-small[class*="gd-icon-"].gd-button-icon-only {
+    height: 27px;
+}
+.gd-button-small[class*="gd-icon-"].gd-button-icon-only::before {
+    width: auto;
+}
+.gd-button-small .gd-button-icon {
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    font-size: 16px;
+}
+
+.gd-button-important {
+    height: 38px;
+    padding: 7px 19px;
+    line-height: 22px;
+    font-size: 16px;
+}
+
+.gd-button.gd-button-icon-only {
+    width: 31px;
+    height: 29px;
+    line-height: 27px;
+    color: var(--gd-palette-complementary-7, #778491);
+    padding-left: 0;
+}
+.gd-button.gd-button-icon-only::before {
+    right: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    color: var(--gd-palette-complementary-7, #778491);
+    font-size: 16px;
+}
+.gd-button.gd-button-icon-only:hover::before,
+.gd-button.gd-button-icon-only:hover .gd-button-icon {
+    color: var(--gd-palette-primary-base, #14b2e2);
+}
+
+/* Button states
+   ========================================================================== */
+.gd-button.disabled,
+.gd-button.disabled:hover,
+.gd-button.disabled:focus,
+.gd-button.disabled:active {
+    box-shadow: none;
+    background: transparent;
+    cursor: default;
+    border-color: transparent;
+    text-decoration: none;
+}
+
+.gd-button-primary.disabled,
+.disabled.gd-button-link.gd-button-icon-only[class*="gd-icon-"],
+.disabled.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"],
+.gd-button-secondary.disabled {
+    cursor: default;
+}
+.gd-button-primary.disabled,
+.disabled.gd-button-link.gd-button-icon-only[class*="gd-icon-"],
+.disabled.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"],
+.gd-button-primary.disabled:hover,
+.disabled.gd-button-link.gd-button-icon-only:hover[class*="gd-icon-"],
+.disabled.gd-button-icon-only.gd-button-link-dimmed:hover[class*="gd-icon-"],
+.gd-button-primary.disabled:focus,
+.disabled.gd-button-link.gd-button-icon-only:focus[class*="gd-icon-"],
+.disabled.gd-button-icon-only.gd-button-link-dimmed:focus[class*="gd-icon-"],
+.gd-button-primary.disabled:active,
+.disabled.gd-button-link.gd-button-icon-only:active[class*="gd-icon-"],
+.disabled.gd-button-icon-only.gd-button-link-dimmed:active[class*="gd-icon-"],
+.gd-button-secondary.disabled,
+.gd-button-secondary.disabled:hover,
+.gd-button-secondary.disabled:focus,
+.gd-button-secondary.disabled:active {
+    color: var(--gd-palette-complementary-5, #b0beca);
+    background: rgba(252, 252, 253, 0.3);
+    border-color: rgba(210, 219, 227, 0.75);
+}
+.gd-button-primary.disabled::before,
+.disabled.gd-button-link.gd-button-icon-only[class*="gd-icon-"]::before,
+.disabled.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"]::before,
+.gd-button-primary.disabled::after,
+.disabled.gd-button-link.gd-button-icon-only[class*="gd-icon-"]::after,
+.disabled.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"]::after,
+.gd-button-primary.disabled .gd-button-icon,
+.disabled.gd-button-link.gd-button-icon-only[class*="gd-icon-"] .gd-button-icon,
+.disabled.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"] .gd-button-icon,
+.gd-button-primary.disabled:hover::before,
+.disabled.gd-button-link.gd-button-icon-only[class*="gd-icon-"]:hover::before,
+.disabled.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"]:hover::before,
+.gd-button-primary.disabled:hover::after,
+.disabled.gd-button-link.gd-button-icon-only[class*="gd-icon-"]:hover::after,
+.disabled.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"]:hover::after,
+.gd-button-primary.disabled:hover .gd-button-icon,
+.disabled.gd-button-link.gd-button-icon-only:hover[class*="gd-icon-"] .gd-button-icon,
+.disabled.gd-button-icon-only.gd-button-link-dimmed:hover[class*="gd-icon-"] .gd-button-icon,
+.gd-button-primary.disabled:focus::before,
+.disabled.gd-button-link.gd-button-icon-only[class*="gd-icon-"]:focus::before,
+.disabled.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"]:focus::before,
+.gd-button-primary.disabled:focus::after,
+.disabled.gd-button-link.gd-button-icon-only[class*="gd-icon-"]:focus::after,
+.disabled.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"]:focus::after,
+.gd-button-primary.disabled:focus .gd-button-icon,
+.disabled.gd-button-link.gd-button-icon-only:focus[class*="gd-icon-"] .gd-button-icon,
+.disabled.gd-button-icon-only.gd-button-link-dimmed:focus[class*="gd-icon-"] .gd-button-icon,
+.gd-button-primary.disabled:active::before,
+.disabled.gd-button-link.gd-button-icon-only[class*="gd-icon-"]:active::before,
+.disabled.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"]:active::before,
+.gd-button-primary.disabled:active::after,
+.disabled.gd-button-link.gd-button-icon-only[class*="gd-icon-"]:active::after,
+.disabled.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"]:active::after,
+.gd-button-primary.disabled:active .gd-button-icon,
+.disabled.gd-button-link.gd-button-icon-only:active[class*="gd-icon-"] .gd-button-icon,
+.disabled.gd-button-icon-only.gd-button-link-dimmed:active[class*="gd-icon-"] .gd-button-icon,
+.gd-button-secondary.disabled::before,
+.gd-button-secondary.disabled::after,
+.gd-button-secondary.disabled .gd-button-icon,
+.gd-button-secondary.disabled:hover::before,
+.gd-button-secondary.disabled:hover::after,
+.gd-button-secondary.disabled:hover .gd-button-icon,
+.gd-button-secondary.disabled:focus::before,
+.gd-button-secondary.disabled:focus::after,
+.gd-button-secondary.disabled:focus .gd-button-icon,
+.gd-button-secondary.disabled:active::before,
+.gd-button-secondary.disabled:active::after,
+.gd-button-secondary.disabled:active .gd-button-icon {
+    color: var(--gd-palette-complementary-5, #b0beca);
+}
+
+.gd-button-positive.disabled {
+    cursor: default;
+}
+.gd-button-positive.disabled,
+.gd-button-positive.disabled:hover,
+.gd-button-positive.disabled:focus,
+.gd-button-positive.disabled:active {
+    color: var(--gd-palette-complementary-0, #fff);
+    background: var(--gd-palette-success-disabled, rgba(0, 224, 163, 0.5));
+}
+.gd-button-positive.disabled::before,
+.gd-button-positive.disabled::after,
+.gd-button-positive.disabled .gd-button-icon,
+.gd-button-positive.disabled:hover::before,
+.gd-button-positive.disabled:hover::after,
+.gd-button-positive.disabled:hover .gd-button-icon,
+.gd-button-positive.disabled:focus::before,
+.gd-button-positive.disabled:focus::after,
+.gd-button-positive.disabled:focus .gd-button-icon,
+.gd-button-positive.disabled:active::before,
+.gd-button-positive.disabled:active::after,
+.gd-button-positive.disabled:active .gd-button-icon {
+    color: var(--gd-palette-complementary-0, #fff);
+}
+
+.gd-button-negative.disabled {
+    cursor: default;
+}
+.gd-button-negative.disabled,
+.gd-button-negative.disabled:hover,
+.gd-button-negative.disabled:focus,
+.gd-button-negative.disabled:active {
+    color: var(--gd-palette-complementary-0, #fff);
+    background: var(--gd-palette-error-disabled, rgba(241, 161, 156, 0.6));
+}
+.gd-button-negative.disabled::before,
+.gd-button-negative.disabled::after,
+.gd-button-negative.disabled .gd-button-icon,
+.gd-button-negative.disabled:hover::before,
+.gd-button-negative.disabled:hover::after,
+.gd-button-negative.disabled:hover .gd-button-icon,
+.gd-button-negative.disabled:focus::before,
+.gd-button-negative.disabled:focus::after,
+.gd-button-negative.disabled:focus .gd-button-icon,
+.gd-button-negative.disabled:active::before,
+.gd-button-negative.disabled:active::after,
+.gd-button-negative.disabled:active .gd-button-icon {
+    color: var(--gd-palette-complementary-0, #fff);
+}
+
+.gd-button-action.disabled {
+    cursor: default;
+}
+.gd-button-action.disabled,
+.gd-button-action.disabled:hover,
+.gd-button-action.disabled:focus,
+.gd-button-action.disabled:active {
+    color: var(--gd-palette-complementary-0, #fff);
+    background: var(--gd-palette-primary-disabled, rgba(69, 199, 239, 0.6));
+    -ms-filter: progid:DXImageTransform.Microsoft.gradient(enabled=false) "";
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false) "";
+}
+.gd-button-action.disabled::before,
+.gd-button-action.disabled::after,
+.gd-button-action.disabled .gd-button-icon,
+.gd-button-action.disabled:hover::before,
+.gd-button-action.disabled:hover::after,
+.gd-button-action.disabled:hover .gd-button-icon,
+.gd-button-action.disabled:focus::before,
+.gd-button-action.disabled:focus::after,
+.gd-button-action.disabled:focus .gd-button-icon,
+.gd-button-action.disabled:active::before,
+.gd-button-action.disabled:active::after,
+.gd-button-action.disabled:active .gd-button-icon {
+    color: var(--gd-palette-complementary-0, #fff);
+}
+
+.gd-button-link.disabled,
+.disabled.gd-button-link-dimmed {
+    cursor: default;
+}
+.gd-button-link.disabled,
+.disabled.gd-button-link-dimmed,
+.gd-button-link.disabled:hover,
+.disabled.gd-button-link-dimmed:hover,
+.gd-button-link.disabled:focus,
+.disabled.gd-button-link-dimmed:focus,
+.gd-button-link.disabled:active,
+.disabled.gd-button-link-dimmed:active {
+    color: var(--gd-palette-complementary-4, #ccd8e2);
+    border-color: transparent;
+}
+.gd-button-link.disabled > span,
+.disabled.gd-button-link-dimmed > span,
+.gd-button-link.disabled:hover > span,
+.disabled.gd-button-link-dimmed:hover > span,
+.gd-button-link.disabled:focus > span,
+.disabled.gd-button-link-dimmed:focus > span,
+.gd-button-link.disabled:active > span,
+.disabled.gd-button-link-dimmed:active > span {
+    text-decoration: none;
+}
+.gd-button-link.disabled::before,
+.disabled.gd-button-link-dimmed::before,
+.gd-button-link.disabled::after,
+.disabled.gd-button-link-dimmed::after,
+.gd-button-link.disabled .gd-button-icon,
+.disabled.gd-button-link-dimmed .gd-button-icon {
+    color: var(--gd-palette-complementary-4, #ccd8e2);
+}
+
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"]::before,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"]::before,
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"]::after,
+.gd-button-icon-only.gd-button-link-dimmed[class*="gd-icon-"]::after {
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.gd-button-group .gd-button {
+    position: relative;
+    z-index: 1;
+    margin: 0 -1px 0 0;
+    border-radius: 0;
+}
+.gd-button-group .gd-button:focus {
+    z-index: 2;
+}
+.gd-button-group .gd-button:not(:focus) {
+    box-shadow: none;
+}
+
+.gd-button-group > .gd-button:first-child,
+.gd-button-group > *:not(.gd-button):first-child .gd-button {
+    border-radius: var(--gd-button-borderRadius, 3px) 0 0 var(--gd-button-borderRadius, 3px);
+}
+
+.gd-button-group > .gd-button:last-child,
+.gd-button-group > *:not(.gd-button):last-child .gd-button {
+    margin-right: 0;
+    border-radius: 0 var(--gd-button-borderRadius, 3px) var(--gd-button-borderRadius, 3px) 0;
+}
+
+/* Alternative markup support
+   ========================================================================== */
+a[class*="gd-button-"] {
+    box-sizing: border-box;
+    display: inline-block;
+}
+a[class*="gd-button-"],
+a[class*="gd-button-"]:hover,
+a[class*="gd-button-"]:focus {
+    text-decoration: none;
+}
+a[class*="gd-button-"],
+a[class*="gd-button-"]:active {
+    outline: none;
+}
+a[class*="gd-button-"] .gd-button-text {
+    display: initial;
+}
+
+a.gd-button-link:hover .gd-button-text,
+a.gd-button-link-dimmed:hover .gd-button-text,
+a.gd-button-link-dimmed:hover .gd-button-text {
+    text-decoration: underline;
+}

@@ -1,0 +1,1583 @@
+meta.foundation-version {
+    font-family: "/5.5.3/";
+}
+
+meta.foundation-mq-small {
+    font-family: "/only screen/";
+    width: 0;
+}
+
+meta.foundation-mq-small-only {
+    font-family: "/only screen and (max-width: 40em)/";
+    width: 0;
+}
+
+meta.foundation-mq-medium {
+    font-family: "/only screen and (min-width:40.0625em)/";
+    width: 40.0625em;
+}
+
+meta.foundation-mq-medium-only {
+    font-family: "/only screen and (min-width:40.0625em) and (max-width:64em)/";
+    width: 40.0625em;
+}
+
+meta.foundation-mq-large {
+    font-family: "/only screen and (min-width:64.0625em)/";
+    width: 64.0625em;
+}
+
+meta.foundation-mq-large-only {
+    font-family: "/only screen and (min-width:64.0625em) and (max-width:90em)/";
+    width: 64.0625em;
+}
+
+meta.foundation-mq-xlarge {
+    font-family: "/only screen and (min-width:90.0625em)/";
+    width: 90.0625em;
+}
+
+meta.foundation-mq-xlarge-only {
+    font-family: "/only screen and (min-width:90.0625em) and (max-width:120em)/";
+    width: 90.0625em;
+}
+
+meta.foundation-mq-xxlarge {
+    font-family: "/only screen and (min-width:120.0625em)/";
+    width: 120.0625em;
+}
+
+meta.foundation-data-attribute-namespace {
+    font-family: false;
+}
+
+/* 0, 640px */
+/* 641px, 1024px */
+/* 1025px, 1440px */
+/* 1441px, 1920px */
+/* 1921px, ... */
+@font-face {
+    font-family: "Indigo";
+    src: url("~@gooddata/sdk-ui-kit/styles/fonts/Indigo-v2.eot");
+    src: url("~@gooddata/sdk-ui-kit/styles/fonts/Indigo-v2.eot?#iefix") format("embedded-opentype"),
+        url("~@gooddata/sdk-ui-kit/styles/fonts/Indigo-v2.woff") format("woff"),
+        url("~@gooddata/sdk-ui-kit/styles/fonts/Indigo-v2.ttf") format("truetype"),
+        url("~@gooddata/sdk-ui-kit/styles/fonts/Indigo-v2.svg#Indigo-v2") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="gd-icon-"]::before,
+[class*=" gd-icon-"]::before,
+[class^="gd-icon-"].gd-icon-right::after,
+[class*=" gd-icon-"].gd-icon-right::after {
+    font-family: "Indigo", sans-serif;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    /* Better Font Rendering looks better in Chrome, corresponds to Sketch mockups */
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: subpixel-antialiased;
+    text-transform: none;
+}
+
+[class^="gd-icon-"].gd-icon-right::before,
+[class*=" gd-icon-"].gd-icon-right::before {
+    content: "";
+    display: none;
+}
+
+.gd-icon-trend-down::before,
+.gd-icon-trend-down.gd-icon-right::after {
+    content: "\e600";
+}
+
+.gd-icon-trend-up::before,
+.gd-icon-trend-up.gd-icon-right::after {
+    content: "\e601";
+}
+
+.gd-icon-user::before,
+.gd-icon-user.gd-icon-right::after {
+    content: "\e602";
+}
+
+.gd-icon-ghost::before,
+.gd-icon-ghost.gd-icon-right::after {
+    content: "\e603";
+}
+
+.gd-icon-redo::before,
+.gd-icon-redo.gd-icon-right::after {
+    content: "\e604";
+}
+
+.gd-icon-undo::before,
+.gd-icon-undo.gd-icon-right::after {
+    content: "\e605";
+}
+
+.gd-icon-pause::before,
+.gd-icon-pause.gd-icon-right::after {
+    content: "\e606";
+}
+
+.gd-icon-users::before,
+.gd-icon-users.gd-icon-right::after {
+    content: "\e607";
+}
+
+.gd-icon-cloud-rain::before,
+.gd-icon-rain::before,
+.gd-icon-cloud-rain.gd-icon-right::after,
+.gd-icon-right.gd-icon-rain::after {
+    content: "\e608";
+}
+
+.gd-icon-calendar::before,
+.gd-icon-calendar.gd-icon-right::after {
+    content: "\e609";
+}
+
+.gd-icon-circle-exclamation::before,
+.gd-icon-circle-exclamation.gd-icon-right::after {
+    content: "\e60a";
+}
+
+.gd-icon-circle-question::before,
+.gd-icon-circle-question.gd-icon-right::after {
+    content: "\e60b";
+}
+
+.gd-icon-dropright::before,
+.gd-icon-dropright.gd-icon-right::after {
+    content: "\e60c";
+}
+
+.gd-icon-dropdown::before,
+.gd-icon-dropdown.gd-icon-right::after {
+    content: "\e60d";
+}
+
+.gd-icon-question::before,
+.gd-icon-question.gd-icon-right::after {
+    content: "\e60e";
+}
+
+.gd-icon-number::before,
+.gd-icon-number.gd-icon-right::after {
+    content: "\e60f";
+}
+
+.gd-icon-navigateleft::before,
+.gd-icon-navigateleft.gd-icon-right::after {
+    content: "\e610";
+}
+
+.gd-icon-navigateright::before,
+.gd-icon-navigateright.gd-icon-right::after {
+    content: "\e611";
+}
+
+.gd-icon-navigatedown::before,
+.gd-icon-navigatedown.gd-icon-right::after {
+    content: "\e612";
+}
+
+.gd-icon-navigateup::before,
+.gd-icon-navigateup.gd-icon-right::after {
+    content: "\e613";
+}
+
+.gd-icon-pencil::before,
+.gd-icon-pencil.gd-icon-right::after {
+    content: "\e614";
+}
+
+.gd-icon-magic::before,
+.gd-icon-magic.gd-icon-right::after {
+    content: "\e615";
+}
+
+.gd-icon-cloud-upload::before,
+.gd-icon-uploadcloud::before,
+.gd-icon-upload::before,
+.gd-icon-cloud-upload.gd-icon-right::after,
+.gd-icon-right.gd-icon-uploadcloud::after,
+.gd-icon-right.gd-icon-upload::after {
+    content: "\e616";
+}
+
+.gd-icon-lock::before,
+.gd-icon-lock.gd-icon-right::after {
+    content: "\e617";
+}
+
+.gd-icon-unlock::before,
+.gd-icon-unlock.gd-icon-right::after {
+    content: "\e618";
+}
+
+.gd-icon-settings::before,
+.gd-icon-config::before,
+.gd-icon-settings.gd-icon-right::after,
+.gd-icon-right.gd-icon-config::after {
+    content: "\e619";
+}
+
+.gd-icon-trash::before,
+.gd-icon-trash.gd-icon-right::after {
+    content: "\e61a";
+}
+
+.gd-icon-at-sign::before,
+.gd-icon-at-sign.gd-icon-right::after {
+    content: "\e61b";
+}
+
+.gd-icon-envelope::before,
+.gd-icon-envelope.gd-icon-right::after {
+    content: "\e61c";
+}
+
+.gd-icon-visible::before,
+.gd-icon-visible.gd-icon-right::after {
+    content: "\e61d";
+}
+
+.gd-icon-invisible::before,
+.gd-icon-invisible.gd-icon-right::after {
+    content: "\e61e";
+}
+
+.gd-icon-save::before,
+.gd-icon-save.gd-icon-right::after {
+    content: "\e61f";
+}
+
+.gd-icon-printer::before,
+.gd-icon-printer.gd-icon-right::after {
+    content: "\e620";
+}
+
+.gd-icon-file::before,
+.gd-icon-file.gd-icon-right::after {
+    content: "\e621";
+}
+
+.gd-icon-folder::before,
+.gd-icon-folder.gd-icon-right::after {
+    content: "\e622";
+}
+
+.gd-icon-enter::before,
+.gd-icon-enter.gd-icon-right::after {
+    content: "\e623";
+}
+
+.gd-icon-earth::before,
+.gd-icon-earth.gd-icon-right::after {
+    content: "\e624";
+}
+
+.gd-icon-bell::before,
+.gd-icon-bell.gd-icon-right::after {
+    content: "\e625";
+}
+
+.gd-icon-horn::before,
+.gd-icon-horn.gd-icon-right::after {
+    content: "\e626";
+}
+
+.gd-icon-sync::before,
+.gd-icon-sync.gd-icon-right::after {
+    content: "\e627";
+}
+
+.gd-icon-clock::before,
+.gd-icon-clock.gd-icon-right::after {
+    content: "\e628";
+}
+
+.gd-icon-timer::before,
+.gd-icon-timer.gd-icon-right::after {
+    content: "\e629";
+}
+
+.gd-icon-download::before,
+.gd-icon-download.gd-icon-right::after {
+    content: "\e62a";
+}
+
+.gd-icon-magnifier::before,
+.gd-icon-search::before,
+.gd-icon-magnifier.gd-icon-right::after,
+.gd-icon-right.gd-icon-search::after {
+    content: "\e62b";
+}
+
+.gd-icon-checkmark::before,
+.gd-icon-checkmark.gd-icon-right::after {
+    content: "\e62c";
+}
+
+.gd-icon-cross::before,
+.gd-icon-clear::before,
+.gd-icon-cross.gd-icon-right::after,
+.gd-icon-right.gd-icon-clear::after {
+    content: "\e62d";
+}
+
+.gd-icon-chevron-up::before,
+.gd-icon-chevron-up.gd-icon-right::after {
+    content: "\e62e";
+}
+
+.gd-icon-chevron-down::before,
+.gd-icon-chevron-down.gd-icon-right::after {
+    content: "\e62f";
+}
+
+.gd-icon-chevron-left::before,
+.gd-icon-chevron-left.gd-icon-right::after {
+    content: "\e630";
+}
+
+.gd-icon-chevron-right::before,
+.gd-icon-chevron-right.gd-icon-right::after {
+    content: "\e631";
+}
+
+.gd-icon-arrow-up::before,
+.gd-icon-arrow-up.gd-icon-right::after {
+    content: "\e632";
+}
+
+.gd-icon-arrow-down::before,
+.gd-icon-arrow-down.gd-icon-right::after {
+    content: "\e633";
+}
+
+.gd-icon-arrow-left::before,
+.gd-icon-arrow-left.gd-icon-right::after {
+    content: "\e634";
+}
+
+.gd-icon-arrow-right::before,
+.gd-icon-arrow-right.gd-icon-right::after {
+    content: "\e635";
+}
+
+.gd-icon-tab::before,
+.gd-icon-tab.gd-icon-right::after {
+    content: "\e636";
+}
+
+.gd-icon-warning::before,
+.gd-icon-warning.gd-icon-right::after {
+    content: "\e637";
+}
+
+.gd-icon-circle-checkmark::before,
+.gd-icon-circle-checkmark.gd-icon-right::after {
+    content: "\e638";
+}
+
+.gd-icon-circle-cross::before,
+.gd-icon-circle-cross.gd-icon-right::after {
+    content: "\e639";
+}
+
+.gd-icon-circle-plus::before,
+.gd-icon-circle-plus.gd-icon-right::after {
+    content: "\e63a";
+}
+
+.gd-icon-circle-minus::before,
+.gd-icon-circle-minus.gd-icon-right::after {
+    content: "\e63b";
+}
+
+.gd-icon-filter::before,
+.gd-icon-filter.gd-icon-right::after {
+    content: "\e63c";
+}
+
+.gd-icon-sharp::before,
+.gd-icon-sharp.gd-icon-right::after {
+    content: "\e63d";
+}
+
+.gd-icon-money::before,
+.gd-icon-money.gd-icon-right::after {
+    content: "\e63e";
+}
+
+.gd-icon-percent::before,
+.gd-icon-percent.gd-icon-right::after {
+    content: "\e63f";
+}
+
+.gd-icon-plus::before,
+.gd-icon-add::before,
+.gd-icon-plus.gd-icon-right::after,
+.gd-icon-right.gd-icon-add::after {
+    content: "\e640";
+}
+
+.gd-icon-A::before,
+.gd-icon-A.gd-icon-right::after {
+    content: "\e641";
+}
+
+.gd-icon-copyright::before,
+.gd-icon-copyright.gd-icon-right::after {
+    content: "\e642";
+}
+
+.animation-fadeIn,
+.animation-fadeOut,
+.animation-bounce {
+    animation-duration: 0.6s;
+}
+
+.animation-fadeIn,
+.animation-fadeOut {
+    animation-name: animation-fade;
+}
+
+.animation-fadeOut {
+    animation-direction: reverse;
+}
+
+.animation-bounce {
+    animation-name: animation-bounce;
+}
+
+.animation-slow {
+    animation-duration: 1s;
+}
+
+.animation-fast {
+    animation-duration: 0.4s;
+}
+
+@keyframes animation-fade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes animation-bounce {
+    0% {
+        opacity: 0;
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* allow vendor prefixes and disable max length */
+/* allow vendor prefixes and disable max length */
+/**
+ * FixedDataTable v1.2.2 
+ *
+ * Copyright Schrodinger, LLC
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+/**
+ * Copyright Schrodinger, LLC
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule fixedDataTableCellGroupLayout
+ */
+.fixedDataTableCellGroupLayout_cellGroup {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    white-space: nowrap;
+}
+
+.fixedDataTable_isRTL .fixedDataTableCellGroupLayout_cellGroup {
+    right: 0;
+    left: auto;
+}
+
+.fixedDataTableCellGroupLayout_cellGroup > .public_fixedDataTableCell_main {
+    display: inline-block;
+    vertical-align: top;
+    white-space: normal;
+}
+
+.fixedDataTableCellGroupLayout_cellGroupWrapper {
+    position: absolute;
+    top: 0;
+}
+
+/**
+ * Copyright Schrodinger, LLC
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule fixedDataTableCellLayout
+ */
+.fixedDataTableCellLayout_main {
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-width: 0 1px 0 0;
+    box-sizing: border-box;
+    display: block;
+    overflow: hidden;
+    position: absolute;
+    white-space: normal;
+}
+
+.fixedDataTable_isRTL .fixedDataTableCellLayout_main {
+    border-right-width: 0;
+    border-left-style: solid;
+    border-left-width: 1px;
+}
+
+.fixedDataTableCellLayout_lastChild {
+    border-width: 0 1px 1px 0;
+}
+
+.fixedDataTableCellLayout_alignRight {
+    text-align: right;
+}
+
+.fixedDataTableCellLayout_alignCenter {
+    text-align: center;
+}
+
+.fixedDataTableCellLayout_wrap {
+    display: table-cell;
+    vertical-align: middle;
+    box-sizing: border-box;
+}
+
+.fixedDataTableCellLayout_wrap1 {
+    display: table;
+}
+
+.fixedDataTableCellLayout_wrap2 {
+    display: table-row;
+}
+
+.fixedDataTableCellLayout_wrap3 {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.fixedDataTableCellLayout_columnResizerContainer {
+    position: absolute;
+    right: 0px;
+    width: 6px;
+    z-index: 1;
+}
+
+.fixedDataTable_isRTL .fixedDataTableCellLayout_columnResizerContainer {
+    left: 0px;
+    right: auto;
+}
+
+.fixedDataTableCellLayout_columnResizerContainer:hover {
+    cursor: ew-resize;
+}
+
+.fixedDataTableCellLayout_columnResizerContainer:hover .fixedDataTableCellLayout_columnResizerKnob {
+    visibility: visible;
+}
+
+.fixedDataTableCellLayout_columnResizerKnob {
+    position: absolute;
+    right: 0px;
+    visibility: hidden;
+    width: 4px;
+}
+
+.fixedDataTable_isRTL .fixedDataTableCellLayout_columnResizerKnob {
+    left: 0px;
+    right: auto;
+}
+
+/**
+ * Copyright Schrodinger, LLC
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule fixedDataTableColumnResizerLineLayout
+ */
+.fixedDataTableColumnResizerLineLayout_mouseArea {
+    cursor: ew-resize;
+    position: absolute;
+    right: -5px;
+    width: 12px;
+}
+
+.fixedDataTable_isRTL .fixedDataTableColumnResizerLineLayout_mouseArea {
+    right: auto;
+    left: -5px;
+}
+
+.fixedDataTableColumnResizerLineLayout_main {
+    border-right-style: solid;
+    border-right-width: 1px;
+    box-sizing: border-box;
+    position: absolute;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.fixedDataTable_isRTL .fixedDataTableColumnResizerLineLayout_main {
+    border-right-width: 0;
+    border-left-style: solid;
+    border-left-width: 1px;
+}
+
+.fixedDataTableColumnResizerLineLayout_hiddenElem {
+    display: none !important;
+}
+
+/**
+ * Copyright Schrodinger, LLC
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule fixedDataTableLayout
+ */
+.fixedDataTableLayout_main {
+    border-style: solid;
+    border-width: 1px;
+    box-sizing: border-box;
+    overflow: hidden;
+    position: relative;
+}
+
+.fixedDataTableLayout_header,
+.fixedDataTableLayout_hasBottomBorder {
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+}
+
+.fixedDataTableLayout_footer .public_fixedDataTableCell_main {
+    border-top-style: solid;
+    border-top-width: 1px;
+}
+
+.fixedDataTableLayout_topShadow,
+.fixedDataTableLayout_bottomShadow {
+    height: 4px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    z-index: 1;
+}
+
+.fixedDataTableLayout_bottomShadow {
+    margin-top: -4px;
+}
+
+.fixedDataTableLayout_rowsContainer {
+    overflow: hidden;
+    position: relative;
+}
+
+/**
+ * Copyright Schrodinger, LLC
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule fixedDataTableRowLayout
+ */
+.fixedDataTableRowLayout_main {
+    box-sizing: border-box;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+}
+
+.fixedDataTableRowLayout_body {
+    left: 0;
+    right: 0;
+    position: absolute;
+    top: 0;
+}
+
+.fixedDataTableRowLayout_rowExpanded {
+    box-sizing: border-box;
+    left: 0;
+    position: absolute;
+}
+
+.fixedDataTableRowLayout_fixedColumnsDivider {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-left-style: solid;
+    border-left-width: 1px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 0;
+}
+
+.fixedDataTable_isRTL .fixedDataTableRowLayout_fixedColumnsDivider {
+    border-left-width: 0;
+    border-right-style: solid;
+    border-right-width: 1px;
+}
+
+.fixedDataTableRowLayout_columnsShadow {
+    position: absolute;
+    width: 4px;
+}
+
+.fixedDataTableRowLayout_columnsRightShadow {
+    right: 1px;
+}
+
+.fixedDataTable_isRTL .fixedDataTableRowLayout_columnsRightShadow {
+    left: 1px;
+    right: auto;
+}
+
+.fixedDataTableRowLayout_rowWrapper {
+    position: absolute;
+    top: 0;
+}
+
+/**
+ * Copyright Schrodinger, LLC
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule ScrollbarLayout
+ */
+.ScrollbarLayout_main {
+    box-sizing: border-box;
+    outline: none;
+    overflow: hidden;
+    position: absolute;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.ScrollbarLayout_mainVertical {
+    bottom: 0;
+    right: 0;
+    top: 0;
+    width: 15px;
+}
+
+.ScrollbarLayout_mainHorizontal {
+    height: 15px;
+    left: 0;
+    transition-property: background-color height;
+}
+
+/* Touching the scroll-track directly makes the scroll-track bolder */
+.ScrollbarLayout_mainHorizontal.public_Scrollbar_mainActive,
+.ScrollbarLayout_mainHorizontal:hover {
+    height: 17px;
+}
+
+.ScrollbarLayout_face {
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: 1;
+    transition-duration: 250ms;
+    transition-timing-function: ease;
+    transition-property: width;
+}
+
+/**
+ * This selector renders the "nub" of the scrollface. The nub must
+ * be rendered as pseudo-element so that it won't receive any UI events then
+ * we can get the correct `event.offsetX` and `event.offsetY` from the
+ * scrollface element while dragging it.
+ */
+.ScrollbarLayout_face:after {
+    border-radius: 6px;
+    content: "";
+    display: block;
+    position: absolute;
+    transition: background-color 250ms ease;
+}
+
+.ScrollbarLayout_faceHorizontal {
+    bottom: 0;
+    left: 0;
+    top: 0;
+}
+
+.ScrollbarLayout_faceHorizontal:after {
+    bottom: 4px;
+    left: 0;
+    top: 4px;
+    width: 100%;
+}
+
+.fixedDataTable_isRTL .ScrollbarLayout_faceHorizontal,
+.fixedDataTable_isRTL .ScrollbarLayout_faceHorizontal:after {
+    right: 0;
+    left: auto;
+}
+
+.ScrollbarLayout_faceHorizontal.public_Scrollbar_faceActive:after,
+.ScrollbarLayout_main:hover .ScrollbarLayout_faceHorizontal:after {
+    bottom: calc(4px / 2);
+}
+
+.ScrollbarLayout_faceVertical {
+    left: 0;
+    right: 0;
+    top: 0;
+}
+
+.ScrollbarLayout_faceVertical:after {
+    height: 100%;
+    left: 4px;
+    right: 4px;
+    top: 0;
+}
+
+.ScrollbarLayout_main:hover .ScrollbarLayout_faceVertical:after,
+.ScrollbarLayout_faceVertical.public_Scrollbar_faceActive:after {
+    left: calc(4px / 2);
+    right: calc(4px / 2);
+}
+
+/**
+ * Copyright Schrodinger, LLC
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule fixedDataTable
+ *
+ */
+/**
+ * Table.
+ */
+.public_fixedDataTable_main {
+    border-color: #d3d3d3;
+}
+
+.public_fixedDataTable_header,
+.public_fixedDataTable_hasBottomBorder {
+    border-color: #d3d3d3;
+}
+
+.public_fixedDataTable_header .public_fixedDataTableCell_main {
+    font-weight: bold;
+}
+
+.public_fixedDataTable_header,
+.public_fixedDataTable_scrollbarSpacer,
+.public_fixedDataTable_header .public_fixedDataTableCell_main {
+    background-color: #f6f7f8;
+    background-image: linear-gradient(#fff, #efefef);
+}
+
+.public_fixedDataTable_scrollbarSpacer {
+    position: absolute;
+    z-index: 99;
+    top: 0;
+}
+
+.public_fixedDataTable_footer .public_fixedDataTableCell_main {
+    background-color: #f6f7f8;
+    border-color: #d3d3d3;
+}
+
+.public_fixedDataTable_topShadow {
+    background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+}
+
+.public_fixedDataTable_bottomShadow {
+    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+}
+
+.public_fixedDataTable_horizontalScrollbar .public_Scrollbar_mainHorizontal {
+    background-color: #fff;
+}
+
+/**
+ * Copyright Schrodinger, LLC
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule fixedDataTableCell
+ */
+/**
+ * Table cell.
+ */
+.public_fixedDataTableCell_main {
+    background-color: #fff;
+    border-color: #d3d3d3;
+}
+
+.public_fixedDataTableCell_highlighted {
+    background-color: #f4f4f4;
+}
+
+.public_fixedDataTableCell_cellContent {
+    padding: 8px;
+}
+
+.public_fixedDataTableCell_columnResizerKnob {
+    background-color: #0284ff;
+}
+
+.public_fixedDataTableCell_hasReorderHandle
+    .public_fixedDataTableCell_wrap1
+    .public_fixedDataTableCell_cellContent {
+    margin-left: 12px;
+}
+
+.public_fixedDataTableCell_hasReorderHandle
+    .public_fixedDataTableCell_wrap.public_fixedDataTableCell_cellContent {
+    padding-left: 20px;
+}
+
+.fixedDataTable_isRTL
+    .public_fixedDataTableCell_hasReorderHandle
+    .public_fixedDataTableCell_wrap1
+    .public_fixedDataTableCell_cellContent {
+    margin-left: auto;
+    margin-right: 12px;
+}
+
+.fixedDataTable_isRTL
+    .public_fixedDataTableCell_hasReorderHandle
+    .public_fixedDataTableCell_wrap.public_fixedDataTableCell_cellContent {
+    padding-right: 20px;
+}
+
+/**
+ * Column reorder goodies.
+ */
+.fixedDataTableCellLayout_columnReorderContainer {
+    border-color: #0284ff;
+    background-color: rgba(0, 0, 0, 0.1);
+    width: 12px;
+    margin-right: -12px;
+    float: left;
+    cursor: move;
+}
+
+.fixedDataTable_isRTL .fixedDataTableCellLayout_columnReorderContainer {
+    margin-right: auto;
+    margin-left: -12px;
+    float: right;
+}
+
+.fixedDataTableCellLayout_columnReorderContainer:after {
+    content: "::";
+    position: absolute;
+    top: 50%;
+    left: 1px;
+    transform: translateY(-50%);
+}
+
+.fixedDataTable_isRTL .fixedDataTableCellLayout_columnReorderContainer:after {
+    left: auto;
+    right: 1px;
+}
+
+/**
+ * Copyright Schrodinger, LLC
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule fixedDataTableColumnResizerLine
+ *
+ */
+/**
+ * Column resizer line.
+ */
+.public_fixedDataTableColumnResizerLine_main {
+    border-color: #0284ff;
+}
+
+/**
+ * Copyright Schrodinger, LLC
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule fixedDataTableRow
+ */
+/**
+ * Table row.
+ */
+.public_fixedDataTableRow_main {
+    background-color: #fff;
+}
+
+.public_fixedDataTableRow_highlighted,
+.public_fixedDataTableRow_highlighted .public_fixedDataTableCell_main {
+    background-color: #f6f7f8;
+}
+
+.public_fixedDataTableRow_fixedColumnsDivider {
+    border-color: #d3d3d3;
+}
+
+.public_fixedDataTableRow_columnsShadow {
+    background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+}
+
+.fixedDataTable_isRTL .public_fixedDataTableRow_columnsShadow {
+    background-image: linear-gradient(270deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+}
+
+.public_fixedDataTableRow_columnsRightShadow {
+    transform: rotate(180deg);
+}
+
+/**
+ * Copyright Schrodinger, LLC
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule Scrollbar
+ *
+ */
+/**
+ * Scrollbars.
+ */
+/* Touching the scroll-track directly makes the scroll-track bolder */
+.public_Scrollbar_main.public_Scrollbar_mainActive,
+.public_Scrollbar_main {
+    background-color: #fff;
+    border-left: 1px solid #d3d3d3;
+}
+
+.fixedDataTable_isRTL .public_Scrollbar_main.public_Scrollbar_mainActive,
+.fixedDataTable_isRTL .public_Scrollbar_main {
+    border-right: 1px solid #d3d3d3;
+    border-left-width: 0;
+}
+
+.public_Scrollbar_mainOpaque,
+.public_Scrollbar_mainOpaque.public_Scrollbar_mainActive,
+.public_Scrollbar_mainOpaque:hover {
+    background-color: #fff;
+}
+
+.public_Scrollbar_face:after {
+    background-color: #c2c2c2;
+}
+
+.public_Scrollbar_main:hover .public_Scrollbar_face:after,
+.public_Scrollbar_mainActive .public_Scrollbar_face:after,
+.public_Scrollbar_faceActive:after {
+    background-color: #7d7d7d;
+}
+
+.gd-list-item.gd-list-item-header .is-collapsible::before,
+.gd-list-item.gd-list-item-header .is-open::before {
+    overflow: hidden;
+    width: 12px;
+    height: 20px;
+    margin: 1px 0 0;
+    color: #b9b9b9;
+    font-family: "Indigo", sans-serif;
+    font-size: 11px;
+}
+
+.gd-list-item.gd-menu-item.is-checked::before,
+.gd-list-item.gd-menu-item.is-submenu::after {
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: var(--gd-palette-complementary-5, #b0beca);
+    font-family: "Indigo", sans-serif;
+}
+
+.gd-list-noResults {
+    padding: 15px;
+    color: var(--gd-palette-complementary-6, #94a1ad);
+    font-size: 14px;
+    font-family: gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
+    text-align: center;
+}
+
+.gd-list-loading {
+    margin: 10px;
+    text-align: center;
+}
+
+.gd-list-status-bar {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 20px;
+    margin: 5px 10px;
+    line-height: 20px;
+    font-size: 12px;
+    padding-top: 5px;
+    border-top: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+}
+.gd-list-status-bar span {
+    flex: 0 0 auto;
+    height: 20px;
+    white-space: nowrap;
+    min-width: 0;
+}
+.gd-list-status-bar .gd-shortened-text {
+    flex: 0 1 auto;
+    overflow: hidden;
+    width: auto;
+    height: 20px;
+    white-space: nowrap;
+    max-width: inherit;
+    text-overflow: ellipsis;
+}
+.gd-list-status-bar .gd-shortened-text.gd-selection-list {
+    max-width: 40px;
+    font-weight: bold;
+}
+
+.gd-list-actions {
+    margin: 0 10px 10px;
+    line-height: 1;
+    font-size: 12px;
+}
+.gd-list-actions .gd-button-link:first-of-type {
+    margin-left: 0;
+    padding-left: 0;
+}
+.gd-list-actions.gd-list-actions-invertable {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+}
+.gd-list-actions.gd-list-actions-invertable .input-checkbox-label {
+    flex: 0 1 auto;
+    cursor: pointer;
+}
+.gd-list-actions.gd-list-actions-invertable .input-checkbox-label.disabled {
+    cursor: default;
+}
+.gd-list-actions.gd-list-actions-invertable .input-checkbox-label::after {
+    content: " ";
+}
+
+.gd-list-actions-selection-size {
+    box-sizing: border-box;
+    margin: 1px 0 0 5px;
+    color: var(--gd-palette-complementary-7, #6d7680);
+}
+
+.gd-list {
+    line-height: 28px;
+    font-size: 12px;
+}
+.gd-list .gd-infinite-list {
+    position: relative;
+    width: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.gd-list-item {
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: inherit;
+    padding: 0 10px;
+    color: var(--gd-palette-complementary-8, #464e56);
+    cursor: pointer;
+    font-family: gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
+    font-size: 12px;
+    text-decoration: none;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.gd-list-item:hover,
+.gd-list-item:focus {
+    color: var(--gd-palette-complementary-9, #000);
+    background: var(--gd-palette-complementary-2, #ebeff4);
+    text-decoration: none;
+}
+.gd-list-item:hover.is-selected,
+.gd-list-item:focus.is-selected {
+    background-color: var(--gd-palette-primary-dimmed, #e8f7fc);
+}
+.gd-mobile-dropdown-content .gd-list-item {
+    border-bottom: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+    font-size: 14px;
+    text-align: left;
+}
+.gd-list-item.is-disabled {
+    opacity: 0.5;
+}
+.gd-list-item.is-selected {
+    color: var(--gd-palette-primary-base, #14b2e2);
+    font-weight: bold;
+}
+.gd-list-item.is-selected .gd-customizable-checkmark-mobile-navigation {
+    top: 18px;
+    right: 13px;
+    bottom: 0;
+}
+.gd-list-item.gd-menu-item {
+    padding: 4px 30px;
+}
+.gd-menu-wrapper.gd-menu-wrapper-small-spacing .gd-list-item.gd-menu-item {
+    padding: 4px 10px;
+}
+.gd-list-item.gd-menu-item.is-checked::before {
+    content: "\E62C";
+    left: 0;
+    width: 30px;
+    font-size: 12px;
+}
+.gd-list-item.gd-menu-item.is-submenu::after {
+    content: "\E611";
+    right: 0;
+    width: 30px;
+    font-size: 14px;
+}
+.gd-list-item label.input-checkbox-label {
+    pointer-events: none;
+}
+.gd-list-item input[type="checkbox"] {
+    flex: 0 0 auto;
+    margin: 0 7px 0 0;
+}
+.gd-list-item span,
+.gd-list-item label {
+    display: block;
+    flex: 1 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.gd-list-item .gd-list-icon {
+    flex: 0 0 auto;
+}
+.is-multiselect .gd-list-item.is-selected {
+    color: var(--gd-palette-complementary-8, #464e56);
+    font-weight: bold;
+}
+.is-multiselect .gd-list-item.is-selected::after {
+    display: none !important;
+}
+.is-multiselect .gd-list-item.is-focused.is-selected,
+.is-multiselect .gd-list-item:hover.is-selected {
+    color: var(--gd-palette-complementary-8, #464e56);
+}
+.gd-list-item.has-only-visible:hover:hover .gd-list-item-only {
+    display: block;
+}
+.gd-list-item .gd-list-item-only {
+    display: none;
+    flex: 0 0 auto;
+    color: var(--gd-palette-primary-base, #14b2e2);
+    margin-left: 7px;
+    font-weight: normal;
+}
+.gd-list-item .gd-list-item-only:hover,
+.gd-list-item .gd-list-item-only:focus,
+.gd-list-item .gd-list-item-only:active {
+    color: var(--gd-palette-complementary-8, #464e56);
+    text-decoration: underline;
+}
+.gd-list-item.gd-list-item-separator,
+.gd-list-item.gd-list-item-header {
+    cursor: default;
+}
+.gd-list-item.gd-list-item-separator:hover,
+.gd-list-item.gd-list-item-separator:hover > div,
+.gd-list-item.gd-list-item-separator:focus,
+.gd-list-item.gd-list-item-separator:focus > div,
+.gd-list-item.gd-list-item-separator:active,
+.gd-list-item.gd-list-item-separator:active > div,
+.gd-list-item.gd-list-item-header:hover,
+.gd-list-item.gd-list-item-header:hover > div,
+.gd-list-item.gd-list-item-header:focus,
+.gd-list-item.gd-list-item-header:focus > div,
+.gd-list-item.gd-list-item-header:active,
+.gd-list-item.gd-list-item-header:active > div {
+    color: var(--gd-palette-complementary-6, #94a1ad);
+    background: transparent;
+}
+.gd-list-item.gd-list-item-separator {
+    position: relative;
+    min-height: 10px;
+}
+.gd-list-item.gd-list-item-separator::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    left: 10px;
+    height: 0;
+    border-bottom: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+}
+.gd-menu-wrapper .gd-list-item.gd-list-item-separator::before {
+    right: 30px;
+    left: 30px;
+}
+.gd-menu-wrapper.gd-menu-wrapper-small-spacing .gd-list-item.gd-list-item-separator::before {
+    right: 10px;
+    left: 10px;
+}
+.gd-list-item.gd-list-item-header {
+    padding: 12px 10px 0;
+    line-height: 16px;
+    color: var(--gd-palette-complementary-6, #94a1ad);
+    font-size: 10px;
+    text-transform: uppercase;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.gd-menu-wrapper .gd-list-item.gd-list-item-header {
+    padding: 12px 30px 0;
+}
+.gd-menu-wrapper.gd-menu-wrapper-small-spacing .gd-list-item.gd-list-item-header {
+    padding: 12px 10px 0;
+}
+.gd-list-item.gd-list-item-header > div {
+    color: inherit;
+}
+.gd-list-item.gd-list-item-header .is-collapsible {
+    cursor: pointer;
+}
+.gd-list-item.gd-list-item-header .is-collapsible:hover {
+    background-color: #f2f2f2;
+}
+.gd-list-item.gd-list-item-header .is-collapsible::before {
+    content: "\29";
+    float: left;
+}
+.gd-list-item.gd-list-item-header .is-open::before {
+    content: "\28";
+}
+.gd-list-item .gd-list-item-bubble {
+    padding-left: 3px;
+    padding-bottom: 3px;
+}
+
+.gd-list-icon {
+    width: 16px;
+    height: 16px;
+    margin: 0 8px;
+    line-height: 16px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.gd-list-icon:first-child {
+    margin-left: 0;
+}
+.gd-list-icon:last-child {
+    margin-right: 0;
+}
+
+.gd-list-item .input-checkbox-label,
+.gd-list-actions .input-checkbox-label {
+    padding-right: 0;
+    padding-left: 23px;
+}
+
+.gd-list-root .gd-button-link {
+    padding: 0;
+    font-size: 12px;
+}
+.gd-list-root .gd-button-link > span {
+    text-decoration: none;
+}
+.gd-list-root .gd-button-link:hover > span {
+    text-decoration: underline;
+}
+.gd-list-root .gd-button-link:first-child {
+    margin-left: 8px;
+}
+
+.gd-infinite-list .fixedDataTableLayout_topShadow,
+.gd-infinite-list .fixedDataTableLayout_bottomShadow {
+    display: none;
+}
+
+.gd-infinite-list .public_fixedDataTable_main,
+.gd-infinite-list .fixedDataTableCellLayout_main,
+.gd-infinite-list .fixedDataTableRowLayout_main {
+    border: none;
+}
+
+.gd-infinite-list .public_Scrollbar_main,
+.gd-infinite-list .public_Scrollbar_main.public_Scrollbar_mainActive {
+    border-color: transparent;
+}
+
+.gd-infinite-list .public_Scrollbar_main,
+.gd-infinite-list .public_Scrollbar_mainActive {
+    background-color: transparent;
+}
+
+.gd-infinite-list .public_Scrollbar_main:hover .public_Scrollbar_face::after,
+.gd-infinite-list .public_Scrollbar_mainActive .public_Scrollbar_face::after {
+    background-color: var(--gd-palette-complementary-5, #b0beca);
+}
+
+.gd-infinite-list .public_Scrollbar_face::after {
+    background-color: rgba(176, 190, 202, 0.3);
+}
+
+.gd-infinite-list .public_Scrollbar_faceActive::after {
+    background-color: var(--gd-palette-complementary-5, #b0beca);
+}
+
+.gd-infinite-list .public_fixedDataTable_header,
+.gd-infinite-list .public_fixedDataTable_header .public_fixedDataTableCell_main,
+.gd-infinite-list .public_fixedDataTable_scrollbarSpacer {
+    background: none;
+}
+
+.gd-infinite-list .public_fixedDataTableRow_main,
+.gd-infinite-list .public_fixedDataTableCell_main,
+.gd-infinite-list .public_fixedDataTableRow_highlighted,
+.gd-infinite-list .public_fixedDataTableRow_highlighted .public_fixedDataTableCell_main {
+    background-color: transparent;
+}
+
+.gd-infinite-list .public_fixedDataTableCell_cellContent {
+    padding: 0;
+    white-space: nowrap;
+    color: var(--gd-palette-complementary-8, #464e56);
+}
+.gd-infinite-list .public_fixedDataTableCell_cellContent:hover {
+    background-color: transparent;
+}
+
+.gd-infinite-list .fixedDataTableCellLayout_wrap1 {
+    table-layout: fixed;
+}
+
+.gd-infinite-list .fixedDataTableCellLayout_wrap2,
+.gd-infinite-list .fixedDataTableCellLayout_wrap3 {
+    width: inherit;
+}
+
+.gd-infinite-list .fixedDataTableCellLayout_wrap2,
+.gd-infinite-list .fixedDataTableCellLayout_wrap3,
+.gd-infinite-list .public_fixedDataTableCell_cellContent,
+.gd-infinite-list .gd-project-list-item {
+    height: inherit;
+}
+
+.gd-list-header,
+.gd-list-footer {
+    margin: 10px;
+    line-height: 16px;
+    color: var(--gd-palette-complementary-6, #94a1ad);
+    font-size: 12px;
+}
+
+.gd-list-header {
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+}
+
+.gd-list-footer {
+    padding-top: 10px;
+    border-top: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+}
+
+.gd-list-limitExceeded {
+    margin: 5px 10px;
+}
+.gd-list-limitExceeded.gd-message::after {
+    display: none;
+}
+
+.gd-menu-wrapper {
+    position: relative;
+    z-index: 10;
+    display: inline-block;
+    padding: 8px 0;
+    box-shadow: 0 1px 20px var(--gd-shadow-color, rgba(20, 56, 93, 0.2));
+    background: var(--gd-palette-complementary-0, #fff);
+    border-radius: 3px;
+}
+
+.gd-menuOpenner {
+    position: relative;
+    z-index: 1;
+}
+
+.gd-menuPosition-wrapper {
+    position: relative;
+}
+
+.gd-menuOpenedByClick-togglerWrapped {
+    display: inline-block;
+}
