@@ -11,44 +11,24 @@ if (process.env.WDYR === "true") {
 }
 import "babel-polyfill";
 import React from "react";
+import { getInsightExecution } from "./getInsightExecution";
+import { getWidgetExecution } from "./getWidgetExecution";
 
-import bearFactory, { BearToBackendConvertors, BearTokenAuthProvider } from "@gooddata/sdk-backend-bear";
-import { BaseVisualization, FullVisualizationCatalog } from "@gooddata/sdk-ui-ext/esm/internal";
-import { IBaseVisualizationProps } from "@gooddata/sdk-ui-ext/esm/internal/components/BaseVisualization";
+// this will be part of the request
+const token = "";
+const projectId = "";
+const insightUri = "";
+const widgetUri = "";
+const filterContextUri = "";
+const dashboardUri = "";
 
-(async function getAfmExecution() {
-    // this will be part of the request
-    const token = "";
-    const projectId = "";
-    const insightUri = "";
+// this is just a cookie hack for the playground - it will not be used like this in node
+document.cookie = `GDCAuthSST=${token};path=/gdc/account`;
 
-    const backend = bearFactory().withAuthentication(new BearTokenAuthProvider(token));
-    const insight = await backend.workspace(projectId).insights().getInsight({ uri: insightUri });
-    const visualizationClasses = await backend.workspace(projectId).insights().getVisualizationClasses();
+(async () => {
+    await getInsightExecution(token, projectId, insightUri);
+})();
 
-    const visualizationClass = visualizationClasses.find(
-        ({ visualizationClass }) => visualizationClass.url === insight.insight.visualizationUrl,
-    )!;
-
-    const props: IBaseVisualizationProps = {
-        backend,
-        insight,
-        projectId,
-        visualizationClass,
-        visualizationCatalog: FullVisualizationCatalog,
-        onError: () => {},
-        onLoadingChanged: () => {},
-        pushData: () => {},
-        renderer: () => {},
-    };
-
-    const visualization = new BaseVisualization(props);
-    const preparedExecution = visualization.getExecution();
-
-    const afmExecution = BearToBackendConvertors.toAfmExecution(preparedExecution.definition);
-    const executionResult = await preparedExecution.execute();
-
-    console.log(afmExecution);
-    console.log(executionResult);
-    // how to get executionResponse or polling link?
+(async () => {
+    await getWidgetExecution(token, projectId, dashboardUri, widgetUri, filterContextUri);
 })();
