@@ -10,7 +10,8 @@ import {
     newCustomWidget,
 } from "@gooddata/sdk-ui-dashboard";
 
-import packageJson from "../../package.json";
+import entryPoint from "../plugin_entry";
+
 import React from "react";
 
 /*
@@ -22,9 +23,11 @@ function MyCustomWidget(_props: IDashboardWidgetProps): JSX.Element {
 }
 
 export class Plugin extends DashboardPluginV1 {
-    public readonly author = packageJson.author;
-    public readonly displayName = packageJson.name;
-    public readonly version = packageJson.version;
+    public readonly author = entryPoint.author;
+    public readonly displayName = entryPoint.displayName;
+    public readonly version = entryPoint.version;
+    public readonly minEngineVersion = entryPoint.minEngineVersion;
+    public readonly maxEngineVersion = entryPoint.maxEngineVersion;
 
     public onPluginLoaded(_ctx: DashboardContext, _parameters?: string): Promise<void> | void {
         /*

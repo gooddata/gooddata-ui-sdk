@@ -1,10 +1,11 @@
 // (C) 2021 GoodData Corporation
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
-import { DashboardContext, IDashboardEngine } from "@gooddata/sdk-ui-dashboard";
+import { DashboardContext, IDashboardEngine, IDashboardPluginContract_V1 } from "@gooddata/sdk-ui-dashboard";
 import { areObjRefsEqual } from "@gooddata/sdk-model";
 import { LoadedPlugin, ModuleFederationIntegration } from "../types";
 import invariant from "ts-invariant";
 import isEmpty from "lodash/isEmpty";
+import { determineDashboardEngine } from "./determineDashboardEngine";
 
 /**
  * @internal
@@ -17,12 +18,19 @@ export async function dynamicDashboardEngineLoader(
     // if this bombs, this loader was called with no plugins (which means noop version should have been used)
     invariant(!isEmpty(plugins));
 
-    const first = plugins[0];
+    const loadedEngines: IDashboardEngine[] = await Promise.all(
+        plugins.map(async (plugin) => {
+            const loadedEngineModule = await loadEngine(
+                moduleNameFromUrl(plugin.url),
+                moduleFederationIntegration,
+            )();
 
-    const loadedEngineModule = await loadEngine(moduleNameFromUrl(first.url), moduleFederationIntegration)();
+            const engineFactory = loadedEngineModule.default;
+            return engineFactory();
+        }),
+    );
 
-    const engineFactory = loadedEngineModule.default;
-    return engineFactory();
+    return determineDashboardEngine(loadedEngines);
 }
 
 /**
@@ -48,8 +56,29 @@ export async function dynamicDashboardPluginLoader(
             )();
             const pluginFactory = loadedModule.default;
 
-            const plugin = pluginFactory();
+            let plugin: IDashboardPluginContract_V1 = pluginFactory();
             const pluginLink = pluginLinks?.find((link) => areObjRefsEqual(link.plugin, pluginMeta.ref));
+
+            // If the dashboard plugin minEngineVersion or maxEngineVersion equals "bundled",
+            // we need to load the bundled engine, to know the desired engine version.
+            if (plugin.maxEngineVersion === "bundled" || plugin.minEngineVersion === "bundled") {
+                const loadedEngineModule = await loadEngine(
+                    moduleNameFromUrl(pluginMeta.url),
+                    moduleFederationIntegration,
+                )();
+
+                const engineFactory = loadedEngineModule.default;
+                const engine: IDashboardEngine = engineFactory();
+
+                // We can't use spread operator here, because we need to preserve
+                // the dashboard plugin prototype methods (eg. onPluginLoaded / register / onPluginUnload)
+                plugin = Object.assign(plugin, {
+                    minEngineVersion:
+                        plugin.minEngineVersion === "bundled" ? engine.version : plugin.minEngineVersion,
+                    maxEngineVersion:
+                        plugin.maxEngineVersion === "bundled" ? engine.version : plugin.maxEngineVersion,
+                });
+            }
 
             return {
                 plugin,

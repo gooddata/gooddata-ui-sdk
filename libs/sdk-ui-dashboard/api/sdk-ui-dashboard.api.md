@@ -1304,8 +1304,8 @@ export type DashboardPluginDescriptor = {
     readonly shortDescription?: string;
     readonly longDescription?: string;
     readonly debugName?: string;
-    readonly minEngineVersion: "bundled";
-    readonly maxEngineVersion?: "bundled";
+    readonly minEngineVersion: string;
+    readonly maxEngineVersion?: string;
 };
 
 // @public
@@ -1315,9 +1315,9 @@ export abstract class DashboardPluginV1 implements IDashboardPluginContract_V1 {
     // (undocumented)
     abstract readonly displayName: string;
     // (undocumented)
-    readonly maxEngineVersion = "bundled";
+    readonly maxEngineVersion?: string;
     // (undocumented)
-    readonly minEngineVersion = "bundled";
+    readonly minEngineVersion: string;
     // (undocumented)
     readonly _pluginVersion = "1.0";
     // (undocumented)

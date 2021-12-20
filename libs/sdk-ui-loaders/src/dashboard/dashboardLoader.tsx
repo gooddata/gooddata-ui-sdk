@@ -34,6 +34,7 @@ import {
     adaptiveDashboardPluginLoaderFactory,
 } from "./loadingStrategies/adaptiveComponentLoaders";
 import { validatePluginsBeforeLoading } from "./beforeLoadPluginValidation";
+import { isPluginCompatibleWithDashboardEngine } from "./loadingStrategies/determineDashboardEngine";
 
 /**
  * @public
@@ -217,7 +218,23 @@ export class DashboardLoader implements IDashboardLoader {
 
         const additionalPlugins = await initializeEmbeddedPlugins(ctx, this.embeddedPlugins);
         const loadedPlugins = await initializeLoadedPlugins(ctx, plugins);
-        const allPlugins = [...loadedPlugins, ...additionalPlugins];
+
+        // If some of the plugins do not match the engine version, do not use any at all.
+        const areLoadedPluginsCompatibleWithDashboardEngine = loadedPlugins.every((p) =>
+            isPluginCompatibleWithDashboardEngine(engine, p),
+        );
+
+        if (!areLoadedPluginsCompatibleWithDashboardEngine) {
+            // eslint-disable-next-line no-console
+            console.error(
+                "Some external dashboard plugin is incompatible with the loaded dashboard engine. " +
+                    "None of the external plugins will be initialized.",
+            );
+        }
+
+        const allPlugins = areLoadedPluginsCompatibleWithDashboardEngine
+            ? [...loadedPlugins, ...additionalPlugins]
+            : additionalPlugins;
 
         return [engine, allPlugins];
     };

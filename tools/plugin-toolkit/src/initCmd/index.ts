@@ -136,6 +136,14 @@ function performReplacementsInFiles(dir: string, config: InitCmdActionConfig): P
                     },
                 ],
             },
+            [pluginIdentifier]: {
+                [`Plugin.${language}x`]: [
+                    {
+                        regex: /"\.\.\/plugin_entry"/g,
+                        value: `"../${pluginIdentifier}_entry"`,
+                    },
+                ],
+            },
         },
     };
 
