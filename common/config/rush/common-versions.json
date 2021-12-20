@@ -22,11 +22,6 @@
         "@microsoft/api-documenter": "^7.12.13",
         "@gooddata/frontend-npm-scripts": "1.2.0",
 
-        /*
-         * lru-cache > 4 is not compatible with IE11 because it uses generators
-         */
-        "lru-cache": "^4.1.5",
-
         "prettier": "~2.5.0",
         "pretty-quick": "~3.1.0",
         "ts-node": "^10.4.0",

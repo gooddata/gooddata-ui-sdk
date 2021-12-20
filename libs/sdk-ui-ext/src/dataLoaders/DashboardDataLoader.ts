@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import LRUCache from "lru-cache";
+import { LRUCache } from "@gooddata/util";
 import { IAnalyticalBackend, IDashboard } from "@gooddata/sdk-backend-spi";
 import { ObjRef, objRefToString } from "@gooddata/sdk-model";
 
@@ -16,9 +16,7 @@ interface IDashboardDataLoader {
 }
 
 class DashboardDataLoader implements IDashboardDataLoader {
-    private dashboardCache: LRUCache<string, Promise<IDashboard>> = new LRUCache({
-        max: DASHBOARD_CACHE_SIZE,
-    });
+    private dashboardCache = new LRUCache<Promise<IDashboard>>({ maxSize: DASHBOARD_CACHE_SIZE });
 
     constructor(protected readonly workspace: string) {}
 
@@ -32,7 +30,7 @@ class DashboardDataLoader implements IDashboardDataLoader {
                 .dashboards()
                 .getDashboard(ref)
                 .catch((error) => {
-                    this.dashboardCache.del(cacheKey);
+                    this.dashboardCache.delete(cacheKey);
                     throw error;
                 });
 
