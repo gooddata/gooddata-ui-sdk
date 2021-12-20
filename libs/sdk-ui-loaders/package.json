@@ -59,6 +59,7 @@
         "@gooddata/sdk-ui": "^8.8.0-alpha.36",
         "lodash": "^4.17.19",
         "react-intl": "^5.23.0",
+        "semver": "^7.3.5",
         "ts-invariant": "^0.7.3",
         "tslib": "^2.0.0"
     },
@@ -78,6 +79,7 @@
         "@types/raf": "^3.4.0",
         "@types/react-dom": "^17.0.11",
         "@types/react": "^17.0.34",
+        "@types/semver": "^7.3.9",
         "@typescript-eslint/eslint-plugin": "^5.5.0",
         "@typescript-eslint/parser": "^5.5.0",
         "@wojtekmaj/enzyme-adapter-react-17": "^0.6.5",

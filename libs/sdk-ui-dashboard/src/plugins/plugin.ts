@@ -43,13 +43,19 @@ export type DashboardPluginDescriptor = {
 
     /**
      * Minimum version of dashboard engine that this plugin supports.
+     *
+     * Value can be "bundled" - then the minimum required version of the engine equals to the bundled one.
+     * Another option is to specify exact minimum version of the SDK - e.g. "8.7.0".
      */
-    readonly minEngineVersion: "bundled";
+    readonly minEngineVersion: string;
 
     /**
      * Greatest version of the dashboard engine that this plugin supports.
+     *
+     * Value can be "bundled" - then the maximum possible version of the engine equals to the bundled one.
+     * Another option is to specify exact maximum version of the SDK - e.g. "8.8.0".
      */
-    readonly maxEngineVersion?: "bundled";
+    readonly maxEngineVersion?: string;
 };
 
 /**
@@ -126,8 +132,8 @@ export interface IDashboardPluginContract_V1 extends DashboardPluginDescriptor {
  */
 export abstract class DashboardPluginV1 implements IDashboardPluginContract_V1 {
     public readonly _pluginVersion = "1.0";
-    public readonly minEngineVersion = "bundled";
-    public readonly maxEngineVersion = "bundled";
+    public readonly minEngineVersion: string = "bundled";
+    public readonly maxEngineVersion?: string = "bundled";
     public abstract readonly author: string;
     public abstract readonly displayName: string;
     public abstract readonly version: string;

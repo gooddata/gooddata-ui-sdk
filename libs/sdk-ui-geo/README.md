@@ -4,6 +4,10 @@ This package provides the components that you can use to visualize location-base
 
 Currently, only the GeoPushpinChart component is available. Use this component to visualize data bound to a single location (not an area).
 
+#### Internet Explorer
+
+With GoodData.UI SDK version >=8.8, Geo Pushpin Chart is no longer supported in Internet Explorer 11.
+
 ## License
 
 (C) 2017-2021 GoodData Corporation

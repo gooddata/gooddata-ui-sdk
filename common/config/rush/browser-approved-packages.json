@@ -147,10 +147,6 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
-      "name": "@gooddata/sdk-ui-charts",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
       "name": "@gooddata/sdk-ui-dashboard",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -165,6 +161,10 @@
     {
       "name": "@gooddata/sdk-ui-geo",
       "allowedCategories": [ "examples", "production" ]
+    },
+    {
+      "name": "@gooddata/sdk-ui-charts",
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@gooddata/sdk-ui-kit",
@@ -391,6 +391,10 @@
       "allowedCategories": [ "tools" ]
     },
     {
+      "name": "@types/semver",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@types/spark-md5",
       "allowedCategories": [ "production" ]
     },
@@ -468,14 +472,6 @@
     },
     {
       "name": "case-sensitive-paths-webpack-plugin",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "chalk",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "chokidar",
       "allowedCategories": [ "tools" ]
     },
     {
@@ -665,6 +661,14 @@
     {
       "name": "http-status-codes",
       "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "chalk",
+      "allowedCategories": [ "tools" ]
+    },
+    {
+      "name": "chokidar",
+      "allowedCategories": [ "tools" ]
     },
     {
       "name": "immer",
@@ -891,16 +895,16 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "recharts",
-      "allowedCategories": [ "examples" ]
-    },
-    {
       "name": "redux-batched-actions",
       "allowedCategories": [ "production" ]
     },
     {
       "name": "redux-saga",
       "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "recharts",
+      "allowedCategories": [ "examples" ]
     },
     {
       "name": "rimraf",
@@ -913,6 +917,10 @@
     {
       "name": "sass-loader",
       "allowedCategories": [ "examples", "production" ]
+    },
+    {
+      "name": "semver",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "source-map-loader",
@@ -947,11 +955,11 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "stylelint-checkstyle-formatter",
+      "name": "stylelint-config-prettier",
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "stylelint-config-prettier",
+      "name": "stylelint-checkstyle-formatter",
       "allowedCategories": [ "production" ]
     },
     {
