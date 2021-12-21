@@ -27,7 +27,7 @@ import {
     createElementCountResolver,
     ScreenshotReadyWrapper,
 } from "../../_infra/ScreenshotReadyWrapper";
-import { withScreenshot } from "../../_infra/backstopWrapper";
+import { ShortPostInteractionTimeout, withScreenshot } from "../../_infra/backstopWrapper";
 import { ConfigurationPanelWrapper } from "../../_infra/ConfigurationPanelWrapper";
 import { StorybookBackend } from "../../_infra/backend";
 import { ExamplesRecordings } from "@gooddata/live-examples-workspace";
@@ -165,7 +165,10 @@ function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
         withScreenshot(child, {
             clickSelector: `.${ConfigurationPanelWrapper.DefaultExpandAllClassName}`,
             readySelector: `.${ScreenshotReadyWrapper.OnReadyClassName}`,
-            postInteractionWait: 200,
+            // give tables some more time to finish rendering
+            postInteractionWait: insightVisualizationUrl(insight).includes("table")
+                ? ShortPostInteractionTimeout
+                : 200,
         });
 
     const wrapper = (child: any) => screenshotWrapper(wrapWithTheme(child, testScenario.tags)); // since themes are global anyway, wrap only once

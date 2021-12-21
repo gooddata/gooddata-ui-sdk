@@ -9,7 +9,7 @@ function getCellElement(gridApi: GridApi, attributeId: string, rowIndex: number)
     const rowRenderer = (gridApi as any).rowRenderer;
     const rowCon = rowRenderer.rowConsByRowIndex[rowIndex];
 
-    return rowCon ? rowCon.centerRowComp.cellComps[attributeId].eGui : null;
+    return rowCon?.centerRowComp?.cellComps?.[attributeId]?.eGui ?? null;
 }
 
 function addCellClass(gridApi: GridApi, attributeId: string, rowIndex: number, className: string): void {
@@ -41,8 +41,8 @@ function getPinnedTopRowElement(gridApi: GridApi): HTMLElement | null {
         return null;
     }
 
-    const rootElement: HTMLElement = (gridApi as any).gridBodyComp.eGui;
-    const rowElement = rootElement.querySelector(`[row-id=${pinnedTopRow.id}]`);
+    const rootElement: HTMLElement | undefined = (gridApi as any).gridBodyComp?.eGui;
+    const rowElement = rootElement?.querySelector(`[row-id=${pinnedTopRow.id}]`);
 
     return rowElement?.parentElement?.parentElement ?? null;
 }
