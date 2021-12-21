@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import LRUCache from "lru-cache";
+import { LRUCache } from "@gooddata/util";
 import { IAnalyticalBackend, IWidgetAlert } from "@gooddata/sdk-backend-spi";
 import { ObjRef, objRefToString } from "@gooddata/sdk-model";
 
@@ -19,9 +19,7 @@ interface IDashboardAlertsDataLoader {
 const EMPTY_RESPONSE: IWidgetAlert[] = [];
 
 class DashboardAlertsDataLoader implements IDashboardAlertsDataLoader {
-    private dashboardAlertsCache: LRUCache<string, Promise<IWidgetAlert[]>> = new LRUCache({
-        max: DASHBOARD_CACHE_SIZE,
-    });
+    private dashboardAlertsCache = new LRUCache<Promise<IWidgetAlert[]>>({ maxSize: DASHBOARD_CACHE_SIZE });
 
     constructor(protected readonly workspace: string) {}
 
@@ -40,7 +38,7 @@ class DashboardAlertsDataLoader implements IDashboardAlertsDataLoader {
                 .dashboards()
                 .getDashboardWidgetAlertsForCurrentUser(ref)
                 .catch((error) => {
-                    this.dashboardAlertsCache.del(cacheKey);
+                    this.dashboardAlertsCache.delete(cacheKey);
                     throw error;
                 });
 

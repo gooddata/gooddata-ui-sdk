@@ -21,7 +21,7 @@ import {
     ExecutionDecoratorFactory,
     SecuritySettingsDecoratorFactory,
 } from "../decoratedBackend";
-import LRUCache from "lru-cache";
+import { LRUCache } from "@gooddata/util";
 import { DecoratedSecuritySettingsService } from "../decoratedBackend/securitySettings";
 import {
     DecoratedExecutionFactory,
@@ -59,23 +59,23 @@ type ExecutionCacheEntry = {
 };
 
 type CatalogCacheEntry = {
-    catalogForOptions: LRUCache<string, Promise<IWorkspaceCatalog>>;
+    catalogForOptions: LRUCache<Promise<IWorkspaceCatalog>>;
 };
 
 type SecuritySettingsCacheEntry = {
-    valid: LRUCache<string, Promise<boolean>>;
+    valid: LRUCache<Promise<boolean>>;
 };
 
 type AttributeCacheEntry = {
-    displayForms: LRUCache<string, Promise<IAttributeDisplayFormMetadataObject>>;
+    displayForms: LRUCache<Promise<IAttributeDisplayFormMetadataObject>>;
 };
 
 type CachingContext = {
     caches: {
-        execution?: LRUCache<string, ExecutionCacheEntry>;
-        workspaceCatalogs?: LRUCache<string, CatalogCacheEntry>;
-        securitySettings?: LRUCache<string, SecuritySettingsCacheEntry>;
-        workspaceAttributes?: LRUCache<string, AttributeCacheEntry>;
+        execution?: LRUCache<ExecutionCacheEntry>;
+        workspaceCatalogs?: LRUCache<CatalogCacheEntry>;
+        securitySettings?: LRUCache<SecuritySettingsCacheEntry>;
+        workspaceAttributes?: LRUCache<AttributeCacheEntry>;
     };
     config: CachingConfiguration;
 };
@@ -101,7 +101,7 @@ class WithExecutionCaching extends DecoratedPreparedExecution {
                     return new WithExecutionResultCaching(res, this.createNew, this.ctx);
                 })
                 .catch((e) => {
-                    cache.del(cacheKey);
+                    cache.delete(cacheKey);
                     throw e;
                 });
 
@@ -171,7 +171,7 @@ function windowKey(offset: number[], size: number[]): string {
 
 class WithExecutionResultCaching extends DecoratedExecutionResult {
     private allData: Promise<IDataView> | undefined;
-    private windows: LRUCache<string, Promise<IDataView>> | undefined;
+    private windows: LRUCache<Promise<IDataView>> | undefined;
 
     constructor(
         decorated: IExecutionResult,
@@ -181,7 +181,7 @@ class WithExecutionResultCaching extends DecoratedExecutionResult {
         super(decorated, wrapper);
 
         if (cachingEnabled(this.ctx.config.maxResultWindows)) {
-            this.windows = new LRUCache({ max: this.ctx.config.maxResultWindows });
+            this.windows = new LRUCache({ maxSize: this.ctx.config.maxResultWindows });
         }
     }
 
@@ -207,7 +207,7 @@ class WithExecutionResultCaching extends DecoratedExecutionResult {
         if (!window) {
             window = super.readWindow(offset, size).catch((e) => {
                 if (this.windows) {
-                    this.windows.del(cacheKey);
+                    this.windows.delete(cacheKey);
                 }
 
                 throw e;
@@ -239,7 +239,7 @@ class WithCatalogCaching extends DecoratedWorkspaceCatalogFactory {
 
         if (!catalog) {
             catalog = super.load().catch((e) => {
-                cache.del(cacheKey);
+                cache.delete(cacheKey);
                 throw e;
             });
 
@@ -259,8 +259,8 @@ class WithCatalogCaching extends DecoratedWorkspaceCatalogFactory {
 
         if (!cacheEntry) {
             cacheEntry = {
-                catalogForOptions: new LRUCache<string, Promise<IWorkspaceCatalog>>({
-                    max: this.ctx.config.maxCatalogOptions,
+                catalogForOptions: new LRUCache<Promise<IWorkspaceCatalog>>({
+                    maxSize: this.ctx.config.maxCatalogOptions,
                 }),
             };
             cache.set(workspace, cacheEntry);
@@ -290,7 +290,7 @@ class WithSecuritySettingsCaching extends DecoratedSecuritySettingsService {
 
         if (!result) {
             result = super.isUrlValid(url, context).catch((e) => {
-                cache.del(cacheKey);
+                cache.delete(cacheKey);
                 throw e;
             });
 
@@ -307,7 +307,7 @@ class WithSecuritySettingsCaching extends DecoratedSecuritySettingsService {
 
         if (!result) {
             result = super.isDashboardPluginUrlValid(url, workspace).catch((e) => {
-                cache.del(url);
+                cache.delete(url);
                 throw e;
             });
 
@@ -323,8 +323,8 @@ class WithSecuritySettingsCaching extends DecoratedSecuritySettingsService {
 
         if (!cacheEntry) {
             cacheEntry = {
-                valid: new LRUCache<string, Promise<boolean>>({
-                    max: this.ctx.config.maxSecuritySettingsOrgUrls,
+                valid: new LRUCache<Promise<boolean>>({
+                    maxSize: this.ctx.config.maxSecuritySettingsOrgUrls,
                     maxAge: this.ctx.config.maxSecuritySettingsOrgUrlsAge,
                 }),
             };
@@ -369,10 +369,10 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
         if (!cacheItem) {
             cacheItem = super.getAttributeDisplayForm(ref).catch((e) => {
                 if (idCacheKey) {
-                    cache.del(idCacheKey);
+                    cache.delete(idCacheKey);
                 }
                 if (uriCacheKey) {
-                    cache.del(uriCacheKey);
+                    cache.delete(uriCacheKey);
                 }
                 throw e;
             });
@@ -444,8 +444,8 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
 
         if (!cacheEntry) {
             cacheEntry = {
-                displayForms: new LRUCache<string, Promise<IAttributeDisplayFormMetadataObject>>({
-                    max: this.ctx.config.maxAttributeDisplayFormsPerWorkspace,
+                displayForms: new LRUCache<Promise<IAttributeDisplayFormMetadataObject>>({
+                    maxSize: this.ctx.config.maxAttributeDisplayFormsPerWorkspace,
                 }),
             };
             cache.set(workspace, cacheEntry);
@@ -483,19 +483,19 @@ function cachingEnabled(desiredSize: number | undefined): boolean {
 function cacheControl(ctx: CachingContext): CacheControl {
     const control: CacheControl = {
         resetExecutions: () => {
-            ctx.caches.execution?.reset();
+            ctx.caches.execution?.clear();
         },
 
         resetCatalogs: () => {
-            ctx.caches.workspaceCatalogs?.reset();
+            ctx.caches.workspaceCatalogs?.clear();
         },
 
         resetSecuritySettings: () => {
-            ctx.caches.securitySettings?.reset();
+            ctx.caches.securitySettings?.clear();
         },
 
         resetAttributes: () => {
-            ctx.caches.workspaceAttributes?.reset();
+            ctx.caches.workspaceAttributes?.clear();
         },
 
         resetAll: () => {
@@ -739,13 +739,13 @@ export function withCaching(
 
     const ctx: CachingContext = {
         caches: {
-            execution: execCaching ? new LRUCache({ max: config.maxExecutions }) : undefined,
-            workspaceCatalogs: catalogCaching ? new LRUCache({ max: config.maxCatalogs }) : undefined,
+            execution: execCaching ? new LRUCache({ maxSize: config.maxExecutions }) : undefined,
+            workspaceCatalogs: catalogCaching ? new LRUCache({ maxSize: config.maxCatalogs }) : undefined,
             securitySettings: securitySettingsCaching
-                ? new LRUCache({ max: config.maxSecuritySettingsOrgs })
+                ? new LRUCache({ maxSize: config.maxSecuritySettingsOrgs })
                 : undefined,
             workspaceAttributes: attributeCaching
-                ? new LRUCache({ max: config.maxAttributeWorkspaces })
+                ? new LRUCache({ maxSize: config.maxAttributeWorkspaces })
                 : undefined,
         },
         config,

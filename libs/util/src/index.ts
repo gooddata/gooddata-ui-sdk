@@ -17,3 +17,4 @@ import * as objectUtils from "./objectUtils";
 import * as typesUtils from "./typesUtils";
 
 export { stringUtils, testUtils, translationUtils, arrayUtils, objectUtils, typesUtils };
+export { ILRUCacheOptions, LRUCache } from "./lruCache";

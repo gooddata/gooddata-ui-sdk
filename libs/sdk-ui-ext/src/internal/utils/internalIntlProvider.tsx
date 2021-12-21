@@ -10,11 +10,11 @@ import {
 
 import { translations } from "./translations";
 import { IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import LRUCache from "lru-cache";
+import { LRUCache } from "@gooddata/util";
 
 const INTL_CACHE_SIZE = 20;
 const INTL_CACHE_KEY = "messages";
-const intlCache: LRUCache<string, Record<string, string>> = new LRUCache({ max: INTL_CACHE_SIZE });
+const intlCache = new LRUCache<Record<string, string>>({ maxSize: INTL_CACHE_SIZE });
 
 export function createInternalIntl(locale: ILocale = DefaultLocale): IntlShape {
     /**

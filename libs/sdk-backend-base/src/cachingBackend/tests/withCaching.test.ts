@@ -399,9 +399,11 @@ describe("withCaching", () => {
                     ReferenceMd.Account.Name.attribute.displayForm,
                 );
 
-                // other 2 calls with different display form to replace the first one
+                // other 3 calls with different display form to replace the first one
+                // the LRU we use starts evicting at maxSize * 2
                 doGetAttributeDisplayForm(backend, ReferenceMd.Activity.Default.attribute.displayForm);
                 doGetAttributeDisplayForm(backend, ReferenceMd.Activity.Subject.attribute.displayForm);
+                doGetAttributeDisplayForm(backend, ReferenceMd.Account.Default.attribute.displayForm);
 
                 const second = doGetAttributeDisplayForm(
                     backend,

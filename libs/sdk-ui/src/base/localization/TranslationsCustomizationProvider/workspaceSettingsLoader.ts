@@ -1,11 +1,11 @@
 // (C) 2021 GoodData Corporation
 import { IAnalyticalBackend, IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import LRUCache from "lru-cache";
+import { LRUCache } from "@gooddata/util";
 
 const LOADER_CACHE_SIZE = 20;
 
 class WorkspaceSettingsLoader {
-    private settingsCache = new LRUCache<string, Promise<IWorkspaceSettings>>({ max: LOADER_CACHE_SIZE });
+    private settingsCache = new LRUCache<Promise<IWorkspaceSettings>>({ maxSize: LOADER_CACHE_SIZE });
 
     public load(backend: IAnalyticalBackend, workspace: string): Promise<IWorkspaceSettings> {
         const cacheKey = workspace;
@@ -18,7 +18,7 @@ class WorkspaceSettingsLoader {
                 .getSettings()
                 .catch((error) => {
                     // do not cache errors
-                    this.settingsCache.del(cacheKey);
+                    this.settingsCache.delete(cacheKey);
                     throw error;
                 });
             this.settingsCache.set(cacheKey, settings);
