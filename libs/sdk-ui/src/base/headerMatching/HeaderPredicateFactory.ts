@@ -19,6 +19,7 @@ import {
     isSimpleMeasure,
     measureArithmeticOperands,
     measureIdentifier,
+    measureItem,
     measureLocalId,
     measureMasterIdentifier,
     measureUri,
@@ -321,7 +322,9 @@ export function objMatch(obj: any): IHeaderPredicate {
     }
 
     if (isSimpleMeasure(obj)) {
-        return localIdentifierMatch(measureLocalId(obj));
+        return (header, context) =>
+            localIdentifierMatch(measureLocalId(obj))(header, context) ||
+            objRefMatch(measureItem(obj))(header, context);
     }
 
     if (isObjRef(obj)) {
