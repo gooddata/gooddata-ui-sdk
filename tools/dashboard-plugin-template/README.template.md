@@ -38,7 +38,7 @@ Building a new plugin is easy. Before you start, ensure that your `.env` and `.e
 
 1.  Start the development server: `{{packageManager}} start`
 
-    To verify everything works correctly, navigate to `{{protocol}}//localhost:3001`. You should see your existing
+    To verify everything works correctly, navigate to `{{protocol}}//127.0.0.1:3001`. You should see your existing
     dashboard with a new empty section added at the end. The section will be titled 'Added from a plugin'.
 
     Note: you can use `PORT` env variable to specify different port number.

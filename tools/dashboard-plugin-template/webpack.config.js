@@ -5,6 +5,7 @@ const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
 const { DefinePlugin, EnvironmentPlugin, ProvidePlugin } = require("webpack");
 const path = require("path");
+const { URL } = require("url");
 const deps = require("./package.json").dependencies;
 const peerDeps = require("./package.json").peerDependencies;
 const Dotenv = require("dotenv-webpack");
@@ -31,11 +32,12 @@ module.exports = (_env, argv) => {
     const isProduction = argv.mode === "production";
 
     const effectiveBackendUrl = process.env.BACKEND_URL || DEFAULT_BACKEND_URL;
+    const protocol = new URL(effectiveBackendUrl).protocol;
 
     const proxy = {
         "/gdc": {
             changeOrigin: true,
-            cookieDomainRewrite: "localhost",
+            cookieDomainRewrite: "127.0.0.1",
             secure: false,
             target: effectiveBackendUrl,
             headers: {
@@ -144,6 +146,8 @@ module.exports = (_env, argv) => {
                 contentBase: path.join(__dirname, "dist"),
                 port: PORT,
                 proxy,
+                host: "127.0.0.1",
+                https: protocol === "https:",
             },
             plugins: [
                 ...commonConfig.plugins,
