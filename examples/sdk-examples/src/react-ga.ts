@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import ReactGA from "react-ga";
 import { history } from "./history";
 
@@ -7,6 +7,7 @@ const isProduction = process.env.NODE_ENV === "production";
 
 ReactGA.initialize(GA_ID, {
     testMode: !isProduction,
+    debug: !isProduction,
 });
 
 history.listen((location) => {
