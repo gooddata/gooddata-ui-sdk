@@ -29,7 +29,7 @@ export const DrillSelectList: React.FunctionComponent<DrillSelectListProps> = (p
             return (
                 <>
                     <div className="gd-drill-modal-picker-title">
-                        <FormattedMessage id="drill_modal_picker.drill-down" />
+                        <FormattedMessage id="drill_modal_picker.drill-down" tagName="span" />
                     </div>
                     {renderItems(items)}
                 </>
@@ -42,7 +42,7 @@ export const DrillSelectList: React.FunctionComponent<DrillSelectListProps> = (p
             return (
                 <>
                     <div className="gd-drill-modal-picker-title">
-                        <FormattedMessage id="drill_modal_picker.drill-into" />
+                        <FormattedMessage id="drill_modal_picker.drill-into" tagName="span" />
                     </div>
                     {renderItems(items)}
                 </>
