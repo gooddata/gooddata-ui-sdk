@@ -74,7 +74,7 @@
         "moment": "^2.24.0",
         "react-day-picker": "^7.4.10",
         "react-intl": "^5.23.0",
-        "react-responsive": "^8.0.1",
+        "react-responsive": "^8.2.0",
         "react-window": "^1.8.6",
         "tslib": "^2.0.0",
         "date-fns": "^2.22.1",
