@@ -7,7 +7,7 @@ import {
     attributeHeaderItem,
     attributeDescriptor,
 } from "./HeaderPredicateFactory.fixtures";
-import { attributeDisplayFormRef, newAttribute, uriRef } from "@gooddata/sdk-model";
+import { attributeDisplayFormRef, measureItem, newAttribute, newMeasure, uriRef } from "@gooddata/sdk-model";
 
 describe("uriMatch", () => {
     describe("measure headers", () => {
@@ -714,6 +714,48 @@ describe("objMatch tests", () => {
         const predicate = headerPredicateFactory.objMatch(attributeObjRef);
 
         expect(predicate(attributeDescriptor, context)).toBe(false);
+    });
+
+    it("should match predicate when measure localIdentifier matches", () => {
+        const measureObjRef = measureItem(
+            newMeasure(uriRef(measureDescriptors.uriBasedMeasure.measureHeaderItem.uri!), (m) =>
+                m.localId(measureDescriptors.identifierBasedRatioMeasure.measureHeaderItem.localIdentifier),
+            ),
+        );
+
+        const predicate = headerPredicateFactory.objMatch(measureObjRef);
+
+        expect(predicate(measureDescriptors.uriBasedMeasure, context)).toBe(true);
+    });
+
+    it("should match predicate when measure objRef matches", () => {
+        const measureObjRef = measureItem(
+            newMeasure(measureDescriptors.identifierBasedMeasure.measureHeaderItem.identifier!),
+        );
+
+        const predicate = headerPredicateFactory.objMatch(measureObjRef);
+
+        expect(predicate(measureDescriptors.identifierBasedMeasure, context)).toBe(true);
+    });
+
+    it("should match predicate when localIdentifier does not match but measure objRef does", () => {
+        const measureObjRef = measureItem(
+            newMeasure(measureDescriptors.identifierBasedMeasure.measureHeaderItem.identifier!, (m) =>
+                m.localId("someOtherLocalIdentifier"),
+            ),
+        );
+
+        const predicate = headerPredicateFactory.objMatch(measureObjRef);
+
+        expect(predicate(measureDescriptors.identifierBasedMeasure, context)).toBe(true);
+    });
+
+    it("should not match predicate when measure objRef does not match", () => {
+        const measureObjRef = measureItem(newMeasure("otherIdentifier"));
+
+        const predicate = headerPredicateFactory.objMatch(measureObjRef);
+
+        expect(predicate(measureDescriptors.identifierBasedMeasure, context)).toBe(false);
     });
 });
 
