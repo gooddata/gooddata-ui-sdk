@@ -13,6 +13,7 @@ import "@gooddata/sdk-ui-dashboard/styles/css/main.css";
 
 import { App } from "./App";
 import { AppProviders } from "./context";
+import "./react-ga";
 
 const root = document.createElement("div");
 root.className = "root";
