@@ -1,8 +1,27 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { IDashboardBaseProps, IDashboardPluginContract_V1 } from "@gooddata/sdk-ui-dashboard";
 import { IClientWorkspaceIdentifiers } from "@gooddata/sdk-ui";
-import { IEmbeddedPlugin } from "./loader";
 import { ObjRef } from "@gooddata/sdk-model";
+
+/**
+ * Embedded plugin is implemented, built and linked into the application that loads the dashboard.
+ * There is no specific runtime loading and linkage required for these plugins.
+ *
+ * The lifecycle of embedded plugin is the same as other plugins
+
+ * @public
+ */
+export interface IEmbeddedPlugin {
+    /**
+     * Factory function to create an instance of the embedded plugin.
+     */
+    factory: () => IDashboardPluginContract_V1;
+
+    /**
+     * Parameters to use.
+     */
+    parameters?: string;
+}
 
 /**
  * This a specialization of {@link @gooddata/sdk-ui-dashboard#IDashboardBaseProps} interface in which the `dashboard` can only be provided
@@ -75,6 +94,17 @@ export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
      * If loadingMode is not set to "staticOnly", this is mandatory.
      */
     adaptiveLoadOptions?: AdaptiveLoadOptions;
+
+    /**
+     * Specify when will be in progress features allowed
+     *
+     * `staticOnly` in progress features allowed only when there is no external plugin loaded
+     * `alwaysAllow` in progress features always allowed
+     * `alwaysPrevent` in progress features always prevented
+     *
+     * Default allowInProgressFeatures is `alwaysPrevent`.
+     */
+    allowInProgressFeatures?: "staticOnly" | "alwaysAllow" | "alwaysPrevent";
 }
 
 /**
@@ -155,3 +185,22 @@ export type LoadedPlugin = {
     plugin: IDashboardPluginContract_V1;
     parameters: string | undefined;
 };
+
+/**
+ * @public
+ */
+export interface IBeforePluginsLoadedParams {
+    externalPluginsCount: number;
+}
+
+/**
+ * @public
+ */
+export type BeforePluginsLoadedCallback = (params: IBeforePluginsLoadedParams) => void;
+
+/**
+ * @public
+ */
+export interface IDashboardPluginsLoaderOptions {
+    beforePluginsLoaded: BeforePluginsLoadedCallback;
+}

@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IClientWorkspaceIdentifiers } from "@gooddata/sdk-ui";
@@ -11,6 +11,7 @@ import {
     DashboardContext,
 } from "@gooddata/sdk-ui-dashboard";
 import { ObjRef } from "@gooddata/sdk-model";
+import { IDashboardLoadOptions, IEmbeddedPlugin } from "./types";
 
 /**
  * A result of successful load of a dashboard consists of a React component and constructed props that
@@ -45,26 +46,6 @@ export type DashboardLoadResult = {
      */
     plugins: IDashboardPluginContract_V1[];
 };
-
-/**
- * Embedded plugin is implemented, built and linked into the application that loads the dashboard.
- * There is no specific runtime loading and linkage required for these plugins.
- *
- * The lifecycle of embedded plugin is the same as other plugins
-
- * @public
- */
-export interface IEmbeddedPlugin {
-    /**
-     * Factory function to create an instance of the embedded plugin.
-     */
-    factory: () => IDashboardPluginContract_V1;
-
-    /**
-     * Parameters to use.
-     */
-    parameters?: string;
-}
 
 /**
  * Dashboard loader is responsible for loading dashboard and all the assets that the dashboard needs. As a
@@ -155,5 +136,5 @@ export interface IDashboardLoader {
      * Finally, returns result containing the DashboardComponent to render, it's props and details
      * about the plugins that will be in effect once the DashboardComponent gets mounted.
      */
-    load(): Promise<DashboardLoadResult>;
+    load(options?: IDashboardLoadOptions): Promise<DashboardLoadResult>;
 }

@@ -1,6 +1,6 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
-import { DashboardLoadResult, IDashboardLoader, IEmbeddedPlugin } from "./loader";
+import { DashboardLoadResult, IDashboardLoader } from "./loader";
 import {
     DashboardContext,
     IDashboardEngine,
@@ -24,9 +24,14 @@ import {
 } from "./loadingStrategies/staticComponentLoaders";
 import {
     AdaptiveLoadOptions,
+    BeforePluginsLoadedCallback,
+    IBeforePluginsLoadedParams,
     IDashboardBasePropsForLoader,
+    IDashboardLoadOptions,
+    IDashboardPluginsLoaderOptions,
     LoadedPlugin,
     ModuleFederationIntegration,
+    IEmbeddedPlugin,
 } from "./types";
 import {
     adaptiveDashboardBeforeLoadFactory,
@@ -47,6 +52,7 @@ export type DashboardEngineLoader = (dashboard: IDashboardWithReferences) => Pro
 export type DashboardPluginsLoader = (
     ctx: DashboardContext,
     dashboard: IDashboardWithReferences,
+    options?: IDashboardPluginsLoaderOptions,
 ) => Promise<LoadedPlugin[]>;
 
 /**
@@ -198,6 +204,7 @@ export class DashboardLoader implements IDashboardLoader {
         ctx: DashboardContext,
         dashboardWithPlugins: IDashboardWithReferences,
         config: DashboardLoaderConfig = this.config,
+        beforeExternalPluginLoaded: BeforePluginsLoadedCallback,
     ): Promise<[IDashboardEngine, IDashboardPluginContract_V1[]]> => {
         const { engineLoader, pluginLoader, beforeLoad } = config;
 
@@ -210,7 +217,7 @@ export class DashboardLoader implements IDashboardLoader {
 
         const [engine, plugins] = await Promise.all([
             engineLoader(dashboardWithPlugins),
-            pluginLoader(ctx, dashboardWithPlugins),
+            pluginLoader(ctx, dashboardWithPlugins, { beforePluginsLoaded: beforeExternalPluginLoaded }),
         ]);
 
         // eslint-disable-next-line no-console
@@ -239,7 +246,7 @@ export class DashboardLoader implements IDashboardLoader {
         return [engine, allPlugins];
     };
 
-    public load = async (): Promise<DashboardLoadResult> => {
+    public load = async (options?: IDashboardLoadOptions): Promise<DashboardLoadResult> => {
         const { backend, dashboard, filterContextRef } = this.baseProps;
         const dashboardRef = typeof dashboard === "string" ? idRef(dashboard) : dashboard;
 
@@ -283,16 +290,31 @@ export class DashboardLoader implements IDashboardLoader {
                     "statically linked dashboard without any external plugins.",
             );
         }
+        let externalPluginLoaded = false;
+        const beforeExternalPluginLoaded = (params: IBeforePluginsLoadedParams) => {
+            if (params.externalPluginsCount > 0) {
+                externalPluginLoaded = true;
+            }
+        };
 
         const [engine, plugins] = await this.loadParts(
             ctx,
             dashboardWithPlugins,
             !pluginsAreValid ? StaticLoadStrategies : this.config,
+            beforeExternalPluginLoaded,
         );
         const extensionProps: IDashboardExtensionProps = engine.initializePlugins(ctx, plugins);
-
+        const { config } = this.baseProps;
+        let dashboardConfig = config;
+        if (options?.allowInProgressFeatures === "staticOnly" && externalPluginLoaded) {
+            dashboardConfig = {
+                ...config,
+                allowInProgressFeatures: false,
+            };
+        }
         const props: IDashboardProps = {
             ...this.baseProps,
+            config: dashboardConfig,
             ...extensionProps,
             workspace,
             dashboard: dashboardWithPlugins.dashboard,

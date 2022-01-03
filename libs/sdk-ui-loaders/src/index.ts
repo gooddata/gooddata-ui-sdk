@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 /**
  * This package provides various component loaders.
@@ -10,7 +10,7 @@
  * @packageDocumentation
  */
 
-export { IDashboardLoader, DashboardLoadResult, IEmbeddedPlugin } from "./dashboard/loader";
+export { IDashboardLoader, DashboardLoadResult } from "./dashboard/loader";
 export { DashboardLoader } from "./dashboard/dashboardLoader";
 export { DashboardStub, IDashboardStubProps } from "./dashboard/DashboardStub";
 export {
@@ -18,5 +18,6 @@ export {
     IDashboardBasePropsForLoader,
     ModuleFederationIntegration,
     AdaptiveLoadOptions,
+    IEmbeddedPlugin,
 } from "./dashboard/types";
 export { useDashboardLoader, DashboardLoadStatus } from "./dashboard/useDashboardLoader";

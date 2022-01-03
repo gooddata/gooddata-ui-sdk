@@ -32,7 +32,7 @@ export class DashboardLoader implements IDashboardLoader {
     // (undocumented)
     fromWorkspace: (workspace: string) => this;
     // (undocumented)
-    load: () => Promise<DashboardLoadResult>;
+    load: (options?: IDashboardLoadOptions | undefined) => Promise<DashboardLoadResult>;
     // (undocumented)
     onBackend: (backend: IAnalyticalBackend) => this;
     static staticOnly(): DashboardLoader;
@@ -69,7 +69,7 @@ export interface IDashboardLoader {
     forDashboard(dashboardRef: ObjRef): IDashboardLoader;
     fromClientWorkspace(clientWorkspace: IClientWorkspaceIdentifiers): IDashboardLoader;
     fromWorkspace(workspace: string): IDashboardLoader;
-    load(): Promise<DashboardLoadResult>;
+    load(options?: IDashboardLoadOptions): Promise<DashboardLoadResult>;
     onBackend(backend: IAnalyticalBackend): IDashboardLoader;
     withBaseProps(props: IDashboardBaseProps): IDashboardLoader;
     withEmbeddedPlugins(...plugins: IEmbeddedPlugin[]): IDashboardLoader;
@@ -79,6 +79,7 @@ export interface IDashboardLoader {
 // @public
 export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
     adaptiveLoadOptions?: AdaptiveLoadOptions;
+    allowInProgressFeatures?: "staticOnly" | "alwaysAllow" | "alwaysPrevent";
     clientWorkspace?: IClientWorkspaceIdentifiers;
     extraPlugins?: IEmbeddedPlugin | IEmbeddedPlugin[];
     loadingMode?: "adaptive" | "staticOnly";

@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { DashboardContext, IDashboardEngine } from "@gooddata/sdk-ui-dashboard";
 import isEmpty from "lodash/isEmpty";
@@ -12,7 +12,7 @@ import {
     dynamicDashboardEngineLoader,
     dynamicDashboardPluginLoader,
 } from "./dynamicComponentLoaders";
-import { LoadedPlugin, ModuleFederationIntegration } from "../types";
+import { IDashboardPluginsLoaderOptions, LoadedPlugin, ModuleFederationIntegration } from "../types";
 
 /**
  * Adaptive loader will check if there are any plugins linked with the dashboard. If so, it will use the
@@ -43,8 +43,13 @@ export const adaptiveDashboardEngineLoaderFactory =
  */
 export const adaptiveDashboardPluginLoaderFactory =
     (moduleFederationIntegration: ModuleFederationIntegration) =>
-    (ctx: DashboardContext, dashboard: IDashboardWithReferences): Promise<LoadedPlugin[]> => {
+    (
+        ctx: DashboardContext,
+        dashboard: IDashboardWithReferences,
+        options?: IDashboardPluginsLoaderOptions,
+    ): Promise<LoadedPlugin[]> => {
         if (!isEmpty(dashboard.references.plugins)) {
+            options!.beforePluginsLoaded({ externalPluginsCount: dashboard.references.plugins.length });
             return dynamicDashboardPluginLoader(ctx, dashboard, moduleFederationIntegration);
         }
 
