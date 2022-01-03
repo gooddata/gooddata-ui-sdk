@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { IExecutionDefinition, ITotal, TotalType } from "@gooddata/sdk-model";
 import { ColumnWidthItem } from "../columnWidths";
 import { ISeparators } from "@gooddata/numberjs";
@@ -65,7 +65,7 @@ export type TableConfigAccessors = {
  */
 export type TableAgGridCallbacks = {
     onGridReady: (event: GridReadyEvent) => void;
-    onFirstDataRendered: (_event: AgGridEvent) => Promise<void>;
+    onFirstDataRendered: (event: AgGridEvent) => Promise<void>;
     onBodyScroll: (event: BodyScrollEvent) => void;
     onModelUpdated: () => void;
     onGridColumnsChanged: () => void;
