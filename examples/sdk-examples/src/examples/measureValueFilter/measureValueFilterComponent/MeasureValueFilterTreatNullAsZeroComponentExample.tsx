@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { useState } from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { MeasureValueFilter } from "@gooddata/sdk-ui-filters";
@@ -6,10 +6,8 @@ import { measureLocalId, newAttribute, newMeasure, newMeasureValueFilter } from 
 
 const sumOfNumberIdentifier = "fact.csv_4dates.number";
 const nameAttributeIdentifier = "label.csv_4dates.name";
-const sumOfNumber = newMeasure(sumOfNumberIdentifier, (m) =>
-    m.aggregation("sum").localId("sumOfNumber").alias("Sum of Number"),
-);
-const nameAttribute = newAttribute(nameAttributeIdentifier, (a) => a.localId("nameAttribute"));
+const sumOfNumber = newMeasure(sumOfNumberIdentifier, (m) => m.aggregation("sum").alias("Sum of Number"));
+const nameAttribute = newAttribute(nameAttributeIdentifier);
 
 const measureTitle = "Sum of Number";
 

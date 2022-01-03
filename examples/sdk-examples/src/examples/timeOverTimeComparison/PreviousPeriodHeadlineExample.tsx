@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 
 import React, { Component } from "react";
 import { Headline } from "@gooddata/sdk-ui-charts";
@@ -7,7 +7,7 @@ import * as Md from "../../md/full";
 import { OnLoadingChanged, OnError } from "@gooddata/sdk-ui";
 
 const TotalSales = modifyMeasure(Md.$TotalSales, (m) =>
-    m.format("#,##0").alias("$ Total Sales").title("Total Sales").localId("totalSales"),
+    m.format("#,##0").alias("$ Total Sales").title("Total Sales"),
 );
 
 export class PreviousPeriodHeadlineExample extends Component {
