@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import {
     AgGridEvent,
     AllCommunityModules,
@@ -1073,7 +1073,8 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             isAltKeyPressed: this.internal.isAltKeyPressed,
             isMetaOrCtrlKeyPressed: this.internal.isMetaOrCtrlKeyPressed,
 
-            clientWidth: this.containerRef?.clientWidth ?? 0,
+            // use clientWidth of the viewport container to accommodate for vertical scrollbars if needed
+            clientWidth: this.containerRef?.getElementsByClassName("ag-body-viewport")[0]?.clientWidth ?? 0,
             containerRef: this.containerRef,
             separators: this.props?.config?.separators,
 
