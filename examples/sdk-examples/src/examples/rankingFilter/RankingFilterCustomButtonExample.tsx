@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React, { useState } from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import {
@@ -8,7 +8,6 @@ import {
     attributeLocalId,
     IFilter,
     IRankingFilter,
-    modifyAttribute,
     modifyMeasure,
 } from "@gooddata/sdk-model";
 import {
@@ -20,16 +19,12 @@ import classNames from "classnames";
 import * as Md from "../../md/full";
 
 const TotalSales = modifyMeasure(Md.$TotalSales, (m) =>
-    m.format("#,##0").alias("$ Total Sales").title("Total Sales").localId("totalSales"),
+    m.format("#,##0").alias("$ Total Sales").title("Total Sales"),
 );
-const FranchisedSales = modifyMeasure(Md.$FranchisedSales, (m) =>
-    m.format("#,##0").title("Franchise Sales").localId("franchiseSales"),
-);
-const LocationState = modifyAttribute(Md.LocationState, (a) => a.localId("locationState"));
-const LocationName = modifyAttribute(Md.LocationName.Default, (a) => a.localId("locationName"));
+const FranchisedSales = modifyMeasure(Md.$FranchisedSales, (m) => m.format("#,##0").title("Franchise Sales"));
 
 const measures = [TotalSales, FranchisedSales];
-const attributes = [LocationState, LocationName];
+const attributes = [Md.LocationState, Md.LocationName.Default];
 
 const measureDropdownItems: IMeasureDropdownItem[] = [
     {
@@ -47,12 +42,12 @@ const measureDropdownItems: IMeasureDropdownItem[] = [
 const attributeDropdownItems: IAttributeDropdownItem[] = [
     {
         title: "Location state",
-        ref: localIdRef(attributeLocalId(LocationState)),
+        ref: localIdRef(attributeLocalId(Md.LocationState)),
         type: "ATTRIBUTE",
     },
     {
         title: "Location",
-        ref: localIdRef(attributeLocalId(LocationName)),
+        ref: localIdRef(attributeLocalId(Md.LocationName.Default)),
         type: "ATTRIBUTE",
     },
 ];

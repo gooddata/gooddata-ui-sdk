@@ -1,20 +1,17 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { IMeasureValueFilter, measureLocalId, modifyAttribute, modifyMeasure } from "@gooddata/sdk-model";
+import { IMeasureValueFilter, measureLocalId, modifyMeasure } from "@gooddata/sdk-model";
 import { MeasureValueFilter } from "@gooddata/sdk-ui-filters";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 
 import * as Md from "../../../md/full";
 
-const FranchisedSales = modifyMeasure(Md.$FranchisedSales, (m) =>
-    m.format("#,##0").title("Franchise Sales").localId("franchiseSales"),
-);
-const LocationName = modifyAttribute(Md.LocationName.Default, (a) => a.localId("LocationName"));
+const FranchisedSales = modifyMeasure(Md.$FranchisedSales, (m) => m.format("#,##0").title("Franchise Sales"));
 
 const measureTitle = "Franchised Sales";
 const measures = [FranchisedSales];
 
-const attributes = [LocationName];
+const attributes = [Md.LocationName.Default];
 
 const defaultFilter = {
     measureValueFilter: {

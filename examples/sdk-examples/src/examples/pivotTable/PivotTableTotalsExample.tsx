@@ -1,22 +1,15 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { ITotal, modifyAttribute, modifyMeasure, newTotal } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+import { modifyMeasure, newTotal } from "@gooddata/sdk-model";
 import * as Md from "../../md/full";
 
-const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) =>
-    m.format("#,##0").localId("franchiseFees").title("Franchise Fees"),
-);
-const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) =>
-    m.format("#,##0").localId("franchiseFeesAdRoyalty"),
-);
+const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) => m.format("#,##0").title("Franchise Fees"));
+const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) => m.format("#,##0"));
+const FranchiseFeesOngoingRoyalty = modifyMeasure(Md.$FranchiseFeesOngoingRoyalty, (m) => m.format("#,##0"));
 const FranchiseFeesInitialFranchiseFee = modifyMeasure(Md.$FranchiseFeesInitialFranchiseFee, (m) =>
-    m.format("#,##0").localId("franchiseFeesInitialFranchiseFee"),
+    m.format("#,##0"),
 );
-const FranchiseFeesOngoingRoyalty = modifyMeasure(Md.$FranchiseFeesOngoingRoyalty, (m) =>
-    m.format("#,##0").localId("franchiseFeesOngoingRoyalty"),
-);
-const LocationState = modifyAttribute(Md.LocationState, (a) => a.localId("locationState"));
 
 const measures = [
     FranchiseFees,
@@ -25,18 +18,18 @@ const measures = [
     FranchiseFeesOngoingRoyalty,
 ];
 
-const attributes = [LocationState, Md.LocationName.Default, Md.MenuCategory];
+const attributes = [Md.LocationState, Md.LocationName.Default, Md.MenuCategory];
 
 const columns = [Md.DateQuarter, Md.DateMonth.Short];
-const totals: ITotal[] = [
-    newTotal("sum", FranchiseFees, LocationState),
-    newTotal("avg", FranchiseFees, LocationState),
-    newTotal("sum", FranchiseFeesAdRoyalty, LocationState),
-    newTotal("max", FranchiseFees, LocationState),
+const totals = [
+    newTotal("sum", FranchiseFees, Md.LocationState),
+    newTotal("avg", FranchiseFees, Md.LocationState),
+    newTotal("sum", FranchiseFeesAdRoyalty, Md.LocationState),
+    newTotal("max", FranchiseFees, Md.LocationState),
 ];
 
-const style = { height: 600 };
-const config = {
+const style: React.CSSProperties = { height: 600 };
+const config: IPivotTableConfig = {
     menu: {
         aggregations: true,
     },

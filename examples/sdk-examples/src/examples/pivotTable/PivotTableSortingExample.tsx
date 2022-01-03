@@ -1,21 +1,15 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { newAttributeSort, modifyAttribute, modifyMeasure } from "@gooddata/sdk-model";
+import { newAttributeSort, modifyMeasure } from "@gooddata/sdk-model";
 import * as Md from "../../md/full";
 
-const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) =>
-    m.format("#,##0").localId("franchiseFees").title("Franchise Fees"),
-);
-const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) =>
-    m.format("#,##0").localId("franchiseFeesAdRoyalty"),
-);
+const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) => m.format("#,##0").title("Franchise Fees"));
+const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) => m.format("#,##0"));
 const FranchiseFeesInitialFranchiseFee = modifyMeasure(Md.$FranchiseFeesInitialFranchiseFee, (m) =>
-    m.format("#,##0").localId("franchiseFeesInitialFranchiseFee"),
+    m.format("#,##0"),
 );
-const FranchiseFeesOngoingRoyalty = modifyMeasure(Md.$FranchiseFeesOngoingRoyalty, (m) =>
-    m.format("#,##0").localId("franchiseFeesOngoingRoyalty"),
-);
+const FranchiseFeesOngoingRoyalty = modifyMeasure(Md.$FranchiseFeesOngoingRoyalty, (m) => m.format("#,##0"));
 
 const measures = [
     FranchiseFees,
@@ -23,13 +17,9 @@ const measures = [
     FranchiseFeesInitialFranchiseFee,
     FranchiseFeesOngoingRoyalty,
 ];
-const attributes = [
-    Md.LocationState,
-    Md.LocationName.Default,
-    modifyAttribute(Md.MenuCategory, (a) => a.localId("menu")),
-];
+const attributes = [Md.LocationState, Md.LocationName.Default, Md.MenuCategory];
 const columns = [Md.DateQuarter, Md.DateMonth.Short];
-const sortBy = [newAttributeSort("menu", "asc")];
+const sortBy = [newAttributeSort(Md.MenuCategory, "asc")];
 
 const style = { height: 300 };
 

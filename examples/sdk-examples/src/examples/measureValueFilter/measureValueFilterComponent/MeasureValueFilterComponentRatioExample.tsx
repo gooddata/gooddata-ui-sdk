@@ -1,30 +1,21 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { MeasureValueFilter } from "@gooddata/sdk-ui-filters";
-import {
-    IMeasureValueFilter,
-    measureLocalId,
-    modifyAttribute,
-    modifyMeasure,
-    modifySimpleMeasure,
-} from "@gooddata/sdk-model";
+import { IMeasureValueFilter, measureLocalId, modifyMeasure, modifySimpleMeasure } from "@gooddata/sdk-model";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 
 import * as Md from "../../../md/full";
 
-const FranchisedSales = modifyMeasure(Md.$FranchisedSales, (m) =>
-    m.format("#,##0").title("Franchise Sales").localId("franchiseSales"),
-);
+const FranchisedSales = modifyMeasure(Md.$FranchisedSales, (m) => m.format("#,##0").title("Franchise Sales"));
 const FranchisedSalesWithRatio = modifySimpleMeasure(FranchisedSales, (m) =>
-    m.format("#,##0.00%").localId("franchiseSalesComputeRatio").title("Franchise Sales shown in %").ratio(),
+    m.format("#,##0.00%").title("Franchise Sales shown in %").ratio(),
 );
-const LocationName = modifyAttribute(Md.LocationName.Default, (a) => a.localId("LocationName"));
 
 const measureTitle = "Franchised Sales in %";
 
 const measures = [FranchisedSalesWithRatio];
 
-const attributes = [LocationName];
+const attributes = [Md.LocationName.Default];
 
 const defaultFilter = {
     measureValueFilter: {

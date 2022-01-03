@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { LineChart, IChartConfig } from "@gooddata/sdk-ui-charts";
 import { modifyMeasure } from "@gooddata/sdk-model";
@@ -7,18 +7,12 @@ import * as Md from "../../md/full";
 
 import { CUSTOM_COLOR_PALETTE } from "../../constants/colors";
 
-const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) =>
-    m.format("#,##0").localId("franchiseFees").title("Franchise Fees"),
-);
-const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) =>
-    m.format("#,##0").localId("franchiseFeesAdRoyalty"),
-);
+const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) => m.format("#,##0").title("Franchise Fees"));
+const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) => m.format("#,##0"));
 const FranchiseFeesInitialFranchiseFee = modifyMeasure(Md.$FranchiseFeesInitialFranchiseFee, (m) =>
-    m.format("#,##0").localId("franchiseFeesInitialFranchiseFee"),
+    m.format("#,##0"),
 );
-const FranchiseFeesOngoingRoyalty = modifyMeasure(Md.$FranchiseFeesOngoingRoyalty, (m) =>
-    m.format("#,##0").localId("franchiseFeesOngoingRoyalty"),
-);
+const FranchiseFeesOngoingRoyalty = modifyMeasure(Md.$FranchiseFeesOngoingRoyalty, (m) => m.format("#,##0"));
 
 const measures = [
     FranchiseFees,

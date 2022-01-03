@@ -1,20 +1,14 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { Component } from "react";
 import { BulletChart } from "@gooddata/sdk-ui-charts";
-import { modifyAttribute, modifyMeasure } from "@gooddata/sdk-model";
+import { modifyMeasure } from "@gooddata/sdk-model";
 
 import * as Md from "../../md/full";
 
-const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) =>
-    m.format("#,##0").localId("franchiseFeesAdRoyalty"),
-);
-const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) =>
-    m.format("#,##0").localId("franchiseFees").title("Franchise Fees"),
-);
-const FranchiseFeesOngoingRoyalty = modifyMeasure(Md.$FranchiseFeesOngoingRoyalty, (m) =>
-    m.format("#,##0").localId("franchiseFeesOngoingRoyalty"),
-);
-const LocationResort = modifyAttribute(Md.LocationResort, (a) => a.localId("locationResort"));
+const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) => m.format("#,##0"));
+const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) => m.format("#,##0").title("Franchise Fees"));
+const FranchiseFeesOngoingRoyalty = modifyMeasure(Md.$FranchiseFeesOngoingRoyalty, (m) => m.format("#,##0"));
+
 export class BulletChartExample extends Component {
     public render(): React.ReactNode {
         return (
@@ -23,7 +17,7 @@ export class BulletChartExample extends Component {
                     primaryMeasure={FranchiseFeesAdRoyalty}
                     targetMeasure={FranchiseFees}
                     comparativeMeasure={FranchiseFeesOngoingRoyalty}
-                    viewBy={LocationResort}
+                    viewBy={Md.LocationResort}
                 />
             </div>
         );

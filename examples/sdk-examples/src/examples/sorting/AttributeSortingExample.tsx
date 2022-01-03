@@ -1,11 +1,9 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 
 import React from "react";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
-import { modifyAttribute, newAttributeSort } from "@gooddata/sdk-model";
+import { newAttributeSort } from "@gooddata/sdk-model";
 import * as Md from "../../md/full";
-
-const LocationCity = modifyAttribute(Md.LocationCity, (a) => a.localId("locationCity"));
 
 const style = { height: 300 };
 
@@ -14,8 +12,8 @@ export const AttributeSortingExample: React.FC = () => {
         <div style={style} className="s-attribute-sorting">
             <ColumnChart
                 measures={[Md.$TotalSales]}
-                viewBy={LocationCity}
-                sortBy={[newAttributeSort(LocationCity, "desc")]}
+                viewBy={Md.LocationCity}
+                sortBy={[newAttributeSort(Md.LocationCity, "desc")]}
             />
         </div>
     );

@@ -1,23 +1,15 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { ITotal, modifyAttribute, modifyMeasure } from "@gooddata/sdk-model";
+import { IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
+import { modifyMeasure, newTotal } from "@gooddata/sdk-model";
 import * as Md from "../../md/full";
 
-const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) =>
-    m.format("#,##0").localId("franchiseFees").title("Franchise Fees"),
-);
-const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) =>
-    m.format("#,##0").localId("franchiseFeesAdRoyalty"),
-);
+const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) => m.format("#,##0").title("Franchise Fees"));
+const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) => m.format("#,##0"));
+const FranchiseFeesOngoingRoyalty = modifyMeasure(Md.$FranchiseFeesOngoingRoyalty, (m) => m.format("#,##0"));
 const FranchiseFeesInitialFranchiseFee = modifyMeasure(Md.$FranchiseFeesInitialFranchiseFee, (m) =>
-    m.format("#,##0").localId("franchiseFeesInitialFranchiseFee"),
+    m.format("#,##0"),
 );
-const FranchiseFeesOngoingRoyalty = modifyMeasure(Md.$FranchiseFeesOngoingRoyalty, (m) =>
-    m.format("#,##0").localId("franchiseFeesOngoingRoyalty"),
-);
-const LocationName = modifyAttribute(Md.LocationName.Default, (a) => a.localId("locationName"));
-const MenuCategory = modifyAttribute(Md.MenuCategory, (a) => a.localId("menuCategory"));
 
 const measures = [
     FranchiseFees,
@@ -25,37 +17,21 @@ const measures = [
     FranchiseFeesInitialFranchiseFee,
     FranchiseFeesOngoingRoyalty,
 ];
-const attributes = [Md.LocationState, LocationName, MenuCategory];
-const totals: ITotal[] = [
-    {
-        measureIdentifier: "franchiseFees",
-        type: "sum",
-        attributeIdentifier: "locationName",
-    },
-    {
-        measureIdentifier: "franchiseFees",
-        type: "avg",
-        attributeIdentifier: "locationName",
-    },
-    {
-        measureIdentifier: "franchiseFeesOngoingRoyalty",
-        type: "sum",
-        attributeIdentifier: "menu",
-    },
-    {
-        measureIdentifier: "franchiseFees",
-        type: "max",
-        attributeIdentifier: "menu",
-    },
+const attributes = [Md.LocationState, Md.LocationName.Default, Md.MenuCategory];
+const totals = [
+    newTotal("sum", FranchiseFees, Md.LocationName.Default),
+    newTotal("avg", FranchiseFees, Md.LocationName.Default),
+    newTotal("sum", FranchiseFeesOngoingRoyalty, Md.MenuCategory),
+    newTotal("max", FranchiseFees, Md.MenuCategory),
 ];
 const columns = [Md.DateQuarter, Md.DateMonth.Short];
-const config = {
+const config: IPivotTableConfig = {
     menu: {
         aggregations: true,
         aggregationsSubMenu: true,
     },
 };
-const style = { height: 500 };
+const style: React.CSSProperties = { height: 500 };
 
 export const PivotTableSubtotalsExample: React.FC = () => {
     return (

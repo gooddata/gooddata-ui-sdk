@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { useState, useEffect } from "react";
 import { ErrorComponent, LoadingComponent } from "@gooddata/sdk-ui";
 import { LineChart, ColumnChart, IChartConfig } from "@gooddata/sdk-ui-charts";
@@ -21,8 +21,8 @@ interface IDynamicMeasuresExampleState {
     };
 }
 
-const getNewMeasureDefinition = (measureItem: any, index: number) => {
-    return newMeasure(measureItem.identifier, (m) => m.format("#,##0").localId(`m${index}`));
+const getNewMeasureDefinition = (measureItem: any) => {
+    return newMeasure(measureItem.identifier, (m) => m.format("#,##0"));
 };
 
 const getMeasureListByTag = async (tag: string) => {

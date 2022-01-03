@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { useState } from "react";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
 import { Datepicker } from "@gooddata/sdk-ui-kit";
@@ -8,9 +8,7 @@ import * as Md from "../../../md/full";
 import { modifyMeasure, modifyAttribute, newAbsoluteDateFilter } from "@gooddata/sdk-model";
 
 const TotalSales = modifyMeasure(Md.$TotalSales, (m) => m.format("#,##0").alias("$ Total Sales"));
-const monthDate = modifyAttribute(Md.DateDatasets.Date.Month.Short, (a) =>
-    a.alias("Month").localId("monthDate"),
-);
+const monthDate = modifyAttribute(Md.DateDatasets.Date.Month.Short, (a) => a.alias("Month"));
 
 const dateFormat = "YYYY-MM-DD";
 const measures = [TotalSales];

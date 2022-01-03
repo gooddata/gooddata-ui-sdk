@@ -1,21 +1,17 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { PivotTable, DefaultColumnWidth } from "@gooddata/sdk-ui-pivot";
 
 import * as Md from "../../md/full";
-import { modifyAttribute, modifyMeasure } from "@gooddata/sdk-model";
+import { modifyMeasure } from "@gooddata/sdk-model";
 
-const FranchisedSales = modifyMeasure(Md.$FranchisedSales, (m) =>
-    m.format("#,##0").title("Franchise Sales").localId("franchiseSales"),
-);
-const EmployeeName = modifyAttribute(Md.EmployeeName.Default, (a) => a.localId("EmployeeName"));
-const LocationName = modifyAttribute(Md.LocationName.Default, (a) => a.localId("LocationName"));
+const FranchisedSales = modifyMeasure(Md.$FranchisedSales, (m) => m.format("#,##0").title("Franchise Sales"));
 
 const measures = [FranchisedSales];
 
-const attributes = [EmployeeName];
+const attributes = [Md.EmployeeName.Default];
 
-const columns = [LocationName];
+const columns = [Md.LocationName.Default];
 
 const config = {
     columnSizing: {
