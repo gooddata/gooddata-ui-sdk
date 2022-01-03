@@ -23,14 +23,14 @@
     &-large {
         width: 165px;
         height: 30px;
-        background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/powered-by-gd-large.svg");
+        background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/powered-by-gd-large.svg?v=2022");
         background-size: 165px 30px;
     }
 
     &-small {
         width: 146px;
         height: 16px;
-        background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/powered-by-gd-small.svg");
+        background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/powered-by-gd-small.svg?v=2022");
         background-size: 146px 16px;
     }
 }
