@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
 import { IDashboardAttributeFilter, IInsightWidget, IKpiWidget, ILegacyKpi } from "@gooddata/sdk-backend-spi";
 import { ToastMessageContextProvider } from "@gooddata/sdk-ui-kit";
@@ -209,6 +209,7 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
                         <ExportDialogContextProvider>
                             <DashboardCustomizationsProvider
                                 insightMenuItemsProvider={props.insightMenuItemsProvider}
+                                enableSaveAsNewButton={props.enableSaveAsNewButton}
                             >
                                 <DashboardComponentsProvider
                                     ErrorComponent={props.ErrorComponent ?? DefaultError}
