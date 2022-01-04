@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React, { ComponentType } from "react";
 import { ReactReduxContextValue } from "react-redux";
 import { IAnalyticalBackend, IDashboard, ITheme, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
@@ -193,6 +193,10 @@ export interface IDashboardCustomComponentProps {
 
     /**
      * Optionally specify component to use for rendering the title.
+     *
+     * @remarks
+     * Defaults to {@link DefaultTitle}. For an editable title, you can use {@link EditableTitle} instead.
+     * To hide the dashboard title altogether, you can use {@link HiddenTitle}.
      *
      * @alpha
      */
