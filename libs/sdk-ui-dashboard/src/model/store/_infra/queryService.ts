@@ -1,8 +1,9 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { DashboardContext } from "../../types/commonTypes";
 import { SagaIterator } from "redux-saga";
 import {
     CaseReducer,
+    CaseReducerActions,
     createEntityAdapter,
     createSelector,
     createSlice,
@@ -15,7 +16,6 @@ import {
 } from "@reduxjs/toolkit";
 import { DashboardQueryType, IDashboardQuery } from "../../queries/base";
 import { DashboardState } from "../types";
-import { CaseReducerActions } from "@reduxjs/toolkit/src/createSlice";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import memoize from "lodash/memoize";
 import { invariant } from "ts-invariant";
