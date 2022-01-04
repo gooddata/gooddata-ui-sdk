@@ -1612,7 +1612,7 @@ export const DefaultShareDialog: (props: IShareDialogProps) => JSX.Element | nul
 export const DefaultShareStatus: React_2.FC<IShareStatusProps>;
 
 // @alpha (undocumented)
-export const DefaultTitle: (props: ITitleProps) => JSX.Element | null;
+export const DefaultTitle: CustomTitleComponent;
 
 // @alpha (undocumented)
 export const DefaultTopBar: (props: ITopBarProps) => JSX.Element;
@@ -1766,6 +1766,9 @@ export function drillToLegacyDashboard(drillDefinition: IDrillToLegacyDashboard,
 
 // @alpha
 export function eagerRemoveSectionItem(sectionIndex: number, itemIndex: number, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): RemoveSectionItem;
+
+// @alpha (undocumented)
+export const EditableTitle: CustomTitleComponent;
 
 // @alpha
 export function enableInsightWidgetDateFilter(ref: ObjRef, dateDataset: ObjRef, correlationId?: string): ChangeInsightWidgetFilterSettings;
@@ -2061,6 +2064,7 @@ export interface IDashboardCustomComponentProps {
 // @public
 export interface IDashboardCustomizationProps extends IDashboardCustomComponentProps {
     customizationFns?: DashboardModelCustomizationFns;
+    enableSaveAsNewButton?: boolean;
     // @alpha
     insightMenuItemsProvider?: InsightMenuItemsProvider;
     // @alpha

@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React, { useCallback, useMemo, useRef } from "react";
 import { useIntl } from "react-intl";
 import {
@@ -40,6 +40,7 @@ import { ScheduledEmailDialog } from "../../scheduledEmail";
 import { SaveAsDialog } from "../../saveAs";
 import { DefaultFilterBar, FilterBar } from "../../filterBar";
 import { ShareDialogDashboardHeader } from "./ShareDialogDashboardHeader";
+import { useDashboardCustomizationsContext } from "../../dashboardContexts";
 
 const useFilterBar = (): {
     filters: FilterContextItem[];
@@ -110,6 +111,7 @@ export const DashboardHeader = (): JSX.Element => {
     const { filters, onAttributeFilterChanged, onDateFilterChanged } = useFilterBar();
     const { title, onTitleChanged, onShareButtonClick, shareInfo } = useTopBar();
     const { addSuccess, addError, addProgress, removeMessage } = useToastMessage();
+    const { enableSaveAsNewButton } = useDashboardCustomizationsContext();
 
     const dispatch = useDashboardDispatch();
     const isScheduleEmailingDialogOpen = useDashboardSelector(selectIsScheduleEmailDialogOpen);
@@ -190,7 +192,8 @@ export const DashboardHeader = (): JSX.Element => {
             return [];
         }
 
-        const isSaveAsVisible = canCreateDashboard;
+        // TODO RAIL-3945 remove the `|| true` once gdc-dashboards is ready for the new prop
+        const isSaveAsVisible = canCreateDashboard && (enableSaveAsNewButton || true);
         const isSaveAsDisabled = isEmptyLayout || !dashboardRef || isReadOnly;
         const isScheduledEmailingDisabled = isReadOnly;
 

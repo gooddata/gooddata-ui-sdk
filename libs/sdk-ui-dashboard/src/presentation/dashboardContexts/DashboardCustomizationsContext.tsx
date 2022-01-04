@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React, { createContext, useContext } from "react";
 import { IInsightWidget } from "@gooddata/sdk-backend-spi";
 import { IInsight } from "@gooddata/sdk-model";
@@ -15,6 +15,7 @@ interface IDashboardCustomizationsContext {
         defaultItems: IInsightMenuItem[],
         closeMenu: () => void,
     ) => IInsightMenuItem[];
+    enableSaveAsNewButton?: boolean;
 }
 
 /**
