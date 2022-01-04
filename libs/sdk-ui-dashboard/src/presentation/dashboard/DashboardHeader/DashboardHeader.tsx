@@ -192,8 +192,7 @@ export const DashboardHeader = (): JSX.Element => {
             return [];
         }
 
-        // TODO RAIL-3945 remove the `|| true` once gdc-dashboards is ready for the new prop
-        const isSaveAsVisible = canCreateDashboard && (enableSaveAsNewButton || true);
+        const isSaveAsVisible = canCreateDashboard && enableSaveAsNewButton;
         const isSaveAsDisabled = isEmptyLayout || !dashboardRef || isReadOnly;
         const isScheduledEmailingDisabled = isReadOnly;
 
