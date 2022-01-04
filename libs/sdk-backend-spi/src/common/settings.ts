@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 
 /**
  * Settings are obtained from backend and are effectively a collection of feature flags or settings with
@@ -186,12 +186,17 @@ export interface ISettings {
      */
     enableAnalyticalDashboardPermissions?: boolean;
 
-    [key: string]: number | boolean | string | object | undefined;
-
     /**
      * Enable renaming measure to metric
      */
     enableRenamingMeasureToMetric?: boolean;
+
+    /**
+     * Enable axis label formatting
+     */
+    enableAxisLabelFormat?: boolean;
+
+    [key: string]: number | boolean | string | object | undefined;
 }
 
 /**
