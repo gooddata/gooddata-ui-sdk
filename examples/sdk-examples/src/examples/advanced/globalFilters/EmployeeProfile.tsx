@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { useState, useEffect } from "react";
 import { BarChart, PieChart } from "@gooddata/sdk-ui-charts";
 import { IElementsQueryResult } from "@gooddata/sdk-backend-spi";
@@ -19,7 +19,7 @@ import { CustomError } from "../../../components/CustomError";
 import { IItem } from "../../attributeFilter/AttributeElementsExample";
 
 const AvgDailyTotalSales = modifyMeasure(Md.$AvgDailyTotalSales, (m) =>
-    m.alias("$ Avg Daily Total Sales").format("$#,##0").localId("averageDailyTotalSales"),
+    m.alias("$ Avg Daily Total Sales").format("$#,##0"),
 );
 const AvgCheckSizeByServer = modifyMeasure(Md.AvgCheckSizeByServer, (m) =>
     m.alias("$ Avg Check Size By Server").format("$#,##0"),

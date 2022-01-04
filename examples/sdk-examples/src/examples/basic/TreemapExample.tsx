@@ -1,11 +1,11 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { Treemap } from "@gooddata/sdk-ui-charts";
 import { modifyMeasure } from "@gooddata/sdk-model";
 import * as Md from "../../md/full";
 
 const numberOfChecks = modifyMeasure(Md.NrChecks, (m) =>
-    m.localId("numOfChecks").format("#,##0").alias("# Checks").title("Number of Checks"),
+    m.format("#,##0").alias("# Checks").title("Number of Checks"),
 );
 
 const style = { height: 300 };

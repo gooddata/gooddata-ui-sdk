@@ -1,28 +1,20 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { useState } from "react";
 import fetch from "isomorphic-fetch";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { LoadingComponent, ErrorComponent, HeaderPredicates } from "@gooddata/sdk-ui";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
-import {
-    newPositiveAttributeFilter,
-    attributeIdentifier,
-    modifyMeasure,
-    modifyAttribute,
-} from "@gooddata/sdk-model";
+import { newPositiveAttributeFilter, attributeIdentifier, modifyMeasure } from "@gooddata/sdk-model";
 import { workspace } from "../../constants/fixtures";
 import * as Md from "../../md/full";
 import { EmployeeProfile } from "./EmployeeProfile";
 
 const AvgDailyTotalSales = modifyMeasure(Md.$AvgDailyTotalSales, (m) =>
-    m.alias("$ Avg Daily Total Sales").format("$#,##0").localId("averageDailyTotalSales"),
+    m.alias("$ Avg Daily Total Sales").format("$#,##0"),
 );
-const LocationState = modifyAttribute(Md.LocationState, (a) => a.localId("locationState"));
-const EmployeeName = modifyAttribute(Md.EmployeeName.Default, (a) => a.localId("employeeName"));
 const TotalSales2 = modifyMeasure(Md.$TotalSales, (m) =>
-    m.format("#,##0").alias("$ Total Sales").title("Total Sales").localId("totalSales"),
+    m.format("#,##0").alias("$ Total Sales").title("Total Sales"),
 );
-const LocationName = modifyAttribute(Md.LocationName.Default, (a) => a.localId("locationName"));
 const locationStateAttributeUri = `/gdc/md/${workspace}/obj/2210`;
 
 interface IEmployee3rdPartyData {
@@ -41,15 +33,19 @@ const employeeTableStyle: React.CSSProperties = { height: 300 };
 const salesChartStyle: React.CSSProperties = { height: 300 };
 
 const stateTableMeasures = [AvgDailyTotalSales];
-const stateTableRows = [LocationState];
-const stateTableDrillableItems = [HeaderPredicates.identifierMatch(attributeIdentifier(LocationState)!)];
+const stateTableRows = [Md.LocationState];
+const stateTableDrillableItems = [HeaderPredicates.identifierMatch(attributeIdentifier(Md.LocationState)!)];
 
 const employeeTableMeasures = [AvgDailyTotalSales];
-const employeeTableRows = [EmployeeName];
-const employeeTableDrillableItems = [HeaderPredicates.identifierMatch(attributeIdentifier(EmployeeName)!)];
+const employeeTableRows = [Md.EmployeeName.Default];
+const employeeTableDrillableItems = [
+    HeaderPredicates.identifierMatch(attributeIdentifier(Md.EmployeeName.Default)!),
+];
 
 const salesChartMeasures = [TotalSales2];
-const salesChartDrillableItems = [HeaderPredicates.identifierMatch(attributeIdentifier(LocationName)!)];
+const salesChartDrillableItems = [
+    HeaderPredicates.identifierMatch(attributeIdentifier(Md.LocationName.Default)!),
+];
 
 const EmployeeDetails: React.FC<{ employeeData: IEmployee3rdPartyData }> = ({ employeeData }) => {
     if (employeeData.error) {
@@ -277,7 +273,7 @@ export const DrillWithExternalDataExample: React.FC = () => {
                 <div style={salesChartStyle} className="s-sales-chart">
                     <ColumnChart
                         measures={salesChartMeasures}
-                        viewBy={LocationName}
+                        viewBy={Md.LocationName.Default}
                         filters={tableFilters}
                         drillableItems={salesChartDrillableItems}
                         onDrill={onLocationDrill}

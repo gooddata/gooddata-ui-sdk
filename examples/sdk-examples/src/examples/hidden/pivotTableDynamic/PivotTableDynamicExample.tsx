@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
@@ -21,33 +21,19 @@ import { createColumnTotal } from "../../../utils/helpers";
 import { ElementWithParam } from "./ElementWithParam";
 import { workspace } from "../../../constants/fixtures";
 
-const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) =>
-    m.format("#,##0").localId("franchiseFees").title("Franchise Fees"),
-);
-const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) =>
-    m.format("#,##0").localId("franchiseFeesAdRoyalty"),
-);
-const LocationState = modifyAttribute(Md.LocationState, (a) => a.localId("LocationState"));
-const LocationName = modifyAttribute(Md.LocationName.Default, (a) => a.localId("LocationName"));
-const MenuCategory = modifyAttribute(Md.MenuCategory, (a) => a.localId("MenuCategory"));
-const quarterDate = modifyAttribute(Md.DateDatasets.Date.Quarter.Default, (a) => a.localId("quarterDate"));
-const monthDate = modifyAttribute(Md.DateDatasets.Date.Month.Short, (a) =>
-    a.alias("Month").localId("monthDate"),
-);
+const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) => m.format("#,##0").title("Franchise Fees"));
+const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) => m.format("#,##0"));
+
+const monthDate = modifyAttribute(Md.DateDatasets.Date.Month.Short, (a) => a.alias("Month"));
 const locationStateAttributeCaliforniaUri = `/gdc/md/${workspace}/obj/2210/elements?id=6340116`;
 const monthDateJanuaryUri = `/gdc/md/${workspace}/obj/2071/elements?id=1`;
 
 const measureFranchiseFees = FranchiseFees;
 const measureAdRoyalty = FranchiseFeesAdRoyalty;
-const attributeLocationState = LocationState;
-const attributeLocationName = LocationName;
-const attributeMenuCategory = MenuCategory;
-const attributeQuarter = quarterDate;
-const attributeMonth = monthDate;
 
 const measures = [measureFranchiseFees, measureAdRoyalty];
-const columns = [attributeQuarter, attributeMonth];
-const rows = [attributeLocationState, attributeLocationName, attributeMenuCategory];
+const columns = [Md.DateDatasets.Date.Quarter.Default, monthDate];
+const rows = [Md.LocationState, Md.LocationName.Default, Md.MenuCategory];
 
 const bucketPresets: any = {
     measures: {
@@ -123,7 +109,7 @@ const bucketPresets: any = {
         key: "smallDataSet",
         bucketProps: {
             measures,
-            rows: [attributeLocationState],
+            rows: [Md.LocationState],
         },
     },
     smallWideDataSet: {
@@ -131,8 +117,8 @@ const bucketPresets: any = {
         key: "smallWideDataSet",
         bucketProps: {
             measures,
-            rows: [attributeLocationState],
-            columns: [attributeQuarter],
+            rows: [Md.LocationState],
+            columns: [Md.DateDatasets.Date.Quarter.Default],
         },
     },
 };
@@ -151,17 +137,19 @@ const drillingPresets: any = {
     attributeQuarter: {
         label: "Attribute Quarter",
         key: "attributeQuarter",
-        drillableItem: HeaderPredicates.identifierMatch(attributeIdentifier(quarterDate)!),
+        drillableItem: HeaderPredicates.identifierMatch(
+            attributeIdentifier(Md.DateDatasets.Date.Quarter.Default)!,
+        ),
     },
     attributeLocationState: {
         label: "Attribute Location state",
         key: "attributeLocationState",
-        drillableItem: HeaderPredicates.identifierMatch(attributeIdentifier(LocationState)!),
+        drillableItem: HeaderPredicates.identifierMatch(attributeIdentifier(Md.LocationState)!),
     },
     attributeMenuCategory: {
         label: "Attribute Menu category",
         key: "attributeMenuCategory",
-        drillableItem: HeaderPredicates.identifierMatch(attributeIdentifier(MenuCategory)!),
+        drillableItem: HeaderPredicates.identifierMatch(attributeIdentifier(Md.MenuCategory)!),
     },
     attributeValueCalifornia: {
         label: "Attribute value California",
@@ -178,24 +166,31 @@ const totalPresets: any = {
     franchiseFeesSum: {
         label: "Franchise Fees Sum",
         key: "franchiseFeesSum",
-        totalItem: createColumnTotal(measureLocalId(FranchiseFees), attributeLocalId(LocationState)),
+        totalItem: createColumnTotal(measureLocalId(FranchiseFees), attributeLocalId(Md.LocationState)),
     },
     franchiseFeesAvg: {
         label: "Franchise Fees Average",
         key: "franchiseFeesAvg",
-        totalItem: createColumnTotal(measureLocalId(FranchiseFees), attributeLocalId(LocationState), "avg"),
+        totalItem: createColumnTotal(
+            measureLocalId(FranchiseFees),
+            attributeLocalId(Md.LocationState),
+            "avg",
+        ),
     },
     franchiseFeesAdRoyaltySum: {
         label: "Franchise Fees Ad Royalty Sum",
         key: "franchiseFeesAdRoyaltySum",
-        totalItem: createColumnTotal(measureLocalId(FranchiseFeesAdRoyalty), attributeLocalId(LocationState)),
+        totalItem: createColumnTotal(
+            measureLocalId(FranchiseFeesAdRoyalty),
+            attributeLocalId(Md.LocationState),
+        ),
     },
     franchiseFeesAdRoyaltyMax: {
         label: "Franchise Fees Ad Royalty Max",
         key: "franchiseFeesAdRoyaltyMax",
         totalItem: createColumnTotal(
             measureLocalId(FranchiseFeesAdRoyalty),
-            attributeLocalId(LocationState),
+            attributeLocalId(Md.LocationState),
             "max",
         ),
     },
@@ -204,7 +199,7 @@ const totalPresets: any = {
         key: "franchiseFeesMaxByLocationState",
         totalItem: createColumnTotal(
             measureLocalId(FranchiseFeesAdRoyalty),
-            attributeLocalId(LocationName),
+            attributeLocalId(Md.LocationName.Default),
             "max",
         ),
     },
@@ -213,7 +208,7 @@ const filterPresets: any = {
     attributeCalifornia: {
         label: "Attribute (California)",
         key: "attributeCalifornia",
-        filterItem: newPositiveAttributeFilter(attributeIdentifier(LocationState)!, [
+        filterItem: newPositiveAttributeFilter(attributeIdentifier(Md.LocationState)!, [
             locationStateAttributeCaliforniaUri,
         ]),
     },
@@ -244,12 +239,12 @@ const sortingPresets: any = {
     byMenuCategory: {
         label: "By Menu Category ASC",
         key: "byMenuCategory",
-        sortBy: [newAttributeSort(MenuCategory, "asc")],
+        sortBy: [newAttributeSort(Md.MenuCategory, "asc")],
     },
     byLocationState: {
         label: "By Location State DESC",
         key: "byLocationState",
-        sortBy: [newAttributeSort(LocationState, "desc")],
+        sortBy: [newAttributeSort(Md.LocationState, "desc")],
     },
     byQ1JanFranchiseFees: {
         label: "by Q1 / Jan / FranchiseFees DESC",
@@ -271,7 +266,7 @@ const sortingPresets: any = {
         label: "By Location State ASC And Q1 Jan Franchise Fees DESC",
         key: "byLocationStateAndQ1JanFranchiseFees",
         sortBy: [
-            newAttributeSort(LocationState, "asc"),
+            newAttributeSort(Md.LocationState, "asc"),
             newMeasureSort(FranchiseFees, "desc", [
                 newAttributeLocator(
                     Md.DateQuarter,

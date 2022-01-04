@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 
 import React from "react";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
@@ -6,7 +6,7 @@ import { modifyMeasure, newMeasureSort } from "@gooddata/sdk-model";
 import * as Md from "../../md/full";
 
 const TotalSales = modifyMeasure(Md.$TotalSales, (m) =>
-    m.format("#,##0").alias("$ Total Sales").title("Total Sales").localId("totalSales"),
+    m.format("#,##0").alias("$ Total Sales").title("Total Sales"),
 );
 
 const style = { height: 300 };

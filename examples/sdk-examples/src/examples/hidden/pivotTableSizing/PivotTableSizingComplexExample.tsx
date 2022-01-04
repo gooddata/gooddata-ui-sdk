@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React, { Component } from "react";
 import {
     IAllMeasureColumnWidthItem,
@@ -11,27 +11,17 @@ import {
     newWidthForAllMeasureColumns,
     newWidthForSelectedColumns,
 } from "@gooddata/sdk-ui-pivot";
-import {
-    IAttributeLocatorItem,
-    ILocatorItem,
-    IMeasureLocatorItem,
-    modifyAttribute,
-    modifyMeasure,
-} from "@gooddata/sdk-model";
+import { IAttributeLocatorItem, ILocatorItem, IMeasureLocatorItem, modifyMeasure } from "@gooddata/sdk-model";
 
 import * as Md from "../../../md/full";
 
-const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) =>
-    m.format("#,##0").localId("franchiseFees").title("Franchise Fees"),
-);
-const LocationState = modifyAttribute(Md.LocationState, (a) => a.localId("LocationState"));
-const quarterDate = modifyAttribute(Md.DateDatasets.Date.Quarter.Default, (a) => a.localId("quarterDate"));
+const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) => m.format("#,##0").title("Franchise Fees"));
 
 const measures = [FranchiseFees];
 
-const attributes = [LocationState];
+const attributes = [Md.LocationState];
 
-const columns = [quarterDate];
+const columns = [Md.DateDatasets.Date.Quarter.Default];
 
 const attributeWidth = (width: number) => newWidthForAttributeColumn(attributes[0], width);
 

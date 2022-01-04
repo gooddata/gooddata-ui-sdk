@@ -1,15 +1,13 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { useState } from "react";
 import { HeaderPredicates, IDrillEvent } from "@gooddata/sdk-ui";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { measureIdentifier, measureLocalId, modifyMeasure, newArithmeticMeasure } from "@gooddata/sdk-model";
 import * as Md from "../../md/full";
 
-const NrRestaurants = modifyMeasure(Md.NrRestaurants, (m) =>
-    m.format("#,##0").localId("numberOfRestaurants"),
-);
+const NrRestaurants = modifyMeasure(Md.NrRestaurants, (m) => m.format("#,##0"));
 const TotalSales = modifyMeasure(Md.$TotalSales, (m) =>
-    m.format("#,##0").alias("$ Total Sales").title("Total Sales").localId("totalSales"),
+    m.format("#,##0").alias("$ Total Sales").title("Total Sales"),
 );
 const arithmeticMeasure = newArithmeticMeasure(
     [measureLocalId(TotalSales), measureLocalId(NrRestaurants)],

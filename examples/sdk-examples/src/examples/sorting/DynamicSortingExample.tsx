@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { useState } from "react";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
 import {
@@ -15,10 +15,7 @@ import {
 import * as Md from "../../md/full";
 import { workspace } from "../../constants/fixtures";
 
-const LocationState = modifyAttribute(Md.LocationState, (a) => a.localId("locationState"));
-const monthDate = modifyAttribute(Md.DateDatasets.Date.Month.Short, (a) =>
-    a.alias("Month").localId("monthDate"),
-);
+const monthDate = modifyAttribute(Md.DateDatasets.Date.Month.Short, (a) => a.alias("Month"));
 const TotalSales = modifyMeasure(Md.$TotalSales, (m) => m.format("#,##0").alias("$ Total Sales"));
 const locationStateAttributeCaliforniaUri = `/gdc/md/${workspace}/obj/2210/elements?id=6340116`;
 const monthDateJanuaryUri = `/gdc/md/${workspace}/obj/2071/elements?id=1`;
@@ -76,7 +73,7 @@ export const DynamicSortingExample: React.FC = () => {
                 `The column stacks (states) are sorted alphabetically by the label of the state attribute in ${getOrderLabel(
                     dir!,
                 )} order.`,
-            sortBy: (dir) => [newAttributeSort(LocationState, dir)],
+            sortBy: (dir) => [newAttributeSort(Md.LocationState, dir)],
         },
         {
             key: "date",
@@ -103,7 +100,7 @@ export const DynamicSortingExample: React.FC = () => {
                 `The stacks (state) are sorted by the sum of the Total Sales stacks across all columns in ${getOrderLabel(
                     dir!,
                 )} order.`,
-            sortBy: (dir) => [newAttributeAreaSort(LocationState, dir)],
+            sortBy: (dir) => [newAttributeAreaSort(Md.LocationState, dir)],
         },
         {
             key: "state-element",
@@ -114,7 +111,7 @@ export const DynamicSortingExample: React.FC = () => {
                 )} order.`,
             sortBy: (dir) => [
                 newMeasureSort(TotalSales, dir, [
-                    newAttributeLocator(LocationState, locationStateAttributeCaliforniaUri),
+                    newAttributeLocator(Md.LocationState, locationStateAttributeCaliforniaUri),
                 ]),
             ],
         },
@@ -149,7 +146,7 @@ export const DynamicSortingExample: React.FC = () => {
                 "The columns (date) are sorted by the value of the Total Sales of California stack in ascending order and the column stacks (states) are sorted by the value of Total Sales in the January column in descending direction",
             sortBy: () => [
                 newMeasureSort(TotalSales, "asc", [
-                    newAttributeLocator(LocationState, locationStateAttributeCaliforniaUri),
+                    newAttributeLocator(Md.LocationState, locationStateAttributeCaliforniaUri),
                 ]),
                 newMeasureSort(TotalSales, "desc", [newAttributeLocator(monthDate, monthDateJanuaryUri)]),
             ],
@@ -226,7 +223,7 @@ export const DynamicSortingExample: React.FC = () => {
                 <ColumnChart
                     measures={[TotalSales]}
                     viewBy={monthDate}
-                    stackBy={LocationState}
+                    stackBy={Md.LocationState}
                     sortBy={sortOption.sortBy(direction)}
                 />
             </div>

@@ -1,15 +1,11 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { modifyMeasure, newArithmeticMeasure } from "@gooddata/sdk-model";
 import * as Md from "../../md/full";
 
-const FranchiseFeesOngoingRoyalty = modifyMeasure(Md.$FranchiseFeesOngoingRoyalty, (m) =>
-    m.format("#,##0").localId("franchiseFeesOngoingRoyalty"),
-);
-const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) =>
-    m.format("#,##0").localId("franchiseFeesAdRoyalty"),
-);
+const FranchiseFeesOngoingRoyalty = modifyMeasure(Md.$FranchiseFeesOngoingRoyalty, (m) => m.format("#,##0"));
+const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) => m.format("#,##0"));
 
 const sum = newArithmeticMeasure([FranchiseFeesOngoingRoyalty, FranchiseFeesAdRoyalty], "sum", (m) =>
     m.format("#,##0").title("$ Ongoing / Ad Royalty Sum"),

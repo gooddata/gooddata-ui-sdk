@@ -1,35 +1,24 @@
-// (C) 2007-2021 GoodData Corporation
-import React, { useState } from "react";
-import { HeaderPredicates, IDrillEvent } from "@gooddata/sdk-ui";
+// (C) 2007-2022 GoodData Corporation
+import React, { useCallback, useState } from "react";
+import { HeaderPredicates, IDrillEvent, IDrillEventCallback } from "@gooddata/sdk-ui";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import {
-    ITotal,
     attributeIdentifier,
     measureIdentifier,
     modifyMeasure,
     modifyAttribute,
+    newTotal,
 } from "@gooddata/sdk-model";
 import * as Md from "../../md/full";
 
-const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) =>
-    m.format("#,##0").localId("franchiseFees").title("Franchise Fees"),
-);
-const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) =>
-    m.format("#,##0").localId("franchiseFeesAdRoyalty"),
-);
+const FranchiseFees = modifyMeasure(Md.$FranchiseFees, (m) => m.format("#,##0").title("Franchise Fees"));
+const FranchiseFeesAdRoyalty = modifyMeasure(Md.$FranchiseFeesAdRoyalty, (m) => m.format("#,##0"));
+const FranchiseFeesOngoingRoyalty = modifyMeasure(Md.$FranchiseFeesOngoingRoyalty, (m) => m.format("#,##0"));
 const FranchiseFeesInitialFranchiseFee = modifyMeasure(Md.$FranchiseFeesInitialFranchiseFee, (m) =>
-    m.format("#,##0").localId("franchiseFeesInitialFranchiseFee"),
+    m.format("#,##0"),
 );
-const FranchiseFeesOngoingRoyalty = modifyMeasure(Md.$FranchiseFeesOngoingRoyalty, (m) =>
-    m.format("#,##0").localId("franchiseFeesOngoingRoyalty"),
-);
-const LocationState = modifyAttribute(Md.LocationState, (a) => a.localId("locationState"));
-const LocationName = modifyAttribute(Md.LocationName.Default, (a) => a.localId("locationName"));
-const MenuCategory = modifyAttribute(Md.MenuCategory, (a) => a.localId("menuCategory"));
-const quarterDate = modifyAttribute(Md.DateDatasets.Date.Quarter.Default, (a) => a.localId("quarterDate"));
-const monthDate = modifyAttribute(Md.DateDatasets.Date.Month.Short, (a) =>
-    a.alias("Month").localId("monthDate"),
-);
+
+const monthDate = modifyAttribute(Md.DateDatasets.Date.Month.Short, (a) => a.alias("Month"));
 
 const measures = [
     FranchiseFees,
@@ -38,66 +27,47 @@ const measures = [
     FranchiseFeesOngoingRoyalty,
 ];
 
-const attributes = [LocationState, LocationName, MenuCategory];
+const attributes = [Md.LocationState, Md.LocationName.Default, Md.MenuCategory];
 
-const columns = [quarterDate, monthDate];
+const columns = [Md.DateDatasets.Date.Quarter.Default, monthDate];
 
-const totals: ITotal[] = [
-    {
-        measureIdentifier: "franchiseFees",
-        type: "sum",
-        attributeIdentifier: "locationState",
-    },
-    {
-        measureIdentifier: "franchiseFeesAdRoyalty",
-        type: "sum",
-        attributeIdentifier: "locationState",
-    },
-    {
-        measureIdentifier: "franchiseFees",
-        type: "max",
-        attributeIdentifier: "locationState",
-    },
-    {
-        measureIdentifier: "franchiseFees",
-        type: "sum",
-        attributeIdentifier: "menu",
-    },
-    {
-        measureIdentifier: "franchiseFeesAdRoyalty",
-        type: "sum",
-        attributeIdentifier: "menu",
-    },
+const totals = [
+    newTotal("sum", FranchiseFees, Md.LocationState),
+    newTotal("sum", FranchiseFeesAdRoyalty, Md.LocationState),
+    newTotal("max", FranchiseFees, Md.LocationState),
+    newTotal("sum", FranchiseFees, Md.MenuCategory),
+    newTotal("sum", FranchiseFeesAdRoyalty, Md.MenuCategory),
 ];
 
 const drillableItems = [
-    HeaderPredicates.identifierMatch(attributeIdentifier(MenuCategory)!),
+    HeaderPredicates.identifierMatch(attributeIdentifier(Md.MenuCategory)!),
     HeaderPredicates.identifierMatch(measureIdentifier(FranchiseFees)!),
 ];
 
-const style = { height: 500 };
+const style: React.CSSProperties = { height: 500 };
+
+const DrillEventDisplay: React.FC<{ drillEvent: IDrillEvent | undefined }> = ({ drillEvent }) => {
+    if (!drillEvent) {
+        return null;
+    }
+
+    const drillColumn = drillEvent.drillContext.row![drillEvent.drillContext.columnIndex!];
+    const drillValue = typeof drillColumn === "object" ? drillColumn.name : drillColumn;
+    return (
+        <h3>
+            You have Clicked <span className="s-drill-value">{drillValue}</span>
+        </h3>
+    );
+};
 
 export const PivotTableDrillExample: React.FC = () => {
-    const [drillEvent, setState] = useState<IDrillEvent>();
+    const [drillEvent, setDrillEvent] = useState<IDrillEvent>();
 
-    const onDrill = (drillEvent: IDrillEvent) => {
-        setState(drillEvent);
-    };
-
-    let renderDrillValue;
-    if (drillEvent) {
-        const drillColumn = drillEvent.drillContext.row![drillEvent.drillContext.columnIndex!];
-        const drillValue = typeof drillColumn === "object" ? drillColumn.name : drillColumn;
-        renderDrillValue = (
-            <h3>
-                You have Clicked <span className="s-drill-value">{drillValue}</span>
-            </h3>
-        );
-    }
+    const onDrill = useCallback<IDrillEventCallback>((drillEvent) => setDrillEvent(drillEvent), []);
 
     return (
         <div>
-            {renderDrillValue}
+            <DrillEventDisplay drillEvent={drillEvent} />
             <div style={style} className="s-pivot-table-drill">
                 <PivotTable
                     measures={measures}

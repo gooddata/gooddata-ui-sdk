@@ -1,15 +1,13 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { modifyMeasure, newArithmeticMeasure, newMeasure } from "@gooddata/sdk-model";
 import * as Md from "../../md/full";
 
 const averageRestaurantDailyCostsIdentifier = "aaQJzQzoeKwZ";
-const NrRestaurants = modifyMeasure(Md.NrRestaurants, (m) =>
-    m.format("#,##0").localId("numberOfRestaurants"),
-);
+const NrRestaurants = modifyMeasure(Md.NrRestaurants, (m) => m.format("#,##0"));
 const averageRestaurantDailyCosts = newMeasure(averageRestaurantDailyCostsIdentifier, (m) =>
-    m.format("#,##0").localId("averageRestaurantDailyCosts"),
+    m.format("#,##0"),
 );
 
 const averageStateDailyCosts = newArithmeticMeasure(
