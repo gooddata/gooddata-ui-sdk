@@ -102,6 +102,9 @@ const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandTy
  */
 export type DashboardStore = EnhancedStore<DashboardState>;
 
+/**
+ * @internal
+ */
 export type DashboardStoreEventing = {
     /**
      * Optionally specify event handlers to register during the initialization.
@@ -127,6 +130,9 @@ export type DashboardStoreEventing = {
     ) => void;
 };
 
+/**
+ * @internal
+ */
 export type DashboardStoreConfig = {
     /**
      * Specifies context that will be hammered into the saga middleware. All sagas can then access the values
@@ -198,6 +204,7 @@ function* rootSaga(
 
 /**
  * Fully configured and initialized dashboard store realized by redux and with redux-sagas.
+ * @internal
  */
 export type ReduxedDashboardStore = {
     store: DashboardStore;
@@ -251,6 +258,7 @@ function mergeQueryServices(
  * Creates a new store for a dashboard.
  *
  * @param config - runtime configuration to apply on the middlewares and the store
+ * @internal
  */
 export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashboardStore {
     const queryProcessing = createQueryProcessingModule(

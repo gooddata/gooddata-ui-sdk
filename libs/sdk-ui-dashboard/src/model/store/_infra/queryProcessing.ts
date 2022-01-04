@@ -42,13 +42,19 @@ export type QueryProcessingModule = {
  */
 export const QueryEnvelopeActionPrefix = "__Q";
 
-type QueryEnvelopeEventHandlers<TQuery extends IDashboardQuery> = {
+/**
+ * @internal
+ */
+export type QueryEnvelopeEventHandlers<TQuery extends IDashboardQuery> = {
     onStart: (query: TQuery) => void;
     onSuccess: (result: IDashboardQueryResult<TQuery>) => void;
     onError: (err: Error) => void;
 };
 
-type QueryEnvelope<TQuery extends IDashboardQuery> = Readonly<QueryEnvelopeEventHandlers<TQuery>> & {
+/**
+ * @internal
+ */
+export type QueryEnvelope<TQuery extends IDashboardQuery> = Readonly<QueryEnvelopeEventHandlers<TQuery>> & {
     readonly type: string;
     readonly query: IDashboardQuery;
     readonly refresh?: boolean;

@@ -168,4 +168,24 @@ export { uiActions } from "./ui";
 
 export { queryAndWaitFor } from "./_infra/queryAndWaitFor";
 export { dispatchAndWaitFor } from "./_infra/dispatchAndWaitFor";
-export { DashboardStore } from "./dashboardStore";
+export {
+    DashboardStore,
+    createDashboardStore,
+    DashboardStoreConfig,
+    ReduxedDashboardStore,
+    DashboardStoreEventing
+} from "./dashboardStore";
+export {
+    queryEnvelopeWithPromise,
+    QueryEnvelope,
+    QueryEnvelopeEventHandlers,
+} from "./_infra/queryProcessing";
+export {
+    IDashboardQueryService,
+    QueryCache,
+    QueryCacheEntry,
+    QueryActions,
+    QueryCacheEntryResult,
+    AllQueryCacheReducers,
+    QueryCacheReducer
+} from "./_infra/queryService";

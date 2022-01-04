@@ -11,6 +11,7 @@ import { Action } from '@reduxjs/toolkit';
 import { AnyAction } from '@reduxjs/toolkit';
 import { CaseReducer } from '@reduxjs/toolkit';
 import { CaseReducerActions } from '@reduxjs/toolkit';
+import { CaseReducerActions as CaseReducerActions_2 } from '@reduxjs/toolkit/src/createSlice';
 import { ComponentType } from 'react';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-backend-spi';
 import { DateFilterGranularity } from '@gooddata/sdk-backend-spi';
@@ -20,6 +21,7 @@ import { Dictionary } from '@reduxjs/toolkit';
 import { Dispatch } from '@reduxjs/toolkit';
 import { DrillDefinition } from '@gooddata/sdk-backend-spi';
 import { EnhancedStore } from '@reduxjs/toolkit';
+import { EntityId } from '@reduxjs/toolkit';
 import { EntityState } from '@reduxjs/toolkit';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
 import { FilterContextItem } from '@gooddata/sdk-backend-spi';
@@ -108,6 +110,7 @@ import { IWidgetDefinition } from '@gooddata/sdk-backend-spi';
 import { IWorkspacePermissions } from '@gooddata/sdk-backend-spi';
 import { LocalIdRef } from '@gooddata/sdk-model';
 import { MemoizedFunction } from 'lodash';
+import { Middleware } from '@reduxjs/toolkit';
 import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { ObjRefInScope } from '@gooddata/sdk-model';
@@ -117,13 +120,17 @@ import { OnFiredDrillEvent } from '@gooddata/sdk-ui';
 import { OnLoadingChanged } from '@gooddata/sdk-ui';
 import { OutputSelector } from '@reduxjs/toolkit';
 import { Patch } from 'immer';
+import { PayloadAction } from '@reduxjs/toolkit';
 import { PlatformEdition } from '@gooddata/sdk-backend-spi';
 import { PropsWithChildren } from 'react';
 import { default as React_2 } from 'react';
 import { ReactReduxContextValue } from 'react-redux';
+import { Reducer } from '@reduxjs/toolkit';
+import { SagaIterator } from 'redux-saga';
 import { ScreenSize } from '@gooddata/sdk-backend-spi';
 import { Selector } from '@reduxjs/toolkit';
 import { ShareStatus } from '@gooddata/sdk-backend-spi';
+import { Task } from 'redux-saga';
 import { TypedUseSelectorHook } from 'react-redux';
 import { UriRef } from '@gooddata/sdk-model';
 import { VisualizationProperties } from '@gooddata/sdk-model';
@@ -198,6 +205,13 @@ export interface AddSectionItems extends IDashboardCommand {
 
 // @internal (undocumented)
 export type AlertsState = EntityState<IWidgetAlert>;
+
+// @internal
+export type AllQueryCacheReducers<TQuery extends IDashboardQuery<TResult>, TResult> = {
+    set: QueryCacheReducer<TQuery, TResult, QueryCacheEntry<TQuery, TResult>>;
+    remove: QueryCacheReducer<TQuery, TResult, string>;
+    removeAll: QueryCacheReducer<TQuery, TResult, void>;
+};
 
 // @public
 export function anyDashboardEventHandler(handler: DashboardEventHandler["handler"]): DashboardEventHandler;
@@ -477,6 +491,9 @@ export interface CreateAlert extends IDashboardCommand {
 
 // @alpha
 export function createAlert(alert: IWidgetAlertDefinition, correlationId?: string): CreateAlert;
+
+// @internal
+export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashboardStore;
 
 // @alpha
 export interface CreateScheduledEmail extends IDashboardCommand {
@@ -1464,6 +1481,23 @@ export type DashboardStateChangeCallback = (state: DashboardState, dispatch: Das
 export type DashboardStore = EnhancedStore<DashboardState>;
 
 // @internal (undocumented)
+export type DashboardStoreConfig = {
+    dashboardContext: DashboardContext;
+    privateContext?: PrivateDashboardContext;
+    additionalMiddleware?: Middleware<any>;
+    eventing?: DashboardStoreEventing;
+    queryServices?: IDashboardQueryService<any, any>[];
+    backgroundWorkers: ((context: DashboardContext) => SagaIterator<void>)[];
+};
+
+// @internal (undocumented)
+export type DashboardStoreEventing = {
+    initialEventHandlers?: DashboardEventHandler[];
+    onStateChange?: (state: DashboardState, dispatch: DashboardDispatch) => void;
+    onEventingInitialized?: (registerEventHandler: (handler: DashboardEventHandler) => void, unregisterEventHandler: (handler: DashboardEventHandler) => void) => void;
+};
+
+// @internal (undocumented)
 export const DashboardStoreProvider: React_2.FC<IDashboardStoreProviderProps>;
 
 // @public (undocumented)
@@ -2286,6 +2320,16 @@ export interface IDashboardQuery<_TResult = any> {
 
 // @alpha
 export type IDashboardQueryResult<T> = T extends IDashboardQuery<infer TResult> ? TResult : never;
+
+// @internal
+export interface IDashboardQueryService<TQuery extends IDashboardQuery<TResult>, TResult> {
+    // (undocumented)
+    cache?: QueryCache<TQuery, TResult>;
+    // (undocumented)
+    generator: (ctx: DashboardContext, query: TQuery, refresh: boolean) => SagaIterator<TResult>;
+    // (undocumented)
+    name: DashboardQueryType;
+}
 
 // @internal
 export interface IDashboardStoreProviderProps {
@@ -3196,14 +3240,66 @@ export interface PermissionsState {
     permissions?: IWorkspacePermissions;
 }
 
+// @internal (undocumented)
+export type PrivateDashboardContext = DashboardModelCustomizationFns & {
+    preloadedDashboard?: IDashboard;
+};
+
+// @internal
+export type QueryActions<TQuery extends IDashboardQuery, TResult> = CaseReducerActions_2<AllQueryCacheReducers<TQuery, TResult>>;
+
 // @alpha
 export function queryAndWaitFor<TQuery extends DashboardQueries>(dispatch: DashboardDispatch, query: TQuery): Promise<IDashboardQueryResult<TQuery>>;
+
+// @internal
+export type QueryCache<TQuery extends IDashboardQuery<TResult>, TResult> = {
+    cacheName: string;
+    reducer: Reducer<EntityState<QueryCacheEntry<TQuery, TResult>>>;
+    actions: QueryActions<TQuery, TResult>;
+    selectById: (id: EntityId) => Selector<DashboardState, QueryCacheEntryResult<TResult> | undefined>;
+    selectQueryResult: (query: TQuery) => Selector<DashboardState, QueryCacheEntryResult<TResult> | undefined>;
+};
+
+// @internal
+export type QueryCacheEntry<TQuery extends IDashboardQuery<TResult>, TResult> = QueryCacheEntryResult<TResult> & {
+    query: TQuery;
+};
+
+// @internal
+export type QueryCacheEntryResult<TResult> = {
+    status: "loading" | "success" | "error";
+    result?: TResult;
+    error?: string;
+};
+
+// @internal
+export type QueryCacheReducer<TQuery extends IDashboardQuery<TResult>, TResult, TPayload> = CaseReducer<EntityState<QueryCacheEntry<TQuery, TResult>>, PayloadAction<TPayload>>;
 
 // @alpha
 export function queryDateDatasetsForInsight(insightOrRef: ObjRef | IInsight, correlationId?: string): QueryInsightDateDatasets;
 
 // @alpha
 export function queryDateDatasetsForMeasure(measureRef: ObjRef, correlationId?: string): QueryMeasureDateDatasets;
+
+// @internal (undocumented)
+export type QueryEnvelope<TQuery extends IDashboardQuery> = Readonly<QueryEnvelopeEventHandlers<TQuery>> & {
+    readonly type: string;
+    readonly query: IDashboardQuery;
+    readonly refresh?: boolean;
+};
+
+// @internal (undocumented)
+export type QueryEnvelopeEventHandlers<TQuery extends IDashboardQuery> = {
+    onStart: (query: TQuery) => void;
+    onSuccess: (result: IDashboardQueryResult<TQuery>) => void;
+    onError: (err: Error) => void;
+};
+
+// @internal (undocumented)
+export function queryEnvelopeWithPromise<TQuery extends IDashboardQuery>(query: TQuery, refresh?: boolean): {
+    promise: Promise<IDashboardQueryResult<TQuery>>;
+    envelope: QueryEnvelope<TQuery>;
+};
 
 // @alpha
 export interface QueryInsightAttributesMeta extends IDashboardQuery<InsightAttributesMeta> {
@@ -3270,6 +3366,14 @@ export function queryWidgetFilters(widgetRef: ObjRef, widgetFilterOverrides?: IF
 
 // @alpha (undocumented)
 export const ReactDashboardContext: any;
+
+// @internal
+export type ReduxedDashboardStore = {
+    store: DashboardStore;
+    registerEventHandler: (handler: DashboardEventHandler) => void;
+    unregisterEventHandler: (handler: DashboardEventHandler) => void;
+    rootSagaTask: Task;
+};
 
 // @alpha (undocumented)
 export interface RefreshInsightWidget extends IDashboardCommand {
@@ -3638,18 +3742,10 @@ export const selectDashboardUri: OutputSelector<DashboardState, string | undefin
 export const selectDashboardUriRef: OutputSelector<DashboardState, UriRef | undefined, (res: string | undefined) => UriRef | undefined>;
 
 // @internal
-export const selectDateDatasetsForInsight: (query: QueryInsightDateDatasets) => Selector<DashboardState, {
-status: "error" | "loading" | "success";
-result?: InsightDateDatasets | undefined;
-error?: string | undefined;
-} | undefined>;
+export const selectDateDatasetsForInsight: (query: QueryInsightDateDatasets) => Selector<DashboardState, QueryCacheEntryResult<InsightDateDatasets> | undefined>;
 
 // @internal
-export const selectDateDatasetsForMeasure: (query: QueryMeasureDateDatasets) => Selector<DashboardState, {
-status: "error" | "loading" | "success";
-result?: MeasureDateDatasets | undefined;
-error?: string | undefined;
-} | undefined>;
+export const selectDateDatasetsForMeasure: (query: QueryMeasureDateDatasets) => Selector<DashboardState, QueryCacheEntryResult<MeasureDateDatasets> | undefined>;
 
 // @public
 export const selectDateFilterConfig: OutputSelector<DashboardState, IDateFilterConfig, (res: ResolvedDashboardConfig) => IDateFilterConfig>;
@@ -3766,11 +3862,7 @@ export const selectImplicitDrillsByAvailableDrillTargets: (availableDrillTargets
 export const selectImplicitDrillsDownByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IDrillTargets | undefined, res2: (ICatalogAttribute | ICatalogDateAttribute)[], res3: boolean) => IImplicitDrillWithPredicates[]>;
 
 // @internal
-export const selectInsightAttributesMeta: (query: QueryInsightAttributesMeta) => Selector<DashboardState, {
-status: "error" | "loading" | "success";
-result?: InsightAttributesMeta | undefined;
-error?: string | undefined;
-} | undefined>;
+export const selectInsightAttributesMeta: (query: QueryInsightAttributesMeta) => Selector<DashboardState, QueryCacheEntryResult<InsightAttributesMeta> | undefined>;
 
 // @alpha
 export const selectInsightByRef: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IInsight | undefined, (res: ObjRefMap<IInsight>) => IInsight | undefined>;

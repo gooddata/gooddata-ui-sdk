@@ -68,6 +68,7 @@ export {
 } from "./types/alertTypes";
 
 export { ICsvExportConfig, IExportConfig, IXlsxExportConfig } from "./types/exportTypes";
+export { PrivateDashboardContext } from "./types/commonTypes";
 
 export * from "./react";
 export * from "./commands";
