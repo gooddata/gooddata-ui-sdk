@@ -280,6 +280,8 @@ export interface IDashboardCustomizationProps extends IDashboardCustomComponentP
      *
      * @remarks
      * Defaults to false, meaning the Save as new button is not shown.
+     *
+     * @deprecated Use {@link DashboardConfig.showSaveAsNewButton} instead.
      */
     enableSaveAsNewButton?: boolean;
 }

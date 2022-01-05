@@ -26,6 +26,7 @@ import {
     selectIsSaveAsDialogOpen,
     selectIsScheduleEmailDialogOpen,
     selectPersistedDashboard,
+    selectShowSaveAsNewButton,
     uiActions,
     useDashboardCommandProcessing,
     useDashboardDispatch,
@@ -111,7 +112,7 @@ export const DashboardHeader = (): JSX.Element => {
     const { filters, onAttributeFilterChanged, onDateFilterChanged } = useFilterBar();
     const { title, onTitleChanged, onShareButtonClick, shareInfo } = useTopBar();
     const { addSuccess, addError, addProgress, removeMessage } = useToastMessage();
-    const { enableSaveAsNewButton } = useDashboardCustomizationsContext();
+    const { enableSaveAsNewButton: enableSaveAsNewButtonDeprecated } = useDashboardCustomizationsContext();
 
     const dispatch = useDashboardDispatch();
     const isScheduleEmailingDialogOpen = useDashboardSelector(selectIsScheduleEmailDialogOpen);
@@ -121,6 +122,7 @@ export const DashboardHeader = (): JSX.Element => {
     const openSaveAsDialog = () => dispatch(uiActions.openSaveAsDialog());
     const closeSaveAsDialog = () => dispatch(uiActions.closeSaveAsDialog());
     const persistedDashboard = useDashboardSelector(selectPersistedDashboard);
+    const showSaveAsNewButton = useDashboardSelector(selectShowSaveAsNewButton);
 
     const lastExportMessageId = useRef("");
     const { run: exportDashboard } = useDashboardCommandProcessing({
@@ -192,7 +194,9 @@ export const DashboardHeader = (): JSX.Element => {
             return [];
         }
 
-        const isSaveAsVisible = canCreateDashboard && enableSaveAsNewButton;
+        // TODO RAIL-3945 remove the deprecated version one gdc-dashboards are ready for this
+        const isSaveAsVisible =
+            canCreateDashboard && (showSaveAsNewButton || enableSaveAsNewButtonDeprecated);
         const isSaveAsDisabled = isEmptyLayout || !dashboardRef || isReadOnly;
         const isScheduledEmailingDisabled = isReadOnly;
 

@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 export { DashboardDispatch, DashboardState, DashboardSelector, DashboardSelectorEvaluator } from "./types";
 
 export { selectDashboardLoading } from "./loading/loadingSelectors";
@@ -35,6 +35,7 @@ export {
     selectEnableKPIDashboardDrillToURL,
     selectEnableKPIDashboardImplicitDrillDown,
     selectHideKpiDrillInEmbedded,
+    selectShowSaveAsNewButton,
 } from "./config/configSelectors";
 export { PermissionsState } from "./permissions/permissionsState";
 export {

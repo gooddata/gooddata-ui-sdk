@@ -189,6 +189,7 @@ Object {
     "thousand": ",",
   },
   "settings": Object {},
+  "showSaveAsNewButton": false,
 }
 `;
 

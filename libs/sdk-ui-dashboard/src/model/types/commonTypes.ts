@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import {
     IAnalyticalBackend,
     IDashboard,
@@ -120,6 +120,13 @@ export type DashboardConfig = {
      * Defaults to false.
      */
     enableFilterValuesResolutionInDrillEvents?: boolean;
+
+    /**
+     * If set to true, the default menu button will include the Save as new button.
+     *
+     * Defaults to false, meaning the Save as new button is not shown.
+     */
+    showSaveAsNewButton?: boolean;
 };
 
 /**

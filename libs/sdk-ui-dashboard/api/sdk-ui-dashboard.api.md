@@ -699,6 +699,7 @@ export type DashboardConfig = {
     isExport?: boolean;
     disableDefaultDrills?: boolean;
     enableFilterValuesResolutionInDrillEvents?: boolean;
+    showSaveAsNewButton?: boolean;
 };
 
 // @public (undocumented)
@@ -2064,6 +2065,7 @@ export interface IDashboardCustomComponentProps {
 // @public
 export interface IDashboardCustomizationProps extends IDashboardCustomComponentProps {
     customizationFns?: DashboardModelCustomizationFns;
+    // @deprecated
     enableSaveAsNewButton?: boolean;
     // @alpha
     insightMenuItemsProvider?: InsightMenuItemsProvider;
@@ -3861,6 +3863,9 @@ export const selectSeparators: OutputSelector<DashboardState, ISeparators, (res:
 
 // @public
 export const selectSettings: OutputSelector<DashboardState, ISettings, (res: ResolvedDashboardConfig) => ISettings>;
+
+// @public
+export const selectShowSaveAsNewButton: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @internal
 export const selectStash: OutputSelector<DashboardState, Record<string, ExtendedDashboardItem<ExtendedDashboardWidget>[]>, (res: LayoutState) => Record<string, ExtendedDashboardItem<ExtendedDashboardWidget>[]>>;

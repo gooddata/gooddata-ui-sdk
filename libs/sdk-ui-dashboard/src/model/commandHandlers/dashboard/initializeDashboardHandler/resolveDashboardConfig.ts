@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { all, call } from "redux-saga/effects";
 import {
@@ -165,6 +165,7 @@ export function* resolveDashboardConfig(
         isExport: config.isExport ?? false,
         disableDefaultDrills: config.disableDefaultDrills ?? false,
         enableFilterValuesResolutionInDrillEvents: config.enableFilterValuesResolutionInDrillEvents ?? false,
+        showSaveAsNewButton: config.showSaveAsNewButton ?? false,
     };
 
     return resolvedConfig;
