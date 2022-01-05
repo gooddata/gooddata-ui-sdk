@@ -182,7 +182,7 @@ export class Checkbox extends React_2.PureComponent<CheckboxProps> {
         text: string;
         title: string;
         value: boolean;
-        isSmallLabel: boolean;
+        labelSize: string;
         onChange: (...args: any[]) => void;
     };
     // (undocumented)
@@ -196,7 +196,7 @@ export interface CheckboxProps {
     // (undocumented)
     disabled: boolean;
     // (undocumented)
-    isSmallLabel?: boolean;
+    labelSize: LabelSize;
     // (undocumented)
     name: string;
     // (undocumented)
@@ -2848,6 +2848,9 @@ export interface IWorkspacePickerHomeFooterProps {
     // (undocumented)
     theme?: ITheme;
 }
+
+// @internal (undocumented)
+export type LabelSize = "small" | "normal";
 
 // @internal @deprecated (undocumented)
 export const LegacyInvertableList: <T>(props: ILegacyInvertableListProps<T>) => any;
