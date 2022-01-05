@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 import { ObjRef } from "@gooddata/sdk-model";
@@ -98,4 +98,12 @@ export const selectIsKpiAlertHighlightedByWidgetRef = createMemoizedSelector(
             },
         );
     },
+);
+
+/**
+ * @alpha
+ */
+export const selectMenuButtonItemsVisibility = createSelector(
+    selectSelf,
+    (state) => state.menuButton.itemsVisibility,
 );

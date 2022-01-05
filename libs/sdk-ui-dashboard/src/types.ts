@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import { DrillDefinition, IAccessGrantee, IWidget, ShareStatus } from "@gooddata/sdk-backend-spi";
 import {
@@ -133,4 +133,22 @@ export interface IShareProps {
     isLocked: boolean;
     granteesToAdd: IAccessGrantee[];
     granteesToDelete: IAccessGrantee[];
+}
+
+/**
+ * @alpha
+ */
+export interface IMenuButtonItemsVisibility {
+    /**
+     * If set to true, the Save as new button will be visible. Defaults to false.
+     */
+    saveAsNewButton?: boolean;
+    /**
+     * If set to true, the Export to PDF button will be visible. Defaults to true.
+     */
+    pdfExportButton?: boolean;
+    /**
+     * If set to true, the Schedule emailing button will be visible. Defaults to true.
+     */
+    scheduleEmailButton?: boolean;
 }

@@ -8,7 +8,6 @@ import {
     isProtectedDataError,
 } from "@gooddata/sdk-backend-spi";
 import { ToastMessages, useToastMessage } from "@gooddata/sdk-ui-kit";
-import compact from "lodash/compact";
 
 import {
     changeAttributeFilterSelection,
@@ -25,6 +24,7 @@ import {
     selectIsReadOnly,
     selectIsSaveAsDialogOpen,
     selectIsScheduleEmailDialogOpen,
+    selectMenuButtonItemsVisibility,
     selectPersistedDashboard,
     uiActions,
     useDashboardCommandProcessing,
@@ -186,21 +186,25 @@ export const DashboardHeader = (): JSX.Element => {
 
     const isReadOnly = useDashboardSelector(selectIsReadOnly);
     const canCreateDashboard = useDashboardSelector(selectCanCreateAnalyticalDashboard);
+    const menuButtonItemsVisibility = useDashboardSelector(selectMenuButtonItemsVisibility);
 
     const defaultMenuItems = useMemo<IMenuButtonItem[]>(() => {
         if (!dashboardRef) {
             return [];
         }
 
-        const isSaveAsVisible = canCreateDashboard && enableSaveAsNewButton;
+        // TODO RAIL-3945 remove enableSaveAsNewButton once gdc-dashboards are ready for this
+        const isSaveAsVisible =
+            canCreateDashboard && (enableSaveAsNewButton || menuButtonItemsVisibility.saveAsNewButton);
         const isSaveAsDisabled = isEmptyLayout || !dashboardRef || isReadOnly;
         const isScheduledEmailingDisabled = isReadOnly;
 
-        return compact([
-            isSaveAsVisible && {
+        return [
+            {
                 type: "button",
                 itemId: "save_as_menu_item", // careful, also a s- class selector, do not change
                 disabled: isSaveAsDisabled,
+                visible: isSaveAsVisible ?? false,
                 itemName: intl.formatMessage({ id: "options.menu.save.as" }),
                 tooltip:
                     // the tooltip is only relevant to non-read only states
@@ -214,6 +218,7 @@ export const DashboardHeader = (): JSX.Element => {
                 itemId: "pdf-export-item", // careful, this is also used as a selector in tests, do not change
                 itemName: intl.formatMessage({ id: "options.menu.export.PDF" }),
                 onClick: defaultOnExportToPdf,
+                visible: menuButtonItemsVisibility.pdfExportButton ?? true,
             },
             {
                 type: "button",
@@ -221,8 +226,9 @@ export const DashboardHeader = (): JSX.Element => {
                 disabled: isScheduledEmailingDisabled,
                 itemName: intl.formatMessage({ id: "options.menu.schedule.email" }),
                 onClick: defaultOnScheduleEmailing,
+                visible: menuButtonItemsVisibility.scheduleEmailButton ?? true,
             },
-        ]);
+        ];
     }, [defaultOnScheduleEmailing, defaultOnExportToPdf, dashboardRef, isReadOnly]);
 
     const onScheduleEmailingError = useCallback(() => {

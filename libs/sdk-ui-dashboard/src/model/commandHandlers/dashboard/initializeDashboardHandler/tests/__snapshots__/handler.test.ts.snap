@@ -183,6 +183,7 @@ Object {
   "isReadOnly": false,
   "locale": "en-US",
   "mapboxToken": undefined,
+  "menuButtonItemsVisibility": Object {},
   "objectAvailability": Object {},
   "separators": Object {
     "decimal": ".",

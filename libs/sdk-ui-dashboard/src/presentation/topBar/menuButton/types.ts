@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { ComponentType } from "react";
 
 /**
@@ -14,7 +14,9 @@ export interface IMenuButtonItemButton {
      */
     tooltip?: string;
     disabled?: boolean;
+    visible?: boolean;
 }
+
 /**
  * @alpha
  */
@@ -22,6 +24,7 @@ export interface IMenuButtonItemSeparator {
     type: "separator";
     itemId: string;
 }
+
 /**
  * @alpha
  */
@@ -30,6 +33,7 @@ export interface IMenuButtonItemHeader {
     itemId: string;
     itemName: string;
 }
+
 /**
  * @alpha
  */

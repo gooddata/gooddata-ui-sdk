@@ -1,7 +1,8 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { Action, AnyAction, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { ObjRef } from "@gooddata/sdk-model";
 import { UiState } from "./uiState";
+import { IMenuButtonItemsVisibility } from "../../../types";
 
 type UiReducer<A extends Action = AnyAction> = CaseReducer<UiState, A>;
 
@@ -49,6 +50,13 @@ const highlightKpiAlert: UiReducer<PayloadAction<ObjRef>> = (state, action) => {
     state.kpiAlerts.highlightedWidgetRef = action.payload;
 };
 
+const setMenuButtonItemsVisibility: UiReducer<PayloadAction<IMenuButtonItemsVisibility>> = (
+    state,
+    action,
+) => {
+    state.menuButton.itemsVisibility = action.payload;
+};
+
 export const uiReducers = {
     openScheduleEmailDialog,
     closeScheduleEmailDialog,
@@ -61,4 +69,5 @@ export const uiReducers = {
     highlightKpiAlert,
     openShareDialog,
     closeShareDialog,
+    setMenuButtonItemsVisibility,
 };

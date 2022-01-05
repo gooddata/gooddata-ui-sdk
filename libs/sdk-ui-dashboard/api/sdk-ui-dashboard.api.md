@@ -699,6 +699,7 @@ export type DashboardConfig = {
     isExport?: boolean;
     disableDefaultDrills?: boolean;
     enableFilterValuesResolutionInDrillEvents?: boolean;
+    menuButtonItemsVisibility?: IMenuButtonItemsVisibility;
 };
 
 // @public (undocumented)
@@ -2064,6 +2065,7 @@ export interface IDashboardCustomComponentProps {
 // @public
 export interface IDashboardCustomizationProps extends IDashboardCustomComponentProps {
     customizationFns?: DashboardModelCustomizationFns;
+    // @deprecated
     enableSaveAsNewButton?: boolean;
     // @alpha
     insightMenuItemsProvider?: InsightMenuItemsProvider;
@@ -2495,6 +2497,8 @@ export interface IMenuButtonItemButton {
     tooltip?: string;
     // (undocumented)
     type: "button";
+    // (undocumented)
+    visible?: boolean;
 }
 
 // @alpha (undocumented)
@@ -2513,6 +2517,13 @@ export interface IMenuButtonItemSeparator {
     itemId: string;
     // (undocumented)
     type: "separator";
+}
+
+// @alpha (undocumented)
+export interface IMenuButtonItemsVisibility {
+    pdfExportButton?: boolean;
+    saveAsNewButton?: boolean;
+    scheduleEmailButton?: boolean;
 }
 
 // @alpha (undocumented)
@@ -3844,6 +3855,9 @@ export const selectLocale: OutputSelector<DashboardState, ILocale, (res: Resolve
 // @internal
 export const selectMapboxToken: OutputSelector<DashboardState, string | undefined, (res: ResolvedDashboardConfig) => string | undefined>;
 
+// @alpha (undocumented)
+export const selectMenuButtonItemsVisibility: OutputSelector<DashboardState, IMenuButtonItemsVisibility, (res: UiState) => IMenuButtonItemsVisibility>;
+
 // @public
 export const selectObjectAvailabilityConfig: OutputSelector<DashboardState, ObjectAvailabilityConfig, (res: ResolvedDashboardConfig) => ObjectAvailabilityConfig>;
 
@@ -3969,6 +3983,10 @@ type: string;
 }>;
 openShareDialog: CaseReducer<UiState, AnyAction>;
 closeShareDialog: CaseReducer<UiState, AnyAction>;
+setMenuButtonItemsVisibility: CaseReducer<UiState, {
+payload: IMenuButtonItemsVisibility;
+type: string;
+}>;
 }>;
 
 // @alpha (undocumented)
@@ -3989,6 +4007,9 @@ export type UiState = {
     kpiAlerts: {
         openedWidgetRef: ObjRef | undefined;
         highlightedWidgetRef: ObjRef | undefined;
+    };
+    menuButton: {
+        itemsVisibility: IMenuButtonItemsVisibility;
     };
 };
 

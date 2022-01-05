@@ -280,6 +280,9 @@ export interface IDashboardCustomizationProps extends IDashboardCustomComponentP
      *
      * @remarks
      * Defaults to false, meaning the Save as new button is not shown.
+     *
+     * @deprecated
+     * Use {@link IDashboardBaseProps.config}'s `menuButtonItemsVisibility` property instead.
      */
     enableSaveAsNewButton?: boolean;
 }
