@@ -1,7 +1,9 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 
+import cx from "classnames";
 import noop from "lodash/noop";
+import { LabelSize } from "./typings";
 
 /**
  * @internal
@@ -13,6 +15,7 @@ export interface CheckboxProps {
     text: string;
     title: string;
     value: boolean;
+    labelSize: LabelSize;
     onChange: (e: boolean) => void;
 }
 
@@ -27,6 +30,7 @@ export class Checkbox extends React.PureComponent<CheckboxProps> {
         text: "",
         title: "",
         value: false,
+        labelSize: "small",
         onChange: noop,
     };
 
@@ -35,11 +39,16 @@ export class Checkbox extends React.PureComponent<CheckboxProps> {
     };
 
     render(): React.ReactNode {
-        const { disabled, name, text, title, value } = this.props;
+        const { disabled, name, text, title, value, labelSize } = this.props;
+
+        const labelClasses = cx("input-label-text", {
+            "gd-label-small gd-checkbox-label-small": labelSize === "small",
+            "gd-label gd-checkbox-label": labelSize === "normal",
+        });
 
         return (
             <React.Fragment>
-                <h6>{title}</h6>
+                {title && <h6>{title}</h6>}
                 <label className="input-checkbox-label">
                     <input
                         type="checkbox"
@@ -49,7 +58,7 @@ export class Checkbox extends React.PureComponent<CheckboxProps> {
                         disabled={disabled}
                         onChange={this.onChange}
                     />
-                    <span className="gd-label-small gd-checkbox-label-small input-label-text">{text}</span>
+                    <span className={labelClasses}>{text}</span>
                 </label>
             </React.Fragment>
         );
