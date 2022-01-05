@@ -95,14 +95,14 @@ exports[`tiger elements forFilter should load attribute filter elements for prov
 InMemoryPaging {
   "allItems": Array [
     Object {
-      "title": "/gdc/md/4dc4e033e611421791adea58d34d958c/obj/1054/elements?id=165847",
-      "uri": "/gdc/md/4dc4e033e611421791adea58d34d958c/obj/1054/elements?id=165847",
+      "title": "Educationly",
+      "uri": "Educationly",
     },
   ],
   "items": Array [
     Object {
-      "title": "/gdc/md/4dc4e033e611421791adea58d34d958c/obj/1054/elements?id=165847",
-      "uri": "/gdc/md/4dc4e033e611421791adea58d34d958c/obj/1054/elements?id=165847",
+      "title": "Educationly",
+      "uri": "Educationly",
     },
   ],
   "limit": 100,
@@ -115,14 +115,14 @@ exports[`tiger elements forFilter should load attribute filter elements for prov
 InMemoryPaging {
   "allItems": Array [
     Object {
-      "title": "/gdc/md/4dc4e033e611421791adea58d34d958c/obj/1054/elements?id=165847",
-      "uri": "/gdc/md/4dc4e033e611421791adea58d34d958c/obj/1054/elements?id=165847",
+      "title": "Educationly",
+      "uri": "Educationly",
     },
   ],
   "items": Array [
     Object {
-      "title": "/gdc/md/4dc4e033e611421791adea58d34d958c/obj/1054/elements?id=165847",
-      "uri": "/gdc/md/4dc4e033e611421791adea58d34d958c/obj/1054/elements?id=165847",
+      "title": "Educationly",
+      "uri": "Educationly",
     },
   ],
   "limit": 100,

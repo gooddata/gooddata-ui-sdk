@@ -1,5 +1,4 @@
 // (C) 2022 GoodData Corporation
-// (C) 2020 GoodData Corporation
 
 import { testBackend, testWorkspace } from "./backend";
 const backend = testBackend();
