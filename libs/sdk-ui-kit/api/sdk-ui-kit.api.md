@@ -182,6 +182,7 @@ export class Checkbox extends React_2.PureComponent<CheckboxProps> {
         text: string;
         title: string;
         value: boolean;
+        isSmallLabel: boolean;
         onChange: (...args: any[]) => void;
     };
     // (undocumented)
@@ -194,6 +195,8 @@ export class Checkbox extends React_2.PureComponent<CheckboxProps> {
 export interface CheckboxProps {
     // (undocumented)
     disabled: boolean;
+    // (undocumented)
+    isSmallLabel?: boolean;
     // (undocumented)
     name: string;
     // (undocumented)
