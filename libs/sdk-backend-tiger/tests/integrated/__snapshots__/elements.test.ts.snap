@@ -1,0 +1,211 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`tiger elements forDisplayForm should load attribute elements for existing display form 1`] = `
+ServerPaging {
+  "getData": [Function],
+  "items": Array [
+    Object {
+      "title": "224",
+      "uri": "224",
+    },
+    Object {
+      "title": "38",
+      "uri": "38",
+    },
+    Object {
+      "title": "545",
+      "uri": "545",
+    },
+    Object {
+      "title": "552",
+      "uri": "552",
+    },
+    Object {
+      "title": "78",
+      "uri": "78",
+    },
+    Object {
+      "title": "955129",
+      "uri": "955129",
+    },
+    Object {
+      "title": "955131",
+      "uri": "955131",
+    },
+    Object {
+      "title": "955133",
+      "uri": "955133",
+    },
+    Object {
+      "title": "955139",
+      "uri": "955139",
+    },
+    Object {
+      "title": "955141",
+      "uri": "955141",
+    },
+    Object {
+      "title": "955143",
+      "uri": "955143",
+    },
+    Object {
+      "title": "955145",
+      "uri": "955145",
+    },
+    Object {
+      "title": "955147",
+      "uri": "955147",
+    },
+    Object {
+      "title": "955153",
+      "uri": "955153",
+    },
+    Object {
+      "title": "955155",
+      "uri": "955155",
+    },
+    Object {
+      "title": "955157",
+      "uri": "955157",
+    },
+    Object {
+      "title": "955159",
+      "uri": "955159",
+    },
+    Object {
+      "title": "955163",
+      "uri": "955163",
+    },
+    Object {
+      "title": "955165",
+      "uri": "955165",
+    },
+    Object {
+      "title": "955167",
+      "uri": "955167",
+    },
+  ],
+  "limit": 20,
+  "offset": 0,
+  "totalCount": 4846,
+}
+`;
+
+exports[`tiger elements forFilter should load attribute filter elements for provided negative attribute filter 1`] = `
+InMemoryPaging {
+  "allItems": Array [
+    Object {
+      "title": "Educationly",
+      "uri": "Educationly",
+    },
+  ],
+  "items": Array [
+    Object {
+      "title": "Educationly",
+      "uri": "Educationly",
+    },
+  ],
+  "limit": 100,
+  "offset": 0,
+  "totalCount": 1,
+}
+`;
+
+exports[`tiger elements forFilter should load attribute filter elements for provided positive attribute filter 1`] = `
+InMemoryPaging {
+  "allItems": Array [
+    Object {
+      "title": "Educationly",
+      "uri": "Educationly",
+    },
+  ],
+  "items": Array [
+    Object {
+      "title": "Educationly",
+      "uri": "Educationly",
+    },
+  ],
+  "limit": 100,
+  "offset": 0,
+  "totalCount": 1,
+}
+`;
+
+exports[`tiger elements forFilter should load no attribute filter elements for provided ALL attribute filter 1`] = `
+InMemoryPaging {
+  "allItems": Array [],
+  "items": Array [],
+  "limit": 100,
+  "offset": 0,
+  "totalCount": 0,
+}
+`;
+
+exports[`tiger elements forFilter should return attribute filter elements for provided attribute filter with elements by value 1`] = `
+InMemoryPaging {
+  "allItems": Array [
+    Object {
+      "title": "Educationly",
+      "uri": "Educationly",
+    },
+  ],
+  "items": Array [
+    Object {
+      "title": "Educationly",
+      "uri": "Educationly",
+    },
+  ],
+  "limit": 100,
+  "offset": 0,
+  "totalCount": 1,
+}
+`;
+
+exports[`tiger elements forFilter should return correct page for given displayForm 1`] = `
+ServerPaging {
+  "getData": [Function],
+  "items": Array [
+    Object {
+      "title": "1-800 We Answer",
+      "uri": "1-800 We Answer",
+    },
+    Object {
+      "title": "1-888-OhioComp",
+      "uri": "1-888-OhioComp",
+    },
+  ],
+  "limit": 2,
+  "offset": 6,
+  "totalCount": 4846,
+}
+`;
+
+exports[`tiger elements forFilter should return empty result for out-of-range page in initial request 1`] = `
+ServerPaging {
+  "getData": [Function],
+  "items": Array [],
+  "limit": 100,
+  "offset": 5000,
+  "totalCount": 4846,
+}
+`;
+
+exports[`tiger elements forFilter should return empty result for out-of-range page with goTo 1`] = `
+ServerPaging {
+  "getData": [Function],
+  "items": Array [],
+  "limit": 100,
+  "offset": 10000,
+  "totalCount": 4846,
+}
+`;
+
+exports[`tiger elements forFilter should return empty result for out-of-range page with next 1`] = `
+ServerPaging {
+  "getData": [Function],
+  "items": Array [],
+  "limit": 100,
+  "offset": 4940,
+  "totalCount": 4846,
+}
+`;
