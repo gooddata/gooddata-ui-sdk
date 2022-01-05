@@ -3,6 +3,7 @@ import React from "react";
 
 import cx from "classnames";
 import noop from "lodash/noop";
+import { LabelSize } from "./typings";
 
 /**
  * @internal
@@ -14,7 +15,7 @@ export interface CheckboxProps {
     text: string;
     title: string;
     value: boolean;
-    isSmallLabel?: boolean;
+    labelSize: LabelSize;
     onChange: (e: boolean) => void;
 }
 
@@ -29,7 +30,7 @@ export class Checkbox extends React.PureComponent<CheckboxProps> {
         text: "",
         title: "",
         value: false,
-        isSmallLabel: true,
+        labelSize: "small",
         onChange: noop,
     };
 
@@ -38,10 +39,11 @@ export class Checkbox extends React.PureComponent<CheckboxProps> {
     };
 
     render(): React.ReactNode {
-        const { disabled, name, text, title, value, isSmallLabel } = this.props;
+        const { disabled, name, text, title, value, labelSize } = this.props;
 
         const labelClasses = cx("input-label-text", {
-            "gd-label-small gd-checkbox-label-small": isSmallLabel,
+            "gd-label-small gd-checkbox-label-small": labelSize === "small",
+            "gd-label gd-checkbox-label": labelSize === "normal",
         });
 
         return (
