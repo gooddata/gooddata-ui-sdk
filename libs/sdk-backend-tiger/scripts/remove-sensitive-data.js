@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2021 GoodData Corporation
+// (C) 2022 GoodData Corporation
 
 const { execSync } = require("child_process");
 const fs = require("fs");

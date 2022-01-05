@@ -39,7 +39,10 @@ start_wiremocks () {
 # Stop wiremock server(s) & destroy the network
 #
 stop_wiremocks () {
+  echo "Stopping wiremock server for bear integrated tests."
   $_WIREMOCK_STOP
+
+  echo "Stopping wiremock server for tiger integrated tests."
   $_TIGER_WIREMOCK_STOP
 
   docker network rm ${WIREMOCK_NET}

@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2022 GoodData Corporation
 
 import { testBackend, testWorkspace } from "./backend";
 import { measureLocalId, newArithmeticMeasure, newPopMeasure } from "@gooddata/sdk-model";
