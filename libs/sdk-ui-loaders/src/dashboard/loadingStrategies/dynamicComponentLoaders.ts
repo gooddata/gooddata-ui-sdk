@@ -1,7 +1,7 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { DashboardContext, IDashboardEngine, IDashboardPluginContract_V1 } from "@gooddata/sdk-ui-dashboard";
-import { areObjRefsEqual } from "@gooddata/sdk-model";
+import { areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
 import { LoadedPlugin, ModuleFederationIntegration } from "../types";
 import invariant from "ts-invariant";
 import isEmpty from "lodash/isEmpty";
@@ -41,15 +41,27 @@ export async function dynamicDashboardPluginLoader(
     dashboard: IDashboardWithReferences,
     moduleFederationIntegration: ModuleFederationIntegration,
 ): Promise<LoadedPlugin[]> {
-    const { plugins } = dashboard.references;
-    if (!plugins.length) {
+    const { plugins: referencedPlugins } = dashboard.references;
+    const pluginLinks = dashboard.dashboard.plugins;
+
+    if (!referencedPlugins.length || !pluginLinks?.length) {
         return [];
     }
 
-    const pluginLinks = dashboard.dashboard.plugins;
-
     return Promise.all(
-        plugins.map(async (pluginMeta): Promise<LoadedPlugin> => {
+        // order of the pluginLinks is important: the plugins MUST be loaded in that order
+        pluginLinks.map(async (pluginLink) => {
+            const pluginMeta = referencedPlugins.find((plugin) =>
+                areObjRefsEqual(pluginLink.plugin, plugin.ref),
+            );
+
+            invariant(
+                pluginMeta,
+                `Plugin in plugin links not found in referenced plugins. Plugin ref: ${objRefToString(
+                    pluginLink.plugin,
+                )}`,
+            );
+
             const loadedModule = await loadPlugin(
                 moduleNameFromUrl(pluginMeta.url),
                 moduleFederationIntegration,
@@ -57,7 +69,6 @@ export async function dynamicDashboardPluginLoader(
             const pluginFactory = loadedModule.default;
 
             let plugin: IDashboardPluginContract_V1 = pluginFactory();
-            const pluginLink = pluginLinks?.find((link) => areObjRefsEqual(link.plugin, pluginMeta.ref));
 
             // If the dashboard plugin minEngineVersion or maxEngineVersion equals "bundled",
             // we need to load the bundled engine, to know the desired engine version.
