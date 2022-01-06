@@ -62,7 +62,7 @@ export const DefaultUiSettings: ISettings = {
     ADCatalogGroupsExpanded: true,
     enableCustomColorPicker: true,
     enableAdAdditionalDateAttributes: true,
-    enableAlternativeDisplayFormSelection: true,
+    enableAlternativeDisplayFormSelection: false,
     enableNewAnalyticalDashboardsNavigation: false, // TODO TNT-278 switch to true for verification or New navigation rollout
     enableAnalyticalDashboardPermissions: false,
 
