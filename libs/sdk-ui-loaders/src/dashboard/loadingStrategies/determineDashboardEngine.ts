@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 // import semver from 'semver';
 import { IDashboardEngine, IDashboardPluginContract_V1 } from "@gooddata/sdk-ui-dashboard";
 import semverCompareBuild from "semver/functions/compare-build";
@@ -29,7 +29,9 @@ export function isPluginCompatibleWithDashboardEngine(
 ): boolean {
     const { minEngineVersion, maxEngineVersion, debugName, displayName, version } = plugin;
     const requiredVersion = `>=${minEngineVersion}${maxEngineVersion ? " <=" + maxEngineVersion : ""}`;
-    const matchesEngineVersion = semverSatisfies(engine.version, requiredVersion);
+    const matchesEngineVersion = semverSatisfies(engine.version, requiredVersion, {
+        includePrerelease: true,
+    });
     if (!matchesEngineVersion) {
         // eslint-disable-next-line no-console
         console.error(
