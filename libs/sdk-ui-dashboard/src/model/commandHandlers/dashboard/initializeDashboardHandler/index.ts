@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { all, call, put, SagaReturnType } from "redux-saga/effects";
 import { InitializeDashboard } from "../../../commands/dashboard";
@@ -21,6 +21,7 @@ import { alertsActions } from "../../../store/alerts";
 import { BatchAction, batchActions } from "redux-batched-actions";
 import { loadUser } from "./loadUser";
 import { userActions } from "../../../store/user";
+import { uiActions } from "../../../store/ui";
 import { loadDashboardList } from "./loadDashboardList";
 import { listedDashboardsActions } from "../../../store/listedDashboards";
 import { backendCapabilitiesActions } from "../../../store/backendCapabilities";
@@ -149,6 +150,7 @@ function* loadExistingDashboard(
             }),
             listedDashboardsActions.setListedDashboards(listedDashboards),
             accessibleDashboardsActions.setAccessibleDashboards(accessibleDashboards),
+            uiActions.setMenuButtonItemsVisibility(config.menuButtonItemsVisibility),
         ],
         "@@GDC.DASH/BATCH.INIT.EXISTING",
     );
@@ -203,6 +205,7 @@ function* initializeNewDashboard(
                 effectiveDateFilterConfig: config.dateFilterConfig,
                 isUsingDashboardOverrides: false,
             }),
+            uiActions.setMenuButtonItemsVisibility(config.menuButtonItemsVisibility),
         ],
         "@@GDC.DASH/BATCH.INIT.NEW",
     );

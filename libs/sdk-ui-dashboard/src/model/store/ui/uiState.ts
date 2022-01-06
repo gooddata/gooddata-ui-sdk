@@ -1,5 +1,7 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
+
+import { IMenuButtonItemsVisibility } from "../../../types";
 
 /**
  * @alpha
@@ -22,6 +24,9 @@ export type UiState = {
         openedWidgetRef: ObjRef | undefined;
         highlightedWidgetRef: ObjRef | undefined;
     };
+    menuButton: {
+        itemsVisibility: IMenuButtonItemsVisibility;
+    };
 };
 
 export const uiInitialState: UiState = {
@@ -41,5 +46,8 @@ export const uiInitialState: UiState = {
     kpiAlerts: {
         highlightedWidgetRef: undefined,
         openedWidgetRef: undefined,
+    },
+    menuButton: {
+        itemsVisibility: {},
     },
 };

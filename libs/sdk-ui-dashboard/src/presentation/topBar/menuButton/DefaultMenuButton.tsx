@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React, { useCallback, useState } from "react";
 import cx from "classnames";
 import {
@@ -48,54 +48,56 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
                 onClose={onMenuButtonClick}
             >
                 <ItemsWrapper smallItemsSpacing>
-                    {menuItems.map((menuItem) => {
-                        if (menuItem.type === "separator") {
-                            return <SingleSelectListItem key={menuItem.itemId} type={menuItem.type} />;
-                        }
+                    {menuItems
+                        .filter((item) => item.type !== "button" || item.visible !== false)
+                        .map((menuItem) => {
+                            if (menuItem.type === "separator") {
+                                return <SingleSelectListItem key={menuItem.itemId} type={menuItem.type} />;
+                            }
 
-                        if (menuItem.type === "header") {
-                            return (
+                            if (menuItem.type === "header") {
+                                return (
+                                    <SingleSelectListItem
+                                        key={menuItem.itemId}
+                                        type={menuItem.type}
+                                        title={menuItem.itemName}
+                                    />
+                                );
+                            }
+
+                            const selectorClassName = `gd-menu-item-${menuItem.itemId}`;
+                            const body = (
                                 <SingleSelectListItem
+                                    className={cx("gd-menu-item", `s-${menuItem.itemId}`, {
+                                        [selectorClassName]: menuItem.tooltip,
+                                        "is-disabled": menuItem.disabled,
+                                    })}
                                     key={menuItem.itemId}
-                                    type={menuItem.type}
                                     title={menuItem.itemName}
+                                    onClick={
+                                        menuItem.disabled
+                                            ? undefined
+                                            : () => {
+                                                  menuItem.onClick?.();
+                                                  setIsOpen(false);
+                                              }
+                                    }
                                 />
                             );
-                        }
 
-                        const selectorClassName = `gd-menu-item-${menuItem.itemId}`;
-                        const body = (
-                            <SingleSelectListItem
-                                className={cx("gd-menu-item", `s-${menuItem.itemId}`, {
-                                    [selectorClassName]: menuItem.tooltip,
-                                    "is-disabled": menuItem.disabled,
-                                })}
-                                key={menuItem.itemId}
-                                title={menuItem.itemName}
-                                onClick={
-                                    menuItem.disabled
-                                        ? undefined
-                                        : () => {
-                                              menuItem.onClick?.();
-                                              setIsOpen(false);
-                                          }
-                                }
-                            />
-                        );
+                            if (!menuItem.tooltip) {
+                                return body;
+                            }
 
-                        if (!menuItem.tooltip) {
-                            return body;
-                        }
-
-                        return (
-                            <BubbleHoverTrigger key={menuItem.itemId}>
-                                {body}
-                                <Bubble alignTo={`.${selectorClassName}`} alignPoints={bubbleAlignPoints}>
-                                    <span>{menuItem.tooltip}</span>
-                                </Bubble>
-                            </BubbleHoverTrigger>
-                        );
-                    })}
+                            return (
+                                <BubbleHoverTrigger key={menuItem.itemId}>
+                                    {body}
+                                    <Bubble alignTo={`.${selectorClassName}`} alignPoints={bubbleAlignPoints}>
+                                        <span>{menuItem.tooltip}</span>
+                                    </Bubble>
+                                </BubbleHoverTrigger>
+                            );
+                        })}
                 </ItemsWrapper>
             </Overlay>
         );

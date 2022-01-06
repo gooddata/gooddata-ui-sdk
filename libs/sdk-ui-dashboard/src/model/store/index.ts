@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 export { DashboardDispatch, DashboardState, DashboardSelector, DashboardSelectorEvaluator } from "./types";
 
 export { selectDashboardLoading } from "./loading/loadingSelectors";
@@ -163,6 +163,7 @@ export {
     selectFilterBarHeight,
     selectIsKpiAlertOpenedByWidgetRef,
     selectIsKpiAlertHighlightedByWidgetRef,
+    selectMenuButtonItemsVisibility,
 } from "./ui/uiSelectors";
 export { uiActions } from "./ui";
 

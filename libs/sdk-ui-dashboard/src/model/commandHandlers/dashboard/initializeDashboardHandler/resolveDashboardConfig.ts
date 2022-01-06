@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { all, call } from "redux-saga/effects";
 import {
@@ -123,7 +123,7 @@ export function* resolveDashboardConfig(
 
     if (isResolvedConfig(config)) {
         /*
-         * Config coming in props is fully specified. There is nothing to do. Bail out imediately.
+         * Config coming in props is fully specified. There is nothing to do. Bail out immediately.
          */
         return config;
     }
@@ -165,6 +165,7 @@ export function* resolveDashboardConfig(
         isExport: config.isExport ?? false,
         disableDefaultDrills: config.disableDefaultDrills ?? false,
         enableFilterValuesResolutionInDrillEvents: config.enableFilterValuesResolutionInDrillEvents ?? false,
+        menuButtonItemsVisibility: config.menuButtonItemsVisibility ?? {},
     };
 
     return resolvedConfig;

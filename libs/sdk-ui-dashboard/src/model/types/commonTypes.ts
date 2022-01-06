@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import {
     IAnalyticalBackend,
     IDashboard,
@@ -10,7 +10,7 @@ import { IColorPalette, ObjRef } from "@gooddata/sdk-model";
 import { ILocale } from "@gooddata/sdk-ui";
 import keys from "lodash/keys";
 import includes from "lodash/includes";
-import { IDashboardFilter } from "../../types";
+import { IDashboardFilter, IMenuButtonItemsVisibility } from "../../types";
 import { ExtendedDashboardWidget } from "./layoutTypes";
 
 /**
@@ -120,6 +120,11 @@ export type DashboardConfig = {
      * Defaults to false.
      */
     enableFilterValuesResolutionInDrillEvents?: boolean;
+
+    /**
+     * Optionally configure which of the default menu button buttons are visible.
+     */
+    menuButtonItemsVisibility?: IMenuButtonItemsVisibility;
 };
 
 /**
