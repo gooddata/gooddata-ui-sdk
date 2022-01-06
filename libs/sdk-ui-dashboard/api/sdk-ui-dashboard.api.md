@@ -1843,6 +1843,7 @@ export interface FilterContextState {
     attributeFilterDisplayForms?: IAttributeDisplayFormMetadataObject[];
     filterContextDefinition?: IFilterContextDefinition;
     filterContextIdentity?: IDashboardObjectIdentity;
+    originalFilterContextDefinition?: IFilterContextDefinition;
 }
 
 // @internal
@@ -3860,6 +3861,12 @@ export const selectMenuButtonItemsVisibility: OutputSelector<DashboardState, IMe
 
 // @public
 export const selectObjectAvailabilityConfig: OutputSelector<DashboardState, ObjectAvailabilityConfig, (res: ResolvedDashboardConfig) => ObjectAvailabilityConfig>;
+
+// @alpha
+export const selectOriginalFilterContextDefinition: OutputSelector<DashboardState, IFilterContextDefinition | undefined, (res: FilterContextState) => IFilterContextDefinition | undefined>;
+
+// @alpha
+export const selectOriginalFilterContextFilters: OutputSelector<DashboardState, FilterContextItem[], (res: IFilterContextDefinition | undefined) => FilterContextItem[]>;
 
 // @public
 export const selectPermissions: OutputSelector<DashboardState, IWorkspacePermissions, (res: PermissionsState) => IWorkspacePermissions>;

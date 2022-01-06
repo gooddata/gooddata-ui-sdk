@@ -105,5 +105,5 @@ export const selectIsKpiAlertHighlightedByWidgetRef = createMemoizedSelector(
  */
 export const selectMenuButtonItemsVisibility = createSelector(
     selectSelf,
-    (state) => state.menuButton.itemsVisibility,
+    (state) => state.menuButton.itemsVisibility ?? {},
 );

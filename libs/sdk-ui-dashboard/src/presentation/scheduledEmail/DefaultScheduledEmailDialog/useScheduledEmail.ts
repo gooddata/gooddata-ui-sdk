@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { useCallback } from "react";
 import {
     IScheduledMailDefinition,
@@ -8,6 +8,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { GoodDataSdkError, ILocale } from "@gooddata/sdk-ui";
 import { UriRef } from "@gooddata/sdk-model";
+import isEqual from "lodash/isEqual";
 
 import {
     CommandProcessingStatus,
@@ -21,6 +22,7 @@ import {
     selectEnableKPIDashboardScheduleRecipients,
     selectCanListUsersInWorkspace,
     selectEnableKPIDashboardSchedule,
+    selectOriginalFilterContextFilters,
 } from "../../../model";
 
 import { useCreateScheduledEmail } from "./useCreateScheduledEmail";
@@ -120,6 +122,7 @@ export const useScheduledEmail = (props: UseScheduledEmailProps): UseScheduledEm
     const currentUser = useDashboardSelector(selectUser);
     const locale = useDashboardSelector(selectLocale);
     const filters = useDashboardSelector(selectFilterContextFilters);
+    const originalFilters = useDashboardSelector(selectOriginalFilterContextFilters);
     const dateFormat = useDashboardSelector(selectDateFormat);
     const enableKPIDashboardScheduleRecipients = useDashboardSelector(
         selectEnableKPIDashboardScheduleRecipients,
@@ -135,9 +138,13 @@ export const useScheduledEmail = (props: UseScheduledEmailProps): UseScheduledEm
 
     const handleCreateScheduledEmail = useCallback(
         (scheduledEmail: IScheduledMailDefinition, customFilters?: FilterContextItem[]) => {
-            scheduledEmailCreator.create(scheduledEmail, customFilters ?? filters);
+            // If dashboard filters are not changed, do not save them to scheduled email filter context.
+            // Like this, future filter changes stored in the original dashboard filter context
+            // are correctly propagated to the scheduled emails with the original filter context.
+            const filtersToStore = isEqual(originalFilters, filters) ? undefined : filters;
+            scheduledEmailCreator.create(scheduledEmail, customFilters ?? filtersToStore);
         },
-        [filters],
+        [filters, originalFilters],
     );
 
     const scheduledEmailCreationStatus = scheduledEmailCreator.creationStatus;

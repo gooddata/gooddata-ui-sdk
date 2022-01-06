@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
@@ -35,12 +35,18 @@ const generateFilterLocalIdentifier = (): string => uuidv4().replace(/-/g, "");
 
 type SetFilterContextPayload = {
     filterContextDefinition: IFilterContextDefinition;
+    originalFilterContextDefinition?: IFilterContextDefinition;
     attributeFilterDisplayForms: IAttributeDisplayFormMetadataObject[];
     filterContextIdentity?: IDashboardObjectIdentity;
 };
 
 const setFilterContext: FilterContextReducer<PayloadAction<SetFilterContextPayload>> = (state, action) => {
-    const { filterContextDefinition, filterContextIdentity, attributeFilterDisplayForms } = action.payload;
+    const {
+        filterContextDefinition,
+        originalFilterContextDefinition,
+        filterContextIdentity,
+        attributeFilterDisplayForms,
+    } = action.payload;
 
     state.filterContextDefinition = {
         ...filterContextDefinition,
@@ -57,6 +63,8 @@ const setFilterContext: FilterContextReducer<PayloadAction<SetFilterContextPaylo
                 : filter,
         ),
     };
+
+    state.originalFilterContextDefinition = originalFilterContextDefinition;
 
     state.filterContextIdentity = filterContextIdentity;
     state.attributeFilterDisplayForms = attributeFilterDisplayForms;

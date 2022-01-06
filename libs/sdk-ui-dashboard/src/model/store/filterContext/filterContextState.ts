@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import {
     IAttributeDisplayFormMetadataObject,
@@ -14,6 +14,11 @@ export interface FilterContextState {
      * Filter context definition contains the actual filters to use. Filter context definition is present
      */
     filterContextDefinition?: IFilterContextDefinition;
+
+    /**
+     * Filter context definition contains the original dashboard filters stored on the backend.
+     */
+    originalFilterContextDefinition?: IFilterContextDefinition;
 
     /**
      * Filter context identity is available for persisted filter contexts. This property may be undefined in

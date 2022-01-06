@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import { DashboardState } from "../types";
 import invariant from "ts-invariant";
@@ -20,7 +20,33 @@ const selectSelf = createSelector(
 );
 
 /**
- * This selector returns dashboard's filter context definition. It is expected that the selector is called only after the filter
+ * This selector returns original (stored) dashboard's filter context definition. It is expected that the selector is called only after the filter
+ * context state is correctly initialized. Invocations before initialization lead to invariant errors.
+ *
+ * @alpha
+ */
+export const selectOriginalFilterContextDefinition = createSelector(selectSelf, (filterContextState) => {
+    invariant(
+        filterContextState.filterContextDefinition,
+        "attempting to access uninitialized filter context state",
+    );
+
+    return filterContextState.originalFilterContextDefinition;
+});
+
+/**
+ * This selector returns original (stored) dashboard's filter context definition. It is expected that the selector is called only after the filter
+ * context state is correctly initialized. Invocations before initialization lead to invariant errors.
+ *
+ * @alpha
+ */
+export const selectOriginalFilterContextFilters = createSelector(
+    selectOriginalFilterContextDefinition,
+    (filterContext): FilterContextItem[] => filterContext?.filters ?? [],
+);
+
+/**
+ * This selector returns original (stored) dashboard's filter context filters. It is expected that the selector is called only after the filter
  * context state is correctly initialized. Invocations before initialization lead to invariant errors.
  *
  * @alpha
