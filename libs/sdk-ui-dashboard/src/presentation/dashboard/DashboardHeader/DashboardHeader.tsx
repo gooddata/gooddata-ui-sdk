@@ -44,7 +44,6 @@ import { ScheduledEmailDialog } from "../../scheduledEmail";
 import { SaveAsDialog } from "../../saveAs";
 import { DefaultFilterBar, FilterBar } from "../../filterBar";
 import { ShareDialogDashboardHeader } from "./ShareDialogDashboardHeader";
-import { useDashboardCustomizationsContext } from "../../dashboardContexts";
 
 const useFilterBar = (): {
     filters: FilterContextItem[];
@@ -115,7 +114,6 @@ export const DashboardHeader = (): JSX.Element => {
     const { filters, onAttributeFilterChanged, onDateFilterChanged } = useFilterBar();
     const { title, onTitleChanged, onShareButtonClick, shareInfo } = useTopBar();
     const { addSuccess, addError, addProgress, removeMessage } = useToastMessage();
-    const { enableSaveAsNewButton } = useDashboardCustomizationsContext();
 
     const dispatch = useDashboardDispatch();
     const isScheduleEmailingDialogOpen = useDashboardSelector(selectIsScheduleEmailDialogOpen);
@@ -204,9 +202,7 @@ export const DashboardHeader = (): JSX.Element => {
             return [];
         }
 
-        // TODO RAIL-3945 remove enableSaveAsNewButton once gdc-dashboards are ready for this
-        const isSaveAsVisible =
-            canCreateDashboard && (enableSaveAsNewButton || menuButtonItemsVisibility.saveAsNewButton);
+        const isSaveAsVisible = canCreateDashboard && (menuButtonItemsVisibility.saveAsNewButton ?? false);
         const isSaveAsDisabled = isEmptyLayout || !dashboardRef || isReadOnly;
 
         const isPdfExportVisible =

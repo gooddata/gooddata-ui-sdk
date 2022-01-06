@@ -15,7 +15,6 @@ interface IDashboardCustomizationsContext {
         defaultItems: IInsightMenuItem[],
         closeMenu: () => void,
     ) => IInsightMenuItem[];
-    enableSaveAsNewButton?: boolean;
 }
 
 /**

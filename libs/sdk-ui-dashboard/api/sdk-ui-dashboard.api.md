@@ -2065,8 +2065,6 @@ export interface IDashboardCustomComponentProps {
 // @public
 export interface IDashboardCustomizationProps extends IDashboardCustomComponentProps {
     customizationFns?: DashboardModelCustomizationFns;
-    // @deprecated
-    enableSaveAsNewButton?: boolean;
     // @alpha
     insightMenuItemsProvider?: InsightMenuItemsProvider;
     // @alpha
