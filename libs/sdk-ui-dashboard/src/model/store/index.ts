@@ -45,6 +45,7 @@ export {
     selectCanCreateAnalyticalDashboard,
     selectCanManageACL,
     selectCanManageAnalyticalDashboard,
+    selectCanCreateScheduledMail,
 } from "./permissions/permissionsSelectors";
 export { FilterContextState } from "./filterContext/filterContextState";
 export {
