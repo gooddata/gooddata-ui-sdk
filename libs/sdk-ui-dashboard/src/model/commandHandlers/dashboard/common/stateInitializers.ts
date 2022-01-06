@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { PayloadAction } from "@reduxjs/toolkit";
 import {
@@ -118,6 +118,7 @@ export function* actionsToInitializeExistingDashboard(
 
     return [
         filterContextActions.setFilterContext({
+            originalFilterContextDefinition: filterContextDefinition,
             filterContextDefinition,
             filterContextIdentity,
             attributeFilterDisplayForms,
