@@ -2066,8 +2066,6 @@ export interface IDashboardCustomComponentProps {
 // @public
 export interface IDashboardCustomizationProps extends IDashboardCustomComponentProps {
     customizationFns?: DashboardModelCustomizationFns;
-    // @deprecated
-    enableSaveAsNewButton?: boolean;
     // @alpha
     insightMenuItemsProvider?: InsightMenuItemsProvider;
     // @alpha
@@ -3570,6 +3568,9 @@ export const selectBackendCapabilities: OutputSelector<DashboardState, IBackendC
 
 // @alpha
 export const selectCanCreateAnalyticalDashboard: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+
+// @alpha
+export const selectCanCreateScheduledMail: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @alpha
 export const selectCanExportReport: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;

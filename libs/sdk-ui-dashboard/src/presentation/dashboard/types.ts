@@ -274,17 +274,6 @@ export interface IDashboardCustomizationProps extends IDashboardCustomComponentP
      * @public
      */
     customizationFns?: DashboardModelCustomizationFns;
-
-    /**
-     * Optionally enable the button to save dashboard as copy (for users with the appropriate permissions).
-     *
-     * @remarks
-     * Defaults to false, meaning the Save as new button is not shown.
-     *
-     * @deprecated
-     * Use {@link IDashboardBaseProps.config}'s `menuButtonItemsVisibility` property instead.
-     */
-    enableSaveAsNewButton?: boolean;
 }
 
 /**

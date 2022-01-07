@@ -1,5 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import cx from "classnames";
 import {
     Button,
@@ -27,11 +27,19 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
         setIsOpen((prevIsOpen) => !prevIsOpen);
     }, []);
 
-    if (!menuItems.length) {
-        // eslint-disable-next-line no-console
-        console.warn(
-            "DefaultMenuButton rendered without menu items. Make sure you are passing some items there.",
-        );
+    const visibleMenuItems = useMemo(
+        () => menuItems.filter((item) => item.type !== "button" || item.visible !== false),
+        [menuItems],
+    );
+
+    if (!visibleMenuItems.length) {
+        if (!menuItems.length) {
+            // only warn if the items were really empty before filtering
+            // eslint-disable-next-line no-console
+            console.warn(
+                "DefaultMenuButton rendered without menu items. Make sure you are passing some items there.",
+            );
+        }
 
         return null;
     }
@@ -48,56 +56,54 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
                 onClose={onMenuButtonClick}
             >
                 <ItemsWrapper smallItemsSpacing>
-                    {menuItems
-                        .filter((item) => item.type !== "button" || item.visible !== false)
-                        .map((menuItem) => {
-                            if (menuItem.type === "separator") {
-                                return <SingleSelectListItem key={menuItem.itemId} type={menuItem.type} />;
-                            }
+                    {visibleMenuItems.map((menuItem) => {
+                        if (menuItem.type === "separator") {
+                            return <SingleSelectListItem key={menuItem.itemId} type={menuItem.type} />;
+                        }
 
-                            if (menuItem.type === "header") {
-                                return (
-                                    <SingleSelectListItem
-                                        key={menuItem.itemId}
-                                        type={menuItem.type}
-                                        title={menuItem.itemName}
-                                    />
-                                );
-                            }
-
-                            const selectorClassName = `gd-menu-item-${menuItem.itemId}`;
-                            const body = (
+                        if (menuItem.type === "header") {
+                            return (
                                 <SingleSelectListItem
-                                    className={cx("gd-menu-item", `s-${menuItem.itemId}`, {
-                                        [selectorClassName]: menuItem.tooltip,
-                                        "is-disabled": menuItem.disabled,
-                                    })}
                                     key={menuItem.itemId}
+                                    type={menuItem.type}
                                     title={menuItem.itemName}
-                                    onClick={
-                                        menuItem.disabled
-                                            ? undefined
-                                            : () => {
-                                                  menuItem.onClick?.();
-                                                  setIsOpen(false);
-                                              }
-                                    }
                                 />
                             );
+                        }
 
-                            if (!menuItem.tooltip) {
-                                return body;
-                            }
+                        const selectorClassName = `gd-menu-item-${menuItem.itemId}`;
+                        const body = (
+                            <SingleSelectListItem
+                                className={cx("gd-menu-item", `s-${menuItem.itemId}`, {
+                                    [selectorClassName]: menuItem.tooltip,
+                                    "is-disabled": menuItem.disabled,
+                                })}
+                                key={menuItem.itemId}
+                                title={menuItem.itemName}
+                                onClick={
+                                    menuItem.disabled
+                                        ? undefined
+                                        : () => {
+                                              menuItem.onClick?.();
+                                              setIsOpen(false);
+                                          }
+                                }
+                            />
+                        );
 
-                            return (
-                                <BubbleHoverTrigger key={menuItem.itemId}>
-                                    {body}
-                                    <Bubble alignTo={`.${selectorClassName}`} alignPoints={bubbleAlignPoints}>
-                                        <span>{menuItem.tooltip}</span>
-                                    </Bubble>
-                                </BubbleHoverTrigger>
-                            );
-                        })}
+                        if (!menuItem.tooltip) {
+                            return body;
+                        }
+
+                        return (
+                            <BubbleHoverTrigger key={menuItem.itemId}>
+                                {body}
+                                <Bubble alignTo={`.${selectorClassName}`} alignPoints={bubbleAlignPoints}>
+                                    <span>{menuItem.tooltip}</span>
+                                </Bubble>
+                            </BubbleHoverTrigger>
+                        );
+                    })}
                 </ItemsWrapper>
             </Overlay>
         );

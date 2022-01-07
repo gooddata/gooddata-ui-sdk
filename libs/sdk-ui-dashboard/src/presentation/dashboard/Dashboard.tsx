@@ -209,7 +209,6 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
                         <ExportDialogContextProvider>
                             <DashboardCustomizationsProvider
                                 insightMenuItemsProvider={props.insightMenuItemsProvider}
-                                enableSaveAsNewButton={props.enableSaveAsNewButton}
                             >
                                 <DashboardComponentsProvider
                                     ErrorComponent={props.ErrorComponent ?? DefaultError}

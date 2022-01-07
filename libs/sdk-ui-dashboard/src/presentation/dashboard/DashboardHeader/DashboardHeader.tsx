@@ -16,9 +16,13 @@ import {
     exportDashboardToPdf,
     renameDashboard,
     selectCanCreateAnalyticalDashboard,
+    selectCanCreateScheduledMail,
+    selectCanExportReport,
     selectDashboardRef,
     selectDashboardShareInfo,
     selectDashboardTitle,
+    selectEnableKPIDashboardExportPDF,
+    selectEnableKPIDashboardSchedule,
     selectFilterContextFilters,
     selectIsLayoutEmpty,
     selectIsReadOnly,
@@ -40,7 +44,6 @@ import { ScheduledEmailDialog } from "../../scheduledEmail";
 import { SaveAsDialog } from "../../saveAs";
 import { DefaultFilterBar, FilterBar } from "../../filterBar";
 import { ShareDialogDashboardHeader } from "./ShareDialogDashboardHeader";
-import { useDashboardCustomizationsContext } from "../../dashboardContexts";
 
 const useFilterBar = (): {
     filters: FilterContextItem[];
@@ -111,7 +114,6 @@ export const DashboardHeader = (): JSX.Element => {
     const { filters, onAttributeFilterChanged, onDateFilterChanged } = useFilterBar();
     const { title, onTitleChanged, onShareButtonClick, shareInfo } = useTopBar();
     const { addSuccess, addError, addProgress, removeMessage } = useToastMessage();
-    const { enableSaveAsNewButton } = useDashboardCustomizationsContext();
 
     const dispatch = useDashboardDispatch();
     const isScheduleEmailingDialogOpen = useDashboardSelector(selectIsScheduleEmailDialogOpen);
@@ -186,6 +188,13 @@ export const DashboardHeader = (): JSX.Element => {
 
     const isReadOnly = useDashboardSelector(selectIsReadOnly);
     const canCreateDashboard = useDashboardSelector(selectCanCreateAnalyticalDashboard);
+
+    const canExportReport = useDashboardSelector(selectCanExportReport);
+    const isKPIDashboardExportPDFEnabled = !!useDashboardSelector(selectEnableKPIDashboardExportPDF);
+
+    const canCreateScheduledMail = useDashboardSelector(selectCanCreateScheduledMail);
+    const isScheduledEmailingEnabled = !!useDashboardSelector(selectEnableKPIDashboardSchedule);
+
     const menuButtonItemsVisibility = useDashboardSelector(selectMenuButtonItemsVisibility);
 
     const defaultMenuItems = useMemo<IMenuButtonItem[]>(() => {
@@ -193,18 +202,26 @@ export const DashboardHeader = (): JSX.Element => {
             return [];
         }
 
-        // TODO RAIL-3945 remove enableSaveAsNewButton once gdc-dashboards are ready for this
-        const isSaveAsVisible =
-            canCreateDashboard && (enableSaveAsNewButton || menuButtonItemsVisibility.saveAsNewButton);
+        const isSaveAsVisible = canCreateDashboard && (menuButtonItemsVisibility.saveAsNewButton ?? false);
         const isSaveAsDisabled = isEmptyLayout || !dashboardRef || isReadOnly;
-        const isScheduledEmailingDisabled = isReadOnly;
+
+        const isPdfExportVisible =
+            canExportReport &&
+            isKPIDashboardExportPDFEnabled &&
+            (menuButtonItemsVisibility.pdfExportButton ?? true);
+
+        const isScheduledEmailingVisible =
+            !isReadOnly &&
+            canCreateScheduledMail &&
+            isScheduledEmailingEnabled &&
+            (menuButtonItemsVisibility.scheduleEmailButton ?? true);
 
         return [
             {
                 type: "button",
                 itemId: "save_as_menu_item", // careful, also a s- class selector, do not change
                 disabled: isSaveAsDisabled,
-                visible: isSaveAsVisible ?? false,
+                visible: !!isSaveAsVisible,
                 itemName: intl.formatMessage({ id: "options.menu.save.as" }),
                 tooltip:
                     // the tooltip is only relevant to non-read only states
@@ -218,18 +235,27 @@ export const DashboardHeader = (): JSX.Element => {
                 itemId: "pdf-export-item", // careful, this is also used as a selector in tests, do not change
                 itemName: intl.formatMessage({ id: "options.menu.export.PDF" }),
                 onClick: defaultOnExportToPdf,
-                visible: menuButtonItemsVisibility.pdfExportButton ?? true,
+                visible: isPdfExportVisible,
             },
             {
                 type: "button",
                 itemId: "schedule-email-item", // careful, this is also used as a selector in tests, do not change
-                disabled: isScheduledEmailingDisabled,
                 itemName: intl.formatMessage({ id: "options.menu.schedule.email" }),
                 onClick: defaultOnScheduleEmailing,
-                visible: menuButtonItemsVisibility.scheduleEmailButton ?? true,
+                visible: isScheduledEmailingVisible,
             },
         ];
-    }, [defaultOnScheduleEmailing, defaultOnExportToPdf, dashboardRef, isReadOnly]);
+    }, [
+        defaultOnScheduleEmailing,
+        defaultOnExportToPdf,
+        dashboardRef,
+        isReadOnly,
+        menuButtonItemsVisibility,
+        canExportReport,
+        isKPIDashboardExportPDFEnabled,
+        canCreateScheduledMail,
+        isScheduledEmailingEnabled,
+    ]);
 
     const onScheduleEmailingError = useCallback(() => {
         closeScheduleEmailingDialog();
