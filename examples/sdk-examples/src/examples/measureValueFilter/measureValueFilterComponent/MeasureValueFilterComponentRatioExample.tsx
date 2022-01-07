@@ -1,14 +1,16 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { MeasureValueFilter } from "@gooddata/sdk-ui-filters";
-import { IMeasureValueFilter, measureLocalId, modifyMeasure, modifySimpleMeasure } from "@gooddata/sdk-model";
+import { IMeasureValueFilter, measureLocalId, modifySimpleMeasure } from "@gooddata/sdk-model";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 
 import * as Md from "../../../md/full";
 
-const FranchisedSales = modifyMeasure(Md.$FranchisedSales, (m) => m.format("#,##0").title("Franchise Sales"));
+const FranchisedSales = modifySimpleMeasure(Md.$FranchisedSales, (m) =>
+    m.format("#,##0").title("Franchise Sales").defaultLocalId(),
+);
 const FranchisedSalesWithRatio = modifySimpleMeasure(FranchisedSales, (m) =>
-    m.format("#,##0.00%").title("Franchise Sales shown in %").ratio(),
+    m.format("#,##0.00%").title("Franchise Sales shown in %").ratio().defaultLocalId(),
 );
 
 const measureTitle = "Franchised Sales in %";
