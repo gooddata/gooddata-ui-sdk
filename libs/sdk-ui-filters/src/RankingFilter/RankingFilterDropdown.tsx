@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React, { useState } from "react";
 import { IRankingFilter, ObjRefInScope } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
@@ -40,6 +40,7 @@ export interface IRankingFilterDropdownProps {
     anchorEl?: HTMLElement | string;
     customGranularitySelection?: ICustomGranularitySelection;
     locale?: string;
+    enableRenamingMeasureToMetric?: boolean;
 }
 
 type RankingFilterDropdownComponentProps = IRankingFilterDropdownProps & WrappedComponentProps;
@@ -54,6 +55,7 @@ const RankingFilterDropdownComponent: React.FC<RankingFilterDropdownComponentPro
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
     customGranularitySelection,
+    enableRenamingMeasureToMetric,
 }) => {
     const [rankingFilter, setRankingFilter] = useState(prepareRankingFilterState(filter));
 
@@ -81,6 +83,7 @@ const RankingFilterDropdownComponent: React.FC<RankingFilterDropdownComponentPro
                 onDropDownItemMouseOver={onDropDownItemMouseOver}
                 onDropDownItemMouseOut={onDropDownItemMouseOut}
                 customGranularitySelection={customGranularitySelection}
+                enableRenamingMeasureToMetric={enableRenamingMeasureToMetric}
             />
         </Overlay>
     );

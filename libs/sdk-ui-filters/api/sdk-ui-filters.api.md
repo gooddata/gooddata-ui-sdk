@@ -426,6 +426,8 @@ export interface IRankingFilterDropdownProps {
     // (undocumented)
     customGranularitySelection?: ICustomGranularitySelection;
     // (undocumented)
+    enableRenamingMeasureToMetric?: boolean;
+    // (undocumented)
     filter: IRankingFilter;
     // (undocumented)
     locale?: string;
@@ -449,6 +451,8 @@ export interface IRankingFilterProps {
     buttonTitle: string;
     // (undocumented)
     customGranularitySelection?: ICustomGranularitySelection;
+    // (undocumented)
+    enableRenamingMeasureToMetric?: boolean;
     // (undocumented)
     filter: IRankingFilter;
     // (undocumented)

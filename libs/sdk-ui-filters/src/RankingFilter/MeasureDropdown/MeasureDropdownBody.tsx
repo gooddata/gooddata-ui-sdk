@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { objRefToString, areObjRefsEqual, ObjRefInScope } from "@gooddata/sdk-model";
 import { Overlay } from "@gooddata/sdk-ui-kit";
@@ -12,6 +12,7 @@ interface IMeasureDropdownBodyProps {
     onClose: () => void;
     onDropDownItemMouseOver?: (ref: ObjRefInScope) => void;
     onDropDownItemMouseOut?: () => void;
+    enableRenamingMeasureToMetric?: boolean;
 }
 
 export const MeasureDropdownBody: React.FC<IMeasureDropdownBodyProps> = ({
@@ -21,6 +22,7 @@ export const MeasureDropdownBody: React.FC<IMeasureDropdownBodyProps> = ({
     onClose,
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
+    enableRenamingMeasureToMetric,
 }) => {
     return (
         <Overlay
@@ -40,6 +42,7 @@ export const MeasureDropdownBody: React.FC<IMeasureDropdownBodyProps> = ({
                             onSelect={onSelect}
                             onDropDownItemMouseOver={onDropDownItemMouseOver}
                             onDropDownItemMouseOut={onDropDownItemMouseOut}
+                            enableRenamingMeasureToMetric={enableRenamingMeasureToMetric}
                         />
                     );
                 })}
