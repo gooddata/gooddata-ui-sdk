@@ -2,7 +2,7 @@
 import React from "react";
 import reject from "lodash/reject";
 import keys from "lodash/keys";
-import uniqueId from "lodash/uniqueId";
+import { v4 as uuid } from "uuid";
 import { Button, Messages, Message, IMessage, MessageType } from "@gooddata/sdk-ui-kit";
 import { wrapWithTheme } from "../../themeWrapper";
 
@@ -86,7 +86,7 @@ class MessagesExamples extends React.Component<unknown, IMessagesExamplesState> 
         const buttons = keys(info.messages).map((type) => {
             return (
                 <Button
-                    key={uniqueId("msg-")}
+                    key={`msg-${uuid()}`}
                     className="gd-button-primary"
                     value={`Add ${type}`}
                     onClick={() => {

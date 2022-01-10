@@ -1,7 +1,7 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import uniqueId from "lodash/uniqueId";
+import { v4 as uuid } from "uuid";
 import pickBy from "lodash/pickBy";
 
 /**
@@ -37,7 +37,7 @@ export class BubbleTrigger<P extends IBubbleTriggerProps> extends React.PureComp
     };
 
     public readonly state: Readonly<IBubbleTriggerState> = {
-        bubbleId: uniqueId("bubble-"),
+        bubbleId: `bubble-${uuid()}`,
         isBubbleVisible: false,
     };
 

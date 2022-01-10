@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 import { Button } from "@gooddata/sdk-ui-kit";
 import React from "react";
-import uniqueId from "lodash/uniqueId";
+import { v4 as uuid } from "uuid";
 
 import { storiesOf } from "@storybook/react";
 import { UiKit } from "../../../_infra/storyGroups";
@@ -237,7 +237,7 @@ const icons = [
 const getButtons = () => {
     return types.map((item) => {
         return (
-            <tr key={uniqueId("button-")}>
+            <tr key={`button-${uuid()}`}>
                 <td>
                     <Button
                         value={item.title}
@@ -272,7 +272,7 @@ const getButtons = () => {
 };
 
 const getGroupButtons = () => (
-    <tr key={uniqueId("button-")}>
+    <tr key={`button-${uuid()}`}>
         <td>
             <div className="gd-button-group">
                 <Button className="gd-button-secondary" value="1" />
@@ -288,7 +288,7 @@ const getGroupButtons = () => (
 
 const getIcons = () => {
     return icons.map((item) => {
-        return <Button key={uniqueId("button-")} value={item} className={`gd-button-link gd-icon-${item}`} />;
+        return <Button key={`button-${uuid()}`} value={item} className={`gd-button-link gd-icon-${item}`} />;
     });
 };
 

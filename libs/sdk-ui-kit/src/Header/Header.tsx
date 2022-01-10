@@ -1,11 +1,11 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { Component, createRef } from "react";
 import { WrappedComponentProps, injectIntl, FormattedMessage } from "react-intl";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import cx from "classnames";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import uniqueId from "lodash/uniqueId";
+import { v4 as uuid } from "uuid";
 import debounce from "lodash/debounce";
 
 import { Overlay } from "../Overlay";
@@ -60,7 +60,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
 
         this.state = {
             childrenWidth: 0,
-            guid: uniqueId("header-"),
+            guid: `header-${uuid()}`,
             isOverlayMenuOpen: false,
             responsiveMode: false,
             isHelpMenuOpen: false,

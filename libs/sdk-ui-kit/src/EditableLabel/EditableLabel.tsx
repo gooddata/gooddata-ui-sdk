@@ -1,6 +1,6 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { Component, ReactNode, RefObject } from "react";
-import uniqueId from "lodash/uniqueId";
+import { v4 as uuid } from "uuid";
 import identity from "lodash/identity";
 import TextareaAutosize from "react-textarea-autosize";
 import cx from "classnames";
@@ -200,7 +200,7 @@ export class EditableLabel extends Component<IEditableLabelProps, IEditableLabel
     };
 
     renderTextAreaInOverlay(): ReactNode {
-        const alignId = uniqueId("gd-editable-label-");
+        const alignId = `gd-editable-label-${uuid()}`;
 
         const style = {
             width: this.state.textareaWidth,

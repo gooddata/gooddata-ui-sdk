@@ -1,6 +1,6 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { useState, useCallback, useEffect, useRef } from "react";
-import uniqueId from "lodash/uniqueId";
+import { v4 as uuid } from "uuid";
 import noop from "lodash/noop";
 
 import { FullScreenOverlay, Overlay } from "../Overlay";
@@ -131,7 +131,7 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
     } = props;
     const [{ isOpen, dropdownId }, setState] = useState<IDropdownState>({
         isOpen: !!openOnInit,
-        dropdownId: uniqueId("dropdown-"),
+        dropdownId: `dropdown-${uuid()}`,
     });
 
     const _renderButton = (renderProps: IDropdownButtonRenderProps) => (

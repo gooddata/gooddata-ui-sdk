@@ -1,7 +1,7 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React from "react";
 import isEmpty from "lodash/isEmpty";
-import uniqueId from "lodash/uniqueId";
+import { v4 as uuid } from "uuid";
 import cx from "classnames";
 import { FormattedMessage, injectIntl } from "react-intl";
 import { IAttributeDropdownListItemProps } from "@gooddata/sdk-ui-filters";
@@ -35,7 +35,7 @@ const AttributeDropdownListItem: React.FC<IAttributeDropdownListItemProps> = (pr
         props.onOnly?.(props.source);
     }
 
-    const itemId = uniqueId("attr-filter-item-");
+    const itemId = `attr-filter-item-${uuid()}`;
 
     return (
         <div

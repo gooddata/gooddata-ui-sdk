@@ -1,6 +1,6 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
-import uniqueId from "lodash/uniqueId";
+import { v4 as uuid } from "uuid";
 import debounce from "lodash/debounce";
 import noop from "lodash/noop";
 import format from "date-fns/format";
@@ -143,7 +143,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
     }
 
     private getInputClasses() {
-        return classNames("input-text", "small-12", this.props.size, uniqueId("gd-datepicker-input-"));
+        return classNames("input-text", "small-12", this.props.size, `gd-datepicker-input-${uuid()}`);
     }
 
     private getComponentClasses() {

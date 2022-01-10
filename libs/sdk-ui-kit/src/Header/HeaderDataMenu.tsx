@@ -1,7 +1,7 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { injectIntl, IntlShape } from "react-intl";
-import uniqueId from "lodash/uniqueId";
+import { v4 as uuid } from "uuid";
 import cx from "classnames";
 
 import { Button } from "../Button";
@@ -72,7 +72,7 @@ export const CoreHeaderDataMenu: React.FC<IHeaderDataMenuProps> = ({
     const dataMenuClassName = cx("gd-data-header-menu-section", className);
     return (
         <div className="gd-data-header-menu-wrapper">
-            <ul key={uniqueId("section-")} className={dataMenuClassName}>
+            <ul key={`section-${uuid()}`} className={dataMenuClassName}>
                 {renderSection(dataMenuItems)}
             </ul>
         </div>
