@@ -23,7 +23,7 @@ const attributes = [Md.LocationState, Md.LocationName.Default, Md.MenuCategory];
 
 const columns = [Md.DateQuarter, Md.DateMonth.Short];
 
-const sortBy = [newAttributeSort("menu", "asc")];
+const sortBy = [newAttributeSort(Md.MenuCategory, "asc")];
 
 const filters = [newAbsoluteDateFilter(Md.DateDatasets.Date, "2017-01-01", "2017-12-31")];
 
