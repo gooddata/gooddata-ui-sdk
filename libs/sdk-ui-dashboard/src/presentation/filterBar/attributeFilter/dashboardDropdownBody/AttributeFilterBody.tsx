@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React, { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import {
@@ -12,7 +12,7 @@ import {
 } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import { AllItemsFilteredMessage } from "./AllItemsFilteredMessage";
-import uniqueId from "lodash/uniqueId";
+import { v4 as uuid } from "uuid";
 import { ItemsFilteredMessage } from "./ItemsFilteredMessage";
 import { ConfigurationButton } from "./configuration/ConfigurationButton";
 import { DeleteButton } from "./DeleteButton";
@@ -126,7 +126,7 @@ const AttributeFilterBodyCore: React.FC<IAttributeDropdownBodyExtendedProps> = (
             itemsCount={props.totalCount}
             isLoading={isElementsLoading}
             isLoadingClass={LoadingMask}
-            getItemKey={(item: IAttributeElement) => (item && item.uri) || uniqueId()}
+            getItemKey={(item: IAttributeElement) => (item && item.uri) || uuid()}
             itemHeight={currentItemHeight}
             height={getDropdownBodyHeight()}
             searchPlaceholder={intl.formatMessage({ id: "attributeFilterDropdown.searchPlaceholder" })}

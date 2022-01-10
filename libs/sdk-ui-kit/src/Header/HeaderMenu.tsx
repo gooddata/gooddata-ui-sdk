@@ -1,7 +1,7 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { PureComponent, ReactNode } from "react";
 import { injectIntl, FormattedMessage, WrappedComponentProps } from "react-intl";
-import uniqueId from "lodash/uniqueId";
+import { v4 as uuid } from "uuid";
 import identity from "lodash/identity";
 import cx from "classnames";
 
@@ -49,7 +49,7 @@ class WrappedHeaderMenu extends PureComponent<IHeaderMenuProps & WrappedComponen
     renderSections(): ReactNode {
         return this.props.sections.map((items) => {
             return (
-                <ul key={uniqueId("section-")} className="gd-header-menu-section gd-header-measure">
+                <ul key={`section-${uuid()}`} className="gd-header-menu-section gd-header-measure">
                     {this.renderSection(items)}
                 </ul>
             );

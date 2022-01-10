@@ -93,7 +93,7 @@
         "@types/raf": "^3.4.0",
         "@types/react-dom": "^17.0.11",
         "@types/react": "^17.0.34",
-        "@types/uuid": "^8.3.0",
+        "@types/uuid": "^8.3.4",
         "@typescript-eslint/eslint-plugin": "^5.5.0",
         "@typescript-eslint/parser": "^5.5.0",
         "@wojtekmaj/enzyme-adapter-react-17": "^0.6.5",
