@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 
 import { TargetDependency } from "../../base/types";
 import path from "path";
@@ -106,9 +106,11 @@ export class PackagePublisher implements IEventListener {
 
         const prefixes: string[] = [];
 
-        dep.pkg.packageJson.files.forEach((fileEntry) => {
-            prefixes.push(fileEntry.split("/")[0]);
-        });
+        dep.pkg.packageJson.files
+            .filter((f) => f !== "NOTICE") // NOTICE is not a directory and we do not need to sync it anyway
+            .forEach((fileEntry) => {
+                prefixes.push(fileEntry.split("/")[0]);
+            });
 
         return uniq(prefixes).map((dir) => [
             path.join(dep.pkg.directory, dir) + path.sep,
