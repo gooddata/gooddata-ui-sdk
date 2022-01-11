@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React, { useState } from "react";
 import { Button } from "@gooddata/sdk-ui-kit";
 import { ObjRefInScope, areObjRefsEqual } from "@gooddata/sdk-model";
@@ -12,6 +12,7 @@ interface IMeasureDropdownProps {
     onSelect: (ref: ObjRefInScope) => void;
     onDropDownItemMouseOver?: (ref: ObjRefInScope) => void;
     onDropDownItemMouseOut?: () => void;
+    enableRenamingMeasureToMetric?: boolean;
 }
 
 export const MeasureDropdown: React.FC<IMeasureDropdownProps> = ({
@@ -20,6 +21,7 @@ export const MeasureDropdown: React.FC<IMeasureDropdownProps> = ({
     onSelect,
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
+    enableRenamingMeasureToMetric,
 }) => {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -55,7 +57,7 @@ export const MeasureDropdown: React.FC<IMeasureDropdownProps> = ({
                 className={buttonClassNames}
                 value={title}
                 onClick={onButtonClick}
-                iconLeft="gd-icon-measure"
+                iconLeft={enableRenamingMeasureToMetric ? "gd-icon-metric" : "gd-icon-measure"}
             />
             {isOpen && (
                 <MeasureDropdownBody
@@ -65,6 +67,7 @@ export const MeasureDropdown: React.FC<IMeasureDropdownProps> = ({
                     onClose={() => setIsOpen(false)}
                     onDropDownItemMouseOver={onDropDownItemMouseOver}
                     onDropDownItemMouseOut={onDropDownItemMouseOut}
+                    enableRenamingMeasureToMetric={enableRenamingMeasureToMetric}
                 />
             )}
         </>

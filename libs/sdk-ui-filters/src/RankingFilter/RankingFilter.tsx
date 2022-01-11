@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React, { useState } from "react";
 import { IRankingFilter, ObjRefInScope } from "@gooddata/sdk-model";
 import { RankingFilterButton } from "./RankingFilterButton";
@@ -20,6 +20,7 @@ export interface IRankingFilterProps {
     onDropDownItemMouseOut?: () => void;
     customGranularitySelection?: ICustomGranularitySelection;
     locale?: string;
+    enableRenamingMeasureToMetric?: boolean;
 }
 
 /**
@@ -36,6 +37,7 @@ export const RankingFilter: React.FC<IRankingFilterProps> = ({
     onDropDownItemMouseOut,
     customGranularitySelection,
     locale,
+    enableRenamingMeasureToMetric,
 }) => {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -73,6 +75,7 @@ export const RankingFilter: React.FC<IRankingFilterProps> = ({
                     onDropDownItemMouseOut={onDropDownItemMouseOut}
                     customGranularitySelection={customGranularitySelection}
                     locale={locale}
+                    enableRenamingMeasureToMetric={enableRenamingMeasureToMetric}
                 />
             )}
         </>

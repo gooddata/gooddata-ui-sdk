@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { stringUtils } from "@gooddata/util";
 import { ObjRefInScope } from "@gooddata/sdk-model";
@@ -11,6 +11,7 @@ interface IMeasureDropdownItemProps {
     onSelect: (ref: ObjRefInScope) => void;
     onDropDownItemMouseOver?: (ref: ObjRefInScope) => void;
     onDropDownItemMouseOut?: () => void;
+    enableRenamingMeasureToMetric?: boolean;
 }
 
 export const MeasureDropdownItem: React.FC<IMeasureDropdownItemProps> = ({
@@ -19,6 +20,7 @@ export const MeasureDropdownItem: React.FC<IMeasureDropdownItemProps> = ({
     onSelect,
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
+    enableRenamingMeasureToMetric,
 }) => {
     const { title, ref, sequenceNumber } = item;
 
@@ -29,7 +31,7 @@ export const MeasureDropdownItem: React.FC<IMeasureDropdownItemProps> = ({
             "is-selected": isSelected,
         },
         "gd-button-link",
-        "gd-icon-measure",
+        enableRenamingMeasureToMetric ? "gd-icon-metric" : "gd-icon-measure",
         `s-rf-measure-${stringUtils.simplifyText(title)}`,
     );
 

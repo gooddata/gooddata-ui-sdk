@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 $base_path: "~@gooddata/sdk-ui-kit/styles";
 
 @mixin gd-svg-icon-base {
@@ -31,6 +31,22 @@ $base_path: "~@gooddata/sdk-ui-kit/styles";
     &.disabled,
     &[disabled="disabled"] {
         @include gd-svg-icon("measure-disabled");
+    }
+
+    &.gd-button-small,
+    &.gd-button-link {
+        &::before {
+            margin-top: -1px;
+        }
+    }
+}
+
+.gd-icon-metric {
+    @include gd-svg-icon("metric");
+
+    &.disabled,
+    &[disabled="disabled"] {
+        @include gd-svg-icon("metric-disabled");
     }
 
     &.gd-button-small,

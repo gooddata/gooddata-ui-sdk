@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React, { useState, useCallback } from "react";
 import { Button, BubbleHoverTrigger, Bubble } from "@gooddata/sdk-ui-kit";
 import { IRankingFilter, newRankingFilter, ObjRefInScope, areObjRefsEqual } from "@gooddata/sdk-model";
@@ -37,6 +37,7 @@ interface IRankingFilterDropdownBodyComponentOwnProps {
     onDropDownItemMouseOver?: (ref: ObjRefInScope) => void;
     onDropDownItemMouseOut?: () => void;
     customGranularitySelection?: ICustomGranularitySelection;
+    enableRenamingMeasureToMetric?: boolean;
 }
 
 type RankingFilterDropdownBodyComponentProps = IRankingFilterDropdownBodyComponentOwnProps &
@@ -52,6 +53,7 @@ const RankingFilterDropdownBodyComponent: React.FC<RankingFilterDropdownBodyComp
     onDropDownItemMouseOut,
     customGranularitySelection,
     intl,
+    enableRenamingMeasureToMetric,
 }) => {
     const rankingFilter = filter.rankingFilter;
     const [value, setValue] = useState(rankingFilter.value);
@@ -112,6 +114,7 @@ const RankingFilterDropdownBodyComponent: React.FC<RankingFilterDropdownBodyComp
                     onSelect={setMeasureIdentifier}
                     onDropDownItemMouseOver={onDropDownItemMouseOver}
                     onDropDownItemMouseOut={onDropDownItemMouseOut}
+                    enableRenamingMeasureToMetric={enableRenamingMeasureToMetric}
                 />
                 <div className="gd-rf-dropdown-section-title">
                     <FormattedMessage id="rankingFilter.preview" />
