@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import cx from "classnames";
 import { injectIntl, WrappedComponentProps } from "react-intl";
@@ -295,7 +295,9 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         };
     });
 
-    const prevParentFilters = usePrevious(props.parentFilters);
+    const resolvedParentFilters = useResolveValueWithPlaceholders(props.parentFilters);
+
+    const prevParentFilters = usePrevious(resolvedParentFilters);
 
     useEffect(() => {
         setState((prevState) => {
@@ -343,10 +345,8 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         });
     }, [currentFilter]);
 
-    const resolvedParentFilters = useResolveValueWithPlaceholders(props.parentFilters);
-
     useEffect(() => {
-        if (!isEmpty(props.parentFilters) && !isEqual(prevParentFilters, props.parentFilters)) {
+        if (!isEmpty(props.parentFilters) && !isEqual(prevParentFilters, resolvedParentFilters)) {
             setState((prevState) => {
                 return {
                     ...prevState,
