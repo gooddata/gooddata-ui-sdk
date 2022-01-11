@@ -155,3 +155,7 @@ plugin and prevent it from loading correctly.
 
 GoodData applications [do not support Internet Explorer](https://help.gooddata.com/pages/viewpage.action?pageId=86775029) as of November 19th 2021.
 The plugin artifacts created during the plugin build are not compatible with Internet Explorer.
+
+### How about Safari?
+
+GoodData applications do support Safari, however currently it's not possible to run this boilerplate locally with GoodData.CN backend running on https protocol, due to the fact how Safari is handling authentication in backend redirects.
