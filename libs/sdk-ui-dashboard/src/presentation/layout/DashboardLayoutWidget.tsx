@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import {
     isWidget,
@@ -22,6 +22,7 @@ import {
     getDashboardLayoutItemHeight,
     getDashboardLayoutItemHeightForRatioAndScreen,
     getDashboardLayoutWidgetDefaultHeight,
+    IDashboardLayoutItemFacade,
     IDashboardLayoutWidgetRenderer,
 } from "./DefaultDashboardLayoutRenderer";
 import { ObjRefMap } from "../../_staging/metadata/objRefMap";
@@ -56,6 +57,21 @@ function calculateWidgetMinHeight(
 }
 
 /**
+ * Tests in KD require widget index for css selectors.
+ * Widget index equals to the widget order in the layout.
+ */
+function getWidgetIndex(item: IDashboardLayoutItemFacade<ExtendedDashboardWidget>): number {
+    const sectionIndex = item.section().index();
+    let itemsInSectionsBefore = 0;
+    for (let i = 0; i < sectionIndex; i += 1) {
+        itemsInSectionsBefore += item.section().layout().section(i)?.items().count() ?? 0;
+    }
+    const index = itemsInSectionsBefore + item.index();
+
+    return index;
+}
+
+/**
  * @internal
  */
 export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
@@ -77,6 +93,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
 
     const allowOverflow = !!currentSize.heightAsRatio;
     const className = settings.enableKDWidgetCustomHeight ? "custom-height" : undefined;
+    const index = getWidgetIndex(item);
 
     return (
         <DefaultWidgetRenderer
@@ -89,6 +106,8 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
             className={className}
         >
             <DashboardWidget
+                // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
+                index={index}
                 screen={screen}
                 onDrill={onDrill}
                 onError={onError}

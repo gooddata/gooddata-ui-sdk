@@ -1,5 +1,6 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React, { useMemo } from "react";
+import cx from "classnames";
 import {
     IDataView,
     isWidget,
@@ -25,7 +26,15 @@ import { DefaultDashboardInsightWidget } from "./DefaultDashboardInsightWidget";
  * @internal
  */
 export const DefaultDashboardWidget = (props: IDashboardWidgetProps): JSX.Element => {
-    const { onError, onFiltersChange, screen, widget, backend } = props;
+    const {
+        onError,
+        onFiltersChange,
+        screen,
+        widget,
+        backend,
+        // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
+        index,
+    } = props;
 
     const widgetRef = widget?.ref;
     const alertSelector = selectAlertByWidgetRef(widgetRef!);
@@ -76,9 +85,14 @@ export const DefaultDashboardWidget = (props: IDashboardWidgetProps): JSX.Elemen
         return (
             <BackendProvider backend={backendWithEventing}>
                 {isInsightWidget(widget) ? (
-                    <DefaultDashboardInsightWidget widget={widget} screen={screen} />
+                    <DefaultDashboardInsightWidget
+                        widget={widget}
+                        screen={screen}
+                        // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
+                        index={index}
+                    />
                 ) : (
-                    <DashboardItem className="type-kpi" screen={screen}>
+                    <DashboardItem className={cx("type-kpi", `s-dash-item-${index}`)} screen={screen}>
                         <DashboardKpi
                             kpiWidget={widget}
                             alert={alert}

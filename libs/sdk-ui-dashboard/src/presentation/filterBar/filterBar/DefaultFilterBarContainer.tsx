@@ -1,6 +1,7 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React from "react";
 import Measure from "react-measure";
+import cx from "classnames";
 
 import { IntlWrapper } from "../../localization";
 import {
@@ -37,7 +38,12 @@ const DefaultFilterBarContainerCore: React.FC = ({ children }) => {
 
     return (
         <div className="dash-filters-wrapper s-gd-dashboard-filter-bar">
-            <div className="dash-filters-visible" style={dashFiltersVisibleStyle}>
+            <div
+                className={cx("dash-filters-visible", {
+                    "s-dash-filters-visible-all": filterBarExpanded,
+                })}
+                style={dashFiltersVisibleStyle}
+            >
                 <Measure
                     bounds
                     onResize={(dimensions) => onAttributeFilterBarHeightChange(dimensions.bounds!.height)}
