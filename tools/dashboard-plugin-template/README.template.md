@@ -61,7 +61,7 @@ Building a new plugin is easy. Before you start, ensure that your `.env` and `.e
     It is paramount that you upload all files from the `dist/dashboardPlugin`.
 
     _IMPORTANT_: your hosting must support https and your GoodData domain must include the hosting location in the list
-    of allowed hosts from where GoodData will load plugins. Your domain admin must explicitly allow the hosting
+    of allowed hosts from where GoodData will load plugins. You should create a [support ticket](https://support.gooddata.com/hc/en-us/requests/new?ticket_form_id=582387) to explicitly allow the hosting
     location before we will load any plugins from it. You may host multiple plugins in separate directories within
     the allowed hosting location.
 
@@ -153,5 +153,5 @@ plugin and prevent it from loading correctly.
 
 ### How about Internet Explorer?
 
-GoodData applications [do not support Internet Explorer](https://help.gooddata.com/doc/enterprise/en/how-to-get-started-with-gooddata/system-requirements-and-supported-browsers) as of November 19th 2021.
+GoodData applications [do not support Internet Explorer](https://help.gooddata.com/pages/viewpage.action?pageId=86775029) as of November 19th 2021.
 The plugin artifacts created during the plugin build are not compatible with Internet Explorer.
