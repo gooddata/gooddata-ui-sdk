@@ -29,6 +29,12 @@ document.cookie = `GDCAuthSST=${token};path=/gdc/account`;
 
 (async () => {
     await getInsightExecution(token, projectId, insightUri);
-    console.log('#############################################')
-    await getWidgetExecution(token, projectId, uriRef(dashboardUri), uriRef(widgetUri), uriRef(filterContextUri));
+    console.log("#############################################");
+    await getWidgetExecution(
+        token,
+        projectId,
+        uriRef(dashboardUri),
+        uriRef(widgetUri),
+        uriRef(filterContextUri),
+    );
 })();

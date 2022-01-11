@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 
-//import { BearToBackendConvertors } from "@gooddata/sdk-backend-bear";
+import { BearToBackendConvertors } from "@gooddata/sdk-backend-bear";
 import { FullVisualizationCatalog } from "@gooddata/sdk-ui-ext/esm/internal";
 import {
     BaseVisualization,
@@ -9,6 +9,7 @@ import {
 import { getBackend } from "./getBackend";
 import { IInsight } from "@gooddata/sdk-model";
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
+import { fillMissingTitles, ignoreTitlesForSimpleMeasures, ILocale } from "@gooddata/sdk-ui";
 
 export async function getExecution(token: string, projectId: string, insight: IInsight) {
     const backend = getBackend(token);
@@ -18,9 +19,12 @@ export async function getExecution(token: string, projectId: string, insight: II
         ({ visualizationClass }) => visualizationClass.url === insight.insight.visualizationUrl,
     )!;
 
+    const locale = (await backend.currentUser().settings().getSettings()).locale as ILocale;
+    const insightWithMissingTitles = ignoreTitlesForSimpleMeasures(fillMissingTitles(insight, locale));
+
     const props: IBaseVisualizationProps = {
         backend,
-        insight,
+        insight: insightWithMissingTitles,
         projectId,
         visualizationClass,
         visualizationCatalog: FullVisualizationCatalog,
@@ -28,17 +32,20 @@ export async function getExecution(token: string, projectId: string, insight: II
         onLoadingChanged: () => {},
         pushData: () => {},
         renderer: () => {},
+        locale,
     };
 
     const visualization = new BaseVisualization(props);
     const preparedExecution = visualization.getExecution();
 
-    //const afmExecution = BearToBackendConvertors.toAfmExecution(preparedExecution.definition);
+    const afmExecution = BearToBackendConvertors.toAfmExecution(preparedExecution.definition);
     const executionResult: IExecutionResult = await preparedExecution.execute();
+    const resultLink = (executionResult as any).execResponse.links.executionResult;
 
-    //console.log("afmExecution", afmExecution);
-    //console.log("executionResult", executionResult);
-    console.log("executionResult.execResponse.links.executionResult", (executionResult as any).execResponse.links.executionResult );
+    console.log("afmExecution", afmExecution);
+    console.log("executionResult link", resultLink);
 
-    executionResult.definition
+    await fetch(resultLink)
+        .then((res) => res.json())
+        .then((data) => console.log("executionResult data", data));
 }
