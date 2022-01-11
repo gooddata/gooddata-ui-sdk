@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { DefaultLocale, ILocale } from "../Locale";
 import { getIntl, getTranslation } from "../IntlStore";
 
@@ -39,6 +39,7 @@ describe("IntlStore", () => {
                 "pt-BR",
                 "pt-PT",
                 "zh-Hans",
+                "ru-RU",
             ];
 
             it("should return message in en-US", () => {

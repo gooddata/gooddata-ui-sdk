@@ -1,6 +1,6 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import format from "date-fns/format";
-import { enUS, de, es, fr, ja, nl, pt, ptBR, zhCN } from "date-fns/locale";
+import { enUS, de, es, fr, ja, nl, pt, ptBR, zhCN, ru } from "date-fns/locale";
 import { DateAttributeGranularity } from "@gooddata/sdk-model";
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import { DateFormatter } from "./types";
@@ -35,6 +35,7 @@ const localeConversions = {
     "pt-BR": ptBR,
     "pt-PT": pt,
     "zh-Hans": zhCN,
+    "ru-RU": ru,
 };
 
 /**

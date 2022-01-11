@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 
 import { IntlShape, createIntl } from "react-intl";
@@ -13,6 +13,7 @@ import nlNL from "./bundles/nl-NL.json";
 import ptBR from "./bundles/pt-BR.json";
 import ptPT from "./bundles/pt-PT.json";
 import zhHans from "./bundles/zh-Hans.json";
+import ruRU from "./bundles/ru-RU.json";
 import { DefaultLocale, ILocale } from "./Locale";
 
 const messagesMap = {
@@ -25,6 +26,7 @@ const messagesMap = {
     "pt-BR": ptBR,
     "pt-PT": ptPT,
     "zh-Hans": zhHans,
+    "ru-RU": ruRU,
 };
 
 const intlStore = {};

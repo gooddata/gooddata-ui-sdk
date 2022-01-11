@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import merge from "lodash/merge";
 import { messagesMap as sdkUiTranslations } from "@gooddata/sdk-ui";
 import { translationUtils } from "@gooddata/util";
@@ -23,6 +23,7 @@ const sdkUiDashboardTranslations: { [locale: string]: Record<string, string> } =
     "pt-BR": ptBR,
     "pt-PT": ptPT,
     "zh-Hans": zhHans,
+    // russian
 };
 
 /**
