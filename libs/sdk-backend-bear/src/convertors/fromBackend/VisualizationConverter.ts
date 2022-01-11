@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     IInsight,
     IBucket,
@@ -237,6 +237,7 @@ export const convertVisualization = (
             updatedBy: meta.contributor ? userMap?.get(meta.contributor) : undefined,
             isLocked: meta.locked,
             tags: meta.tags?.split(" ").filter(Boolean) ?? [],
+            summary: meta.summary ?? "",
         },
     };
 };
