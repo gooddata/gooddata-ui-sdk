@@ -34,7 +34,11 @@ interface IDefaultDashboardInsightWidgetProps {
 const DefaultDashboardInsightWidgetWrapper: React.FC<
     IDefaultDashboardInsightWidgetProps & WrappedComponentProps
 > = (props) => {
-    const { widget } = props;
+    const {
+        widget,
+        // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
+        index,
+    } = props;
     const insights = useDashboardSelector(selectInsightsMap);
     const insight = insights.get(widget.insight);
 
@@ -46,7 +50,14 @@ const DefaultDashboardInsightWidgetWrapper: React.FC<
         return null;
     }
 
-    return <DefaultDashboardInsightWidgetCore {...props} insight={insight} />;
+    return (
+        <DefaultDashboardInsightWidgetCore
+            {...props}
+            insight={insight}
+            // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
+            index={index}
+        />
+    );
 };
 
 /**
@@ -54,7 +65,17 @@ const DefaultDashboardInsightWidgetWrapper: React.FC<
  */
 const DefaultDashboardInsightWidgetCore: React.FC<
     IDefaultDashboardInsightWidgetProps & WrappedComponentProps & { insight: IInsight }
-> = ({ widget, insight, screen, onError, onExportReady, onLoadingChanged, intl }) => {
+> = ({
+    widget,
+    insight,
+    screen,
+    onError,
+    onExportReady,
+    onLoadingChanged,
+    intl,
+    // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
+    index,
+}) => {
     const visType = insightVisualizationUrl(insight).split(":")[1] as VisType;
 
     const { exportCSVEnabled, exportXLSXEnabled, onExportCSV, onExportXLSX } = useInsightExport({
@@ -88,6 +109,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
     return (
         <DashboardItem
             className={cx(
+                `s-dash-item-${index}`,
                 "type-visualization",
                 "gd-dashboard-view-widget",
                 getVisTypeCssClass(widget.type, visType),

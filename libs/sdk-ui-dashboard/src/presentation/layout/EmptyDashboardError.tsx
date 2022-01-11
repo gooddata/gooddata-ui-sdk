@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IErrorProps } from "@gooddata/sdk-ui";
@@ -13,6 +13,7 @@ const EmptyDashboardErrorCore: React.FC<IEmptyDashboardErrorProps & WrappedCompo
 }) => {
     return (
         <ErrorComponent
+            className="s-layout-error"
             message={intl.formatMessage({ id: "dashboard.error.empty.heading" })}
             description={intl.formatMessage({ id: "dashboard.error.empty.text" })}
         />

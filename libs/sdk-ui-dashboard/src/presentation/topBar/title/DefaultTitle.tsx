@@ -12,7 +12,7 @@ export const DefaultTitle: CustomTitleComponent = (props) => {
 
     return (
         <TitleWrapper>
-            <div className={"s-gd-dashboard-title dash-title static"}>{title}</div>
+            <div className={"s-gd-dashboard-title s-dash-title dash-title static"}>{title}</div>
         </TitleWrapper>
     );
 };

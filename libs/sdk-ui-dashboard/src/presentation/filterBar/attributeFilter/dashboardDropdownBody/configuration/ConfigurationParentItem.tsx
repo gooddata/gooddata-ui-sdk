@@ -1,11 +1,11 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React from "react";
 import { ObjRef } from "@gooddata/sdk-model";
 import { FormattedMessage } from "react-intl";
 import { DisabledConfigurationParentItem } from "./DisabledConfigurationParentItem";
 import cx from "classnames";
-import { stringUtils } from "@gooddata/util/dist";
 import { ConnectingAttributesDropdown } from "../connectingAttributesDropdown/ConnectingAttributesDropdown";
+import { getTestClassname } from "../../../../../_staging/testUtils/getTestClassname";
 
 export interface IConnectingAttribute {
     ref: ObjRef;
@@ -49,7 +49,7 @@ export const ConfigurationParentItem: React.FC<IConfigurationParentItemProps> = 
 
     const itemClassName = cx(
         "gd-list-item attribute-filter-item s-attribute-filter-dropdown-configuration-item",
-        `s-${stringUtils.simplifyText(title)}`,
+        getTestClassname(title),
         {
             "is-selected": isSelected,
         },

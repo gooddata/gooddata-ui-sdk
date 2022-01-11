@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React, { useMemo } from "react";
 import { useDashboardComponentsContext } from "../../dashboardContexts";
 import { extendedWidgetDebugStr } from "../../../model";
@@ -19,7 +19,11 @@ const MissingWidget: React.FC = () => {
  */
 export const DashboardWidget = (props: IDashboardWidgetProps): JSX.Element => {
     const { WidgetComponentProvider } = useDashboardComponentsContext();
-    const { widget } = props;
+    const {
+        widget,
+        // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
+        index,
+    } = props;
     const WidgetComponent = useMemo((): React.ComponentType<IDashboardWidgetProps> => {
         // TODO: we need to get rid of this; the widget being optional at this point is the problem; the parent
         //  components (or possibly the model) should deal with layout items that have no valid widgets associated
@@ -50,5 +54,11 @@ export const DashboardWidget = (props: IDashboardWidgetProps): JSX.Element => {
         }
     }, [widget]);
 
-    return <WidgetComponent {...props} />;
+    return (
+        <WidgetComponent
+            {...props}
+            // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
+            index={index}
+        />
+    );
 };

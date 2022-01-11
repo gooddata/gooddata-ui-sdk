@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 
 import { DrillSelectList } from "./DrillSelectList";
@@ -19,7 +19,7 @@ export const DrillSelectListBody: React.FC<DrillSelectListBodyProps> = (props) =
 
     return (
         <div
-            className="gd-drill-modal-picker-dropdown s-drill-measure-selector-dropdown"
+            className="gd-drill-modal-picker-dropdown s-drill-item-selector-dropdown"
             onScroll={stopPropagation}
         >
             <div className="gd-drill-modal-picker-body">

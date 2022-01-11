@@ -15,7 +15,7 @@ export const EditableTitle: CustomTitleComponent = (props) => {
             <EditableLabel
                 value={title}
                 onSubmit={onTitleChanged!}
-                className="s-gd-dashboard-title dash-title editable"
+                className="s-gd-dashboard-title s-dash-title dash-title editable"
             >
                 {title}
             </EditableLabel>
