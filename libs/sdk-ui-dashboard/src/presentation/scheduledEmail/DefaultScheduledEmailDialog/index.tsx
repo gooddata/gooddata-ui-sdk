@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import invariant from "ts-invariant";
 import { IScheduledEmailDialogProps } from "../types";
@@ -22,7 +22,7 @@ export const DefaultScheduledEmailDialog = (props: IScheduledEmailDialogProps): 
         dateFormat,
         enableKPIDashboardSchedule,
         enableKPIDashboardScheduleRecipients,
-    } = useScheduledEmail({ onSubmit, onSubmitSuccess: onSuccess });
+    } = useScheduledEmail({ onSubmit, onSubmitSuccess: onSuccess, onSubmitError: onError });
 
     // trigger the invariant only if the user tries to open the dialog
     if (isVisible) {
