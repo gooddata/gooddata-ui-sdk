@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { IntlShape } from "react-intl";
 import merge from "lodash/merge";
 import { translationUtils } from "@gooddata/util";
@@ -13,6 +13,7 @@ import nlNL from "../translations/nl-NL.json";
 import ptBR from "../translations/pt-BR.json";
 import ptPT from "../translations/pt-PT.json";
 import zhHans from "../translations/zh-Hans.json";
+import ruRU from "../translations/ru-RU.json";
 import { IDropdownItem } from "../interfaces/Dropdown";
 
 export function getTranslation(
@@ -41,6 +42,7 @@ const sdkUiExtTranslations: { [locale: string]: Record<string, string> } = {
     "pt-BR": ptBR,
     "pt-PT": ptPT,
     "zh-Hans": zhHans,
+    "ru-RU": ruRU,
 };
 
 /**

@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { useMemo } from "react";
 import { IntlProvider } from "react-intl";
 import { translationUtils } from "@gooddata/util";
@@ -14,6 +14,7 @@ import nlNL from "./bundles/nl-NL.json";
 import ptBR from "./bundles/pt-BR.json";
 import ptPT from "./bundles/pt-PT.json";
 import zhHans from "./bundles/zh-Hans.json";
+import ruRU from "./bundles/ru-RU.json";
 import { IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 
 /**
@@ -36,6 +37,7 @@ export const messagesMap: { [locale: string]: ITranslations } = {
     "pt-BR": ptBR,
     "pt-PT": ptPT,
     "zh-Hans": zhHans,
+    "ru-RU": ruRU,
 };
 
 /**
