@@ -7,6 +7,7 @@ import {
     OnError,
     OnLoadingChanged,
     PlaceholdersProvider,
+    usePlaceholder,
     useResolveValueWithPlaceholders,
 } from "@gooddata/sdk-ui";
 import { AttributeFilterButton } from "@gooddata/sdk-ui-filters";
@@ -31,7 +32,7 @@ const stateFilterPlaceholder = newPlaceholder<IAttributeFilter>(
     }),
 );
 
-let cityFilterPlaceholder = newPlaceholder<IAttributeFilter>(
+const cityFilterPlaceholder = newPlaceholder<IAttributeFilter>(
     newNegativeAttributeFilter(attributeDisplayFormRef(Md.LocationCity), {
         uris: [],
     }),
@@ -55,11 +56,13 @@ const AttributeParentChildFilterButtonWithPlaceholder: React.FC = () => {
 
     const parentFilter = useResolveValueWithPlaceholders(stateFilterPlaceholder);
 
+    const [, setChildFilter] = usePlaceholder(cityFilterPlaceholder);
+
     /**
      * What happens with the component depending on the child filters is handled outside the AttributeFilterButton component.
      */
     useEffect(() => {
-        cityFilterPlaceholder = newPlaceholder<IAttributeFilter>(
+        setChildFilter(
             newNegativeAttributeFilter(attributeDisplayFormRef(Md.LocationCity), {
                 uris: [],
             }),
