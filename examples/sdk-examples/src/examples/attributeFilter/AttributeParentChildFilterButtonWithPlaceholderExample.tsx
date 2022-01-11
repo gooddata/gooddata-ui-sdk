@@ -1,5 +1,5 @@
 // (C) 2007-2022 GoodData Corporation
-import React from "react";
+import React, { useEffect } from "react";
 import {
     IPlaceholder,
     newComposedPlaceholder,
@@ -7,6 +7,8 @@ import {
     OnError,
     OnLoadingChanged,
     PlaceholdersProvider,
+    usePlaceholder,
+    useResolveValueWithPlaceholders,
 } from "@gooddata/sdk-ui";
 import { AttributeFilterButton } from "@gooddata/sdk-ui-filters";
 import { BarChart } from "@gooddata/sdk-ui-charts";
@@ -51,6 +53,21 @@ const AttributeParentChildFilterButtonWithPlaceholder: React.FC = () => {
         // eslint-disable-next-line no-console
         console.info("AttributeFilterExample onLoadingChanged", ...params);
     };
+
+    const parentFilter = useResolveValueWithPlaceholders(stateFilterPlaceholder);
+
+    const [, setChildFilter] = usePlaceholder(cityFilterPlaceholder);
+
+    /**
+     * What happens with the component depending on the child filters is handled outside the AttributeFilterButton component.
+     */
+    useEffect(() => {
+        setChildFilter(
+            newNegativeAttributeFilter(attributeDisplayFormRef(Md.LocationCity), {
+                uris: [],
+            }),
+        );
+    }, [parentFilter]);
 
     return (
         <div className="s-attribute-filter">

@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import {
     IAnalyticalBackend,
@@ -64,8 +64,13 @@ export const getItemsTitles = (
 ): string => {
     return selectedFilterOptions
         .map((selectedOption) =>
-            selectedOption?.uri ? elementTitles.get(selectedOption.uri)?.title : undefined,
+            selectedOption?.uri
+                ? elementTitles.get(selectedOption.uri)?.title
+                : selectedOption?.title
+                ? selectedOption.title
+                : undefined,
         )
+        .filter((title) => !isEmpty(title))
         .join(", ");
 };
 
@@ -92,8 +97,8 @@ export const updateSelectedOptionsWithData = (
     if (isEmpty(items)) {
         return selection.map((item) => {
             return {
-                title: item.title ?? "",
-                uri: item.uri ?? "",
+                title: item?.title ?? "",
+                uri: item?.uri ?? "",
             };
         });
     }
@@ -103,8 +108,8 @@ export const updateSelectedOptionsWithData = (
     return selection.map((selectedItem) => {
         return nonEmptyItems.find(
             (item) =>
-                (selectedItem.uri && item.uri === selectedItem.uri) ||
-                (selectedItem.title && item.title === selectedItem.title),
+                (selectedItem?.uri && item.uri === selectedItem.uri) ||
+                (selectedItem?.title && item.title === selectedItem.title),
         );
     });
 };

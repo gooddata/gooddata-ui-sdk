@@ -95,7 +95,7 @@ export class AttributeFilterButtonExample extends Component<unknown, IAttributeF
 
     public render(): React.ReactNode {
         const { filters } = this.state;
-        const filter = filters?.[0] ?? newNegativeAttributeFilter(Md.LocationResort, []);
+        const filter = filters?.[0] ?? newNegativeAttributeFilter(Md.LocationResort, { uris: [] });
 
         return (
             <div className="s-attribute-filter">
