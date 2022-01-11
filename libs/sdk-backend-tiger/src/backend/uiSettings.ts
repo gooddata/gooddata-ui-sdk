@@ -63,7 +63,7 @@ export const DefaultUiSettings: ISettings = {
     enableCustomColorPicker: true,
     enableAdAdditionalDateAttributes: true,
     enableAlternativeDisplayFormSelection: false,
-    enableNewAnalyticalDashboardsNavigation: false, // TODO TNT-278 switch to true for verification or New navigation rollout
+    enableNewAnalyticalDashboardsNavigation: true,
     enableAnalyticalDashboardPermissions: false,
 
     // enable the plugin-ready Dashboard component in gdc-dashboards
