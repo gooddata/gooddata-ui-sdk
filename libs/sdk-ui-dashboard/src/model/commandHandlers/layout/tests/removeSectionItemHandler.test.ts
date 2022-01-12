@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import { TestCorrelation, TestStash } from "../../../tests/fixtures/Dashboard.fixtures";
 import {
@@ -150,7 +150,7 @@ describe("remove layout section item handler", () => {
         });
 
         it("should be undoable when doing single eager removal", async () => {
-            await Tester.dispatch(eagerRemoveSectionItem(2, 0, undefined, TestCorrelation));
+            Tester.dispatch(eagerRemoveSectionItem(2, 0, undefined, TestCorrelation));
 
             const removalUndone: DashboardLayoutChanged = await Tester.dispatchAndWaitFor(
                 undoLayoutChanges(),
@@ -164,8 +164,8 @@ describe("remove layout section item handler", () => {
         it("should be undoable when doing multiple removals", async () => {
             // two eager removals from second section that has two items. after first removal the section still exists,
             // after second removal even the section goes away
-            await Tester.dispatch(eagerRemoveSectionItem(1, 0, undefined, TestCorrelation));
-            await Tester.dispatch(eagerRemoveSectionItem(1, 0, undefined, TestCorrelation));
+            Tester.dispatch(eagerRemoveSectionItem(1, 0, undefined, TestCorrelation));
+            Tester.dispatch(eagerRemoveSectionItem(1, 0, undefined, TestCorrelation));
 
             const lastRemoveUndone: DashboardLayoutChanged = await Tester.dispatchAndWaitFor(
                 undoLayoutChanges(),
@@ -185,7 +185,7 @@ describe("remove layout section item handler", () => {
         });
 
         it("should emit correct events during eager removal", async () => {
-            await Tester.dispatch(eagerRemoveSectionItem(2, 0, undefined, TestCorrelation));
+            Tester.dispatch(eagerRemoveSectionItem(2, 0, undefined, TestCorrelation));
 
             // both of these need to fly
             await Tester.waitForAll([
