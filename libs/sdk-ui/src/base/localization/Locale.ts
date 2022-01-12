@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 
 /**
  * Language codes that can be used with GoodData.
@@ -14,7 +14,8 @@ export type ILocale =
     | "nl-NL"
     | "pt-BR"
     | "pt-PT"
-    | "zh-Hans";
+    | "zh-Hans"
+    | "ru-RU";
 
 /**
  * Default value for {@link ILocale}.
