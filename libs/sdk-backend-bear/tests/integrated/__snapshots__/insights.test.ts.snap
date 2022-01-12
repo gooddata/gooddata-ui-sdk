@@ -2,9 +2,13 @@
 
 exports[`bear insights should load empty insights for out-of-range page 1`] = `
 ServerPaging {
+  "all": [Function],
+  "allSorted": [Function],
   "getData": [Function],
+  "goTo": [Function],
   "items": Array [],
   "limit": 50,
+  "next": [Function],
   "offset": 200,
   "totalCount": 23,
 }
@@ -12,7 +16,10 @@ ServerPaging {
 
 exports[`bear insights should load insights 1`] = `
 ServerPaging {
+  "all": [Function],
+  "allSorted": [Function],
   "getData": [Function],
+  "goTo": [Function],
   "items": Array [
     Object {
       "insight": Object {
@@ -1828,6 +1835,7 @@ ServerPaging {
     },
   ],
   "limit": 50,
+  "next": [Function],
   "offset": 0,
   "totalCount": 23,
 }
