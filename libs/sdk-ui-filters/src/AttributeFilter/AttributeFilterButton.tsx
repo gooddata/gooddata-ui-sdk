@@ -24,6 +24,7 @@ import debounce from "lodash/debounce";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
+import noop from "lodash/noop";
 import { MAX_SELECTION_SIZE } from "./AttributeDropdown/AttributeDropdownList";
 import { mergeElementQueryResults } from "./AttributeDropdown/mergeElementQueryResults";
 import {
@@ -899,7 +900,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                                       ),
                                       isElementsLoading: !state.validOptions?.items && isElementsLoading(),
                                       isLoaded: !isOriginalTotalCountLoading(),
-                                      onConfigurationChange: () => {},
+                                      onConfigurationChange: noop,
                                       attributeFilterRef: null,
                                       isMobile,
                                   })
