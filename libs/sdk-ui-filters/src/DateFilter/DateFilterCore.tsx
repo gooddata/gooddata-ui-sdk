@@ -1,6 +1,7 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { useMemo } from "react";
 import flow from "lodash/flow";
+import noop from "lodash/noop";
 import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
 import { Dropdown } from "@gooddata/sdk-ui-kit";
 import MediaQuery from "react-responsive";
@@ -109,7 +110,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
                             ]}
                             onOpenStateChanged={onDropdownOpenChanged}
                             renderButton={({ isOpen, toggleDropdown }) => (
-                                <span onClick={disabled ? () => {} : toggleDropdown}>
+                                <span onClick={disabled ? noop : toggleDropdown}>
                                     {dateFilterButton(isOpen)}
                                 </span>
                             )}

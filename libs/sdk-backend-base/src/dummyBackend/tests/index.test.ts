@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
 
@@ -24,7 +24,7 @@ describe("dummyBackend", () => {
 
         describe("measures", () => {
             it("should return created measure", async () => {
-                const service = await dummyBackend().workspace(WORKSPACE_ID).measures();
+                const service = dummyBackend().workspace(WORKSPACE_ID).measures();
 
                 expect(
                     await service.createMeasure({
@@ -51,7 +51,7 @@ describe("dummyBackend", () => {
             });
 
             it("should return updated measure", async () => {
-                const service = await dummyBackend().workspace(WORKSPACE_ID).measures();
+                const service = dummyBackend().workspace(WORKSPACE_ID).measures();
 
                 expect(
                     await service.updateMeasure({
@@ -85,19 +85,19 @@ describe("dummyBackend", () => {
             });
 
             it("should return delete state", async () => {
-                const service = await dummyBackend().workspace(WORKSPACE_ID).measures();
+                const service = dummyBackend().workspace(WORKSPACE_ID).measures();
 
                 expect(async () => await service.deleteMeasure(idRef("", "measure"))).not.toThrow();
             });
 
             it("should return expression tokens", async () => {
-                const service = await dummyBackend().workspace(WORKSPACE_ID).measures();
+                const service = dummyBackend().workspace(WORKSPACE_ID).measures();
 
                 expect(await service.getMeasureExpressionTokens(idRef("", "measure"))).toEqual([]);
             });
 
             it("should return referencing empty object", async () => {
-                const service = await dummyBackend().workspace(WORKSPACE_ID).measures();
+                const service = dummyBackend().workspace(WORKSPACE_ID).measures();
 
                 expect(await service.getMeasureReferencingObjects(idRef("", "measure"))).toEqual({});
             });

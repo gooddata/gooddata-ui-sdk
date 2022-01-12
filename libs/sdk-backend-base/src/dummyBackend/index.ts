@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     IAnalyticalBackendConfig,
     IAuthenticatedPrincipal,
@@ -358,12 +358,12 @@ function dummyPreparedExecution(
             return executionFactory.forDefinition(defWithDateFormat(definition, dateFormat));
         },
         execute(): Promise<IExecutionResult> {
-            return new Promise((r) => r(dummyExecutionResult(definition, executionFactory, config)));
+            return Promise.resolve(dummyExecutionResult(definition, executionFactory, config));
         },
         explain(): Promise<void> {
             // eslint-disable-next-line no-console
             console.warn("Backend does not support explain mode");
-            return new Promise((resolve) => resolve());
+            return Promise.resolve();
         },
         fingerprint(): string {
             return fp;

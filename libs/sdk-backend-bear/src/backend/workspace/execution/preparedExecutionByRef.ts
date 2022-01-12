@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import { IExecutionFactory, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
@@ -61,7 +61,7 @@ export class BearPreparedExecutionByRef implements IPreparedExecution {
     public async explain(): Promise<void> {
         // eslint-disable-next-line no-console
         console.warn("Backend does not support explain mode");
-        return new Promise((resolve) => resolve());
+        return Promise.resolve();
     }
 
     private async createVisualizationExecution(): Promise<IVisualizationExecution> {

@@ -8,21 +8,21 @@ import getAnalyticalDashboards from "./getAnalyticalDashboards.json";
 export default {
     catalogue: {
         loadItems() {
-            return new Promise((resolve) => resolve(catalogItemsResponse));
+            return Promise.resolve(catalogItemsResponse);
         },
     },
     md: {
         getObjectsByQuery() {
-            return new Promise((resolve) => resolve(getObjectsByQueryResponse));
+            return Promise.resolve(getObjectsByQueryResponse);
         },
         getObjects() {
-            return new Promise((resolve) => resolve(getObjectsResponse));
+            return Promise.resolve(getObjectsResponse);
         },
         getVisualizations() {
-            return new Promise((resolve) => resolve(getVisualizationsResponse));
+            return Promise.resolve(getVisualizationsResponse);
         },
         getAnalyticalDashboards() {
-            return new Promise((resolve) => resolve(getAnalyticalDashboards));
+            return Promise.resolve(getAnalyticalDashboards);
         },
     },
 };

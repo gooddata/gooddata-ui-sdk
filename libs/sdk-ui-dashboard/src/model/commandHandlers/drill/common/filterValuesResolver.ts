@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import invariant from "ts-invariant";
 import isEmpty from "lodash/isEmpty";
@@ -44,12 +44,11 @@ export async function resolveFilterValues(
     const promises: Promise<IResolvedDateFilterValue | IResolvedAttributeFilterValues>[] = filters.map(
         (filter) => {
             if (isAbsoluteDateFilter(filter)) {
-                return new Promise<IResolvedDateFilterValue>((resolve) =>
-                    resolve({
-                        from: filter.absoluteDateFilter.from,
-                        to: filter.absoluteDateFilter.to,
-                    }),
-                );
+                const resolved: IResolvedDateFilterValue = {
+                    from: filter.absoluteDateFilter.from,
+                    to: filter.absoluteDateFilter.to,
+                };
+                return Promise.resolve(resolved);
             }
 
             invariant(backend, `backend needs to be provided for this type of filter: ${filter}`);
