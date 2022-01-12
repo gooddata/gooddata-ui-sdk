@@ -2,7 +2,10 @@
 
 exports[`tiger elements forDisplayForm should load attribute elements for existing display form 1`] = `
 ServerPaging {
+  "all": [Function],
+  "allSorted": [Function],
   "getData": [Function],
+  "goTo": [Function],
   "items": Array [
     Object {
       "title": "224",
@@ -86,6 +89,7 @@ ServerPaging {
     },
   ],
   "limit": 20,
+  "next": [Function],
   "offset": 0,
   "totalCount": 4846,
 }
@@ -163,7 +167,10 @@ InMemoryPaging {
 
 exports[`tiger elements forFilter should return correct page for given displayForm 1`] = `
 ServerPaging {
+  "all": [Function],
+  "allSorted": [Function],
   "getData": [Function],
+  "goTo": [Function],
   "items": Array [
     Object {
       "title": "1-800 We Answer",
@@ -175,6 +182,7 @@ ServerPaging {
     },
   ],
   "limit": 2,
+  "next": [Function],
   "offset": 6,
   "totalCount": 4846,
 }
@@ -182,9 +190,13 @@ ServerPaging {
 
 exports[`tiger elements forFilter should return empty result for out-of-range page in initial request 1`] = `
 ServerPaging {
+  "all": [Function],
+  "allSorted": [Function],
   "getData": [Function],
+  "goTo": [Function],
   "items": Array [],
   "limit": 100,
+  "next": [Function],
   "offset": 5000,
   "totalCount": 4846,
 }
@@ -192,9 +204,13 @@ ServerPaging {
 
 exports[`tiger elements forFilter should return empty result for out-of-range page with goTo 1`] = `
 ServerPaging {
+  "all": [Function],
+  "allSorted": [Function],
   "getData": [Function],
+  "goTo": [Function],
   "items": Array [],
   "limit": 100,
+  "next": [Function],
   "offset": 10000,
   "totalCount": 4846,
 }
@@ -202,9 +218,13 @@ ServerPaging {
 
 exports[`tiger elements forFilter should return empty result for out-of-range page with next 1`] = `
 ServerPaging {
+  "all": [Function],
+  "allSorted": [Function],
   "getData": [Function],
+  "goTo": [Function],
   "items": Array [],
   "limit": 100,
+  "next": [Function],
   "offset": 4940,
   "totalCount": 4846,
 }

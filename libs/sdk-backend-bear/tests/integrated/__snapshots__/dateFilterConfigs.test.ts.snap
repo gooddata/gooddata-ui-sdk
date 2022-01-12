@@ -2,7 +2,10 @@
 
 exports[`bear dateFilterConfigs should load date filter configs 1`] = `
 ServerPaging {
+  "all": [Function],
+  "allSorted": [Function],
   "getData": [Function],
+  "goTo": [Function],
   "items": Array [
     Object {
       "absoluteForm": Object {
@@ -149,6 +152,7 @@ ServerPaging {
     },
   ],
   "limit": 10,
+  "next": [Function],
   "offset": 0,
   "totalCount": 1,
 }
@@ -156,9 +160,13 @@ ServerPaging {
 
 exports[`bear dateFilterConfigs should load empty date filter configs for out-of-range page 1`] = `
 ServerPaging {
+  "all": [Function],
+  "allSorted": [Function],
   "getData": [Function],
+  "goTo": [Function],
   "items": Array [],
   "limit": 10,
+  "next": [Function],
   "offset": 40,
   "totalCount": 1,
 }
