@@ -102,14 +102,20 @@ export const updateSelectedOptionsWithData = (
             };
         });
     }
+    const createFullItem = (item: Partial<IAttributeElement>): IAttributeElement => ({
+        uri: item.uri ?? "",
+        title: item.title ?? "",
+    });
 
     const nonEmptyItems = items.filter(isNonEmptyListItem);
 
     return selection.map((selectedItem) => {
-        return nonEmptyItems.find(
-            (item) =>
-                (selectedItem?.uri && item.uri === selectedItem.uri) ||
-                (selectedItem?.title && item.title === selectedItem.title),
+        return (
+            nonEmptyItems.find(
+                (item) =>
+                    (selectedItem?.uri && item.uri === selectedItem.uri) ||
+                    (selectedItem?.title && item.title === selectedItem.title),
+            ) || createFullItem(selectedItem)
         );
     });
 };
