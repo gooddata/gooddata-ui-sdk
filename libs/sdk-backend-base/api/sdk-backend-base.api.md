@@ -827,21 +827,21 @@ export type SecuritySettingsDecoratorFactory = (securitySettings: ISecuritySetti
 export class ServerPaging<T> implements IPagedResource<T> {
     constructor(getData: (pagingParams: IServerPagingParams) => Promise<IServerPagingResult<T>>, limit: number, offset: number, totalCount: number, items: T[]);
     // (undocumented)
-    all(): Promise<T[]>;
+    all: () => Promise<T[]>;
     // (undocumented)
-    allSorted(compareFn: (a: T, b: T) => number): Promise<T[]>;
+    allSorted: (compareFn: (a: T, b: T) => number) => Promise<T[]>;
     // (undocumented)
     static for<TItem>(getData: (pagingParams: IServerPagingParams) => Promise<IServerPagingResult<TItem>>, limit?: number, offset?: number): Promise<IPagedResource<TItem>>;
     // (undocumented)
     protected readonly getData: (pagingParams: IServerPagingParams) => Promise<IServerPagingResult<T>>;
     // (undocumented)
-    goTo(pageIndex: number): Promise<IPagedResource<T>>;
+    goTo: (pageIndex: number) => Promise<IPagedResource<T>>;
     // (undocumented)
     readonly items: T[];
     // (undocumented)
     readonly limit: number;
     // (undocumented)
-    next(): Promise<IPagedResource<T>>;
+    next: () => Promise<IPagedResource<T>>;
     // (undocumented)
     readonly offset: number;
     // (undocumented)

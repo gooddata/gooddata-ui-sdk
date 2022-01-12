@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { IPagedResource } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
 import range from "lodash/range";
@@ -100,7 +100,7 @@ export class ServerPaging<T> implements IPagedResource<T> {
         public readonly items: T[],
     ) {}
 
-    public async next(): Promise<IPagedResource<T>> {
+    public next = async (): Promise<IPagedResource<T>> => {
         // No items = we are on the last page.
         if (this.items.length === 0) {
             return this;
@@ -119,15 +119,15 @@ export class ServerPaging<T> implements IPagedResource<T> {
             pageData.totalCount,
             pageData.items,
         );
-    }
+    };
 
-    public async goTo(pageIndex: number): Promise<IPagedResource<T>> {
+    public goTo = async (pageIndex: number): Promise<IPagedResource<T>> => {
         const offset = pageIndex * this.limit;
         const pageData = await this.getData({ limit: this.limit, offset });
         return new ServerPaging(this.getData, this.limit, offset, pageData.totalCount, pageData.items);
-    }
+    };
 
-    public async all(): Promise<T[]> {
+    public all = async (): Promise<T[]> => {
         const results: T[] = [];
         const maxRequests = 6;
         const allPagesToLoad = range(0, this.totalCount / this.limit);
@@ -146,10 +146,10 @@ export class ServerPaging<T> implements IPagedResource<T> {
         }
 
         return results;
-    }
+    };
 
-    public async allSorted(compareFn: (a: T, b: T) => number): Promise<T[]> {
+    public allSorted = async (compareFn: (a: T, b: T) => number): Promise<T[]> => {
         const all = await this.all();
         return all.sort(compareFn);
-    }
+    };
 }
