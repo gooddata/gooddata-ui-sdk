@@ -2,7 +2,10 @@
 
 exports[`bear elements forDisplayForm should load attribute elements for existing display form 1`] = `
 ServerPaging {
+  "all": [Function],
+  "allSorted": [Function],
   "getData": [Function],
+  "goTo": [Function],
   "items": Array [
     Object {
       "title": "1000Bulbs.com",
@@ -86,6 +89,7 @@ ServerPaging {
     },
   ],
   "limit": 20,
+  "next": [Function],
   "offset": 0,
   "totalCount": 4846,
 }
@@ -93,7 +97,10 @@ ServerPaging {
 
 exports[`bear elements forDisplayForm should load attribute elements for existing display form with a limiting measure 1`] = `
 ServerPaging {
+  "all": [Function],
+  "allSorted": [Function],
   "getData": [Function],
+  "goTo": [Function],
   "items": Array [
     Object {
       "title": "1000Bulbs.com",
@@ -177,6 +184,7 @@ ServerPaging {
     },
   ],
   "limit": 20,
+  "next": [Function],
   "offset": 0,
   "totalCount": 4844,
 }
@@ -184,7 +192,10 @@ ServerPaging {
 
 exports[`bear elements forDisplayForm should load attribute elements for existing display form with a parent filter 1`] = `
 ServerPaging {
+  "all": [Function],
+  "allSorted": [Function],
   "getData": [Function],
+  "goTo": [Function],
   "items": Array [
     Object {
       "title": "14 West",
@@ -268,6 +279,7 @@ ServerPaging {
     },
   ],
   "limit": 20,
+  "next": [Function],
   "offset": 0,
   "totalCount": 2952,
 }
@@ -275,7 +287,10 @@ ServerPaging {
 
 exports[`bear elements forFilter should load attribute filter elements for provided negative attribute filter 1`] = `
 ServerPaging {
+  "all": [Function],
+  "allSorted": [Function],
   "getData": [Function],
+  "goTo": [Function],
   "items": Array [
     Object {
       "title": "Educationly",
@@ -283,6 +298,7 @@ ServerPaging {
     },
   ],
   "limit": 50,
+  "next": [Function],
   "offset": 0,
   "totalCount": 1,
 }
@@ -290,7 +306,10 @@ ServerPaging {
 
 exports[`bear elements forFilter should load attribute filter elements for provided positive attribute filter 1`] = `
 ServerPaging {
+  "all": [Function],
+  "allSorted": [Function],
   "getData": [Function],
+  "goTo": [Function],
   "items": Array [
     Object {
       "title": "Educationly",
@@ -298,6 +317,7 @@ ServerPaging {
     },
   ],
   "limit": 50,
+  "next": [Function],
   "offset": 0,
   "totalCount": 1,
 }
@@ -335,7 +355,10 @@ InMemoryPaging {
 
 exports[`bear elements forFilter should return correct page for given displayForm 1`] = `
 ServerPaging {
+  "all": [Function],
+  "allSorted": [Function],
   "getData": [Function],
+  "goTo": [Function],
   "items": Array [
     Object {
       "title": "1-888-OhioComp",
@@ -347,6 +370,7 @@ ServerPaging {
     },
   ],
   "limit": 2,
+  "next": [Function],
   "offset": 6,
   "totalCount": 4846,
 }
@@ -354,9 +378,13 @@ ServerPaging {
 
 exports[`bear elements forFilter should return empty result for out-of-range page in initial request 1`] = `
 ServerPaging {
+  "all": [Function],
+  "allSorted": [Function],
   "getData": [Function],
+  "goTo": [Function],
   "items": Array [],
   "limit": 100,
+  "next": [Function],
   "offset": 5000,
   "totalCount": 4846,
 }
@@ -364,9 +392,13 @@ ServerPaging {
 
 exports[`bear elements forFilter should return empty result for out-of-range page with goTo 1`] = `
 ServerPaging {
+  "all": [Function],
+  "allSorted": [Function],
   "getData": [Function],
+  "goTo": [Function],
   "items": Array [],
   "limit": 100,
+  "next": [Function],
   "offset": 10000,
   "totalCount": 4846,
 }
@@ -374,9 +406,13 @@ ServerPaging {
 
 exports[`bear elements forFilter should return empty result for out-of-range page with next 1`] = `
 ServerPaging {
+  "all": [Function],
+  "allSorted": [Function],
   "getData": [Function],
+  "goTo": [Function],
   "items": Array [],
   "limit": 100,
+  "next": [Function],
   "offset": 4940,
   "totalCount": 4846,
 }
