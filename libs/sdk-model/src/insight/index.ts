@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import intersection from "lodash/intersection";
 import { ISortItem, sortEntityIds, SortEntityIds } from "../execution/base/sort";
@@ -94,6 +94,17 @@ export type IInsightDefinition = {
          * Added in 8.6.0
          */
         tags?: string[];
+
+        /**
+         * Insight summary.
+         *
+         * @remarks
+         * This property is optional for backwards compatibility reasons, but for newly created insights,
+         * you can expect this to always be defined (an empty string in case there are no summary).
+         *
+         * Added in 8.9.0
+         */
+        summary?: string;
 
         /**
          * URL of visualization that should be used to render this insight. This is a link to the location
@@ -467,6 +478,19 @@ export function insightTags(insight: IInsightDefinition): string[] {
     invariant(insight, "insight must be specified");
 
     return insight.insight.tags ?? [];
+}
+
+/**
+ * Gets the insights summary
+ *
+ * @param insight - insight to get the summary of
+ * @returns the insight summary or an empty string if is not specified
+ * @public
+ */
+export function insightSummary(insight: IInsightDefinition): string {
+    invariant(insight, "insight must be specified");
+
+    return insight.insight.summary ?? "";
 }
 
 /**

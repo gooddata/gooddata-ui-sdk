@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { GdcVisualizationObject } from "@gooddata/api-model-bear";
 import {
     IInsightDefinition,
@@ -21,6 +21,7 @@ import {
     insightCreated,
     insightUpdated,
     insightTags,
+    insightSummary,
 } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 import omitBy from "lodash/omitBy";
@@ -112,6 +113,7 @@ export const convertInsight = (insight: IInsight): GdcVisualizationObject.IVisua
             updated: insightUpdated(insight),
             ...(locked && { locked }),
             tags: insightTags(insight).join(" "),
+            summary: insightSummary(insight),
         },
     };
 };

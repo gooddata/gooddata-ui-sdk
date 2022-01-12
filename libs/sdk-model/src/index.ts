@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 /**
  * This package provides domain models for GoodData.UI.
  *
@@ -334,6 +334,7 @@ export {
     insightSorts,
     insightBucket,
     insightTags,
+    insightSummary,
     insightTitle,
     insightUri,
     insightIsLocked,

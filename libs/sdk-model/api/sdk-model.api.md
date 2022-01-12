@@ -510,6 +510,7 @@ export type IInsightDefinition = {
     insight: {
         title: string;
         tags?: string[];
+        summary?: string;
         visualizationUrl: string;
         buckets: IBucket[];
         filters: IFilter[];
@@ -699,6 +700,9 @@ export function insightSetSorts<T extends IInsightDefinition>(insight: T, sorts?
 
 // @public
 export function insightSorts(insight: IInsightDefinition): ISortItem[];
+
+// @public
+export function insightSummary(insight: IInsightDefinition): string;
 
 // @public
 export function insightTags(insight: IInsightDefinition): string[];
