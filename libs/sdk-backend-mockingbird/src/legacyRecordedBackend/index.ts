@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { GdcExecution } from "@gooddata/api-model-bear";
 import {
     IAnalyticalBackendConfig,
@@ -314,10 +314,10 @@ function recordedExecutionResult(
         definition,
         dimensions: convertDimensions(afmResponse.dimensions),
         readAll(): Promise<IDataView> {
-            return new Promise((r) => r(recordedDataView(definition, result, recording)));
+            return Promise.resolve(recordedDataView(definition, result, recording));
         },
         readWindow(_1: number[], _2: number[]): Promise<IDataView> {
-            return new Promise((r) => r(recordedDataView(definition, result, recording)));
+            return Promise.resolve(recordedDataView(definition, result, recording));
         },
         fingerprint(): string {
             return fp;
@@ -381,7 +381,7 @@ function recordedPreparedExecution(
         explain(): Promise<void> {
             // eslint-disable-next-line no-console
             console.warn("Backend does not support explain mode");
-            return new Promise((resolve) => resolve());
+            return Promise.resolve();
         },
         fingerprint(): string {
             return fp;

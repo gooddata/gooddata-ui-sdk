@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import { AfmExecutionResponse, ExecutionResult } from "@gooddata/api-client-tiger";
 import {
@@ -101,9 +101,7 @@ export class TigerExecutionResult implements IExecutionResult {
     }
 
     public async export(_options: IExportConfig): Promise<IExportResult> {
-        return new Promise((_, reject) => {
-            reject(new NotSupported("Tiger backend does not support exports"));
-        });
+        return Promise.reject(new NotSupported("Tiger backend does not support exports"));
     }
 
     public equals(other: IExecutionResult): boolean {
