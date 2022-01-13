@@ -131,12 +131,17 @@ The structure and naming are essential for the build and the runtime loading of 
 This project is setup so that all your custom code must be self-contained in the [src/{{pluginIdentifier}}](./src/{{pluginIdentifier}}) directory.
 
 The [src/{{pluginIdentifier}}\_engine](./src/{{pluginIdentifier}}_engine) and [src/{{pluginIdentifier}}\_entry](./src/{{pluginIdentifier}}_entry) directories contain essential plugin boilerplate.
-You must not modify these directories or their contents.
+You should not modify these directories or their contents unless you are 100% sure what you are doing.
 
 The [src/harness] directory contains code for plugin development harness; it is used only during plugin development and the
 code in this directory will not be part of the plugin build. You can start the harness using `{{packageManager}} start`.
 You should have no need to modify the code in the harness. We anticipate that at times you may need to tweak Analytical Backend setup
 that is contained in the [src/harness/backend.ts](src/harness/backend.ts) - this is a safe change.
+
+### How can I setup compatibility of the plugin?
+
+You can modify minEngineVersion and maxEngineVersion properties in `src/{{pluginIdentifier}}\_entry/index`.
+By default, we guarantee that plugin will be compatible only with the exact version of the dashboard engine used during its build (`"bundled"` option). But if you are sure, that plugin is compatible also with the other engine versions, you can set concrete range of the versions (e.g. `"minEngineVersion": "8.8.0", "maxEngineVersion": "8.9.0"`).
 
 ### How do plugin dependencies work?
 
