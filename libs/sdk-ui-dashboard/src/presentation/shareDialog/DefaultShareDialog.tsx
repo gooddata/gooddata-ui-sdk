@@ -1,8 +1,9 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React, { useMemo } from "react";
 import { ShareDialog, IShareDialogLabels } from "@gooddata/sdk-ui-kit";
 import { IShareDialogProps } from "./types";
 import { useIntl } from "react-intl";
+import { useDashboardSelector, selectLocale } from "../../model";
 
 /**
  * @alpha
@@ -20,6 +21,7 @@ export const DefaultShareDialog = (props: IShareDialogProps): JSX.Element | null
         onError,
     } = props;
 
+    const locale = useDashboardSelector(selectLocale);
     const intl = useIntl();
     const labels: IShareDialogLabels = useMemo(
         () => ({
@@ -43,6 +45,7 @@ export const DefaultShareDialog = (props: IShareDialogProps): JSX.Element | null
 
     return (
         <ShareDialog
+            locale={locale}
             backend={backend}
             workspace={workspace}
             sharedObject={sharedObject}
