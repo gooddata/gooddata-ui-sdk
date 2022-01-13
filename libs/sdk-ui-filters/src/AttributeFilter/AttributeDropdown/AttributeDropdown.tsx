@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
@@ -303,6 +303,7 @@ export class AttributeDropdownCore extends React.PureComponent<
                 className={classes}
                 fullscreenOnMobile={fullscreenOnMobile}
                 onOpenStateChanged={this.onDropdownOpenStateChanged}
+                enableEventPropagation={true}
             />
         );
     }
