@@ -261,8 +261,9 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
     const [resolvedPlaceholder, setPlaceholderValue] = usePlaceholder(props.connectToPlaceholder);
 
     const currentFilter = resolvedPlaceholder || props.filter;
-
     const filterRef = filterObjRef(currentFilter);
+    const isElementsByRef = isAttributeElementsByRef(filterAttributeElements(currentFilter));
+
     const currentFilterObjRef = useMemo(() => filterRef, [stringify(filterRef)]);
 
     const getInitialSelectedOptions = (): IAttributeElement[] =>
@@ -387,7 +388,8 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                 setState((prevState) => {
                     const uriToAttributeElementMap = new Map(prevState.uriToAttributeElementMap);
                     initialElements.items?.forEach((item) => {
-                        uriToAttributeElementMap.set(item.uri, item);
+                        const key = isElementsByRef ? item.uri : item.title;
+                        uriToAttributeElementMap.set(key, item);
                     });
 
                     return {
@@ -418,7 +420,8 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                     const { items } = mergedValidElements;
 
                     items.filter(isNonEmptyListItem).forEach((item) => {
-                        newUriToAttributeElementMap.set(item.uri, item);
+                        const key = isElementsByRef ? item.uri : item.title;
+                        newUriToAttributeElementMap.set(key, item);
                     });
 
                     // make sure that selected items have both title and uri, otherwise selection in InvertableList won't work
@@ -426,10 +429,12 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                     const updatedSelectedItems = updateSelectedOptionsWithDataByMap(
                         prevState.selectedFilterOptions,
                         newUriToAttributeElementMap,
+                        isElementsByRef,
                     );
                     const updatedAppliedItems = updateSelectedOptionsWithDataByMap(
                         prevState.appliedFilterOptions,
                         newUriToAttributeElementMap,
+                        isElementsByRef,
                     );
 
                     const validOptions = resolvedParentFilters?.length ? newElements : mergedValidElements;
@@ -684,8 +689,13 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                 ? `${getAllPartIntl} ${getItemsTitles(
                       state.selectedFilterOptions,
                       state.uriToAttributeElementMap,
+                      isElementsByRef,
                   )}`
-                : `${getItemsTitles(state.selectedFilterOptions, state.uriToAttributeElementMap)}`;
+                : `${getItemsTitles(
+                      state.selectedFilterOptions,
+                      state.uriToAttributeElementMap,
+                      isElementsByRef,
+                  )}`;
         }
         return "";
     };
