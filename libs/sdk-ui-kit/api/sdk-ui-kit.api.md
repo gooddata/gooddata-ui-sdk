@@ -827,6 +827,18 @@ export const Icon: {
     Interaction: FC<IIconProps>;
     AttributeFilter: FC<IIconProps>;
     LegendMenu: FC<IIconProps>;
+    ArrowDown: FC<IIconProps>;
+    ArrowUp: FC<IIconProps>;
+    Attribute: FC<IIconProps>;
+    Close: FC<IIconProps>;
+    Expand: FC<IIconProps>;
+    Fact: FC<IIconProps>;
+    Function: FC<IIconProps>;
+    Insight: FC<IIconProps>;
+    Keyword: FC<IIconProps>;
+    Label: FC<IIconProps>;
+    Metric: FC<IIconProps>;
+    QuestionMark: FC<IIconProps>;
 };
 
 // @internal (undocumented)
