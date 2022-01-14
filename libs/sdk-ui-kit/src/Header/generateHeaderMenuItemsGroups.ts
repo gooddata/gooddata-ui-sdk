@@ -186,7 +186,7 @@ function createInsightsItemsGroup(
     pushConditionally(
         insightItemsGroup,
         createIHeaderMenuItem(HEADER_ITEM_ID_DATA, "s-menu-data", dataUrl),
-        canShowDataItem(featureFlags, workspacePermissions, isFreemiumCustomer, backendSupportsDataItem),
+        canShowDataItem(featureFlags, workspacePermissions),
     );
     return insightItemsGroup;
 }
@@ -249,15 +249,9 @@ function dataItemUrl(
     }
     return `/modeler/#/${workspaceRef}s/${workspaceId}`;
 }
-function canShowDataItem(
-    featureFlags: ISettings,
-    workspacePermissions: IWorkspacePermissions,
-    isFreemiumCustomer: boolean,
-    backendSupportsDataItem: boolean,
-): boolean {
+function canShowDataItem(featureFlags: ISettings, workspacePermissions: IWorkspacePermissions): boolean {
     return (
         featureFlags.enableDataSection &&
-        (isFreemiumCustomer || backendSupportsDataItem) &&
         (workspacePermissions.canInitData || workspacePermissions.canRefreshData)
     );
 }

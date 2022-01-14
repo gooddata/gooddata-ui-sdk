@@ -43,6 +43,11 @@ describe("generateHeaderMenuItemsGroups", () => {
                     href: "/data/#/projects/TestWorkspaceId/datasets",
                     key: "gs.header.load",
                 },
+                {
+                    className: "s-menu-data",
+                    href: "/modeler/#/projects/TestWorkspaceId",
+                    key: "gs.header.data",
+                },
             ],
             [
                 {
@@ -94,6 +99,11 @@ describe("generateHeaderMenuItemsGroups", () => {
                     href: "/data/#/workspaces/TestWorkspaceId/datasets",
                     key: "gs.header.load",
                 },
+                {
+                    className: "s-menu-data",
+                    href: "/modeler/#/workspaces/TestWorkspaceId",
+                    key: "gs.header.data",
+                },
             ],
             [
                 {
@@ -123,6 +133,11 @@ describe("generateHeaderMenuItemsGroups", () => {
                     href: "/data/#/projects/TestWorkspaceId/datasets",
                     key: "gs.header.load",
                 },
+                {
+                    className: "s-menu-data",
+                    href: "/modeler/#/projects/TestWorkspaceId",
+                    key: "gs.header.data",
+                },
             ],
             [
                 {
@@ -151,6 +166,11 @@ describe("generateHeaderMenuItemsGroups", () => {
                     className: "s-menu-load",
                     href: "/data/#/workspaces/TestWorkspaceId/datasets",
                     key: "gs.header.load",
+                },
+                {
+                    className: "s-menu-data",
+                    href: "/modeler/#/workspaces/TestWorkspaceId",
+                    key: "gs.header.data",
                 },
             ],
             [
@@ -345,6 +365,11 @@ describe("generateHeaderMenuItemsGroups", () => {
                     href: "/data/#/projects/TestWorkspaceId/datasets",
                     key: "gs.header.load",
                 },
+                {
+                    className: "s-menu-data",
+                    href: "/modeler/#/projects/TestWorkspaceId",
+                    key: "gs.header.data",
+                },
             ],
         ]);
     });
@@ -366,6 +391,11 @@ describe("generateHeaderMenuItemsGroups", () => {
                     className: "s-menu-load",
                     href: "/data/#/workspaces/TestWorkspaceId/datasets",
                     key: "gs.header.load",
+                },
+                {
+                    className: "s-menu-data",
+                    href: "/modeler/#/workspaces/TestWorkspaceId",
+                    key: "gs.header.data",
                 },
             ],
         ]);
@@ -406,6 +436,11 @@ describe("generateHeaderMenuItemsGroups", () => {
                     className: "s-menu-analyze",
                     href: "/analyze/#/TestWorkspaceId/reportId/edit",
                     key: "gs.header.analyze",
+                },
+                {
+                    className: "s-menu-data",
+                    href: "/modeler/#/projects/TestWorkspaceId",
+                    key: "gs.header.data",
                 },
             ],
             [
@@ -453,6 +488,11 @@ describe("generateHeaderMenuItemsGroups", () => {
                     className: "s-menu-analyze",
                     href: "/analyze/#/TestWorkspaceId/reportId/edit",
                     key: "gs.header.analyze",
+                },
+                {
+                    className: "s-menu-data",
+                    href: "/modeler/#/workspaces/TestWorkspaceId",
+                    key: "gs.header.data",
                 },
             ],
             [
@@ -511,6 +551,11 @@ describe("generateHeaderMenuItemsGroups", () => {
                     className: "s-menu-load",
                     href: "/data/#/projects/TestWorkspaceId/datasets",
                     key: "gs.header.load",
+                },
+                {
+                    className: "s-menu-data",
+                    href: "/modeler/#/projects/TestWorkspaceId",
+                    key: "gs.header.data",
                 },
             ],
             [
