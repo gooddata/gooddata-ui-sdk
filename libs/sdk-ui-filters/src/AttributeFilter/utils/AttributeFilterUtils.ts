@@ -61,15 +61,17 @@ export const getNoneTitleIntl = (intl: IntlShape): string => {
 export const getItemsTitles = (
     selectedFilterOptions: IAttributeElement[],
     elementTitles: Map<string, IAttributeElement>,
+    isElementsByRef: boolean,
 ): string => {
     return selectedFilterOptions
-        .map((selectedOption) =>
-            selectedOption?.uri
-                ? elementTitles.get(selectedOption.uri)?.title
+        .map((selectedOption) => {
+            const key = isElementsByRef ? selectedOption.uri : selectedOption.title;
+            return key
+                ? elementTitles.get(key)?.title
                 : selectedOption?.title
                 ? selectedOption.title
-                : undefined,
-        )
+                : undefined;
+        })
         .filter((title) => !isEmpty(title))
         .join(", ");
 };
@@ -77,9 +79,11 @@ export const getItemsTitles = (
 export const updateSelectedOptionsWithDataByMap = (
     selection: Array<Partial<IAttributeElement>>,
     validElements: Map<string, IAttributeElement>,
+    isElementsByRef: boolean,
 ): Array<IAttributeElement> => {
     return selection.map((selectedItem) => {
-        return validElements.get(selectedItem.uri);
+        const key = isElementsByRef ? selectedItem.uri : selectedItem.title;
+        return validElements.get(key);
     });
 };
 
