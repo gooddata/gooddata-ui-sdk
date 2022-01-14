@@ -79,7 +79,7 @@ Building a new plugin is easy. Before you start, ensure that your `.env` and `.e
     the tool among the devDependencies together with convenience script to add plugin to either workspace specified
     in your `.env` file (default) or another workspace that you specify on the command line.
 
-    Run the `{{packageManager}} run add-plugin -- "https://your.hosting/pluginDirOfYourChoice/dp_{{pluginIdentifier}}.js"` to
+    Run the `{{packageManager}} run add-plugin -- "https://your.hosting/pluginDirOfYourChoice/{{pluginIdentifier}}.js"` to
     create a new dashboard plugin object in the workspace specified in the `.env` file. The created dashboard object
     point to the URL of the built plugin.
 
