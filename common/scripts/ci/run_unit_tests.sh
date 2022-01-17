@@ -21,7 +21,7 @@ PREFIXES=$(git diff --name-only "$TARGET_BRANCH...HEAD" | awk -F'[ /]' '{ printf
 
 # if there are any changes outside examples, libs, and tools, we must re-test everything as these often mean
 # configuration changes that can affect anything
-OUTSIDE_FILES_COUNT=$(echo "$PREFIXES" | grep -Evc '^(examples|libs|tools)')
+OUTSIDE_FILES_COUNT=$(echo "$PREFIXES" | grep -Evc '^(examples|libs|tools)' || true)
 
 if [ "$OUTSIDE_FILES_COUNT" -eq 0 ]; then
   echo 'Changes are only in code files, we can make the testing smarter'
