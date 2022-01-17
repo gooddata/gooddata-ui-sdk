@@ -23,15 +23,15 @@ PREFIXES=$(git diff --name-only "$TARGET_BRANCH...HEAD" | awk -F'[ /]' '{ printf
 # configuration changes that can affect anything
 OUTSIDE_FILES_COUNT=$(echo "$PREFIXES" | grep -Evc '^(examples|libs|tools)')
 
-if [ $OUTSIDE_FILES_COUNT -ne 0 ]; then
-  echo 'There are some files modified outside of the code, falling back to testing everything...'
-  RUSH_SPECS=''
-else
+if [ "$OUTSIDE_FILES_COUNT" -eq 0 ]; then
   echo 'Changes are only in code files, we can make the testing smarter'
-  # create an --impacted-by caluse for every changed pacakge
+  # create an --impacted-by clause for every changed package
   RUSH_SPECS=$(echo "$PREFIXES" | awk -F'[ /]' '{ printf " --impacted-by %s",$2 }')
   echo 'The rush commands would be limited by the following limiters:'
   echo "$RUSH_SPECS"
+else
+  echo 'There are some files modified outside of the code, falling back to testing everything...'
+  RUSH_SPECS=''
 fi
 
 # TODO pass $RUSH_SPECS to validate-ci and test-ci like $_RUSH validate-ci $RUSH_SPECS
