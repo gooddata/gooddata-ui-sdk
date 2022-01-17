@@ -171,6 +171,14 @@ interface IAttributeFilterButtonState {
     validOptions: IElementQueryResultWithEmptyItems;
     uriToAttributeElementMap: Map<string, IAttributeElement>;
     isFiltering: boolean;
+    /**
+     * This flag simulates previous value for `searchString` value. If the search string changes, it will force
+     * elements reloading.
+     *
+     * Implementation of this flag covers some edge case scenarios which resulted into fetching incorrect
+     * elements for current searched value.
+     */
+    needsReloadAfterSearch: boolean;
 }
 
 /**
@@ -293,6 +301,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             validOptions: null,
             uriToAttributeElementMap: new Map<string, IAttributeElement>(),
             isFiltering: false,
+            needsReloadAfterSearch: false,
         };
     });
 
@@ -369,6 +378,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                 validOptions: null,
                 offset: 0,
                 limit: LIMIT,
+                needsReloadAfterSearch: true,
             };
         });
     }, [state.searchString]);
@@ -404,12 +414,17 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
     // it merges the newly loaded data into the already loaded data
     const { error: elementsError, status: elementsStatus } = useCancelablePromise(
         {
-            promise: needsLoading(state.validOptions, state.offset, state.limit)
-                ? async () => {
-                      const preparedElementQuery = prepareElementsQuery(state.offset, state.limit);
-                      return preparedElementQuery.query();
-                  }
-                : null,
+            promise:
+                needsLoading(state.validOptions, state.offset, state.limit) || state.needsReloadAfterSearch
+                    ? async () => {
+                          const preparedElementQuery = prepareElementsQuery(
+                              state.offset,
+                              state.limit,
+                              state.searchString,
+                          );
+                          return preparedElementQuery.query();
+                      }
+                    : null,
             onSuccess: (newElements) => {
                 setState((prevState) => {
                     const mergedValidElements = mergeElementQueryResults(prevState.validOptions, newElements);
@@ -441,6 +456,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                         validOptions: validOptions,
                         firstLoad: false,
                         uriToAttributeElementMap: newUriToAttributeElementMap,
+                        needsReloadAfterSearch: false,
                     };
                 });
             },
@@ -451,6 +467,8 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             state.validOptions,
             state.offset,
             state.limit,
+            state.searchString,
+            state.needsReloadAfterSearch,
             resolvedParentFilters,
         ],
     );
@@ -567,7 +585,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         uriToAttributeElementMapError,
     ]);
 
-    const prepareElementsQuery = (offset: number, limit: number) => {
+    const prepareElementsQuery = (offset: number, limit: number, filter: string) => {
         const { workspace } = props;
         const preparedElementQuery = getBackend()
             .workspace(workspace)
@@ -575,7 +593,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             .elements()
             .forDisplayForm(getObjRef(currentFilter, props.identifier))
             .withOptions({
-                ...(!isEmpty(state.searchString) ? { filter: state.searchString } : {}),
+                ...(!isEmpty(filter) ? { filter } : {}),
             })
             .withOffset(offset)
             .withLimit(limit);
