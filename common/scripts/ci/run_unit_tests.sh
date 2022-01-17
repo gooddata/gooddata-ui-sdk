@@ -23,10 +23,9 @@ PREFIXES=$(git diff --name-only "$TARGET_BRANCH...HEAD" | awk -F'[ /]' '{ printf
 # configuration changes that can affect anything
 OUTSIDE_FILES_COUNT=$(echo "$PREFIXES" | grep -Evc '^(examples|libs|tools)')
 
-RUSH_SPECS=''
-
 if [ $OUTSIDE_FILES_COUNT -ne 0 ]; then
   echo 'There are some files modified outside of the code, falling back to testing everything...'
+  RUSH_SPECS=''
 else
   echo 'Changes are only in code files, we can make the testing smarter'
   # create an --impacted-by caluse for every changed pacakge
