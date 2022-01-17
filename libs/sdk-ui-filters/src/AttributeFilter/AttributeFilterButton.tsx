@@ -63,6 +63,7 @@ import stringify from "json-stable-stringify";
 import { IElementQueryResultWithEmptyItems, isNonEmptyListItem } from "./AttributeDropdown/types";
 import { AttributeDropdownAllFilteredOutBody } from "./AttributeDropdown/AttributeDropdownAllFilteredOutBody";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
+import { stringUtils } from "@gooddata/util";
 
 /**
  * @public
@@ -196,7 +197,8 @@ const DropdownButton: React.FC<{
     subtitleText: string;
     subtitleItemCount: number;
     isFiltering?: boolean;
-}> = ({ isMobile, isOpen, title, subtitleItemCount, subtitleText, isFiltering }) => {
+    isLoaded?: boolean;
+}> = ({ isMobile, isOpen, title, subtitleItemCount, subtitleText, isFiltering, isLoaded }) => {
     const subtitleSelectedItemsRef = useRef(null);
     const [displayItemCount, setDisplayItemCount] = useState(false);
     const [subtitle, setSubtitle] = useState("");
@@ -222,11 +224,17 @@ const DropdownButton: React.FC<{
 
     return (
         <div
-            className={cx("attribute-filter-button", "s-attribute-filter", {
-                "is-active": isOpen,
-                "gd-attribute-filter-button-mobile": isMobile,
-                "gd-attribute-filter-button-is-filtering": isFiltering,
-            })}
+            className={cx(
+                "attribute-filter-button",
+                "s-attribute-filter",
+                `s-${stringUtils.simplifyText(title)}`,
+                {
+                    "is-active": isOpen,
+                    "gd-attribute-filter-button-mobile": isMobile,
+                    "gd-attribute-filter-button-is-filtering": isFiltering,
+                    "is-loaded": isLoaded,
+                },
+            )}
         >
             <div className="button-content">
                 <div className="button-title">
@@ -889,6 +897,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                                     }
                                     subtitleText={getSubtitle()}
                                     subtitleItemCount={state.selectedFilterOptions.length}
+                                    isLoaded={!isOriginalTotalCountLoading()}
                                 />
                             </span>
                         )}
