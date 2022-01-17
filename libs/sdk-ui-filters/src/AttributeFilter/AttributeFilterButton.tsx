@@ -392,7 +392,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         {
             promise: isEmpty(state.selectedFilterOptions)
                 ? null
-                : async () => prepareElementsTitleQuery().query(),
+                : async () => prepareElementsTitleQuery(state.selectedFilterOptions).query(),
             onSuccess: (initialElements) => {
                 setState((prevState) => {
                     const uriToAttributeElementMap = new Map(prevState.uriToAttributeElementMap);
@@ -614,14 +614,14 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         return preparedElementQuery;
     };
 
-    const prepareElementsTitleQuery = () => {
+    const prepareElementsTitleQuery = (elements: IAttributeElement[]) => {
         return getBackend()
             .workspace(props.workspace)
             .attributes()
             .elements()
             .forDisplayForm(getObjRef(currentFilter, props.identifier))
             .withOptions({
-                uris: state.selectedFilterOptions.map((opt) => opt.uri),
+                uris: elements.map((opt) => opt.uri),
             });
     };
 
