@@ -228,6 +228,8 @@
     "shareDialog.share.grantee.add.info": "Gebruikers en groepen toevoegen",
     "shareDialog.share.grantee.add.search.placeholder": "Gebruikers en groepen zoeken",
     "shareDialog.share.grantee.add.search.error.message": "Laden van gebruikers en groepen mislukt. Probeer het later opnieuw.",
+    "shareDialog.share.grantee.add.label.user": "Gebruikers",
+    "shareDialog.share.grantee.add.label.group": "Groepen",
     "shareDialog.share.grantee.add.search.no.matching.items": "Geen matchende gebruikers of groepen.",
     "shareDialog.share.grantee.item.you": "{userName} (u)",
     "shareDialog.share.grantee.item.users.count": "{granteeCount} gebruikers",

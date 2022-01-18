@@ -1211,6 +1211,16 @@
         "comment": "Error message shown to the user when query in search input failed",
         "limit": 0
     },
+    "shareDialog.share.grantee.add.label.user": {
+        "value": "Users",
+        "comment": "Label shown to the user when query in search input matches an user",
+        "limit": 0
+    },
+    "shareDialog.share.grantee.add.label.group": {
+        "value": "Groups",
+        "comment": "Label shown to the user when query in search input matches a group of users",
+        "limit": 0
+    },
     "shareDialog.share.grantee.add.search.no.matching.items": {
         "value": "No matching users or groups.",
         "comment": "Information shown to the user when query in search input does no match any user or group.",
