@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { isInsightWidget, IWidgetDefinition } from "@gooddata/sdk-backend-spi";
 import {
     IInsightDefinition,
@@ -27,10 +27,14 @@ const FAKE_ELEMENT_URI_REGEX = /\/obj\/\d+\/elements\?id=(.*)/;
 /**
  * @internal
  */
-type ColorMapping = { color: { type: "guid"; value: string }; id: string };
+export type ColorMapping = {
+    color: { type: "guid"; value: string };
+    // TODO: RAIL-3984 unify this with IColorMapping type from sdk-model
+    id: string | null; // id: null means the setting is relevant to (empty value) of the attribute
+};
 
 function fixColorMapping(colorMapping: ColorMapping): ColorMapping {
-    const [uri, labelValue] = colorMapping.id.match(FAKE_ELEMENT_URI_REGEX) ?? [];
+    const [uri, labelValue] = colorMapping.id?.match(FAKE_ELEMENT_URI_REGEX) ?? [];
     if (uri) {
         return {
             ...colorMapping,
