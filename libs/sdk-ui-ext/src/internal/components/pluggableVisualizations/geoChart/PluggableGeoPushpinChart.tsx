@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 
 import {
@@ -96,6 +96,21 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
 
     public getUiConfig(): IUiConfig {
         return cloneDeep(GEO_PUSHPIN_CHART_UICONFIG);
+    }
+
+    public getExecution(
+        options: IVisProps,
+        insight: IInsightDefinition,
+        executionFactory: IExecutionFactory,
+    ) {
+        const { executionConfig } = options;
+        const buckets = this.prepareBuckets(insight);
+
+        return executionFactory
+            .forBuckets(buckets, insightFilters(insight))
+            .withDimensions(getGeoChartDimensions)
+            .withSorting(...this.createSort(insight))
+            .withExecConfig(executionConfig);
     }
 
     protected getSupportedPropertiesList(): string[] {
@@ -218,7 +233,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
     ): void {
-        const { dimensions = { height: undefined }, custom = {}, locale, theme, executionConfig } = options;
+        const { dimensions = { height: undefined }, custom = {}, locale, theme } = options;
         const { height } = dimensions;
         const { geoPushpinElement, intl } = this;
 
@@ -227,60 +242,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         const { drillableItems } = custom;
         const supportedControls: IVisualizationProperties = this.visualizationProperties.controls || {};
         const fullConfig = this.buildVisualizationConfig(options, supportedControls);
-
-        // we need to shallow copy the buckets so that we can add more without mutating the original array
-        const buckets = [...insightBuckets(insight)];
-
-        if (supportedControls && supportedControls?.tooltipText) {
-            const tooltipText: string = supportedControls?.tooltipText;
-            /*
-             * The display form to use for tooltip text is provided in properties :( This is unfortunate; the chart
-             * props could very well contain an extra prop for the tooltip bucket.
-             *
-             * Current guess is that this is because AD creates insight buckets; in order to create the tooltip
-             * bucket, AD would have to actually show the tooltip bucket in the UI - which is not desired. Thus the
-             * displayForm to add as bucket is passed in visualization properties.
-             *
-             * This workaround is highly unfortunate for two reasons:
-             *
-             * 1.  It leaks all the way to the API of geo chart: bucket geo does not have the tooltip bucket. Instead
-             *     it duplicates then here logic in chart transform
-             *
-             * 2.  The executeVisualization endpoint is useless for GeoChart; cannot be used to render geo chart because
-             *     the buckets stored in vis object are not complete. execVisualization takes buckets as is.
-             */
-
-            const locationBucket = insightBucket(insight, BucketNames.LOCATION);
-            let ref: ObjRef = idRef(tooltipText, "displayForm");
-            let alias = "";
-
-            if (locationBucket) {
-                const attribute = bucketAttribute(locationBucket);
-                if (attribute) {
-                    alias = attributeAlias(attribute);
-
-                    if (isUriRef(attributeDisplayFormRef(attribute))) {
-                        ref = uriRef(tooltipText);
-                    }
-                }
-            }
-
-            const existingTooltipTextBucket = insightBucket(insight, BucketNames.TOOLTIP_TEXT);
-            if (!existingTooltipTextBucket) {
-                buckets.push(
-                    newBucket(
-                        BucketNames.TOOLTIP_TEXT,
-                        newAttribute(ref, (m) => m.localId("tooltipText_df").alias(alias)),
-                    ),
-                );
-            }
-        }
-
-        const execution = executionFactory
-            .forBuckets(buckets, insightFilters(insight))
-            .withDimensions(getGeoChartDimensions)
-            .withSorting(...this.createSort(insight))
-            .withExecConfig(executionConfig);
+        const execution = this.getExecution(options, insight, executionFactory);
 
         const geoPushpinProps = {
             drillableItems,
@@ -412,5 +374,59 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             set(referencePointConfigured, "references", this.references);
         }
         return referencePointConfigured;
+    }
+
+    private prepareBuckets(insight: IInsightDefinition) {
+        const supportedControls: IVisualizationProperties = this.visualizationProperties.controls || {};
+
+        // we need to shallow copy the buckets so that we can add more without mutating the original array
+        const buckets = [...insightBuckets(insight)];
+
+        if (supportedControls && supportedControls?.tooltipText) {
+            const tooltipText: string = supportedControls?.tooltipText;
+            /*
+             * The display form to use for tooltip text is provided in properties :( This is unfortunate; the chart
+             * props could very well contain an extra prop for the tooltip bucket.
+             *
+             * Current guess is that this is because AD creates insight buckets; in order to create the tooltip
+             * bucket, AD would have to actually show the tooltip bucket in the UI - which is not desired. Thus the
+             * displayForm to add as bucket is passed in visualization properties.
+             *
+             * This workaround is highly unfortunate for two reasons:
+             *
+             * 1.  It leaks all the way to the API of geo chart: bucket geo does not have the tooltip bucket. Instead
+             *     it duplicates then here logic in chart transform
+             *
+             * 2.  The executeVisualization endpoint is useless for GeoChart; cannot be used to render geo chart because
+             *     the buckets stored in vis object are not complete. execVisualization takes buckets as is.
+             */
+
+            const locationBucket = insightBucket(insight, BucketNames.LOCATION);
+            let ref: ObjRef = idRef(tooltipText, "displayForm");
+            let alias = "";
+
+            if (locationBucket) {
+                const attribute = bucketAttribute(locationBucket);
+                if (attribute) {
+                    alias = attributeAlias(attribute);
+
+                    if (isUriRef(attributeDisplayFormRef(attribute))) {
+                        ref = uriRef(tooltipText);
+                    }
+                }
+            }
+
+            const existingTooltipTextBucket = insightBucket(insight, BucketNames.TOOLTIP_TEXT);
+            if (!existingTooltipTextBucket) {
+                buckets.push(
+                    newBucket(
+                        BucketNames.TOOLTIP_TEXT,
+                        newAttribute(ref, (m) => m.localId("tooltipText_df").alias(alias)),
+                    ),
+                );
+            }
+        }
+
+        return buckets;
     }
 }

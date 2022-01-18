@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
 import { bucketIsEmpty, IInsightDefinition, insightBucket, insightHasDataDefined } from "@gooddata/sdk-model";
@@ -115,6 +115,20 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
+    public getExecution(
+        options: IVisProps,
+        insight: IInsightDefinition,
+        executionFactory: IExecutionFactory,
+    ) {
+        const { dateFormat, executionConfig } = options;
+
+        return executionFactory
+            .forInsight(insight)
+            .withDimensions({ itemIdentifiers: ["measureGroup"] })
+            .withDateFormat(dateFormat)
+            .withExecConfig(executionConfig);
+    }
+
     protected checkBeforeRender(insight: IInsightDefinition): boolean {
         super.checkBeforeRender(insight);
 
@@ -139,20 +153,9 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
             return;
         }
 
-        const {
-            locale,
-            dateFormat,
-            custom = {},
-            config,
-            customVisualizationConfig,
-            executionConfig,
-        } = options;
+        const { locale, custom = {}, config, customVisualizationConfig } = options;
         const { drillableItems } = custom;
-        const execution = executionFactory
-            .forInsight(insight)
-            .withDimensions({ itemIdentifiers: ["measureGroup"] })
-            .withDateFormat(dateFormat)
-            .withExecConfig(executionConfig);
+        const execution = this.getExecution(options, insight, executionFactory);
 
         this.renderFun(
             <CoreHeadline

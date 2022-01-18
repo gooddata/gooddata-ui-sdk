@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import noop from "lodash/noop";
 import { shallow } from "enzyme";
@@ -21,12 +21,13 @@ import { VisualizationTypes, IDrillableItem } from "@gooddata/sdk-ui";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { CatalogViaTypeToClassMap, IVisualizationCatalog } from "../VisualizationCatalog";
 import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
-import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { DummyVisConstruct } from "../pluggableVisualizations/tests/visConstruct.fixture";
 import { BaseChartDescriptor } from "../pluggableVisualizations/baseChart/BaseChartDescriptor";
 import { PluggableVisualizationFactory } from "../../interfaces/VisualizationDescriptor";
 
 const { delay } = testUtils;
+const pluggableVisualizationGetExecutionMock = jest.fn(() => ({} as IPreparedExecution));
 
 class DummyClass extends AbstractPluggableVisualization {
     constructor(props: IVisConstruct) {
@@ -61,6 +62,14 @@ class DummyClass extends AbstractPluggableVisualization {
     }
     public unmount() {
         return;
+    }
+
+    public getExecution(
+        _options: IVisProps,
+        _insight: IInsightDefinition,
+        _executionFactory: IExecutionFactory,
+    ) {
+        return pluggableVisualizationGetExecutionMock();
     }
 }
 
@@ -466,5 +475,13 @@ describe("BaseVisualization", () => {
         const { onExportReady } = getDummyComponent();
         await delay();
         expect(onExportReady).toHaveBeenCalledTimes(1);
+    });
+
+    it("should call pluggable visualization's getExecution method", () => {
+        const visualization = new BaseVisualization(defaultProps);
+
+        expect(pluggableVisualizationGetExecutionMock).toHaveBeenCalledTimes(0);
+        visualization.getExecution();
+        expect(pluggableVisualizationGetExecutionMock).toHaveBeenCalledTimes(1);
     });
 });

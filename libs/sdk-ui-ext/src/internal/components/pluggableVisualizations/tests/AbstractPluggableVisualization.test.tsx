@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { IVisProps, IDrillDownContext } from "../../../interfaces/Visualization";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
 import { BucketNames } from "@gooddata/sdk-ui";
@@ -38,6 +38,14 @@ describe("AbstractPluggableVisualization", () => {
             _executionFactory: IExecutionFactory,
         ): void {
             return;
+        }
+
+        public getExecution(
+            _options: IVisProps,
+            insight: IInsightDefinition,
+            executionFactory: IExecutionFactory,
+        ) {
+            return executionFactory.forInsight(insight);
         }
     }
 
