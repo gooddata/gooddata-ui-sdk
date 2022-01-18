@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import {
     addIntersectionFiltersToInsight,
@@ -241,6 +241,21 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         return sanitizeTableProperties(insightSanitize(drillDownInsightWithFilters));
     }
 
+    public getExecution(
+        options: IVisProps,
+        insight: IInsightDefinition,
+        executionFactory: IExecutionFactory,
+    ) {
+        const { dateFormat, executionConfig } = options;
+
+        return executionFactory
+            .forInsight(insight)
+            .withDimensions(...this.getDimensions(insight))
+            .withSorting(...getPivotTableSortItems(insight))
+            .withDateFormat(dateFormat)
+            .withExecConfig(executionConfig);
+    }
+
     private createCorePivotTableProps = () => {
         const onColumnResized = isManualResizingEnabled(this.settings) ? this.onColumnResized : undefined;
 
@@ -286,26 +301,11 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             return;
         }
 
-        const {
-            locale,
-            dateFormat,
-            custom,
-            dimensions,
-            config = {},
-            customVisualizationConfig = {},
-            theme,
-            executionConfig,
-        } = options;
+        const { locale, custom, dimensions, config = {}, customVisualizationConfig = {}, theme } = options;
         const { maxHeight, maxWidth } = config;
         const height = dimensions?.height;
         const { drillableItems } = custom;
-
-        const execution = executionFactory
-            .forInsight(insight)
-            .withDimensions(...this.getDimensions(insight))
-            .withSorting(...getPivotTableSortItems(insight))
-            .withDateFormat(dateFormat)
-            .withExecConfig(executionConfig);
+        const execution = this.getExecution(options, insight, executionFactory);
 
         const columnWidths: ColumnWidthItem[] | undefined = getColumnWidthsFromProperties(
             insightProperties(insight),

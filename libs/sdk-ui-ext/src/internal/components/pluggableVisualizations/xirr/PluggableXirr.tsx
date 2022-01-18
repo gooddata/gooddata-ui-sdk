@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
 import {
@@ -86,17 +86,27 @@ export class PluggableXirr extends AbstractPluggableVisualization {
         return sanitizeFilters(newReferencePoint);
     };
 
+    public getExecution(
+        options: IVisProps,
+        insight: IInsightDefinition,
+        executionFactory: IExecutionFactory,
+    ) {
+        const { dateFormat } = options;
+
+        return executionFactory
+            .forInsight(insight)
+            .withDimensions(...this.getXirrDimensions(insight))
+            .withDateFormat(dateFormat);
+    }
+
     protected renderVisualization(
         options: IVisProps,
         insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
     ): void {
-        const { locale, dateFormat, custom = {}, config } = options;
+        const { locale, custom = {}, config } = options;
         const { drillableItems } = custom;
-        const execution = executionFactory
-            .forInsight(insight)
-            .withDimensions(...this.getXirrDimensions(insight))
-            .withDateFormat(dateFormat);
+        const execution = this.getExecution(options, insight, executionFactory);
 
         this.renderFun(
             <CoreXirr

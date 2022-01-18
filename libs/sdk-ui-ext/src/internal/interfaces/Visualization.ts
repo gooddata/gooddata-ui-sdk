@@ -1,7 +1,13 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
 import isEmpty from "lodash/isEmpty";
-import { IAnalyticalBackend, IExecutionFactory, ISettings, ITheme } from "@gooddata/sdk-backend-spi";
+import {
+    IAnalyticalBackend,
+    IExecutionFactory,
+    IPreparedExecution,
+    ISettings,
+    ITheme,
+} from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
     IInsight,
@@ -352,6 +358,19 @@ export interface IVisualization {
         insightPropertiesMeta: any,
         executionFactory: IExecutionFactory,
     ): void;
+
+    /**
+     * Get visualization execution based on provided props, insight and execution factory.
+     *
+     * @param props - visualization properties
+     * @param insight - insight to be executed
+     * @param executionFactory - execution factory to use when triggering calculation on backend
+     */
+    getExecution(
+        props: IVisProps,
+        insight: IInsightDefinition,
+        executionFactory: IExecutionFactory,
+    ): IPreparedExecution;
 
     unmount(): void;
 
