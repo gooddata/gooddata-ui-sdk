@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React, { useCallback, useMemo, useState, CSSProperties } from "react";
 import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { createSelector } from "@reduxjs/toolkit";
@@ -97,7 +97,7 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
         onLoadingChanged?.({ isLoading });
     }, []);
 
-    /// Filtering
+    // Filtering
     const {
         result: filtersForInsight,
         status: filtersStatus,
@@ -149,16 +149,16 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
         },
         [onError],
     );
-    const error = filtersError ?? visualizationError;
+    const effectiveError = filtersError ?? visualizationError;
 
     return (
         <div style={insightStyle}>
             <div style={insightPositionStyle}>
                 <IntlWrapper locale={locale}>
                     {(filtersStatus === "running" || isVisualizationLoading) && <LoadingComponent />}
-                    {error && (
+                    {effectiveError && (
                         <CustomError
-                            error={error}
+                            error={effectiveError}
                             // drill dialog does not measure its size but is always large enough to fit the full content
                             forceFullContent
                         />
@@ -166,7 +166,7 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
                     {filtersStatus === "success" && (
                         <div
                             className="insight-view-visualization"
-                            style={isVisualizationLoading || error ? { height: 0 } : undefined}
+                            style={isVisualizationLoading || effectiveError ? { height: 0 } : undefined}
                         >
                             <InsightRenderer
                                 insight={insightWithAddedWidgetProperties}
