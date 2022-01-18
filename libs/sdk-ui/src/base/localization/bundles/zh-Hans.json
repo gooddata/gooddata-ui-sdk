@@ -228,6 +228,8 @@
     "shareDialog.share.grantee.add.info": "添加用户和组",
     "shareDialog.share.grantee.add.search.placeholder": "搜索用户和组",
     "shareDialog.share.grantee.add.search.error.message": "无法加载用户和组。请稍后再试。",
+    "shareDialog.share.grantee.add.label.user": "用户",
+    "shareDialog.share.grantee.add.label.group": "组",
     "shareDialog.share.grantee.add.search.no.matching.items": "没有匹配的用户或组。",
     "shareDialog.share.grantee.item.you": "{userName}（您）",
     "shareDialog.share.grantee.item.users.count": "{granteeCount} 个用户",
