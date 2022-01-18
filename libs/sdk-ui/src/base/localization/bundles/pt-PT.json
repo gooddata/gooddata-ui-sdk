@@ -228,6 +228,8 @@
     "shareDialog.share.grantee.add.info": "Adicionar utilizadores e grupos",
     "shareDialog.share.grantee.add.search.placeholder": "Procurar utilizadores e grupos",
     "shareDialog.share.grantee.add.search.error.message": "Falha ao carregar utilizadores e grupos. Tente mais tarde.",
+    "shareDialog.share.grantee.add.label.user": "Utilizadores",
+    "shareDialog.share.grantee.add.label.group": "Grupos",
     "shareDialog.share.grantee.add.search.no.matching.items": "Nenhuns utilizadores ou grupos correspondentes.",
     "shareDialog.share.grantee.item.you": "{userName} (O Utilizador)",
     "shareDialog.share.grantee.item.users.count": "{granteeCount} utilizadores",
