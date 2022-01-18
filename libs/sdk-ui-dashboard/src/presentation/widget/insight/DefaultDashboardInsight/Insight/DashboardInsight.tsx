@@ -30,7 +30,6 @@ import {
     selectSeparators,
     selectSettings,
     useDashboardAsyncRender,
-    useDashboardEventDispatch,
     useDashboardSelector,
     useWidgetExecutionsHandler,
 } from "../../../../../model";
@@ -90,7 +89,6 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
 
-    const dispatchEvent = useDashboardEventDispatch();
     const executionsHandler = useWidgetExecutionsHandler(widgetRef(widget));
 
     // State props
@@ -122,7 +120,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         [onLoadingChanged, executionsHandler.onLoadingChanged],
     );
 
-    /// Filtering
+    // Filtering
     const {
         result: filtersForInsight,
         status: filtersStatus,
@@ -192,10 +190,10 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
             onError?.(error);
             executionsHandler.onError(error);
         },
-        [onError, dispatchEvent, executionsHandler.onError],
+        [onError, executionsHandler.onError],
     );
 
-    const error = filtersError ?? visualizationError;
+    const effectiveError = filtersError ?? visualizationError;
 
     const visualizationProperties = insightProperties(insightWithAddedWidgetProperties);
     const isZoomable = visualizationProperties?.controls.zoomInsight;
@@ -208,9 +206,9 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
             >
                 <IntlWrapper locale={locale}>
                     {(filtersStatus === "running" || isVisualizationLoading) && <LoadingComponent />}
-                    {error && (
+                    {effectiveError && (
                         <CustomError
-                            error={error}
+                            error={effectiveError}
                             isCustomWidgetHeightEnabled={!!settings?.enableKDWidgetCustomHeight}
                             height={clientHeight}
                             width={clientWidth}
