@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     IWorkspaceMeasuresService,
     IMeasureExpressionToken,
@@ -56,7 +56,11 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
         regexToken: IExpressionToken,
         metric: JsonApiMetricOutDocument,
     ): IMeasureExpressionToken {
-        if (regexToken.type === "text" || regexToken.type === "quoted_text") {
+        if (
+            regexToken.type === "text" ||
+            regexToken.type === "quoted_text" ||
+            regexToken.type === "comment"
+        ) {
             return { type: "text", value: regexToken.value };
         }
         const [type, id] = regexToken.value.split("/");
