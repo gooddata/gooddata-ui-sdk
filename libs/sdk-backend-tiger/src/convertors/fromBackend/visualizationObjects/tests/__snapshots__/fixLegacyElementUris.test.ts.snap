@@ -1,5 +1,31 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`fixInsightLegacyElementUris color mapping should handle color mapping items with null ids (RAIL-3983) 1`] = `
+Array [
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "0",
+    },
+    "id": "CZ",
+  },
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "1",
+    },
+    "id": "Czech.Republic",
+  },
+  Object {
+    "color": Object {
+      "type": "guid",
+      "value": "foo",
+    },
+    "id": null,
+  },
+]
+`;
+
 exports[`fixInsightLegacyElementUris color mapping should strip fake uris and keep only label text values 1`] = `
 Array [
   Object {

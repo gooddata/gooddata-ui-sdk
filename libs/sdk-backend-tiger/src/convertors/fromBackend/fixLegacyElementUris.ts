@@ -27,10 +27,13 @@ const FAKE_ELEMENT_URI_REGEX = /\/obj\/\d+\/elements\?id=(.*)/;
 /**
  * @internal
  */
-type ColorMapping = { color: { type: "guid"; value: string }; id: string };
+export type ColorMapping = {
+    color: { type: "guid"; value: string };
+    id: string | null;
+};
 
 function fixColorMapping(colorMapping: ColorMapping): ColorMapping {
-    const [uri, labelValue] = colorMapping.id.match(FAKE_ELEMENT_URI_REGEX) ?? [];
+    const [uri, labelValue] = colorMapping.id?.match(FAKE_ELEMENT_URI_REGEX) ?? [];
     if (uri) {
         return {
             ...colorMapping,
