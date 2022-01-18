@@ -172,6 +172,14 @@ interface IAttributeFilterButtonState {
     validOptions: IElementQueryResultWithEmptyItems;
     uriToAttributeElementMap: Map<string, IAttributeElement>;
     isFiltering: boolean;
+    /**
+     * This flag simulates previous value for `searchString` value. If the search string changes, it will force
+     * elements reloading.
+     *
+     * Implementation of this flag covers some edge case scenarios which resulted into fetching incorrect
+     * elements for current searched value.
+     */
+    needsReloadAfterSearch: boolean;
 }
 
 /**
@@ -302,6 +310,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             validOptions: null,
             uriToAttributeElementMap: new Map<string, IAttributeElement>(),
             isFiltering: false,
+            needsReloadAfterSearch: false,
         };
     });
 
@@ -378,12 +387,14 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                 validOptions: null,
                 offset: 0,
                 limit: LIMIT,
+                needsReloadAfterSearch: true,
             };
         });
     }, [state.searchString]);
 
     /*
-     * This cancelable promise is used to fetch attribute filter elements for the initial selected options.
+     * This cancelable promise is used to fetch attribute filter elements for the initial selected options or
+     * to fetch the elements after selection change coming from the parent component.
      * It's only called on component mounting to ensure we have attribute element titles for elements out of
      * limits in case of huge element number.
      */
@@ -391,7 +402,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         {
             promise: isEmpty(state.selectedFilterOptions)
                 ? null
-                : async () => prepareElementsTitleQuery().query(),
+                : async () => prepareElementsTitleQuery(state.appliedFilterOptions).query(),
             onSuccess: (initialElements) => {
                 setState((prevState) => {
                     const uriToAttributeElementMap = new Map(prevState.uriToAttributeElementMap);
@@ -407,19 +418,30 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                 });
             },
         },
-        [props.backend, props.workspace, props.identifier, stringify(currentFilterObjRef)],
+        [
+            props.backend,
+            props.workspace,
+            props.identifier,
+            stringify(currentFilterObjRef),
+            state.appliedFilterOptions,
+        ],
     );
 
     // this cancelable promise loads missing page of data if needed and in the onSuccess callback
     // it merges the newly loaded data into the already loaded data
     const { error: elementsError, status: elementsStatus } = useCancelablePromise(
         {
-            promise: needsLoading(state.validOptions, state.offset, state.limit)
-                ? async () => {
-                      const preparedElementQuery = prepareElementsQuery(state.offset, state.limit);
-                      return preparedElementQuery.query();
-                  }
-                : null,
+            promise:
+                needsLoading(state.validOptions, state.offset, state.limit) || state.needsReloadAfterSearch
+                    ? async () => {
+                          const preparedElementQuery = prepareElementsQuery(
+                              state.offset,
+                              state.limit,
+                              state.searchString,
+                          );
+                          return preparedElementQuery.query();
+                      }
+                    : null,
             onSuccess: (newElements) => {
                 setState((prevState) => {
                     const mergedValidElements = mergeElementQueryResults(prevState.validOptions, newElements);
@@ -454,6 +476,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                         validOptions: validOptions,
                         firstLoad: false,
                         uriToAttributeElementMap: newUriToAttributeElementMap,
+                        needsReloadAfterSearch: false,
                     };
                 });
             },
@@ -464,6 +487,8 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             state.validOptions,
             state.offset,
             state.limit,
+            state.searchString,
+            state.needsReloadAfterSearch,
             resolvedParentFilters,
         ],
     );
@@ -580,7 +605,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         uriToAttributeElementMapError,
     ]);
 
-    const prepareElementsQuery = (offset: number, limit: number) => {
+    const prepareElementsQuery = (offset: number, limit: number, filter: string) => {
         const { workspace } = props;
         const preparedElementQuery = getBackend()
             .workspace(workspace)
@@ -588,7 +613,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             .elements()
             .forDisplayForm(getObjRef(currentFilter, props.identifier))
             .withOptions({
-                ...(!isEmpty(state.searchString) ? { filter: state.searchString } : {}),
+                ...(!isEmpty(filter) ? { filter } : {}),
             })
             .withOffset(offset)
             .withLimit(limit);
@@ -609,14 +634,14 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         return preparedElementQuery;
     };
 
-    const prepareElementsTitleQuery = () => {
+    const prepareElementsTitleQuery = (elements: IAttributeElement[]) => {
         return getBackend()
             .workspace(props.workspace)
             .attributes()
             .elements()
             .forDisplayForm(getObjRef(currentFilter, props.identifier))
             .withOptions({
-                uris: state.selectedFilterOptions.map((opt) => opt.uri),
+                uris: elements.map((opt) => opt.uri),
             });
     };
 
@@ -677,12 +702,16 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
              * If the number of selected items is 0 and originalTotalCount is greater than 0, it is
              * considered the selection is empty.
              */
-            const empty = getNumberOfSelectedItems() === 0 && originalTotalCount > 0;
+            const empty =
+                getNumberOfSelectedItems(state.selectedFilterOptions, state.isInverted) === 0 &&
+                originalTotalCount > 0;
             /**
              * All items are selected only in case the number of selected items is equal to original total
              * count.
              */
-            const all = getNumberOfSelectedItems() === originalTotalCount;
+            const all =
+                getNumberOfSelectedItems(state.selectedFilterOptions, state.isInverted) ===
+                originalTotalCount;
             const getAllPartIntl = all ? getAllTitle(props.intl) : getAllExceptTitle(props.intl);
 
             if (empty) {
@@ -800,12 +829,12 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         isOpen ? onDropdownOpen() : onDropdownClosed();
     };
 
-    const getNumberOfSelectedItems = () => {
-        if (state.isInverted) {
-            return originalTotalCount - state.selectedFilterOptions.length;
+    const getNumberOfSelectedItems = (filterOptions: IAttributeElement[], isInverted: boolean) => {
+        if (isInverted) {
+            return originalTotalCount - filterOptions.length;
         }
 
-        return state.selectedFilterOptions.length;
+        return filterOptions.length;
     };
 
     const hasNoData =
@@ -859,7 +888,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                 isParentFilterTitlesLoading() ||
                 isOriginalTotalCountLoading(),
             searchString: state.searchString,
-            applyDisabled: getNumberOfSelectedItems() === 0,
+            applyDisabled: getNumberOfSelectedItems(state.selectedFilterOptions, state.isInverted) === 0,
             showItemsFilteredMessage:
                 showItemsFilteredMessage(isElementsLoading(), resolvedParentFilters) && !isAllFiltered,
             parentFilterTitles,
