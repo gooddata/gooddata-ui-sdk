@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import {
     IAnalyticalBackend,
     IWorkspaceUserGroupsQueryOptions,
@@ -88,11 +88,11 @@ export const loadGranteeOptionsPromise =
 
             return [
                 {
-                    label: "Groups",
+                    label: intl.formatMessage({ id: "shareDialog.share.grantee.add.label.group" }),
                     options: mappedGroups,
                 },
                 {
-                    label: "Users",
+                    label: intl.formatMessage({ id: "shareDialog.share.grantee.add.label.user" }),
                     options: mappedUsers,
                 },
             ];

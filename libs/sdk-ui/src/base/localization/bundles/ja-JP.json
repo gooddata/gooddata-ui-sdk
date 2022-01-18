@@ -228,6 +228,8 @@
     "shareDialog.share.grantee.add.info": "ユーザーまたはグループを追加",
     "shareDialog.share.grantee.add.search.placeholder": "ユーザーまたはグループを検索",
     "shareDialog.share.grantee.add.search.error.message": "ユーザーおよびグループのロードに失敗しました。後で再試行してください。",
+    "shareDialog.share.grantee.add.label.user": "ユーザー",
+    "shareDialog.share.grantee.add.label.group": "グループ",
     "shareDialog.share.grantee.add.search.no.matching.items": "一致するユーザーまたはグループがありません。",
     "shareDialog.share.grantee.item.you": "{userName} (あなた)",
     "shareDialog.share.grantee.item.users.count": "{granteeCount} ユーザー",
