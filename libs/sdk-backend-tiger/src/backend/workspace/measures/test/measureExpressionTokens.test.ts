@@ -43,7 +43,10 @@ describe("tokenizeExpression", () => {
             { type: "text", value: "*" },
             { type: "fact", value: "fact/order_lines.quantity" },
             { type: "text", value: ") " },
-            { type: "comment", value: '# WHERE NOT (label/customer.c_custkey IN ("Returned", "Canceled"))' },
+            {
+                type: "comment",
+                value: '# WHERE NOT ({label/customer.c_custkey} IN ("Returned", "Canceled"))',
+            },
         ]);
     });
 

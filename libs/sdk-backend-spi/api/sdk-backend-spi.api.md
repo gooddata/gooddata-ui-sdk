@@ -392,6 +392,12 @@ export interface ICatalogMeasure extends IGroupableCatalogItemBase {
     type: "measure";
 }
 
+// @public
+export interface ICommentExpressionToken {
+    type: "comment";
+    value: string;
+}
+
 // @alpha
 export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, IDashboardObjectIdentity, Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers>, IAccessControlAware {
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
@@ -1032,7 +1038,7 @@ export interface IMeasureDescriptor {
 }
 
 // @public
-export type IMeasureExpressionToken = IObjectExpressionToken | IAttributeElementExpressionToken | ITextExpressionToken;
+export type IMeasureExpressionToken = IObjectExpressionToken | IAttributeElementExpressionToken | ITextExpressionToken | ICommentExpressionToken;
 
 // @public
 export interface IMeasureGroupDescriptor {

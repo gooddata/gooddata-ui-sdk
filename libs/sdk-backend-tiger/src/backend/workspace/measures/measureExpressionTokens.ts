@@ -49,6 +49,6 @@ export const tokenizeExpression = (expression: string): IExpressionToken[] => {
 
     return tokens.map((token) => ({
         ...token,
-        value: token.value.replace(REMOVE_BRACKETS_REGEXP, ""),
+        value: token.type === "comment" ? token.value : token.value.replace(REMOVE_BRACKETS_REGEXP, ""),
     }));
 };

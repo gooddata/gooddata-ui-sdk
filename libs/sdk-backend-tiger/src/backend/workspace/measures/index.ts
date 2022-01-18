@@ -56,12 +56,11 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
         regexToken: IExpressionToken,
         metric: JsonApiMetricOutDocument,
     ): IMeasureExpressionToken {
-        if (
-            regexToken.type === "text" ||
-            regexToken.type === "quoted_text" ||
-            regexToken.type === "comment"
-        ) {
+        if (regexToken.type === "text" || regexToken.type === "quoted_text") {
             return { type: "text", value: regexToken.value };
+        }
+        if (regexToken.type === "comment") {
+            return { type: "comment", value: regexToken.value };
         }
         const [type, id] = regexToken.value.split("/");
         if (type === "metric" || type === "fact" || type === "attribute" || type === "label") {
