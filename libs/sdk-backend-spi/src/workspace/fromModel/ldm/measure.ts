@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { ObjectType, ObjRef } from "@gooddata/sdk-model";
 
 /**
@@ -41,7 +41,8 @@ import { ObjectType, ObjRef } from "@gooddata/sdk-model";
 export type IMeasureExpressionToken =
     | IObjectExpressionToken
     | IAttributeElementExpressionToken
-    | ITextExpressionToken;
+    | ITextExpressionToken
+    | ICommentExpressionToken;
 
 /**
  * Parsed {@link https://help.gooddata.com/pages/viewpage.action?pageId=86795279 | MAQL} token referencing a metadata object.
@@ -111,6 +112,26 @@ export interface ITextExpressionToken {
      * Expression token type
      */
     type: "text";
+
+    /**
+     * Plain text
+     */
+    value: string;
+}
+
+/**
+ * Parsed {@link https://help.gooddata.com/pages/viewpage.action?pageId=86795279 | MAQL} comment text.
+ *
+ * @remarks
+ * See {@link IMeasureExpressionToken} for more information.
+ *
+ * @public
+ */
+export interface ICommentExpressionToken {
+    /**
+     * Expression token type
+     */
+    type: "comment";
 
     /**
      * Plain text

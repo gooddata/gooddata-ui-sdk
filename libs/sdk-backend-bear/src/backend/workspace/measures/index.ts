@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { GdcMetadata, GdcMetadataObject } from "@gooddata/api-model-bear";
 import {
     IMeasureExpressionToken,
@@ -129,6 +129,11 @@ export class BearWorkspaceMeasures implements IWorkspaceMeasuresService {
                     value: meta.title,
                     id: meta.id,
                     ref: meta.ref,
+                };
+            } else if (token.type === "comment") {
+                return {
+                    type: "comment",
+                    value: token.value,
                 };
             }
 

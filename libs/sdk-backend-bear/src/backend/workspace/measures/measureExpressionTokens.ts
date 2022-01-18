@@ -1,10 +1,10 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import flow from "lodash/flow";
 import filter from "lodash/fp/filter";
 import map from "lodash/fp/map";
 import uniq from "lodash/fp/uniq";
 
-type ExpressionTokenType = "text" | "quoted_text" | "identifier" | "uri" | "element_uri";
+type ExpressionTokenType = "text" | "quoted_text" | "identifier" | "uri" | "element_uri" | "comment";
 
 interface IExpressionToken {
     type: ExpressionTokenType;
@@ -13,11 +13,12 @@ interface IExpressionToken {
 
 const REMOVE_BRACKETS_REGEXP = /[[\]{}]/g;
 const TOKEN_TYPE_REGEXP_PAIRS: Array<[ExpressionTokenType, RegExp]> = [
-    ["text", /^[^{}[\]]+/],
+    ["text", /^[^#{}[\]"]+/],
     ["quoted_text", /^"(?:[^"\\]|\\\\.)*"/],
     ["identifier", /^\{[^}]+\}/],
     ["element_uri", /^\[[a-zA-Z0-9\\/]+elements\?id=\d+]/],
     ["uri", /^\[[a-zA-Z0-9\\/]+]/],
+    ["comment", /#[^\n]*/],
 ];
 
 export const getTokenValuesOfType = (tokenType: ExpressionTokenType, tokens: IExpressionToken[]): string[] =>
@@ -52,6 +53,6 @@ export const tokenizeExpression = (expression: string): IExpressionToken[] => {
 
     return tokens.map((token) => ({
         ...token,
-        value: token.value.replace(REMOVE_BRACKETS_REGEXP, ""),
+        value: token.type === "comment" ? token.value : token.value.replace(REMOVE_BRACKETS_REGEXP, ""),
     }));
 };

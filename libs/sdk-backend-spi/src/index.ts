@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 /**
  * This package provides definitions of the Service Provider Interface (SPI) for the Analytical Backend.
  *
@@ -432,6 +432,7 @@ export {
     IObjectExpressionToken,
     IAttributeElementExpressionToken,
     ITextExpressionToken,
+    ICommentExpressionToken,
 } from "./workspace/fromModel/ldm/measure";
 
 export { IOrganization, IOrganizations, IOrganizationDescriptor } from "./organization";
