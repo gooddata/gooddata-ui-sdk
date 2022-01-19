@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { Button } from "@gooddata/sdk-ui-kit";
@@ -155,6 +155,10 @@ class DropdownBodyWrapped extends React.PureComponent<IDropdownBodyProps, IDropd
             return false;
         }
 
+        if (this.props.usePercentage) {
+            return this.trimToPrecision(this.fromPercentToDecimal(value)) === this.props.value.value;
+        }
+
         return value === this.props.value.value;
     }
 
@@ -167,6 +171,13 @@ class DropdownBodyWrapped extends React.PureComponent<IDropdownBodyProps, IDropd
 
         if (this.props.value === null || this.isChanged()) {
             return false;
+        }
+
+        if (this.props.usePercentage) {
+            return (
+                this.trimToPrecision(this.fromPercentToDecimal(from)) === this.props.value.from &&
+                this.trimToPrecision(this.fromPercentToDecimal(to)) === this.props.value.to
+            );
         }
 
         return from === this.props.value.from && to === this.props.value.to;

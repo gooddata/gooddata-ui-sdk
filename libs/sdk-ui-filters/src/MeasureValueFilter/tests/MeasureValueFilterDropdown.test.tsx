@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { mount } from "enzyme";
 import noop from "lodash/noop";
@@ -425,6 +425,44 @@ describe("Measure value filter dropdown", () => {
                 expect(component.isApplyButtonDisabled()).toEqual(true);
 
                 component.toggleTreatNullAsCheckbox();
+
+                expect(component.isApplyButtonDisabled()).toEqual(false);
+            });
+
+            it("should disable apply button when value in percentage mode is equivalent but not equal to prop value with comparison operator", () => {
+                const filter = newMeasureValueFilter(localIdRef("myMeasure"), "EQUAL_TO", 42.123);
+                const component = renderComponent({ filter, usePercentage: true });
+
+                component.setComparisonValue("0").setComparisonValue("4212.3");
+
+                expect(component.isApplyButtonDisabled()).toEqual(true);
+            });
+
+            it("should enable apply button when value in percentage mode is equal but not equivalent to prop value with comparison operator", () => {
+                const filter = newMeasureValueFilter(localIdRef("myMeasure"), "EQUAL_TO", 42.123);
+                const component = renderComponent({ filter, usePercentage: true });
+
+                component.setComparisonValue("4200").setComparisonValue("42.123");
+
+                expect(component.isApplyButtonDisabled()).toEqual(false);
+            });
+
+            it("should disable apply button when values in percentage mode are equivalent but not equal to prop values with range operator", () => {
+                const filter = newMeasureValueFilter(localIdRef("myMeasure"), "BETWEEN", 24.123, 42.246);
+                const component = renderComponent({ filter, usePercentage: true });
+
+                component.setRangeFrom("0").setRangeFrom("2412.3");
+                component.setRangeTo("0").setRangeTo("4224.6");
+
+                expect(component.isApplyButtonDisabled()).toEqual(true);
+            });
+
+            it("should enable apply button when values in percentage mode are equal but not equivalent to prop values with range operator", () => {
+                const filter = newMeasureValueFilter(localIdRef("myMeasure"), "BETWEEN", 24.123, 42.246);
+                const component = renderComponent({ filter, usePercentage: true });
+
+                component.setRangeFrom("2400").setRangeFrom("24.123");
+                component.setRangeTo("4200").setRangeTo("42.246");
 
                 expect(component.isApplyButtonDisabled()).toEqual(false);
             });
