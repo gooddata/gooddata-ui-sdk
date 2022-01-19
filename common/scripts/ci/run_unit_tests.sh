@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P))
+DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)
 WIREMOCK_DIR="${DIR}/../../../libs/sdk-backend-bear/tests/wiremock"
 
 # Network for the wiremock server(s) & the test code to share; this is exported and propagated to dockerized
@@ -18,15 +18,19 @@ echo 'Evaluating possible incremental test/validation optimizations'
 # get all prefixes only two levels deep to determine which packages were changed
 TARGET_BRANCH=$ZUUL_BRANCH
 PREFIXES=$(git diff --name-only "$TARGET_BRANCH...HEAD" | awk -F'[ /]' '{ printf "%s/%s\n",$1,$2 }' | sort | uniq)
+# Filter out things in common/changes, they are insignificant in this context
+FILTERED_PREFIXES=$(echo "$PREFIXES" | grep -v '^common/changes' || true)
+
+echo "$FILTERED_PREFIXES"
 
 # if there are any changes outside examples, libs, and tools, we must re-test everything as these often mean
 # configuration changes that can affect anything
-OUTSIDE_FILES_COUNT=$(echo "$PREFIXES" | grep -Evc '^(examples|libs|tools)' || true)
+OUTSIDE_FILES_COUNT=$(echo "$FILTERED_PREFIXES" | grep -Evc '^(examples|libs|tools)' || true)
 
 if [ "$OUTSIDE_FILES_COUNT" -eq 0 ]; then
   echo 'Changes are only in code files, we can make the testing smarter'
   # create an --impacted-by clause for every changed package
-  RUSH_SPECS=$(echo "$PREFIXES" | awk -F'[ /]' '{ printf " --impacted-by %s",$2 }')
+  RUSH_SPECS=$(echo "$FILTERED_PREFIXES" | awk -F'[ /]' '{ printf " --impacted-by %s",$2 }')
   echo 'The rush commands would be limited by the following limiters:'
   echo "$RUSH_SPECS"
 else
