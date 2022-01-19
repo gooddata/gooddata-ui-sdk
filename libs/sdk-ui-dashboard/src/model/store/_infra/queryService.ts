@@ -37,7 +37,7 @@ import capitalize from "lodash/capitalize";
  *
  * @internal
  */
-type QueryCacheEntryResult<TResult> = {
+export type QueryCacheEntryResult<TResult> = {
     /**
      *
      */
@@ -53,23 +53,27 @@ type QueryCacheEntryResult<TResult> = {
  *
  * @internal
  */
-type QueryCacheEntry<TQuery extends IDashboardQuery<TResult>, TResult> = QueryCacheEntryResult<TResult> & {
+export type QueryCacheEntry<TQuery extends IDashboardQuery<TResult>, TResult> = QueryCacheEntryResult<TResult> & {
     query: TQuery;
 };
 
 /**
  * Each slice reducer is typed as toolkit's CaseReducer. This type specializes the case reducer to the purpose of
  * doing reductions on state that holds results for particular query type.
+ * 
+ * @internal
  */
-type QueryCacheReducer<TQuery extends IDashboardQuery<TResult>, TResult, TPayload> = CaseReducer<
+export type QueryCacheReducer<TQuery extends IDashboardQuery<TResult>, TResult, TPayload> = CaseReducer<
     EntityState<QueryCacheEntry<TQuery, TResult>>,
     PayloadAction<TPayload>
 >;
 
 /**
  * This defines all possible reducers for the cache slice.
+ * 
+ * @internal
  */
-type AllQueryCacheReducers<TQuery extends IDashboardQuery<TResult>, TResult> = {
+export type AllQueryCacheReducers<TQuery extends IDashboardQuery<TResult>, TResult> = {
     /**
      * Sets value of cache entry.
      */
@@ -88,15 +92,19 @@ type AllQueryCacheReducers<TQuery extends IDashboardQuery<TResult>, TResult> = {
 
 /**
  * This is a specialization of toolkit's CaseReducerActions to correctly type the action creators.
+ * 
+ * @internal
  */
-type QueryActions<TQuery extends IDashboardQuery, TResult> = CaseReducerActions<
+export type QueryActions<TQuery extends IDashboardQuery, TResult> = CaseReducerActions<
     AllQueryCacheReducers<TQuery, TResult>
 >;
 
 /**
  * Contains all essentials of query cache that can be integrated into redux store and redux sagas.
+ * 
+ * @internal
  */
-type QueryCache<TQuery extends IDashboardQuery<TResult>, TResult> = {
+export type QueryCache<TQuery extends IDashboardQuery<TResult>, TResult> = {
     /**
      * A name to use as key in _queryCache part of the redux state.
      */
@@ -232,6 +240,8 @@ function createQueryCacheSlice<TQuery extends IDashboardQuery<TResult>, TResult>
  *
  * The dashboard component's infrastructure and hooks ensure that the query result (or query error) will be
  * pushed to the caller code.
+ *
+ * @internal
  */
 export interface IDashboardQueryService<TQuery extends IDashboardQuery<TResult>, TResult> {
     name: DashboardQueryType;

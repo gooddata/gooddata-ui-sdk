@@ -19,7 +19,7 @@ import { DateString } from '@gooddata/sdk-backend-spi';
 import { Dictionary } from '@reduxjs/toolkit';
 import { Dispatch } from '@reduxjs/toolkit';
 import { DrillDefinition } from '@gooddata/sdk-backend-spi';
-import { EnhancedStore } from '@reduxjs/toolkit';
+import { EntityId } from '@reduxjs/toolkit';
 import { EntityState } from '@reduxjs/toolkit';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
 import { FilterContextItem } from '@gooddata/sdk-backend-spi';
@@ -117,10 +117,13 @@ import { OnFiredDrillEvent } from '@gooddata/sdk-ui';
 import { OnLoadingChanged } from '@gooddata/sdk-ui';
 import { OutputSelector } from '@reduxjs/toolkit';
 import { Patch } from 'immer';
+import { PayloadAction } from '@reduxjs/toolkit';
 import { PlatformEdition } from '@gooddata/sdk-backend-spi';
 import { PropsWithChildren } from 'react';
 import { default as React_2 } from 'react';
 import { ReactReduxContextValue } from 'react-redux';
+import { Reducer } from '@reduxjs/toolkit';
+import { SagaIterator } from 'redux-saga';
 import { ScreenSize } from '@gooddata/sdk-backend-spi';
 import { Selector } from '@reduxjs/toolkit';
 import { ShareStatus } from '@gooddata/sdk-backend-spi';
@@ -198,6 +201,13 @@ export interface AddSectionItems extends IDashboardCommand {
 
 // @internal (undocumented)
 export type AlertsState = EntityState<IWidgetAlert>;
+
+// @internal
+export type AllQueryCacheReducers<TQuery extends IDashboardQuery<TResult>, TResult> = {
+    set: QueryCacheReducer<TQuery, TResult, QueryCacheEntry<TQuery, TResult>>;
+    remove: QueryCacheReducer<TQuery, TResult, string>;
+    removeAll: QueryCacheReducer<TQuery, TResult, void>;
+};
 
 // @public
 export function anyDashboardEventHandler(handler: DashboardEventHandler["handler"]): DashboardEventHandler;
@@ -1462,9 +1472,6 @@ export type DashboardState = {
 export type DashboardStateChangeCallback = (state: DashboardState, dispatch: DashboardDispatch) => void;
 
 // @internal (undocumented)
-export type DashboardStore = EnhancedStore<DashboardState>;
-
-// @internal (undocumented)
 export const DashboardStoreProvider: React_2.FC<IDashboardStoreProviderProps>;
 
 // @public (undocumented)
@@ -1930,6 +1937,34 @@ export function getDefaultLegacyInsightMenuItems(intl: IntlShape, config: {
 // @internal (undocumented)
 export function getDrillDownAttributeTitle(localIdentifier: string, drillEvent: IDrillEvent): string;
 
+// @internal (undocumented)
+export class HeadlessDashboard {
+    constructor(ctx: DashboardContext, config?: HeadlessDashboardConfig);
+    // (undocumented)
+    protected capturedActions: Array<PayloadAction<any>>;
+    // (undocumented)
+    protected capturedEvents: Array<DashboardEvents>;
+    // (undocumented)
+    dispatch(action: DashboardCommands | PayloadAction<any>): void;
+    dispatchAndWaitFor(action: DashboardCommands | PayloadAction<any>, actionType: DashboardEventType | DashboardCommandType | string, timeout?: number): Promise<any>;
+    // (undocumented)
+    protected getOrCreateMonitoredAction: (actionType: string) => MonitoredAction;
+    // (undocumented)
+    protected monitoredActions: Record<string, MonitoredAction>;
+    query<TResult>(action: IDashboardQuery<TResult>): Promise<TResult>;
+    // (undocumented)
+    select<TSelectorFactory extends (...args: any[]) => any>(selectorFactory: TSelectorFactory): ReturnType<TSelectorFactory>;
+    protected state(): DashboardState;
+    waitFor(actionType: DashboardEventType | DashboardCommandType | string, timeout?: number): Promise<any>;
+}
+
+// @internal (undocumented)
+export type HeadlessDashboardConfig = {
+    queryServices?: IDashboardQueryService<any, any>[];
+    backgroundWorkers?: ((context: DashboardContext) => SagaIterator<void>)[];
+    customizationFns?: DashboardModelCustomizationFns;
+};
+
 // @alpha
 export const HiddenButtonBar: () => JSX.Element | null;
 
@@ -2291,6 +2326,16 @@ export interface IDashboardQuery<_TResult = any> {
 
 // @alpha
 export type IDashboardQueryResult<T> = T extends IDashboardQuery<infer TResult> ? TResult : never;
+
+// @internal
+export interface IDashboardQueryService<TQuery extends IDashboardQuery<TResult>, TResult> {
+    // (undocumented)
+    cache?: QueryCache<TQuery, TResult>;
+    // (undocumented)
+    generator: (ctx: DashboardContext, query: TQuery, refresh: boolean) => SagaIterator<TResult>;
+    // (undocumented)
+    name: DashboardQueryType;
+}
 
 // @internal
 export interface IDashboardStoreProviderProps {
@@ -3029,6 +3074,14 @@ export interface ModifyDrillsForInsightWidget extends IDashboardCommand {
 // @alpha
 export function modifyDrillsForInsightWidget(ref: ObjRef, drills: InsightDrillDefinition[], correlationId?: string): ModifyDrillsForInsightWidget;
 
+// @internal (undocumented)
+export type MonitoredAction = {
+    calls: number;
+    promise: Promise<PayloadAction<any>>;
+    resolve: (action: PayloadAction<any>) => void;
+    reject: (e: any) => void;
+};
+
 // @alpha (undocumented)
 export interface MoveAttributeFilter extends IDashboardCommand {
     // (undocumented)
@@ -3212,8 +3265,35 @@ export interface PermissionsState {
     permissions?: IWorkspacePermissions;
 }
 
+// @internal
+export type QueryActions<TQuery extends IDashboardQuery, TResult> = CaseReducerActions<AllQueryCacheReducers<TQuery, TResult>>;
+
 // @alpha
 export function queryAndWaitFor<TQuery extends DashboardQueries>(dispatch: DashboardDispatch, query: TQuery): Promise<IDashboardQueryResult<TQuery>>;
+
+// @internal
+export type QueryCache<TQuery extends IDashboardQuery<TResult>, TResult> = {
+    cacheName: string;
+    reducer: Reducer<EntityState<QueryCacheEntry<TQuery, TResult>>>;
+    actions: QueryActions<TQuery, TResult>;
+    selectById: (id: EntityId) => Selector<DashboardState, QueryCacheEntryResult<TResult> | undefined>;
+    selectQueryResult: (query: TQuery) => Selector<DashboardState, QueryCacheEntryResult<TResult> | undefined>;
+};
+
+// @internal
+export type QueryCacheEntry<TQuery extends IDashboardQuery<TResult>, TResult> = QueryCacheEntryResult<TResult> & {
+    query: TQuery;
+};
+
+// @internal
+export type QueryCacheEntryResult<TResult> = {
+    status: "loading" | "success" | "error";
+    result?: TResult;
+    error?: string;
+};
+
+// @internal
+export type QueryCacheReducer<TQuery extends IDashboardQuery<TResult>, TResult, TPayload> = CaseReducer<EntityState<QueryCacheEntry<TQuery, TResult>>, PayloadAction<TPayload>>;
 
 // @alpha
 export function queryDateDatasetsForInsight(insightOrRef: ObjRef | IInsight, correlationId?: string): QueryInsightDateDatasets;
@@ -3657,18 +3737,10 @@ export const selectDashboardUri: OutputSelector<DashboardState, string | undefin
 export const selectDashboardUriRef: OutputSelector<DashboardState, UriRef | undefined, (res: string | undefined) => UriRef | undefined>;
 
 // @internal
-export const selectDateDatasetsForInsight: (query: QueryInsightDateDatasets) => Selector<DashboardState, {
-status: "error" | "loading" | "success";
-result?: InsightDateDatasets | undefined;
-error?: string | undefined;
-} | undefined>;
+export const selectDateDatasetsForInsight: (query: QueryInsightDateDatasets) => Selector<DashboardState, QueryCacheEntryResult<InsightDateDatasets> | undefined>;
 
 // @internal
-export const selectDateDatasetsForMeasure: (query: QueryMeasureDateDatasets) => Selector<DashboardState, {
-status: "error" | "loading" | "success";
-result?: MeasureDateDatasets | undefined;
-error?: string | undefined;
-} | undefined>;
+export const selectDateDatasetsForMeasure: (query: QueryMeasureDateDatasets) => Selector<DashboardState, QueryCacheEntryResult<MeasureDateDatasets> | undefined>;
 
 // @public
 export const selectDateFilterConfig: OutputSelector<DashboardState, IDateFilterConfig, (res: ResolvedDashboardConfig) => IDateFilterConfig>;
@@ -3785,11 +3857,7 @@ export const selectImplicitDrillsByAvailableDrillTargets: (availableDrillTargets
 export const selectImplicitDrillsDownByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IDrillTargets | undefined, res2: (ICatalogAttribute | ICatalogDateAttribute)[], res3: boolean) => IImplicitDrillWithPredicates[]>;
 
 // @internal
-export const selectInsightAttributesMeta: (query: QueryInsightAttributesMeta) => Selector<DashboardState, {
-status: "error" | "loading" | "success";
-result?: InsightAttributesMeta | undefined;
-error?: string | undefined;
-} | undefined>;
+export const selectInsightAttributesMeta: (query: QueryInsightAttributesMeta) => Selector<DashboardState, QueryCacheEntryResult<InsightAttributesMeta> | undefined>;
 
 // @alpha
 export const selectInsightByRef: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IInsight | undefined, (res: ObjRefMap<IInsight>) => IInsight | undefined>;

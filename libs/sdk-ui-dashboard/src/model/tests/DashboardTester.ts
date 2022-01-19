@@ -1,8 +1,7 @@
 // (C) 2021 GoodData Corporation
 
+import { PayloadAction } from "@reduxjs/toolkit";
 import { Identifier, idRef } from "@gooddata/sdk-model";
-import { createDashboardStore, ReduxedDashboardStore } from "../store/dashboardStore";
-import { DashboardState } from "../store/types";
 import { DashboardContext, DashboardModelCustomizationFns } from "../types/commonTypes";
 import {
     recordedBackend,
@@ -11,32 +10,16 @@ import {
 } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import {
-    DashboardEvents,
-    DashboardEventType,
-    isDashboardCommandStarted,
-    isDashboardQueryCompleted,
-    isDashboardQueryStarted,
-} from "../events";
-import { Middleware, PayloadAction } from "@reduxjs/toolkit";
-import noop from "lodash/noop";
-import {
-    DashboardCommands,
     DashboardCommandType,
     InitializeDashboard,
     initializeDashboard,
 } from "../commands";
-import { IDashboardQuery } from "../queries";
-import { queryEnvelopeWithPromise } from "../store/_infra/queryProcessing";
 import { IDashboardQueryService } from "../store/_infra/queryService";
-import { newRenderingWorker, RenderingWorkerConfiguration } from "../commandHandlers/render/renderingWorker";
 import { IBackendCapabilities } from "@gooddata/sdk-backend-spi";
-
-type MonitoredAction = {
-    calls: number;
-    promise: Promise<PayloadAction<any>>;
-    resolve: (action: PayloadAction<any>) => void;
-    reject: (e: any) => void;
-};
+import { HeadlessDashboard, HeadlessDashboardConfig } from "../headlessDashboard";
+import { newRenderingWorker, RenderingWorkerConfiguration } from "../commandHandlers/render/renderingWorker";
+import { DashboardEvents, DashboardEventType, isDashboardCommandStarted, isDashboardQueryCompleted, isDashboardQueryStarted } from "../events";
+import { DashboardState } from "../store";
 
 type DashboardTesterConfig = {
     queryServices?: IDashboardQueryService<any, any>[];
@@ -44,105 +27,16 @@ type DashboardTesterConfig = {
     customizationFns?: DashboardModelCustomizationFns;
 };
 
-export class DashboardTester {
-    protected readonly reduxedStore: ReduxedDashboardStore;
-    private monitoredActions: Record<string, MonitoredAction> = {};
-    private capturedActions: Array<PayloadAction<any>> = [];
-    private capturedEvents: Array<DashboardEvents> = [];
-
+export class DashboardTester extends HeadlessDashboard{
     protected constructor(ctx: DashboardContext, config?: DashboardTesterConfig) {
-        // Middleware to store the actions and create promises
-        const testerMiddleware: Middleware = () => (next) => (action) => {
-            if (action.type.startsWith("@@redux/")) {
-                //
-            } else {
-                this.onActionCaptured(action);
-            }
-
-            return next(action);
-        };
-
-        this.reduxedStore = createDashboardStore({
-            dashboardContext: ctx,
-            additionalMiddleware: testerMiddleware,
-            eventing: {
-                initialEventHandlers: [
-                    {
-                        eval: () => true,
-                        handler: this.eventHandler,
-                    },
-                ],
-            },
+        const headlessDahboardConfig: HeadlessDashboardConfig = {
             queryServices: config?.queryServices,
             backgroundWorkers: [newRenderingWorker(config?.renderingWorkerConfig)],
-            privateContext: config?.customizationFns,
-        });
-    }
-
-    private getOrCreateMonitoredAction = (actionType: string): MonitoredAction => {
-        const existingAction: MonitoredAction = this.monitoredActions[actionType];
-
-        if (existingAction) {
-            return existingAction;
+            customizationFns: config?.customizationFns
         }
 
-        const partialAction = {
-            calls: 0,
-            resolve: noop,
-            reject: noop,
-        };
-
-        const promise = new Promise<PayloadAction<any>>((resolve, reject) => {
-            partialAction.resolve = resolve;
-            partialAction.reject = reject;
-        });
-
-        const newAction: MonitoredAction = {
-            ...partialAction,
-            promise,
-        };
-
-        this.monitoredActions[actionType] = newAction;
-
-        return newAction;
-    };
-
-    private onActionCaptured = (action: PayloadAction<any>): void => {
-        this.capturedActions.push(action);
-
-        const monitoredAction = this.getOrCreateMonitoredAction(action.type);
-        monitoredAction.calls += 1;
-        monitoredAction.resolve(action);
-    };
-
-    private eventHandler = (evt: DashboardEvents): void => {
-        this.capturedEvents.push(evt);
-    };
-
-    private commandFailedRejectsWaitFor = () => {
-        const commandFailed = this.getOrCreateMonitoredAction("GDC.DASH/EVT.COMMAND.FAILED");
-
-        return commandFailed.promise.then((evt) => {
-            // eslint-disable-next-line no-console
-            console.error(`Command processing failed: ${evt.payload.reason} - ${evt.payload.message}`);
-
-            throw evt.payload.error;
-        });
-    };
-
-    private commandRejectedEndsWaitFor = () => {
-        const commandRejected = this.getOrCreateMonitoredAction("GDC.DASH/EVT.COMMAND.REJECTED");
-
-        return commandRejected.promise.then((evt) => {
-            // eslint-disable-next-line no-console
-            console.error(
-                "Command was rejected because dashboard does not know how to handle it. " +
-                    "This is likely because the handler for the rejected command is not registered in the system. See root command handler.",
-            );
-
-            throw evt;
-        });
-    };
+        super(ctx, headlessDahboardConfig)
+    }
 
     /**
      * Creates an instance of DashboardTester set up to run tests on top of a dashboard with the provided
@@ -193,80 +87,37 @@ export class DashboardTester {
         return new DashboardTester(ctx, testerConfig);
     }
 
-    public dispatch(action: DashboardCommands | PayloadAction<any>): void {
-        /*
-         * Clearing monitored actions is essential to allow sane usage in tests that need fire a command and wait
-         * for the same type of event multiple times. Monitored actions is what is used to wait in the `waitFor`
-         * method. Without the clearing, the second `waitFor` would bail out immediately and return the very first
-         * captured event.
-         */
-        this.monitoredActions = {};
-        this.reduxedStore.store.dispatch(action);
+    /**
+     * Wait the specified time.
+     *
+     * @param timeout - timeout after which the wait will be resolved
+     * @returns promise
+     */
+    public wait(timeout: number): Promise<void> {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve();
+            }, timeout);
+        });
     }
 
     /**
-     * Convenience function that combines both {@link dispatch} and {@link waitFor}.
-     *
-     * @param action - action (typically a command) to dispatch
-     * @param actionType - type of action (typically an event type) to wait for
-     * @param timeout - timeout after which the wait fails, default is 1000
+     * Returns all actions that were dispatched since the tester was created or since it was last reset.
      */
-    public dispatchAndWaitFor(
-        action: DashboardCommands | PayloadAction<any>,
-        actionType: DashboardEventType | DashboardCommandType | string,
-        timeout: number = 1000,
-    ): Promise<any> {
-        this.dispatch(action);
-
-        return this.waitFor(actionType, timeout);
-    }
-
-    /**
-     * Starts a dashboard query.
-     *
-     * @param action - query action
-     */
-    public query<TResult>(action: IDashboardQuery<TResult>): Promise<TResult> {
-        const { envelope, promise } = queryEnvelopeWithPromise(action);
-        this.reduxedStore.store.dispatch(envelope);
-        return promise;
-    }
-
-    /**
-     * Wait for action to occur. The wait is bounded by a timeout that is 1s by default.
-     *
-     * @param actionType - action type to wait for
-     * @param timeout - timeout after which the wait fails, default is 1000
-     */
-    public waitFor(
-        actionType: DashboardEventType | DashboardCommandType | string,
-        timeout: number = 1000,
-    ): Promise<any> {
-        const includeErrorHandler = actionType !== "GDC.DASH/EVT.COMMAND.FAILED";
-
-        return Promise.race([
-            this.getOrCreateMonitoredAction(actionType).promise,
-            ...(includeErrorHandler ? [this.commandFailedRejectsWaitFor()] : []),
-            this.commandRejectedEndsWaitFor(),
-            new Promise((_, reject) => {
-                setTimeout(() => {
-                    reject(new Error(`Wait for action '${actionType}' timed out after ${timeout}ms`));
-                }, timeout);
-            }),
-        ]);
+     public dispatchedActions(): ReadonlyArray<PayloadAction<any>> {
+        return this.capturedActions.slice();
     }
 
     /**
      * Wait for all of the listed actions to occur. The wait is bounded by a timeout that is 1s by default.
      *
      * This is useful when testing commands that emit multiple events and you need to verify that all of the
-     * events happened. This function does not care about the order in which the events occurred. If you then
-     * need to verify the order, use {@link emittedEvents} or {@link emittedEventsDigest}.
+     * events happened. This function does not care about the order in which the events occurred.
      *
      * @param actionTypes - action types to wait for
      * @param timeout - timeout after which the wait fails
      */
-    public waitForAll(
+     public waitForAll(
         actionTypes: ReadonlyArray<DashboardEventType | DashboardCommandType | string>,
         timeout: number = 1000,
     ): Promise<any> {
@@ -285,27 +136,6 @@ export class DashboardTester {
     }
 
     /**
-     * Wait the specified time.
-     *
-     * @param timeout - timeout after which the wait will be resolved
-     * @returns promise
-     */
-    public wait(timeout: number): Promise<void> {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve();
-            }, timeout);
-        });
-    }
-
-    /**
-     * Returns all actions that were dispatched since the tester was created or since it was last reset.
-     */
-    public dispatchedActions(): ReadonlyArray<PayloadAction<any>> {
-        return this.capturedActions.slice();
-    }
-
-    /**
      * Returns all events that were emitted during execution. Events are a sub-type of actions - they are
      * actions that are suitable for external consumption and describe what has happened in the dashboard.
      *
@@ -316,13 +146,30 @@ export class DashboardTester {
     }
 
     /**
+     * Resets internal state of the tester's monitors. The captured actions will be cleared up as part
+     * of this.
+     */
+    public resetMonitors(): void {
+        this.capturedActions = [];
+        this.capturedEvents = [];
+        this.monitoredActions = {};
+    }
+
+    /**
+     * Returns dashboard state.
+     */
+     public state(): DashboardState {
+        return super.state();
+    }
+
+    /**
      * Returns digests of all events that were emitted during execution. Digest contains just the event
      * type and the correlation id of the event. The payload is discarded.
      *
      * This is useful for snapshotting event sequence.
      */
     public emittedEventsDigest(): ReadonlyArray<{ type: string; correlationId?: string }> {
-        return this.capturedEvents.map((evt) => {
+        return this.emittedEvents().map((evt) => {
             if (isDashboardQueryStarted(evt) || isDashboardQueryCompleted(evt)) {
                 return {
                     type: evt.type,
@@ -344,23 +191,6 @@ export class DashboardTester {
                 correlationId: evt.correlationId,
             };
         });
-    }
-
-    /**
-     * Resets internal state of the tester's monitors. The captured actions will be cleared up as part
-     * of this.
-     */
-    public resetMonitors(): void {
-        this.capturedActions = [];
-        this.capturedEvents = [];
-        this.monitoredActions = {};
-    }
-
-    /**
-     * Returns dashboard state.
-     */
-    public state(): DashboardState {
-        return this.reduxedStore.store.getState();
     }
 }
 
