@@ -141,7 +141,7 @@ that is contained in the [src/harness/backend.ts](src/harness/backend.ts) - this
 ### How can I setup compatibility of the plugin?
 
 You can modify minEngineVersion and maxEngineVersion properties in `src/{{pluginIdentifier}}\_entry/index`.
-By default, we guarantee that plugin will be compatible only with the exact version of the dashboard engine used during its build (`"bundled"` option). But if you are sure, that plugin is compatible also with the other engine versions, you can set concrete range of the versions (e.g. `"minEngineVersion": "8.8.0", "maxEngineVersion": "8.9.0"`).
+By default, we guarantee that plugin will be compatible only with the exact version of the dashboard engine used during its build (`"bundled"` option). But if you are sure, that plugin is compatible also with the other engine versions, you can set concrete range of the versions (e.g. `"minEngineVersion": "8.8.0", "maxEngineVersion": "8.9.0"`). Note that combining multiple plugins created before version `8.8.0` may not work.
 
 ### How do plugin dependencies work?
 
