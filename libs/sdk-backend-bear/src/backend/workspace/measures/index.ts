@@ -24,7 +24,7 @@ import {
 import { convertMetricToBackend } from "../../../convertors/toBackend/MetricConverter";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { objRefToUri } from "../../../utils/api";
-import { getTokenValuesOfType, tokenizeExpression } from "./measureExpressionTokens";
+import { getTokenValuesOfType, tokenizeExpression, IExpressionToken } from "./measureExpressionTokens";
 import { convertListedVisualization } from "../../../convertors/fromBackend/VisualizationConverter";
 
 export class BearWorkspaceMeasures implements IWorkspaceMeasuresService {
@@ -107,40 +107,24 @@ export class BearWorkspaceMeasures implements IWorkspaceMeasuresService {
 
         return expressionTokens.map((token): IMeasureExpressionToken => {
             if (token.type === "element_uri") {
-                const element = attributeElementsByUri[token.value];
-                return {
-                    type: "attributeElement",
-                    ...(element
-                        ? {
-                              value: element.title,
-                          }
-                        : {
-                              value: "",
-                              deleted: true,
-                          }),
-                };
-            } else if (token.type === "uri" || token.type === "identifier") {
-                const meta =
-                    token.type === "uri"
-                        ? convertMetadataObject(objectsByUri[token.value])
-                        : convertMetadataObject(objectsByIdentifier[token.value]);
-                return {
-                    type: meta.type,
-                    value: meta.title,
-                    id: meta.id,
-                    ref: meta.ref,
-                };
-            } else if (token.type === "comment") {
-                return {
-                    type: "comment",
-                    value: token.value,
-                };
+                return createAttribute(attributeElementsByUri, token);
             }
 
-            return {
-                type: "text",
-                value: token.value,
-            };
+            if (token.type === "uri" || token.type === "identifier") {
+                return createIdentifier(token, objectsByUri, objectsByIdentifier);
+            }
+
+            if (
+                token.type === "comment" ||
+                token.type === "number" ||
+                token.type === "quoted_text" ||
+                token.type === "text" ||
+                token.type === "bracket"
+            ) {
+                return createToken(token.type, token.value);
+            }
+
+            return createToken("text", token.value);
         });
     }
 
@@ -183,4 +167,46 @@ export class BearWorkspaceMeasures implements IWorkspaceMeasuresService {
                 .map(convertListedVisualization),
         });
     }
+}
+
+function createAttribute(
+    attributeElementsByUri: { [p: string]: GdcMetadata.IAttributeElement },
+    token: IExpressionToken,
+): IMeasureExpressionToken {
+    const element = attributeElementsByUri[token.value];
+    return {
+        type: "attributeElement",
+        ...(element
+            ? {
+                  value: element.title,
+              }
+            : {
+                  value: "",
+                  deleted: true,
+              }),
+    };
+}
+
+function createIdentifier(
+    token: IExpressionToken,
+    objectsByUri: { [p: string]: GdcMetadataObject.IObject },
+    objectsByIdentifier: { [p: string]: GdcMetadataObject.IObject },
+): IMeasureExpressionToken {
+    const meta =
+        token.type === "uri"
+            ? convertMetadataObject(objectsByUri[token.value])
+            : convertMetadataObject(objectsByIdentifier[token.value]);
+    return {
+        type: meta.type,
+        value: meta.title,
+        id: meta.id,
+        ref: meta.ref,
+    };
+}
+
+function createToken<T>(type: T, value: string): { type: T; value: string } {
+    return {
+        type,
+        value,
+    };
 }

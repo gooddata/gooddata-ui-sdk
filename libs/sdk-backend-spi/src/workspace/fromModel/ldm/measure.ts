@@ -42,7 +42,8 @@ export type IMeasureExpressionToken =
     | IObjectExpressionToken
     | IAttributeElementExpressionToken
     | ITextExpressionToken
-    | ICommentExpressionToken;
+    | ICommentExpressionToken
+    | IBracketExpressionToken;
 
 /**
  * Parsed {@link https://help.gooddata.com/pages/viewpage.action?pageId=86795279 | MAQL} token referencing a metadata object.
@@ -111,7 +112,27 @@ export interface ITextExpressionToken {
     /**
      * Expression token type
      */
-    type: "text";
+    type: "text" | "quoted_text" | "number";
+
+    /**
+     * Plain text
+     */
+    value: string;
+}
+
+/**
+ * Parsed {@link https://help.gooddata.com/pages/viewpage.action?pageId=86795279 | MAQL} bracket.
+ *
+ * @remarks
+ * See {@link IMeasureExpressionToken} for more information.
+ *
+ * @public
+ */
+export interface IBracketExpressionToken {
+    /**
+     * Expression token type
+     */
+    type: "bracket";
 
     /**
      * Plain text

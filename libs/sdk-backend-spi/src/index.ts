@@ -433,6 +433,7 @@ export {
     IAttributeElementExpressionToken,
     ITextExpressionToken,
     ICommentExpressionToken,
+    IBracketExpressionToken,
 } from "./workspace/fromModel/ldm/measure";
 
 export { IOrganization, IOrganizations, IOrganizationDescriptor } from "./organization";
