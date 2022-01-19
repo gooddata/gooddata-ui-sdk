@@ -81,7 +81,7 @@
     "cancel": "キャンセル",
     "save": "保存",
     "loading": "読み込んでいます…",
-    "filtering": "フィルタリング中...",
+    "filtering": "フィルタリング中…",
     "dateFilterDropdown.title": "日付範囲",
     "dateFilterDropdown.buttonTitle": "日付範囲",
     "dateFilterDropdown.setDefault": "ビューアーのデフォルトの{nbsp}日付フィルターを設定：",
