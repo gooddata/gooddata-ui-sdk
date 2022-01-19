@@ -4,17 +4,27 @@ import filter from "lodash/fp/filter";
 import map from "lodash/fp/map";
 import uniq from "lodash/fp/uniq";
 
-type ExpressionTokenType = "text" | "quoted_text" | "identifier" | "uri" | "element_uri" | "comment";
+type ExpressionTokenType =
+    | "text"
+    | "quoted_text"
+    | "number"
+    | "bracket"
+    | "identifier"
+    | "uri"
+    | "element_uri"
+    | "comment";
 
-interface IExpressionToken {
+export interface IExpressionToken {
     type: ExpressionTokenType;
     value: string;
 }
 
 const REMOVE_BRACKETS_REGEXP = /[[\]{}]/g;
 const TOKEN_TYPE_REGEXP_PAIRS: Array<[ExpressionTokenType, RegExp]> = [
-    ["text", /^[^#{}[\]"]+/],
+    ["text", /^[^#{}[\]"()0-9.]+/],
     ["quoted_text", /^"(?:[^"\\]|\\\\.)*"/],
+    ["number", /^[+-]?((\d+(\.\d*)?)|(\.\d+))/],
+    ["bracket", /^[()]+/],
     ["identifier", /^\{[^}]+\}/],
     ["element_uri", /^\[[a-zA-Z0-9\\/]+elements\?id=\d+]/],
     ["uri", /^\[[a-zA-Z0-9\\/]+]/],

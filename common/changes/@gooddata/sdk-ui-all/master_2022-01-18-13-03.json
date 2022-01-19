@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "Added support for comment tokens in maql expression",
+            "comment": "Added support for comment, bracket, quoted_text and number tokens in maql expression",
             "type": "none"
         }
     ],

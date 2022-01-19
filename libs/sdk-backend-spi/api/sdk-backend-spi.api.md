@@ -345,6 +345,12 @@ export interface IBaseWidget {
 }
 
 // @public
+export interface IBracketExpressionToken {
+    type: "bracket";
+    value: string;
+}
+
+// @public
 export interface ICatalogAttribute extends IGroupableCatalogItemBase {
     attribute: IAttributeMetadataObject;
     defaultDisplayForm: IAttributeDisplayFormMetadataObject;
@@ -1038,7 +1044,7 @@ export interface IMeasureDescriptor {
 }
 
 // @public
-export type IMeasureExpressionToken = IObjectExpressionToken | IAttributeElementExpressionToken | ITextExpressionToken | ICommentExpressionToken;
+export type IMeasureExpressionToken = IObjectExpressionToken | IAttributeElementExpressionToken | ITextExpressionToken | ICommentExpressionToken | IBracketExpressionToken;
 
 // @public
 export interface IMeasureGroupDescriptor {
@@ -1530,7 +1536,7 @@ export interface ITempFilterContext {
 
 // @public
 export interface ITextExpressionToken {
-    type: "text";
+    type: "text" | "quoted_text" | "number";
     value: string;
 }
 
