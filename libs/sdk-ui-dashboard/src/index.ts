@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 /**
  * This package provides the Dashboard component that can be used to embed dashboards into your application as React components.
@@ -24,5 +24,6 @@ export * from "./presentation";
 export * from "./types";
 export * from "./converters";
 export * from "./plugins";
+export * from "./hooks";
 
 export { InsightPlaceholderWidget, KpiPlaceholderWidget } from "./widgets/placeholders/types";
