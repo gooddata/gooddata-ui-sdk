@@ -15,26 +15,21 @@ _RUSH="${DIR}/docker_rush.sh"
 
 echo 'Evaluating possible incremental test/validation optimizations'
 
-# get all prefixes only two levels deep to determine which packages were changed
-TARGET_BRANCH=$ZUUL_BRANCH
-PREFIXES=$(git diff --name-only "$TARGET_BRANCH...HEAD" | awk -F'[ /]' '{ printf "%s/%s\n",$1,$2 }' | sort | uniq)
-# Filter out things in common/changes, they are insignificant in this context
-FILTERED_PREFIXES=$(echo "$PREFIXES" | grep -v '^common/changes' || true)
-
-echo "$FILTERED_PREFIXES"
-
 # if there are any changes outside examples, libs, and tools, we must re-test everything as these often mean
 # configuration changes that can affect anything
-OUTSIDE_FILES_COUNT=$(echo "$FILTERED_PREFIXES" | grep -Evc '^(examples|libs|tools)' || true)
+# also ignore some other files that have no bearing on the buildable and runnable code
+#  - files in common/changes - those are changelog entries with no effect on the tests/validation
+#  - NOTICE, LICENCE, README.md, docs files
+EXTERNAL_FILES_CHANGED=$(git diff --name-only "$ZUUL_BRANCH...HEAD" | grep -Ev '^(examples|libs|tools|common/changes|docs|NOTICE|README|LICENSE)' || true)
 
-if [ "$OUTSIDE_FILES_COUNT" -eq 0 ]; then
+if [ -z "$EXTERNAL_FILES_CHANGED" ]; then
   echo 'Changes are only in code files, we can make the testing smarter'
-  # create an --impacted-by clause for every changed package
-  RUSH_SPECS=$(echo "$FILTERED_PREFIXES" | awk -F'[ /]' '{ printf " --impacted-by %s",$2 }')
-  echo 'The rush commands would be limited by the following limiters:'
-  echo "$RUSH_SPECS"
+  RUSH_SPECS=" --impacted-by git:$ZUUL_BRANCH"
+  echo "The rush commands would be limited by the following limiter: $RUSH_SPECS"
 else
-  echo 'There are some files modified outside of the code, falling back to testing everything...'
+  echo 'There are some files modified outside of the code:'
+  echo "$EXTERNAL_FILES_CHANGED"
+  echo 'Falling back to testing everything...'
   RUSH_SPECS=''
 fi
 
