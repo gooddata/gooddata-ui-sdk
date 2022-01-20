@@ -61,12 +61,14 @@
         overflow: visible;
         padding: 7px 10px;
         border-radius: 3px;
+        pointer-events: none;
 
         .content {
             display: block;
             overflow: hidden;
             max-width: 100%;
             word-wrap: break-word;
+            pointer-events: auto;
 
             a {
                 color: $gd-color-text-light;
