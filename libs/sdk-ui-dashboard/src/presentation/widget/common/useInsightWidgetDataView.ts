@@ -1,42 +1,56 @@
-// (C) 2020-2021 GoodData Corporation
-import { useMemo } from "react";
-import stringify from "json-stable-stringify";
+// (C) 2022 GoodData Corporation
 import { IInsightWidget } from "@gooddata/sdk-backend-spi";
-import { insightSetFilters } from "@gooddata/sdk-model";
 import {
+    DataViewFacade,
     GoodDataSdkError,
     useBackendStrict,
-    useWorkspaceStrict,
-    UseCancelablePromiseState,
     useCancelablePromise,
-    DataViewFacade,
+    UseCancelablePromiseState,
     useExecutionDataView,
+    useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
-import { useWidgetFilters, selectInsightByRef, useDashboardSelector } from "@gooddata/sdk-ui-dashboard";
+import { useMemo } from "react";
+import { IFilter, insightSetFilters } from "@gooddata/sdk-model";
+import stringify from "json-stable-stringify";
+import { selectInsightByRef, useDashboardSelector } from "../../../model";
+import { useWidgetFilters } from "./useWidgetFilters";
 
-interface IUseInsightWidgetDataView {
+/**
+ * Configuration for the `useInsightWidgetDataView` hook.
+ *
+ * @public
+ */
+export interface IUseInsightWidgetDataView {
     /**
      * Insight widget to get data view for.
      *
      * Note: When the insight widget is not provided, hook is locked in a "pending" state.
      */
     insightWidget?: IInsightWidget;
+
+    /**
+     * Additional filters to the data view. These additional filters are used alongside the
+     * filters used by the insight.
+     */
+    additionalFilters?: IFilter[];
 }
 
 /**
- * Hook that presents bare minimum code to get data view for particular insight widget,
- * with respect to current dashboard filters.
+ * This hook provides an easy way to read a data view from insight widget. It also allows to add
+ * additional filters to this data view.
  *
  * @param config - configuration of the hook
+ *
+ * @public
  */
 export function useInsightWidgetDataView(
     config: IUseInsightWidgetDataView,
 ): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError> {
-    const { insightWidget } = config;
+    const { insightWidget, additionalFilters } = config;
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
     const insight = useDashboardSelector(selectInsightByRef(insightWidget?.insight));
-    const widgetFiltersPromise = useWidgetFilters(insightWidget);
+    const widgetFiltersPromise = useWidgetFilters(insightWidget, additionalFilters);
 
     const insightWithAddedFilters = useMemo(
         () => insightSetFilters(insight!, widgetFiltersPromise.result),
