@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock, { MockOptions } from "fetch-mock";
 import isPlainObject from "lodash/isPlainObject";
@@ -223,6 +223,27 @@ describe("fetch", () => {
             return Promise.all([xhr.ajax("/some/url/1"), xhr.ajax("/some/url/2")]).then((r) => {
                 expect(r[0].response.status).toBe(200);
                 expect(r[1].response.status).toBe(200);
+            });
+        });
+
+        it("should call beforeSend in each request including unauthorized", () => {
+            const beforeSendStub = jest.fn();
+            const url = "/some/url";
+
+            fetchMock.get(url, (url: string) => {
+                // for the first time return 401 - simulate no token
+                if (fetchMock.calls(url).length === 1) {
+                    return 401;
+                }
+                return 200;
+            });
+            fetchMock.get("/gdc/account/token", 200);
+
+            const xhr = createXhr();
+            xhr.ajaxSetup({ beforeSend: beforeSendStub });
+
+            return xhr.ajax(url).then(() => {
+                expect(beforeSendStub).toHaveBeenCalledTimes(3);
             });
         });
     });

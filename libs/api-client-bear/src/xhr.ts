@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import isPlainObject from "lodash/isPlainObject";
 import isFunction from "lodash/isFunction";
 import set from "lodash/set";
@@ -369,6 +369,8 @@ export class XhrModule {
             this.createRequestSettings({}),
             this.configStorage.domain,
         );
+
+        simulateBeforeSend(url, settings); // mutates `settings` param
 
         this.tokenRequest = this.fetch(url, settings);
         const response = await this.tokenRequest;
