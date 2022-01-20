@@ -9,11 +9,11 @@ import {
     useExecutionDataView,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
-import { selectInsightByRef, useDashboardSelector } from "../model";
-import { useWidgetFilters } from "../presentation";
 import { useMemo } from "react";
 import { IFilter, insightSetFilters } from "@gooddata/sdk-model";
 import stringify from "json-stable-stringify";
+import { selectInsightByRef, useDashboardSelector } from "../../../model";
+import { useWidgetFilters } from "./useWidgetFilters";
 
 /**
  * Configuration for the `useInsightWidgetDataView` hook.

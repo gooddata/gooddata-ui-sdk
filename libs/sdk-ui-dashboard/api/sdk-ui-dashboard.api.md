@@ -13,7 +13,6 @@ import { CaseReducer } from '@reduxjs/toolkit';
 import { CaseReducerActions } from '@reduxjs/toolkit';
 import { ComponentType } from 'react';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-backend-spi';
-import { DataViewFacade } from '@gooddata/sdk-ui';
 import { DateFilterGranularity } from '@gooddata/sdk-backend-spi';
 import { DateFilterType } from '@gooddata/sdk-backend-spi';
 import { DateString } from '@gooddata/sdk-backend-spi';
@@ -127,7 +126,6 @@ import { Selector } from '@reduxjs/toolkit';
 import { ShareStatus } from '@gooddata/sdk-backend-spi';
 import { TypedUseSelectorHook } from 'react-redux';
 import { UriRef } from '@gooddata/sdk-model';
-import { UseCancelablePromiseState } from '@gooddata/sdk-ui';
 import { VisualizationProperties } from '@gooddata/sdk-model';
 import { WithIntlProps } from 'react-intl';
 import { WrappedComponentProps } from 'react-intl';
@@ -2953,12 +2951,6 @@ export interface ITopBarProps {
     titleProps: ITitleProps;
 }
 
-// @public
-export interface IUseInsightWidgetDataView {
-    additionalFilters?: IFilter[];
-    insightWidget?: IInsightWidget;
-}
-
 // @alpha (undocumented)
 export type IXlsxExportConfig = {
     format: "xlsx";
@@ -4548,9 +4540,6 @@ export interface UseDrillToLegacyDashboardProps {
     // (undocumented)
     onSuccess?: (event: DashboardDrillToLegacyDashboardResolved) => void;
 }
-
-// @public
-export function useInsightWidgetDataView(config: IUseInsightWidgetDataView): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
 
 // @alpha (undocumented)
 export type UserInteractionPayload = UserInteractionPayloadWithData | BareUserInteractionPayload;

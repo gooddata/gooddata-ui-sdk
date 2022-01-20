@@ -1,4 +1,5 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 export * from "./useExportHandler";
 export * from "./useInsightExport";
 export * from "./useWidgetFilters";
+export * from "./useInsightWidgetDataView";

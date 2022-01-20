@@ -24,6 +24,5 @@ export * from "./presentation";
 export * from "./types";
 export * from "./converters";
 export * from "./plugins";
-export * from "./hooks";
 
 export { InsightPlaceholderWidget, KpiPlaceholderWidget } from "./widgets/placeholders/types";
