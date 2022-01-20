@@ -113,6 +113,7 @@ options = {
             "src/model/events/widget.ts",
             "src/presentation/constants",
             "src/presentation/dashboardContexts",
+            "src/presentation/dashboardContexts/DashboardComponentsContext.tsx",
             "src/presentation/drill",
             "src/presentation/drill/types.ts",
             "src/presentation/localization",
