@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { IAnalyticalBackend, IExecutionFactory, ISettings, ITheme } from "@gooddata/sdk-backend-spi";
 import {
     IInsight,
@@ -28,6 +28,7 @@ import {
     IVisConstruct,
     IVisualization,
     IDrillDownContext,
+    IVisProps,
 } from "../interfaces/Visualization";
 import { PluggableVisualizationFactory } from "../interfaces/VisualizationDescriptor";
 import { FullVisualizationCatalog, IVisualizationCatalog } from "./VisualizationCatalog";
@@ -219,21 +220,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         }
 
         this.visualization.update(
-            {
-                locale: this.props.locale,
-                dateFormat: this.props.dateFormat,
-                dimensions: {
-                    width: this.props.width,
-                    height: this.props.height,
-                },
-                custom: {
-                    drillableItems: this.props.drillableItems,
-                    totalsEditAllowed: this.props.totalsEditAllowed,
-                },
-                config: this.props.config,
-                theme: this.props.theme,
-                executionConfig: this.props.executionConfig,
-            },
+            this.getVisualizationProps(),
             this.props.insight,
             this.props.insightPropertiesMeta,
             this.executionFactory,
@@ -270,10 +257,40 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         return !isEqual(omit(currentReferencePoint, "properties"), omit(nextReferencePoint, "properties"));
     }
 
+    private getVisualizationProps(): IVisProps {
+        return {
+            locale: this.props.locale,
+            dateFormat: this.props.dateFormat,
+            dimensions: {
+                width: this.props.width,
+                height: this.props.height,
+            },
+            custom: {
+                drillableItems: this.props.drillableItems,
+                totalsEditAllowed: this.props.totalsEditAllowed,
+            },
+            config: this.props.config,
+            theme: this.props.theme,
+            executionConfig: this.props.executionConfig,
+        };
+    }
+
     public getInsightWithDrillDownApplied(
         sourceVisualization: IInsight,
         drillDownContext: IDrillDownContext,
     ): IInsight {
         return this.visualization.getInsightWithDrillDownApplied(sourceVisualization, drillDownContext);
+    }
+
+    public getExecution() {
+        if (!this.visualization) {
+            this.setupVisualization(this.props);
+        }
+
+        return this.visualization.getExecution(
+            this.getVisualizationProps(),
+            this.props.insight,
+            this.executionFactory,
+        );
     }
 }

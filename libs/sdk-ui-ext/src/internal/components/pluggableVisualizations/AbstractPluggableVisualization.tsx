@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import {
     IBucketItem,
@@ -17,7 +17,7 @@ import {
 } from "../../interfaces/Visualization";
 import { findDerivedBucketItem, hasDerivedBucketItems, isDerivedBucketItem } from "../../utils/bucketHelper";
 import { IInsight, IInsightDefinition, insightHasDataDefined, insightProperties } from "@gooddata/sdk-model";
-import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
     DefaultLocale,
     GoodDataSdkError,
@@ -140,6 +140,19 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
 
         this.renderConfigurationPanel(insight);
     }
+
+    /**
+     * Get visualization execution based on provided options, insight and execution factory.
+     *
+     * @param options - visualization options
+     * @param insight - insight to be executed
+     * @param executionFactory - execution factory to use when triggering calculation on backend
+     */
+    public abstract getExecution(
+        options: IVisProps,
+        insight: IInsightDefinition,
+        executionFactory: IExecutionFactory,
+    ): IPreparedExecution;
 
     /**
      * This method will be called during the {@link update} processing. This is where internal properties of the

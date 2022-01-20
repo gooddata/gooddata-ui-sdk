@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
 import {
     bucketsIsEmpty,
@@ -160,6 +160,24 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         this.customControlsProperties = customControlsProperties;
     }
 
+    public getExecution(
+        options: IVisProps,
+        insight: IInsightDefinition,
+        executionFactory: IExecutionFactory,
+    ) {
+        const { dateFormat, executionConfig } = options;
+        const supportedControls: IVisualizationProperties = this.getSupportedControls(insight, options);
+
+        return executionFactory
+            .forInsight(insight)
+            .withDimensions(...this.getDimensions(insight))
+            .withSorting(
+                ...createSorts(this.type, insight, canSortStackTotalValue(insight, supportedControls)),
+            )
+            .withDateFormat(dateFormat)
+            .withExecConfig(executionConfig);
+    }
+
     protected configureBuckets(extendedReferencePoint: IExtendedReferencePoint): void {
         const buckets = extendedReferencePoint?.buckets ?? [];
         const categoriesCount =
@@ -223,14 +241,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
     ): void {
-        const {
-            dimensions = { height: undefined },
-            custom = {},
-            locale,
-            dateFormat,
-            theme,
-            executionConfig,
-        } = options;
+        const { dimensions = { height: undefined }, custom = {}, locale, theme } = options;
         const { height } = dimensions;
 
         // keep height undef for AD; causes indigo-visualizations to pick default 100%
@@ -239,15 +250,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         const supportedControls: IVisualizationProperties = this.getSupportedControls(insight, options);
         const configSupportedControls = isEmpty(supportedControls) ? null : supportedControls;
         const fullConfig = this.buildVisualizationConfig(options, configSupportedControls);
-
-        const execution = executionFactory
-            .forInsight(insight)
-            .withDimensions(...this.getDimensions(insight))
-            .withSorting(
-                ...createSorts(this.type, insight, canSortStackTotalValue(insight, supportedControls)),
-            )
-            .withDateFormat(dateFormat)
-            .withExecConfig(executionConfig);
+        const execution = this.getExecution(options, insight, executionFactory);
 
         this.renderFun(
             <BaseChart
