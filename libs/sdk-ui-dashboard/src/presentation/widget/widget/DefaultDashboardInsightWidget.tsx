@@ -93,8 +93,12 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         onExportXLSX,
     });
 
-    const { InsightMenuButtonComponentProvider, InsightMenuComponentProvider } =
-        useDashboardComponentsContext();
+    const {
+        InsightMenuButtonComponentProvider,
+        InsightMenuComponentProvider,
+        ErrorComponent,
+        LoadingComponent,
+    } = useDashboardComponentsContext();
 
     const InsightMenuButtonComponent = useMemo(
         () => InsightMenuButtonComponentProvider(insight, widget),
@@ -154,6 +158,8 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                         onExportReady={onExportReady}
                         onLoadingChanged={onLoadingChanged}
                         onError={onError}
+                        ErrorComponent={ErrorComponent}
+                        LoadingComponent={LoadingComponent}
                     />
                 )}
             </DashboardItemVisualization>

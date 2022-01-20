@@ -2196,10 +2196,10 @@ export interface IDashboardInsightProps {
     // @alpha (undocumented)
     clientWidth?: number;
     // @alpha
-    ErrorComponent?: ComponentType<IErrorProps>;
+    ErrorComponent: ComponentType<IErrorProps>;
     insight: IInsight;
     // @alpha
-    LoadingComponent?: ComponentType<ILoadingProps>;
+    LoadingComponent: ComponentType<ILoadingProps>;
     // @alpha (undocumented)
     onDrill?: OnWidgetDrill;
     // @alpha (undocumented)

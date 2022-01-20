@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import { ComponentType } from "react";
 import { IAnalyticalBackend, IInsightWidget } from "@gooddata/sdk-backend-spi";
 import { IInsight } from "@gooddata/sdk-model";
@@ -78,14 +78,14 @@ export interface IDashboardInsightProps {
      *
      * @alpha
      */
-    ErrorComponent?: ComponentType<IErrorProps>;
+    ErrorComponent: ComponentType<IErrorProps>;
 
     /**
      * Loading component to use while loading and preparing data to render.
      *
      * @alpha
      */
-    LoadingComponent?: ComponentType<ILoadingProps>;
+    LoadingComponent: ComponentType<ILoadingProps>;
 
     /**
      * @alpha

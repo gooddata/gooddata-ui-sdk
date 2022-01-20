@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React, { useCallback, useState } from "react";
 import { IInsightWidget } from "@gooddata/sdk-backend-spi";
 import { idRef, IInsight, insightTitle } from "@gooddata/sdk-model";
@@ -12,6 +12,9 @@ import { DrillDialog } from "./DrillDialog";
 import { DrillDialogInsight } from "./DrillDialogInsight";
 import { useWidgetExecutionsHandler } from "../../../../../model";
 import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs";
+import { useDashboardComponentsContext } from "../../../../dashboardContexts";
+import { ThemedLoadingEqualizer } from "../../../../presentationComponents";
+import { ThrowMissingComponentError } from "../../../../dashboardContexts/DashboardComponentsContext";
 
 /**
  * @internal
@@ -44,6 +47,15 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
     const [isLoading, setIsLoading] = useState(false);
 
     const executionsHandler = useWidgetExecutionsHandler(DRILL_MODAL_EXECUTION_PSEUDO_REF);
+
+    const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext({
+        ErrorComponent: ThrowMissingComponentError("ErrorComponent"),
+        /**
+         * There is a need to use Loading spinner instead of "Running three dots" loader while drill is loading.
+         * If no custom loading component is provided, LoadingComponent defaults to Loading spinner.
+         */
+        LoadingComponent: ThemedLoadingEqualizer,
+    });
 
     const handleLoadingChanged = useCallback<OnLoadingChanged>(({ isLoading }) => {
         setIsLoading(isLoading);
@@ -97,6 +109,8 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
                                     onLoadingChanged={handleLoadingChanged}
                                     onError={executionsHandler.onError}
                                     pushData={executionsHandler.onPushData}
+                                    ErrorComponent={ErrorComponent}
+                                    LoadingComponent={LoadingComponent}
                                 />
                             );
                         }}
