@@ -1,10 +1,6 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { IInsightWidget } from "@gooddata/sdk-backend-spi";
-import {
-    ColorMapping,
-    fixInsightLegacyElementUris,
-    fixWidgetLegacyElementUris,
-} from "../../fixLegacyElementUris";
+import { fixInsightLegacyElementUris, fixWidgetLegacyElementUris } from "../../fixLegacyElementUris";
 import { mockInsight, mockWidget } from "./fixLegacyElementUris.fixtures";
 
 describe("fixInsightLegacyElementUris", () => {
@@ -27,22 +23,6 @@ describe("fixInsightLegacyElementUris", () => {
             expect(insightWithoutUris.insight.properties.controls?.colorMapping).toEqual(
                 sanitizedInsightWithoutUris.insight.properties.controls?.colorMapping,
             );
-        });
-
-        it("should handle color mapping items with null ids (RAIL-3983)", () => {
-            const fakeInsight = mockInsight(["/obj/0/elements?id=CZ", "/obj/0/elements?id=Czech.Republic"]);
-            const emptyValueColorMapping: ColorMapping = {
-                id: null, // set this color for the (empty value) attribute value
-                color: {
-                    type: "guid",
-                    value: "foo",
-                },
-            };
-            fakeInsight.insight.properties.controls.colorMapping.push(emptyValueColorMapping);
-
-            expect(
-                fixInsightLegacyElementUris(fakeInsight).insight.properties.controls.colorMapping,
-            ).toMatchSnapshot();
         });
     });
 

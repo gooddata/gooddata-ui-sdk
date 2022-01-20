@@ -9,7 +9,10 @@ import {
 import { IWidget } from "@gooddata/sdk-backend-spi";
 import { newInsightWidget } from "@gooddata/sdk-backend-base";
 
-import { ColorMapping } from "../../fixLegacyElementUris";
+/**
+ * @internal
+ */
+type ColorMapping = { color: { type: "guid"; value: string }; id: string };
 
 const mockColorMapping = (elementIds: string[]): ColorMapping[] => {
     return elementIds.map((id, idx) => ({
