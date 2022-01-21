@@ -52,6 +52,16 @@
     }
 }
 
+@keyframes sticky-intro {
+    from {
+        top: -100%;
+    }
+
+    to {
+        top: 0;
+    }
+}
+
 .dash-filters-visible {
     overflow-y: hidden;
     padding: 0 15px;
@@ -134,12 +144,12 @@
     }
 
     &-mobile {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        left: 0;
         display: flex;
         align-items: stretch;
-        position: fixed;
-        bottom: 0;
-        right: 0;
-        left: 0;
 
         .gd-button {
             text-align: center;

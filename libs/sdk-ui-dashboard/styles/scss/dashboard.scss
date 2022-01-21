@@ -99,7 +99,6 @@
                 left: 0;
                 background-color: $gd-palette-primary-dimmed;
                 // in animations
-                // stylelint-disable-next-line no-unknown-animations
                 animation-name: alert-highlighted;
                 animation-duration: 0.3s;
                 animation-iteration-count: 1;
@@ -117,6 +116,24 @@
                 }
             }
         }
+    }
+}
+
+@keyframes alert-highlighted {
+    0% {
+        top: 50%;
+        right: 50%;
+        bottom: 50%;
+        left: 50%;
+        opacity: 0;
+    }
+
+    100% {
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        opacity: 1;
     }
 }
 
