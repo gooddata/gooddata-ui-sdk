@@ -1,6 +1,7 @@
 // (C) 2021 GoodData Corporation
 import {
     DashboardInitialized,
+    DashboardDeinitialized,
     DashboardSaved,
     DashboardCopySaved,
     DateFilterValidationFailed,
@@ -103,6 +104,7 @@ export {
     DateFilterValidationFailed,
     DateFilterValidationResult,
     DashboardInitialized,
+    DashboardDeinitialized,
     DashboardSaved,
     DashboardCopySaved,
     DashboardRenamed,
@@ -114,6 +116,7 @@ export {
     isDashboardSaved,
     isDashboardCopySaved,
     isDashboardInitialized,
+    isDashboardDeinitialized,
     isDashboardRenamed,
     isDashboardWasReset,
     isDashboardDeleted,
@@ -286,6 +289,7 @@ export {
  */
 export type DashboardEvents =
     | DashboardInitialized
+    | DashboardDeinitialized
     | DateFilterValidationFailed
     | DashboardCommandStarted<any>
     | DashboardCommandFailed<any>

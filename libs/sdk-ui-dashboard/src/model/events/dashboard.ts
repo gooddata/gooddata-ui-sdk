@@ -87,6 +87,46 @@ export const isDashboardInitialized = eventGuard<DashboardInitialized>("GDC.DASH
 //
 
 /**
+ * This event is emitted when a dashboard is deinitialized. The event contains contextual information such as
+ * the ref of dashboard being deinitialized if the dashboard being deinitialized contained a persisted dashboard object.
+ *
+ * @public
+ */
+export interface DashboardDeinitialized extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.DEINITIALIZED";
+    readonly payload: {
+        dashboard: ObjRef | undefined;
+    };
+}
+
+export function dashboardDeinitialized(
+    ctx: DashboardContext,
+    dashboard: ObjRef | undefined,
+    correlationId?: string,
+): DashboardDeinitialized {
+    return {
+        type: "GDC.DASH/EVT.DEINITIALIZED",
+        ctx,
+        correlationId,
+        payload: {
+            dashboard,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardDeinitialized}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardDeinitialized = eventGuard<DashboardDeinitialized>("GDC.DASH/EVT.DEINITIALIZED");
+
+//
+//
+//
+
+/**
  * This event is emitted at the end of successful dashboard save command processing. At this point, the
  * dashboard state is persisted on the backend.
  *
