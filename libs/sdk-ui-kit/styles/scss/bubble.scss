@@ -61,6 +61,7 @@
         overflow: visible;
         padding: 7px 10px;
         border-radius: 3px;
+        pointer-events: none;
 
         .content {
             display: block;
