@@ -56,8 +56,10 @@
         "prettier-write": "prettier --write '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
         "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
-        "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check",
-        "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
+        "stylelint": "stylelint '**/*.scss'",
+        "stylelint-ci": "stylelint '**/*.scss' --custom-formatter=node_modules/stylelint-checkstyle-formatter > ./ci/results/stylelint-results.xml",
+        "validate": "npm run dep-cruiser && npm run eslint && npm run stylelint && npm run prettier-check",
+        "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run stylelint-ci && npm run prettier-check"
     },
     "dependencies": {
         "@gooddata/numberjs": "^4.0.1",
@@ -139,6 +141,9 @@
         "raf": "^3.4.1",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
+        "stylelint": "^13.8.0",
+        "stylelint-checkstyle-formatter": "^0.1.2",
+        "stylelint-config-prettier": "^8.0.2",
         "svgo": "^2.8.0",
         "ts-jest": "^27.0.5",
         "typescript": "4.0.2"

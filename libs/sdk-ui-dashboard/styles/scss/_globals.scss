@@ -15,14 +15,14 @@
 // stylelint-disable-next-line
 html,
 body {
-    // TODO: add font-family to overlay in sdk-ui-kit (as it is rendered outside of the root element)?
-    background: $gd-dashboards-content-backgroundColor;
-    font-family: $gd-font-primary;
     position: relative;
+    height: 100%;
     margin: 0;
     padding: 0;
     line-height: 1.5;
-    height: 100%;
+    // TODO: add font-family to overlay in sdk-ui-kit (as it is rendered outside of the root element)?
+    background: $gd-dashboards-content-backgroundColor;
+    font-family: $gd-font-primary;
 }
 
 body {
