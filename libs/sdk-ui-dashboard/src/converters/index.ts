@@ -1,7 +1,7 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 export {
-    filterContextItemsToFiltersForWidget,
-    filterContextToFiltersForWidget,
-    filterContextDateFilterToDateFilter,
-    filterContextAttributeFilterToAttributeFilter,
+    filterContextItemsToDashboardFilters,
+    filterContextToDashboardFilters,
+    dashboardDateFilterToDateFilter,
+    dashboardAttributeFilterToAttributeFilter,
 } from "./filterConverters";

@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import {
     IAttributeDisplayFormMetadataObject,
@@ -8,7 +8,7 @@ import {
     IWidgetAlert,
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef, objRefToString } from "@gooddata/sdk-model";
-import { filterContextItemsToFiltersForWidget } from "../../converters";
+import { filterContextItemsToDashboardFilters } from "../../converters";
 import isEmpty from "lodash/isEmpty";
 import { SagaIterator } from "redux-saga";
 import { select, call, SagaReturnType } from "redux-saga/effects";
@@ -126,7 +126,7 @@ function* getDashboardFilters(kpiWidget: IKpiWidget): SagaIterator<IDashboardFil
     const dashboardFilters: ReturnType<typeof selectFilterContextFilters> = yield select(
         selectFilterContextFilters,
     );
-    const allFilters = filterContextItemsToFiltersForWidget(dashboardFilters, kpiWidget);
+    const allFilters = filterContextItemsToDashboardFilters(dashboardFilters, kpiWidget);
 
     return allFilters ?? [];
 }

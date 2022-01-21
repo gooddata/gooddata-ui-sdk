@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import {
     IDashboardAttributeFilter,
     IDashboardDateFilter,
@@ -11,7 +11,7 @@ import { eventGuard } from "./util";
 /**
  * This event is emitted after the dashboard's date filter selection is changed.
  *
- * @alpha
+ * @public
  */
 export interface DashboardDateFilterSelectionChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.SELECTION_CHANGED";
@@ -227,7 +227,9 @@ export const isDashboardAttributeFilterMoved = eventGuard<DashboardAttributeFilt
 /**
  * This event is emitted after new elements are selected and applied in an attribute filter.
  *
- * @alpha
+ * The filter in the payload object must be converted to a IFilter object before its usage.
+ *
+ * @public
  */
 export interface DashboardAttributeFilterSelectionChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_CHANGED";
@@ -321,10 +323,10 @@ export const isDashboardAttributeFilterParentChanged = eventGuard<DashboardAttri
  * This event is emitted after _any_ change to dashboard filters (be it date or attribute filter).
  * The event describes the new state of the entire filter context.
  *
- * This is event is emitted as convenience - more granular events describe all the possible
+ * This event is emitted as convenience - more granular events describe all the possible
  * changes to the dashboard filters and can be used to event source the state of filter context.
  *
- * @alpha
+ * @public
  */
 export interface DashboardFilterContextChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED";

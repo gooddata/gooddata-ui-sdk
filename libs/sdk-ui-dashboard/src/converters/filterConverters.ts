@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import {
     FilterContextItem,
     IDashboardAttributeFilter,
@@ -25,11 +25,13 @@ import { IDashboardFilter } from "../types";
 /**
  * Gets {@link IDashboardFilter} items for filters specified in given filterContext in relation to the given widget.
  *
+ * forWidget...
+ *
  * @param filterContext - filter context to get filters for
  * @param widget - widget to use to get dateDataSet for date filters
- * @internal
+ * @public
  */
-export function filterContextToFiltersForWidget(
+export function filterContextToDashboardFilters(
     filterContext: IFilterContextDefinition | IFilterContext | ITempFilterContext | undefined,
     widget: IWidgetDefinition,
 ): IDashboardFilter[] {
@@ -37,16 +39,16 @@ export function filterContextToFiltersForWidget(
         return [];
     }
 
-    return filterContextItemsToFiltersForWidget(filterContext.filters, widget);
+    return filterContextItemsToDashboardFilters(filterContext.filters, widget);
 }
 
 /**
  * Converts {@link @gooddata/sdk-backend-spi#IDashboardAttributeFilter} to {@link @gooddata/sdk-model#IAttributeFilter} instance.
  *
  * @param filter - filter context attribute filter to convert
- * @internal
+ * @public
  */
-export function filterContextAttributeFilterToAttributeFilter(
+export function dashboardAttributeFilterToAttributeFilter(
     filter: IDashboardAttributeFilter,
 ): IAttributeFilter {
     if (filter.attributeFilter.negativeSelection) {
@@ -67,9 +69,9 @@ export function filterContextAttributeFilterToAttributeFilter(
  *
  * @param filter - filter context attribute filter to convert
  * @param widget - widget to use to get dateDataSet for date filters
- * @internal
+ * @public
  */
-export function filterContextDateFilterToDateFilter(
+export function dashboardDateFilterToDateFilter(
     filter: IDashboardDateFilter,
     widget: Partial<IFilterableWidget>,
 ): IDateFilter {
@@ -94,17 +96,17 @@ export function filterContextDateFilterToDateFilter(
  *
  * @param filterContextItems - filter context items to get filters for
  * @param widget - widget to use to get dateDataSet for date filters
- * @internal
+ * @public
  */
-export function filterContextItemsToFiltersForWidget(
+export function filterContextItemsToDashboardFilters(
     filterContextItems: FilterContextItem[],
     widget: Partial<IFilterableWidget>,
 ): IDashboardFilter[] {
     return filterContextItems.map((filter) => {
         if (isDashboardAttributeFilter(filter)) {
-            return filterContextAttributeFilterToAttributeFilter(filter);
+            return dashboardAttributeFilterToAttributeFilter(filter);
         } else {
-            return filterContextDateFilterToDateFilter(filter, widget);
+            return dashboardDateFilterToDateFilter(filter, widget);
         }
     });
 }
