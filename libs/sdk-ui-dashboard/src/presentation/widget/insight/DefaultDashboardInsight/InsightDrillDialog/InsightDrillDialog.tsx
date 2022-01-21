@@ -14,7 +14,6 @@ import { useWidgetExecutionsHandler } from "../../../../../model";
 import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs";
 import { useDashboardComponentsContext } from "../../../../dashboardContexts";
 import { ThemedLoadingEqualizer } from "../../../../presentationComponents";
-import { ThrowMissingComponentError } from "../../../../dashboardContexts/DashboardComponentsContext";
 
 /**
  * @internal
@@ -49,7 +48,6 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
     const executionsHandler = useWidgetExecutionsHandler(DRILL_MODAL_EXECUTION_PSEUDO_REF);
 
     const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext({
-        ErrorComponent: ThrowMissingComponentError("ErrorComponent"),
         /**
          * There is a need to use Loading spinner instead of "Running three dots" loader while drill is loading.
          * If no custom loading component is provided, LoadingComponent defaults to Loading spinner.

@@ -52,10 +52,7 @@ interface IDashboardComponentsContext {
     FilterBarComponent: CustomFilterBarComponent;
 }
 
-/**
- * @internal
- */
-export const ThrowMissingComponentError = (componentName: string) => () => {
+const ThrowMissingComponentError = (componentName: string) => () => {
     throw new UnexpectedSdkError(
         `Component: ${componentName} is missing in the DashboardComponentsProvider.`,
     );
