@@ -29,10 +29,9 @@ export interface IUseInsightWidgetDataView {
     insightWidget?: IInsightWidget;
 
     /**
-     * Additional filters to the data view. These additional filters are used alongside the
-     * filters used by the insight.
+     * If specified, these filters will be used instead of the filters set on the insight.
      */
-    additionalFilters?: IFilter[];
+    insightFilterOverrides?: IFilter[];
 }
 
 /**
@@ -46,11 +45,11 @@ export interface IUseInsightWidgetDataView {
 export function useInsightWidgetDataView(
     config: IUseInsightWidgetDataView,
 ): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError> {
-    const { insightWidget, additionalFilters } = config;
+    const { insightWidget, insightFilterOverrides } = config;
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
     const insight = useDashboardSelector(selectInsightByRef(insightWidget?.insight));
-    const widgetFiltersPromise = useWidgetFilters(insightWidget, additionalFilters);
+    const widgetFiltersPromise = useWidgetFilters(insightWidget, insightFilterOverrides);
 
     const insightWithAddedFilters = useMemo(
         () => insightSetFilters(insight!, widgetFiltersPromise.result),

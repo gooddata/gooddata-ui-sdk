@@ -177,18 +177,11 @@ function selectResolvedInsightDateFilters(
         return insightDateFilters;
     }
 
-    const allDateFilters = [...insightDateFilters, ...dashboardDateFilters];
-    const allDateFilterDateDatasetPairs = selectDateDatasetsForDateFilters(state, allDateFilters);
-
-    return resolveDateFilters(allDateFilterDateDatasetPairs);
+    return selectResolvedDateFilters(state, [...insightDateFilters, ...dashboardDateFilters]);
 }
 
-function selectResolvedDateFilters(
-    state: DashboardState,
-    dashboardDateFilters: IDateFilter[],
-): IDateFilter[] {
-    const allDateFilterDateDatasetPairs = selectDateDatasetsForDateFilters(state, dashboardDateFilters);
-
+function selectResolvedDateFilters(state: DashboardState, dateFilters: IDateFilter[]): IDateFilter[] {
+    const allDateFilterDateDatasetPairs = selectDateDatasetsForDateFilters(state, dateFilters);
     return resolveDateFilters(allDateFilterDateDatasetPairs);
 }
 
@@ -288,7 +281,7 @@ function* queryForKpiOrCustomWidget(
         widgetAwareDashboardFiltersSelector,
     );
 
-    // use the widgetFilterOverrides if specified instead of insight filters
+    // use the widgetFilterOverrides if specified instead of dashboard filters
     const effectiveDashboardFilters = widgetFilterOverrides ?? widgetAwareDashboardFilters;
 
     const [dateFilters, attributeFilters] = yield all([

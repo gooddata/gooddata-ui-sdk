@@ -24,7 +24,8 @@ export interface QueryWidgetFilters extends IDashboardQuery<IFilter[]> {
  * Creates action thought which you can query dashboard component for filters that should be used by a given widget.
  *
  * @param widgetRef - reference to insight widget
- * @param widgetFilterOverrides - optionally specify filters to be applied on top of the dashboard and insight filters
+ * @param widgetFilterOverrides - optionally specify filters to be applied instead of insight filters for InsightWidgets
+ *  or instead of dashboard filters for KpiWidgets and CustomWidgets
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  * @alpha
