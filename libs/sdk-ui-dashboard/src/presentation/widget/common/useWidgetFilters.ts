@@ -1,11 +1,6 @@
 // (C) 2020-2021 GoodData Corporation
 import { useEffect, useMemo, useState } from "react";
-import {
-    FilterContextItem,
-    isDashboardAttributeFilter,
-    isInsightWidget,
-    IWidget,
-} from "@gooddata/sdk-backend-spi";
+import { FilterContextItem, isDashboardAttributeFilter, isInsightWidget } from "@gooddata/sdk-backend-spi";
 import { areObjRefsEqual, filterObjRef, IFilter, ObjRef } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import stringify from "json-stable-stringify";
@@ -16,6 +11,7 @@ import isEqual from "lodash/isEqual";
 import sortBy from "lodash/fp/sortBy";
 
 import {
+    ExtendedDashboardWidget,
     QueryProcessingStatus,
     queryWidgetFilters,
     selectFilterContextFilters,
@@ -33,7 +29,7 @@ import {
  * @alpha
  */
 export const useWidgetFilters = (
-    widget: IWidget | undefined,
+    widget: ExtendedDashboardWidget | undefined,
     filters?: IFilter[],
 ): {
     result?: IFilter[];
@@ -109,7 +105,7 @@ export const useWidgetFilters = (
  *
  * @param widget - widget to get the non-ignored filters for
  */
-function useNonIgnoredFilters(widget: IWidget | undefined) {
+function useNonIgnoredFilters(widget: ExtendedDashboardWidget | undefined) {
     const dashboardFilters = useDashboardSelector(selectFilterContextFilters);
     const widgetIgnoresDateFilter = !widget?.dateDataSet;
 

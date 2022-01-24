@@ -69,6 +69,7 @@ import { IErrorProps } from '@gooddata/sdk-ui';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IExecutionResult } from '@gooddata/sdk-backend-spi';
 import { IFilter } from '@gooddata/sdk-model';
+import { IFilterableWidget } from '@gooddata/sdk-backend-spi';
 import { IFilterContext } from '@gooddata/sdk-backend-spi';
 import { IFilterContextDefinition } from '@gooddata/sdk-backend-spi';
 import { IHeaderPredicate } from '@gooddata/sdk-ui';
@@ -1844,10 +1845,10 @@ export const FilterBar: (props: IFilterBarProps) => JSX.Element;
 export function filterContextAttributeFilterToAttributeFilter(filter: IDashboardAttributeFilter): IAttributeFilter;
 
 // @internal
-export function filterContextDateFilterToDateFilter(filter: IDashboardDateFilter, widget: IWidgetDefinition): IDateFilter;
+export function filterContextDateFilterToDateFilter(filter: IDashboardDateFilter, widget: Partial<IFilterableWidget>): IDateFilter;
 
 // @internal
-export function filterContextItemsToFiltersForWidget(filterContextItems: FilterContextItem[], widget: IWidgetDefinition): IDashboardFilter[];
+export function filterContextItemsToFiltersForWidget(filterContextItems: FilterContextItem[], widget: Partial<IFilterableWidget>): IDashboardFilter[];
 
 // @alpha (undocumented)
 export interface FilterContextSelection {
@@ -2032,7 +2033,7 @@ export interface ICustomDashboardEvent<TPayload = any> {
 }
 
 // @public
-export interface ICustomWidget extends ICustomWidgetBase, IDashboardObjectIdentity {
+export interface ICustomWidget extends ICustomWidgetBase, IDashboardObjectIdentity, Partial<IFilterableWidget> {
 }
 
 // @public
@@ -3139,7 +3140,7 @@ export interface MoveSectionItem extends IDashboardCommand {
 export function moveSectionItem(sectionIndex: number, itemIndex: number, toSectionIndex: number, toItemIndex: number, correlationId?: string): MoveSectionItem;
 
 // @public
-export function newCustomWidget<TExtra = void>(identifier: string, customType: string, extras?: TExtra): TExtra & ICustomWidget;
+export function newCustomWidget<TExtra = void>(identifier: string, customType: string, extras?: TExtra & Partial<IFilterableWidget>): TExtra & ICustomWidget;
 
 // @public
 export function newDashboardEngine(): IDashboardEngine;
@@ -4660,7 +4661,7 @@ export function useWidgetExecutionsHandler(widgetRef: ObjRef): {
 };
 
 // @alpha
-export const useWidgetFilters: (widget: IWidget | undefined, filters?: IFilter[] | undefined) => {
+export const useWidgetFilters: (widget: ExtendedDashboardWidget | undefined, filters?: IFilter[] | undefined) => {
     result?: IFilter[] | undefined;
     status?: "error" | "running" | "success" | "rejected" | undefined;
     error?: GoodDataSdkError | undefined;

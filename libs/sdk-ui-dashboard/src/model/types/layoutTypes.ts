@@ -7,6 +7,7 @@ import {
     IDashboardLayoutSectionHeader,
     IDashboardLayoutSizeByScreenSize,
     IDashboardObjectIdentity,
+    IFilterableWidget,
     isWidget,
     IWidget,
     IWidgetDefinition,
@@ -31,7 +32,10 @@ export interface ICustomWidgetBase extends IBaseWidget {
  *
  * @public
  */
-export interface ICustomWidget extends ICustomWidgetBase, IDashboardObjectIdentity {}
+export interface ICustomWidget
+    extends ICustomWidgetBase,
+        IDashboardObjectIdentity,
+        Partial<IFilterableWidget> {}
 
 /**
  * Definition of custom widget. The definition may not specify identity. In that case a temporary identity
@@ -54,7 +58,7 @@ export interface ICustomWidgetDefinition extends ICustomWidgetBase, Partial<IDas
 export function newCustomWidget<TExtra = void>(
     identifier: string,
     customType: string,
-    extras?: TExtra,
+    extras?: TExtra & Partial<IFilterableWidget>,
 ): TExtra & ICustomWidget {
     const extrasCopy = extras ? cloneDeep(extras) : {};
 

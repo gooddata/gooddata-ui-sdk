@@ -3,6 +3,7 @@ import {
     FilterContextItem,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
+    IFilterableWidget,
     IFilterContext,
     IFilterContextDefinition,
     isDashboardAttributeFilter,
@@ -18,6 +19,7 @@ import {
     IDateFilter,
 } from "@gooddata/sdk-model";
 import isString from "lodash/isString";
+
 import { IDashboardFilter } from "../types";
 
 /**
@@ -69,7 +71,7 @@ export function filterContextAttributeFilterToAttributeFilter(
  */
 export function filterContextDateFilterToDateFilter(
     filter: IDashboardDateFilter,
-    widget: IWidgetDefinition,
+    widget: Partial<IFilterableWidget>,
 ): IDateFilter {
     if (filter.dateFilter.type === "relative") {
         return newRelativeDateFilter(
@@ -96,7 +98,7 @@ export function filterContextDateFilterToDateFilter(
  */
 export function filterContextItemsToFiltersForWidget(
     filterContextItems: FilterContextItem[],
-    widget: IWidgetDefinition,
+    widget: Partial<IFilterableWidget>,
 ): IDashboardFilter[] {
     return filterContextItems.map((filter) => {
         if (isDashboardAttributeFilter(filter)) {

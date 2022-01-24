@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import { ObjRef, objRefToString } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
@@ -178,14 +178,10 @@ export const selectWidgetDrills = createMemoizedSelector((ref: ObjRef | undefine
  * @internal
  */
 export const selectAllFiltersForWidgetByRef = createMemoizedSelector((ref: ObjRef) => {
-    return createSelector(
-        selectAnalyticalWidgetByRef(ref),
-        selectFilterContextFilters,
-        (widget, dashboardFilters) => {
-            invariant(widget, `widget with ref ${objRefToString(ref)} does not exist in the state`);
-            return filterContextItemsToFiltersForWidget(dashboardFilters, widget);
-        },
-    );
+    return createSelector(selectWidgetByRef(ref), selectFilterContextFilters, (widget, dashboardFilters) => {
+        invariant(widget, `widget with ref ${objRefToString(ref)} does not exist in the state`);
+        return filterContextItemsToFiltersForWidget(dashboardFilters, widget);
+    });
 });
 
 const selectAllWidgets = createSelector(selectWidgetsMap, (widgetMap) => {
