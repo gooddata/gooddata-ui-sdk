@@ -78,7 +78,7 @@ export function dashboardInitialized(
  * Tests whether the provided object is an instance of {@link DashboardInitialized}.
  *
  * @param obj - object to test
- * @alpha
+ * @public
  */
 export const isDashboardInitialized = eventGuard<DashboardInitialized>("GDC.DASH/EVT.INITIALIZED");
 
@@ -118,7 +118,7 @@ export function dashboardDeinitialized(
  * Tests whether the provided object is an instance of {@link DashboardDeinitialized}.
  *
  * @param obj - object to test
- * @alpha
+ * @public
  */
 export const isDashboardDeinitialized = eventGuard<DashboardDeinitialized>("GDC.DASH/EVT.DEINITIALIZED");
 
@@ -130,7 +130,7 @@ export const isDashboardDeinitialized = eventGuard<DashboardDeinitialized>("GDC.
  * This event is emitted at the end of successful dashboard save command processing. At this point, the
  * dashboard state is persisted on the backend.
  *
- * @alpha
+ * @public
  */
 export interface DashboardSaved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.SAVED";
@@ -141,8 +141,8 @@ export interface DashboardSaved extends IDashboardEvent {
         readonly dashboard: IDashboard;
 
         /**
-         * Indicates whether this was the initial save and thus a new dashboard object was created or whether
-         * an existing dashboard was updated.
+         * If true, this was the initial save and thus a new dashboard object was created.
+         * If false, an existing dashboard was updated.
          */
         readonly newDashboard: boolean;
     };
@@ -169,7 +169,7 @@ export function dashboardSaved(
  * Tests whether the provided object is an instance of {@link DashboardSaved}.
  *
  * @param obj - object to test
- * @alpha
+ * @public
  */
 export const isDashboardSaved = eventGuard<DashboardSaved>("GDC.DASH/EVT.SAVED");
 
@@ -212,7 +212,7 @@ export function dashboardCopySaved(
  * Tests whether the provided object is an instance of {@link DashboardCopySaved}.
  *
  * @param obj - object to test
- * @alpha
+ * @public
  */
 export const isDashboardCopySaved = eventGuard<DashboardCopySaved>("GDC.DASH/EVT.COPY_SAVED");
 

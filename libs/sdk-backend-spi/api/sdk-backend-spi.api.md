@@ -1858,7 +1858,7 @@ export interface IWorkspaceAccessControlService {
     // (undocumented)
     grantAccess(sharedObject: ObjRef, grantees: IAccessGrantee[]): Promise<void>;
     // (undocumented)
-    revokeAccess(sharedObject: ObjRef, grantess: IAccessGrantee[]): Promise<void>;
+    revokeAccess(sharedObject: ObjRef, grantees: IAccessGrantee[]): Promise<void>;
 }
 
 // @public

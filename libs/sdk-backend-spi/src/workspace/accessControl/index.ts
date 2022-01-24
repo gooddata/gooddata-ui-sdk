@@ -110,5 +110,5 @@ export interface IWorkspaceAccessControlService {
 
     grantAccess(sharedObject: ObjRef, grantees: IAccessGrantee[]): Promise<void>;
 
-    revokeAccess(sharedObject: ObjRef, grantess: IAccessGrantee[]): Promise<void>;
+    revokeAccess(sharedObject: ObjRef, grantees: IAccessGrantee[]): Promise<void>;
 }

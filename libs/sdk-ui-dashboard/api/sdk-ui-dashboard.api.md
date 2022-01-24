@@ -1414,7 +1414,7 @@ export interface DashboardRenderResolved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.RENDER.RESOLVED";
 }
 
-// @alpha
+// @public
 export interface DashboardSaved extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
@@ -2738,13 +2738,13 @@ export const isDashboardCommandRejected: (obj: unknown) => obj is DashboardComma
 // @alpha
 export const isDashboardCommandStarted: (obj: unknown) => obj is DashboardCommandStarted<any>;
 
-// @alpha
+// @public
 export const isDashboardCopySaved: (obj: unknown) => obj is DashboardCopySaved;
 
 // @alpha
 export const isDashboardDateFilterSelectionChanged: (obj: unknown) => obj is DashboardDateFilterSelectionChanged;
 
-// @alpha
+// @public
 export const isDashboardDeinitialized: (obj: unknown) => obj is DashboardDeinitialized;
 
 // @alpha
@@ -2813,7 +2813,7 @@ export function isDashboardFilter(obj: unknown): obj is IDashboardFilter;
 // @alpha
 export const isDashboardFilterContextChanged: (obj: unknown) => obj is DashboardFilterContextChanged;
 
-// @alpha
+// @public
 export const isDashboardInitialized: (obj: unknown) => obj is DashboardInitialized;
 
 // @alpha
@@ -2906,7 +2906,7 @@ export const isDashboardRenderRequested: (obj: unknown) => obj is DashboardRende
 // @alpha
 export const isDashboardRenderResolved: (obj: unknown) => obj is DashboardRenderResolved;
 
-// @alpha
+// @public
 export const isDashboardSaved: (obj: unknown) => obj is DashboardSaved;
 
 // @alpha
