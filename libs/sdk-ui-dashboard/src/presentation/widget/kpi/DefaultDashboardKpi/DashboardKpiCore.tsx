@@ -24,7 +24,6 @@ export const DashboardKpiCore = (props: IDashboardKpiProps): JSX.Element => {
     const {
         kpiWidget,
         alert,
-        filters,
         onFiltersChange,
         onDrill,
         onError,
@@ -53,7 +52,6 @@ export const DashboardKpiCore = (props: IDashboardKpiProps): JSX.Element => {
     const kpiData = useKpiData({
         kpiWidget,
         backend,
-        filters,
         dashboardFilters,
         workspace,
     });

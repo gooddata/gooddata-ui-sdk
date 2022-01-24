@@ -16,7 +16,7 @@ export interface QueryWidgetFilters extends IDashboardQuery<IFilter[]> {
     readonly type: "GDC.DASH/QUERY.WIDGET.FILTERS";
     readonly payload: {
         readonly widgetRef: ObjRef;
-        readonly widgetFilterOverrides: IFilter[] | undefined;
+        readonly insightFilterOverrides: IFilter[] | undefined;
     };
 }
 
@@ -24,15 +24,15 @@ export interface QueryWidgetFilters extends IDashboardQuery<IFilter[]> {
  * Creates action thought which you can query dashboard component for filters that should be used by a given widget.
  *
  * @param widgetRef - reference to insight widget
- * @param widgetFilterOverrides - optionally specify filters to be applied instead of insight filters for InsightWidgets
- *  or instead of dashboard filters for KpiWidgets and CustomWidgets
+ * @param insightFilterOverrides - optionally specify filters to be applied instead of insight filters for InsightWidgets,
+ *  for Custom- and KpiWidgets this is ignored
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  * @alpha
  */
 export function queryWidgetFilters(
     widgetRef: ObjRef,
-    widgetFilterOverrides?: IFilter[],
+    insightFilterOverrides?: IFilter[],
     correlationId?: string,
 ): QueryWidgetFilters {
     return {
@@ -40,7 +40,7 @@ export function queryWidgetFilters(
         correlationId,
         payload: {
             widgetRef,
-            widgetFilterOverrides,
+            insightFilterOverrides,
         },
     };
 }

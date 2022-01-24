@@ -1,6 +1,12 @@
 // (C) 2020-2021 GoodData Corporation
 import { useEffect, useMemo, useState } from "react";
-import { FilterContextItem, isDashboardAttributeFilter, isInsightWidget } from "@gooddata/sdk-backend-spi";
+import {
+    FilterContextItem,
+    IInsightWidget,
+    IKpiWidget,
+    isDashboardAttributeFilter,
+    isInsightWidget,
+} from "@gooddata/sdk-backend-spi";
 import { areObjRefsEqual, filterObjRef, IFilter, ObjRef } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import stringify from "json-stable-stringify";
@@ -12,6 +18,7 @@ import sortBy from "lodash/fp/sortBy";
 
 import {
     ExtendedDashboardWidget,
+    ICustomWidget,
     QueryProcessingStatus,
     queryWidgetFilters,
     selectFilterContextFilters,
@@ -23,19 +30,49 @@ import {
  * Hook for obtaining the effective filters for a widget.
  *
  * @param widget - widget to get effective filters for
- * @param filters - additional filters to apply
  * @returns set of filters that should be used to execute the given widget
  *
  * @alpha
  */
-export const useWidgetFilters = (
-    widget: ExtendedDashboardWidget | undefined,
-    filters?: IFilter[],
+export function useWidgetFilters(widget: ICustomWidget | IKpiWidget | undefined): {
+    result?: IFilter[];
+    status?: QueryProcessingStatus;
+    error?: GoodDataSdkError;
+};
+/**
+ * Hook for obtaining the effective filters for a widget.
+ *
+ * @param widget - widget to get effective filters for
+ * @param insightFilterOverrides - filters to use instead of the insight filters
+ * @returns set of filters that should be used to execute the given widget
+ *
+ * @alpha
+ */
+export function useWidgetFilters(
+    widget: IInsightWidget | undefined,
+    insightFilterOverrides?: IFilter[],
 ): {
     result?: IFilter[];
     status?: QueryProcessingStatus;
     error?: GoodDataSdkError;
-} => {
+};
+/**
+ * Hook for obtaining the effective filters for a widget.
+ *
+ * @param widget - widget to get effective filters for
+ * @param insightFilterOverrides - filters to use instead of the insight filters
+ * @returns set of filters that should be used to execute the given widget
+ *
+ * @alpha
+ */
+export function useWidgetFilters(
+    widget: ExtendedDashboardWidget | undefined,
+    insightFilterOverrides?: IFilter[],
+): {
+    result?: IFilter[];
+    status?: QueryProcessingStatus;
+    error?: GoodDataSdkError;
+} {
     const [effectiveFiltersState, setEffectiveFiltersState] = useState<{
         filters: IFilter[];
         filterQueryStatus?: QueryProcessingStatus;
@@ -85,9 +122,9 @@ export const useWidgetFilters = (
     // only run the "full" filters query if any of the non-ignored filters has changed
     useEffect(() => {
         if (widget && nonIgnoredFiltersStatus === "success") {
-            runFiltersQuery(widget, filters);
+            runFiltersQuery(widget, insightFilterOverrides);
         }
-    }, [widget, stringify(nonIgnoredFilters), filters, nonIgnoredFiltersStatus]);
+    }, [widget, stringify(nonIgnoredFilters), insightFilterOverrides, nonIgnoredFiltersStatus]);
 
     return {
         result: effectiveFiltersState.filters,
@@ -98,7 +135,7 @@ export const useWidgetFilters = (
         ),
         error: nonIgnoredFiltersError ?? error,
     };
-};
+}
 
 /**
  * Hook that retrieves the non-ignored dashboard level filters for a widget.

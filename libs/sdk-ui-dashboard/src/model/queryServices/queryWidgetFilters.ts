@@ -274,19 +274,15 @@ function* queryForInsightWidget(
 function* queryForKpiOrCustomWidget(
     ctx: DashboardContext,
     widget: IKpiWidget | ICustomWidget,
-    widgetFilterOverrides: IFilter[] | undefined,
 ): SagaIterator<IFilter[]> {
     const widgetAwareDashboardFiltersSelector = selectAllFiltersForWidgetByRef(widget.ref);
     const widgetAwareDashboardFilters: ReturnType<typeof widgetAwareDashboardFiltersSelector> = yield select(
         widgetAwareDashboardFiltersSelector,
     );
 
-    // use the widgetFilterOverrides if specified instead of dashboard filters
-    const effectiveDashboardFilters = widgetFilterOverrides ?? widgetAwareDashboardFilters;
-
     const [dateFilters, attributeFilters] = yield all([
-        select(selectResolvedDateFilters, effectiveDashboardFilters.filter(isDateFilter)),
-        call(getResolvedAttributeFilters, ctx, widget, effectiveDashboardFilters.filter(isAttributeFilter)),
+        select(selectResolvedDateFilters, widgetAwareDashboardFilters.filter(isDateFilter)),
+        call(getResolvedAttributeFilters, ctx, widget, widgetAwareDashboardFilters.filter(isAttributeFilter)),
     ]);
 
     return [...dateFilters, ...attributeFilters];
@@ -294,7 +290,7 @@ function* queryForKpiOrCustomWidget(
 
 function* queryService(ctx: DashboardContext, query: QueryWidgetFilters): SagaIterator<IFilter[]> {
     const {
-        payload: { widgetRef, widgetFilterOverrides },
+        payload: { widgetRef, insightFilterOverrides },
         correlationId,
     } = query;
     const widgetSelector = selectWidgetByRef(widgetRef);
@@ -309,8 +305,12 @@ function* queryService(ctx: DashboardContext, query: QueryWidgetFilters): SagaIt
     }
 
     if (isInsightWidget(widget)) {
-        return yield call(queryForInsightWidget, ctx, widget, widgetFilterOverrides, correlationId);
+        return yield call(queryForInsightWidget, ctx, widget, insightFilterOverrides, correlationId);
     } else {
-        return yield call(queryForKpiOrCustomWidget, ctx, widget, widgetFilterOverrides);
+        if (insightFilterOverrides) {
+            // eslint-disable-next-line no-console
+            console.warn("Using 'insightFilterOverrides' for non-InsightWidget, ignoring...");
+        }
+        return yield call(queryForKpiOrCustomWidget, ctx, widget);
     }
 }

@@ -25,12 +25,10 @@ import invariant from "ts-invariant";
 import { filterContextItemsToFiltersForWidget } from "../../../../converters";
 import { IDashboardFilter } from "../../../../types";
 import { useWidgetFilters } from "../../common";
-import { useMemo } from "react";
 
 interface IUseKpiDataConfig {
     kpiWidget?: IKpiWidget;
     dashboardFilters: FilterContextItem[];
-    filters?: FilterContextItem[];
     backend?: IAnalyticalBackend;
     workspace?: string;
     onError?: OnError;
@@ -48,7 +46,6 @@ interface IUseKpiDataResult {
  */
 export function useKpiData({
     kpiWidget,
-    filters,
     dashboardFilters,
     backend,
     workspace,
@@ -56,12 +53,7 @@ export function useKpiData({
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
 
-    const convertedFilters = useMemo(
-        () => filters && kpiWidget && filterContextItemsToFiltersForWidget(filters, kpiWidget),
-        [filters, kpiWidget],
-    );
-
-    const { status, result } = useWidgetFilters(kpiWidget, convertedFilters);
+    const { status, result } = useWidgetFilters(kpiWidget);
 
     // we only put IDashboardFilters in, so we must get IDashboardFilters out as well
     const effectiveFilters = result as IDashboardFilter[] | undefined;

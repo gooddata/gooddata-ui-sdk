@@ -2283,6 +2283,7 @@ export interface IDashboardKpiProps {
     backend?: IAnalyticalBackend;
     // @alpha
     ErrorComponent?: React_2.ComponentType<IErrorProps>;
+    // @deprecated
     filters?: FilterContextItem[];
     kpiWidget: IKpiWidget;
     // @alpha
@@ -3342,7 +3343,7 @@ export interface QueryInsightWidgetFilters extends IDashboardQuery<IFilter[]> {
     // (undocumented)
     readonly payload: {
         readonly widgetRef: ObjRef;
-        readonly widgetFilterOverrides: IFilter[] | undefined;
+        readonly insightFilterOverrides: IFilter[] | undefined;
     };
     // (undocumented)
     readonly type: "GDC.DASH/QUERY.WIDGET.FILTERS";
@@ -3375,7 +3376,7 @@ export interface QueryWidgetBrokenAlerts extends IDashboardQuery<IBrokenAlertFil
 export function queryWidgetBrokenAlerts(widgetRef: ObjRef, correlationId?: string): QueryWidgetBrokenAlerts;
 
 // @alpha
-export function queryWidgetFilters(widgetRef: ObjRef, widgetFilterOverrides?: IFilter[], correlationId?: string): QueryInsightWidgetFilters;
+export function queryWidgetFilters(widgetRef: ObjRef, insightFilterOverrides?: IFilter[], correlationId?: string): QueryInsightWidgetFilters;
 
 // @alpha (undocumented)
 export const ReactDashboardContext: any;
@@ -4661,10 +4662,17 @@ export function useWidgetExecutionsHandler(widgetRef: ObjRef): {
 };
 
 // @alpha
-export const useWidgetFilters: (widget: ExtendedDashboardWidget | undefined, filters?: IFilter[] | undefined) => {
-    result?: IFilter[] | undefined;
-    status?: "error" | "running" | "success" | "rejected" | undefined;
-    error?: GoodDataSdkError | undefined;
+export function useWidgetFilters(widget: ICustomWidget | IKpiWidget | undefined): {
+    result?: IFilter[];
+    status?: QueryProcessingStatus;
+    error?: GoodDataSdkError;
+};
+
+// @alpha
+export function useWidgetFilters(widget: IInsightWidget | undefined, insightFilterOverrides?: IFilter[]): {
+    result?: IFilter[];
+    status?: QueryProcessingStatus;
+    error?: GoodDataSdkError;
 };
 
 // @public (undocumented)
