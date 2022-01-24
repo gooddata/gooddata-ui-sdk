@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { DashboardContext } from "../types/commonTypes";
 import { SagaIterator } from "redux-saga";
 import { all, call, SagaReturnType, select } from "redux-saga/effects";
@@ -162,18 +162,9 @@ function resolveWidgetFilterIgnore(
  * global date filter is desired because otherwise there is a large chance that the intersection of global date filter
  * and measure's date filters would lead to empty set and no data shown for the insight?
  */
-export function isDateFilterIgnoredForInsight(insight: IInsight): boolean {
+export function isDashboardDateFilterIgnoredForInsight(insight: IInsight): boolean {
     const simpleMeasures = insightMeasures(insight, isSimpleMeasure);
-
-    if (simpleMeasures.length === 0) {
-        return false;
-    }
-
-    const simpleMeasuresWithDateFilter = simpleMeasures.filter((m) =>
-        (measureFilters(m) ?? []).some(isDateFilter),
-    );
-
-    return simpleMeasures.length === simpleMeasuresWithDateFilter.length;
+    return simpleMeasures.length > 0 && simpleMeasures.every((m) => measureFilters(m)?.some(isDateFilter));
 }
 
 function selectResolvedInsightDateFilters(
@@ -182,7 +173,7 @@ function selectResolvedInsightDateFilters(
     dashboardDateFilters: IDateFilter[],
     insightDateFilters: IDateFilter[],
 ): IDateFilter[] {
-    if (isDateFilterIgnoredForInsight(insight)) {
+    if (isDashboardDateFilterIgnoredForInsight(insight)) {
         return insightDateFilters;
     }
 
