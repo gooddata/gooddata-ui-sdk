@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "Geo Pushpin Chart is no longer supported in Internet Explorer 11.",
+            "comment": "Geo pushpin charts no longer support Internet Explorer 11.",
             "type": "none"
         }
     ],
