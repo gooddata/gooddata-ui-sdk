@@ -32,7 +32,7 @@ import {
  * @param widget - widget to get effective filters for
  * @returns set of filters that should be used to execute the given widget
  *
- * @alpha
+ * @public
  */
 export function useWidgetFilters(widget: ICustomWidget | IKpiWidget | undefined): {
     result?: IFilter[];
@@ -42,11 +42,15 @@ export function useWidgetFilters(widget: ICustomWidget | IKpiWidget | undefined)
 /**
  * Hook for obtaining the effective filters for a widget.
  *
+ * @remarks
+ * The filters returned should be used with {@link @gooddata/sdk-model#insightSetFilters} to obtain
+ * insight that is ready for execution.
+ *
  * @param widget - widget to get effective filters for
  * @param insightFilterOverrides - filters to use instead of the insight filters
  * @returns set of filters that should be used to execute the given widget
  *
- * @alpha
+ * @public
  */
 export function useWidgetFilters(
     widget: IInsightWidget | undefined,
@@ -63,7 +67,7 @@ export function useWidgetFilters(
  * @param insightFilterOverrides - filters to use instead of the insight filters
  * @returns set of filters that should be used to execute the given widget
  *
- * @alpha
+ * @public
  */
 export function useWidgetFilters(
     widget: ExtendedDashboardWidget | undefined,

@@ -4661,14 +4661,14 @@ export function useWidgetExecutionsHandler(widgetRef: ObjRef): {
     onPushData: (data: IPushData) => void;
 };
 
-// @alpha
+// @public
 export function useWidgetFilters(widget: ICustomWidget | IKpiWidget | undefined): {
     result?: IFilter[];
     status?: QueryProcessingStatus;
     error?: GoodDataSdkError;
 };
 
-// @alpha
+// @public
 export function useWidgetFilters(widget: IInsightWidget | undefined, insightFilterOverrides?: IFilter[]): {
     result?: IFilter[];
     status?: QueryProcessingStatus;
