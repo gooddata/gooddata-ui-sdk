@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "Fixed bug with dashboardPluginHosts validation",
+            "comment": "The bug with dashboardPluginHosts validation was fixed.",
             "type": "none"
         }
     ],

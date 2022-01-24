@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "Add possibility to set dashboard plugin compatibility with minEngineVersion and maxEngineVersion properties.",
+            "comment": "The option for setting compatibility of dashboard plugins with the minEngineVersion and maxEngineVersion properties was added.",
             "type": "none"
         }
     ],
