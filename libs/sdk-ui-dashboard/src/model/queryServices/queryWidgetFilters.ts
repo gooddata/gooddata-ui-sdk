@@ -27,7 +27,7 @@ import {
     uriRef,
 } from "@gooddata/sdk-model";
 import { QueryWidgetFilters } from "../queries/widgets";
-import { selectAllFiltersForWidgetByRef, selectWidgetByRef } from "../store/layout/layoutSelectors";
+import { selectAllFiltersForWidgetByRef, selectAnalyticalWidgetByRef } from "../store/layout/layoutSelectors";
 import { selectInsightByRef } from "../store/insights/insightsSelectors";
 import { invalidQueryArguments } from "../events/general";
 import {
@@ -312,7 +312,7 @@ function* queryService(ctx: DashboardContext, query: QueryWidgetFilters): SagaIt
         payload: { widgetRef, widgetFilterOverrides },
         correlationId,
     } = query;
-    const widgetSelector = selectWidgetByRef(widgetRef);
+    const widgetSelector = selectAnalyticalWidgetByRef(widgetRef);
     const widget: ReturnType<typeof widgetSelector> = yield select(widgetSelector);
 
     if (!widget) {

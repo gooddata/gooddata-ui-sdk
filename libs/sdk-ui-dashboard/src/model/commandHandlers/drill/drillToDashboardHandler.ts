@@ -15,7 +15,7 @@ import {
     selectFilterContextAttributeFilters,
     selectFilterContextDateFilter,
 } from "../../store/filterContext/filterContextSelectors";
-import { selectWidgetByRef } from "../../store/layout/layoutSelectors";
+import { selectAnalyticalWidgetByRef } from "../../store/layout/layoutSelectors";
 import { IInsightWidget } from "@gooddata/sdk-backend-spi";
 import { IDashboardFilter } from "../../../types";
 import {
@@ -60,7 +60,9 @@ export function* drillToDashboardHandler(
     );
 
     // decide if we should use date filter (only if enabled and connected to a dataset)
-    const widget: IInsightWidget = yield select(selectWidgetByRef(cmd.payload.drillEvent.widgetRef!));
+    const widget: IInsightWidget = yield select(
+        selectAnalyticalWidgetByRef(cmd.payload.drillEvent.widgetRef!),
+    );
     const insight: IInsight = yield select(selectInsightByRef(widget.insight));
 
     // if this bombs, widget is not an insight widget and something is seriously wrong

@@ -4,7 +4,7 @@ import { DashboardTester, preloadedTesterFactory } from "../../../tests/Dashboar
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import { ChangeKpiWidgetComparison, changeKpiWidgetComparison, KpiWidgetComparison } from "../../../commands";
 import { DashboardCommandFailed, DashboardKpiWidgetComparisonChanged } from "../../../events";
-import { selectWidgetByRef } from "../../../store/layout/layoutSelectors";
+import { selectAnalyticalWidgetByRef } from "../../../store/layout/layoutSelectors";
 import { uriRef } from "@gooddata/sdk-model";
 import {
     ComplexDashboardIdentifier,
@@ -39,7 +39,7 @@ describe("change KPI widget comparison handler", () => {
 
             expect(event.payload.kpi.comparisonType).toEqual("previousPeriod");
             expect(event.payload.kpi.comparisonDirection).toEqual("growIsBad");
-            const widgetState: IKpiWidget = selectWidgetByRef(ref)(Tester.state()) as IKpiWidget;
+            const widgetState: IKpiWidget = selectAnalyticalWidgetByRef(ref)(Tester.state()) as IKpiWidget;
             expect(widgetState.kpi.comparisonType).toEqual(event.payload.kpi.comparisonType);
             expect(widgetState.kpi.comparisonDirection).toEqual(event.payload.kpi.comparisonDirection);
         });
@@ -54,7 +54,7 @@ describe("change KPI widget comparison handler", () => {
 
             expect(event.payload.kpi.comparisonType).toEqual("previousPeriod");
             expect(event.payload.kpi.comparisonDirection).toEqual("growIsGood");
-            const widgetState: IKpiWidget = selectWidgetByRef(ref)(Tester.state()) as IKpiWidget;
+            const widgetState: IKpiWidget = selectAnalyticalWidgetByRef(ref)(Tester.state()) as IKpiWidget;
             expect(widgetState.kpi.comparisonType).toEqual(event.payload.kpi.comparisonType);
             expect(widgetState.kpi.comparisonDirection).toEqual(event.payload.kpi.comparisonDirection);
         });
@@ -69,7 +69,7 @@ describe("change KPI widget comparison handler", () => {
 
             expect(event.payload.kpi.comparisonType).toEqual("none");
             expect(event.payload.kpi.comparisonDirection).toBeUndefined();
-            const widgetState: IKpiWidget = selectWidgetByRef(ref)(Tester.state()) as IKpiWidget;
+            const widgetState: IKpiWidget = selectAnalyticalWidgetByRef(ref)(Tester.state()) as IKpiWidget;
             expect(widgetState.kpi.comparisonType).toEqual(event.payload.kpi.comparisonType);
             expect(widgetState.kpi.comparisonDirection).toBeUndefined();
         });
@@ -84,7 +84,7 @@ describe("change KPI widget comparison handler", () => {
 
             expect(event.payload.kpi.comparisonType).toEqual("none");
             expect(event.payload.kpi.comparisonDirection).toBeUndefined();
-            const widgetState: IKpiWidget = selectWidgetByRef(ref)(Tester.state()) as IKpiWidget;
+            const widgetState: IKpiWidget = selectAnalyticalWidgetByRef(ref)(Tester.state()) as IKpiWidget;
             expect(widgetState.kpi.comparisonType).toEqual(event.payload.kpi.comparisonType);
             expect(widgetState.kpi.comparisonDirection).toBeUndefined();
         });

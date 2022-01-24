@@ -12,7 +12,7 @@ import {
 } from "../../../commands";
 import { attributeDisplayFormRef, idRef, ObjRef, uriRef } from "@gooddata/sdk-model";
 import { DashboardCommandFailed, DashboardInsightWidgetFilterSettingsChanged } from "../../../events";
-import { selectWidgetByRef } from "../../../store/layout/layoutSelectors";
+import { selectAnalyticalWidgetByRef } from "../../../store/layout/layoutSelectors";
 import { isDashboardAttributeFilterReference } from "@gooddata/sdk-backend-spi";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import {
@@ -22,7 +22,7 @@ import {
 } from "../../../tests/fixtures/ComplexDashboard.fixtures";
 
 function ignoredWidgetFilterRefs(tester: DashboardTester, ref: ObjRef) {
-    const widget = selectWidgetByRef(ref)(tester.state());
+    const widget = selectAnalyticalWidgetByRef(ref)(tester.state());
 
     return widget!.ignoreDashboardFilters.filter(isDashboardAttributeFilterReference).map((ignored) => {
         return ignored.displayForm;
@@ -61,7 +61,7 @@ describe("change insight widget filter settings handler", () => {
 
             // this verifies that the widget's date dataset is updated && importantly the 'native' ref used
             // on the catalog date dataset is used.
-            const widget = selectWidgetByRef(TestWidgetRef)(Tester.state());
+            const widget = selectAnalyticalWidgetByRef(TestWidgetRef)(Tester.state());
             expect(widget!.dateDataSet).toEqual(event.payload.dateDatasetForFiltering!.dataSet.ref);
             expect(widget!.ignoreDashboardFilters).toEqual([]);
         });
@@ -82,7 +82,7 @@ describe("change insight widget filter settings handler", () => {
 
             // this verifies that the widget's date dataset is updated && importantly the 'native' ref used
             // on the catalog date dataset is used.
-            const widget = selectWidgetByRef(TestWidgetRef)(Tester.state());
+            const widget = selectAnalyticalWidgetByRef(TestWidgetRef)(Tester.state());
             expect(widget!.dateDataSet).toEqual(event.payload.dateDatasetForFiltering!.dataSet.ref);
             expect(widget!.ignoreDashboardFilters).toEqual([]);
         });
@@ -124,7 +124,7 @@ describe("change insight widget filter settings handler", () => {
 
             // this verifies that the widget's ignored filters are updated && importantly the 'native' ref used
             // on the ignored attribute filter is used
-            const widget = selectWidgetByRef(TestWidgetRef)(Tester.state());
+            const widget = selectAnalyticalWidgetByRef(TestWidgetRef)(Tester.state());
             expect(ignoredWidgetFilterRefs(Tester, TestWidgetRef)).toEqual([
                 ComplexDashboardFilters.FirstAttribute.filter.attributeFilter.displayForm,
                 ComplexDashboardFilters.SecondAttribute.filter.attributeFilter.displayForm,
@@ -198,12 +198,12 @@ describe("change insight widget filter settings handler", () => {
 
             // this verifies that the widget's date dataset is updated && importantly the 'native' ref used
             // on the catalog date dataset is used.
-            const widget = selectWidgetByRef(WidgetWithNoFilters.ref)(Tester.state());
+            const widget = selectAnalyticalWidgetByRef(WidgetWithNoFilters.ref)(Tester.state());
             expect(widget!.dateDataSet).toEqual(event.payload.dateDatasetForFiltering!.dataSet.ref);
         });
 
         it("should modify date dataset when widget already has date filter enabled", async () => {
-            const originalWidget = selectWidgetByRef(WidgetWithAllFilters.ref)(Tester.state());
+            const originalWidget = selectAnalyticalWidgetByRef(WidgetWithAllFilters.ref)(Tester.state());
 
             const event: DashboardInsightWidgetFilterSettingsChanged = await Tester.dispatchAndWaitFor(
                 enableInsightWidgetDateFilter(WidgetWithAllFilters.ref, ValidDateDatasetIdRef),
@@ -215,13 +215,13 @@ describe("change insight widget filter settings handler", () => {
 
             // this verifies that the widget's date dataset is updated && importantly the 'native' ref used
             // on the catalog date dataset is used.
-            const widget = selectWidgetByRef(WidgetWithAllFilters.ref)(Tester.state());
+            const widget = selectAnalyticalWidgetByRef(WidgetWithAllFilters.ref)(Tester.state());
             expect(widget!.dateDataSet).toEqual(event.payload.dateDatasetForFiltering!.dataSet.ref);
             expect(widget!.dateDataSet).not.toEqual(originalWidget!.dateDataSet);
         });
 
         it("should not touch the ignored attribute filters", async () => {
-            const originalWidget = selectWidgetByRef(WidgetWithNoFilters.ref)(Tester.state());
+            const originalWidget = selectAnalyticalWidgetByRef(WidgetWithNoFilters.ref)(Tester.state());
 
             const event: DashboardInsightWidgetFilterSettingsChanged = await Tester.dispatchAndWaitFor(
                 enableInsightWidgetDateFilter(WidgetWithNoFilters.ref, ValidDateDatasetIdRef),
@@ -230,7 +230,7 @@ describe("change insight widget filter settings handler", () => {
 
             // widget with no filters means all attribute filters are in widget's ignore list. ensure they remain
             // the same
-            const widget = selectWidgetByRef(WidgetWithNoFilters.ref)(Tester.state());
+            const widget = selectAnalyticalWidgetByRef(WidgetWithNoFilters.ref)(Tester.state());
             expect(widget!.ignoreDashboardFilters).toEqual(originalWidget!.ignoreDashboardFilters);
             expect(event.payload.ignoredAttributeFilters).not.toEqual([]);
         });
@@ -245,7 +245,7 @@ describe("change insight widget filter settings handler", () => {
 
             expect(event.payload.dateDatasetForFiltering).toBeUndefined();
 
-            const widget = selectWidgetByRef(WidgetWithAllFilters.ref)(Tester.state());
+            const widget = selectAnalyticalWidgetByRef(WidgetWithAllFilters.ref)(Tester.state());
             expect(widget!.dateDataSet).toBeUndefined();
         });
 
@@ -257,12 +257,12 @@ describe("change insight widget filter settings handler", () => {
 
             expect(event.payload.dateDatasetForFiltering).toBeUndefined();
 
-            const widget = selectWidgetByRef(WidgetWithNoFilters.ref)(Tester.state());
+            const widget = selectAnalyticalWidgetByRef(WidgetWithNoFilters.ref)(Tester.state());
             expect(widget!.dateDataSet).toBeUndefined();
         });
 
         it("should not touch the ignored attribute filters", async () => {
-            const originalWidget = selectWidgetByRef(WidgetWithNoFilters.ref)(Tester.state());
+            const originalWidget = selectAnalyticalWidgetByRef(WidgetWithNoFilters.ref)(Tester.state());
 
             const event: DashboardInsightWidgetFilterSettingsChanged = await Tester.dispatchAndWaitFor(
                 disableInsightWidgetDateFilter(WidgetWithNoFilters.ref),
@@ -271,7 +271,7 @@ describe("change insight widget filter settings handler", () => {
 
             // widget with no filters means all attribute filters are in widget's ignore list. ensure they remain
             // the same
-            const widget = selectWidgetByRef(WidgetWithNoFilters.ref)(Tester.state());
+            const widget = selectAnalyticalWidgetByRef(WidgetWithNoFilters.ref)(Tester.state());
             expect(widget!.ignoreDashboardFilters).toEqual(originalWidget!.ignoreDashboardFilters);
             expect(event.payload.ignoredAttributeFilters).not.toEqual([]);
         });
@@ -297,7 +297,7 @@ describe("change insight widget filter settings handler", () => {
         });
 
         it("should not touch the date filter setting", async () => {
-            const originalWidget = selectWidgetByRef(WidgetWithAllFilters.ref)(Tester.state());
+            const originalWidget = selectAnalyticalWidgetByRef(WidgetWithAllFilters.ref)(Tester.state());
             const event: DashboardInsightWidgetFilterSettingsChanged = await Tester.dispatchAndWaitFor(
                 replaceInsightWidgetIgnoredFilters(WidgetWithAllFilters.ref, [
                     ComplexDashboardFilters.FirstAttribute.uriRef,
@@ -307,7 +307,7 @@ describe("change insight widget filter settings handler", () => {
 
             expect(event.payload.dateDatasetForFiltering).toBeDefined();
 
-            const widget = selectWidgetByRef(WidgetWithAllFilters.ref)(Tester.state());
+            const widget = selectAnalyticalWidgetByRef(WidgetWithAllFilters.ref)(Tester.state());
             expect(widget!.dateDataSet).toEqual(originalWidget!.dateDataSet);
         });
     });

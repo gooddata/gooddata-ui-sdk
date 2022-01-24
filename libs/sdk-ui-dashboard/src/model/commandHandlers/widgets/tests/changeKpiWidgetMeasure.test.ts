@@ -5,7 +5,7 @@ import { ChangeKpiWidgetMeasure, changeKpiWidgetMeasure, initializeDashboard } f
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { measureItem, uriRef } from "@gooddata/sdk-model";
 import { DashboardCommandFailed, DashboardKpiWidgetMeasureChanged } from "../../../events";
-import { selectWidgetByRef } from "../../../store/layout/layoutSelectors";
+import { selectAnalyticalWidgetByRef } from "../../../store/layout/layoutSelectors";
 import {
     ComplexDashboardIdentifier,
     ComplexDashboardWidgets,
@@ -117,7 +117,7 @@ describe("change KPI widget measure handler", () => {
             await Tester.dispatchAndWaitFor(initializeDashboard(), "GDC.DASH/EVT.INITIALIZED");
             Tester.resetMonitors();
 
-            const originalWidget = selectWidgetByRef(WidgetWithDateDataset.ref)(Tester.state());
+            const originalWidget = selectAnalyticalWidgetByRef(WidgetWithDateDataset.ref)(Tester.state());
             const event: DashboardKpiWidgetMeasureChanged = await Tester.dispatchAndWaitFor(
                 changeKpiWidgetMeasure(WidgetWithDateDataset.ref, measureItem(ReferenceMd.Won)),
                 "GDC.DASH/EVT.KPI_WIDGET.MEASURE_CHANGED",
@@ -139,7 +139,7 @@ describe("change KPI widget measure handler", () => {
             await Tester.dispatchAndWaitFor(initializeDashboard(), "GDC.DASH/EVT.INITIALIZED");
             Tester.resetMonitors();
 
-            const originalWidget = selectWidgetByRef(WidgetWithDateDataset.ref)(Tester.state());
+            const originalWidget = selectAnalyticalWidgetByRef(WidgetWithDateDataset.ref)(Tester.state());
             const event: DashboardKpiWidgetMeasureChanged = await Tester.dispatchAndWaitFor(
                 changeKpiWidgetMeasure(WidgetWithDateDataset.ref, measureItem(ReferenceMd.Won)),
                 "GDC.DASH/EVT.KPI_WIDGET.MEASURE_CHANGED",
