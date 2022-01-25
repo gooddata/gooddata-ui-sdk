@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { Identifier } from "../../objRef/index";
 import { attributeLocalId, IAttribute } from "../attribute";
 import { IMeasure, measureLocalId } from "../measure";
@@ -20,6 +20,13 @@ export type ISortItem = IAttributeSortItem | IMeasureSortItem;
  */
 export type SortDirection = "asc" | "desc";
 
+export interface ISortDirection {
+    /**
+     * Sort ascending or descending.
+     */
+    direction: SortDirection;
+}
+
 /**
  * Sort item which specifies that the result should be sorted by attribute element values in either
  * ascending or descending order.
@@ -27,20 +34,22 @@ export type SortDirection = "asc" | "desc";
  * @public
  */
 export interface IAttributeSortItem {
-    attributeSortItem: {
-        /**
-         * Sort ascending or descending.
-         */
-        direction: SortDirection;
-        /**
-         * Local identifier of the attribute to sort by.
-         */
-        attributeIdentifier: Identifier;
-        /**
-         * TODO: find out what this does :)
-         */
-        aggregation?: "sum";
-    };
+    attributeSortItem: IAttributeSortTarget & IAttributeSortType & ISortDirection;
+}
+
+export interface IAttributeSortTarget {
+    /**
+     * Local identifier of the attribute to sort by.
+     */
+    attributeIdentifier: Identifier;
+}
+
+export interface IAttributeSortType {
+    /**
+     * If specified, defines aggregation function used on attribute's data points before sorting is evaluated
+     * eg. used on stacked bar chart on view by attribute it defines, that all stacks are summed up and results are sorted
+     */
+    aggregation?: "sum";
 }
 
 /**
@@ -51,16 +60,13 @@ export interface IAttributeSortItem {
  * @public
  */
 export interface IMeasureSortItem {
-    measureSortItem: {
-        /**
-         * Sort ascending or descending.
-         */
-        direction: SortDirection;
-        /**
-         * Locators explicitly specifying the exact slice of the measure values to sort by.
-         */
-        locators: ILocatorItem[];
-    };
+    measureSortItem: IMeasureSortTarget & ISortDirection;
+}
+export interface IMeasureSortTarget {
+    /**
+     * Locators explicitly specifying the exact slice of the measure values to sort by.
+     */
+    locators: ILocatorItem[];
 }
 
 /**
@@ -275,7 +281,7 @@ export function measureLocatorIdentifier(locator: IMeasureLocatorItem): Identifi
  * @public
  */
 export function newAttributeSort(
-    attributeOrId: IAttribute | string,
+    attributeOrId: IAttribute | Identifier,
     sortDirection: SortDirection = "asc",
 ): IAttributeSortItem {
     invariant(attributeOrId, "attribute to create sort for must be specified");
@@ -288,6 +294,21 @@ export function newAttributeSort(
             direction: sortDirection,
         },
     };
+}
+
+/**
+ * Creates a new attribute sort - sorting the result by defined target in defined direction
+ *
+ * @param attributeSortTarget - sort target part
+ * @param sortDirection - sort direction part
+ * @returns new sort item
+ * @public
+ */
+export function newAttributeSortFromParts(
+    attributeSortTarget: IAttributeSortTarget,
+    sortDirection: ISortDirection = { direction: "asc" },
+): IAttributeSortItem {
+    return newAttributeSort(attributeSortTarget.attributeIdentifier, sortDirection.direction);
 }
 
 /**
@@ -315,6 +336,25 @@ export function newAttributeAreaSort(
             aggregation,
         },
     };
+}
+/**
+ * Creates a new attribute sort - sorting the result by defined target, type and in defined direction
+ *
+ * @param attributeSortTarget - sort target part
+ * @param sortDirection - sort direction part
+ * @returns new sort item
+ * @public
+ */
+export function newAttributeAreaSortFromParts(
+    attributeSortTarget: IAttributeSortTarget,
+    sortDirection: ISortDirection = { direction: "asc" },
+    attributeSortType: IAttributeSortType = { aggregation: "sum" },
+): IAttributeSortItem {
+    return newAttributeAreaSort(
+        attributeSortTarget.attributeIdentifier,
+        sortDirection.direction,
+        attributeSortType.aggregation,
+    );
 }
 
 /**
@@ -347,6 +387,28 @@ export function newMeasureSort(
                     },
                 },
             ],
+        },
+    };
+}
+
+/**
+ * Creates a new measure sort - sorting the result by defined target in defined direction
+ *
+ * @param measureSortTarget - what to sort part
+ * @param sortDirection - direction
+ * @returns new sort item
+ * @public
+ */
+export function newMeasureSortFromParts(
+    measureSortTarget: IMeasureSortTarget,
+    sortDirection: SortDirection = "asc",
+): IMeasureSortItem {
+    invariant(measureSortTarget, "measure to create sort for must be specified");
+
+    return {
+        measureSortItem: {
+            direction: sortDirection,
+            ...measureSortTarget,
         },
     };
 }
