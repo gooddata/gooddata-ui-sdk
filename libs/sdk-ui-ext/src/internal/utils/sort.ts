@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import every from "lodash/every";
 import includes from "lodash/includes";
 import isEmpty from "lodash/isEmpty";
@@ -133,6 +133,9 @@ export function createSorts(
     insight: IInsightDefinition,
     canSortStackTotalValue: boolean = false,
 ): ISortItem[] {
+    if (insight.insight.sorts) {
+        return insight.insight.sorts;
+    }
     switch (type) {
         case VisualizationTypes.COLUMN:
         case VisualizationTypes.LINE:
