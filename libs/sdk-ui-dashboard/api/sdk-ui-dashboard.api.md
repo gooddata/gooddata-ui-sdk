@@ -2392,10 +2392,10 @@ export interface IDashboardWidgetProps {
     backend?: IAnalyticalBackend;
     dateDataset?: ObjRef;
     // @alpha
-    ErrorComponent?: ComponentType<IErrorProps>;
+    ErrorComponent: ComponentType<IErrorProps>;
     ignoredAttributeFilters?: ObjRefInScope[];
     // @alpha
-    LoadingComponent?: ComponentType<ILoadingProps>;
+    LoadingComponent: ComponentType<ILoadingProps>;
     // @alpha (undocumented)
     onDrill?: OnFiredDashboardViewDrillEvent;
     // @alpha (undocumented)
