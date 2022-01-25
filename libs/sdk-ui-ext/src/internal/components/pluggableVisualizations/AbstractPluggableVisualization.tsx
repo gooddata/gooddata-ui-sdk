@@ -14,6 +14,7 @@ import {
     IDrillDownContext,
     EmptyAfmSdkError,
     isEmptyAfm,
+    ISortConfig,
 } from "../../interfaces/Visualization";
 import { findDerivedBucketItem, hasDerivedBucketItems, isDerivedBucketItem } from "../../utils/bucketHelper";
 import { IInsight, IInsightDefinition, insightHasDataDefined, insightProperties } from "@gooddata/sdk-model";
@@ -307,5 +308,22 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
         _drillDownContext: IDrillDownContext,
     ): IInsight {
         return sourceVisualization;
+    }
+
+    /**
+     * Default implementation of sort config getter returning empty object
+     *
+     * @param sourceVisualization drill down source {@link IInsight}
+     * @param _drillDownContext drill context (unused in this implementation)
+     * @returns the {@code sourceVisualization}
+     * @see {@link IVisualization.getInsightWithDrillDownApplied} for more information
+     */
+    public getSortConfig(_referencePoint: IReferencePoint): Promise<ISortConfig> {
+        return Promise.resolve({
+            currentSort: [],
+            availableSorts: [],
+            supported: false,
+            disabled: false,
+        });
     }
 }

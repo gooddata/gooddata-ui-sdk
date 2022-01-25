@@ -17,6 +17,15 @@ import {
     VisualizationProperties,
     IExecutionConfig,
     LocalIdRef,
+    ISortItem,
+    IAttributeSortTarget,
+    IAttributeSortType,
+    IMeasureSortTarget,
+    Identifier,
+    IAttributeLocatorItem,
+    newMeasureSort,
+    newAttributeSort,
+    newAttributeAreaSort,
 } from "@gooddata/sdk-model";
 import {
     ChartType,
@@ -307,8 +316,98 @@ export interface IUiConfig {
 
 export interface IVisualizationProperties {
     // This can be anything depending on a visualization type
-    // perhaps consider adding: sortItems?: AFM.SortItem[]
-    [property: string]: any;
+    sortItems?: ISortItem[];
+    controls?: {
+        [property: string]: any;
+    };
+    [property: string]: any; // should not be used like this but to be backward compatible
+}
+
+export type AttributeSortSuggestion = {
+    type: "attributeSort";
+} & IAttributeSortTarget &
+    IAttributeSortType;
+
+export type MeasureSortSuggestion = {
+    type: "measureSort";
+} & IMeasureSortTarget;
+
+export type SortSuggestion = AttributeSortSuggestion | MeasureSortSuggestion;
+
+export function newMeasureSortSuggestion(
+    identifier: Identifier,
+    attributeLocators: IAttributeLocatorItem[] = [],
+): MeasureSortSuggestion {
+    const {
+        measureSortItem: { locators },
+    } = newMeasureSort(identifier, "asc", attributeLocators);
+    return {
+        type: "measureSort",
+        locators,
+    };
+}
+
+export function newAttributeSortSuggestion(identifier: Identifier): AttributeSortSuggestion {
+    const {
+        attributeSortItem: { attributeIdentifier },
+    } = newAttributeSort(identifier);
+    return {
+        type: "attributeSort",
+        attributeIdentifier,
+    };
+}
+
+export function newAttributeAreaSortSuggestion(
+    identifier: Identifier,
+    areaAggregation: "sum" = "sum",
+): AttributeSortSuggestion {
+    const {
+        attributeSortItem: { attributeIdentifier, aggregation },
+    } = newAttributeAreaSort(identifier, "asc", areaAggregation);
+    return {
+        type: "attributeSort",
+        attributeIdentifier,
+        aggregation,
+    };
+}
+
+/**
+ * Specifies set of available sorts for given level of hierarchy:
+ * Specific attribute to which sort is related - for eg. multiple ViewBy attributes, each can specify its sorting
+ */
+export interface IAvailableSortsGroup {
+    // bucket item identifier
+    forBucketItem: LocalIdRef;
+    // all possible sort combinations for given level, sort direction is irrelevant
+    sortSuggestions: SortSuggestion[];
+    /**
+     * Additional text to available sorts, eg.
+     * when there is single available sort, this can contain explanation of the reason
+     */
+    explanation?: string;
+}
+export interface ISortConfig {
+    /**
+     * Current sort - default or chosen from inside of visualization
+     */
+    currentSort: ISortItem[];
+    /**
+     * All available sorts for current buckets
+     * - should contain current sort too
+     */
+    availableSorts: IAvailableSortsGroup[];
+    /**
+     * Whether sorting is supported by viz
+     */
+    supported: boolean;
+    /**
+     * Whether sorting is disabled for current buckets
+     */
+    disabled: boolean;
+    /**
+     * When sorting is disabled, this can contain explanation of reason
+     */
+    disabledExplanation?: string;
 }
 
 export interface IReferencePoint {
@@ -321,10 +420,7 @@ export interface IReferences {
     [identifier: string]: string;
 }
 
-export interface IExtendedReferencePoint {
-    buckets: IBucketOfFun[];
-    filters: IFilters;
-    properties?: IVisualizationProperties; // properties are under plugvis creator's control
+export interface IExtendedReferencePoint extends IReferencePoint {
     uiConfig: IUiConfig;
 }
 
@@ -405,6 +501,12 @@ export interface IVisualization {
      * @returns `source` as the Drill Down target {@link IInsight}
      */
     getInsightWithDrillDownApplied(source: IInsight, drillDownContext: IDrillDownContext): IInsight;
+
+    /**
+     * Called whenever inputs for default sorts calculation changed and it should provide current sort and also all valid available sorts for actual reference point/properties
+     * @param referencePoint
+     */
+    getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig>;
 }
 
 export interface IGdcConfig {

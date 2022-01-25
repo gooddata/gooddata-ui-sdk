@@ -29,6 +29,8 @@ import {
     IVisualization,
     IDrillDownContext,
     IVisProps,
+    IExtendedReferencePoint,
+    ISortConfig,
 } from "../interfaces/Visualization";
 import { PluggableVisualizationFactory } from "../interfaces/VisualizationDescriptor";
 import { FullVisualizationCatalog, IVisualizationCatalog } from "./VisualizationCatalog";
@@ -62,8 +64,8 @@ export interface IBaseVisualizationProps extends IVisCallbacks {
     isMdObjectValid?: boolean;
     configPanelClassName?: string;
     theme?: ITheme;
-    onExtendedReferencePointChanged?(): void;
-
+    onExtendedReferencePointChanged?(referencePoint: IExtendedReferencePoint): void;
+    onSortingChanged?(sortConfig: ISortConfig): void;
     onNewDerivedBucketItemsPlaced?(): void;
 
     renderer?(component: any, target: Element): void;
@@ -125,6 +127,10 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
             this.props.referencePoint,
             nextProps.referencePoint,
         );
+        const propertiesChanged = BaseVisualization.propertiesHasChanged(
+            this.props.referencePoint,
+            nextProps.referencePoint,
+        );
 
         if (visualizationClassChanged) {
             this.visElementId = uuidv4();
@@ -137,6 +143,9 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
                 // only pass current props if the visualization class is the same (see getExtendedReferencePoint JSDoc)
                 visualizationClassChanged ? undefined : this.props,
             );
+        }
+        if (propertiesChanged) {
+            this.triggerPropertiesChanged(nextProps);
         }
     }
 
@@ -241,12 +250,28 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         newProps: IBaseVisualizationProps,
         currentProps?: IBaseVisualizationProps,
     ) {
-        const { referencePoint: newReferencePoint, onExtendedReferencePointChanged } = newProps;
+        const {
+            referencePoint: newReferencePoint,
+            onExtendedReferencePointChanged,
+            onSortingChanged,
+        } = newProps;
 
         if (this.visualization && newReferencePoint && onExtendedReferencePointChanged) {
             this.visualization
                 .getExtendedReferencePoint(newReferencePoint, currentProps && currentProps.referencePoint)
-                .then(onExtendedReferencePointChanged);
+                .then(async (extendedReferencePoint) => {
+                    onExtendedReferencePointChanged(extendedReferencePoint);
+                    const sortConfig = await this.visualization.getSortConfig(extendedReferencePoint);
+                    return onSortingChanged && onSortingChanged(sortConfig);
+                });
+        }
+    }
+
+    private triggerPropertiesChanged(newProps: IBaseVisualizationProps) {
+        const { referencePoint: newReferencePoint, onSortingChanged } = newProps;
+        // Some of the properties eg. stacking of measures, dual axes influence sorting
+        if (this.visualization && newReferencePoint && onSortingChanged) {
+            this.visualization.getSortConfig(newReferencePoint).then(onSortingChanged);
         }
     }
 
@@ -273,6 +298,13 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
             theme: this.props.theme,
             executionConfig: this.props.executionConfig,
         };
+    }
+
+    private static propertiesHasChanged(
+        currentReferencePoint: IReferencePoint,
+        nextReferencePoint: IReferencePoint,
+    ) {
+        return !isEqual(currentReferencePoint.properties, nextReferencePoint.properties);
     }
 
     public getInsightWithDrillDownApplied(
