@@ -1,6 +1,11 @@
 {
     "extends": "./tsconfig.json",
-    "include": ["src/gooddata-node.ts", "src/gooddata-browser.ts", "src/typings.d.ts"],
+    "include": [
+        "src/gooddata-node.ts",
+        "src/gooddata-browser.ts",
+        "src/gooddata-custom.ts",
+        "src/typings.d.ts"
+    ],
     "compilerOptions": {
         "baseUrl": null,
         "paths": null,
