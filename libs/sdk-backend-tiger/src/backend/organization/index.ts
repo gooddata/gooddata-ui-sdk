@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import {
     IOrganization,
@@ -27,13 +27,14 @@ export class TigerOrganization implements IOrganization {
         }
 
         // TODO: replace with direct call of TigerClient (once methods are generated from OpenAPI)
-        const organizationData = (
-            await this.authCall((client) => client.axios.get("/api/entities/organization"))
-        ).data;
+        const organizationData: {
+            organizationName: string;
+            organizationId: string;
+        } = await this.authCall((client) => client.axios.get("/api/profile"));
 
         return {
-            id: this.organizationId,
-            title: organizationData.data.attributes.name,
+            id: organizationData.organizationId,
+            title: organizationData.organizationName,
         };
     }
 
@@ -47,12 +48,13 @@ export class TigerOrganizations implements IOrganizations {
 
     public async getCurrentOrganization(): Promise<IOrganization> {
         // TODO: replace with direct call of TigerClient (once methods are generated from OpenAPI)
-        const organizationData = (
-            await this.authCall((client) => client.axios.get("/api/entities/organization"))
-        ).data;
+        const organizationData: {
+            organizationName: string;
+            organizationId: string;
+        } = await this.authCall((client) => client.axios.get("/api/profile"));
 
-        const organizationId = organizationData.data.id;
-        const organizationName = organizationData.data.attributes.name;
+        const organizationId = organizationData.organizationId;
+        const organizationName = organizationData.organizationName;
 
         return new TigerOrganization(this.authCall, organizationId, organizationName);
     }
