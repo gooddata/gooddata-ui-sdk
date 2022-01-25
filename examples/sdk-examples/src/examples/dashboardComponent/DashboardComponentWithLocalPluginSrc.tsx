@@ -1,7 +1,16 @@
 // (C) 2007-2021 GoodData Corporation
-import React, { ComponentType } from "react";
+import React from "react";
 import max from "lodash/max";
-import { Legend, PolarAngleAxis, PolarGrid, PolarRadiusAxis, Radar, RadarChart, Tooltip } from "recharts";
+import {
+    Legend,
+    PolarAngleAxis,
+    PolarGrid,
+    PolarRadiusAxis,
+    Radar,
+    RadarChart,
+    ResponsiveContainer,
+    Tooltip,
+} from "recharts";
 import {
     CustomDashboardWidgetComponent,
     DashboardConfig,
@@ -13,11 +22,11 @@ import {
     newCustomWidget,
     newDashboardItem,
     newDashboardSection,
-    useWidgetFilters,
+    useCustomWidgetExecutionDataView,
 } from "@gooddata/sdk-ui-dashboard";
-import { idRef, IFilter } from "@gooddata/sdk-model";
+import { idRef } from "@gooddata/sdk-model";
 import { useDashboardLoader } from "@gooddata/sdk-ui-loaders";
-import { IErrorProps, ILoadingProps, LoadingComponent, useExecutionDataView } from "@gooddata/sdk-ui";
+import { LoadingComponent } from "@gooddata/sdk-ui";
 
 import { MAPBOX_TOKEN } from "../../constants/fixtures";
 import * as Md from "../../md/full";
@@ -25,37 +34,31 @@ import * as Md from "../../md/full";
 const dashboardRef = idRef("aeO5PVgShc0T");
 const config: DashboardConfig = { mapboxToken: MAPBOX_TOKEN, isReadOnly: true };
 
-interface ISimpleRadarChartProps {
-    filters: IFilter[];
-    ErrorComponent: ComponentType<IErrorProps>;
-    LoadingComponent: ComponentType<ILoadingProps>;
-}
-
 const simpleCurrencyFormatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
     maximumSignificantDigits: 3,
 });
 
-const SimpleRadarChart: React.FC<ISimpleRadarChartProps> = ({
-    filters,
-    ErrorComponent,
-    LoadingComponent,
-}) => {
-    const { result, error, status } = useExecutionDataView({
+/*
+ * Component to render 'myCustomWidget'. If you create custom widget instance and also pass extra data,
+ * then that data will be available in the `widget` prop.
+ */
+const MyCustomWidget: CustomDashboardWidgetComponent = ({ widget, LoadingComponent, ErrorComponent }) => {
+    const { result, status, error } = useCustomWidgetExecutionDataView({
+        widget: widget as ICustomWidget,
         execution: {
             seriesBy: [Md.$TotalSales, Md.$FranchisedSales],
             slicesBy: [Md.LocationState],
-            filters,
         },
     });
 
-    if (status === "loading" || status === "pending") {
+    if (status === "pending" || status === "loading") {
         return <LoadingComponent />;
     }
 
     if (status === "error") {
-        return <ErrorComponent message={error?.message ?? "Error loading execution"} />;
+        return <ErrorComponent message={error?.message ?? "Unknown error"} />;
     }
 
     const data = result!
@@ -75,56 +78,34 @@ const SimpleRadarChart: React.FC<ISimpleRadarChartProps> = ({
     const maxValue = max(data.map((i) => max([i.totalSales, i.franchisedSales])))!;
 
     return (
-        <RadarChart width={730} height={240} data={data}>
-            <PolarGrid color="#94a1ad" />
-            <PolarAngleAxis dataKey="title" color="#94a1ad" />
-            <PolarRadiusAxis
-                angle={90}
-                color="#94a1ad"
-                domain={[0, maxValue]}
-                tickFormatter={simpleCurrencyFormatter.format}
-            />
-            <Radar
-                name="Total Sales"
-                dataKey="totalSales"
-                stroke="#14b2e2"
-                fill="#14b2e2"
-                fillOpacity={0.6}
-            />
-            <Radar
-                name="Franchised Sales"
-                dataKey="franchisedSales"
-                stroke="#00c18e"
-                fill="#00c18e"
-                fillOpacity={0.6}
-            />
-            <Tooltip />
-            <Legend />
-        </RadarChart>
-    );
-};
-
-/*
- * Component to render 'myCustomWidget'. If you create custom widget instance and also pass extra data,
- * then that data will be available in
- */
-const MyCustomWidget: CustomDashboardWidgetComponent = ({ widget, LoadingComponent, ErrorComponent }) => {
-    const { result, status, error } = useWidgetFilters(widget as ICustomWidget);
-
-    if (status === "running") {
-        return <LoadingComponent />;
-    }
-
-    if (status === "error") {
-        return <ErrorComponent message={error?.message ?? "Error loading filters"} />;
-    }
-
-    return (
-        <SimpleRadarChart
-            ErrorComponent={ErrorComponent}
-            LoadingComponent={LoadingComponent}
-            filters={result ?? []}
-        />
+        <ResponsiveContainer height={240} width="90%">
+            <RadarChart data={data}>
+                <PolarGrid color="#94a1ad" />
+                <PolarAngleAxis dataKey="title" color="#94a1ad" />
+                <PolarRadiusAxis
+                    angle={90}
+                    color="#94a1ad"
+                    domain={[0, maxValue]}
+                    tickFormatter={simpleCurrencyFormatter.format}
+                />
+                <Radar
+                    name="Total Sales"
+                    dataKey="totalSales"
+                    stroke="#14b2e2"
+                    fill="#14b2e2"
+                    fillOpacity={0.6}
+                />
+                <Radar
+                    name="Franchised Sales"
+                    dataKey="franchisedSales"
+                    stroke="#00c18e"
+                    fill="#00c18e"
+                    fillOpacity={0.6}
+                />
+                <Tooltip />
+                <Legend />
+            </RadarChart>
+        </ResponsiveContainer>
     );
 };
 

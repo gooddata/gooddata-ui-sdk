@@ -13,6 +13,7 @@ import { CaseReducer } from '@reduxjs/toolkit';
 import { CaseReducerActions } from '@reduxjs/toolkit';
 import { ComponentType } from 'react';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-backend-spi';
+import { DataViewFacade } from '@gooddata/sdk-ui';
 import { DateFilterGranularity } from '@gooddata/sdk-backend-spi';
 import { DateFilterType } from '@gooddata/sdk-backend-spi';
 import { DateString } from '@gooddata/sdk-backend-spi';
@@ -66,6 +67,7 @@ import { IDrillToDashboard } from '@gooddata/sdk-backend-spi';
 import { IDrillToInsight } from '@gooddata/sdk-backend-spi';
 import { IDrillToLegacyDashboard } from '@gooddata/sdk-backend-spi';
 import { IErrorProps } from '@gooddata/sdk-ui';
+import { IExecutionConfiguration } from '@gooddata/sdk-ui';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IExecutionResult } from '@gooddata/sdk-backend-spi';
 import { IFilter } from '@gooddata/sdk-model';
@@ -130,6 +132,7 @@ import { Selector } from '@reduxjs/toolkit';
 import { ShareStatus } from '@gooddata/sdk-backend-spi';
 import { TypedUseSelectorHook } from 'react-redux';
 import { UriRef } from '@gooddata/sdk-model';
+import { UseCancelablePromiseState } from '@gooddata/sdk-ui';
 import { VisualizationProperties } from '@gooddata/sdk-model';
 import { WithIntlProps } from 'react-intl';
 import { WrappedComponentProps } from 'react-intl';
@@ -3010,6 +3013,12 @@ export interface ITopBarProps {
     titleProps: ITitleProps;
 }
 
+// @beta
+export interface IUseCustomWidgetExecutionDataViewConfig {
+    execution?: Exclude<IExecutionConfiguration, "filters">;
+    widget: ICustomWidget;
+}
+
 // @alpha (undocumented)
 export type IXlsxExportConfig = {
     format: "xlsx";
@@ -4160,6 +4169,9 @@ export interface UpsertExecutionResult extends IDashboardCommand {
     // (undocumented)
     readonly type: "GDC.DASH/CMD.EXECUTION_RESULT.UPSERT";
 }
+
+// @beta
+export const useCustomWidgetExecutionDataView: ({ widget, execution, }: IUseCustomWidgetExecutionDataViewConfig) => UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
 
 // @internal (undocumented)
 export interface UseDashboardAsyncRender {
