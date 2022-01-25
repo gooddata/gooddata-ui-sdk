@@ -14,7 +14,8 @@ const DashboardWithLocalPlugin = (): JSX.Element => (
 
         <p>
             Example on how to embed a dashboard with a local plugin. The example plugin adds a new section to
-            the Dashboard and renders a text there.
+            the Dashboard and renders a custom visualization there. Note that the custom visualization
+            respects the dashboard filters.
         </p>
 
         <ExampleWithSource
