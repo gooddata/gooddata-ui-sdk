@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { factory as createSdk, SDK } from "@gooddata/api-client-bear";
 import {
     IAnalyticalBackendConfig,
@@ -124,6 +124,13 @@ type LegacyFunctionsSubscription = {
 };
 
 /**
+ * Provides a way to use custom factory for creating SDK instances.
+ */
+type FactoryFunction = {
+    factory?: (config?: any) => SDK;
+};
+
+/**
  * This implementation of analytical backend uses the gooddata-js API client to realize the SPI.
  *
  * The only thing worth noting about this impl is the handling of SDK instance creation and authentication:
@@ -151,7 +158,7 @@ export class BearBackend implements IAnalyticalBackend {
 
     constructor(
         config?: IAnalyticalBackendConfig,
-        implConfig?: BearBackendConfig & LegacyFunctionsSubscription,
+        implConfig?: BearBackendConfig & LegacyFunctionsSubscription & FactoryFunction,
         telemetry?: TelemetryData,
         authProvider?: IAuthProviderCallGuard,
     ) {
@@ -435,10 +442,10 @@ function telemetrySanitize(telemetry?: TelemetryData): TelemetryData {
 
 function newSdkInstance(
     config: IAnalyticalBackendConfig,
-    implConfig: BearBackendConfig,
+    implConfig: BearBackendConfig & FactoryFunction,
     telemetry: TelemetryData,
 ): SDK {
-    const sdk = createSdk();
+    const sdk = implConfig.factory ? implConfig.factory() : createSdk();
 
     if (config.hostname) {
         sdk.config.setCustomDomain(config.hostname);
