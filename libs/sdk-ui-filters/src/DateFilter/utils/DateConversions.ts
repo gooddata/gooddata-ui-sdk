@@ -34,7 +34,7 @@ export const convertPlatformDateStringToDate = (
 
 /**
  * Returns the timezone offset in milliseconds for the given date.
- * @param when when to return the offset for. This is important because of DST - the offset changes during the year.
+ * @param when - when to return the offset for. This is important because of DST - the offset changes during the year.
  */
 const getTimeOffsetInMilliseconds = (when: Date): number =>
     when.getTimezoneOffset() * NUM_OF_MILISECONDS_IN_MINUTE;
