@@ -190,8 +190,6 @@ function createItemBorderRadiusPredicate(chartType: string): boolean | ItemBorde
  * The big question is - why is this mapper even needed, why not creating the legend items correctly the first time?
  * It is likely that the code was glued-in while implementing combo and dual axes charts. Perhaps better way is to
  * refactor the legend builders (which can be chart-specific) to create the legend items correctly.
- *
- * @param chartType
  */
 function createSeriesMapper(chartType: string) {
     if (isComboChart(chartType)) {

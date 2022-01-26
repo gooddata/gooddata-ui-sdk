@@ -7,7 +7,7 @@
  *      Page:    https://www.highcharts.com/products/plugin-registry/single/42/Zero-align%20y-axes
  *      Github:  https://github.com/chriskmnds/highcharts-zero-align-y-axes
  *
- * Modified by binh.nguyen@gooddata.com to support min/max configuration
+ * Modified by `binh.nguyen@gooddata.com` to support min/max configuration
  */
 
 import partial from "lodash/partial";
@@ -40,8 +40,6 @@ export interface IMinMaxLookup {
 
 /**
  * Check if user sets min or max
- * @param minmax
- * @param index
  */
 function isMinMaxConfig(minmax: IMinMaxInfo[], index: number): boolean {
     return minmax[index].isSetMin || minmax[index].isSetMax;
@@ -110,13 +108,6 @@ function calculateMax(
  *
  * For max, the calculation is base on axis having largest max in case having min/max setting
  * Otherwise, it is calculated base on axis having larger max
- *
- * @param minmax
- * @param minmaxLookup
- * @param axisIndex
- * @param getIndex
- * @param calculateLimit
- * @param findExtreme
  */
 function getLimit(
     minmax: IMinMaxInfo[],
@@ -211,8 +202,6 @@ export function getMinMaxInfo(config: any, stacking: StackingType, type: string)
 
 /**
  * Get series on related axis
- * @param axisIndex
- * @param series
  */
 function getSeriesOnAxis(series: ISeriesItem[], axisIndex: number): ISeriesItem[] {
     return series.filter((item: ISeriesItem): boolean => item.yAxis === axisIndex);
@@ -220,7 +209,6 @@ function getSeriesOnAxis(series: ISeriesItem[], axisIndex: number): ISeriesItem[
 
 /**
  * Get y value in series
- * @param series
  */
 function getYDataInSeries(series: ISeriesItem): number[] {
     return series.data.map((item: ISeriesDataItem): number => item.y);
@@ -237,7 +225,6 @@ function getYDataInSeries(series: ISeriesItem): number[] {
  *  [1, [2, [3,
  *   4]  5]  6]
  * ]
- * @param yData
  */
 function getStackedYData(yData: number[][]): number[][] {
     return zip(...yData);
@@ -249,8 +236,6 @@ function getStackedYData(yData: number[][]): number[][] {
  *  [1, [2, [3,
  *   4]  5]  6]
  * ]
- * @param columns
- * @return [min, max]
  */
 function getColumnExtremes(columns: number[]): IMinMax {
     return columns.reduce(
@@ -289,7 +274,6 @@ function getStackedDataMinMax(yData: number[][]): IMinMax {
  *      [20, [30, [40, [  , [100
  *       80]  70] -60]  ]      ]
  *  ]
- * @param yData
  */
 export function convertNumberToPercent(yData: number[][]): number[][] {
     return yData.map((columns: number[]) => {
@@ -302,9 +286,6 @@ export function convertNumberToPercent(yData: number[][]): number[][] {
 /**
  * Get data min/max in stacked chart
  * By comparing total of positive value to get max and total of negative value to get min
- * @param series
- * @param stacking
- * @param opposite
  */
 function getDataMinMaxOnStackedChart(
     series: ISeriesItem[],
@@ -323,7 +304,6 @@ function getDataMinMaxOnStackedChart(
 /**
  * Get data min/max in normal chart
  * By comparing min max value in all series in axis
- * @param series
  */
 function getDataMinMax(series: ISeriesItem[], isLineChart: boolean): IMinMax {
     const { min, max } = series.reduce(
@@ -370,7 +350,6 @@ function getExtremeByChartTypeOnAxis(
 
 /**
  * Check whether axis has invalid min/max
- * @param minmax
  */
 function hasInvalidAxis(minmax: IMinMaxInfo[]): boolean {
     return minmax.reduce((result: boolean, item: IMinMaxInfo) => {
@@ -384,9 +363,6 @@ function hasInvalidAxis(minmax: IMinMaxInfo[]): boolean {
 
 /**
  * Hide invalid axis by setting 'visible' to false
- * @param config
- * @param minmax
- * @param type
  */
 function hideInvalidAxis(config: any, minmax: IMinMaxInfo[], type: string) {
     const series: ISeriesItem[] = config.series.map((item: ISeriesItem) => {
@@ -424,8 +400,6 @@ function hideInvalidAxis(config: any, minmax: IMinMaxInfo[], type: string) {
 
 /**
  * Calculate new min/max to make Y axes aligned
- * @param chartOptions
- * @param config
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function getZeroAlignConfiguration(chartOptions: IChartOptions, config: any): any {

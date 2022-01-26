@@ -121,7 +121,6 @@ const getResponsiveConfigOptions = (
  * Responsive config for multiple charts.
  * Some charts (e.g. bar chart) have inverted axes - the x-axis stands for the y-axis and vice versa,
  * therefore is possible to use the boolean parameter "inverted" to get inverted config.
- * @param {boolean} [inverted]
  */
 export const getCommonResponsiveConfig = (
     inverted: boolean = false,

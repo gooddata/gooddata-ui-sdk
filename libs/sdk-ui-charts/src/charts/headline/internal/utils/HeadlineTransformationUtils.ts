@@ -89,11 +89,10 @@ function getExecutionData(dv: DataViewFacade): IHeadlineExecutionData[] {
 }
 
 /**
- * Get {HeadlineData} used by the {Headline} component.
+ * Get {@link IHeadlineData} used by the {@link Headline} component.
  *
  * @param dataView - data to visualize
  * @param intl - Required localization for compare item title
- * @returns {*}
  */
 export function getHeadlineData(dataView: IDataView, intl: IntlShape): IHeadlineData {
     const dv = DataViewFacade.for(dataView);
@@ -119,7 +118,7 @@ export function getHeadlineData(dataView: IDataView, intl: IntlShape): IHeadline
  * The method will return copied collection of the headline data with altered drillable status.
  *
  * @param headlineData - The headline data that we want to change the drillable status.
- * @param drillableItems - list of drillable items {uri, identifier}
+ * @param drillableItems - list of drillable items
  * @param dataView - data visualized by the headline
  * @returns altered headlineData
  */
@@ -145,12 +144,11 @@ export function applyDrillableItems(
 }
 
 /**
- * Build drill event data (object with execution and drill context) from the data obtained by clicking on the {Headline}
+ * Build drill event data (object with execution and drill context) from the data obtained by clicking on the {@link Headline}
  * component an from the execution objects.
  *
- * @param itemContext - data received from the click on the {Headline} component.
+ * @param itemContext - data received from the click on the {@link Headline} component.
  * @param dataView - data visualized by the headline
- * @returns {*}
  */
 export function buildDrillEventData(
     itemContext: IHeadlineDrillItemContext,

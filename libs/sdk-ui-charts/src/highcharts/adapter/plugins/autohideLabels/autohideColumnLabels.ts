@@ -198,8 +198,7 @@ function findColumnKey(key: string): boolean {
  * Merge stack label points from axes to one
  * Primary axis:    [pointP1, pointP2, pointP3]
  * Secondary axis:  [pointS1, pointS2, pointS3]
- * @param stacks
- * @return [pointP1, pointS1, pointP2, pointS2, pointP3, pointS3]
+ * @returns [pointP1, pointS1, pointP2, pointS2, pointP3, pointS3]
  */
 export function getStackLabelPointsForDualAxis(stacks: UnsafeInternals[]): Highcharts.Point[] {
     return flatten(
