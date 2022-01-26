@@ -224,7 +224,6 @@ const filterMatchesData = (dateFilter: IDashboardDateFilter) => (filter: DateFil
  * Creates a virtual preset with values corresponding to a provided server-side value.
  * This is used in situations when a dashboard was saved with setting
  * that can no longer be reproduced by the available options (e.g. relativeForm was used and later, was disabled)
- * @param dateFilter
  */
 function createVirtualPresetForStoredFilter(
     dateFilter: IDashboardDateFilter | undefined,

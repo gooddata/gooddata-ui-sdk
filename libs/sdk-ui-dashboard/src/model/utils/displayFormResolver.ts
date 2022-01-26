@@ -28,9 +28,9 @@ export type DisplayFormResolutionResult = {
  * Given a set of display form refs (which may be of any type.. uri or id), this function returns a list of
  * attribute display form metadata objects.
  *
- * @param ctx dashboard context in which the resolution is done
- * @param refs ObjRefs of display forms; the type of ObjRef can be either uri or id ref, the function will resolve it regardless
- * @param displayForms optionally specify mapping of display forms to use for in-memory resolution of refs to metadata objects; if
+ * @param ctx - dashboard context in which the resolution is done
+ * @param refs - ObjRefs of display forms; the type of ObjRef can be either uri or id ref, the function will resolve it regardless
+ * @param displayForms - optionally specify mapping of display forms to use for in-memory resolution of refs to metadata objects; if
  *  not specified, the generator will retrieve all catalog display forms from state
  */
 export function* resolveDisplayFormMetadata(

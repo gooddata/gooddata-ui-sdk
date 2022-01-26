@@ -28,9 +28,9 @@ export type AttributeResolutionResult = {
  * Given a set of attribute refs (which may be of any type.. uri or id), this function returns a list of
  * attribute metadata objects.
  *
- * @param ctx dashboard context in which the resolution is done
- * @param refs ObjRefs of display forms; the type of ObjRef can be either uri or id ref, the function will resolve it regardless
- * @param attributes optionally specify mapping of attributes to use for in-memory resolution of refs to metadata objects; if
+ * @param ctx - dashboard context in which the resolution is done
+ * @param refs - ObjRefs of display forms; the type of ObjRef can be either uri or id ref, the function will resolve it regardless
+ * @param attributes - optionally specify mapping of attributes to use for in-memory resolution of refs to metadata objects; if
  *  not specified, the generator will retrieve all catalog attributes from state
  */
 export function* resolveAttributeMetadata(

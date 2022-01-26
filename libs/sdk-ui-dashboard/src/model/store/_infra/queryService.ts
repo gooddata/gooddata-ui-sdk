@@ -170,11 +170,6 @@ export function createSliceNameForQueryCache(queryName: string): string {
     return `${segments.join("")}Cache`;
 }
 
-/**
- *
- * @param queryName
- * @param selectId
- */
 function createQueryCacheSlice<TQuery extends IDashboardQuery<TResult>, TResult>(
     queryName: string,
     selectId: IdSelector<TQuery>,

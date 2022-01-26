@@ -22,10 +22,10 @@ import invariant from "ts-invariant";
  * but the currently applied filters either do not contain them, or the KPI has started ignoring them
  * since the alert was first set up.
  *
- * @param alert the alert to compute the broken filters for
- * @param kpi the KPI widget that the alert is relevant to
- * @param appliedFilters all the currently applied filters (including All Time date filters)
- * @param displayFormsMap map of all resolved related display forms
+ * @param alert - the alert to compute the broken filters for
+ * @param kpi - the KPI widget that the alert is relevant to
+ * @param appliedFilters - all the currently applied filters (including All Time date filters)
+ * @param displayFormsMap - map of all resolved related display forms
  *
  * @internal
  */

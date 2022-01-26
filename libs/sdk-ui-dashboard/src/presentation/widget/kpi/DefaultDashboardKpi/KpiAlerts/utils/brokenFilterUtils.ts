@@ -35,11 +35,11 @@ export type IAttributeFilterMetaCollection = { [ref: string]: IAttributeFilterMe
 /**
  * Takes basic broken alert info and adds additional information used for displaying of such filters to the user.
  *
- * @param brokenAlertFilters the basic broken alert filters info to enrich
- * @param intl the intl object used
- * @param dateFormat the date format to be used
- * @param dateDataSets all available date data sets
- * @param attributeFiltersMeta additional information about attribute filters (see {@link IAttributeFilterMetaCollection} for details)
+ * @param brokenAlertFilters - the basic broken alert filters info to enrich
+ * @param intl - the intl object used
+ * @param dateFormat - the date format to be used
+ * @param dateDataSets - all available date data sets
+ * @param attributeFiltersMeta - additional information about attribute filters (see {@link IAttributeFilterMetaCollection} for details)
  */
 export function enrichBrokenAlertsInfo(
     brokenAlertFilters: IBrokenAlertFilterBasicInfo[],

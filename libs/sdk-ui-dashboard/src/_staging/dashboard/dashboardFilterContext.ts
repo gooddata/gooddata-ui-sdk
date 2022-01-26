@@ -86,8 +86,6 @@ export function dashboardFilterContextIdentity<TWidget>(
  * This function will sanitize the filter context and remove invalid entries:
  *
  * 1.  Attribute filters that are setup with parent filters, but those parent filters do not exist in the contex.
- *
- * @param filterContext
  */
 export function dashboardFilterContextSanitize(
     filterContext: IFilterContextDefinition,
