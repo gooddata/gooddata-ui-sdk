@@ -2550,6 +2550,20 @@ export interface IRowsIconProps extends IIconProps {
 }
 
 // @internal (undocumented)
+export interface IScrollGradientProps {
+    // (undocumented)
+    backgroundColor?: string;
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    contentClassName?: string;
+    // (undocumented)
+    onScroll?: (event: React_2.MouseEvent<HTMLDivElement>) => void;
+    // (undocumented)
+    size?: number;
+}
+
+// @internal (undocumented)
 export const isDateDatasetHeader: (obj: unknown) => obj is IDateDatasetHeader;
 
 // @internal (undocumented)
@@ -3091,6 +3105,9 @@ export type SameAsTargetPosition = "sameAsTarget";
 
 // @internal (undocumented)
 export type ScrollCallback = (visibleRowsStartIndex: number, visibleRowsEndIndex: number) => void;
+
+// @internal (undocumented)
+export const ScrollGradient: React_2.FC<IScrollGradientProps>;
 
 // @internal (undocumented)
 export type SelectedTime = {
