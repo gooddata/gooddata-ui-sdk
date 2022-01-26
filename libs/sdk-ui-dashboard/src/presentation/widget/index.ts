@@ -3,6 +3,8 @@ export {
     useWidgetFilters,
     useCustomWidgetExecutionDataView,
     IUseCustomWidgetExecutionDataViewConfig,
+    useCustomWidgetInsightDataView,
+    IUseCustomWidgetInsightDataViewConfig,
 } from "./common";
 
 export * from "./insight";

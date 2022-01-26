@@ -3020,6 +3020,12 @@ export interface IUseCustomWidgetExecutionDataViewConfig {
     widget: ICustomWidget;
 }
 
+// @beta
+export interface IUseCustomWidgetInsightDataViewConfig {
+    insight?: IInsightDefinition | ObjRef;
+    widget: ICustomWidget;
+}
+
 // @alpha (undocumented)
 export type IXlsxExportConfig = {
     format: "xlsx";
@@ -4173,6 +4179,9 @@ export interface UpsertExecutionResult extends IDashboardCommand {
 
 // @beta
 export const useCustomWidgetExecutionDataView: ({ widget, execution, }: IUseCustomWidgetExecutionDataViewConfig) => UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
+
+// @beta
+export const useCustomWidgetInsightDataView: ({ widget, insight, }: IUseCustomWidgetInsightDataViewConfig) => UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
 
 // @internal (undocumented)
 export interface UseDashboardAsyncRender {
