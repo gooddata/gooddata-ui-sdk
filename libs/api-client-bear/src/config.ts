@@ -9,8 +9,6 @@ import set from "lodash/set";
  *
  * Never set properties directly - always use setter methods
  *
- * @module config
- * @class config
  */
 
 const URL_REGEXP = "(?:(https)://+|(www\\.)?)\\w[:;,\\.?\\[\\]\\w/~%&=+#-@!]*";
@@ -33,8 +31,7 @@ export function sanitizeDomain(domain: string | null): string | undefined {
 /**
  * Returns sanitized config
  *
- * @method sanitizeConfig
- * @return {object|undefined} config with sanitized domain
+ * @returns config with sanitized domain
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function sanitizeConfig(config: any): any {
@@ -59,9 +56,8 @@ export interface IConfigStorage {
 /**
  * Config factory
  *
- * @param {object|null} configStorage config object
- * @method createModule
- * @return SDK config module
+ * @param configStorage - config object
+ * @returns SDK config module
  */
 export class ConfigModule {
     constructor(private configStorage: IConfigStorage) {
@@ -76,8 +72,7 @@ export class ConfigModule {
      *
      * RegExp inspired taken from
      * https://github.com/jarib/google-closure-library/blob/master/closure/goog/string/linkify.js
-     * @param {String|null} domain valid domain starting with https:// or null for removing
-     * @method setCustomDomain
+     * @param domain - valid domain starting with https:// or null for removing
      */
     public setCustomDomain(domain: string): void {
         this.configStorage.domain = sanitizeDomain(domain);
@@ -86,7 +81,6 @@ export class ConfigModule {
     /**
      * Returns current domain
      *
-     * @method getCustomDomain
      */
     public getCustomDomain(): string | undefined {
         return this.configStorage.domain;
@@ -95,10 +89,9 @@ export class ConfigModule {
     /**
      * Sets JS package and version info
      *
-     * @method setJsPackage
-     * @param {String} name package name
-     * @param {String} version package version (semver)
-     * @private
+     * @param name - package name
+     * @param version - package version (semver)
+     * @internal
      */
     public setJsPackage(name: string, version: string): void {
         if (!this.configStorage.originPackage) {
@@ -110,9 +103,8 @@ export class ConfigModule {
     /**
      * Returns JS package and version info
      *
-     * @method getJsPackage
-     * @return {object} with 'name' and 'version' properties
-     * @private
+     * @returns with 'name' and 'version' properties
+     * @internal
      */
     public getJsPackage(): IOriginPackage | undefined {
         return this.configStorage.originPackage;

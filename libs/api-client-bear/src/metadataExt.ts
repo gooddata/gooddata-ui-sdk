@@ -77,9 +77,9 @@ function getSanitizedMeta(
 /**
  * Updates content of the dashboard
  *
- * @param {string} dashboardUri uri of dashboard
- * @param {UriTranslator} uriTranslator gets updated widgets and kpis uri
- * @param {string} filterContext updated filter context uri
+ * @param dashboardUri - uri of dashboard
+ * @param uriTranslator - gets updated widgets and kpis uri
+ * @param filterContext - updated filter context uri
  * @experimental
  */
 export function updateContent(
@@ -120,18 +120,18 @@ export class MetadataModuleExt {
     }
 
     /**
-     * @param {string} projectId id of the project
-     * @param {string} dashboardUri uri of the dashboard
-     * @param {ICopyDashboardOptions} options object with options:
-     *          - default {} dashboard is cloned with new kpi reference and visualization widget is cloned with new
+     * @param projectId - id of the project
+     * @param dashboardUri - uri of the dashboard
+     * @param options - object with options:
+     *          - default - dashboard is cloned with new kpi reference and visualization widget is cloned with new
      *              visualization object reference
-     *          - copyKpi {boolean} choose whether dashboard is cloned with new Kpi reference
-     *          - copyVisObj {boolean} choose whether visualization widget is cloned with new visualization object reference
-     *          - name {string} optional - choose name, default value is "Copy of (old title of the dashboard)"
-     *          - summary {string} - choose summary, default is the summary of the original dashboard
-     *          - tags {string} - choose tags, default is the tags of the original dashboard
-     *          - clearLockedFlag {boolean} - if true, the isLocked flag will be cleared for the newly created dashboard, defaults to false
-     * @returns {string} uri of cloned dashboard
+     *          - copyKpi - choose whether dashboard is cloned with new Kpi reference
+     *          - copyVisObj - choose whether visualization widget is cloned with new visualization object reference
+     *          - name - optional - choose name, default value is "Copy of (old title of the dashboard)"
+     *          - summary - choose summary, default is the summary of the original dashboard
+     *          - tags - choose tags, default is the tags of the original dashboard
+     *          - clearLockedFlag - if true, the isLocked flag will be cleared for the newly created dashboard, defaults to false
+     * @returns uri of cloned dashboard
      * @experimental
      */
 
@@ -192,9 +192,8 @@ export class MetadataModuleExt {
      * Deletes dashboard and its objects
      * (only the author of the dashboard can delete the dashboard and its objects)
      *
-     * @method deleteAllObjects
-     * @param {string} projectId Project identifier
-     * @param {string} dashboardUri Uri of a dashboard to be deleted
+     * @param projectId - Project identifier
+     * @param dashboardUri - Uri of a dashboard to be deleted
      * @experimental
      */
 

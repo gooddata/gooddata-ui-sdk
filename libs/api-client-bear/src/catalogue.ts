@@ -31,14 +31,14 @@ const LOAD_DATE_DATASET_DEFAULTS = {
  * Convert specific params in options to "requiredDataSets" structure. For more details look into
  * res file https://github.com/gooddata/gdc-bear/blob/develop/resources/specification/internal/catalog.res
  *
- * @param options Supported keys in options are:
+ * @param options - Supported keys in options are:
  * <ul>
  * <li>dataSetIdentifier - in value is string identifier of dataSet - this leads to CUSTOM type
  * <li>returnAllDateDataSets - true value means to return ALL values without dataSet differentiation
  * <li>returnAllRelatedDateDataSets - only related date dataSets are loaded across all dataSets
  * <li>by default we get PRODUCTION dataSets
  * </ul>
- * @returns {Object} "requiredDataSets" object hash.
+ * @returns "requiredDataSets" object hash.
  */
 const getRequiredDataSets = (options: GdcCatalog.ILoadDateDataSetsParams = {}) => {
     if (options.returnAllRelatedDateDataSets) {
@@ -115,8 +115,8 @@ export class CatalogueModule {
 
     /**
      * Load all catalog items
-     * @param projectId string
-     * @param options GdcCatalog.ILoadCatalogItemsParams
+     * @param projectId - string
+     * @param options - GdcCatalog.ILoadCatalogItemsParams
      */
     public async loadAllItems(
         projectId: string,
@@ -158,8 +158,8 @@ export class CatalogueModule {
 
     /**
      * Load catalog groups
-     * @param projectId string
-     * @param options GdcCatalog.ILoadCatalogGroupsParams
+     * @param projectId - string
+     * @param options - GdcCatalog.ILoadCatalogGroupsParams
      */
     public async loadGroups(
         projectId: string,
@@ -177,8 +177,8 @@ export class CatalogueModule {
 
     /**
      * Load available item uris by already used uris and expressions
-     * @param projectId string
-     * @param options GdcCatalog.ILoadAvailableCatalogItemsParams
+     * @param projectId - string
+     * @param options - GdcCatalog.ILoadAvailableCatalogItemsParams
      */
     public async loadAvailableItemUris(
         projectId: string,
@@ -264,13 +264,12 @@ export class CatalogueModule {
      * Loads item description objects and returns them
      *
      * @internal
-     * @private
      *
-     * @param projectId {string}
-     * @param mdObj metadata object containing buckets, visualization class, properties etc.
-     * @param attributesMap contains map of attributes where the keys are the attributes display forms URIs
-     * @param removeDateItems {boolean} skip date items
-     * @return ItemDescription which is either `{ uri: string }` or `{ expression: string }`
+     * @param projectId - id of the project to load from
+     * @param mdObj - metadata object containing buckets, visualization class, properties etc.
+     * @param attributesMap - contains map of attributes where the keys are the attributes display forms URIs
+     * @param removeDateItems - whether to skip date items
+     * @returns ItemDescription which is either `{ uri: string }` or `{ expression: string }`
      */
     public async loadItemDescriptionObjects(
         projectId: string,
@@ -291,11 +290,11 @@ export class CatalogueModule {
      * ItemDescription is either URI or MAQL expression
      * https://github.com/gooddata/gdc-bear/blob/185.4/resources/specification/md/obj.res#L284
      *
-     * @param projectId {string}
-     * @param mdObj metadata object containing buckets, visualization class, properties etc.
-     * @param attributesMap contains map of attributes where the keys are the attributes display forms URIs
-     * @param removeDateItems {boolean} skip date items
-     * @deprecated
+     * @param projectId - id of the project to load from
+     * @param mdObj - metadata object containing buckets, visualization class, properties etc.
+     * @param attributesMap - contains map of attributes where the keys are the attributes display forms URIs
+     * @param removeDateItems - whether to skip date items
+     * @deprecated Use {@link loadItemDescriptionObjects}.
      */
     public async loadItemDescriptions(
         projectId: string,
@@ -316,7 +315,7 @@ export class CatalogueModule {
 
     /**
      * Loads all available data sets.
-     * @param projectId
+     * @param projectId - id of the project to load from
      */
     public async loadDataSets(projectId: string): Promise<GdcDataSetsCsv.IDataset[]> {
         const uri = `/gdc/dataload/internal/projects/${projectId}/csv/datasets`;

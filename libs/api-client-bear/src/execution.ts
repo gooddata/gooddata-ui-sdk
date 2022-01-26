@@ -9,8 +9,6 @@ import { GdcVisualizationObject, GdcCatalog } from "@gooddata/api-model-bear";
 /**
  * Execution endpoints
  *
- * @module execution
- * @class execution
  *
  */
 export class ExecutionModule {

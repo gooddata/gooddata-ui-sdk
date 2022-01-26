@@ -2,8 +2,8 @@
 /**
  * Return promise that will resolve after `ms` miliseconds
  *
- * @param {Number} ms time in miliseconds
- * @return {Promise}
+ * @param ms - time in miliseconds
+ * @returns
  */
 export function delay(ms: number): Promise<void> {
     return new Promise((resolve: () => any) => {

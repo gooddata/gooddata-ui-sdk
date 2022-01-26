@@ -23,8 +23,6 @@ export const omitEmpty = omitBy((val) => {
 /**
  * Utility methods. Mostly private
  *
- * @module util
- * @class util
  *
  */
 
@@ -42,11 +40,11 @@ export interface IPollingOptions {
 /**
  * Helper for polling
  *
- * @param xhrRequest xhr module
- * @param {String} uri
- * @param {Function} isPollingDone
- * @param {Object} options for polling (maxAttempts, pollStep)
- * @private
+ * @param xhrRequest - xhr module
+ * @param uri - URI to poll
+ * @param isPollingDone - function determining whether the polling is finished
+ * @param options - for polling (maxAttempts, pollStep)
+ * @internal
  */
 export const handlePolling = (
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -78,11 +76,11 @@ export const handlePolling = (
 /**
  * Helper for polling with header status
  *
- * @param xhrRequest xhr module
- * @param {String} uri
- * @param {Function} isPollingDone
- * @param {Object} options for polling (maxAttempts, pollStep)
- * @private
+ * @param xhrRequest - xhr module
+ * @param uri - URI to poll
+ * @param isPollingDone - function determining whether the polling is finished
+ * @param options - for polling (maxAttempts, pollStep)
+ * @internal
  */
 export const handleHeadPolling = (
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -128,8 +126,8 @@ export const isUri = (value: string): boolean => REG_URI_OBJ.test(value);
  * Builds query string from plain object
  * (Refactored from admin/routes.js)
  *
- * @param {Object} query parameters possibly including arrays inside
- * @returns {string} querystring
+ * @param query - parameters possibly including arrays inside
+ * @returns querystring
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function queryString(query: any): string {
@@ -150,11 +148,11 @@ export function queryString(query: any): string {
  * Get all results from paged api by traversing all resulting pages
  * This is usable for apis which support offset and limit (i.e. not those with next paging links)
  *
- * @param xhrGet xhr module
- * @param {string} uri uri to be fetched, will append offset and limit for next pages
- * @param {string} itemKey key under which to look for results (differs for different apis)
- * @param {number} optional offset starting offset, default 0
- * @param pagesData optional data to be pre-filled
+ * @param xhrGet - xhr module
+ * @param uri - uri to be fetched, will append offset and limit for next pages
+ * @param itemKey - key under which to look for results (differs for different apis)
+ * @param optional - offset starting offset, default 0
+ * @param pagesData - optional data to be pre-filled
  */
 export function getAllPagesByOffsetLimit(
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types

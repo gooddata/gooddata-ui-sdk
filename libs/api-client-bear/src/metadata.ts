@@ -35,15 +35,13 @@ function getResponseData(r: ApiResponse) {
 /**
  * Functions for working with metadata objects
  *
- * @class metadata
- * @module metadata
  */
 export class MetadataModule {
     constructor(private xhr: XhrModule) {}
 
     /**
      * Get default display form value of provided attribute element uri
-     * @param attributeElementUri string
+     * @param attributeElementUri - string
      */
     public async getAttributeElementDefaultDisplayFormValue(
         attributeElementUri: string,
@@ -69,7 +67,7 @@ export class MetadataModule {
 
     /**
      * Get default display form of provided attribute uri
-     * @param attributeUri string
+     * @param attributeUri - string
      */
     public async getAttributeDefaultDisplayForm(
         attributeUri: string,
@@ -87,8 +85,8 @@ export class MetadataModule {
 
     /**
      * Get metadata object by provided identifier
-     * @param projectId string
-     * @param identifier string
+     * @param projectId - string
+     * @param identifier - string
      */
     public async getObjectByIdentifier<
         T extends GdcMetadataObject.WrappedObject = GdcMetadataObject.WrappedObject,
@@ -99,8 +97,8 @@ export class MetadataModule {
 
     /**
      * Get metadata objects by provided identifiers
-     * @param projectId string
-     * @param identifiers string[]
+     * @param projectId - string
+     * @param identifiers - string[]
      */
     public async getObjectsByIdentifiers<
         T extends GdcMetadataObject.WrappedObject = GdcMetadataObject.WrappedObject,
@@ -114,10 +112,9 @@ export class MetadataModule {
      * Load all objects with given uris
      * (use bulk loading instead of getting objects one by one)
      *
-     * @method getObjects
-     * @param {String} projectId id of the project
-     * @param {Array} objectUris array of uris for objects to be loaded
-     * @return {Array} array of loaded elements
+     * @param projectId - id of the project
+     * @param objectUris - array of uris for objects to be loaded
+     * @returns array of loaded elements
      */
     public getObjects<T extends GdcMetadataObject.WrappedObject = GdcMetadataObject.WrappedObject>(
         projectId: string,
@@ -162,15 +159,14 @@ export class MetadataModule {
     /**
      * Loads all objects by query (fetches all pages, one by one)
      *
-     * @method getObjectsByQuery
-     * @param {String} projectId id of the project
-     * @param {Object} options (see https://developer.gooddata.com/api endpoint: /gdc/md/{project_id}/objects/query)
-     *        - category {String} for example 'dataSets' or 'projectDashboard'
-     *        - mode {String} 'enriched' or 'raw'
-     *        - author {String} the URI of the author of the metadata objects
-     *        - limit {number} default is 50 (also maximum)
-     *        - deprecated {boolean} show also deprecated objects
-     * @return {Promise<Array>} array of returned objects
+     * @param projectId - id of the project
+     * @param options - (see https://developer.gooddata.com/api endpoint: `/gdc/md/{project_id}/objects/query`)
+     *        - category - for example 'dataSets' or 'projectDashboard'
+     *        - mode - 'enriched' or 'raw'
+     *        - author - the URI of the author of the metadata objects
+     *        - limit - default is 50 (also maximum)
+     *        - deprecated - show also deprecated objects
+     * @returns array of returned objects
      */
     public getObjectsByQuery<T extends GdcMetadataObject.WrappedObject = GdcMetadataObject.WrappedObject>(
         projectId: string,
@@ -202,17 +198,16 @@ export class MetadataModule {
     /**
      * Loads all objects by query with paging
      *
-     * @method getObjectsByQueryWithPaging
-     * @param {String} projectId id of the project
-     * @param {Object} options (see https://developer.gooddata.com/api endpoint: /gdc/md/{project_id}/objects/query)
-     *        - category {String} for example 'dataSets' or 'projectDashboard'
-     *        - mode {String} 'enriched' or 'raw'
-     *        - author {String} the URI of the author of the metadata objects
-     *        - limit {number} default is 50 (also maximum)
-     *        - deprecated {boolean} show also deprecated objects
-     *        - orderBy {id|title|updated} order the results by id, title or the last updated (newest first)
-     *        - getTotalCount {boolean} include total count of items in the paging object
-     * @return {Promise<Array>} array of returned objects
+     * @param projectId - id of the project
+     * @param options - (see https://developer.gooddata.com/api endpoint: `/gdc/md/{project_id}/objects/query`)
+     *        - category - for example 'dataSets' or 'projectDashboard'
+     *        - mode - 'enriched' or 'raw'
+     *        - author - the URI of the author of the metadata objects
+     *        - limit - default is 50 (also maximum)
+     *        - deprecated - show also deprecated objects
+     *        - orderBy - order the results by id, title or the last updated (newest first)
+     *        - getTotalCount - include total count of items in the paging object
+     * @returns array of returned objects
      */
     public getObjectsByQueryWithPaging<T = any>(
         projectId: string,
@@ -230,13 +225,12 @@ export class MetadataModule {
      * Get MD objects from using2 resource. Include only objects of given types
      * and take care about fetching only nearest objects if requested.
      *
-     * @method getObjectUsing
-     * @param {String} projectId id of the project
-     * @param {String} uri uri of the object for which dependencies are to be found
-     * @param {Object} options objects with options:
-     *        - types {Array} array of strings with object types to be included
-     *        - nearest {Boolean} whether to include only nearest dependencies
-     * @return {Promise} promise promise once resolved returns an array of
+     * @param projectId - id of the project
+     * @param uri - uri of the object for which dependencies are to be found
+     * @param options - objects with options:
+     *        - types - array of strings with object types to be included
+     *        - nearest - whether to include only nearest dependencies
+     * @returns promise promise once resolved returns an array of
      *         entries returned by using2 resource
      */
     public getObjectUsing(
@@ -265,13 +259,12 @@ export class MetadataModule {
      * Get MD objects from using2 resource. Include only objects of given types
      * and take care about fetching only nearest objects if requested.
      *
-     * @method getObjectUsingMany
-     * @param {String} projectId id of the project
-     * @param {Array} uris uris of objects for which dependencies are to be found
-     * @param {Object} options objects with options:
-     *        - types {Array} array of strings with object types to be included
-     *        - nearest {Boolean} whether to include only nearest dependencies
-     * @return {Promise} promise promise once resolved returns an array of
+     * @param projectId - id of the project
+     * @param uris - uris of objects for which dependencies are to be found
+     * @param options - objects with options:
+     *        - types - array of strings with object types to be included
+     *        - nearest - whether to include only nearest dependencies
+     * @returns promise promise once resolved returns an array of
      *         entries returned by using2 resource
      */
     public getObjectUsingMany(
@@ -300,13 +293,12 @@ export class MetadataModule {
      * Get MD objects from usedby2 resource. Include only objects of given types
      * and take care about fetching only nearest objects if requested.
      *
-     * @method getObjectUsedBy
-     * @param {String} projectId id of the project
-     * @param {String} uri uri of the object for which dependencies are to be found
-     * @param {Object} options objects with options:
-     *        - types {Array} array of strings with object types to be included
-     *        - nearest {Boolean} whether to include only nearest dependencies (default is false)
-     * @return {Promise} promise promise once resolved returns an array of
+     * @param projectId - id of the project
+     * @param uri - uri of the object for which dependencies are to be found
+     * @param options - objects with options:
+     *        - types - array of strings with object types to be included
+     *        - nearest - whether to include only nearest dependencies (default is false)
+     * @returns promise promise once resolved returns an array of
      *         entries returned by usedby2 resource
      */
     public getObjectUsedBy(
@@ -335,13 +327,12 @@ export class MetadataModule {
      * Get MD objects from usedby2 resource. Include only objects of given types
      * and take care about fetching only nearest objects if requested.
      *
-     * @method getObjectsUsedByMany
-     * @param {String} projectId id of the project
-     * @param {Array} uris uris of objects for which dependencies are to be found
-     * @param {Object} options objects with options:
-     *        - types {Array} array of strings with object types to be included
-     *        - nearest {Boolean} whether to include only nearest dependencies (default is false)
-     * @return {Promise} promise promise once resolved returns an array of
+     * @param projectId - id of the project
+     * @param uris - uris of objects for which dependencies are to be found
+     * @param options - objects with options:
+     *        - types - array of strings with object types to be included
+     *        - nearest - whether to include only nearest dependencies (default is false)
+     * @returns promise promise once resolved returns an array of
      *         entries returned by usedby2 resource
      */
     public getObjectsUsedByMany(
@@ -372,9 +363,8 @@ export class MetadataModule {
     /**
      * Returns all visualizationObjects metadata in a project specified by projectId param
      *
-     * @method getVisualizations
-     * @param {string} projectId Project identifier
-     * @return {Array} An array of visualization objects metadata
+     * @param projectId - Project identifier
+     * @returns An array of visualization objects metadata
      */
     public getVisualizations(projectId: string): Promise<any> {
         return this.xhr
@@ -388,9 +378,8 @@ export class MetadataModule {
     /**
      * Returns all attributes in a project specified by projectId param
      *
-     * @method getAttributes
-     * @param {string} projectId Project identifier
-     * @return {Array} An array of attribute objects
+     * @param projectId - Project identifier
+     * @returns An array of attribute objects
      */
     public getAttributes(projectId: string): Promise<any> {
         return this.xhr
@@ -404,9 +393,8 @@ export class MetadataModule {
     /**
      * Returns all dimensions in a project specified by projectId param
      *
-     * @method getDimensions
-     * @param {string} projectId Project identifier
-     * @return {Array} An array of dimension objects
+     * @param projectId - Project identifier
+     * @returns An array of dimension objects
      * @see getFolders
      */
     public getDimensions(projectId: string): Promise<any> {
@@ -422,10 +410,9 @@ export class MetadataModule {
      * Returns project folders. Folders can be of specific types and you can specify
      * the type you need by passing and optional `type` parameter
      *
-     * @method getFolders
-     * @param {String} projectId - Project identifier
-     * @param {String} type - Optional, possible values are `metric`, `fact`, `attribute`
-     * @return {Array} An array of dimension objects
+     * @param projectId - Project identifier
+     * @param type - Optional, possible values are `metric`, `fact`, `attribute`
+     * @returns An array of dimension objects
      */
     public getFolders(projectId: string, type: string): Promise<any> {
         // TODO enum?
@@ -458,9 +445,8 @@ export class MetadataModule {
     /**
      * Returns all facts in a project specified by the given projectId
      *
-     * @method getFacts
-     * @param {string} projectId Project identifier
-     * @return {Array} An array of fact objects
+     * @param projectId - Project identifier
+     * @returns An array of fact objects
      */
     public getFacts(projectId: string): Promise<any> {
         return this.xhr
@@ -474,9 +460,8 @@ export class MetadataModule {
     /**
      * Returns all metrics in a project specified by the given projectId
      *
-     * @method getMetrics
-     * @param {string} projectId Project identifier
-     * @return {Array} An array of metric objects
+     * @param projectId - Project identifier
+     * @returns An array of metric objects
      */
     public getMetrics(projectId: string): Promise<any> {
         return this.xhr
@@ -490,9 +475,8 @@ export class MetadataModule {
     /**
      * Returns all project dashboards (pixel perfect dashboards) in a project specified by the given projectId
      *
-     * @method getProjectDashboards
-     * @param {string} projectId Project identifier
-     * @return {Array} An array of project dashboard objects
+     * @param projectId - Project identifier
+     * @returns An array of project dashboard objects
      */
     public getProjectDashboards(projectId: string): Promise<GdcProjectDashboard.IWrappedProjectDashboard[]> {
         return this.xhr
@@ -511,14 +495,13 @@ export class MetadataModule {
     /**
      * Returns all analytical dashboards (kpi dashboards) in a project specified by the given projectId
      *
-     * @method getAnalyticalDashboards
-     * @param {string} projectId Project identifier
-     * @param {boolean} fetchAllListedDashboards Optionally specify if also all the listed
+     * @param projectId - Project identifier
+     * @param fetchAllListedDashboards - Optionally specify if also all the listed
      *  dashboards should be loaded. Note that these include not just shared dashboards and dashboards
      *  that were not shared with the user but are accessible via link, but also dashboards that cannot
      *  be accessed because there were not shared are under strict control access (only its listed record
      *  is accessible, not the whole metadata object).
-     * @return {Array} An array of links to analytical dashboard objects
+     * @returns An array of links to analytical dashboard objects
      */
     public getAnalyticalDashboards(
         projectId: string,
@@ -536,9 +519,8 @@ export class MetadataModule {
     /**
      * Returns all dashboard plugins in a project specified by the given projectId
      *
-     * @method getDashboardPlugins
-     * @param {string} projectId Project identifier
-     * @return {Array} An array of links to dashboard plugin objects
+     * @param projectId - Project identifier
+     * @returns An array of links to dashboard plugin objects
      */
     public getDashboardPlugins(projectId: string): Promise<GdcMetadata.IObjectLink[]> {
         return this.xhr
@@ -554,11 +536,10 @@ export class MetadataModule {
      * Returns all metrics that are reachable (with respect to ldm of the project
      * specified by the given projectId) for given attributes
      *
-     * @method getAvailableMetrics
-     * @param {String} projectId - Project identifier
-     * @param {Array} attrs - An array of attribute uris for which we want to get
+     * @param projectId - Project identifier
+     * @param attrs - An array of attribute uris for which we want to get
      * available metrics
-     * @return {Array} An array of reachable metrics for the given attrs
+     * @returns An array of reachable metrics for the given attrs
      * @see getAvailableAttributes
      * @see getAvailableFacts
      */
@@ -575,11 +556,10 @@ export class MetadataModule {
      * Returns all attributes that are reachable (with respect to ldm of the project
      * specified by the given projectId) for given metrics (also called as drillCrossPath)
      *
-     * @method getAvailableAttributes
-     * @param {String} projectId - Project identifier
-     * @param {Array} metrics - An array of metric uris for which we want to get
+     * @param projectId - Project identifier
+     * @param metrics - An array of metric uris for which we want to get
      * available attributes
-     * @return {Array} An array of reachable attributes for the given metrics
+     * @returns An array of reachable attributes for the given metrics
      * @see getAvailableMetrics
      * @see getAvailableFacts
      */
@@ -594,11 +574,10 @@ export class MetadataModule {
      * Returns all attributes that are reachable (with respect to ldm of the project
      * specified by the given projectId) for given metrics (also called as drillCrossPath)
      *
-     * @method getAvailableFacts
-     * @param {String} projectId - Project identifier
-     * @param {Array} items - An array of metric or attribute uris for which we want to get
+     * @param projectId - Project identifier
+     * @param items - An array of metric or attribute uris for which we want to get
      * available facts
-     * @return {Array} An array of reachable facts for the given items
+     * @returns An array of reachable facts for the given items
      * @see getAvailableAttributes
      * @see getAvailableMetrics
      */
@@ -612,9 +591,8 @@ export class MetadataModule {
     /**
      * Get details of a metadata object specified by its uri
      *
-     * @method getObjectDetails
-     * @param uri uri of the metadata object for which details are to be retrieved
-     * @return {Object} object details
+     * @param uri - uri of the metadata object for which details are to be retrieved
+     * @returns object details
      */
     public getObjectDetails<T = any>(uri: string): Promise<T> {
         return this.xhr.get(uri).then((r: ApiResponse) => r.getData());
@@ -626,9 +604,8 @@ export class MetadataModule {
      * corresponding items. Each item is either a metric or attribute, keeping its original
      * verbose structure.
      *
-     * @method getFoldersWithItems
-     * @param {String} type type of folders to return
-     * @return {Array} Array of folder object, each containing title and
+     * @param type - type of folders to return
+     * @returns Array of folder object, each containing title and
      * corresponding items.
      */
     public getFoldersWithItems(projectId: string, type: string): Promise<any> {
@@ -636,7 +613,7 @@ export class MetadataModule {
         return this.getFolders(projectId, type).then((folders) => {
             // Helper public to get details for each metric in the given
             // array of links to the metadata objects representing the metrics.
-            // @return the array of promises
+            // @returns the array of promises
             const getMetricItemsDetails = (array: any[]) => {
                 return Promise.all(array.map(this.getObjectDetails)).then((metricArgs) => {
                     return metricArgs.map((item: any) => item.metric);
@@ -771,9 +748,8 @@ export class MetadataModule {
     /**
      * Get identifier of a metadata object identified by its uri
      *
-     * @method getObjectIdentifier
-     * @param uri uri of the metadata object for which the identifier is to be retrieved
-     * @return {String} object identifier
+     * @param uri - uri of the metadata object for which the identifier is to be retrieved
+     * @returns object identifier
      */
     public getObjectIdentifier(uri: string): Promise<string> {
         function idFinder(obj: any) {
@@ -800,10 +776,9 @@ export class MetadataModule {
     /**
      * Get uri of an metadata object, specified by its identifier and project id it belongs to
      *
-     * @method getObjectUri
-     * @param {string} projectId id of the project
-     * @param identifier identifier of the metadata object
-     * @return {String} uri of the metadata object
+     * @param projectId - id of the project
+     * @param identifier - identifier of the metadata object
+     * @returns uri of the metadata object
      */
     public getObjectUri(projectId: string, identifier: string): Promise<string> {
         return this.xhr
@@ -834,10 +809,9 @@ export class MetadataModule {
     /**
      * Get uris specified by identifiers
      *
-     * @method getUrisFromIdentifiers
-     * @param {String} projectId id of the project
-     * @param {Array} identifiers identifiers of the metadata objects
-     * @return {Array} array of identifier + uri pairs
+     * @param projectId - id of the project
+     * @param identifiers - identifiers of the metadata objects
+     * @returns array of identifier + uri pairs
      */
     public getUrisFromIdentifiers(projectId: string, identifiers: string[]): Promise<IUriIdentifierPair[]> {
         if (!identifiers.length) {
@@ -859,10 +833,9 @@ export class MetadataModule {
     /**
      * Get identifiers specified by uris
      *
-     * @method getIdentifiersFromUris
-     * @param {String} projectId id of the project
-     * @param {Array} uris of the metadata objects
-     * @return {Array} array of identifier + uri pairs
+     * @param projectId - id of the project
+     * @param uris - of the metadata objects
+     * @returns array of identifier + uri pairs
      */
     public getIdentifiersFromUris(projectId: string, uris: string[]): Promise<IUriIdentifierPair[]> {
         return this.xhr
@@ -880,11 +853,11 @@ export class MetadataModule {
     /**
      * Get attribute elements with their labels and uris.
      *
-     * @param {String} projectId id of the project
-     * @param {String} labelUri uri of the label (display form)
-     * @param {Array<String>} patterns elements labels/titles (for EXACT mode), or patterns (for WILD mode)
-     * @param {('EXACT'|'WILD')} mode match mode, currently only EXACT supported
-     * @return {Array} array of elementLabelUri objects
+     * @param projectId - id of the project
+     * @param labelUri - uri of the label (display form)
+     * @param patterns - elements labels/titles (for EXACT mode), or patterns (for WILD mode)
+     * @param mode - match mode, currently only EXACT supported
+     * @returns array of elementLabelUri objects
      */
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     public translateElementLabelsToUris(
@@ -911,24 +884,10 @@ export class MetadataModule {
     /**
      * Get valid elements of an attribute, specified by its identifier and project id it belongs to
      *
-     * @method getValidElements
-     * @param {string} projectId id of the project
-     * @param id display form id of the metadata object
-     * @param {Object} options objects with options:
-     *      - limit {Number}
-     *      - offset {Number}
-     *      - order {String} 'asc' or 'desc'
-     *      - filter {String}
-     *      - prompt {String}
-     *      - uris {Array}
-     *      - complement {Boolean}
-     *      - includeTotalCountWithoutFilters {Boolean}
-     *      - restrictiveDefinition {String}
-     *      - afm {Object}
-     * @return {Object} ValidElements response with:
-     *      - items {Array} elements
-     *      - paging {Object}
-     *      - elementsMeta {Object}
+     * @param projectId - id of the project
+     * @param id - display form id of the metadata object
+     * @param options - objects with options
+     * @returns ValidElements response
      */
     public getValidElements(
         projectId: string,
@@ -981,8 +940,7 @@ export class MetadataModule {
     /**
      * Get visualization by Uri and process data
      *
-     * @method getVisualization
-     * @param {String} visualizationUri
+     * @param uri - visualization URI
      */
     public getVisualization(uri: string): Promise<GdcVisualizationObject.IVisualization> {
         return this.getObjectDetails(uri).then(
@@ -998,8 +956,8 @@ export class MetadataModule {
     /**
      * Save visualization
      *
-     * @method saveVisualization
-     * @param {String} visualizationUri
+     * @param projectId - id of the project to save the visualization to
+     * @param visualization - the visualization to save
      */
     public saveVisualization(
         projectId: string,
@@ -1013,8 +971,8 @@ export class MetadataModule {
     /**
      * Update visualization
      *
-     * @method updateVisualization
-     * @param {String} visualizationUri
+     * @param projectId - id of the project to update the visualization in
+     * @param visualization - the visualization to update
      */
     public updateVisualization(
         projectId: string,
@@ -1030,8 +988,7 @@ export class MetadataModule {
     /**
      * Delete visualization
      *
-     * @method deleteVisualization
-     * @param {String} visualizationUri
+     * @param visualizationUri - URI of the visualization to delete
      */
     public deleteVisualization(visualizationUri: string): Promise<ApiResponse<any>> {
         return this.deleteObject(visualizationUri);
@@ -1041,8 +998,7 @@ export class MetadataModule {
      * Delete object
      *
      * @experimental
-     * @method deleteObject
-     * @param {String} uri of the object to be deleted
+     * @param uri - of the object to be deleted
      */
     public deleteObject(uri: string): Promise<ApiResponse<any>> {
         return this.xhr.del(uri);
@@ -1071,9 +1027,8 @@ export class MetadataModule {
      * Create object
      *
      * @experimental
-     * @method createObject
-     * @param {String} projectId
-     * @param {String} obj object definition
+     * @param projectId - id of the project to create the object in
+     * @param obj - object definition
      */
     public createObject<T extends GdcMetadataObject.WrappedObject = GdcMetadataObject.WrappedObject>(
         projectId: string,
@@ -1088,10 +1043,9 @@ export class MetadataModule {
      * Update object
      *
      * @experimental
-     * @method updateObject
-     * @param {String} projectId
-     * @param {String} objectId
-     * @param {String} obj object definition
+     * @param projectId - id of the project to update the object in
+     * @param objectId - objectId of the object to update
+     * @param obj - object definition
      */
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     public updateObject(projectId: string, objectId: string, obj: any): Promise<any> {
@@ -1104,9 +1058,9 @@ export class MetadataModule {
 
     /**
      * Converts the visualization object to legacy report.
-     * @param {String} projectId
-     * @param mdObject visualization object to convert
-     * @return uri to the converted report
+     * @param projectId - id of the project to perform the conversion in
+     * @param mdObject - visualization object to convert
+     * @returns uri to the converted report
      */
     public openVisualizationAsReport(
         projectId: string,
@@ -1124,10 +1078,9 @@ export class MetadataModule {
      * LDM manage
      *
      * @experimental
-     * @method ldmManage
-     * @param {String} projectId
-     * @param {String} maql
-     * @param {Object} options for polling (maxAttempts, pollStep)
+     * @param projectId - id of the project to use
+     * @param maql - MAQL to manage
+     * @param options - for polling (maxAttempts, pollStep)
      */
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     public ldmManage(projectId: string, maql: string, options = {}) {
@@ -1150,10 +1103,9 @@ export class MetadataModule {
      * ETL pull
      *
      * @experimental
-     * @method etlPull
-     * @param {String} projectId
-     * @param {String} uploadsDir
-     * @param {Object} options for polling (maxAttempts, pollStep)
+     * @param projectId - id of the project to use
+     * @param uploadsDir - the directory to use
+     * @param options - for polling (maxAttempts, pollStep)
      */
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     public etlPull(projectId: string, uploadsDir: string, options = {}) {
