@@ -263,7 +263,7 @@ function illegalState(message: string) {
  * The responsibilities of this class is to operate on top of digest & data stored in the data view and
  * from information therein create descriptors for series, slices and then series and slices itself. It also
  * makes access to underlying data transparent - hiding the detail whether series and slices have their
- * data organized in row->col or col->row.
+ * data organized in row-\>col or col-\>row.
  */
 export class DataAccessImpl {
     private readonly dataView: IDataView;
