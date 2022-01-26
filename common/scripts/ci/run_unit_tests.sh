@@ -24,7 +24,7 @@ EXTERNAL_FILES_CHANGED=$(git diff --name-only "$ZUUL_BRANCH...HEAD" | grep -Ev '
 
 if [ -z "$EXTERNAL_FILES_CHANGED" ]; then
   echo 'Changes are only in code files, we can make the testing smarter'
-  RUSH_SPECS="--impacted-by git:$ZUUL_BRANCH"
+  RUSH_SPECS=" --impacted-by git:$ZUUL_BRANCH"
   echo "The rush commands would be limited by the following limiter: $RUSH_SPECS"
 else
   echo 'There are some files modified outside of the code:'
@@ -103,7 +103,7 @@ RC=1
   fi
 
   if [ $RC -eq 0 ]; then
-    $_RUSH validate-ci $RUSH_SPECS
+    $_RUSH validate-ci
     RC=$?
   fi
 
@@ -113,7 +113,7 @@ RC=1
     # per-project basis.
     #
 
-    $_RUSH test-ci --parallelism 4 $RUSH_SPECS
+    $_RUSH test-ci --parallelism 4
     RC=$?
   fi
 
