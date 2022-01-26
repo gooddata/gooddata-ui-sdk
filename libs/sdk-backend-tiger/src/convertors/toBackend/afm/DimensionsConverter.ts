@@ -47,9 +47,9 @@ function convertSortDirection(direction: SortDirection): TigerSortDirection {
  *
  * To avoid that (because it will likely be several weeks worth of effort and testing), we opted for a dirty 'trick'
  * where tiger backend constructs attribute element URIs so that they resemble the bear URIs. The element ID is
- * actually the primaryLabelValue --> thing that can be used for sorting.
+ * actually the primaryLabelValue --\> thing that can be used for sorting.
  *
- * This function caters for the dirty trick + in case the sorts were created 'normally', programatically by the
+ * This function caters for the dirty trick + in case the sorts were created 'normally', programmatically by the
  * user who specified primaryLabelValue directly, it has logic to fall back to using the uri as-is.
  */
 function extractItemValueFromElement(elementUri: string): string {
@@ -173,7 +173,7 @@ function dimensionsWithSorts(dims: Dimension[], sorts: ISortItem[]): Dimension[]
  * Converts data in execution definition into dimension specifications for tiger. The tiger specifics
  * are that dimensions have localIds and that sorting is specified per-dimension.
  *
- * @param def
+ * @param def - execution definition to convert
  */
 export function convertDimensions(def: IExecutionDefinition): Dimension[] {
     const dimensionsWithoutSorts: Dimension[] = def.dimensions.map((dim, idx) => {
