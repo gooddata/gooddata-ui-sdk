@@ -111,7 +111,6 @@ export function createPushpinDataLayer(
 
 /**
  * Create layer for clustered points/pins which have 'properties.point_count' indicates number of same points is clustered together
- * @param dataSourceName
  */
 export function createClusterPoints(dataSourceName: string): mapboxgl.CircleLayer {
     return {
@@ -129,7 +128,6 @@ export function createClusterPoints(dataSourceName: string): mapboxgl.CircleLaye
 
 /**
  * Create layer for cluster labels which indicate number of points/pins is clustered
- * @param dataSourceName
  */
 export function createClusterLabels(dataSourceName: string): mapboxgl.SymbolLayer {
     return {
@@ -140,8 +138,6 @@ export function createClusterLabels(dataSourceName: string): mapboxgl.SymbolLaye
 }
 /**
  * Create layer for un-clustered points which are not close to others
- * @param dataSourceName
- * @param selectedSegmentItems
  */
 export function createUnclusterPoints(dataSourceName: string): mapboxgl.CircleLayer {
     return {
