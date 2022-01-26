@@ -14,9 +14,6 @@ interface IRgbaColor {
 /**
  * Helper function that transforms any string representation of a color
  * into dojo.Color object.
- *
- * @param String string
- * @return dojo.Color
  */
 export function toColor(hexColor: string): IRgbaColor {
     let parsed: number[];
@@ -45,8 +42,7 @@ export function toColor(hexColor: string): IRgbaColor {
  * Helper function that returns a luminance of a color.
  * Color must be an object with r, g and b properties.
  *
- * @param  {dojo.Color} color
- * @return {Number} Luminance in interval 0 - 255
+ * @returns Luminance in interval 0 - 255
  */
 export function luminanceOf(color: IRgbaColor): number {
     // Imprecise luminance values may arise from finite precision of RGB coefitients
@@ -59,11 +55,10 @@ export function luminanceOf(color: IRgbaColor): number {
  * Function that chooses from two colors based on luminance
  * of control color. This luminance is compared to specified threshold value.
  *
- * @param  {String} color as a String
- * @param  {Number} threshold Luminance threshold value in interval 1 - 255
- * @param  {String} dark Dark color variant for when control color luminance is higher than threshold
- * @param  {String} light Light color variant for when control color luminance is lower or equal than threshold
- * @return {String}
+ * @param color - color as a String
+ * @param threshold - Luminance threshold value in interval 1 - 255
+ * @param dark - Dark color variant for when control color luminance is higher than threshold
+ * @param light - Light color variant for when control color luminance is lower or equal than threshold
  */
 export function chooseColor(hexColor: string, threshold: number, dark: string, light: string): string {
     if (!hexColor) {

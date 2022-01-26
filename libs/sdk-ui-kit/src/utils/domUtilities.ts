@@ -4,7 +4,6 @@ import { IRegion } from "../typings/domUtilities";
 
 /**
  * Removes the element specified from the DOM
- * @param {HTMLElement} element
  */
 export const removeFromDom = (element: HTMLElement): void => {
     if (element && element.parentNode) {
@@ -17,10 +16,10 @@ export const removeFromDom = (element: HTMLElement): void => {
  * in local (relative to offset parent of element)
  * coordinate space
  *
- * @param  {HTMLElement}  element
- * @param  {boolean}      ignoreScrollOffsets
- * @param  {Object}       windowObject - use for unit test only
- * @return {Object}       Bounding rectangle
+ * @param element - element to get the region for
+ * @param ignoreScrollOffsets - whether to ignore scrollOffsets
+ * @param windowObject - use for unit test only
+ * @returns Bounding rectangle
  */
 export const region = (
     element: HTMLElement,
@@ -46,8 +45,6 @@ export const region = (
 /**
  * Returns a value indicating whether the element
  * specified is mounted to the DOM
- * @param {HTMLElement} element
- * @returns {boolean}
  */
 const isInDom = (element: any) => {
     let elem = element;
@@ -64,8 +61,6 @@ const isInDom = (element: any) => {
  * Returns a value indicating whether the element
  * specified is fixed position
  * or is contained in fixed position element
- * @param {HTMLElement|string} element
- * @returns {boolean}
  */
 export const isFixedPosition = (element: HTMLElement | string): boolean => {
     let elem = typeof element === "string" ? (document.querySelector(element) as HTMLElement) : element;
@@ -88,8 +83,6 @@ export const isFixedPosition = (element: HTMLElement | string): boolean => {
  * Returns bounding rectangle of specified elements
  * in local (relative to offset parent of element)
  * coordinate space
- * @param {HTMLElement|string} elementOrSelector
- * @param getRegionBasedOnPosition
  */
 export const elementRegion = (
     elementOrSelector: HTMLElement | string,
