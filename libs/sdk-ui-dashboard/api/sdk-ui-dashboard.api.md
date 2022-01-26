@@ -76,6 +76,7 @@ import { IFilterContext } from '@gooddata/sdk-backend-spi';
 import { IFilterContextDefinition } from '@gooddata/sdk-backend-spi';
 import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { IInsight } from '@gooddata/sdk-model';
+import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IInsightWidget } from '@gooddata/sdk-backend-spi';
 import { IInsightWidgetDefinition } from '@gooddata/sdk-backend-spi';
 import { IKpiWidget } from '@gooddata/sdk-backend-spi';
@@ -3352,7 +3353,7 @@ export interface QueryInsightWidgetFilters extends IDashboardQuery<IFilter[]> {
     // (undocumented)
     readonly payload: {
         readonly widgetRef: ObjRef;
-        readonly insightFilterOverrides: IFilter[] | undefined;
+        readonly insight?: IInsightDefinition | null;
     };
     // (undocumented)
     readonly type: "GDC.DASH/QUERY.WIDGET.FILTERS";
@@ -3385,7 +3386,7 @@ export interface QueryWidgetBrokenAlerts extends IDashboardQuery<IBrokenAlertFil
 export function queryWidgetBrokenAlerts(widgetRef: ObjRef, correlationId?: string): QueryWidgetBrokenAlerts;
 
 // @alpha
-export function queryWidgetFilters(widgetRef: ObjRef, insightFilterOverrides?: IFilter[], correlationId?: string): QueryInsightWidgetFilters;
+export function queryWidgetFilters(widgetRef: ObjRef, insight?: IInsightDefinition | null, correlationId?: string): QueryInsightWidgetFilters;
 
 // @alpha (undocumented)
 export const ReactDashboardContext: any;
@@ -4674,14 +4675,7 @@ export function useWidgetExecutionsHandler(widgetRef: ObjRef): {
 };
 
 // @public
-export function useWidgetFilters(widget: ICustomWidget | IKpiWidget | undefined): {
-    result?: IFilter[];
-    status?: QueryProcessingStatus;
-    error?: GoodDataSdkError;
-};
-
-// @public
-export function useWidgetFilters(widget: IInsightWidget | undefined, insightFilterOverrides?: IFilter[]): {
+export function useWidgetFilters(widget: ExtendedDashboardWidget | undefined, insight?: IInsightDefinition): {
     result?: IFilter[];
     status?: QueryProcessingStatus;
     error?: GoodDataSdkError;

@@ -10,7 +10,7 @@ import {
     IDateFilter,
     idRef,
     IFilter,
-    IInsight,
+    IInsightDefinition,
     insightFilters,
     insightMeasures,
     isAllTimeDateFilter,
@@ -33,12 +33,10 @@ import { invalidQueryArguments } from "../events/general";
 import {
     IAttributeDisplayFormMetadataObject,
     ICatalogDateDataset,
-    IInsightWidget,
     IKpiWidget,
     IMetadataObject,
     isDashboardAttributeFilterReference,
     isInsightWidget,
-    IWidget,
 } from "@gooddata/sdk-backend-spi";
 import compact from "lodash/compact";
 import { selectAllCatalogDateDatasetsMap } from "../store/catalog/catalogSelectors";
@@ -109,7 +107,7 @@ function selectDateDatasetsForDateFilters(
 
 function* getResolvedInsightAttributeFilters(
     ctx: DashboardContext,
-    widget: IWidget,
+    widget: ExtendedDashboardWidget,
     dashboardAttributeFilters: IAttributeFilter[],
     insightAttributeFilters: IAttributeFilter[],
 ): SagaIterator<IAttributeFilter[]> {
@@ -162,14 +160,14 @@ function resolveWidgetFilterIgnore(
  * global date filter is desired because otherwise there is a large chance that the intersection of global date filter
  * and measure's date filters would lead to empty set and no data shown for the insight?
  */
-export function isDashboardDateFilterIgnoredForInsight(insight: IInsight): boolean {
+export function isDashboardDateFilterIgnoredForInsight(insight: IInsightDefinition): boolean {
     const simpleMeasures = insightMeasures(insight, isSimpleMeasure);
     return simpleMeasures.length > 0 && simpleMeasures.every((m) => measureFilters(m)?.some(isDateFilter));
 }
 
 function selectResolvedInsightDateFilters(
     state: DashboardState,
-    insight: IInsight,
+    insight: IInsightDefinition,
     dashboardDateFilters: IDateFilter[],
     insightDateFilters: IDateFilter[],
 ): IDateFilter[] {
@@ -204,24 +202,11 @@ function resolveDateFilters(allDateFilterDateDatasetPairs: IFilterDateDatasetPai
         .filter((item) => !isAllTimeDateFilter(item));
 }
 
-function* queryForInsightWidget(
+function* queryWithInsight(
     ctx: DashboardContext,
-    widget: IInsightWidget,
-    widgetFilterOverrides: IFilter[] | undefined,
-    correlationId: string | undefined,
+    widget: ExtendedDashboardWidget,
+    insight: IInsightDefinition,
 ): SagaIterator<IFilter[]> {
-    const insightRef = widget.insight;
-    const insightSelector = selectInsightByRef(insightRef);
-    const insight: ReturnType<typeof insightSelector> = yield select(insightSelector);
-
-    if (!insight) {
-        throw invalidQueryArguments(
-            ctx,
-            `Insight with ref ${objRefToString(insightRef)} does not exist on the dashboard`,
-            correlationId,
-        );
-    }
-
     const widgetAwareDashboardFiltersSelector = selectAllFiltersForWidgetByRef(widget.ref);
     const widgetAwareDashboardFilters: ReturnType<typeof widgetAwareDashboardFiltersSelector> = yield select(
         widgetAwareDashboardFiltersSelector,
@@ -234,8 +219,7 @@ function* queryForInsightWidget(
         widgetAwareDashboardFilters.push(newAllTimeFilter(widget.dateDataSet));
     }
 
-    // use the widgetFilterOverrides if specified instead of insight filters
-    const effectiveInsightFilters = widgetFilterOverrides ?? insightFilters(insight);
+    const effectiveInsightFilters = insightFilters(insight);
 
     const [dateFilters, attributeFilters] = yield all([
         select(
@@ -271,7 +255,7 @@ function* queryForInsightWidget(
     ];
 }
 
-function* queryForKpiOrCustomWidget(
+function* queryWithoutInsight(
     ctx: DashboardContext,
     widget: IKpiWidget | ICustomWidget,
 ): SagaIterator<IFilter[]> {
@@ -290,7 +274,7 @@ function* queryForKpiOrCustomWidget(
 
 function* queryService(ctx: DashboardContext, query: QueryWidgetFilters): SagaIterator<IFilter[]> {
     const {
-        payload: { widgetRef, insightFilterOverrides },
+        payload: { widgetRef, insight },
         correlationId,
     } = query;
     const widgetSelector = selectWidgetByRef(widgetRef);
@@ -304,13 +288,25 @@ function* queryService(ctx: DashboardContext, query: QueryWidgetFilters): SagaIt
         );
     }
 
-    if (isInsightWidget(widget)) {
-        return yield call(queryForInsightWidget, ctx, widget, insightFilterOverrides, correlationId);
+    if (insight) {
+        return yield call(queryWithInsight, ctx, widget, insight);
     } else {
-        if (insightFilterOverrides) {
-            // eslint-disable-next-line no-console
-            console.warn("Using 'insightFilterOverrides' for non-InsightWidget, ignoring...");
+        if (isInsightWidget(widget)) {
+            const insightRef = widget.insight;
+            const insightSelector = selectInsightByRef(insightRef);
+            const linkedInsight: ReturnType<typeof insightSelector> = yield select(insightSelector);
+
+            if (!linkedInsight) {
+                throw invalidQueryArguments(
+                    ctx,
+                    `Insight with ref ${objRefToString(insightRef)} does not exist on the dashboard`,
+                    correlationId,
+                );
+            }
+
+            return yield call(queryWithInsight, ctx, widget, linkedInsight);
+        } else {
+            return yield call(queryWithoutInsight, ctx, widget);
         }
-        return yield call(queryForKpiOrCustomWidget, ctx, widget);
     }
 }

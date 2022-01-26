@@ -10,7 +10,7 @@ import {
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 import { useMemo } from "react";
-import { IFilter, insightSetFilters } from "@gooddata/sdk-model";
+import { insightSetFilters } from "@gooddata/sdk-model";
 import stringify from "json-stable-stringify";
 import { selectInsightByRef, useDashboardSelector } from "../../../model";
 import { useWidgetFilters } from "./useWidgetFilters";
@@ -27,11 +27,6 @@ export interface IUseInsightWidgetDataView {
      * Note: When the insight widget is not provided, hook is locked in a "pending" state.
      */
     insightWidget?: IInsightWidget;
-
-    /**
-     * If specified, these filters will be used instead of the filters set on the insight.
-     */
-    insightFilterOverrides?: IFilter[];
 }
 
 /**
@@ -45,11 +40,11 @@ export interface IUseInsightWidgetDataView {
 export function useInsightWidgetDataView(
     config: IUseInsightWidgetDataView,
 ): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError> {
-    const { insightWidget, insightFilterOverrides } = config;
+    const { insightWidget } = config;
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
     const insight = useDashboardSelector(selectInsightByRef(insightWidget?.insight));
-    const widgetFiltersPromise = useWidgetFilters(insightWidget, insightFilterOverrides);
+    const widgetFiltersPromise = useWidgetFilters(insightWidget);
 
     const insightWithAddedFilters = useMemo(
         () => insightSetFilters(insight!, widgetFiltersPromise.result),

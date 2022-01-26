@@ -1,13 +1,7 @@
 // (C) 2020-2021 GoodData Corporation
 import { useEffect, useMemo, useState } from "react";
-import {
-    FilterContextItem,
-    IInsightWidget,
-    IKpiWidget,
-    isDashboardAttributeFilter,
-    isInsightWidget,
-} from "@gooddata/sdk-backend-spi";
-import { areObjRefsEqual, filterObjRef, IFilter, ObjRef } from "@gooddata/sdk-model";
+import { FilterContextItem, isDashboardAttributeFilter } from "@gooddata/sdk-backend-spi";
+import { areObjRefsEqual, filterObjRef, IFilter, IInsightDefinition, ObjRef } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import stringify from "json-stable-stringify";
 import compact from "lodash/compact";
@@ -18,7 +12,6 @@ import sortBy from "lodash/fp/sortBy";
 
 import {
     ExtendedDashboardWidget,
-    ICustomWidget,
     QueryProcessingStatus,
     queryWidgetFilters,
     selectFilterContextFilters,
@@ -29,49 +22,19 @@ import {
 /**
  * Hook for obtaining the effective filters for a widget.
  *
- * @param widget - widget to get effective filters for
- * @returns set of filters that should be used to execute the given widget
- *
- * @public
- */
-export function useWidgetFilters(widget: ICustomWidget | IKpiWidget | undefined): {
-    result?: IFilter[];
-    status?: QueryProcessingStatus;
-    error?: GoodDataSdkError;
-};
-/**
- * Hook for obtaining the effective filters for a widget.
- *
  * @remarks
  * The filters returned should be used with {@link @gooddata/sdk-model#insightSetFilters} to obtain
  * insight that is ready for execution.
  *
  * @param widget - widget to get effective filters for
- * @param insightFilterOverrides - filters to use instead of the insight filters
- * @returns set of filters that should be used to execute the given widget
- *
- * @public
- */
-export function useWidgetFilters(
-    widget: IInsightWidget | undefined,
-    insightFilterOverrides?: IFilter[],
-): {
-    result?: IFilter[];
-    status?: QueryProcessingStatus;
-    error?: GoodDataSdkError;
-};
-/**
- * Hook for obtaining the effective filters for a widget.
- *
- * @param widget - widget to get effective filters for
- * @param insightFilterOverrides - filters to use instead of the insight filters
+ * @param insight - insight to evaluate the filters for in context of the widget
  * @returns set of filters that should be used to execute the given widget
  *
  * @public
  */
 export function useWidgetFilters(
     widget: ExtendedDashboardWidget | undefined,
-    insightFilterOverrides?: IFilter[],
+    insight?: IInsightDefinition,
 ): {
     result?: IFilter[];
     status?: QueryProcessingStatus;
@@ -126,9 +89,9 @@ export function useWidgetFilters(
     // only run the "full" filters query if any of the non-ignored filters has changed
     useEffect(() => {
         if (widget && nonIgnoredFiltersStatus === "success") {
-            runFiltersQuery(widget, insightFilterOverrides);
+            runFiltersQuery(widget, insight);
         }
-    }, [widget, stringify(nonIgnoredFilters), insightFilterOverrides, nonIgnoredFiltersStatus]);
+    }, [widget, stringify(nonIgnoredFilters), insight, nonIgnoredFiltersStatus]);
 
     return {
         result: effectiveFiltersState.filters,
@@ -175,12 +138,8 @@ function useNonIgnoredFilters(widget: ExtendedDashboardWidget | undefined) {
 
     useEffect(() => {
         if (widget) {
-            if (isInsightWidget(widget)) {
-                // set [] as filter overrides to ignore filters on insights -> this way we get only the dashboard level filters
-                run(widget, []);
-            } else {
-                run(widget);
-            }
+            // force ignore the insight -> this way we get only the dashboard level filters even for InsightWidgets
+            run(widget, null);
         }
     }, [widget, filtersDigest(dashboardFilters, widgetIgnoresDateFilter)]);
 
