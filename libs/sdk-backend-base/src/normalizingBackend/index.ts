@@ -88,12 +88,12 @@ class NormalizingPreparedExecution extends DecoratedPreparedExecution {
  * then de-normalizes the dimension headers so that they match the original definition.
  *
  * The result instance receives also receives the normalizing execution which triggered creation of
- * the result -> this is so that when client calls transform(), they can get back to further customizing the
+ * the result -\> this is so that when client calls transform(), they can get back to further customizing the
  * execution.
  *
- * The result instance receives also the original, non-normalizing prepared execution -> this is needed
+ * The result instance receives also the original, non-normalizing prepared execution -\> this is needed
  * because of export(). Exports are a server side thing that must be done for the original execution - because
- * the normalization process normally takes away the essential detail that is importat in the exports - such as
+ * the normalization process normally takes away the essential detail that is important in the exports - such as
  * titles, formats and so on. See the export() implementation - this actually performs the original execution
  * and exports result from it.
  */
