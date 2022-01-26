@@ -1,12 +1,7 @@
 // (C) 2020-2021 GoodData Corporation
 import { useEffect, useMemo, useState } from "react";
-import {
-    FilterContextItem,
-    isDashboardAttributeFilter,
-    isInsightWidget,
-    IWidget,
-} from "@gooddata/sdk-backend-spi";
-import { areObjRefsEqual, filterObjRef, IFilter, ObjRef } from "@gooddata/sdk-model";
+import { FilterContextItem, isDashboardAttributeFilter } from "@gooddata/sdk-backend-spi";
+import { areObjRefsEqual, filterObjRef, IFilter, IInsightDefinition, ObjRef } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import stringify from "json-stable-stringify";
 import compact from "lodash/compact";
@@ -16,6 +11,7 @@ import isEqual from "lodash/isEqual";
 import sortBy from "lodash/fp/sortBy";
 
 import {
+    ExtendedDashboardWidget,
     QueryProcessingStatus,
     queryWidgetFilters,
     selectFilterContextFilters,
@@ -26,20 +22,24 @@ import {
 /**
  * Hook for obtaining the effective filters for a widget.
  *
+ * @remarks
+ * The filters returned should be used with {@link @gooddata/sdk-model#insightSetFilters} to obtain
+ * insight that is ready for execution.
+ *
  * @param widget - widget to get effective filters for
- * @param filters - additional filters to apply
+ * @param insight - insight to evaluate the filters for in context of the widget
  * @returns set of filters that should be used to execute the given widget
  *
- * @alpha
+ * @public
  */
-export const useWidgetFilters = (
-    widget: IWidget | undefined,
-    filters?: IFilter[],
+export function useWidgetFilters(
+    widget: ExtendedDashboardWidget | undefined,
+    insight?: IInsightDefinition,
 ): {
     result?: IFilter[];
     status?: QueryProcessingStatus;
     error?: GoodDataSdkError;
-} => {
+} {
     const [effectiveFiltersState, setEffectiveFiltersState] = useState<{
         filters: IFilter[];
         filterQueryStatus?: QueryProcessingStatus;
@@ -89,9 +89,9 @@ export const useWidgetFilters = (
     // only run the "full" filters query if any of the non-ignored filters has changed
     useEffect(() => {
         if (widget && nonIgnoredFiltersStatus === "success") {
-            runFiltersQuery(widget, filters);
+            runFiltersQuery(widget, insight);
         }
-    }, [widget, stringify(nonIgnoredFilters), filters, nonIgnoredFiltersStatus]);
+    }, [widget, stringify(nonIgnoredFilters), insight, nonIgnoredFiltersStatus]);
 
     return {
         result: effectiveFiltersState.filters,
@@ -102,14 +102,14 @@ export const useWidgetFilters = (
         ),
         error: nonIgnoredFiltersError ?? error,
     };
-};
+}
 
 /**
  * Hook that retrieves the non-ignored dashboard level filters for a widget.
  *
  * @param widget - widget to get the non-ignored filters for
  */
-function useNonIgnoredFilters(widget: IWidget | undefined) {
+function useNonIgnoredFilters(widget: ExtendedDashboardWidget | undefined) {
     const dashboardFilters = useDashboardSelector(selectFilterContextFilters);
     const widgetIgnoresDateFilter = !widget?.dateDataSet;
 
@@ -138,12 +138,8 @@ function useNonIgnoredFilters(widget: IWidget | undefined) {
 
     useEffect(() => {
         if (widget) {
-            if (isInsightWidget(widget)) {
-                // set [] as filter overrides to ignore filters on insights -> this way we get only the dashboard level filters
-                run(widget, []);
-            } else {
-                run(widget);
-            }
+            // force ignore the insight -> this way we get only the dashboard level filters even for InsightWidgets
+            run(widget, null);
         }
     }, [widget, filtersDigest(dashboardFilters, widgetIgnoresDateFilter)]);
 

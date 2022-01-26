@@ -13,6 +13,7 @@ import { CaseReducer } from '@reduxjs/toolkit';
 import { CaseReducerActions } from '@reduxjs/toolkit';
 import { ComponentType } from 'react';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-backend-spi';
+import { DataViewFacade } from '@gooddata/sdk-ui';
 import { DateFilterGranularity } from '@gooddata/sdk-backend-spi';
 import { DateFilterType } from '@gooddata/sdk-backend-spi';
 import { DateString } from '@gooddata/sdk-backend-spi';
@@ -66,13 +67,16 @@ import { IDrillToDashboard } from '@gooddata/sdk-backend-spi';
 import { IDrillToInsight } from '@gooddata/sdk-backend-spi';
 import { IDrillToLegacyDashboard } from '@gooddata/sdk-backend-spi';
 import { IErrorProps } from '@gooddata/sdk-ui';
+import { IExecutionConfiguration } from '@gooddata/sdk-ui';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IExecutionResult } from '@gooddata/sdk-backend-spi';
 import { IFilter } from '@gooddata/sdk-model';
+import { IFilterableWidget } from '@gooddata/sdk-backend-spi';
 import { IFilterContext } from '@gooddata/sdk-backend-spi';
 import { IFilterContextDefinition } from '@gooddata/sdk-backend-spi';
 import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { IInsight } from '@gooddata/sdk-model';
+import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IInsightWidget } from '@gooddata/sdk-backend-spi';
 import { IInsightWidgetDefinition } from '@gooddata/sdk-backend-spi';
 import { IKpiWidget } from '@gooddata/sdk-backend-spi';
@@ -129,6 +133,7 @@ import { Selector } from '@reduxjs/toolkit';
 import { ShareStatus } from '@gooddata/sdk-backend-spi';
 import { TypedUseSelectorHook } from 'react-redux';
 import { UriRef } from '@gooddata/sdk-model';
+import { UseCancelablePromiseState } from '@gooddata/sdk-ui';
 import { VisualizationProperties } from '@gooddata/sdk-model';
 import { WithIntlProps } from 'react-intl';
 import { WrappedComponentProps } from 'react-intl';
@@ -1844,10 +1849,10 @@ export const FilterBar: (props: IFilterBarProps) => JSX.Element;
 export function filterContextAttributeFilterToAttributeFilter(filter: IDashboardAttributeFilter): IAttributeFilter;
 
 // @internal
-export function filterContextDateFilterToDateFilter(filter: IDashboardDateFilter, widget: IWidgetDefinition): IDateFilter;
+export function filterContextDateFilterToDateFilter(filter: IDashboardDateFilter, widget: Partial<IFilterableWidget>): IDateFilter;
 
 // @internal
-export function filterContextItemsToFiltersForWidget(filterContextItems: FilterContextItem[], widget: IWidgetDefinition): IDashboardFilter[];
+export function filterContextItemsToFiltersForWidget(filterContextItems: FilterContextItem[], widget: Partial<IFilterableWidget>): IDashboardFilter[];
 
 // @alpha (undocumented)
 export interface FilterContextSelection {
@@ -2032,7 +2037,7 @@ export interface ICustomDashboardEvent<TPayload = any> {
 }
 
 // @public
-export interface ICustomWidget extends ICustomWidgetBase, IDashboardObjectIdentity {
+export interface ICustomWidget extends ICustomWidgetBase, IDashboardObjectIdentity, Partial<IFilterableWidget> {
 }
 
 // @public
@@ -2282,6 +2287,7 @@ export interface IDashboardKpiProps {
     backend?: IAnalyticalBackend;
     // @alpha
     ErrorComponent?: React_2.ComponentType<IErrorProps>;
+    // @deprecated
     filters?: FilterContextItem[];
     kpiWidget: IKpiWidget;
     // @alpha
@@ -2390,10 +2396,10 @@ export interface IDashboardWidgetProps {
     backend?: IAnalyticalBackend;
     dateDataset?: ObjRef;
     // @alpha
-    ErrorComponent?: ComponentType<IErrorProps>;
+    ErrorComponent: ComponentType<IErrorProps>;
     ignoredAttributeFilters?: ObjRefInScope[];
     // @alpha
-    LoadingComponent?: ComponentType<ILoadingProps>;
+    LoadingComponent: ComponentType<ILoadingProps>;
     // @alpha (undocumented)
     onDrill?: OnFiredDashboardViewDrillEvent;
     // @alpha (undocumented)
@@ -3008,6 +3014,18 @@ export interface ITopBarProps {
     titleProps: ITitleProps;
 }
 
+// @beta
+export interface IUseCustomWidgetExecutionDataViewConfig {
+    execution?: Exclude<IExecutionConfiguration, "filters">;
+    widget: ICustomWidget;
+}
+
+// @beta
+export interface IUseCustomWidgetInsightDataViewConfig {
+    insight?: IInsightDefinition | ObjRef;
+    widget: ICustomWidget;
+}
+
 // @alpha (undocumented)
 export type IXlsxExportConfig = {
     format: "xlsx";
@@ -3139,7 +3157,7 @@ export interface MoveSectionItem extends IDashboardCommand {
 export function moveSectionItem(sectionIndex: number, itemIndex: number, toSectionIndex: number, toItemIndex: number, correlationId?: string): MoveSectionItem;
 
 // @public
-export function newCustomWidget<TExtra = void>(identifier: string, customType: string, extras?: TExtra): TExtra & ICustomWidget;
+export function newCustomWidget<TExtra = void>(identifier: string, customType: string, extras?: TExtra & Partial<IFilterableWidget>): TExtra & ICustomWidget;
 
 // @public
 export function newDashboardEngine(): IDashboardEngine;
@@ -3341,7 +3359,7 @@ export interface QueryInsightWidgetFilters extends IDashboardQuery<IFilter[]> {
     // (undocumented)
     readonly payload: {
         readonly widgetRef: ObjRef;
-        readonly widgetFilterOverrides: IFilter[] | undefined;
+        readonly insight?: IInsightDefinition | null;
     };
     // (undocumented)
     readonly type: "GDC.DASH/QUERY.WIDGET.FILTERS";
@@ -3374,7 +3392,7 @@ export interface QueryWidgetBrokenAlerts extends IDashboardQuery<IBrokenAlertFil
 export function queryWidgetBrokenAlerts(widgetRef: ObjRef, correlationId?: string): QueryWidgetBrokenAlerts;
 
 // @alpha
-export function queryWidgetFilters(widgetRef: ObjRef, widgetFilterOverrides?: IFilter[], correlationId?: string): QueryInsightWidgetFilters;
+export function queryWidgetFilters(widgetRef: ObjRef, insight?: IInsightDefinition | null, correlationId?: string): QueryInsightWidgetFilters;
 
 // @alpha (undocumented)
 export const ReactDashboardContext: any;
@@ -3973,8 +3991,8 @@ export const selectUser: OutputSelector<DashboardState, IUser, (res: UserState) 
 // @internal (undocumented)
 export const selectValidConfiguredDrillsByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IImplicitDrillWithPredicates[], res2: ObjRefMap<IAttributeDisplayFormMetadataObject>, res3: ObjRefMap<IListedDashboard>, res4: ObjRefMap<IInsight>) => IImplicitDrillWithPredicates[]>;
 
-// @alpha @deprecated
-export const selectWidgetByRef: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IKpiWidget | IInsightWidget | undefined, (res: ObjRefMap<ExtendedDashboardWidget>) => IKpiWidget | IInsightWidget | undefined>;
+// @alpha
+export const selectWidgetByRef: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IKpiWidget | IInsightWidget | ICustomWidget | undefined, (res: ObjRefMap<ExtendedDashboardWidget>) => IKpiWidget | IInsightWidget | ICustomWidget | undefined>;
 
 // @alpha
 export const selectWidgetDrills: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IDrillToLegacyDashboard[] | InsightDrillDefinition[], (res: IKpiWidget | IInsightWidget | undefined) => IDrillToLegacyDashboard[] | InsightDrillDefinition[]>;
@@ -4158,6 +4176,12 @@ export interface UpsertExecutionResult extends IDashboardCommand {
     // (undocumented)
     readonly type: "GDC.DASH/CMD.EXECUTION_RESULT.UPSERT";
 }
+
+// @beta
+export const useCustomWidgetExecutionDataView: ({ widget, execution, }: IUseCustomWidgetExecutionDataViewConfig) => UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
+
+// @beta
+export const useCustomWidgetInsightDataView: ({ widget, insight, }: IUseCustomWidgetInsightDataViewConfig) => UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
 
 // @internal (undocumented)
 export interface UseDashboardAsyncRender {
@@ -4659,11 +4683,11 @@ export function useWidgetExecutionsHandler(widgetRef: ObjRef): {
     onPushData: (data: IPushData) => void;
 };
 
-// @alpha
-export const useWidgetFilters: (widget: IWidget | undefined, filters?: IFilter[] | undefined) => {
-    result?: IFilter[] | undefined;
-    status?: "error" | "running" | "success" | "rejected" | undefined;
-    error?: GoodDataSdkError | undefined;
+// @public
+export function useWidgetFilters(widget: ExtendedDashboardWidget | undefined, insight?: IInsightDefinition): {
+    result?: IFilter[];
+    status?: QueryProcessingStatus;
+    error?: GoodDataSdkError;
 };
 
 // @public (undocumented)

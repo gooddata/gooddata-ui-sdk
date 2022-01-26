@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 
-import { IFilter, ObjRef } from "@gooddata/sdk-model";
+import { IFilter, IInsightDefinition, ObjRef } from "@gooddata/sdk-model";
 import { IBrokenAlertFilterBasicInfo } from "../types/alertTypes";
 import { IDashboardQuery } from "./base";
 
@@ -16,7 +16,7 @@ export interface QueryWidgetFilters extends IDashboardQuery<IFilter[]> {
     readonly type: "GDC.DASH/QUERY.WIDGET.FILTERS";
     readonly payload: {
         readonly widgetRef: ObjRef;
-        readonly widgetFilterOverrides: IFilter[] | undefined;
+        readonly insight?: IInsightDefinition | null;
     };
 }
 
@@ -24,14 +24,16 @@ export interface QueryWidgetFilters extends IDashboardQuery<IFilter[]> {
  * Creates action thought which you can query dashboard component for filters that should be used by a given widget.
  *
  * @param widgetRef - reference to insight widget
- * @param widgetFilterOverrides - optionally specify filters to be applied on top of the dashboard and insight filters
+ * @param insight - optionally specify insight to evaluate the filters for in context of the widget.
+ *  If null, InsightWidgets will ignore the insight the are referencing.
+ *  If not specified, InsightWidgets will default to the insights they reference, Custom- and KpiWidgets will ignore it.
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  * @alpha
  */
 export function queryWidgetFilters(
     widgetRef: ObjRef,
-    widgetFilterOverrides?: IFilter[],
+    insight?: IInsightDefinition | null,
     correlationId?: string,
 ): QueryWidgetFilters {
     return {
@@ -39,7 +41,7 @@ export function queryWidgetFilters(
         correlationId,
         payload: {
             widgetRef,
-            widgetFilterOverrides,
+            insight,
         },
     };
 }

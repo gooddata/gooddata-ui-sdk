@@ -2,7 +2,7 @@
 import React, { useCallback, useMemo, useState, CSSProperties } from "react";
 import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { createSelector } from "@reduxjs/toolkit";
-import { insightFilters, insightSetFilters, insightVisualizationUrl } from "@gooddata/sdk-model";
+import { insightSetFilters, insightVisualizationUrl } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
     IPushData,
@@ -91,7 +91,7 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
         result: filtersForInsight,
         status: filtersStatus,
         error: filtersError,
-    } = useWidgetFilters(widget, insight && insightFilters(insight));
+    } = useWidgetFilters(widget, insight);
 
     const insightWithAddedFilters = useMemo(
         () => insightSetFilters(insight, filtersForInsight),

@@ -26,6 +26,7 @@ import {
     IDashboardLayoutWidgetRenderer,
 } from "./DefaultDashboardLayoutRenderer";
 import { ObjRefMap } from "../../_staging/metadata/objRefMap";
+import { useDashboardComponentsContext } from "../dashboardContexts";
 
 function calculateWidgetMinHeight(
     widget: ExtendedDashboardWidget,
@@ -81,6 +82,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     const { item, screen, DefaultWidgetRenderer, onDrill, onFiltersChange, onError } = props;
     const insights = useDashboardSelector(selectInsightsMap);
     const settings = useDashboardSelector(selectSettings);
+    const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext();
     // TODO: we should probably do something more meaningful when item has no widget; should that even
     //  be allowed? undefined widget will make things explode down the line away so..
     const widget = item.widget()!;
@@ -113,6 +115,8 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                 onError={onError}
                 onFiltersChange={onFiltersChange}
                 widget={widget as ExtendedDashboardWidget}
+                ErrorComponent={ErrorComponent}
+                LoadingComponent={LoadingComponent}
             />
         </DefaultWidgetRenderer>
     );

@@ -1,32 +1,113 @@
 // (C) 2007-2021 GoodData Corporation
 import React from "react";
+import max from "lodash/max";
 import {
+    Legend,
+    PolarAngleAxis,
+    PolarGrid,
+    PolarRadiusAxis,
+    Radar,
+    RadarChart,
+    ResponsiveContainer,
+    Tooltip,
+} from "recharts";
+import {
+    CustomDashboardWidgetComponent,
     DashboardConfig,
     DashboardContext,
     DashboardPluginV1,
+    ICustomWidget,
     IDashboardCustomizer,
     IDashboardEventHandling,
-    IDashboardWidgetProps,
     newCustomWidget,
     newDashboardItem,
     newDashboardSection,
+    useCustomWidgetExecutionDataView,
 } from "@gooddata/sdk-ui-dashboard";
 import { idRef } from "@gooddata/sdk-model";
 import { useDashboardLoader } from "@gooddata/sdk-ui-loaders";
+import { LoadingComponent } from "@gooddata/sdk-ui";
 
 import { MAPBOX_TOKEN } from "../../constants/fixtures";
-import { LoadingComponent } from "@gooddata/sdk-ui";
+import * as Md from "../../md/full";
 
 const dashboardRef = idRef("aeO5PVgShc0T");
 const config: DashboardConfig = { mapboxToken: MAPBOX_TOKEN, isReadOnly: true };
 
+const simpleCurrencyFormatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumSignificantDigits: 3,
+});
+
 /*
  * Component to render 'myCustomWidget'. If you create custom widget instance and also pass extra data,
- * then that data will be available in
+ * then that data will be available in the `widget` prop.
  */
-function MyCustomWidget(_props: IDashboardWidgetProps): JSX.Element {
-    return <div>Hello from custom widget</div>;
-}
+const MyCustomWidget: CustomDashboardWidgetComponent = ({ widget, LoadingComponent, ErrorComponent }) => {
+    const { result, status, error } = useCustomWidgetExecutionDataView({
+        widget: widget as ICustomWidget,
+        execution: {
+            seriesBy: [Md.$TotalSales, Md.$FranchisedSales],
+            slicesBy: [Md.LocationState],
+        },
+    });
+
+    if (status === "pending" || status === "loading") {
+        return <LoadingComponent />;
+    }
+
+    if (status === "error") {
+        return <ErrorComponent message={error?.message ?? "Unknown error"} />;
+    }
+
+    const data = result!
+        .data()
+        .slices()
+        .toArray()
+        .map((slice) => {
+            const rawTotalSales = slice.dataPoints()[0].rawValue;
+            const rawFranchisedSales = slice.dataPoints()[1].rawValue;
+            return {
+                title: slice.descriptor.sliceTitles()[0],
+                totalSales: rawTotalSales ? parseFloat(rawTotalSales.toString()) : 0,
+                franchisedSales: rawFranchisedSales ? parseFloat(rawFranchisedSales.toString()) : 0,
+            };
+        });
+
+    const maxValue = max(data.map((i) => max([i.totalSales, i.franchisedSales])))!;
+
+    return (
+        <ResponsiveContainer height={240} width="90%">
+            <RadarChart data={data}>
+                <PolarGrid color="#94a1ad" />
+                <PolarAngleAxis dataKey="title" color="#94a1ad" />
+                <PolarRadiusAxis
+                    angle={90}
+                    color="#94a1ad"
+                    domain={[0, maxValue]}
+                    tickFormatter={simpleCurrencyFormatter.format}
+                />
+                <Radar
+                    name="Total Sales"
+                    dataKey="totalSales"
+                    stroke="#14b2e2"
+                    fill="#14b2e2"
+                    fillOpacity={0.6}
+                />
+                <Radar
+                    name="Franchised Sales"
+                    dataKey="franchisedSales"
+                    stroke="#00c18e"
+                    fill="#00c18e"
+                    fillOpacity={0.6}
+                />
+                <Tooltip />
+                <Legend />
+            </RadarChart>
+        </ResponsiveContainer>
+    );
+};
 
 class LocalPlugin extends DashboardPluginV1 {
     public readonly author = "John Doe";
@@ -44,14 +125,24 @@ class LocalPlugin extends DashboardPluginV1 {
                 0,
                 newDashboardSection(
                     "Section Added By Plugin",
-                    newDashboardItem(newCustomWidget("myWidget1", "myCustomWidget"), {
-                        xl: {
-                            // all 12 columns of the grid will be 'allocated' for this this new item
-                            gridWidth: 12,
-                            // minimum height since the custom widget now has just some one-liner text
-                            gridHeight: 1,
+                    newDashboardItem(
+                        newCustomWidget("myWidget1", "myCustomWidget", {
+                            // specify which date data set to used when applying the date filter to this widget
+                            // if not specified, the date filter is ignored
+                            dateDataSet: Md.DateDatasets.Date,
+                            // specify which attribute filters to ignore for this widget
+                            // if empty or not specified, all attribute filters are used
+                            ignoreDashboardFilters: [],
+                        }),
+                        {
+                            xl: {
+                                // all 12 columns of the grid will be 'allocated' for this this new item
+                                gridWidth: 12,
+                                // medium height to fit the chart
+                                gridHeight: 12,
+                            },
                         },
-                    }),
+                    ),
                 ),
             );
         });

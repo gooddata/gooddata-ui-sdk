@@ -19,7 +19,7 @@ import { invalidQueryArguments } from "../events/general";
 import { QueryWidgetBrokenAlerts } from "../queries/widgets";
 import { selectAlertByWidgetRef } from "../store/alerts/alertsSelectors";
 import { selectFilterContextFilters } from "../store/filterContext/filterContextSelectors";
-import { selectWidgetByRef } from "../store/layout/layoutSelectors";
+import { selectAnalyticalWidgetByRef } from "../store/layout/layoutSelectors";
 import { createQueryService } from "../store/_infra/queryService";
 import { IBrokenAlertFilterBasicInfo } from "../types/alertTypes";
 import { DashboardContext } from "../types/commonTypes";
@@ -77,7 +77,7 @@ function* getKpiWidgetAndAlert(
     ctx: DashboardContext,
     correlationId?: string,
 ): SagaIterator<GetKpiWidgetAndAlertResult> {
-    const widgetSelector = selectWidgetByRef(widgetRef);
+    const widgetSelector = selectAnalyticalWidgetByRef(widgetRef);
     const kpiWidget: ReturnType<typeof widgetSelector> = yield select(widgetSelector);
 
     if (!kpiWidget) {

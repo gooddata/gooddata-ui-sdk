@@ -9,7 +9,7 @@ import {
     modifyDrillsForInsightWidget,
 } from "../../../commands";
 import { DashboardCommandFailed, DashboardInsightWidgetDrillsModified } from "../../../events";
-import { selectWidgetByRef } from "../../../store/layout/layoutSelectors";
+import { selectAnalyticalWidgetByRef } from "../../../store/layout/layoutSelectors";
 import { idRef, uriRef } from "@gooddata/sdk-model";
 import { DrillOrigin } from "@gooddata/sdk-backend-spi";
 import {
@@ -70,7 +70,7 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
         it("should add one drill to state for widget and emit event with one add drill def. No items from state are updated", async () => {
             const drills = [DrillToDashboardFromProductAttributeDefinition];
 
-            const origWidgetState = selectWidgetByRef(SimpleSortedTableWidgetRef)(Tester.state());
+            const origWidgetState = selectAnalyticalWidgetByRef(SimpleSortedTableWidgetRef)(Tester.state());
             const origStateDrill = origWidgetState?.drills[0];
 
             const event: DashboardInsightWidgetDrillsModified = await Tester.dispatchAndWaitFor(
@@ -81,7 +81,7 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
             expect(event.payload.updated).toEqual([]);
             expect(event.payload.added).toEqual([DrillToDashboardFromProductAttributeDefinition]);
 
-            const widgetState = selectWidgetByRef(SimpleSortedTableWidgetRef)(Tester.state());
+            const widgetState = selectAnalyticalWidgetByRef(SimpleSortedTableWidgetRef)(Tester.state());
 
             expect(widgetState?.drills.length).toBe(2);
             expect(widgetState?.drills).toContainEqual(origStateDrill);
@@ -102,7 +102,7 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
             expect(event.payload.updated).toEqual([DrillToToInsightFromWonMeasureDefinition]);
             expect(event.payload.added).toEqual([DrillToDashboardFromProductAttributeDefinition]);
 
-            const widgetState = selectWidgetByRef(SimpleSortedTableWidgetRef)(Tester.state());
+            const widgetState = selectAnalyticalWidgetByRef(SimpleSortedTableWidgetRef)(Tester.state());
 
             expect(widgetState?.drills.length).toBe(2);
             expect(widgetState?.drills).toContainEqual(DrillToToInsightFromWonMeasureDefinition);
@@ -114,7 +114,7 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
             drillToDashboardUriTarget.target = uriRef(ComplexDashboardWithReferences.dashboard.uri);
             const drills = [drillToDashboardUriTarget];
 
-            const origWidgetState = selectWidgetByRef(SimpleSortedTableWidgetRef)(Tester.state());
+            const origWidgetState = selectAnalyticalWidgetByRef(SimpleSortedTableWidgetRef)(Tester.state());
             const origStateDrill = origWidgetState?.drills[0];
 
             const event: DashboardInsightWidgetDrillsModified = await Tester.dispatchAndWaitFor(
@@ -125,7 +125,7 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
             expect(event.payload.updated).toEqual([]);
             expect(event.payload.added).toEqual([DrillToDashboardFromProductAttributeDefinition]);
 
-            const widgetState = selectWidgetByRef(SimpleSortedTableWidgetRef)(Tester.state());
+            const widgetState = selectAnalyticalWidgetByRef(SimpleSortedTableWidgetRef)(Tester.state());
 
             expect(widgetState?.drills.length).toBe(2);
             expect(widgetState?.drills).toContainEqual(origStateDrill);
@@ -143,7 +143,7 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
             );
 
             expect(event.payload.updated).toEqual([DrillToToInsightFromWonMeasureDefinition]);
-            const widgetState = selectWidgetByRef(SimpleSortedTableWidgetRef)(Tester.state());
+            const widgetState = selectAnalyticalWidgetByRef(SimpleSortedTableWidgetRef)(Tester.state());
 
             expect(widgetState?.drills.length).toBe(1);
             expect(widgetState?.drills).toContainEqual(DrillToToInsightFromWonMeasureDefinition);
@@ -158,7 +158,7 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
             );
 
             expect(event.payload.updated).toEqual([DrillToCustomUrlFromMeasureDefinition]);
-            const widgetState = selectWidgetByRef(SimpleSortedTableWidgetRef)(Tester.state());
+            const widgetState = selectAnalyticalWidgetByRef(SimpleSortedTableWidgetRef)(Tester.state());
 
             expect(widgetState?.drills.length).toBe(1);
             expect(widgetState?.drills).toContainEqual(DrillToCustomUrlFromMeasureDefinition);
@@ -173,7 +173,7 @@ describe("modifyDrillsForInsightWidgetHandler", () => {
             );
 
             expect(event.payload.added).toEqual([DrillToAttributeUrlFromMeasureDefinition]);
-            const widgetState = selectWidgetByRef(drillToAttributeUrlWidgetRef)(Tester.state());
+            const widgetState = selectAnalyticalWidgetByRef(drillToAttributeUrlWidgetRef)(Tester.state());
 
             expect(widgetState?.drills.length).toBe(1);
             expect(widgetState?.drills).toContainEqual(DrillToAttributeUrlFromMeasureDefinition);

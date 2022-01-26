@@ -64,14 +64,14 @@ export interface IDashboardWidgetProps {
      *
      * @alpha
      */
-    ErrorComponent?: ComponentType<IErrorProps>;
+    ErrorComponent: ComponentType<IErrorProps>;
 
     /**
      * Loading component to use while loading and preparing data to render.
      *
      * @alpha
      */
-    LoadingComponent?: ComponentType<ILoadingProps>;
+    LoadingComponent: ComponentType<ILoadingProps>;
 
     /**
      * @alpha

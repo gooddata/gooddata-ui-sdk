@@ -6,7 +6,7 @@ import { DashboardState } from "../types";
 import { createMemoizedSelector } from "../_infra/selectors";
 import { executionResultsAdapter } from "./executionResultsEntityAdapter";
 import { IExecutionResultEnvelope } from "./types";
-import { selectWidgetByRef } from "../layout/layoutSelectors";
+import { selectAnalyticalWidgetByRef } from "../layout/layoutSelectors";
 import { isNonExportableError } from "../../../_staging/errors/errorPredicates";
 import { selectPermissions } from "../permissions/permissionsSelectors";
 import { selectSettings } from "../config/configSelectors";
@@ -42,14 +42,18 @@ export const selectExecutionResultByRef = createMemoizedSelector((ref: ObjRef) =
  * @alpha
  */
 export const selectIsExecutionResultReadyForExportByRef = createMemoizedSelector((ref: ObjRef) =>
-    createSelector(selectExecutionResultByRef(ref), selectWidgetByRef(ref), (widgetExecution): boolean => {
-        if (!widgetExecution) {
-            return false;
-        }
+    createSelector(
+        selectExecutionResultByRef(ref),
+        selectAnalyticalWidgetByRef(ref),
+        (widgetExecution): boolean => {
+            if (!widgetExecution) {
+                return false;
+            }
 
-        const { isLoading, error, executionResult } = widgetExecution;
-        return !!executionResult && !isLoading && !isNonExportableError(error);
-    }),
+            const { isLoading, error, executionResult } = widgetExecution;
+            return !!executionResult && !isLoading && !isNonExportableError(error);
+        },
+    ),
 );
 
 /**

@@ -3,3 +3,5 @@ export * from "./useExportHandler";
 export * from "./useInsightExport";
 export * from "./useWidgetFilters";
 export * from "./useInsightWidgetDataView";
+export * from "./useCustomWidgetExecutionDataView";
+export * from "./useCustomWidgetInsightDataView";

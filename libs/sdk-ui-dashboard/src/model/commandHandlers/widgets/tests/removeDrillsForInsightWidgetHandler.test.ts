@@ -9,7 +9,7 @@ import {
     removeDrillsForInsightWidget,
 } from "../../../commands";
 import { localIdRef, uriRef } from "@gooddata/sdk-model";
-import { selectWidgetByRef } from "../../../store/layout/layoutSelectors";
+import { selectAnalyticalWidgetByRef } from "../../../store/layout/layoutSelectors";
 import { DashboardInsightWidgetDrillsRemoved } from "../../../events/insight";
 import { DashboardCommandFailed } from "../../../events";
 import {
@@ -72,7 +72,7 @@ describe("removeDrillsForInsightWidgetHandler", () => {
             expect(event.payload.removed).toEqual([DrillToToInsightFromWonMeasureDefinition]);
             expect(event.payload.ref).toEqual(SimpleSortedTableWidgetRef);
 
-            const widgetState = selectWidgetByRef(SimpleSortedTableWidgetRef)(Tester.state());
+            const widgetState = selectAnalyticalWidgetByRef(SimpleSortedTableWidgetRef)(Tester.state());
 
             expect(widgetState?.drills.length).toBe(1);
             expect(widgetState?.drills).toContainEqual(DrillToDashboardFromProductAttributeDefinition);
@@ -89,7 +89,7 @@ describe("removeDrillsForInsightWidgetHandler", () => {
             expect(event.payload.removed).toContainEqual(DrillToDashboardFromProductAttributeDefinition);
             expect(event.payload.ref).toEqual(SimpleSortedTableWidgetRef);
 
-            const widgetState = selectWidgetByRef(SimpleSortedTableWidgetRef)(Tester.state());
+            const widgetState = selectAnalyticalWidgetByRef(SimpleSortedTableWidgetRef)(Tester.state());
 
             expect(widgetState?.drills.length).toBe(0);
             expect(widgetState?.drills).toEqual([]);

@@ -55,6 +55,7 @@ export interface IDashboardKpiProps {
     /**
      * Optionally, specify filters to be applied to the KPI.
      *
+     * @deprecated Do not use, made part of the public API by accident. Will do nothing.
      * @public
      */
     filters?: FilterContextItem[];

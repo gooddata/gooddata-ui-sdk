@@ -4,13 +4,12 @@ import {
     DataViewFacade,
     GoodDataSdkError,
     useBackendStrict,
-    useCancelablePromise,
     UseCancelablePromiseState,
     useExecutionDataView,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 import { useMemo } from "react";
-import { IFilter, insightSetFilters } from "@gooddata/sdk-model";
+import { insightSetFilters } from "@gooddata/sdk-model";
 import stringify from "json-stable-stringify";
 import { selectInsightByRef, useDashboardSelector } from "../../../model";
 import { useWidgetFilters } from "./useWidgetFilters";
@@ -27,12 +26,6 @@ export interface IUseInsightWidgetDataView {
      * Note: When the insight widget is not provided, hook is locked in a "pending" state.
      */
     insightWidget?: IInsightWidget;
-
-    /**
-     * Additional filters to the data view. These additional filters are used alongside the
-     * filters used by the insight.
-     */
-    additionalFilters?: IFilter[];
 }
 
 /**
@@ -46,11 +39,11 @@ export interface IUseInsightWidgetDataView {
 export function useInsightWidgetDataView(
     config: IUseInsightWidgetDataView,
 ): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError> {
-    const { insightWidget, additionalFilters } = config;
+    const { insightWidget } = config;
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
     const insight = useDashboardSelector(selectInsightByRef(insightWidget?.insight));
-    const widgetFiltersPromise = useWidgetFilters(insightWidget, additionalFilters);
+    const widgetFiltersPromise = useWidgetFilters(insightWidget);
 
     const insightWithAddedFilters = useMemo(
         () => insightSetFilters(insight!, widgetFiltersPromise.result),
@@ -65,17 +58,11 @@ export function useInsightWidgetDataView(
         ],
     );
 
-    const insightWidgetExecutionPromise = useCancelablePromise(
-        {
-            promise:
-                insightWithAddedFilters && insightWidget
-                    ? async () => {
-                          return backend.workspace(workspace).execution().forInsight(insightWithAddedFilters);
-                      }
-                    : null,
-        },
-        [backend, workspace, insightWithAddedFilters, insightWidget],
-    );
+    const insightExecution = useMemo(() => {
+        return insightWithAddedFilters && insightWidget
+            ? backend.workspace(workspace).execution().forInsight(insightWithAddedFilters)
+            : undefined;
+    }, [backend, workspace, insightWithAddedFilters, insightWidget]);
 
-    return useExecutionDataView({ execution: insightWidgetExecutionPromise.result });
+    return useExecutionDataView({ execution: insightExecution });
 }

@@ -118,15 +118,34 @@ export const selectWidgetsMap = createSelector(selectLayout, (layout) => {
 });
 
 /**
- * Selects analytical widget by its ref. This selector will return undefined if the provided
- * widget ref is for a custom widget.
+ * Selects widget by its ref (including custom widgets).
  *
- * @deprecated use {@link selectAnalyticalWidgetByRef} instead; this selector will in near future to return all widget
- *  types - even custom widgets
+ * @remarks
+ * To limit the scope only to analytical widgets, use {@link selectAnalyticalWidgetByRef}.
+ *
  * @alpha
  */
 export const selectWidgetByRef = createMemoizedSelector((ref: ObjRef | undefined) =>
-    createSelector(selectWidgetsMap, (widgetMap) => {
+    createSelector(selectWidgetsMap, (widgetMap): ExtendedDashboardWidget | undefined => {
+        if (!ref) {
+            return undefined;
+        }
+
+        return widgetMap.get(ref);
+    }),
+);
+
+/**
+ * Selects analytical widget by its ref. This selector will return undefined if the provided
+ * widget ref is for a custom widget.
+ *
+ * @remarks
+ * To include custom widgets as well, use {@link selectWidgetByRef}.
+ *
+ * @alpha
+ */
+export const selectAnalyticalWidgetByRef = createMemoizedSelector((ref: ObjRef | undefined) =>
+    createSelector(selectWidgetsMap, (widgetMap): IWidget | undefined => {
         if (!ref) {
             return undefined;
         }
@@ -142,20 +161,12 @@ export const selectWidgetByRef = createMemoizedSelector((ref: ObjRef | undefined
 );
 
 /**
- * Selects analytical widget by its ref. This selector will return undefined if the provided
- * widget ref is for a custom widget.
- *
- * @alpha
- */
-export const selectAnalyticalWidgetByRef = selectWidgetByRef;
-
-/**
  * Selects widget drills by the widget ref.
  *
  * @alpha
  */
 export const selectWidgetDrills = createMemoizedSelector((ref: ObjRef | undefined) =>
-    createSelector(selectWidgetByRef(ref), (widget) => widget?.drills ?? []),
+    createSelector(selectAnalyticalWidgetByRef(ref), (widget) => widget?.drills ?? []),
 );
 
 /**

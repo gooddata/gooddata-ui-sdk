@@ -4,7 +4,7 @@ import { DashboardTester, preloadedTesterFactory } from "../../../tests/Dashboar
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import { ChangeInsightWidgetVisProperties, changeInsightWidgetVisProperties } from "../../../commands";
 import { DashboardCommandFailed, DashboardInsightWidgetVisPropertiesChanged } from "../../../events";
-import { selectWidgetByRef } from "../../../store/layout/layoutSelectors";
+import { selectAnalyticalWidgetByRef } from "../../../store/layout/layoutSelectors";
 import { idRef, uriRef } from "@gooddata/sdk-model";
 import { IInsightWidget } from "@gooddata/sdk-backend-spi";
 import {
@@ -32,7 +32,7 @@ describe("change insight widget vis properties handler", () => {
             );
 
             expect(event.payload.properties).toEqual(TestProperties);
-            const widgetState = selectWidgetByRef(ref)(Tester.state()) as IInsightWidget;
+            const widgetState = selectAnalyticalWidgetByRef(ref)(Tester.state()) as IInsightWidget;
             expect(widgetState!.properties).toEqual(TestProperties);
         });
 
@@ -45,7 +45,7 @@ describe("change insight widget vis properties handler", () => {
             );
 
             expect(event.payload.properties).toEqual(TestProperties);
-            const widgetState = selectWidgetByRef(ref)(Tester.state()) as IInsightWidget;
+            const widgetState = selectAnalyticalWidgetByRef(ref)(Tester.state()) as IInsightWidget;
             expect(widgetState!.properties).toEqual(TestProperties);
         });
 
@@ -58,7 +58,7 @@ describe("change insight widget vis properties handler", () => {
             );
 
             expect(event.payload.properties).toEqual(TestProperties);
-            const widgetState = selectWidgetByRef(ref)(Tester.state()) as IInsightWidget;
+            const widgetState = selectAnalyticalWidgetByRef(ref)(Tester.state()) as IInsightWidget;
             expect(widgetState!.properties).toEqual(TestProperties);
         });
 
@@ -71,7 +71,7 @@ describe("change insight widget vis properties handler", () => {
             );
 
             expect(event.payload.properties).toBeUndefined();
-            const widgetState = selectWidgetByRef(ref)(Tester.state()) as IInsightWidget;
+            const widgetState = selectAnalyticalWidgetByRef(ref)(Tester.state()) as IInsightWidget;
             expect(widgetState!.properties).toBeUndefined();
         });
 
@@ -84,7 +84,7 @@ describe("change insight widget vis properties handler", () => {
             );
 
             expect(event.payload.properties).toEqual({});
-            const widgetState = selectWidgetByRef(ref)(Tester.state()) as IInsightWidget;
+            const widgetState = selectAnalyticalWidgetByRef(ref)(Tester.state()) as IInsightWidget;
             expect(widgetState!.properties).toEqual({});
         });
 

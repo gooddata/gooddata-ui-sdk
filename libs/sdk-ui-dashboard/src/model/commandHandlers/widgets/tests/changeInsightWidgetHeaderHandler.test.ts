@@ -4,7 +4,7 @@ import { DashboardTester, preloadedTesterFactory } from "../../../tests/Dashboar
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import { ChangeInsightWidgetHeader, changeInsightWidgetHeader } from "../../../commands";
 import { DashboardCommandFailed, DashboardInsightWidgetHeaderChanged } from "../../../events";
-import { selectWidgetByRef } from "../../../store/layout/layoutSelectors";
+import { selectAnalyticalWidgetByRef } from "../../../store/layout/layoutSelectors";
 import { idRef, uriRef } from "@gooddata/sdk-model";
 import {
     ComplexDashboardIdentifier,
@@ -31,7 +31,7 @@ describe("change insight widget header handler", () => {
             );
 
             expect(event.payload.header).toEqual(TestHeader);
-            const widgetState = selectWidgetByRef(ref)(Tester.state());
+            const widgetState = selectAnalyticalWidgetByRef(ref)(Tester.state());
             expect(widgetState!.title).toEqual(TestHeader.title);
         });
 
@@ -44,7 +44,7 @@ describe("change insight widget header handler", () => {
             );
 
             expect(event.payload.header).toEqual(TestHeader);
-            const widgetState = selectWidgetByRef(ref)(Tester.state());
+            const widgetState = selectAnalyticalWidgetByRef(ref)(Tester.state());
             expect(widgetState!.title).toEqual(TestHeader.title);
         });
 
@@ -57,7 +57,7 @@ describe("change insight widget header handler", () => {
             );
 
             expect(event.payload.header).toEqual(TestHeader);
-            const widgetState = selectWidgetByRef(ref)(Tester.state());
+            const widgetState = selectAnalyticalWidgetByRef(ref)(Tester.state());
             expect(widgetState!.title).toEqual(TestHeader.title);
         });
 

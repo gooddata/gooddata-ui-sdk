@@ -16,7 +16,7 @@ import { DashboardContext } from "../../types/commonTypes";
 import { PromiseFnReturnType } from "../../types/sagas";
 import { SagaIterator } from "redux-saga";
 import { selectDashboardId } from "../../store/meta/metaSelectors";
-import { selectWidgetByRef } from "../../store/layout/layoutSelectors";
+import { selectAnalyticalWidgetByRef } from "../../store/layout/layoutSelectors";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors";
 import { getElementTitle } from "./getElementTitle";
 import { getAttributeIdentifiersPlaceholdersFromUrl } from "../../../_staging/drills/drillingUtils";
@@ -166,7 +166,7 @@ export function* getInsightIdentifiersReplacements(
 ): SagaIterator<IDrillToUrlPlaceholderReplacement[]> {
     const { workspace, clientId, dataProductId } = ctx;
     const dashboardId: ReturnType<typeof selectDashboardId> = yield select(selectDashboardId);
-    const widget: IInsightWidget = yield select(selectWidgetByRef(widgetRef));
+    const widget: IInsightWidget = yield select(selectAnalyticalWidgetByRef(widgetRef));
     const insight: ReturnType<ReturnType<typeof selectInsightByRef>> = yield select(
         selectInsightByRef(widget.insight),
     );
