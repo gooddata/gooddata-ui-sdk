@@ -4,7 +4,6 @@ import {
     DataViewFacade,
     GoodDataSdkError,
     useBackendStrict,
-    useCancelablePromise,
     UseCancelablePromiseState,
     useExecutionDataView,
     useWorkspaceStrict,
@@ -59,17 +58,11 @@ export function useInsightWidgetDataView(
         ],
     );
 
-    const insightWidgetExecutionPromise = useCancelablePromise(
-        {
-            promise:
-                insightWithAddedFilters && insightWidget
-                    ? async () => {
-                          return backend.workspace(workspace).execution().forInsight(insightWithAddedFilters);
-                      }
-                    : null,
-        },
-        [backend, workspace, insightWithAddedFilters, insightWidget],
-    );
+    const insightExecution = useMemo(() => {
+        return insightWithAddedFilters && insightWidget
+            ? backend.workspace(workspace).execution().forInsight(insightWithAddedFilters)
+            : undefined;
+    }, [backend, workspace, insightWithAddedFilters, insightWidget]);
 
-    return useExecutionDataView({ execution: insightWidgetExecutionPromise.result });
+    return useExecutionDataView({ execution: insightExecution });
 }
