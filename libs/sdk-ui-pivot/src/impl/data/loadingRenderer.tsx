@@ -13,9 +13,6 @@ import { useTheme } from "@gooddata/sdk-ui-theme-provider";
  *
  * NOTE: keep in mind that this loading renderer IS NOT used to configure ag-grids built-in loading renderer. This
  * renderer is essentially a custom cell renderer which our table impl uses for all cells of the left-most table column.
- *
- * @param _table
- * @param _props
  */
 export function createLoadingRenderer(
     _table: TableFacade,
