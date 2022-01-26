@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 module.exports = {
     parser: "@typescript-eslint/parser",
-    plugins: ["prettier", "sonarjs"],
+    plugins: ["prettier", "sonarjs", "eslint-plugin-tsdoc"],
     extends: [
         "@gooddata",
         "plugin:import/errors",

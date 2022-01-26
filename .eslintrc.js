@@ -33,6 +33,7 @@ module.exports = {
         "sonarjs/no-duplicate-string": "off",
         // some of these findings are not actionable in a reasonable time
         "sonarjs/cognitive-complexity": "warn",
+        "tsdoc/syntax": "error"
     },
     overrides: [
         {
