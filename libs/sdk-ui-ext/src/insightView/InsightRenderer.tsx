@@ -251,8 +251,6 @@ export const IntlInsightRenderer = compose(injectIntl, withTheme, withContexts)(
  * Updated callback (callback with a different reference) is not properly propagated to the "visualization" instance
  * (because it only takes the callbacks provided on the first render)
  * Workaround it by storing the updated callback to the ref and calling it instead.
- *
- * @param callback
  */
 function useUpdatableCallback<T extends (...args: any[]) => any>(callback: T): T {
     const pushDataCached = useRef(callback);

@@ -194,8 +194,8 @@ function findDerivedTypesReferencedByArithmeticMeasure(
  *
  * @param measure - the (possibly) arithmetic measure
  * @param buckets - all buckets
- * @return empty array if there are no derived measures in the arithmetic measure ancestors, empty array if provided
- * measure is not arithmetic, array of unique {OverTimeComparisonType} of derived ancestor measures found in arithmetic
+ * @returns empty array if there are no derived measures in the arithmetic measure ancestors, empty array if provided
+ * measure is not arithmetic, array of unique {@link OverTimeComparisonType} of derived ancestor measures found in arithmetic
  * measure tree.
  */
 export function getDerivedTypesFromArithmeticMeasure(

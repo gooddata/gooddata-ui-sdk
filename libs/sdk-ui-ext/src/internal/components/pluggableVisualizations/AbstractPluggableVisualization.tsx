@@ -107,11 +107,6 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
      * 4. configuration panel is rendered (always)
      *
      * Note: do not override this method.
-     *
-     * @param options
-     * @param insight
-     * @param visualizationPropertiesMeta
-     * @param executionFactory
      */
     public update(
         options: IVisProps,
@@ -302,9 +297,9 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
     /**
      * Default no-op implementation of the drill down, which just returns the original visualization.
      *
-     * @param sourceVisualization drill down source {@link IInsight}
-     * @param _drillDownContext drill context (unused in this implementation)
-     * @returns the {@code sourceVisualization}
+     * @param sourceVisualization - drill down source {@link IInsight}
+     * @param _drillDownContext - drill context (unused in this implementation)
+     * @returns the `sourceVisualization`
      * @see {@link IVisualization.getInsightWithDrillDownApplied} for more information
      */
     public getInsightWithDrillDownApplied(
