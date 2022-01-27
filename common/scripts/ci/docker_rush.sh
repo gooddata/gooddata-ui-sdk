@@ -3,7 +3,7 @@
 # Absolute root directory - for volumes
 ROOT_DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}")/../../.. && pwd -P))
 
-IMAGE="node:16.13.0"
+IMAGE="node:16.13.0-bullseye"
 
 echo "Running \"$*\" using ${IMAGE} in root directory ${ROOT_DIR}"
 
