@@ -11,9 +11,12 @@ import { SagaIterator } from "redux-saga";
  * @param q - query to run
  * @param refresh - indicates whether the query should ignore cached results and re-load data from backend
  */
-export function* query<TResult>(q: IDashboardQuery<TResult>, refresh = false): SagaIterator<TResult> {
-    const { promise, envelope } = queryEnvelopeWithPromise(q, refresh);
-    const waitForResult = (): Promise<TResult> => {
+export function* query<TQuery extends IDashboardQuery, TQueryResult>(
+    q: TQuery,
+    refresh = false,
+): SagaIterator<TQueryResult> {
+    const { promise, envelope } = queryEnvelopeWithPromise<TQuery, TQueryResult>(q, refresh);
+    const waitForResult = () => {
         return promise;
     };
 

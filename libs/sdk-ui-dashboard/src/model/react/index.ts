@@ -8,7 +8,17 @@ export {
 export { IDashboardEventsContext, useDashboardEventsContext } from "./DashboardEventsContext";
 export { useDashboardCommandProcessing, CommandProcessingStatus } from "./useDashboardCommandProcessing";
 export { useDashboardEventDispatch } from "./useDashboardEventDispatch";
-export { useDashboardQueryProcessing, QueryProcessingStatus } from "./useDashboardQueryProcessing";
+export {
+    useDashboardQueryProcessing,
+    QueryProcessingStatus,
+    QueryProcessingErrorState,
+    QueryProcessingPendingState,
+    QueryProcessingRejectedState,
+    QueryProcessingRunningState,
+    QueryProcessingState,
+    QueryProcessingSuccessState,
+    UseDashboardQueryProcessingResult,
+} from "./useDashboardQueryProcessing";
 export { useDashboardUserInteraction } from "./useDashboardUserInteraction";
 export { useDashboardAsyncRender, UseDashboardAsyncRender } from "./useDashboardAsyncRender";
 export { IDashboardStoreProviderProps } from "./types";

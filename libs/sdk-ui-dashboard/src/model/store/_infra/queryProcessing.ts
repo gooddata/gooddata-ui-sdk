@@ -3,7 +3,7 @@
 import { IDashboardQueryService } from "./queryService";
 import { Saga, SagaIterator } from "redux-saga";
 import { actionChannel, call, spawn, take } from "redux-saga/effects";
-import { IDashboardQuery, IDashboardQueryResult } from "../../queries";
+import { IDashboardQuery } from "../../queries";
 import { DashboardContext } from "../../types/commonTypes";
 import keyBy from "lodash/keyBy";
 import { Action, CombinedState, combineReducers, Reducer } from "@reduxjs/toolkit";
@@ -42,30 +42,32 @@ export type QueryProcessingModule = {
  */
 export const QueryEnvelopeActionPrefix = "__Q";
 
-type QueryEnvelopeEventHandlers<TQuery extends IDashboardQuery> = {
+type QueryEnvelopeEventHandlers<TQuery extends IDashboardQuery, TQueryResult> = {
     onStart: (query: TQuery) => void;
-    onSuccess: (result: IDashboardQueryResult<TQuery>) => void;
+    onSuccess: (result: TQueryResult) => void;
     onError: (err: Error) => void;
 };
 
-type QueryEnvelope<TQuery extends IDashboardQuery> = Readonly<QueryEnvelopeEventHandlers<TQuery>> & {
+type QueryEnvelope<TQuery extends IDashboardQuery, TQueryResult> = Readonly<
+    QueryEnvelopeEventHandlers<TQuery, TQueryResult>
+> & {
     readonly type: string;
     readonly query: IDashboardQuery;
     readonly refresh?: boolean;
 };
 
-function isQueryEnvelope(obj: unknown): obj is QueryEnvelope<any> {
-    return !!obj && (obj as QueryEnvelope<any>).type.startsWith(QueryEnvelopeActionPrefix);
+function isQueryEnvelope(obj: unknown): obj is QueryEnvelope<any, any> {
+    return !!obj && (obj as QueryEnvelope<any, any>).type.startsWith(QueryEnvelopeActionPrefix);
 }
 
 /**
  * @internal
  */
-export function queryEnvelope<TQuery extends IDashboardQuery>(
+export function queryEnvelope<TQuery extends IDashboardQuery, TQueryResult>(
     query: TQuery,
-    eventHandlers?: Partial<QueryEnvelopeEventHandlers<TQuery>>,
+    eventHandlers?: Partial<QueryEnvelopeEventHandlers<TQuery, TQueryResult>>,
     refresh: boolean = false,
-): QueryEnvelope<TQuery> {
+): QueryEnvelope<TQuery, TQueryResult> {
     return {
         type: `${QueryEnvelopeActionPrefix}(${query.type})`,
         query,
@@ -79,16 +81,16 @@ export function queryEnvelope<TQuery extends IDashboardQuery>(
 /**
  * @internal
  */
-export function queryEnvelopeWithPromise<TQuery extends IDashboardQuery>(
+export function queryEnvelopeWithPromise<TQuery extends IDashboardQuery, TQueryResult>(
     query: TQuery,
     refresh: boolean = false,
 ): {
-    promise: Promise<IDashboardQueryResult<TQuery>>;
-    envelope: QueryEnvelope<TQuery>;
+    promise: Promise<TQueryResult>;
+    envelope: QueryEnvelope<TQuery, TQueryResult>;
 } {
-    const queryEnvelopeEventHandlers: Partial<QueryEnvelopeEventHandlers<TQuery>> = {};
+    const queryEnvelopeEventHandlers: Partial<QueryEnvelopeEventHandlers<TQuery, TQueryResult>> = {};
 
-    const promise = new Promise<IDashboardQueryResult<TQuery>>((resolve, reject) => {
+    const promise = new Promise<TQueryResult>((resolve, reject) => {
         queryEnvelopeEventHandlers.onSuccess = resolve;
         queryEnvelopeEventHandlers.onError = reject;
     });
@@ -104,7 +106,7 @@ export function queryEnvelopeWithPromise<TQuery extends IDashboardQuery>(
 function* processQuery(
     service: IDashboardQueryService<any, any>,
     ctx: DashboardContext,
-    envelope: QueryEnvelope<any>,
+    envelope: QueryEnvelope<any, any>,
 ) {
     const {
         query,
@@ -142,7 +144,7 @@ function* processQuery(
             );
         }
         yield dispatchDashboardEvent(queryCompleted(ctx, query, result, correlationId));
-    } catch (e) {
+    } catch (e: any) {
         try {
             envelope.onError(e);
         } catch (ne) {
@@ -168,7 +170,7 @@ function* processQuery(
     }
 }
 
-function ensureQueryWrappedInEnvelope(action: Action): QueryEnvelope<any> {
+function ensureQueryWrappedInEnvelope(action: Action): QueryEnvelope<any, any> {
     return isQueryEnvelope(action) ? action : queryEnvelope(action);
 }
 

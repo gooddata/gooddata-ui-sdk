@@ -1353,7 +1353,7 @@ export abstract class DashboardPluginV1 implements IDashboardPluginContract_V1 {
 }
 
 // @alpha (undocumented)
-export type DashboardQueries = QueryInsightDateDatasets | QueryInsightAttributesMeta | QueryInsightWidgetFilters | QueryWidgetBrokenAlerts;
+export type DashboardQueries = QueryInsightDateDatasets | QueryInsightAttributesMeta | QueryWidgetFilters | QueryWidgetBrokenAlerts;
 
 // @alpha
 export interface DashboardQueryCompleted<TQuery extends IDashboardQuery<TResult>, TResult> extends IDashboardEvent {
@@ -1966,7 +1966,7 @@ export class HeadlessDashboard {
     protected getOrCreateMonitoredAction: (actionType: string) => MonitoredAction;
     // (undocumented)
     protected monitoredActions: Record<string, MonitoredAction>;
-    query<TResult>(action: IDashboardQuery<TResult>): Promise<TResult>;
+    query<TQueryResult>(action: IDashboardQuery): Promise<TQueryResult>;
     select<TSelectorFactory extends (...args: any[]) => any>(selectorFactory: TSelectorFactory): ReturnType<TSelectorFactory>;
     protected state(): DashboardState;
     waitFor(actionType: DashboardEventType | DashboardCommandType | string, timeout?: number): Promise<any>;
@@ -2338,9 +2338,6 @@ export interface IDashboardQuery<_TResult = any> {
     readonly correlationId?: string;
     readonly type: DashboardQueryType;
 }
-
-// @alpha
-export type IDashboardQueryResult<T> = T extends IDashboardQuery<infer TResult> ? TResult : never;
 
 // @internal
 export interface IDashboardQueryService<TQuery extends IDashboardQuery<TResult>, TResult> {
@@ -3299,7 +3296,7 @@ export interface PermissionsState {
 export type QueryActions<TQuery extends IDashboardQuery, TResult> = CaseReducerActions<AllQueryCacheReducers<TQuery, TResult>>;
 
 // @alpha
-export function queryAndWaitFor<TQuery extends DashboardQueries>(dispatch: DashboardDispatch, query: TQuery): Promise<IDashboardQueryResult<TQuery>>;
+export function queryAndWaitFor<TQuery extends DashboardQueries, TQueryResult>(dispatch: DashboardDispatch, query: TQuery): Promise<TQueryResult>;
 
 // @internal
 export type QueryCache<TQuery extends IDashboardQuery<TResult>, TResult> = {
@@ -3355,17 +3352,6 @@ export interface QueryInsightDateDatasets extends IDashboardQuery<InsightDateDat
 }
 
 // @alpha
-export interface QueryInsightWidgetFilters extends IDashboardQuery<IFilter[]> {
-    // (undocumented)
-    readonly payload: {
-        readonly widgetRef: ObjRef;
-        readonly insight?: IInsightDefinition | null;
-    };
-    // (undocumented)
-    readonly type: "GDC.DASH/QUERY.WIDGET.FILTERS";
-}
-
-// @alpha
 export interface QueryMeasureDateDatasets extends IDashboardQuery<MeasureDateDatasets> {
     // (undocumented)
     readonly payload: {
@@ -3376,7 +3362,45 @@ export interface QueryMeasureDateDatasets extends IDashboardQuery<MeasureDateDat
 }
 
 // @internal (undocumented)
-export type QueryProcessingStatus = "running" | "success" | "error" | "rejected";
+export type QueryProcessingErrorState = {
+    status: "error";
+    error: GoodDataSdkError;
+    result: undefined;
+};
+
+// @internal (undocumented)
+export type QueryProcessingPendingState = {
+    status: "pending";
+    error: undefined;
+    result: undefined;
+};
+
+// @internal (undocumented)
+export type QueryProcessingRejectedState = {
+    status: "rejected";
+    error: undefined;
+    result: undefined;
+};
+
+// @internal (undocumented)
+export type QueryProcessingRunningState = {
+    status: "running";
+    error: undefined;
+    result: undefined;
+};
+
+// @internal (undocumented)
+export type QueryProcessingState<TResult> = QueryProcessingPendingState | QueryProcessingRunningState | QueryProcessingErrorState | QueryProcessingRejectedState | QueryProcessingSuccessState<TResult>;
+
+// @internal (undocumented)
+export type QueryProcessingStatus = QueryProcessingState<any>["status"];
+
+// @internal (undocumented)
+export type QueryProcessingSuccessState<TResult> = {
+    status: "success";
+    error: undefined;
+    result: TResult;
+};
 
 // @alpha
 export interface QueryWidgetBrokenAlerts extends IDashboardQuery<IBrokenAlertFilterBasicInfo[]> {
@@ -3392,7 +3416,18 @@ export interface QueryWidgetBrokenAlerts extends IDashboardQuery<IBrokenAlertFil
 export function queryWidgetBrokenAlerts(widgetRef: ObjRef, correlationId?: string): QueryWidgetBrokenAlerts;
 
 // @alpha
-export function queryWidgetFilters(widgetRef: ObjRef, insight?: IInsightDefinition | null, correlationId?: string): QueryInsightWidgetFilters;
+export interface QueryWidgetFilters extends IDashboardQuery<IFilter[]> {
+    // (undocumented)
+    readonly payload: {
+        readonly widgetRef: ObjRef;
+        readonly insight?: IInsightDefinition | null;
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/QUERY.WIDGET.FILTERS";
+}
+
+// @alpha
+export function queryWidgetFilters(widgetRef: ObjRef, insight?: IInsightDefinition | null, correlationId?: string): QueryWidgetFilters;
 
 // @alpha (undocumented)
 export const ReactDashboardContext: any;
@@ -4511,17 +4546,17 @@ export const useDashboardEventDispatch: () => (eventBody: DashboardEventBody<Das
 export const useDashboardEventsContext: () => IDashboardEventsContext;
 
 // @internal (undocumented)
-export const useDashboardQueryProcessing: <TQuery extends DashboardQueries, TQueryCreatorArgs extends any[]>({ queryCreator, onSuccess, onError, onRejected, onBeforeRun, }: {
+export const useDashboardQueryProcessing: <TQuery extends DashboardQueries, TQueryResult, TQueryCreatorArgs extends any[]>({ queryCreator, onSuccess, onError, onRejected, onBeforeRun, }: {
     queryCreator: (...args: TQueryCreatorArgs) => TQuery;
-    onSuccess?: ((result: IDashboardQueryResult<TQuery>) => void) | undefined;
+    onSuccess?: ((result: TQueryResult) => void) | undefined;
     onError?: ((event: DashboardQueryFailed) => void) | undefined;
     onRejected?: ((event: DashboardQueryRejected) => void) | undefined;
     onBeforeRun?: ((query: TQuery) => void) | undefined;
-}) => {
+}) => UseDashboardQueryProcessingResult<TQueryCreatorArgs, TQueryResult>;
+
+// @internal (undocumented)
+export type UseDashboardQueryProcessingResult<TQueryCreatorArgs extends any[], TQueryResult> = QueryProcessingState<TQueryResult> & {
     run: (...args: TQueryCreatorArgs) => void;
-    status?: "error" | "running" | "success" | "rejected" | undefined;
-    result?: IDashboardQueryResult<TQuery> | undefined;
-    error?: GoodDataSdkError | undefined;
 };
 
 // @alpha (undocumented)
@@ -4684,11 +4719,7 @@ export function useWidgetExecutionsHandler(widgetRef: ObjRef): {
 };
 
 // @public
-export function useWidgetFilters(widget: ExtendedDashboardWidget | undefined, insight?: IInsightDefinition): {
-    result?: IFilter[];
-    status?: QueryProcessingStatus;
-    error?: GoodDataSdkError;
-};
+export function useWidgetFilters(widget: ExtendedDashboardWidget | undefined, insight?: IInsightDefinition): QueryProcessingState<IFilter[]>;
 
 // @public (undocumented)
 export type WidgetComponentProvider = (widget: ExtendedDashboardWidget) => CustomDashboardWidgetComponent;

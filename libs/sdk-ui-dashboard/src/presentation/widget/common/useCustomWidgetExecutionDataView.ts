@@ -3,6 +3,7 @@ import {
     DataViewFacade,
     GoodDataSdkError,
     IExecutionConfiguration,
+    UnexpectedSdkError,
     UseCancelablePromiseState,
     useExecutionDataView,
 } from "@gooddata/sdk-ui";
@@ -39,17 +40,17 @@ export const useCustomWidgetExecutionDataView = ({
     widget,
     execution,
 }: IUseCustomWidgetExecutionDataViewConfig): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError> => {
-    const { result: filters, status: filtersStatus, error: filtersError } = useWidgetFilters(widget);
-    const { result, error, status } = useExecutionDataView({
+    const filterQueryTask = useWidgetFilters(widget);
+    const dataViewTask = useExecutionDataView({
         execution: execution
             ? {
                   ...execution,
-                  filters,
+                  filters: filterQueryTask.result,
               }
             : undefined,
     });
 
-    if (!filtersStatus || status === "pending") {
+    if (filterQueryTask.status === "pending" || dataViewTask.status === "pending") {
         return {
             error: undefined,
             result: undefined,
@@ -57,7 +58,7 @@ export const useCustomWidgetExecutionDataView = ({
         };
     }
 
-    if (filtersStatus === "running" || status === "loading") {
+    if (filterQueryTask.status === "running" || dataViewTask.status === "loading") {
         return {
             error: undefined,
             result: undefined,
@@ -65,9 +66,17 @@ export const useCustomWidgetExecutionDataView = ({
         };
     }
 
-    if (filtersError || error) {
+    if (filterQueryTask.status === "error" || dataViewTask.status === "error") {
         return {
-            error: (error ?? filtersError)!,
+            error: (filterQueryTask.error ?? dataViewTask.error)!,
+            result: undefined,
+            status: "error",
+        };
+    }
+
+    if (filterQueryTask.status === "rejected") {
+        return {
+            error: new UnexpectedSdkError("The widget filter query was rejected"),
             result: undefined,
             status: "error",
         };
@@ -75,7 +84,7 @@ export const useCustomWidgetExecutionDataView = ({
 
     return {
         error: undefined,
-        result: result!,
+        result: dataViewTask.result,
         status: "success",
     };
 };

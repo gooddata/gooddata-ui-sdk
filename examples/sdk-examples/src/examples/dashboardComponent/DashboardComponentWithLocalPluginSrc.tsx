@@ -45,7 +45,7 @@ const simpleCurrencyFormatter = new Intl.NumberFormat("en-US", {
  * then that data will be available in the `widget` prop.
  */
 const MyCustomWidget: CustomDashboardWidgetComponent = ({ widget, LoadingComponent, ErrorComponent }) => {
-    const { result, status, error } = useCustomWidgetExecutionDataView({
+    const dataViewTask = useCustomWidgetExecutionDataView({
         widget: widget as ICustomWidget,
         execution: {
             seriesBy: [Md.$TotalSales, Md.$FranchisedSales],
@@ -53,15 +53,15 @@ const MyCustomWidget: CustomDashboardWidgetComponent = ({ widget, LoadingCompone
         },
     });
 
-    if (status === "pending" || status === "loading") {
+    if (dataViewTask.status === "pending" || dataViewTask.status === "loading") {
         return <LoadingComponent />;
     }
 
-    if (status === "error") {
-        return <ErrorComponent message={error?.message ?? "Unknown error"} />;
+    if (dataViewTask.status === "error") {
+        return <ErrorComponent message={dataViewTask.error.message ?? "Unknown error"} />;
     }
 
-    const data = result!
+    const data = dataViewTask.result
         .data()
         .slices()
         .toArray()

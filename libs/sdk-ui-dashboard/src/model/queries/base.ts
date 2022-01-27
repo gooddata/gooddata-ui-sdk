@@ -28,10 +28,3 @@ export interface IDashboardQuery<_TResult = any> {
      */
     readonly correlationId?: string;
 }
-
-/**
- * Utility type to extract the type of the {@link IDashboardQuery} result.
- *
- * @alpha
- */
-export type IDashboardQueryResult<T> = T extends IDashboardQuery<infer TResult> ? TResult : never;
