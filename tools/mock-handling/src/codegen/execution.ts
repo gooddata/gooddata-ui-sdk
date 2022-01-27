@@ -77,7 +77,7 @@ function generateScenariosConst(recordings: ExecutionRecording[]): OptionalKind<
 
 /**
  * Generate constants for the execution recordings. This function will return non-exported constant per recording
- * and then also an exported 'Scenarios' constant that is a map from vis => scenario => recording.
+ * and then also an exported 'Scenarios' constant that is a map from vis =\> scenario =\> recording.
  *
  * @param recordings - recordings to generate constants for
  * @param targetDir - absolute path to directory where index will be stored, this is needed so that paths can be
