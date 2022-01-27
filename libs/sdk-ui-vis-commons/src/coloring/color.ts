@@ -68,7 +68,7 @@ export function getLighterColorFromRGB(color: IRgbColorValue, percent: number): 
 
 /**
  * Takes short or long format of HEX color and returns long format.
- * @param color short `#123` or long `#112233` format
+ * @param color - short `#123` or long `#112233` format
  * @returns long hex format `#112233`
  */
 function convertToLongHexFormat(color: string): string {
