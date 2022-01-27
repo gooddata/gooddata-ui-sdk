@@ -3,7 +3,7 @@
 /**
  * Shift array once to the right
  *
- * @param array some array
+ * @param array - some array
  * @internal
  */
 export function shiftArrayRight<T>(array: Array<T>): Array<T> {

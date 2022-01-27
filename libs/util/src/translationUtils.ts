@@ -2,7 +2,7 @@
 
 /**
  * Given an object containing the parsed translation bundle, this function creates a new object which contains
- * only key -> value mapping between translation key and the actual value.
+ * only key -\> value mapping between translation key and the actual value.
  *
  * @param translationsWithMetadata - parsed translation bundle
  * @internal
