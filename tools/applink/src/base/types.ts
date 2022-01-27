@@ -30,7 +30,7 @@ export type SourceDescriptor = {
  */
 export type PackageDescriptor = {
     /**
-     * Package name (@gooddata/api-client-bear)
+     * Package name (e.g. `@gooddata/api-client-bear`)
      */
     packageName: string;
 
@@ -40,7 +40,7 @@ export type PackageDescriptor = {
     directory: string;
 
     /**
-     * Package's installation directory, split to segments (['@gooddata', 'api-client-bear']
+     * Package's installation directory, split to segments (e.g. `['@gooddata', 'api-client-bear']`)
      */
     installDir: string[];
 
