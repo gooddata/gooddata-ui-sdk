@@ -50,8 +50,6 @@ export type WorkspaceTargetConfig = {
 
 /**
  * Creates common config for commands that target a workspace.
- *
- * @param options
  */
 export function createWorkspaceTargetConfig(options: ActionOptions): WorkspaceTargetConfig {
     const packageJson = readPackageJsonIfExists();

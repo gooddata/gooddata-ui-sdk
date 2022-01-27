@@ -57,9 +57,7 @@ export function convertToPluginIdentifier(name: string): string {
 
 /**
  * Converts plugin name to directory name for the plugin. This will ensure that if the plugin name
- * contains organization (@something/plugin) then only the `plugin` will be used.
- *
- * @param name
+ * contains organization (`@something/plugin`) then only the `plugin` will be used.
  */
 export function convertToPluginDirectory(name: string): string {
     const split = name.split("/");

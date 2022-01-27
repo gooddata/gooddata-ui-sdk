@@ -43,8 +43,6 @@ export function pluginNameValidator(value: string): boolean | string {
 
 /**
  * Validates that value is either 'bear' or 'tiger'.
- *
- * @param value
  */
 export function backendTypeValidator(value: string): boolean | string {
     if (value === "bear" || value === "tiger") {
@@ -300,11 +298,11 @@ export function createDashboardPluginValidator(
  *
  * Otherwise the function throws an {@link InputValidationError}.
  *
- * @param inputName name of input that is being validated - this is purely metadata, passed over to the exception
+ * @param inputName - name of input that is being validated - this is purely metadata, passed over to the exception
  *  so that whoever gets hold of it can determine what exactly failed validation.
- * @param value value to validate; this will be sent to the validator function & in case of failure will also
+ * @param value - value to validate; this will be sent to the validator function & in case of failure will also
  *  appear in the exception
- * @param validator validator to use, this is function matching the contract set by the inquirer library
+ * @param validator - validator to use, this is function matching the contract set by the inquirer library
  */
 export function validOrDie(inputName: string, value: string, validator: InputValidator): void {
     const result = validator(value);
