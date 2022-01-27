@@ -174,7 +174,7 @@ function createDashboards(projectMeta: WorkspaceMetadata): TitleToItemMap {
  *   an item in the new catalog. In that case item from existing catalog will have the title
  *   changed, sequence number will be added
  *
- * - Merging is done recursively if item is an object with predefined keys (df, attributes) =>
+ * - Merging is done recursively if item is an object with predefined keys (df, attributes) =\>
  *   this is thus currently triggered for date data sets and attributes.
  *
  * @param newCatalog - newly generated catalog

@@ -7,7 +7,7 @@ import { ObjectMeta } from "../../base/types";
  * each insight is returned.
  *
  * @param workspaceId - workspace to get insights from
- * @return array of insight metadata
+ * @returns array of insight metadata
  */
 export async function loadInsights(workspaceId: string): Promise<ObjectMeta[]> {
     const visualizations = await gooddata.md.getVisualizations(workspaceId);

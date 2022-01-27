@@ -7,7 +7,7 @@ import { ObjectMeta } from "../../base/types";
  * each analytical dashboard is returned.
  *
  * @param workspaceId - workspace to get analytical dashboards from
- * @return array of analytical dashboard meta
+ * @returns array of analytical dashboard meta
  */
 export async function loadAnalyticalDashboard(workspaceId: string): Promise<ObjectMeta[]> {
     const analyticalDashboards = await gooddata.md.getAnalyticalDashboards(workspaceId);
