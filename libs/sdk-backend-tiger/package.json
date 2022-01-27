@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-tiger",
-    "version": "8.9.0-alpha.20",
+    "version": "8.9.0-alpha.21",
     "author": "GoodData",
     "description": "GoodData Backend SPI implementation for the Tiger platform",
     "repository": {
@@ -57,10 +57,10 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/api-client-tiger": "^8.9.0-alpha.20",
-        "@gooddata/sdk-backend-base": "^8.9.0-alpha.20",
-        "@gooddata/sdk-backend-spi": "^8.9.0-alpha.20",
-        "@gooddata/sdk-model": "^8.9.0-alpha.20",
+        "@gooddata/api-client-tiger": "^8.9.0-alpha.21",
+        "@gooddata/sdk-backend-base": "^8.9.0-alpha.21",
+        "@gooddata/sdk-backend-spi": "^8.9.0-alpha.21",
+        "@gooddata/sdk-model": "^8.9.0-alpha.21",
         "axios": "^0.21.4",
         "date-fns": "^2.22.1",
         "http-status-codes": "^2.1.4",
@@ -72,9 +72,9 @@
         "uuid": "^8.3.2"
     },
     "devDependencies": {
-        "@gooddata/catalog-export": "^8.9.0-alpha.20",
+        "@gooddata/catalog-export": "^8.9.0-alpha.21",
         "@gooddata/eslint-config": "^2.1.0",
-        "@gooddata/reference-workspace": "^8.9.0-alpha.20",
+        "@gooddata/reference-workspace": "^8.9.0-alpha.21",
         "@microsoft/api-documenter": "^7.12.13",
         "@microsoft/api-extractor": "^7.18.4",
         "@types/jest": "^27.0.1",
