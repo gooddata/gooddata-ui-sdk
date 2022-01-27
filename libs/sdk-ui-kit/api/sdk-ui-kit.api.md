@@ -839,6 +839,7 @@ export const Icon: {
     Label: FC<IIconProps>;
     Metric: FC<IIconProps>;
     QuestionMark: FC<IIconProps>;
+    Minimize: FC<IIconProps>;
 };
 
 // @internal (undocumented)
