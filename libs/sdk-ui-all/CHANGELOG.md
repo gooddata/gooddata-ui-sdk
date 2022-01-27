@@ -1,6 +1,23 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Tue, 14 Dec 2021 13:31:37 GMT and should not be manually modified.
+This log was last generated on Thu, 27 Jan 2022 08:25:24 GMT and should not be manually modified.
+
+## 8.8.0
+Thu, 27 Jan 2022 08:25:24 GMT
+
+### Updates
+
+- Support for React 17 was added. React 16 is still supported as well.
+- UI controls for sharing a dashboard with other users were added.
+- The SPI was extended with the option for managing access permissions of a metadata object.
+- The SPI was extended with the option for querying user groups in a workspace.
+- The workspace user service was extended with the option for querying users per page.
+- The workspace dashboard service was extended with the option for querying dashboards that are accessible only via their URL.
+- The workspace dashboard interface was extended with information about sharing status and access control mode.
+- The IListedDashboard interface was extended with the "availability" field.
+- The bug with dashboardPluginHosts validation was fixed.
+- Geo pushpin charts no longer support Internet Explorer 11.
+- The option for setting compatibility of dashboard plugins with the minEngineVersion and maxEngineVersion properties was added.
 
 ## 8.7.1
 Tue, 14 Dec 2021 13:31:37 GMT

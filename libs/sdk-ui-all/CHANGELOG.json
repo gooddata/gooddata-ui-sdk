@@ -2,6 +2,48 @@
   "name": "@gooddata/sdk-ui-all",
   "entries": [
     {
+      "version": "8.8.0",
+      "tag": "@gooddata/sdk-ui-all_v8.8.0",
+      "date": "Thu, 27 Jan 2022 08:25:24 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Support for React 17 was added. React 16 is still supported as well."
+          },
+          {
+            "comment": "UI controls for sharing a dashboard with other users were added."
+          },
+          {
+            "comment": "The SPI was extended with the option for managing access permissions of a metadata object."
+          },
+          {
+            "comment": "The SPI was extended with the option for querying user groups in a workspace."
+          },
+          {
+            "comment": "The workspace user service was extended with the option for querying users per page."
+          },
+          {
+            "comment": "The workspace dashboard service was extended with the option for querying dashboards that are accessible only via their URL."
+          },
+          {
+            "comment": "The workspace dashboard interface was extended with information about sharing status and access control mode."
+          },
+          {
+            "comment": "The IListedDashboard interface was extended with the \"availability\" field."
+          },
+          {
+            "comment": "The bug with dashboardPluginHosts validation was fixed."
+          },
+          {
+            "comment": "Geo pushpin charts no longer support Internet Explorer 11."
+          },
+          {
+            "comment": "The option for setting compatibility of dashboard plugins with the minEngineVersion and maxEngineVersion properties was added."
+          }
+        ]
+      }
+    },
+    {
       "version": "8.7.1",
       "tag": "@gooddata/sdk-ui-all_v8.7.1",
       "date": "Tue, 14 Dec 2021 13:31:37 GMT",
