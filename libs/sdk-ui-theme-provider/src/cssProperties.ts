@@ -12,8 +12,8 @@ const BLACK_COLOR = "#000";
 
 /**
  *
- * @param {string} src - Font src
- * @param {string} number - Font weight
+ * @param src - Font src
+ * @param number - Font weight
  */
 function createfontFace(src: string, weight: number): undefined {
     const styleTag = document.getElementById("gdc-theme-custom-font") || document.createElement("style");
@@ -141,6 +141,7 @@ export const clearCssProperties = (): void => {
  * Converts properties from theme object into CSS variables and injects them into <body>
  *
  * The CSS variable name is defined as a path through the theme object to the given value, e.g.:
+ * ```
  * {
  *      palette: {
  *          primary: {
@@ -148,6 +149,7 @@ export const clearCssProperties = (): void => {
  *          }
  *      }
  * }
+ * ```
  * is converted to "palette-primary-base" variable with value #14b2e2
  *
  * @internal
