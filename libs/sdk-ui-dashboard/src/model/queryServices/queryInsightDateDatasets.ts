@@ -102,7 +102,7 @@ function lookupDatasetsUsedInDateFilters(
  * used display forms and attributes. With this, the function will lookup date datasets for each display form
  * used in insight's attribute buckets and attribute filters.
  *
- * Note: that cataloged date datasets already contain mapping of dataset -> attribute -> default display form. However
+ * Note: that cataloged date datasets already contain mapping of dataset -\> attribute -\> default display form. However
  * this cannot be used because the code cannot expect that the insights only use date dataset's default display forms.
  *
  * @param insight - insight work with

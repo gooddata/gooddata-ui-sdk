@@ -100,7 +100,6 @@ export const isHeatmap = isEqual(VisualizationTypes.HEATMAP);
 
 /**
  * @internal
- * @param type
  */
 export const isInvertedChartType = (type: string): boolean => isBarChart(type) || isBulletChart(type);
 export const isChartSupported = (type: string): boolean => includes(VisualizationTypes, type);

@@ -382,8 +382,8 @@ export interface IVisualization {
     /**
      * Called every time the reference point or the visualization class change
      * to allow visualizations to get updated ExtendedReferencePoint.
-     * @param referencePoint The new value of the reference point.
-     * @param previousReferencePoint The previous value of the reference point.
+     * @param referencePoint - The new value of the reference point.
+     * @param previousReferencePoint - The previous value of the reference point.
      * This value is only provided if the visualization class was not changed
      * (i. e. both points are related to the same visualization class).
      * @returns Promise of the new ExtendedReferencePoint.
@@ -400,9 +400,9 @@ export interface IVisualization {
      * the drilled attribute with the Drill Down target target attribute and include the filters from the
      * drill event into the returned {@link IInsight}.
      *
-     * @param source {@link IInsight} to be used for the the Drill Down execution
-     * @param drillDownContext Drill Down configuration used to properly create the result
-     * @returns {@code source} as the Drill Down target {@link IInsight}
+     * @param source - {@link IInsight} to be used for the the Drill Down execution
+     * @param drillDownContext - Drill Down configuration used to properly create the result
+     * @returns `source` as the Drill Down target {@link IInsight}
      */
     getInsightWithDrillDownApplied(source: IInsight, drillDownContext: IDrillDownContext): IInsight;
 }

@@ -225,8 +225,6 @@ export class ResizedColumnsStore {
      * Here Be Dragons 2: This method is adding what appears like 'dummy garage placeholder'
      * 'auto' widths when all measure width is used and then measure column is
      * removed. Not sure why.
-     *
-     * @param column
      */
     public removeFromManuallyResizedColumn = (column: Column): void => {
         const col = this.tableDescriptor.getCol(agColId(column));

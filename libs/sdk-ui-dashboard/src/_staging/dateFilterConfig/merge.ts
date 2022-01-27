@@ -19,8 +19,6 @@ type DashboardConfigMerger = (
 
 /**
  * Merges presets so that presets that are semantically unique are de-duplicated.
- * @param projectPresets
- * @param dashboardPresets
  */
 const mergePresets = <T extends IAbsoluteDateFilterPreset | IRelativeDateFilterPreset>(
     projectPresets: T[],

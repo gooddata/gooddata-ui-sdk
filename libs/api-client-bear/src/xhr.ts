@@ -17,8 +17,6 @@ const { name: pkgName, version: pkgVersion } = pkgInfo;
  * is transparently returned to the original call.
  *
  * Additionally polling is handled. Only final result of polling returned.
- * @module xhr
- * @class xhr
  */
 
 const DEFAULT_POLL_DELAY = 1000;
@@ -31,7 +29,7 @@ const LATEST_REST_API_VERSION = 5;
 
 /**
  * Gooddata-js package signature
- * @private
+ * @internal
  */
 export const thisPackage = { name: pkgName, version: pkgVersion };
 
@@ -165,7 +163,7 @@ export class XhrModule {
      *
      * Usually in our apps we used beforeSend ajax callback to set the X-GDC-REQUEST header with unique ID.
      *
-     * @param settings object XHR settings as
+     * @param settings - object XHR settings as
      */
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     public ajaxSetup(settings: any) {

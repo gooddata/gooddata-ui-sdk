@@ -2,7 +2,7 @@
 module.exports = {
     parser: "@typescript-eslint/parser",
     ignorePatterns: ["src/playground/**/*"],
-    plugins: ["react-hooks", "prettier", "sonarjs"],
+    plugins: ["react-hooks", "prettier", "sonarjs", "eslint-plugin-tsdoc"],
     extends: [
         "@gooddata",
         "plugin:react/recommended",

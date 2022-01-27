@@ -43,10 +43,7 @@ export type DrilledRow = Array<DrilledSliceDetail | DataValue>;
  * row is an array with cols ordered in the same way as they appear in the table. The information about slice
  * columns appear first, followed by values of data columns.
  *
- * The the informationa bout slice column contains both
- *
- * @param row
- * @param tableDescriptor
+ * The the information about slice column contains both
  */
 export function createDrilledRow(row: IGridRow, tableDescriptor: TableDescriptor): DrilledRow {
     const result: DrilledRow = [];

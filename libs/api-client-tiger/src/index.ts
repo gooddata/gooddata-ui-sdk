@@ -3,9 +3,9 @@
  * This package provides low-level functions for communication with GoodData.CN.
  *
  * @remarks
- * The package is used by @gooddata/sdk-backend-tiger, which you should use instead of directly using
+ * The package is used by `@gooddata/sdk-backend-tiger`, which you should use instead of directly using
  * `@gooddata/api-client-tiger` whenever possible.
- * For the similar package for the GoodData platform, see @gooddata/api-client-bear.
+ * For the similar package for the GoodData platform, see `@gooddata/api-client-bear`.
  *
  * @packageDocumentation
  */

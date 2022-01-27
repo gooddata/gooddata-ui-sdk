@@ -64,7 +64,6 @@ interface IMinMax {
 
 /**
  * Get min/max values in number array and ignore NaN values
- * @param data
  */
 export function getMinMax(data: number[]): IMinMax {
     return data.reduce(

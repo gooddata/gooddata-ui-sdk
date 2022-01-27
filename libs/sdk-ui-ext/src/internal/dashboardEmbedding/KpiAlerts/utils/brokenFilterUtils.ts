@@ -57,9 +57,9 @@ export function isBrokenAlertAttributeFilterInfo(
  * but the currently applied filters either do not contain them, or the KPI has started ignoring them
  * since the alert was first set up.
  *
- * @param alert the alert to compute the broken filters for
- * @param kpi the KPI widget that the alert is relevant to
- * @param appliedFilters all the currently applied filters (including All Time date filters)
+ * @param alert - the alert to compute the broken filters for
+ * @param kpi - the KPI widget that the alert is relevant to
+ * @param appliedFilters - all the currently applied filters (including All Time date filters)
  */
 export function getBrokenAlertFiltersBasicInfo(
     alert: IWidgetAlertDefinition | undefined,
@@ -138,11 +138,11 @@ export type IAttributeFilterMetaCollection = { [ref: string]: IAttributeFilterMe
 /**
  * Takes basic broken alert info and adds additional information used for displaying of such filters to the user.
  *
- * @param brokenAlertFilters the basic broken alert filters info to enrich
- * @param intl the intl object used
- * @param dateFormat the date format to be used
- * @param dateDataSets all available date data sets
- * @param attributeFiltersMeta additional information about attribute filters (see {@link IAttributeFilterMetaCollection} for details)
+ * @param brokenAlertFilters - the basic broken alert filters info to enrich
+ * @param intl - the intl object used
+ * @param dateFormat - the date format to be used
+ * @param dateDataSets - all available date data sets
+ * @param attributeFiltersMeta - additional information about attribute filters (see {@link IAttributeFilterMetaCollection} for details)
  */
 export function enrichBrokenAlertsInfo(
     brokenAlertFilters: IBrokenAlertFilterBasicInfo[],

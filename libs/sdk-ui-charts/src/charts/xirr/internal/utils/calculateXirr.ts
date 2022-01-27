@@ -32,8 +32,6 @@ const newtonRaphson = (fun: NumericFunction, derivative: NumericFunction, guess:
 /**
  * Calculates the XIRR value for the (amount, when) pairs.
  * @see https://en.wikipedia.org/wiki/Internal_rate_of_return#Exact_dates_of_cash_flows for mathematical background.
- * @param transactions
- * @param guess
  */
 export const calculateXirr = (transactions: IXirrInput[], guess = 0.1): number => {
     // convert any date to a fractional year difference to allow non-uniform cash-flow distribution (the X in XIRR)

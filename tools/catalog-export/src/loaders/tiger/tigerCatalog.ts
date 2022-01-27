@@ -55,9 +55,6 @@ function convertAttributes(attributes: JsonApiAttributeOutList): Attribute[] {
 
 /**
  * Loads metric, attribute and fact catalog
- *
- * @param client
- * @param workspaceId
  */
 export async function loadCatalog(client: ITigerClient, workspaceId: string): Promise<Catalog> {
     const [metricsResult, factsResult, attributesResult] = await Promise.all([

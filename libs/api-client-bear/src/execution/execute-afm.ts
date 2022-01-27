@@ -16,7 +16,7 @@ export const DEFAULT_LIMIT = 1000;
  * NOTE: all functionality related to executeVisualization is experimental and subject to possible breaking changes
  * in the future; location and shape of this interface WILL change when the functionality is made GA.
  *
- * @private
+ * @internal
  * @internal
  */
 export interface IVisualizationExecution {
@@ -31,7 +31,7 @@ export interface IVisualizationExecution {
  * This interface represents error caused during second part of api execution (data fetching)
  * and contains information about first execution part if that part was successful.
  *
- * @private
+ * @internal
  * @internal
  */
 export class ApiExecutionResponseError extends ApiResponseError {
@@ -46,11 +46,10 @@ export class ExecuteAfmModule {
     /**
      * Execute AFM and fetch all data results
      *
-     * @method executeAfm
-     * @param {String} projectId - GD project identifier
-     * @param {GdcExecuteAFM.IExecution} execution
+     * @param projectId - GD project identifier
+     * @param execution - what to execute
      *
-     * @returns {Promise<GdcExecution.IExecutionResponses>} Structure with `executionResponse` and `executionResult`
+     * @returns Structure with `executionResponse` and `executionResult`
      */
     public executeAfm(
         projectId: string,
@@ -74,11 +73,10 @@ export class ExecuteAfmModule {
      * Execute AFM and return execution's response; the response describes dimensionality of the results and
      * includes link to poll for the results.
      *
-     * @method getExecutionResponse
-     * @param {string} projectId - GD project identifier
-     * @param {GdcExecuteAFM.IExecution} execution
+     * @param projectId - GD project identifier
+     * @param execution - what to get the response for
      *
-     * @returns {Promise<GdcExecution.IExecutionResponse>} Promise with `executionResponse`
+     * @returns Promise with `executionResponse`
      */
     public getExecutionResponse(
         projectId: string,
@@ -97,10 +95,10 @@ export class ExecuteAfmModule {
      * NOTE: all functionality related to executeVisualization is experimental and subject to possible breaking changes
      * in the future; location and shape of this interface WILL change when the functionality is made GA.
      *
-     * @param {string} projectId - GD project identifier
-     * @param {IVisualizationExecution} visExecution - execution payload
+     * @param projectId - GD project identifier
+     * @param visExecution - execution payload
      *
-     * @private
+     * @internal
      * @internal
      */
     public _executeVisualization(
@@ -128,10 +126,10 @@ export class ExecuteAfmModule {
      * NOTE: all functionality related to executeVisualization is experimental and subject to possible breaking changes
      * in the future; location and shape of this interface WILL change when the functionality is made GA.
      *
-     * @param {string} projectId - GD project identifier
-     * @param {IVisualizationExecution} visExecution - execution payload
+     * @param projectId - GD project identifier
+     * @param visExecution - execution payload
      *
-     * @private
+     * @internal
      * @internal
      */
     public _getVisExecutionResponse(
@@ -155,13 +153,11 @@ export class ExecuteAfmModule {
     /**
      * Get one page of Result from Execution (with requested limit and offset)
      *
-     * @method getPartialExecutionResult
-     * @param {string} executionResultUri
-     * @param {number[]} limit - limit for each dimension
-     * @param {number[]} offset - offset for each dimension
+     * @param executionResultUri - URI of the execution result to work with
+     * @param limit - limit for each dimension
+     * @param offset - offset for each dimension
      *
-     * @returns {Promise<GdcExecution.IExecutionResult | null>}
-     *  Promise with `executionResult` or `null` (null means empty response - HTTP 204)
+     * @returns Promise with `executionResult` or `null` (null means empty response - HTTP 204)
      */
     public getPartialExecutionResult(
         executionResultUri: string,
@@ -178,11 +174,9 @@ export class ExecuteAfmModule {
     /**
      * Get whole ExecutionResult
      *
-     * @method getExecutionResult
-     * @param {string} executionResultUri
+     * @param executionResultUri - URI of the execution result to work with
      *
-     * @returns {Promise<GdcExecution.IExecutionResult | null>}
-     *  Promise with `executionResult` or `null` (null means empty response - HTTP 204)
+     * @returns Promise with `executionResult` or `null` (null means empty response - HTTP 204)
      */
     public getExecutionResult(executionResultUri: string): Promise<GdcExecution.IExecutionResult | null> {
         const executionResultUriQueryPart = getExecutionResultUriQueryPart(executionResultUri);

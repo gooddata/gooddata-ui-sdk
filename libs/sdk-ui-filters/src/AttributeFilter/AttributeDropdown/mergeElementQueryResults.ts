@@ -21,7 +21,7 @@ export function mergeElementQueryResults(
     // because the underlying list throws on undefined members
     const holeLength = newElements.offset - currentLength;
     if (holeLength > 0) {
-        /**
+        /*
          * do NOT rewrite this to splice or concat!
          * for large arrays this will cause a stack size limit breach
          *

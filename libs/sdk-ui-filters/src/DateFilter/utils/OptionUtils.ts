@@ -109,7 +109,7 @@ function sanitizeRelativePresets(
 }
 
 /**
- * Returns dateFilterOptions with all the presets sanitized, i.e. having from <= to.
+ * Returns dateFilterOptions with all the presets sanitized, i.e. having `from <= to`.
  * @param dateFilterOptions - options to sanitize
  */
 export function sanitizePresetIntervals(

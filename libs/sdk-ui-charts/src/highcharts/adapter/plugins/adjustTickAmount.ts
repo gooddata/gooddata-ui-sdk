@@ -4,7 +4,7 @@
  * Original code snippet
  *      https://github.com/highcharts/highcharts/blob/b54fe33d91c0d1fd7da009aaa84af694f15cffad/js/parts/Axis.js#L4214
  *
- * Modified by binh.nguyen@gooddata.com to support zero alignment
+ * Modified by `binh.nguyen@gooddata.com` to support zero alignment
  *
  * Relying on undocumented internal properties of Highcharts.Axis
  *  - visible
@@ -44,8 +44,7 @@ function isYAxis(axis: Highcharts.Axis): boolean {
 
 /**
  * Check if user sets min/max on any axis
- * @param chart
- * @return true if any axis is set min/max to. Otherwise false
+ * @returns true if any axis is set min/max to. Otherwise false
  */
 function isUserSetExtremesOnAnyAxis(chart: Highcharts.Chart): boolean {
     const yAxes = chart.userOptions.yAxis;
@@ -54,9 +53,7 @@ function isUserSetExtremesOnAnyAxis(chart: Highcharts.Chart): boolean {
 
 /**
  * Get direction to make secondary axis align to primary axis
- * @param primaryAxis
- * @param secondaryAxis
- * @return
+ * @returns
  *     -1: move zero index to left
  *      0: it aligns
  *      1: move zero index to right
@@ -90,9 +87,7 @@ export function getDirection(primaryAxis: Highcharts.Axis, secondaryAxis: Highch
 
 /**
  * Add new tick to first or last position
- * @param tickPositions
- * @param tickInterval
- * @param isAddFirst: if true, add to first. Otherwise, add to last
+ * @param isAddFirst - if true, add to first. Otherwise, add to last
  */
 function addTick(tickPositions: number[], tickInterval: number, isAddFirst: boolean): number[] {
     const tick: number = isAddFirst
@@ -104,7 +99,6 @@ function addTick(tickPositions: number[], tickInterval: number, isAddFirst: bool
 
 /**
  * Add or reduce ticks
- * @param axis
  */
 export function adjustTicks(axis: Highcharts.Axis): void {
     let tickPositions: number[] = (axis.tickPositions || []).slice();
@@ -165,8 +159,6 @@ export function getSelectionRange(axis: Highcharts.Axis): number[] {
 
 /**
  * Get axis score that increase 1 for data having positive and negative values
- * @param axis Y axis
- * @return Y axis score
  */
 export function getYAxisScore(axis: Highcharts.Axis): number {
     const { dataMin, dataMax } = axis.getExtremes();
@@ -187,8 +179,8 @@ export function getYAxisScore(axis: Highcharts.Axis): number {
 /**
  * Base on axis score which is bigger than another, will become base axis
  * The other axis will be aligned to base axis
- * @param yAxes
- * @return base Y axis and aligned Y axis
+ *
+ * @returns base Y axis and aligned Y axis
  */
 function getBaseYAxis(yAxes: Highcharts.Axis[]): IBaseAndAlignedAxes {
     const [firstAxisScore, secondAxisScore] = yAxes.map(getYAxisScore);
@@ -245,7 +237,6 @@ function updateAxis(axis: Highcharts.Axis, currentTickAmount: number): void {
 /**
  * Prevent data is cut off by increasing tick interval to zoom out axis
  * Only apply to chart without user-input min/max
- * @param axis
  */
 export function preventDataCutOff(axis: Highcharts.Axis): void {
     const { chart } = axis;
@@ -264,7 +255,6 @@ export function preventDataCutOff(axis: Highcharts.Axis): void {
 /**
  * Align axes once secondary axis is ready
  * Cause at the time HC finishes adjust primary axis, secondary axis has not been done yet
- * @param axis
  */
 function alignYAxes(axis: Highcharts.Axis): void {
     const chart: Highcharts.Chart = axis.chart;
@@ -336,8 +326,8 @@ function isSingleAxisChart(axis: Highcharts.Axis): boolean {
 
 /**
  * Decide whether run default or custom behavior
- * @param axis
- * @return true as leaving to HC, otherwise false as running custom behavior
+ *
+ * @returns true as leaving to HC, otherwise false as running custom behavior
  */
 export function shouldBeHandledByHighcharts(axis: Highcharts.Axis): boolean {
     if (!isYAxis(axis) || isSingleAxisChart(axis) || isAxisWithLineChartType(axis)) {

@@ -87,7 +87,7 @@ export class TableFacade {
      *
      * In all other cases this field be undefined.
      *
-     * @private
+     * @internal
      */
     private transformedExecution: IPreparedExecution | undefined;
     private currentResult: IExecutionResult;
@@ -108,14 +108,14 @@ export class TableFacade {
      *
      * Note: see gridApiGuard. Always use the guard to access the GridApi. Never access the field directly.
      *
-     * @private
+     * @internal
      */
     private gridApi: GridApi | undefined;
 
     /**
      * Lifecycle of this field is tied to gridApi. If the gridApiGuard returns an API, then it is for sure
      * that the columnApi is also defined.
-     * @private
+     * @internal
      */
     private columnApi: ColumnApi | undefined;
     private destroyed: boolean = false;
@@ -756,8 +756,6 @@ export class TableFacade {
      *
      * If the transformation is not happening, then the table is showing data for an existing execution result - in that
      * case the matching goes against the definition backing that result.
-     *
-     * @param other
      */
     public isMatchingExecution(other: IPreparedExecution): boolean {
         if (this.originalExecution.fingerprint() === other.fingerprint()) {

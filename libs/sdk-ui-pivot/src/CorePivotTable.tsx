@@ -267,8 +267,6 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
      * shown and the only reasonable thing to do is to throw everything away and start from scratch.
      *
      * This will reset all React state and non-react state and start table initialization process.
-     *
-     * @param execution
      */
     private reinitialize = (execution: IPreparedExecution): void => {
         this.setState(
@@ -364,8 +362,6 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
      *
      * - prepared execution has changed AND the new prep execution definition does not match currently shown
      *   data.
-     *
-     * @param prevProps
      */
     private isReinitNeeded(prevProps: ICorePivotTableProps): boolean {
         const drillingIsSame = isEqual(prevProps.drillableItems, this.props.drillableItems);
@@ -414,9 +410,9 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
      * turns on/off the aggregation menus through the props. The menus happen to appear in the table column headers
      * so the refresh is essential to show/hide them.
      *
-     * @param props current table props
-     * @param prevProps previous table props
-     * @private
+     * @param props - current table props
+     * @param prevProps - previous table props
+     * @internal
      */
     private shouldRefreshHeader(props: ICorePivotTableProps, prevProps: ICorePivotTableProps): boolean {
         const propsRequiringAgGridRerender: Array<(props: ICorePivotTableProps) => any> = [
@@ -432,7 +428,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
      * PivotTable will not be rendered correctly. Therefore, we need to inform the user at least on the console
      * on what is happening.
      *
-     * @private
+     * @internal
      */
     private alertParentWrapperMissingHeight(): void {
         const parentWrapper = document.getElementById(this.pivotTableId)?.parentElement;

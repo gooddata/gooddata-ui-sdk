@@ -202,7 +202,7 @@ const getDateFilterRepresentationByFilterType = (
 // ...
 /**
  * Gets the filter title favoring custom name if specified.
- * @returns {string} Representation of the filter (e.g. "My preset", "From 2 weeks ago to 1 week ahead")
+ * @returns Representation of the filter (e.g. "My preset", "From 2 weeks ago to 1 week ahead")
  */
 export const getDateFilterTitle = (
     filter: DateFilterOption,
@@ -216,7 +216,7 @@ export const getDateFilterTitle = (
 
 /**
  * Gets the filter title favoring custom name if specified. This function is only for mock purpose.
- * @returns {string} Representation of the filter (e.g. "My preset", "From 2 weeks ago to 1 week ahead")
+ * @returns Representation of the filter (e.g. "My preset", "From 2 weeks ago to 1 week ahead")
  */
 export const getDateFilterTitleUsingTranslator = (
     filter: DateFilterOption,
@@ -226,7 +226,7 @@ export const getDateFilterTitleUsingTranslator = (
 
 /**
  * Gets the filter representation regardless of custom name.
- * @returns {string} Representation of the filter (e.g. "From 2 weeks ago to 1 week ahead")
+ * @returns Representation of the filter (e.g. "From 2 weeks ago to 1 week ahead")
  */
 const getDateFilterRepresentationUsingTranslator = (
     filter: DateFilterOption,

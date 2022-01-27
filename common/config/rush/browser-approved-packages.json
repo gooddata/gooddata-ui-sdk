@@ -147,6 +147,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "@gooddata/sdk-ui-charts",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
       "name": "@gooddata/sdk-ui-dashboard",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -161,10 +165,6 @@
     {
       "name": "@gooddata/sdk-ui-geo",
       "allowedCategories": [ "examples", "production" ]
-    },
-    {
-      "name": "@gooddata/sdk-ui-charts",
-      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@gooddata/sdk-ui-kit",
@@ -471,6 +471,14 @@
       "allowedCategories": [ "tools" ]
     },
     {
+      "name": "chalk",
+      "allowedCategories": [ "tools" ]
+    },
+    {
+      "name": "chokidar",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "circular-dependency-plugin",
       "allowedCategories": [ "examples", "production" ]
     },
@@ -591,6 +599,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "eslint-plugin-tsdoc",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
       "name": "fast-glob",
       "allowedCategories": [ "tools" ]
     },
@@ -657,14 +669,6 @@
     {
       "name": "http-status-codes",
       "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "chalk",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "chokidar",
-      "allowedCategories": [ "tools" ]
     },
     {
       "name": "immer",
@@ -887,16 +891,16 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "recharts",
+      "allowedCategories": [ "examples" ]
+    },
+    {
       "name": "redux-batched-actions",
       "allowedCategories": [ "production" ]
     },
     {
       "name": "redux-saga",
       "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "recharts",
-      "allowedCategories": [ "examples" ]
     },
     {
       "name": "rimraf",
@@ -947,11 +951,11 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "stylelint-config-prettier",
+      "name": "stylelint-checkstyle-formatter",
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "stylelint-checkstyle-formatter",
+      "name": "stylelint-config-prettier",
       "allowedCategories": [ "production" ]
     },
     {

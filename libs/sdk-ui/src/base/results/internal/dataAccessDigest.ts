@@ -59,7 +59,7 @@ export type DataSeriesDigest = {
     allAttributeHeaders: IResultAttributeHeader[][];
 
     /**
-     * Index of measure local id -> index into the series dimension
+     * Index of measure local id -\> index into the series dimension
      */
     measureIndexes: { [localId: string]: number[] };
 

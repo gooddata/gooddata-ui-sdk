@@ -143,9 +143,6 @@ export type UndoActionPayload = {
  *
  * Note that this reducer is not concerned by the transaction boundaries of command processing. It is responsibility
  * of the caller to create an undo action that
- *
- * @param state
- * @param action
  */
 export const undoReducer = <TState extends UndoEnhancedState>(
     state: Draft<TState>,

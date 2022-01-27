@@ -26,8 +26,6 @@ function deleteDashboard(ctx: DashboardContext, dashboardRef: ObjRef): Promise<v
  * saga context so that it contains an empty dashboardRef.
  *
  * Note: This will not clear any of the dashboard-agnostic global state such as config and settings.
- *
- * @param ctx
  */
 function* resetToNewDashboard(ctx: DashboardContext): SagaIterator<DashboardContext> {
     const dateFilterConfig: ReturnType<typeof selectDateFilterConfig> = yield select(selectDateFilterConfig);

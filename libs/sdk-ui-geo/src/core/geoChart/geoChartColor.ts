@@ -66,13 +66,14 @@ export function getColorPaletteMapping(colorStrategy: IColorStrategy): ColorPale
 
 /**
  * Return RGB border and background colors base on color and segment values
- *  Example:
- *      [any-number] => [{
- *           border: "rgb(127,224,198)",
- *           background: "rgb(215,242,250)",
- *      }]
- * @param colorValues
- * @param segmentValues
+ *
+ * Example:
+ * ```
+ *  [any-number] => [{
+ *       border: "rgb(127,224,198)",
+ *       background: "rgb(215,242,250)",
+ *  }]
+ * ```
  */
 export function getPushpinColors(
     colorValues: Array<number | null>,

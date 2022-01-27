@@ -148,7 +148,7 @@ export class ChangeDetector implements IEventListener {
      *
      * The files that come in are for instance 'tools/applink/src/index.ts':
      * -  The function assumes that the repo has projects organized in two levels
-     * -  It will obtain project directory from the path -> 'tools/applink'
+     * -  It will obtain project directory from the path -\> 'tools/applink'
      * -  Try to match the package dir against information from the source descriptor
      * -  Create package change for the matched package + include paths to files - relative to the package directory
      */

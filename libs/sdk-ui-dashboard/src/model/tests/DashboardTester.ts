@@ -45,11 +45,6 @@ export class DashboardTester extends HeadlessDashboard {
      * identifier. The dashboard will be loaded from recorded backend, from its reference workspace.
      *
      * You may additionally influence how the different query services behave (typically to stub/mock the service)
-     *
-     * @param identifier
-     * @param testerConfig
-     * @param backendConfig
-     * @param customCapabilities
      */
     public static forRecording(
         identifier: Identifier,
@@ -73,9 +68,6 @@ export class DashboardTester extends HeadlessDashboard {
      * Creates an instance of DashboardTester set up to run tests on top of an empty, freshly initialized dashboard.
      *
      * You may additionally influence how the different query services behave (typically to stub/mock the service)
-     *
-     * @param testerConfig
-     * @param backendConfig
      */
     public static forNewDashboard(
         testerConfig?: DashboardTesterConfig,

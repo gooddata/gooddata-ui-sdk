@@ -39,8 +39,6 @@ import { LdmModule } from "./ldm";
  * [Authentication via API article](http://developer.gooddata.com/article/authentication-via-api)
  * on [GoodData Developer Portal](http://developer.gooddata.com/)
  *
- * @module sdk
- * @class sdk
  */
 export class SDK {
     public config: ConfigModule;
@@ -90,8 +88,7 @@ export class SDK {
 /**
  * # Factory for creating SDK instances
  *
- * @param {object|null} config object to be passed to SDK constructor
- * @method setCustomDomain
+ * @param config - object to be passed to SDK constructor
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const factory =

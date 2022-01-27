@@ -166,8 +166,6 @@ function groupColumns(
 /**
  * This function creates bottom-most column descriptors from column attributes. It essentially creates the bottom-most
  * {@link ScopeCol} which would normally host the measure columns.
- *
- * @param dv
  */
 function createColumnDescriptorsWhenNoMeasures(dv: DataViewFacade): GroupingOperationResult {
     const descriptors = dv.meta().attributeDescriptorsForDim(1);

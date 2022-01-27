@@ -31,8 +31,6 @@ import { HighchartsOptions, XAxisOptions } from "../../lib";
 
 /**
  * Set 'normal' stacking config to single series which will overwrite config in 'plotOptions.series'
- * @param stackMeasures
- * @param seriesItem
  */
 function handleStackMeasure(stackMeasures: boolean, seriesItem: ISeriesItem): ISeriesItem {
     return stackMeasures
@@ -46,8 +44,6 @@ function handleStackMeasure(stackMeasures: boolean, seriesItem: ISeriesItem): IS
 
 /**
  * Set 'percent' stacking config to single series which will overwrite config in 'plotOptions.series'
- * @param stackMeasuresToPercent
- * @param seriesItem
  */
 function handleStackMeasuresToPercent(stackMeasuresToPercent: boolean, seriesItem: ISeriesItem): ISeriesItem {
     return stackMeasuresToPercent
@@ -115,7 +111,6 @@ function countMeasuresInSeries(series: ISeriesItem[]): number[] {
 
 /**
  * For y axis having one series, this series should be removed stacking config
- * @param series
  */
 export function getSanitizedStackingForSeries(series: ISeriesItem[]): ISeriesItem[] {
     const [primaryMeasuresNum, secondaryMeasuresNum] = countMeasuresInSeries(series);
@@ -215,9 +210,6 @@ export function getYAxisConfiguration(
 
 /**
  * Set config to highchart for 'Stack Measures' and 'Stack to 100%'
- * @param chartOptions
- * @param config
- * @param chartConfig
  */
 export function getStackMeasuresConfiguration(
     chartOptions: IChartOptions,
@@ -245,8 +237,6 @@ export function getStackMeasuresConfiguration(
 
 /**
  * Add style to X axis in case of 'grouped-categories'
- * @param chartOptions
- * @param config
  */
 export function getParentAttributeConfiguration(
     chartOptions: IChartOptions,
@@ -288,9 +278,6 @@ export function setDrillConfigToXAxis(drillConfig: IDrillConfig): {
 /**
  * Format labels in Y axis from '0 - 100' to '0% - 100%'
  * Only applied when measure/series in Y axis more than one
- * @param chartOptions
- * @param chartConfig
- * @param [config]
  */
 export function getShowInPercentConfiguration(
     chartOptions: IChartOptions = {},
@@ -326,9 +313,6 @@ export function getShowInPercentConfiguration(
 /**
  * Convert [0, 1] to [0, 100], it's needed by highchart
  * Only applied to primary Y axis
- * @param _chartOptions
- * @param config
- * @param chartConfig
  */
 export function convertMinMaxFromPercentToNumber(
     _chartOptions: IChartOptions,

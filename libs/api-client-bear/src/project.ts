@@ -53,8 +53,6 @@ export interface IProjectConfigResponse {
 /**
  * Functions for working with projects
  *
- * @class project
- * @module project
  */
 export class ProjectModule {
     constructor(private xhr: XhrModule) {}
@@ -62,8 +60,7 @@ export class ProjectModule {
     /**
      * Get current project id
      *
-     * @method getCurrentProjectId
-     * @return {String} current project identifier
+     * @returns current project identifier
      */
     public getCurrentProjectId(): Promise<string> {
         return this.xhr
@@ -83,9 +80,8 @@ export class ProjectModule {
     /**
      * Fetches project by its identifier.
      *
-     * @method getProject
-     * @param {String} projectId - Project identifier
-     * @return {GdcUser.IProject} Project
+     * @param projectId - Project identifier
+     * @returns Project
      */
     public getProject(projectId: string): Promise<GdcUser.IProject> {
         return this.xhr.getParsed(`/gdc/projects/${projectId}`);
@@ -94,9 +90,8 @@ export class ProjectModule {
     /**
      * Fetches projects available for the user represented by the given profileId
      *
-     * @method getProjects
-     * @param {String} profileId - User profile identifier
-     * @return {Array} An Array of projects
+     * @param profileId - User profile identifier
+     * @returns An Array of projects
      */
     public getProjects(profileId: string): Promise<GdcUser.IProject[]> {
         return getAllPagesByOffsetLimit(
@@ -108,9 +103,9 @@ export class ProjectModule {
 
     /**
      * Fetches projects available for the user represented by the given profileId page by page.
-     * @param userId
-     * @param offset
-     * @param limit
+     * @param userId - id of the user to get the projects for
+     * @param offset - number of items to skip
+     * @param limit - maximum items on page
      */
     public getProjectsWithPaging(
         userId: string,
@@ -137,9 +132,8 @@ export class ProjectModule {
     /**
      * Fetches all datasets for the given project
      *
-     * @method getDatasets
-     * @param {String} projectId - GD project identifier
-     * @return {Array} An array of objects containing datasets metadata
+     * @param projectId - GD project identifier
+     * @returns An array of objects containing datasets metadata
      */
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     public getDatasets(projectId: string) {
@@ -153,9 +147,8 @@ export class ProjectModule {
      * Fetches a chart color palette for a project represented by the given
      * projectId parameter.
      *
-     * @method getColorPalette
-     * @param {String} projectId - A project identifier
-     * @return {Array} An array of objects with r, g, b fields representing a project's
+     * @param projectId - A project identifier
+     * @returns An array of objects with r, g, b fields representing a project's
      * color palette
      */
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -191,9 +184,8 @@ export class ProjectModule {
      * Fetches a chart color palette for a project represented by the given
      * projectId parameter.
      *
-     * @method getColorPaletteWithGuids
-     * @param {String} projectId - A project identifier
-     * @return {Array} An array of objects representing a project's
+     * @param projectId - A project identifier
+     * @returns An array of objects representing a project's
      * color palette with color guid or undefined
      */
     public getColorPaletteWithGuids(projectId: string): Promise<IColorPalette | undefined> {
@@ -221,9 +213,8 @@ export class ProjectModule {
     /**
      * Sets given colors as a color palette for a given project.
      *
-     * @method setColorPalette
-     * @param {String} projectId - GD project identifier
-     * @param {Array} colors - An array of colors that we want to use within the project.
+     * @param projectId - GD project identifier
+     * @param colors - An array of colors that we want to use within the project.
      * Each color should be an object with r, g, b fields. // TODO really object?
      */
     public setColorPalette(projectId: string, colors: IColor[]): Promise<ApiResponse> {
@@ -239,16 +230,20 @@ export class ProjectModule {
     }
 
     /**
-     * Gets current timezone and its offset. Example output:
+     * Gets current timezone and its offset.
+     * @example
      *
-     *     {
-     *         id: 'Europe/Prague',
-     *         displayName: 'Central European Time',
-     *         currentOffsetMs: 3600000
-     *     }
+     * Example output:
      *
-     * @method getTimezone
-     * @param {String} projectId - GD project identifier
+     * ```
+     * {
+     *     id: 'Europe/Prague',
+     *     displayName: 'Central European Time',
+     *     currentOffsetMs: 3600000
+     * }
+     * ```
+     *
+     * @param projectId - GD project identifier
      */
     public getTimezone(projectId: string): Promise<ITimezone> {
         const bootstrapUrl = `/gdc/app/account/bootstrap?projectId=${projectId}`;
@@ -280,11 +275,10 @@ export class ProjectModule {
      * Note: returns a promise which is resolved when the project creation is finished
      *
      * @experimental
-     * @method createProject
-     * @param {String} title
-     * @param {String} authorizationToken
-     * @param {Object} options for project creation (summary, projectTemplate, ...)
-     * @return {Object} created project object
+     * @param title - title of the new project
+     * @param authorizationToken - authorization token to use
+     * @param options - for project creation (summary, projectTemplate, ...)
+     * @returns created project object
      */
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     public createProject(title: string, authorizationToken: string, options: any = {}) {
@@ -331,8 +325,7 @@ export class ProjectModule {
     /**
      * Delete project
      *
-     * @method deleteProject
-     * @param {String} projectId
+     * @param projectId - projectId to delete
      */
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     public deleteProject(projectId: string) {
@@ -342,9 +335,8 @@ export class ProjectModule {
     /**
      * Gets aggregated feature flags for given project and current user
      *
-     * @method getFeatureFlags
-     * @param {String} projectId - A project identifier
-     * @return {IFeatureFlags} Hash table of feature flags and theirs values where feature flag is as key
+     * @param projectId - A project identifier
+     * @returns Hash table of feature flags and theirs values where feature flag is as key
      */
     public getFeatureFlags(projectId: string): Promise<IFeatureFlags> {
         return this.xhr
@@ -363,8 +355,8 @@ export class ProjectModule {
     /**
      * Gets project config including project specific feature flags
      *
-     * @param {String} projectId - A project identifier
-     * @return {IProjectConfigSettingItem[]} An array of project config setting items
+     * @param projectId - A project identifier
+     * @returns An array of project config setting items
      */
     public getConfig(projectId: string): Promise<IProjectConfigSettingItem[]> {
         return this.xhr
@@ -383,9 +375,9 @@ export class ProjectModule {
     /**
      * Gets project config including project specific feature flags
      *
-     * @param {String} projectId - A project identifier
-     * @param {String} key - config item key
-     * @return {IProjectConfigSettingItem | undefined} single setting item or undefined if item with such key does not exist
+     * @param projectId - A project identifier
+     * @param key - config item key
+     * @returns single setting item or undefined if item with such key does not exist
      */
     public getConfigItem(projectId: string, key: string): Promise<IProjectConfigSettingItem | undefined> {
         return this.xhr
@@ -405,9 +397,9 @@ export class ProjectModule {
     /**
      * Gets project specific feature flags
      *
-     * @param {String} projectId - A project identifier
-     * @param {String} source - optional filter settingItems with specific source
-     * @return {IFeatureFlags} Hash table of feature flags and theirs values where feature flag is as key
+     * @param projectId - A project identifier
+     * @param source - optional filter settingItems with specific source
+     * @returns Hash table of feature flags and theirs values where feature flag is as key
      */
     public getProjectFeatureFlags(projectId: string, source?: string): Promise<IFeatureFlags> {
         return this.getConfig(projectId).then((settingItems: IProjectConfigSettingItem[]) => {
@@ -427,10 +419,9 @@ export class ProjectModule {
     /**
      * Get paged user list
      *
-     * @method getUserListWithPaging
-     * @param {String} projectId - project identifier
-     * @param {IGetUserListParams} options - filtering options for the user list
-     * @return {IGetUserListResponse} List of users with paging
+     * @param projectId - project identifier
+     * @param options - filtering options for the user list
+     * @returns List of users with paging
      */
     public getUserListWithPaging(
         projectId: string,
@@ -444,10 +435,9 @@ export class ProjectModule {
     /**
      * Get full user list
      *
-     * @method getUserList
-     * @param {String} projectId - project identifier
-     * @param {Object} options - filtering options for the user list
-     * @return {IUserListItem[]} List of users
+     * @param projectId - project identifier
+     * @param options - filtering options for the user list
+     * @returns List of users
      */
     public getUserList(
         projectId: string,
@@ -477,10 +467,9 @@ export class ProjectModule {
     /**
      * Get paged user groups
      *
-     * @method getUserGroups
-     * @param {String} projectId - project identifier
-     * @param {IGetUserGroupsParams} options - paging params
-     * @return {IGetUserGroupsResponse} List of user groups with paging
+     * @param projectId - project identifier
+     * @param options - paging params
+     * @returns List of user groups with paging
      */
     public getUserGroups(
         projectId: string,
@@ -496,10 +485,9 @@ export class ProjectModule {
     /**
      * Get info about all grantees able to access given object
      *
-     * @method getGranteesInfo
-     * @param {String} objectUri - object's uri
-     * @param {IGetGranteesParams} options - grantee limitations params
-     * @return {IGetGranteesResponse} List of all grantees
+     * @param objectUri - object's uri
+     * @param options - grantee limitations params
+     * @returns List of all grantees
      */
     public getGranteesInfo(
         objectUri: string,

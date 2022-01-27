@@ -104,7 +104,7 @@ export function parseStringToArray(str: string): string[] | null {
  * (The hash value of the empty string is zero.)
  *
  * @param value - s a string
- * @return a hash code value for the given string.
+ * @returns a hash code value for the given string.
  *
  * @internal
  */

@@ -23,7 +23,7 @@ export interface IXirrTransformationProps {
 }
 
 /**
- * The React component that handles the transformation of the execution objects into the data accepted by the {Headline}
+ * The React component that handles the transformation of the execution objects into the data accepted by the {@link Headline}
  * React component that this components wraps. It also handles the propagation of the drillable items to the component
  * and drill events out of it.
  */

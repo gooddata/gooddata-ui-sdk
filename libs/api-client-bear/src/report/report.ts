@@ -23,9 +23,6 @@ interface IExportResultPayload {
 
 /**
  * Functions for working with reports
- *
- * @Class report
- * @module report
  */
 export class ReportModule {
     constructor(private xhr: XhrModule) {}
@@ -36,12 +33,11 @@ export class ReportModule {
      * request new export of existing AFM execution
      *
      * @experimental
-     * @method exportResult
-     * @param {String} projectId GoodData projectId
-     * @param {String} executionResult report which should be exported
-     * @param {IExportConfig} exportConfig requested export options
-     * @param {Object} pollingOptions for polling (maxAttempts, pollStep)
-     * @return {Promise} Resolves if export successfully,
+     * @param projectId - GoodData projectId
+     * @param executionResult - report which should be exported
+     * @param exportConfig - requested export options
+     * @param pollingOptions - for polling (maxAttempts, pollStep)
+     * @returns Resolves if export successfully,
      *                   Reject if export has error (network error, api error)
      */
     public exportResult(

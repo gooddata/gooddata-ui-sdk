@@ -249,7 +249,7 @@ function getBubbleDimensions(insight: IInsightDefinition): IDimension[] {
  * WARNING: It duplicates logic from pluggable visualizations.
  *          Remove once react components support pluggable visualizations.
  * @param insight - insight being visualized
- * @param type:VisType - visualization type string
+ * @param type - visualization type string
  * @internal
  */
 export function generateDimensions(insight: IInsightDefinition, type: VisType): IDimension[] {

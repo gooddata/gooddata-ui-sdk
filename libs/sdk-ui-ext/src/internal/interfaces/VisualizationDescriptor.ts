@@ -50,9 +50,9 @@ export interface IVisualizationDescriptor {
      * Gets info about size of visualization based on its type, bucket content, layout context and if custom height is enabled.
      * Provided info is used by layout and it defines what will be the default size during render of insight and what will be the limits during resizing of insight.
      *
-     * @param insight Current insight definition
-     * @param layoutDescriptor layout creating context for visualization
-     * @param settings to know if custom heights are allowed
+     * @param insight - Current insight definition
+     * @param layoutDescriptor - layout creating context for visualization
+     * @param settings - to know if custom heights are allowed
      * @alpha
      */
     getSizeInfo(
@@ -68,8 +68,8 @@ export interface IVisualizationDescriptor {
      * the drilled attribute with the Drill Down target target attribute and include the filters from the
      * drill event into the returned {@link @gooddata/sdk-model#IInsight}.
      *
-     * @param insight {@link @gooddata/sdk-model#IInsight} to be used for the the drill down application
-     * @param drillDownContext drill down configuration used to properly create the result
+     * @param insight - {@link @gooddata/sdk-model#IInsight} to be used for the the drill down application
+     * @param drillDownContext - drill down configuration used to properly create the result
      * @returns {@link @gooddata/sdk-model#IInsight} with modified buckets and filters according to the provided drill down context.
      */
     applyDrillDown(insight: IInsight, drillDownContext: IDrillDownContext): IInsight;

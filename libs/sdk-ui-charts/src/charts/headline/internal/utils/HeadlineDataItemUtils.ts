@@ -33,13 +33,10 @@ function buildCssStyle(color?: string, backgroundColor?: string) {
 }
 
 /**
- * Format {HeadlineData} value.
+ * Format {@link IHeadlineDataItem} value.
  *
  * The method processes the provided item and returns object with value that can be rendered as it is and 'cssStyle'
  * object that can be passed into the react element 'style' attribute.
- *
- * @param item
- * @returns {{cssStyle: {color, backgroundColor}, value: string, isValueEmpty: boolean}}
  */
 export function formatItemValue(
     item: IHeadlineDataItem,
@@ -65,12 +62,9 @@ export function formatItemValue(
  *
  * Formatted value conditions:
  *  - value is rounded to Integer
- *  - shows '>999%' when value is above the limit
- *  - shows '<-999%' when value is below the limit
+ *  - shows `>999%` when value is above the limit
+ *  - shows `<-999%` when value is below the limit
  *  - otherwise shows 'value%'
- *
- * @param item
- * @returns {{value: string, isValueEmpty: boolean}}
  */
 export function formatPercentageValue(item: IHeadlineDataItem): IFormattedHeadlineDataItem {
     if (!item || item.value === null || isNaN(parseFloat(item.value))) {

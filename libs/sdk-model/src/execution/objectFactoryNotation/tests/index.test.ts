@@ -56,8 +56,6 @@ const factories = {
 
 /**
  * Makes sure that evaluating the model notation results in the provided object.
- * @param factoryNotation
- * @param expected
  */
 const testModelNotation = (factoryNotation: string, expected: any) => {
     // We need this to perform the test and since this is in test code this should be OK.

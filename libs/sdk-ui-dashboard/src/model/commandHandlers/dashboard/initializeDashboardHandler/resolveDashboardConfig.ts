@@ -109,9 +109,6 @@ function resolveColorPalette(ctx: DashboardContext, config: DashboardConfig): Pr
  * Loads all essential dashboard configuration from the backend if needed. The load command may specify their
  * own inline config - if that is the case the config is bounced back immediately. Otherwise the necessary
  * backend queries and post-processing is done.
- *
- * @param ctx
- * @param cmd
  */
 export function* resolveDashboardConfig(
     ctx: DashboardContext,

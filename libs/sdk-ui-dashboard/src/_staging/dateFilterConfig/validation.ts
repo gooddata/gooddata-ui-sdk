@@ -120,7 +120,6 @@ export function validateDateFilterConfig(
 
 /**
  * Filters out all weekly presets from the filter config.
- * @param config
  */
 export function filterOutWeeks(config: IDateFilterConfig): IDateFilterConfig {
     const { relativeForm, relativePresets } = config;

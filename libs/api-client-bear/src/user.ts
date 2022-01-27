@@ -29,8 +29,7 @@ export class UserModule {
     /**
      * Find out whether a user is logged in
      *
-     * @return {Promise} resolves with true if user logged in, false otherwise
-     * @method isLoggedIn
+     * @returns resolves with true if user logged in, false otherwise
      */
     public isLoggedIn(): Promise<boolean> {
         return new Promise((resolve, reject) => {
@@ -56,9 +55,8 @@ export class UserModule {
     /**
      * Find out whether a specified project is available to a currently logged user
      *
-     * @method isLoggedInProject
-     * @param {String} projectId A project identifier
-     * @return {Promise} Resolves with true if user logged in and project available,
+     * @param projectId - A project identifier
+     * @returns Resolves with true if user logged in and project available,
      *                   resolves with false if user logged in and project not available,
      *                   rejects if user not logged in
      */
@@ -87,10 +85,6 @@ export class UserModule {
      * This function provides an authentication entry point to the GD API. It is needed to authenticate
      * by calling this function prior any other API calls. After providing valid credentials
      * every subsequent API call in a current session will be authenticated.
-     *
-     * @method login
-     * @param {String} username
-     * @param {String} password
      */
     public login(username: string, password: string): Promise<any> {
         return this.xhr
@@ -112,10 +106,9 @@ export class UserModule {
      * This function provides an authentication entry point to the GD API via SSO
      * https://help.gooddata.com/display/developer/GoodData+PGP+Single+Sign-On
      *
-     * @method loginSso
-     * @param {String} encryptedClaims PGP message
-     * @param {String} ssoProvider
-     * @param {String} targetUrl
+     * @param encryptedClaims - PGP message
+     * @param ssoProvider - name of the SSO provider
+     * @param targetUrl - where to redirect after the SSO flow, set this to `/gdc/account/token`
      */
     public loginSso(
         encryptedClaims: string,
@@ -135,7 +128,6 @@ export class UserModule {
 
     /**
      * Logs out current user
-     * @method logout
      */
     public logout(): Promise<ApiResponse | void> {
         return this.isLoggedIn().then(
@@ -158,8 +150,7 @@ export class UserModule {
 
     /**
      * Gets current user's profile
-     * @method getCurrentProfile
-     * @return {Promise} Resolves with account setting object
+     * @returns Resolves with account setting object
      */
     public getCurrentProfile(): Promise<GdcUser.IAccountSetting> {
         return this.xhr.get("/gdc/account/profile/current").then((r) => r.getData().accountSetting);
@@ -167,9 +158,8 @@ export class UserModule {
 
     /**
      * Gets user's regional number formatting configuration
-     * @method getUserRegionalNumberFormatting
-     * @param {String} userId - loginMD5
-     * @return {Promise} Resolves with separators setting object
+     * @param userId - loginMD5
+     * @returns Resolves with separators setting object
      */
     public getUserRegionalNumberFormatting(userId: string): Promise<GdcUser.ISeparators> {
         return this.xhr
@@ -184,9 +174,8 @@ export class UserModule {
 
     /**
      * Updates user's profile settings
-     * @method updateProfileSettings
-     * @param {String} profileId - User profile identifier
-     * @param {Object} profileSetting
+     * @param profileId - User profile identifier
+     * @param profileSetting - the profile setting update payload
      */
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     public updateProfileSettings(profileId: string, profileSetting: any): Promise<ApiResponse> {
@@ -198,7 +187,6 @@ export class UserModule {
 
     /**
      * Returns info about currently logged in user from bootstrap resource
-     * @method getAccountInfo
      */
     public getAccountInfo(): Promise<{
         login: string;
@@ -224,8 +212,8 @@ export class UserModule {
     /**
      * Gets user configs including user specific feature flags
      *
-     * @param {String} userId - A user identifier
-     * @return {IUserConfigsSettingItem[]} An array of user configs setting item
+     * @param userId - A user identifier
+     * @returns An array of user configs setting item
      */
     public getUserConfigs(userId: string): Promise<IUserConfigsSettingItem[]> {
         return this.xhr.get(`/gdc/account/profile/${userId}/config`).then((apiResponse: ApiResponse) => {
@@ -241,9 +229,9 @@ export class UserModule {
     /**
      * Gets user specific feature flags
      *
-     * @param {String} userId - A user identifier
-     * @param {String[]} sourceFilter - Optional list of setting item sources to include. Defaults to including everything
-     * @return {IFeatureFlags} Hash table of feature flags and their values where feature flag is the key
+     * @param userId - A user identifier
+     * @param sourceFilter - Optional list of setting item sources to include. Defaults to including everything
+     * @returns Hash table of feature flags and their values where feature flag is the key
      */
     public getUserFeatureFlags(userId: string, sourceFilter?: string[]): Promise<IFeatureFlags> {
         return this.getUserConfigs(userId).then((settingItems) => {
@@ -263,7 +251,6 @@ export class UserModule {
 
     /**
      * Returns the feature flags valid for the currently logged in user.
-     * @method getFeatureFlags
      */
     public getFeatureFlags(): Promise<GdcUser.IFeatureFlags> {
         return this.xhr
@@ -294,7 +281,7 @@ export class UserModule {
     /**
      * Initiates SPI SAML SSO.
      *
-     * @param relayState URL of the page where the user is redirected after a successful login
+     * @param relayState - URL of the page where the user is redirected after a successful login
      */
     public initiateSamlSso(relayState: string): Promise<void> {
         /*

@@ -118,7 +118,6 @@ export function getConfigProps(props: IAreaChartProps): IChartConfig {
 
 /**
  * Show warning to SDK user in console log
- * @param props
  */
 function verifyBuckets(props: IAreaChartProps): void {
     const viewBy = truncate(props.viewBy, ViewByAttributesLimit);
