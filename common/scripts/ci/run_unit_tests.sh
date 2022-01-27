@@ -9,10 +9,6 @@ export WIREMOCK_NET="wiremock-sdk-ui-${RANDOM}"
 
 _RUSH="${DIR}/docker_rush.sh"
 
-# ---------------------------------------------------------------------
-# START: testing mechanisms for incremental tests
-# ---------------------------------------------------------------------
-
 echo 'Evaluating possible incremental test/validation optimizations'
 
 # if there are any changes outside examples, libs, and tools, we must re-test everything as these often mean
@@ -25,20 +21,12 @@ EXTERNAL_FILES_CHANGED=$(git diff --name-only "$ZUUL_BRANCH...HEAD" | grep -Ev '
 if [ -z "$EXTERNAL_FILES_CHANGED" ]; then
   echo 'Changes are only in code files, we can make the testing smarter'
   RUSH_SPECS="--impacted-by git:$ZUUL_BRANCH"
-  echo "The rush commands would be limited by the following limiter: $RUSH_SPECS"
 else
   echo 'There are some files modified outside of the code:'
   echo "$EXTERNAL_FILES_CHANGED"
   echo 'Falling back to testing everything...'
   RUSH_SPECS=''
 fi
-
-# always install and build everything, just in case
-# once we are confident this works well
-
-# ---------------------------------------------------------------------
-# END: testing mechanisms for incremental tests
-# ---------------------------------------------------------------------
 
 # ---------------------------------------------------------------------
 # Support for starting wiremock on a dedicated docker network
@@ -97,6 +85,7 @@ RC=1
   RC=$?
 
   if [ $RC -eq 0 ]; then
+    # always install and build everything, just in case
     $_RUSH build
     RC=$?
   fi
