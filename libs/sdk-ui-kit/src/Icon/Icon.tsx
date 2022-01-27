@@ -31,6 +31,7 @@ import { Keyword } from "./icons/Keyword";
 import { Label } from "./icons/Label";
 import { Metric } from "./icons/Metric";
 import { QuestionMark } from "./icons/QuestionMark";
+import { Minimize } from "./icons/Minimize";
 
 /**
  * @internal
@@ -68,6 +69,7 @@ export const Icon = {
     Label,
     Metric,
     QuestionMark,
+    Minimize,
 };
 
 export { IRowsIconProps };
