@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 /**
  * This package provides various UI components used to build GoodData applications (such as buttons, icons, and so on).
  *
@@ -48,3 +48,4 @@ export * from "./DateDatasets";
 export * from "./ColorPicker";
 export * from "./FilterLabel";
 export * from "./Menu";
+export * from "./ScrollGradient";
