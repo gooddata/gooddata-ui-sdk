@@ -145,7 +145,7 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
 
     /**
      * Adds multiple test scenarios; given base name & props of the scenario this method will use the
-     * provided customizer function to expand base into multiple contrete scenarios. It then adds those
+     * provided customizer function to expand base into multiple concrete scenarios. It then adds those
      * one-by-one using the {@link addScenario} method.
      *
      * When adding scenarios in bulk fashion, the scenario tagging works as follows:
@@ -204,10 +204,6 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
      *
      * This can be used to copy & modify scenarios, or to multiply scenarios for different variants. All depends
      * on the implementation of the customizer function.
-     *
-     * @param fromGroup
-     * @param customizer
-     * @param m
      */
     public addCustomizedScenarios(
         fromGroup: ScenarioGroup<T>,

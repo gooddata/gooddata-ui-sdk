@@ -75,9 +75,6 @@ function initializeStore(
  * Locates target directory where the recording definition for the provided scenario should be stored. Returns
  * `undefined` if not possible to determine - for instance of the stores root location is not provided via the
  * env variable
- *
- * @param scenario
- * @param defType
  */
 export function storeDirectoryFor(
     scenario: IScenario<any>,

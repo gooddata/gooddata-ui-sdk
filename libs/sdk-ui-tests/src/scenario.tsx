@@ -116,7 +116,7 @@ export interface IScenario<T extends VisProps> {
     readonly customDataCapture: ScenarioDataCapture;
 
     /**
-     * Props factory which transforms unbound props + backend + workspace => real component props
+     * Props factory which transforms unbound props + backend + workspace =\> real component props
      */
     readonly propsFactory: PropsFactory<T>;
 
