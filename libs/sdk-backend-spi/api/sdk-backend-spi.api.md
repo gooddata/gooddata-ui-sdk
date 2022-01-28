@@ -178,7 +178,7 @@ export interface IAccessControlAware {
     readonly shareStatus: ShareStatus;
 }
 
-// @alpha
+// @public
 export type IAccessGrantee = IUserGroupAccessGrantee | IUserAccessGrantee;
 
 // @alpha
@@ -1502,13 +1502,13 @@ export function isUnexpectedResponseError(obj: unknown): obj is UnexpectedRespon
 // @alpha
 export const isUserAccess: (obj: unknown) => obj is IUserAccess;
 
-// @alpha
+// @public
 export const isUserAccessGrantee: (obj: unknown) => obj is IUserAccessGrantee;
 
 // @alpha
 export const isUserGroupAccess: (obj: unknown) => obj is IUserGroupAccess;
 
-// @alpha
+// @public
 export const isUserGroupAccessGrantee: (obj: unknown) => obj is IUserGroupAccessGrantee;
 
 // @public
@@ -1747,7 +1747,7 @@ export interface IUserAccess {
     user: IWorkspaceUser;
 }
 
-// @alpha
+// @public
 export interface IUserAccessGrantee {
     // (undocumented)
     granteeRef: ObjRef;
@@ -1763,7 +1763,7 @@ export interface IUserGroupAccess {
     userGroup: IWorkspaceUserGroup;
 }
 
-// @alpha
+// @public
 export interface IUserGroupAccessGrantee {
     // (undocumented)
     granteeRef: ObjRef;
@@ -2199,7 +2199,7 @@ export type ScheduledMailAttachment = IDashboardAttachment;
 // @alpha
 export type ScreenSize = "xl" | "lg" | "md" | "sm" | "xs";
 
-// @alpha
+// @public
 export type ShareStatus = "private" | "shared" | "public";
 
 // @alpha (undocumented)

@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { IDashboard, IDashboardDefinition, isFilterContext } from "@gooddata/sdk-backend-spi";
@@ -27,7 +27,7 @@ type DashboardSaveSharingContext = {
 };
 
 function* createDashboardSaveSharingContext(cmd: ChangeSharing): SagaIterator<DashboardSaveSharingContext> {
-    const { newShareProps } = cmd.payload;
+    const { newSharingProperties } = cmd.payload;
 
     const persistedDashboard: ReturnType<typeof selectPersistedDashboard> = yield select(
         selectPersistedDashboard,
@@ -47,7 +47,7 @@ function* createDashboardSaveSharingContext(cmd: ChangeSharing): SagaIterator<Da
     };
     const dashboardToSave: IDashboardDefinition = {
         ...dashboardFromState,
-        ...newShareProps,
+        ...newSharingProperties,
     };
 
     return {
@@ -72,7 +72,7 @@ function addGrantees(ctx: DashboardContext, saveSharingCtx: DashboardSaveSharing
     return ctx.backend
         .workspace(ctx.workspace)
         .accessControl()
-        .grantAccess(ctx.dashboardRef!, cmd.payload.newShareProps.granteesToAdd);
+        .grantAccess(ctx.dashboardRef!, cmd.payload.newSharingProperties.granteesToAdd);
 }
 
 function removeGrantees(ctx: DashboardContext, saveSharingCtx: DashboardSaveSharingContext): Promise<any> {
@@ -80,7 +80,7 @@ function removeGrantees(ctx: DashboardContext, saveSharingCtx: DashboardSaveShar
     return ctx.backend
         .workspace(ctx.workspace)
         .accessControl()
-        .revokeAccess(ctx.dashboardRef!, cmd.payload.newShareProps.granteesToDelete);
+        .revokeAccess(ctx.dashboardRef!, cmd.payload.newSharingProperties.granteesToDelete);
 }
 
 type DashboardSaveSharingResult = {
@@ -98,7 +98,7 @@ function* saveSharing(
         saveSharingCtx,
     );
 
-    const { granteesToDelete, granteesToAdd } = saveSharingCtx.cmd.payload.newShareProps;
+    const { granteesToDelete, granteesToAdd } = saveSharingCtx.cmd.payload.newSharingProperties;
 
     if (!isEmpty(granteesToDelete)) {
         yield call(removeGrantees, ctx, saveSharingCtx);
@@ -141,5 +141,5 @@ export function* changeSharingHandler(
         yield put(batch);
     }
 
-    return dashboardSharingChanged(ctx, dashboardRef, cmd.payload.newShareProps, cmd.correlationId);
+    return dashboardSharingChanged(ctx, dashboardRef, cmd.payload.newSharingProperties, cmd.correlationId);
 }

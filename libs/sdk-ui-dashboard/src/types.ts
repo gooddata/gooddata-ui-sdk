@@ -124,14 +124,35 @@ export interface IDrillToUrlPlaceholder {
 }
 
 /**
- * @alpha
- * All sharing props describing sharing change from share dialog in future
+ * All sharing properties describing sharing changes
+ *
+ * @public
  */
-export interface IShareProps {
+export interface ISharingProperties {
+    /**
+     * Dashboard share status
+     * private - dashboard accessible only by its creator
+     * shared - dashboard shared with closed set of users/groups
+     * public - accessible by everyone in the workspace
+     */
     shareStatus: ShareStatus;
+    /**
+     * For backends NOT forcing strict access this prop reflects its current setting of strict access
+     * If set to true then object is not accessible via its URI/ref for people without access rights.
+     * Otherwise object is accessible by its URI/ref, eg. when drilling to it.
+     */
     isUnderStrictControl: boolean;
+    /**
+     * When set to true, the dashboard is locked and no one other than the administrator can edit it.
+     */
     isLocked: boolean;
+    /**
+     * Access grantees to grant access to the dashboard to.
+     */
     granteesToAdd: IAccessGrantee[];
+    /**
+     * Access grantees whose access to the dashboard to revoke.
+     */
     granteesToDelete: IAccessGrantee[];
 }
 
