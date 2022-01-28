@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { DashboardConfig } from "../types/commonTypes";
 import { IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
@@ -198,7 +198,7 @@ export function renameDashboard(newTitle: string, correlationId?: string): Renam
 export interface ChangeSharing extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.SHARING.CHANGE";
     readonly payload: {
-        readonly newShareProps: ISharingApplyPayload;
+        readonly newSharingProperties: ISharingApplyPayload;
     };
 }
 
@@ -206,17 +206,20 @@ export interface ChangeSharing extends IDashboardCommand {
  * Creates the ChangeSharing command. Dispatching this command will result in change of sharing status of dashboard. The changes
  * will be done in-memory and also propagated to the backend.
  *
- * @param newShareProps - new dashboard share props
+ * @param newSharingProperties - new dashboard sharing properties
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  * @alpha
  */
-export function changeSharing(newShareProps: ISharingApplyPayload, correlationId?: string): ChangeSharing {
+export function changeSharing(
+    newSharingProperties: ISharingApplyPayload,
+    correlationId?: string,
+): ChangeSharing {
     return {
         type: "GDC.DASH/CMD.SHARING.CHANGE",
         correlationId,
         payload: {
-            newShareProps,
+            newSharingProperties,
         },
     };
 }

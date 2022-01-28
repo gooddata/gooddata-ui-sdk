@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { uriRef } from "@gooddata/sdk-model";
 
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
@@ -34,7 +34,7 @@ describe("change dashboard sharing handler", () => {
 
             expect(event.payload).toEqual({
                 dashboardRef: uriRef("/gdc/md/referenceworkspace/obj/1304"),
-                newShareProps: {
+                newSharingProperties: {
                     shareStatus: "public",
                     isUnderStrictControl: false,
                     isLocked: true,

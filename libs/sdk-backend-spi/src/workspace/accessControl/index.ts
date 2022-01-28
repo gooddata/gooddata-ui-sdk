@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { ObjRef } from "@gooddata/sdk-model";
 
@@ -54,9 +54,9 @@ export const isUserGroupAccess = (obj: unknown): obj is IUserGroupAccess => {
 export type AccessGranteeDetail = IUserAccess | IUserGroupAccess;
 
 /**
- * New user grantee specification.
+ * User access grantee specification.
  *
- * @alpha
+ * @public
  */
 export interface IUserAccessGrantee {
     type: "user";
@@ -67,16 +67,16 @@ export interface IUserAccessGrantee {
  * Tests whether the provided object is an instance of {@link IUserAccessGrantee}.
  *
  * @param obj - object to test
- * @alpha
+ * @public
  */
 export const isUserAccessGrantee = (obj: unknown): obj is IUserAccessGrantee => {
     return !isEmpty(obj) && (obj as IUserAccessGrantee).type === "user";
 };
 
 /**
- * New user group grantee specification.
+ * User group access grantee specification.
  *
- * @alpha
+ * @public
  */
 export interface IUserGroupAccessGrantee {
     type: "group";
@@ -87,16 +87,16 @@ export interface IUserGroupAccessGrantee {
  * Tests whether the provided object is an instance of {@link IUserGroupAccessGrantee}.
  *
  * @param obj - object to test
- * @alpha
+ * @public
  */
 export const isUserGroupAccessGrantee = (obj: unknown): obj is IUserGroupAccessGrantee => {
     return !isEmpty(obj) && (obj as IUserGroupAccessGrantee).type === "group";
 };
 
 /**
- * New grantee specification.
+ * Access grantee specification.
  *
- * @alpha
+ * @public
  */
 export type IAccessGrantee = IUserGroupAccessGrantee | IUserAccessGrantee;
 

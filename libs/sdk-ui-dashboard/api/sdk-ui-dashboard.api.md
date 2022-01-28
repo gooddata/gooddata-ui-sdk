@@ -448,14 +448,14 @@ export function changeLayoutSectionHeader(index: number, header: IDashboardLayou
 export interface ChangeSharing extends IDashboardCommand {
     // (undocumented)
     readonly payload: {
-        readonly newShareProps: ISharingApplyPayload_2;
+        readonly newSharingProperties: ISharingApplyPayload_2;
     };
     // (undocumented)
     readonly type: "GDC.DASH/CMD.SHARING.CHANGE";
 }
 
 // @alpha
-export function changeSharing(newShareProps: ISharingApplyPayload_2, correlationId?: string): ChangeSharing;
+export function changeSharing(newSharingProperties: ISharingApplyPayload_2, correlationId?: string): ChangeSharing;
 
 // @alpha
 export function clearDateFilterSelection(correlationId?: string): ChangeDateFilterSelection;
@@ -1451,7 +1451,7 @@ export interface DashboardSharingChanged extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
         dashboardRef: ObjRef;
-        newShareProps: IShareProps;
+        newSharingProperties: ISharingProperties;
     };
     // (undocumented)
     readonly type: "GDC.DASH/EVT.SHARING.CHANGED";
@@ -2964,20 +2964,6 @@ export interface IShareDialogProps {
     workspace: string;
 }
 
-// @alpha
-export interface IShareProps {
-    // (undocumented)
-    granteesToAdd: IAccessGrantee[];
-    // (undocumented)
-    granteesToDelete: IAccessGrantee[];
-    // (undocumented)
-    isLocked: boolean;
-    // (undocumented)
-    isUnderStrictControl: boolean;
-    // (undocumented)
-    shareStatus: ShareStatus;
-}
-
 // @alpha (undocumented)
 export interface IShareStatusProps {
     // (undocumented)
@@ -2988,6 +2974,15 @@ export interface IShareStatusProps {
 
 // @alpha (undocumented)
 export interface ISharingApplyPayload extends ISharingApplyPayload_2 {
+}
+
+// @public
+export interface ISharingProperties {
+    granteesToAdd: IAccessGrantee[];
+    granteesToDelete: IAccessGrantee[];
+    isLocked: boolean;
+    isUnderStrictControl: boolean;
+    shareStatus: ShareStatus;
 }
 
 // @alpha (undocumented)

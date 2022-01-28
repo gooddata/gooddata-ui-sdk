@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import { DashboardContext } from "../types/commonTypes";
 
@@ -11,7 +11,10 @@ import { DashboardContext } from "../types/commonTypes";
  * These are the event types that we currently consider stable:
  *
  * -  GDC.DASH/EVT.INITIALIZED
+ * -  GDC.DASH/EVT.DEINITIALIZED
+ * -  GDC.DASH/EVT.SAVED
  * -  GDC.DASH/EVT.COPY_SAVED
+ * -  GDC.DASH/EVT.SHARING.CHANGED
  *
  * @public
  */

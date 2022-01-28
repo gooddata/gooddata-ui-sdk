@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { IAuditableDates, IAuditableUsers, Identifier, IInsight, ObjRef } from "@gooddata/sdk-model";
 import { IDashboardLayout, IDashboardWidget } from "./layout";
 import { IFilterContext, IFilterContextDefinition, ITempFilterContext } from "./filterContext";
@@ -154,7 +154,7 @@ export interface IDashboardPluginLink {
  * private - object accessible only by its creator
  * shared - object shared with closed set of users/groups
  * public - accessible by everyone in project
- * @alpha
+ * @public
  */
 export type ShareStatus = "private" | "shared" | "public";
 
@@ -169,12 +169,13 @@ export interface IAccessControlAware {
     readonly shareStatus: ShareStatus;
     /**
      * For backends NOT forcing strict access this prop reflects its current setting of strict access
-     * If set to true then object is not accessible via its URI for people without access rights. Otherwise object is accessible by its URI, eg. when drilling to it.
+     * If set to true then object is not accessible via its URI for people without access rights.
+     * Otherwise object is accessible by its URI, eg. when drilling to it.
      */
     readonly isUnderStrictControl?: boolean;
 
     /**
-     * When dashboard is locked, no one other than the administrator can edit it
+     * When object is locked, no one other than the administrator can edit it
      */
     readonly isLocked?: boolean;
 }
