@@ -5,15 +5,13 @@ import isEmpty from "lodash/isEmpty";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IInsightDefinition, newAttributeAreaSort, newMeasureSort, localIdRef } from "@gooddata/sdk-model";
 import { PluggableColumnBarCharts } from "../PluggableColumnBarCharts";
+import { IReferencePoint, IVisConstruct, IVisualizationProperties } from "../../../interfaces/Visualization";
 import {
-    IReferencePoint,
     ISortConfig,
-    IVisConstruct,
-    IVisualizationProperties,
     newAttributeAreaSortSuggestion,
     newAttributeSortSuggestion,
     newMeasureSortSuggestion,
-} from "../../../interfaces/Visualization";
+} from "../../../interfaces/SortConfig";
 import { BAR_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 import BarChartConfigurationPanel from "../../configurationPanels/BarChartConfigurationPanel";
 import { AXIS, AXIS_NAME } from "../../../constants/axis";
