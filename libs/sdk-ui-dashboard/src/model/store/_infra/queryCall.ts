@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { IDashboardQuery } from "../../queries";
 import { queryEnvelopeWithPromise } from "./queryProcessing";
@@ -33,6 +33,6 @@ export function* query<TQuery extends IDashboardQuery, TQueryResult>(
  *
  * @param q - query to run
  */
-export function* queryFresh<TResult>(q: IDashboardQuery<TResult>): SagaIterator<TResult> {
+export function* queryFresh<TResult>(q: IDashboardQuery): SagaIterator<TResult> {
     return yield call(query, q, true);
 }

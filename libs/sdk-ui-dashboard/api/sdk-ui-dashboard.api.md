@@ -208,7 +208,7 @@ export interface AddSectionItems extends IDashboardCommand {
 export type AlertsState = EntityState<IWidgetAlert>;
 
 // @internal
-export type AllQueryCacheReducers<TQuery extends IDashboardQuery<TResult>, TResult> = {
+export type AllQueryCacheReducers<TQuery extends IDashboardQuery, TResult> = {
     set: QueryCacheReducer<TQuery, TResult, QueryCacheEntry<TQuery, TResult>>;
     remove: QueryCacheReducer<TQuery, TResult, string>;
     removeAll: QueryCacheReducer<TQuery, TResult, void>;
@@ -1356,7 +1356,7 @@ export abstract class DashboardPluginV1 implements IDashboardPluginContract_V1 {
 export type DashboardQueries = QueryInsightDateDatasets | QueryInsightAttributesMeta | QueryWidgetFilters | QueryWidgetBrokenAlerts;
 
 // @alpha
-export interface DashboardQueryCompleted<TQuery extends IDashboardQuery<TResult>, TResult> extends IDashboardEvent {
+export interface DashboardQueryCompleted<TQuery extends IDashboardQuery, TResult> extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
         readonly query: TQuery;
@@ -2334,13 +2334,13 @@ export interface IDashboardProps extends IDashboardBaseProps, IDashboardExtensio
 }
 
 // @alpha
-export interface IDashboardQuery<_TResult = any> {
+export interface IDashboardQuery {
     readonly correlationId?: string;
     readonly type: DashboardQueryType;
 }
 
 // @internal
-export interface IDashboardQueryService<TQuery extends IDashboardQuery<TResult>, TResult> {
+export interface IDashboardQueryService<TQuery extends IDashboardQuery, TResult> {
     // (undocumented)
     cache?: QueryCache<TQuery, TResult>;
     // (undocumented)
@@ -3299,7 +3299,7 @@ export type QueryActions<TQuery extends IDashboardQuery, TResult> = CaseReducerA
 export function queryAndWaitFor<TQuery extends DashboardQueries, TQueryResult>(dispatch: DashboardDispatch, query: TQuery): Promise<TQueryResult>;
 
 // @internal
-export type QueryCache<TQuery extends IDashboardQuery<TResult>, TResult> = {
+export type QueryCache<TQuery extends IDashboardQuery, TResult> = {
     cacheName: string;
     reducer: Reducer<EntityState<QueryCacheEntry<TQuery, TResult>>>;
     actions: QueryActions<TQuery, TResult>;
@@ -3308,7 +3308,7 @@ export type QueryCache<TQuery extends IDashboardQuery<TResult>, TResult> = {
 };
 
 // @internal
-export type QueryCacheEntry<TQuery extends IDashboardQuery<TResult>, TResult> = QueryCacheEntryResult<TResult> & {
+export type QueryCacheEntry<TQuery extends IDashboardQuery, TResult> = QueryCacheEntryResult<TResult> & {
     query: TQuery;
 };
 
@@ -3320,7 +3320,7 @@ export type QueryCacheEntryResult<TResult> = {
 };
 
 // @internal
-export type QueryCacheReducer<TQuery extends IDashboardQuery<TResult>, TResult, TPayload> = CaseReducer<EntityState<QueryCacheEntry<TQuery, TResult>>, PayloadAction<TPayload>>;
+export type QueryCacheReducer<TQuery extends IDashboardQuery, TResult, TPayload> = CaseReducer<EntityState<QueryCacheEntry<TQuery, TResult>>, PayloadAction<TPayload>>;
 
 // @alpha
 export function queryDateDatasetsForInsight(insightOrRef: ObjRef | IInsight, correlationId?: string): QueryInsightDateDatasets;
@@ -3329,7 +3329,7 @@ export function queryDateDatasetsForInsight(insightOrRef: ObjRef | IInsight, cor
 export function queryDateDatasetsForMeasure(measureRef: ObjRef, correlationId?: string): QueryMeasureDateDatasets;
 
 // @alpha
-export interface QueryInsightAttributesMeta extends IDashboardQuery<InsightAttributesMeta> {
+export interface QueryInsightAttributesMeta extends IDashboardQuery {
     // (undocumented)
     readonly payload: {
         readonly insightOrRef: ObjRef | IInsight;
@@ -3342,7 +3342,7 @@ export interface QueryInsightAttributesMeta extends IDashboardQuery<InsightAttri
 export function queryInsightAttributesMeta(insightOrRef: ObjRef | IInsight, correlationId?: string): QueryInsightAttributesMeta;
 
 // @alpha
-export interface QueryInsightDateDatasets extends IDashboardQuery<InsightDateDatasets> {
+export interface QueryInsightDateDatasets extends IDashboardQuery {
     // (undocumented)
     readonly payload: {
         readonly insightOrRef: ObjRef | IInsight;
@@ -3352,7 +3352,7 @@ export interface QueryInsightDateDatasets extends IDashboardQuery<InsightDateDat
 }
 
 // @alpha
-export interface QueryMeasureDateDatasets extends IDashboardQuery<MeasureDateDatasets> {
+export interface QueryMeasureDateDatasets extends IDashboardQuery {
     // (undocumented)
     readonly payload: {
         readonly measureRef: ObjRef;
@@ -3403,7 +3403,7 @@ export type QueryProcessingSuccessState<TResult> = {
 };
 
 // @alpha
-export interface QueryWidgetBrokenAlerts extends IDashboardQuery<IBrokenAlertFilterBasicInfo[]> {
+export interface QueryWidgetBrokenAlerts extends IDashboardQuery {
     // (undocumented)
     readonly payload: {
         readonly widgetRef: ObjRef;
@@ -3416,7 +3416,7 @@ export interface QueryWidgetBrokenAlerts extends IDashboardQuery<IBrokenAlertFil
 export function queryWidgetBrokenAlerts(widgetRef: ObjRef, correlationId?: string): QueryWidgetBrokenAlerts;
 
 // @alpha
-export interface QueryWidgetFilters extends IDashboardQuery<IFilter[]> {
+export interface QueryWidgetFilters extends IDashboardQuery {
     // (undocumented)
     readonly payload: {
         readonly widgetRef: ObjRef;

@@ -53,10 +53,7 @@ export type QueryCacheEntryResult<TResult> = {
  *
  * @internal
  */
-export type QueryCacheEntry<
-    TQuery extends IDashboardQuery<TResult>,
-    TResult,
-> = QueryCacheEntryResult<TResult> & {
+export type QueryCacheEntry<TQuery extends IDashboardQuery, TResult> = QueryCacheEntryResult<TResult> & {
     query: TQuery;
 };
 
@@ -66,7 +63,7 @@ export type QueryCacheEntry<
  *
  * @internal
  */
-export type QueryCacheReducer<TQuery extends IDashboardQuery<TResult>, TResult, TPayload> = CaseReducer<
+export type QueryCacheReducer<TQuery extends IDashboardQuery, TResult, TPayload> = CaseReducer<
     EntityState<QueryCacheEntry<TQuery, TResult>>,
     PayloadAction<TPayload>
 >;
@@ -76,7 +73,7 @@ export type QueryCacheReducer<TQuery extends IDashboardQuery<TResult>, TResult, 
  *
  * @internal
  */
-export type AllQueryCacheReducers<TQuery extends IDashboardQuery<TResult>, TResult> = {
+export type AllQueryCacheReducers<TQuery extends IDashboardQuery, TResult> = {
     /**
      * Sets value of cache entry.
      */
@@ -107,7 +104,7 @@ export type QueryActions<TQuery extends IDashboardQuery, TResult> = CaseReducerA
  *
  * @internal
  */
-export type QueryCache<TQuery extends IDashboardQuery<TResult>, TResult> = {
+export type QueryCache<TQuery extends IDashboardQuery, TResult> = {
     /**
      * A name to use as key in _queryCache part of the redux state.
      */
@@ -170,7 +167,7 @@ export function createSliceNameForQueryCache(queryName: string): string {
     return `${segments.join("")}Cache`;
 }
 
-function createQueryCacheSlice<TQuery extends IDashboardQuery<TResult>, TResult>(
+function createQueryCacheSlice<TQuery extends IDashboardQuery, TResult>(
     queryName: string,
     selectId: IdSelector<TQuery>,
 ): QueryCache<TQuery, TResult> {
@@ -241,7 +238,7 @@ function createQueryCacheSlice<TQuery extends IDashboardQuery<TResult>, TResult>
  *
  * @internal
  */
-export interface IDashboardQueryService<TQuery extends IDashboardQuery<TResult>, TResult> {
+export interface IDashboardQueryService<TQuery extends IDashboardQuery, TResult> {
     name: DashboardQueryType;
     generator: (ctx: DashboardContext, query: TQuery, refresh: boolean) => SagaIterator<TResult>;
     cache?: QueryCache<TQuery, TResult>;
@@ -257,7 +254,7 @@ export interface IDashboardQueryService<TQuery extends IDashboardQuery<TResult>,
  * @param generator - the generator function that processes the query
  * @param queryToCacheKey - function to map query into a cache key under which to store the results
  */
-export function createCachedQueryService<TQuery extends IDashboardQuery<TResult>, TResult>(
+export function createCachedQueryService<TQuery extends IDashboardQuery, TResult>(
     queryName: DashboardQueryType,
     generator: (ctx: DashboardContext, query: TQuery) => SagaIterator<TResult>,
     queryToCacheKey: (query: TQuery) => EntityId,
@@ -323,7 +320,7 @@ export function createCachedQueryService<TQuery extends IDashboardQuery<TResult>
  * @param queryName - name of the query
  * @param generator - the generator function that processes the query
  */
-export function createQueryService<TQuery extends IDashboardQuery<TResult>, TResult>(
+export function createQueryService<TQuery extends IDashboardQuery, TResult>(
     queryName: DashboardQueryType,
     generator: (ctx: DashboardContext, query: TQuery) => SagaIterator<TResult>,
 ): IDashboardQueryService<TQuery, TResult> {
