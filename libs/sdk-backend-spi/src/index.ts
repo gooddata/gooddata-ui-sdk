@@ -132,6 +132,7 @@ export {
     NotSupported,
     NotImplemented,
     NotAuthenticated,
+    NotAuthenticatedReason,
     ErrorConverter,
     isAnalyticalBackendError,
     isNoDataError,
