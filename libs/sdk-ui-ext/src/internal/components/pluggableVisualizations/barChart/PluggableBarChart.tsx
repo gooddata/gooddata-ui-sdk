@@ -97,19 +97,20 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
                     ],
                     availableSorts: [
                         {
-                            forBucketItem: localIdRef(viewBy[0].localIdentifier),
-                            sortSuggestions: [
-                                newAttributeSortSuggestion(viewBy[0].localIdentifier),
-                                newAttributeAreaSortSuggestion(viewBy[0].localIdentifier),
-                            ],
+                            itemId: localIdRef(viewBy[0].localIdentifier),
+                            attributeSort: {
+                                normalSortEnabled: true,
+                                areaSortEnabled: true,
+                            },
                         },
                         {
-                            forBucketItem: localIdRef(viewBy[1].localIdentifier),
-                            sortSuggestions: [
-                                newAttributeSortSuggestion(viewBy[1].localIdentifier),
-                                newAttributeAreaSortSuggestion(viewBy[1].localIdentifier),
-                                newMeasureSortSuggestion(measures[1].localIdentifier),
-                                // TODO INE add other measure sorts for rest of measures
+                            itemId: localIdRef(viewBy[1].localIdentifier),
+                            attributeSort: {
+                                normalSortEnabled: true,
+                                areaSortEnabled: true,
+                            },
+                            metricSorts: [
+                                ...measures.map((m) => newMeasureSortSuggestion(m.localIdentifier)),
                             ],
                         },
                     ],
@@ -124,15 +125,19 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
                 ],
                 availableSorts: [
                     {
-                        forBucketItem: localIdRef(viewBy[0].localIdentifier),
-                        sortSuggestions: [newAttributeSortSuggestion(viewBy[0].localIdentifier)],
+                        itemId: localIdRef(viewBy[0].localIdentifier),
+                        attributeSort: {
+                            normalSortEnabled: true,
+                            areaSortEnabled: true,
+                        },
                     },
                     {
-                        forBucketItem: localIdRef(viewBy[1].localIdentifier),
-                        sortSuggestions: [
-                            newAttributeSortSuggestion(viewBy[1].localIdentifier),
-                            newAttributeAreaSortSuggestion(viewBy[1].localIdentifier),
-                        ],
+                        itemId: localIdRef(viewBy[1].localIdentifier),
+                        attributeSort: {
+                            normalSortEnabled: true,
+                            areaSortEnabled: true,
+                        },
+                        metricSorts: [...measures.map((m) => newMeasureSortSuggestion(m.localIdentifier))],
                     },
                 ],
             };
@@ -144,10 +149,11 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
                 currentSort: [newAttributeAreaSort(viewBy[0].localIdentifier, "desc")],
                 availableSorts: [
                     {
-                        forBucketItem: localIdRef(viewBy[0].localIdentifier),
-                        sortSuggestions: [
-                            ...measures.map((measure) => newMeasureSortSuggestion(measure.localIdentifier)),
-                        ],
+                        itemId: localIdRef(viewBy[0].localIdentifier),
+                        attributeSort: {
+                            normalSortEnabled: true,
+                            areaSortEnabled: true,
+                        },
                     },
                 ],
             };
@@ -157,32 +163,25 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
             return {
                 ...common,
                 currentSort: [newAttributeAreaSort(viewBy[0].localIdentifier, "desc")],
-                availableSorts: [],
+                availableSorts: [
+                    {
+                        itemId: localIdRef(viewBy[0].localIdentifier),
+                        attributeSort: {
+                            normalSortEnabled: true,
+                            areaSortEnabled: true,
+                        },
+                    },
+                ],
             };
         }
 
-        return isEmpty(stackBy) && !isEmpty(measures)
-            ? {
-                  ...common,
-                  currentSort: [newMeasureSort(measures[0].localIdentifier, "desc")],
-                  availableSorts: [
-                      {
-                          forBucketItem: localIdRef(measures[0].localIdentifier), // TODO INE is measure identifier ok here?
-                          sortSuggestions: [
-                              ...measures
-                                  .slice(1, measures.length)
-                                  .map((measure) => newMeasureSortSuggestion(measure.localIdentifier)),
-                          ],
-                      },
-                  ],
-              }
-            : {
-                  supported: true,
-                  disabled: true,
-                  disabledExplanation: "je to rozbity",
-                  currentSort: [],
-                  availableSorts: [],
-              };
+        return {
+            supported: true,
+            disabled: true,
+            disabledExplanation: "je to rozbity",
+            currentSort: [],
+            availableSorts: [],
+        };
     }
 
     public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
@@ -192,10 +191,12 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
             referencePoint,
             canSortStackTotalValue(referencePoint.buckets, referencePoint.properties.controls),
         );
+        // TODO validate that sort coming from props is actually valid == its parts can be found in available sorts
+        const isExternalSortValid = !!sort;
         return Promise.resolve({
             supported,
             disabled,
-            currentSort: sort ? sort : currentSort,
+            currentSort: sort && isExternalSortValid ? sort : currentSort,
             availableSorts,
         });
     }
