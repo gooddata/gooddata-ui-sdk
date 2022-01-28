@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import compact from "lodash/compact";
 import {
     DrillDefinition,
@@ -28,8 +28,10 @@ import {
 } from "@gooddata/sdk-ui";
 import first from "lodash/first";
 import last from "lodash/last";
-import { DashboardDrillDefinition, IDrillDownDefinition, IDrillToUrlPlaceholder } from "../../types";
+import { DashboardDrillDefinition, IDrillDownDefinition } from "../../types";
 import isEqual from "lodash/isEqual";
+
+export { getAttributeIdentifiersPlaceholdersFromUrl } from "@gooddata/sdk-backend-spi/dist/workspace/dashboards/drills";
 
 interface IImplicitDrillWithPredicates {
     drillDefinition: DrillDefinition | IDrillDownDefinition;
@@ -163,22 +165,6 @@ export function filterDrillsByDrillEvent(
     const drillSourceLocalIdentifiers = getDrillSourceLocalIdentifierFromEvent(drillEvent);
     return getDrillsBySourceLocalIdentifiers(drillDefinitions, drillSourceLocalIdentifiers);
 }
-
-function matchAll(regex: RegExp, text: string): RegExpExecArray[] {
-    const matches = [];
-    let match = null;
-    while ((match = regex.exec(text)) !== null) {
-        matches.push(match);
-    }
-    return matches;
-}
-
-export const getAttributeIdentifiersPlaceholdersFromUrl = (url: string): IDrillToUrlPlaceholder[] =>
-    matchAll(/{attribute_title\((.*?)\)}/g, url).map((match) => ({
-        placeholder: match[0],
-        identifier: match[1],
-        toBeEncoded: match.index !== 0,
-    }));
 
 export function getDrillOriginLocalIdentifier(
     drillDefinition: InsightDrillDefinition | IDrillDownDefinition,
