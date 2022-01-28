@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import {
     AnalyticalDashboardModelV1,
     JsonApiAnalyticalDashboardOutDocument,
@@ -20,6 +20,7 @@ import updateWith from "lodash/updateWith";
 import { fixWidgetLegacyElementUris } from "../../fixLegacyElementUris";
 import { cloneWithSanitizedIds } from "../../IdSanitization";
 import { isInheritedObject } from "../../utils";
+import { convertDrillToCustomUrlInLayoutFromBackend } from "../DrillToCustomUrlConverter";
 
 function setWidgetRefsInLayout(layout: IDashboardLayout<IDashboardWidget> | undefined) {
     if (!layout) {
@@ -57,7 +58,9 @@ function getConvertedAnalyticalDashboardContent(
 ): IAnalyticalDashboardContent {
     return {
         dateFilterConfig: cloneWithSanitizedIds(analyticalDashboard.analyticalDashboard.dateFilterConfig),
-        layout: setWidgetRefsInLayout(cloneWithSanitizedIds(analyticalDashboard.analyticalDashboard.layout)),
+        layout: convertDrillToCustomUrlInLayoutFromBackend(
+            setWidgetRefsInLayout(cloneWithSanitizedIds(analyticalDashboard.analyticalDashboard.layout)),
+        ),
     };
 }
 

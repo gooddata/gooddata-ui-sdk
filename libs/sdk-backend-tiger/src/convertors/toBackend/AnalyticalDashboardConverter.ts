@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import { AnalyticalDashboardModelV2 } from "@gooddata/api-client-tiger";
 import {
     IDashboardDefinition,
@@ -6,7 +6,11 @@ import {
     IDashboardPluginDefinition,
     IDashboardPluginLink,
     IDashboardWidget,
+    IDrillToCustomUrl,
     IFilterContextDefinition,
+    isDrillToCustomUrl,
+    isInsightWidget,
+    isInsightWidgetDefinition,
     LayoutPath,
     walkLayout,
 } from "@gooddata/sdk-backend-spi";
@@ -14,6 +18,9 @@ import { ObjRef } from "@gooddata/sdk-model";
 import omit from "lodash/omit";
 import updateWith from "lodash/updateWith";
 import { cloneWithSanitizedIds } from "./IdSanitization";
+import isEmpty from "lodash/isEmpty";
+import update from "lodash/update";
+import { splitDrillUrlParts } from "@gooddata/sdk-backend-spi/dist/workspace/dashboards/drillUrls";
 
 function removeIdentifiers(widget: IDashboardWidget) {
     return omit(widget, ["ref", "uri", "identifier"]);
@@ -38,7 +45,9 @@ export function convertAnalyticalDashboard(
     dashboard: IDashboardDefinition,
     filterContextRef?: ObjRef,
 ): AnalyticalDashboardModelV2.IAnalyticalDashboard {
-    const layout = removeWidgetIdentifiersInLayout(dashboard.layout);
+    const layout = convertDrillToCustomUrlInLayoutToBackend(
+        removeWidgetIdentifiersInLayout(dashboard.layout),
+    );
 
     return {
         dateFilterConfig: cloneWithSanitizedIds(dashboard.dateFilterConfig),
@@ -75,4 +84,45 @@ export function convertDashboardPluginLinkToBackend(
         parameters: pluginLink.parameters,
         version: "2",
     };
+}
+
+export function getDrillToCustomUrlPaths(layout: IDashboardLayout) {
+    const paths: LayoutPath[] = [];
+
+    walkLayout(layout, {
+        widgetCallback: (widget, widgetPath) => {
+            if (!isInsightWidget(widget) && !isInsightWidgetDefinition(widget)) {
+                return;
+            }
+
+            widget.drills.forEach((drill, drillIndex) => {
+                if (!isDrillToCustomUrl(drill)) {
+                    return;
+                }
+
+                paths.push([...widgetPath, "drills", drillIndex]);
+            });
+        },
+    });
+
+    return paths;
+}
+
+function convertTargetUrlToParts(drill: IDrillToCustomUrl) {
+    return update(drill, ["target", "url"], splitDrillUrlParts);
+}
+
+export function convertDrillToCustomUrlInLayoutToBackend(layout?: IDashboardLayout) {
+    if (!layout) {
+        return;
+    }
+
+    const paths = getDrillToCustomUrlPaths(layout);
+    if (isEmpty(paths)) {
+        return layout;
+    }
+
+    return paths.reduce((layout: IDashboardLayout, path: LayoutPath) => {
+        return update(layout, path, convertTargetUrlToParts);
+    }, layout);
 }
