@@ -11,6 +11,10 @@ import { eventGuard } from "./util";
 /**
  * This event is emitted after the dashboard's date filter selection is changed.
  *
+ * ** PAYLOAD **
+ * @param filter - {@link @gooddata/sdk-backend-spi#IDashboardDateFilter} object with changed selection
+ * @param dateFilterOptionLocalId - optional local identifier of the new selected date filter option
+ *
  * @public
  */
 export interface DashboardDateFilterSelectionChanged extends IDashboardEvent {
@@ -227,7 +231,10 @@ export const isDashboardAttributeFilterMoved = eventGuard<DashboardAttributeFilt
 /**
  * This event is emitted after new elements are selected and applied in an attribute filter.
  *
- * The filter in the payload object must be converted to a IFilter object before its usage.
+ * The filter in the payload object must be converted to a {@link @gooddata/sdk-model#IFilter} object before its usage.
+ *
+ * ** PAYLOAD **
+ * @param filter - {@link @gooddata/sdk-backend-spi#IDashboardAttributeFilter} object with changed selection
  *
  * @public
  */
@@ -325,6 +332,9 @@ export const isDashboardAttributeFilterParentChanged = eventGuard<DashboardAttri
  *
  * This event is emitted as convenience - more granular events describe all the possible
  * changes to the dashboard filters and can be used to event source the state of filter context.
+ *
+ * ** PAYLOAD **
+ * @param filterContext - {@link @gooddata/sdk-backend-spi#IFilterContextDefinition} object
  *
  * @public
  */
