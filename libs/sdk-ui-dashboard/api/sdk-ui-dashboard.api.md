@@ -750,7 +750,10 @@ export interface DashboardDateFilterSelectionChanged extends IDashboardEvent {
 }
 
 // @public
-export function dashboardDateFilterToDateFilter(filter: IDashboardDateFilter, widget: IWidgetDefinition): IDateFilter;
+export function dashboardDateFilterToDateFilterByDateDataSet(filter: IDashboardDateFilter, dateDataSet: ObjRef): IDateFilter;
+
+// @public
+export function dashboardDateFilterToDateFilterByWidget(filter: IDashboardDateFilter, widget: IWidgetDefinition): IDateFilter;
 
 // @public
 export interface DashboardDeinitialized extends IDashboardEvent {
@@ -1847,7 +1850,10 @@ export function extendedWidgetDebugStr(widget: ExtendedDashboardWidget): string;
 export const FilterBar: (props: IFilterBarProps) => JSX.Element;
 
 // @public
-export function filterContextItemsToDashboardFilters(filterContextItems: FilterContextItem[], widget: IWidgetDefinition): IDashboardFilter[];
+export function filterContextItemsToDashboardFiltersByDateDataSet(filterContextItems: FilterContextItem[], dateDataSet: ObjRef): IDashboardFilter[];
+
+// @public
+export function filterContextItemsToDashboardFiltersByWidget(filterContextItems: FilterContextItem[], widget: IWidgetDefinition): IDashboardFilter[];
 
 // @alpha (undocumented)
 export interface FilterContextSelection {
@@ -1864,7 +1870,10 @@ export interface FilterContextState {
 }
 
 // @public
-export function filterContextToDashboardFilters(filterContext: IFilterContextDefinition | IFilterContext | ITempFilterContext | undefined, widget: IWidgetDefinition): IDashboardFilter[];
+export function filterContextToDashboardFiltersByDateDataSet(filterContext: IFilterContextDefinition | IFilterContext | ITempFilterContext | undefined, dateDataSet: ObjRef): IDashboardFilter[];
+
+// @public
+export function filterContextToDashboardFiltersByWidget(filterContext: IFilterContextDefinition | IFilterContext | ITempFilterContext | undefined, widget: IWidgetDefinition): IDashboardFilter[];
 
 // @alpha (undocumented)
 export interface FilterOp {

@@ -41,7 +41,7 @@ import {
     withExecution,
 } from "@gooddata/sdk-ui";
 
-import { filterContextItemsToDashboardFilters } from "../../../../converters";
+import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters";
 import {
     selectDrillableItems,
     selectPermissions,
@@ -348,7 +348,7 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
                         onFiltersChange
                             ? () =>
                                   onFiltersChange(
-                                      filterContextItemsToDashboardFilters(
+                                      filterContextItemsToDashboardFiltersByWidget(
                                           alert?.filterContext?.filters ?? [],
                                           kpiWidget,
                                       ),

@@ -19,7 +19,7 @@ import { selectAnalyticalWidgetByRef } from "../../store/layout/layoutSelectors"
 import { IInsightWidget } from "@gooddata/sdk-backend-spi";
 import { IDashboardFilter } from "../../../types";
 import {
-    dashboardDateFilterToDateFilter,
+    dashboardDateFilterToDateFilterByWidget,
     dashboardAttributeFilterToAttributeFilter,
 } from "../../../converters";
 import {
@@ -105,7 +105,7 @@ function selectDrillingDateFilter(state: DashboardState, widget: IInsightWidget)
     const globalDateFilter = selectFilterContextDateFilter(state);
 
     return globalDateFilter
-        ? dashboardDateFilterToDateFilter(globalDateFilter, widget)
+        ? dashboardDateFilterToDateFilterByWidget(globalDateFilter, widget)
         : newAllTimeFilter(widget.dateDataSet!);
 }
 

@@ -8,7 +8,7 @@ import {
     IWidgetAlert,
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef, objRefToString } from "@gooddata/sdk-model";
-import { filterContextItemsToDashboardFilters } from "../../converters";
+import { filterContextItemsToDashboardFiltersByWidget } from "../../converters";
 import isEmpty from "lodash/isEmpty";
 import { SagaIterator } from "redux-saga";
 import { select, call, SagaReturnType } from "redux-saga/effects";
@@ -126,7 +126,7 @@ function* getDashboardFilters(kpiWidget: IKpiWidget): SagaIterator<IDashboardFil
     const dashboardFilters: ReturnType<typeof selectFilterContextFilters> = yield select(
         selectFilterContextFilters,
     );
-    const allFilters = filterContextItemsToDashboardFilters(dashboardFilters, kpiWidget);
+    const allFilters = filterContextItemsToDashboardFiltersByWidget(dashboardFilters, kpiWidget);
 
     return allFilters ?? [];
 }
