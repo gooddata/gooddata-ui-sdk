@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { IDashboardQuery } from "./base";
 import { ObjRef } from "@gooddata/sdk-model";
 import { ICatalogDateDataset } from "@gooddata/sdk-backend-spi";
@@ -9,7 +9,7 @@ import { ICatalogDateDataset } from "@gooddata/sdk-backend-spi";
  *
  * @alpha
  */
-export interface QueryMeasureDateDatasets extends IDashboardQuery<MeasureDateDatasets> {
+export interface QueryMeasureDateDatasets extends IDashboardQuery {
     readonly type: "GDC.DASH/QUERY.MEASURE.DATE.DATASETS";
     readonly payload: {
         readonly measureRef: ObjRef;

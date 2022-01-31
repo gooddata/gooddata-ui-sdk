@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { IDashboardQuery } from "../../queries";
 import { queryEnvelopeWithPromise } from "./queryProcessing";
@@ -11,9 +11,12 @@ import { SagaIterator } from "redux-saga";
  * @param q - query to run
  * @param refresh - indicates whether the query should ignore cached results and re-load data from backend
  */
-export function* query<TResult>(q: IDashboardQuery<TResult>, refresh = false): SagaIterator<TResult> {
-    const { promise, envelope } = queryEnvelopeWithPromise(q, refresh);
-    const waitForResult = (): Promise<TResult> => {
+export function* query<TQuery extends IDashboardQuery, TQueryResult>(
+    q: TQuery,
+    refresh = false,
+): SagaIterator<TQueryResult> {
+    const { promise, envelope } = queryEnvelopeWithPromise<TQuery, TQueryResult>(q, refresh);
+    const waitForResult = () => {
         return promise;
     };
 
@@ -30,6 +33,6 @@ export function* query<TResult>(q: IDashboardQuery<TResult>, refresh = false): S
  *
  * @param q - query to run
  */
-export function* queryFresh<TResult>(q: IDashboardQuery<TResult>): SagaIterator<TResult> {
+export function* queryFresh<TResult>(q: IDashboardQuery): SagaIterator<TResult> {
     return yield call(query, q, true);
 }

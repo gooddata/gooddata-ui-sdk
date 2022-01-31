@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 /**
  * @alpha
@@ -16,7 +16,7 @@ export type DashboardQueryType =
  *
  * @alpha
  */
-export interface IDashboardQuery<_TResult = any> {
+export interface IDashboardQuery {
     /**
      * Query type. Always starts with "GDC.DASH/QUERY".
      */
@@ -28,10 +28,3 @@ export interface IDashboardQuery<_TResult = any> {
      */
     readonly correlationId?: string;
 }
-
-/**
- * Utility type to extract the type of the {@link IDashboardQuery} result.
- *
- * @alpha
- */
-export type IDashboardQueryResult<T> = T extends IDashboardQuery<infer TResult> ? TResult : never;

@@ -168,8 +168,8 @@ export class HeadlessDashboard {
      *
      * @param action - query action
      */
-    public query<TResult>(action: IDashboardQuery<TResult>): Promise<TResult> {
-        const { envelope, promise } = queryEnvelopeWithPromise(action);
+    public query<TQueryResult>(action: IDashboardQuery): Promise<TQueryResult> {
+        const { envelope, promise } = queryEnvelopeWithPromise<any, TQueryResult>(action);
         this.reduxedStore.store.dispatch(envelope);
         return promise;
     }

@@ -1,7 +1,6 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
-import { IFilter, IInsightDefinition, ObjRef } from "@gooddata/sdk-model";
-import { IBrokenAlertFilterBasicInfo } from "../types/alertTypes";
+import { IInsightDefinition, ObjRef } from "@gooddata/sdk-model";
 import { IDashboardQuery } from "./base";
 
 /**
@@ -12,7 +11,7 @@ import { IDashboardQuery } from "./base";
  *
  * @alpha
  */
-export interface QueryWidgetFilters extends IDashboardQuery<IFilter[]> {
+export interface QueryWidgetFilters extends IDashboardQuery {
     readonly type: "GDC.DASH/QUERY.WIDGET.FILTERS";
     readonly payload: {
         readonly widgetRef: ObjRef;
@@ -51,7 +50,7 @@ export function queryWidgetFilters(
  * In case any broken alert filters query return empty array.
  * @alpha
  */
-export interface QueryWidgetBrokenAlerts extends IDashboardQuery<IBrokenAlertFilterBasicInfo[]> {
+export interface QueryWidgetBrokenAlerts extends IDashboardQuery {
     readonly type: "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS";
     readonly payload: {
         readonly widgetRef: ObjRef;

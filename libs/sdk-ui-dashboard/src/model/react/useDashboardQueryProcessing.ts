@@ -5,7 +5,7 @@ import { GoodDataSdkError, UnexpectedSdkError } from "@gooddata/sdk-ui";
 
 import { queryAndWaitFor } from "../store";
 import { useDashboardDispatch } from "./DashboardStoreProvider";
-import { DashboardQueries, IDashboardQueryResult } from "../queries";
+import { DashboardQueries } from "../queries";
 import {
     DashboardQueryFailed,
     DashboardQueryRejected,
@@ -16,13 +16,79 @@ import {
 /**
  * @internal
  */
-export type QueryProcessingStatus = "running" | "success" | "error" | "rejected";
+export type QueryProcessingPendingState = {
+    status: "pending";
+    error: undefined;
+    result: undefined;
+};
+
+/**
+ * @internal
+ */
+export type QueryProcessingRunningState = {
+    status: "running";
+    error: undefined;
+    result: undefined;
+};
+
+/**
+ * @internal
+ */
+export type QueryProcessingErrorState = {
+    status: "error";
+    error: GoodDataSdkError;
+    result: undefined;
+};
+
+/**
+ * @internal
+ */
+export type QueryProcessingRejectedState = {
+    status: "rejected";
+    error: undefined;
+    result: undefined;
+};
+
+/**
+ * @internal
+ */
+export type QueryProcessingSuccessState<TResult> = {
+    status: "success";
+    error: undefined;
+    result: TResult;
+};
+
+/**
+ * @internal
+ */
+export type QueryProcessingState<TResult> =
+    | QueryProcessingPendingState
+    | QueryProcessingRunningState
+    | QueryProcessingErrorState
+    | QueryProcessingRejectedState
+    | QueryProcessingSuccessState<TResult>;
+
+/**
+ * @internal
+ */
+export type UseDashboardQueryProcessingResult<
+    TQueryCreatorArgs extends any[],
+    TQueryResult,
+> = QueryProcessingState<TQueryResult> & {
+    run: (...args: TQueryCreatorArgs) => void;
+};
+
+/**
+ * @internal
+ */
+export type QueryProcessingStatus = QueryProcessingState<any>["status"];
 
 /**
  * @internal
  */
 export const useDashboardQueryProcessing = <
     TQuery extends DashboardQueries,
+    TQueryResult,
     TQueryCreatorArgs extends any[],
 >({
     queryCreator,
@@ -32,26 +98,21 @@ export const useDashboardQueryProcessing = <
     onBeforeRun,
 }: {
     queryCreator: (...args: TQueryCreatorArgs) => TQuery;
-    onSuccess?: (result: IDashboardQueryResult<TQuery>) => void;
+    onSuccess?: (result: TQueryResult) => void;
     onError?: (event: DashboardQueryFailed) => void;
     onRejected?: (event: DashboardQueryRejected) => void;
     onBeforeRun?: (query: TQuery) => void;
-}): {
-    run: (...args: TQueryCreatorArgs) => void;
-    status?: QueryProcessingStatus;
-    result?: IDashboardQueryResult<TQuery>;
-    error?: GoodDataSdkError;
-} => {
-    const [state, setState] = useState<{
-        result: IDashboardQueryResult<TQuery> | undefined;
-        status: QueryProcessingStatus;
-        error: GoodDataSdkError | undefined;
-    }>();
+}): UseDashboardQueryProcessingResult<TQueryCreatorArgs, TQueryResult> => {
+    const [state, setState] = useState<QueryProcessingState<TQueryResult>>({
+        status: "pending",
+        error: undefined,
+        result: undefined,
+    });
     const canceled = useRef(false);
     const dispatch = useDashboardDispatch();
 
-    const run = useCallback(
-        (...args: TQueryCreatorArgs) => {
+    const run = useCallback<UseDashboardQueryProcessingResult<TQueryCreatorArgs, TQueryResult>["run"]>(
+        (...args) => {
             if (canceled.current) {
                 return;
             }
@@ -75,7 +136,7 @@ export const useDashboardQueryProcessing = <
 
             onBeforeRun?.(query);
 
-            queryAndWaitFor(dispatch, query)
+            queryAndWaitFor<TQuery, TQueryResult>(dispatch, query)
                 .then((result) => {
                     if (!canceled.current) {
                         setState({ status: "success", result, error: undefined });

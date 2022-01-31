@@ -3,7 +3,7 @@
 import { QueryInsightAttributesMeta, QueryInsightDateDatasets } from "./insights";
 import { QueryWidgetBrokenAlerts, QueryWidgetFilters } from "./widgets";
 
-export { IDashboardQuery, DashboardQueryType, IDashboardQueryResult } from "./base";
+export { IDashboardQuery, DashboardQueryType } from "./base";
 export {
     QueryInsightDateDatasets,
     InsightDateDatasets,
@@ -15,7 +15,7 @@ export {
 } from "./insights";
 export { QueryMeasureDateDatasets, queryDateDatasetsForMeasure, MeasureDateDatasets } from "./kpis";
 export {
-    QueryWidgetFilters as QueryInsightWidgetFilters,
+    QueryWidgetFilters,
     queryWidgetFilters,
     QueryWidgetBrokenAlerts,
     queryWidgetBrokenAlerts,

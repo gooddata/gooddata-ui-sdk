@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { IDashboardEvent } from "./base";
 import { DashboardContext } from "../types/commonTypes";
@@ -321,8 +321,7 @@ export const isDashboardQueryStarted = eventGuard<DashboardQueryStarted>("GDC.DA
  *
  * @alpha
  */
-export interface DashboardQueryCompleted<TQuery extends IDashboardQuery<TResult>, TResult>
-    extends IDashboardEvent {
+export interface DashboardQueryCompleted<TQuery extends IDashboardQuery, TResult> extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.QUERY.COMPLETED";
     readonly payload: {
         readonly query: TQuery;
@@ -330,7 +329,7 @@ export interface DashboardQueryCompleted<TQuery extends IDashboardQuery<TResult>
     };
 }
 
-export function queryCompleted<TQuery extends IDashboardQuery<TResult>, TResult>(
+export function queryCompleted<TQuery extends IDashboardQuery, TResult>(
     ctx: DashboardContext,
     query: TQuery,
     result: TResult,

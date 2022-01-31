@@ -2,7 +2,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { FilterContextItem, isDashboardAttributeFilter } from "@gooddata/sdk-backend-spi";
 import { areObjRefsEqual, filterObjRef, IFilter, IInsightDefinition, ObjRef } from "@gooddata/sdk-model";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import stringify from "json-stable-stringify";
 import compact from "lodash/compact";
 import first from "lodash/first";
@@ -12,6 +11,7 @@ import sortBy from "lodash/fp/sortBy";
 
 import {
     ExtendedDashboardWidget,
+    QueryProcessingState,
     QueryProcessingStatus,
     queryWidgetFilters,
     selectFilterContextFilters,
@@ -35,17 +35,13 @@ import {
 export function useWidgetFilters(
     widget: ExtendedDashboardWidget | undefined,
     insight?: IInsightDefinition,
-): {
-    result?: IFilter[];
-    status?: QueryProcessingStatus;
-    error?: GoodDataSdkError;
-} {
+): QueryProcessingState<IFilter[]> {
     const [effectiveFiltersState, setEffectiveFiltersState] = useState<{
         filters: IFilter[];
-        filterQueryStatus?: QueryProcessingStatus;
+        filterQueryStatus: QueryProcessingStatus;
     }>({
         filters: [],
-        filterQueryStatus: undefined,
+        filterQueryStatus: "pending",
     });
 
     const {
@@ -97,11 +93,11 @@ export function useWidgetFilters(
         result: effectiveFiltersState.filters,
         status: combineQueryProcessingStatuses(
             nonIgnoredFiltersStatus,
-            effectiveFiltersState?.filterQueryStatus,
+            effectiveFiltersState.filterQueryStatus,
             status,
         ),
         error: nonIgnoredFiltersError ?? error,
-    };
+    } as QueryProcessingState<IFilter[]>;
 }
 
 /**
@@ -170,16 +166,17 @@ const statusPriorities: { [S in QueryProcessingStatus]: number } = {
     rejected: 1,
     running: 2,
     success: 3,
+    pending: 4,
 };
 
-function combineQueryProcessingStatuses(
-    ...statuses: (QueryProcessingStatus | undefined)[]
-): QueryProcessingStatus | undefined {
-    return flow(
-        compact,
-        sortBy<QueryProcessingStatus>((status) => statusPriorities[status]),
-        first,
-    )(statuses);
+function combineQueryProcessingStatuses(...statuses: QueryProcessingStatus[]): QueryProcessingStatus {
+    return (
+        flow(
+            compact,
+            sortBy<QueryProcessingStatus>((status) => statusPriorities[status]),
+            first,
+        )(statuses) ?? "pending"
+    );
 }
 
 /**

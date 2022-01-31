@@ -47,11 +47,7 @@ export const useCustomWidgetInsightDataView = ({
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
 
-    const {
-        result: effectiveInsight,
-        error: insightError,
-        status: insightStatus,
-    } = useCancelablePromise(
+    const effectiveInsightTask = useCancelablePromise(
         {
             promise: insight
                 ? async () => {
@@ -67,26 +63,25 @@ export const useCustomWidgetInsightDataView = ({
         [backend, workspace, insight],
     );
 
-    const {
-        result: filters,
-        status: filtersStatus,
-        error: filtersError,
-    } = useWidgetFilters(
+    const filterQueryTask = useWidgetFilters(
         // only pass the widget in when the insight is ready to not start the filter query while the insight is loading
-        effectiveInsight ? widget : undefined,
-        effectiveInsight,
+        effectiveInsightTask.result ? widget : undefined,
+        effectiveInsightTask.result,
     );
 
     const insightWithAddedFilters = useMemo(
-        () => (effectiveInsight ? insightSetFilters(effectiveInsight, filters) : undefined),
+        () =>
+            effectiveInsightTask.result
+                ? insightSetFilters(effectiveInsightTask.result, filterQueryTask.result)
+                : undefined,
         [
-            effectiveInsight,
+            effectiveInsightTask.result,
             /**
              * We use stringified value to avoid setting equal filters. This prevents cascading cache invalidation
              * and expensive re-renders down the line. The stringification is worth it as the filters are usually
              * pretty small thus saving more time than it is taking.
              */
-            stringify(filters),
+            stringify(filterQueryTask.result),
         ],
     );
 
@@ -96,20 +91,22 @@ export const useCustomWidgetInsightDataView = ({
             : undefined;
     }, [backend, workspace, insightWithAddedFilters, widget]);
 
-    const { result, error, status } = useExecutionDataView({
-        execution: insightExecution,
-    });
+    const dataViewTask = useExecutionDataView({ execution: insightExecution });
 
     // insight non-success status has precedence, other things cannot run without an insight
-    if (insightStatus !== "success") {
+    if (
+        effectiveInsightTask.status === "error" ||
+        effectiveInsightTask.status === "loading" ||
+        effectiveInsightTask.status === "pending"
+    ) {
         return {
-            error: insightError,
+            error: effectiveInsightTask.error,
             result: undefined,
-            status: insightStatus,
+            status: effectiveInsightTask.status,
         };
     }
 
-    if (!filtersStatus || status === "pending") {
+    if (filterQueryTask.status === "pending" || dataViewTask.status === "pending") {
         return {
             error: undefined,
             result: undefined,
@@ -117,7 +114,7 @@ export const useCustomWidgetInsightDataView = ({
         };
     }
 
-    if (filtersStatus === "running" || status === "loading") {
+    if (filterQueryTask.status === "running" || dataViewTask.status === "loading") {
         return {
             error: undefined,
             result: undefined,
@@ -125,9 +122,9 @@ export const useCustomWidgetInsightDataView = ({
         };
     }
 
-    if (filtersError || error) {
+    if (filterQueryTask.status === "error" || dataViewTask.status === "error") {
         return {
-            error: (error ?? filtersError)!,
+            error: (dataViewTask.error ?? filterQueryTask.error)!,
             result: undefined,
             status: "error",
         };
@@ -135,7 +132,7 @@ export const useCustomWidgetInsightDataView = ({
 
     return {
         error: undefined,
-        result: result!,
+        result: dataViewTask.result,
         status: "success",
     };
 };

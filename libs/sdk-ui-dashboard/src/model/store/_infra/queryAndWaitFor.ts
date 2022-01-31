@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 
-import { DashboardQueries, IDashboardQueryResult } from "../../queries";
+import { DashboardQueries } from "../../queries";
 import { DashboardDispatch } from "../types";
 import { queryEnvelopeWithPromise } from "./queryProcessing";
 
@@ -12,11 +12,11 @@ import { queryEnvelopeWithPromise } from "./queryProcessing";
  * @returns Promise of the query result
  * @alpha
  */
-export async function queryAndWaitFor<TQuery extends DashboardQueries>(
+export async function queryAndWaitFor<TQuery extends DashboardQueries, TQueryResult>(
     dispatch: DashboardDispatch,
     query: TQuery,
-): Promise<IDashboardQueryResult<TQuery>> {
-    const { promise, envelope } = queryEnvelopeWithPromise(query);
+): Promise<TQueryResult> {
+    const { promise, envelope } = queryEnvelopeWithPromise<TQuery, TQueryResult>(query);
 
     dispatch(envelope);
 

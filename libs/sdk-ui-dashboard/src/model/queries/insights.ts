@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { IDashboardQuery } from "./base";
 import { IInsight, InsightDisplayFormUsage, ObjRef } from "@gooddata/sdk-model";
 import {
@@ -13,7 +13,7 @@ import {
  *
  * @alpha
  */
-export interface QueryInsightDateDatasets extends IDashboardQuery<InsightDateDatasets> {
+export interface QueryInsightDateDatasets extends IDashboardQuery {
     readonly type: "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS";
     readonly payload: {
         readonly insightOrRef: ObjRef | IInsight;
@@ -144,7 +144,7 @@ export function insightSelectDateDataset(queryResult: InsightDateDatasets): ICat
  *
  * @alpha
  */
-export interface QueryInsightAttributesMeta extends IDashboardQuery<InsightAttributesMeta> {
+export interface QueryInsightAttributesMeta extends IDashboardQuery {
     readonly type: "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META";
     readonly payload: {
         readonly insightOrRef: ObjRef | IInsight;
