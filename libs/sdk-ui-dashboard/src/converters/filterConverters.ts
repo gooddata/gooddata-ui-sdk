@@ -17,6 +17,7 @@ import {
     newAbsoluteDateFilter,
     IAttributeFilter,
     IDateFilter,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import isString from "lodash/isString";
 
@@ -31,7 +32,7 @@ import { IDashboardFilter } from "../types";
  * @param widget - widget to use to get dateDataSet for date filters
  * @public
  */
-export function filterContextToDashboardFilters(
+export function filterContextToDashboardFiltersByWidget(
     filterContext: IFilterContextDefinition | IFilterContext | ITempFilterContext | undefined,
     widget: IWidgetDefinition,
 ): IDashboardFilter[] {
@@ -39,7 +40,26 @@ export function filterContextToDashboardFilters(
         return [];
     }
 
-    return filterContextItemsToDashboardFilters(filterContext.filters, widget);
+    return filterContextItemsToDashboardFiltersByWidget(filterContext.filters, widget);
+}
+
+/**
+ * Gets {@link IDashboardFilter} items for filters specified in given filterContext in relation to the
+ * given dateDataSet.
+ *
+ * @param filterContext - filter context to get filters for
+ * @param dateDataSet - widget to use to get dateDataSet for date filters
+ * @public
+ */
+export function filterContextToDashboardFiltersByDateDataSet(
+    filterContext: IFilterContextDefinition | IFilterContext | ITempFilterContext | undefined,
+    dateDataSet: ObjRef,
+): IDashboardFilter[] {
+    if (!filterContext) {
+        return [];
+    }
+
+    return filterContextItemsToDashboardFiltersByDateDataSet(filterContext.filters, dateDataSet);
 }
 
 /**
@@ -65,13 +85,13 @@ export function dashboardAttributeFilterToAttributeFilter(
 }
 
 /**
- * Converts {@link @gooddata/sdk-backend-spi#IDashboardDateFilter} to {@link @gooddata/sdk-model#IAttributeFilter} instance.
+ * Converts {@link @gooddata/sdk-backend-spi#IDashboardDateFilter} to {@link @gooddata/sdk-model#IDateFilter} instance.
  *
  * @param filter - filter context attribute filter to convert
  * @param widget - widget to use to get dateDataSet for date filters
  * @public
  */
-export function dashboardDateFilterToDateFilter(
+export function dashboardDateFilterToDateFilterByWidget(
     filter: IDashboardDateFilter,
     widget: Partial<IFilterableWidget>,
 ): IDateFilter {
@@ -92,13 +112,40 @@ export function dashboardDateFilterToDateFilter(
 }
 
 /**
+ * Converts {@link @gooddata/sdk-backend-spi#IDashboardDateFilter} to {@link @gooddata/sdk-model#IDateFilter} instance.
+ *
+ * @param filter - filter context attribute filter to convert
+ * @param dateDataSet - date data set to define {@link @gooddata/sdk-model#IDateFilter}
+ * @public
+ */
+export function dashboardDateFilterToDateFilterByDateDataSet(
+    filter: IDashboardDateFilter,
+    dateDataSet: ObjRef,
+): IDateFilter {
+    if (filter.dateFilter.type === "relative") {
+        return newRelativeDateFilter(
+            dateDataSet,
+            filter.dateFilter.granularity,
+            numberOrStringToNumber(filter.dateFilter.from!),
+            numberOrStringToNumber(filter.dateFilter.to!),
+        );
+    } else {
+        return newAbsoluteDateFilter(
+            dateDataSet,
+            filter.dateFilter.from!.toString(),
+            filter.dateFilter.to!.toString(),
+        );
+    }
+}
+
+/**
  * Gets {@link IDashboardFilter} items for filters specified as {@link @gooddata/sdk-backend-spi#FilterContextItem} instances.
  *
  * @param filterContextItems - filter context items to get filters for
  * @param widget - widget to use to get dateDataSet for date filters
  * @public
  */
-export function filterContextItemsToDashboardFilters(
+export function filterContextItemsToDashboardFiltersByWidget(
     filterContextItems: FilterContextItem[],
     widget: Partial<IFilterableWidget>,
 ): IDashboardFilter[] {
@@ -106,7 +153,27 @@ export function filterContextItemsToDashboardFilters(
         if (isDashboardAttributeFilter(filter)) {
             return dashboardAttributeFilterToAttributeFilter(filter);
         } else {
-            return dashboardDateFilterToDateFilter(filter, widget);
+            return dashboardDateFilterToDateFilterByWidget(filter, widget);
+        }
+    });
+}
+
+/**
+ * Gets {@link IDashboardFilter} items for filters specified as {@link @gooddata/sdk-backend-spi#FilterContextItem} instances.
+ *
+ * @param filterContextItems - filter context items to get filters for
+ * @param dateDataSet - date data set to define {@link @gooddata/sdk-model#IDateFilter}
+ * @public
+ */
+export function filterContextItemsToDashboardFiltersByDateDataSet(
+    filterContextItems: FilterContextItem[],
+    dateDataSet: ObjRef,
+): IDashboardFilter[] {
+    return filterContextItems.map((filter) => {
+        if (isDashboardAttributeFilter(filter)) {
+            return dashboardAttributeFilterToAttributeFilter(filter);
+        } else {
+            return dashboardDateFilterToDateFilterByDateDataSet(filter, dateDataSet);
         }
     });
 }

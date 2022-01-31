@@ -1,5 +1,57 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`filterContextToFiltersForDataSet should handle filterContext with absolute date filter 1`] = `
+Array [
+  Object {
+    "absoluteDateFilter": Object {
+      "dataSet": Object {
+        "identifier": "activity.dataset.dt",
+        "type": "dataSet",
+      },
+      "from": "2020-01-01",
+      "to": "2021-01-01",
+    },
+  },
+]
+`;
+
+exports[`filterContextToFiltersForDataSet should handle filterContext with positive attribute filter with values 1`] = `
+Array [
+  Object {
+    "positiveAttributeFilter": Object {
+      "displayForm": Object {
+        "identifier": "label.account.id.name",
+        "type": "displayForm",
+      },
+      "in": Object {
+        "values": Array [
+          "foo",
+          "bar",
+        ],
+      },
+    },
+  },
+]
+`;
+
+exports[`filterContextToFiltersForDataSet should handle filterContext with relative date filter 1`] = `
+Array [
+  Object {
+    "relativeDateFilter": Object {
+      "dataSet": Object {
+        "identifier": "activity.dataset.dt",
+        "type": "dataSet",
+      },
+      "from": -4,
+      "granularity": "GDC.time.date",
+      "to": -3,
+    },
+  },
+]
+`;
+
+exports[`filterContextToFiltersForDataSet should handle undefined filterContext 1`] = `Array []`;
+
 exports[`filterContextToFiltersForWidget should handle filterContext with absolute date filter 1`] = `
 Array [
   Object {
@@ -70,3 +122,126 @@ Array [
 `;
 
 exports[`filterContextToFiltersForWidget should handle undefined filterContext 1`] = `Array []`;
+
+exports[`filterConverters tests filterContextToFiltersForDataSet should handle filterContext with absolute date filter 1`] = `
+Array [
+  Object {
+    "absoluteDateFilter": Object {
+      "dataSet": Object {
+        "identifier": "activity.dataset.dt",
+        "type": "dataSet",
+      },
+      "from": "2020-01-01",
+      "to": "2021-01-01",
+    },
+  },
+]
+`;
+
+exports[`filterConverters tests filterContextToFiltersForDataSet should handle filterContext with positive attribute filter with values 1`] = `
+Array [
+  Object {
+    "positiveAttributeFilter": Object {
+      "displayForm": Object {
+        "identifier": "label.account.id.name",
+        "type": "displayForm",
+      },
+      "in": Object {
+        "values": Array [
+          "foo",
+          "bar",
+        ],
+      },
+    },
+  },
+]
+`;
+
+exports[`filterConverters tests filterContextToFiltersForDataSet should handle filterContext with relative date filter 1`] = `
+Array [
+  Object {
+    "relativeDateFilter": Object {
+      "dataSet": Object {
+        "identifier": "activity.dataset.dt",
+        "type": "dataSet",
+      },
+      "from": -4,
+      "granularity": "GDC.time.date",
+      "to": -3,
+    },
+  },
+]
+`;
+
+exports[`filterConverters tests filterContextToFiltersForDataSet should handle undefined filterContext 1`] = `Array []`;
+
+exports[`filterConverters tests filterContextToFiltersForWidget should handle filterContext with absolute date filter 1`] = `
+Array [
+  Object {
+    "absoluteDateFilter": Object {
+      "dataSet": Object {
+        "identifier": "activity.dataset.dt",
+        "type": "dataSet",
+      },
+      "from": "2020-01-01",
+      "to": "2021-01-01",
+    },
+  },
+]
+`;
+
+exports[`filterConverters tests filterContextToFiltersForWidget should handle filterContext with negative attribute filter with uris 1`] = `
+Array [
+  Object {
+    "negativeAttributeFilter": Object {
+      "displayForm": Object {
+        "identifier": "label.account.id.name",
+        "type": "displayForm",
+      },
+      "notIn": Object {
+        "uris": Array [
+          "foo",
+          "bar",
+        ],
+      },
+    },
+  },
+]
+`;
+
+exports[`filterConverters tests filterContextToFiltersForWidget should handle filterContext with positive attribute filter with values 1`] = `
+Array [
+  Object {
+    "positiveAttributeFilter": Object {
+      "displayForm": Object {
+        "identifier": "label.account.id.name",
+        "type": "displayForm",
+      },
+      "in": Object {
+        "values": Array [
+          "foo",
+          "bar",
+        ],
+      },
+    },
+  },
+]
+`;
+
+exports[`filterConverters tests filterContextToFiltersForWidget should handle filterContext with relative date filter 1`] = `
+Array [
+  Object {
+    "relativeDateFilter": Object {
+      "dataSet": Object {
+        "identifier": "activity.dataset.dt",
+        "type": "dataSet",
+      },
+      "from": -4,
+      "granularity": "GDC.time.date",
+      "to": -3,
+    },
+  },
+]
+`;
+
+exports[`filterConverters tests filterContextToFiltersForWidget should handle undefined filterContext 1`] = `Array []`;
