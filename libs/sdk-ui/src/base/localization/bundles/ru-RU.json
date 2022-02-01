@@ -228,6 +228,8 @@
     "shareDialog.share.grantee.add.info": "Добавить пользователей и группы",
     "shareDialog.share.grantee.add.search.placeholder": "Искать пользователей и группы",
     "shareDialog.share.grantee.add.search.error.message": "Не удалось загрузить пользователей и группы. Попробуйте позже.",
+    "shareDialog.share.grantee.add.label.user": "Пользователи",
+    "shareDialog.share.grantee.add.label.group": "Группы",
     "shareDialog.share.grantee.add.search.no.matching.items": "Нет подходящих пользователей или групп.",
     "shareDialog.share.grantee.item.you": "{userName} (Вы)",
     "shareDialog.share.grantee.item.users.count": "Пользователей: {granteeCount}",
