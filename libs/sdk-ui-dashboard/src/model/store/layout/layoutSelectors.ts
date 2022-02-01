@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import { ObjRef, objRefToString } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
@@ -15,7 +15,7 @@ import { ExtendedDashboardWidget, isCustomWidget } from "../../types/layoutTypes
 import { createUndoableCommandsMapping } from "../_infra/undoEnhancer";
 import { newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap";
 import { selectFilterContextFilters } from "../filterContext/filterContextSelectors";
-import { filterContextItemsToFiltersForWidget } from "../../../converters";
+import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters";
 import { createMemoizedSelector } from "../_infra/selectors";
 import isEmpty from "lodash/isEmpty";
 
@@ -180,7 +180,7 @@ export const selectWidgetDrills = createMemoizedSelector((ref: ObjRef | undefine
 export const selectAllFiltersForWidgetByRef = createMemoizedSelector((ref: ObjRef) => {
     return createSelector(selectWidgetByRef(ref), selectFilterContextFilters, (widget, dashboardFilters) => {
         invariant(widget, `widget with ref ${objRefToString(ref)} does not exist in the state`);
-        return filterContextItemsToFiltersForWidget(dashboardFilters, widget);
+        return filterContextItemsToDashboardFiltersByWidget(dashboardFilters, widget);
     });
 });
 

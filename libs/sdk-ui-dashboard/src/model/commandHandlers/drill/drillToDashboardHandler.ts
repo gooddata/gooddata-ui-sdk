@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import compact from "lodash/compact";
@@ -19,8 +19,8 @@ import { selectAnalyticalWidgetByRef } from "../../store/layout/layoutSelectors"
 import { IInsightWidget } from "@gooddata/sdk-backend-spi";
 import { IDashboardFilter } from "../../../types";
 import {
-    filterContextDateFilterToDateFilter,
-    filterContextAttributeFilterToAttributeFilter,
+    dashboardDateFilterToDateFilterByWidget,
+    dashboardAttributeFilterToAttributeFilter,
 } from "../../../converters";
 import {
     DrillEventIntersectionElementHeader,
@@ -105,14 +105,14 @@ function selectDrillingDateFilter(state: DashboardState, widget: IInsightWidget)
     const globalDateFilter = selectFilterContextDateFilter(state);
 
     return globalDateFilter
-        ? filterContextDateFilterToDateFilter(globalDateFilter, widget)
+        ? dashboardDateFilterToDateFilterByWidget(globalDateFilter, widget)
         : newAllTimeFilter(widget.dateDataSet!);
 }
 
 function selectAllAttributeFilters(state: DashboardState): IAttributeFilter[] {
     const filterContextItems = selectFilterContextAttributeFilters(state);
 
-    return filterContextItems.map(filterContextAttributeFilterToAttributeFilter);
+    return filterContextItems.map(dashboardAttributeFilterToAttributeFilter);
 }
 
 function* getWidgetAwareAttributeFilters(
@@ -123,7 +123,7 @@ function* getWidgetAwareAttributeFilters(
         selectFilterContextAttributeFilters,
     );
 
-    const filters = filterContextItems.map(filterContextAttributeFilterToAttributeFilter);
+    const filters = filterContextItems.map(dashboardAttributeFilterToAttributeFilter);
 
     return yield call(getResolvedFiltersForWidget, ctx, widget, filters);
 }

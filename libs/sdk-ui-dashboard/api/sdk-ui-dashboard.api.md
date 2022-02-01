@@ -655,7 +655,7 @@ export interface DashboardAttributeFilterRemoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVED";
 }
 
-// @alpha
+// @public
 export interface DashboardAttributeFilterSelectionChanged extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
@@ -664,6 +664,9 @@ export interface DashboardAttributeFilterSelectionChanged extends IDashboardEven
     // (undocumented)
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_CHANGED";
 }
+
+// @public
+export function dashboardAttributeFilterToAttributeFilter(filter: IDashboardAttributeFilter): IAttributeFilter;
 
 // @alpha
 export interface DashboardCommandFailed<TCommand extends IDashboardCommand = IDashboardCommand> extends IDashboardEvent {
@@ -740,7 +743,7 @@ export interface DashboardCopySaved extends IDashboardEvent {
 // @internal (undocumented)
 export const DashboardDateFilter: (props: IDashboardDateFilterProps) => JSX.Element;
 
-// @alpha
+// @public
 export interface DashboardDateFilterSelectionChanged extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
@@ -750,6 +753,12 @@ export interface DashboardDateFilterSelectionChanged extends IDashboardEvent {
     // (undocumented)
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.SELECTION_CHANGED";
 }
+
+// @public
+export function dashboardDateFilterToDateFilterByDateDataSet(filter: IDashboardDateFilter, dateDataSet: ObjRef): IDateFilter;
+
+// @public
+export function dashboardDateFilterToDateFilterByWidget(filter: IDashboardDateFilter, widget: Partial<IFilterableWidget>): IDateFilter;
 
 // @public
 export interface DashboardDeinitialized extends IDashboardEvent {
@@ -1000,7 +1009,7 @@ export interface DashboardExportToPdfResolved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.EXPORT.PDF.RESOLVED";
 }
 
-// @alpha
+// @public
 export interface DashboardFilterContextChanged extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
@@ -1845,14 +1854,11 @@ export function extendedWidgetDebugStr(widget: ExtendedDashboardWidget): string;
 // @internal (undocumented)
 export const FilterBar: (props: IFilterBarProps) => JSX.Element;
 
-// @internal
-export function filterContextAttributeFilterToAttributeFilter(filter: IDashboardAttributeFilter): IAttributeFilter;
+// @public
+export function filterContextItemsToDashboardFiltersByDateDataSet(filterContextItems: FilterContextItem[], dateDataSet: ObjRef): IDashboardFilter[];
 
-// @internal
-export function filterContextDateFilterToDateFilter(filter: IDashboardDateFilter, widget: Partial<IFilterableWidget>): IDateFilter;
-
-// @internal
-export function filterContextItemsToFiltersForWidget(filterContextItems: FilterContextItem[], widget: Partial<IFilterableWidget>): IDashboardFilter[];
+// @public
+export function filterContextItemsToDashboardFiltersByWidget(filterContextItems: FilterContextItem[], widget: Partial<IFilterableWidget>): IDashboardFilter[];
 
 // @alpha (undocumented)
 export interface FilterContextSelection {
@@ -1868,8 +1874,11 @@ export interface FilterContextState {
     originalFilterContextDefinition?: IFilterContextDefinition;
 }
 
-// @internal
-export function filterContextToFiltersForWidget(filterContext: IFilterContextDefinition | IFilterContext | ITempFilterContext | undefined, widget: IWidgetDefinition): IDashboardFilter[];
+// @public
+export function filterContextToDashboardFiltersByDateDataSet(filterContext: IFilterContextDefinition | IFilterContext | ITempFilterContext | undefined, dateDataSet: ObjRef): IDashboardFilter[];
+
+// @public
+export function filterContextToDashboardFiltersByWidget(filterContext: IFilterContextDefinition | IFilterContext | ITempFilterContext | undefined, widget: IWidgetDefinition): IDashboardFilter[];
 
 // @alpha (undocumented)
 export interface FilterOp {
