@@ -1,0 +1,19 @@
+{
+    "presets": [
+        [
+            "@babel/preset-env",
+            {
+                "modules": false
+            }
+        ],
+        "@babel/react",
+        "@babel/preset-typescript"
+    ],
+    "plugins": [
+        "styled-jsx/babel",
+        "@babel/plugin-proposal-object-rest-spread",
+        "@babel/plugin-proposal-class-properties",
+        "@babel/plugin-transform-async-to-generator",
+        "lodash"
+    ]
+}

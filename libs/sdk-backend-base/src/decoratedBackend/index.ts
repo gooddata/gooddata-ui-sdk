@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import {
     IAnalyticalBackendConfig,
@@ -155,6 +155,12 @@ class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
     }
 
     public dashboards(): IWorkspaceDashboardsService {
+        const { dashboards } = this.factories;
+
+        if (dashboards) {
+            return dashboards(this.decorated.dashboards(), this.workspace);
+        }
+
         return this.decorated.dashboards();
     }
 
@@ -265,6 +271,14 @@ export type AttributesDecoratorFactory = (
 ) => IWorkspaceAttributesService;
 
 /**
+ * @alpha
+ */
+export type DashboardsDecoratorFactory = (
+    dashboards: IWorkspaceDashboardsService,
+    workspace: string,
+) => IWorkspaceDashboardsService;
+
+/**
  * Provides factory functions for the different decorators (currently only supports execution
  * decorator). Input to each factory function is the original implementation from the wrapped backend, output
  * is whatever decorateur sees fit.
@@ -277,6 +291,7 @@ export type DecoratorFactories = {
     securitySettings?: SecuritySettingsDecoratorFactory;
     workspaceSettings?: WorkspaceSettingsDecoratorFactory;
     attributes?: AttributesDecoratorFactory;
+    dashboards?: DashboardsDecoratorFactory;
 };
 
 /**

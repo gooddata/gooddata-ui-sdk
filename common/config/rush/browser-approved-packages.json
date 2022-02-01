@@ -24,7 +24,7 @@
     },
     {
       "name": "@babel/plugin-proposal-class-properties",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@babel/plugin-proposal-export-default-from",
@@ -32,11 +32,11 @@
     },
     {
       "name": "@babel/plugin-proposal-object-rest-spread",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@babel/plugin-transform-async-to-generator",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@babel/plugin-transform-typescript",
@@ -44,7 +44,7 @@
     },
     {
       "name": "@babel/polyfill",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@babel/preset-env",
@@ -60,7 +60,7 @@
     },
     {
       "name": "@babel/runtime",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@braintree/sanitize-url",
@@ -108,15 +108,15 @@
     },
     {
       "name": "@gooddata/plugin-toolkit",
-      "allowedCategories": [ "tools" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "@gooddata/reference-workspace",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "@gooddata/sdk-backend-base",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@gooddata/sdk-backend-bear",
@@ -124,7 +124,7 @@
     },
     {
       "name": "@gooddata/sdk-backend-mockingbird",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "@gooddata/sdk-backend-spi",
@@ -147,10 +147,6 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
-      "name": "@gooddata/sdk-ui-charts",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
       "name": "@gooddata/sdk-ui-dashboard",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -160,27 +156,31 @@
     },
     {
       "name": "@gooddata/sdk-ui-filters",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@gooddata/sdk-ui-geo",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "@gooddata/sdk-ui-charts",
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@gooddata/sdk-ui-kit",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@gooddata/sdk-ui-loaders",
-      "allowedCategories": [ "examples", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@gooddata/sdk-ui-pivot",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@gooddata/sdk-ui-theme-provider",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@gooddata/sdk-ui-vis-commons",
@@ -309,6 +309,10 @@
     {
       "name": "@types/node-fetch",
       "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@types/node-static",
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "@types/prettier",
@@ -471,16 +475,8 @@
       "allowedCategories": [ "tools" ]
     },
     {
-      "name": "chalk",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "chokidar",
-      "allowedCategories": [ "tools" ]
-    },
-    {
       "name": "circular-dependency-plugin",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "classnames",
@@ -488,7 +484,7 @@
     },
     {
       "name": "clean-webpack-plugin",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "codemirror",
@@ -504,7 +500,7 @@
     },
     {
       "name": "compression-webpack-plugin",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "concurrently",
@@ -528,7 +524,7 @@
     },
     {
       "name": "cypress",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "date-fns",
@@ -628,7 +624,7 @@
     },
     {
       "name": "fork-ts-checker-webpack-plugin",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "formik",
@@ -669,6 +665,14 @@
     {
       "name": "http-status-codes",
       "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "chalk",
+      "allowedCategories": [ "tools" ]
+    },
+    {
+      "name": "chokidar",
+      "allowedCategories": [ "tools" ]
     },
     {
       "name": "immer",
@@ -752,6 +756,10 @@
     },
     {
       "name": "node-sass-magic-importer",
+      "allowedCategories": [ "production", "tools" ]
+    },
+    {
+      "name": "node-static",
       "allowedCategories": [ "production", "tools" ]
     },
     {
@@ -891,16 +899,16 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "recharts",
-      "allowedCategories": [ "examples" ]
-    },
-    {
       "name": "redux-batched-actions",
       "allowedCategories": [ "production" ]
     },
     {
       "name": "redux-saga",
       "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "recharts",
+      "allowedCategories": [ "examples" ]
     },
     {
       "name": "rimraf",
@@ -951,11 +959,11 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "stylelint-checkstyle-formatter",
+      "name": "stylelint-config-prettier",
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "stylelint-config-prettier",
+      "name": "stylelint-checkstyle-formatter",
       "allowedCategories": [ "production" ]
     },
     {

@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dashboard Plugin Tests - Utils create create local test plugin link 1`] = `
+Object {
+  "parameters": undefined,
+  "plugin": Object {
+    "identifier": "test-plugin",
+  },
+  "type": "IDashboardPluginLink",
+}
+`;
+
+exports[`Dashboard Plugin Tests - Utils should convert plugin name to plugin identifier 1`] = `"dp_test_plugin"`;
+
+exports[`Dashboard Plugin Tests - Utils should create local test plugin 1`] = `
+Object {
+  "identifier": "test-plugin",
+  "name": "test-plugin",
+  "ref": Object {
+    "identifier": "test-plugin",
+  },
+  "tags": Array [],
+  "type": "IDashboardPlugin",
+  "uri": "/test-plugin",
+  "url": "http://localhost:8445/plugins/test-plugin/dp_test_plugin.js",
+}
+`;

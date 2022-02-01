@@ -1,0 +1,9 @@
+{
+    "extends": "./tsconfig.json",
+    "include": ["src/**/*.(ts|tsx)", "typings/globals.d.ts", "cypress/**/*.ts"],
+    "compilerOptions": {
+        "baseUrl": null,
+        "paths": null,
+        "declaration": true
+    }
+}
