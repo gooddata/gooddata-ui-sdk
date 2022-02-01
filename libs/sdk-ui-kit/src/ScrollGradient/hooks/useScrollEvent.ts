@@ -3,6 +3,7 @@
 import React, { useEffect, useCallback } from "react";
 
 import { useNumberState } from "./useNumberState";
+import { useContentHeight } from "./useContentHeight";
 
 export function useScrollEvent(
     content: HTMLElement | null,
@@ -15,10 +16,11 @@ export function useScrollEvent(
 } {
     const [top, setTop] = useNumberState();
     const [bottom, setBottom] = useNumberState();
+    const contentHeight = useContentHeight(content);
 
     useEffect(() => {
         calculateOpacities(content, size, [top, setTop], [bottom, setBottom]);
-    }, [bottom, setBottom, setTop, size, top, content]);
+    }, [bottom, setBottom, setTop, size, top, content, contentHeight]);
 
     const onScrollHandler = useCallback(
         (event: React.MouseEvent<HTMLDivElement>) => {
