@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React, { useEffect } from "react";
 import ReactGA from "react-ga";
 import { Redirect, Route, Router, Switch } from "react-router-dom";
@@ -72,8 +72,9 @@ export const App: React.FC = () => {
                                 height: 100%;
                             }
 
+                            :global(html),
                             :global(body) {
-                                background-color: #fafafa;
+                                background: #fafafa;
                             }
 
                             :global(*),
