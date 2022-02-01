@@ -8,6 +8,7 @@ import { IScrollGradientProps } from "../typings";
 import { useRightInScrollable } from "../hooks/useRightInScrollable";
 import { useScrollEvent } from "../hooks/useScrollEvent";
 import { useGradientColor } from "../hooks/useGradientColor";
+import { useContentHeight } from "../hooks/useContentHeight";
 
 function renderScrollGradient(height: number, options: Partial<IScrollGradientProps>) {
     return mount(
@@ -58,6 +59,22 @@ function renderGradientColor(color: string): [() => ReturnType<typeof useGradien
 
     function HookComponent(): null {
         data = useGradientColor(color);
+        return null;
+    }
+
+    const wrapper = mount(
+        <div>
+            <HookComponent />
+        </div>,
+    );
+
+    return [() => data, () => wrapper.unmount()];
+}
+function renderContentHeight(element: HTMLElement): [() => ReturnType<typeof useContentHeight>, () => void] {
+    let data: ReturnType<typeof useContentHeight>;
+
+    function HookComponent(): null {
+        data = useContentHeight(element);
         return null;
     }
 
@@ -227,6 +244,42 @@ describe("ScrollGradient", () => {
             expect(data().topBackground).toBe(`linear-gradient(#FFFFFF, rgba(255, 255, 255, 0.001))`);
             expect(data().bottomBackground).toBe(`linear-gradient(rgba(255, 255, 255, 0.001), #FFFFFF)`);
             clear();
+        });
+    });
+
+    describe("useContentHeight", () => {
+        let raf: ReturnType<typeof jest.spyOn>, handler: FrameRequestCallback;
+
+        beforeEach(() => {
+            raf = jest.spyOn(window, "requestAnimationFrame").mockImplementation((h) => {
+                handler = h;
+                return 1;
+            });
+        });
+
+        it("determine content height from element", () => {
+            const el = document.createElement("div");
+            const spy = jest.spyOn(el, "scrollHeight", "get");
+
+            const [data, clear] = renderContentHeight(el);
+            expect(data()).toBe(-1);
+
+            act(() => {
+                spy.mockReturnValue(0);
+                handler(0);
+            });
+            expect(data()).toBe(0);
+
+            act(() => {
+                spy.mockReturnValue(1000);
+                handler(0);
+            });
+            expect(data()).toBe(1000);
+            clear();
+        });
+
+        afterEach(() => {
+            raf.mockRestore();
         });
     });
 });
