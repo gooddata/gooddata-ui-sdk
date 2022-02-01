@@ -1,6 +1,12 @@
 // (C) 2021-2022 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
-import { IDashboardAttributeFilter, IInsightWidget, IKpiWidget, ILegacyKpi } from "@gooddata/sdk-backend-spi";
+import {
+    IAnalyticalBackend,
+    IDashboardAttributeFilter,
+    IInsightWidget,
+    IKpiWidget,
+    ILegacyKpi,
+} from "@gooddata/sdk-backend-spi";
 import { ToastMessageContextProvider } from "@gooddata/sdk-ui-kit";
 import {
     BackendProvider,
@@ -13,6 +19,12 @@ import {
 import { ThemeProvider, useThemeIsLoading } from "@gooddata/sdk-ui-theme-provider";
 
 import {
+    AttributeFilterComponentProvider,
+    InsightComponentProvider,
+    InsightMenuButtonComponentProvider,
+    InsightMenuComponentProvider,
+    KpiComponentProvider,
+    WidgetComponentProvider,
     DashboardComponentsProvider,
     DashboardConfigProvider,
     DashboardCustomizationsProvider,
@@ -59,7 +71,7 @@ import { DefaultButtonBar, DefaultMenuButton, DefaultTitle, DefaultTopBar } from
 import { defaultDashboardThemeModifier } from "./defaultDashboardThemeModifier";
 import { IDashboardProps } from "./types";
 import { DefaultSaveAsDialog } from "../saveAs";
-import { idRef, IInsight } from "@gooddata/sdk-model";
+import { IdentifierRef, idRef, IInsight, UriRef } from "@gooddata/sdk-model";
 import { DEFAULT_FILTER_BAR_HEIGHT } from "../constants";
 import { DefaultShareDialog } from "../shareDialog";
 import { DashboardHeader } from "./DashboardHeader/DashboardHeader";
@@ -121,75 +133,129 @@ const DashboardLoading: React.FC<IDashboardProps> = (props: IDashboardProps) => 
     return <DashboardInner {...props} />;
 };
 
-/**
- * @internal
- */
-export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => {
+interface IUseDashboardResult {
+    backend: IAnalyticalBackend;
+    workspace: string;
+    dashboardOrRef: UriRef | IdentifierRef | undefined;
+    hasThemeProvider: boolean;
+    attributeFilterProvider: AttributeFilterComponentProvider;
+    widgetProvider: WidgetComponentProvider;
+    insightProvider: InsightComponentProvider;
+    insightMenuButtonProvider: InsightMenuButtonComponentProvider;
+    insightMenuProvider: InsightMenuComponentProvider;
+    kpiProvider: KpiComponentProvider;
+}
+
+const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
+    const {
+        dashboard,
+        DashboardAttributeFilterComponentProvider,
+        WidgetComponentProvider,
+        InsightComponentProvider,
+        InsightMenuButtonComponentProvider,
+        insightMenuItemsProvider,
+        InsightMenuComponentProvider,
+        KpiComponentProvider,
+    } = props;
+
     const backend = useBackendStrict(props.backend);
     const workspace = useWorkspaceStrict(props.workspace);
 
     const attributeFilterProvider = useCallback(
         (filter: IDashboardAttributeFilter): CustomDashboardAttributeFilterComponent => {
-            const userSpecified = props.DashboardAttributeFilterComponentProvider?.(filter);
+            const userSpecified = DashboardAttributeFilterComponentProvider?.(filter);
             return userSpecified ?? DefaultDashboardAttributeFilter;
         },
-        [props.DashboardAttributeFilterComponentProvider],
+        [DashboardAttributeFilterComponentProvider],
     );
 
     const widgetProvider = useCallback(
         (widget: ExtendedDashboardWidget): CustomDashboardWidgetComponent => {
-            const userSpecified = props.WidgetComponentProvider?.(widget);
+            const userSpecified = WidgetComponentProvider?.(widget);
             return userSpecified ?? DefaultDashboardWidget;
         },
-        [props.WidgetComponentProvider],
+        [WidgetComponentProvider],
     );
 
     const insightProvider = useCallback(
         (insight: IInsight, widget: IInsightWidget): CustomDashboardInsightComponent => {
-            const userSpecified = props.InsightComponentProvider?.(insight, widget);
+            const userSpecified = InsightComponentProvider?.(insight, widget);
             return userSpecified ?? DefaultDashboardInsight;
         },
-        [props.InsightComponentProvider],
+        [InsightComponentProvider],
     );
 
     const insightMenuButtonProvider = useCallback(
         (insight: IInsight, widget: IInsightWidget): CustomDashboardInsightMenuButtonComponent => {
-            const userSpecified = props.InsightMenuButtonComponentProvider?.(insight, widget);
+            const userSpecified = InsightMenuButtonComponentProvider?.(insight, widget);
             // if user customizes the items, always use the "new" default menu button
-            const FallbackDashboardInsightMenuButtonInner = props.insightMenuItemsProvider
+            const FallbackDashboardInsightMenuButtonInner = insightMenuItemsProvider
                 ? DefaultDashboardInsightMenuButton
                 : LegacyDashboardInsightMenuButton;
             return userSpecified ?? FallbackDashboardInsightMenuButtonInner;
         },
-        [props.InsightMenuButtonComponentProvider],
+        [InsightMenuButtonComponentProvider],
     );
 
     const insightMenuProvider = useCallback(
         (insight: IInsight, widget: IInsightWidget): CustomDashboardInsightMenuComponent => {
-            const userSpecified = props.InsightMenuComponentProvider?.(insight, widget);
+            const userSpecified = InsightMenuComponentProvider?.(insight, widget);
             // if user customizes the items, always use the "new" default menu
-            const FallbackDashboardInsightMenuInner = props.insightMenuItemsProvider
+            const FallbackDashboardInsightMenuInner = insightMenuItemsProvider
                 ? DefaultDashboardInsightMenu
                 : LegacyDashboardInsightMenu;
             return userSpecified ?? FallbackDashboardInsightMenuInner;
         },
-        [props.InsightMenuComponentProvider],
+        [InsightMenuComponentProvider],
     );
 
     const kpiProvider = useCallback(
         (kpi: ILegacyKpi, widget: IKpiWidget): CustomDashboardKpiComponent => {
-            const userSpecified = props.KpiComponentProvider?.(kpi, widget);
+            const userSpecified = KpiComponentProvider?.(kpi, widget);
             return userSpecified ?? DefaultDashboardKpi;
         },
-        [props.KpiComponentProvider],
+        [KpiComponentProvider],
     );
+
+    const dashboardOrRef = useMemo(() => {
+        return typeof dashboard === "string" ? idRef(dashboard) : dashboard;
+    }, [dashboard]);
 
     const isThemeLoading = useThemeIsLoading();
     const hasThemeProvider = isThemeLoading !== undefined;
-    const { dashboard } = props;
-    const dashboardOrRef = typeof dashboard === "string" ? idRef(dashboard) : dashboard;
 
-    let dashboardRender = (
+    return {
+        backend,
+        workspace,
+        hasThemeProvider,
+        dashboardOrRef,
+        attributeFilterProvider,
+        widgetProvider,
+        insightProvider,
+        insightMenuButtonProvider,
+        insightMenuProvider,
+        kpiProvider,
+    };
+};
+
+/**
+ * @internal
+ */
+export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => {
+    const {
+        backend,
+        workspace,
+        hasThemeProvider,
+        dashboardOrRef,
+        attributeFilterProvider,
+        widgetProvider,
+        insightProvider,
+        insightMenuButtonProvider,
+        insightMenuProvider,
+        kpiProvider,
+    } = useDashboard(props);
+
+    const dashboardRender = (
         <BackendProvider backend={backend}>
             <WorkspaceProvider workspace={workspace}>
                 <DashboardStoreProvider
@@ -247,12 +313,12 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
     );
 
     if (props.theme || (!hasThemeProvider && !props.disableThemeLoading)) {
-        dashboardRender = (
+        return (
             <ThemeProvider
                 theme={props.theme}
                 modifier={props.themeModifier ?? defaultDashboardThemeModifier}
-                backend={props.backend}
-                workspace={props.workspace}
+                backend={backend}
+                workspace={workspace}
             >
                 {dashboardRender}
             </ThemeProvider>
