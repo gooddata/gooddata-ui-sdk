@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import qs from "qs";
 import { XhrModule, ApiResponseError, ApiResponse } from "./xhr";
 import { ProjectModule } from "./project";
@@ -42,7 +42,7 @@ export class UserModule {
                     resolve(false);
                 },
                 (err: any) => {
-                    if (err.response.status === 401) {
+                    if (err?.response?.status === 401) {
                         resolve(false);
                     } else {
                         reject(err);
