@@ -181,3 +181,4 @@ export {
     AllQueryCacheReducers,
     QueryCacheReducer,
 } from "./_infra/queryService";
+export { StoreAccessors } from "./storeAccessors";

@@ -4068,6 +4068,22 @@ export function singleEventTypeHandler(type: (DashboardEvents | ICustomDashboard
 // @alpha
 export type StashedDashboardItemsId = string;
 
+// @public
+export class StoreAccessors {
+    // (undocumented)
+    dispatch: DashboardDispatch | undefined;
+    getDispatch(): DashboardDispatch | undefined;
+    // (undocumented)
+    static getInstance(): StoreAccessors;
+    getSelector(): DashboardSelectorEvaluator | undefined;
+    // (undocumented)
+    selectorEvaluator: DashboardSelectorEvaluator | undefined;
+    setDispatch(dispatch: DashboardDispatch): void;
+    setSelector(selectorEvaluator: DashboardSelectorEvaluator): void;
+    // (undocumented)
+    static stateAccessor: StoreAccessors;
+}
+
 // @internal (undocumented)
 export const Title: (props: ITitleProps) => JSX.Element;
 
