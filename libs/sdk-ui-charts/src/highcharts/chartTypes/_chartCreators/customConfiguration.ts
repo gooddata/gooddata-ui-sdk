@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import noop from "lodash/noop";
 import isString from "lodash/isString";
 import merge from "lodash/merge";
@@ -1275,7 +1275,9 @@ function getZoomingAndPanningConfiguration(
                   },
                   resetZoomButton: {
                       theme: {
-                          display: "none",
+                          style: {
+                              display: "none",
+                          },
                       },
                   },
               },

@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import set from "lodash/set";
 import noop from "lodash/noop";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
@@ -46,7 +46,9 @@ function getChartZoomConfig(chartConfig: any): void {
         },
         resetZoomButton: {
             theme: {
-                display: "none",
+                style: {
+                    display: "none",
+                },
             },
         },
     };
