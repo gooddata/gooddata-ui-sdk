@@ -181,4 +181,4 @@ export {
     AllQueryCacheReducers,
     QueryCacheReducer,
 } from "./_infra/queryService";
-export { StoreAccessors } from "./storeAccessors";
+export { DashboardStoreAccessor } from "./storeAccessors";

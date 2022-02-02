@@ -1486,6 +1486,22 @@ export type DashboardState = {
 // @public
 export type DashboardStateChangeCallback = (state: DashboardState, dispatch: DashboardDispatch) => void;
 
+// @public
+export class DashboardStoreAccessor {
+    // (undocumented)
+    dispatch: DashboardDispatch | undefined;
+    getDispatch(): DashboardDispatch | undefined;
+    // (undocumented)
+    static getInstance(): DashboardStoreAccessor;
+    getSelector(): DashboardSelectorEvaluator | undefined;
+    // (undocumented)
+    selectorEvaluator: DashboardSelectorEvaluator | undefined;
+    setDispatch(dispatch: DashboardDispatch): void;
+    setSelector(selectorEvaluator: DashboardSelectorEvaluator): void;
+    // (undocumented)
+    static stateAccessor: DashboardStoreAccessor;
+}
+
 // @internal (undocumented)
 export const DashboardStoreProvider: React_2.FC<IDashboardStoreProviderProps>;
 
@@ -4067,22 +4083,6 @@ export function singleEventTypeHandler(type: (DashboardEvents | ICustomDashboard
 
 // @alpha
 export type StashedDashboardItemsId = string;
-
-// @public
-export class StoreAccessors {
-    // (undocumented)
-    dispatch: DashboardDispatch | undefined;
-    getDispatch(): DashboardDispatch | undefined;
-    // (undocumented)
-    static getInstance(): StoreAccessors;
-    getSelector(): DashboardSelectorEvaluator | undefined;
-    // (undocumented)
-    selectorEvaluator: DashboardSelectorEvaluator | undefined;
-    setDispatch(dispatch: DashboardDispatch): void;
-    setSelector(selectorEvaluator: DashboardSelectorEvaluator): void;
-    // (undocumented)
-    static stateAccessor: StoreAccessors;
-}
 
 // @internal (undocumented)
 export const Title: (props: ITitleProps) => JSX.Element;

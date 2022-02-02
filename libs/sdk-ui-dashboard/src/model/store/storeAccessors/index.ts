@@ -1,2 +1,2 @@
 // (C) 2022 GoodData Corporation
-export { StoreAccessors } from "./StoreAccessors";
+export { DashboardStoreAccessor } from "./DashboardStoreAccessor";
