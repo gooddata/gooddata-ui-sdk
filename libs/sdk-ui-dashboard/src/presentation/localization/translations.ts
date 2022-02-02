@@ -12,6 +12,7 @@ import nlNL from "./bundles/nl-NL.json";
 import ptBR from "./bundles/pt-BR.json";
 import ptPT from "./bundles/pt-PT.json";
 import zhHans from "./bundles/zh-Hans.json";
+import ruRU from "./bundles/ru-RU.json";
 
 const sdkUiDashboardTranslations: { [locale: string]: Record<string, string> } = {
     "en-US": translationUtils.removeMetadata(enUS),
@@ -23,7 +24,7 @@ const sdkUiDashboardTranslations: { [locale: string]: Record<string, string> } =
     "pt-BR": ptBR,
     "pt-PT": ptPT,
     "zh-Hans": zhHans,
-    // russian
+    "ru-RU": ruRU,
 };
 
 /**
