@@ -1,5 +1,6 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import has from "lodash/has";
+import deburr from "lodash/deburr";
 
 const NonAlphaNumRegex = /[^\w\d$]+/g;
 
@@ -11,11 +12,16 @@ const NonAlphaNumRegex = /[^\w\d$]+/g;
  */
 export function stringToVariableName(input: string): string {
     /*
-     * First do special substitution of chars that have common meaning
+     * Remove diacritic
+     */
+    const removedDiacritic = deburr(input);
+
+    /*
+     * Do special substitution of chars that have common meaning
      *
      * Then replace all non-chars and non-digits (except for $) with whitespace
      */
-    const onlyAlphaNumWithSpaces = input
+    const onlyAlphaNumWithSpaces = removedDiacritic
         .replace(/&/g, " and ")
         .replace(/#/g, "Nr")
         .replace(/%/g, "Percent")

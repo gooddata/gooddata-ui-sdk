@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 
 import { createUniqueName, createUniqueVariableName } from "../titles";
 
@@ -20,6 +20,10 @@ describe("createUniqueVariableName", () => {
             ["NrOfOpportunities", "# Of Opportunities"],
             ["$Spent", "$ - Spent"],
             ["MinExecTime", "min_exec_time"],
+            ["ZavislostNaPoctu", "Závislost na počtu"],
+            ["NecoAndHackem", "Něco&háčkem"],
+            ["NecoSHackem", "Něco s háčkem"],
+            ["NecoSHackem", "Něco_s_háčkem"],
         ];
 
         it.each(TEST_DATA)("should return '%s' when input is '%s'", (expectedResult, input) => {
