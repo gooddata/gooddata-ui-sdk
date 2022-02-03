@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 
 import isEmpty from "lodash/isEmpty";
 import { AuthenticationFlow } from "@gooddata/sdk-backend-spi";
@@ -21,6 +21,7 @@ export const ErrorCodes = {
     PROTECTED_REPORT: "PROTECTED_REPORT",
     UNKNOWN_ERROR: "UNKNOWN_ERROR",
     CANCELLED: "CANCELLED",
+    DYNAMIC_SCRIPT_LOAD_ERROR: "DYNAMIC_SCRIPT_LOAD_ERROR",
 };
 
 /**
@@ -210,6 +211,17 @@ export class CancelledSdkError extends GoodDataSdkError {
     }
 }
 
+/**
+ * This error means that loading of dynamic script/plugin failed.
+ *
+ * @public
+ */
+export class DynamicScriptLoadSdkError extends GoodDataSdkError {
+    constructor(message?: string, cause?: Error) {
+        super(ErrorCodes.DYNAMIC_SCRIPT_LOAD_ERROR as SdkErrorType, message, cause);
+    }
+}
+
 //
 //
 //
@@ -329,4 +341,13 @@ export function isUnknownSdkError(obj: unknown): obj is UnexpectedSdkError {
  */
 export function isCancelledSdkError(obj: unknown): obj is CancelledSdkError {
     return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "CANCELLED";
+}
+
+/**
+ * Typeguard checking whether input is an instance of {@link DynamicScriptLoadSdkError};
+ *
+ * @public
+ */
+export function isDynamicScriptLoadSdkError(obj: unknown): obj is DynamicScriptLoadSdkError {
+    return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "DYNAMIC_SCRIPT_LOAD_ERROR";
 }

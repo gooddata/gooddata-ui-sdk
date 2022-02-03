@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 /*
  *
@@ -27,6 +27,7 @@ export {
     GeoLocationMissingSdkError,
     BadRequestSdkError,
     GeoTokenMissingSdkError,
+    DynamicScriptLoadSdkError,
     isGoodDataSdkError,
     isBadRequest,
     isCancelledSdkError,
@@ -40,6 +41,7 @@ export {
     isProtectedReport,
     isUnauthorized,
     isUnknownSdkError,
+    isDynamicScriptLoadSdkError,
 } from "./errors/GoodDataSdkError";
 export {
     IErrorDescriptors,
