@@ -1,6 +1,7 @@
 // (C) 2022 GoodData Corporation
 
-import { DashboardDispatch, DashboardSelectorEvaluator } from "../types";
+import { DashboardDispatch, DashboardSelectorEvaluator, DashboardState } from "../types";
+import { invariant } from "ts-invariant";
 
 /**
  * This singleton class serves the selector and the dispatcher properties of the dashboard component state.
@@ -52,7 +53,7 @@ export class DashboardStoreAccessor {
      * @returns stateAccessor - an existing instance of StoreAccessors class. If no instance is available,
      * the new one is created.
      */
-    static getInstance() {
+    static getInstance(): DashboardStoreAccessor {
         if (!DashboardStoreAccessor.stateAccessor) {
             DashboardStoreAccessor.stateAccessor = new DashboardStoreAccessor();
         }
@@ -62,7 +63,8 @@ export class DashboardStoreAccessor {
     /**
      * Returns current selector for the dashboard's component state.
      */
-    getSelector() {
+    getSelector(): DashboardSelectorEvaluator {
+        invariant(this.selectorEvaluator, "DashboardStoreAccessor selectorEvaluator is not initialized");
         return this.selectorEvaluator;
     }
 
@@ -70,14 +72,15 @@ export class DashboardStoreAccessor {
      * Setter for the dashboard's component state selector.
      * @param selectorEvaluator - dashboardSelectorEvaluator
      */
-    setSelector(selectorEvaluator: DashboardSelectorEvaluator) {
+    private setSelector(selectorEvaluator: DashboardSelectorEvaluator): void {
         this.selectorEvaluator = selectorEvaluator;
     }
 
     /**
      * Returns current dispatch object for the dashboard component state.
      */
-    getDispatch() {
+    getDispatch(): DashboardDispatch {
+        invariant(this.dispatch, "DashboardStoreAccessor dispatch is not initialized");
         return this.dispatch;
     }
 
@@ -85,7 +88,29 @@ export class DashboardStoreAccessor {
      * Setter for the dashboard's component state dispatch.
      * @param dispatch - dashboardDispatch
      */
-    setDispatch(dispatch: DashboardDispatch) {
+    private setDispatch(dispatch: DashboardDispatch): void {
         this.dispatch = dispatch;
+    }
+
+    /**
+     * Checks if {@link DashboardStoreAccessor} is fully initialized.
+     */
+    isDashboardStoreAccessorInitialized(): boolean {
+        return !!this.selectorEvaluator && !!this.dispatch;
+    }
+
+    /**
+     * Callback to be passed as {@link Dashboard} component {@link Dashboard#onStateChange} property to set
+     * {@link DashboardStoreAccessor#selectorEvaluator} and {@link DashboardStoreAccessor#dispatch} to handle Dashboard component state from outside of the
+     * component.
+     *
+     * @param state - {@link DashboardState} object.
+     * @param dispatch - {@link DashboardDispatch} object.
+     */
+    setSelectAndDispatch(state: DashboardState, dispatch: DashboardDispatch): void {
+        const dashboardSelect: DashboardSelectorEvaluator = (select) => select(state);
+
+        this.setSelector(dashboardSelect);
+        this.setDispatch(dispatch);
     }
 }
