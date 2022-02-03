@@ -357,6 +357,11 @@ export class DerivedMeasureTitleSuffixFactory {
 export type DrillEventIntersectionElementHeader = IAttributeDescriptor | IMeasureDescriptor | ITotalDescriptor | IDrillIntersectionAttributeItem;
 
 // @public
+export class DynamicScriptLoadSdkError extends GoodDataSdkError {
+    constructor(message?: string, cause?: Error);
+}
+
+// @public
 export const ErrorCodes: {
     BAD_REQUEST: string;
     UNAUTHORIZED: string;
@@ -370,6 +375,7 @@ export const ErrorCodes: {
     PROTECTED_REPORT: string;
     UNKNOWN_ERROR: string;
     CANCELLED: string;
+    DYNAMIC_SCRIPT_LOAD_ERROR: string;
 };
 
 // @public
@@ -1210,6 +1216,9 @@ export function isDrillableItemUri(item: unknown): item is IDrillableItemUri;
 
 // @public (undocumented)
 export function isDrillIntersectionAttributeItem(header: DrillEventIntersectionElementHeader): header is IDrillIntersectionAttributeItem;
+
+// @public
+export function isDynamicScriptLoadSdkError(obj: unknown): obj is DynamicScriptLoadSdkError;
 
 export { ISeparators }
 

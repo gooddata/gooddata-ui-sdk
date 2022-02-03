@@ -6,6 +6,7 @@ import { LoadedPlugin, ModuleFederationIntegration } from "../types";
 import invariant from "ts-invariant";
 import isEmpty from "lodash/isEmpty";
 import { determineDashboardEngine } from "./determineDashboardEngine";
+import { DynamicScriptLoadSdkError } from "@gooddata/sdk-ui";
 
 /**
  * @internal
@@ -145,9 +146,10 @@ function addScriptTag(url: string): { element: HTMLScriptElement; promise: Promi
         };
 
         element.onerror = () => {
+            const message = `Dynamic Script Error: ${url}`;
             // eslint-disable-next-line no-console
-            console.error(`Dynamic Script Error: ${url}`);
-            reject();
+            console.error(message);
+            reject(new DynamicScriptLoadSdkError(message));
         };
 
         document.head.appendChild(element);
