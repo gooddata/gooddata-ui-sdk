@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
     changeDateFilterSelection,
     Dashboard,
@@ -17,19 +17,19 @@ const DashboardComponentWithAccessorSrc: React.FC = () => {
     const dashboardStoreAccessor = DashboardStoreAccessor.getInstance();
     const [selectResult, setSelectResult] = useState<any>();
 
-    const onDispatchClick = () => {
+    const onDispatchClick = useCallback(() => {
         if (dashboardStoreAccessor.isDashboardStoreAccessorInitialized()) {
             dashboardStoreAccessor.getDispatch()(
                 changeDateFilterSelection("relative", "GDC.time.month", "-3", "0"),
             );
         }
-    };
+    }, [dashboardStoreAccessor]);
 
-    const onSelectClick = () => {
+    const onSelectClick = useCallback(() => {
         if (dashboardStoreAccessor.isDashboardStoreAccessorInitialized()) {
             setSelectResult(dashboardStoreAccessor.getSelector()(selectEffectiveDateFilterOptions));
         }
-    };
+    }, [dashboardStoreAccessor]);
 
     return (
         <div>
