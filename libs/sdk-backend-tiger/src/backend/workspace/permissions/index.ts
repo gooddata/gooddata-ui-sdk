@@ -12,6 +12,8 @@ export class TigerWorkspacePermissionsFactory implements IWorkspacePermissionsSe
         const response = await this.authCall((client) =>
             client.axios.get(`/api/entities/workspaces/${this.workspace}?metaInclude=permissions`),
         );
+        // NOTE: From tiger backend there are permissions like MANAGE, ANALYZE, VIEW. Keep on mind that
+        // NOTE: if user has MANAGE permissions, there will be also ANALYZE and VIEW in permissions array.
         const permissions = response.data.data.meta.permissions as Array<TigerPermissionType>;
         const { canViewWorkspace, canAnalyzeWorkspace, canManageWorkspace } = getPermission(permissions);
 
