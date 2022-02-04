@@ -1495,6 +1495,22 @@ export type DashboardState = {
 // @public
 export type DashboardStateChangeCallback = (state: DashboardState, dispatch: DashboardDispatch) => void;
 
+// @public
+export class DashboardStoreAccessor {
+    // (undocumented)
+    dispatch: DashboardDispatch | undefined;
+    getDispatch: () => DashboardDispatch;
+    // (undocumented)
+    static getInstance(): DashboardStoreAccessor;
+    getSelector: () => DashboardSelectorEvaluator;
+    isDashboardStoreAccessorInitialized: () => boolean;
+    // (undocumented)
+    selectorEvaluator: DashboardSelectorEvaluator | undefined;
+    setSelectAndDispatch: (state: DashboardState, dispatch: DashboardDispatch) => void;
+    // (undocumented)
+    static stateAccessor: DashboardStoreAccessor;
+}
+
 // @internal (undocumented)
 export const DashboardStoreProvider: React_2.FC<IDashboardStoreProviderProps>;
 
