@@ -1490,14 +1490,14 @@ export type DashboardStateChangeCallback = (state: DashboardState, dispatch: Das
 export class DashboardStoreAccessor {
     // (undocumented)
     dispatch: DashboardDispatch | undefined;
-    getDispatch(): DashboardDispatch;
+    getDispatch: () => DashboardDispatch;
     // (undocumented)
     static getInstance(): DashboardStoreAccessor;
-    getSelector(): DashboardSelectorEvaluator;
-    isDashboardStoreAccessorInitialized(): boolean;
+    getSelector: () => DashboardSelectorEvaluator;
+    isDashboardStoreAccessorInitialized: () => boolean;
     // (undocumented)
     selectorEvaluator: DashboardSelectorEvaluator | undefined;
-    setSelectAndDispatch(state: DashboardState, dispatch: DashboardDispatch): void;
+    setSelectAndDispatch: (state: DashboardState, dispatch: DashboardDispatch) => void;
     // (undocumented)
     static stateAccessor: DashboardStoreAccessor;
 }

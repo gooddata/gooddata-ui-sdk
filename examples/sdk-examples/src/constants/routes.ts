@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { BasicComponents } from "../examples/basic";
 import { PivotTable } from "../examples/pivotTable";
 import { InsightView } from "../examples/insightView";
@@ -55,6 +55,7 @@ import MultiValuePlaceholders from "../examples/placeholders/MultiValuePlacehold
 import ComposedPlaceholder from "../examples/placeholders/ComposedPlaceholder";
 import SimpleDashboardComponent from "../examples/dashboardComponent/SimpleDashboardComponent";
 import DashboardComponentWithLocalPlugin from "../examples/dashboardComponent/DashboardComponentWithLocalPlugin";
+import DashboardWithAccessor from "../examples/dashboardComponent/DashboardComponentWithAccessor";
 
 // import PivotTableDynamic from "./PivotTableDynamic";
 // import MultipleDomains from "./MultipleDomains";
@@ -106,6 +107,11 @@ export const dashboardComponentUseCasesRoutes = [
         path: "/dashboard/local-plugin",
         title: "With local plugin",
         Component: DashboardComponentWithLocalPlugin,
+    },
+    {
+        path: "/dashboard/accessor",
+        title: "With store accessor",
+        Component: DashboardWithAccessor,
     },
 ];
 

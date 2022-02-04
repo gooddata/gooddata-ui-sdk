@@ -18,16 +18,10 @@ import { invariant } from "ts-invariant";
  * ```
  *  const stateAccessors = StoreAccessors.getInstance();
  *
- *  const onStateChange = (state: DashboardState, dispatch: DashboardDispatch) => {
- *      const dashboardSelect: DashboardSelectorEvaluator = (select) => select(state);
- *
- *      stateAccessors.setSelector(dashboardSelect);
- *      stateAccessors.setDispatch(dispatch);
- *  }
  *
  *  // in the code where needed
- *  stateAccessors.getSelector()?.(selectEffectiveDateFilterOptions);
- *  stateAccessors.getDispatch()?.(saveDashboardAs("Saved from exposed dispatch", false, false));
+ *  stateAccessors.getSelector()(selectEffectiveDateFilterOptions);
+ *  stateAccessors.getDispatch()(saveDashboardAs("Saved from exposed dispatch", false, false));
  *
  *  return (
  *      <Dashboard dashboard={"<dashboardId>"} onStateChange={onStateChange}/>
@@ -63,41 +57,41 @@ export class DashboardStoreAccessor {
     /**
      * Returns current selector for the dashboard's component state.
      */
-    getSelector(): DashboardSelectorEvaluator {
+    getSelector = (): DashboardSelectorEvaluator => {
         invariant(this.selectorEvaluator, "DashboardStoreAccessor selectorEvaluator is not initialized");
         return this.selectorEvaluator;
-    }
+    };
 
     /**
      * Setter for the dashboard's component state selector.
      * @param selectorEvaluator - dashboardSelectorEvaluator
      */
-    private setSelector(selectorEvaluator: DashboardSelectorEvaluator): void {
+    private setSelector = (selectorEvaluator: DashboardSelectorEvaluator): void => {
         this.selectorEvaluator = selectorEvaluator;
-    }
+    };
 
     /**
      * Returns current dispatch object for the dashboard component state.
      */
-    getDispatch(): DashboardDispatch {
+    getDispatch = (): DashboardDispatch => {
         invariant(this.dispatch, "DashboardStoreAccessor dispatch is not initialized");
         return this.dispatch;
-    }
+    };
 
     /**
      * Setter for the dashboard's component state dispatch.
      * @param dispatch - dashboardDispatch
      */
-    private setDispatch(dispatch: DashboardDispatch): void {
+    private setDispatch = (dispatch: DashboardDispatch): void => {
         this.dispatch = dispatch;
-    }
+    };
 
     /**
      * Checks if {@link DashboardStoreAccessor} is fully initialized.
      */
-    isDashboardStoreAccessorInitialized(): boolean {
+    isDashboardStoreAccessorInitialized = (): boolean => {
         return !!this.selectorEvaluator && !!this.dispatch;
-    }
+    };
 
     /**
      * Callback to be passed as {@link Dashboard} component {@link Dashboard#onStateChange} property to set
@@ -107,10 +101,10 @@ export class DashboardStoreAccessor {
      * @param state - {@link DashboardState} object.
      * @param dispatch - {@link DashboardDispatch} object.
      */
-    setSelectAndDispatch(state: DashboardState, dispatch: DashboardDispatch): void {
+    setSelectAndDispatch = (state: DashboardState, dispatch: DashboardDispatch): void => {
         const dashboardSelect: DashboardSelectorEvaluator = (select) => select(state);
 
         this.setSelector(dashboardSelect);
         this.setDispatch(dispatch);
-    }
+    };
 }
