@@ -1,32 +1,62 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { IWorkspacePermissionsService, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
 import { TigerAuthenticatedCallGuard } from "../../../types";
+
+type TigerPermissionType = "MANAGE" | "VIEW" | "ANALYZE";
 
 export class TigerWorkspacePermissionsFactory implements IWorkspacePermissionsService {
     constructor(public readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
 
     public async getPermissionsForCurrentUser(): Promise<IWorkspacePermissions> {
-        return await this.authCall(async () => {
-            return {
-                canAccessWorkbench: true,
-                canCreateReport: true,
-                canCreateVisualization: true,
-                canExecuteRaw: true,
-                canExportReport: true,
-                canManageAnalyticalDashboard: true,
-                canUploadNonProductionCSV: true,
-                canManageProject: true,
-                canCreateAnalyticalDashboard: true,
-                canInitData: true,
-                canManageMetric: false,
-                canManageReport: true,
-                canCreateScheduledMail: true,
-                canListUsersInProject: true,
-                canManageDomain: true,
-                canInviteUserToProject: true,
-                canRefreshData: true,
-                canManageACL: true,
-            };
-        });
+        // TODO: replace with direct call of TigerClient (once methods are generated from OpenAPI)
+        const response = await this.authCall((client) =>
+            client.axios.get(`/api/entities/workspaces/${this.workspace}?metaInclude=permissions`),
+        );
+        // NOTE: From tiger backend there are permissions like MANAGE, ANALYZE, VIEW. Keep on mind that
+        // NOTE: if user has MANAGE permissions, there will be also ANALYZE and VIEW in permissions array.
+        const permissions = response.data.data.meta.permissions as Array<TigerPermissionType>;
+        const { canViewWorkspace, canAnalyzeWorkspace, canManageWorkspace } = getPermission(permissions);
+
+        return {
+            //disabled for tiger for now
+            canCreateReport: false,
+            canExportReport: false,
+            canUploadNonProductionCSV: false,
+            canManageACL: false,
+            canRefreshData: false,
+            canManageDomain: false,
+            canInviteUserToProject: false,
+            canCreateScheduledMail: false,
+            canListUsersInProject: false,
+            //based on group: VIEW
+            canAccessWorkbench: canViewWorkspace,
+            canExecuteRaw: canViewWorkspace,
+            //based on group: ANALYZE
+            canCreateVisualization: canAnalyzeWorkspace,
+            canManageAnalyticalDashboard: canAnalyzeWorkspace,
+            canCreateAnalyticalDashboard: canAnalyzeWorkspace,
+            canManageMetric: canAnalyzeWorkspace,
+            canManageReport: canAnalyzeWorkspace,
+            //based on group: MANAGE
+            canManageProject: canManageWorkspace,
+            //NOTE: Data source MANAGE in future
+            canInitData: canManageWorkspace,
+        };
     }
+}
+
+function getPermission(permissions: Array<TigerPermissionType>) {
+    const canViewWorkspace = hasPermission(permissions, "VIEW");
+    const canAnalyzeWorkspace = hasPermission(permissions, "ANALYZE");
+    const canManageWorkspace = hasPermission(permissions, "MANAGE");
+
+    return {
+        canViewWorkspace,
+        canAnalyzeWorkspace,
+        canManageWorkspace,
+    };
+}
+
+function hasPermission(permissions: Array<TigerPermissionType>, need: TigerPermissionType) {
+    return permissions.indexOf(need) >= 0;
 }
