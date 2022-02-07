@@ -34,24 +34,12 @@ import { invariant } from "ts-invariant";
  * @public
  */
 export class DashboardStoreAccessor {
-    static stateAccessor: DashboardStoreAccessor;
-
     selectorEvaluator: DashboardSelectorEvaluator | undefined;
     dispatch: DashboardDispatch | undefined;
 
-    private constructor() {
-        // constructor empty on purpose to prevent incorrect StoreAccessors object initialization
-    }
-
-    /**
-     * @returns stateAccessor - an existing instance of StoreAccessors class. If no instance is available,
-     * the new one is created.
-     */
-    static getInstance(): DashboardStoreAccessor {
-        if (!DashboardStoreAccessor.stateAccessor) {
-            DashboardStoreAccessor.stateAccessor = new DashboardStoreAccessor();
-        }
-        return this.stateAccessor;
+    constructor(selector: DashboardSelectorEvaluator, dispatch: DashboardDispatch) {
+        this.selectorEvaluator = selector;
+        this.dispatch = dispatch;
     }
 
     /**
