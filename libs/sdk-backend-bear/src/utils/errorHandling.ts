@@ -65,7 +65,7 @@ export function convertApiError(error: Error): AnalyticalBackendError {
     }
 
     if (isApiResponseError(error)) {
-        if (error.response.status !== HttpStatusCodes.UNAUTHORIZED) {
+        if (error.response.status === HttpStatusCodes.UNAUTHORIZED) {
             // detect expired passwords using the specific exception code from the backend
             // use responseBody directly (instead of response.json) in case the stream has already been used
             // at this point (which would bomb)
