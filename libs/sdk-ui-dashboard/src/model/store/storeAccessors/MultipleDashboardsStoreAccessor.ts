@@ -1,9 +1,12 @@
 // (C) 2022 GoodData Corporation
 
-import { DashboardDispatch, DashboardSelectorEvaluator } from "../types";
+import { DashboardDispatch, DashboardSelectorEvaluator, DashboardState } from "../types";
 import { invariant } from "ts-invariant";
 import { DashboardStoreAccessor } from "./DashboardStoreAccessor";
 
+/**
+ * @public
+ */
 export class MultipleDashboardStoreAccessor {
     static dashboardAccessor: MultipleDashboardStoreAccessor;
 
@@ -22,6 +25,16 @@ export class MultipleDashboardStoreAccessor {
         return accessor;
     }
 
+    getOnChangeHandlerForDashboard(
+        dashboardId: string,
+    ): (state: DashboardState, dispatch: DashboardDispatch) => void {
+        return (state, dispatch) => {
+            const dashboardSelect: DashboardSelectorEvaluator = (select) => select(state);
+
+            this.setAccessorForDashboard(dashboardId, dashboardSelect, dispatch);
+        };
+    }
+
     setAccessorForDashboard(
         dashboardId: string,
         selector: DashboardSelectorEvaluator,
@@ -32,6 +45,10 @@ export class MultipleDashboardStoreAccessor {
 
     clearAccessorForDashboard(dashboardId: string): void {
         this.accessors.delete(dashboardId);
+    }
+
+    clearAllAccessors(): void {
+        this.accessors.clear();
     }
 
     isAccessorInitializedForDashboard(dashboardId: string): boolean {

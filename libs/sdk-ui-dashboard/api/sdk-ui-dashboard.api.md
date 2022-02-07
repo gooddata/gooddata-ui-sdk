@@ -1488,18 +1488,15 @@ export type DashboardStateChangeCallback = (state: DashboardState, dispatch: Das
 
 // @public
 export class DashboardStoreAccessor {
+    constructor(selector: DashboardSelectorEvaluator, dispatch: DashboardDispatch);
     // (undocumented)
     dispatch: DashboardDispatch | undefined;
     getDispatch: () => DashboardDispatch;
-    // (undocumented)
-    static getInstance(): DashboardStoreAccessor;
     getSelector: () => DashboardSelectorEvaluator;
     isDashboardStoreAccessorInitialized: () => boolean;
     // (undocumented)
     selectorEvaluator: DashboardSelectorEvaluator | undefined;
     setSelectAndDispatch: (state: DashboardState, dispatch: DashboardDispatch) => void;
-    // (undocumented)
-    static stateAccessor: DashboardStoreAccessor;
 }
 
 // @internal (undocumented)
@@ -3163,6 +3160,28 @@ export interface MoveSectionItem extends IDashboardCommand {
 
 // @alpha
 export function moveSectionItem(sectionIndex: number, itemIndex: number, toSectionIndex: number, toItemIndex: number, correlationId?: string): MoveSectionItem;
+
+// @public (undocumented)
+export class MultipleDashboardStoreAccessor {
+    // (undocumented)
+    accessors: Map<string, DashboardStoreAccessor>;
+    // (undocumented)
+    clearAccessorForDashboard(dashboardId: string): void;
+    // (undocumented)
+    clearAllAccessors(): void;
+    // (undocumented)
+    static dashboardAccessor: MultipleDashboardStoreAccessor;
+    // (undocumented)
+    getAccessorsForDashboard(dashboardId: string): DashboardStoreAccessor;
+    // (undocumented)
+    static getInstance(): MultipleDashboardStoreAccessor;
+    // (undocumented)
+    getOnChangeHandlerForDashboard(dashboardId: string): (state: DashboardState, dispatch: DashboardDispatch) => void;
+    // (undocumented)
+    isAccessorInitializedForDashboard(dashboardId: string): boolean;
+    // (undocumented)
+    setAccessorForDashboard(dashboardId: string, selector: DashboardSelectorEvaluator, dispatch: DashboardDispatch): void;
+}
 
 // @public
 export function newCustomWidget<TExtra = void>(identifier: string, customType: string, extras?: TExtra & Partial<IFilterableWidget>): TExtra & ICustomWidget;
