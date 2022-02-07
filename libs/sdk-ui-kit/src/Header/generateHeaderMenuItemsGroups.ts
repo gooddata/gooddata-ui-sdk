@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { ISettings, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
 import { isFreemiumEdition, shouldHidePPExperience, shouldEnableNewNavigation } from "../utils/featureFlags";
 
@@ -166,7 +166,7 @@ function createInsightsItemsGroup(
     pushConditionally(
         insightItemsGroup,
         createIHeaderMenuItem(HEADER_ITEM_ID_METRICS, "s-menu-metrics", measuresUrl),
-        hasMeasures,
+        canShowMetricsItem(hasMeasures, workspacePermissions),
     );
 
     const loadUrl = loadItemUrl(workspaceRef, workspaceId);
@@ -210,6 +210,9 @@ function manageItemUrl(workspaceRef: string, workspaceId: string): string {
 }
 function measuresItemUrl(workspaceId: string): string {
     return `/metrics/#/${workspaceId}`;
+}
+function canShowMetricsItem(hasMetrics: boolean, workspacePermissions: IWorkspacePermissions): boolean {
+    return Boolean(workspacePermissions.canManageMetric === true && hasMetrics);
 }
 
 function kpisItemUrl(workspaceRef: string, workspaceId: string): string {
