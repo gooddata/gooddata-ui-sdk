@@ -8,7 +8,7 @@ import {
     IDashboardWidgetCustomizer,
     IFilterBarCustomizer,
 } from "../customizer";
-import { DefaultFilterBar, HiddenFilterBar, IDashboardExtensionProps } from "../../presentation";
+import { IDashboardExtensionProps } from "../../presentation";
 import { DefaultInsightCustomizer } from "./insightCustomizer";
 import { DashboardCustomizationLogger } from "./customizationLogging";
 import { IDashboardPluginContract_V1 } from "../plugin";
@@ -77,7 +77,7 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
     };
 
     public build = (): IDashboardExtensionProps => {
-        const filterBarCustomizerResult = this.filterBarCustomizer.getFilterBarCustomizerResult();
+        const filterBarCustomizerResult = this.filterBarCustomizer.getCustomizerResult();
 
         const props: IDashboardExtensionProps = {
             InsightComponentProvider: this.insightCustomizer.getInsightProvider(),
@@ -86,10 +86,7 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
             customizationFns: {
                 existingDashboardTransformFn: this.layoutCustomizer.getExistingDashboardTransformFn(),
             },
-            FilterBarComponent:
-                filterBarCustomizerResult.filterBarRenderingMode === "hidden"
-                    ? HiddenFilterBar
-                    : DefaultFilterBar,
+            FilterBarComponent: filterBarCustomizerResult.FilterBarComponent,
         };
 
         this.sealCustomizers();

@@ -146,7 +146,6 @@ class LocalPlugin extends DashboardPluginV1 {
                 ),
             );
         });
-        customize.filterBar().setFilterBarRenderingMode("default").setFilterBarRenderingMode("hidden");
     }
 }
 

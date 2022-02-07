@@ -273,7 +273,7 @@ export interface IFilterBarCustomizer {
      *
      * @param mode - the mode to use, see {@link FilterBarRenderingMode} for info on individual values
      */
-    setFilterBarRenderingMode(mode: FilterBarRenderingMode): IFilterBarCustomizer;
+    setRenderingMode(mode: FilterBarRenderingMode): IFilterBarCustomizer;
 }
 
 /**

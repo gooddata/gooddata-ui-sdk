@@ -2497,7 +2497,7 @@ export type IExportConfig = ICsvExportConfig | IXlsxExportConfig;
 
 // @public (undocumented)
 export interface IFilterBarCustomizer {
-    setFilterBarRenderingMode(mode: FilterBarRenderingMode): IFilterBarCustomizer;
+    setRenderingMode(mode: FilterBarRenderingMode): IFilterBarCustomizer;
 }
 
 // @alpha (undocumented)

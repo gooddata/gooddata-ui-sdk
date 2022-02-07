@@ -1,4 +1,5 @@
 // (C) 2022 GoodData Corporation
+import { DefaultFilterBar, HiddenFilterBar } from "../../../presentation";
 import { DefaultFilterBarCustomizer } from "../filterBarCustomizer";
 import { TestingDashboardCustomizationLogger } from "./fixtures/TestingDashboardCustomizationLogger";
 
@@ -14,28 +15,34 @@ describe("filter bar customizer", () => {
     });
 
     describe("filter bar rendering mode", () => {
-        it('should return "default" if no mode was explicitly set', () => {
-            const actual = Customizer.getFilterBarCustomizerResult();
-            expect(actual.filterBarRenderingMode).toEqual("default");
+        it("should return DefaultFilterBar if no mode was explicitly set", () => {
+            const actual = Customizer.getCustomizerResult();
+            expect(actual.FilterBarComponent).toEqual(DefaultFilterBar);
         });
 
-        it("should return the mode set using the setter", () => {
-            Customizer.setFilterBarRenderingMode("hidden");
-            const actual = Customizer.getFilterBarCustomizerResult();
-            expect(actual.filterBarRenderingMode).toEqual("hidden");
+        it("should return DefaultFilterBar if mode: default was explicitly set", () => {
+            Customizer.setRenderingMode("default");
+            const actual = Customizer.getCustomizerResult();
+            expect(actual.FilterBarComponent).toEqual(DefaultFilterBar);
+        });
+
+        it("should return HiddenFilterBar if mode: hidden set using the setter", () => {
+            Customizer.setRenderingMode("hidden");
+            const actual = Customizer.getCustomizerResult();
+            expect(actual.FilterBarComponent).toEqual(HiddenFilterBar);
         });
 
         it("should use the last provided mode if set multiple times", () => {
-            Customizer.setFilterBarRenderingMode("default");
-            Customizer.setFilterBarRenderingMode("hidden");
+            Customizer.setRenderingMode("default");
+            Customizer.setRenderingMode("hidden");
 
-            const actual = Customizer.getFilterBarCustomizerResult();
-            expect(actual.filterBarRenderingMode).toEqual("hidden");
+            const actual = Customizer.getCustomizerResult();
+            expect(actual.FilterBarComponent).toEqual(HiddenFilterBar);
         });
 
         it("should issue a warning if filter bar rendering mode is set multiple times", () => {
-            Customizer.setFilterBarRenderingMode("default");
-            Customizer.setFilterBarRenderingMode("hidden");
+            Customizer.setRenderingMode("default");
+            Customizer.setRenderingMode("hidden");
 
             expect(mockWarn).toHaveBeenCalled();
         });
