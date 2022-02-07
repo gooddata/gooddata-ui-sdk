@@ -8,5 +8,5 @@ sonar.exclusions=**/generated/**, libs/sdk-ui-tests-e2e/recordings/**
 # SonarQube needs additional steps before it can fully audit the repo
 # for now mainly just installing the dependencies
 gdc.sonar.prebuild=./common/scripts/ci/sonar_prepare.sh
-gdc.sonar.prebuild_img=node:12.20.1
+gdc.sonar.prebuild_img=node:16.13.0-bullseye
 gdc.sonar.prebuild_docker_params=-e USERID=$(id -u $USER) -e NPM_AUTH_TOKEN
