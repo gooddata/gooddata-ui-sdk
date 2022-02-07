@@ -1871,6 +1871,9 @@ export function extendedWidgetDebugStr(widget: ExtendedDashboardWidget): string;
 export const FilterBar: (props: IFilterBarProps) => JSX.Element;
 
 // @public
+export type FilterBarRenderingMode = "default" | "hidden";
+
+// @public
 export function filterContextItemsToDashboardFiltersByDateDataSet(filterContextItems: FilterContextItem[], dateDataSet: ObjRef): IDashboardFilter[];
 
 // @public
@@ -2149,6 +2152,7 @@ export interface IDashboardCustomizationProps extends IDashboardCustomComponentP
 // @public (undocumented)
 export interface IDashboardCustomizer {
     customWidgets(): IDashboardWidgetCustomizer;
+    filterBar(): IFilterBarCustomizer;
     insightWidgets(): IDashboardInsightCustomizer;
     kpiWidgets(): IDashboardKpiCustomizer;
     layout(): IDashboardLayoutCustomizer;
@@ -2490,6 +2494,11 @@ export interface IExecutionResultEnvelope {
 
 // @alpha (undocumented)
 export type IExportConfig = ICsvExportConfig | IXlsxExportConfig;
+
+// @public (undocumented)
+export interface IFilterBarCustomizer {
+    setFilterBarRenderingMode(mode: FilterBarRenderingMode): IFilterBarCustomizer;
+}
 
 // @alpha (undocumented)
 export interface IFilterBarProps {

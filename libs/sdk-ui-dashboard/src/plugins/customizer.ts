@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import {
     CustomDashboardInsightComponent,
     CustomDashboardWidgetComponent,
@@ -256,6 +256,27 @@ export interface IDashboardLayoutCustomizer {
 }
 
 /**
+ * Mode of rendering of the FilterBar:
+ * - default - the default implementation is used
+ * - hidden - the filter bar is hidden. Note that the filters set on the dashboard are still active, just not visible.
+ *
+ * @public
+ */
+export type FilterBarRenderingMode = "default" | "hidden";
+
+/**
+ * @public
+ */
+export interface IFilterBarCustomizer {
+    /**
+     * Set the rendering mode of the FilterBar.
+     *
+     * @param mode - the mode to use, see {@link FilterBarRenderingMode} for info on individual values
+     */
+    setFilterBarRenderingMode(mode: FilterBarRenderingMode): IFilterBarCustomizer;
+}
+
+/**
  * @public
  */
 export interface IDashboardCustomizer {
@@ -280,6 +301,11 @@ export interface IDashboardCustomizer {
      * before it is rendered.
      */
     layout(): IDashboardLayoutCustomizer;
+
+    /**
+     * Customize the filter bar.
+     */
+    filterBar(): IFilterBarCustomizer;
 }
 
 /**

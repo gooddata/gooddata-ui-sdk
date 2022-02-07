@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import max from "lodash/max";
 import {
@@ -146,6 +146,7 @@ class LocalPlugin extends DashboardPluginV1 {
                 ),
             );
         });
+        customize.filterBar().setFilterBarRenderingMode("default").setFilterBarRenderingMode("hidden");
     }
 }
 
