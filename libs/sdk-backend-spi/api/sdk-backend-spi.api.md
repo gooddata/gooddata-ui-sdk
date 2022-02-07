@@ -2146,13 +2146,17 @@ export class NoDataError extends AnalyticalBackendError {
 
 // @public
 export class NotAuthenticated extends AnalyticalBackendError {
-    constructor(message: string, cause?: Error);
+    constructor(message: string, cause?: Error, reason?: NotAuthenticatedReason);
     // (undocumented)
     authenticationFlow?: AuthenticationFlow;
+    reason?: NotAuthenticatedReason;
 }
 
 // @public
 export type NotAuthenticatedHandler = (context: IAuthenticationContext, error: NotAuthenticated) => void;
+
+// @public
+export type NotAuthenticatedReason = "invalid_credentials" | "credentials_expired";
 
 // @public
 export class NotImplemented extends AnalyticalBackendError {

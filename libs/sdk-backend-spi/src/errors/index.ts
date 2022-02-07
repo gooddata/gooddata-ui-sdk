@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import { IDataView } from "../workspace/execution";
 
@@ -141,6 +141,16 @@ export type AuthenticationFlow = {
 };
 
 /**
+ * More detailed reason of the NotAuthenticated error.
+ *
+ * - invalid_credentials - the provided credentials were invalid
+ * - credentials_expired - the credentials' validity expired
+ *
+ * @public
+ */
+export type NotAuthenticatedReason = "invalid_credentials" | "credentials_expired";
+
+/**
  * This exception is thrown when client code triggers an operation which requires authentication but the client
  * code did not provide credentials or the credentials are invalid.
  *
@@ -148,9 +158,17 @@ export type AuthenticationFlow = {
  */
 export class NotAuthenticated extends AnalyticalBackendError {
     public authenticationFlow?: AuthenticationFlow;
+    /**
+     * More detailed reason of the NotAuthenticated error. See {@link NotAuthenticatedReason} for more information.
+     *
+     * @remarks
+     * MAY be undefined if the particular backend implementation does not provide this value.
+     */
+    public reason?: NotAuthenticatedReason;
 
-    constructor(message: string, cause?: Error) {
+    constructor(message: string, cause?: Error, reason?: NotAuthenticatedReason) {
         super(message, AnalyticalBackendErrorTypes.NOT_AUTHENTICATED, cause);
+        this.reason = reason;
     }
 }
 

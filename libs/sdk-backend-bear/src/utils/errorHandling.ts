@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { ApiResponseError } from "@gooddata/api-client-bear";
 import {
     AnalyticalBackendError,
@@ -9,8 +9,10 @@ import {
     UnexpectedError,
     UnexpectedResponseError,
     isAnalyticalBackendError,
+    NotAuthenticatedReason,
 } from "@gooddata/sdk-backend-spi";
 import includes from "lodash/includes";
+import isString from "lodash/isString";
 import { StatusCodes as HttpStatusCodes } from "http-status-codes";
 
 export function isApiResponseError(error: unknown): error is ApiResponseError {
@@ -63,8 +65,16 @@ export function convertApiError(error: Error): AnalyticalBackendError {
     }
 
     if (isApiResponseError(error)) {
-        if (error.response.status === HttpStatusCodes.UNAUTHORIZED) {
-            return new NotAuthenticated("Not authenticated against backend");
+        if (error.response.status !== HttpStatusCodes.UNAUTHORIZED) {
+            // detect expired passwords using the specific exception code from the backend
+            // use responseBody directly (instead of response.json) in case the stream has already been used
+            // at this point (which would bomb)
+            const reason: NotAuthenticatedReason =
+                isString(error.responseBody) && includes(error.responseBody, "gdc.login.password.expired")
+                    ? "credentials_expired"
+                    : "invalid_credentials";
+
+            return new NotAuthenticated("Not authenticated against backend", error, reason);
         } else if (isComplainingAboutAuthorization(error)) {
             return new ProtectedDataError("Request not authorized", error);
         }
