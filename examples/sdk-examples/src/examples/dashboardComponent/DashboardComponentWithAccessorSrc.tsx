@@ -4,7 +4,7 @@ import {
     changeDateFilterSelection,
     Dashboard,
     DashboardConfig,
-    MultipleDashboardStoreAccessor,
+    DashboardStoreAccessorRepository,
     selectEffectiveDateFilterOptions,
 } from "@gooddata/sdk-ui-dashboard";
 import { idRef } from "@gooddata/sdk-model";
@@ -16,26 +16,26 @@ const dashboardRef = idRef(DASHBOARD_ID);
 const config: DashboardConfig = { mapboxToken: MAPBOX_TOKEN, isReadOnly: true };
 
 const DashboardComponentWithAccessorSrc: React.FC = () => {
-    const dashboardStoreAccessor = MultipleDashboardStoreAccessor.getInstance();
+    const dashboardStoreAccessorRepository = DashboardStoreAccessorRepository.getInstance();
     const [selectResult, setSelectResult] = useState<any>();
 
     const onDispatchClick = useCallback(() => {
-        if (dashboardStoreAccessor.isAccessorInitializedForDashboard(DASHBOARD_ID)) {
-            dashboardStoreAccessor.getAccessorsForDashboard(DASHBOARD_ID).getDispatch()(
+        if (dashboardStoreAccessorRepository.isAccessorInitializedForDashboard(DASHBOARD_ID)) {
+            dashboardStoreAccessorRepository.getAccessorsForDashboard(DASHBOARD_ID).getDispatch()(
                 changeDateFilterSelection("relative", "GDC.time.month", "-3", "0"),
             );
         }
-    }, [dashboardStoreAccessor]);
+    }, [dashboardStoreAccessorRepository]);
 
     const onSelectClick = useCallback(() => {
-        if (dashboardStoreAccessor.isAccessorInitializedForDashboard(DASHBOARD_ID)) {
+        if (dashboardStoreAccessorRepository.isAccessorInitializedForDashboard(DASHBOARD_ID)) {
             setSelectResult(
-                dashboardStoreAccessor.getAccessorsForDashboard(DASHBOARD_ID).getSelector()(
+                dashboardStoreAccessorRepository.getAccessorsForDashboard(DASHBOARD_ID).getSelector()(
                     selectEffectiveDateFilterOptions,
                 ),
             );
         }
-    }, [dashboardStoreAccessor]);
+    }, [dashboardStoreAccessorRepository]);
 
     return (
         <div>
@@ -52,7 +52,7 @@ const DashboardComponentWithAccessorSrc: React.FC = () => {
             <Dashboard
                 dashboard={dashboardRef}
                 config={config}
-                onStateChange={dashboardStoreAccessor.getOnChangeHandlerForDashboard(DASHBOARD_ID)}
+                onStateChange={dashboardStoreAccessorRepository.getOnChangeHandlerForDashboard(DASHBOARD_ID)}
             />
         </div>
     );

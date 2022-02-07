@@ -1499,6 +1499,20 @@ export class DashboardStoreAccessor {
     setSelectAndDispatch: (state: DashboardState, dispatch: DashboardDispatch) => void;
 }
 
+// @public
+export class DashboardStoreAccessorRepository {
+    // (undocumented)
+    accessors: Map<ObjRef, DashboardStoreAccessor>;
+    clearAccessorForDashboard(dashboard: ObjRef): void;
+    clearAllAccessors(): void;
+    // (undocumented)
+    static dashboardAccessor: DashboardStoreAccessorRepository;
+    getAccessorsForDashboard(dashboard: ObjRef): DashboardStoreAccessor;
+    static getInstance(): DashboardStoreAccessorRepository;
+    getOnChangeHandlerForDashboard(dashboard: ObjRef): (state: DashboardState, dispatch: DashboardDispatch) => void;
+    isAccessorInitializedForDashboard(dashboardId: ObjRef): boolean;
+}
+
 // @internal (undocumented)
 export const DashboardStoreProvider: React_2.FC<IDashboardStoreProviderProps>;
 
@@ -3160,28 +3174,6 @@ export interface MoveSectionItem extends IDashboardCommand {
 
 // @alpha
 export function moveSectionItem(sectionIndex: number, itemIndex: number, toSectionIndex: number, toItemIndex: number, correlationId?: string): MoveSectionItem;
-
-// @public (undocumented)
-export class MultipleDashboardStoreAccessor {
-    // (undocumented)
-    accessors: Map<string, DashboardStoreAccessor>;
-    // (undocumented)
-    clearAccessorForDashboard(dashboardId: string): void;
-    // (undocumented)
-    clearAllAccessors(): void;
-    // (undocumented)
-    static dashboardAccessor: MultipleDashboardStoreAccessor;
-    // (undocumented)
-    getAccessorsForDashboard(dashboardId: string): DashboardStoreAccessor;
-    // (undocumented)
-    static getInstance(): MultipleDashboardStoreAccessor;
-    // (undocumented)
-    getOnChangeHandlerForDashboard(dashboardId: string): (state: DashboardState, dispatch: DashboardDispatch) => void;
-    // (undocumented)
-    isAccessorInitializedForDashboard(dashboardId: string): boolean;
-    // (undocumented)
-    setAccessorForDashboard(dashboardId: string, selector: DashboardSelectorEvaluator, dispatch: DashboardDispatch): void;
-}
 
 // @public
 export function newCustomWidget<TExtra = void>(identifier: string, customType: string, extras?: TExtra & Partial<IFilterableWidget>): TExtra & ICustomWidget;
