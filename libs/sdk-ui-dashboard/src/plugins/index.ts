@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 export { IDashboardPluginContract_V1, DashboardPluginV1, DashboardPluginDescriptor } from "./plugin";
 export { IDashboardEngine, newDashboardEngine } from "./engine";
 export {
@@ -10,5 +10,7 @@ export {
     IDashboardWidgetCustomizer,
     FluidLayoutCustomizationFn,
     IFluidLayoutCustomizer,
+    IFilterBarCustomizer,
     DashboardStateChangeCallback,
+    FilterBarRenderingMode,
 } from "./customizer";

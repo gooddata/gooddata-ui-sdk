@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import {
     IDashboardCustomizer,
@@ -6,6 +6,7 @@ import {
     IDashboardKpiCustomizer,
     IDashboardLayoutCustomizer,
     IDashboardWidgetCustomizer,
+    IFilterBarCustomizer,
 } from "../customizer";
 import { IDashboardExtensionProps } from "../../presentation";
 import { DefaultInsightCustomizer } from "./insightCustomizer";
@@ -14,6 +15,7 @@ import { IDashboardPluginContract_V1 } from "../plugin";
 import { DefaultKpiCustomizer } from "./kpiCustomizer";
 import { DefaultWidgetCustomizer } from "./widgetCustomizer";
 import { DefaultLayoutCustomizer } from "./layoutCustomizer";
+import { DefaultFilterBarCustomizer } from "./filterBarCustomizer";
 
 /**
  * @internal
@@ -24,6 +26,9 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
     private readonly kpiCustomizer: DefaultKpiCustomizer = new DefaultKpiCustomizer(this.logger);
     private readonly widgetCustomizer: DefaultWidgetCustomizer = new DefaultWidgetCustomizer(this.logger);
     private readonly layoutCustomizer: DefaultLayoutCustomizer = new DefaultLayoutCustomizer(this.logger);
+    private readonly filterBarCustomizer: DefaultFilterBarCustomizer = new DefaultFilterBarCustomizer(
+        this.logger,
+    );
 
     private sealCustomizers = (): void => {
         this.insightCustomizer.sealCustomizer();
@@ -48,6 +53,10 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
         return this.layoutCustomizer;
     };
 
+    public filterBar = (): IFilterBarCustomizer => {
+        return this.filterBarCustomizer;
+    };
+
     public onBeforePluginRegister = (plugin: IDashboardPluginContract_V1): void => {
         this.logger.setCurrentPlugin(plugin);
         this.logger.log("Starting registration.");
@@ -68,6 +77,8 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
     };
 
     public build = (): IDashboardExtensionProps => {
+        const filterBarCustomizerResult = this.filterBarCustomizer.getCustomizerResult();
+
         const props: IDashboardExtensionProps = {
             InsightComponentProvider: this.insightCustomizer.getInsightProvider(),
             KpiComponentProvider: this.kpiCustomizer.getKpiProvider(),
@@ -75,6 +86,7 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
             customizationFns: {
                 existingDashboardTransformFn: this.layoutCustomizer.getExistingDashboardTransformFn(),
             },
+            FilterBarComponent: filterBarCustomizerResult.FilterBarComponent,
         };
 
         this.sealCustomizers();

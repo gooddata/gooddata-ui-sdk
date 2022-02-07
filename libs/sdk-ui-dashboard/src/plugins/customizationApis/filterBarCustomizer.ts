@@ -1,0 +1,77 @@
+// (C) 2022 GoodData Corporation
+import { CustomFilterBarComponent, DefaultFilterBar, HiddenFilterBar } from "../../presentation";
+import { FilterBarRenderingMode, IFilterBarCustomizer } from "../customizer";
+import { IDashboardCustomizationLogger } from "./customizationLogging";
+
+interface IFilterBarCustomizerState {
+    setRenderingMode(mode: FilterBarRenderingMode): void;
+    getRenderingMode(): FilterBarRenderingMode;
+}
+
+interface IFilterBarCustomizerResult {
+    FilterBarComponent: CustomFilterBarComponent;
+}
+
+class FilterBarCustomizerState implements IFilterBarCustomizerState {
+    private renderingMode: FilterBarRenderingMode | undefined = undefined;
+
+    constructor(private readonly logger: IDashboardCustomizationLogger) {}
+
+    getRenderingMode = (): FilterBarRenderingMode => {
+        return this.renderingMode ?? "default";
+    };
+
+    setRenderingMode = (renderingMode: FilterBarRenderingMode): void => {
+        if (this.renderingMode) {
+            this.logger.warn(
+                `Redefining filter bar rendering mode to "${renderingMode}". Previous definition will be discarded.`,
+            );
+        }
+        this.renderingMode = renderingMode;
+    };
+}
+
+class SealedFilterBarCustomizerState implements IFilterBarCustomizerState {
+    constructor(
+        private readonly state: IFilterBarCustomizerState,
+        private readonly logger: IDashboardCustomizationLogger,
+    ) {}
+
+    getRenderingMode = (): FilterBarRenderingMode => {
+        return this.state.getRenderingMode();
+    };
+
+    setRenderingMode = (_renderingMode: FilterBarRenderingMode): void => {
+        this.logger.warn(
+            `Attempting to set filter bar rendering mode outside of plugin registration. Ignoring.`,
+        );
+    };
+}
+
+/**
+ * @internal
+ */
+export class DefaultFilterBarCustomizer implements IFilterBarCustomizer {
+    private state: IFilterBarCustomizerState = new FilterBarCustomizerState(this.logger);
+
+    constructor(private readonly logger: IDashboardCustomizationLogger) {}
+
+    setRenderingMode = (mode: FilterBarRenderingMode): this => {
+        this.state.setRenderingMode(mode);
+
+        return this;
+    };
+
+    getCustomizerResult = (): IFilterBarCustomizerResult => {
+        return {
+            FilterBarComponent:
+                this.state.getRenderingMode() === "hidden" ? HiddenFilterBar : DefaultFilterBar,
+        };
+    };
+
+    sealCustomizer = (): this => {
+        this.state = new SealedFilterBarCustomizerState(this.state, this.logger);
+
+        return this;
+    };
+}
