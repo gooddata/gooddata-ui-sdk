@@ -1,10 +1,10 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { IDashboardLayout, IDashboardLayoutItem, IDashboardLayoutSection } from "@gooddata/sdk-backend-spi";
 import { IFluidLayoutCustomizer } from "../customizer";
 import { ExtendedDashboardWidget, ICustomWidget } from "../../model";
 import { DashboardLayoutBuilder } from "../../_staging/dashboard/fluidLayout";
 import isEmpty from "lodash/isEmpty";
-import { DashboardCustomizationLogger } from "./customizationLogging";
+import { IDashboardCustomizationLogger } from "./customizationLogging";
 import cloneDeep from "lodash/cloneDeep";
 
 type AddItemOp = {
@@ -22,7 +22,7 @@ export class FluidLayoutCustomizer implements IFluidLayoutCustomizer {
     private readonly addItemOps: AddItemOp[] = [];
     private readonly addSectionOps: AddSectionOp[] = [];
 
-    constructor(private readonly logger: DashboardCustomizationLogger) {}
+    constructor(private readonly logger: IDashboardCustomizationLogger) {}
 
     public addItem = (
         sectionIdx: number,

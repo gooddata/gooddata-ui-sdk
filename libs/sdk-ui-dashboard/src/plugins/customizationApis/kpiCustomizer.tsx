@@ -1,8 +1,8 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { IDashboardKpiCustomizer } from "../customizer";
 import { DefaultDashboardKpi, KpiComponentProvider, OptionalKpiComponentProvider } from "../../presentation";
 import { InvariantError } from "ts-invariant";
-import { DashboardCustomizationLogger } from "./customizationLogging";
+import { IDashboardCustomizationLogger } from "./customizationLogging";
 
 const DefaultKpiRendererProvider: KpiComponentProvider = () => {
     return DefaultDashboardKpi;
@@ -83,7 +83,7 @@ class DefaultKpiCustomizerState implements IKpiCustomizerState {
  */
 class SealedKpiCustomizerState implements IKpiCustomizerState {
     constructor(
-        private readonly logger: DashboardCustomizationLogger,
+        private readonly logger: IDashboardCustomizationLogger,
         private readonly state: IKpiCustomizerState,
     ) {}
 
@@ -115,11 +115,11 @@ class SealedKpiCustomizerState implements IKpiCustomizerState {
  * @internal
  */
 export class DefaultKpiCustomizer implements IDashboardKpiCustomizer {
-    private readonly logger: DashboardCustomizationLogger;
+    private readonly logger: IDashboardCustomizationLogger;
     private state: IKpiCustomizerState;
 
     constructor(
-        logger: DashboardCustomizationLogger,
+        logger: IDashboardCustomizationLogger,
         defaultProvider: KpiComponentProvider = DefaultKpiRendererProvider,
     ) {
         this.logger = logger;

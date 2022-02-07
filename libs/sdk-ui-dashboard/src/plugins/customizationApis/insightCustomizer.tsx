@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { IDashboardInsightCustomizer } from "../customizer";
 import {
     CustomDashboardInsightComponent,
@@ -9,7 +9,7 @@ import {
 import { InvariantError } from "ts-invariant";
 import includes from "lodash/includes";
 import { insightTags } from "@gooddata/sdk-model";
-import { DashboardCustomizationLogger } from "./customizationLogging";
+import { IDashboardCustomizationLogger } from "./customizationLogging";
 
 const DefaultInsightRendererProvider: InsightComponentProvider = () => {
     return DefaultDashboardInsight;
@@ -70,9 +70,9 @@ class DefaultInsightCustomizerState implements IInsightCustomizerState {
      */
     private rootProvider: InsightComponentProvider = this.coreProvider;
 
-    private logger: DashboardCustomizationLogger;
+    private logger: IDashboardCustomizationLogger;
 
-    constructor(logger: DashboardCustomizationLogger, defaultProvider: InsightComponentProvider) {
+    constructor(logger: IDashboardCustomizationLogger, defaultProvider: InsightComponentProvider) {
         this.logger = logger;
         this.coreProviderChain = [defaultProvider];
     }
@@ -118,7 +118,7 @@ class DefaultInsightCustomizerState implements IInsightCustomizerState {
  */
 class SealedInsightCustomizerState implements IInsightCustomizerState {
     constructor(
-        private readonly logger: DashboardCustomizationLogger,
+        private readonly logger: IDashboardCustomizationLogger,
         private readonly state: IInsightCustomizerState,
     ) {}
 
@@ -162,11 +162,11 @@ class SealedInsightCustomizerState implements IInsightCustomizerState {
  * @internal
  */
 export class DefaultInsightCustomizer implements IDashboardInsightCustomizer {
-    private readonly logger: DashboardCustomizationLogger;
+    private readonly logger: IDashboardCustomizationLogger;
     private state: IInsightCustomizerState;
 
     constructor(
-        logger: DashboardCustomizationLogger,
+        logger: IDashboardCustomizationLogger,
         defaultProvider: InsightComponentProvider = DefaultInsightRendererProvider,
     ) {
         this.logger = logger;

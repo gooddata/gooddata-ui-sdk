@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 import { FilterBarRenderingMode, IFilterBarCustomizer } from "../customizer";
-import { DashboardCustomizationLogger } from "./customizationLogging";
+import { IDashboardCustomizationLogger } from "./customizationLogging";
 
 interface IFilterBarCustomizerState {
     setFilterBarRenderingMode(mode: FilterBarRenderingMode): void;
@@ -14,7 +14,7 @@ interface IFilterBarCustomizerResult {
 class FilterBarCustomizerState implements IFilterBarCustomizerState {
     private renderingMode: FilterBarRenderingMode | undefined = undefined;
 
-    constructor(private readonly logger: DashboardCustomizationLogger) {}
+    constructor(private readonly logger: IDashboardCustomizationLogger) {}
 
     getFilterBarRenderingMode = (): FilterBarRenderingMode => {
         return this.renderingMode ?? "default";
@@ -33,7 +33,7 @@ class FilterBarCustomizerState implements IFilterBarCustomizerState {
 class SealedFilterBarCustomizerState implements IFilterBarCustomizerState {
     constructor(
         private readonly state: IFilterBarCustomizerState,
-        private readonly logger: DashboardCustomizationLogger,
+        private readonly logger: IDashboardCustomizationLogger,
     ) {}
 
     getFilterBarRenderingMode = (): FilterBarRenderingMode => {
@@ -53,7 +53,7 @@ class SealedFilterBarCustomizerState implements IFilterBarCustomizerState {
 export class DefaultFilterBarCustomizer implements IFilterBarCustomizer {
     private state: IFilterBarCustomizerState = new FilterBarCustomizerState(this.logger);
 
-    constructor(private readonly logger: DashboardCustomizationLogger) {}
+    constructor(private readonly logger: IDashboardCustomizationLogger) {}
 
     setFilterBarRenderingMode = (mode: FilterBarRenderingMode): this => {
         this.state.setFilterBarRenderingMode(mode);

@@ -1,7 +1,7 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { IDashboardWidgetCustomizer } from "../customizer";
-import { DashboardCustomizationLogger } from "./customizationLogging";
+import { IDashboardCustomizationLogger } from "./customizationLogging";
 import { CustomDashboardWidgetComponent, OptionalWidgetComponentProvider } from "../../presentation";
 import { isCustomWidget } from "../../model";
 
@@ -35,7 +35,7 @@ interface IWidgetCustomizerState {
 class WidgetCustomizerState implements IWidgetCustomizerState {
     private readonly customWidgetMap: CustomWidgetMap = new Map();
 
-    constructor(private readonly logger: DashboardCustomizationLogger) {}
+    constructor(private readonly logger: IDashboardCustomizationLogger) {}
 
     public addDefinition = (definition: IDashboardWidgetDefinition): void => {
         if (this.customWidgetMap.has(definition.widgetType)) {
@@ -55,7 +55,7 @@ class WidgetCustomizerState implements IWidgetCustomizerState {
 class SealedCustomizerState implements IWidgetCustomizerState {
     constructor(
         private readonly state: IWidgetCustomizerState,
-        private readonly logger: DashboardCustomizationLogger,
+        private readonly logger: IDashboardCustomizationLogger,
     ) {}
 
     public addDefinition = (_definition: IDashboardWidgetDefinition): void => {
@@ -70,7 +70,7 @@ class SealedCustomizerState implements IWidgetCustomizerState {
 export class DefaultWidgetCustomizer implements IDashboardWidgetCustomizer {
     private state: IWidgetCustomizerState = new WidgetCustomizerState(this.logger);
 
-    constructor(private readonly logger: DashboardCustomizationLogger) {}
+    constructor(private readonly logger: IDashboardCustomizationLogger) {}
 
     public addCustomWidget = (
         widgetType: string,

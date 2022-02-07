@@ -1,6 +1,6 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { FluidLayoutCustomizationFn, IDashboardLayoutCustomizer } from "../customizer";
-import { DashboardCustomizationLogger } from "./customizationLogging";
+import { IDashboardCustomizationLogger } from "./customizationLogging";
 import { FluidLayoutCustomizer } from "./fluidLayoutCustomizer";
 import { IDashboardLayout } from "@gooddata/sdk-backend-spi";
 import { DashboardTransformFn, ExtendedDashboardWidget } from "../../model";
@@ -9,7 +9,7 @@ export class DefaultLayoutCustomizer implements IDashboardLayoutCustomizer {
     private sealed = false;
     private readonly fluidLayoutTransformations: FluidLayoutCustomizationFn[] = [];
 
-    constructor(private readonly logger: DashboardCustomizationLogger) {}
+    constructor(private readonly logger: IDashboardCustomizationLogger) {}
 
     public customizeFluidLayout = (
         customizationFn: FluidLayoutCustomizationFn,
