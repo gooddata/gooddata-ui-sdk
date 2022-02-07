@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { getAccountMenuFeatureFlagsMock, getWorkspacePermissionsMock } from "./mock";
 import { generateHeaderMenuItemsGroups } from "../generateHeaderMenuItemsGroups";
 
@@ -563,6 +563,57 @@ describe("generateHeaderMenuItemsGroups", () => {
                     className: "s-menu-manage",
                     href: "/#s=/gdc/projects/TestWorkspaceId|dataPage|",
                     key: "gs.header.manage",
+                },
+            ],
+        ]);
+    });
+
+    it("should return dashboards and report items if hasMeasures is true but canManageMetric is false", () => {
+        const items = generateHeaderMenuItemsGroups(
+            getAccountMenuFeatureFlagsMock(true, true, false, true, "enterprise", false),
+            getWorkspacePermissionsMock(true, false),
+            true,
+            "TestWorkspaceId",
+            "TestDashboardId",
+            "TestTabId",
+            false,
+            false,
+            true,
+            true,
+        );
+        expect(items).toEqual([
+            [
+                {
+                    className: "s-menu-dashboards",
+                    href: "/#s=/gdc/projects/TestWorkspaceId|projectDashboardPage|TestDashboardId|TestTabId",
+                    key: "gs.header.dashboards",
+                },
+                {
+                    className: "s-menu-reports",
+                    href: "/#s=/gdc/projects/TestWorkspaceId|domainPage|all-reports",
+                    key: "gs.header.reports",
+                },
+            ],
+            [
+                {
+                    className: "s-menu-kpis",
+                    href: "/dashboards/#/project/TestWorkspaceId",
+                    key: "gs.header.kpis",
+                },
+                {
+                    className: "s-menu-analyze",
+                    href: "/analyze/#/TestWorkspaceId/reportId/edit",
+                    key: "gs.header.analyze",
+                },
+                {
+                    className: "s-menu-load",
+                    href: "/data/#/projects/TestWorkspaceId/datasets",
+                    key: "gs.header.load",
+                },
+                {
+                    className: "s-menu-data",
+                    href: "/modeler/#/projects/TestWorkspaceId",
+                    key: "gs.header.data",
                 },
             ],
         ]);
