@@ -26,7 +26,7 @@ services:
       - backend-mock
 
   backend-mock:
-    image: harbor.intgdc.com/3rdparty/rodolpheche/wiremock
+    image: wiremock/wiremock:2.32.0
     command: "--preserve-host-header --proxy-all=https://${HOST:-staging3.intgdc.com} --extensions org.gooddata.extensions.ResponseHeadersTransformer,org.gooddata.extensions.RequestHeadersTransformer"
 #    --extensions org.gooddata.extensions.ResponseHeadersTransformer,org.gooddata.extensions.RequestHeadersTransformer --verbose"
     volumes:

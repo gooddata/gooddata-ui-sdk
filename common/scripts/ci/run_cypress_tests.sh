@@ -5,7 +5,7 @@ _RUSH="${DIR}/docker_rush.sh"
 _RUSHX="${DIR}/docker_rushx.sh"
 
 $_RUSH install
-$_RUSH build
+$_RUSH build -t sdk-ui-tests-e2e
 $_RUSHX libs/sdk-ui-tests-e2e build-scenarios
 
 docker build --file ./libs/sdk-ui-tests-e2e/Dockerfile -t gooddata-ui-sdk-scenarios . || exit 1
