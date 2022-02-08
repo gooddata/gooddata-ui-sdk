@@ -15,10 +15,25 @@ const DASHBOARD_ID = "aeO5PVgShc0T";
 const dashboardRef = idRef(DASHBOARD_ID);
 const config: DashboardConfig = { mapboxToken: MAPBOX_TOKEN, isReadOnly: true };
 
+/**
+ * A component to render Dashboard with external store accessors, which enable accessing and/or modifying
+ * state from the parent components of the Dashboard component.
+ *
+ * DashboardStoreAccessorRepository is a singleton storing selectorEvaluator and dispatch object for multiple
+ * instances of Dashboard component.
+ *
+ * To all functions provided by DashboardStoreAccessorRepository object the use of dashboard idRef as well as
+ * of dashboard id is possible.
+ *
+ * For more information, see {@link https://sdk.gooddata.com/gooddata-ui/docs/dashboard_component.html#eventing-props}
+ */
 const DashboardComponentWithAccessorSrc: React.FC = () => {
     const dashboardStoreAccessorRepository = DashboardStoreAccessorRepository.getInstance();
     const [selectResult, setSelectResult] = useState<any>();
 
+    /**
+     * Sample of how to dispatch `changeDateFilterSelection` event from outside of the dashboard component.
+     */
     const onDispatchClick = useCallback(() => {
         if (dashboardStoreAccessorRepository.isAccessorInitializedForDashboard(DASHBOARD_ID)) {
             dashboardStoreAccessorRepository.getAccessorsForDashboard(DASHBOARD_ID).getDispatch()(
@@ -27,6 +42,10 @@ const DashboardComponentWithAccessorSrc: React.FC = () => {
         }
     }, [dashboardStoreAccessorRepository]);
 
+    /**
+     * Sample of how to use `selectEffectiveDateFilterOptions` selector from outside of the dashboard
+     * component.
+     */
     const onSelectClick = useCallback(() => {
         if (dashboardStoreAccessorRepository.isAccessorInitializedForDashboard(DASHBOARD_ID)) {
             setSelectResult(
@@ -52,6 +71,7 @@ const DashboardComponentWithAccessorSrc: React.FC = () => {
             <Dashboard
                 dashboard={dashboardRef}
                 config={config}
+                //
                 onStateChange={dashboardStoreAccessorRepository.getOnChangeHandlerForDashboard(DASHBOARD_ID)}
             />
         </div>

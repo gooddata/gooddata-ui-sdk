@@ -3,10 +3,10 @@
 import { DashboardDispatch, DashboardSelectorEvaluator, DashboardState } from "../types";
 import { invariant } from "ts-invariant";
 import { DashboardStoreAccessor } from "./DashboardStoreAccessor";
-import { ObjRef } from "@gooddata/sdk-model";
+import { idRef, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 
 /**
- * This singleton class serves the selector and the dispatcher properties for given dashboard {@link @gooddata/sdk-model#IdentifierRef}.
+ * This singleton class serves the selector and the dispatcher properties for given dashboard.
  *
  * The {@link Dashboard} component has an optional property {@link IDashboardProps#onStateChange} through which
  * you can handle setting of the values for {@link DashboardDispatch} and {@link DashboardSelectorEvaluator}.
@@ -18,25 +18,25 @@ import { ObjRef } from "@gooddata/sdk-model";
  *
  * @example
  * ```
- *  const dashboardStoreAccessor = MultipleDashboardStoreAccessor.getInstance();
+ *  const dashboardStoreAccessors = DashboardStoreAccessorRepository.getInstance();
  *
  *
  *  // in the code where needed
- *  dashboardStoreAccessor.getAccessorsForDashboard(<DASHBOARD_ID>).getDispatch()(
+ *  dashboardStoreAccessors.getAccessorsForDashboard(<DASHBOARD_ID>).getDispatch()(
  *      changeDateFilterSelection("relative", "GDC.time.month", "-3", "0"),
  *  );
  *
  *  // or with check if accessor is initialized already
- *  if (dashboardStoreAccessor.isAccessorInitializedForDashboard(DASHBOARD_ID)) {
+ *  if (dashboardStoreAccessors.isAccessorInitializedForDashboard(DASHBOARD_ID)) {
  *          setSelectResult(
- *              dashboardStoreAccessor.getAccessorsForDashboard(DASHBOARD_ID).getSelector()(
+ *              dashboardStoreAccessors.getAccessorsForDashboard(DASHBOARD_ID).getSelector()(
  *                  selectEffectiveDateFilterOptions,
  *              ),
  *          );
  *      }
  *
  *  return (
- *      <Dashboard dashboard={"<dashboardId>"} onStateChange={dashboardStoreAccessor.getOnChangeHandlerForDashboard(DASHBOARD_ID)}/>
+ *      <Dashboard dashboard={"<dashboardId>"} onStateChange={dashboardStoreAccessors.getOnChangeHandlerForDashboard(DASHBOARD_REF)}/>
  *  )
  * ```
  *
@@ -46,9 +46,9 @@ import { ObjRef } from "@gooddata/sdk-model";
  * @public
  */
 export class DashboardStoreAccessorRepository {
-    static dashboardAccessor: DashboardStoreAccessorRepository;
+    private static dashboardAccessor: DashboardStoreAccessorRepository;
 
-    accessors = new Map<ObjRef, DashboardStoreAccessor>();
+    private accessors = new Map<string, DashboardStoreAccessor>();
 
     private constructor() {
         // empty on purpose to prevent incorrect use of this class
@@ -67,13 +67,20 @@ export class DashboardStoreAccessorRepository {
         return this.dashboardAccessor;
     }
 
+    private getSerializedDashboardRef(dashboard: ObjRef | string): string {
+        const dashboardRef = typeof dashboard === "string" ? idRef(dashboard) : dashboard;
+        return serializeObjRef(dashboardRef);
+    }
+
     /**
-     * Gets the correct {@link DashboardStoreAccessor} for given dashboard from the {@link DashboardStoreAccessorRepository#accessors} map.
+     * Gets the correct {@link DashboardStoreAccessor} for given dashboard from the accessors map.
      *
-     * @param dashboard - an {@link @gooddata/sdk-model#IdentifierRef} of the dashboard.
+     * @param dashboard - an {@link @gooddata/sdk-model#ObjRef} of the dashboard, or its id as a string
      */
-    getAccessorsForDashboard(dashboard: ObjRef): DashboardStoreAccessor {
-        const accessor = this.accessors.get(dashboard);
+    getAccessorsForDashboard(dashboard: ObjRef | string): DashboardStoreAccessor {
+        const serializedDashboardRef = this.getSerializedDashboardRef(dashboard);
+
+        const accessor = this.accessors.get(serializedDashboardRef);
         invariant(accessor, `No accessor available for dashboard ${dashboard}`);
         return accessor;
     }
@@ -81,49 +88,53 @@ export class DashboardStoreAccessorRepository {
     /**
      * Creates a {@link Dashboard#onStateChange} callback for given dashboard.
      *
-     * @param dashboard - an {@link @gooddata/sdk-model#IdentifierRef} of the dashboard.
+     * @param dashboard - an {@link @gooddata/sdk-model#ObjRef} of the dashboard, or its id as a string
      */
     getOnChangeHandlerForDashboard(
-        dashboard: ObjRef,
+        dashboard: ObjRef | string,
     ): (state: DashboardState, dispatch: DashboardDispatch) => void {
+        const serializedDashboardRef = this.getSerializedDashboardRef(dashboard);
+
         return (state, dispatch) => {
             const dashboardSelect: DashboardSelectorEvaluator = (select) => select(state);
 
-            this.setAccessorForDashboard(dashboard, dashboardSelect, dispatch);
+            this.setAccessorForDashboard(serializedDashboardRef, dashboardSelect, dispatch);
         };
     }
 
     private setAccessorForDashboard(
-        dashboardId: ObjRef,
+        serializedDashboardRef: string,
         selector: DashboardSelectorEvaluator,
         dispatch: DashboardDispatch,
     ) {
-        this.accessors.set(dashboardId, new DashboardStoreAccessor(selector, dispatch));
+        this.accessors.set(serializedDashboardRef, new DashboardStoreAccessor(selector, dispatch));
     }
 
     /**
-     * Removes dashboard accessors from {@link DashboardStoreAccessorRepository#accessors} for the given dashboard {@link @gooddata/sdk-model#IdentifierRef}.
+     * Removes dashboard accessors from {@link DashboardStoreAccessorRepository#accessors} for the given dashboard {@link @gooddata/sdk-model#ObjRef}.
      *
-     * @param dashboard - an {@link @gooddata/sdk-model#IdentifierRef} of the dashboard.
+     * @param dashboard - an {@link @gooddata/sdk-model#ObjRef} of the dashboard, or its id as a string
      */
-    clearAccessorForDashboard(dashboard: ObjRef): void {
-        this.accessors.delete(dashboard);
+    clearAccessorForDashboard(dashboard: ObjRef | string): void {
+        const serializedDashboardRef = this.getSerializedDashboardRef(dashboard);
+        this.accessors.delete(serializedDashboardRef);
     }
 
     /**
-     * Clears all accessors saved in {@link DashboardStoreAccessorRepository#accessors} map.
+     * Clears all accessors saved in accessors map.
      */
     clearAllAccessors(): void {
         this.accessors.clear();
     }
 
     /**
-     * Checks if accessors is initialized for given dashboard {@link @gooddata/sdk-model#IdentifierRef}.
+     * Checks if accessors is initialized for given dashboard {@link @gooddata/sdk-model#ObjRef}.
      *
-     * @param dashboardId - an {@link @gooddata/sdk-model#IdentifierRef} of the dashboard.
+     * @param dashboard -an {@link @gooddata/sdk-model#ObjRef} of the dashboard, or its id as a string
      */
-    isAccessorInitializedForDashboard(dashboardId: ObjRef): boolean {
-        const accessor = this.accessors.get(dashboardId);
+    isAccessorInitializedForDashboard(dashboard: ObjRef | string): boolean {
+        const serializedDashboardRef = this.getSerializedDashboardRef(dashboard);
+        const accessor = this.accessors.get(serializedDashboardRef);
         return !!accessor && accessor.isDashboardStoreAccessorInitialized();
     }
 }

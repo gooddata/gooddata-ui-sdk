@@ -1501,16 +1501,12 @@ export class DashboardStoreAccessor {
 
 // @public
 export class DashboardStoreAccessorRepository {
-    // (undocumented)
-    accessors: Map<ObjRef, DashboardStoreAccessor>;
-    clearAccessorForDashboard(dashboard: ObjRef): void;
+    clearAccessorForDashboard(dashboard: ObjRef | string): void;
     clearAllAccessors(): void;
-    // (undocumented)
-    static dashboardAccessor: DashboardStoreAccessorRepository;
-    getAccessorsForDashboard(dashboard: ObjRef): DashboardStoreAccessor;
+    getAccessorsForDashboard(dashboard: ObjRef | string): DashboardStoreAccessor;
     static getInstance(): DashboardStoreAccessorRepository;
-    getOnChangeHandlerForDashboard(dashboard: ObjRef): (state: DashboardState, dispatch: DashboardDispatch) => void;
-    isAccessorInitializedForDashboard(dashboardId: ObjRef): boolean;
+    getOnChangeHandlerForDashboard(dashboard: ObjRef | string): (state: DashboardState, dispatch: DashboardDispatch) => void;
+    isAccessorInitializedForDashboard(dashboard: ObjRef | string): boolean;
 }
 
 // @internal (undocumented)
