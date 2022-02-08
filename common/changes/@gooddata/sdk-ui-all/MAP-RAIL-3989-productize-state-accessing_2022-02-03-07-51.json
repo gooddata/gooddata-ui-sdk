@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "DashboardStoreAccessors class has been added to allow Dashboard component state handling outside of the component itself.",
+            "comment": "DashboardStoreAccessor and DashboardStoreAccessorRepository classes have been added to allow Dashboard component state handling outside of the component itself.",
             "type": "none"
         }
     ],
