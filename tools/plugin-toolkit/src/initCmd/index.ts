@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { ActionOptions, TargetAppLanguage } from "../_base/types";
 import { logError, logInfo, logSuccess, logWarn } from "../_base/terminal/loggers";
 import * as path from "path";
@@ -178,6 +178,7 @@ async function prepareProject(target: string, config: InitCmdActionConfig): Prom
 
 function runInstall(target: string, config: InitCmdActionConfig): void {
     const { skipInstall, packageManager } = config;
+    const isNpm = packageManager === "npm";
 
     if (skipInstall) {
         logWarn(
@@ -188,7 +189,13 @@ function runInstall(target: string, config: InitCmdActionConfig): void {
     }
 
     try {
-        const result = spawnSync(packageManager, ["install"], {
+        const args = ["install"];
+        if (isNpm) {
+            args.push("--legacy-peer-deps");
+            logInfo("Command will run with '--legacy-peer-deps' flag.");
+        }
+
+        const result = spawnSync(packageManager, args, {
             cwd: target,
             stdio: ["ignore", "inherit", "inherit"],
         });
