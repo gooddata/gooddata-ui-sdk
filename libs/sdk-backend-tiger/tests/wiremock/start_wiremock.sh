@@ -61,7 +61,7 @@ if [ ${mode} = "interactive" ]; then
       --user $(id -u):$(id -g) \
       --volume ${RECORDINGS_DIR}:/home/wiremock:Z \
       --publish 8442:8442 \
-      rodolpheche/wiremock:2.26.3-alpine \
+      wiremock/wiremock:2.32.0 \
         --https-port 8442 --enable-browser-proxying --verbose
 else
   if [ -z ${WIREMOCK_NET} ]; then
@@ -76,7 +76,7 @@ else
         --user $(id -u):$(id -g) \
         --volume ${RECORDINGS_DIR}:/home/wiremock:Z \
         --publish 8442:8442 \
-        rodolpheche/wiremock:2.26.3-alpine \
+        wiremock/wiremock:2.32.0 \
           --https-port 8442 --enable-browser-proxying)
   else
     #
@@ -89,7 +89,7 @@ else
         --user $(id -u):$(id -g) \
         --volume ${RECORDINGS_DIR}:/home/wiremock:Z \
         --net "${WIREMOCK_NET}" --net-alias tiger \
-        rodolpheche/wiremock:2.26.3-alpine \
+        wiremock/wiremock:2.32.0 \
           --https-port 8442 --enable-browser-proxying)
   fi
 
