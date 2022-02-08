@@ -25,7 +25,7 @@ $dialog-background: $is-focused-background;
 
 .kpi-alert-dialog {
     position: relative;
-    z-index: 10;
+    z-index: 1000;
     min-height: 148px;
     border: 1px solid var(--gd-palette-complementary-3, transparentize($dialog-border, 0.5));
     border-radius: 5px;
