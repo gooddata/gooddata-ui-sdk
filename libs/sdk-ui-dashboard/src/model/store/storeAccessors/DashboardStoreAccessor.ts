@@ -4,7 +4,7 @@ import { DashboardDispatch, DashboardSelectorEvaluator, DashboardState } from ".
 import { invariant } from "ts-invariant";
 
 /**
- * This singleton class serves the selector and the dispatcher properties of the dashboard component state.
+ * This class serves the selector and the dispatcher properties of the dashboard component state.
  *
  * The {@link Dashboard} component has an optional property {@link IDashboardProps#onStateChange} through which
  * you can handle set the values for {@link DashboardDispatch} and {@link DashboardSelectorEvaluator}.
@@ -14,19 +14,7 @@ import { invariant } from "ts-invariant";
  * and use it like in the example below. The example shows the accessor's usage as well. There is a need to check
  * the select and dispatch object existence.
  *
- * @example
- * ```
- *  const stateAccessors = StoreAccessors.getInstance();
- *
- *
- *  // in the code where needed
- *  stateAccessors.getSelector()(selectEffectiveDateFilterOptions);
- *  stateAccessors.getDispatch()(saveDashboardAs("Saved from exposed dispatch", false, false));
- *
- *  return (
- *      <Dashboard dashboard={"<dashboardId>"} onStateChange={onStateChange}/>
- *  )
- * ```
+ * See {@link DashboardStoreAccessorRepository} on possible way how to use the store accessor.
  *
  * To get latest properties, use static member function {@link DashboardStoreAccessor#getInstance}. If there is already an instance
  * created, it will return this instance and will return new instance of the {@link DashboardStoreAccessor} otherwise.
@@ -34,24 +22,12 @@ import { invariant } from "ts-invariant";
  * @public
  */
 export class DashboardStoreAccessor {
-    static stateAccessor: DashboardStoreAccessor;
-
     selectorEvaluator: DashboardSelectorEvaluator | undefined;
     dispatch: DashboardDispatch | undefined;
 
-    private constructor() {
-        // constructor empty on purpose to prevent incorrect StoreAccessors object initialization
-    }
-
-    /**
-     * @returns stateAccessor - an existing instance of StoreAccessors class. If no instance is available,
-     * the new one is created.
-     */
-    static getInstance(): DashboardStoreAccessor {
-        if (!DashboardStoreAccessor.stateAccessor) {
-            DashboardStoreAccessor.stateAccessor = new DashboardStoreAccessor();
-        }
-        return this.stateAccessor;
+    constructor(selector: DashboardSelectorEvaluator, dispatch: DashboardDispatch) {
+        this.selectorEvaluator = selector;
+        this.dispatch = dispatch;
     }
 
     /**

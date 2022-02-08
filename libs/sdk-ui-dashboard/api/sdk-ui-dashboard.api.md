@@ -1497,18 +1497,25 @@ export type DashboardStateChangeCallback = (state: DashboardState, dispatch: Das
 
 // @public
 export class DashboardStoreAccessor {
+    constructor(selector: DashboardSelectorEvaluator, dispatch: DashboardDispatch);
     // (undocumented)
     dispatch: DashboardDispatch | undefined;
     getDispatch: () => DashboardDispatch;
-    // (undocumented)
-    static getInstance(): DashboardStoreAccessor;
     getSelector: () => DashboardSelectorEvaluator;
     isDashboardStoreAccessorInitialized: () => boolean;
     // (undocumented)
     selectorEvaluator: DashboardSelectorEvaluator | undefined;
     setSelectAndDispatch: (state: DashboardState, dispatch: DashboardDispatch) => void;
-    // (undocumented)
-    static stateAccessor: DashboardStoreAccessor;
+}
+
+// @public
+export class DashboardStoreAccessorRepository {
+    clearAccessorForDashboard(dashboard: ObjRef | string): void;
+    clearAllAccessors(): void;
+    getAccessorsForDashboard(dashboard: ObjRef | string): DashboardStoreAccessor;
+    static getInstance(): DashboardStoreAccessorRepository;
+    getOnChangeHandlerForDashboard(dashboard: ObjRef | string): (state: DashboardState, dispatch: DashboardDispatch) => void;
+    isAccessorInitializedForDashboard(dashboard: ObjRef | string): boolean;
 }
 
 // @internal (undocumented)

@@ -4,32 +4,57 @@ import {
     changeDateFilterSelection,
     Dashboard,
     DashboardConfig,
-    DashboardStoreAccessor,
+    DashboardStoreAccessorRepository,
     selectEffectiveDateFilterOptions,
 } from "@gooddata/sdk-ui-dashboard";
 import { idRef } from "@gooddata/sdk-model";
 import { MAPBOX_TOKEN } from "../../constants/fixtures";
 
-const dashboardRef = idRef("aeO5PVgShc0T");
+const DASHBOARD_ID = "aeO5PVgShc0T";
+
+const dashboardRef = idRef(DASHBOARD_ID);
 const config: DashboardConfig = { mapboxToken: MAPBOX_TOKEN, isReadOnly: true };
 
+/**
+ * A component to render Dashboard with external store accessors, which enable accessing and/or modifying
+ * state from the parent components of the Dashboard component.
+ *
+ * DashboardStoreAccessorRepository is a singleton storing selectorEvaluator and dispatch object for multiple
+ * instances of Dashboard component.
+ *
+ * To all functions provided by DashboardStoreAccessorRepository object the use of dashboard idRef as well as
+ * of dashboard id is possible.
+ *
+ * For more information, see {@link https://sdk.gooddata.com/gooddata-ui/docs/dashboard_component.html#eventing-props}
+ */
 const DashboardComponentWithAccessorSrc: React.FC = () => {
-    const dashboardStoreAccessor = DashboardStoreAccessor.getInstance();
+    const dashboardStoreAccessorRepository = DashboardStoreAccessorRepository.getInstance();
     const [selectResult, setSelectResult] = useState<any>();
 
+    /**
+     * Sample of how to dispatch `changeDateFilterSelection` event from outside of the dashboard component.
+     */
     const onDispatchClick = useCallback(() => {
-        if (dashboardStoreAccessor.isDashboardStoreAccessorInitialized()) {
-            dashboardStoreAccessor.getDispatch()(
+        if (dashboardStoreAccessorRepository.isAccessorInitializedForDashboard(DASHBOARD_ID)) {
+            dashboardStoreAccessorRepository.getAccessorsForDashboard(DASHBOARD_ID).getDispatch()(
                 changeDateFilterSelection("relative", "GDC.time.month", "-3", "0"),
             );
         }
-    }, [dashboardStoreAccessor]);
+    }, [dashboardStoreAccessorRepository]);
 
+    /**
+     * Sample of how to use `selectEffectiveDateFilterOptions` selector from outside of the dashboard
+     * component.
+     */
     const onSelectClick = useCallback(() => {
-        if (dashboardStoreAccessor.isDashboardStoreAccessorInitialized()) {
-            setSelectResult(dashboardStoreAccessor.getSelector()(selectEffectiveDateFilterOptions));
+        if (dashboardStoreAccessorRepository.isAccessorInitializedForDashboard(DASHBOARD_ID)) {
+            setSelectResult(
+                dashboardStoreAccessorRepository.getAccessorsForDashboard(DASHBOARD_ID).getSelector()(
+                    selectEffectiveDateFilterOptions,
+                ),
+            );
         }
-    }, [dashboardStoreAccessor]);
+    }, [dashboardStoreAccessorRepository]);
 
     return (
         <div>
@@ -46,7 +71,8 @@ const DashboardComponentWithAccessorSrc: React.FC = () => {
             <Dashboard
                 dashboard={dashboardRef}
                 config={config}
-                onStateChange={dashboardStoreAccessor.setSelectAndDispatch}
+                //
+                onStateChange={dashboardStoreAccessorRepository.getOnChangeHandlerForDashboard(DASHBOARD_ID)}
             />
         </div>
     );
