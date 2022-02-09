@@ -6,22 +6,28 @@ import { ILegacyKpiComparisonDirection, ILegacyKpiComparisonTypeComparison } fro
 import { FilterOpReplaceAll, WidgetFilterOperation, WidgetHeader } from "../types/widgetTypes";
 
 /**
+ * Payload of the {@link ChangeKpiWidgetHeader} command.
+ * @alpha
+ */
+export interface ChangeKpiWidgetHeaderPayload {
+    /**
+     * KPI Widget reference whose measure to change.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Header to use for the KPI widget. Contents of the provided header will be used as-is and will be
+     * used to replace the current header values.
+     */
+    readonly header: WidgetHeader;
+}
+
+/**
  * @alpha
  */
 export interface ChangeKpiWidgetHeader extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_HEADER";
-    readonly payload: {
-        /**
-         * KPI Widget reference whose measure to change.
-         */
-        readonly ref: ObjRef;
-
-        /**
-         * Header to use for the KPI widget. Contents of the provided header will be used as-is and will be
-         * used to replace the current header values.
-         */
-        readonly header: WidgetHeader;
-    };
+    readonly payload: ChangeKpiWidgetHeaderPayload;
 }
 
 /**
@@ -55,30 +61,36 @@ export function changeKpiWidgetHeader(
 //
 
 /**
+ * Payload of the {@link ChangeKpiWidgetMeasure} command.
+ * @alpha
+ */
+export interface ChangeKpiWidgetMeasurePayload {
+    /**
+     * KPI Widget reference whose measure to change.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Reference to the new measure to use instead of the old measure.
+     */
+    readonly measureRef: ObjRef;
+
+    /**
+     * Optionally specify the new header that should be used for the KPI widget with the
+     * changed measure.
+     *
+     * You may specify the widget header as 'from-measure'. In that case the title will be automatically
+     * set to the title of measure specified in the `measureRef` property.
+     */
+    readonly header?: WidgetHeader | "from-measure";
+}
+
+/**
  * @alpha
  */
 export interface ChangeKpiWidgetMeasure extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_MEASURE";
-    readonly payload: {
-        /**
-         * KPI Widget reference whose measure to change.
-         */
-        readonly ref: ObjRef;
-
-        /**
-         * Reference to the new measure to use instead of the old measure.
-         */
-        readonly measureRef: ObjRef;
-
-        /**
-         * Optionally specify the new header that should be used for the KPI widget with the
-         * changed measure.
-         *
-         * You may specify the widget header as 'from-measure'. In that case the title will be automatically
-         * set to the title of measure specified in the `measureRef` property.
-         */
-        readonly header?: WidgetHeader | "from-measure";
-    };
+    readonly payload: ChangeKpiWidgetMeasurePayload;
 }
 
 /**
@@ -115,22 +127,28 @@ export function changeKpiWidgetMeasure(
 //
 
 /**
+ * Payload of the {@link ChangeKpiWidgetFilterSettings} command.
+ * @alpha
+ */
+export interface ChangeKpiWidgetFilterSettingsPayload {
+    /**
+     * KPI Widget reference whose filter settings to change.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Filter settings to apply for the widget. The settings are used as-is and
+     * replace current widget settings.
+     */
+    readonly operation: WidgetFilterOperation;
+}
+
+/**
  * @alpha
  */
 export interface ChangeKpiWidgetFilterSettings extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS";
-    readonly payload: {
-        /**
-         * KPI Widget reference whose filter settings to change.
-         */
-        readonly ref: ObjRef;
-
-        /**
-         * Filter settings to apply for the widget. The settings are used as-is and
-         * replace current widget settings.
-         */
-        readonly operation: WidgetFilterOperation;
-    };
+    readonly payload: ChangeKpiWidgetFilterSettingsPayload;
 }
 
 /**
@@ -352,23 +370,29 @@ export interface KpiWidgetComparison {
 }
 
 /**
+ * Payload of the {@link ChangeKpiWidgetComparison} command.
+ * @alpha
+ */
+export interface ChangeKpiWidgetComparisonPayload {
+    /**
+     * Reference to KPI Widget whose filter settings to change.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Comparison settings to use for the KPI Widget.
+     *
+     * To disable comparison you can send empty object here.
+     */
+    readonly comparison: KpiWidgetComparison;
+}
+
+/**
  * @alpha
  */
 export interface ChangeKpiWidgetComparison extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.KPI_WIDGET.CHANGE_COMPARISON";
-    readonly payload: {
-        /**
-         * Reference to KPI Widget whose filter settings to change.
-         */
-        readonly ref: ObjRef;
-
-        /**
-         * Comparison settings to use for the KPI Widget.
-         *
-         * To disable comparison you can send empty object here.
-         */
-        readonly comparison: KpiWidgetComparison;
-    };
+    readonly payload: ChangeKpiWidgetComparisonPayload;
 }
 
 /**
@@ -404,16 +428,22 @@ export function changeKpiWidgetComparison(
 //
 
 /**
+ * Payload of the {@link RefreshKpiWidget} command.
+ * @alpha
+ */
+export interface RefreshKpiWidgetPayload {
+    /**
+     * Reference to KPI Widget to refresh.
+     */
+    readonly ref: ObjRef;
+}
+
+/**
  * @alpha
  */
 export interface RefreshKpiWidget extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.KPI_WIDGET.REFRESH";
-    readonly payload: {
-        /**
-         * Reference to KPI Widget to refresh.
-         */
-        readonly ref: ObjRef;
-    };
+    readonly payload: RefreshKpiWidgetPayload;
 }
 
 /**

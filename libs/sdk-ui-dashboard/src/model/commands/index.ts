@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import {
     InitializeDashboard,
@@ -68,12 +68,15 @@ export { DashboardCommandType, IDashboardCommand, CommandProcessingMeta } from "
 export {
     InitialLoadCorrelationId,
     InitializeDashboard,
+    InitializeDashboardPayload,
     initializeDashboard,
     SaveDashboardAs,
+    SaveDashboardAsPayload,
     saveDashboardAs,
     SaveDashboard,
     saveDashboard,
     RenameDashboard,
+    RenameDashboardPayload,
     renameDashboard,
     ResetDashboard,
     resetDashboard,
@@ -82,65 +85,103 @@ export {
     DeleteDashboard,
     deleteDashboard,
     ChangeSharing,
+    ChangeSharingPayload,
     changeSharing,
 } from "./dashboard";
-export { TriggerEvent, triggerEvent } from "./events";
+
+export { TriggerEvent, TriggerEventPayload, triggerEvent } from "./events";
+
 export {
     ChangeDateFilterSelection,
     changeDateFilterSelection,
     clearDateFilterSelection,
     AddAttributeFilter,
+    AddAttributeFilterPayload,
     addAttributeFilter,
     MoveAttributeFilter,
+    MoveAttributeFilterPayload,
     moveAttributeFilter,
     RemoveAttributeFilters,
+    RemoveAttributeFiltersPayload,
     removeAttributeFilter,
     ChangeAttributeFilterSelection,
     AttributeFilterSelectionType,
     resetAttributeFilterSelection,
     changeAttributeFilterSelection,
     SetAttributeFilterParent,
+    SetAttributeFilterParentPayload,
     setAttributeFilterParent,
     AttributeFilterSelection,
     ChangeFilterContextSelection,
+    ChangeFilterContextSelectionPayload,
     DateFilterSelection,
     changeFilterContextSelection,
-    FilterContextSelection,
 } from "./filters";
+
 export {
     AddLayoutSection,
+    AddLayoutSectionPayload,
     addLayoutSection,
     MoveLayoutSection,
+    MoveLayoutSectionPayload,
     moveLayoutSection,
     RemoveLayoutSection,
+    RemoveLayoutSectionPayload,
     removeLayoutSection,
     ChangeLayoutSectionHeader,
+    ChangeLayoutSectionHeaderPayload,
     changeLayoutSectionHeader,
     AddSectionItems,
+    AddSectionItemsPayload,
     addSectionItem,
     ReplaceSectionItem,
+    ReplaceSectionItemPayload,
     replaceSectionItem,
     MoveSectionItem,
+    MoveSectionItemPayload,
     moveSectionItem,
     RemoveSectionItem,
+    RemoveSectionItemPayload,
     eagerRemoveSectionItem,
     UndoLayoutChanges,
+    UndoLayoutChangesPayload,
     undoLayoutChanges,
     revertLastLayoutChange,
     DashboardLayoutCommands,
     UndoPointSelector,
 } from "./layout";
-export { CreateAlert, createAlert, RemoveAlerts, removeAlerts, UpdateAlert, updateAlert } from "./alerts";
-export { CreateScheduledEmail, createScheduledEmail } from "./scheduledEmail";
+
+export {
+    CreateAlert,
+    CreateAlertPayload,
+    createAlert,
+    RemoveAlerts,
+    RemoveAlertsPayload,
+    removeAlerts,
+    UpdateAlert,
+    UpdateAlertPayload,
+    updateAlert,
+} from "./alerts";
+
+export { CreateScheduledEmail, CreateScheduledEmailPayload, createScheduledEmail } from "./scheduledEmail";
+
 export {
     Drill,
+    DrillPayload,
     DrillDown,
+    DrillDownPayload,
     DrillToAttributeUrl,
+    DrillToAttributeUrlPayload,
     DrillToCustomUrl,
+    DrillToCustomUrlPayload,
     DrillToDashboard,
+    DrillToDashboardPayload,
     DrillToInsight,
+    DrillToInsightPayload,
     DrillToLegacyDashboard,
+    DrillToLegacyDashboardPayload,
     ChangeDrillableItems,
+    ChangeDrillableItemsPayload,
     DashboardDrillCommand,
     drill,
     drillDown,
@@ -151,18 +192,23 @@ export {
     drillToLegacyDashboard,
     changeDrillableItems,
 } from "./drill";
+
 export {
     UpsertExecutionResult,
     setExecutionResultData,
     setExecutionResultError,
     setExecutionResultLoading,
 } from "./executionResults";
+
 export {
     ChangeKpiWidgetHeader,
+    ChangeKpiWidgetHeaderPayload,
     changeKpiWidgetHeader,
     ChangeKpiWidgetMeasure,
+    ChangeKpiWidgetMeasurePayload,
     changeKpiWidgetMeasure,
     ChangeKpiWidgetFilterSettings,
+    ChangeKpiWidgetFilterSettingsPayload,
     replaceKpiWidgetFilterSettings,
     enableKpiWidgetDateFilter,
     disableKpiWidgetDateFilter,
@@ -170,16 +216,20 @@ export {
     ignoreFilterOnKpiWidget,
     unignoreFilterOnKpiWidget,
     ChangeKpiWidgetComparison,
+    ChangeKpiWidgetComparisonPayload,
     changeKpiWidgetComparison,
     RefreshKpiWidget,
+    RefreshKpiWidgetPayload,
     refreshKpiWidget,
     KpiWidgetComparison,
 } from "./kpi";
 
 export {
     ChangeInsightWidgetHeader,
+    ChangeInsightWidgetHeaderPayload,
     changeInsightWidgetHeader,
     ChangeInsightWidgetFilterSettings,
+    ChangeInsightWidgetFilterSettingsPayload,
     replaceInsightWidgetFilterSettings,
     enableInsightWidgetDateFilter,
     disableInsightWidgetDateFilter,
@@ -187,23 +237,36 @@ export {
     ignoreFilterOnInsightWidget,
     unignoreFilterOnInsightWidget,
     ChangeInsightWidgetVisProperties,
+    ChangeInsightWidgetVisPropertiesPayload,
     changeInsightWidgetVisProperties,
     ChangeInsightWidgetInsight,
+    ChangeInsightWidgetInsightPayload,
     changeInsightWidgetInsight,
     ModifyDrillsForInsightWidget,
+    ModifyDrillsForInsightWidgetPayload,
     modifyDrillsForInsightWidget,
     RemoveDrillsForInsightWidget,
+    RemoveDrillsForInsightWidgetPayload,
     removeDrillsForInsightWidget,
     RemoveDrillsSelector,
     RefreshInsightWidget,
+    RefreshInsightWidgetPayload,
     refreshInsightWidget,
     ExportInsightWidget,
+    ExportInsightWidgetPayload,
     exportInsightWidget,
 } from "./insight";
 
-export { RequestAsyncRender, ResolveAsyncRender, requestAsyncRender, resolveAsyncRender } from "./render";
+export {
+    RequestAsyncRender,
+    RequestAsyncRenderPayload,
+    ResolveAsyncRender,
+    ResolveAsyncRenderPayload,
+    requestAsyncRender,
+    resolveAsyncRender,
+} from "./render";
 
-export { AddDrillTargets, addDrillTargets } from "./drillTargets";
+export { AddDrillTargets, AddDrillTargetsPayload, addDrillTargets } from "./drillTargets";
 
 /**
  * Union type that contains all available built-in dashboard commands.

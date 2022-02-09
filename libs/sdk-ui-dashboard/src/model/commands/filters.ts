@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import {
     DateFilterGranularity,
     DateFilterType,
@@ -128,39 +128,45 @@ export function clearDateFilterSelection(correlationId?: string): ChangeDateFilt
 //
 
 /**
+ * Payload of the {@link AddAttributeFilter} command.
+ * @alpha
+ */
+export interface AddAttributeFilterPayload {
+    readonly displayForm: ObjRef;
+
+    readonly index: number;
+
+    /**
+     * Optionally specify parent filters whose selected values will be used to narrow
+     * down the selection in this newly added filter.
+     *
+     * XXX: not needed in the initial version; would be good for API completeness
+     */
+    readonly parentFilters?: ReadonlyArray<IDashboardAttributeFilterParent>;
+
+    /**
+     * Optionally specify the initial selection of attribute elements. If not provided all
+     * elements will be selected by default.
+     *
+     * XXX: not needed in the initial version; would be good for API completeness
+     */
+    readonly initialSelection?: IAttributeElements;
+
+    /**
+     * Optionally specify if the initial selection of attribute elements is a negative one:
+     * if true, the elements selected should NOT be included in teh results.
+     *
+     * XXX: not needed in the initial version; would be good for API completeness
+     */
+    readonly initialIsNegativeSelection?: boolean;
+}
+
+/**
  * @alpha
  */
 export interface AddAttributeFilter extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADD";
-    readonly payload: {
-        readonly displayForm: ObjRef;
-
-        readonly index: number;
-
-        /**
-         * Optionally specify parent filters whose selected values will be used to narrow
-         * down the selection in this newly added filter.
-         *
-         * XXX: not needed in the initial version; would be good for API completeness
-         */
-        readonly parentFilters?: ReadonlyArray<IDashboardAttributeFilterParent>;
-
-        /**
-         * Optionally specify the initial selection of attribute elements. If not provided all
-         * elements will be selected by default.
-         *
-         * XXX: not needed in the initial version; would be good for API completeness
-         */
-        readonly initialSelection?: IAttributeElements;
-
-        /**
-         * Optionally specify if the initial selection of attribute elements is a negative one:
-         * if true, the elements selected should NOT be included in teh results.
-         *
-         * XXX: not needed in the initial version; would be good for API completeness
-         */
-        readonly initialIsNegativeSelection?: boolean;
-    };
+    readonly payload: AddAttributeFilterPayload;
 }
 
 /**
@@ -198,17 +204,23 @@ export function addAttributeFilter(
 //
 
 /**
+ * Payload of the {@link RemoveAttributeFilters} command.
+ * @alpha
+ */
+export interface RemoveAttributeFiltersPayload {
+    /**
+     * XXX: we do not necessarily need to remove multiple filters atm, but this should
+     *  be very easy to do and adds some extra flexibility.
+     */
+    readonly filterLocalIds: string[];
+}
+
+/**
  * @alpha
  */
 export interface RemoveAttributeFilters extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVE";
-    readonly payload: {
-        /**
-         * XXX: we do not necessarily need to remove multiple filters atm, but this should
-         *  be very easy to do and adds some extra flexibility.
-         */
-        readonly filterLocalIds: string[];
-    };
+    readonly payload: RemoveAttributeFiltersPayload;
 }
 
 /**
@@ -235,14 +247,26 @@ export function removeAttributeFilter(filterLocalId: string, correlationId?: str
 //
 
 /**
+ * Payload of the {@link MoveAttributeFilter} command.
+ * @alpha
+ */
+export interface MoveAttributeFilterPayload {
+    /**
+     * Local identifier of the filter to move.
+     */
+    readonly filterLocalId: string;
+    /**
+     * Index to move the filter to.
+     */
+    readonly index: number;
+}
+
+/**
  * @alpha
  */
 export interface MoveAttributeFilter extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVE";
-    readonly payload: {
-        readonly filterLocalId: string;
-        readonly index: number;
-    };
+    readonly payload: MoveAttributeFilterPayload;
 }
 
 /**
@@ -375,14 +399,20 @@ export function resetAttributeFilterSelection(
 //
 
 /**
+ * Payload of the {@link SetAttributeFilterParent} command.
+ * @alpha
+ */
+export interface SetAttributeFilterParentPayload {
+    readonly filterLocalId: string;
+    readonly parentFilters: ReadonlyArray<IDashboardAttributeFilterParent>;
+}
+
+/**
  * @alpha
  */
 export interface SetAttributeFilterParent extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_PARENT";
-    readonly payload: {
-        readonly filterLocalId: string;
-        readonly parentFilters: ReadonlyArray<IDashboardAttributeFilterParent>;
-    };
+    readonly payload: SetAttributeFilterParentPayload;
 }
 
 /**
@@ -422,17 +452,18 @@ export function setAttributeFilterParent(
 }
 
 /**
+ * Payload of the {@link ChangeFilterContextSelection} command.
  * @alpha
  */
-export interface FilterContextSelection {
+export interface ChangeFilterContextSelectionPayload {
     /**
-     * Attribute filters to apply.
+     * Filters to apply to the current dashboard filter context.
      */
-    readonly attributeFilters?: Array<AttributeFilterSelection>;
+    filters: (IDashboardFilter | FilterContextItem)[];
     /**
-     * Date filter to apply.
+     * Should filters not mentioned in the payload reset to All items selected/All time? Defaults to false.
      */
-    readonly dateFilter?: DateFilterSelection;
+    resetOthers: boolean;
 }
 
 /**
@@ -440,16 +471,7 @@ export interface FilterContextSelection {
  */
 export interface ChangeFilterContextSelection extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION";
-    readonly payload: {
-        /**
-         * Filters to apply to the current dashboard filter context.
-         */
-        filters: (IDashboardFilter | FilterContextItem)[];
-        /**
-         * Should filters not mentioned in the payload reset to All items selected/All time? Defaults to false.
-         */
-        resetOthers: boolean;
-    };
+    readonly payload: ChangeFilterContextSelectionPayload;
 }
 
 /**

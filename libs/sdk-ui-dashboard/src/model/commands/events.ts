@@ -1,7 +1,18 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { DashboardEventBody, ICustomDashboardEvent, IDashboardEvent } from "../events/base";
 import { IDashboardCommand } from "./base";
+
+/**
+ * Payload of the {@link TriggerEvent} command.
+ * @alpha
+ */
+export interface TriggerEventPayload {
+    /**
+     * Event body without the {@link DashboardContext} property. That will be filled when the command is processed.
+     */
+    readonly eventBody: DashboardEventBody<IDashboardEvent | ICustomDashboardEvent>;
+}
 
 /**
  * Triggers an event.
@@ -10,12 +21,7 @@ import { IDashboardCommand } from "./base";
  */
 export interface TriggerEvent extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.EVENT.TRIGGER";
-    readonly payload: {
-        /**
-         * Event body without the {@link DashboardContext} property. That will be filled when the command is processed.
-         */
-        readonly eventBody: DashboardEventBody<IDashboardEvent | ICustomDashboardEvent>;
-    };
+    readonly payload: TriggerEventPayload;
 }
 
 /**

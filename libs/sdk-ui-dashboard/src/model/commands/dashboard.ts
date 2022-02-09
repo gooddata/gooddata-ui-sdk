@@ -13,16 +13,22 @@ import { ISharingApplyPayload } from "@gooddata/sdk-ui-kit";
 export const InitialLoadCorrelationId = "initialLoad";
 
 /**
+ * Payload of the {@link InitializeDashboard} command.
+ * @public
+ */
+export interface InitializeDashboardPayload {
+    readonly config?: DashboardConfig;
+    readonly permissions?: IWorkspacePermissions;
+}
+
+/**
  * Loads dashboard from analytical backend.
  *
  * @public
  */
 export interface InitializeDashboard extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INITIALIZE";
-    readonly payload: {
-        readonly config?: DashboardConfig;
-        readonly permissions?: IWorkspacePermissions;
-    };
+    readonly payload: InitializeDashboardPayload;
 }
 
 /**
@@ -101,28 +107,34 @@ export function saveDashboard(correlationId?: string): SaveDashboard {
 //
 
 /**
+ * Payload of the {@link SaveDashboardAs} command.
+ * @public
+ */
+export interface SaveDashboardAsPayload {
+    /**
+     * Specify new title for the dashboard that will be created during the Save As operation.
+     */
+    readonly title?: string;
+
+    /**
+     * Indicate whether the dashboard component should switch to the copy of the dashboard or whether
+     * it should stay on the current dashboard.
+     */
+    readonly switchToCopy?: boolean;
+
+    /**
+     * Indicates whether new dashboard should use the original filter context or whether to use the one
+     * with current filter selection.
+     */
+    readonly useOriginalFilterContext?: boolean;
+}
+
+/**
  * @public
  */
 export interface SaveDashboardAs extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.SAVEAS";
-    readonly payload: {
-        /**
-         * Specify new title for the dashboard that will be created during the Save As operation.
-         */
-        readonly title?: string;
-
-        /**
-         * Indicate whether the dashboard component should switch to the copy of the dashboard or whether
-         * it should stay on the current dashboard.
-         */
-        readonly switchToCopy?: boolean;
-
-        /**
-         * Indicates whether new dashboard should use the original filter context or whether to use the one
-         * with current filter selection.
-         */
-        readonly useOriginalFilterContext?: boolean;
-    };
+    readonly payload: SaveDashboardAsPayload;
 }
 
 /**
@@ -164,13 +176,22 @@ export function saveDashboardAs(
 //
 
 /**
+ * Payload of the {@link RenameDashboard} command.
+ * @alpha
+ */
+export interface RenameDashboardPayload {
+    /**
+     * New title to use for the dashboard.
+     */
+    readonly newTitle: string;
+}
+
+/**
  * @alpha
  */
 export interface RenameDashboard extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.RENAME";
-    readonly payload: {
-        readonly newTitle: string;
-    };
+    readonly payload: RenameDashboardPayload;
 }
 
 /**
@@ -192,14 +213,27 @@ export function renameDashboard(newTitle: string, correlationId?: string): Renam
     };
 }
 
+//
+//
+//
+
+/**
+ * Payload of the {@link ChangeSharing} command.
+ * @alpha
+ */
+export interface ChangeSharingPayload {
+    /**
+     * New sharing-related properties to use.
+     */
+    readonly newSharingProperties: ISharingApplyPayload;
+}
+
 /**
  * @alpha
  */
 export interface ChangeSharing extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.SHARING.CHANGE";
-    readonly payload: {
-        readonly newSharingProperties: ISharingApplyPayload;
-    };
+    readonly payload: ChangeSharingPayload;
 }
 
 /**
