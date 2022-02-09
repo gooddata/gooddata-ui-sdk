@@ -4,7 +4,7 @@ import { DashboardStoreAccessorRepository } from "./DashboardStoreAccessorReposi
 import { idRef, serializeObjRef } from "@gooddata/sdk-model";
 import { DashboardDispatch, DashboardSelectorEvaluator, DashboardState } from "../types";
 
-const DASHBOARD = serializeObjRef(idRef("dashboard_id"));
+const DASHBOARD = serializeObjRef(idRef("SingleDashboardStoreAccessor_mock_dashboard_id"));
 
 /**
  * This singleton class uses {@link DashboardStoreAccessorRepository} to create a store accessor for
@@ -55,14 +55,14 @@ export class SingleDashboardStoreAccessor {
     /**
      * Removes dashboard accessors from {@link DashboardStoreAccessorRepository#accessors} for current dashboard.
      */
-    clearAccessorForDashboard(): void {
+    clearAccessor(): void {
         this.accessorRepository.clearAccessorForDashboard(DASHBOARD);
     }
 
     /**
      * Checks if accessors is initialized for current dashboard.
      */
-    isAccessorInitializedForDashboard(): boolean {
+    isAccessorInitialized(): boolean {
         return this.accessorRepository.isAccessorInitializedForDashboard(DASHBOARD);
     }
 }
