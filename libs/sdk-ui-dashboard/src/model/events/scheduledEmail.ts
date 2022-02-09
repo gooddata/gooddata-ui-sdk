@@ -1,8 +1,19 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { IScheduledMail } from "@gooddata/sdk-backend-spi";
 import { DashboardContext } from "../types/commonTypes";
 import { IDashboardEvent } from "./base";
 import { eventGuard } from "./util";
+
+/**
+ * Payload of the {@link DashboardScheduledEmailCreated} event.
+ * @alpha
+ */
+export interface DashboardScheduledEmailCreatedPayload {
+    /**
+     * The scheduled email created.
+     */
+    readonly scheduledEmail: IScheduledMail;
+}
 
 /**
  * This event is emitted after the scheduled email is successfully created.
@@ -11,9 +22,7 @@ import { eventGuard } from "./util";
  */
 export interface DashboardScheduledEmailCreated extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.SCHEDULED_EMAIL.CREATED";
-    readonly payload: {
-        readonly scheduledEmail: IScheduledMail;
-    };
+    readonly payload: DashboardScheduledEmailCreatedPayload;
 }
 
 export function scheduledEmailCreated(
@@ -40,7 +49,3 @@ export function scheduledEmailCreated(
 export const isDashboardScheduledEmailCreated = eventGuard<DashboardScheduledEmailCreated>(
     "GDC.DASH/EVT.SCHEDULED_EMAIL.CREATED",
 );
-
-//
-//
-//

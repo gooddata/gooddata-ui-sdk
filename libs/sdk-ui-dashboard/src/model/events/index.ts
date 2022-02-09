@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import {
     DashboardInitialized,
     DashboardDeinitialized,
@@ -100,19 +100,30 @@ export {
     isDashboardEventOrCustomDashboardEvent,
     DashboardEventBody,
 } from "./base";
+
 export {
     DateFilterValidationFailed,
+    DateFilterValidationFailedPayload,
     DateFilterValidationResult,
     DashboardInitialized,
+    DashboardInitializedPayload,
     DashboardDeinitialized,
+    DashboardDeinitializedPayload,
     DashboardSaved,
+    DashboardSavedPayload,
     DashboardCopySaved,
+    DashboardCopySavedPayload,
     DashboardRenamed,
+    DashboardRenamedPayload,
     DashboardWasReset,
+    DashboardWasResetPayload,
     DashboardDeleted,
+    DashboardDeletedPayload,
     DashboardExportToPdfRequested,
     DashboardExportToPdfResolved,
+    DashboardExportToPdfResolvedPayload,
     DashboardSharingChanged,
+    DashboardSharingChangedPayload,
     isDashboardSaved,
     isDashboardCopySaved,
     isDashboardInitialized,
@@ -125,17 +136,23 @@ export {
     isDashboardExportToPdfResolved,
     isDashboardSharingChanged,
 } from "./dashboard";
+
 export {
     DashboardCommandStarted,
+    DashboardCommandStartedPayload,
     DashboardCommandRejected,
     DashboardCommandFailed,
+    DashboardCommandFailedPayload,
     ActionFailedErrorReason,
     isDashboardCommandStarted,
     isDashboardCommandFailed,
     DashboardQueryRejected,
     DashboardQueryFailed,
+    DashboardQueryFailedPayload,
     DashboardQueryStarted,
+    DashboardQueryStartedPayload,
     DashboardQueryCompleted,
+    DashboardQueryCompletedPayload,
     isDashboardQueryFailed,
     isDashboardCommandRejected,
     isDashboardQueryCompleted,
@@ -145,12 +162,19 @@ export {
 
 export {
     DashboardDateFilterSelectionChanged,
+    DashboardAttributeFilterSelectionChangedPayload,
     DashboardFilterContextChanged,
+    DashboardFilterContextChangedPayload,
     DashboardAttributeFilterParentChanged,
+    DashboardAttributeFilterParentChangedPayload,
     DashboardAttributeFilterRemoved,
+    DashboardAttributeFilterRemovedPayload,
     DashboardAttributeFilterSelectionChanged,
+    DashboardDateFilterSelectionChangedPayload,
     DashboardAttributeFilterMoved,
+    DashboardAttributeFilterMovedPayload,
     DashboardAttributeFilterAdded,
+    DashboardAttributeFilterAddedPayload,
     isDashboardAttributeFilterAdded,
     isDashboardAttributeFilterMoved,
     isDashboardAttributeFilterParentChanged,
@@ -162,14 +186,23 @@ export {
 
 export {
     DashboardLayoutSectionAdded,
+    DashboardLayoutSectionAddedPayload,
     DashboardLayoutSectionMoved,
+    DashboardLayoutSectionMovedPayload,
     DashboardLayoutSectionRemoved,
+    DashboardLayoutSectionRemovedPayload,
     DashboardLayoutSectionHeaderChanged,
+    DashboardLayoutSectionHeaderChangedPayload,
     DashboardLayoutSectionItemsAdded,
+    DashboardLayoutSectionItemsAddedPayload,
     DashboardLayoutSectionItemReplaced,
+    DashboardLayoutSectionItemReplacedPayload,
     DashboardLayoutSectionItemMoved,
+    DashboardLayoutSectionItemMovedPayload,
     DashboardLayoutSectionItemRemoved,
+    DashboardLayoutSectionItemRemovedPayload,
     DashboardLayoutChanged,
+    DashboardLayoutChangedPayload,
     isDashboardLayoutChanged,
     isDashboardLayoutSectionAdded,
     isDashboardLayoutSectionHeaderChanged,
@@ -183,10 +216,15 @@ export {
 
 export {
     DashboardKpiWidgetHeaderChanged,
+    DashboardKpiWidgetHeaderChangedPayload,
     DashboardKpiWidgetMeasureChanged,
+    DashboardKpiWidgetMeasureChangedPayload,
     DashboardKpiWidgetFilterSettingsChanged,
+    DashboardKpiWidgetFilterSettingsChangedPayload,
     DashboardKpiWidgetComparisonChanged,
+    DashboardKpiWidgetComparisonChangedPayload,
     DashboardKpiWidgetChanged,
+    DashboardKpiWidgetChangedPayload,
     isDashboardKpiWidgetChanged,
     isDashboardKpiWidgetComparisonChanged,
     isDashboardKpiWidgetFilterSettingsChanged,
@@ -196,14 +234,23 @@ export {
 
 export {
     DashboardInsightWidgetHeaderChanged,
+    DashboardInsightWidgetHeaderChangedPayload,
     DashboardInsightWidgetFilterSettingsChanged,
+    DashboardInsightWidgetFilterSettingsChangedPayload,
     DashboardInsightWidgetVisPropertiesChanged,
+    DashboardInsightWidgetVisPropertiesChangedPayload,
     DashboardInsightWidgetInsightSwitched,
+    DashboardInsightWidgetInsightSwitchedPayload,
     DashboardInsightWidgetDrillsModified,
+    DashboardInsightWidgetDrillsModifiedPayload,
     DashboardInsightWidgetDrillsRemoved,
+    DashboardInsightWidgetDrillsRemovedPayload,
     DashboardInsightWidgetChanged,
+    DashboardInsightWidgetChangedPayload,
     DashboardInsightWidgetExportRequested,
+    DashboardInsightWidgetExportRequestedPayload,
     DashboardInsightWidgetExportResolved,
+    DashboardInsightWidgetExportResolvedPayload,
     isDashboardInsightWidgetChanged,
     isDashboardInsightWidgetDrillsModified,
     isDashboardInsightWidgetDrillsRemoved,
@@ -214,39 +261,68 @@ export {
     isDashboardInsightWidgetExportRequested,
     isDashboardInsightWidgetExportResolved,
 } from "./insight";
+
 export {
     DashboardWidgetExecutionStarted,
+    DashboardWidgetExecutionStartedPayload,
     DashboardWidgetExecutionSucceeded,
+    DashboardWidgetExecutionSucceededPayload,
     DashboardWidgetExecutionFailed,
+    DashboardWidgetExecutionFailedPayload,
     isDashboardWidgetExecutionStarted,
     isDashboardWidgetExecutionSucceeded,
     isDashboardWidgetExecutionFailed,
 } from "./widget";
+
 export {
     DashboardAlertCreated,
+    DashboardAlertCreatedPayload,
     DashboardAlertsRemoved,
+    DashboardAlertsRemovedPayload,
     DashboardAlertUpdated,
+    DashboardAlertUpdatedPayload,
     isDashboardAlertCreated,
     isDashboardAlertsRemoved,
     isDashboardAlertUpdated,
 } from "./alerts";
-export { DashboardScheduledEmailCreated, isDashboardScheduledEmailCreated } from "./scheduledEmail";
+
+export {
+    DashboardScheduledEmailCreated,
+    DashboardScheduledEmailCreatedPayload,
+    isDashboardScheduledEmailCreated,
+} from "./scheduledEmail";
+
 export {
     DashboardDrillRequested,
+    DashboardDrillRequestedPayload,
     DashboardDrillResolved,
+    DashboardDrillResolvedPayload,
     DashboardDrillDownRequested,
+    DashboardDrillDownRequestedPayload,
     DashboardDrillDownResolved,
+    DashboardDrillDownResolvedPayload,
     DashboardDrillToAttributeUrlRequested,
+    DashboardDrillToAttributeUrlRequestedPayload,
     DashboardDrillToAttributeUrlResolved,
+    DashboardDrillToAttributeUrlResolvedPayload,
     DashboardDrillToCustomUrlRequested,
+    DashboardDrillToCustomUrlRequestedPayload,
     DashboardDrillToCustomUrlResolved,
+    DashboardDrillToCustomUrlResolvedPayload,
     DashboardDrillToInsightRequested,
+    DashboardDrillToInsightRequestedPayload,
     DashboardDrillToInsightResolved,
+    DashboardDrillToInsightResolvedPayload,
     DashboardDrillToDashboardRequested,
+    DashboardDrillToDashboardRequestedPayload,
     DashboardDrillToDashboardResolved,
+    DashboardDrillToDashboardResolvedPayload,
     DashboardDrillToLegacyDashboardRequested,
+    DashboardDrillToLegacyDashboardRequestedPayload,
     DashboardDrillToLegacyDashboardResolved,
+    DashboardDrillToLegacyDashboardResolvedPayload,
     DashboardDrillableItemsChanged,
+    DashboardDrillableItemsChangedPayload,
     isDashboardDrillDownRequested,
     isDashboardDrillDownResolved,
     isDashboardDrillRequested,
@@ -264,13 +340,21 @@ export {
     isDashboardDrillableItemsChanged,
 } from "./drill";
 
-export { DrillTargetsAdded, drillTargetsAdded, isDrillTargetsAdded } from "./drillTargets";
+export {
+    DrillTargetsAdded,
+    DrillTargetsAddedPayload,
+    drillTargetsAdded,
+    isDrillTargetsAdded,
+} from "./drillTargets";
 
 export * from "./userInteraction";
+
 export {
     DashboardRenderRequested,
+    DashboardAsyncRenderRequestedPayload,
     DashboardAsyncRenderRequested,
     DashboardAsyncRenderResolved,
+    DashboardAsyncRenderResolvedPayload,
     DashboardRenderResolved,
     isDashboardAsyncRenderRequested,
     isDashboardAsyncRenderResolved,
