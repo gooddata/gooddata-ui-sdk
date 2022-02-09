@@ -4104,6 +4104,17 @@ export const ShareDialog: (props: IShareDialogProps) => JSX.Element;
 export const ShareStatusIndicator: (props: IShareStatusProps) => JSX.Element;
 
 // @public
+export class SingleDashboardStoreAccessor {
+    clearAccessor(): void;
+    getDashboardDispatch(): DashboardDispatch;
+    getDashboardSelect(): DashboardSelectorEvaluator;
+    // (undocumented)
+    static getInstance(): SingleDashboardStoreAccessor;
+    getOnChangeHandler(): (state: DashboardState, dispatch: DashboardDispatch) => void;
+    isAccessorInitialized(): boolean;
+}
+
+// @public
 export function singleEventTypeHandler(type: (DashboardEvents | ICustomDashboardEvent)["type"], handler: DashboardEventHandler["handler"]): DashboardEventHandler;
 
 // @alpha
