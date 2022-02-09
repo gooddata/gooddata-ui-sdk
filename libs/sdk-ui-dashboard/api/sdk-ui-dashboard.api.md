@@ -4105,13 +4105,13 @@ export const ShareStatusIndicator: (props: IShareStatusProps) => JSX.Element;
 
 // @public
 export class SingleDashboardStoreAccessor {
-    clearAccessorForDashboard(): void;
+    clearAccessor(): void;
     getDashboardDispatch(): DashboardDispatch;
     getDashboardSelect(): DashboardSelectorEvaluator;
     // (undocumented)
     static getInstance(): SingleDashboardStoreAccessor;
     getOnChangeHandler(): (state: DashboardState, dispatch: DashboardDispatch) => void;
-    isAccessorInitializedForDashboard(): boolean;
+    isAccessorInitialized(): boolean;
 }
 
 // @public
