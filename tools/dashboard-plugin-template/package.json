@@ -63,8 +63,7 @@
         "@gooddata/sdk-ui-charts": "^8.9.0-alpha.35",
         "@gooddata/sdk-ui-ext": "^8.9.0-alpha.35",
         "react": "^16.10.0 || ^17.0.0",
-        "react-dom": "^16.10.0 || ^17.0.0",
-        "react-intl": "^3.6.0"
+        "react-dom": "^16.10.0 || ^17.0.0"
     },
     "devDependencies": {
         "@babel/core": "^7.7.2",

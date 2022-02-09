@@ -1,8 +1,7 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import type { DashboardPluginDescriptor } from "@gooddata/sdk-ui-dashboard";
 
-import { MODULE_FEDERATION_NAME } from "../metadata.json";
-
+import metadataJson from "../metadata.json";
 import packageJson from "../../package.json";
 
 type PluginEntryPoint = DashboardPluginDescriptor & {
@@ -23,8 +22,8 @@ const entryPoint: PluginEntryPoint = {
     minEngineVersion: "bundled",
     maxEngineVersion: "bundled",
     // These two must fit the values in the webpack config. Do not edit them unless you know what you are doing
-    engineKey: `./${MODULE_FEDERATION_NAME}_ENGINE`,
-    pluginKey: `./${MODULE_FEDERATION_NAME}_PLUGIN`,
+    engineKey: `./${metadataJson.MODULE_FEDERATION_NAME}_ENGINE`,
+    pluginKey: `./${metadataJson.MODULE_FEDERATION_NAME}_PLUGIN`,
 };
 
 export default entryPoint;
