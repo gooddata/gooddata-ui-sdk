@@ -46,7 +46,7 @@ import { idRef, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
  * @public
  */
 export class DashboardStoreAccessorRepository {
-    private static dashboardAccessor: DashboardStoreAccessorRepository;
+    private static dashboardStoreAccessorRepository: DashboardStoreAccessorRepository;
 
     private accessors = new Map<string, DashboardStoreAccessor>();
 
@@ -61,10 +61,11 @@ export class DashboardStoreAccessorRepository {
      * @Returns the existing {@link DashboardStoreAccessorRepository} or create and return new one.
      */
     static getInstance() {
-        if (!DashboardStoreAccessorRepository.dashboardAccessor) {
-            DashboardStoreAccessorRepository.dashboardAccessor = new DashboardStoreAccessorRepository();
+        if (!DashboardStoreAccessorRepository.dashboardStoreAccessorRepository) {
+            DashboardStoreAccessorRepository.dashboardStoreAccessorRepository =
+                new DashboardStoreAccessorRepository();
         }
-        return this.dashboardAccessor;
+        return DashboardStoreAccessorRepository.dashboardStoreAccessorRepository;
     }
 
     private getSerializedDashboardRef(dashboard: ObjRef | string): string {
