@@ -1510,12 +1510,11 @@ export class DashboardStoreAccessor {
 
 // @public
 export class DashboardStoreAccessorRepository {
-    clearAccessorForDashboard(dashboard: ObjRef | string): void;
-    clearAllAccessors(): void;
-    getAccessorsForDashboard(dashboard: ObjRef | string): DashboardStoreAccessor;
-    static getInstance(): DashboardStoreAccessorRepository;
-    getOnChangeHandlerForDashboard(dashboard: ObjRef | string): (state: DashboardState, dispatch: DashboardDispatch) => void;
-    isAccessorInitializedForDashboard(dashboard: ObjRef | string): boolean;
+    static clearAccessorForDashboard(dashboard: ObjRef | string): void;
+    static clearAllAccessors(): void;
+    static getAccessorsForDashboard(dashboard: ObjRef | string): DashboardStoreAccessor;
+    static getOnChangeHandlerForDashboard(dashboard: ObjRef | string): (state: DashboardState, dispatch: DashboardDispatch) => void;
+    static isAccessorInitializedForDashboard(dashboard: ObjRef | string): boolean;
 }
 
 // @internal (undocumented)
@@ -4105,13 +4104,11 @@ export const ShareStatusIndicator: (props: IShareStatusProps) => JSX.Element;
 
 // @public
 export class SingleDashboardStoreAccessor {
-    clearAccessor(): void;
-    getDashboardDispatch(): DashboardDispatch;
-    getDashboardSelect(): DashboardSelectorEvaluator;
-    // (undocumented)
-    static getInstance(): SingleDashboardStoreAccessor;
-    getOnChangeHandler(): (state: DashboardState, dispatch: DashboardDispatch) => void;
-    isAccessorInitialized(): boolean;
+    static clearAccessor(): void;
+    static getDashboardDispatch(): DashboardDispatch;
+    static getDashboardSelect(): DashboardSelectorEvaluator;
+    static getOnChangeHandler(): (state: DashboardState, dispatch: DashboardDispatch) => void;
+    static isAccessorInitialized(): boolean;
 }
 
 // @public
