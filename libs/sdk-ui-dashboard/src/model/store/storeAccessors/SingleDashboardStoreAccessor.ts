@@ -16,53 +16,38 @@ const DASHBOARD = serializeObjRef(idRef("SingleDashboardStoreAccessor_mock_dashb
  * @public
  */
 export class SingleDashboardStoreAccessor {
-    private static singleDashboardStoreAccessor: SingleDashboardStoreAccessor;
-
-    private accessorRepository: DashboardStoreAccessorRepository;
-
-    private constructor() {
-        this.accessorRepository = DashboardStoreAccessorRepository.getInstance();
-    }
-
-    static getInstance(): SingleDashboardStoreAccessor {
-        if (!SingleDashboardStoreAccessor.singleDashboardStoreAccessor) {
-            SingleDashboardStoreAccessor.singleDashboardStoreAccessor = new SingleDashboardStoreAccessor();
-        }
-        return SingleDashboardStoreAccessor.singleDashboardStoreAccessor;
-    }
-
     /**
      * Returns a selector for current dashboard.
      */
-    getDashboardSelect(): DashboardSelectorEvaluator {
-        return this.accessorRepository.getAccessorsForDashboard(DASHBOARD).getSelector();
+    static getDashboardSelect(): DashboardSelectorEvaluator {
+        return DashboardStoreAccessorRepository.getAccessorsForDashboard(DASHBOARD).getSelector();
     }
 
     /**
      * Returns a dispatch object for current dashboard.
      */
-    getDashboardDispatch(): DashboardDispatch {
-        return this.accessorRepository.getAccessorsForDashboard(DASHBOARD).getDispatch();
+    static getDashboardDispatch(): DashboardDispatch {
+        return DashboardStoreAccessorRepository.getAccessorsForDashboard(DASHBOARD).getDispatch();
     }
 
     /**
      * Creates a {@link Dashboard#onStateChange} callback for current dashboard.
      */
-    getOnChangeHandler(): (state: DashboardState, dispatch: DashboardDispatch) => void {
-        return this.accessorRepository.getOnChangeHandlerForDashboard(DASHBOARD);
+    static getOnChangeHandler(): (state: DashboardState, dispatch: DashboardDispatch) => void {
+        return DashboardStoreAccessorRepository.getOnChangeHandlerForDashboard(DASHBOARD);
     }
 
     /**
      * Removes dashboard accessors from {@link DashboardStoreAccessorRepository#accessors} for current dashboard.
      */
-    clearAccessor(): void {
-        this.accessorRepository.clearAccessorForDashboard(DASHBOARD);
+    static clearAccessor(): void {
+        DashboardStoreAccessorRepository.clearAccessorForDashboard(DASHBOARD);
     }
 
     /**
      * Checks if accessors is initialized for current dashboard.
      */
-    isAccessorInitialized(): boolean {
-        return this.accessorRepository.isAccessorInitializedForDashboard(DASHBOARD);
+    static isAccessorInitialized(): boolean {
+        return DashboardStoreAccessorRepository.isAccessorInitializedForDashboard(DASHBOARD);
     }
 }
