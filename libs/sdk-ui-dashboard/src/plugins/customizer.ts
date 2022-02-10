@@ -309,10 +309,14 @@ export interface IDashboardCustomizer {
 }
 
 /**
- * TODO: move to common location
+ * Callback called whenever the Dashboard's internal state changes.
+ *
+ * @param state - the new value of the state
+ * @param dispatch - the new dispatcher function that can be used to dispatch commands
  *
  * @public
  */
+// TODO: move to common location
 export type DashboardStateChangeCallback = (state: DashboardState, dispatch: DashboardDispatch) => void;
 
 /**

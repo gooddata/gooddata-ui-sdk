@@ -23,7 +23,7 @@ import { ExtendedDashboardWidget } from "./layoutTypes";
  *
  * @public
  */
-export type ObjectAvailabilityConfig = {
+export interface ObjectAvailabilityConfig {
     /**
      * Specify tags to exclude objects by. If any of these tags appears on an object, then it will be not
      * available for use.
@@ -36,14 +36,14 @@ export type ObjectAvailabilityConfig = {
      * range of objects may be excluded at first and then a subset will be cherry-picked using this prop.
      */
     includeObjectsWithTags?: string[];
-};
+}
 
 /**
  * Dashboard configuration can influence the available features, look and feel and behavior of the dashboard.
  *
  * @public
  */
-export type DashboardConfig = {
+export interface DashboardConfig {
     /**
      * Locale to use for the dashboard.
      */
@@ -125,7 +125,7 @@ export type DashboardConfig = {
      * Optionally configure which of the default menu button buttons are visible.
      */
     menuButtonItemsVisibility?: IMenuButtonItemsVisibility;
-};
+}
 
 /**
  * Dashboard configuration resolved using the config passed in via props and any essential data retrieved from
@@ -167,7 +167,7 @@ export function isResolvedConfig(config?: DashboardConfig): config is ResolvedDa
 /**
  * @public
  */
-export type DashboardContext = {
+export interface DashboardContext {
     /**
      * Analytical Backend where the dashboard exists.
      */
@@ -198,7 +198,7 @@ export type DashboardContext = {
      * Data product identifier - it's required, if the backend implementation supports it and workspace is provisioned via LCM.
      */
     dataProductId?: string;
-};
+}
 
 /**
  * @internal
@@ -221,7 +221,7 @@ export type DashboardTransformFn = (
 /**
  * @public
  */
-export type DashboardModelCustomizationFns = {
+export interface DashboardModelCustomizationFns {
     /**
      * Optionally provide a function that will be used during dashboard initialization of an existing dashboard.
      * This function will be called after the dashboard is loaded from backend and before it is dispatched for
@@ -232,7 +232,7 @@ export type DashboardModelCustomizationFns = {
      *    dashboard will be used as-is.
      */
     existingDashboardTransformFn?: DashboardTransformFn;
-};
+}
 
 /**
  * @alpha

@@ -6,7 +6,7 @@ import { IMenuButtonItemsVisibility } from "../../../types";
 /**
  * @alpha
  */
-export type UiState = {
+export interface UiState {
     scheduleEmailDialog: {
         open: boolean;
     };
@@ -27,7 +27,7 @@ export type UiState = {
     menuButton: {
         itemsVisibility: IMenuButtonItemsVisibility;
     };
-};
+}
 
 export const uiInitialState: UiState = {
     scheduleEmailDialog: {

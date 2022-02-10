@@ -188,7 +188,7 @@ export class DashboardTester extends HeadlessDashboard {
     }
 }
 
-export type PreloadedTesterOptions = {
+export interface PreloadedTesterOptions {
     /**
      * Customize the load command.
      *
@@ -211,7 +211,7 @@ export type PreloadedTesterOptions = {
      * on the recorded analytical backend.
      */
     queryServices?: IDashboardQueryService<any, any>[];
-};
+}
 
 /**
  * This factory will return a function that can be integrated into jest's `beforeAll` or `beforeEach` statements. That returned

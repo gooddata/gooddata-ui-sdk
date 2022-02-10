@@ -1,12 +1,14 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { IDashboardCustomizer, IDashboardEventHandling } from "./customizer";
 import { DashboardContext } from "../model";
 
 /**
+ * Basic set of information about a Dashboard plugin.
+ *
  * @public
  */
-export type DashboardPluginDescriptor = {
+export interface DashboardPluginDescriptor {
     /**
      * Author of the plugin. This should ideally contain name and contact (email) for the author.
      */
@@ -56,7 +58,7 @@ export type DashboardPluginDescriptor = {
      * Another option is to specify exact maximum version of the SDK - e.g. "8.8.0".
      */
     readonly maxEngineVersion?: string;
-};
+}
 
 /**
  * This is the raw, low-level interface that the dashboard plugins need to implement. Through this interface

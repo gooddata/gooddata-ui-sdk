@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { actionChannel, select, take } from "redux-saga/effects";
 
@@ -6,11 +6,11 @@ import { DashboardEventHandler } from "../../eventHandlers/eventHandler";
 import { DashboardEvents, isDashboardEventOrCustomDashboardEvent } from "../../events";
 import { DashboardDispatch, DashboardSelectorEvaluator, DashboardState } from "../types";
 
-export type EventEmitter = {
+export interface EventEmitter {
     registerHandler: (handler: DashboardEventHandler) => void;
     unregisterHandler: (handler: DashboardEventHandler) => void;
     eventEmitterSaga: () => SagaIterator<void>;
-};
+}
 
 /**
  * Creates root event emitter that will be responsible for emitting events to all registered handlers.

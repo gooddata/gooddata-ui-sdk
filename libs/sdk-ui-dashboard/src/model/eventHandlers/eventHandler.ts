@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { AnyAction, Dispatch } from "@reduxjs/toolkit";
 import { IDashboardCommand } from "../commands";
 import { DashboardSelectorEvaluator } from "../store/types";
@@ -33,7 +33,7 @@ export type DashboardEventEvalFn = (event: DashboardEvents | ICustomDashboardEve
  *
  * @public
  */
-export type DashboardEventHandler<TEvents extends DashboardEvents | ICustomDashboardEvent = any> = {
+export interface DashboardEventHandler<TEvents extends DashboardEvents | ICustomDashboardEvent = any> {
     /**
      * Specify event evaluation function. This will be used by dashboard's event emitter to determine
      * whether event of particular type should be dispatched to this handler.
@@ -50,7 +50,7 @@ export type DashboardEventHandler<TEvents extends DashboardEvents | ICustomDashb
      * @param stateSelect - callback to execute arbitrary selectors against the dashboard state
      */
     handler: DashboardEventHandlerFn<TEvents>;
-};
+}
 
 /**
  * Creates a {@link DashboardEventHandler} instance that will be invoked for any event (event for custom events).

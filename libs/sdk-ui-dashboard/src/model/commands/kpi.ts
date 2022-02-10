@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { IDashboardCommand } from "./base";
 import { isObjRef, ObjRef } from "@gooddata/sdk-model";
@@ -333,7 +333,7 @@ export function unignoreFilterOnKpiWidget(
 /**
  * @alpha
  */
-export type KpiWidgetComparison = {
+export interface KpiWidgetComparison {
     /**
      * Type of comparison to do. May be period-over-period, previous period or no
      * comparison.
@@ -349,7 +349,7 @@ export type KpiWidgetComparison = {
      * a good thing or a bad thing. This setting influences the visuals (red vs green indicators)
      */
     comparisonDirection?: ILegacyKpiComparisonDirection;
-};
+}
 
 /**
  * @alpha

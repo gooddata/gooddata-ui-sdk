@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import {
     ExtendedDashboardItem,
@@ -8,7 +8,7 @@ import {
 } from "../../../types/layoutTypes";
 import { LayoutStash } from "../../../store/layout/layoutState";
 
-export type ItemResolutionResult = {
+export interface ItemResolutionResult {
     /**
      * Existing layout stashes that were used by the item definitions.
      */
@@ -36,7 +36,7 @@ export type ItemResolutionResult = {
      * but were stashed.
      */
     newItemBitmap: boolean[];
-};
+}
 
 /**
  * Given layout stash and a list of dashboard item definitions, this function will validate and resolve those

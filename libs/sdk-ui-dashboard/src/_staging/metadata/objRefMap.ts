@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import {
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
@@ -25,7 +25,7 @@ import values from "lodash/values";
  *
  * @alpha
  */
-export type ObjRefMapConfig<T> = {
+export interface ObjRefMapConfig<T> {
     /**
      * Function that extracts `ref` from object
      */
@@ -55,7 +55,7 @@ export type ObjRefMapConfig<T> = {
      * Type of object stored in the map.
      */
     readonly type?: ObjectType;
-};
+}
 
 /**
  * Utility class that assists with type-agnostic mapping of metadata objects by ObjRef.

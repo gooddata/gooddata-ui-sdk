@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { DashboardContext } from "../types/commonTypes";
 import { IInsight, isInsight, isObjRef, ObjRef } from "@gooddata/sdk-model";
@@ -30,7 +30,7 @@ async function loadInsightsFromBackend(
     };
 }
 
-export type InsightResolutionResult = {
+export interface InsightResolutionResult {
     /**
      * Map containing all resolved insights.
      */
@@ -45,7 +45,7 @@ export type InsightResolutionResult = {
      * List of ObjRefs that could not be resolved.
      */
     missing: ObjRef[];
-};
+}
 
 /**
  * Given a list of insight ObjRefs, this generator will resolve those refs to actual IInsight objects. The resolution

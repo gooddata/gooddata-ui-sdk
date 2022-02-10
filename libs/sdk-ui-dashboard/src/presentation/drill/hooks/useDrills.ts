@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import {
     OnDashboardDrill,
     OnDashboardDrillSuccess,
@@ -27,7 +27,7 @@ import { useDrillToLegacyDashboard } from "./useDrillToLegacyDashboard";
 /**
  * @internal
  */
-export type UseDrillsProps = {
+export interface UseDrillsProps {
     onDrill?: OnDashboardDrill;
     onDrillSuccess?: OnDashboardDrillSuccess;
     onDrillError?: OnDashboardDrillError;
@@ -57,7 +57,7 @@ export type UseDrillsProps = {
     onDrillToLegacyDashboardError?: OnDashboardDrillError;
     // Common error handler
     onError?: OnDashboardDrillError;
-};
+}
 
 /**
  * @internal

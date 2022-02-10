@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import {
     combineReducers,
     configureStore,
@@ -102,7 +102,7 @@ const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandTy
  */
 export type DashboardStore = EnhancedStore<DashboardState>;
 
-export type DashboardStoreEventing = {
+export interface DashboardStoreEventing {
     /**
      * Optionally specify event handlers to register during the initialization.
      */
@@ -125,9 +125,9 @@ export type DashboardStoreEventing = {
         registerEventHandler: (handler: DashboardEventHandler) => void,
         unregisterEventHandler: (handler: DashboardEventHandler) => void,
     ) => void;
-};
+}
 
-export type DashboardStoreConfig = {
+export interface DashboardStoreConfig {
     /**
      * Specifies context that will be hammered into the saga middleware. All sagas can then access the values
      * from the context.
@@ -173,7 +173,7 @@ export type DashboardStoreConfig = {
      * Background workers are processed last in the chain of all command and event processing.
      */
     backgroundWorkers: ((context: DashboardContext) => SagaIterator<void>)[];
-};
+}
 
 function* rootSaga(
     eventEmitter: Saga,
@@ -199,12 +199,12 @@ function* rootSaga(
 /**
  * Fully configured and initialized dashboard store realized by redux and with redux-sagas.
  */
-export type ReduxedDashboardStore = {
+export interface ReduxedDashboardStore {
     store: DashboardStore;
     registerEventHandler: (handler: DashboardEventHandler) => void;
     unregisterEventHandler: (handler: DashboardEventHandler) => void;
     rootSagaTask: Task;
-};
+}
 
 /**
  * This middleware ensures that actions occurring in the dashboard have their meta enriched with appropriate

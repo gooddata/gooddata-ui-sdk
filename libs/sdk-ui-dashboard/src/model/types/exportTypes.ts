@@ -1,16 +1,16 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 /**
  * @alpha
  */
-export type ICsvExportConfig = {
+export interface ICsvExportConfig {
     format: "csv";
-};
+}
 
 /**
  * @alpha
  */
-export type IXlsxExportConfig = {
+export interface IXlsxExportConfig {
     format: "xlsx";
     /**
      * Optionally specify title of the workbook.
@@ -30,7 +30,7 @@ export type IXlsxExportConfig = {
      * into the XLSX in a human readable form.
      */
     showFilters?: boolean;
-};
+}
 
 /**
  * @alpha

@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { AnyAction, Dispatch, EntityState } from "@reduxjs/toolkit";
 import { IInsight } from "@gooddata/sdk-model";
 import { LoadingState } from "./loading/loadingState";
@@ -36,7 +36,7 @@ import { UiState } from "./ui/uiState";
  *
  * @alpha
  */
-export type DashboardState = {
+export interface DashboardState {
     loading: LoadingState;
     saving: SavingState;
     backendCapabilities: BackendCapabilitiesState;
@@ -74,7 +74,7 @@ export type DashboardState = {
     _queryCache: {
         [queryName: string]: any;
     };
-};
+}
 
 /**
  * @public

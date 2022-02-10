@@ -1,9 +1,9 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import * as React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { normalizeTime, ConfirmDialogBase, Overlay, Alignment } from "@gooddata/sdk-ui-kit";
-import { IAnalyticalBackend, IScheduledMailDefinition, IUser } from "@gooddata/sdk-backend-spi";
-import { ObjRef } from "@gooddata/sdk-model";
+import { IAnalyticalBackend, IScheduledMailDefinition } from "@gooddata/sdk-backend-spi";
+import { ObjRef, IUser } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import memoize from "lodash/memoize";
 
@@ -42,7 +42,7 @@ const MAX_SUBJECT_LENGTH = 200;
 const MAX_DASHBOARD_TITLE_LENGTH = DASHBOARD_TITLE_MAX_LENGTH;
 const MAX_HYPHEN_LENGTH = 3;
 
-export type IScheduledMailDialogRendererOwnProps = {
+export interface IScheduledMailDialogRendererOwnProps {
     /**
      * Reference of the dashboard to be attached to the scheduled email.
      */
@@ -109,7 +109,7 @@ export type IScheduledMailDialogRendererOwnProps = {
      * Callback to be called, when error occurs.
      */
     onError?: (error: GoodDataSdkError) => void;
-};
+}
 
 export type IScheduledMailDialogRendererProps = IScheduledMailDialogRendererOwnProps & WrappedComponentProps;
 
