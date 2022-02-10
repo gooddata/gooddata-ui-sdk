@@ -27,6 +27,7 @@ function main() {
     let version = "";
     let help = false;
     let dev = false;
+    let updateSymlink = false;
     let index = 2;
     while (index < process.argv.length) {
         if (process.argv[index] === "-v" || process.argv[index] === "--version") {
@@ -41,6 +42,10 @@ function main() {
             dev = true;
             index += 1;
         }
+        if (process.argv[index] === "--update-symlink") {
+            updateSymlink = true;
+            index += 1;
+        }
     }
 
     if (help) {
@@ -49,8 +54,10 @@ function main() {
     }
 
     // always use the Next version for dev
+    // also never update symlinks in dev
     if (dev) {
         version = "Next";
+        updateSymlink = false;
     }
 
     if (!version) {
@@ -58,13 +65,13 @@ function main() {
         process.exit(1);
     }
 
-    buildVersion(version, dev, () => process.exit(0));
+    buildVersion(version, dev, updateSymlink, () => process.exit(0));
 }
 
 main();
 
 function printUsage() {
-    console.log("Usage: node build-docs.js -v VERSION [-h|--help] [-d|--dev]");
+    console.log("Usage: node build-docs.js -v VERSION [-h|--help] [-d|--dev] [--update-symlink]");
 }
 
 function writeJson(where, obj) {
@@ -96,7 +103,7 @@ function runCommand(command, argv, cwd) {
     });
 }
 
-async function buildVersion(versionName, dev, onSuccess) {
+async function buildVersion(versionName, dev, shouldUpdateSymlink, onSuccess) {
     const dir = __dirname;
     const rootDir = path.resolve(dir, "../..");
 
@@ -160,16 +167,16 @@ async function buildVersion(versionName, dev, onSuccess) {
             if (libsToBeRemoved.includes(withoutExtension)) {
                 return unlink(path.resolve(apiDocInputDir, fileName));
             }
-        })
+        }),
     );
 
     console.log("Starting api-documenter. Generated files will be stored in apidocs/docs.");
     const apiDocumenterBin = path.resolve(
         rootDir,
-        "common/temp/node_modules/@microsoft/api-documenter/bin/api-documenter"
+        "common/temp/node_modules/@microsoft/api-documenter/bin/api-documenter",
     );
     await exec(
-        `"${apiDocumenterBin}" markdown --input-folder "${apiDocInputDir}" --output-folder "${apiDocDirDocs}"`
+        `"${apiDocumenterBin}" markdown --input-folder "${apiDocInputDir}" --output-folder "${apiDocDirDocs}"`,
     );
 
     // Make the api-documenter output compatible with docusaurus
@@ -219,7 +226,7 @@ async function buildVersion(versionName, dev, onSuccess) {
             // return data for the sidebar
             // only items that are one level deep are eligible for sidebar entry
             return splitFileName.length === 2 ? [packageName, fileNameWithoutExtension] : undefined;
-        })
+        }),
     );
 
     const sidebarData = sidebarEntries.filter(Boolean).reduce((acc, [package, entry]) => {
@@ -257,8 +264,13 @@ mv gooddata-ui-apidocs/* .
 rm -rf gooddata-ui-apidocs
 `,
             ],
-            apiDocDirVersioned
+            apiDocDirVersioned,
         );
+
+        if (shouldUpdateSymlink) {
+            // make sure the docs root symlink will now link to the current version if requested by the CI params
+            await runCommand("ln", ["-sfn", `./v${versionName}/docs`, "docs"], apiDocDir);
+        }
 
         onSuccess();
     }
