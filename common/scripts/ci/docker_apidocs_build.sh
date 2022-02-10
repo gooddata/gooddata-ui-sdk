@@ -15,13 +15,11 @@ echo "Running apidocs build using ${IMAGE} in root directory ${ROOT_DIR}"
 #
 export CI=true
 
-
 echo "-----------------------------------------------------------------------"
 echo "--- starting: apidocs build"
 echo "-----------------------------------------------------------------------"
 
-
-if [ -z $API_DOCS_VERSION ]; then
+if [ -z "$API_DOCS_VERSION" ]; then
   echo "You did not specify api docs version to create."
   exit 1
 fi
@@ -30,6 +28,12 @@ fi
 # Execute apidocs build using dockerized node - all heavy lifting is done against SDK sources mounted as a volume onto the
 # /workspace directory
 #
+
+if [ "$IS_NEW_LATEST_STABLE" = true ]; then
+  SYMLINK_SWITCH=' --update-symlink'
+else
+  SYMLINK_SWITCH=''
+fi
 
 docker run \
   --env CI \
@@ -41,4 +45,4 @@ docker run \
   -u $(id -u ${USER}):$(id -g ${USER}) \
   -w /workspace \
   ${IMAGE} \
-  /bin/bash -c "cd gooddata-ui-sdk && ./common/scripts/build-docs.js -v $API_DOCS_VERSION"
+  /bin/bash -c "cd gooddata-ui-sdk && ./common/scripts/build-docs.js -v $API_DOCS_VERSION $SYMLINK_SWITCH"
