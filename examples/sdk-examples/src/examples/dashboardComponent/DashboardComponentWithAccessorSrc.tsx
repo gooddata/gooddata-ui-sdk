@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import {
     changeDateFilterSelection,
     Dashboard,
@@ -28,33 +28,32 @@ const config: DashboardConfig = { mapboxToken: MAPBOX_TOKEN, isReadOnly: true };
  * For more information, see {@link https://sdk.gooddata.com/gooddata-ui/docs/dashboard_component.html#eventing-props}
  */
 const DashboardComponentWithAccessorSrc: React.FC = () => {
-    const dashboardStoreAccessorRepository = DashboardStoreAccessorRepository.getInstance();
     const [selectResult, setSelectResult] = useState<any>();
 
     /**
      * Sample of how to dispatch `changeDateFilterSelection` event from outside of the dashboard component.
      */
-    const onDispatchClick = useCallback(() => {
-        if (dashboardStoreAccessorRepository.isAccessorInitializedForDashboard(DASHBOARD_ID)) {
-            dashboardStoreAccessorRepository.getAccessorsForDashboard(DASHBOARD_ID).getDispatch()(
+    const onDispatchClick = () => {
+        if (DashboardStoreAccessorRepository.isAccessorInitializedForDashboard(DASHBOARD_ID)) {
+            DashboardStoreAccessorRepository.getAccessorsForDashboard(DASHBOARD_ID).getDispatch()(
                 changeDateFilterSelection("relative", "GDC.time.month", "-3", "0"),
             );
         }
-    }, [dashboardStoreAccessorRepository]);
+    };
 
     /**
      * Sample of how to use `selectEffectiveDateFilterOptions` selector from outside of the dashboard
      * component.
      */
-    const onSelectClick = useCallback(() => {
-        if (dashboardStoreAccessorRepository.isAccessorInitializedForDashboard(DASHBOARD_ID)) {
+    const onSelectClick = () => {
+        if (DashboardStoreAccessorRepository.isAccessorInitializedForDashboard(DASHBOARD_ID)) {
             setSelectResult(
-                dashboardStoreAccessorRepository.getAccessorsForDashboard(DASHBOARD_ID).getSelector()(
+                DashboardStoreAccessorRepository.getAccessorsForDashboard(DASHBOARD_ID).getSelector()(
                     selectEffectiveDateFilterOptions,
                 ),
             );
         }
-    }, [dashboardStoreAccessorRepository]);
+    };
 
     return (
         <div>
@@ -71,8 +70,7 @@ const DashboardComponentWithAccessorSrc: React.FC = () => {
             <Dashboard
                 dashboard={dashboardRef}
                 config={config}
-                //
-                onStateChange={dashboardStoreAccessorRepository.getOnChangeHandlerForDashboard(DASHBOARD_ID)}
+                onStateChange={DashboardStoreAccessorRepository.getOnChangeHandlerForDashboard(DASHBOARD_ID)}
             />
         </div>
     );
