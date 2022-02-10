@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 /* eslint-disable import/no-unresolved,import/default */
 import React from "react";
 
@@ -15,7 +15,8 @@ const DashboardWithLocalPlugin = (): JSX.Element => (
         <p>
             Example on how to embed a dashboard with a local plugin. The example plugin adds a new section to
             the Dashboard and renders a custom visualization there. Note that the custom visualization
-            respects the dashboard filters.
+            respects the dashboard filters. See the source code listing below for instructions on how to make
+            the custom widget ignore some of the filters on the dashboard.
         </p>
 
         <ExampleWithSource
