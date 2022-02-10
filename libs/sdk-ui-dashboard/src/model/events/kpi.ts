@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { ObjRef } from "@gooddata/sdk-model";
 import {
@@ -16,23 +16,29 @@ import { DashboardContext } from "../types/commonTypes";
 import { eventGuard } from "./util";
 
 /**
+ * Payload of the {@link DashboardKpiWidgetHeaderChanged} event.
+ * @alpha
+ */
+export interface DashboardKpiWidgetHeaderChangedPayload {
+    /**
+     * Reference to changed KPI Widget.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * New value of the widget header.
+     */
+    readonly header: WidgetHeader;
+}
+
+/**
  * This event is emitted when the dashboard's KPI Widget header is modified.
  *
  * @alpha
  */
 export interface DashboardKpiWidgetHeaderChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.KPI_WIDGET.HEADER_CHANGED";
-    readonly payload: {
-        /**
-         * Reference to changed KPI Widget.
-         */
-        readonly ref: ObjRef;
-
-        /**
-         * New value of the widget header.
-         */
-        readonly header: WidgetHeader;
-    };
+    readonly payload: DashboardKpiWidgetHeaderChangedPayload;
 }
 
 export function kpiWidgetHeaderChanged(
@@ -67,6 +73,35 @@ export const isDashboardKpiWidgetHeaderChanged = eventGuard<DashboardKpiWidgetHe
 //
 
 /**
+ * Payload of the {@link DashboardKpiWidgetMeasureChanged} event.
+ * @alpha
+ */
+export interface DashboardKpiWidgetMeasureChangedPayload {
+    /**
+     * Reference to changed KPI Widget.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * New setup of KPI. Includes the measure used to calculate KPI and the comparison settings that
+     * are in effect.
+     *
+     * Note: the comparison may be 'none' - meaning
+     */
+    readonly kpiWidget: IKpiWidget;
+
+    /**
+     * Metadata object describing the measure that is now used on the KPI.
+     */
+    readonly measure: IMeasureMetadataObject;
+
+    /**
+     * If a new header was also set while changing the measure, then the new header value is included here.
+     */
+    readonly header?: WidgetHeader;
+}
+
+/**
  * This event is emitted when the dashboard's KPI Widget measure is modified - the KPI now shows value for
  * different measure. The change of measure to use may be accompanied with a change of the KPI header (change of
  * title). In that case new value of header is also included in the event.
@@ -75,30 +110,7 @@ export const isDashboardKpiWidgetHeaderChanged = eventGuard<DashboardKpiWidgetHe
  */
 export interface DashboardKpiWidgetMeasureChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.KPI_WIDGET.MEASURE_CHANGED";
-    readonly payload: {
-        /**
-         * Reference to changed KPI Widget.
-         */
-        readonly ref: ObjRef;
-
-        /**
-         * New setup of KPI. Includes the measure used to calculate KPI and the comparison settings that
-         * are in effect.
-         *
-         * Note: the comparison may be 'none' - meaning
-         */
-        readonly kpiWidget: IKpiWidget;
-
-        /**
-         * Metadata object describing the measure that is now used on the KPI.
-         */
-        readonly measure: IMeasureMetadataObject;
-
-        /**
-         * If a new header was also set while changing the measure, then the new header value is included here.
-         */
-        readonly header?: WidgetHeader;
-    };
+    readonly payload: DashboardKpiWidgetMeasureChangedPayload;
 }
 
 export function kpiWidgetMeasureChanged(
@@ -137,32 +149,38 @@ export const isDashboardKpiWidgetMeasureChanged = eventGuard<DashboardKpiWidgetM
 //
 
 /**
+ * Payload of the {@link DashboardKpiWidgetFilterSettingsChanged} event.
+ * @alpha
+ */
+export interface DashboardKpiWidgetFilterSettingsChangedPayload {
+    /**
+     * Reference to changed KPI Widget.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Attribute filters that are ignored for the widget.
+     *
+     * If empty, then all attribute filters defined for the dashboard are in effect.
+     */
+    readonly ignoredAttributeFilters: IDashboardAttributeFilter[];
+
+    /**
+     * Date dataset used for date filtering.
+     *
+     * If undefined, then dashboard's date filter is not in effect for the widget.
+     */
+    readonly dateDatasetForFiltering?: ICatalogDateDataset;
+}
+
+/**
  * This event is emitted when dashboard's KPI Widget filter settings are modified.
  *
  * @alpha
  */
 export interface DashboardKpiWidgetFilterSettingsChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.KPI_WIDGET.FILTER_SETTINGS_CHANGED";
-    readonly payload: {
-        /**
-         * Reference to changed KPI Widget.
-         */
-        readonly ref: ObjRef;
-
-        /**
-         * Attribute filters that are ignored for the widget.
-         *
-         * If empty, then all attribute filters defined for the dashboard are in effect.
-         */
-        readonly ignoredAttributeFilters: IDashboardAttributeFilter[];
-
-        /**
-         * Date dataset used for date filtering.
-         *
-         * If undefined, then dashboard's date filter is not in effect for the widget.
-         */
-        readonly dateDatasetForFiltering?: ICatalogDateDataset;
-    };
+    readonly payload: DashboardKpiWidgetFilterSettingsChangedPayload;
 }
 
 export function kpiWidgetFilterSettingsChanged(
@@ -199,6 +217,25 @@ export const isDashboardKpiWidgetFilterSettingsChanged = eventGuard<DashboardKpi
 //
 
 /**
+ * Payload of the {@link DashboardKpiWidgetComparisonChanged} event.
+ * @alpha
+ */
+export interface DashboardKpiWidgetComparisonChangedPayload {
+    /**
+     * Reference to changed KPI Widget.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * New setup of KPI. Includes the measure used to calculate KPI and the comparison settings that
+     * are in effect.
+     *
+     * Note: the comparison may be 'none' - meaning
+     */
+    readonly kpi: ILegacyKpi;
+}
+
+/**
  * This event is emitted when dashboard's KPI Widget has its comparison type changed. The event includes
  * the new definition of the KPI that has uses same measure as before however has new setup of the over-time
  * comparison.
@@ -207,20 +244,7 @@ export const isDashboardKpiWidgetFilterSettingsChanged = eventGuard<DashboardKpi
  */
 export interface DashboardKpiWidgetComparisonChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.KPI_WIDGET.COMPARISON_CHANGED";
-    readonly payload: {
-        /**
-         * Reference to changed KPI Widget.
-         */
-        readonly ref: ObjRef;
-
-        /**
-         * New setup of KPI. Includes the measure used to calculate KPI and the comparison settings that
-         * are in effect.
-         *
-         * Note: the comparison may be 'none' - meaning
-         */
-        readonly kpi: ILegacyKpi;
-    };
+    readonly payload: DashboardKpiWidgetComparisonChangedPayload;
 }
 
 export function kpiWidgetComparisonChanged(
@@ -255,6 +279,17 @@ export const isDashboardKpiWidgetComparisonChanged = eventGuard<DashboardKpiWidg
 //
 
 /**
+ * Payload of the {@link DashboardKpiWidgetChanged} event.
+ * @alpha
+ */
+export interface DashboardKpiWidgetChangedPayload {
+    /**
+     * The new value of the changed widget.
+     */
+    kpiWidget: IKpiWidget | IKpiWidgetDefinition;
+}
+
+/**
  * This event is emitted after any change to KPI Widget configuration. It contains the entire new state of the
  * KPI Widget.
  *
@@ -262,12 +297,7 @@ export const isDashboardKpiWidgetComparisonChanged = eventGuard<DashboardKpiWidg
  */
 export interface DashboardKpiWidgetChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.KPI_WIDGET.WIDGET_CHANGED";
-    readonly payload: {
-        /**
-         *
-         */
-        kpiWidget: IKpiWidget | IKpiWidgetDefinition;
-    };
+    readonly payload: DashboardKpiWidgetChangedPayload;
 }
 
 export function kpiWidgetChanged(

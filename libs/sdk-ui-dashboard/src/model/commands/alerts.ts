@@ -1,8 +1,19 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { IWidgetAlert, IWidgetAlertDefinition } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
 import { IDashboardCommand } from "./base";
+
+/**
+ * Payload of the {@link CreateAlert} command.
+ * @alpha
+ */
+export interface CreateAlertPayload {
+    /**
+     * The alert to be created.
+     */
+    readonly alert: IWidgetAlertDefinition;
+}
 
 /**
  * Creates Kpi alert.
@@ -11,9 +22,7 @@ import { IDashboardCommand } from "./base";
  */
 export interface CreateAlert extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.ALERT.CREATE";
-    readonly payload: {
-        readonly alert: IWidgetAlertDefinition;
-    };
+    readonly payload: CreateAlertPayload;
 }
 
 /**
@@ -34,16 +43,29 @@ export function createAlert(alert: IWidgetAlertDefinition, correlationId?: strin
     };
 }
 
+//
+//
+//
+
 /**
- *Updates Kpi alert.
+ * Payload of the {@link UpdateAlert} command.
+ * @alpha
+ */
+export interface UpdateAlertPayload {
+    /**
+     * The alert to be updated.
+     */
+    readonly alert: IWidgetAlert;
+}
+
+/**
+ * Updates Kpi alert.
  *
  * @alpha
  */
 export interface UpdateAlert extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.ALERT.UPDATE";
-    readonly payload: {
-        readonly alert: IWidgetAlert;
-    };
+    readonly payload: UpdateAlertPayload;
 }
 
 /**
@@ -65,19 +87,29 @@ export function updateAlert(alert: IWidgetAlert, correlationId?: string): Update
     };
 }
 
+//
+//
+//
+
 /**
- * Removes Kpi alert.
+ * Payload of the {@link RemoveAlerts} command.
+ * @alpha
+ */
+export interface RemoveAlertsPayload {
+    /**
+     * References to Kpi alerts that should be removed.
+     */
+    readonly refs: ObjRef[];
+}
+
+/**
+ * Removes Kpi alerts.
  *
  * @alpha
  */
 export interface RemoveAlerts extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.ALERTS.REMOVE";
-    readonly payload: {
-        /**
-         * References to Kpi alerts whose should be removed.
-         */
-        readonly refs: ObjRef[];
-    };
+    readonly payload: RemoveAlertsPayload;
 }
 
 /**

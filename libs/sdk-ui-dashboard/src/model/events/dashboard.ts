@@ -15,6 +15,35 @@ import { eventGuard } from "./util";
 //
 
 /**
+ * Payload of the {@link DashboardInitialized} event.
+ * @public
+ */
+export interface DashboardInitializedPayload {
+    /**
+     * Loaded dashboard.
+     */
+    readonly dashboard?: IDashboard;
+
+    /**
+     * Insights used on the dashboard.
+     */
+    readonly insights: ReadonlyArray<IInsight>;
+
+    /**
+     * Configuration in effect for the dashboard. If the config was provided via props, then
+     * that same config is sent here. If there was no config in props, then the dashboard component load resolved
+     * all the config and includes it here.
+     */
+    readonly config: DashboardConfig;
+
+    /**
+     * Permissions in effect for the dashboard. If the permissions were provided via props, then those
+     * same permissions are included here. Otherwise the dashboard will load the permissions and include it here.
+     */
+    readonly permissions: IWorkspacePermissions;
+}
+
+/**
  * This event is emitted when a dashboard is successfully initialized. The event contains contextual information
  * such as the resolved DashboardConfig and the permissions in effect for the current user and current workspace.
  *
@@ -27,30 +56,7 @@ import { eventGuard } from "./util";
  */
 export interface DashboardInitialized extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INITIALIZED";
-    readonly payload: {
-        /**
-         * Loaded dashboard.
-         */
-        readonly dashboard?: IDashboard;
-
-        /**
-         * Insights used on the dashboard.
-         */
-        readonly insights: ReadonlyArray<IInsight>;
-
-        /**
-         * Configuration in effect for the dashboard. If the config was provided via props, then
-         * that same config is sent here. If there was no config in props, then the dashboard component load resolved
-         * all the config and includes it here.
-         */
-        readonly config: DashboardConfig;
-
-        /**
-         * Permissions in effect for the dashboard. If the permissions were provided via props, then those
-         * same permissions are included here. Otherwise the dashboard will load the permissions and include it here.
-         */
-        readonly permissions: IWorkspacePermissions;
-    };
+    readonly payload: DashboardInitializedPayload;
 }
 
 export function dashboardInitialized(
@@ -87,6 +93,17 @@ export const isDashboardInitialized = eventGuard<DashboardInitialized>("GDC.DASH
 //
 
 /**
+ * Payload of the {@link DashboardDeinitialized} event.
+ * @public
+ */
+export interface DashboardDeinitializedPayload {
+    /**
+     * Reference of the dashboard being deinitialized (if the dashboard being deinitialized had one i.e. contained a persisted dashboard object).
+     */
+    dashboard: ObjRef | undefined;
+}
+
+/**
  * This event is emitted when a dashboard is deinitialized. The event contains contextual information such as
  * the ref of dashboard being deinitialized if the dashboard being deinitialized contained a persisted dashboard object.
  *
@@ -94,9 +111,7 @@ export const isDashboardInitialized = eventGuard<DashboardInitialized>("GDC.DASH
  */
 export interface DashboardDeinitialized extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DEINITIALIZED";
-    readonly payload: {
-        dashboard: ObjRef | undefined;
-    };
+    readonly payload: DashboardDeinitializedPayload;
 }
 
 export function dashboardDeinitialized(
@@ -127,6 +142,23 @@ export const isDashboardDeinitialized = eventGuard<DashboardDeinitialized>("GDC.
 //
 
 /**
+ * Payload of the {@link DashboardSaved} event.
+ * @public
+ */
+export interface DashboardSavedPayload {
+    /**
+     * Definition of the saved dashboard.
+     */
+    readonly dashboard: IDashboard;
+
+    /**
+     * If true, this was the initial save and thus a new dashboard object was created.
+     * If false, an existing dashboard was updated.
+     */
+    readonly newDashboard: boolean;
+}
+
+/**
  * This event is emitted at the end of successful dashboard save command processing. At this point, the
  * dashboard state is persisted on the backend.
  *
@@ -134,18 +166,7 @@ export const isDashboardDeinitialized = eventGuard<DashboardDeinitialized>("GDC.
  */
 export interface DashboardSaved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.SAVED";
-    readonly payload: {
-        /**
-         * Definition of the saved dashboard.
-         */
-        readonly dashboard: IDashboard;
-
-        /**
-         * If true, this was the initial save and thus a new dashboard object was created.
-         * If false, an existing dashboard was updated.
-         */
-        readonly newDashboard: boolean;
-    };
+    readonly payload: DashboardSavedPayload;
 }
 
 export function dashboardSaved(
@@ -178,6 +199,17 @@ export const isDashboardSaved = eventGuard<DashboardSaved>("GDC.DASH/EVT.SAVED")
 //
 
 /**
+ * Payload of the {@link DashboardCopySaved} event.
+ * @public
+ */
+export interface DashboardCopySavedPayload {
+    /**
+     * Definition of the newly created dashboard copy.
+     */
+    readonly dashboard: IDashboard;
+}
+
+/**
  * This event is emitted at the end of successful 'dashboard save as' command processing. At this point, a new
  * dashboard exists on the backend.
  *
@@ -185,12 +217,7 @@ export const isDashboardSaved = eventGuard<DashboardSaved>("GDC.DASH/EVT.SAVED")
  */
 export interface DashboardCopySaved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.COPY_SAVED";
-    readonly payload: {
-        /**
-         * Definition of the newly created dashboard copy.
-         */
-        readonly dashboard: IDashboard;
-    };
+    readonly payload: DashboardCopySavedPayload;
 }
 
 export function dashboardCopySaved(
@@ -221,6 +248,17 @@ export const isDashboardCopySaved = eventGuard<DashboardCopySaved>("GDC.DASH/EVT
 //
 
 /**
+ * Payload of the {@link DashboardRenamed} event.
+ * @alpha
+ */
+export interface DashboardRenamedPayload {
+    /**
+     * The new title of the dashboard.
+     */
+    readonly newTitle: string;
+}
+
+/**
  * This event is emitted at the end of successful 'dashboard rename' command processing. At this point, only the
  * in-memory title is changed and the changes are not saved on the backend.
  *
@@ -228,12 +266,7 @@ export const isDashboardCopySaved = eventGuard<DashboardCopySaved>("GDC.DASH/EVT
  */
 export interface DashboardRenamed extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.RENAMED";
-    readonly payload: {
-        /**
-         * The new title of the dashboard.
-         */
-        readonly newTitle: string;
-    };
+    readonly payload: DashboardRenamedPayload;
 }
 
 export function dashboardRenamed(
@@ -264,6 +297,18 @@ export const isDashboardRenamed = eventGuard<DashboardRenamed>("GDC.DASH/EVT.REN
 //
 
 /**
+ * Payload of the {@link DashboardWasReset} event.
+ * @alpha
+ */
+export interface DashboardWasResetPayload {
+    /**
+     * Persisted state to which the dashboard was reset. If a new (not yet saved) dashboard was reset
+     * then this property will be undefined.
+     */
+    dashboard?: IDashboard;
+}
+
+/**
  * This event is emitted at the end of successful 'dashboard reset' command processing. At this point, the
  * dashboard is reset to the state it was after initial load.
  *
@@ -271,13 +316,7 @@ export const isDashboardRenamed = eventGuard<DashboardRenamed>("GDC.DASH/EVT.REN
  */
 export interface DashboardWasReset extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.RESET";
-    readonly payload: {
-        /**
-         * Persisted state to which the dashboard was reset. If a new (not yet saved) dashboard was reset
-         * then this property will be undefined.
-         */
-        dashboard?: IDashboard;
-    };
+    readonly payload: DashboardWasResetPayload;
 }
 
 export function dashboardWasReset(
@@ -306,6 +345,17 @@ export const isDashboardWasReset = eventGuard<DashboardWasReset>("GDC.DASH/EVT.R
 //
 //
 //
+
+/**
+ * Payload of the {@link DashboardDeleted} event.
+ * @alpha
+ */
+export interface DashboardDeletedPayload {
+    /**
+     * Dashboard that was deleted.
+     */
+    readonly dashboard: IDashboard;
+}
 
 /**
  * This event is emitted at the end of successful 'dashboard delete' command processing. At this point,
@@ -357,6 +407,17 @@ export const isDashboardDeleted = eventGuard<DashboardDeleted>("GDC.DASH/EVT.DEL
 export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | DateFilterConfigValidationResult;
 
 /**
+ * Payload of the {@link DateFilterValidationFailed} event.
+ * @public
+ */
+export interface DateFilterValidationFailedPayload {
+    /**
+     * Result of the date filter validation.
+     */
+    readonly result: DateFilterValidationResult;
+}
+
+/**
  * This event may occur while the dashboard is handling the Load Dashboard command and is loading and validating
  * dashboard configuration from the backend.
  *
@@ -370,9 +431,7 @@ export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | Date
  */
 export interface DateFilterValidationFailed extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.VALIDATION.FAILED";
-    readonly payload: {
-        readonly result: DateFilterValidationResult;
-    };
+    readonly payload: DateFilterValidationFailedPayload;
 }
 
 export function dateFilterValidationFailed(
@@ -435,6 +494,17 @@ export const isDashboardExportToPdfRequested = eventGuard<DashboardExportToPdfRe
 );
 
 /**
+ * Payload of the {@link DashboardExportToPdfResolved} event.
+ * @alpha
+ */
+export interface DashboardExportToPdfResolvedPayload {
+    /**
+     * URI of the resulting file that can be used to download it.
+     */
+    readonly resultUri: string;
+}
+
+/**
  * This event is emitted at the end of successful 'dashboard export to PDF' command processing.
  * In its payload, there is an uri of the resulting PDF file.
  *
@@ -442,12 +512,7 @@ export const isDashboardExportToPdfRequested = eventGuard<DashboardExportToPdfRe
  */
 export interface DashboardExportToPdfResolved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.EXPORT.PDF.RESOLVED";
-    readonly payload: {
-        /**
-         * URI of the resulting file that can be used to download it.
-         */
-        readonly resultUri: string;
-    };
+    readonly payload: DashboardExportToPdfResolvedPayload;
 }
 
 export function dashboardExportToPdfResolved(
@@ -480,16 +545,28 @@ export const isDashboardExportToPdfResolved = eventGuard<DashboardExportToPdfRes
 //
 
 /**
+ * Payload of the {@link DashboardSharingChanged} event.
+ * @public
+ */
+export interface DashboardSharingChangedPayload {
+    /**
+     * @deprecated Use the dashboardRef in the event.ctx instead.
+     */
+    dashboardRef: ObjRef;
+    /**
+     * New properties related to the sharing.
+     */
+    newSharingProperties: ISharingProperties;
+}
+
+/**
  * This event is emitted at the end of successful 'change sharing status of dashboard' command processing.
  *
- * @alpha
+ * @public
  */
 export interface DashboardSharingChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.SHARING.CHANGED";
-    readonly payload: {
-        dashboardRef: ObjRef;
-        newSharingProperties: ISharingProperties;
-    };
+    readonly payload: DashboardSharingChangedPayload;
 }
 
 export function dashboardSharingChanged(
@@ -513,6 +590,6 @@ export function dashboardSharingChanged(
  * Tests whether the provided object is an instance of {@link DashboardSharingChanged}.
  *
  * @param obj - object to test
- * @alpha
+ * @public
  */
 export const isDashboardSharingChanged = eventGuard<DashboardSharingChanged>("GDC.DASH/EVT.SHARING.CHANGED");

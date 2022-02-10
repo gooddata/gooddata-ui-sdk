@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { IDashboardCommand } from "./base";
 import {
     IDrillToAttributeUrl,
@@ -12,20 +12,26 @@ import { ExplicitDrill } from "@gooddata/sdk-ui";
 import { DashboardDrillContext, IDashboardDrillEvent, IDrillDownDefinition } from "../../types";
 
 /**
+ * Payload of the {@link Drill} command.
+ * @alpha
+ */
+export interface DrillPayload {
+    /**
+     * Original drill event, that triggered this particular drill interaction.
+     */
+    readonly drillEvent: IDashboardDrillEvent;
+    /**
+     * Context in which the drill interaction was triggered (widget and insight details - if available).
+     */
+    readonly drillContext: DashboardDrillContext;
+}
+
+/**
  * @alpha
  */
 export interface Drill extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DRILL";
-    readonly payload: {
-        /**
-         * Original drill event, that triggered this particular drill interaction.
-         */
-        readonly drillEvent: IDashboardDrillEvent;
-        /**
-         * Context in which the drill interaction was triggered (widget and insight details - if available).
-         */
-        readonly drillContext: DashboardDrillContext;
-    };
+    readonly payload: DrillPayload;
 }
 
 /**
@@ -69,24 +75,30 @@ export function drill(
 //
 
 /**
+ * Payload of the {@link DrillDown} command.
+ * @alpha
+ */
+export interface DrillDownPayload {
+    /**
+     * Insight to which the drill down should be applied.
+     */
+    readonly insight: IInsight;
+    /**
+     * Drill down definition to apply.
+     */
+    readonly drillDefinition: IDrillDownDefinition;
+    /**
+     * Original drill event, that triggered this particular drill interaction.
+     */
+    readonly drillEvent: IDashboardDrillEvent;
+}
+
+/**
  * @alpha
  */
 export interface DrillDown extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DRILL.DRILL_DOWN";
-    readonly payload: {
-        /**
-         * Insight to which the drill down should be applied.
-         */
-        readonly insight: IInsight;
-        /**
-         * Drill down definition to apply.
-         */
-        readonly drillDefinition: IDrillDownDefinition;
-        /**
-         * Original drill event, that triggered this particular drill interaction.
-         */
-        readonly drillEvent: IDashboardDrillEvent;
-    };
+    readonly payload: DrillDownPayload;
 }
 
 /**
@@ -126,20 +138,26 @@ export function drillDown(
 //
 
 /**
+ * Payload of the {@link DrillToInsight} command.
+ * @alpha
+ */
+export interface DrillToInsightPayload {
+    /**
+     * Drill definition with the target insight.
+     */
+    readonly drillDefinition: IDrillToInsight;
+    /**
+     * Original drill event, that triggered this particular drill interaction.
+     */
+    readonly drillEvent: IDashboardDrillEvent;
+}
+
+/**
  * @alpha
  */
 export interface DrillToInsight extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_INSIGHT";
-    readonly payload: {
-        /**
-         * Drill definition with the target insight.
-         */
-        readonly drillDefinition: IDrillToInsight;
-        /**
-         * Original drill event, that triggered this particular drill interaction.
-         */
-        readonly drillEvent: IDashboardDrillEvent;
-    };
+    readonly payload: DrillToInsightPayload;
 }
 
 /**
@@ -176,20 +194,26 @@ export function drillToInsight(
 //
 
 /**
+ * Payload of the {@link DrillToDashboard} command.
+ * @alpha
+ */
+export interface DrillToDashboardPayload {
+    /**
+     * Drill definition with the target dashboard.
+     */
+    readonly drillDefinition: IDrillToDashboard;
+    /**
+     * Original drill event, that triggered this particular drill interaction.
+     */
+    readonly drillEvent: IDashboardDrillEvent;
+}
+
+/**
  * @alpha
  */
 export interface DrillToDashboard extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_DASHBOARD";
-    readonly payload: {
-        /**
-         * Drill definition with the target dashboard.
-         */
-        readonly drillDefinition: IDrillToDashboard;
-        /**
-         * Original drill event, that triggered this particular drill interaction.
-         */
-        readonly drillEvent: IDashboardDrillEvent;
-    };
+    readonly payload: DrillToDashboardPayload;
 }
 
 /**
@@ -223,20 +247,26 @@ export function drillToDashboard(
 //
 
 /**
+ * Payload of the {@link DrillToCustomUrl} command.
+ * @alpha
+ */
+export interface DrillToCustomUrlPayload {
+    /**
+     * Drill definition with the custom url to resolve.
+     */
+    readonly drillDefinition: IDrillToCustomUrl;
+    /**
+     * Original drill event, that triggered this particular drill interaction.
+     */
+    readonly drillEvent: IDashboardDrillEvent;
+}
+
+/**
  * @alpha
  */
 export interface DrillToCustomUrl extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_CUSTOM_URL";
-    readonly payload: {
-        /**
-         * Drill definition with the custom url to resolve.
-         */
-        readonly drillDefinition: IDrillToCustomUrl;
-        /**
-         * Original drill event, that triggered this particular drill interaction.
-         */
-        readonly drillEvent: IDashboardDrillEvent;
-    };
+    readonly payload: DrillToCustomUrlPayload;
 }
 
 /**
@@ -274,20 +304,26 @@ export function drillToCustomUrl(
 //
 
 /**
+ * Payload of the {@link DrillToAttributeUrl} command.
+ * @alpha
+ */
+export interface DrillToAttributeUrlPayload {
+    /**
+     * Drill definition with the attribute url to resolve.
+     */
+    readonly drillDefinition: IDrillToAttributeUrl;
+    /**
+     * Original drill event, that triggered this particular drill interaction.
+     */
+    readonly drillEvent: IDashboardDrillEvent;
+}
+
+/**
  * @alpha
  */
 export interface DrillToAttributeUrl extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_ATTRIBUTE_URL";
-    readonly payload: {
-        /**
-         * Drill definition with the attribute url to resolve.
-         */
-        readonly drillDefinition: IDrillToAttributeUrl;
-        /**
-         * Original drill event, that triggered this particular drill interaction.
-         */
-        readonly drillEvent: IDashboardDrillEvent;
-    };
+    readonly payload: DrillToAttributeUrlPayload;
 }
 
 /**
@@ -324,20 +360,26 @@ export function drillToAttributeUrl(
 //
 
 /**
+ * Payload of the {@link DrillToLegacyDashboard} command.
+ * @alpha
+ */
+export interface DrillToLegacyDashboardPayload {
+    /**
+     * Drill definition with the target dashboard.
+     */
+    readonly drillDefinition: IDrillToLegacyDashboard;
+    /**
+     * Original drill event, that triggered this particular drill interaction.
+     */
+    readonly drillEvent: IDashboardDrillEvent;
+}
+
+/**
  * @alpha
  */
 export interface DrillToLegacyDashboard extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DRILL.DRILL_TO_LEGACY_DASHBOARD";
-    readonly payload: {
-        /**
-         * Drill definition with the target dashboard.
-         */
-        readonly drillDefinition: IDrillToLegacyDashboard;
-        /**
-         * Original drill event, that triggered this particular drill interaction.
-         */
-        readonly drillEvent: IDashboardDrillEvent;
-    };
+    readonly payload: DrillToLegacyDashboardPayload;
 }
 
 /**
@@ -373,20 +415,27 @@ export function drillToLegacyDashboard(
 //
 
 /**
+ * Payload of the {@link ChangeDrillableItems} command.
+ * @alpha
+ */
+export interface ChangeDrillableItemsPayload {
+    /**
+     * Additional items that can enable drilling of the widgets.
+     * If the item (identifier/uri/predicate) matches attribute or measure in the widget, widget drilling will be enabled.
+     *
+     * @remarks
+     * Note: These items has lower priority than the configured widget drills or drill down.
+     *       You can disable configured widget drills and drill down by setting {@link DashboardConfig} disableDefaultDrills property to true.
+     */
+    readonly drillableItems: ExplicitDrill[];
+}
+
+/**
  * @alpha
  */
 export interface ChangeDrillableItems extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DRILL.DRILLABLE_ITEMS.CHANGE";
-    readonly payload: {
-        /**
-         * Additional items that can enable drilling of the widgets.
-         * If the item (identifier/uri/predicate) matches attribute or measure in the widget, widget drilling will be enabled.
-         *
-         * Note: These items has lower priority than the configured widget drills or drill down.
-         *       You can disable configured widget drills and drill down by setting {@link DashboardConfig} disableDefaultDrills property to true.
-         */
-        readonly drillableItems: ExplicitDrill[];
-    };
+    readonly payload: ChangeDrillableItemsPayload;
 }
 
 /**

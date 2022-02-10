@@ -1,46 +1,52 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { IDashboardCommand } from "./base";
 import { DashboardItemDefinition, RelativeIndex, StashedDashboardItemsId } from "../types/layoutTypes";
 import { IDashboardLayoutSectionHeader } from "@gooddata/sdk-backend-spi";
 
 /**
+ * Payload of the {@link AddLayoutSection} command.
+ * @alpha
+ */
+export interface AddLayoutSectionPayload {
+    /**
+     * Index where to place the new section
+     *
+     * Index is zero-based and for convenience index -1 means place new section at the end. 0 means place new
+     * section at the beginning. Both 0 and -1 and can be used when inserting the first section into and empty layout.
+     */
+    readonly index: RelativeIndex;
+
+    /**
+     * Optionally specify the section header.
+     */
+    readonly initialHeader?: IDashboardLayoutSectionHeader;
+
+    /**
+     * Optionally specify one or more items to include in the newly created section.
+     */
+    readonly initialItems?: ReadonlyArray<DashboardItemDefinition>;
+
+    /**
+     * Optionally specify whether dashboard should auto-resolve date dataset to use for date filtering of KPI
+     * and insight widgets.
+     *
+     * This is by default disabled. Meaning date filtering will be enabled only for those KPI or Insight widgets
+     * that already specify dateDataset. Those that have dateDataset `undefined` will not be filtered by dashboard's
+     * date filter.
+     *
+     * When you turn on this option, then the dashboard will automatically resolve date dataset for those
+     * KPI and Insight widgets that have it `undefined`.
+     */
+    readonly autoResolveDateFilterDataset?: boolean;
+}
+
+/**
  * @alpha
  */
 export interface AddLayoutSection extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION";
-    readonly payload: {
-        /**
-         * Index where to place the new section
-         *
-         * Index is zero-based and for convenience index -1 means place new section at the end. 0 means place new
-         * section at the beginning. Both 0 and -1 and can be used when inserting the first section into and empty layout.
-         */
-        readonly index: RelativeIndex;
-
-        /**
-         * Optionally specify the section header.
-         */
-        readonly initialHeader?: IDashboardLayoutSectionHeader;
-
-        /**
-         * Optionally specify one or more items to include in the newly created section.
-         */
-        readonly initialItems?: ReadonlyArray<DashboardItemDefinition>;
-
-        /**
-         * Optionally specify whether dashboard should auto-resolve date dataset to use for date filtering of KPI
-         * and insight widgets.
-         *
-         * This is by default disabled. Meaning date filtering will be enabled only for those KPI or Insight widgets
-         * that already specify dateDataset. Those that have dateDataset `undefined` will not be filtered by dashboard's
-         * date filter.
-         *
-         * When you turn on this option, then the dashboard will automatically resolve date dataset for those
-         * KPI and Insight widgets that have it `undefined`.
-         */
-        readonly autoResolveDateFilterDataset?: boolean;
-    };
+    readonly payload: AddLayoutSectionPayload;
 }
 
 /**
@@ -84,25 +90,31 @@ export function addLayoutSection(
 //
 
 /**
+ * Payload of the {@link MoveLayoutSection} command.
+ * @alpha
+ */
+export interface MoveLayoutSectionPayload {
+    /**
+     * Index of the section to move.
+     *
+     * Index is zero-based.
+     */
+    readonly sectionIndex: number;
+
+    /**
+     * Index where the section should be moved.
+     *
+     * Index is zero-based. For convenience index of -1 means moving the item to the end of the section list.
+     */
+    readonly toIndex: RelativeIndex;
+}
+
+/**
  * @alpha
  */
 export interface MoveLayoutSection extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION";
-    readonly payload: {
-        /**
-         * Index of the section to move.
-         *
-         * Index is zero-based.
-         */
-        readonly sectionIndex: number;
-
-        /**
-         * Index where the section should be moved.
-         *
-         * Index is zero-based. For convenience index of -1 means moving the item to the end of the section list.
-         */
-        readonly toIndex: RelativeIndex;
-    };
+    readonly payload: MoveLayoutSectionPayload;
 }
 
 /**
@@ -136,27 +148,33 @@ export function moveLayoutSection(
 //
 
 /**
+ * Payload of the {@link RemoveLayoutSection} command.
+ * @alpha
+ */
+export interface RemoveLayoutSectionPayload {
+    /**
+     * Index of section to remove.
+     *
+     * Zero based. For convenience -1 can be used to remove the last section.
+     */
+    readonly index: RelativeIndex;
+
+    /**
+     * Optionally specify stash identifier. If provided, the items from the removed section will not be
+     * permanently removed but will be stored in the stash under this identifier. You can then
+     * use the stash identifier to 'resurrect' the items in different section.
+     *
+     * Default behavior with no stashIdentifier is to also remove all items in the section.
+     */
+    readonly stashIdentifier?: StashedDashboardItemsId;
+}
+
+/**
  * @alpha
  */
 export interface RemoveLayoutSection extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION";
-    readonly payload: {
-        /**
-         * Index of section to remove.
-         *
-         * Zero based. For convenience -1 can be used to remove the last section.
-         */
-        readonly index: RelativeIndex;
-
-        /**
-         * Optionally specify stash identifier. If provided, the items from the removed section will not be
-         * permanently removed but will be stored in the stash under this identifier. You can then
-         * use the stash identifier to 'resurrect' the items in different section.
-         *
-         * Default behavior with no stashIdentifier is to also remove all items in the section.
-         */
-        readonly stashIdentifier?: StashedDashboardItemsId;
-    };
+    readonly payload: RemoveLayoutSectionPayload;
 }
 
 /**
@@ -191,30 +209,36 @@ export function removeLayoutSection(
 //
 
 /**
+ * Payload of the {@link ChangeLayoutSectionHeader} command.
+ * @alpha
+ */
+export interface ChangeLayoutSectionHeaderPayload {
+    /**
+     * Index of section whose header to set.
+     *
+     * Index is zero based. Exact index must be provided.
+     */
+    readonly index: number;
+
+    /**
+     * New value of the header.
+     */
+    readonly header: IDashboardLayoutSectionHeader;
+
+    /**
+     * Optionally indicate that the old header and the new header should be merged.
+     *
+     * The default behavior is to overwrite the old header with the new header provided in this command.
+     */
+    readonly merge?: boolean;
+}
+
+/**
  * @alpha
  */
 export interface ChangeLayoutSectionHeader extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.CHANGE_SECTION_HEADER";
-    readonly payload: {
-        /**
-         * Index of section whose header to set.
-         *
-         * Index is zero based. Exact index must be provided.
-         */
-        readonly index: number;
-
-        /**
-         * New value of the header.
-         */
-        readonly header: IDashboardLayoutSectionHeader;
-
-        /**
-         * Optionally indicate that the old header and the new header should be merged.
-         *
-         * The default behavior is to overwrite the old header with the new header provided in this command.
-         */
-        readonly merge?: boolean;
-    };
+    readonly payload: ChangeLayoutSectionHeaderPayload;
 }
 
 /**
@@ -251,47 +275,53 @@ export function changeLayoutSectionHeader(
 //
 
 /**
+ * Payload of the {@link AddSectionItems} command.
+ * @alpha
+ */
+export interface AddSectionItemsPayload {
+    /**
+     * Section to which the item should be added.
+     *
+     * Index is zero-based.
+     */
+    readonly sectionIndex: number;
+
+    /**
+     * Index within section items where the item should be inserted.
+     *
+     * Index is zero-based. For convenience, you may specify -1 to append the new item.
+     */
+    readonly itemIndex: RelativeIndex;
+
+    /**
+     * Items to add. This item may be a placeholder for KPI or insight, an actual dashboard widget or a previously
+     * stashed dashboard item.
+     *
+     * Note: if you use the stashed items identifier, the items will be moved from the stash - you cannot use
+     * the stash identifier again.
+     */
+    readonly items: ReadonlyArray<DashboardItemDefinition>;
+
+    /**
+     * Optionally specify whether dashboard should auto-resolve date dataset to use for date filtering of KPI
+     * and insight widgets.
+     *
+     * This is by default disabled. Meaning date filtering will be enabled only for those KPI or Insight widgets
+     * that already specify dateDataset. Those that have dateDataset `undefined` will not be filtered by dashboard's
+     * date filter.
+     *
+     * When you turn on this option, then the dashboard will automatically resolve date dataset for those
+     * KPI and Insight widgets that have it `undefined`.
+     */
+    readonly autoResolveDateFilterDataset?: boolean;
+}
+
+/**
  * @alpha
  */
 export interface AddSectionItems extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.ADD_ITEMS";
-    readonly payload: {
-        /**
-         * Section to which the item should be added.
-         *
-         * Index is zero-based.
-         */
-        readonly sectionIndex: number;
-
-        /**
-         * Index within section items where the item should be inserted.
-         *
-         * Index is zero-based. For convenience, you may specify -1 to append the new item.
-         */
-        readonly itemIndex: RelativeIndex;
-
-        /**
-         * Items to add. This item may be a placeholder for KPI or insight, an actual dashboard widget or a previously
-         * stashed dashboard item.
-         *
-         * Note: if you use the stashed items identifier, the items will be moved from the stash - you cannot use
-         * the stash identifier again.
-         */
-        readonly items: ReadonlyArray<DashboardItemDefinition>;
-
-        /**
-         * Optionally specify whether dashboard should auto-resolve date dataset to use for date filtering of KPI
-         * and insight widgets.
-         *
-         * This is by default disabled. Meaning date filtering will be enabled only for those KPI or Insight widgets
-         * that already specify dateDataset. Those that have dateDataset `undefined` will not be filtered by dashboard's
-         * date filter.
-         *
-         * When you turn on this option, then the dashboard will automatically resolve date dataset for those
-         * KPI and Insight widgets that have it `undefined`.
-         */
-        readonly autoResolveDateFilterDataset?: boolean;
-    };
+    readonly payload: AddSectionItemsPayload;
 }
 
 /**
@@ -335,46 +365,52 @@ export function addSectionItem(
 //
 
 /**
+ * Payload of the {@link ReplaceSectionItem} command.
+ * @alpha
+ */
+export interface ReplaceSectionItemPayload {
+    /**
+     * Index of section where the item to modify resides.
+     */
+    readonly sectionIndex: number;
+
+    /**
+     * Index of item within section that should be modified.
+     */
+    readonly itemIndex: number;
+
+    /**
+     * New item definition.
+     */
+    readonly item: DashboardItemDefinition;
+
+    /**
+     * Optionally specify identifier for stash where the old item should be stored.
+     *
+     * If no stashIdentifier provided, then the old item will be thrown away.
+     */
+    readonly stashIdentifier?: StashedDashboardItemsId;
+
+    /**
+     * Optionally specify whether dashboard should auto-resolve date dataset to use for date filtering of the KPI
+     * or insight widget that will be used to replace item on a dashboard.
+     *
+     * This is by default disabled. Meaning date filtering will be enabled only if the KPI or Insight widget
+     * already specifies dateDataset. If the dateDataset is `undefined` the widget will not be filtered
+     * by dashboard's date filter.
+     *
+     * When you turn on this option, then the dashboard will automatically resolve date dataset for those
+     * KPI and Insight widgets that have it `undefined`.
+     */
+    readonly autoResolveDateFilterDataset?: boolean;
+}
+
+/**
  * @alpha
  */
 export interface ReplaceSectionItem extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.REPLACE_ITEM";
-    readonly payload: {
-        /**
-         * Index of section where the item to modify resides.
-         */
-        readonly sectionIndex: number;
-
-        /**
-         * Index of item within section that should be modified.
-         */
-        readonly itemIndex: number;
-
-        /**
-         * New item definition.
-         */
-        readonly item: DashboardItemDefinition;
-
-        /**
-         * Optionally specify identifier for stash where the old item should be stored.
-         *
-         * If no stashIdentifier provided, then the old item will be thrown away.
-         */
-        readonly stashIdentifier?: StashedDashboardItemsId;
-
-        /**
-         * Optionally specify whether dashboard should auto-resolve date dataset to use for date filtering of the KPI
-         * or insight widget that will be used to replace item on a dashboard.
-         *
-         * This is by default disabled. Meaning date filtering will be enabled only if the KPI or Insight widget
-         * already specifies dateDataset. If the dateDataset is `undefined` the widget will not be filtered
-         * by dashboard's date filter.
-         *
-         * When you turn on this option, then the dashboard will automatically resolve date dataset for those
-         * KPI and Insight widgets that have it `undefined`.
-         */
-        readonly autoResolveDateFilterDataset?: boolean;
-    };
+    readonly payload: ReplaceSectionItemPayload;
 }
 
 /**
@@ -419,40 +455,46 @@ export function replaceSectionItem(
 //
 
 /**
+ * Payload of the {@link MoveSectionItem} command.
+ * @alpha
+ */
+export interface MoveSectionItemPayload {
+    /**
+     * Index of the section where the item to move is located.
+     *
+     * Index is zero-based.
+     */
+    readonly sectionIndex: number;
+
+    /**
+     * Index of section item that should be moved.
+     *
+     * Index is zero-based.
+     */
+    readonly itemIndex: number;
+
+    /**
+     * Index of section to which the item should be moved.
+     *
+     * Index is zero-based. For convenience you may specify -1 to move to last section.
+     */
+    readonly toSectionIndex: RelativeIndex;
+
+    /**
+     * Index within the target section.
+     *
+     * Index is zero-based. For convenience you may specify -1 to append the item at the end of the target section's
+     * items.
+     */
+    readonly toItemIndex: RelativeIndex;
+}
+
+/**
  * @alpha
  */
 export interface MoveSectionItem extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM";
-    readonly payload: {
-        /**
-         * Index of the section where the item to move is located.
-         *
-         * Index is zero-based.
-         */
-        readonly sectionIndex: number;
-
-        /**
-         * Index of section item that should be moved.
-         *
-         * Index is zero-based.
-         */
-        readonly itemIndex: number;
-
-        /**
-         * Index of section to which the item should be moved.
-         *
-         * Index is zero-based. For convenience you may specify -1 to move to last section.
-         */
-        readonly toSectionIndex: RelativeIndex;
-
-        /**
-         * Index within the target section.
-         *
-         * Index is zero-based. For convenience you may specify -1 to append the item at the end of the target section's
-         * items.
-         */
-        readonly toItemIndex: RelativeIndex;
-    };
+    readonly payload: MoveSectionItemPayload;
 }
 
 /**
@@ -492,42 +534,48 @@ export function moveSectionItem(
 //
 
 /**
+ * Payload of the {@link RemoveSectionItem} command.
+ * @alpha
+ */
+export interface RemoveSectionItemPayload {
+    /**
+     * Index of the section where the item to move is located.
+     *
+     * Index is zero-based.
+     */
+    readonly sectionIndex: number;
+
+    /**
+     * Index of section item that should be moved.
+     *
+     * Index is zero-based. For convenience you may use index of -1 to remove last item from section.
+     */
+    readonly itemIndex: RelativeIndex;
+
+    /**
+     * Optionally specify stash identifier. If provided, the item will not be permanently removed but will be
+     * stored in the stash under this identifier. You can then use the stash identifier to 'resurrect' the item
+     * in different section.
+     *
+     * Default behavior with no stashIdentifier is to permanently remove the item as well.
+     */
+    readonly stashIdentifier?: StashedDashboardItemsId;
+
+    /**
+     * Optionally specify whether to eagerly remove the entire section if the item being removed was the only
+     * item in the section.
+     *
+     * Default is false. Meaning an empty section will be left.
+     */
+    readonly eager?: boolean;
+}
+
+/**
  * @alpha
  */
 export interface RemoveSectionItem extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM";
-    readonly payload: {
-        /**
-         * Index of the section where the item to move is located.
-         *
-         * Index is zero-based.
-         */
-        readonly sectionIndex: number;
-
-        /**
-         * Index of section item that should be moved.
-         *
-         * Index is zero-based. For convenience you may use index of -1 to remove last item from section.
-         */
-        readonly itemIndex: RelativeIndex;
-
-        /**
-         * Optionally specify stash identifier. If provided, the item will not be permanently removed but will be
-         * stored in the stash under this identifier. You can then use the stash identifier to 'resurrect' the item
-         * in different section.
-         *
-         * Default behavior with no stashIdentifier is to permanently remove the item as well.
-         */
-        readonly stashIdentifier?: StashedDashboardItemsId;
-
-        /**
-         * Optionally specify whether to eagerly remove the entire section if the item being removed was the only
-         * item in the section.
-         *
-         * Default is false. Meaning an empty section will be left.
-         */
-        readonly eager?: boolean;
-    };
+    readonly payload: RemoveSectionItemPayload;
 }
 
 /**
@@ -628,35 +676,41 @@ export type DashboardLayoutCommands =
 export type UndoPointSelector = (undoableCommands: ReadonlyArray<DashboardLayoutCommands>) => number;
 
 /**
+ * Payload of the {@link UndoLayoutChanges} command.
+ * @alpha
+ */
+export interface UndoLayoutChangesPayload {
+    /**
+     * Optionally specify a function that will be used to select a command up to which the undo should be done.
+     *
+     * If not provided then the default selector will be used and will undo the very last command.
+     *
+     * The undo point selector is essential if you are implementing complex user-facing features that are achieved
+     * using multiple commands. For instance drag-and-drop. On drag start, an item is removed - that is one command, and
+     * then user drops the item at the new location - that is another command. The commands are dispatched by your
+     * code separately, yet if user is able to do undo drag-and-drop operation, you need to get layout to a point
+     * before
+     *
+     * If you want to trigger a proper undo in this case, then you need to undo both commands. Building on the
+     * example above, you can proceed as follows:
+     *
+     * -  Your drag-and-drop feature should use correlationId convention to tie commands to user-facing feature.
+     * -  Upon interaction start, your feature computes a correlationId `prefix` = "dnd-<UUID>"
+     * -  The first command to remove the dragged item from layout will have correlationId = `${prefix}-drag`
+     * -  The second command to add the dropped item to a new place on layout will have correlationId = `${prefix}-drop`
+     * -  When the user clicks 'Undo', you dispatch the UndoLayoutChanges with a greedy selector. This will check whether
+     *    the last command is a 'drop' in the dnd interaction. If so, look at previous command, check if it matches
+     *    the correlationId and if so undo up to and including that command.
+     */
+    readonly undoPointSelector?: UndoPointSelector;
+}
+
+/**
  * @alpha
  */
 export interface UndoLayoutChanges extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.UNDO";
-    readonly payload: {
-        /**
-         * Optionally specify a function that will be used to select a command up to which the undo should be done.
-         *
-         * If not provided then the default selector will be used and will undo the very last command.
-         *
-         * The undo point selector is essential if you are implementing complex user-facing features that are achieved
-         * using multiple commands. For instance drag-and-drop. On drag start, an item is removed - that is one command, and
-         * then user drops the item at the new location - that is another command. The commands are dispatched by your
-         * code separately, yet if user is able to do undo drag-and-drop operation, you need to get layout to a point
-         * before
-         *
-         * If you want to trigger a proper undo in this case, then you need to undo both commands. Building on the
-         * example above, you can proceed as follows:
-         *
-         * -  Your drag-and-drop feature should use correlationId convention to tie commands to user-facing feature.
-         * -  Upon interaction start, your feature computes a correlationId `prefix` = "dnd-<UUID>"
-         * -  The first command to remove the dragged item from layout will have correlationId = `${prefix}-drag`
-         * -  The second command to add the dropped item to a new place on layout will have correlationId = `${prefix}-drop`
-         * -  When the user clicks 'Undo', you dispatch the UndoLayoutChanges with a greedy selector. This will check whether
-         *    the last command is a 'drop' in the dnd interaction. If so, look at previous command, check if it matches
-         *    the correlationId and if so undo up to and including that command.
-         */
-        readonly undoPointSelector?: UndoPointSelector;
-    };
+    readonly payload: UndoLayoutChangesPayload;
 }
 
 /**

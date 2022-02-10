@@ -1,8 +1,17 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { ObjRef } from "@gooddata/sdk-model";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { IDashboardCommand } from "./base";
+
+/**
+ * Payload of the {@link AddDrillTargets} command.
+ * @alpha
+ */
+export interface AddDrillTargetsPayload {
+    readonly ref: ObjRef;
+    readonly availableDrillTargets: IAvailableDrillTargets;
+}
 
 /**
  * Add widget drill targets
@@ -11,10 +20,7 @@ import { IDashboardCommand } from "./base";
  */
 export interface AddDrillTargets extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.DRILL_TARGETS.ADD";
-    readonly payload: {
-        readonly ref: ObjRef;
-        readonly availableDrillTargets: IAvailableDrillTargets;
-    };
+    readonly payload: AddDrillTargetsPayload;
 }
 
 /**

@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { IDashboardCommand } from "./base";
 import { isObjRef, ObjRef, ObjRefInScope, VisualizationProperties } from "@gooddata/sdk-model";
@@ -7,22 +7,28 @@ import { InsightDrillDefinition } from "@gooddata/sdk-backend-spi";
 import { IExportConfig } from "../types/exportTypes";
 
 /**
+ * Payload of the {@link ChangeInsightWidgetHeader} command.
+ * @alpha
+ */
+export interface ChangeInsightWidgetHeaderPayload {
+    /**
+     * Reference to Insight Widget whose header to change.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Header to use for the Insight widget. Contents of the provided header will be used as-is and will be
+     * used to replace the current header values.
+     */
+    readonly header: WidgetHeader;
+}
+
+/**
  * @alpha
  */
 export interface ChangeInsightWidgetHeader extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_HEADER";
-    readonly payload: {
-        /**
-         * Reference to Insight Widget whose header to change.
-         */
-        readonly ref: ObjRef;
-
-        /**
-         * Header to use for the Insight widget. Contents of the provided header will be used as-is and will be
-         * used to replace the current header values.
-         */
-        readonly header: WidgetHeader;
-    };
+    readonly payload: ChangeInsightWidgetHeaderPayload;
 }
 
 /**
@@ -56,21 +62,27 @@ export function changeInsightWidgetHeader(
 //
 
 /**
+ * Payload of the {@link ChangeInsightWidgetFilterSettings} command.
+ * @alpha
+ */
+export interface ChangeInsightWidgetFilterSettingsPayload {
+    /**
+     * Reference to Insight Widget whose filter settings to change.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Filter operation to apply.
+     */
+    readonly operation: WidgetFilterOperation;
+}
+
+/**
  * @alpha
  */
 export interface ChangeInsightWidgetFilterSettings extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS";
-    readonly payload: {
-        /**
-         * Reference to Insight Widget whose filter settings to change.
-         */
-        readonly ref: ObjRef;
-
-        /**
-         * Filter operation to apply.
-         */
-        readonly operation: WidgetFilterOperation;
-    };
+    readonly payload: ChangeInsightWidgetFilterSettingsPayload;
 }
 
 /**
@@ -272,24 +284,30 @@ export function unignoreFilterOnInsightWidget(
 //
 
 /**
+ * Payload of the {@link ChangeInsightWidgetVisProperties} command.
+ * @alpha
+ */
+export interface ChangeInsightWidgetVisPropertiesPayload {
+    /**
+     * Reference to Insight Widget whose visualization properties to change.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Visualization properties to use for the insight that is rendered by the widget.
+     *
+     * These will replace the existing visualization properties. To clear any widget-level properties
+     * currently in effect for the widget, set the properties to `undefined`.
+     */
+    readonly properties: VisualizationProperties | undefined;
+}
+
+/**
  * @alpha
  */
 export interface ChangeInsightWidgetVisProperties extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_PROPERTIES";
-    readonly payload: {
-        /**
-         * Reference to Insight Widget whose visualization properties to change.
-         */
-        readonly ref: ObjRef;
-
-        /**
-         * Visualization properties to use for the insight that is rendered by the widget.
-         *
-         * These will replace the existing visualization properties. To clear any widget-level properties
-         * currently in effect for the widget, set the properties to `undefined`.
-         */
-        readonly properties: VisualizationProperties | undefined;
-    };
+    readonly payload: ChangeInsightWidgetVisPropertiesPayload;
 }
 
 /**
@@ -329,6 +347,31 @@ export function changeInsightWidgetVisProperties(
 //
 
 /**
+ * Payload of the {@link ChangeInsightWidgetInsight} command.
+ * @alpha
+ */
+export interface ChangeInsightWidgetInsightPayload {
+    /**
+     * Reference to Insight Widget whose insight to change.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Reference to the new insight to use inside the widget.
+     */
+    readonly insightRef: ObjRef;
+
+    /**
+     * Optionally specify new visualization properties to use for the insight. If none specified,
+     * the properties already included in the widget will be used.
+     *
+     * Note: if you don't want to use any custom visualization properties for the new insight, then
+     * pass empty object.
+     */
+    readonly visualizationProperties?: VisualizationProperties;
+}
+
+/**
  * XXX: don't think this is needed right away. should definitely allow such flexibility though. Would allow
  *  to switch between insights that are of different vis type but show same data.
  *
@@ -336,26 +379,7 @@ export function changeInsightWidgetVisProperties(
  */
 export interface ChangeInsightWidgetInsight extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_INSIGHT";
-    readonly payload: {
-        /**
-         * Reference to Insight Widget whose insight to change.
-         */
-        readonly ref: ObjRef;
-
-        /**
-         * Reference to the new insight to use inside the widget.
-         */
-        readonly insightRef: ObjRef;
-
-        /**
-         * Optionally specify new visualization properties to use for the insight. If none specified,
-         * the properties already included in the widget will be used.
-         *
-         * Note: if you don't want to use any custom visualization properties for the new insight, then
-         * pass empty object.
-         */
-        readonly visualizationProperties?: VisualizationProperties;
-    };
+    readonly payload: ChangeInsightWidgetInsightPayload;
 }
 
 /**
@@ -393,28 +417,34 @@ export function changeInsightWidgetInsight(
 //
 
 /**
+ * Payload of the {@link ModifyDrillsForInsightWidget} command.
+ * @alpha
+ */
+export interface ModifyDrillsForInsightWidgetPayload {
+    /**
+     * Reference to Insight Widget whose drill items should be modified.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * New drill definitions. The drills are defined per measure in insight and there can
+     * be exactly one drill definition for insight measure.
+     *
+     * The newly provided items will be matches to existing items by the measure they are linked to. The
+     * definition of drill for that measure will be modified.
+     *
+     * Note: this can do upsert. if you specify drill for a measure and there is no existing drill for it,
+     * then the new definition will be used.
+     */
+    readonly drills: InsightDrillDefinition[];
+}
+
+/**
  * @alpha
  */
 export interface ModifyDrillsForInsightWidget extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS";
-    readonly payload: {
-        /**
-         * Reference to Insight Widget whose drill items should be modified.
-         */
-        readonly ref: ObjRef;
-
-        /**
-         * New drill definitions. The drills are defined per measure in insight and there can
-         * be exactly one drill definition for insight measure.
-         *
-         * The newly provided items will be matches to existing items by the measure they are linked to. The
-         * definition of drill for that measure will be modified.
-         *
-         * Note: this can do upsert. if you specify drill for a measure and there is no existing drill for it,
-         * then the new definition will be used.
-         */
-        readonly drills: InsightDrillDefinition[];
-    };
+    readonly payload: ModifyDrillsForInsightWidgetPayload;
 }
 
 /**
@@ -472,21 +502,27 @@ export function isAllDrillSelector(obj: RemoveDrillsSelector): obj is "*" {
 }
 
 /**
+ * Payload of the {@link RemoveDrillsForInsightWidget} command.
+ * @alpha
+ */
+export interface RemoveDrillsForInsightWidgetPayload {
+    /**
+     * Reference to Insight Widget whose drill items should be removed.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Specify measure or attribute localIdentifiers whose drills to remove or '*' to remove all defined drills.
+     */
+    readonly origins: RemoveDrillsSelector;
+}
+
+/**
  * @alpha
  */
 export interface RemoveDrillsForInsightWidget extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS";
-    readonly payload: {
-        /**
-         * Reference to Insight Widget whose drill items should be removed.
-         */
-        readonly ref: ObjRef;
-
-        /**
-         * Specify measure or attribute localIdentifiers whose drills to remove or '*' to remove all defined drills.
-         */
-        readonly origins: RemoveDrillsSelector;
-    };
+    readonly payload: RemoveDrillsForInsightWidgetPayload;
 }
 
 /**
@@ -521,16 +557,22 @@ export function removeDrillsForInsightWidget(
 //
 
 /**
+ * Payload of the {@link RefreshInsightWidget} command.
+ * @alpha
+ */
+export interface RefreshInsightWidgetPayload {
+    /**
+     * Reference to Insight Widget to refresh.
+     */
+    readonly ref: ObjRef;
+}
+
+/**
  * @alpha
  */
 export interface RefreshInsightWidget extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH";
-    readonly payload: {
-        /**
-         * Reference to Insight Widget to refresh.
-         */
-        readonly ref: ObjRef;
-    };
+    readonly payload: RefreshInsightWidgetPayload;
 }
 
 /**
@@ -558,20 +600,26 @@ export function refreshInsightWidget(ref: ObjRef, correlationId?: string): Refre
 //
 
 /**
+ * Payload of the {@link ExportInsightWidget} command.
+ * @alpha
+ */
+export interface ExportInsightWidgetPayload {
+    /**
+     * Reference to Insight Widget to export.
+     */
+    readonly ref: ObjRef;
+    /**
+     * Options for the export.
+     */
+    readonly config: IExportConfig;
+}
+
+/**
  * @alpha
  */
 export interface ExportInsightWidget extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT";
-    readonly payload: {
-        /**
-         * Reference to Insight Widget to export.
-         */
-        readonly ref: ObjRef;
-        /**
-         * Options for the export.
-         */
-        readonly config: IExportConfig;
-    };
+    readonly payload: ExportInsightWidgetPayload;
 }
 
 /**

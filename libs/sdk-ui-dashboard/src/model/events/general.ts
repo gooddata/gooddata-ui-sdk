@@ -7,18 +7,24 @@ import { IDashboardCommand } from "../commands";
 import { eventGuard } from "./util";
 
 /**
+ * Payload of the {@link DashboardCommandStarted} event.
+ * @alpha
+ */
+export interface DashboardCommandStartedPayload<TCommand extends IDashboardCommand> {
+    /**
+     * The command that started processing.
+     */
+    readonly command: TCommand;
+}
+
+/**
  * This event is emitted when a particular command processing starts.
  *
  * @alpha
  */
 export interface DashboardCommandStarted<TCommand extends IDashboardCommand> extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.COMMAND.STARTED";
-    readonly payload: {
-        /**
-         * The command that started processing.
-         */
-        readonly command: TCommand;
-    };
+    readonly payload: DashboardCommandStartedPayload<TCommand>;
 }
 
 export function dashboardCommandStarted<TCommand extends IDashboardCommand>(
@@ -51,6 +57,32 @@ export const isDashboardCommandStarted = eventGuard<DashboardCommandStarted<any>
 export type ActionFailedErrorReason = "USER_ERROR" | "INTERNAL_ERROR";
 
 /**
+ * Payload of the {@link DashboardCommandFailed} event.
+ * @alpha
+ */
+export interface DashboardCommandFailedPayload<TCommand extends IDashboardCommand> {
+    /**
+     * Reason for the failure.
+     */
+    readonly reason: ActionFailedErrorReason;
+
+    /**
+     * Message explaining the nature of the failure.
+     */
+    readonly message: string;
+
+    /**
+     * Error that has occurred and caused the command to fail.
+     */
+    readonly error?: Error;
+
+    /**
+     * The command that failed.
+     */
+    readonly command: TCommand;
+}
+
+/**
  * This event is emitted if a particular command processing fails. The failure may be for two general reasons:
  *
  * -  A user error was made; dispatched command is found to have bad payload or the dispatched command is not applicable
@@ -63,27 +95,7 @@ export type ActionFailedErrorReason = "USER_ERROR" | "INTERNAL_ERROR";
 export interface DashboardCommandFailed<TCommand extends IDashboardCommand = IDashboardCommand>
     extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.COMMAND.FAILED";
-    readonly payload: {
-        /**
-         * Reason for the failure.
-         */
-        readonly reason: ActionFailedErrorReason;
-
-        /**
-         * Message explaining the nature of the failure.
-         */
-        readonly message: string;
-
-        /**
-         * Error that has occurred and caused the command to fail.
-         */
-        readonly error?: Error;
-
-        /**
-         * The command that failed.
-         */
-        readonly command: TCommand;
-    };
+    readonly payload: DashboardCommandFailedPayload<TCommand>;
 }
 
 export function internalErrorOccurred<TCommand extends IDashboardCommand>(
@@ -201,6 +213,27 @@ export const isDashboardQueryRejected = eventGuard<DashboardQueryRejected>("GDC.
 //
 
 /**
+ * Payload of the {@link DashboardQueryFailed} event.
+ * @alpha
+ */
+export interface DashboardQueryFailedPayload {
+    /**
+     * Reason for the failure.
+     */
+    readonly reason: ActionFailedErrorReason;
+
+    /**
+     * Message explaining the nature of the failure.
+     */
+    readonly message: string;
+
+    /**
+     * Error that has occurred and caused the command to fail.
+     */
+    readonly error?: Error;
+}
+
+/**
  * This event is emitted if a particular query processing fails. The failure may be for two general reasons:
  *
  * -  A user error was made; dispatched query is found to have bad payload or the dispatched query is not applicable
@@ -212,22 +245,7 @@ export const isDashboardQueryRejected = eventGuard<DashboardQueryRejected>("GDC.
  */
 export interface DashboardQueryFailed extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.QUERY.FAILED";
-    readonly payload: {
-        /**
-         * Reason for the failure.
-         */
-        readonly reason: ActionFailedErrorReason;
-
-        /**
-         * Message explaining the nature of the failure.
-         */
-        readonly message: string;
-
-        /**
-         * Error that has occurred and caused the command to fail.
-         */
-        readonly error?: Error;
-    };
+    readonly payload: DashboardQueryFailedPayload;
 }
 
 export function internalQueryErrorOccurred(
@@ -277,15 +295,24 @@ export const isDashboardQueryFailed = eventGuard<DashboardQueryFailed>("GDC.DASH
 //
 
 /**
+ * Payload of the {@link DashboardQueryStarted} event.
+ * @alpha
+ */
+export interface DashboardQueryStartedPayload {
+    /**
+     * The query that is starting to be run.
+     */
+    readonly query: IDashboardQuery;
+}
+
+/**
  * This event is emitted when query processing starts.
  *
  * @alpha
  */
 export interface DashboardQueryStarted extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.QUERY.STARTED";
-    readonly payload: {
-        readonly query: IDashboardQuery;
-    };
+    readonly payload: DashboardQueryStartedPayload;
 }
 
 export function queryStarted(
@@ -316,6 +343,21 @@ export const isDashboardQueryStarted = eventGuard<DashboardQueryStarted>("GDC.DA
 //
 
 /**
+ * Payload of the {@link DashboardQueryCompleted} event.
+ * @alpha
+ */
+export interface DashboardQueryCompletedPayload<TQuery extends IDashboardQuery, TResult> {
+    /**
+     * The query that was run to get the given result.
+     */
+    readonly query: TQuery;
+    /**
+     * The result of the query.
+     */
+    readonly result: TResult;
+}
+
+/**
  * This event is emitted when query processing completes with success. Both the query payload and the result are
  * included.
  *
@@ -323,10 +365,7 @@ export const isDashboardQueryStarted = eventGuard<DashboardQueryStarted>("GDC.DA
  */
 export interface DashboardQueryCompleted<TQuery extends IDashboardQuery, TResult> extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.QUERY.COMPLETED";
-    readonly payload: {
-        readonly query: TQuery;
-        readonly result: TResult;
-    };
+    readonly payload: DashboardQueryCompletedPayload<TQuery, TResult>;
 }
 
 export function queryCompleted<TQuery extends IDashboardQuery, TResult>(

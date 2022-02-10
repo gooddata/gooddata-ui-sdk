@@ -1,7 +1,22 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { IScheduledMailDefinition, IFilterContextDefinition } from "@gooddata/sdk-backend-spi";
 import { IDashboardCommand } from "./base";
+
+/**
+ * Payload of the {@link CreateScheduledEmail} command.
+ * @alpha
+ */
+export interface CreateScheduledEmailPayload {
+    /**
+     * The scheduled email to create.
+     */
+    readonly scheduledEmail: IScheduledMailDefinition;
+    /**
+     * Filter context to use for the scheduled email. If no filter context is provided, stored dashboard filter context will be used.
+     */
+    readonly filterContext?: IFilterContextDefinition;
+}
 
 /**
  * Creates scheduled email.
@@ -10,10 +25,7 @@ import { IDashboardCommand } from "./base";
  */
 export interface CreateScheduledEmail extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.SCHEDULED_EMAIL.CREATE";
-    readonly payload: {
-        readonly scheduledEmail: IScheduledMailDefinition;
-        readonly filterContext?: IFilterContextDefinition;
-    };
+    readonly payload: CreateScheduledEmailPayload;
 }
 
 /**
@@ -40,7 +52,3 @@ export function createScheduledEmail(
         },
     };
 }
-
-//
-//
-//

@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { DashboardContext } from "../types/commonTypes";
@@ -6,19 +6,25 @@ import { IDashboardEvent } from "./base";
 import { eventGuard } from "./util";
 
 /**
- *  Widget drill targets added event
+ * Payload of the {@link DrillTargetsAdded} event.
+ * @alpha
+ */
+export interface DrillTargetsAddedPayload {
+    /**
+     * Reference to Insight Widget
+     */
+    readonly ref: ObjRef;
+    readonly availableDrillTargets: IAvailableDrillTargets;
+}
+
+/**
+ * Widget drill targets added event
  *
  * @alpha
  */
 export interface DrillTargetsAdded extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.DRILL_TARGETS.ADDED";
-    readonly payload: {
-        /**
-         * Reference to Insight Widget
-         */
-        readonly ref: ObjRef;
-        readonly availableDrillTargets: IAvailableDrillTargets;
-    };
+    readonly payload: DrillTargetsAddedPayload;
 }
 
 /**
@@ -26,7 +32,7 @@ export interface DrillTargetsAdded extends IDashboardEvent {
  *
  * @param ref - Unique widget ref
  * @param availableDrillTargets - Available widget drill targets {@link @gooddata/sdk-ui#IAvailableDrillTargets}
- * @param  correlationId - correlationId
+ * @param correlationId - correlationId
  * @returns - DrillTargetsAdded command
  *
  * @alpha

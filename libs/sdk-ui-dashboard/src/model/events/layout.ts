@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { IDashboardLayout, IDashboardLayoutSectionHeader } from "@gooddata/sdk-backend-spi";
 
 import {
@@ -12,25 +12,31 @@ import { IDashboardEvent } from "./base";
 import { eventGuard } from "./util";
 
 /**
+ * Payload of the {@link DashboardLayoutSectionAdded} event.
+ * @alpha
+ */
+export interface DashboardLayoutSectionAddedPayload {
+    /**
+     * The new section.
+     */
+    readonly section: ExtendedDashboardLayoutSection;
+
+    /**
+     * Index of the new section among other sections in the layout.
+     *
+     * Index is zero-based.
+     */
+    readonly index: number;
+}
+
+/**
  * This event is emitted when a new dashboard layout section is added.
  *
  * @alpha
  */
 export interface DashboardLayoutSectionAdded extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED";
-    readonly payload: {
-        /**
-         * The new section.
-         */
-        readonly section: ExtendedDashboardLayoutSection;
-
-        /**
-         * Index of the new section among other sections in the layout.
-         *
-         * Index is zero-based.
-         */
-        readonly index: number;
-    };
+    readonly payload: DashboardLayoutSectionAddedPayload;
 }
 
 export function layoutSectionAdded(
@@ -65,17 +71,32 @@ export const isDashboardLayoutSectionAdded = eventGuard<DashboardLayoutSectionAd
 //
 
 /**
+ * Payload of the {@link DashboardLayoutSectionMoved} event.
+ * @alpha
+ */
+export interface DashboardLayoutSectionMovedPayload {
+    /**
+     * The section moved.
+     */
+    readonly section: ExtendedDashboardLayoutSection;
+    /**
+     * Index from which the section was moved.
+     */
+    readonly fromIndex: number;
+    /**
+     * Zero-based index to which the section was moved.
+     */
+    readonly toIndex: number;
+}
+
+/**
  * This event is emitted when a dashboard layout section is moved from one place to another.
  *
  * @alpha
  */
 export interface DashboardLayoutSectionMoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_MOVED";
-    readonly payload: {
-        readonly section: ExtendedDashboardLayoutSection;
-        readonly fromIndex: number;
-        readonly toIndex: number;
-    };
+    readonly payload: DashboardLayoutSectionMovedPayload;
 }
 
 export function layoutSectionMoved(
@@ -112,6 +133,35 @@ export const isDashboardLayoutSectionMoved = eventGuard<DashboardLayoutSectionMo
 //
 
 /**
+ * Payload of the {@link DashboardLayoutSectionRemoved} event.
+ * @alpha
+ */
+export interface DashboardLayoutSectionRemovedPayload {
+    /**
+     * Section that was removed.
+     *
+     * Note: when the section is eagerly removed, it's items will be empty.
+     */
+    readonly section: ExtendedDashboardLayoutSection;
+
+    /**
+     * Index where the section originally resided.
+     */
+    readonly index: number;
+
+    /**
+     * Indicates that the section was removed as part of eager removal of the section items.
+     */
+    readonly eagerRemoval?: boolean;
+
+    /**
+     * If the remove command indicated to stash the items for later reuse, then the stash identifier
+     * provided on the command is mirrored here.
+     */
+    readonly stashIdentifier?: StashedDashboardItemsId;
+}
+
+/**
  * This event is emitted when a dashboard layout section is removed from the layout.
  *
  * Note: this event will be emitted also when the section is removed as part of eager removal of
@@ -122,30 +172,7 @@ export const isDashboardLayoutSectionMoved = eventGuard<DashboardLayoutSectionMo
  */
 export interface DashboardLayoutSectionRemoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_REMOVED";
-    readonly payload: {
-        /**
-         * Section that was removed.
-         *
-         * Note: when the section is eagerly removed, it's items will be empty.
-         */
-        readonly section: ExtendedDashboardLayoutSection;
-
-        /**
-         * Index where the section originally resided.
-         */
-        readonly index: number;
-
-        /**
-         * Indicates that the section was removed as part of eager removal of the section items.
-         */
-        readonly eagerRemoval?: boolean;
-
-        /**
-         * If the remove command indicated to stash the items for later reuse, then the stash identifier
-         * provided on the command is mirrored here.
-         */
-        readonly stashIdentifier?: StashedDashboardItemsId;
-    };
+    readonly payload: DashboardLayoutSectionRemovedPayload;
 }
 
 export function layoutSectionRemoved(
@@ -184,23 +211,29 @@ export const isDashboardLayoutSectionRemoved = eventGuard<DashboardLayoutSection
 //
 
 /**
+ * Payload of the {@link DashboardLayoutSectionHeaderChanged} event.
+ * @alpha
+ */
+export interface DashboardLayoutSectionHeaderChangedPayload {
+    /**
+     * The new header of the section.
+     */
+    readonly newHeader: IDashboardLayoutSectionHeader;
+
+    /**
+     * Index of the section which had the header updated.
+     */
+    readonly sectionIndex: number;
+}
+
+/**
  * This event is emitted when dashboard layout section changes.
  *
  * @alpha
  */
 export interface DashboardLayoutSectionHeaderChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_HEADER_CHANGED";
-    readonly payload: {
-        /**
-         * The new header of the section.
-         */
-        readonly newHeader: IDashboardLayoutSectionHeader;
-
-        /**
-         * Index of the section which had the header updated.
-         */
-        readonly sectionIndex: number;
-    };
+    readonly payload: DashboardLayoutSectionHeaderChangedPayload;
 }
 
 export function layoutSectionHeaderChanged(
@@ -235,34 +268,40 @@ export const isDashboardLayoutSectionHeaderChanged = eventGuard<DashboardLayoutS
 //
 
 /**
+ * Payload of the {@link DashboardLayoutSectionItemsAdded} event.
+ * @alpha
+ */
+export interface DashboardLayoutSectionItemsAddedPayload {
+    /**
+     * Index of the section to which the items were added.
+     */
+    readonly sectionIndex: number;
+
+    /**
+     * Index within the section at which the items were inserted.
+     */
+    readonly startIndex: number;
+
+    /**
+     * Items that were inserted.
+     */
+    readonly itemsAdded: ReadonlyArray<ExtendedDashboardItem>;
+
+    /**
+     * If the items from one or more stashes were added and the stashes were cleared, the the list of
+     * stash identifiers will be included here.
+     */
+    readonly stashesUsed?: ReadonlyArray<StashedDashboardItemsId>;
+}
+
+/**
  * This event is emitted when items are added to a dashboard section.
  *
  * @alpha
  */
 export interface DashboardLayoutSectionItemsAdded extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED";
-    readonly payload: {
-        /**
-         * Index of the section to which the items were added.
-         */
-        readonly sectionIndex: number;
-
-        /**
-         * Index within the section at which the items were inserted.
-         */
-        readonly startIndex: number;
-
-        /**
-         * Items that were inserted.
-         */
-        readonly itemsAdded: ReadonlyArray<ExtendedDashboardItem>;
-
-        /**
-         * If the items from one or more stashes were added and the stashes were cleared, the the list of
-         * stash identifiers will be included here.
-         */
-        readonly stashesUsed?: ReadonlyArray<StashedDashboardItemsId>;
-    };
+    readonly payload: DashboardLayoutSectionItemsAddedPayload;
 }
 
 export function layoutSectionItemsAdded(
@@ -301,38 +340,44 @@ export const isDashboardLayoutSectionItemsAdded = eventGuard<DashboardLayoutSect
 //
 
 /**
+ * Payload of the {@link DashboardLayoutSectionItemReplaced} event.
+ * @alpha
+ */
+export interface DashboardLayoutSectionItemReplacedPayload {
+    /**
+     * Index of section where the replacement happened.
+     */
+    readonly sectionIndex: number;
+
+    /**
+     * Index of item within the section that was replaced.
+     */
+    readonly itemIndex: number;
+
+    /**
+     * New item definition.
+     */
+    readonly items: ReadonlyArray<ExtendedDashboardItem>;
+
+    /**
+     * Item that was replaced
+     */
+    readonly previousItem: ExtendedDashboardItem;
+
+    /**
+     * If the replacement specified to stash the old item, then the identifier of the
+     * stash is included here.
+     */
+    readonly stashIdentifier?: StashedDashboardItemsId;
+}
+
+/**
  * This event is emitted when an item in a dashboard section is replaced.
  * @alpha
  */
 export interface DashboardLayoutSectionItemReplaced extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED";
-    readonly payload: {
-        /**
-         * Index of section where the replacement happened.
-         */
-        readonly sectionIndex: number;
-
-        /**
-         * Index of item within the section that was replaced.
-         */
-        readonly itemIndex: number;
-
-        /**
-         * New item definition.
-         */
-        readonly items: ReadonlyArray<ExtendedDashboardItem>;
-
-        /**
-         * Item that was replaced
-         */
-        readonly previousItem: ExtendedDashboardItem;
-
-        /**
-         * If the replacement specified to stash the old item, then the identifier of the
-         * stash is included here.
-         */
-        readonly stashIdentifier?: StashedDashboardItemsId;
-    };
+    readonly payload: DashboardLayoutSectionItemReplacedPayload;
 }
 
 export function layoutSectionItemReplaced(
@@ -373,40 +418,46 @@ export const isDashboardLayoutSectionItemReplaced = eventGuard<DashboardLayoutSe
 //
 
 /**
+ * Payload of the {@link DashboardLayoutSectionItemMoved} event.
+ * @alpha
+ */
+export interface DashboardLayoutSectionItemMovedPayload {
+    /**
+     * Item that was moved.
+     */
+    readonly item: ExtendedDashboardItem;
+
+    /**
+     * Index of section from which the item was moved.
+     */
+    readonly fromSectionIndex: number;
+
+    /**
+     * Index of section to which the item was moved.
+     *
+     * This may be the same as `fromSectionIndex` - which means the move happened within the same section.
+     */
+    readonly toSectionIndex: number;
+
+    /**
+     * Index within the `fromSection` from where the item was moved.
+     */
+    readonly fromIndex: number;
+
+    /**
+     * Index in `toSection` at which the item was inserted.
+     */
+    readonly toIndex: number;
+}
+
+/**
  * This event is emitted when a dashboard item is moved between sections or within a section.
  *
  * @alpha
  */
 export interface DashboardLayoutSectionItemMoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_MOVED";
-    readonly payload: {
-        /**
-         * Item that was moved.
-         */
-        readonly item: ExtendedDashboardItem;
-
-        /**
-         * Index of section from which the item was moved.
-         */
-        readonly fromSectionIndex: number;
-
-        /**
-         * Index of section to which the item was moved.
-         *
-         * This may be the same as `fromSectionIndex` - which means the move happened within the same section.
-         */
-        readonly toSectionIndex: number;
-
-        /**
-         * Index within the `fromSection` from where the item was moved.
-         */
-        readonly fromIndex: number;
-
-        /**
-         * Index in `toSection` at which the item was inserted.
-         */
-        readonly toIndex: number;
-    };
+    readonly payload: DashboardLayoutSectionItemMovedPayload;
 }
 
 export function layoutSectionItemMoved(
@@ -447,35 +498,41 @@ export const isDashboardLayoutSectionItemMoved = eventGuard<DashboardLayoutSecti
 //
 
 /**
+ * Payload of the {@link DashboardLayoutSectionItemRemoved} event.
+ * @alpha
+ */
+export interface DashboardLayoutSectionItemRemovedPayload {
+    /**
+     * Item that was removed.
+     */
+    readonly item: ExtendedDashboardItem;
+
+    /**
+     * Index where the item resided.
+     */
+    readonly itemIndex: number;
+
+    /**
+     * If the removal was eager and removed the entire section, then that section is included here.
+     *
+     * NOTE: the {@link DashboardLayoutSectionRemoved} will be fired at the occasion as well.
+     */
+    readonly section?: ExtendedDashboardLayoutSection;
+
+    /**
+     * If the removal indicated to stash the item, then the stash identifier is mirrored here.
+     */
+    readonly stashIdentifier?: StashedDashboardItemsId;
+}
+
+/**
  * This event is emitted when an item is removed from dashboard layout section.
  *
  * @alpha
  */
 export interface DashboardLayoutSectionItemRemoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REMOVED";
-    readonly payload: {
-        /**
-         * Item that was removed.
-         */
-        readonly item: ExtendedDashboardItem;
-
-        /**
-         * Index where the item resided.
-         */
-        readonly itemIndex: number;
-
-        /**
-         * If the removal was eager and removed the entire section, then that section is included here.
-         *
-         * NOTE: the {@link DashboardLayoutSectionRemoved} will be fired at the occasion as well.
-         */
-        readonly section?: ExtendedDashboardLayoutSection;
-
-        /**
-         * If the removal indicated to stash the item, then the stash identifier is mirrored here.
-         */
-        readonly stashIdentifier?: StashedDashboardItemsId;
-    };
+    readonly payload: DashboardLayoutSectionItemRemovedPayload;
 }
 
 export function layoutSectionItemRemoved(
@@ -514,18 +571,24 @@ export const isDashboardLayoutSectionItemRemoved = eventGuard<DashboardLayoutSec
 //
 
 /**
+ * Payload of the {@link DashboardLayoutChanged} event.
+ * @alpha
+ */
+export interface DashboardLayoutChangedPayload {
+    /**
+     * Layout after the change.
+     */
+    readonly layout: IDashboardLayout<ExtendedDashboardWidget>;
+}
+
+/**
  * This event is emitted after any change to the dashboard layout and will include the entire new layout.
  *
  * @alpha
  */
 export interface DashboardLayoutChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED";
-    readonly payload: {
-        /**
-         * Layout after the change.
-         */
-        readonly layout: IDashboardLayout<ExtendedDashboardWidget>;
-    };
+    readonly payload: DashboardLayoutChangedPayload;
 }
 
 export function layoutChanged(

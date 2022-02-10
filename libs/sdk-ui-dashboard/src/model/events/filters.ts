@@ -9,20 +9,28 @@ import { DashboardContext } from "../types/commonTypes";
 import { eventGuard } from "./util";
 
 /**
+ * Payload of the {@link DashboardDateFilterSelectionChanged} event.
+ * @public
+ */
+export interface DashboardDateFilterSelectionChangedPayload {
+    /**
+     * Object with changed date filter selection.
+     */
+    readonly filter: IDashboardDateFilter | undefined;
+    /**
+     * Optional local identifier of the new selected date filter option.
+     */
+    readonly dateFilterOptionLocalId?: string;
+}
+
+/**
  * This event is emitted after the dashboard's date filter selection is changed.
- *
- * ** PAYLOAD **
- * @param filter - {@link @gooddata/sdk-backend-spi#IDashboardDateFilter} object with changed selection
- * @param dateFilterOptionLocalId - optional local identifier of the new selected date filter option
  *
  * @public
  */
 export interface DashboardDateFilterSelectionChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.SELECTION_CHANGED";
-    readonly payload: {
-        readonly filter: IDashboardDateFilter | undefined;
-        readonly dateFilterOptionLocalId?: string;
-    };
+    readonly payload: DashboardDateFilterSelectionChangedPayload;
 }
 
 export function dateFilterChanged(
@@ -46,7 +54,7 @@ export function dateFilterChanged(
  * Tests whether the provided object is an instance of {@link DashboardDateFilterSelectionChanged}.
  *
  * @param obj - object to test
- * @alpha
+ * @public
  */
 export const isDashboardDateFilterSelectionChanged = eventGuard<DashboardDateFilterSelectionChanged>(
     "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.SELECTION_CHANGED",
@@ -57,27 +65,31 @@ export const isDashboardDateFilterSelectionChanged = eventGuard<DashboardDateFil
 //
 
 /**
+ * Payload of the {@link DashboardAttributeFilterAdded} event.
+ * @alpha
+ */
+export interface DashboardAttributeFilterAddedPayload {
+    /**
+     * Definition of the created attribute filter. The filter's local identifier can be used in subsequent
+     * commands to identify this filter.
+     */
+    readonly added: IDashboardAttributeFilter;
+
+    /**
+     * Zero-based index indicating the position of the attribute filter among the other filters.
+     */
+    readonly index: number;
+}
+
+/**
  * This event is emitted after a new dashboard attribute filter is successfully added into dashboard's
  * filters.
- *
- * Each dashboard attribute filter has
  *
  * @alpha
  */
 export interface DashboardAttributeFilterAdded extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADDED";
-    readonly payload: {
-        /**
-         * Definition of the created attribute filter. The filter's local identifier can be used in subsequent
-         * commands to identify this filter.
-         */
-        readonly added: IDashboardAttributeFilter;
-
-        /**
-         * Zero-based index indicating the position of the attribute filter among the other filters.
-         */
-        readonly index: number;
-    };
+    readonly payload: DashboardAttributeFilterAddedPayload;
 }
 
 export function attributeFilterAdded(
@@ -112,6 +124,26 @@ export const isDashboardAttributeFilterAdded = eventGuard<DashboardAttributeFilt
 //
 
 /**
+ * Payload of the {@link DashboardAttributeFilterRemoved} event.
+ * @alpha
+ */
+export interface DashboardAttributeFilterRemovedPayload {
+    /**
+     * The dashboard attribute filter that has been removed.
+     */
+    readonly removed: IDashboardAttributeFilter;
+
+    /**
+     * If the removed filter figured as a parent filter for some other filters, then
+     * those children have lost their parent - the relationship was removed.
+     *
+     * If any children filters were impacted by the removal, their new definition that does
+     * not include the parent relationship is included here.
+     */
+    readonly children?: ReadonlyArray<IDashboardAttributeFilter>;
+}
+
+/**
  * This event is emitted after a dashboard attribute filter is successfully removed.
  *
  * If the removed filter figured as a parent to one or more child filters, then the removal
@@ -121,21 +153,7 @@ export const isDashboardAttributeFilterAdded = eventGuard<DashboardAttributeFilt
  */
 export interface DashboardAttributeFilterRemoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVED";
-    readonly payload: {
-        /**
-         * The dashboard attribute filter that has been removed.
-         */
-        readonly removed: IDashboardAttributeFilter;
-
-        /**
-         * If the removed filter figured as a parent filter for some other filters, then
-         * those children have lost their parent - the relationship was removed.
-         *
-         * If any children filters were impacted by the removal, their new definition that does
-         * not include the parent relationship is included here.
-         */
-        readonly children?: ReadonlyArray<IDashboardAttributeFilter>;
-    };
+    readonly payload: DashboardAttributeFilterRemovedPayload;
 }
 
 export function attributeFilterRemoved(
@@ -170,6 +188,27 @@ export const isDashboardAttributeFilterRemoved = eventGuard<DashboardAttributeFi
 //
 
 /**
+ * Payload of the {@link DashboardAttributeFilterMoved} event.
+ * @alpha
+ */
+export interface DashboardAttributeFilterMovedPayload {
+    /**
+     * Definition of the dashboard attribute filter that was moved.
+     */
+    readonly moved: IDashboardAttributeFilter;
+
+    /**
+     * The original position of the filter.
+     */
+    readonly fromIndex: number;
+
+    /**
+     * New absolute position of the filter.
+     */
+    readonly toIndex: number;
+}
+
+/**
  * This event is emitted after a dashboard attribute filter is moved from one position in the filter bar
  * to a new position
  *
@@ -177,22 +216,7 @@ export const isDashboardAttributeFilterRemoved = eventGuard<DashboardAttributeFi
  */
 export interface DashboardAttributeFilterMoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVED";
-    readonly payload: {
-        /**
-         * Definition of the dashboard attribute filter that was moved.
-         */
-        readonly moved: IDashboardAttributeFilter;
-
-        /**
-         * The original position of the filter.
-         */
-        readonly fromIndex: number;
-
-        /**
-         * New absolute position of the filter.
-         */
-        readonly toIndex: number;
-    };
+    readonly payload: DashboardAttributeFilterMovedPayload;
 }
 
 export function attributeFilterMoved(
@@ -229,25 +253,28 @@ export const isDashboardAttributeFilterMoved = eventGuard<DashboardAttributeFilt
 //
 
 /**
+ * Payload of the {@link DashboardAttributeFilterSelectionChanged} event.
+ * @public
+ */
+export interface DashboardAttributeFilterSelectionChangedPayload {
+    /**
+     * The update definition of the dashboard attribute filter.
+     *
+     * The attribute elements and/or the negativeSelection indicator values have changed.
+     */
+    readonly filter: IDashboardAttributeFilter;
+}
+
+/**
  * This event is emitted after new elements are selected and applied in an attribute filter.
  *
  * The filter in the payload object must be converted to a {@link @gooddata/sdk-model#IFilter} object before its usage.
- *
- * ** PAYLOAD **
- * @param filter - {@link @gooddata/sdk-backend-spi#IDashboardAttributeFilter} object with changed selection
  *
  * @public
  */
 export interface DashboardAttributeFilterSelectionChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_CHANGED";
-    readonly payload: {
-        /**
-         * The update definition of the dashboard attribute filter.
-         *
-         * The attribute elements and/or the negativeSelection indicator values have changed.
-         */
-        readonly filter: IDashboardAttributeFilter;
-    };
+    readonly payload: DashboardAttributeFilterSelectionChangedPayload;
 }
 
 export function attributeFilterSelectionChanged(
@@ -269,7 +296,7 @@ export function attributeFilterSelectionChanged(
  * Tests whether the provided object is an instance of {@link DashboardAttributeFilterSelectionChanged}.
  *
  * @param obj - object to test
- * @alpha
+ * @public
  */
 export const isDashboardAttributeFilterSelectionChanged =
     eventGuard<DashboardAttributeFilterSelectionChanged>(
@@ -281,20 +308,26 @@ export const isDashboardAttributeFilterSelectionChanged =
 //
 
 /**
+ * Payload of the {@link DashboardAttributeFilterParentChanged} event.
+ * @alpha
+ */
+export interface DashboardAttributeFilterParentChangedPayload {
+    /**
+     * The updated definition of the dashboard attribute filter.
+     *
+     * The definition of parents represents the new state.
+     */
+    readonly filter: IDashboardAttributeFilter;
+}
+
+/**
  * This event is emitted after the parent relationships of a filter change.
  *
  * @alpha
  */
 export interface DashboardAttributeFilterParentChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.PARENT_CHANGED";
-    readonly payload: {
-        /**
-         * The updated definition of the dashboard attribute filter.
-         *
-         * The definition of parents represents the new state.
-         */
-        readonly filter: IDashboardAttributeFilter;
-    };
+    readonly payload: DashboardAttributeFilterParentChangedPayload;
 }
 
 export function attributeFilterParentChanged(
@@ -327,22 +360,28 @@ export const isDashboardAttributeFilterParentChanged = eventGuard<DashboardAttri
 //
 
 /**
+ * Payload of the {@link DashboardFilterContextChanged} event.
+ * @public
+ */
+export interface DashboardFilterContextChangedPayload {
+    /**
+     * The new value of the filterContext.
+     */
+    readonly filterContext: IFilterContextDefinition;
+}
+
+/**
  * This event is emitted after _any_ change to dashboard filters (be it date or attribute filter).
  * The event describes the new state of the entire filter context.
  *
  * This event is emitted as convenience - more granular events describe all the possible
  * changes to the dashboard filters and can be used to event source the state of filter context.
  *
- * ** PAYLOAD **
- * @param filterContext - {@link @gooddata/sdk-backend-spi#IFilterContextDefinition} object
- *
  * @public
  */
 export interface DashboardFilterContextChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED";
-    readonly payload: {
-        readonly filterContext: IFilterContextDefinition;
-    };
+    readonly payload: DashboardFilterContextChangedPayload;
 }
 
 export function filterContextChanged(
@@ -364,7 +403,7 @@ export function filterContextChanged(
  * Tests whether the provided object is an instance of {@link DashboardFilterContextChanged}.
  *
  * @param obj - object to test
- * @alpha
+ * @public
  */
 export const isDashboardFilterContextChanged = eventGuard<DashboardFilterContextChanged>(
     "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",

@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { IInsight, ObjRef, VisualizationProperties } from "@gooddata/sdk-model";
 import {
     DrillDefinition,
@@ -15,6 +15,21 @@ import { eventGuard } from "./util";
 import { IExportConfig } from "../types/exportTypes";
 
 /**
+ * Payload of the {@link DashboardInsightWidgetHeaderChanged} event.
+ * @alpha
+ */
+export interface DashboardInsightWidgetHeaderChangedPayload {
+    /**
+     * Reference to Insight Widget that was changed.
+     */
+    readonly ref: ObjRef;
+    /**
+     * New widget header that is now used on the widget.
+     */
+    readonly header: WidgetHeader;
+}
+
+/**
  * This event is emitted when the header of an insight widget changed. The new value of the header (title)
  * is included in the event.
  *
@@ -22,17 +37,7 @@ import { IExportConfig } from "../types/exportTypes";
  */
 export interface DashboardInsightWidgetHeaderChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.HEADER_CHANGED";
-    readonly payload: {
-        /**
-         * Reference to Insight Widget that was changed.
-         */
-        readonly ref: ObjRef;
-
-        /**
-         * New widget header that is now used on the widget.
-         */
-        readonly header: WidgetHeader;
-    };
+    readonly payload: DashboardInsightWidgetHeaderChangedPayload;
 }
 
 export function insightWidgetHeaderChanged(
@@ -67,6 +72,31 @@ export const isDashboardInsightWidgetHeaderChanged = eventGuard<DashboardInsight
 //
 
 /**
+ * Payload of the {@link DashboardInsightWidgetFilterSettingsChanged} event.
+ * @alpha
+ */
+export interface DashboardInsightWidgetFilterSettingsChangedPayload {
+    /**
+     * Reference to Insight Widget that was changed.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Attribute filters that are ignored for the widget.
+     *
+     * If empty, then all attribute filters defined for the dashboard are in effect.
+     */
+    readonly ignoredAttributeFilters: IDashboardAttributeFilter[];
+
+    /**
+     * Date dataset used for date filtering.
+     *
+     * If undefined, then dashboard's date filter is not in effect for the widget.
+     */
+    readonly dateDatasetForFiltering?: ICatalogDateDataset;
+}
+
+/**
  * This event is emitted when the insight widget's filter settings change.
  *
  * Filter settings influence what date dataset to use for filter or which of the dashboard's attribute filters
@@ -77,26 +107,7 @@ export const isDashboardInsightWidgetHeaderChanged = eventGuard<DashboardInsight
  */
 export interface DashboardInsightWidgetFilterSettingsChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.FILTER_SETTINGS_CHANGED";
-    readonly payload: {
-        /**
-         * Reference to Insight Widget that was changed.
-         */
-        readonly ref: ObjRef;
-
-        /**
-         * Attribute filters that are ignored for the widget.
-         *
-         * If empty, then all attribute filters defined for the dashboard are in effect.
-         */
-        readonly ignoredAttributeFilters: IDashboardAttributeFilter[];
-
-        /**
-         * Date dataset used for date filtering.
-         *
-         * If undefined, then dashboard's date filter is not in effect for the widget.
-         */
-        readonly dateDatasetForFiltering?: ICatalogDateDataset;
-    };
+    readonly payload: DashboardInsightWidgetFilterSettingsChangedPayload;
 }
 
 export function insightWidgetFilterSettingsChanged(
@@ -134,6 +145,27 @@ export const isDashboardInsightWidgetFilterSettingsChanged =
 //
 
 /**
+ * Payload of the {@link DashboardInsightWidgetVisPropertiesChanged} event.
+ * @alpha
+ */
+export interface DashboardInsightWidgetVisPropertiesChangedPayload {
+    /**
+     * Reference to Insight Widget that was changed.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * New visualization properties that are now in effect for the insight widget. These properties
+     * will be merged with the properties defined on the insight itself. They will influence how the
+     * insight visually appears.
+     *
+     * Will be undefined if there are no widget-level visualization properties set for the particular
+     * insight widget.
+     */
+    readonly properties: VisualizationProperties | undefined;
+}
+
+/**
  * This event is emitted when the insight widget's visualization properties change.
  *
  * The properties specified influence how the insight rendered in the widget appears visually (legend, tooltips,
@@ -143,22 +175,7 @@ export const isDashboardInsightWidgetFilterSettingsChanged =
  */
 export interface DashboardInsightWidgetVisPropertiesChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.PROPERTIES_CHANGED";
-    readonly payload: {
-        /**
-         * Reference to Insight Widget that was changed.
-         */
-        readonly ref: ObjRef;
-
-        /**
-         * New visualization properties that are now in effect for the insight widget. These properties
-         * will be merged with the properties defined on the insight itself. They will influence how the
-         * insight visually appears.
-         *
-         * Will be undefined if there are no widget-level visualization properties set for the particular
-         * insight widget.
-         */
-        readonly properties: VisualizationProperties | undefined;
-    };
+    readonly payload: DashboardInsightWidgetVisPropertiesChangedPayload;
 }
 
 export function insightWidgetVisPropertiesChanged(
@@ -192,6 +209,22 @@ export const isDashboardInsightWidgetVisPropertiesChanged =
 //
 
 /**
+ * Payload of the {@link DashboardInsightWidgetInsightSwitched} event.
+ * @alpha
+ */
+export interface DashboardInsightWidgetInsightSwitchedPayload {
+    /**
+     * Reference to Insight Widget that was changed.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * The new insight that is now rendered for the widget.
+     */
+    readonly insight: IInsight;
+}
+
+/**
  * This event is emitted when the insight rendered inside an insight widget gets switched for another one.
  *
  * That essentially means the insight widget now renders a different visualization
@@ -200,17 +233,7 @@ export const isDashboardInsightWidgetVisPropertiesChanged =
  */
 export interface DashboardInsightWidgetInsightSwitched extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.INSIGHT_SWITCHED";
-    readonly payload: {
-        /**
-         * Reference to Insight Widget that was changed.
-         */
-        readonly ref: ObjRef;
-
-        /**
-         * The new insight that is now rendered for the widget.
-         */
-        readonly insight: IInsight;
-    };
+    readonly payload: DashboardInsightWidgetInsightSwitchedPayload;
 }
 
 export function insightWidgetInsightChanged(
@@ -245,6 +268,29 @@ export const isDashboardInsightWidgetInsightSwitched = eventGuard<DashboardInsig
 //
 
 /**
+ * Payload of the {@link DashboardInsightWidgetDrillsModified} event.
+ * @alpha
+ */
+export interface DashboardInsightWidgetDrillsModifiedPayload {
+    /**
+     * Reference to Insight Widget that was changed.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Drill definitions that were newly added. There will be at most one drill definition for drillable
+     * measure.
+     */
+    readonly added: DrillDefinition[];
+
+    /**
+     * Drill definitions that were updated. For each measure that was already set up with a drill definition,
+     * there will be the new drill definition.
+     */
+    readonly updated: DrillDefinition[];
+}
+
+/**
  * This event is emitted when the insight widget's drill definitions change. The change may include
  * addition or change of drill definition for one or more drillable measures.
  *
@@ -252,24 +298,7 @@ export const isDashboardInsightWidgetInsightSwitched = eventGuard<DashboardInsig
  */
 export interface DashboardInsightWidgetDrillsModified extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_MODIFIED";
-    readonly payload: {
-        /**
-         * Reference to Insight Widget that was changed.
-         */
-        readonly ref: ObjRef;
-
-        /**
-         * Drill definitions that were newly added. There will be at most one drill definition for drillable
-         * measure.
-         */
-        readonly added: DrillDefinition[];
-
-        /**
-         * Drill definitions that were updated. For each measure that was already set up with a drill definition,
-         * there will be the new drill definition.
-         */
-        readonly updated: DrillDefinition[];
-    };
+    readonly payload: DashboardInsightWidgetDrillsModifiedPayload;
 }
 
 export function insightWidgetDrillsModified(
@@ -306,6 +335,22 @@ export const isDashboardInsightWidgetDrillsModified = eventGuard<DashboardInsigh
 //
 
 /**
+ * Payload of the {@link DashboardInsightWidgetDrillsRemoved} event.
+ * @alpha
+ */
+export interface DashboardInsightWidgetDrillsRemovedPayload {
+    /**
+     * Reference to Insight Widget that was changed.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Drill definitions that were removed.
+     */
+    readonly removed: DrillDefinition[];
+}
+
+/**
  * This event is emitted when the insight widget's drill definitions are removed. The measures for which
  * the drill definitions were set up will no longer be clickable.
  *
@@ -313,17 +358,7 @@ export const isDashboardInsightWidgetDrillsModified = eventGuard<DashboardInsigh
  */
 export interface DashboardInsightWidgetDrillsRemoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.DRILLS_REMOVED";
-    readonly payload: {
-        /**
-         * Reference to Insight Widget that was changed.
-         */
-        readonly ref: ObjRef;
-
-        /**
-         * Drill definitions that were removed.
-         */
-        readonly removed: DrillDefinition[];
-    };
+    readonly payload: DashboardInsightWidgetDrillsRemovedPayload;
 }
 
 export function insightWidgetDrillsRemoved(
@@ -358,6 +393,17 @@ export const isDashboardInsightWidgetDrillsRemoved = eventGuard<DashboardInsight
 //
 
 /**
+ * Payload of the {@link DashboardInsightWidgetChanged} event.
+ * @alpha
+ */
+export interface DashboardInsightWidgetChangedPayload {
+    /**
+     * The entire definition of the insight widget after the change.
+     */
+    insightWidget: IInsightWidget | IInsightWidgetDefinition;
+}
+
+/**
  * This event is emitted after any change to Insight Widget configuration. It contains the entire new state of the
  * Insight Widget.
  *
@@ -365,12 +411,7 @@ export const isDashboardInsightWidgetDrillsRemoved = eventGuard<DashboardInsight
  */
 export interface DashboardInsightWidgetChanged extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.WIDGET_CHANGED";
-    readonly payload: {
-        /**
-         * The entire definition of the insight widget after the change.
-         */
-        insightWidget: IInsightWidget | IInsightWidgetDefinition;
-    };
+    readonly payload: DashboardInsightWidgetChangedPayload;
 }
 
 export function insightWidgetChanged(
@@ -403,16 +444,28 @@ export const isDashboardInsightWidgetChanged = eventGuard<DashboardInsightWidget
 //
 
 /**
+ * Payload of the {@link DashboardInsightWidgetExportRequested} event.
+ * @alpha
+ */
+export interface DashboardInsightWidgetExportRequestedPayload {
+    /**
+     * Reference to the Insight to be exported.
+     */
+    readonly ref: ObjRef;
+    /**
+     * Additional configuration of the export.
+     */
+    readonly config: IExportConfig;
+}
+
+/**
  * This event is emitted after export of an insight widget is requested.
  *
  * @alpha
  */
 export interface DashboardInsightWidgetExportRequested extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.EXPORT_REQUESTED";
-    readonly payload: {
-        ref: ObjRef;
-        config: IExportConfig;
-    };
+    readonly payload: DashboardInsightWidgetExportRequestedPayload;
 }
 
 /**
@@ -445,6 +498,21 @@ export const isDashboardInsightWidgetExportRequested = eventGuard<DashboardInsig
     "GDC.DASH/EVT.INSIGHT_WIDGET.EXPORT_REQUESTED",
 );
 
+//
+//
+//
+
+/**
+ * Payload of the {@link DashboardInsightWidgetExportResolved} event.
+ * @alpha
+ */
+export interface DashboardInsightWidgetExportResolvedPayload {
+    /**
+     * URI of the resulting file that can be used to download it.
+     */
+    resultUri: string;
+}
+
 /**
  * This event is emitted after export of an insight widget is resolved.
  *
@@ -452,12 +520,7 @@ export const isDashboardInsightWidgetExportRequested = eventGuard<DashboardInsig
  */
 export interface DashboardInsightWidgetExportResolved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.EXPORT_RESOLVED";
-    readonly payload: {
-        /**
-         * URI of the resulting file that can be used to download it.
-         */
-        resultUri: string;
-    };
+    readonly payload: DashboardInsightWidgetExportResolvedPayload;
 }
 
 /**

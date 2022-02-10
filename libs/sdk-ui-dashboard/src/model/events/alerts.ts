@@ -1,9 +1,20 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { IWidgetAlert } from "@gooddata/sdk-backend-spi";
 
 import { DashboardContext } from "../types/commonTypes";
 import { IDashboardEvent } from "./base";
 import { eventGuard } from "./util";
+
+/**
+ * Payload of the {@link DashboardAlertCreated} event.
+ * @alpha
+ */
+export interface DashboardAlertCreatedPayload {
+    /**
+     * The alert created.
+     */
+    readonly alert: IWidgetAlert;
+}
 
 /**
  * This event is emitted after the Kpi alert is successfully saved.
@@ -12,9 +23,7 @@ import { eventGuard } from "./util";
  */
 export interface DashboardAlertCreated extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.ALERT.CREATED";
-    readonly payload: {
-        readonly alert: IWidgetAlert;
-    };
+    readonly payload: DashboardAlertCreatedPayload;
 }
 
 export function alertCreated(
@@ -41,15 +50,24 @@ export function alertCreated(
 export const isDashboardAlertCreated = eventGuard<DashboardAlertCreated>("GDC.DASH/EVT.ALERT.CREATED");
 
 /**
+ * Payload of the {@link DashboardAlertsRemoved} event.
+ * @alpha
+ */
+export interface DashboardAlertsRemovedPayload {
+    /**
+     * The alerts removed.
+     */
+    readonly alerts: IWidgetAlert[];
+}
+
+/**
  * This event is emitted after the Kpi alerts are successfully removed.
  *
  * @alpha
  */
 export interface DashboardAlertsRemoved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.ALERTS.REMOVED";
-    readonly payload: {
-        readonly alerts: IWidgetAlert[];
-    };
+    readonly payload: DashboardAlertsRemovedPayload;
 }
 
 export function alertsRemoved(
@@ -76,15 +94,24 @@ export function alertsRemoved(
 export const isDashboardAlertsRemoved = eventGuard<DashboardAlertsRemoved>("GDC.DASH/EVT.ALERTS.REMOVED");
 
 /**
+ * Payload of the {@link DashboardAlertUpdated} event.
+ * @alpha
+ */
+export interface DashboardAlertUpdatedPayload {
+    /**
+     * The alert updated.
+     */
+    readonly updated: IWidgetAlert;
+}
+
+/**
  * This event is emitted after the Kpi alert is updated.
  *
  * @alpha
  */
 export interface DashboardAlertUpdated extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.ALERT.UPDATED";
-    readonly payload: {
-        readonly updated: IWidgetAlert;
-    };
+    readonly payload: DashboardAlertUpdatedPayload;
 }
 
 export function alertUpdated(

@@ -1,17 +1,23 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { IDashboardCommand } from "./base";
+
+/**
+ * Payload of the {@link RequestAsyncRender} command.
+ * @alpha
+ */
+export interface RequestAsyncRenderPayload {
+    /**
+     * Async render identifier (eg stringified widget {@link @gooddata/sdk-model#ObjRef}).
+     */
+    readonly id: string;
+}
 
 /**
  * @alpha
  */
 export interface RequestAsyncRender extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.RENDER.ASYNC.REQUEST";
-    readonly payload: {
-        /**
-         * Async render identifier (eg stringified widget {@link @gooddata/sdk-model#ObjRef}).
-         */
-        readonly id: string;
-    };
+    readonly payload: RequestAsyncRenderPayload;
 }
 
 /**
@@ -48,17 +54,27 @@ export function requestAsyncRender(id: string, correlationId?: string): RequestA
     };
 }
 
+//
+//
+//
+
+/**
+ * Payload of the {@link ResolveAsyncRender} command.
+ * @alpha
+ */
+export interface ResolveAsyncRenderPayload {
+    /**
+     * Async render identifier (eg stringified widget {@link @gooddata/sdk-model#ObjRef}).
+     */
+    readonly id: string;
+}
+
 /**
  * @alpha
  */
 export interface ResolveAsyncRender extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE";
-    readonly payload: {
-        /**
-         * Async render identifier (eg stringified widget {@link @gooddata/sdk-model#ObjRef}).
-         */
-        readonly id: string;
-    };
+    readonly payload: ResolveAsyncRenderPayload;
 }
 
 /**

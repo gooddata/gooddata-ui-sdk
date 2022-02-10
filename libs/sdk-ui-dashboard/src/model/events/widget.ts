@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { IExecutionDefinition, ObjRef } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
@@ -8,22 +8,28 @@ import { DashboardEventBody, IDashboardEvent } from "./base";
 import { eventGuard } from "./util";
 
 /**
+ * Payload of the {@link DashboardWidgetExecutionStarted} event.
+ * @alpha
+ */
+export interface DashboardWidgetExecutionStartedPayload {
+    /**
+     * Reference to the widget that this event relates to.
+     */
+    widgetRef: ObjRef;
+    /**
+     * Instance of {@link @gooddata/sdk-model#IExecutionDefinition} that the widget executed.
+     */
+    executionDefinition: IExecutionDefinition;
+}
+
+/**
  * This event is emitted after execution of an insight widget starts.
  *
  * @alpha
  */
 export interface DashboardWidgetExecutionStarted extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.WIDGET.EXECUTION_STARTED";
-    readonly payload: {
-        /**
-         * Reference to the widget that this event relates to.
-         */
-        widgetRef: ObjRef;
-        /**
-         * Instance of {@link @gooddata/sdk-model#IExecutionDefinition} that the widget executed.
-         */
-        executionDefinition: IExecutionDefinition;
-    };
+    readonly payload: DashboardWidgetExecutionStartedPayload;
 }
 
 /**
@@ -54,6 +60,25 @@ export const isDashboardWidgetExecutionStarted = eventGuard<DashboardWidgetExecu
     "GDC.DASH/EVT.WIDGET.EXECUTION_STARTED",
 );
 
+//
+//
+//
+
+/**
+ * Payload of the {@link DashboardWidgetExecutionFailed} event.
+ * @alpha
+ */
+export interface DashboardWidgetExecutionFailedPayload {
+    /**
+     * Instance of {@link @gooddata/sdk-ui#GoodDataSdkError} with the information about the error the related execution failed with.
+     */
+    error: GoodDataSdkError;
+    /**
+     * Reference to the widget that this event relates to.
+     */
+    widgetRef: ObjRef;
+}
+
 /**
  * This event is emitted after execution of an insight widget fails.
  *
@@ -61,16 +86,7 @@ export const isDashboardWidgetExecutionStarted = eventGuard<DashboardWidgetExecu
  */
 export interface DashboardWidgetExecutionFailed extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.WIDGET.EXECUTION_FAILED";
-    readonly payload: {
-        /**
-         * Instance of {@link @gooddata/sdk-ui#GoodDataSdkError} with the information about the error the related execution failed with.
-         */
-        error: GoodDataSdkError;
-        /**
-         * Reference to the widget that this event relates to.
-         */
-        widgetRef: ObjRef;
-    };
+    readonly payload: DashboardWidgetExecutionFailedPayload;
 }
 
 /**
@@ -101,6 +117,25 @@ export const isDashboardWidgetExecutionFailed = eventGuard<DashboardWidgetExecut
     "GDC.DASH/EVT.WIDGET.EXECUTION_FAILED",
 );
 
+//
+//
+//
+
+/**
+ * Payload of the {@link DashboardWidgetExecutionSucceeded} event.
+ * @alpha
+ */
+export interface DashboardWidgetExecutionSucceededPayload {
+    /**
+     * Instance of {@link @gooddata/sdk-backend-spi#IDataView} with the data the widget first requested.
+     */
+    dataView: IDataView;
+    /**
+     * Reference to the widget that this event relates to.
+     */
+    widgetRef: ObjRef;
+}
+
 /**
  * This event is emitted after execution of an insight widget succeeds.
  *
@@ -108,16 +143,7 @@ export const isDashboardWidgetExecutionFailed = eventGuard<DashboardWidgetExecut
  */
 export interface DashboardWidgetExecutionSucceeded extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.WIDGET.EXECUTION_SUCCEEDED";
-    readonly payload: {
-        /**
-         * Instance of {@link @gooddata/sdk-backend-spi#IDataView} with the data the widget first requested.
-         */
-        dataView: IDataView;
-        /**
-         * Reference to the widget that this event relates to.
-         */
-        widgetRef: ObjRef;
-    };
+    readonly payload: DashboardWidgetExecutionSucceededPayload;
 }
 
 /**
