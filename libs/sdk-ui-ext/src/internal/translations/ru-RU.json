@@ -118,7 +118,7 @@
     "properties.not_applicable": "Свойство неприменимо для данной конфигурации анализа",
     "properties.auto_placeholder": "автоматически",
     "properties.auto_default": "авто (по умолчанию)",
-    "properties.legend.title": "Условные обозначения",
+    "properties.legend.title": "Услов. обозн.",
     "properties.legend.position": "Позиция",
     "properties.canvas.title": "Полотно",
     "properties.canvas.gridline": "Сетка",
