@@ -16,10 +16,11 @@ describe("SingleDashboardStoreAccessor tests", () => {
         const instance = SingleDashboardStoreAccessor.getInstance();
         const onStateChangeHandler = instance.getOnChangeHandler();
 
-        onStateChangeHandler({} as DashboardState, jest.fn());
+        const dashboardDispatch = jest.fn();
+        onStateChangeHandler({} as DashboardState, dashboardDispatch);
 
         expect(instance.getDashboardSelect()).toBeTruthy();
-        expect(instance.getDashboardDispatch()).toBeTruthy();
+        expect(instance.getDashboardDispatch()).toBe(dashboardDispatch);
     });
 
     it("is initialized", () => {

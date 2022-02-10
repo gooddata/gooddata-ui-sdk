@@ -27,12 +27,13 @@ describe("dashboard store accessors repository", () => {
         const instance = DashboardStoreAccessorRepository.getInstance();
         const onStateChangeCallback = instance.getOnChangeHandlerForDashboard(DASHBOARD_ID);
 
-        onStateChangeCallback({} as DashboardState, jest.fn());
+        const dashboardDispatch = jest.fn();
+        onStateChangeCallback({} as DashboardState, dashboardDispatch);
 
         const accessors = instance.getAccessorsForDashboard(DASHBOARD_ID);
 
         expect(accessors.getSelector()).toBeTruthy();
-        expect(accessors.getDispatch()).toBeTruthy();
+        expect(accessors.getDispatch()).toBe(dashboardDispatch);
     });
 
     it("clear accessors for dashboard", () => {
