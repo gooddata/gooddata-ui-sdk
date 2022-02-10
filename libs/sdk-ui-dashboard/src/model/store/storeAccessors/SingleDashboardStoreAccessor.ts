@@ -28,7 +28,7 @@ export class SingleDashboardStoreAccessor {
         if (!SingleDashboardStoreAccessor.singleDashboardStoreAccessor) {
             SingleDashboardStoreAccessor.singleDashboardStoreAccessor = new SingleDashboardStoreAccessor();
         }
-        return this.singleDashboardStoreAccessor;
+        return SingleDashboardStoreAccessor.singleDashboardStoreAccessor;
     }
 
     /**
