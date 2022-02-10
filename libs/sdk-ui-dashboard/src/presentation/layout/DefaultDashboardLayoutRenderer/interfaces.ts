@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { IDashboardWidget, IDashboardLayout, ScreenSize } from "@gooddata/sdk-backend-spi";
 import {
     IDashboardLayoutItemFacade,
@@ -40,7 +40,7 @@ export type IDashboardLayoutSectionKeyGetter<TWidget = IDashboardWidget> = (
  *
  * @alpha
  */
-export type IDashboardLayoutSectionRenderProps<TWidget = IDashboardWidget> = {
+export interface IDashboardLayoutSectionRenderProps<TWidget = IDashboardWidget> {
     /**
      * Dashboard layout section.
      */
@@ -75,7 +75,7 @@ export type IDashboardLayoutSectionRenderProps<TWidget = IDashboardWidget> = {
      * Is hidden section? Use this to hide the section without remounting it.
      */
     isHidden?: boolean;
-};
+}
 
 /**
  * Dashboard layout section renderer.
@@ -92,7 +92,7 @@ export type IDashboardLayoutSectionRenderer<TWidget = IDashboardWidget, TCustomP
  *
  * @alpha
  */
-export type IDashboardLayoutSectionHeaderRenderProps<TWidget = IDashboardWidget> = {
+export interface IDashboardLayoutSectionHeaderRenderProps<TWidget = IDashboardWidget> {
     /**
      * Dashboard layout section.
      */
@@ -107,7 +107,7 @@ export type IDashboardLayoutSectionHeaderRenderProps<TWidget = IDashboardWidget>
      * Default renderer of the section header - can be used as a fallback for custom sectionHeaderRenderer.
      */
     DefaultSectionHeaderRenderer: IDashboardLayoutSectionHeaderRenderer<TWidget>;
-};
+}
 
 /**
  * Dashboard layout section heder renderer.
@@ -124,7 +124,7 @@ export type IDashboardLayoutSectionHeaderRenderer<TWidget = IDashboardWidget, TC
  *
  * @alpha
  */
-export type IDashboardLayoutItemKeyGetterProps<TWidget = IDashboardWidget> = {
+export interface IDashboardLayoutItemKeyGetterProps<TWidget = IDashboardWidget> {
     /**
      * Dashboard layout item.
      */
@@ -134,7 +134,7 @@ export type IDashboardLayoutItemKeyGetterProps<TWidget = IDashboardWidget> = {
      * Current screen type with respect to the set breakpoints.
      */
     screen: ScreenSize;
-};
+}
 
 /**
  * Dashboard layout item key getter.
@@ -154,7 +154,7 @@ export type IDashboardLayoutItemKeyGetter<TWidget = IDashboardWidget> = (
  *
  * @alpha
  */
-export type IDashboardLayoutItemRenderProps<TWidget = IDashboardWidget> = {
+export interface IDashboardLayoutItemRenderProps<TWidget = IDashboardWidget> {
     /**
      * Dashboard layout item.
      */
@@ -189,7 +189,7 @@ export type IDashboardLayoutItemRenderProps<TWidget = IDashboardWidget> = {
      * Widget rendered by widgetRenderer.
      */
     children: React.ReactNode;
-};
+}
 
 /**
  * Dashboard layout item renderer.
@@ -206,7 +206,7 @@ export type IDashboardLayoutItemRenderer<TWidget = IDashboardWidget, TCustomProp
  *
  * @alpha
  */
-export type IDashboardLayoutWidgetRenderProps<TWidget = IDashboardWidget> = {
+export interface IDashboardLayoutWidgetRenderProps<TWidget = IDashboardWidget> {
     /**
      * Dashboard layout item.
      */
@@ -262,7 +262,7 @@ export type IDashboardLayoutWidgetRenderProps<TWidget = IDashboardWidget> = {
      * Default widget renderer - can be used as a fallback for custom widgetRenderer.
      */
     DefaultWidgetRenderer: IDashboardLayoutWidgetRenderer<TWidget>;
-};
+}
 
 /**
  * Dashboard layout content renderer.
@@ -279,7 +279,7 @@ export type IDashboardLayoutWidgetRenderer<TWidget = IDashboardWidget, TCustomPr
  *
  * @alpha
  */
-export type IDashboardLayoutGridRowRenderProps<TWidget = IDashboardWidget> = {
+export interface IDashboardLayoutGridRowRenderProps<TWidget = IDashboardWidget> {
     /**
      * Items rendered in one row.
      */
@@ -299,7 +299,7 @@ export type IDashboardLayoutGridRowRenderProps<TWidget = IDashboardWidget> = {
      * Current screen type with respect to the set breakpoints.
      */
     screen: ScreenSize;
-};
+}
 
 /**
  * Dashboard layout grid row renderer.
@@ -318,7 +318,7 @@ export type IDashboardLayoutGridRowRenderer<TWidget = IDashboardWidget, TCustomP
  *
  * @alpha
  */
-export type IDashboardLayoutRenderProps<TWidget = IDashboardWidget> = {
+export interface IDashboardLayoutRenderProps<TWidget = IDashboardWidget> {
     /**
      * Dashboard layout definition to render.
      */
@@ -381,7 +381,7 @@ export type IDashboardLayoutRenderProps<TWidget = IDashboardWidget> = {
      * Checks if feature flag enableKDWidgetCustomHeight is enabled
      */
     enableCustomHeight?: boolean;
-};
+}
 
 /**
  * Dashboard layout renderer.

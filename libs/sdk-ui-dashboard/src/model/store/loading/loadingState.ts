@@ -1,12 +1,12 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 /**
  * @alpha
  */
-export type LoadingState = {
+export interface LoadingState {
     loading: boolean;
     result?: boolean;
     error?: Error;
-};
+}
 
 export const loadingInitialState: LoadingState = { loading: false };

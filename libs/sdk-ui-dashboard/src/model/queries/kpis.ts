@@ -47,7 +47,7 @@ export function queryDateDatasetsForMeasure(
  *
  * @alpha
  */
-export type MeasureDateDatasets = {
+export interface MeasureDateDatasets {
     /**
      * Date datasets that are available for filtering of the measure. The available datasets are obtained by inspecting
      * relation of measure and the different date datasets in the workspace's logical data model.
@@ -65,4 +65,4 @@ export type MeasureDateDatasets = {
      * that figure in the result structure have their titles included in this mapping
      */
     readonly dateDatasetDisplayNames: Record<string, string>;
-};
+}

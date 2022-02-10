@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { ObjRef } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
@@ -6,12 +6,12 @@ import isEmpty from "lodash/isEmpty";
 /**
  * @alpha
  */
-export type WidgetHeader = {
+export interface WidgetHeader {
     /**
      * Title to set. If not defined then widget will have no title.
      */
     title?: string;
-};
+}
 
 /**
  * @internal

@@ -1,12 +1,12 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 /**
  * @alpha
  */
-export type SavingState = {
+export interface SavingState {
     saving: boolean;
     result?: boolean;
     error?: Error;
-};
+}
 
 export const savingInitialState: SavingState = { saving: false };

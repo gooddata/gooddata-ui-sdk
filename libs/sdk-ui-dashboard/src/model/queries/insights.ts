@@ -58,7 +58,7 @@ export function queryDateDatasetsForInsight(
  *
  * @alpha
  */
-export type InsightDateDatasets = {
+export interface InsightDateDatasets {
     /**
      * Date datasets that are available for filtering of the insight. The available datasets are obtained by inspecting
      * the LDM entities used in the insight and how they relate to date datasets in the workspace's logical data model.
@@ -118,7 +118,7 @@ export type InsightDateDatasets = {
      * date datasets listed in this result.
      */
     readonly allAvailableDateDatasets: ICatalogDateDataset[];
-};
+}
 
 /**
  * Given results of a query of date datasets available to use for filtering an insight, this function will
@@ -154,7 +154,7 @@ export interface QueryInsightAttributesMeta extends IDashboardQuery {
 /**
  * @alpha
  */
-export type InsightAttributesMeta = {
+export interface InsightAttributesMeta {
     /**
      * High-level break down of how different display forms are used in the insight.
      */
@@ -169,7 +169,7 @@ export type InsightAttributesMeta = {
      * List of attributes to which the used display forms belong.
      */
     attributes: ReadonlyArray<IAttributeMetadataObject>;
-};
+}
 
 /**
  * Creates action thought which you can query dashboard component for information about display forms and

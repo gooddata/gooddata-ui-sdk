@@ -418,21 +418,24 @@ export interface IDashboardBaseProps {
  *
  * @public
  */
-export type IDashboardExtensionProps = IDashboardEventing &
-    IDashboardCustomizationProps &
-    IDashboardThemingProps & {
-        /**
-         * Pass instance of ReactReduxContext where the dashboard component's store should be saved.
-         *
-         * This is essential if you are dynamically loading dashboard engine and then enriching the
-         * dashboard with embedded, local plugins. If such plugins are compiled against sdk-ui-dashboard and
-         * use Redux hooks (useDashboardSelect, useDashboardDispatch) then your solution will not work
-         * unless you explicitly send your application's `ReactDashboardContext` into this prop.
-         *
-         * Note: there is no need to use this prop unless you are dynamically loading the engine bundle.
-         */
-        additionalReduxContext?: React.Context<ReactReduxContextValue>;
-    };
+export interface IDashboardExtensionProps
+    extends IDashboardEventing,
+        IDashboardCustomizationProps,
+        IDashboardThemingProps {
+    /**
+     * Pass instance of ReactReduxContext where the dashboard component's store should be saved.
+     *
+     * @remarks
+     *
+     * This is essential if you are dynamically loading dashboard engine and then enriching the
+     * dashboard with embedded, local plugins. If such plugins are compiled against sdk-ui-dashboard and
+     * use Redux hooks (useDashboardSelect, useDashboardDispatch) then your solution will not work
+     * unless you explicitly send your application's `ReactDashboardContext` into this prop.
+     *
+     * Note: there is no need to use this prop unless you are dynamically loading the engine bundle.
+     */
+    additionalReduxContext?: React.Context<ReactReduxContextValue>;
+}
 
 /**
  * @public

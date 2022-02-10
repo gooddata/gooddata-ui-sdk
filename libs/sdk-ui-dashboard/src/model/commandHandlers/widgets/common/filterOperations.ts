@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import {
     ICatalogDateDataset,
     IDashboardAttributeFilter,
@@ -207,7 +207,7 @@ function* unignoreAttributeFilter(
  * Result of the filter operation. This is fully resolved variant of filter settings that should be set as-is
  * on the widget.
  */
-export type FilterOpResult = {
+export interface FilterOpResult {
     /**
      * Date data set (if any) to use for date filtering the widget
      */
@@ -217,7 +217,7 @@ export type FilterOpResult = {
      * Attribute filters to ignore on the widget.
      */
     ignoredFilters?: IDashboardAttributeFilter[];
-};
+}
 
 export type DateDatasetValidator<T extends IAnalyticalWidget> = (
     ctx: DashboardContext,
@@ -236,11 +236,11 @@ export type FilterValidators<T extends IAnalyticalWidget> = {
     attributeFilterValidator: AttributeFilterValidator<T>;
 };
 
-export type FilterOpCommand = IDashboardCommand & {
+export interface FilterOpCommand extends IDashboardCommand {
     payload: {
         readonly operation: WidgetFilterOperation;
     };
-};
+}
 
 /**
  * This is one of the more complex event handlers. Here is a little introduction to make studying easier. You

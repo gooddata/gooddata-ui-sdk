@@ -15,21 +15,21 @@ import { queryEnvelopeWithPromise } from "../store/_infra/queryProcessing";
 /**
  * @internal
  */
-export type MonitoredAction = {
+export interface MonitoredAction {
     calls: number;
     promise: Promise<PayloadAction<any>>;
     resolve: (action: PayloadAction<any>) => void;
     reject: (e: any) => void;
-};
+}
 
 /**
  * @internal
  */
-export type HeadlessDashboardConfig = {
+export interface HeadlessDashboardConfig {
     queryServices?: IDashboardQueryService<any, any>[];
     backgroundWorkers?: ((context: DashboardContext) => SagaIterator<void>)[];
     customizationFns?: DashboardModelCustomizationFns;
-};
+}
 
 /**
  * @internal

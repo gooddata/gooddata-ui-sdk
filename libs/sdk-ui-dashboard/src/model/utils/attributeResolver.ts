@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
 import { IAttributeMetadataObject } from "@gooddata/sdk-backend-spi";
@@ -19,10 +19,10 @@ async function loadAttributesMetadata(
     return ctx.backend.workspace(ctx.workspace).attributes().getAttributes(refs);
 }
 
-export type AttributeResolutionResult = {
+export interface AttributeResolutionResult {
     resolved: ObjRefMap<IAttributeMetadataObject>;
     missing: ObjRef[];
-};
+}
 
 /**
  * Given a set of attribute refs (which may be of any type.. uri or id), this function returns a list of

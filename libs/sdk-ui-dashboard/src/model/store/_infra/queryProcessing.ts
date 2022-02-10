@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { IDashboardQueryService } from "./queryService";
 import { Saga, SagaIterator } from "redux-saga";
@@ -23,7 +23,7 @@ import { getDashboardContext } from "./contexts";
 /**
  * Query processing component has multiple pieces that need to be integrated into the redux store.
  */
-export type QueryProcessingModule = {
+export interface QueryProcessingModule {
     /**
      * Query services may store the results in state for caching purposes. All services that use caching implement
      * the cache as a separate slice of the internal `_queryCache` part of the state. This reducer is a combined
@@ -35,7 +35,7 @@ export type QueryProcessingModule = {
      * A single saga is in place to handle query processing requests. Query requests will be processed concurrently.
      */
     rootQueryProcessor: Saga;
-};
+}
 
 /**
  * @internal

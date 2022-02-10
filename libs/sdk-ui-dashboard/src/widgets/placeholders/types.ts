@@ -1,13 +1,13 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import { ICustomWidgetBase } from "../../model";
 
 /**
  * @alpha
  */
-export type KpiPlaceholderWidget = ICustomWidgetBase & {
+export interface KpiPlaceholderWidget extends ICustomWidgetBase {
     readonly customType: "kpiPlaceholder";
-};
+}
 
 /**
  * Tests whether an object is a {@link KpiPlaceholderWidget}.
@@ -22,9 +22,9 @@ export function isKpiPlaceholderWidget(obj: unknown): obj is KpiPlaceholderWidge
 /**
  * @alpha
  */
-export type InsightPlaceholderWidget = ICustomWidgetBase & {
+export interface InsightPlaceholderWidget extends ICustomWidgetBase {
     readonly customType: "insightPlaceholder";
-};
+}
 
 /**
  * Tests whether an object is a {@link InsightPlaceholderWidget}.

@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React, { useState, useCallback, useRef } from "react";
 import cx from "classnames";
 import { v4 as uuid } from "uuid";
@@ -40,7 +40,7 @@ import { useDrills } from "../hooks/useDrills";
 /**
  * @internal
  */
-export type WithDrillSelectProps = {
+export interface WithDrillSelectProps {
     widgetRef: ObjRef;
     insight: IInsight;
     onDrillDownSuccess?: OnDrillDownSuccess;
@@ -50,7 +50,7 @@ export type WithDrillSelectProps = {
     onDrillToCustomUrlSuccess?: OnDrillToCustomUrlSuccess;
     onError?: (error: any) => void;
     children: (props: { onDrill: OnWidgetDrill }) => JSX.Element;
-};
+}
 
 /**
  * @internal

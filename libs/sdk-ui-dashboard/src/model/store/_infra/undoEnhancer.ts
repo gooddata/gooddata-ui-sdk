@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import produce, { applyPatches, enablePatches, original, Patch, produceWithPatches } from "immer";
 import { CaseReducer, Draft, PayloadAction } from "@reduxjs/toolkit";
 import { IDashboardCommand } from "../../commands";
@@ -15,7 +15,7 @@ enablePatches();
  *
  * @alpha
  */
-export type UndoEntry<T extends IDashboardCommand = IDashboardCommand> = {
+export interface UndoEntry<T extends IDashboardCommand = IDashboardCommand> {
     /**
      * Dashboard command that has initiated the state changes.
      */
@@ -30,19 +30,19 @@ export type UndoEntry<T extends IDashboardCommand = IDashboardCommand> = {
      * Patches to apply in order to redo the undone changes.
      */
     redoPatches: Patch[];
-};
+}
 
 /**
  * Slice that can be undo-enabled needs to include the undo section which will contain the essential undo metadata.
  *
  * @alpha
  */
-export type UndoEnhancedState<T extends IDashboardCommand = IDashboardCommand> = {
+export interface UndoEnhancedState<T extends IDashboardCommand = IDashboardCommand> {
     _undo: {
         undoPointer: number;
         undoStack: UndoEntry<T>[];
     };
-};
+}
 
 /**
  * Initial value of the undo state.
@@ -57,7 +57,7 @@ export const InitialUndoState: UndoEnhancedState<any> = {
 /**
  * Actions that can be undone need to contain extra information in order to perform the undo correctly.
  */
-export type UndoPayload<T extends IDashboardCommand = IDashboardCommand> = {
+export interface UndoPayload<T extends IDashboardCommand = IDashboardCommand> {
     /**
      * Undo-related information. If not specified, then no undo will be possible for the action
      */
@@ -70,7 +70,7 @@ export type UndoPayload<T extends IDashboardCommand = IDashboardCommand> = {
          */
         cmd: T;
     };
-};
+}
 
 /**
  * Signature of the reducer enhanced to with undo - the payload action requires additional `undo` part in the payload.
@@ -192,7 +192,7 @@ export const resetUndoReducer = <TState extends UndoEnhancedState>(state: Draft<
     state._undo = InitialUndoState._undo;
 };
 
-export type UndoableCommand<TCmd extends IDashboardCommand = IDashboardCommand> = {
+export interface UndoableCommand<TCmd extends IDashboardCommand = IDashboardCommand> {
     /**
      * Command that can be un-done.
      */
@@ -206,7 +206,7 @@ export type UndoableCommand<TCmd extends IDashboardCommand = IDashboardCommand> 
      * patches is done on particular reducer level (which the batch-actions reducer calls in sequence).
      */
     firstOccurrenceOnStack: number;
-};
+}
 
 /**
  * Given the undo information stored in state, this function produces an array of commands that can be un-done. The commands
