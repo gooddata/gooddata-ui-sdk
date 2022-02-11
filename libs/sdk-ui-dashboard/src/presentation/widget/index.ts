@@ -1,10 +1,12 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 export {
     useWidgetFilters,
     useCustomWidgetExecutionDataView,
     IUseCustomWidgetExecutionDataViewConfig,
     useCustomWidgetInsightDataView,
     IUseCustomWidgetInsightDataViewConfig,
+    useInsightWidgetDataView,
+    IUseInsightWidgetDataView,
 } from "./common";
 
 export * from "./insight";

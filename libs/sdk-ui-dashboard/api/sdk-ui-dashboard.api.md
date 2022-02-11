@@ -3378,6 +3378,11 @@ export interface IUseCustomWidgetInsightDataViewConfig {
     widget: ICustomWidget;
 }
 
+// @public
+export interface IUseInsightWidgetDataView {
+    insightWidget?: IInsightWidget;
+}
+
 // @alpha (undocumented)
 export interface IXlsxExportConfig {
     // (undocumented)
@@ -5143,6 +5148,9 @@ export interface UseDrillToLegacyDashboardProps {
     // (undocumented)
     onSuccess?: (event: DashboardDrillToLegacyDashboardResolved) => void;
 }
+
+// @public
+export function useInsightWidgetDataView(config: IUseInsightWidgetDataView): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
 
 // @alpha (undocumented)
 export type UserInteractionPayload = UserInteractionPayloadWithData | BareUserInteractionPayload;
