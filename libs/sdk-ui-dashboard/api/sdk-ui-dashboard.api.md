@@ -3366,13 +3366,13 @@ export interface ITopBarProps {
     titleProps: ITitleProps;
 }
 
-// @beta
+// @public
 export interface IUseCustomWidgetExecutionDataViewConfig {
     execution?: Exclude<IExecutionConfiguration, "filters">;
     widget: ICustomWidget;
 }
 
-// @beta
+// @public
 export interface IUseCustomWidgetInsightDataViewConfig {
     insight?: IInsightDefinition | ObjRef;
     widget: ICustomWidget;
@@ -4677,11 +4677,11 @@ export interface UpsertExecutionResult extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.EXECUTION_RESULT.UPSERT";
 }
 
-// @beta
-export const useCustomWidgetExecutionDataView: ({ widget, execution, }: IUseCustomWidgetExecutionDataViewConfig) => UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
+// @public
+export function useCustomWidgetExecutionDataView({ widget, execution, }: IUseCustomWidgetExecutionDataViewConfig): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
 
-// @beta
-export const useCustomWidgetInsightDataView: ({ widget, insight, }: IUseCustomWidgetInsightDataViewConfig) => UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
+// @public
+export function useCustomWidgetInsightDataView({ widget, insight, }: IUseCustomWidgetInsightDataViewConfig): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
 
 // @internal (undocumented)
 export interface UseDashboardAsyncRender {
