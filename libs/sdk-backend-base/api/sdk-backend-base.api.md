@@ -11,6 +11,7 @@ import { DateAttributeGranularity } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { ErrorConverter } from '@gooddata/sdk-backend-spi';
 import { ExplainConfig } from '@gooddata/sdk-backend-spi';
+import { FilterContextItem } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
@@ -27,8 +28,14 @@ import { ICatalogDateDataset } from '@gooddata/sdk-backend-spi';
 import { ICatalogFact } from '@gooddata/sdk-backend-spi';
 import { ICatalogGroup } from '@gooddata/sdk-backend-spi';
 import { ICatalogMeasure } from '@gooddata/sdk-backend-spi';
+import { IDashboard } from '@gooddata/sdk-backend-spi';
+import { IDashboardDefinition } from '@gooddata/sdk-backend-spi';
 import { IDashboardFilterReference } from '@gooddata/sdk-backend-spi';
 import { IDashboardMetadataObject } from '@gooddata/sdk-backend-spi';
+import { IDashboardPlugin } from '@gooddata/sdk-backend-spi';
+import { IDashboardPluginDefinition } from '@gooddata/sdk-backend-spi';
+import { IDashboardReferences } from '@gooddata/sdk-backend-spi';
+import { IDashboardWithReferences } from '@gooddata/sdk-backend-spi';
 import { IDataSetMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IDimension } from '@gooddata/sdk-model';
@@ -40,6 +47,9 @@ import { IExecutionResult } from '@gooddata/sdk-backend-spi';
 import { IExportConfig } from '@gooddata/sdk-backend-spi';
 import { IExportResult } from '@gooddata/sdk-backend-spi';
 import { IFactMetadataObject } from '@gooddata/sdk-backend-spi';
+import { IFilter } from '@gooddata/sdk-model';
+import { IFilterContextDefinition } from '@gooddata/sdk-backend-spi';
+import { IGetDashboardOptions } from '@gooddata/sdk-backend-spi';
 import { IGroupableCatalogItemBase } from '@gooddata/sdk-backend-spi';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
@@ -50,6 +60,7 @@ import { IKpiWidgetDefinition } from '@gooddata/sdk-backend-spi';
 import { ILegacyKpi } from '@gooddata/sdk-backend-spi';
 import { ILegacyKpiComparisonDirection } from '@gooddata/sdk-backend-spi';
 import { ILegacyKpiComparisonTypeComparison } from '@gooddata/sdk-backend-spi';
+import { IListedDashboard } from '@gooddata/sdk-backend-spi';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IMetadataObject } from '@gooddata/sdk-backend-spi';
@@ -59,17 +70,24 @@ import { IPagedResource } from '@gooddata/sdk-backend-spi';
 import { IPostProcessing } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { IResultHeader } from '@gooddata/sdk-backend-spi';
+import { IScheduledMail } from '@gooddata/sdk-backend-spi';
+import { IScheduledMailDefinition } from '@gooddata/sdk-backend-spi';
 import { ISecuritySettingsService } from '@gooddata/sdk-backend-spi';
 import { ISettings } from '@gooddata/sdk-backend-spi';
 import { ISortItem } from '@gooddata/sdk-model';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { IVariableMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IWidget } from '@gooddata/sdk-backend-spi';
+import { IWidgetAlert } from '@gooddata/sdk-backend-spi';
+import { IWidgetAlertCount } from '@gooddata/sdk-backend-spi';
+import { IWidgetAlertDefinition } from '@gooddata/sdk-backend-spi';
+import { IWidgetReferences } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceAttributesService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalog } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogAvailableItemsFactory } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogFactory } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogFactoryOptions } from '@gooddata/sdk-backend-spi';
+import { IWorkspaceDashboardsService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceSettingsService } from '@gooddata/sdk-backend-spi';
 import { KpiDrillDefinition } from '@gooddata/sdk-backend-spi';
@@ -77,6 +95,8 @@ import { MeasureBuilder } from '@gooddata/sdk-model';
 import { MeasureModifications } from '@gooddata/sdk-model';
 import { NotAuthenticated } from '@gooddata/sdk-backend-spi';
 import { ObjRef } from '@gooddata/sdk-model';
+import { SupportedDashboardReferenceTypes } from '@gooddata/sdk-backend-spi';
+import { SupportedWidgetReferenceTypes } from '@gooddata/sdk-backend-spi';
 import { ValidationContext } from '@gooddata/sdk-backend-spi';
 import { VisualizationProperties } from '@gooddata/sdk-model';
 
@@ -308,6 +328,9 @@ export type CustomCallContext = {
 export class DashboardMetadataObjectBuilder<T extends IDashboardMetadataObject = IDashboardMetadataObject> extends MetadataObjectBuilder<T> {
 }
 
+// @alpha (undocumented)
+export type DashboardsDecoratorFactory = (dashboards: IWorkspaceDashboardsService, workspace: string) => IWorkspaceDashboardsService;
+
 // @beta (undocumented)
 export type DataProvider = (context: DataProviderContext) => Promise<IDataView>;
 
@@ -447,6 +470,61 @@ export abstract class DecoratedWorkspaceCatalogFactory implements IWorkspaceCata
 }
 
 // @alpha (undocumented)
+export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceDashboardsService {
+    protected constructor(decorated: IWorkspaceDashboardsService, workspace: string);
+    // (undocumented)
+    createDashboard(dashboard: IDashboardDefinition): Promise<IDashboard>;
+    // (undocumented)
+    createDashboardPlugin(plugin: IDashboardPluginDefinition): Promise<IDashboardPlugin>;
+    // (undocumented)
+    createScheduledMail(scheduledMail: IScheduledMailDefinition, exportFilterContext?: IFilterContextDefinition): Promise<IScheduledMail>;
+    // (undocumented)
+    createWidgetAlert(alert: IWidgetAlertDefinition): Promise<IWidgetAlert>;
+    // (undocumented)
+    protected decorated: IWorkspaceDashboardsService;
+    // (undocumented)
+    deleteDashboard(ref: ObjRef): Promise<void>;
+    // (undocumented)
+    deleteDashboardPlugin(ref: ObjRef): Promise<void>;
+    // (undocumented)
+    deleteWidgetAlert(ref: ObjRef): Promise<void>;
+    // (undocumented)
+    deleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
+    // (undocumented)
+    exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<string>;
+    // (undocumented)
+    getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;
+    // (undocumented)
+    getDashboard(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboard>;
+    // (undocumented)
+    getDashboardPlugin(ref: ObjRef): Promise<IDashboardPlugin>;
+    // (undocumented)
+    getDashboardPlugins(): Promise<IDashboardPlugin[]>;
+    // (undocumented)
+    getDashboardReferencedObjects(dashboard: IDashboard, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardReferences>;
+    // (undocumented)
+    getDashboards(options?: IGetDashboardOptions): Promise<IListedDashboard[]>;
+    // (undocumented)
+    getDashboardWidgetAlertsForCurrentUser(ref: ObjRef): Promise<IWidgetAlert[]>;
+    // (undocumented)
+    getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardWithReferences>;
+    // (undocumented)
+    getResolvedFiltersForWidget(widget: IWidget, filters: IFilter[]): Promise<IFilter[]>;
+    // (undocumented)
+    getScheduledMailsCountForDashboard(ref: ObjRef): Promise<number>;
+    // (undocumented)
+    getWidgetAlertsCountForWidgets(refs: ObjRef[]): Promise<IWidgetAlertCount[]>;
+    // (undocumented)
+    getWidgetReferencedObjects(widget: IWidget, types?: SupportedWidgetReferenceTypes[]): Promise<IWidgetReferences>;
+    // (undocumented)
+    updateDashboard(dashboard: IDashboard, updatedDashboard: IDashboardDefinition): Promise<IDashboard>;
+    // (undocumented)
+    updateWidgetAlert(alert: IWidgetAlert | IWidgetAlertDefinition): Promise<IWidgetAlert>;
+    // (undocumented)
+    workspace: string;
+}
+
+// @alpha (undocumented)
 export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSettingsService {
     protected constructor(decorated: IWorkspaceSettingsService);
     // (undocumented)
@@ -464,6 +542,7 @@ export type DecoratorFactories = {
     securitySettings?: SecuritySettingsDecoratorFactory;
     workspaceSettings?: WorkspaceSettingsDecoratorFactory;
     attributes?: AttributesDecoratorFactory;
+    dashboards?: DashboardsDecoratorFactory;
 };
 
 // @beta (undocumented)

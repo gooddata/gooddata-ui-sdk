@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 
 import { IRecording, readJsonSync, RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common";
 import {
@@ -81,6 +81,7 @@ export class DisplayFormRecording implements IRecording {
         return {
             elements: this.elementFile,
             obj: this.objFile,
+            req: this.requestFile,
         };
     }
 
