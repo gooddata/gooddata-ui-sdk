@@ -8,6 +8,7 @@ import {
     filterObjRef,
     IAttributeFilter,
     isAttributeElementsByRef,
+    isAttributeElementsByValue,
     isNegativeAttributeFilter,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
@@ -635,14 +636,20 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
     };
 
     const prepareElementsTitleQuery = (elements: IAttributeElement[]) => {
+        const options = isAttributeElementsByValue(elements)
+            ? {
+                  values: elements.map((opt) => opt.title),
+              }
+            : {
+                  uris: elements.map((opt) => opt.uri),
+              };
+
         return getBackend()
             .workspace(props.workspace)
             .attributes()
             .elements()
             .forDisplayForm(getObjRef(currentFilter, props.identifier))
-            .withOptions({
-                uris: elements.map((opt) => opt.uri),
-            });
+            .withOptions(options);
     };
 
     /**
