@@ -15,7 +15,7 @@ import { useWidgetFilters } from "./useWidgetFilters";
 /**
  * Configuration options for the {@link useCustomWidgetExecutionDataView} hook.
  *
- * @beta
+ * @public
  */
 export interface IUseCustomWidgetExecutionDataViewConfig {
     /**
@@ -34,12 +34,12 @@ export interface IUseCustomWidgetExecutionDataViewConfig {
  * This hook provides an easy way to read a data view from a custom widget. It resolves the appropriate filters
  * for the widget based on the filters currently set on the whole dashboard.
  *
- * @beta
+ * @public
  */
-export const useCustomWidgetExecutionDataView = ({
+export function useCustomWidgetExecutionDataView({
     widget,
     execution,
-}: IUseCustomWidgetExecutionDataViewConfig): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError> => {
+}: IUseCustomWidgetExecutionDataViewConfig): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError> {
     const filterQueryTask = useWidgetFilters(widget);
     const dataViewTask = useExecutionDataView({
         execution: execution
@@ -87,4 +87,4 @@ export const useCustomWidgetExecutionDataView = ({
         result: dataViewTask.result,
         status: "success",
     };
-};
+}

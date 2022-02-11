@@ -19,7 +19,7 @@ import { useWidgetFilters } from "./useWidgetFilters";
 /**
  * Configuration options for the {@link useCustomWidgetInsightDataView} hook.
  *
- * @beta
+ * @public
  */
 export interface IUseCustomWidgetInsightDataViewConfig {
     /**
@@ -38,12 +38,12 @@ export interface IUseCustomWidgetInsightDataViewConfig {
  * This hook provides an easy way to read a data view for an insight from a custom widget.
  * It resolves the appropriate filters for the widget based on the filters currently set on the whole dashboard.
  *
- * @beta
+ * @public
  */
-export const useCustomWidgetInsightDataView = ({
+export function useCustomWidgetInsightDataView({
     widget,
     insight,
-}: IUseCustomWidgetInsightDataViewConfig): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError> => {
+}: IUseCustomWidgetInsightDataViewConfig): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError> {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
 
@@ -135,4 +135,4 @@ export const useCustomWidgetInsightDataView = ({
         result: dataViewTask.result,
         status: "success",
     };
-};
+}
