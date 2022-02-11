@@ -10,6 +10,13 @@ import { eventGuard } from "./util";
 
 /**
  * Payload of the {@link DashboardDateFilterSelectionChanged} event.
+ *
+ * @remarks
+ *
+ * See also {@link dashboardDateFilterToDateFilterByWidget} and {@link dashboardDateFilterToDateFilterByDateDataSet} convertors
+ * – those allow you to convert the `filter` object to an {@link @gooddata/sdk-model#IDateFilter} instance you can use
+ * with visualizations, filter UI components and so on.
+ *
  * @public
  */
 export interface DashboardDateFilterSelectionChangedPayload {
@@ -25,6 +32,12 @@ export interface DashboardDateFilterSelectionChangedPayload {
 
 /**
  * This event is emitted after the dashboard's date filter selection is changed.
+ *
+ * @remarks
+ *
+ * See also {@link dashboardDateFilterToDateFilterByWidget} and {@link dashboardDateFilterToDateFilterByDateDataSet} convertors
+ * – those allow you to convert the `filter` in the event payload to an {@link @gooddata/sdk-model#IDateFilter} instance you can use
+ * with visualizations, filter UI components and so on.
  *
  * @public
  */
@@ -254,6 +267,13 @@ export const isDashboardAttributeFilterMoved = eventGuard<DashboardAttributeFilt
 
 /**
  * Payload of the {@link DashboardAttributeFilterSelectionChanged} event.
+ *
+ * @remarks
+ *
+ * See also {@link dashboardAttributeFilterToAttributeFilter} convertor – this allows you to convert the `filter`
+ * object to an {@link @gooddata/sdk-model#IAttributeFilter} instance you can use with visualizations,
+ * filter UI components and so on.
+ *
  * @public
  */
 export interface DashboardAttributeFilterSelectionChangedPayload {
@@ -268,7 +288,11 @@ export interface DashboardAttributeFilterSelectionChangedPayload {
 /**
  * This event is emitted after new elements are selected and applied in an attribute filter.
  *
- * The filter in the payload object must be converted to a {@link @gooddata/sdk-model#IFilter} object before its usage.
+ * @remarks
+ *
+ * See also {@link dashboardAttributeFilterToAttributeFilter} convertor – this allows you to convert the `filter`
+ * in the event payload to an {@link @gooddata/sdk-model#IAttributeFilter} instance you can use with visualizations,
+ * filter UI components and so on.
  *
  * @public
  */
@@ -361,6 +385,13 @@ export const isDashboardAttributeFilterParentChanged = eventGuard<DashboardAttri
 
 /**
  * Payload of the {@link DashboardFilterContextChanged} event.
+ *
+ * @remarks
+ *
+ * See also {@link filterContextToDashboardFiltersByWidget} and {@link filterContextToDashboardFiltersByDateDataSet} convertors
+ * – those allow you to convert the `filterContext` object to array of {@link @gooddata/sdk-model#IFilter} instances you can use
+ * with visualizations, filter UI components and so on.
+ *
  * @public
  */
 export interface DashboardFilterContextChangedPayload {
@@ -376,6 +407,12 @@ export interface DashboardFilterContextChangedPayload {
  *
  * This event is emitted as convenience - more granular events describe all the possible
  * changes to the dashboard filters and can be used to event source the state of filter context.
+ *
+ * @remarks
+ *
+ * See also {@link filterContextToDashboardFiltersByWidget} and {@link filterContextToDashboardFiltersByDateDataSet} convertors
+ * – those allow you to convert the `filterContext` in the event payload to array of {@link @gooddata/sdk-model#IFilter} instances you can use
+ * with visualizations, filter UI components and so on.
  *
  * @public
  */
