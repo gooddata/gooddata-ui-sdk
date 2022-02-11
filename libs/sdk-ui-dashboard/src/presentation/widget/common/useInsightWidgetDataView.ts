@@ -29,8 +29,7 @@ export interface IUseInsightWidgetDataView {
 }
 
 /**
- * This hook provides an easy way to read a data view from insight widget. It also allows to add
- * additional filters to this data view.
+ * This hook provides an easy way to read a data view from insight widget.
  *
  * @param config - configuration of the hook
  *
