@@ -1,14 +1,14 @@
 // (C) 2022 GoodData Corporation
 
 import { IDashboardLayout, IDrillToCustomUrl, LayoutPath } from "@gooddata/sdk-backend-spi";
-import update from "lodash/update";
+import update from "lodash/fp/update";
 
 import { getDrillToCustomUrlPaths } from "../../toBackend/AnalyticalDashboardConverter";
 import isEmpty from "lodash/isEmpty";
 import { joinDrillUrlParts } from "@gooddata/sdk-backend-spi/dist/workspace/dashboards/drillUrls";
 
 function convertTargetUrlPartsToString(drill: IDrillToCustomUrl) {
-    return update(drill, ["target", "url"], joinDrillUrlParts);
+    return update(["target", "url"], joinDrillUrlParts, drill);
 }
 
 export function convertDrillToCustomUrlInLayoutFromBackend(layout?: IDashboardLayout) {
@@ -22,6 +22,6 @@ export function convertDrillToCustomUrlInLayoutFromBackend(layout?: IDashboardLa
     }
 
     return paths.reduce((layout: IDashboardLayout, path: LayoutPath) => {
-        return update(layout, path, convertTargetUrlPartsToString);
+        return update(path, convertTargetUrlPartsToString, layout);
     }, layout);
 }

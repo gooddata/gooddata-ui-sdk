@@ -19,7 +19,7 @@ import omit from "lodash/omit";
 import updateWith from "lodash/updateWith";
 import { cloneWithSanitizedIds } from "./IdSanitization";
 import isEmpty from "lodash/isEmpty";
-import update from "lodash/update";
+import update from "lodash/fp/update";
 import { splitDrillUrlParts } from "@gooddata/sdk-backend-spi/dist/workspace/dashboards/drillUrls";
 
 function removeIdentifiers(widget: IDashboardWidget) {
@@ -109,7 +109,7 @@ export function getDrillToCustomUrlPaths(layout: IDashboardLayout) {
 }
 
 function convertTargetUrlToParts(drill: IDrillToCustomUrl) {
-    return update(drill, ["target", "url"], splitDrillUrlParts);
+    return update(["target", "url"], splitDrillUrlParts, drill);
 }
 
 export function convertDrillToCustomUrlInLayoutToBackend(layout?: IDashboardLayout) {
@@ -123,6 +123,6 @@ export function convertDrillToCustomUrlInLayoutToBackend(layout?: IDashboardLayo
     }
 
     return paths.reduce((layout: IDashboardLayout, path: LayoutPath) => {
-        return update(layout, path, convertTargetUrlToParts);
+        return update(path, convertTargetUrlToParts, layout);
     }, layout);
 }
