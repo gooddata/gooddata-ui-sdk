@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { IAnalyticalBackend, IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { LRUCache } from "@gooddata/util";
 
@@ -15,7 +15,7 @@ class WorkspaceSettingsLoader {
             settings = backend
                 .workspace(workspace)
                 .settings()
-                .getSettings()
+                .getSettingsForCurrentUser()
                 .catch((error) => {
                     // do not cache errors
                     this.settingsCache.delete(cacheKey);

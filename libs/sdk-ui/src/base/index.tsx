@@ -183,6 +183,7 @@ export {
     pickCorrectMetricWording,
     pickCorrectWording,
     removeAllInsightToReportTranslations,
+    removeAllWordingTranslationsWithSpecialSuffix,
 } from "./localization/TranslationsCustomizationProvider";
 
 /*

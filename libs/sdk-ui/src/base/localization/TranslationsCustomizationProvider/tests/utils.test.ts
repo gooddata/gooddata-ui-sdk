@@ -1,6 +1,10 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
-import { pickCorrectInsightWording, removeAllInsightToReportTranslations } from "../utils";
+import {
+    pickCorrectInsightWording,
+    removeAllInsightToReportTranslations,
+    removeAllWordingTranslationsWithSpecialSuffix,
+} from "../utils";
 import { IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { ITranslations } from "../../../localization/IntlWrapper";
 
@@ -38,6 +42,23 @@ describe("removeAllInsightToReportTranslations", () => {
         const result = removeAllInsightToReportTranslations({
             ...mockTranslationWithoutExtraWords,
             ...mockTranslation,
+        });
+        expect(result).toMatchObject(mockTranslationWithoutExtraWords);
+    });
+});
+
+describe("removeAllWordingTranslationsWithSpecialSuffix", () => {
+    const mockTranslationWithoutExtraWords: ITranslations = {
+        "mock.translation": "Insight",
+        "mock.translation.metric": "Measure",
+    };
+
+    it("should remove all insight to report words", () => {
+        const result = removeAllWordingTranslationsWithSpecialSuffix({
+            ...mockTranslationWithoutExtraWords,
+            ...mockTranslation,
+            "mock.translation.metric._measure": "Measure",
+            "mock.translation.metric._metric": "Metric",
         });
         expect(result).toMatchObject(mockTranslationWithoutExtraWords);
     });
