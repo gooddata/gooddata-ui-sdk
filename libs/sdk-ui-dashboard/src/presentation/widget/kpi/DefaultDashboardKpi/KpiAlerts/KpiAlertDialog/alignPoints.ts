@@ -17,20 +17,6 @@ export const kpiAlertDialogAlignPoints: IAlignPoint[] = [
         },
     },
     {
-        align: "br bl",
-        offset: {
-            x: 18,
-            y: 0,
-        },
-    },
-    {
-        align: "bl br",
-        offset: {
-            x: -18,
-            y: 0,
-        },
-    },
-    {
         align: "bc tc",
         offset: {
             x: 0,
@@ -38,10 +24,31 @@ export const kpiAlertDialogAlignPoints: IAlignPoint[] = [
         },
     },
     {
-        align: "cc cr",
+        align: "tc cr",
         offset: {
-            x: -200,
-            y: 0,
+            x: -100,
+            y: 90,
+        },
+    },
+    {
+        align: "tc cl",
+        offset: {
+            x: 100,
+            y: 90,
+        },
+    },
+    {
+        align: "tc cr",
+        offset: {
+            x: -50,
+            y: 90,
+        },
+    },
+    {
+        align: "tc cl",
+        offset: {
+            x: 50,
+            y: 90,
         },
     },
 ];

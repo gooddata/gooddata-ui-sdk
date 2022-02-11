@@ -110,7 +110,10 @@ $dialog-background: $is-focused-background;
 
 .target-tr.self-tl,
 .target-tl.self-tr,
-.target-cc.self-cr {
+.target-cc.self-cr,
+.target-cc.self-cl,
+.target-tc.self-cr,
+.target-tc.self-cl {
     .kpi-alert-dialog {
         &::before {
             margin-top: -12px;
@@ -132,7 +135,10 @@ $dialog-background: $is-focused-background;
     }
 }
 
-.target-cc.self-cr {
+.target-cc.self-cr,
+.target-cc.self-cl,
+.target-tc.self-cr,
+.target-tc.self-cl {
     .kpi-alert-dialog {
         &::before,
         &::after {
@@ -142,7 +148,9 @@ $dialog-background: $is-focused-background;
 }
 
 .target-tr.self-tl,
-.target-br.self-bl {
+.target-br.self-bl,
+.target-cc.self-cl,
+.target-tc.self-cl {
     .kpi-alert-dialog {
         &::before,
         &::after {
@@ -161,7 +169,8 @@ $dialog-background: $is-focused-background;
 
 .target-tl.self-tr,
 .target-bl.self-br,
-.target-cc.self-cr {
+.target-cc.self-cr,
+.target-tc.self-cr {
     .kpi-alert-dialog {
         &::after,
         &::before {
