@@ -10,7 +10,7 @@ import {
     validateCredentialsComplete,
     promptCredentials,
 } from "./credentials";
-import { discoverBackendTypeOrDie, readPackageJsonIfExists } from "./utils";
+import { discoverBackendType, readPackageJsonIfExists } from "./utils";
 import {
     getBackendFromOptions,
     getHostnameFromOptions,
@@ -19,7 +19,7 @@ import {
 import { loadEnv } from "./env";
 import { createHostnameValidator, validOrDie } from "./inputHandling/validators";
 import { createBackend } from "./backend";
-import { promptWorkspaceId } from "./terminal/prompts";
+import { promptBackend, promptHostname, promptWorkspaceId } from "./terminal/prompts";
 
 /**
  * Config for commands that target a workspace.
@@ -110,15 +110,17 @@ async function promptWorkspace(
  */
 export async function createWorkspaceTargetConfig(options: ActionOptions): Promise<WorkspaceTargetConfig> {
     const packageJson = readPackageJsonIfExists();
+
     const backendFromOptions = getBackendFromOptions(options);
-    const backend = backendFromOptions ?? discoverBackendTypeOrDie(packageJson);
+    const backend = backendFromOptions ?? discoverBackendType(packageJson) ?? (await promptBackend());
+
     const env = loadEnv(backend);
 
     const credentials = await createOrPromptCredentials(backend, env);
     completeCredentialsOrDie(backend, credentials);
 
     const hostnameFromOptions = getHostnameFromOptions(backendFromOptions, options);
-    const hostname = hostnameFromOptions ?? env.BACKEND_URL;
+    const hostname = hostnameFromOptions ?? env.BACKEND_URL ?? (await promptHostname(backend));
     validOrDie("hostname", hostname, createHostnameValidator(backend));
 
     const workspaceFromOptions = getWorkspaceFromOptions(options);
