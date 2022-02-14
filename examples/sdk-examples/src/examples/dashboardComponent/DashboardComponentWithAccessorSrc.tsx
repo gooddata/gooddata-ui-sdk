@@ -35,7 +35,7 @@ const DashboardComponentWithAccessorSrc: React.FC = () => {
      */
     const onDispatchClick = useCallback(() => {
         if (DashboardStoreAccessorRepository.isAccessorInitializedForDashboard(DASHBOARD_ID)) {
-            DashboardStoreAccessorRepository.getAccessorsForDashboard(DASHBOARD_ID).getDispatch()(
+            DashboardStoreAccessorRepository.getDashboardDispatchForDashboard(DASHBOARD_ID)(
                 changeDateFilterSelection("relative", "GDC.time.month", "-3", "0"),
             );
         }
@@ -48,7 +48,7 @@ const DashboardComponentWithAccessorSrc: React.FC = () => {
     const onSelectClick = useCallback(() => {
         if (DashboardStoreAccessorRepository.isAccessorInitializedForDashboard(DASHBOARD_ID)) {
             setSelectResult(
-                DashboardStoreAccessorRepository.getAccessorsForDashboard(DASHBOARD_ID).getSelector()(
+                DashboardStoreAccessorRepository.getDashboardSelectForDashboard(DASHBOARD_ID)(
                     selectEffectiveDateFilterOptions,
                 ),
             );

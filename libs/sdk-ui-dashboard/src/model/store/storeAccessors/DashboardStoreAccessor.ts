@@ -33,7 +33,7 @@ export class DashboardStoreAccessor {
     /**
      * Returns current selector for the dashboard's component state.
      */
-    getSelector = (): DashboardSelectorEvaluator => {
+    getDashboardSelect = (): DashboardSelectorEvaluator => {
         invariant(this.selectorEvaluator, "DashboardStoreAccessor selectorEvaluator is not initialized");
         return this.selectorEvaluator;
     };
@@ -49,7 +49,7 @@ export class DashboardStoreAccessor {
     /**
      * Returns current dispatch object for the dashboard component state.
      */
-    getDispatch = (): DashboardDispatch => {
+    getDashboardDispatch = (): DashboardDispatch => {
         invariant(this.dispatch, "DashboardStoreAccessor dispatch is not initialized");
         return this.dispatch;
     };
