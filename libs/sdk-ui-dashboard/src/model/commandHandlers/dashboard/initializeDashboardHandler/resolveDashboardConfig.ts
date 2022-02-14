@@ -23,7 +23,7 @@ import {
     ResolvedDashboardConfig,
 } from "../../../types/commonTypes";
 import { PromiseFnReturnType } from "../../../types/sagas";
-import { sanitizeInProgressFeatureSettings } from "./sanitizeInProgressFeatureSettings";
+import { sanitizeUnfinishedFeatureSettings } from "./sanitizeUnfinishedFeatureSettings";
 
 function loadDateFilterConfig(ctx: DashboardContext): Promise<IDateFilterConfigsQueryResult | undefined> {
     const { backend, workspace } = ctx;
@@ -123,12 +123,12 @@ export function* resolveDashboardConfig(
         /*
          * Config coming in props is fully specified. There is nothing to do. Bail out immediately.
          */
-        if (config.allowInProgressFeatures || !config.settings) {
+        if (config.allowUnfinishedFeatures || !config.settings) {
             return config;
         }
         return {
             ...config,
-            settings: sanitizeInProgressFeatureSettings(config.settings),
+            settings: sanitizeUnfinishedFeatureSettings(config.settings),
         };
     }
 
@@ -155,15 +155,15 @@ export function* resolveDashboardConfig(
     if (configValidation !== "Valid") {
         yield dispatchDashboardEvent(dateFilterValidationFailed(ctx, configValidation, cmd.correlationId));
     }
-    const allowInProgressFeatures = config.allowInProgressFeatures ?? false;
+    const allowUnfinishedFeatures = config.allowUnfinishedFeatures ?? false;
 
     const resolvedConfig: ResolvedDashboardConfig = {
         locale: settings.locale as ILocale,
         separators: settings.separators,
         dateFilterConfig: validDateFilterConfig,
-        settings: allowInProgressFeatures
+        settings: allowUnfinishedFeatures
             ? settings.settings
-            : sanitizeInProgressFeatureSettings(settings.settings),
+            : sanitizeUnfinishedFeatureSettings(settings.settings),
         colorPalette,
         objectAvailability: config.objectAvailability ?? {},
         mapboxToken: config.mapboxToken,
@@ -173,7 +173,7 @@ export function* resolveDashboardConfig(
         disableDefaultDrills: config.disableDefaultDrills ?? false,
         enableFilterValuesResolutionInDrillEvents: config.enableFilterValuesResolutionInDrillEvents ?? false,
         menuButtonItemsVisibility: config.menuButtonItemsVisibility ?? {},
-        allowInProgressFeatures,
+        allowUnfinishedFeatures,
     };
 
     return resolvedConfig;

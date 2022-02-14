@@ -306,10 +306,10 @@ export class DashboardLoader implements IDashboardLoader {
         const extensionProps: IDashboardExtensionProps = engine.initializePlugins(ctx, plugins);
         const { config } = this.baseProps;
         let dashboardConfig = config;
-        if (options?.allowInProgressFeatures === "staticOnly" && externalPluginLoaded) {
+        if (options?.allowUnfinishedFeatures === "staticOnly" && externalPluginLoaded) {
             dashboardConfig = {
                 ...config,
-                allowInProgressFeatures: false,
+                allowUnfinishedFeatures: false,
             };
         }
         const props: IDashboardProps = {

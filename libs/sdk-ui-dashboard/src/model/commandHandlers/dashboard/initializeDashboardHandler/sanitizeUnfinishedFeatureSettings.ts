@@ -3,12 +3,12 @@
 import { ISettings } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
 
-import { disabledInProgressFeatureSettings } from "../../../disabledInProgressFeatureSettings";
+import { disabledUnfinishedFeatureSettings } from "../../../disabledUnfinishedFeatureSettings";
 
-export const sanitizeInProgressFeatureSettings = (settings: ISettings | undefined): ISettings => {
+export const sanitizeUnfinishedFeatureSettings = (settings: ISettings | undefined): ISettings => {
     invariant(settings, "cannot sanitize undefined settings");
     return {
         ...settings,
-        ...disabledInProgressFeatureSettings,
+        ...disabledUnfinishedFeatureSettings,
     };
 };

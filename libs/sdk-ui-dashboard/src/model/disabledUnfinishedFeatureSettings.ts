@@ -12,7 +12,7 @@ import { ISettings } from "@gooddata/sdk-backend-spi";
  */
 
 /**
- * Turns off development settings for features in progress which cant be turned on in this version of UI SDK.
+ * Turns off development settings for unfinished features which cant be turned on in this version of UI SDK.
  * Add disabled FF for your feature, when it is not completed yet, but UI SDK needs to be released. It will prevent this feature from being accidentally turned on in WIP state by its platform setting when used in this version of UI SDK as part of old plugin.
  */
-export const disabledInProgressFeatureSettings: ISettings = {};
+export const disabledUnfinishedFeatureSettings: ISettings = {};

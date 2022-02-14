@@ -801,7 +801,7 @@ export type DashboardCommandType = "GDC.DASH/CMD.INITIALIZE" | "GDC.DASH/CMD.SAV
 
 // @public
 export interface DashboardConfig {
-    allowInProgressFeatures?: boolean;
+    allowUnfinishedFeatures?: boolean;
     colorPalette?: IColorPalette;
     dateFilterConfig?: IDateFilterConfig;
     disableDefaultDrills?: boolean;

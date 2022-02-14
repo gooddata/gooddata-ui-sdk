@@ -131,7 +131,7 @@ export interface DashboardConfig {
      *
      * Defaults to false.
      */
-    allowInProgressFeatures?: boolean;
+    allowUnfinishedFeatures?: boolean;
 }
 
 /**

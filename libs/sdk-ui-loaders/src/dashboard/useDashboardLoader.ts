@@ -31,17 +31,17 @@ const InitialStatus: DashboardLoadStatus = {
 
 const getDashboardConfig = (
     config: DashboardConfig = {},
-    allowInProgressFeatures: IDashboardLoadOptions["allowInProgressFeatures"],
+    allowUnfinishedFeatures: IDashboardLoadOptions["allowUnfinishedFeatures"],
 ): DashboardConfig => {
-    if (allowInProgressFeatures === "alwaysAllow" || allowInProgressFeatures === "staticOnly") {
+    if (allowUnfinishedFeatures === "alwaysAllow" || allowUnfinishedFeatures === "staticOnly") {
         return {
             ...config,
-            allowInProgressFeatures: true, // will be turned off in case of external plugins later during load
+            allowUnfinishedFeatures: true, // will be turned off in case of external plugins later during load
         };
     }
     return {
         ...config,
-        allowInProgressFeatures: false,
+        allowUnfinishedFeatures: false,
     };
 };
 
@@ -67,7 +67,7 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
         loadingMode,
         extraPlugins,
         adaptiveLoadOptions,
-        allowInProgressFeatures = "alwaysPrevent",
+        allowUnfinishedFeatures = "alwaysPrevent",
     } = options;
     const dashboardRef = typeof dashboard === "string" ? idRef(dashboard) : dashboard;
 
@@ -86,7 +86,7 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
     }, []);
 
     const dashboardLoader = useMemo(() => {
-        const dashboardConfig = getDashboardConfig(config, allowInProgressFeatures);
+        const dashboardConfig = getDashboardConfig(config, allowUnfinishedFeatures);
         const baseProps: IDashboardBasePropsForLoader = {
             backend,
             workspace,

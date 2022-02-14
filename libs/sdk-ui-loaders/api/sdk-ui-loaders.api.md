@@ -79,7 +79,7 @@ export interface IDashboardLoader {
 // @public
 export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
     adaptiveLoadOptions?: AdaptiveLoadOptions;
-    allowInProgressFeatures?: "staticOnly" | "alwaysAllow" | "alwaysPrevent";
+    allowUnfinishedFeatures?: "staticOnly" | "alwaysAllow" | "alwaysPrevent";
     clientWorkspace?: IClientWorkspaceIdentifiers;
     extraPlugins?: IEmbeddedPlugin | IEmbeddedPlugin[];
     loadingMode?: "adaptive" | "staticOnly";

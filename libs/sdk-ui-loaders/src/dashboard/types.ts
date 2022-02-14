@@ -102,9 +102,9 @@ export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
      * `alwaysAllow` in progress features always allowed
      * `alwaysPrevent` in progress features always prevented
      *
-     * Default allowInProgressFeatures is `alwaysPrevent`.
+     * Default allowUnfinishedFeatures is `alwaysPrevent`.
      */
-    allowInProgressFeatures?: "staticOnly" | "alwaysAllow" | "alwaysPrevent";
+    allowUnfinishedFeatures?: "staticOnly" | "alwaysAllow" | "alwaysPrevent";
 }
 
 /**
