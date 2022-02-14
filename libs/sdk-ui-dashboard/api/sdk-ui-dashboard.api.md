@@ -239,7 +239,7 @@ export function anyEventHandler(handler: DashboardEventHandler["handler"]): Dash
 // @alpha (undocumented)
 export type AttributeFilterComponentProvider = (filter: IDashboardAttributeFilter) => CustomDashboardAttributeFilterComponent;
 
-// @alpha (undocumented)
+// @public
 export interface AttributeFilterSelection {
     readonly elements: IAttributeElements;
     readonly filterLocalId: string;
@@ -288,7 +288,7 @@ export interface CatalogState {
     measures?: ICatalogMeasure[];
 }
 
-// @alpha (undocumented)
+// @public
 export interface ChangeAttributeFilterSelection extends IDashboardCommand {
     // (undocumented)
     readonly payload: AttributeFilterSelection;
@@ -296,7 +296,7 @@ export interface ChangeAttributeFilterSelection extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.CHANGE_SELECTION";
 }
 
-// @alpha
+// @public
 export function changeAttributeFilterSelection(filterLocalId: string, elements: IAttributeElements, selectionType: AttributeFilterSelectionType, correlationId?: string): ChangeAttributeFilterSelection;
 
 // @alpha (undocumented)
@@ -307,7 +307,7 @@ export interface ChangeDateFilterSelection extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION";
 }
 
-// @alpha
+// @public
 export function changeDateFilterSelection(type: DateFilterType, granularity: DateFilterGranularity, from?: DateString | number, to?: DateString | number, dateFilterOptionLocalId?: string, correlationId?: string): ChangeDateFilterSelection;
 
 // @alpha (undocumented)
@@ -509,7 +509,7 @@ export interface ChangeSharingPayload {
     readonly newSharingProperties: ISharingApplyPayload_2;
 }
 
-// @alpha
+// @public
 export function clearDateFilterSelection(correlationId?: string): ChangeDateFilterSelection;
 
 // @alpha
@@ -4015,7 +4015,7 @@ export interface RequestAsyncRenderPayload {
     readonly id: string;
 }
 
-// @alpha
+// @public
 export function resetAttributeFilterSelection(filterLocalId: string, correlationId?: string): ChangeAttributeFilterSelection;
 
 // @alpha (undocumented)

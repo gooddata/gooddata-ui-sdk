@@ -80,7 +80,7 @@ export interface ChangeDateFilterSelection extends IDashboardCommand {
  *  events that will be emitted during the command processing
  * @remarks see {@link ChangeDateFilterSelection} for a more complete description of the different parameters
  *
- * @alpha
+ * @public
  */
 export function changeDateFilterSelection(
     type: DateFilterType,
@@ -110,7 +110,7 @@ export function changeDateFilterSelection(
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @alpha
+ * @public
  */
 export function clearDateFilterSelection(correlationId?: string): ChangeDateFilterSelection {
     return {
@@ -307,7 +307,9 @@ export function moveAttributeFilter(
 export type AttributeFilterSelectionType = "IN" | "NOT_IN";
 
 /**
- * @alpha
+ * Payload type for {@link ChangeAttributeFilterSelection} command.
+ *
+ * @public
  */
 export interface AttributeFilterSelection {
     /**
@@ -319,13 +321,15 @@ export interface AttributeFilterSelection {
      */
     readonly elements: IAttributeElements;
     /**
-     * Selection type. Either 'IN' or 'NOT_IN'.
+     * Selection type. Either 'IN' for positive selection or 'NOT_IN' for negative selection (All except selected items).
      */
     readonly selectionType: AttributeFilterSelectionType;
 }
 
 /**
- * @alpha
+ * Command for attribute filter selection change.
+ *
+ * @public
  */
 export interface ChangeAttributeFilterSelection extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.CHANGE_SELECTION";
@@ -348,7 +352,7 @@ export interface ChangeAttributeFilterSelection extends IDashboardCommand {
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @alpha
+ * @public
  */
 export function changeAttributeFilterSelection(
     filterLocalId: string,
@@ -377,7 +381,7 @@ export function changeAttributeFilterSelection(
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
- * @alpha
+ * @public
  */
 export function resetAttributeFilterSelection(
     filterLocalId: string,
