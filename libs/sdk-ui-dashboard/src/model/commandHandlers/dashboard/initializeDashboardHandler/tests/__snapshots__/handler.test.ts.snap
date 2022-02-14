@@ -190,9 +190,7 @@ Object {
     "decimal": ".",
     "thousand": ",",
   },
-  "settings": Object {
-    "enableAnalyticalDashboardPermissions": false,
-  },
+  "settings": Object {},
 }
 `;
 
