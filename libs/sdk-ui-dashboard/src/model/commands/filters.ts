@@ -311,7 +311,7 @@ export type AttributeFilterSelectionType = "IN" | "NOT_IN";
  *
  * @public
  */
-export interface AttributeFilterSelection {
+export interface ChangeAttributeFilterSelectionPayload {
     /**
      * Dashboard attribute filter's local identifier.
      */
@@ -333,7 +333,7 @@ export interface AttributeFilterSelection {
  */
 export interface ChangeAttributeFilterSelection extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.CHANGE_SELECTION";
-    readonly payload: AttributeFilterSelection;
+    readonly payload: ChangeAttributeFilterSelectionPayload;
 }
 
 /**

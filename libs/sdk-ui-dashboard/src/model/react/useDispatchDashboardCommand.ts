@@ -20,9 +20,14 @@ import { useDashboardDispatch } from "./DashboardStoreProvider";
  * **
  * ```
  *
+ * To convert {@link @gooddata/sdk-model#IPositiveAttributeFilter} or {@link @gooddata/sdk-model#INegativeAttributeFilter} to {@link @gooddata/sdk-model#IFilter} use
+ * {@link dashboardAttributeFilterToAttributeFilter}. For date filter, use {@link dashboardDateFilterToDateFilterByWidget} or
+ * {@link dashboardDateFilterToDateFilterByDateDataSet}, depending on whether you have widget or dateDataSet available.
+ * Converted filter can be used within the command's payload.
+ *
  * @param commandCreator - command factory
  * @returns callback that dispatches the command
- * @alpha
+ * @public
  */
 export const useDispatchDashboardCommand = <TCommand extends DashboardCommands, TArgs extends any[]>(
     commandCreator: (...args: TArgs) => TCommand,

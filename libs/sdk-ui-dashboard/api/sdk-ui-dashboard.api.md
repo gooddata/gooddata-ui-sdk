@@ -239,13 +239,6 @@ export function anyEventHandler(handler: DashboardEventHandler["handler"]): Dash
 // @alpha (undocumented)
 export type AttributeFilterComponentProvider = (filter: IDashboardAttributeFilter) => CustomDashboardAttributeFilterComponent;
 
-// @public
-export interface AttributeFilterSelection {
-    readonly elements: IAttributeElements;
-    readonly filterLocalId: string;
-    readonly selectionType: AttributeFilterSelectionType;
-}
-
 // @alpha (undocumented)
 export type AttributeFilterSelectionType = "IN" | "NOT_IN";
 
@@ -291,13 +284,20 @@ export interface CatalogState {
 // @public
 export interface ChangeAttributeFilterSelection extends IDashboardCommand {
     // (undocumented)
-    readonly payload: AttributeFilterSelection;
+    readonly payload: ChangeAttributeFilterSelectionPayload;
     // (undocumented)
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.CHANGE_SELECTION";
 }
 
 // @public
 export function changeAttributeFilterSelection(filterLocalId: string, elements: IAttributeElements, selectionType: AttributeFilterSelectionType, correlationId?: string): ChangeAttributeFilterSelection;
+
+// @public
+export interface ChangeAttributeFilterSelectionPayload {
+    readonly elements: IAttributeElements;
+    readonly filterLocalId: string;
+    readonly selectionType: AttributeFilterSelectionType;
+}
 
 // @alpha (undocumented)
 export interface ChangeDateFilterSelection extends IDashboardCommand {
@@ -5037,7 +5037,7 @@ export const useDashboardUserInteraction: () => {
     kpiAlertDialogOpened: (alreadyHasAlert: boolean) => void;
 };
 
-// @alpha
+// @public
 export const useDispatchDashboardCommand: <TCommand extends DashboardCommands, TArgs extends any[]>(commandCreator: (...args: TArgs) => TCommand) => (...args: TArgs) => void;
 
 // @internal (undocumented)
