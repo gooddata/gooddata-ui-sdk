@@ -55,6 +55,7 @@ export function generateHeaderMenuItemsGroups(
     backendSupportsDataItem: boolean = false,
     backendSupportsCsvUploader: boolean = true,
     hasMeasures: boolean = false,
+    hasManage: boolean = true,
 ): IHeaderMenuItem[][] {
     if (!workspaceId) {
         return [];
@@ -81,7 +82,12 @@ export function generateHeaderMenuItemsGroups(
         backendSupportsDataItem,
         hasNoDataSet,
     );
-    const manageItemsGroup = createManageItemsGroup(workspacePermissions, workspaceRef, workspaceId);
+    const manageItemsGroup = createManageItemsGroup(
+        workspacePermissions,
+        workspaceRef,
+        workspaceId,
+        hasManage,
+    );
 
     return [pixelPerfectItemsGroup, insightItemsGroup, manageItemsGroup].filter(
         (itemsGroup) => itemsGroup.length > 0,
@@ -120,6 +126,7 @@ function createManageItemsGroup(
     workspacePermissions: IWorkspacePermissions,
     workspaceRef: string,
     workspaceId: string,
+    hasManage: boolean,
 ) {
     const { canManageMetric } = workspacePermissions;
     const manageItemsGroup: IHeaderMenuItem[] = [];
@@ -128,7 +135,7 @@ function createManageItemsGroup(
     pushConditionally(
         manageItemsGroup,
         createIHeaderMenuItem(HEADER_ITEM_ID_MANAGE, "s-menu-manage", manageUrl),
-        canManageMetric,
+        canManageMetric && hasManage,
     );
     return manageItemsGroup;
 }
