@@ -126,7 +126,7 @@ export interface DashboardConfig {
      */
     menuButtonItemsVisibility?: IMenuButtonItemsVisibility;
 
-	/**
+    /**
      * When turned on the features still under development will be turned on based on corresponding settings
      *
      * Defaults to false.

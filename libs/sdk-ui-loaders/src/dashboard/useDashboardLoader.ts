@@ -39,13 +39,10 @@ const getDashboardConfig = (
             allowInProgressFeatures: true, // will be turned off in case of external plugins later during load
         };
     }
-    if (allowInProgressFeatures === "alwaysPrevent") {
-        return {
-            ...config,
-            allowInProgressFeatures: false,
-        };
-    }
-    return config;
+    return {
+        ...config,
+        allowInProgressFeatures: false,
+    };
 };
 
 /**

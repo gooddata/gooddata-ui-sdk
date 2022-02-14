@@ -173,7 +173,7 @@ export function* resolveDashboardConfig(
         disableDefaultDrills: config.disableDefaultDrills ?? false,
         enableFilterValuesResolutionInDrillEvents: config.enableFilterValuesResolutionInDrillEvents ?? false,
         menuButtonItemsVisibility: config.menuButtonItemsVisibility ?? {},
-		allowInProgressFeatures,
+        allowInProgressFeatures,
     };
 
     return resolvedConfig;
