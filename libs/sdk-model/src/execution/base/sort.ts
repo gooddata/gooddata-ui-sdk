@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { Identifier } from "../../objRef/index";
 import { attributeLocalId, IAttribute } from "../attribute";
 import { IMeasure, measureLocalId } from "../measure";
@@ -21,26 +21,50 @@ export type ISortItem = IAttributeSortItem | IMeasureSortItem;
 export type SortDirection = "asc" | "desc";
 
 /**
+ * Sorting direction part of sort.
+ *
+ * @public
+ */
+export interface ISortDirection {
+    /**
+     * Sort ascending or descending.
+     */
+    direction: SortDirection;
+}
+
+/**
  * Sort item which specifies that the result should be sorted by attribute element values in either
  * ascending or descending order.
  *
  * @public
  */
 export interface IAttributeSortItem {
-    attributeSortItem: {
-        /**
-         * Sort ascending or descending.
-         */
-        direction: SortDirection;
-        /**
-         * Local identifier of the attribute to sort by.
-         */
-        attributeIdentifier: Identifier;
-        /**
-         * TODO: find out what this does :)
-         */
-        aggregation?: "sum";
-    };
+    attributeSortItem: IAttributeSortTarget & IAttributeSortType & ISortDirection;
+}
+
+/**
+ * Attribute sort target.
+ *
+ * @public
+ */
+export interface IAttributeSortTarget {
+    /**
+     * Local identifier of the attribute to sort by.
+     */
+    attributeIdentifier: Identifier;
+}
+
+/**
+ * Attribute sort type specification.
+ *
+ * @public
+ */
+export interface IAttributeSortType {
+    /**
+     * If specified, defines aggregation function used on attribute's data points before sorting is evaluated
+     * eg. used on stacked bar chart on view by attribute it defines, that all stacks are summed up and results are sorted
+     */
+    aggregation?: "sum";
 }
 
 /**
@@ -51,16 +75,19 @@ export interface IAttributeSortItem {
  * @public
  */
 export interface IMeasureSortItem {
-    measureSortItem: {
-        /**
-         * Sort ascending or descending.
-         */
-        direction: SortDirection;
-        /**
-         * Locators explicitly specifying the exact slice of the measure values to sort by.
-         */
-        locators: ILocatorItem[];
-    };
+    measureSortItem: IMeasureSortTarget & ISortDirection;
+}
+
+/**
+ * Measure sort target.
+ *
+ * @public
+ */
+export interface IMeasureSortTarget {
+    /**
+     * Locators explicitly specifying the exact slice of the measure values to sort by.
+     */
+    locators: ILocatorItem[];
 }
 
 /**

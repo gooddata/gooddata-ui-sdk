@@ -17,6 +17,7 @@ import {
     VisualizationProperties,
     IExecutionConfig,
     LocalIdRef,
+    ISortItem,
 } from "@gooddata/sdk-model";
 import {
     ChartType,
@@ -31,6 +32,8 @@ import {
     SdkErrorType,
     VisualizationEnvironment,
 } from "@gooddata/sdk-ui";
+
+import { ISortConfig } from "./SortConfig";
 
 export type RenderFunction = (component: any, target: Element) => void;
 
@@ -306,9 +309,12 @@ export interface IUiConfig {
 }
 
 export interface IVisualizationProperties {
-    // This can be anything depending on a visualization type
-    // perhaps consider adding: sortItems?: AFM.SortItem[]
-    [property: string]: any;
+    sortItems?: ISortItem[];
+    controls?: {
+        // This can be anything depending on a visualization type
+        [property: string]: any;
+    };
+    [property: string]: any; // should not be used like this but to be backward compatible
 }
 
 export interface IReferencePoint {
@@ -321,10 +327,7 @@ export interface IReferences {
     [identifier: string]: string;
 }
 
-export interface IExtendedReferencePoint {
-    buckets: IBucketOfFun[];
-    filters: IFilters;
-    properties?: IVisualizationProperties; // properties are under plugvis creator's control
+export interface IExtendedReferencePoint extends IReferencePoint {
     uiConfig: IUiConfig;
 }
 
@@ -405,6 +408,12 @@ export interface IVisualization {
      * @returns `source` as the Drill Down target {@link IInsight}
      */
     getInsightWithDrillDownApplied(source: IInsight, drillDownContext: IDrillDownContext): IInsight;
+
+    /**
+     * Called whenever inputs for default sorts calculation changed and it should provide current sort and also all valid available sorts for actual reference point/properties
+     * @param referencePoint - the reference point for which the sort config needs to be evaluated
+     */
+    getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig>;
 }
 
 export interface IGdcConfig {

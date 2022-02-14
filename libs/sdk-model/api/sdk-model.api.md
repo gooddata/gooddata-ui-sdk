@@ -369,11 +369,17 @@ export type IAttributeOrMeasure = IMeasure | IAttribute;
 // @public
 export interface IAttributeSortItem {
     // (undocumented)
-    attributeSortItem: {
-        direction: SortDirection;
-        attributeIdentifier: Identifier;
-        aggregation?: "sum";
-    };
+    attributeSortItem: IAttributeSortTarget & IAttributeSortType & ISortDirection;
+}
+
+// @public
+export interface IAttributeSortTarget {
+    attributeIdentifier: Identifier;
+}
+
+// @public
+export interface IAttributeSortType {
+    aggregation?: "sum";
 }
 
 // @public
@@ -562,10 +568,12 @@ export interface IMeasureLocatorItem {
 // @public
 export interface IMeasureSortItem {
     // (undocumented)
-    measureSortItem: {
-        direction: SortDirection;
-        locators: ILocatorItem[];
-    };
+    measureSortItem: IMeasureSortTarget & ISortDirection;
+}
+
+// @public
+export interface IMeasureSortTarget {
+    locators: ILocatorItem[];
 }
 
 // @public
@@ -944,6 +952,11 @@ export function isNegativeAttributeFilter(obj: unknown): obj is INegativeAttribu
 
 // @public
 export function isObjRef(obj: unknown): obj is ObjRef;
+
+// @public
+export interface ISortDirection {
+    direction: SortDirection;
+}
 
 // @public
 export type ISortItem = IAttributeSortItem | IMeasureSortItem;

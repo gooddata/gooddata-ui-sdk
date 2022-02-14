@@ -74,9 +74,13 @@ export { TotalType, ITotal, isTotal, newTotal, totalIsNative } from "./execution
 
 export {
     SortDirection,
+    ISortDirection,
     IAttributeSortItem,
+    IAttributeSortTarget,
+    IAttributeSortType,
     ISortItem,
     IMeasureSortItem,
+    IMeasureSortTarget,
     ILocatorItem,
     IAttributeLocatorItem,
     IMeasureLocatorItem,
