@@ -23,6 +23,7 @@ import {
     ResolvedDashboardConfig,
 } from "../../../types/commonTypes";
 import { PromiseFnReturnType } from "../../../types/sagas";
+import { sanitizeUnfinishedFeatureSettings } from "./sanitizeUnfinishedFeatureSettings";
 
 function loadDateFilterConfig(ctx: DashboardContext): Promise<IDateFilterConfigsQueryResult | undefined> {
     const { backend, workspace } = ctx;
@@ -122,7 +123,13 @@ export function* resolveDashboardConfig(
         /*
          * Config coming in props is fully specified. There is nothing to do. Bail out immediately.
          */
-        return config;
+        if (config.allowUnfinishedFeatures || !config.settings) {
+            return config;
+        }
+        return {
+            ...config,
+            settings: sanitizeUnfinishedFeatureSettings(config.settings),
+        };
     }
 
     /*
@@ -148,12 +155,15 @@ export function* resolveDashboardConfig(
     if (configValidation !== "Valid") {
         yield dispatchDashboardEvent(dateFilterValidationFailed(ctx, configValidation, cmd.correlationId));
     }
+    const allowUnfinishedFeatures = config.allowUnfinishedFeatures ?? false;
 
     const resolvedConfig: ResolvedDashboardConfig = {
         locale: settings.locale as ILocale,
         separators: settings.separators,
         dateFilterConfig: validDateFilterConfig,
-        settings: settings.settings,
+        settings: allowUnfinishedFeatures
+            ? settings.settings
+            : sanitizeUnfinishedFeatureSettings(settings.settings),
         colorPalette,
         objectAvailability: config.objectAvailability ?? {},
         mapboxToken: config.mapboxToken,
@@ -163,6 +173,7 @@ export function* resolveDashboardConfig(
         disableDefaultDrills: config.disableDefaultDrills ?? false,
         enableFilterValuesResolutionInDrillEvents: config.enableFilterValuesResolutionInDrillEvents ?? false,
         menuButtonItemsVisibility: config.menuButtonItemsVisibility ?? {},
+        allowUnfinishedFeatures,
     };
 
     return resolvedConfig;

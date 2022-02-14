@@ -41,6 +41,7 @@ Object {
 
 exports[`initialize dashboard handler for any dashboard should resolve config props that can be obtained from backend 1`] = `
 Object {
+  "allowUnfinishedFeatures": false,
   "colorPalette": Array [],
   "dateFilterConfig": Object {
     "absoluteForm": Object {

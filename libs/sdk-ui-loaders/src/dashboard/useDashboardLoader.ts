@@ -1,6 +1,6 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { useEffect, useMemo, useState } from "react";
-import { IDashboardBasePropsForLoader, IDashboardLoadOptions } from "./types";
+import { IDashboardBasePropsForLoader, IDashboardLoadOptions, IEmbeddedPlugin } from "./types";
 import {
     IClientWorkspaceIdentifiers,
     useBackendStrict,
@@ -8,12 +8,12 @@ import {
     UseCancelablePromiseState,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
-import { IDashboardBaseProps } from "@gooddata/sdk-ui-dashboard";
+import { DashboardConfig, IDashboardBaseProps } from "@gooddata/sdk-ui-dashboard";
 import { idRef, objRefToString, serializeObjRef } from "@gooddata/sdk-model";
 import isArray from "lodash/isArray";
 import compact from "lodash/compact";
 import { DashboardLoader } from "./dashboardLoader";
-import { DashboardLoadResult, IDashboardLoader, IEmbeddedPlugin } from "./loader";
+import { DashboardLoadResult, IDashboardLoader } from "./loader";
 import invariant from "ts-invariant";
 
 /**
@@ -27,6 +27,22 @@ const InitialStatus: DashboardLoadStatus = {
     result: undefined,
     error: undefined,
     status: "loading",
+};
+
+const getDashboardConfig = (
+    config: DashboardConfig = {},
+    allowUnfinishedFeatures: IDashboardLoadOptions["allowUnfinishedFeatures"],
+): DashboardConfig => {
+    if (allowUnfinishedFeatures === "alwaysAllow" || allowUnfinishedFeatures === "staticOnly") {
+        return {
+            ...config,
+            allowUnfinishedFeatures: true, // will be turned off in case of external plugins later during load
+        };
+    }
+    return {
+        ...config,
+        allowUnfinishedFeatures: false,
+    };
 };
 
 /**
@@ -51,6 +67,7 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
         loadingMode,
         extraPlugins,
         adaptiveLoadOptions,
+        allowUnfinishedFeatures = "alwaysPrevent",
     } = options;
     const dashboardRef = typeof dashboard === "string" ? idRef(dashboard) : dashboard;
 
@@ -69,12 +86,13 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
     }, []);
 
     const dashboardLoader = useMemo(() => {
+        const dashboardConfig = getDashboardConfig(config, allowUnfinishedFeatures);
         const baseProps: IDashboardBasePropsForLoader = {
             backend,
             workspace,
             dashboard: dashboardRef,
             filterContextRef,
-            config,
+            config: dashboardConfig,
             permissions,
         };
 
@@ -112,7 +130,7 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
 
     useCancelablePromise(
         {
-            promise: dashboardLoader.load,
+            promise: () => dashboardLoader.load(options),
             onLoading: () => {
                 setLoadStatus(InitialStatus);
             },
