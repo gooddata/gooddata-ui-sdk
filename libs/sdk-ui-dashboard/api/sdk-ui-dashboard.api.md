@@ -1773,8 +1773,8 @@ export class DashboardStoreAccessor {
     constructor(selector: DashboardSelectorEvaluator, dispatch: DashboardDispatch);
     // (undocumented)
     dispatch: DashboardDispatch | undefined;
-    getDispatch: () => DashboardDispatch;
-    getSelector: () => DashboardSelectorEvaluator;
+    getDashboardDispatch: () => DashboardDispatch;
+    getDashboardSelect: () => DashboardSelectorEvaluator;
     isDashboardStoreAccessorInitialized: () => boolean;
     // (undocumented)
     selectorEvaluator: DashboardSelectorEvaluator | undefined;
@@ -1786,6 +1786,8 @@ export class DashboardStoreAccessorRepository {
     static clearAccessorForDashboard(dashboard: ObjRef | string): void;
     static clearAllAccessors(): void;
     static getAccessorsForDashboard(dashboard: ObjRef | string): DashboardStoreAccessor;
+    static getDashboardDispatchForDashboard(dashboard: ObjRef | string): DashboardDispatch;
+    static getDashboardSelectForDashboard(dashboard: ObjRef | string): DashboardSelectorEvaluator;
     static getOnChangeHandlerForDashboard(dashboard: ObjRef | string): (state: DashboardState, dispatch: DashboardDispatch) => void;
     static isAccessorInitializedForDashboard(dashboard: ObjRef | string): boolean;
 }

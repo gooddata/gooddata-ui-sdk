@@ -26,8 +26,8 @@ describe("dashboard store accessors repository", () => {
 
         const accessors = DashboardStoreAccessorRepository.getAccessorsForDashboard(DASHBOARD_ID);
 
-        expect(accessors.getSelector()).toBeTruthy();
-        expect(accessors.getDispatch()).toBe(dashboardDispatch);
+        expect(accessors.getDashboardSelect()).toBeTruthy();
+        expect(accessors.getDashboardDispatch()).toBe(dashboardDispatch);
     });
 
     it("clear accessors for dashboard", () => {

@@ -4,6 +4,10 @@ import { DashboardStoreAccessorRepository } from "./DashboardStoreAccessorReposi
 import { idRef, serializeObjRef } from "@gooddata/sdk-model";
 import { DashboardDispatch, DashboardSelectorEvaluator, DashboardState } from "../types";
 
+/**
+ * This `mocked` ID is used as a key under which is the accessor object stored in the instance of the
+ * {@link DashboardStoreAccessorRepository}.
+ */
 const DASHBOARD = serializeObjRef(idRef("SingleDashboardStoreAccessor_mock_dashboard_id"));
 
 /**
@@ -20,14 +24,14 @@ export class SingleDashboardStoreAccessor {
      * Returns a selector for current dashboard.
      */
     static getDashboardSelect(): DashboardSelectorEvaluator {
-        return DashboardStoreAccessorRepository.getAccessorsForDashboard(DASHBOARD).getSelector();
+        return DashboardStoreAccessorRepository.getAccessorsForDashboard(DASHBOARD).getDashboardSelect();
     }
 
     /**
      * Returns a dispatch object for current dashboard.
      */
     static getDashboardDispatch(): DashboardDispatch {
-        return DashboardStoreAccessorRepository.getAccessorsForDashboard(DASHBOARD).getDispatch();
+        return DashboardStoreAccessorRepository.getAccessorsForDashboard(DASHBOARD).getDashboardDispatch();
     }
 
     /**

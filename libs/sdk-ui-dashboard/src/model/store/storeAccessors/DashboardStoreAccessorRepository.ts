@@ -67,6 +67,32 @@ export class DashboardStoreAccessorRepository {
     }
 
     /**
+     * Gets the correct {@link DashboardSelectorEvaluator} for given dashboard from the accessors map.
+     *
+     * @param dashboard - an {@link @gooddata/sdk-model#ObjRef} of the dashboard, or its id as a string
+     */
+    static getDashboardSelectForDashboard(dashboard: ObjRef | string): DashboardSelectorEvaluator {
+        const serializedDashboardRef = DashboardStoreAccessorRepository.getSerializedDashboardRef(dashboard);
+
+        const selectorEvaluator = this.accessors.get(serializedDashboardRef)?.getDashboardSelect();
+        invariant(selectorEvaluator, `No selector available for dashboard ${dashboard}`);
+        return selectorEvaluator;
+    }
+
+    /**
+     * Gets the correct {@link DashboardDispatch} for given dashboard from the accessors map.
+     *
+     * @param dashboard - an {@link @gooddata/sdk-model#ObjRef} of the dashboard, or its id as a string
+     */
+    static getDashboardDispatchForDashboard(dashboard: ObjRef | string): DashboardDispatch {
+        const serializedDashboardRef = DashboardStoreAccessorRepository.getSerializedDashboardRef(dashboard);
+
+        const dashboardDispatch = this.accessors.get(serializedDashboardRef)?.getDashboardDispatch();
+        invariant(dashboardDispatch, `No selector available for dashboard ${dashboard}`);
+        return dashboardDispatch;
+    }
+
+    /**
      * Creates a {@link Dashboard#onStateChange} callback for given dashboard.
      *
      * @param dashboard - an {@link @gooddata/sdk-model#ObjRef} of the dashboard, or its id as a string
