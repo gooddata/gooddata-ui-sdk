@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { ActionOptions } from "../_base/types";
 import fse from "fs-extra";
 import { logError, logInfo } from "../_base/terminal/loggers";
@@ -37,7 +37,6 @@ export async function inspectCmdAction(
         );
 
         process.exit(1);
-        return;
     }
 
     try {

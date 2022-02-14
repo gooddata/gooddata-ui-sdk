@@ -238,7 +238,6 @@ export async function initCmdAction(pluginName: string | undefined, options: Act
             );
 
             process.exit(1);
-            return;
         }
 
         await prepareProject(target, config);

@@ -72,7 +72,7 @@ export async function linkPluginCmdAction(identifier: string, options: ActionOpt
                 "Dry run has finished. Dashboard was not updated. Remove '--dry-run' to perform the actual update.",
             );
 
-            return process.exit(0);
+            process.exit(0);
         }
 
         const updateProgress = ora({

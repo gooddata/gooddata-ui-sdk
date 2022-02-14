@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import url from "url";
 import includes from "lodash/includes";
@@ -159,7 +159,7 @@ export function createPluginUrlValidator(pluginIdentifier: string): AsyncInputVa
                     } else if (status === 403) {
                         return (
                             prefix +
-                            "Host requires authorization to access plugin. Note that in some hosting configuration " +
+                            "Host requires authorization to access plugin. Note that in some hosting configurations " +
                             "this is just a 404 in disguise and the plugin actually does not exist on the host."
                         );
                     }
