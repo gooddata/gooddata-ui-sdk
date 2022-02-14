@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { ActionOptions } from "../_base/types";
 import { convertToPluginIdentifier } from "../_base/utils";
 import {
@@ -49,7 +49,7 @@ export async function getAddCmdActionConfig(
     pluginUrl: string,
     options: ActionOptions,
 ): Promise<AddCmdActionConfig> {
-    const workspaceTargetConfig = createWorkspaceTargetConfig(options);
+    const workspaceTargetConfig = await createWorkspaceTargetConfig(options);
     const { hostname, backend, credentials, packageJson } = workspaceTargetConfig;
 
     const backendInstance = createBackend({

@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { DistinctQuestion, prompt } from "inquirer";
 import { TargetAppLanguage, TargetBackendType } from "../types";
 import { createHostnameValidator, pluginNameValidator } from "../inputHandling/validators";
@@ -24,6 +24,17 @@ export async function promptPassword(): Promise<string> {
     const passwordResponse = await prompt(passwordQuestion);
 
     return passwordResponse.password;
+}
+
+export async function promptApiToken(): Promise<string> {
+    const tokenQuestion: DistinctQuestion = {
+        type: "input",
+        name: "token",
+        message: "Enter your API token:",
+    };
+    const tokenResponse = await prompt(tokenQuestion);
+
+    return tokenResponse.token;
 }
 
 export type WorkspaceChoices = {

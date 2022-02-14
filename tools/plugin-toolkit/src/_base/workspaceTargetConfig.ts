@@ -1,7 +1,13 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { ActionOptions, TargetBackendType } from "./types";
-import { BackendCredentials, createCredentialsFromEnv, validateCredentialsAreComplete } from "./credentials";
+import {
+    BackendCredentials,
+    createCredentialsFromEnv,
+    completeCredentialsOrDie,
+    validateCredentialsComplete,
+    promptCredentials,
+} from "./credentials";
 import { discoverBackendTypeOrDie, readPackageJsonIfExists } from "./utils";
 import {
     getBackendFromOptions,
@@ -48,10 +54,23 @@ export type WorkspaceTargetConfig = {
     packageJson: Record<string, any>;
 };
 
+function createOrPromptCredentials(
+    backend: TargetBackendType,
+    env: Record<string, string>,
+): Promise<BackendCredentials> {
+    const credentialsFromEnv = createCredentialsFromEnv(env);
+    const areCredentialsValid = !validateCredentialsComplete(backend, credentialsFromEnv);
+    if (areCredentialsValid) {
+        return Promise.resolve(credentialsFromEnv);
+    }
+
+    return promptCredentials(backend);
+}
+
 /**
  * Creates common config for commands that target a workspace.
  */
-export function createWorkspaceTargetConfig(options: ActionOptions): WorkspaceTargetConfig {
+export async function createWorkspaceTargetConfig(options: ActionOptions): Promise<WorkspaceTargetConfig> {
     const packageJson = readPackageJsonIfExists();
     const backendFromOptions = getBackendFromOptions(options);
     const backend = backendFromOptions ?? discoverBackendTypeOrDie(packageJson);
@@ -60,10 +79,12 @@ export function createWorkspaceTargetConfig(options: ActionOptions): WorkspaceTa
     const workspaceFromOptions = getWorkspaceFromOptions(options);
     const hostname = hostnameFromOptions ?? env.BACKEND_URL;
     const workspace = workspaceFromOptions ?? env.WORKSPACE;
-    const credentials = createCredentialsFromEnv(env);
 
     validOrDie("hostname", hostname, createHostnameValidator(backend));
-    validateCredentialsAreComplete(backend, credentials);
+
+    const credentials = await createOrPromptCredentials(backend, env);
+
+    completeCredentialsOrDie(backend, credentials);
 
     return {
         backend,

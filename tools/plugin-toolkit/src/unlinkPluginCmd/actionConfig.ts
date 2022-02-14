@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { createWorkspaceTargetConfig, WorkspaceTargetConfig } from "../_base/workspaceTargetConfig";
 import { IAnalyticalBackend, IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { ActionOptions } from "../_base/types";
@@ -34,8 +34,6 @@ function createLinkedPluginValidator(
     identifier: string,
     pluginIdentifier: string,
 ): InputValidator<IDashboardWithReferences> {
-    const entryPoint = convertToPluginEntrypoint(pluginIdentifier);
-
     return (dashboardWithReferences) => {
         const {
             dashboard,
@@ -52,7 +50,10 @@ function createLinkedPluginValidator(
             return `Dashboard ${dashboard.identifier} is not linked with plugin ${identifier}.`;
         }
 
-        if (!linkedPlugin.url.endsWith(entryPoint)) {
+        // if the pluginIdentifier is not available, we are running the tool outside of the original plugin
+        // directory so the entry point validation is impossible
+        const entryPoint = convertToPluginEntrypoint(pluginIdentifier);
+        if (pluginIdentifier && !linkedPlugin.url.endsWith(entryPoint)) {
             return (
                 `You are trying to unlink a plugin (${linkedPlugin.name}) whose entry point differs from the ` +
                 "entry point of the plugin in your current directory."
@@ -92,7 +93,7 @@ export async function getUnlinkCmdActionConfig(
     identifier: string,
     options: ActionOptions,
 ): Promise<UnlinkCmdActionConfig> {
-    const workspaceTargetConfig = createWorkspaceTargetConfig(options);
+    const workspaceTargetConfig = await createWorkspaceTargetConfig(options);
     const { hostname, backend, credentials, env, packageJson } = workspaceTargetConfig;
     const dashboard = getDashboardFromOptions(options) ?? env.DASHBOARD_ID;
 
@@ -105,7 +106,7 @@ export async function getUnlinkCmdActionConfig(
     const config: UnlinkCmdActionConfig = {
         ...workspaceTargetConfig,
         identifier,
-        pluginIdentifier: convertToPluginIdentifier(packageJson.name),
+        pluginIdentifier: packageJson.name && convertToPluginIdentifier(packageJson.name),
         dashboard,
         dryRun: options.commandOpts.dryRun ?? false,
         backendInstance,
