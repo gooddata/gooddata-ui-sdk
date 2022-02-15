@@ -17,19 +17,25 @@ export const getInitialIsInverted = (currentFilter: IAttributeFilter): boolean =
     return currentFilter ? isNegativeAttributeFilter(currentFilter) : true;
 };
 
-export const areCancelablePromisesInPendingStatus = (cancelablePromiseStatuses: UseCancelablePromiseStatus[]) => {
+export const areCancelablePromisesInPendingStatus = (
+    cancelablePromiseStatuses: UseCancelablePromiseStatus[],
+) => {
     return cancelablePromiseStatuses.some((status) => status === "pending");
-}
+};
 
-export const areCancelablePromisesInLoadingState = (cancelablePromiseStatuses: UseCancelablePromiseStatus[]) => {
+export const areCancelablePromisesInLoadingState = (
+    cancelablePromiseStatuses: UseCancelablePromiseStatus[],
+) => {
     return cancelablePromiseStatuses.some((status) => status === "loading");
-}
+};
 
 export const areCancelablePromisesLoading = (cancelablePromiseStatuses: UseCancelablePromiseStatus[]) => {
-    return areCancelablePromisesInLoadingState(cancelablePromiseStatuses) ||
-        areCancelablePromisesInPendingStatus(cancelablePromiseStatuses);
-}
+    return (
+        areCancelablePromisesInLoadingState(cancelablePromiseStatuses) ||
+        areCancelablePromisesInPendingStatus(cancelablePromiseStatuses)
+    );
+};
 
-export const getBackend = (backend: IAnalyticalBackend, props: ) => {
+export const getBackend = (backend: IAnalyticalBackend, props: any) => {
     return backend.withTelemetry("AttributeFilter", props);
 };
