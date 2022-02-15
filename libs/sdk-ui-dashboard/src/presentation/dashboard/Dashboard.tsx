@@ -60,7 +60,6 @@ import {
     selectDashboardLoading,
     selectFilterBarExpanded,
     selectFilterBarHeight,
-    selectIsEmbedded,
     selectLocale,
     useDashboardSelector,
     useDispatchDashboardCommand,
@@ -78,17 +77,13 @@ import { DashboardHeader } from "./DashboardHeader/DashboardHeader";
 
 const DashboardMainContent: React.FC<IDashboardProps> = () => {
     const isFilterBarExpanded = useDashboardSelector(selectFilterBarExpanded);
-    const isEmbedded = useDashboardSelector(selectIsEmbedded);
     const filterBarHeight = useDashboardSelector(selectFilterBarHeight);
 
     const onFiltersChange = useDispatchDashboardCommand(changeFilterContextSelection);
 
     const dashSectionStyles = useMemo(
         () => ({
-            marginTop:
-                isFilterBarExpanded && !isEmbedded
-                    ? filterBarHeight - DEFAULT_FILTER_BAR_HEIGHT + "px"
-                    : undefined,
+            marginTop: isFilterBarExpanded ? filterBarHeight - DEFAULT_FILTER_BAR_HEIGHT + "px" : undefined,
             transition: "margin-top 0.2s",
         }),
         [isFilterBarExpanded, filterBarHeight],
