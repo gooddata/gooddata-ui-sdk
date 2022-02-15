@@ -111,11 +111,13 @@ export {
     SetAttributeFilterParent,
     SetAttributeFilterParentPayload,
     setAttributeFilterParent,
-    AttributeFilterSelection,
+    ChangeAttributeFilterSelectionPayload,
     ChangeFilterContextSelection,
     ChangeFilterContextSelectionPayload,
     DateFilterSelection,
     changeFilterContextSelection,
+    applyAttributeFilter,
+    applyDateFilter,
 } from "./filters";
 
 export {

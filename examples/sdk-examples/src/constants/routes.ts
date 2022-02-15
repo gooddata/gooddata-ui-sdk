@@ -56,6 +56,7 @@ import ComposedPlaceholder from "../examples/placeholders/ComposedPlaceholder";
 import SimpleDashboardComponent from "../examples/dashboardComponent/SimpleDashboardComponent";
 import DashboardComponentWithLocalPlugin from "../examples/dashboardComponent/DashboardComponentWithLocalPlugin";
 import DashboardWithAccessor from "../examples/dashboardComponent/DashboardComponentWithAccessor";
+import DashboardWithUseDispatchDashboardCommand from "../examples/dashboardComponent/DashboardComponentWithUseDispatchDashboardCommand";
 
 // import PivotTableDynamic from "./PivotTableDynamic";
 // import MultipleDomains from "./MultipleDomains";
@@ -107,6 +108,11 @@ export const dashboardComponentUseCasesRoutes = [
         path: "/dashboard/local-plugin",
         title: "With local plugin",
         Component: DashboardComponentWithLocalPlugin,
+    },
+    {
+        path: "/dashboard/dispatch-dashboard-command-hook",
+        title: "With useDispatchDashboardCommand hook",
+        Component: DashboardWithUseDispatchDashboardCommand,
     },
     {
         path: "/dashboard/accessor",

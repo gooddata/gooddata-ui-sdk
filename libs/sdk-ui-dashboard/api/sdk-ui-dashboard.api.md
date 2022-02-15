@@ -236,17 +236,16 @@ export function anyDashboardEventHandler(handler: DashboardEventHandler["handler
 // @public
 export function anyEventHandler(handler: DashboardEventHandler["handler"]): DashboardEventHandler;
 
+// @public
+export function applyAttributeFilter(filterLocalId: string, filter: IAttributeFilter, correlationId?: string): ChangeAttributeFilterSelection;
+
+// @public
+export function applyDateFilter(filter: IDateFilter, correlationId?: string): ChangeDateFilterSelection;
+
 // @alpha (undocumented)
 export type AttributeFilterComponentProvider = (filter: IDashboardAttributeFilter) => CustomDashboardAttributeFilterComponent;
 
-// @alpha (undocumented)
-export interface AttributeFilterSelection {
-    readonly elements: IAttributeElements;
-    readonly filterLocalId: string;
-    readonly selectionType: AttributeFilterSelectionType;
-}
-
-// @alpha (undocumented)
+// @public
 export type AttributeFilterSelectionType = "IN" | "NOT_IN";
 
 // @alpha (undocumented)
@@ -288,18 +287,25 @@ export interface CatalogState {
     measures?: ICatalogMeasure[];
 }
 
-// @alpha (undocumented)
+// @public
 export interface ChangeAttributeFilterSelection extends IDashboardCommand {
     // (undocumented)
-    readonly payload: AttributeFilterSelection;
+    readonly payload: ChangeAttributeFilterSelectionPayload;
     // (undocumented)
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.CHANGE_SELECTION";
 }
 
-// @alpha
+// @public
 export function changeAttributeFilterSelection(filterLocalId: string, elements: IAttributeElements, selectionType: AttributeFilterSelectionType, correlationId?: string): ChangeAttributeFilterSelection;
 
-// @alpha (undocumented)
+// @public
+export interface ChangeAttributeFilterSelectionPayload {
+    readonly elements: IAttributeElements;
+    readonly filterLocalId: string;
+    readonly selectionType: AttributeFilterSelectionType;
+}
+
+// @public
 export interface ChangeDateFilterSelection extends IDashboardCommand {
     // (undocumented)
     readonly payload: DateFilterSelection;
@@ -307,7 +313,7 @@ export interface ChangeDateFilterSelection extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION";
 }
 
-// @alpha
+// @public
 export function changeDateFilterSelection(type: DateFilterType, granularity: DateFilterGranularity, from?: DateString | number, to?: DateString | number, dateFilterOptionLocalId?: string, correlationId?: string): ChangeDateFilterSelection;
 
 // @alpha (undocumented)
@@ -509,7 +515,7 @@ export interface ChangeSharingPayload {
     readonly newSharingProperties: ISharingApplyPayload_2;
 }
 
-// @alpha
+// @public
 export function clearDateFilterSelection(correlationId?: string): ChangeDateFilterSelection;
 
 // @alpha
@@ -1875,7 +1881,7 @@ export interface DateFilterConfigState {
 // @public
 export type DateFilterConfigValidationResult = "Valid" | "NoVisibleOptions" | "ConflictingIdentifiers" | "SelectedOptionInvalid";
 
-// @alpha (undocumented)
+// @public
 export interface DateFilterSelection {
     readonly dateFilterOptionLocalId?: string;
     readonly from?: DateString | number;
@@ -4015,7 +4021,7 @@ export interface RequestAsyncRenderPayload {
     readonly id: string;
 }
 
-// @alpha
+// @public
 export function resetAttributeFilterSelection(filterLocalId: string, correlationId?: string): ChangeAttributeFilterSelection;
 
 // @alpha (undocumented)
@@ -5037,7 +5043,7 @@ export const useDashboardUserInteraction: () => {
     kpiAlertDialogOpened: (alreadyHasAlert: boolean) => void;
 };
 
-// @alpha
+// @public
 export const useDispatchDashboardCommand: <TCommand extends DashboardCommands, TArgs extends any[]>(commandCreator: (...args: TArgs) => TCommand) => (...args: TArgs) => void;
 
 // @internal (undocumented)
