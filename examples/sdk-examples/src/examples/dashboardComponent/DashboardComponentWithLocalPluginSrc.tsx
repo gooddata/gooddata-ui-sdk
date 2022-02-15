@@ -132,7 +132,15 @@ class LocalPlugin extends DashboardPluginV1 {
                             dateDataSet: Md.DateDatasets.Date,
                             // specify which attribute filters to ignore for this widget
                             // if empty or not specified, all attribute filters are used
-                            ignoreDashboardFilters: [],
+                            ignoreDashboardFilters: [
+                                // add the following line to the top of the file
+                                // import { attributeDisplayFormRef } from "@gooddata/sdk-model";
+                                // and uncomment the following lines to make the RestaurantCategory filter ignored for this widget
+                                // {
+                                //     type: "attributeFilterReference",
+                                //     displayForm: attributeDisplayFormRef(Md.RestaurantCategory),
+                                // },
+                            ],
                         }),
                         {
                             xl: {
