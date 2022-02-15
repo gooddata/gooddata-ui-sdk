@@ -1,11 +1,11 @@
 // (C) 2022 GoodData Corporation
 
 import { IAttributeElement, IElementsQueryResult } from "@gooddata/sdk-backend-spi";
-import { IElementQueryResultWithEmptyItems } from "../AttributeDropdown/types";
+import { IElementQueryResultWithEmptyItems } from "../../AttributeDropdown/types";
 import { useEffect, useState } from "react";
-import { ATTRIBUTE_FILTER_BUTTON_LIMIT } from "./constants";
+import { ATTRIBUTE_FILTER_BUTTON_LIMIT } from "../constants";
 import { IAttributeFilter, isAttributeElementsByRef } from "@gooddata/sdk-model";
-import { getInitialIsInverted, getInitialSelectedOptions } from "./AttributeFilterButtonUtils";
+import { getInitialIsInverted, getInitialSelectedOptions } from "../AttributeFilterButtonUtils";
 import isEqual from "lodash/isEqual";
 
 interface IAttributeFilterButtonState {
@@ -31,9 +31,7 @@ interface IAttributeFilterButtonState {
     needsReloadAfterSearch: boolean;
 }
 
-
 export const useAttributeFilterButtonState = (currentFilter: IAttributeFilter) => {
-
     /**
      * AttributeFilterButton state initialization
      */
@@ -132,7 +130,7 @@ export const useAttributeFilterButtonState = (currentFilter: IAttributeFilter) =
                 uriToAttributeElementMap,
             };
         });
-    }
+    };
 
     /**
      * Effects
