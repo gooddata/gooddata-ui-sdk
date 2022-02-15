@@ -245,7 +245,7 @@ export function applyDateFilter(filter: IDateFilter, correlationId?: string): Ch
 // @alpha (undocumented)
 export type AttributeFilterComponentProvider = (filter: IDashboardAttributeFilter) => CustomDashboardAttributeFilterComponent;
 
-// @alpha (undocumented)
+// @public
 export type AttributeFilterSelectionType = "IN" | "NOT_IN";
 
 // @alpha (undocumented)
@@ -305,7 +305,7 @@ export interface ChangeAttributeFilterSelectionPayload {
     readonly selectionType: AttributeFilterSelectionType;
 }
 
-// @public (undocumented)
+// @public
 export interface ChangeDateFilterSelection extends IDashboardCommand {
     // (undocumented)
     readonly payload: DateFilterSelection;
@@ -1881,7 +1881,7 @@ export interface DateFilterConfigState {
 // @public
 export type DateFilterConfigValidationResult = "Valid" | "NoVisibleOptions" | "ConflictingIdentifiers" | "SelectedOptionInvalid";
 
-// @public (undocumented)
+// @public
 export interface DateFilterSelection {
     readonly dateFilterOptionLocalId?: string;
     readonly from?: DateString | number;

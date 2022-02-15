@@ -22,6 +22,8 @@ import { IDashboardCommand } from "./base";
 import { IDashboardFilter } from "../../types";
 
 /**
+ * Payload type for {@link ChangeDateFilterSelection} command.
+ *
  * @public
  */
 export interface DateFilterSelection {
@@ -71,6 +73,8 @@ export interface DateFilterSelection {
 }
 
 /**
+ * Command for date filter selection change.
+ *
  * @public
  */
 export interface ChangeDateFilterSelection extends IDashboardCommand {
@@ -353,7 +357,9 @@ export function moveAttributeFilter(
 //
 
 /**
- * @alpha
+ * Attribute filter selection type for {@link ChangeAttributeFilterSelectionPayload}.
+ *
+ * @public
  */
 export type AttributeFilterSelectionType = "IN" | "NOT_IN";
 
@@ -394,19 +400,18 @@ export interface ChangeAttributeFilterSelection extends IDashboardCommand {
  * The attribute elements can be provided either using their URI (primary key) or value. Together with the
  * elements you must indicate the selection type - either 'IN' or 'NOT_IN'.
  *
- * To convert {@link IDashboardFilter} to {@link @gooddata/sdk-model#IFilter} use {@link dashboardAttributeFilterToAttributeFilter}.
- * Converted filter can be used within the command's payload.
- *
  * @remarks see {@link resetAttributeFilterSelection} for convenience function to select all attribute elements of
  *  particular filter.
  *
- *  For determination of what selection type to use, use {@link @gooddata/sdk-model#isPositiveAttributeFilter} function.
- *  If the result is `true` use "IN" {@link AttributeFilterSelectionType}, "NOT_IN" otherwise.
+ * See also {@link applyAttributeFilter} for convenient function when you have an {@link @gooddata/sdk-model#IAttributeFilter} instance.
  *
  *  @example
  * ```
  * const selectionType = isPositiveAttributeFilter ? "IN" : "NOT_IN";
  * ```
+ *
+ * To create this command without a need to calculate the payload values from a {@link @gooddata/sdk-model#IFilter} object,
+ * we recommend to use {@link applyAttributeFilter} command creator instead.
  *
  * @param filterLocalId - dashboard attribute filter's local id
  * @param elements - elements
