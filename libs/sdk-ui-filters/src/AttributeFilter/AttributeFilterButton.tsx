@@ -1,6 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import cx from "classnames";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IAnalyticalBackend, IAttributeElement, IAttributeMetadataObject } from "@gooddata/sdk-backend-spi";
 import {
@@ -9,12 +8,11 @@ import {
     IAttributeFilter,
     isAttributeElementsByRef,
     isAttributeElementsByValue,
-    isNegativeAttributeFilter,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     ObjRef,
 } from "@gooddata/sdk-model";
-import { NoData, Dropdown } from "@gooddata/sdk-ui-kit";
+import { Dropdown, NoData } from "@gooddata/sdk-ui-kit";
 import {
     AttributeDropdownBody,
     IAttributeDropdownBodyExtendedProps,
@@ -26,7 +24,6 @@ import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
 import noop from "lodash/noop";
-import { MAX_SELECTION_SIZE } from "./AttributeDropdown/AttributeDropdownList";
 import { mergeElementQueryResults } from "./AttributeDropdown/mergeElementQueryResults";
 import {
     AttributeFiltersOrPlaceholders,
@@ -41,7 +38,6 @@ import {
 import MediaQuery from "react-responsive";
 import { MediaQueries } from "../constants";
 import {
-    attributeElementsToAttributeElementArray,
     getAllExceptTitle,
     getAllTitle,
     getElementTotalCount,
@@ -61,10 +57,14 @@ import {
 } from "./utils/AttributeFilterUtils";
 import invariant from "ts-invariant";
 import stringify from "json-stable-stringify";
-import { IElementQueryResultWithEmptyItems, isNonEmptyListItem } from "./AttributeDropdown/types";
+import { isNonEmptyListItem } from "./AttributeDropdown/types";
 import { AttributeDropdownAllFilteredOutBody } from "./AttributeDropdown/AttributeDropdownAllFilteredOutBody";
-import { ShortenedText } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import AttributeFilterButtonDropdownButton from "./AttributeFilterButton/AttributeFilterButtonDropdownButton";
+import { useAttributeFilterButtonState } from "./AttributeFilterButton/hooks/useAttributeFilterButtonState";
+import { ATTRIBUTE_FILTER_BUTTON_LIMIT } from "./AttributeFilterButton/constants";
+import AttributeFilterButtonDefaultError from "./AttributeFilterButton/AttributeFilterButtonDefaultError";
+import { useAttributeFilterButtonTotalCount } from "./AttributeFilterButton/hooks/useAttributeFilterButtonTotalCount";
+import { useParentFilterTitles } from "./AttributeFilterButton/hooks/useParentFilterTitles";
 
 /**
  * @public
@@ -160,109 +160,10 @@ export interface IAttributeFilterButtonOwnProps {
     renderBody?: (props: IAttributeDropdownBodyExtendedProps) => React.ReactNode;
 }
 
-interface IAttributeFilterButtonState {
-    selectedFilterOptions: IAttributeElement[];
-    appliedFilterOptions: IAttributeElement[];
-    isInverted: boolean;
-    appliedIsInverted: boolean;
-    firstLoad: boolean;
-    searchString: string;
-    offset: number;
-    limit: number;
-    isDropdownOpen: boolean;
-    validOptions: IElementQueryResultWithEmptyItems;
-    uriToAttributeElementMap: Map<string, IAttributeElement>;
-    isFiltering: boolean;
-    /**
-     * This flag simulates previous value for `searchString` value. If the search string changes, it will force
-     * elements reloading.
-     *
-     * Implementation of this flag covers some edge case scenarios which resulted into fetching incorrect
-     * elements for current searched value.
-     */
-    needsReloadAfterSearch: boolean;
-}
-
 /**
  * @public
  */
 export type IAttributeFilterButtonProps = IAttributeFilterButtonOwnProps & WrappedComponentProps;
-
-const DefaultFilterError: React.FC = injectIntl(({ intl }) => {
-    const text = intl.formatMessage({ id: "gs.filter.error" });
-    return <div className="gd-message error s-button-error">{text}</div>;
-});
-
-const tooltipAlignPoints = [
-    { align: "tc bc", offset: { x: 0, y: -2 } },
-    { align: "cc tc", offset: { x: 0, y: 10 } },
-    { align: "bl tr", offset: { x: -2, y: -8 } },
-];
-
-const DropdownButton: React.FC<{
-    isMobile?: boolean;
-    isOpen?: boolean;
-    title: string;
-    subtitleText: string;
-    subtitleItemCount: number;
-    isFiltering?: boolean;
-    isLoaded?: boolean;
-}> = ({ isMobile, isOpen, title, subtitleItemCount, subtitleText, isFiltering, isLoaded }) => {
-    const subtitleSelectedItemsRef = useRef(null);
-    const [displayItemCount, setDisplayItemCount] = useState(false);
-    const [subtitle, setSubtitle] = useState("");
-
-    useEffect(() => {
-        if (!isEmpty(subtitleText) && subtitleText !== subtitle) {
-            setSubtitle(subtitleText);
-        }
-    }, [subtitleText]);
-
-    useEffect(() => {
-        const element = subtitleSelectedItemsRef.current;
-
-        if (!element) {
-            return;
-        }
-
-        const roundedWidth = Math.ceil(element.getBoundingClientRect().width);
-        const displayItemCount = roundedWidth < element.scrollWidth;
-
-        setDisplayItemCount(displayItemCount);
-    }, [subtitle]);
-
-    return (
-        <div
-            className={cx(
-                "attribute-filter-button",
-                "s-attribute-filter",
-                `s-${stringUtils.simplifyText(title)}`,
-                {
-                    "is-active": isOpen,
-                    "gd-attribute-filter-button-mobile": isMobile,
-                    "gd-attribute-filter-button-is-filtering": isFiltering,
-                    "is-loaded": isLoaded,
-                },
-            )}
-        >
-            <div className="button-content">
-                <div className="button-title">
-                    <ShortenedText tooltipAlignPoints={tooltipAlignPoints}>{title}</ShortenedText>
-                </div>
-                <div className="button-subtitle">
-                    <span className="button-selected-items" ref={subtitleSelectedItemsRef}>
-                        {subtitle}
-                    </span>
-                    {displayItemCount && (
-                        <span className="button-selected-items-count">{`(${subtitleItemCount})`}</span>
-                    )}
-                </div>
-            </div>
-        </div>
-    );
-};
-
-const LIMIT = MAX_SELECTION_SIZE + 50;
 
 export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = (props) => {
     invariant(
@@ -283,115 +184,32 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
 
     const currentFilterObjRef = useMemo(() => filterRef, [stringify(filterRef)]);
 
-    const getInitialSelectedOptions = (): IAttributeElement[] =>
-        // the as any cast is ok here, the data will get fixed once the element load completes
-        // this serves only to have some initial state here so that when full element data is loaded
-        // it automatically sets the props.filter.elements as selected
-        currentFilter
-            ? (attributeElementsToAttributeElementArray(filterAttributeElements(currentFilter)) as any)
-            : [];
-
-    const getInitialIsInverted = (): boolean =>
-        currentFilter ? isNegativeAttributeFilter(currentFilter) : true;
-
-    const [state, setState] = useState<IAttributeFilterButtonState>(() => {
-        const initialSelection = getInitialSelectedOptions();
-        const initialIsInverted = getInitialIsInverted();
-
-        return {
-            selectedFilterOptions: initialSelection,
-            appliedFilterOptions: initialSelection,
-            isInverted: initialIsInverted,
-            appliedIsInverted: initialIsInverted,
-            firstLoad: true,
-            searchString: "",
-            offset: 0,
-            limit: LIMIT,
-            isDropdownOpen: false,
-            validOptions: null,
-            uriToAttributeElementMap: new Map<string, IAttributeElement>(),
-            isFiltering: false,
-            needsReloadAfterSearch: false,
-        };
-    });
+    const {
+        state,
+        setState,
+        onCurrentFilterChange,
+        clearUriToElementMap,
+        resetSelection,
+        mapInitialSelectionElements,
+    } = useAttributeFilterButtonState(currentFilter);
 
     const resolvedParentFilters = useResolveValueWithPlaceholders(props.parentFilters);
 
     const prevParentFilters = usePrevious(resolvedParentFilters);
 
     useEffect(() => {
-        setState((prevState) => {
-            return {
-                ...prevState,
-                uriToAttributeElementMap: new Map<string, IAttributeElement>(),
-            };
-        });
+        clearUriToElementMap();
     }, [props.backend, props.workspace, props.identifier, stringify(currentFilterObjRef)]);
 
     useEffect(() => {
-        setState((prevValue) => {
-            const initialSelection = getInitialSelectedOptions();
-            const initialIsInverted = getInitialIsInverted();
-
-            const selectedOptionsUris = prevValue.selectedFilterOptions.map((opt) => opt.uri);
-            const appliedOptionsUris = prevValue.appliedFilterOptions.map((opt) => opt.uri);
-            const initialSelectionUris = initialSelection.map((opt) => opt.uri);
-
-            let resultState = prevValue;
-
-            if (!isEqual(selectedOptionsUris, initialSelectionUris)) {
-                resultState = {
-                    ...resultState,
-                    selectedFilterOptions: initialSelection,
-                };
-            }
-
-            if (!isEqual(appliedOptionsUris, initialSelectionUris)) {
-                resultState = {
-                    ...resultState,
-                    appliedFilterOptions: initialSelection,
-                };
-            }
-
-            if (prevValue.isInverted !== initialIsInverted) {
-                resultState = {
-                    ...resultState,
-                    isInverted: initialIsInverted,
-                    appliedIsInverted: initialIsInverted,
-                };
-            }
-            // if no change returning prevValue effectively skips the setState
-            return resultState;
-        });
+        onCurrentFilterChange(currentFilter);
     }, [currentFilter]);
 
     useEffect(() => {
         if (!isEmpty(props.parentFilters) && !isEqual(prevParentFilters, resolvedParentFilters)) {
-            setState((prevState) => {
-                return {
-                    ...prevState,
-                    selectedFilterOptions: [],
-                    appliedFilterOptions: [],
-                    isInverted: true,
-                    appliedIsInverted: true,
-                    validOptions: null,
-                    isFiltering: true,
-                };
-            });
+            resetSelection();
         }
     }, [stringify(resolvedParentFilters)]);
-
-    useEffect(() => {
-        setState((prevState) => {
-            return {
-                ...prevState,
-                validOptions: null,
-                offset: 0,
-                limit: LIMIT,
-                needsReloadAfterSearch: true,
-            };
-        });
-    }, [state.searchString]);
 
     /*
      * This cancelable promise is used to fetch attribute filter elements for the initial selected options or
@@ -405,18 +223,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                 ? null
                 : async () => prepareElementsTitleQuery(state.appliedFilterOptions).query(),
             onSuccess: (initialElements) => {
-                setState((prevState) => {
-                    const uriToAttributeElementMap = new Map(prevState.uriToAttributeElementMap);
-                    initialElements.items?.forEach((item) => {
-                        const key = isElementsByRef ? item.uri : item.title;
-                        uriToAttributeElementMap.set(key, item);
-                    });
-
-                    return {
-                        ...prevState,
-                        uriToAttributeElementMap,
-                    };
-                });
+                mapInitialSelectionElements(initialElements);
             },
         },
         [
@@ -524,21 +331,22 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         }
     }, [originalTotalCountStatus]);
 
+    /**
+     * todo does it make sense to move cancelable promises like this??
+     */
     const {
         error: totalCountError,
         result: totalCount,
         status: totalCountStatus,
-    } = useCancelablePromise<number>(
+    } = useAttributeFilterButtonTotalCount(
         {
-            promise: async () => {
-                return getElementTotalCount(
-                    props.workspace,
-                    props.backend,
-                    getObjRef(currentFilter, props.identifier),
-                    state.searchString,
-                    getValidElementsFilters(resolvedParentFilters, props.parentFilterOverAttribute),
-                );
-            },
+            backend: props.backend,
+            workspace: props.workspace,
+            currentFilter,
+            identifier: props.identifier,
+            searchString: state.searchString,
+            resolvedParentFilters,
+            parentFilterOverAttribute: props.parentFilterOverAttribute,
         },
         [
             props.backend,
@@ -554,12 +362,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         error: parentFilterTitlesError,
         result: parentFilterTitles,
         status: parentFilterTitlesStatus,
-    } = useCancelablePromise<string[]>(
-        {
-            promise: () => getParentFilterTitles(resolvedParentFilters ?? [], getBackend(), props.workspace),
-        },
-        [props.backend, props.workspace, stringify(resolvedParentFilters)],
-    );
+    } = useParentFilterTitles({ backend: props.backend, workspace: props.workspace, resolvedParentFilters });
 
     const {
         error: attributeError,
@@ -655,10 +458,6 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
     /**
      * getters
      */
-    const getBackend = () => {
-        return props.backend.withTelemetry("AttributeFilter", props);
-    };
-
     const isElementsLoading = () => {
         // pending means idle in this context
         return elementsStatus === "loading";
@@ -882,7 +681,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             isMobile: false,
         ) => ({
             items: state.validOptions?.items ?? [],
-            totalCount: totalCount ?? LIMIT,
+            totalCount: totalCount ?? ATTRIBUTE_FILTER_BUTTON_LIMIT,
             onSelect,
             onRangeChange,
             onSearch,
@@ -921,7 +720,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                     <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
                         {(isMobile) => (
                             <span onClick={toggleDropdown}>
-                                <DropdownButton
+                                <AttributeFilterButtonDropdownButton
                                     isFiltering={state.isFiltering}
                                     isOpen={state.isDropdownOpen}
                                     isMobile={isMobile}
@@ -1003,7 +802,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
 };
 
 AttributeFilterButtonCore.defaultProps = {
-    FilterError: DefaultFilterError,
+    FilterError: AttributeFilterButtonDefaultError,
 };
 
 const IntlAttributeFilterButton = withContexts(injectIntl(AttributeFilterButtonCore));
