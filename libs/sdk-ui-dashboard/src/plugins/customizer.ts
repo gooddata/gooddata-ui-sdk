@@ -257,7 +257,7 @@ export interface IDashboardLayoutCustomizer {
 
 /**
  * Mode of rendering of the FilterBar:
- * - default - the default implementation is used
+ * - default - the filter bar will be rendered as if no rendering mode was set at all.
  * - hidden - the filter bar is hidden. Note that the filters set on the dashboard are still active, just not visible.
  *
  * @public
