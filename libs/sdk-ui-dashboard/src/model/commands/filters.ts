@@ -22,7 +22,7 @@ import { IDashboardCommand } from "./base";
 import { IDashboardFilter } from "../../types";
 
 /**
- * @alpha
+ * @public
  */
 export interface DateFilterSelection {
     /**
@@ -71,7 +71,7 @@ export interface DateFilterSelection {
 }
 
 /**
- * @alpha
+ * @public
  */
 export interface ChangeDateFilterSelection extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION";
@@ -114,6 +114,19 @@ export function changeDateFilterSelection(
     };
 }
 
+/**
+ * Creates the ChangeDateFilterSelection command. Dispatching this command will result in change of dashboard's
+ * date filter, or error in case of invalid update (e.g. hidden date filter option by dateFilterConfig).
+ *
+ * All parameters for {@link ChangeDateFilterSelection} command is derived from the provided date filter.
+ *
+ * @param filter - date filter to apply
+ * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ * @remarks see {@link ChangeDateFilterSelection} for a more complete description of the different parameters
+ *
+ * @public
+ */
 export function applyDateFilter(filter: IDateFilter, correlationId?: string): ChangeDateFilterSelection {
     if (isAllTimeDateFilter(filter)) {
         return clearDateFilterSelection(correlationId);
@@ -391,9 +404,9 @@ export interface ChangeAttributeFilterSelection extends IDashboardCommand {
  *  If the result is `true` use "IN" {@link AttributeFilterSelectionType}, "NOT_IN" otherwise.
  *
  *  @example
- *  ```
- *  const selectionType = isPositiveAttributeFilter ? "IN" : "NOT_IN";
- *  ```
+ * ```
+ * const selectionType = isPositiveAttributeFilter ? "IN" : "NOT_IN";
+ * ```
  *
  * @param filterLocalId - dashboard attribute filter's local id
  * @param elements - elements
@@ -420,6 +433,23 @@ export function changeAttributeFilterSelection(
     };
 }
 
+/**
+ * Creates the ChangeAttributeFilterSelection command. Dispatching this command will result in application
+ * of element selection for the dashboard attribute filter with the provided id, or error in case of invalid update (e.g. non-existing filterLocalId).
+ *
+ * The {@link ChangeAttributeFilterSelectionPayload}'s selectionType and elements are derived from the
+ * provided attribute filter.
+ *
+ * To convert {@link IDashboardFilter} to {@link @gooddata/sdk-model#IFilter} use {@link dashboardAttributeFilterToAttributeFilter}.
+ * Converted filter can be used within the command's payload.
+ *
+ * @param filterLocalId - dashboard attribute filter's local id
+ * @param filter - attribute filter to apply
+ * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @public
+ */
 export function applyAttributeFilter(
     filterLocalId: string,
     filter: IAttributeFilter,

@@ -116,6 +116,8 @@ export {
     ChangeFilterContextSelectionPayload,
     DateFilterSelection,
     changeFilterContextSelection,
+    applyAttributeFilter,
+    applyDateFilter,
 } from "./filters";
 
 export {

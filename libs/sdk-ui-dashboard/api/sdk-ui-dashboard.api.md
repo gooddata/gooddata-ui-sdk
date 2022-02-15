@@ -236,6 +236,12 @@ export function anyDashboardEventHandler(handler: DashboardEventHandler["handler
 // @public
 export function anyEventHandler(handler: DashboardEventHandler["handler"]): DashboardEventHandler;
 
+// @public
+export function applyAttributeFilter(filterLocalId: string, filter: IAttributeFilter, correlationId?: string): ChangeAttributeFilterSelection;
+
+// @public
+export function applyDateFilter(filter: IDateFilter, correlationId?: string): ChangeDateFilterSelection;
+
 // @alpha (undocumented)
 export type AttributeFilterComponentProvider = (filter: IDashboardAttributeFilter) => CustomDashboardAttributeFilterComponent;
 
@@ -299,7 +305,7 @@ export interface ChangeAttributeFilterSelectionPayload {
     readonly selectionType: AttributeFilterSelectionType;
 }
 
-// @alpha (undocumented)
+// @public (undocumented)
 export interface ChangeDateFilterSelection extends IDashboardCommand {
     // (undocumented)
     readonly payload: DateFilterSelection;
@@ -1875,7 +1881,7 @@ export interface DateFilterConfigState {
 // @public
 export type DateFilterConfigValidationResult = "Valid" | "NoVisibleOptions" | "ConflictingIdentifiers" | "SelectedOptionInvalid";
 
-// @alpha (undocumented)
+// @public (undocumented)
 export interface DateFilterSelection {
     readonly dateFilterOptionLocalId?: string;
     readonly from?: DateString | number;
