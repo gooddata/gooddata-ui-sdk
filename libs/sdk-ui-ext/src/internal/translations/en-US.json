@@ -1536,5 +1536,25 @@
         "value": "Stay",
         "comment": "",
         "limit": 0
+    },
+    "sorting.tooltip.sum._measure": {
+        "value": "The insight is sliced by two attributes. The first attribute is always sorted by the sum of all measure values.",
+        "comment": "Tooltip that is shown in Sort dropdown when Sum of all measures (total) option is selected.",
+        "limit": 0
+    },
+    "sorting.tooltip.sum._metric": {
+        "value": "The insight is sliced by two attributes. The first attribute is always sorted by the sum of all metric values.",
+        "comment": "Tooltip that is shown in Sort dropdown when Sum of all metrics (total) option is selected.",
+        "limit": 0
+    },
+    "sorting.tooltip.measure._measure": {
+        "value": "You can sort only by measures already used on the insight.",
+        "comment": "Tooltip that is shown in Sort dropdown when a measure is selected.",
+        "limit": 0
+    },
+    "sorting.tooltip.measure._metric": {
+        "value": "You can sort only by metrics already used on the insight.",
+        "comment": "Tooltip that is shown in Sort dropdown when a metric is selected.",
+        "limit": 0
     }
 }

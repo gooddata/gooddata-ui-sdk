@@ -1,5 +1,6 @@
 // (C) 2020 GoodData Corporation
 @import "~@gooddata/sdk-ui-kit/styles/scss/form";
+@import "~@gooddata/sdk-ui-kit/styles/scss/variables";
 
 $dropdown_max_height: 300px;
 $ranking_filter_dropdown_width: 250px;
@@ -7,7 +8,6 @@ $operator_dropdown_width: 100px;
 $value_dropdown_width: 80px;
 $attribute_dropdown_width: $ranking_filter_dropdown_width - 20px;
 $measure_dropdown_width: $ranking_filter_dropdown_width - 20px;
-$measure_sequence_number_font: menlo, monaco, consolas, "Courier New", monospace;
 
 .gd-rf-dropdown-body {
     width: $ranking_filter_dropdown_width;

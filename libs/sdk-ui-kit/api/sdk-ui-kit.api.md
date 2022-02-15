@@ -16,17 +16,21 @@ import { IAccessControlAware } from '@gooddata/sdk-backend-spi';
 import { IAccessGrantee } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAuditableUsers } from '@gooddata/sdk-model';
+import { IMeasureSortTarget } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
 import { ISeparators } from '@gooddata/sdk-ui';
 import { ISettings } from '@gooddata/sdk-backend-spi';
+import { ISortItem } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-backend-spi';
 import { IWorkspacePermissions } from '@gooddata/sdk-backend-spi';
+import { LocalIdRef } from '@gooddata/sdk-model';
 import { MessageDescriptor } from 'react-intl';
 import { ObjRef } from '@gooddata/sdk-model';
 import { PureComponent } from 'react';
 import { default as React_2 } from 'react';
 import { ReactNode } from 'react';
 import { ShareStatus } from '@gooddata/sdk-backend-spi';
+import { SortDirection } from '@gooddata/sdk-model';
 import { WithIntlProps } from 'react-intl';
 import { WrappedComponentProps } from 'react-intl';
 
@@ -172,6 +176,30 @@ export class Button extends React_2.Component<IButtonProps> {
     // (undocumented)
     render(): React_2.ReactNode;
 }
+
+// @internal (undocumented)
+export interface ChartSortingOwnProps {
+    // (undocumented)
+    bucketItemNames: IBucketItemNames;
+    // (undocumented)
+    enableRenamingMeasureToMetric?: boolean;
+    // (undocumented)
+    onApply: (sortItems: ISortItem[]) => void;
+    // (undocumented)
+    onCancel: () => void;
+    // (undocumented)
+    onClose?: () => void;
+    // (undocumented)
+    sortConfig: ISortConfig;
+}
+
+// @internal (undocumented)
+export type ChartSortingProps = ChartSortingOwnProps & WrappedComponentProps;
+
+// @internal (undocumented)
+export const ChartSortingWithIntl: React_2.FC<WithIntlProps<ChartSortingProps>> & {
+    WrappedComponent: React_2.ComponentType<ChartSortingProps>;
+};
 
 // @internal (undocumented)
 export class Checkbox extends React_2.PureComponent<CheckboxProps> {
@@ -669,6 +697,19 @@ export interface IAutoSizeProps {
     children: ({ width, height }: IAutoSizeChildren) => React_2.ReactNode;
 }
 
+// @internal (undocumented)
+export interface IAvailableSortsGroup {
+    attributeSort?: {
+        normalSortEnabled: boolean;
+        areaSortEnabled: boolean;
+    };
+    explanation?: string;
+    // (undocumented)
+    itemId: LocalIdRef;
+    // (undocumented)
+    metricSorts?: MeasureSortSuggestion[];
+}
+
 // @internal
 export type IBreakpointsConfig = {
     [s in ResponsiveScreenType]: number;
@@ -739,6 +780,15 @@ export interface IBubbleTriggerState {
     bubbleId: string;
     // (undocumented)
     isBubbleVisible: boolean;
+}
+
+// @internal (undocumented)
+export interface IBucketItemNames {
+    // (undocumented)
+    [localIdentifier: string]: {
+        name: string;
+        sequenceNumber?: string;
+    };
 }
 
 // @internal (undocumented)
@@ -2751,6 +2801,29 @@ export interface ISnapPoints {
 }
 
 // @internal (undocumented)
+export interface ISortConfig {
+    availableSorts: IAvailableSortsGroup[];
+    currentSort: ISortItem[];
+    disabled: boolean;
+    disabledExplanation?: string;
+    supported: boolean;
+}
+
+// @internal (undocumented)
+export interface ISortTypeItem {
+    // (undocumented)
+    id: SORT_TARGET_TYPE;
+    // (undocumented)
+    localIdentifier: string;
+    // (undocumented)
+    sortDirection: SortDirection;
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    type: "alphabetical" | "numerical";
+}
+
+// @internal (undocumented)
 export interface ISpinnerProps {
     // (undocumented)
     className?: string;
@@ -3007,6 +3080,11 @@ export class MeasureNumberFormat extends React_2.PureComponent<IMeasureNumberFor
 }
 
 // @internal (undocumented)
+export type MeasureSortSuggestion = {
+    type: "measureSort";
+} & IMeasureSortTarget;
+
+// @internal (undocumented)
 export const Menu: React_2.FC<IMenuProps>;
 
 // @internal (undocumented)
@@ -3199,6 +3277,18 @@ export enum SnapPoint {
     TopLeft = "tl",
     // (undocumented)
     TopRight = "tr"
+}
+
+// @internal (undocumented)
+export enum SORT_TARGET_TYPE {
+    // (undocumented)
+    ALPHABETICAL_ASC = "alphabetical-asc",
+    // (undocumented)
+    ALPHABETICAL_DESC = "alphabetical-desc",
+    // (undocumented)
+    NUMERICAL_ASC = "numerical-asc",
+    // (undocumented)
+    NUMERICAL_DESC = "numerical-desc"
 }
 
 // @internal (undocumented)
