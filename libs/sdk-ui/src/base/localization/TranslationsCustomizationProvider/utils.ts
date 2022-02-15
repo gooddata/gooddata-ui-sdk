@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import memoizeOne from "memoize-one";
 import { IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 
@@ -95,6 +95,29 @@ export const removeAllInsightToReportTranslations = (
             delete translations[key];
         }
     });
+    return {
+        ...translations,
+    };
+};
+
+/**
+ * The function to remove all translation keys that contain special suffixes "|report", "|insight", "._measure" or "._metric"
+ * @beta
+ */
+export const removeAllWordingTranslationsWithSpecialSuffix = (
+    translations: Record<string, string>,
+): Record<string, string> => {
+    Object.keys(translations).forEach((key) => {
+        if (
+            key.includes("|report") ||
+            key.includes("|insight") ||
+            key.includes("._measure") ||
+            key.includes("._metric")
+        ) {
+            delete translations[key];
+        }
+    });
+
     return {
         ...translations,
     };

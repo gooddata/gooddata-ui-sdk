@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 export {
     ITranslationsCustomizationContextProviderProps,
     TranslationsCustomizationContextProvider,
@@ -13,4 +13,5 @@ export {
     pickCorrectMetricWording,
     pickCorrectWording,
     removeAllInsightToReportTranslations,
+    removeAllWordingTranslationsWithSpecialSuffix,
 } from "./utils";

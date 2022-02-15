@@ -1543,6 +1543,9 @@ export const RawExecute: React_2.ComponentClass<IRawExecuteProps, any>;
 // @beta (undocumented)
 export const removeAllInsightToReportTranslations: (translations: Record<string, string>) => Record<string, string>;
 
+// @beta
+export const removeAllWordingTranslationsWithSpecialSuffix: (translations: Record<string, string>) => Record<string, string>;
+
 // @alpha
 export const ResolvedClientWorkspaceProvider: React_2.FC<IClientWorkspaceIdentifiers>;
 
