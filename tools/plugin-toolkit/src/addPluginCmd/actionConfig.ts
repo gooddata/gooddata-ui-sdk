@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { ActionOptions } from "../_base/types";
 import { convertToPluginIdentifier } from "../_base/utils";
 import {
@@ -45,11 +45,21 @@ async function doAsyncValidations(config: AddCmdActionConfig) {
     }
 }
 
+/**
+ * Get the best guess of the original plugin name from ints entry point URL.
+ *
+ * @param url - the URL of the plugin being added
+ */
+function pluginUrlToPluginName(url: string): string {
+    const match = /dp_([^/]+).js$/i.exec(url);
+    return match?.[1] ?? "";
+}
+
 export async function getAddCmdActionConfig(
     pluginUrl: string,
     options: ActionOptions,
 ): Promise<AddCmdActionConfig> {
-    const workspaceTargetConfig = createWorkspaceTargetConfig(options);
+    const workspaceTargetConfig = await createWorkspaceTargetConfig(options);
     const { hostname, backend, credentials, packageJson } = workspaceTargetConfig;
 
     const backendInstance = createBackend({
@@ -58,11 +68,18 @@ export async function getAddCmdActionConfig(
         credentials,
     });
 
+    /*
+     * In case we are not running this from the original plugin directory, derive a best-guess name from
+     * the plugin URL. This is good enough for most cases and is easier than asking the user to provide
+     * a valid name that would match the URL and pass subsequent validations.
+     */
+    const pluginName = packageJson.name ?? pluginUrlToPluginName(pluginUrl);
+
     const config: AddCmdActionConfig = {
         ...workspaceTargetConfig,
         pluginUrl,
-        pluginIdentifier: convertToPluginIdentifier(packageJson.name),
-        pluginName: packageJson.name,
+        pluginName,
+        pluginIdentifier: convertToPluginIdentifier(pluginName),
         pluginDescription: packageJson.description,
         dryRun: options.commandOpts.dryRun ?? false,
         backendInstance,

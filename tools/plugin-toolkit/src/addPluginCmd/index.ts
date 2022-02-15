@@ -1,8 +1,7 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { ActionOptions } from "../_base/types";
-import { logError, logInfo, logSuccess, logWarn } from "../_base/terminal/loggers";
+import { logInfo, logSuccess, logWarn } from "../_base/terminal/loggers";
 import { AddCmdActionConfig, getAddCmdActionConfig } from "./actionConfig";
-import fse from "fs-extra";
 import { IDashboardPlugin } from "@gooddata/sdk-backend-spi";
 import { genericErrorReporter } from "../_base/utils";
 import isEmpty from "lodash/isEmpty";
@@ -46,15 +45,6 @@ function createPluginObject(config: AddCmdActionConfig): Promise<IDashboardPlugi
 }
 
 export async function addPluginCmdAction(pluginUrl: string, options: ActionOptions): Promise<void> {
-    if (!fse.existsSync("package.json")) {
-        logError(
-            "Cannot find package.json. Please make sure to run the tool in directory that contains your dashboard plugin project.",
-        );
-
-        process.exit(1);
-        return;
-    }
-
     try {
         const config: AddCmdActionConfig = await getAddCmdActionConfig(pluginUrl, options);
 
@@ -66,7 +56,6 @@ export async function addPluginCmdAction(pluginUrl: string, options: ActionOptio
             );
 
             process.exit(0);
-            return;
         }
 
         const newPluginObject = await createPluginObject(config);

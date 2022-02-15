@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { createWorkspaceTargetConfig, WorkspaceTargetConfig } from "../_base/workspaceTargetConfig";
 import { IAnalyticalBackend, IDashboardPlugin, IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { ActionOptions } from "../_base/types";
@@ -74,10 +74,11 @@ function createDuplicatePluginLinkValidator(
 }
 
 function createLinkedPluginUrlValidator(pluginIdentifier: string): InputValidator<IDashboardPlugin> {
-    const entryPoint = convertToPluginEntrypoint(pluginIdentifier);
-
     return (plugin) => {
-        if (!plugin.url.endsWith(entryPoint)) {
+        // if the pluginIdentifier is not available, we are running the tool outside of the original plugin
+        // directory so the entry point validation is impossible
+        const entryPoint = convertToPluginEntrypoint(pluginIdentifier);
+        if (pluginIdentifier && !plugin.url.endsWith(entryPoint)) {
             return (
                 `You are trying to link a plugin (${plugin.name}) whose entry point differs from the ` +
                 "entry point of the plugin in your current directory."
@@ -126,7 +127,7 @@ export async function getLinkCmdActionConfig(
     identifier: string,
     options: ActionOptions,
 ): Promise<LinkCmdActionConfig> {
-    const workspaceTargetConfig = createWorkspaceTargetConfig(options);
+    const workspaceTargetConfig = await createWorkspaceTargetConfig(options);
     const { hostname, backend, credentials, env, packageJson } = workspaceTargetConfig;
     const dashboard = getDashboardFromOptions(options) ?? env.DASHBOARD_ID;
 
@@ -140,7 +141,7 @@ export async function getLinkCmdActionConfig(
         ...workspaceTargetConfig,
         identifier,
         dashboard,
-        pluginIdentifier: convertToPluginIdentifier(packageJson.name),
+        pluginIdentifier: packageJson.name && convertToPluginIdentifier(packageJson.name),
         dryRun: options.commandOpts.dryRun ?? false,
         withParameters: options.commandOpts.withParameters ?? false,
         parameters: undefined,

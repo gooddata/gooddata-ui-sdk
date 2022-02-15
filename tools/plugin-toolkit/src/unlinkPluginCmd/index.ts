@@ -1,7 +1,6 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { ActionOptions } from "../_base/types";
-import { logError, logInfo, logSuccess, logWarn } from "../_base/terminal/loggers";
-import fse from "fs-extra";
+import { logInfo, logSuccess, logWarn } from "../_base/terminal/loggers";
 import { getUnlinkCmdActionConfig, UnlinkCmdActionConfig } from "./actionConfig";
 import { IDashboardDefinition, IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { areObjRefsEqual, idRef } from "@gooddata/sdk-model";
@@ -71,15 +70,6 @@ async function removeDashboardPluginLink(config: UnlinkCmdActionConfig): Promise
 }
 
 export async function unlinkPluginCmdAction(identifier: string, options: ActionOptions): Promise<void> {
-    if (!fse.existsSync("package.json")) {
-        logError(
-            "Cannot find package.json. Please make sure to run the tool in directory that contains your dashboard plugin project.",
-        );
-
-        process.exit(1);
-        return;
-    }
-
     try {
         const config: UnlinkCmdActionConfig = await getUnlinkCmdActionConfig(identifier, options);
 
@@ -91,7 +81,6 @@ export async function unlinkPluginCmdAction(identifier: string, options: ActionO
             );
 
             process.exit(0);
-            return;
         }
 
         const updateProgress = ora({

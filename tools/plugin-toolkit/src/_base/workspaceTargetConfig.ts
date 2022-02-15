@@ -1,8 +1,16 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
+
+import ora from "ora";
 
 import { ActionOptions, TargetBackendType } from "./types";
-import { BackendCredentials, createCredentialsFromEnv, validateCredentialsAreComplete } from "./credentials";
-import { discoverBackendTypeOrDie, readPackageJsonIfExists } from "./utils";
+import {
+    BackendCredentials,
+    createCredentialsFromEnv,
+    completeCredentialsOrDie,
+    validateCredentialsComplete,
+    promptCredentials,
+} from "./credentials";
+import { discoverBackendType, readPackageJsonIfExists } from "./utils";
 import {
     getBackendFromOptions,
     getHostnameFromOptions,
@@ -10,6 +18,8 @@ import {
 } from "./inputHandling/extractors";
 import { loadEnv } from "./env";
 import { createHostnameValidator, validOrDie } from "./inputHandling/validators";
+import { createBackend } from "./backend";
+import { promptBackend, promptHostname, promptWorkspaceId } from "./terminal/prompts";
 
 /**
  * Config for commands that target a workspace.
@@ -48,22 +58,74 @@ export type WorkspaceTargetConfig = {
     packageJson: Record<string, any>;
 };
 
+function createOrPromptCredentials(
+    backend: TargetBackendType,
+    env: Record<string, string>,
+): Promise<BackendCredentials> {
+    const credentialsFromEnv = createCredentialsFromEnv(env);
+    const areCredentialsValid = !validateCredentialsComplete(backend, credentialsFromEnv);
+    if (areCredentialsValid) {
+        return Promise.resolve(credentialsFromEnv);
+    }
+
+    return promptCredentials(backend);
+}
+
+async function promptWorkspace(
+    backend: TargetBackendType,
+    hostname: string,
+    credentials: BackendCredentials,
+): Promise<string> {
+    const backendInstance = createBackend({
+        hostname,
+        backend,
+        credentials,
+    });
+
+    const workspaceLoadingProgress = ora({
+        text: "Loading workspaces.",
+    });
+
+    try {
+        workspaceLoadingProgress.start();
+        const workspacesFirstPage = await backendInstance.workspaces().forCurrentUser().query();
+        const allWorkspaces = await workspacesFirstPage.all();
+        const descriptors = await Promise.all(allWorkspaces.map((ws) => ws.getDescriptor()));
+        workspaceLoadingProgress.stop();
+
+        return promptWorkspaceId(
+            descriptors.map((ws) => ({
+                name: ws.title ?? ws.id,
+                value: ws.id,
+            })),
+        );
+    } catch (e: any) {
+        workspaceLoadingProgress.fail(e.message ?? "Error loading workspaces");
+        throw e;
+    }
+}
+
 /**
  * Creates common config for commands that target a workspace.
  */
-export function createWorkspaceTargetConfig(options: ActionOptions): WorkspaceTargetConfig {
+export async function createWorkspaceTargetConfig(options: ActionOptions): Promise<WorkspaceTargetConfig> {
     const packageJson = readPackageJsonIfExists();
-    const backendFromOptions = getBackendFromOptions(options);
-    const backend = backendFromOptions ?? discoverBackendTypeOrDie(packageJson);
-    const env = loadEnv(backend);
-    const hostnameFromOptions = getHostnameFromOptions(backendFromOptions, options);
-    const workspaceFromOptions = getWorkspaceFromOptions(options);
-    const hostname = hostnameFromOptions ?? env.BACKEND_URL;
-    const workspace = workspaceFromOptions ?? env.WORKSPACE;
-    const credentials = createCredentialsFromEnv(env);
 
+    const backendFromOptions = getBackendFromOptions(options);
+    const backend = backendFromOptions ?? discoverBackendType(packageJson) ?? (await promptBackend());
+
+    const env = loadEnv(backend);
+
+    const credentials = await createOrPromptCredentials(backend, env);
+    completeCredentialsOrDie(backend, credentials);
+
+    const hostnameFromOptions = getHostnameFromOptions(backendFromOptions, options);
+    const hostname = hostnameFromOptions ?? env.BACKEND_URL ?? (await promptHostname(backend));
     validOrDie("hostname", hostname, createHostnameValidator(backend));
-    validateCredentialsAreComplete(backend, credentials);
+
+    const workspaceFromOptions = getWorkspaceFromOptions(options);
+    const workspace =
+        workspaceFromOptions ?? env.WORKSPACE ?? (await promptWorkspace(backend, hostname, credentials));
 
     return {
         backend,

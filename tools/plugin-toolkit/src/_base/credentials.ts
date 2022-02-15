@@ -1,7 +1,8 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { InputValidationError, TargetBackendType } from "./types";
 import isEmpty from "lodash/isEmpty";
+import { promptApiToken, promptPassword, promptUsername } from "./terminal/prompts";
 
 export type BackendCredentials = {
     /**
@@ -28,6 +29,56 @@ export function createCredentialsFromEnv(env: Record<string, string>): BackendCr
     };
 }
 
+export async function promptCredentials(backend: TargetBackendType): Promise<BackendCredentials> {
+    if (backend === "bear") {
+        const username = await promptUsername();
+        const password = await promptPassword();
+        return {
+            username,
+            password,
+            token: undefined,
+        };
+    } else {
+        const token = await promptApiToken();
+        return {
+            token,
+            username: undefined,
+            password: undefined,
+        };
+    }
+}
+
+type CredentialsValidationError = "USERNAME_MISSING" | "PASSWORD_MISSING" | "TOKEN_MISSING";
+
+/**
+ * Validate that the gathered credentials provided on the input are complete in the context of the
+ * specified backend type. For 'bear' both username & password must be specified. For 'tiger' only
+ * token must be specified.
+ *
+ * If any essential prop is missing value - being undefined or empty, an appropriate validation error value is
+ * returned. Otherwise, undefined is returned.
+ *
+ * @param backend - backend being targeted by the CLI
+ * @param credentials - gathered credentials
+ */
+export function validateCredentialsComplete(
+    backend: TargetBackendType,
+    credentials: BackendCredentials,
+): CredentialsValidationError | undefined {
+    const { username, password, token } = credentials;
+
+    if (backend === "bear") {
+        if (isEmpty(username)) {
+            return "USERNAME_MISSING";
+        }
+        if (isEmpty(password)) {
+            return "PASSWORD_MISSING";
+        }
+    } else if (isEmpty(token)) {
+        return "TOKEN_MISSING";
+    }
+}
+
 /**
  * Validate that the gathered credentials provided on the input are complete in the context of the
  * specified backend type. For 'bear' both username & password must be specified. For 'tiger' only
@@ -39,32 +90,26 @@ export function createCredentialsFromEnv(env: Record<string, string>): BackendCr
  * @param backend - backend being targeted by the CLI
  * @param credentials - gathered credentials
  */
-export function validateCredentialsAreComplete(
-    backend: TargetBackendType,
-    credentials: BackendCredentials,
-): void {
-    const { username, password, token } = credentials;
-
-    if (backend === "bear") {
-        if (isEmpty(username)) {
+export function completeCredentialsOrDie(backend: TargetBackendType, credentials: BackendCredentials): void {
+    const validationError = validateCredentialsComplete(backend, credentials);
+    switch (validationError) {
+        case "USERNAME_MISSING":
             throw new InputValidationError(
                 "username",
                 "",
                 "Unable to determine username to use when logging into GoodData platform. Please make sure GDC_USERNAME env variable is set in your session or in the .env.secrets file",
             );
-        }
-        if (isEmpty(password)) {
+        case "PASSWORD_MISSING":
             throw new InputValidationError(
                 "password",
                 "",
                 "Unable to determine password to use when logging into GoodData platform. Please make sure GDC_PASSWORD env variable is set in your session or in the .env.secrets file",
             );
-        }
-    } else if (isEmpty(token)) {
-        throw new InputValidationError(
-            "token",
-            "",
-            "Unable to determine token to use for authentication to GoodData.CN. Please make sure TIGER_API_TOKEN env variable is set in your session or in the .env.secrets file",
-        );
+        case "TOKEN_MISSING":
+            throw new InputValidationError(
+                "token",
+                "",
+                "Unable to determine token to use for authentication to GoodData.CN. Please make sure TIGER_API_TOKEN env variable is set in your session or in the .env.secrets file",
+            );
     }
 }

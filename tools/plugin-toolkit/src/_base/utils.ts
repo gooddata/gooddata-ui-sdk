@@ -1,8 +1,8 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import path from "path";
 import fse from "fs-extra";
 import snakeCase from "lodash/snakeCase";
-import { InputValidationError, isInputValidationError, TargetBackendType } from "./types";
+import { isInputValidationError, TargetBackendType } from "./types";
 import { logError, logInfo } from "./terminal/loggers";
 import { isNotAuthenticated } from "@gooddata/sdk-backend-spi";
 
@@ -74,12 +74,12 @@ export function convertToPluginEntrypoint(pluginIdentifier: string): string {
 
 /**
  * Given package JSON contents, this function tries to discover the backend type that action should
- * target. The idea is.. if the person develops plugin against particular backend then its likely
+ * target. The idea is: if the person develops plugin against particular backend then its likely
  * that they will also want to deploy it there.
  *
  * @param packageJson - package json object
  */
-export function discoverBackendTypeOrDie(packageJson: Record<string, any>): TargetBackendType {
+export function discoverBackendType(packageJson: Record<string, any>): TargetBackendType | undefined {
     const { peerDependencies = {} } = packageJson;
 
     if (peerDependencies["@gooddata/sdk-backend-bear"] !== undefined) {
@@ -91,12 +91,6 @@ export function discoverBackendTypeOrDie(packageJson: Record<string, any>): Targ
 
         return "tiger";
     }
-
-    throw new InputValidationError(
-        "backend",
-        "?",
-        "Unable to discover target backend type. Please specify --backend option on the command line.",
-    );
 }
 
 export function extractRootCause(error: any): any {
