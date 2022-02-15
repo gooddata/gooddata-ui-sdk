@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import { DefaultFilterBar, HiddenFilterBar } from "../../../presentation";
+import { HiddenFilterBar } from "../../../presentation";
 import { DefaultFilterBarCustomizer } from "../filterBarCustomizer";
 import { TestingDashboardCustomizationLogger } from "./fixtures/TestingDashboardCustomizationLogger";
 
@@ -15,15 +15,15 @@ describe("filter bar customizer", () => {
     });
 
     describe("filter bar rendering mode", () => {
-        it("should return DefaultFilterBar if no mode was explicitly set", () => {
+        it("should return undefined if no mode was explicitly set", () => {
             const actual = Customizer.getCustomizerResult();
-            expect(actual.FilterBarComponent).toEqual(DefaultFilterBar);
+            expect(actual.FilterBarComponent).toBeUndefined();
         });
 
-        it("should return DefaultFilterBar if mode: default was explicitly set", () => {
+        it("should return undefined if mode: default was explicitly set", () => {
             Customizer.setRenderingMode("default");
             const actual = Customizer.getCustomizerResult();
-            expect(actual.FilterBarComponent).toEqual(DefaultFilterBar);
+            expect(actual.FilterBarComponent).toBeUndefined();
         });
 
         it("should return HiddenFilterBar if mode: hidden set using the setter", () => {

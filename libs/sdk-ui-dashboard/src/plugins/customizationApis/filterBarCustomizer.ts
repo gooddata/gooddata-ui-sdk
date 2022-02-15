@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import { CustomFilterBarComponent, DefaultFilterBar, HiddenFilterBar } from "../../presentation";
+import { CustomFilterBarComponent, HiddenFilterBar } from "../../presentation";
 import { FilterBarRenderingMode, IFilterBarCustomizer } from "../customizer";
 import { IDashboardCustomizationLogger } from "./customizationLogging";
 
@@ -9,7 +9,7 @@ interface IFilterBarCustomizerState {
 }
 
 interface IFilterBarCustomizerResult {
-    FilterBarComponent: CustomFilterBarComponent;
+    FilterBarComponent: CustomFilterBarComponent | undefined;
 }
 
 class FilterBarCustomizerState implements IFilterBarCustomizerState {
@@ -64,8 +64,10 @@ export class DefaultFilterBarCustomizer implements IFilterBarCustomizer {
 
     getCustomizerResult = (): IFilterBarCustomizerResult => {
         return {
-            FilterBarComponent:
-                this.state.getRenderingMode() === "hidden" ? HiddenFilterBar : DefaultFilterBar,
+            // if rendering mode is "hidden", explicitly replace the component with HiddenFilterBar,
+            // otherwise do nothing to allow the default or any custom component provided by the embedding application
+            // to kick in
+            FilterBarComponent: this.state.getRenderingMode() === "hidden" ? HiddenFilterBar : undefined,
         };
     };
 

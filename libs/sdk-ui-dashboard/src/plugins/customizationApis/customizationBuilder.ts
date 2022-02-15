@@ -86,7 +86,10 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
             customizationFns: {
                 existingDashboardTransformFn: this.layoutCustomizer.getExistingDashboardTransformFn(),
             },
-            FilterBarComponent: filterBarCustomizerResult.FilterBarComponent,
+            // only set the value if there is anything to set
+            ...(filterBarCustomizerResult.FilterBarComponent
+                ? { FilterBarComponent: filterBarCustomizerResult.FilterBarComponent }
+                : {}),
         };
 
         this.sealCustomizers();
