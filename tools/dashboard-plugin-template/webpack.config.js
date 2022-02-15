@@ -42,10 +42,13 @@ module.exports = (_env, argv) => {
             secure: false,
             target: effectiveBackendUrl,
             headers: {
-                host: effectiveBackendUrl,
-                origin: null,
+                host: effectiveBackendUrl.replace(/^https?:\/\//, ""),
+                // This is essential for Tiger backends. To ensure 401 flies when not authenticated and using proxy
+                "X-Requested-With": "XMLHttpRequest",
             },
             onProxyReq(proxyReq) {
+                // changeOrigin: true does not work well for POST requests, so remove origin like this to be safe
+                proxyReq.removeHeader("origin");
                 proxyReq.setHeader("accept-encoding", "identity");
             },
         },
