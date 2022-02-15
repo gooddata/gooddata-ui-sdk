@@ -23,7 +23,6 @@ import { useDashboardLoader } from "@gooddata/sdk-ui-loaders";
 import { LoadingComponent } from "@gooddata/sdk-ui";
 
 import { MAPBOX_TOKEN } from "../../constants/fixtures";
-import * as Md from "../../md/full";
 
 const dashboardRef = idRef("aeO5PVgShc0T");
 const config: DashboardConfig = { mapboxToken: MAPBOX_TOKEN, isReadOnly: true };
@@ -109,24 +108,14 @@ class LocalPlugin extends DashboardPluginV1 {
                 0,
                 newDashboardSection(
                     "Buttons to dispatch filter commands",
-                    newDashboardItem(
-                        newCustomWidget("myWidget1", "myCustomWidget", {
-                            // specify which date data set to used when applying the date filter to this widget
-                            // if not specified, the date filter is ignored
-                            dateDataSet: Md.DateDatasets.Date,
-                            // specify which attribute filters to ignore for this widget
-                            // if empty or not specified, all attribute filters are used
-                            ignoreDashboardFilters: [],
-                        }),
-                        {
-                            xl: {
-                                // all 12 columns of the grid will be 'allocated' for this this new item
-                                gridWidth: 12,
-                                // medium height to fit the chart
-                                gridHeight: 3,
-                            },
+                    newDashboardItem(newCustomWidget("myWidget1", "myCustomWidget"), {
+                        xl: {
+                            // all 12 columns of the grid will be 'allocated' for this this new item
+                            gridWidth: 12,
+                            // medium height to fit the chart
+                            gridHeight: 3,
                         },
-                    ),
+                    }),
                 ),
             );
         });

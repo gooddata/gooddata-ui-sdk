@@ -6,7 +6,18 @@ import {
     FilterContextItem,
     IDashboardAttributeFilterParent,
 } from "@gooddata/sdk-backend-spi";
-import { IAttributeElements, ObjRef } from "@gooddata/sdk-model";
+import {
+    absoluteDateFilterValues,
+    filterAttributeElements,
+    IAttributeElements,
+    IAttributeFilter,
+    IDateFilter,
+    isAllTimeDateFilter,
+    isPositiveAttributeFilter,
+    isRelativeDateFilter,
+    ObjRef,
+    relativeDateFilterValues,
+} from "@gooddata/sdk-model";
 import { IDashboardCommand } from "./base";
 import { IDashboardFilter } from "../../types";
 
@@ -103,6 +114,33 @@ export function changeDateFilterSelection(
     };
 }
 
+export function applyDateFilter(filter: IDateFilter, correlationId?: string): ChangeDateFilterSelection {
+    if (isAllTimeDateFilter(filter)) {
+        return clearDateFilterSelection(correlationId);
+    }
+
+    if (isRelativeDateFilter(filter)) {
+        const values = relativeDateFilterValues(filter);
+        return changeDateFilterSelection(
+            "relative",
+            values.granularity as DateFilterGranularity,
+            values.from,
+            values.to,
+            undefined,
+            correlationId,
+        );
+    } else {
+        const values = absoluteDateFilterValues(filter);
+        return changeDateFilterSelection(
+            "absolute",
+            "GDC.time.date",
+            values.from,
+            values.to,
+            undefined,
+            correlationId,
+        );
+    }
+}
 /**
  * This convenience function will create ChangeDateFilterSelection configured so that the date filter will be
  * unbounded - showing data for 'All Time'.
@@ -343,8 +381,19 @@ export interface ChangeAttributeFilterSelection extends IDashboardCommand {
  * The attribute elements can be provided either using their URI (primary key) or value. Together with the
  * elements you must indicate the selection type - either 'IN' or 'NOT_IN'.
  *
+ * To convert {@link IDashboardFilter} to {@link @gooddata/sdk-model#IFilter} use {@link dashboardAttributeFilterToAttributeFilter}.
+ * Converted filter can be used within the command's payload.
+ *
  * @remarks see {@link resetAttributeFilterSelection} for convenience function to select all attribute elements of
  *  particular filter.
+ *
+ *  For determination of what selection type to use, use {@link @gooddata/sdk-model#isPositiveAttributeFilter} function.
+ *  If the result is `true` use "IN" {@link AttributeFilterSelectionType}, "NOT_IN" otherwise.
+ *
+ *  @example
+ *  ```
+ *  const selectionType = isPositiveAttributeFilter ? "IN" : "NOT_IN";
+ *  ```
  *
  * @param filterLocalId - dashboard attribute filter's local id
  * @param elements - elements
@@ -369,6 +418,19 @@ export function changeAttributeFilterSelection(
             selectionType,
         },
     };
+}
+
+export function applyAttributeFilter(
+    filterLocalId: string,
+    filter: IAttributeFilter,
+    correlationId?: string,
+): ChangeAttributeFilterSelection {
+    return changeAttributeFilterSelection(
+        filterLocalId,
+        filterAttributeElements(filter),
+        isPositiveAttributeFilter(filter) ? "IN" : "NOT_IN",
+        correlationId,
+    );
 }
 
 /**
