@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React from "react";
 import partition from "lodash/partition";
 import { isDashboardDateFilter } from "@gooddata/sdk-backend-spi";
@@ -13,7 +13,7 @@ import {
     useDashboardSelector,
 } from "../../../model";
 import { useDashboardComponentsContext } from "../../dashboardContexts";
-import { DashboardDateFilter } from "../dateFilter";
+import { DashboardDateFilter, HiddenDashboardDateFilter } from "../dateFilter";
 import { IDashboardDateFilterConfig, IFilterBarProps } from "../types";
 
 import { DefaultFilterBarContainer } from "./DefaultFilterBarContainer";
@@ -46,12 +46,16 @@ export const DefaultFilterBar = (props: IFilterBarProps): JSX.Element => {
     return (
         <DefaultFilterBarContainer>
             <div className="dash-filters-date dash-filters-attribute">
-                <DashboardDateFilter
-                    filter={dateFilter}
-                    onFilterChanged={onDateFilterChanged}
-                    config={dateFilterComponentConfig}
-                    readonly={dateFilterMode === "readonly"}
-                />
+                {dateFilterMode === "hidden" ? (
+                    <HiddenDashboardDateFilter />
+                ) : (
+                    <DashboardDateFilter
+                        filter={dateFilter}
+                        onFilterChanged={onDateFilterChanged}
+                        config={dateFilterComponentConfig}
+                        readonly={dateFilterMode === "readonly"}
+                    />
+                )}
             </div>
             {attributeFilters.map((filter) => {
                 const AttributeFilter = DashboardAttributeFilterComponentProvider(filter);
