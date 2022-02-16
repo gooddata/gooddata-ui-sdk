@@ -12,7 +12,6 @@ import { NoData } from "@gooddata/sdk-ui-kit";
 
 interface IAttributeFilterButtonDefaultDropdownBodyProps {
     allElementsFiltered: boolean;
-    parentFilterTitles: string[];
     onApplyButtonClicked: (closeDropdown: () => void) => void;
     closeDropdown: () => void;
     hasNoData: boolean;
@@ -22,14 +21,7 @@ interface IAttributeFilterButtonDefaultDropdownBodyProps {
 const AttributeFilterButtonDefaultDropdownBody: React.FC<IAttributeFilterButtonDefaultDropdownBodyProps> = (
     props,
 ) => {
-    const {
-        allElementsFiltered,
-        parentFilterTitles,
-        onApplyButtonClicked,
-        closeDropdown,
-        hasNoData,
-        bodyProps,
-    } = props;
+    const { allElementsFiltered, onApplyButtonClicked, closeDropdown, hasNoData, bodyProps } = props;
 
     const intl = useIntl();
     // function renderDefaultBody(bodyProps: IAttributeDropdownBodyProps, closeDropdown: () => void) {
@@ -37,10 +29,7 @@ const AttributeFilterButtonDefaultDropdownBody: React.FC<IAttributeFilterButtonD
         <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
             {(isMobile) => (
                 <AttributeDropdownAllFilteredOutBody
-                    parentFilterTitles={parentFilterTitles}
-                    // onApplyButtonClick={() => {
-                    //     onApply(closeDropdown);
-                    // }}
+                    parentFilterTitles={bodyProps.parentFilterTitles}
                     onApplyButtonClick={() => onApplyButtonClicked(closeDropdown)}
                     onCancelButtonClick={closeDropdown}
                     isMobile={isMobile}
