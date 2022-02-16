@@ -1,12 +1,16 @@
 // (C) 2022 GoodData Corporation
 
 import { IAttributeElement, IElementsQueryResult } from "@gooddata/sdk-backend-spi";
-import { IElementQueryResultWithEmptyItems } from "../../AttributeDropdown/types";
-import { useEffect, useState } from "react";
+import { IElementQueryResultWithEmptyItems, isNonEmptyListItem } from "../../AttributeDropdown/types";
+import { useCallback, useEffect, useState } from "react";
 import { ATTRIBUTE_FILTER_BUTTON_LIMIT } from "../constants";
 import { IAttributeFilter, isAttributeElementsByRef } from "@gooddata/sdk-model";
 import { getInitialIsInverted, getInitialSelectedOptions } from "../AttributeFilterButtonUtils";
 import isEqual from "lodash/isEqual";
+import { mergeElementQueryResults } from "../../AttributeDropdown/mergeElementQueryResults";
+import { updateSelectedOptionsWithDataByMap } from "../../utils/AttributeFilterUtils";
+import compact from "lodash/compact";
+import debounce from "lodash/debounce";
 
 interface IAttributeFilterButtonState {
     selectedFilterOptions: IAttributeElement[];
@@ -132,6 +136,112 @@ export const useAttributeFilterButtonState = (currentFilter: IAttributeFilter) =
         });
     };
 
+    const resolveAttributeElements = (
+        elements: IElementsQueryResult,
+        parentFilters: IAttributeFilter[],
+        isElementsByRef: boolean,
+    ) => {
+        setState((prevState) => {
+            const mergedValidElements = mergeElementQueryResults(prevState.validOptions, elements);
+            const newUriToAttributeElementMap = new Map(prevState.uriToAttributeElementMap);
+
+            const { items } = mergedValidElements;
+
+            items.filter(isNonEmptyListItem).forEach((item) => {
+                const key = isElementsByRef ? item.uri : item.title;
+                newUriToAttributeElementMap.set(key, item);
+            });
+
+            // make sure that selected items have both title and uri, otherwise selection in InvertableList won't work
+            // TODO we could maybe use the InvertableList's getItemKey and just use title or uri for example
+            const updatedSelectedItems = updateSelectedOptionsWithDataByMap(
+                prevState.selectedFilterOptions,
+                newUriToAttributeElementMap,
+                isElementsByRef,
+            );
+            const updatedAppliedItems = updateSelectedOptionsWithDataByMap(
+                prevState.appliedFilterOptions,
+                newUriToAttributeElementMap,
+                isElementsByRef,
+            );
+
+            const validOptions = parentFilters?.length ? elements : mergedValidElements;
+
+            return {
+                ...prevState,
+                selectedFilterOptions: compact(updatedSelectedItems),
+                appliedFilterOptions: compact(updatedAppliedItems),
+                validOptions: validOptions,
+                firstLoad: false,
+                uriToAttributeElementMap: newUriToAttributeElementMap,
+                needsReloadAfterSearch: false,
+            };
+        });
+    };
+
+    const onSearch = useCallback(
+        debounce((query: string) => {
+            setState((s) => ({
+                ...s,
+                searchString: query,
+            }));
+        }, 500),
+        [],
+    );
+
+    const onElementSelect = (selectedFilterOptions: IAttributeElement[], isInverted: boolean) => {
+        setState((s) => ({
+            ...s,
+            selectedFilterOptions: selectedFilterOptions,
+            isInverted: isInverted,
+        }));
+    };
+
+    const backupIsInverted = () => {
+        setState((state) => ({
+            ...state,
+            appliedIsInverted: state.isInverted,
+        }));
+    };
+
+    const removeFilteringStatus = () => {
+        setState((prevState) => {
+            return {
+                ...prevState,
+                isFiltering: false,
+            };
+        });
+    };
+
+    const onRangeChange = (_searchString: string, from: number, to: number) => {
+        // only react to range changes after initial load to properly handle offset shifts on search
+        if (state.validOptions) {
+            setState((s) => ({
+                ...s,
+                offset: from,
+                limit: to - from,
+            }));
+        }
+    };
+
+    const onDropdownClosed = () => {
+        setState((s) => {
+            return {
+                ...s,
+                selectedFilterOptions: s.appliedFilterOptions,
+                isInverted: s.appliedIsInverted,
+                searchString: "",
+                isDropdownOpen: false,
+            };
+        });
+    };
+
+    const onDropdownOpen = () => {
+        setState((s) => ({
+            ...s,
+            isDropdownOpen: true,
+        }));
+    };
     /**
      * Effects
      */
@@ -154,5 +264,13 @@ export const useAttributeFilterButtonState = (currentFilter: IAttributeFilter) =
         clearUriToElementMap,
         resetSelection,
         mapInitialSelectionElements,
+        resolveAttributeElements,
+        onSearch,
+        onElementSelect,
+        backupIsInverted,
+        removeFilteringStatus,
+        onRangeChange,
+        onDropdownClosed,
+        onDropdownOpen,
     };
 };

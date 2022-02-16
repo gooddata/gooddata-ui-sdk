@@ -4,7 +4,7 @@ import { stringUtils } from "@gooddata/util";
 import isEmpty from "lodash/isEmpty";
 import cx from "classnames";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
-import { ATTRIBUTE_FILTER_BITTON_TOOLTIP_ALIGN_POINT } from "./constants";
+import { ATTRIBUTE_FILTER_BITTON_TOOLTIP_ALIGN_POINT } from "../constants";
 
 export interface IAttributeFilterButtonDropdownButtonProps {
     isMobile?: boolean;

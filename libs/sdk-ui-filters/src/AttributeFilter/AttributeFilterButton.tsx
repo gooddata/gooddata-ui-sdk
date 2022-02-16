@@ -1,70 +1,60 @@
 // (C) 2021-2022 GoodData Corporation
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { IAnalyticalBackend, IAttributeElement, IAttributeMetadataObject } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IAttributeElement } from "@gooddata/sdk-backend-spi";
 import {
     filterAttributeElements,
     filterObjRef,
     IAttributeFilter,
     isAttributeElementsByRef,
-    isAttributeElementsByValue,
-    newNegativeAttributeFilter,
-    newPositiveAttributeFilter,
     ObjRef,
 } from "@gooddata/sdk-model";
-import { Dropdown, NoData } from "@gooddata/sdk-ui-kit";
 import {
-    AttributeDropdownBody,
     IAttributeDropdownBodyExtendedProps,
     IAttributeDropdownBodyProps,
 } from "./AttributeDropdown/AttributeDropdownBody";
-import compact from "lodash/compact";
-import debounce from "lodash/debounce";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
-import noop from "lodash/noop";
-import { mergeElementQueryResults } from "./AttributeDropdown/mergeElementQueryResults";
 import {
     AttributeFiltersOrPlaceholders,
     IntlWrapper,
     IPlaceholder,
-    useCancelablePromise,
     usePlaceholder,
     usePrevious,
     useResolveValueWithPlaceholders,
     withContexts,
 } from "@gooddata/sdk-ui";
-import MediaQuery from "react-responsive";
-import { MediaQueries } from "../constants";
 import {
     getAllExceptTitle,
     getAllTitle,
-    getElementTotalCount,
     getFilteringTitleIntl,
     getItemsTitles,
     getLoadingTitleIntl,
     getNoneTitleIntl,
     getObjRef,
-    getParentFilterTitles,
-    getValidElementsFilters,
-    isParentFilteringEnabled,
-    isParentFiltersElementsByRef,
-    needsLoading,
     showAllFilteredMessage,
     showItemsFilteredMessage,
-    updateSelectedOptionsWithDataByMap,
 } from "./utils/AttributeFilterUtils";
 import invariant from "ts-invariant";
 import stringify from "json-stable-stringify";
-import { isNonEmptyListItem } from "./AttributeDropdown/types";
-import { AttributeDropdownAllFilteredOutBody } from "./AttributeDropdown/AttributeDropdownAllFilteredOutBody";
-import AttributeFilterButtonDropdownButton from "./AttributeFilterButton/AttributeFilterButtonDropdownButton";
 import { useAttributeFilterButtonState } from "./AttributeFilterButton/hooks/useAttributeFilterButtonState";
 import { ATTRIBUTE_FILTER_BUTTON_LIMIT } from "./AttributeFilterButton/constants";
-import AttributeFilterButtonDefaultError from "./AttributeFilterButton/AttributeFilterButtonDefaultError";
+import AttributeFilterButtonDefaultError from "./AttributeFilterButton/components/AttributeFilterButtonDefaultError";
 import { useAttributeFilterButtonTotalCount } from "./AttributeFilterButton/hooks/useAttributeFilterButtonTotalCount";
 import { useParentFilterTitles } from "./AttributeFilterButton/hooks/useParentFilterTitles";
+import { useLoadMissingData } from "./AttributeFilterButton/hooks/useLoadMissingData";
+import {
+    areCancelablePromisesInLoadingState,
+    areCancelablePromisesLoading,
+    createFilter,
+    getBackend,
+} from "./AttributeFilterButton/AttributeFilterButtonUtils";
+import { useFetchInitialElements } from "./AttributeFilterButton/hooks/useFetchInitialElements";
+import { useOriginalTotalElementsCount } from "./AttributeFilterButton/hooks/useOriginalTotalElementsCount";
+import { useAttribute } from "./AttributeFilterButton/hooks/useAttribute";
+import { useOnErrorCallback } from "./AttributeFilterButton/hooks/useOnErrorCallback";
+import AttributeFilterButtonDropdown from "./AttributeFilterButton/components/AttributeFilterButtonDropdown";
 
 /**
  * @public
@@ -186,11 +176,18 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
 
     const {
         state,
-        setState,
         onCurrentFilterChange,
         clearUriToElementMap,
         resetSelection,
         mapInitialSelectionElements,
+        resolveAttributeElements,
+        onSearch,
+        onElementSelect,
+        backupIsInverted,
+        removeFilteringStatus,
+        onRangeChange,
+        onDropdownClosed,
+        onDropdownOpen,
     } = useAttributeFilterButtonState(currentFilter);
 
     const resolvedParentFilters = useResolveValueWithPlaceholders(props.parentFilters);
@@ -217,117 +214,52 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
      * It's only called on component mounting to ensure we have attribute element titles for elements out of
      * limits in case of huge element number.
      */
-    const { error: uriToAttributeElementMapError } = useCancelablePromise(
-        {
-            promise: isEmpty(state.selectedFilterOptions)
-                ? null
-                : async () => prepareElementsTitleQuery(state.appliedFilterOptions).query(),
-            onSuccess: (initialElements) => {
-                mapInitialSelectionElements(initialElements);
-            },
-        },
-        [
-            props.backend,
-            props.workspace,
-            props.identifier,
-            stringify(currentFilterObjRef),
-            state.appliedFilterOptions,
-        ],
+    const { error: uriToAttributeElementMapError } = useFetchInitialElements(
+        getBackend(props.backend, props),
+        props.workspace,
+        props.identifier,
+        currentFilter,
+        getObjRef(currentFilter, props.identifier),
+        state.selectedFilterOptions,
+        state.appliedFilterOptions,
+        mapInitialSelectionElements,
     );
 
     // this cancelable promise loads missing page of data if needed and in the onSuccess callback
     // it merges the newly loaded data into the already loaded data
-    const { error: elementsError, status: elementsStatus } = useCancelablePromise(
-        {
-            promise:
-                needsLoading(state.validOptions, state.offset, state.limit) || state.needsReloadAfterSearch
-                    ? async () => {
-                          const preparedElementQuery = prepareElementsQuery(
-                              state.offset,
-                              state.limit,
-                              state.searchString,
-                          );
-                          return preparedElementQuery.query();
-                      }
-                    : null,
-            onSuccess: (newElements) => {
-                setState((prevState) => {
-                    const mergedValidElements = mergeElementQueryResults(prevState.validOptions, newElements);
-                    const newUriToAttributeElementMap = new Map(prevState.uriToAttributeElementMap);
-
-                    const { items } = mergedValidElements;
-
-                    items.filter(isNonEmptyListItem).forEach((item) => {
-                        const key = isElementsByRef ? item.uri : item.title;
-                        newUriToAttributeElementMap.set(key, item);
-                    });
-
-                    // make sure that selected items have both title and uri, otherwise selection in InvertableList won't work
-                    // TODO we could maybe use the InvertableList's getItemKey and just use title or uri for example
-                    const updatedSelectedItems = updateSelectedOptionsWithDataByMap(
-                        prevState.selectedFilterOptions,
-                        newUriToAttributeElementMap,
-                        isElementsByRef,
-                    );
-                    const updatedAppliedItems = updateSelectedOptionsWithDataByMap(
-                        prevState.appliedFilterOptions,
-                        newUriToAttributeElementMap,
-                        isElementsByRef,
-                    );
-
-                    const validOptions = resolvedParentFilters?.length ? newElements : mergedValidElements;
-
-                    return {
-                        ...prevState,
-                        selectedFilterOptions: compact(updatedSelectedItems),
-                        appliedFilterOptions: compact(updatedAppliedItems),
-                        validOptions: validOptions,
-                        firstLoad: false,
-                        uriToAttributeElementMap: newUriToAttributeElementMap,
-                        needsReloadAfterSearch: false,
-                    };
-                });
-            },
-        },
-        [
-            state.selectedFilterOptions,
-            state.appliedFilterOptions,
-            state.validOptions,
-            state.offset,
-            state.limit,
-            state.searchString,
-            state.needsReloadAfterSearch,
-            resolvedParentFilters,
-        ],
+    const { error: elementsError, status: elementsStatus } = useLoadMissingData(
+        state.validOptions,
+        state.offset,
+        state.limit,
+        state.needsReloadAfterSearch,
+        state.searchString,
+        getBackend(props.backend, props),
+        props.workspace,
+        getObjRef(currentFilter, props.identifier),
+        resolvedParentFilters,
+        props.parentFilterOverAttribute,
+        isElementsByRef,
+        state.selectedFilterOptions,
+        state.appliedFilterOptions,
+        resolveAttributeElements,
     );
 
     const {
         error: originalTotalCountError,
         result: originalTotalCount,
         status: originalTotalCountStatus,
-    } = useCancelablePromise<number>(
-        {
-            promise: async () => {
-                return getElementTotalCount(
-                    props.workspace,
-                    props.backend,
-                    getObjRef(currentFilter, props.identifier),
-                    "", // we need to get all available elements count in every case possible
-                    getValidElementsFilters(resolvedParentFilters, props.parentFilterOverAttribute),
-                );
-            },
-        },
-        [props.backend, props.workspace, props.identifier, stringify(resolvedParentFilters), currentFilter],
+    } = useOriginalTotalElementsCount(
+        props.backend,
+        props.workspace,
+        props.identifier,
+        currentFilter,
+        resolvedParentFilters,
+        props.parentFilterOverAttribute,
     );
 
     useEffect(() => {
-        if (originalTotalCountStatus !== "loading" && originalTotalCountStatus !== "pending") {
-            setState((prevState) => {
-                return {
-                    ...prevState,
-                    isFiltering: false,
-                };
-            });
+        if (areCancelablePromisesLoading([originalTotalCountStatus])) {
+            removeFilteringStatus();
         }
     }, [originalTotalCountStatus]);
 
@@ -364,43 +296,20 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         status: parentFilterTitlesStatus,
     } = useParentFilterTitles({ backend: props.backend, workspace: props.workspace, resolvedParentFilters });
 
+    // todo if props contain currentFilter, identifier and filterObjRef, remove filterObjRef and calculate it inside the hook
     const {
         error: attributeError,
         result: attribute,
         status: attributeStatus,
-    } = useCancelablePromise<IAttributeMetadataObject>(
-        {
-            promise: async () => {
-                const attributes = getBackend().workspace(props.workspace).attributes();
-                const displayForm = await attributes.getAttributeDisplayForm(
-                    getObjRef(currentFilter, props.identifier),
-                );
-                return attributes.getAttribute(displayForm.attribute);
-            },
-        },
-        [stringify(currentFilterObjRef), props.workspace, props.backend, props.identifier],
+    } = useAttribute(
+        getBackend(props.backend, props),
+        props.workspace,
+        props.identifier,
+        currentFilter,
+        getObjRef(currentFilter, props.identifier),
     );
 
-    useEffect(() => {
-        if (
-            props.onError &&
-            (attributeError ||
-                elementsError ||
-                totalCountError ||
-                parentFilterTitlesError ||
-                originalTotalCountError ||
-                uriToAttributeElementMapError)
-        ) {
-            props.onError(
-                attributeError ||
-                    elementsError ||
-                    totalCountError ||
-                    parentFilterTitlesError ||
-                    originalTotalCountError ||
-                    uriToAttributeElementMapError,
-            );
-        }
-    }, [
+    useOnErrorCallback(props.onError, [
         attributeError,
         elementsError,
         totalCountError,
@@ -408,52 +317,6 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         originalTotalCountError,
         uriToAttributeElementMapError,
     ]);
-
-    const prepareElementsQuery = (offset: number, limit: number, filter: string) => {
-        const { workspace } = props;
-        const preparedElementQuery = getBackend()
-            .workspace(workspace)
-            .attributes()
-            .elements()
-            .forDisplayForm(getObjRef(currentFilter, props.identifier))
-            .withOptions({
-                ...(!isEmpty(filter) ? { filter } : {}),
-            })
-            .withOffset(offset)
-            .withLimit(limit);
-
-        if (isParentFilteringEnabled(getBackend())) {
-            if (resolvedParentFilters && !isParentFiltersElementsByRef(resolvedParentFilters)) {
-                // eslint-disable-next-line no-console
-                console.error(
-                    "Parent filters must be defined by uris to enable parent-child filtering feature",
-                );
-            } else {
-                preparedElementQuery.withAttributeFilters(
-                    getValidElementsFilters(resolvedParentFilters, props.parentFilterOverAttribute),
-                );
-            }
-        }
-
-        return preparedElementQuery;
-    };
-
-    const prepareElementsTitleQuery = (elements: IAttributeElement[]) => {
-        const options = isAttributeElementsByValue(elements)
-            ? {
-                  values: elements.map((opt) => opt.title),
-              }
-            : {
-                  uris: elements.map((opt) => opt.uri),
-              };
-
-        return getBackend()
-            .workspace(props.workspace)
-            .attributes()
-            .elements()
-            .forDisplayForm(getObjRef(currentFilter, props.identifier))
-            .withOptions(options);
-    };
 
     /**
      * getters
@@ -543,44 +406,14 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         return "";
     };
 
-    /**
-     * callbacks
-     */
-    const onSearch = useCallback(
-        debounce((query: string) => {
-            setState((s) => ({
-                ...s,
-                searchString: query,
-            }));
-        }, 500),
-        [],
-    );
-
-    const createFilter = (filter: IAttributeFilter, emptyFilter = false) => {
-        const useUriElements = filter && isAttributeElementsByRef(filterAttributeElements(filter));
-
-        const filterFactory =
-            state.isInverted || emptyFilter ? newNegativeAttributeFilter : newPositiveAttributeFilter;
-        const items = emptyFilter ? [] : state.selectedFilterOptions;
-
-        return filterFactory(
-            getObjRef(filter, props.identifier),
-            useUriElements
-                ? { uris: items.map((item) => item.uri) }
-                : { values: items.map((item) => item.title) },
-        );
-    };
-
-    const backupIsInverted = () => {
-        setState((state) => ({
-            ...state,
-            appliedIsInverted: state.isInverted,
-        }));
-    };
-
     const onApply = (closeDropdown: () => void) => {
         backupIsInverted();
-        const filter = createFilter(currentFilter);
+        const filter = createFilter(
+            currentFilter,
+            state.isInverted,
+            state.selectedFilterOptions,
+            props.identifier,
+        );
 
         if (props.connectToPlaceholder) {
             setPlaceholderValue(filter);
@@ -590,46 +423,9 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         return closeDropdown();
     };
 
-    const onSelect = (selectedFilterOptions: IAttributeElement[], isInverted: boolean) => {
-        setState((s) => ({
-            ...s,
-            selectedFilterOptions: selectedFilterOptions,
-            isInverted: isInverted,
-        }));
-    };
-
-    const onRangeChange = (_searchString: string, from: number, to: number) => {
-        // only react to range changes after initial load to properly handle offset shifts on search
-        if (state.validOptions) {
-            setState((s) => ({
-                ...s,
-                offset: from,
-                limit: to - from,
-            }));
-        }
-    };
-
     /**
      * utilities
      */
-    const onDropdownClosed = () => {
-        setState((s) => {
-            return {
-                ...s,
-                selectedFilterOptions: s.appliedFilterOptions,
-                isInverted: s.appliedIsInverted,
-                searchString: "",
-                isDropdownOpen: false,
-            };
-        });
-    };
-
-    const onDropdownOpen = () => {
-        setState((s) => ({
-            ...s,
-            isDropdownOpen: true,
-        }));
-    };
 
     const onDropdownOpenStateChanged = (isOpen: boolean) => {
         isOpen ? onDropdownOpen() : onDropdownClosed();
@@ -649,27 +445,6 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         !isElementsLoading() &&
         originalTotalCount === 0;
 
-    function renderDefaultBody(bodyProps: IAttributeDropdownBodyProps, closeDropdown: () => void) {
-        return isAllFiltered ? (
-            <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
-                {(isMobile) => (
-                    <AttributeDropdownAllFilteredOutBody
-                        parentFilterTitles={parentFilterTitles}
-                        onApplyButtonClick={() => {
-                            onApply(closeDropdown);
-                        }}
-                        onCancelButtonClick={closeDropdown}
-                        isMobile={isMobile}
-                    />
-                )}
-            </MediaQuery>
-        ) : hasNoData ? (
-            <NoData noDataLabel={props.intl.formatMessage({ id: "attributesDropdown.noData" })} />
-        ) : (
-            <AttributeDropdownBody {...bodyProps} isMobile={bodyProps.isFullWidth} />
-        );
-    }
-
     const renderAttributeDropdown = () => {
         const getDropdownBodyProps: (
             onApplyButtonClicked: () => void,
@@ -682,7 +457,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         ) => ({
             items: state.validOptions?.items ?? [],
             totalCount: totalCount ?? ATTRIBUTE_FILTER_BUTTON_LIMIT,
-            onSelect,
+            onSelect: onElementSelect,
             onRangeChange,
             onSearch,
             selectedItems: state.selectedFilterOptions,
@@ -703,76 +478,27 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             isFullWidth: isMobile,
         });
 
+        /**
+         * todo review properties of AttributeFilterButtonDropdown component.
+         */
         return (
-            <Dropdown
-                closeOnParentScroll={true}
-                closeOnMouseDrag={true}
-                closeOnOutsideClick={true}
-                enableEventPropagation={true}
-                alignPoints={[
-                    { align: "bl tl" },
-                    { align: "tr tl" },
-                    { align: "br tr", offset: { x: -11 } },
-                    { align: "tr tl", offset: { x: 0, y: -100 } },
-                    { align: "tr tl", offset: { x: 0, y: -50 } },
-                ]}
-                renderButton={({ toggleDropdown }) => (
-                    <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
-                        {(isMobile) => (
-                            <span onClick={toggleDropdown}>
-                                <AttributeFilterButtonDropdownButton
-                                    isFiltering={state.isFiltering}
-                                    isOpen={state.isDropdownOpen}
-                                    isMobile={isMobile}
-                                    title={
-                                        props.title ||
-                                        (attributeStatus !== "loading" && attributeStatus !== "pending")
-                                            ? attribute.title
-                                            : getLoadingTitleIntl(props.intl)
-                                    }
-                                    subtitleText={getSubtitle()}
-                                    subtitleItemCount={state.selectedFilterOptions.length}
-                                    isLoaded={!isOriginalTotalCountLoading()}
-                                />
-                            </span>
-                        )}
-                    </MediaQuery>
-                )}
-                onOpenStateChanged={onDropdownOpenStateChanged}
-                renderBody={({ closeDropdown }) => (
-                    <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
-                        {(isMobile) =>
-                            props.renderBody
-                                ? props.renderBody({
-                                      ...getDropdownBodyProps(
-                                          () => {
-                                              onApply(closeDropdown);
-                                          },
-                                          () => {
-                                              closeDropdown();
-                                          },
-                                      ),
-                                      isElementsLoading: !state.validOptions?.items && isElementsLoading(),
-                                      isLoaded: !isOriginalTotalCountLoading(),
-                                      onConfigurationChange: noop,
-                                      attributeFilterRef: null,
-                                      isMobile,
-                                  })
-                                : renderDefaultBody(
-                                      getDropdownBodyProps(
-                                          () => {
-                                              onApply(closeDropdown);
-                                          },
-                                          () => {
-                                              closeDropdown();
-                                          },
-                                          isMobile,
-                                      ),
-                                      closeDropdown,
-                                  )
-                        }
-                    </MediaQuery>
-                )}
+            <AttributeFilterButtonDropdown
+                isFiltering={state.isFiltering}
+                isDropdownOpen={state.isDropdownOpen}
+                isElementsLoading={areCancelablePromisesInLoadingState([elementsStatus])}
+                isAttributeStatusLoading={areCancelablePromisesLoading([attributeStatus])}
+                isOriginalTotalCountLoading={areCancelablePromisesLoading([originalTotalCountStatus])}
+                parentFilterTitles={parentFilterTitles}
+                attribute={attribute}
+                validOptions={state.validOptions}
+                title={props.title}
+                subtitle={getSubtitle()}
+                selectedFilterOptions={state.selectedFilterOptions}
+                onDropdownOpenStateChanged={onDropdownOpenStateChanged}
+                onApplyButtonClicked={onApply}
+                isAllFiltered={isAllFiltered}
+                hasNoData={hasNoData}
+                getDropdownBodyProps={getDropdownBodyProps}
             />
         );
     };
