@@ -2,31 +2,23 @@
 import React from "react";
 import { MediaQueries } from "../../../constants";
 import AttributeFilterButtonDropdownButton from "./AttributeFilterButtonDropdownButton";
-import { getLoadingTitleIntl } from "../../utils/AttributeFilterUtils";
 import { Dropdown } from "@gooddata/sdk-ui-kit";
 import MediaQuery from "react-responsive";
-import { IAttributeElement, IAttributeMetadataObject } from "@gooddata/sdk-backend-spi";
-import { useIntl } from "react-intl";
+import { IAttributeElement } from "@gooddata/sdk-backend-spi";
 import AttributeFilterButtonDefaultDropdownBody from "./AttributeFilterButtonDefaultDropdownBody";
 import {
     IAttributeDropdownBodyExtendedProps,
     IAttributeDropdownBodyProps,
 } from "../../AttributeDropdown/AttributeDropdownBody";
 import noop from "lodash/noop";
-import { IElementQueryResultWithEmptyItems } from "../../AttributeDropdown/types";
 
 interface IAttributeFilterButtonDropdownProps {
     isFiltering: boolean;
     isDropdownOpen: boolean;
 
     isElementsLoading: boolean;
-    isAttributeStatusLoading: boolean;
     isOriginalTotalCountLoading: boolean;
 
-    parentFilterTitles: string[];
-
-    attribute: IAttributeMetadataObject;
-    validOptions: IElementQueryResultWithEmptyItems;
     title: string;
 
     subtitle: string;
@@ -53,23 +45,17 @@ const AttributeFilterButtonDropdown: React.FC<IAttributeFilterButtonDropdownProp
         isFiltering,
         isDropdownOpen,
         isElementsLoading,
-        isAttributeStatusLoading,
         isOriginalTotalCountLoading,
-        attribute,
-        validOptions,
         title,
         subtitle,
         selectedFilterOptions,
         onDropdownOpenStateChanged,
         isAllFiltered,
         hasNoData,
-        parentFilterTitles,
         onApplyButtonClicked,
         getDropdownBodyProps,
         renderBody,
     } = props;
-
-    const intl = useIntl();
 
     return (
         <Dropdown
@@ -92,13 +78,7 @@ const AttributeFilterButtonDropdown: React.FC<IAttributeFilterButtonDropdownProp
                                 isFiltering={isFiltering}
                                 isOpen={isDropdownOpen}
                                 isMobile={isMobile}
-                                title={
-                                    title ||
-                                    // (attributeStatus !== "loading" && attributeStatus !== "pending")
-                                    isAttributeStatusLoading
-                                        ? attribute.title
-                                        : getLoadingTitleIntl(intl)
-                                }
+                                title={title}
                                 subtitleText={subtitle}
                                 subtitleItemCount={selectedFilterOptions.length}
                                 isLoaded={!isOriginalTotalCountLoading}
@@ -121,7 +101,7 @@ const AttributeFilterButtonDropdown: React.FC<IAttributeFilterButtonDropdownProp
                                         closeDropdown();
                                     },
                                 ),
-                                isElementsLoading: !validOptions?.items && isElementsLoading,
+                                isElementsLoading: isElementsLoading,
                                 isLoaded: !isOriginalTotalCountLoading,
                                 onConfigurationChange: noop,
                                 attributeFilterRef: null,
@@ -130,7 +110,6 @@ const AttributeFilterButtonDropdown: React.FC<IAttributeFilterButtonDropdownProp
                         ) : (
                             <AttributeFilterButtonDefaultDropdownBody
                                 allElementsFiltered={isAllFiltered}
-                                parentFilterTitles={parentFilterTitles}
                                 onApplyButtonClicked={onApplyButtonClicked}
                                 closeDropdown={closeDropdown}
                                 hasNoData={hasNoData}

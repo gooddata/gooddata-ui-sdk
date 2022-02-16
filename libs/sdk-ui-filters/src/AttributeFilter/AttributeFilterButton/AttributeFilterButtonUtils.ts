@@ -2,6 +2,12 @@
 import { IAnalyticalBackend, IAttributeElement } from "@gooddata/sdk-backend-spi";
 import {
     attributeElementsToAttributeElementArray,
+    getAllExceptTitle,
+    getAllTitle,
+    getFilteringTitleIntl,
+    getItemsTitles,
+    getLoadingTitleIntl,
+    getNoneTitleIntl,
     getObjRef,
     getValidElementsFilters,
     isParentFilteringEnabled,
@@ -19,6 +25,8 @@ import {
 } from "@gooddata/sdk-model";
 import { UseCancelablePromiseStatus } from "@gooddata/sdk-ui";
 import isEmpty from "lodash/isEmpty";
+import { IntlShape } from "react-intl";
+import isNil from "lodash/isNil";
 
 export const getInitialSelectedOptions = (currentFilter: IAttributeFilter): IAttributeElement[] => {
     // the as any cast is ok here, the data will get fixed once the element load completes
@@ -33,22 +41,18 @@ export const getInitialIsInverted = (currentFilter: IAttributeFilter): boolean =
     return currentFilter ? isNegativeAttributeFilter(currentFilter) : true;
 };
 
-export const areCancelablePromisesInPendingStatus = (
-    cancelablePromiseStatuses: UseCancelablePromiseStatus[],
-) => {
-    return cancelablePromiseStatuses.some((status) => status === "pending");
+export const isCancelablePromisePending = (cancelablePromiseStatus: UseCancelablePromiseStatus) => {
+    return cancelablePromiseStatus === "pending";
 };
 
-export const areCancelablePromisesInLoadingState = (
-    cancelablePromiseStatuses: UseCancelablePromiseStatus[],
-) => {
-    return cancelablePromiseStatuses.some((status) => status === "loading");
+export const isCancelablePromiseLoading = (cancelablePromiseStatus: UseCancelablePromiseStatus) => {
+    return cancelablePromiseStatus === "loading";
 };
 
-export const areCancelablePromisesLoading = (cancelablePromiseStatuses: UseCancelablePromiseStatus[]) => {
+export const isCancelablePromisePendingOrLoading = (cancelablePromiseStatus: UseCancelablePromiseStatus) => {
     return (
-        areCancelablePromisesInLoadingState(cancelablePromiseStatuses) ||
-        areCancelablePromisesInPendingStatus(cancelablePromiseStatuses)
+        isCancelablePromiseLoading(cancelablePromiseStatus) ||
+        isCancelablePromisePending(cancelablePromiseStatus)
     );
 };
 
@@ -133,4 +137,91 @@ export const createFilter = (
             ? { uris: items.map((item) => item.uri) }
             : { values: items.map((item) => item.title) },
     );
+};
+
+export const getNumberOfSelectedItems = (
+    originalTotalCount: number,
+    filterOptions: IAttributeElement[],
+    isInverted: boolean,
+) => {
+    if (isInverted) {
+        return originalTotalCount - filterOptions.length;
+    }
+
+    return filterOptions.length;
+};
+
+export const getSubtitle = (
+    isElementsLoading: boolean,
+    isTotalCountLoading: boolean,
+    firstLoad: boolean,
+    isFiltering: boolean,
+    isAllFiltered: boolean,
+    isInverted: boolean,
+    isElementsByRef: boolean,
+
+    currentFilter: IAttributeFilter,
+    selectedFilterOptions: IAttributeElement[],
+    uriToAttributeElementMap: Map<string, IAttributeElement>,
+    identifier: string,
+    searchString: string,
+    originalTotalCount: number,
+
+    intl: IntlShape,
+) => {
+    if (isElementsLoading && !isEmpty(searchString)) {
+        return "";
+    }
+
+    if (isTotalCountLoading) {
+        if (firstLoad) {
+            return getLoadingTitleIntl(intl);
+        } else if (isFiltering) {
+            return getFilteringTitleIntl(intl);
+        }
+    }
+
+    if (isAllFiltered) {
+        return getAllTitle(intl);
+    }
+
+    const displayForm = getObjRef(currentFilter, identifier);
+    if (uriToAttributeElementMap.size > 0 && !isNil(originalTotalCount) && displayForm) {
+        /**
+         * If the attribute filter is positive, `getNumberOfSelectedItems` returns current size of
+         * the `selectedFilterOptions` array. If the filter is negative attribute filter, it
+         * returns difference between `originalTotalCount` and current size of the selection.
+         *
+         * If the number of selected items is 0 and originalTotalCount is greater than 0, it is
+         * considered the selection is empty.
+         */
+        const empty =
+            getNumberOfSelectedItems(originalTotalCount, selectedFilterOptions, isInverted) === 0 &&
+            originalTotalCount > 0;
+        /**
+         * All items are selected only in case the number of selected items is equal to original total
+         * count.
+         */
+        const all =
+            getNumberOfSelectedItems(originalTotalCount, selectedFilterOptions, isInverted) ===
+            originalTotalCount;
+        const getAllPartIntl = all ? getAllTitle(intl) : getAllExceptTitle(intl);
+
+        if (empty) {
+            return getNoneTitleIntl(intl);
+        }
+
+        if (all) {
+            return getAllPartIntl;
+        }
+
+        return isInverted
+            ? `${getAllPartIntl} ${getItemsTitles(
+                  selectedFilterOptions,
+                  uriToAttributeElementMap,
+                  isElementsByRef,
+              )}`
+            : `${getItemsTitles(selectedFilterOptions, uriToAttributeElementMap, isElementsByRef)}`;
+    }
+    return "";
 };

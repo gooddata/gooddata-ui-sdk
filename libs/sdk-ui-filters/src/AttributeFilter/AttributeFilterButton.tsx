@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import React, { useEffect, useMemo } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { IAnalyticalBackend, IAttributeElement } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     filterAttributeElements,
     filterObjRef,
@@ -15,7 +15,6 @@ import {
 } from "./AttributeDropdown/AttributeDropdownBody";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
-import isNil from "lodash/isNil";
 import {
     AttributeFiltersOrPlaceholders,
     IntlWrapper,
@@ -26,12 +25,7 @@ import {
     withContexts,
 } from "@gooddata/sdk-ui";
 import {
-    getAllExceptTitle,
-    getAllTitle,
-    getFilteringTitleIntl,
-    getItemsTitles,
     getLoadingTitleIntl,
-    getNoneTitleIntl,
     getObjRef,
     showAllFilteredMessage,
     showItemsFilteredMessage,
@@ -45,10 +39,12 @@ import { useAttributeFilterButtonTotalCount } from "./AttributeFilterButton/hook
 import { useParentFilterTitles } from "./AttributeFilterButton/hooks/useParentFilterTitles";
 import { useLoadMissingData } from "./AttributeFilterButton/hooks/useLoadMissingData";
 import {
-    areCancelablePromisesInLoadingState,
-    areCancelablePromisesLoading,
     createFilter,
     getBackend,
+    getNumberOfSelectedItems,
+    getSubtitle,
+    isCancelablePromiseLoading,
+    isCancelablePromisePendingOrLoading,
 } from "./AttributeFilterButton/AttributeFilterButtonUtils";
 import { useFetchInitialElements } from "./AttributeFilterButton/hooks/useFetchInitialElements";
 import { useOriginalTotalElementsCount } from "./AttributeFilterButton/hooks/useOriginalTotalElementsCount";
@@ -258,36 +254,23 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
     );
 
     useEffect(() => {
-        if (areCancelablePromisesLoading([originalTotalCountStatus])) {
+        if (isCancelablePromisePendingOrLoading(originalTotalCountStatus)) {
             removeFilteringStatus();
         }
     }, [originalTotalCountStatus]);
 
-    /**
-     * todo does it make sense to move cancelable promises like this??
-     */
     const {
         error: totalCountError,
         result: totalCount,
         status: totalCountStatus,
     } = useAttributeFilterButtonTotalCount(
-        {
-            backend: props.backend,
-            workspace: props.workspace,
-            currentFilter,
-            identifier: props.identifier,
-            searchString: state.searchString,
-            resolvedParentFilters,
-            parentFilterOverAttribute: props.parentFilterOverAttribute,
-        },
-        [
-            props.backend,
-            props.workspace,
-            props.identifier,
-            stringify(resolvedParentFilters),
-            state.searchString,
-            currentFilter,
-        ],
+        props.backend,
+        props.workspace,
+        currentFilter,
+        props.identifier,
+        state.searchString,
+        resolvedParentFilters,
+        props.parentFilterOverAttribute,
     );
 
     const {
@@ -296,18 +279,11 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         status: parentFilterTitlesStatus,
     } = useParentFilterTitles({ backend: props.backend, workspace: props.workspace, resolvedParentFilters });
 
-    // todo if props contain currentFilter, identifier and filterObjRef, remove filterObjRef and calculate it inside the hook
     const {
         error: attributeError,
         result: attribute,
         status: attributeStatus,
-    } = useAttribute(
-        getBackend(props.backend, props),
-        props.workspace,
-        props.identifier,
-        currentFilter,
-        getObjRef(currentFilter, props.identifier),
-    );
+    } = useAttribute(getBackend(props.backend, props), props.workspace, props.identifier, currentFilter);
 
     useOnErrorCallback(props.onError, [
         attributeError,
@@ -318,93 +294,11 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         uriToAttributeElementMapError,
     ]);
 
-    /**
-     * getters
-     */
-    const isElementsLoading = () => {
-        // pending means idle in this context
-        return elementsStatus === "loading";
-    };
-
-    const isTotalCountLoading = () => {
-        return totalCountStatus === "pending" || totalCountStatus === "loading";
-    };
-
-    const isOriginalTotalCountLoading = () => {
-        return originalTotalCountStatus === "pending" || originalTotalCountStatus === "loading";
-    };
-
-    const isParentFilterTitlesLoading = () => {
-        return parentFilterTitlesStatus === "pending" || parentFilterTitlesStatus === "loading";
-    };
-
     const isAllFiltered = showAllFilteredMessage(
-        isElementsLoading(),
+        isCancelablePromiseLoading(elementsStatus),
         resolvedParentFilters,
         originalTotalCount,
     );
-
-    const getSubtitle = () => {
-        if (isElementsLoading() && !isEmpty(state.searchString)) {
-            return "";
-        }
-
-        if (isTotalCountLoading()) {
-            if (state.firstLoad) {
-                return getLoadingTitleIntl(props.intl);
-            } else if (state.isFiltering) {
-                return getFilteringTitleIntl(props.intl);
-            }
-        }
-
-        if (isAllFiltered) {
-            return getAllTitle(props.intl);
-        }
-
-        const displayForm = getObjRef(currentFilter, props.identifier);
-        if (state.uriToAttributeElementMap.size > 0 && !isNil(originalTotalCount) && displayForm) {
-            /**
-             * If the attribute filter is positive, `getNumberOfSelectedItems` returns current size of
-             * the `state.selectedFilterOptions` array. If the filter is negative attribute filter, it
-             * returns difference between `originalTotalCount` and current size of the selection.
-             *
-             * If the number of selected items is 0 and originalTotalCount is greater than 0, it is
-             * considered the selection is empty.
-             */
-            const empty =
-                getNumberOfSelectedItems(state.selectedFilterOptions, state.isInverted) === 0 &&
-                originalTotalCount > 0;
-            /**
-             * All items are selected only in case the number of selected items is equal to original total
-             * count.
-             */
-            const all =
-                getNumberOfSelectedItems(state.selectedFilterOptions, state.isInverted) ===
-                originalTotalCount;
-            const getAllPartIntl = all ? getAllTitle(props.intl) : getAllExceptTitle(props.intl);
-
-            if (empty) {
-                return getNoneTitleIntl(props.intl);
-            }
-
-            if (all) {
-                return getAllPartIntl;
-            }
-
-            return state.isInverted
-                ? `${getAllPartIntl} ${getItemsTitles(
-                      state.selectedFilterOptions,
-                      state.uriToAttributeElementMap,
-                      isElementsByRef,
-                  )}`
-                : `${getItemsTitles(
-                      state.selectedFilterOptions,
-                      state.uriToAttributeElementMap,
-                      isElementsByRef,
-                  )}`;
-        }
-        return "";
-    };
 
     const onApply = (closeDropdown: () => void) => {
         backupIsInverted();
@@ -423,85 +317,48 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         return closeDropdown();
     };
 
-    /**
-     * utilities
-     */
-
     const onDropdownOpenStateChanged = (isOpen: boolean) => {
         isOpen ? onDropdownOpen() : onDropdownClosed();
     };
 
-    const getNumberOfSelectedItems = (filterOptions: IAttributeElement[], isInverted: boolean) => {
-        if (isInverted) {
-            return originalTotalCount - filterOptions.length;
-        }
-
-        return filterOptions.length;
-    };
-
     const hasNoData =
-        !isParentFilterTitlesLoading() &&
+        !isCancelablePromisePendingOrLoading(parentFilterTitlesStatus) &&
         !parentFilterTitles?.length &&
-        !isElementsLoading() &&
+        !isCancelablePromiseLoading(elementsStatus) &&
         originalTotalCount === 0;
 
-    const renderAttributeDropdown = () => {
-        const getDropdownBodyProps: (
-            onApplyButtonClicked: () => void,
-            onCloseButtonClicked: () => void,
-            isMobile?: boolean,
-        ) => IAttributeDropdownBodyProps = (
-            onApplyButtonClicked: () => void,
-            onCloseButtonClicked: () => void,
-            isMobile: false,
-        ) => ({
-            items: state.validOptions?.items ?? [],
-            totalCount: totalCount ?? ATTRIBUTE_FILTER_BUTTON_LIMIT,
-            onSelect: onElementSelect,
-            onRangeChange,
-            onSearch,
-            selectedItems: state.selectedFilterOptions,
-            isInverted: state.isInverted,
-            isLoading:
-                (!state.validOptions?.items && isElementsLoading()) ||
-                isTotalCountLoading() ||
-                isOriginalTotalCountLoading() ||
-                isParentFilterTitlesLoading() ||
-                isOriginalTotalCountLoading(),
-            searchString: state.searchString,
-            applyDisabled: getNumberOfSelectedItems(state.selectedFilterOptions, state.isInverted) === 0,
-            showItemsFilteredMessage:
-                showItemsFilteredMessage(isElementsLoading(), resolvedParentFilters) && !isAllFiltered,
-            parentFilterTitles,
-            onApplyButtonClicked,
-            onCloseButtonClicked,
-            isFullWidth: isMobile,
-        });
-
-        /**
-         * todo review properties of AttributeFilterButtonDropdown component.
-         */
-        return (
-            <AttributeFilterButtonDropdown
-                isFiltering={state.isFiltering}
-                isDropdownOpen={state.isDropdownOpen}
-                isElementsLoading={areCancelablePromisesInLoadingState([elementsStatus])}
-                isAttributeStatusLoading={areCancelablePromisesLoading([attributeStatus])}
-                isOriginalTotalCountLoading={areCancelablePromisesLoading([originalTotalCountStatus])}
-                parentFilterTitles={parentFilterTitles}
-                attribute={attribute}
-                validOptions={state.validOptions}
-                title={props.title}
-                subtitle={getSubtitle()}
-                selectedFilterOptions={state.selectedFilterOptions}
-                onDropdownOpenStateChanged={onDropdownOpenStateChanged}
-                onApplyButtonClicked={onApply}
-                isAllFiltered={isAllFiltered}
-                hasNoData={hasNoData}
-                getDropdownBodyProps={getDropdownBodyProps}
-            />
-        );
-    };
+    const getDropdownBodyProps: (
+        onApplyButtonClicked: () => void,
+        onCloseButtonClicked: () => void,
+        isMobile?: boolean,
+    ) => IAttributeDropdownBodyProps = (
+        onApplyButtonClicked: () => void,
+        onCloseButtonClicked: () => void,
+        isMobile: false,
+    ) => ({
+        items: state.validOptions?.items ?? [],
+        totalCount: totalCount ?? ATTRIBUTE_FILTER_BUTTON_LIMIT,
+        onSelect: onElementSelect,
+        onRangeChange,
+        onSearch,
+        selectedItems: state.selectedFilterOptions,
+        isInverted: state.isInverted,
+        isLoading:
+            (!state.validOptions?.items && isCancelablePromiseLoading(elementsStatus)) ||
+            isCancelablePromisePendingOrLoading(totalCountStatus) ||
+            isCancelablePromisePendingOrLoading(originalTotalCountStatus) ||
+            isCancelablePromisePendingOrLoading(parentFilterTitlesStatus),
+        searchString: state.searchString,
+        applyDisabled:
+            getNumberOfSelectedItems(originalTotalCount, state.selectedFilterOptions, state.isInverted) === 0,
+        showItemsFilteredMessage:
+            showItemsFilteredMessage(isCancelablePromiseLoading(elementsStatus), resolvedParentFilters) &&
+            !isAllFiltered,
+        parentFilterTitles,
+        onApplyButtonClicked,
+        onCloseButtonClicked,
+        isFullWidth: isMobile,
+    });
 
     const { FilterError } = props;
 
@@ -523,7 +380,39 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             }
         />
     ) : (
-        renderAttributeDropdown()
+        <AttributeFilterButtonDropdown
+            isFiltering={state.isFiltering}
+            isDropdownOpen={state.isDropdownOpen}
+            isElementsLoading={!state.validOptions?.items && isCancelablePromiseLoading(elementsStatus)}
+            isOriginalTotalCountLoading={isCancelablePromisePendingOrLoading(originalTotalCountStatus)}
+            title={
+                props.title || isCancelablePromisePendingOrLoading(attributeStatus)
+                    ? attribute.title
+                    : getLoadingTitleIntl(props.intl)
+            }
+            subtitle={getSubtitle(
+                isCancelablePromiseLoading(elementsStatus),
+                isCancelablePromisePendingOrLoading(totalCountStatus),
+                state.firstLoad,
+                state.isFiltering,
+                isAllFiltered,
+                state.isInverted,
+                isElementsByRef,
+                currentFilter,
+                state.selectedFilterOptions,
+                state.uriToAttributeElementMap,
+                props.identifier,
+                state.searchString,
+                originalTotalCount,
+                props.intl,
+            )}
+            selectedFilterOptions={state.selectedFilterOptions}
+            onDropdownOpenStateChanged={onDropdownOpenStateChanged}
+            onApplyButtonClicked={onApply}
+            isAllFiltered={isAllFiltered}
+            hasNoData={hasNoData}
+            getDropdownBodyProps={getDropdownBodyProps}
+        />
     );
 };
 
