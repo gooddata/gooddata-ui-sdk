@@ -205,7 +205,6 @@ export const useAttributeFilterButtonState = (currentFilter: IAttributeFilter) =
     };
 
     const removeFilteringStatus = () => {
-        console.log("removeFilteringState");
         setState((prevState) => {
             return {
                 ...prevState,
