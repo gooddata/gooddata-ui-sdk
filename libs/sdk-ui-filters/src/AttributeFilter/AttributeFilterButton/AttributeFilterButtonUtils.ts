@@ -17,7 +17,6 @@ import {
     filterAttributeElements,
     IAttributeFilter,
     isAttributeElementsByRef,
-    isAttributeElementsByValue,
     isNegativeAttributeFilter,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
@@ -102,21 +101,14 @@ export const prepareElementsTitleQuery = (
     currentFilter: IAttributeFilter,
     identifier: string,
 ) => {
-    const options = isAttributeElementsByValue(appliedElements)
-        ? {
-              // todo find another way how to fetch elements while elements are defined by value
-              values: appliedElements.map((opt) => opt.title),
-          }
-        : {
-              uris: appliedElements.map((opt) => opt.uri),
-          };
-
     return backend
         .workspace(workspace)
         .attributes()
         .elements()
         .forDisplayForm(getObjRef(currentFilter, identifier))
-        .withOptions(options);
+        .withOptions({
+            uris: appliedElements.map((opt) => opt.uri),
+        });
 };
 
 export const createFilter = (
@@ -159,14 +151,12 @@ export const getSubtitle = (
     isAllFiltered: boolean,
     isInverted: boolean,
     isElementsByRef: boolean,
-
     currentFilter: IAttributeFilter,
     selectedFilterOptions: IAttributeElement[],
     uriToAttributeElementMap: Map<string, IAttributeElement>,
     identifier: string,
     searchString: string,
     originalTotalCount: number,
-
     intl: IntlShape,
 ) => {
     if (isElementsLoading && !isEmpty(searchString)) {

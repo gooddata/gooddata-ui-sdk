@@ -2,43 +2,47 @@
 
 import { useCancelablePromise } from "@gooddata/sdk-ui";
 import { needsLoading } from "../../utils/AttributeFilterUtils";
-import { IElementQueryResultWithEmptyItems } from "../../AttributeDropdown/types";
 import { prepareElementsQuery } from "../AttributeFilterButtonUtils";
-import { IAnalyticalBackend, IAttributeElement, IElementsQueryResult } from "@gooddata/sdk-backend-spi";
-import { IAttributeFilter, ObjRef } from "@gooddata/sdk-model";
+import { IElementsQueryResult } from "@gooddata/sdk-backend-spi";
+import { IAttributeFilter } from "@gooddata/sdk-model";
+import { AttributeFilterButtonContextProps, AttributeFilterButtonHookOwnProps } from "./types";
+import { IAttributeFilterButtonState } from "./useAttributeFilterButtonState";
 
-export const useLoadMissingData = (
-    validOptions: IElementQueryResultWithEmptyItems,
-    offset: number,
-    limit: number,
-    needsReloadAfterSearch: boolean,
-    searchString: string,
-    backend: IAnalyticalBackend,
-    workspace: string,
-    filterObjRef: ObjRef,
-    parentFilters: IAttributeFilter[],
-    parentFilterOverAttribute: ObjRef | ((parentFilter: IAttributeFilter, index: number) => ObjRef),
-    isElementsByRef: boolean,
-    selectedFilterOptions: IAttributeElement[],
-    appliedFilterOptions: IAttributeElement[],
-    resolveAttributeElements: (
+interface IUseLoadMissingDataProps {
+    context: Pick<AttributeFilterButtonContextProps, "backend" | "workspace" | "filterObjRef">;
+    state: Pick<
+        IAttributeFilterButtonState,
+        | "validOptions"
+        | "needsReloadAfterSearch"
+        | "searchString"
+        | "selectedFilterOptions"
+        | "appliedFilterOptions"
+        | "offset"
+        | "limit"
+    >;
+    callback: (
         elements: IElementsQueryResult,
         parentFilters: IAttributeFilter[],
         isElementsByRef: boolean,
-    ) => void,
-) => {
+    ) => void;
+    ownProps: AttributeFilterButtonHookOwnProps;
+}
+
+export const useLoadMissingData = (props: IUseLoadMissingDataProps) => {
+    const { context, state, ownProps, callback } = props;
+
     const promise =
-        needsLoading(validOptions, offset, limit) || needsReloadAfterSearch
+        needsLoading(state.validOptions, state.offset, state.limit) || state.needsReloadAfterSearch
             ? async () => {
                   const preparedElementQuery = prepareElementsQuery(
-                      backend,
-                      workspace,
-                      filterObjRef,
-                      parentFilters,
-                      parentFilterOverAttribute,
-                      offset,
-                      limit,
-                      searchString,
+                      context.backend,
+                      context.workspace,
+                      context.filterObjRef,
+                      ownProps.parentFilters,
+                      ownProps.parentFilterOverAttribute,
+                      state.offset,
+                      state.limit,
+                      state.searchString,
                   );
                   return preparedElementQuery.query();
               }
@@ -48,18 +52,18 @@ export const useLoadMissingData = (
         {
             promise,
             onSuccess: (newElements) => {
-                resolveAttributeElements(newElements, parentFilters, isElementsByRef);
+                callback(newElements, ownProps.parentFilters, ownProps.isElementsByRef);
             },
         },
         [
-            selectedFilterOptions,
-            appliedFilterOptions,
-            validOptions,
-            offset,
-            limit,
-            searchString,
-            needsReloadAfterSearch,
-            parentFilters,
+            state.selectedFilterOptions,
+            state.appliedFilterOptions,
+            state.validOptions,
+            state.offset,
+            state.limit,
+            state.searchString,
+            state.needsReloadAfterSearch,
+            ownProps.parentFilters,
         ],
     );
 };
