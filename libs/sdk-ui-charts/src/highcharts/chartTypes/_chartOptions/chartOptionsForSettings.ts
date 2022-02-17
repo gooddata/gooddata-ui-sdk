@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 
 import { ISettings } from "@gooddata/sdk-backend-spi";
 import { IChartConfig } from "../../../interfaces";
@@ -15,6 +15,10 @@ export function updateConfigWithSettings(config: IChartConfig, settings: ISettin
 
         if (settings["enableKDWidgetCustomHeight"] === true) {
             updatedConfig = { ...updatedConfig, enableCompactSize: true };
+        }
+
+        if (settings["enableAxisNameViewByTwoAttributes"] === true) {
+            updatedConfig = { ...updatedConfig, enableJoinedAttributeAxisName: true };
         }
     }
 

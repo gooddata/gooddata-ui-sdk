@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { shallow } from "enzyme";
 import BulletChartConfigurationPanel from "../BulletChartConfigurationPanel";
@@ -338,6 +338,31 @@ describe("BulletChartConfigurationPanel", () => {
 
             const yAxisSection = wrapper.find(NameSubsection).at(1);
             expect(yAxisSection.props().disabled).toEqual(true);
+        });
+
+        it("should render name configuration panel enabled if there are two attributes and feature flag 'enableAxisNameViewByTwoAttributes' is true", () => {
+            const insight = testInsight([
+                {
+                    localIdentifier: "measures",
+                    items: [testMeasure],
+                },
+                {
+                    localIdentifier: "view",
+                    items: [attributeItemA1, attributeItemA2],
+                },
+            ]);
+
+            const wrapper = createComponent({
+                ...defaultProps,
+                featureFlags: {
+                    ...defaultProps.featureFlags,
+                    enableAxisNameViewByTwoAttributes: true,
+                },
+                insight,
+            });
+
+            const yAxisSection = wrapper.find(NameSubsection).at(1);
+            expect(yAxisSection.props().disabled).toEqual(false);
         });
     });
 });

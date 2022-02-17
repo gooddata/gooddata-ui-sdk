@@ -191,6 +191,7 @@ export interface IChartConfig {
     disableDrillUnderline?: boolean;
     dualAxis?: boolean;
     enableCompactSize?: boolean;
+    enableJoinedAttributeAxisName?: boolean;
     forceDisableDrillOnAxes?: boolean;
     grid?: IGridConfig;
     legend?: ILegendConfig;

@@ -30,6 +30,7 @@ import {
     isOneOfTypes,
     isRotationInRange,
     isScatterPlot,
+    isSupportingJoinedAttributeAxisName,
     percentFormatter,
 } from "../_util/common";
 import {
@@ -1176,7 +1177,10 @@ const getXAxisConfiguration = (
                 ? MIN_RANGE
                 : undefined;
 
-        const titleTextProp = visible && !isViewByTwoAttributes ? {} : { text: null }; // new way how to hide title instead of deprecated 'enabled'
+        const joinedAttributeAxisName: boolean =
+            chartConfig?.enableJoinedAttributeAxisName && isSupportingJoinedAttributeAxisName(type);
+        const titleTextProp =
+            visible && (!isViewByTwoAttributes || joinedAttributeAxisName) ? {} : { text: null }; // new way how to hide title instead of deprecated 'enabled'
 
         // for bar chart take y axis options
         return {
@@ -1204,7 +1208,6 @@ const getXAxisConfiguration = (
                 useHTML: !isInvertedChart && isViewByTwoAttributes,
             },
             title: {
-                // should disable X axis title when 'View By 2 attributes'
                 ...titleTextProp,
                 margin: 10,
                 style: {

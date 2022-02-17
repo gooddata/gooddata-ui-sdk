@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import includes from "lodash/includes";
@@ -123,10 +123,13 @@ export default class BaseChartConfigurationPanel<
         const itemsOnAxes = countItemsOnAxes(type, controls, insight);
         const isNameSubsectionVisible: boolean = featureFlags.enableAxisNameConfiguration as boolean;
         const isAxisLabelsFormatEnabled: boolean = featureFlags.enableAxisLabelFormat as boolean;
+        const isAxisNameViewByTwoAttributesEnabled: boolean =
+            featureFlags.enableAxisNameViewByTwoAttributes as boolean;
 
         return axes.map((axis: IAxisProperties) => {
             const disabled = controlsDisabled || (!axis.primary && !isViewedBy);
-            const hasMoreThanOneItem = itemsOnAxes[axis.name] > 1;
+            const nameSubsectionDisabled: boolean =
+                (axis.primary || !isAxisNameViewByTwoAttributesEnabled) && itemsOnAxes[axis.name] > 1;
             const { name, title, subtitle, visible } = axis;
 
             return (
@@ -145,7 +148,7 @@ export default class BaseChartConfigurationPanel<
                 >
                     {isNameSubsectionVisible && (
                         <NameSubsection
-                            disabled={disabled || hasMoreThanOneItem}
+                            disabled={disabled || nameSubsectionDisabled}
                             configPanelDisabled={controlsDisabled}
                             axis={axis.name}
                             properties={properties}
