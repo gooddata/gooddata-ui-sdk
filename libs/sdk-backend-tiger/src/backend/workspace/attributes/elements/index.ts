@@ -1,25 +1,29 @@
-// (C) 2019-2021 GoodData Corporation
-import { ElementsRequest, ElementsRequestSortOrderEnum } from "@gooddata/api-client-tiger";
-import { ServerPaging, InMemoryPaging } from "@gooddata/sdk-backend-base";
+// (C) 2019-2022 GoodData Corporation
 import {
-    IElementsQueryFactory,
+    ElementsRequest,
+    ElementsRequestFilterByLabelTypeEnum,
+    ElementsRequestSortOrderEnum,
+} from "@gooddata/api-client-tiger";
+import { InMemoryPaging, ServerPaging } from "@gooddata/sdk-backend-base";
+import {
+    FilterWithResolvableElements,
+    IAttributeElement,
     IElementsQuery,
+    IElementsQueryFactory,
     IElementsQueryOptions,
     IElementsQueryResult,
-    UnexpectedError,
-    NotSupported,
-    IAttributeElement,
-    FilterWithResolvableElements,
     IFilterElementsQuery,
+    NotSupported,
+    UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
 import {
-    ObjRef,
-    isIdentifierRef,
+    filterAttributeElements,
     IAttributeFilter,
     IRelativeDateFilter,
-    isAttributeFilter,
-    filterAttributeElements,
     isAttributeElementsByRef,
+    isAttributeFilter,
+    isIdentifierRef,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { TigerAuthenticatedCallGuard } from "../../../../types";
@@ -31,6 +35,7 @@ export class TigerWorkspaceElements implements IElementsQueryFactory {
     public forDisplayForm(ref: ObjRef): IElementsQuery {
         return new TigerWorkspaceElementsQuery(this.authCall, ref, this.workspace);
     }
+
     public forFilter(filter: FilterWithResolvableElements): IFilterElementsQuery {
         return new TigerWorkspaceFilterElementsQuery(this.authCall, filter);
     }
@@ -94,7 +99,14 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
                         label: ref.identifier,
                         ...(options?.complement && { complementFilter: options.complement }),
                         ...(options?.filter && { patternFilter: options.filter }),
-                        ...(options?.uris && { exactFilter: options.uris }),
+                        ...(options?.uris && {
+                            exactFilter: options.uris,
+                            // filtering by uris on tiger forces filtering by primary label value
+                            // this is way how we load non-primary label by primary label values list in uris option (related to NAS-137)
+                            filterBy: {
+                                labelType: ElementsRequestFilterByLabelTypeEnum.PRIMARY,
+                            },
+                        }),
                         ...(options?.order && {
                             sortOrder:
                                 options.order === "asc"

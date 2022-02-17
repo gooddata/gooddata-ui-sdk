@@ -746,17 +746,6 @@ TigerWorkspaceCatalogWithAvailableItems {
       "displayForms": Array [
         Object {
           "description": "",
-          "id": "label.f_account.account.accountid",
-          "ref": Object {
-            "identifier": "label.f_account.account.accountid",
-            "type": "displayForm",
-          },
-          "title": "Account",
-          "type": "displayForm",
-          "uri": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_account.account.accountid",
-        },
-        Object {
-          "description": "",
           "id": "label.f_account.account",
           "ref": Object {
             "identifier": "label.f_account.account",
@@ -765,6 +754,17 @@ TigerWorkspaceCatalogWithAvailableItems {
           "title": "Name",
           "type": "displayForm",
           "uri": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_account.account",
+        },
+        Object {
+          "description": "",
+          "id": "label.f_account.account.accountid",
+          "ref": Object {
+            "identifier": "label.f_account.account.accountid",
+            "type": "displayForm",
+          },
+          "title": "Account",
+          "type": "displayForm",
+          "uri": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_account.account.accountid",
         },
       ],
       "geoPinDisplayForms": Array [],
@@ -1646,17 +1646,6 @@ TigerWorkspaceCatalogWithAvailableItems {
       "displayForms": Array [
         Object {
           "description": "",
-          "id": "label.f_opportunity.opportunity",
-          "ref": Object {
-            "identifier": "label.f_opportunity.opportunity",
-            "type": "displayForm",
-          },
-          "title": "Opportunity Name",
-          "type": "displayForm",
-          "uri": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_opportunity.opportunity",
-        },
-        Object {
-          "description": "",
           "id": "label.f_opportunity.opportunity.opportunity",
           "ref": Object {
             "identifier": "label.f_opportunity.opportunity.opportunity",
@@ -1676,6 +1665,17 @@ TigerWorkspaceCatalogWithAvailableItems {
           "title": "SFDC URL",
           "type": "displayForm",
           "uri": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_opportunity.opportunity.sfdcurl",
+        },
+        Object {
+          "description": "",
+          "id": "label.f_opportunity.opportunity",
+          "ref": Object {
+            "identifier": "label.f_opportunity.opportunity",
+            "type": "displayForm",
+          },
+          "title": "Opportunity Name",
+          "type": "displayForm",
+          "uri": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_opportunity.opportunity",
         },
       ],
       "geoPinDisplayForms": Array [],
@@ -1886,17 +1886,6 @@ TigerWorkspaceCatalogWithAvailableItems {
       "displayForms": Array [
         Object {
           "description": "",
-          "id": "label.f_product.product",
-          "ref": Object {
-            "identifier": "label.f_product.product",
-            "type": "displayForm",
-          },
-          "title": "Product Name",
-          "type": "displayForm",
-          "uri": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_product.product",
-        },
-        Object {
-          "description": "",
           "id": "label.f_product.product.productid",
           "ref": Object {
             "identifier": "label.f_product.product.productid",
@@ -1905,6 +1894,17 @@ TigerWorkspaceCatalogWithAvailableItems {
           "title": "Product",
           "type": "displayForm",
           "uri": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_product.product.productid",
+        },
+        Object {
+          "description": "",
+          "id": "label.f_product.product",
+          "ref": Object {
+            "identifier": "label.f_product.product",
+            "type": "displayForm",
+          },
+          "title": "Product Name",
+          "type": "displayForm",
+          "uri": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_product.product",
         },
       ],
       "geoPinDisplayForms": Array [],
@@ -2241,17 +2241,6 @@ TigerWorkspaceCatalogWithAvailableItems {
       "displayForms": Array [
         Object {
           "description": "",
-          "id": "label.f_stage.stagename",
-          "ref": Object {
-            "identifier": "label.f_stage.stagename",
-            "type": "displayForm",
-          },
-          "title": "Stage Name",
-          "type": "displayForm",
-          "uri": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_stage.stagename",
-        },
-        Object {
-          "description": "",
           "id": "label.f_stage.stagename.order",
           "ref": Object {
             "identifier": "label.f_stage.stagename.order",
@@ -2271,6 +2260,17 @@ TigerWorkspaceCatalogWithAvailableItems {
           "title": "Stage Name",
           "type": "displayForm",
           "uri": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_stage.stagename.stagename",
+        },
+        Object {
+          "description": "",
+          "id": "label.f_stage.stagename",
+          "ref": Object {
+            "identifier": "label.f_stage.stagename",
+            "type": "displayForm",
+          },
+          "title": "Stage Name",
+          "type": "displayForm",
+          "uri": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_stage.stagename",
         },
       ],
       "geoPinDisplayForms": Array [],
@@ -5735,17 +5735,6 @@ TigerWorkspaceCatalog {
       "displayForms": Array [
         Object {
           "description": "",
-          "id": "label.f_account.account.accountid",
-          "ref": Object {
-            "identifier": "label.f_account.account.accountid",
-            "type": "displayForm",
-          },
-          "title": "Account",
-          "type": "displayForm",
-          "uri": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_account.account.accountid",
-        },
-        Object {
-          "description": "",
           "id": "label.f_account.account",
           "ref": Object {
             "identifier": "label.f_account.account",
@@ -5754,6 +5743,17 @@ TigerWorkspaceCatalog {
           "title": "Name",
           "type": "displayForm",
           "uri": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_account.account",
+        },
+        Object {
+          "description": "",
+          "id": "label.f_account.account.accountid",
+          "ref": Object {
+            "identifier": "label.f_account.account.accountid",
+            "type": "displayForm",
+          },
+          "title": "Account",
+          "type": "displayForm",
+          "uri": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_account.account.accountid",
         },
       ],
       "geoPinDisplayForms": Array [],
@@ -6635,17 +6635,6 @@ TigerWorkspaceCatalog {
       "displayForms": Array [
         Object {
           "description": "",
-          "id": "label.f_opportunity.opportunity",
-          "ref": Object {
-            "identifier": "label.f_opportunity.opportunity",
-            "type": "displayForm",
-          },
-          "title": "Opportunity Name",
-          "type": "displayForm",
-          "uri": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_opportunity.opportunity",
-        },
-        Object {
-          "description": "",
           "id": "label.f_opportunity.opportunity.opportunity",
           "ref": Object {
             "identifier": "label.f_opportunity.opportunity.opportunity",
@@ -6665,6 +6654,17 @@ TigerWorkspaceCatalog {
           "title": "SFDC URL",
           "type": "displayForm",
           "uri": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_opportunity.opportunity.sfdcurl",
+        },
+        Object {
+          "description": "",
+          "id": "label.f_opportunity.opportunity",
+          "ref": Object {
+            "identifier": "label.f_opportunity.opportunity",
+            "type": "displayForm",
+          },
+          "title": "Opportunity Name",
+          "type": "displayForm",
+          "uri": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_opportunity.opportunity",
         },
       ],
       "geoPinDisplayForms": Array [],
@@ -6875,17 +6875,6 @@ TigerWorkspaceCatalog {
       "displayForms": Array [
         Object {
           "description": "",
-          "id": "label.f_product.product",
-          "ref": Object {
-            "identifier": "label.f_product.product",
-            "type": "displayForm",
-          },
-          "title": "Product Name",
-          "type": "displayForm",
-          "uri": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_product.product",
-        },
-        Object {
-          "description": "",
           "id": "label.f_product.product.productid",
           "ref": Object {
             "identifier": "label.f_product.product.productid",
@@ -6894,6 +6883,17 @@ TigerWorkspaceCatalog {
           "title": "Product",
           "type": "displayForm",
           "uri": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_product.product.productid",
+        },
+        Object {
+          "description": "",
+          "id": "label.f_product.product",
+          "ref": Object {
+            "identifier": "label.f_product.product",
+            "type": "displayForm",
+          },
+          "title": "Product Name",
+          "type": "displayForm",
+          "uri": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_product.product",
         },
       ],
       "geoPinDisplayForms": Array [],
@@ -7230,17 +7230,6 @@ TigerWorkspaceCatalog {
       "displayForms": Array [
         Object {
           "description": "",
-          "id": "label.f_stage.stagename",
-          "ref": Object {
-            "identifier": "label.f_stage.stagename",
-            "type": "displayForm",
-          },
-          "title": "Stage Name",
-          "type": "displayForm",
-          "uri": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_stage.stagename",
-        },
-        Object {
-          "description": "",
           "id": "label.f_stage.stagename.order",
           "ref": Object {
             "identifier": "label.f_stage.stagename.order",
@@ -7260,6 +7249,17 @@ TigerWorkspaceCatalog {
           "title": "Stage Name",
           "type": "displayForm",
           "uri": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_stage.stagename.stagename",
+        },
+        Object {
+          "description": "",
+          "id": "label.f_stage.stagename",
+          "ref": Object {
+            "identifier": "label.f_stage.stagename",
+            "type": "displayForm",
+          },
+          "title": "Stage Name",
+          "type": "displayForm",
+          "uri": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/label.f_stage.stagename",
         },
       ],
       "geoPinDisplayForms": Array [],
