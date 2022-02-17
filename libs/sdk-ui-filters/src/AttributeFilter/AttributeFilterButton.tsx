@@ -26,7 +26,6 @@ import {
 } from "@gooddata/sdk-ui";
 import {
     getLoadingTitleIntl,
-    getObjRef,
     showAllFilteredMessage,
     showItemsFilteredMessage,
 } from "./utils/AttributeFilterUtils";
@@ -169,6 +168,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
     const isElementsByRef = isAttributeElementsByRef(filterAttributeElements(currentFilter));
 
     const currentFilterObjRef = useMemo(() => filterRef, [stringify(filterRef)]);
+    const backendWithTelemetry = useMemo(() => getBackend(props.backend, props), [props.backend]);
 
     const {
         state,
@@ -204,6 +204,17 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         }
     }, [stringify(resolvedParentFilters)]);
 
+    const {
+        error: attributeError,
+        result: attribute,
+        status: attributeStatus,
+    } = useAttribute({
+        backend: backendWithTelemetry,
+        workspace: props.workspace,
+        identifier: props.identifier,
+        filter: currentFilter,
+    });
+
     /**
      * This cancelable promise is used to fetch attribute filter elements for the initial selected options or
      * to fetch the elements after selection change coming from the parent component.
@@ -212,7 +223,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
      */
     const { error: uriToAttributeElementMapError } = useFetchInitialElements({
         context: {
-            backend: getBackend(props.backend, props),
+            backend: backendWithTelemetry,
             workspace: props.workspace,
             identifier: props.identifier,
             filter: currentFilter,
@@ -230,9 +241,9 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
      */
     const { error: elementsError, status: elementsStatus } = useLoadMissingData({
         context: {
-            backend: getBackend(props.backend, props),
+            backend: backendWithTelemetry,
             workspace: props.workspace,
-            filterObjRef: getObjRef(currentFilter, props.identifier),
+            filterObjRef: currentFilterObjRef,
         },
         state: {
             validOptions: state.validOptions,
@@ -257,7 +268,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         status: originalTotalCountStatus,
     } = useOriginalTotalElementsCount({
         context: {
-            backend: props.backend,
+            backend: backendWithTelemetry,
             workspace: props.workspace,
             identifier: props.identifier,
             filter: currentFilter,
@@ -269,7 +280,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
     });
 
     useEffect(() => {
-        if (isCancelablePromisePendingOrLoading(originalTotalCountStatus)) {
+        if (!isCancelablePromisePendingOrLoading(originalTotalCountStatus)) {
             removeFilteringStatus();
         }
     }, [originalTotalCountStatus]);
@@ -280,7 +291,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         status: totalCountStatus,
     } = useAttributeFilterButtonTotalCount({
         context: {
-            backend: props.backend,
+            backend: backendWithTelemetry,
             workspace: props.workspace,
             filter: currentFilter,
             identifier: props.identifier,
@@ -300,21 +311,10 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         status: parentFilterTitlesStatus,
     } = useParentFilterTitles({
         context: {
-            backend: props.backend,
+            backend: backendWithTelemetry,
             workspace: props.workspace,
         },
         ownProps: { parentFilters: resolvedParentFilters },
-    });
-
-    const {
-        error: attributeError,
-        result: attribute,
-        status: attributeStatus,
-    } = useAttribute({
-        backend: getBackend(props.backend, props),
-        workspace: props.workspace,
-        identifier: props.identifier,
-        filter: currentFilter,
     });
 
     useOnErrorCallback(props.onError, [
@@ -418,7 +418,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             isElementsLoading={!state.validOptions?.items && isCancelablePromiseLoading(elementsStatus)}
             isOriginalTotalCountLoading={isCancelablePromisePendingOrLoading(originalTotalCountStatus)}
             title={
-                props.title || isCancelablePromisePendingOrLoading(attributeStatus)
+                props.title || !isCancelablePromisePendingOrLoading(attributeStatus)
                     ? attribute.title
                     : getLoadingTitleIntl(props.intl)
             }

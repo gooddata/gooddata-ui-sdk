@@ -1,9 +1,9 @@
 // (C) 2022 GoodData Corporation
 
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 export const useOnErrorCallback = (onError: (error: any) => void, errors: Array<any>) => {
-    const error = errors.find((error) => !!error);
+    const error = useMemo(() => errors.find((error) => !!error), [errors]);
     return useEffect(() => {
         if (onError && error) {
             onError(error);

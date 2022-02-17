@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-
+import { useMemo } from "react";
 import { useCancelablePromise } from "@gooddata/sdk-ui";
 import { IAttributeMetadataObject } from "@gooddata/sdk-backend-spi";
 import { getObjRef } from "../../utils/AttributeFilterUtils";
@@ -7,7 +7,11 @@ import stringify from "json-stable-stringify";
 import { AttributeFilterButtonContextProps } from "./types";
 
 export const useAttribute = (context: Omit<AttributeFilterButtonContextProps, "filterObjRef">) => {
-    const filterObjRef = getObjRef(context.filter, context.identifier);
+    const filterObjRef = useMemo(
+        () => getObjRef(context.filter, context.identifier),
+        [context.filter, context.identifier],
+    );
+
     return useCancelablePromise<IAttributeMetadataObject>(
         {
             promise: async () => {
