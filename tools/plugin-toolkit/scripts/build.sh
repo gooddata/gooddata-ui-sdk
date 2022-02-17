@@ -35,6 +35,8 @@ npm run build-cjs
 # this will be used as-is for TypeScript template
 mkdir -p "${TS_BUILD_DIR}/src"
 cp -R "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/src" "${TS_BUILD_DIR}"
+mkdir -p "${TS_BUILD_DIR}/scripts"
+cp -R "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/scripts" "${TS_BUILD_DIR}"
 cp "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/package.json" "${TS_BUILD_DIR}"
 cp "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/webpack.config.js" "${TS_BUILD_DIR}"
 cp "${DASHBOARD_PLUGIN_TEMPLATE_DIR}/.env.template" "${TS_BUILD_DIR}/.env"

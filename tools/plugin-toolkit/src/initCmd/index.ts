@@ -121,6 +121,20 @@ function performReplacementsInFiles(dir: string, config: InitCmdActionConfig): P
                 value: protocol ?? "https:",
             },
         ],
+        scripts: {
+            "refresh-md.js": [
+                {
+                    regex: /const backend = "bear"/g,
+                    value: 'const backend = "tiger"',
+                    apply: isTiger,
+                },
+                {
+                    regex: /full\.ts/g,
+                    value: "full.js",
+                    apply: language === "js",
+                },
+            ],
+        },
         src: {
             "metadata.json": [
                 {

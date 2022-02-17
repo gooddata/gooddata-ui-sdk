@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import identity from "lodash/identity";
 import pick from "lodash/pick";
 import pickBy from "lodash/pickBy";
@@ -40,6 +40,16 @@ function retrieveConfigFromObject(obj: OptionValues): CatalogExportConfig {
         output: obj.output ?? null,
         backend: obj.backend ?? "bear",
     };
+}
+
+export function getConfigFromEnv(prevConfig = DEFAULT_CONFIG): CatalogExportConfig {
+    return mergeConfigs(
+        retrieveConfigFromObject({
+            username: process.env.GDC_USERNAME,
+            password: process.env.GDC_PASSWORD,
+        }),
+        prevConfig,
+    );
 }
 
 export function getConfigFromOptions(obj: OptionValues, prevConfig = DEFAULT_CONFIG): CatalogExportConfig {
