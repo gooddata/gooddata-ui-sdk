@@ -204,54 +204,69 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         }
     }, [stringify(resolvedParentFilters)]);
 
-    /*
+    /**
      * This cancelable promise is used to fetch attribute filter elements for the initial selected options or
      * to fetch the elements after selection change coming from the parent component.
      * It's only called on component mounting to ensure we have attribute element titles for elements out of
      * limits in case of huge element number.
      */
-    const { error: uriToAttributeElementMapError } = useFetchInitialElements(
-        getBackend(props.backend, props),
-        props.workspace,
-        props.identifier,
-        currentFilter,
-        getObjRef(currentFilter, props.identifier),
-        state.selectedFilterOptions,
-        state.appliedFilterOptions,
-        mapInitialSelectionElements,
-    );
+    const { error: uriToAttributeElementMapError } = useFetchInitialElements({
+        context: {
+            backend: getBackend(props.backend, props),
+            workspace: props.workspace,
+            identifier: props.identifier,
+            filter: currentFilter,
+        },
+        state: {
+            selectedFilterOptions: state.selectedFilterOptions,
+            appliedFilterOptions: state.appliedFilterOptions,
+        },
+        callback: mapInitialSelectionElements,
+    });
 
-    // this cancelable promise loads missing page of data if needed and in the onSuccess callback
-    // it merges the newly loaded data into the already loaded data
-    const { error: elementsError, status: elementsStatus } = useLoadMissingData(
-        state.validOptions,
-        state.offset,
-        state.limit,
-        state.needsReloadAfterSearch,
-        state.searchString,
-        getBackend(props.backend, props),
-        props.workspace,
-        getObjRef(currentFilter, props.identifier),
-        resolvedParentFilters,
-        props.parentFilterOverAttribute,
-        isElementsByRef,
-        state.selectedFilterOptions,
-        state.appliedFilterOptions,
-        resolveAttributeElements,
-    );
+    /**
+     * This cancelable promise loads missing page of data if needed and in the onSuccess callback
+     * it merges the newly loaded data into the already loaded data
+     */
+    const { error: elementsError, status: elementsStatus } = useLoadMissingData({
+        context: {
+            backend: getBackend(props.backend, props),
+            workspace: props.workspace,
+            filterObjRef: getObjRef(currentFilter, props.identifier),
+        },
+        state: {
+            validOptions: state.validOptions,
+            offset: state.offset,
+            limit: state.limit,
+            needsReloadAfterSearch: state.needsReloadAfterSearch,
+            searchString: state.searchString,
+            selectedFilterOptions: state.selectedFilterOptions,
+            appliedFilterOptions: state.appliedFilterOptions,
+        },
+        ownProps: {
+            parentFilters: resolvedParentFilters,
+            parentFilterOverAttribute: props.parentFilterOverAttribute,
+            isElementsByRef,
+        },
+        callback: resolveAttributeElements,
+    });
 
     const {
         error: originalTotalCountError,
         result: originalTotalCount,
         status: originalTotalCountStatus,
-    } = useOriginalTotalElementsCount(
-        props.backend,
-        props.workspace,
-        props.identifier,
-        currentFilter,
-        resolvedParentFilters,
-        props.parentFilterOverAttribute,
-    );
+    } = useOriginalTotalElementsCount({
+        context: {
+            backend: props.backend,
+            workspace: props.workspace,
+            identifier: props.identifier,
+            filter: currentFilter,
+        },
+        ownProps: {
+            parentFilters: resolvedParentFilters,
+            parentFilterOverAttribute: props.parentFilterOverAttribute,
+        },
+    });
 
     useEffect(() => {
         if (isCancelablePromisePendingOrLoading(originalTotalCountStatus)) {
@@ -263,27 +278,44 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         error: totalCountError,
         result: totalCount,
         status: totalCountStatus,
-    } = useAttributeFilterButtonTotalCount(
-        props.backend,
-        props.workspace,
-        currentFilter,
-        props.identifier,
-        state.searchString,
-        resolvedParentFilters,
-        props.parentFilterOverAttribute,
-    );
+    } = useAttributeFilterButtonTotalCount({
+        context: {
+            backend: props.backend,
+            workspace: props.workspace,
+            filter: currentFilter,
+            identifier: props.identifier,
+        },
+        state: {
+            searchString: state.searchString,
+        },
+        ownProps: {
+            parentFilters: resolvedParentFilters,
+            parentFilterOverAttribute: props.parentFilterOverAttribute,
+        },
+    });
 
     const {
         error: parentFilterTitlesError,
         result: parentFilterTitles,
         status: parentFilterTitlesStatus,
-    } = useParentFilterTitles({ backend: props.backend, workspace: props.workspace, resolvedParentFilters });
+    } = useParentFilterTitles({
+        context: {
+            backend: props.backend,
+            workspace: props.workspace,
+        },
+        ownProps: { parentFilters: resolvedParentFilters },
+    });
 
     const {
         error: attributeError,
         result: attribute,
         status: attributeStatus,
-    } = useAttribute(getBackend(props.backend, props), props.workspace, props.identifier, currentFilter);
+    } = useAttribute({
+        backend: getBackend(props.backend, props),
+        workspace: props.workspace,
+        identifier: props.identifier,
+        filter: currentFilter,
+    });
 
     useOnErrorCallback(props.onError, [
         attributeError,

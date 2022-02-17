@@ -2,31 +2,38 @@
 
 import { useCancelablePromise } from "@gooddata/sdk-ui";
 import { getElementTotalCount, getObjRef, getValidElementsFilters } from "../../utils/AttributeFilterUtils";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IAttributeFilter, ObjRef } from "@gooddata/sdk-model";
 import stringify from "json-stable-stringify";
+import { AttributeFilterButtonContextProps, AttributeFilterButtonHookOwnProps } from "./types";
+import { IAttributeFilterButtonState } from "./useAttributeFilterButtonState";
 
-export const useAttributeFilterButtonTotalCount = (
-    backend: IAnalyticalBackend,
-    workspace: string,
-    currentFilter: IAttributeFilter,
-    identifier: string,
-    searchString: string,
-    resolvedParentFilters: IAttributeFilter[],
-    parentFilterOverAttribute: ObjRef | ((parentFilter: IAttributeFilter, index: number) => ObjRef),
-) => {
+interface IUseAttributeFilterButtonTotalCountProps {
+    context: Omit<AttributeFilterButtonContextProps, "filterObjRef">;
+    state: Pick<IAttributeFilterButtonState, "searchString">;
+    ownProps: Omit<AttributeFilterButtonHookOwnProps, "isElementsByRef">;
+}
+
+export const useAttributeFilterButtonTotalCount = (props: IUseAttributeFilterButtonTotalCountProps) => {
+    const { context, state, ownProps } = props;
+
     return useCancelablePromise<number>(
         {
             promise: async () => {
                 return getElementTotalCount(
-                    workspace,
-                    backend,
-                    getObjRef(currentFilter, identifier),
-                    searchString,
-                    getValidElementsFilters(resolvedParentFilters, parentFilterOverAttribute),
+                    context.workspace,
+                    context.backend,
+                    getObjRef(context.filter, context.identifier),
+                    state.searchString,
+                    getValidElementsFilters(ownProps.parentFilters, ownProps.parentFilterOverAttribute),
                 );
             },
         },
-        [backend, workspace, identifier, stringify(resolvedParentFilters), searchString, currentFilter],
+        [
+            context.backend,
+            context.workspace,
+            context.identifier,
+            stringify(ownProps.parentFilters),
+            state.searchString,
+            context.filter,
+        ],
     );
 };

@@ -2,22 +2,22 @@
 
 import { useCancelablePromise } from "@gooddata/sdk-ui";
 import { getParentFilterTitles } from "../../utils/AttributeFilterUtils";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IAttributeFilter } from "@gooddata/sdk-model";
 import stringify from "json-stable-stringify";
+import { AttributeFilterButtonContextProps, AttributeFilterButtonHookOwnProps } from "./types";
 
 interface IUseParentFilterTitlesProps {
-    backend: IAnalyticalBackend;
-    workspace: string;
-    resolvedParentFilters: IAttributeFilter[];
+    context: Pick<AttributeFilterButtonContextProps, "backend" | "workspace">;
+    ownProps: Pick<AttributeFilterButtonHookOwnProps, "parentFilters">;
 }
 
 export const useParentFilterTitles = (props: IUseParentFilterTitlesProps) => {
+    const { context, ownProps } = props;
 
     return useCancelablePromise<string[]>(
         {
-            promise: () => getParentFilterTitles(props.resolvedParentFilters ?? [], props.backend, props.workspace),
+            promise: () =>
+                getParentFilterTitles(ownProps.parentFilters ?? [], context.backend, context.workspace),
         },
-        [props.backend, props.workspace, stringify(props.resolvedParentFilters)],
+        [context.backend, context.workspace, stringify(ownProps.parentFilters)],
     );
 };

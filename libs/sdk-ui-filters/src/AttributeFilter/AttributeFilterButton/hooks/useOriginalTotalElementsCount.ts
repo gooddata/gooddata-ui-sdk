@@ -2,30 +2,34 @@
 
 import { useCancelablePromise } from "@gooddata/sdk-ui";
 import { getElementTotalCount, getObjRef, getValidElementsFilters } from "../../utils/AttributeFilterUtils";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IAttributeFilter, ObjRef } from "@gooddata/sdk-model";
 import stringify from "json-stable-stringify";
+import { AttributeFilterButtonContextProps, AttributeFilterButtonHookOwnProps } from "./types";
 
-export const useOriginalTotalElementsCount = (
-    backend: IAnalyticalBackend,
-    workspace: string,
-    identifier: string,
-    currentFilter: IAttributeFilter,
-    parentFilters: IAttributeFilter[],
-    parentFilterOverAttribute: ObjRef | ((parentFilter: IAttributeFilter, index: number) => ObjRef),
-) => {
+interface IUseOriginalTotalElementCountProps {
+    context: Omit<AttributeFilterButtonContextProps, "filterObjRef">;
+    ownProps: Omit<AttributeFilterButtonHookOwnProps, "isElementsByRef">;
+}
+
+export const useOriginalTotalElementsCount = (props: IUseOriginalTotalElementCountProps) => {
+    const { context, ownProps } = props;
     return useCancelablePromise<number>(
         {
             promise: async () => {
                 return getElementTotalCount(
-                    workspace,
-                    backend,
-                    getObjRef(currentFilter, identifier),
+                    context.workspace,
+                    context.backend,
+                    getObjRef(context.filter, context.identifier),
                     "", // we need to get all available elements count in every case possible
-                    getValidElementsFilters(parentFilters, parentFilterOverAttribute),
+                    getValidElementsFilters(ownProps.parentFilters, ownProps.parentFilterOverAttribute),
                 );
             },
         },
-        [backend, workspace, identifier, stringify(parentFilters), currentFilter],
+        [
+            context.backend,
+            context.workspace,
+            context.identifier,
+            stringify(ownProps.parentFilters),
+            context.filter,
+        ],
     );
 };

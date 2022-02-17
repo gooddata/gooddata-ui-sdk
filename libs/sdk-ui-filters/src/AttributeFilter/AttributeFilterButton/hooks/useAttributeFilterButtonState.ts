@@ -12,7 +12,7 @@ import { updateSelectedOptionsWithDataByMap } from "../../utils/AttributeFilterU
 import compact from "lodash/compact";
 import debounce from "lodash/debounce";
 
-interface IAttributeFilterButtonState {
+export interface IAttributeFilterButtonState {
     selectedFilterOptions: IAttributeElement[];
     appliedFilterOptions: IAttributeElement[];
     isInverted: boolean;
