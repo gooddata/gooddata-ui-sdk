@@ -1,7 +1,7 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 
 import { ObjectMeta } from "../../base/types";
-import { ITigerClient, ValidateRelationsHeader, MetadataUtilities } from "@gooddata/api-client-tiger";
+import { ITigerClient, MetadataUtilities } from "@gooddata/api-client-tiger";
 
 /**
  * Load analytical dashboards that are stored in workspace metadata so that their links can be included
@@ -18,7 +18,8 @@ export async function loadAnalyticalDashboards(
         client,
         client.workspaceObjects.getAllEntitiesAnalyticalDashboards,
         { workspaceId },
-        { headers: ValidateRelationsHeader },
+        // TODO we need to show dashboards with invalid references now, later this should be rework or removed completely (related to NAS-140)
+        // { headers: ValidateRelationsHeader },
     )
         .then(MetadataUtilities.mergeEntitiesResults)
         .then(MetadataUtilities.filterValidEntities);
