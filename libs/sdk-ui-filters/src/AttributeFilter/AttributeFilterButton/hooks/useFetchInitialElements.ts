@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-
+import { useMemo } from "react";
 import { useCancelablePromise } from "@gooddata/sdk-ui";
 import isEmpty from "lodash/isEmpty";
 import { IElementsQueryResult } from "@gooddata/sdk-backend-spi";
@@ -18,7 +18,10 @@ interface IUseFetchInitialElementsProps {
 export const useFetchInitialElements = (props: IUseFetchInitialElementsProps) => {
     const { context, state, callback } = props;
 
-    const filterObjRef = getObjRef(context.filter, context.identifier);
+    const filterObjRef = useMemo(
+        () => getObjRef(context.filter, context.identifier),
+        [context.filter, context.identifier],
+    );
 
     return useCancelablePromise(
         {
