@@ -31,7 +31,7 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$"
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$"
                         }
                     },
                     {
@@ -75,6 +75,10 @@
                             }
                         }
                     }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["VIEW"],
+                    "description": "Permissions required to view a report or label elements."
                 }
             }
         },
@@ -82,7 +86,7 @@
             "post": {
                 "tags": ["actions"],
                 "summary": "AFM explain resource.",
-                "description": "The resource provides static structures needed for investigation of a problem with given AFM. The structures are MAQL (internal form of AFM), and logical and physical models (LDM and PDM) of corresponding workspace.",
+                "description": "The resource provides static structures needed for investigation of a problem with given AFM. The structures differs for AQE and for Calcique. They are either MAQL (internal form of AFM) and logical and physical models (LDM and PDM) of corresponding workspace or MAQL and GRPC and WDF models.",
                 "operationId": "explainAFM",
                 "parameters": [
                     {
@@ -92,13 +96,13 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$"
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$"
                         }
                     },
                     {
                         "name": "explainType",
                         "in": "query",
-                        "description": "Requested explain type (LDM, PDM or MAQL). If not specified all types are bundled in a ZIP archive.",
+                        "description": "Requested explain type (LDM, PDM, GRPC_MODEL, WDF or MAQL). If not specified all types are bundled in a ZIP archive.",
                         "required": false,
                         "schema": {
                             "type": "string"
@@ -117,7 +121,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "ZIP archive with MAQL, LDM and PDM files.",
+                        "description": "ZIP archive with MAQL, LDM and PDM files; or with MAQL, GRPC_MODEL and WDF files",
                         "content": {
                             "application/zip": {
                                 "schema": {
@@ -127,6 +131,10 @@
                             }
                         }
                     }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["ANALYZE"],
+                    "description": "Permissions required to analyze data."
                 }
             }
         },
@@ -134,7 +142,7 @@
             "post": {
                 "tags": ["actions"],
                 "summary": "Valid objects",
-                "description": "Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.",
+                "description": "Returns list containing attributes, facts, or metrics, which can be added to given AFM while still keeping it computable.",
                 "operationId": "computeValidObjects",
                 "parameters": [
                     {
@@ -144,7 +152,7 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$"
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$"
                         }
                     }
                 ],
@@ -160,7 +168,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "List of attributes, facts and measures valid with respect to given AFM.",
+                        "description": "List of attributes, facts and metrics valid with respect to given AFM.",
                         "content": {
                             "*/*": {
                                 "schema": {
@@ -169,135 +177,14 @@
                             }
                         }
                     }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["ANALYZE"],
+                    "description": "Permissions required to analyze data."
                 }
             }
         },
         "/api/actions/workspaces/{workspaceId}/execution/collectLabelElements": {
-            "get": {
-                "tags": ["actions"],
-                "summary": "Listing of label values.",
-                "description": "Returns paged list of elements (values) of given label satisfying given filtering criteria.",
-                "operationId": "computeLabelElements",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "description": "Workspace identifier",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$"
-                        }
-                    },
-                    {
-                        "name": "label",
-                        "in": "query",
-                        "description": "Requested label.",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "sortOrder",
-                        "in": "query",
-                        "description": "Sort order of returned items.\nItems are sorted by ```label``` title.",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "enum": ["ASC", "DESC"],
-                            "default": "ASC"
-                        }
-                    },
-                    {
-                        "name": "complementFilter",
-                        "in": "query",
-                        "description": "Inverse filter:\n* ```false``` - return items matching ```patternFilter``` and ```exactFilter```\n* ```true``` - return items not matching ```patternFilter``` and ```exactFilter```",
-                        "required": false,
-                        "schema": {
-                            "type": "boolean",
-                            "default": false
-                        }
-                    },
-                    {
-                        "name": "patternFilter",
-                        "in": "query",
-                        "description": "Return only items, whose ```label``` title case insensitively contains ```filter``` as substring.",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "exactFilter",
-                        "in": "query",
-                        "description": "Return only items, whose ```label``` title exactly matches one of ```filter```.",
-                        "required": false,
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    {
-                        "name": "offset",
-                        "in": "query",
-                        "description": "Request page with this offset.",
-                        "required": false,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32",
-                            "default": 0
-                        }
-                    },
-                    {
-                        "name": "limit",
-                        "in": "query",
-                        "description": "Return only this number of items.",
-                        "required": false,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32",
-                            "default": 1000
-                        }
-                    },
-                    {
-                        "name": "dataSamplingPercentage",
-                        "in": "query",
-                        "description": "Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.",
-                        "required": false,
-                        "schema": {
-                            "type": "number",
-                            "minimum": 0,
-                            "exclusiveMinimum": true,
-                            "maximum": 100,
-                            "exclusiveMaximum": true
-                        }
-                    },
-                    {
-                        "name": "skip-cache",
-                        "description": "Ignore all caches during execution of current request.",
-                        "in": "header",
-                        "required": false,
-                        "schema": {
-                            "type": "boolean"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "List of label values.",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ElementsResponse"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
             "post": {
                 "tags": ["actions"],
                 "summary": "Listing of label values.",
@@ -311,7 +198,7 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$"
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$"
                         }
                     },
                     {
@@ -367,6 +254,10 @@
                             }
                         }
                     }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["VIEW"],
+                    "description": "Permissions required to view a report or label elements."
                 }
             }
         },
@@ -384,7 +275,7 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$"
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$"
                         }
                     },
                     {
@@ -473,6 +364,10 @@
                             }
                         }
                     }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["VIEW"],
+                    "description": "Permissions required to view a report or label elements."
                 }
             }
         }
@@ -499,14 +394,14 @@
                     },
                     "measures": {
                         "type": "array",
-                        "description": "Measures to be computed.",
+                        "description": "Metrics to be computed.",
                         "items": {
                             "$ref": "#/components/schemas/MeasureItem"
                         }
                     },
                     "auxMeasures": {
                         "type": "array",
-                        "description": "Measures to be referenced from other AFM objects (e.g. filters) but not included in the result.",
+                        "description": "Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.",
                         "items": {
                             "$ref": "#/components/schemas/MeasureItem"
                         }
@@ -531,7 +426,7 @@
             "ArithmeticMeasureDefinition": {
                 "required": ["arithmeticMeasure"],
                 "type": "object",
-                "description": "Measure representing arithmetics between measures.",
+                "description": "Metric representing arithmetics between metrics.",
                 "properties": {
                     "arithmeticMeasure": {
                         "required": ["measureIdentifiers", "operator"],
@@ -539,14 +434,14 @@
                         "properties": {
                             "measureIdentifiers": {
                                 "type": "array",
-                                "description": "List of measures to apply arithmetic operation by chosen operator.",
+                                "description": "List of metrics to apply arithmetic operation by chosen operator.",
                                 "items": {
                                     "$ref": "#/components/schemas/LocalIdentifier"
                                 }
                             },
                             "operator": {
                                 "type": "string",
-                                "description": "Arithmetic operator describing operation between measures.",
+                                "description": "Arithmetic operator describing operation between metrics.",
                                 "example": "SUM",
                                 "enum": ["SUM", "DIFFERENCE", "MULTIPLICATION", "RATIO", "CHANGE"]
                             }
@@ -574,7 +469,7 @@
                 "properties": {
                     "itemIdentifiers": {
                         "type": "array",
-                        "description": "List of items in current dimension. Can reference 'localIdentifier' from 'AttributeItem', or special pseudo attribute \"measureGroup\" representing list of measures.",
+                        "description": "List of items in current dimension. Can reference 'localIdentifier' from 'AttributeItem', or special pseudo attribute \"measureGroup\" representing list of metrics.",
                         "example": "[ \"attribute1\", \"measureGroup\"]",
                         "items": {
                             "type": "string"
@@ -634,7 +529,7 @@
                 "properties": {
                     "dimensionAttributesValues": {
                         "type": "object",
-                        "description": "Allows to customize for which attribute values the grand total will be computed. If the values for particular attribute are not specified then the totals for all values are computed. Note that this also covers the case of individual measures (treated as values of the \"measureGroup\" pseudo attribute).",
+                        "description": "Allows to customize for which attribute values the grand total will be computed. If the values for particular attribute are not specified then the totals for all values are computed. Note that this also covers the case of individual metrics (treated as values of the \"measureGroup\" pseudo attribute).",
                         "example": "{\"measureGroup\": [\"m1\"], \"status\": [\"Lost\", \"Won\"]}",
                         "additionalProperties": {
                             "type": "array",
@@ -857,7 +752,7 @@
             },
             "MeasureValueFilter": {
                 "type": "object",
-                "description": "Abstract filter definition type filtering by the value of the measure.",
+                "description": "Abstract filter definition type filtering by the value of the metric.",
                 "oneOf": [
                     {
                         "$ref": "#/components/schemas/ComparisonMeasureValueFilter"
@@ -870,7 +765,7 @@
             "ComparisonMeasureValueFilter": {
                 "required": ["comparisonMeasureValueFilter"],
                 "type": "object",
-                "description": "Filter the result by comparing specified measure to given constant value, using given comparison operator.",
+                "description": "Filter the result by comparing specified metric to given constant value, using given comparison operator.",
                 "properties": {
                     "comparisonMeasureValueFilter": {
                         "$ref": "#/components/schemas/ComparisonMeasureValueFilterBody"
@@ -909,7 +804,7 @@
             "RangeMeasureValueFilter": {
                 "required": ["rangeMeasureValueFilter"],
                 "type": "object",
-                "description": "Filter the result by comparing specified measure to given range of values.",
+                "description": "Filter the result by comparing specified metric to given range of values.",
                 "properties": {
                     "rangeMeasureValueFilter": {
                         "$ref": "#/components/schemas/RangeMeasureValueFilterBody"
@@ -945,7 +840,7 @@
             "RankingFilter": {
                 "required": ["rankingFilter"],
                 "type": "object",
-                "description": "Filter the result on top/bottom N values according to given measure(s).",
+                "description": "Filter the result on top/bottom N values according to given metric(s).",
                 "properties": {
                     "rankingFilter": {
                         "$ref": "#/components/schemas/RankingFilterBody"
@@ -1125,7 +1020,7 @@
             },
             "FilterDefinitionForSimpleMeasure": {
                 "type": "object",
-                "description": "Abstract filter definition type for simple measure.",
+                "description": "Abstract filter definition type for simple metric.",
                 "oneOf": [
                     {
                         "$ref": "#/components/schemas/DateFilter"
@@ -1153,7 +1048,7 @@
             },
             "MeasureDefinition": {
                 "type": "object",
-                "description": "Abstract measure definition type",
+                "description": "Abstract metric definition type",
                 "oneOf": [
                     {
                         "$ref": "#/components/schemas/InlineMeasureDefinition"
@@ -1202,7 +1097,7 @@
             "PopDatasetMeasureDefinition": {
                 "required": ["previousPeriodMeasure"],
                 "type": "object",
-                "description": "Previous period type of measure.",
+                "description": "Previous period type of metric.",
                 "properties": {
                     "previousPeriodMeasure": {
                         "required": ["dateDatasets", "measureIdentifier"],
@@ -1237,7 +1132,7 @@
             "PopDateMeasureDefinition": {
                 "required": ["overPeriodMeasure"],
                 "type": "object",
-                "description": "Period over period type of measure.",
+                "description": "Period over period type of metric.",
                 "properties": {
                     "overPeriodMeasure": {
                         "required": ["dateAttributes", "measureIdentifier"],
@@ -1302,7 +1197,7 @@
                             },
                             "aggregation": {
                                 "type": "string",
-                                "description": "Definition of aggregation type of the measure.",
+                                "description": "Definition of aggregation type of the metric.",
                                 "example": "SUM",
                                 "enum": [
                                     "SUM",
@@ -1316,14 +1211,14 @@
                                 ]
                             },
                             "computeRatio": {
-                                "description": "If true compute the percentage of given measure values (broken down by AFM attributes) to the total (not broken down).",
+                                "description": "If true compute the percentage of given metric values (broken down by AFM attributes) to the total (not broken down).",
                                 "default": false,
                                 "example": true,
                                 "type": "boolean"
                             },
                             "filters": {
                                 "type": "array",
-                                "description": "Measure can be filtered by attribute filters with the same interface as ones for global AFM. Note that only one DateFilter is allowed.",
+                                "description": "Metrics can be filtered by attribute filters with the same interface as ones for global AFM. Note that only one DateFilter is allowed.",
                                 "items": {
                                     "$ref": "#/components/schemas/FilterDefinitionForSimpleMeasure"
                                 }
@@ -1351,7 +1246,7 @@
                 "properties": {
                     "id": {
                         "type": "string",
-                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
+                        "pattern": "^((?!\\.)[.A-Za-z0-9_-]{1,255}:)?(?!\\.)[.A-Za-z0-9_-]{1,255}$",
                         "example": "sample_item.price"
                     },
                     "type": {
@@ -1373,7 +1268,7 @@
             "LocalIdentifier": {
                 "required": ["localIdentifier"],
                 "type": "object",
-                "description": "String that uniquely identifies the measure in the context of the current AFM.",
+                "description": "String that uniquely identifies the metric in the context of the current AFM.",
                 "properties": {
                     "localIdentifier": {
                         "type": "string",
@@ -1385,7 +1280,7 @@
             "InlineMeasureDefinition": {
                 "required": ["inline"],
                 "type": "object",
-                "description": "Measure defined by the raw MAQL query.",
+                "description": "Metric defined by the raw MAQL query.",
                 "properties": {
                     "inline": {
                         "required": ["maql"],
@@ -1589,6 +1484,21 @@
                     "label": {
                         "type": "string",
                         "description": "Requested label."
+                    },
+                    "filterBy": {
+                        "type": "object",
+                        "properties": {
+                            "labelType": {
+                                "type": "string",
+                                "description": "Specifies which label is used for filtering - primary or requested.",
+                                "default": "REQUESTED",
+                                "enum": ["PRIMARY", "REQUESTED"]
+                            }
+                        },
+                        "description": "Specifies what is used for filtering.",
+                        "default": {
+                            "labelType": "REQUESTED"
+                        }
                     },
                     "sortOrder": {
                         "type": "string",
@@ -1850,7 +1760,7 @@
                         }
                     }
                 },
-                "description": "Contains the information specific for a group of headers. These groups correlate to attributes and measure groups."
+                "description": "Contains the information specific for a group of headers. These groups correlate to attributes and metric groups."
             },
             "MeasureExecutionResultHeader": {
                 "required": ["measureHeader"],
@@ -1867,12 +1777,12 @@
                 "properties": {
                     "measureIndex": {
                         "type": "integer",
-                        "description": "Measure index. Starts at 0.",
+                        "description": "Metric index. Starts at 0.",
                         "format": "int32",
                         "example": 0
                     }
                 },
-                "description": "Header containing the information related to measures."
+                "description": "Header containing the information related to metrics."
             }
         }
     }

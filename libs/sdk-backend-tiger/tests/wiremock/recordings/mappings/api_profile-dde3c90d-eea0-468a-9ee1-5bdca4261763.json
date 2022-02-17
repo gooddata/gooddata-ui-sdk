@@ -1,47 +1,41 @@
 {
-    "id": "5fb51adf-5555-4822-b1bd-2b37da78432b",
-    "name": "api_actions_workspaces_4dc4e033e611421791adea58d34d958c_execution_collectlabelelements",
+    "id": "dde3c90d-eea0-468a-9ee1-5bdca4261763",
+    "name": "api_profile",
     "request": {
-        "url": "/api/actions/workspaces/4dc4e033e611421791adea58d34d958c/execution/collectLabelElements?offset=10000&limit=100",
-        "method": "POST",
+        "url": "/api/profile",
+        "method": "GET",
         "headers": {
             "Accept": {
                 "equalTo": "application/json, text/plain, */*"
-            },
-            "Content-Type": {
-                "equalTo": "application/json",
-                "caseInsensitive": true
             }
-        },
-        "bodyPatterns": [
-            {
-                "equalToJson": "{\"label\":\"label.f_account.account.accountid\"}",
-                "ignoreArrayOrder": false,
-                "ignoreExtraElements": false
-            }
-        ]
+        }
     },
     "response": {
         "status": 200,
-        "body": "{\"primaryLabel\":{\"id\":\"label.f_account.account\",\"type\":\"label\"},\"elements\":[],\"paging\":{\"total\":4846,\"count\":0,\"offset\":10000,\"next\":null}}",
+        "body": "{\"organizationId\":\"staging\",\"organizationName\":\"Anywhere Staging\",\"userId\":\"first.last\",\"telemetry\":{\"host\":\"https://matomo.anywhere.gooddata.com/matomo.php\",\"siteId\":2,\"deploymentId\":\"deploymentId\",\"organizationHash\":\"d9390b2c40115621a794999e812abc00bf9e5c7b\",\"userHash\":\"35fc7016022ae6140d4dbe0edfb2bc867267d793\"},\"links\":{\"self\":\"https://staging.anywhere.gooddata.com/api/profile\",\"organization\":\"https://staging.anywhere.gooddata.com/api/entities/admin/organizations/staging\",\"user\":\"https://staging.anywhere.gooddata.com/api/entities/users/first.last\"}}",
         "headers": {
             "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
             "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' matomo.anywhere.gooddata.com connectors.tableau.com gdc-dev-dashboard-plugins.s3.amazonaws.com; img-src 'self' data: blob: www.gooddata.com gdc-dev-dashboard-plugins.s3.amazonaws.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com gdc-dev-dashboard-plugins.s3.amazonaws.com; font-src 'self' data: fonts.gstatic.com at.alicdn.com gdc-dev-dashboard-plugins.s3.amazonaws.com; frame-src 'self'; object-src 'none'; worker-src 'self' blob:; child-src blob:; connect-src 'self' *.tiles.mapbox.com api.mapbox.com events.mapbox.com matomo.anywhere.gooddata.com *.okta.com;",
             "Content-Type": "application/json",
-            "Date": "Wed, 05 Jan 2022 11:43:06 GMT",
+            "Date": "Thu, 17 Feb 2022 14:29:24 GMT",
             "Expires": "0",
             "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';",
             "Pragma": "no-cache",
             "Referrer-Policy": "no-referrer",
             "Set-Cookie": "SPRING_REDIRECT_URI=; Path=/; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Secure; HttpOnly; SameSite=None",
             "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-            "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+            "Vary": [
+                "Accept-Encoding",
+                "Origin",
+                "Access-Control-Request-Method",
+                "Access-Control-Request-Headers"
+            ],
             "X-Content-Type-Options": "nosniff",
-            "X-GDC-TRACE-ID": "9b12d202c877eef3",
+            "X-GDC-TRACE-ID": "08f5ee71531713eb",
             "X-XSS-Protection": "1 ; mode=block"
         }
     },
-    "uuid": "5fb51adf-5555-4822-b1bd-2b37da78432b",
+    "uuid": "dde3c90d-eea0-468a-9ee1-5bdca4261763",
     "persistent": true,
-    "insertionIndex": 8
+    "insertionIndex": 2
 }

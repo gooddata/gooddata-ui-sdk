@@ -110,18 +110,6 @@ export interface AFM {
 
 // @public
 export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApiInterface {
-    computeLabelElements(params: {
-        workspaceId: string;
-        label: string;
-        sortOrder?: "ASC" | "DESC";
-        complementFilter?: boolean;
-        patternFilter?: string;
-        exactFilter?: Array<string>;
-        offset?: number;
-        limit?: number;
-        dataSamplingPercentage?: number;
-        skipCache?: boolean;
-    }, options?: any): AxiosPromise<ElementsResponse>;
     computeLabelElementsPost(params: {
         workspaceId: string;
         elementsRequest: ElementsRequest;
@@ -154,18 +142,6 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
 
 // @public
 export const AfmActionsApiAxiosParamCreator: (configuration?: LabelElementsConfiguration | undefined) => {
-    computeLabelElements(params: {
-        workspaceId: string;
-        label: string;
-        sortOrder?: "ASC" | "DESC" | undefined;
-        complementFilter?: boolean | undefined;
-        patternFilter?: string | undefined;
-        exactFilter?: string[] | undefined;
-        offset?: number | undefined;
-        limit?: number | undefined;
-        dataSamplingPercentage?: number | undefined;
-        skipCache?: boolean | undefined;
-    }, options?: any): LabelElementsRequestArgs;
     computeLabelElementsPost(params: {
         workspaceId: string;
         elementsRequest: ElementsRequest;
@@ -198,18 +174,6 @@ export const AfmActionsApiAxiosParamCreator: (configuration?: LabelElementsConfi
 
 // @public
 export const AfmActionsApiFactory: (configuration?: LabelElementsConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
-    computeLabelElements(params: {
-        workspaceId: string;
-        label: string;
-        sortOrder?: "ASC" | "DESC";
-        complementFilter?: boolean;
-        patternFilter?: string;
-        exactFilter?: Array<string>;
-        offset?: number;
-        limit?: number;
-        dataSamplingPercentage?: number;
-        skipCache?: boolean;
-    }, options?: any): AxiosPromise<ElementsResponse>;
     computeLabelElementsPost(params: {
         workspaceId: string;
         elementsRequest: ElementsRequest;
@@ -242,18 +206,6 @@ export const AfmActionsApiFactory: (configuration?: LabelElementsConfiguration |
 
 // @public
 export const AfmActionsApiFp: (configuration?: LabelElementsConfiguration | undefined) => {
-    computeLabelElements(params: {
-        workspaceId: string;
-        label: string;
-        sortOrder?: "ASC" | "DESC";
-        complementFilter?: boolean;
-        patternFilter?: string;
-        exactFilter?: Array<string>;
-        offset?: number;
-        limit?: number;
-        dataSamplingPercentage?: number;
-        skipCache?: boolean;
-    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<ElementsResponse>;
     computeLabelElementsPost(params: {
         workspaceId: string;
         elementsRequest: ElementsRequest;
@@ -286,18 +238,6 @@ export const AfmActionsApiFp: (configuration?: LabelElementsConfiguration | unde
 
 // @public
 export interface AfmActionsApiInterface {
-    computeLabelElements(params: {
-        workspaceId: string;
-        label: string;
-        sortOrder?: "ASC" | "DESC";
-        complementFilter?: boolean;
-        patternFilter?: string;
-        exactFilter?: Array<string>;
-        offset?: number;
-        limit?: number;
-        dataSamplingPercentage?: number;
-        skipCache?: boolean;
-    }, options?: any): AxiosPromise<ElementsResponse>;
     computeLabelElementsPost(params: {
         workspaceId: string;
         elementsRequest: ElementsRequest;
@@ -1155,9 +1095,23 @@ export interface ElementsRequest {
     complementFilter?: boolean;
     dataSamplingPercentage?: number;
     exactFilter?: Array<string>;
+    filterBy?: ElementsRequestFilterBy;
     label: string;
     patternFilter?: string;
     sortOrder?: ElementsRequestSortOrderEnum;
+}
+
+// @public
+export interface ElementsRequestFilterBy {
+    labelType?: ElementsRequestFilterByLabelTypeEnum;
+}
+
+// @public
+export enum ElementsRequestFilterByLabelTypeEnum {
+    // (undocumented)
+    PRIMARY = "PRIMARY",
+    // (undocumented)
+    REQUESTED = "REQUESTED"
 }
 
 // @public

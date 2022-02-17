@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2022 GoodData Corporation
 
 /* eslint-disable */
 /**
@@ -51,13 +51,13 @@ export interface AFM {
      */
     filters: Array<FilterDefinition>;
     /**
-     * Measures to be computed.
+     * Metrics to be computed.
      * @type {Array<MeasureItem>}
      * @memberof AFM
      */
     measures: Array<MeasureItem>;
     /**
-     * Measures to be referenced from other AFM objects (e.g. filters) but not included in the result.
+     * Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.
      * @type {Array<MeasureItem>}
      * @memberof AFM
      */
@@ -254,7 +254,7 @@ export interface AfmValidObjectsResponse {
     items: Array<ObjectIdentifier>;
 }
 /**
- * Measure representing arithmetics between measures.
+ * Metric representing arithmetics between metrics.
  * @export
  * @interface ArithmeticMeasureDefinition
  */
@@ -273,13 +273,13 @@ export interface ArithmeticMeasureDefinition {
  */
 export interface ArithmeticMeasureDefinitionArithmeticMeasure {
     /**
-     * List of measures to apply arithmetic operation by chosen operator.
+     * List of metrics to apply arithmetic operation by chosen operator.
      * @type {Array<LocalIdentifier>}
      * @memberof ArithmeticMeasureDefinitionArithmeticMeasure
      */
     measureIdentifiers: Array<LocalIdentifier>;
     /**
-     * Arithmetic operator describing operation between measures.
+     * Arithmetic operator describing operation between metrics.
      * @type {string}
      * @memberof ArithmeticMeasureDefinitionArithmeticMeasure
      */
@@ -581,7 +581,7 @@ export interface CommonMeasureValueFilterAllOf {
     treatNullValuesAs?: number;
 }
 /**
- * Filter the result by comparing specified measure to given constant value, using given comparison operator.
+ * Filter the result by comparing specified metric to given constant value, using given comparison operator.
  * @export
  * @interface ComparisonMeasureValueFilter
  */
@@ -696,7 +696,7 @@ export type DateFilter = AbsoluteDateFilter | RelativeDateFilter;
  */
 export interface Dimension {
     /**
-     * List of items in current dimension. Can reference \'localIdentifier\' from \'AttributeItem\', or special pseudo attribute \"measureGroup\" representing list of measures.
+     * List of items in current dimension. Can reference \'localIdentifier\' from \'AttributeItem\', or special pseudo attribute \"measureGroup\" representing list of metrics.
      * @type {Array<string>}
      * @memberof Dimension
      */
@@ -759,6 +759,12 @@ export interface ElementsRequest {
      */
     label: string;
     /**
+     *
+     * @type {ElementsRequestFilterBy}
+     * @memberof ElementsRequest
+     */
+    filterBy?: ElementsRequestFilterBy;
+    /**
      * Sort order of returned items. Items are sorted by ```label``` title.
      * @type {string}
      * @memberof ElementsRequest
@@ -797,6 +803,29 @@ export interface ElementsRequest {
 export enum ElementsRequestSortOrderEnum {
     ASC = "ASC",
     DESC = "DESC",
+}
+
+/**
+ * Specifies what is used for filtering.
+ * @export
+ * @interface ElementsRequestFilterBy
+ */
+export interface ElementsRequestFilterBy {
+    /**
+     * Specifies which label is used for filtering - primary or requested.
+     * @type {string}
+     * @memberof ElementsRequestFilterBy
+     */
+    labelType?: ElementsRequestFilterByLabelTypeEnum;
+}
+
+/**
+ * @export
+ * @enum {string}
+ */
+export enum ElementsRequestFilterByLabelTypeEnum {
+    PRIMARY = "PRIMARY",
+    REQUESTED = "REQUESTED",
 }
 
 /**
@@ -1000,7 +1029,7 @@ export type FilterDefinition =
     | RankingFilter;
 /**
  * @type FilterDefinitionForSimpleMeasure
- * Abstract filter definition type for simple measure.
+ * Abstract filter definition type for simple metric.
  * @export
  */
 export type FilterDefinitionForSimpleMeasure = AttributeFilter | DateFilter;
@@ -1030,7 +1059,7 @@ export interface GrandTotal {
     includedDimensions: { [key: string]: IncludedDimensionProps };
 }
 /**
- * Contains the information specific for a group of headers. These groups correlate to attributes and measure groups.
+ * Contains the information specific for a group of headers. These groups correlate to attributes and metric groups.
  * @export
  * @interface HeaderGroup
  */
@@ -1055,7 +1084,7 @@ export type Identifier = AfmObjectIdentifier | LocalIdentifier;
  */
 export interface IncludedDimensionProps {
     /**
-     * Allows to customize for which attribute values the grand total will be computed. If the values for particular attribute are not specified then the totals for all values are computed. Note that this also covers the case of individual measures (treated as values of the \"measureGroup\" pseudo attribute).
+     * Allows to customize for which attribute values the grand total will be computed. If the values for particular attribute are not specified then the totals for all values are computed. Note that this also covers the case of individual metrics (treated as values of the \"measureGroup\" pseudo attribute).
      * @type {{ [key: string]: Array<string>; }}
      * @memberof IncludedDimensionProps
      */
@@ -1107,7 +1136,7 @@ export interface InlineFilterDefinitionBodyAllOf {
     filter: string;
 }
 /**
- * Measure defined by the raw MAQL query.
+ * Metric defined by the raw MAQL query.
  * @export
  * @interface InlineMeasureDefinition
  */
@@ -1133,7 +1162,7 @@ export interface InlineMeasureDefinitionInline {
     maql: string;
 }
 /**
- * String that uniquely identifies the measure in the context of the current AFM.
+ * String that uniquely identifies the metric in the context of the current AFM.
  * @export
  * @interface LocalIdentifier
  */
@@ -1147,7 +1176,7 @@ export interface LocalIdentifier {
 }
 /**
  * @type MeasureDefinition
- * Abstract measure definition type
+ * Abstract metric definition type
  * @export
  */
 export type MeasureDefinition =
@@ -1227,13 +1256,13 @@ export interface MeasureItem {
     definition: MeasureDefinition;
 }
 /**
- * Header containing the information related to measures.
+ * Header containing the information related to metrics.
  * @export
  * @interface MeasureResultHeader
  */
 export interface MeasureResultHeader {
     /**
-     * Measure index. Starts at 0.
+     * Metric index. Starts at 0.
      * @type {number}
      * @memberof MeasureResultHeader
      */
@@ -1241,7 +1270,7 @@ export interface MeasureResultHeader {
 }
 /**
  * @type MeasureValueFilter
- * Abstract filter definition type filtering by the value of the measure.
+ * Abstract filter definition type filtering by the value of the metric.
  * @export
  */
 export type MeasureValueFilter = ComparisonMeasureValueFilter | RangeMeasureValueFilter;
@@ -1366,7 +1395,7 @@ export interface PopDataset {
     periodsAgo: number;
 }
 /**
- * Previous period type of measure.
+ * Previous period type of metric.
  * @export
  * @interface PopDatasetMeasureDefinition
  */
@@ -1417,7 +1446,7 @@ export interface PopDate {
     periodsAgo: number;
 }
 /**
- * Period over period type of measure.
+ * Period over period type of metric.
  * @export
  * @interface PopDateMeasureDefinition
  */
@@ -1500,7 +1529,7 @@ export interface PositiveAttributeFilterBodyAllOf {
     in: AttributeFilterElements;
 }
 /**
- * Filter the result by comparing specified measure to given range of values.
+ * Filter the result by comparing specified metric to given range of values.
  * @export
  * @interface RangeMeasureValueFilter
  */
@@ -1607,7 +1636,7 @@ export enum RangeMeasureValueFilterBodyAllOfOperatorEnum {
 }
 
 /**
- * Filter the result on top/bottom N values according to given measure(s).
+ * Filter the result on top/bottom N values according to given metric(s).
  * @export
  * @interface RankingFilter
  */
@@ -1880,19 +1909,19 @@ export interface SimpleMeasureDefinitionMeasure {
      */
     item: AfmObjectIdentifier;
     /**
-     * Definition of aggregation type of the measure.
+     * Definition of aggregation type of the metric.
      * @type {string}
      * @memberof SimpleMeasureDefinitionMeasure
      */
     aggregation?: SimpleMeasureDefinitionMeasureAggregationEnum;
     /**
-     * If true compute the percentage of given measure values (broken down by AFM attributes) to the total (not broken down).
+     * If true compute the percentage of given metric values (broken down by AFM attributes) to the total (not broken down).
      * @type {boolean}
      * @memberof SimpleMeasureDefinitionMeasure
      */
     computeRatio?: boolean;
     /**
-     * Measure can be filtered by attribute filters with the same interface as ones for global AFM. Note that only one DateFilter is allowed.
+     * Metrics can be filtered by attribute filters with the same interface as ones for global AFM. Note that only one DateFilter is allowed.
      * @type {Array<FilterDefinitionForSimpleMeasure>}
      * @memberof SimpleMeasureDefinitionMeasure
      */
@@ -2006,151 +2035,6 @@ export enum TotalFunction {
  */
 export const ActionsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
-        /**
-         * Returns paged list of elements (values) of given label satisfying given filtering criteria.
-         * @summary Listing of label values.
-         * @param {string} workspaceId Workspace identifier
-         * @param {string} label Requested label.
-         * @param {'ASC' | 'DESC'} [sortOrder] Sort order of returned items. Items are sorted by &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title.
-         * @param {boolean} [complementFilter] Inverse filter: * &#x60;&#x60;&#x60;false&#x60;&#x60;&#x60; - return items matching &#x60;&#x60;&#x60;patternFilter&#x60;&#x60;&#x60; and &#x60;&#x60;&#x60;exactFilter&#x60;&#x60;&#x60; * &#x60;&#x60;&#x60;true&#x60;&#x60;&#x60; - return items not matching &#x60;&#x60;&#x60;patternFilter&#x60;&#x60;&#x60; and &#x60;&#x60;&#x60;exactFilter&#x60;&#x60;&#x60;
-         * @param {string} [patternFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title case insensitively contains &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60; as substring.
-         * @param {Array<string>} [exactFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title exactly matches one of &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60;.
-         * @param {number} [offset] Request page with this offset.
-         * @param {number} [limit] Return only this number of items.
-         * @param {number} [dataSamplingPercentage] Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.
-         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        computeLabelElements(
-            params: {
-                workspaceId: string;
-                label: string;
-                sortOrder?: "ASC" | "DESC";
-                complementFilter?: boolean;
-                patternFilter?: string;
-                exactFilter?: Array<string>;
-                offset?: number;
-                limit?: number;
-                dataSamplingPercentage?: number;
-                skipCache?: boolean;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const {
-                workspaceId,
-                label,
-                sortOrder,
-                complementFilter,
-                patternFilter,
-                exactFilter,
-                offset,
-                limit,
-                dataSamplingPercentage,
-                skipCache,
-            } = params;
-            // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling computeLabelElements.",
-                );
-            }
-            // verify required parameter 'label' is not null or undefined
-            if (label === null || label === undefined) {
-                throw new RequiredError(
-                    "label",
-                    "Required parameter label was null or undefined when calling computeLabelElements.",
-                );
-            }
-            const localVarPath =
-                `/api/actions/workspaces/{workspaceId}/execution/collectLabelElements`.replace(
-                    `{${"workspaceId"}}`,
-                    encodeURIComponent(String(workspaceId)),
-                );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (label !== undefined) {
-                if (typeof label === "object") {
-                    addFlattenedObjectTo(label, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["label"] = label;
-                }
-            }
-
-            if (sortOrder !== undefined) {
-                if (typeof sortOrder === "object") {
-                    addFlattenedObjectTo(sortOrder, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["sortOrder"] = sortOrder;
-                }
-            }
-
-            if (complementFilter !== undefined) {
-                if (typeof complementFilter === "object") {
-                    addFlattenedObjectTo(complementFilter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["complementFilter"] = complementFilter;
-                }
-            }
-
-            if (patternFilter !== undefined) {
-                if (typeof patternFilter === "object") {
-                    addFlattenedObjectTo(patternFilter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["patternFilter"] = patternFilter;
-                }
-            }
-
-            if (exactFilter) {
-                localVarQueryParameter["exactFilter"] = exactFilter;
-            }
-
-            if (offset !== undefined) {
-                if (typeof offset === "object") {
-                    addFlattenedObjectTo(offset, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["offset"] = offset;
-                }
-            }
-
-            if (limit !== undefined) {
-                if (typeof limit === "object") {
-                    addFlattenedObjectTo(limit, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["limit"] = limit;
-                }
-            }
-
-            if (dataSamplingPercentage !== undefined) {
-                if (typeof dataSamplingPercentage === "object") {
-                    addFlattenedObjectTo(dataSamplingPercentage, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["dataSamplingPercentage"] = dataSamplingPercentage;
-                }
-            }
-
-            if (skipCache !== undefined && skipCache !== null) {
-                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
-            }
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
         /**
          * Returns paged list of elements (values) of given label satisfying given filtering criteria.
          * @summary Listing of label values.
@@ -2313,7 +2197,7 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.
+         * Returns list containing attributes, facts, or metrics, which can be added to given AFM while still keeping it computable.
          * @summary Valid objects
          * @param {string} workspaceId Workspace identifier
          * @param {AfmValidObjectsQuery} afmValidObjectsQuery
@@ -2375,11 +2259,11 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * The resource provides static structures needed for investigation of a problem with given AFM. The structures are MAQL (internal form of AFM), and logical and physical models (LDM and PDM) of corresponding workspace.
+         * The resource provides static structures needed for investigation of a problem with given AFM. The structures differs for AQE and for Calcique. They are either MAQL (internal form of AFM) and logical and physical models (LDM and PDM) of corresponding workspace or MAQL and GRPC and WDF models.
          * @summary AFM explain resource.
          * @param {string} workspaceId Workspace identifier
          * @param {AfmExecution} afmExecution
-         * @param {string} [explainType] Requested explain type (LDM, PDM or MAQL). If not specified all types are bundled in a ZIP archive.
+         * @param {string} [explainType] Requested explain type (LDM, PDM, GRPC_MODEL, WDF or MAQL). If not specified all types are bundled in a ZIP archive.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2523,49 +2407,6 @@ export const ActionsApiFp = function (configuration?: Configuration) {
          * Returns paged list of elements (values) of given label satisfying given filtering criteria.
          * @summary Listing of label values.
          * @param {string} workspaceId Workspace identifier
-         * @param {string} label Requested label.
-         * @param {'ASC' | 'DESC'} [sortOrder] Sort order of returned items. Items are sorted by &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title.
-         * @param {boolean} [complementFilter] Inverse filter: * &#x60;&#x60;&#x60;false&#x60;&#x60;&#x60; - return items matching &#x60;&#x60;&#x60;patternFilter&#x60;&#x60;&#x60; and &#x60;&#x60;&#x60;exactFilter&#x60;&#x60;&#x60; * &#x60;&#x60;&#x60;true&#x60;&#x60;&#x60; - return items not matching &#x60;&#x60;&#x60;patternFilter&#x60;&#x60;&#x60; and &#x60;&#x60;&#x60;exactFilter&#x60;&#x60;&#x60;
-         * @param {string} [patternFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title case insensitively contains &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60; as substring.
-         * @param {Array<string>} [exactFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title exactly matches one of &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60;.
-         * @param {number} [offset] Request page with this offset.
-         * @param {number} [limit] Return only this number of items.
-         * @param {number} [dataSamplingPercentage] Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.
-         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        computeLabelElements(
-            params: {
-                workspaceId: string;
-                label: string;
-                sortOrder?: "ASC" | "DESC";
-                complementFilter?: boolean;
-                patternFilter?: string;
-                exactFilter?: Array<string>;
-                offset?: number;
-                limit?: number;
-                dataSamplingPercentage?: number;
-                skipCache?: boolean;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<ElementsResponse> {
-            const localVarAxiosArgs = ActionsApiAxiosParamCreator(configuration).computeLabelElements(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Returns paged list of elements (values) of given label satisfying given filtering criteria.
-         * @summary Listing of label values.
-         * @param {string} workspaceId Workspace identifier
          * @param {ElementsRequest} elementsRequest
          * @param {number} [offset] Request page with this offset.
          * @param {number} [limit] Return only this number of items.
@@ -2627,7 +2468,7 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             };
         },
         /**
-         * Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.
+         * Returns list containing attributes, facts, or metrics, which can be added to given AFM while still keeping it computable.
          * @summary Valid objects
          * @param {string} workspaceId Workspace identifier
          * @param {AfmValidObjectsQuery} afmValidObjectsQuery
@@ -2654,11 +2495,11 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             };
         },
         /**
-         * The resource provides static structures needed for investigation of a problem with given AFM. The structures are MAQL (internal form of AFM), and logical and physical models (LDM and PDM) of corresponding workspace.
+         * The resource provides static structures needed for investigation of a problem with given AFM. The structures differs for AQE and for Calcique. They are either MAQL (internal form of AFM) and logical and physical models (LDM and PDM) of corresponding workspace or MAQL and GRPC and WDF models.
          * @summary AFM explain resource.
          * @param {string} workspaceId Workspace identifier
          * @param {AfmExecution} afmExecution
-         * @param {string} [explainType] Requested explain type (LDM, PDM or MAQL). If not specified all types are bundled in a ZIP archive.
+         * @param {string} [explainType] Requested explain type (LDM, PDM, GRPC_MODEL, WDF or MAQL). If not specified all types are bundled in a ZIP archive.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2727,39 +2568,6 @@ export const ActionsApiFactory = function (
          * Returns paged list of elements (values) of given label satisfying given filtering criteria.
          * @summary Listing of label values.
          * @param {string} workspaceId Workspace identifier
-         * @param {string} label Requested label.
-         * @param {'ASC' | 'DESC'} [sortOrder] Sort order of returned items. Items are sorted by &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title.
-         * @param {boolean} [complementFilter] Inverse filter: * &#x60;&#x60;&#x60;false&#x60;&#x60;&#x60; - return items matching &#x60;&#x60;&#x60;patternFilter&#x60;&#x60;&#x60; and &#x60;&#x60;&#x60;exactFilter&#x60;&#x60;&#x60; * &#x60;&#x60;&#x60;true&#x60;&#x60;&#x60; - return items not matching &#x60;&#x60;&#x60;patternFilter&#x60;&#x60;&#x60; and &#x60;&#x60;&#x60;exactFilter&#x60;&#x60;&#x60;
-         * @param {string} [patternFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title case insensitively contains &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60; as substring.
-         * @param {Array<string>} [exactFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title exactly matches one of &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60;.
-         * @param {number} [offset] Request page with this offset.
-         * @param {number} [limit] Return only this number of items.
-         * @param {number} [dataSamplingPercentage] Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.
-         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        computeLabelElements(
-            params: {
-                workspaceId: string;
-                label: string;
-                sortOrder?: "ASC" | "DESC";
-                complementFilter?: boolean;
-                patternFilter?: string;
-                exactFilter?: Array<string>;
-                offset?: number;
-                limit?: number;
-                dataSamplingPercentage?: number;
-                skipCache?: boolean;
-            },
-            options?: any,
-        ): AxiosPromise<ElementsResponse> {
-            return ActionsApiFp(configuration).computeLabelElements(params, options)(axios, basePath);
-        },
-        /**
-         * Returns paged list of elements (values) of given label satisfying given filtering criteria.
-         * @summary Listing of label values.
-         * @param {string} workspaceId Workspace identifier
          * @param {ElementsRequest} elementsRequest
          * @param {number} [offset] Request page with this offset.
          * @param {number} [limit] Return only this number of items.
@@ -2801,7 +2609,7 @@ export const ActionsApiFactory = function (
             return ActionsApiFp(configuration).computeReport(params, options)(axios, basePath);
         },
         /**
-         * Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.
+         * Returns list containing attributes, facts, or metrics, which can be added to given AFM while still keeping it computable.
          * @summary Valid objects
          * @param {string} workspaceId Workspace identifier
          * @param {AfmValidObjectsQuery} afmValidObjectsQuery
@@ -2818,11 +2626,11 @@ export const ActionsApiFactory = function (
             return ActionsApiFp(configuration).computeValidObjects(params, options)(axios, basePath);
         },
         /**
-         * The resource provides static structures needed for investigation of a problem with given AFM. The structures are MAQL (internal form of AFM), and logical and physical models (LDM and PDM) of corresponding workspace.
+         * The resource provides static structures needed for investigation of a problem with given AFM. The structures differs for AQE and for Calcique. They are either MAQL (internal form of AFM) and logical and physical models (LDM and PDM) of corresponding workspace or MAQL and GRPC and WDF models.
          * @summary AFM explain resource.
          * @param {string} workspaceId Workspace identifier
          * @param {AfmExecution} afmExecution
-         * @param {string} [explainType] Requested explain type (LDM, PDM or MAQL). If not specified all types are bundled in a ZIP archive.
+         * @param {string} [explainType] Requested explain type (LDM, PDM, GRPC_MODEL, WDF or MAQL). If not specified all types are bundled in a ZIP archive.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2870,39 +2678,6 @@ export interface ActionsApiInterface {
      * Returns paged list of elements (values) of given label satisfying given filtering criteria.
      * @summary Listing of label values.
      * @param {string} workspaceId Workspace identifier
-     * @param {string} label Requested label.
-     * @param {'ASC' | 'DESC'} [sortOrder] Sort order of returned items. Items are sorted by &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title.
-     * @param {boolean} [complementFilter] Inverse filter: * &#x60;&#x60;&#x60;false&#x60;&#x60;&#x60; - return items matching &#x60;&#x60;&#x60;patternFilter&#x60;&#x60;&#x60; and &#x60;&#x60;&#x60;exactFilter&#x60;&#x60;&#x60; * &#x60;&#x60;&#x60;true&#x60;&#x60;&#x60; - return items not matching &#x60;&#x60;&#x60;patternFilter&#x60;&#x60;&#x60; and &#x60;&#x60;&#x60;exactFilter&#x60;&#x60;&#x60;
-     * @param {string} [patternFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title case insensitively contains &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60; as substring.
-     * @param {Array<string>} [exactFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title exactly matches one of &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60;.
-     * @param {number} [offset] Request page with this offset.
-     * @param {number} [limit] Return only this number of items.
-     * @param {number} [dataSamplingPercentage] Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.
-     * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ActionsApiInterface
-     */
-    computeLabelElements(
-        params: {
-            workspaceId: string;
-            label: string;
-            sortOrder?: "ASC" | "DESC";
-            complementFilter?: boolean;
-            patternFilter?: string;
-            exactFilter?: Array<string>;
-            offset?: number;
-            limit?: number;
-            dataSamplingPercentage?: number;
-            skipCache?: boolean;
-        },
-        options?: any,
-    ): AxiosPromise<ElementsResponse>;
-
-    /**
-     * Returns paged list of elements (values) of given label satisfying given filtering criteria.
-     * @summary Listing of label values.
-     * @param {string} workspaceId Workspace identifier
      * @param {ElementsRequest} elementsRequest
      * @param {number} [offset] Request page with this offset.
      * @param {number} [limit] Return only this number of items.
@@ -2944,7 +2719,7 @@ export interface ActionsApiInterface {
     ): AxiosPromise<AfmExecutionResponse>;
 
     /**
-     * Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.
+     * Returns list containing attributes, facts, or metrics, which can be added to given AFM while still keeping it computable.
      * @summary Valid objects
      * @param {string} workspaceId Workspace identifier
      * @param {AfmValidObjectsQuery} afmValidObjectsQuery
@@ -2961,11 +2736,11 @@ export interface ActionsApiInterface {
     ): AxiosPromise<AfmValidObjectsResponse>;
 
     /**
-     * The resource provides static structures needed for investigation of a problem with given AFM. The structures are MAQL (internal form of AFM), and logical and physical models (LDM and PDM) of corresponding workspace.
+     * The resource provides static structures needed for investigation of a problem with given AFM. The structures differs for AQE and for Calcique. They are either MAQL (internal form of AFM) and logical and physical models (LDM and PDM) of corresponding workspace or MAQL and GRPC and WDF models.
      * @summary AFM explain resource.
      * @param {string} workspaceId Workspace identifier
      * @param {AfmExecution} afmExecution
-     * @param {string} [explainType] Requested explain type (LDM, PDM or MAQL). If not specified all types are bundled in a ZIP archive.
+     * @param {string} [explainType] Requested explain type (LDM, PDM, GRPC_MODEL, WDF or MAQL). If not specified all types are bundled in a ZIP archive.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ActionsApiInterface
@@ -3008,44 +2783,6 @@ export interface ActionsApiInterface {
  * @extends {BaseAPI}
  */
 export class ActionsApi extends BaseAPI implements ActionsApiInterface {
-    /**
-     * Returns paged list of elements (values) of given label satisfying given filtering criteria.
-     * @summary Listing of label values.
-     * @param {string} workspaceId Workspace identifier
-     * @param {string} label Requested label.
-     * @param {'ASC' | 'DESC'} [sortOrder] Sort order of returned items. Items are sorted by &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title.
-     * @param {boolean} [complementFilter] Inverse filter: * &#x60;&#x60;&#x60;false&#x60;&#x60;&#x60; - return items matching &#x60;&#x60;&#x60;patternFilter&#x60;&#x60;&#x60; and &#x60;&#x60;&#x60;exactFilter&#x60;&#x60;&#x60; * &#x60;&#x60;&#x60;true&#x60;&#x60;&#x60; - return items not matching &#x60;&#x60;&#x60;patternFilter&#x60;&#x60;&#x60; and &#x60;&#x60;&#x60;exactFilter&#x60;&#x60;&#x60;
-     * @param {string} [patternFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title case insensitively contains &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60; as substring.
-     * @param {Array<string>} [exactFilter] Return only items, whose &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title exactly matches one of &#x60;&#x60;&#x60;filter&#x60;&#x60;&#x60;.
-     * @param {number} [offset] Request page with this offset.
-     * @param {number} [limit] Return only this number of items.
-     * @param {number} [dataSamplingPercentage] Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.
-     * @param {boolean} [skipCache] Ignore all caches during execution of current request.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ActionsApi
-     */
-    public computeLabelElements(
-        params: {
-            workspaceId: string;
-            label: string;
-            sortOrder?: "ASC" | "DESC";
-            complementFilter?: boolean;
-            patternFilter?: string;
-            exactFilter?: Array<string>;
-            offset?: number;
-            limit?: number;
-            dataSamplingPercentage?: number;
-            skipCache?: boolean;
-        },
-        options?: any,
-    ) {
-        return ActionsApiFp(this.configuration).computeLabelElements(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
     /**
      * Returns paged list of elements (values) of given label satisfying given filtering criteria.
      * @summary Listing of label values.
@@ -3098,7 +2835,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.
+     * Returns list containing attributes, facts, or metrics, which can be added to given AFM while still keeping it computable.
      * @summary Valid objects
      * @param {string} workspaceId Workspace identifier
      * @param {AfmValidObjectsQuery} afmValidObjectsQuery
@@ -3120,11 +2857,11 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * The resource provides static structures needed for investigation of a problem with given AFM. The structures are MAQL (internal form of AFM), and logical and physical models (LDM and PDM) of corresponding workspace.
+     * The resource provides static structures needed for investigation of a problem with given AFM. The structures differs for AQE and for Calcique. They are either MAQL (internal form of AFM) and logical and physical models (LDM and PDM) of corresponding workspace or MAQL and GRPC and WDF models.
      * @summary AFM explain resource.
      * @param {string} workspaceId Workspace identifier
      * @param {AfmExecution} afmExecution
-     * @param {string} [explainType] Requested explain type (LDM, PDM or MAQL). If not specified all types are bundled in a ZIP archive.
+     * @param {string} [explainType] Requested explain type (LDM, PDM, GRPC_MODEL, WDF or MAQL). If not specified all types are bundled in a ZIP archive.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ActionsApi

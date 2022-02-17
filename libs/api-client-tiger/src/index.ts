@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 /**
  * This package provides low-level functions for communication with GoodData.CN.
  *
@@ -75,6 +75,8 @@ export {
     DimensionHeader,
     Element,
     ElementsRequest,
+    ElementsRequestFilterBy,
+    ElementsRequestFilterByLabelTypeEnum,
     ElementsRequestSortOrderEnum,
     ElementsResponse,
     ErrorMessage,

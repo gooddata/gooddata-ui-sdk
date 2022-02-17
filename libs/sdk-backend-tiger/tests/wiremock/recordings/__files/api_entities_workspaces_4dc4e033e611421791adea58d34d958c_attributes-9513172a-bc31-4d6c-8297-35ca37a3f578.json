@@ -10,8 +10,8 @@
                 "dataset": { "data": { "id": "f_account", "type": "dataset" } },
                 "labels": {
                     "data": [
-                        { "id": "label.f_account.account.accountid", "type": "label" },
-                        { "id": "label.f_account.account", "type": "label" }
+                        { "id": "label.f_account.account", "type": "label" },
+                        { "id": "label.f_account.account.accountid", "type": "label" }
                     ]
                 }
             },
@@ -128,9 +128,9 @@
                 "dataset": { "data": { "id": "f_opportunity", "type": "dataset" } },
                 "labels": {
                     "data": [
-                        { "id": "label.f_opportunity.opportunity", "type": "label" },
                         { "id": "label.f_opportunity.opportunity.opportunity", "type": "label" },
-                        { "id": "label.f_opportunity.opportunity.sfdcurl", "type": "label" }
+                        { "id": "label.f_opportunity.opportunity.sfdcurl", "type": "label" },
+                        { "id": "label.f_opportunity.opportunity", "type": "label" }
                     ]
                 }
             },
@@ -263,8 +263,8 @@
                 "dataset": { "data": { "id": "f_product", "type": "dataset" } },
                 "labels": {
                     "data": [
-                        { "id": "label.f_product.product", "type": "label" },
-                        { "id": "label.f_product.product.productid", "type": "label" }
+                        { "id": "label.f_product.product.productid", "type": "label" },
+                        { "id": "label.f_product.product", "type": "label" }
                     ]
                 }
             },
@@ -292,9 +292,9 @@
                 "dataset": { "data": { "id": "f_stage", "type": "dataset" } },
                 "labels": {
                     "data": [
-                        { "id": "label.f_stage.stagename", "type": "label" },
                         { "id": "label.f_stage.stagename.order", "type": "label" },
-                        { "id": "label.f_stage.stagename.stagename", "type": "label" }
+                        { "id": "label.f_stage.stagename.stagename", "type": "label" },
+                        { "id": "label.f_stage.stagename", "type": "label" }
                     ]
                 }
             },
@@ -3192,19 +3192,9 @@
                 "grain": [{ "id": "f_opportunitysnapshot.id", "type": "attribute" }],
                 "referenceProperties": [
                     {
-                        "identifier": { "id": "dt_closedate_timestamp", "type": "dataset" },
-                        "multivalue": false,
-                        "sourceColumns": ["dt_closedate_timestamp"]
-                    },
-                    {
                         "identifier": { "id": "f_account", "type": "dataset" },
                         "multivalue": false,
                         "sourceColumns": ["accountid_id"]
-                    },
-                    {
-                        "identifier": { "id": "f_owner", "type": "dataset" },
-                        "multivalue": false,
-                        "sourceColumns": ["ownerid_id"]
                     },
                     {
                         "identifier": { "id": "dt_snapshotdate_timestamp", "type": "dataset" },
@@ -3212,9 +3202,19 @@
                         "sourceColumns": ["dt_snapshotdate_timestamp"]
                     },
                     {
+                        "identifier": { "id": "f_owner", "type": "dataset" },
+                        "multivalue": false,
+                        "sourceColumns": ["ownerid_id"]
+                    },
+                    {
                         "identifier": { "id": "f_opportunity", "type": "dataset" },
                         "multivalue": false,
                         "sourceColumns": ["opportunityid_id"]
+                    },
+                    {
+                        "identifier": { "id": "f_product", "type": "dataset" },
+                        "multivalue": false,
+                        "sourceColumns": ["productid_id"]
                     },
                     {
                         "identifier": { "id": "f_stage", "type": "dataset" },
@@ -3222,9 +3222,9 @@
                         "sourceColumns": ["stage_id"]
                     },
                     {
-                        "identifier": { "id": "f_product", "type": "dataset" },
+                        "identifier": { "id": "dt_closedate_timestamp", "type": "dataset" },
                         "multivalue": false,
-                        "sourceColumns": ["productid_id"]
+                        "sourceColumns": ["dt_closedate_timestamp"]
                     }
                 ],
                 "dataSourceTableId": "pg_staging-goodsales:f_opportunitysnapshot",
@@ -3318,14 +3318,14 @@
                         "sourceColumns": ["opportunityid_id"]
                     },
                     {
-                        "identifier": { "id": "f_stage", "type": "dataset" },
-                        "multivalue": false,
-                        "sourceColumns": ["stage_id"]
-                    },
-                    {
                         "identifier": { "id": "f_product", "type": "dataset" },
                         "multivalue": false,
                         "sourceColumns": ["productid_id"]
+                    },
+                    {
+                        "identifier": { "id": "f_stage", "type": "dataset" },
+                        "multivalue": false,
+                        "sourceColumns": ["stage_id"]
                     }
                 ],
                 "dataSourceTableId": "pg_staging-goodsales:f_stagehistory",
