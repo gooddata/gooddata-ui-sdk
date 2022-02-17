@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import * as Axis from "./constants/axis";
 import * as DrillablePredicatesUtils from "./utils/drillablePredicates";
 export { Axis, DrillablePredicatesUtils };
@@ -43,6 +43,8 @@ export {
     IDrillDownDefinition,
     isDrillDownDefinition,
 } from "./interfaces/Visualization";
+
+export { ISortConfig } from "./interfaces/SortConfig";
 
 export { isDateFilter, isMeasureValueFilter, isAttributeFilter, isRankingFilter } from "./utils/bucketHelper";
 export { createInternalIntl, InternalIntlWrapper } from "./utils/internalIntlProvider";

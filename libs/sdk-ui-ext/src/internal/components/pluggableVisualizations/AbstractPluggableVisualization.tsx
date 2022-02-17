@@ -32,6 +32,7 @@ import {
 import { IntlShape } from "react-intl";
 import { createInternalIntl } from "../../utils/internalIntlProvider";
 import { getSupportedProperties } from "../../utils/propertiesHelper";
+import { ISortConfig } from "../../interfaces/SortConfig";
 
 export abstract class AbstractPluggableVisualization implements IVisualization {
     protected intl: IntlShape;
@@ -307,5 +308,20 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
         _drillDownContext: IDrillDownContext,
     ): IInsight {
         return sourceVisualization;
+    }
+
+    /**
+     * Default implementation of sort config getter returning empty object
+     *
+     * @param _referencePoint - reference point
+     * @returns promise promise once resolved returns an sort config
+     */
+    public getSortConfig(_referencePoint: IReferencePoint): Promise<ISortConfig> {
+        return Promise.resolve({
+            currentSort: [],
+            availableSorts: [],
+            supported: false,
+            disabled: false,
+        });
     }
 }

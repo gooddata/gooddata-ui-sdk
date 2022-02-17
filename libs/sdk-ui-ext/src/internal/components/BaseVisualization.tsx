@@ -29,6 +29,7 @@ import {
     IVisualization,
     IDrillDownContext,
     IVisProps,
+    IExtendedReferencePoint,
 } from "../interfaces/Visualization";
 import { PluggableVisualizationFactory } from "../interfaces/VisualizationDescriptor";
 import { FullVisualizationCatalog, IVisualizationCatalog } from "./VisualizationCatalog";
@@ -36,6 +37,7 @@ import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
 import noop from "lodash/noop";
 import omit from "lodash/omit";
+import { ISortConfig } from "../interfaces/SortConfig";
 
 export interface IBaseVisualizationProps extends IVisCallbacks {
     backend: IAnalyticalBackend;
@@ -62,7 +64,8 @@ export interface IBaseVisualizationProps extends IVisCallbacks {
     isMdObjectValid?: boolean;
     configPanelClassName?: string;
     theme?: ITheme;
-    onExtendedReferencePointChanged?(): void;
+    onExtendedReferencePointChanged?(referencePoint: IExtendedReferencePoint): void;
+    onSortingChanged?(sortConfig: ISortConfig): void;
 
     onNewDerivedBucketItemsPlaced?(): void;
 
@@ -241,12 +244,20 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         newProps: IBaseVisualizationProps,
         currentProps?: IBaseVisualizationProps,
     ) {
-        const { referencePoint: newReferencePoint, onExtendedReferencePointChanged } = newProps;
+        const {
+            referencePoint: newReferencePoint,
+            onExtendedReferencePointChanged,
+            onSortingChanged,
+        } = newProps;
 
         if (this.visualization && newReferencePoint && onExtendedReferencePointChanged) {
             this.visualization
                 .getExtendedReferencePoint(newReferencePoint, currentProps && currentProps.referencePoint)
-                .then(onExtendedReferencePointChanged);
+                .then(async (extendedReferencePoint) => {
+                    onExtendedReferencePointChanged(extendedReferencePoint);
+                    const sortConfig = await this.visualization.getSortConfig(extendedReferencePoint);
+                    return onSortingChanged && onSortingChanged(sortConfig);
+                });
         }
     }
 

@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     getSupportedPropertiesControls,
     getSupportedProperties,
@@ -26,6 +26,7 @@ import {
     IVisualizationProperties,
 } from "../../interfaces/Visualization";
 import { ColumnWidthItem } from "@gooddata/sdk-ui-pivot";
+import { newAttributeSort } from "@gooddata/sdk-model";
 
 describe("propertiesHelper", () => {
     describe("getSupportedPropertiesControls", () => {
@@ -106,11 +107,12 @@ describe("propertiesHelper", () => {
 
     describe("getReferencePointWithSupportedProperties", () => {
         it("should return reference point with pith properties with only sort items", () => {
+            const sortItem = newAttributeSort("a");
             const referencePoint = {
                 ...emptyReferencePoint,
                 uiConfig: simpleStackedBaseUiConfig,
                 properties: {
-                    sortItems: ["sortItem"],
+                    sortItems: [sortItem],
                     controls: {},
                 },
             };
@@ -118,7 +120,7 @@ describe("propertiesHelper", () => {
                 ...emptyReferencePoint,
                 uiConfig: simpleStackedBaseUiConfig,
                 properties: {
-                    sortItems: ["sortItem"],
+                    sortItems: [sortItem],
                 },
             };
 

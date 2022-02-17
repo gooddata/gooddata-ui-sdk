@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import noop from "lodash/noop";
 import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 import { PluggableBarChart } from "../PluggableBarChart";
@@ -137,6 +137,30 @@ describe("PluggableBarChart", () => {
             const axis = extendedReferencePoint?.uiConfig?.axis;
             expect(measures).toEqual(["m3", "m4"]);
             expect(axis).toEqual(AXIS.DUAL);
+        });
+    });
+
+    describe("Sort config", () => {
+        it("should create sort config with sorting supported but disabled when there is no view by attribute", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(
+                referencePointMocks.oneMetricNoCategoriesReferencePoint,
+            );
+
+            expect(sortConfig.supported).toBeTruthy();
+            expect(sortConfig.disabled).toBeTruthy();
+        });
+
+        it("should create sort config with sorting enabled when there is view by attribute", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(
+                referencePointMocks.oneMetricAndCategoryAndStackReferencePoint,
+            );
+
+            expect(sortConfig.supported).toBeTruthy();
+            expect(sortConfig.disabled).toBeFalsy();
         });
     });
 });

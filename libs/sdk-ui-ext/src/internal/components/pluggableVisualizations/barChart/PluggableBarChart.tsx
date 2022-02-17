@@ -1,13 +1,15 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { render } from "react-dom";
-import { VisualizationTypes } from "@gooddata/sdk-ui";
+import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IInsightDefinition } from "@gooddata/sdk-model";
 import { PluggableColumnBarCharts } from "../PluggableColumnBarCharts";
-import { IVisConstruct } from "../../../interfaces/Visualization";
+import { IReferencePoint, IVisConstruct } from "../../../interfaces/Visualization";
 import { BAR_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 import BarChartConfigurationPanel from "../../configurationPanels/BarChartConfigurationPanel";
 import { AXIS, AXIS_NAME } from "../../../constants/axis";
+import { ISortConfig } from "../../../interfaces/SortConfig";
+import { getBucketItems } from "../../../utils/bucketHelper";
 
 export class PluggableBarChart extends PluggableColumnBarCharts {
     constructor(props: IVisConstruct) {
@@ -44,5 +46,16 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
                 document.querySelector(this.configPanelElement),
             );
         }
+    }
+
+    public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
+        const { buckets } = referencePoint;
+        const viewBy = getBucketItems(buckets, BucketNames.VIEW);
+        return Promise.resolve({
+            supported: true,
+            disabled: viewBy.length < 1,
+            currentSort: [],
+            availableSorts: [],
+        });
     }
 }

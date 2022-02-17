@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     IReferencePoint,
     IBucketItem,
@@ -12,7 +12,7 @@ import {
 } from "../../interfaces/Visualization";
 import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 import { ColumnWidthItem } from "@gooddata/sdk-ui-pivot";
-import { ObjRef, uriRef, idRef } from "@gooddata/sdk-model";
+import { ObjRef, uriRef, idRef, ISortItem } from "@gooddata/sdk-model";
 
 export const dateDatasetRef: ObjRef = uriRef("data.dataset.1");
 
@@ -534,7 +534,7 @@ export const dateItemWithDateDataset: IBucketItem = {
     dateDatasetRef,
 };
 
-const defaultSortItem = {
+const defaultSortItem: ISortItem = {
     attributeSortItem: {
         attributeIdentifier: "a1",
         direction: "asc",
