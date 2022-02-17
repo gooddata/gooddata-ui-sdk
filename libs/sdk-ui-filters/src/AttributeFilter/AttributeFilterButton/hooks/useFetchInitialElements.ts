@@ -3,7 +3,7 @@
 import { useCancelablePromise } from "@gooddata/sdk-ui";
 import isEmpty from "lodash/isEmpty";
 import { IElementsQueryResult } from "@gooddata/sdk-backend-spi";
-import { stringify } from "../../../../../api-client-bear/src/utils/queryString";
+import stringify from "json-stable-stringify";
 import { prepareElementsTitleQuery } from "../AttributeFilterButtonUtils";
 import { getObjRef } from "../../utils/AttributeFilterUtils";
 import { AttributeFilterButtonContextProps } from "./types";
