@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import {
     JsonApiDatasetOut,
     JsonApiLabelOut,
@@ -68,7 +68,11 @@ export function getReferencedDataset(
     return datasetsMap[datasetsRef.id];
 }
 
-export function convertLabels(attribute: JsonApiAttributeOutWithLinks, labelsMap: LabelMap): DisplayForm[] {
+export function convertLabels(
+    attribute: JsonApiAttributeOutWithLinks,
+    labelsMap: LabelMap,
+    workspaceId: string,
+): DisplayForm[] {
     const labelsRefs = attribute.relationships?.labels?.data as JsonApiLabelLinkage[];
     return labelsRefs
         .map((ref) => {
@@ -80,7 +84,7 @@ export function convertLabels(attribute: JsonApiAttributeOutWithLinks, labelsMap
 
             return {
                 meta: {
-                    identifier: ref.id,
+                    identifier: toFullyQualifiedId(ref.id, workspaceId),
                     title: label.attributes?.title ?? ref.id,
                     tags: label.attributes?.tags?.join(",") ?? "",
                 },
@@ -92,17 +96,35 @@ export function convertLabels(attribute: JsonApiAttributeOutWithLinks, labelsMap
 export function convertAttribute(
     attribute: JsonApiAttributeOutWithLinks,
     labels: LabelMap,
+    workspaceId: string,
 ): Attribute | undefined {
     return {
         attribute: {
             content: {
-                displayForms: convertLabels(attribute, labels),
+                displayForms: convertLabels(attribute, labels, workspaceId),
             },
             meta: {
-                identifier: attribute.id,
+                identifier: toFullyQualifiedId(attribute.id, workspaceId),
                 title: attribute.attributes?.title ?? attribute.id,
                 tags: attribute.attributes?.tags?.join(",") ?? "",
             },
         },
     };
+}
+
+const WORKSPACE_PREFIX_SEPARATOR = ":";
+
+/**
+ * To make sure ids are as portable as possible, prefix every non-prefixed id with the current workspace.
+ * This makes sure that things created in that workspace will keep working even in child workspaces
+ * (e.g. dashboard plugins created for a parent workspace should keep working in child workspaces as well
+ * and for that to happen, all the ids must be prefixed with the parent workspace id).
+ *
+ * @param id - the id to convert
+ * @param workspaceId - the id of the workspace the catalog is being exported for
+ * @internal
+ */
+export function toFullyQualifiedId(id: string, workspaceId: string): string {
+    const isAlreadyPrefixed = id.includes(WORKSPACE_PREFIX_SEPARATOR);
+    return isAlreadyPrefixed ? id : [workspaceId, id].join(WORKSPACE_PREFIX_SEPARATOR);
 }

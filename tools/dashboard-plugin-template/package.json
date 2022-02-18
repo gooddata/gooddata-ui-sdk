@@ -46,7 +46,8 @@
         "dep-cruiser": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
         "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
         "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check",
-        "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
+        "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check",
+        "refresh-md": "node ./scripts/refresh-md.js"
     },
     "dependencies": {
         "@gooddata/sdk-ui-dashboard": "^8.9.0-alpha.51",
@@ -69,6 +70,7 @@
         "@babel/core": "^7.7.2",
         "@babel/preset-env": "^7.7.2",
         "@babel/preset-react": "^7.7.2",
+        "@gooddata/catalog-export": "^8.9.0-alpha.51",
         "@gooddata/eslint-config": "^2.1.0",
         "@gooddata/plugin-toolkit": "^8.9.0-alpha.51",
         "@gooddata/sdk-model": "^8.9.0-alpha.51",

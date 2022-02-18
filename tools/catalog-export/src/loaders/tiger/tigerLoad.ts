@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { CatalogExportError, WorkspaceMetadata } from "../../base/types";
 import { ITigerClient } from "@gooddata/api-client-tiger";
 import ora from "ora";
@@ -35,7 +35,7 @@ export async function tigerLoad(client: ITigerClient, workspaceId: string): Prom
             insights,
             analyticalDashboards,
         };
-    } catch (err) {
+    } catch (err: any) {
         spinner.fail();
         if (err?.response?.status === 404) {
             // handle known error more gracefully to avoid general-type error messages
