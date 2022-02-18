@@ -9,9 +9,6 @@ import {
     getLoadingTitleIntl,
     getNoneTitleIntl,
     getObjRef,
-    getValidElementsFilters,
-    isParentFilteringEnabled,
-    isParentFiltersElementsByRef,
 } from "../utils/AttributeFilterUtils";
 import {
     filterAttributeElements,
@@ -20,7 +17,6 @@ import {
     isNegativeAttributeFilter,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
-    ObjRef,
 } from "@gooddata/sdk-model";
 import { UseCancelablePromiseStatus } from "@gooddata/sdk-ui";
 import isEmpty from "lodash/isEmpty";
@@ -59,58 +55,6 @@ export const getBackend = (backend: IAnalyticalBackend, props: any) => {
     return backend.withTelemetry("AttributeFilter", props);
 };
 
-export const prepareElementsQuery = (
-    backend: IAnalyticalBackend,
-    workspace: string,
-    filterObjRef: ObjRef,
-    parentFilters: IAttributeFilter[],
-    parentFilterOverAttribute: ObjRef | ((parentFilter: IAttributeFilter, index: number) => ObjRef),
-    offset: number,
-    limit: number,
-    searchQuery: string,
-) => {
-    const preparedElementQuery = backend
-        .workspace(workspace)
-        .attributes()
-        .elements()
-        .forDisplayForm(filterObjRef)
-        .withOptions({
-            ...(!isEmpty(searchQuery) ? { filter: searchQuery } : {}),
-        })
-        .withOffset(offset)
-        .withLimit(limit);
-
-    if (isParentFilteringEnabled(backend)) {
-        if (parentFilters && !isParentFiltersElementsByRef(parentFilters)) {
-            // eslint-disable-next-line no-console
-            console.error("Parent filters must be defined by uris to enable parent-child filtering feature");
-        } else {
-            preparedElementQuery.withAttributeFilters(
-                getValidElementsFilters(parentFilters, parentFilterOverAttribute),
-            );
-        }
-    }
-
-    return preparedElementQuery;
-};
-
-export const prepareElementsTitleQuery = (
-    appliedElements: IAttributeElement[],
-    backend: IAnalyticalBackend,
-    workspace: string,
-    currentFilter: IAttributeFilter,
-    identifier: string,
-) => {
-    return backend
-        .workspace(workspace)
-        .attributes()
-        .elements()
-        .forDisplayForm(getObjRef(currentFilter, identifier))
-        .withOptions({
-            uris: appliedElements.map((opt) => opt.uri),
-        });
-};
-
 export const createFilter = (
     filter: IAttributeFilter,
     isInverted: boolean,
@@ -143,40 +87,49 @@ export const getNumberOfSelectedItems = (
     return filterOptions.length;
 };
 
-export const getSubtitle = (
-    isElementsLoading: boolean,
-    isTotalCountLoading: boolean,
-    firstLoad: boolean,
-    isFiltering: boolean,
-    isAllFiltered: boolean,
-    isInverted: boolean,
-    isElementsByRef: boolean,
-    currentFilter: IAttributeFilter,
-    selectedFilterOptions: IAttributeElement[],
-    uriToAttributeElementMap: Map<string, IAttributeElement>,
-    identifier: string,
-    searchString: string,
-    originalTotalCount: number,
-    intl: IntlShape,
-) => {
-    if (isElementsLoading && !isEmpty(searchString)) {
+interface GetSubtitleProps {
+    loadingProps: {
+        isElementsLoading: boolean;
+        isTotalCountLoading: boolean;
+    };
+    ownProps: {
+        isAllFiltered: boolean;
+        isElementsByRef: boolean;
+        currentFilter: IAttributeFilter;
+        identifier: string;
+        originalTotalCount: number;
+        intl: IntlShape;
+    };
+    state: {
+        isInverted: boolean;
+        isFiltering: boolean;
+        selectedFilterOptions: IAttributeElement[];
+        uriToAttributeElementMap: Map<string, IAttributeElement>;
+        searchString: string;
+        firstLoad: boolean;
+    };
+}
+
+export const getSubtitle = (props: GetSubtitleProps) => {
+    const { loadingProps, ownProps, state } = props;
+    if (loadingProps.isElementsLoading && !isEmpty(state.searchString)) {
         return "";
     }
 
-    if (isTotalCountLoading) {
-        if (firstLoad) {
-            return getLoadingTitleIntl(intl);
-        } else if (isFiltering) {
-            return getFilteringTitleIntl(intl);
+    if (loadingProps.isTotalCountLoading) {
+        if (state.firstLoad) {
+            return getLoadingTitleIntl(ownProps.intl);
+        } else if (state.isFiltering) {
+            return getFilteringTitleIntl(ownProps.intl);
         }
     }
 
-    if (isAllFiltered) {
-        return getAllTitle(intl);
+    if (ownProps.isAllFiltered) {
+        return getAllTitle(ownProps.intl);
     }
 
-    const displayForm = getObjRef(currentFilter, identifier);
-    if (uriToAttributeElementMap.size > 0 && !isNil(originalTotalCount) && displayForm) {
+    const displayForm = getObjRef(ownProps.currentFilter, ownProps.identifier);
+    if (state.uriToAttributeElementMap.size > 0 && !isNil(ownProps.originalTotalCount) && displayForm) {
         /**
          * If the attribute filter is positive, `getNumberOfSelectedItems` returns current size of
          * the `selectedFilterOptions` array. If the filter is negative attribute filter, it
@@ -186,32 +139,42 @@ export const getSubtitle = (
          * considered the selection is empty.
          */
         const empty =
-            getNumberOfSelectedItems(originalTotalCount, selectedFilterOptions, isInverted) === 0 &&
-            originalTotalCount > 0;
+            getNumberOfSelectedItems(
+                ownProps.originalTotalCount,
+                state.selectedFilterOptions,
+                state.isInverted,
+            ) === 0 && ownProps.originalTotalCount > 0;
         /**
          * All items are selected only in case the number of selected items is equal to original total
          * count.
          */
         const all =
-            getNumberOfSelectedItems(originalTotalCount, selectedFilterOptions, isInverted) ===
-            originalTotalCount;
-        const getAllPartIntl = all ? getAllTitle(intl) : getAllExceptTitle(intl);
+            getNumberOfSelectedItems(
+                ownProps.originalTotalCount,
+                state.selectedFilterOptions,
+                state.isInverted,
+            ) === ownProps.originalTotalCount;
+        const getAllPartIntl = all ? getAllTitle(ownProps.intl) : getAllExceptTitle(ownProps.intl);
 
         if (empty) {
-            return getNoneTitleIntl(intl);
+            return getNoneTitleIntl(ownProps.intl);
         }
 
         if (all) {
             return getAllPartIntl;
         }
 
-        return isInverted
+        return state.isInverted
             ? `${getAllPartIntl} ${getItemsTitles(
-                  selectedFilterOptions,
-                  uriToAttributeElementMap,
-                  isElementsByRef,
+                  state.selectedFilterOptions,
+                  state.uriToAttributeElementMap,
+                  ownProps.isElementsByRef,
               )}`
-            : `${getItemsTitles(selectedFilterOptions, uriToAttributeElementMap, isElementsByRef)}`;
+            : `${getItemsTitles(
+                  state.selectedFilterOptions,
+                  state.uriToAttributeElementMap,
+                  ownProps.isElementsByRef,
+              )}`;
     }
     return "";
 };

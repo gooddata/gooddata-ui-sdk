@@ -422,22 +422,28 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
                     ? attribute.title
                     : getLoadingTitleIntl(props.intl)
             }
-            subtitle={getSubtitle(
-                isCancelablePromiseLoading(elementsStatus),
-                isCancelablePromisePendingOrLoading(totalCountStatus),
-                state.firstLoad,
-                state.isFiltering,
-                isAllFiltered,
-                state.isInverted,
-                isElementsByRef,
-                currentFilter,
-                state.selectedFilterOptions,
-                state.uriToAttributeElementMap,
-                props.identifier,
-                state.searchString,
-                originalTotalCount,
-                props.intl,
-            )}
+            subtitle={getSubtitle({
+                loadingProps: {
+                    isElementsLoading: isCancelablePromiseLoading(elementsStatus),
+                    isTotalCountLoading: isCancelablePromisePendingOrLoading(totalCountStatus),
+                },
+                ownProps: {
+                    isAllFiltered,
+                    isElementsByRef,
+                    currentFilter,
+                    identifier: props.identifier,
+                    originalTotalCount,
+                    intl: props.intl,
+                },
+                state: {
+                    firstLoad: state.firstLoad,
+                    isFiltering: state.isFiltering,
+                    isInverted: state.isInverted,
+                    selectedFilterOptions: state.selectedFilterOptions,
+                    uriToAttributeElementMap: state.uriToAttributeElementMap,
+                    searchString: state.searchString,
+                },
+            })}
             selectedFilterOptions={state.selectedFilterOptions}
             onDropdownOpenStateChanged={onDropdownOpenStateChanged}
             onApplyButtonClicked={onApply}
