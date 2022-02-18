@@ -377,9 +377,9 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         isInverted: state.isInverted,
         isLoading:
             (!state.validOptions?.items && isCancelablePromiseLoading(elementsStatus)) ||
-            isCancelablePromisePendingOrLoading(totalCountStatus) ||
-            isCancelablePromisePendingOrLoading(originalTotalCountStatus) ||
-            isCancelablePromisePendingOrLoading(parentFilterTitlesStatus),
+            [totalCountStatus, originalTotalCountStatus, parentFilterTitlesStatus].some(
+                isCancelablePromisePendingOrLoading,
+            ),
         searchString: state.searchString,
         applyDisabled:
             getNumberOfSelectedItems(originalTotalCount, state.selectedFilterOptions, state.isInverted) === 0,
