@@ -6,6 +6,9 @@ import { getObjRef } from "../../utils/AttributeFilterUtils";
 import stringify from "json-stable-stringify";
 import { AttributeFilterButtonContextProps } from "./types";
 
+/**
+ * Fetches the attribute related to the Attribute Filter needed to acquire attribute title.
+ */
 export const useAttribute = (context: Omit<AttributeFilterButtonContextProps, "filterObjRef">) => {
     const filterObjRef = useMemo(
         () => getObjRef(context.filter, context.identifier),

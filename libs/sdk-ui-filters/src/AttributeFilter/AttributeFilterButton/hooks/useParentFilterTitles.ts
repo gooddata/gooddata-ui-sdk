@@ -10,6 +10,9 @@ interface IUseParentFilterTitlesProps {
     ownProps: Pick<AttributeFilterButtonHookOwnProps, "parentFilters">;
 }
 
+/**
+ * Fetches attribute titles for parent filters impacting the {@link AttributeFilterButton}.
+ */
 export const useParentFilterTitles = (props: IUseParentFilterTitlesProps) => {
     const { context, ownProps } = props;
 

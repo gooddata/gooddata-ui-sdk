@@ -10,6 +10,9 @@ interface IUseOriginalTotalElementCountProps {
     ownProps: Omit<AttributeFilterButtonHookOwnProps, "isElementsByRef">;
 }
 
+/**
+ * Gets the number of all elements available for the attribute.
+ */
 export const useOriginalTotalElementsCount = (props: IUseOriginalTotalElementCountProps) => {
     const { context, ownProps } = props;
     return useCancelablePromise<number>(

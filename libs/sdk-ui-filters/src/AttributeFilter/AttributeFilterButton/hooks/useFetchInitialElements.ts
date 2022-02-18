@@ -32,6 +32,9 @@ const prepareElementsTitleQuery = (
         });
 };
 
+/**
+ * Fetches data for the initial selection.
+ */
 export const useFetchInitialElements = (props: IUseFetchInitialElementsProps) => {
     const { context, state, callback } = props;
 

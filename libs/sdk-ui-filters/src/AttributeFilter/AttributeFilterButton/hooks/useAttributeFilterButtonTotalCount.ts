@@ -12,6 +12,10 @@ interface IUseAttributeFilterButtonTotalCountProps {
     ownProps: Omit<AttributeFilterButtonHookOwnProps, "isElementsByRef">;
 }
 
+/**
+ * Gets the number of the elements available for the attribute, depending on the inserted search
+ * query.
+ */
 export const useAttributeFilterButtonTotalCount = (props: IUseAttributeFilterButtonTotalCountProps) => {
     const { context, state, ownProps } = props;
 

@@ -35,6 +35,12 @@ export interface IAttributeFilterButtonState {
     needsReloadAfterSearch: boolean;
 }
 
+/**
+ * Provides a {@link IAttributeFilterButtonState} and a set of functions to handle the state
+ * of {@link AttributeFilterButton} component.
+ *
+ * @param currentFilter - the filter object to initialize the component's state.
+ */
 export const useAttributeFilterButtonState = (currentFilter: IAttributeFilter) => {
     /**
      * AttributeFilterButton state initialization

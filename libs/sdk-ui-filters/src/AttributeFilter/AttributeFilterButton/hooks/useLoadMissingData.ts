@@ -68,6 +68,9 @@ const prepareElementsQuery = (
     return preparedElementQuery;
 };
 
+/**
+ * Fetches missing attribute elements on scrolling.
+ */
 export const useLoadMissingData = (props: IUseLoadMissingDataProps) => {
     const { context, state, ownProps, callback } = props;
 
