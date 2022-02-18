@@ -36,6 +36,14 @@ _Note: GoodData currently does not provide hosting for your plugin artifacts._
 
 Building a new plugin is easy. Before you start, ensure that your `.env` and `.env.secrets` files are set up correctly.
 
+0.  (Optional) Export catalog: `{{packageManager}} run refresh-md`
+
+    To make referencing various metadata objects easier in your plugin, you can use the [Export catalog](https://sdk.gooddata.com/gooddata-ui/docs/export_catalog.html) feature to get a easy-to-use list of the various MD objects in your workspace (insights, dashboards, attributes, etc.).
+    For convenience, this was integrated to your plugin, just run `{{packageManager}} run refresh-md`.
+    This will connect to the workspace specified in the `.env` file using the credentials from `.env.secrets`
+    and populate the file `src/md/full.{{language}}` with information about the metadata objects available in the specified workspace.
+    See the [Export catalog](https://sdk.gooddata.com/gooddata-ui/docs/export_catalog.html) documentation page for more information.
+
 1.  Start the development server: `{{packageManager}} start`
 
     To verify everything works correctly, navigate to `{{protocol}}//127.0.0.1:3001`. You should see your existing
