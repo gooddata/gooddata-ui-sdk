@@ -23,6 +23,9 @@ import isEmpty from "lodash/isEmpty";
 import { IntlShape } from "react-intl";
 import isNil from "lodash/isNil";
 
+/**
+ * Gets the selection from the initial {@link @gooddata/sdk-model#IAttributeFilter} object.
+ */
 export const getInitialSelectedOptions = (currentFilter: IAttributeFilter): IAttributeElement[] => {
     // the as any cast is ok here, the data will get fixed once the element load completes
     // this serves only to have some initial state here so that when full element data is loaded
@@ -32,6 +35,9 @@ export const getInitialSelectedOptions = (currentFilter: IAttributeFilter): IAtt
         : [];
 };
 
+/**
+ * Gets the isInverted property from the initial {@link @gooddata/sdk-model#IAttributeFilter} object.
+ */
 export const getInitialIsInverted = (currentFilter: IAttributeFilter): boolean => {
     return currentFilter ? isNegativeAttributeFilter(currentFilter) : true;
 };
@@ -51,10 +57,17 @@ export const isCancelablePromisePendingOrLoading = (cancelablePromiseStatus: Use
     );
 };
 
+/**
+ * Applies a telemetry to the {@link @gooddata/sdk-backend-spi#IAnalyticalBackend} object.
+ */
 export const getBackend = (backend: IAnalyticalBackend, props: any) => {
     return backend.withTelemetry("AttributeFilter", props);
 };
 
+/**
+ * Creates the new {@link @gooddata/sdk-model#IAttributeFilter} with the actual selection
+ * and actual inverted state property.
+ */
 export const createFilter = (
     filter: IAttributeFilter,
     isInverted: boolean,
@@ -75,6 +88,11 @@ export const createFilter = (
     );
 };
 
+/**
+ * Returns number of selected elements. If the selection is inverted, it returns
+ * the number of all elements of the attribute without the actual selection,
+ * the size of the actual selection otherwise.
+ */
 export const getNumberOfSelectedItems = (
     originalTotalCount: number,
     filterOptions: IAttributeElement[],
@@ -110,6 +128,9 @@ interface GetSubtitleProps {
     };
 }
 
+/**
+ * Gets the subtitle according to current selection and loading status of the component.
+ */
 export const getSubtitle = (props: GetSubtitleProps) => {
     const { loadingProps, ownProps, state } = props;
     if (loadingProps.isElementsLoading && !isEmpty(state.searchString)) {
