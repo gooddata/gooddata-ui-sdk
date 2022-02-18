@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import invariant from "ts-invariant";
 import { ObjRef, VisualizationProperties } from "@gooddata/sdk-model";
 import {
@@ -50,6 +50,9 @@ export class InsightWidgetBuilder extends WidgetBaseBuilder<IInsightWidget> impl
             title: "",
             type: "insight",
             insight,
+            configuration: {
+                hideTitle: false,
+            },
         };
         return InsightWidgetBuilder.for(emptyInsightWidget);
     }

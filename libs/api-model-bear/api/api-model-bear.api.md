@@ -3014,9 +3014,15 @@ export namespace GdcVisualizationWidget {
             drills?: IDrillDefinition[];
             properties?: string;
             references?: GdcVisualizationObject.IReferenceItems;
+            configuration?: IVisualizationWidgetConfiguration;
         };
         // (undocumented)
         meta: GdcMetadata.IObjectMeta;
+    }
+    // (undocumented)
+    export interface IVisualizationWidgetConfiguration {
+        // (undocumented)
+        hideTitle: boolean;
     }
     // (undocumented)
     export interface IWrappedVisualizationWidget {
