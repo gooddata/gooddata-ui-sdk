@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import { BucketNames } from "@gooddata/sdk-ui";
 import {
@@ -15,7 +15,6 @@ import { DEFAULT_BASE_CHART_UICONFIG } from "../../constants/uiConfig";
 import { SORT_DIR_ASC, SORT_DIR_DESC } from "../../constants/sort";
 import { ATTRIBUTE, FILTERS, METRIC } from "../../constants/bucket";
 import {
-    emptyInsight,
     insightWithSingleMeasureAndStack,
     insightWithSingleMeasureAndTwoViewBy,
     insightWithSingleMeasureAndViewBy,
@@ -25,7 +24,6 @@ import {
 import {
     IAttributeSortItem,
     IMeasureSortItem,
-    insightSetSorts,
     ISortItem,
     newAttribute,
     newBucket,
@@ -179,27 +177,12 @@ describe("createSorts", () => {
                 expect(createSorts("pie", insightWithSingleMeasureAndViewByAndStack)).toEqual([]);
             });
         });
-    });
 
-    it("should ignore sort from visualization properties if localIdentifier is missing in AFM", () => {
-        const sortItems: ISortItem[] = [
-            {
-                measureSortItem: {
-                    direction: "desc",
-                    locators: [
-                        {
-                            measureLocatorItem: {
-                                measureIdentifier: "m1",
-                            },
-                        },
-                    ],
-                },
-            },
-        ];
-
-        const testInsight = insightSetSorts(emptyInsight, sortItems);
-
-        expect(createSorts("table", testInsight)).toEqual([]);
+        describe("table", () => {
+            it("should return empty array", () => {
+                expect(createSorts("table", insightWithSingleMeasureAndViewByAndStack)).toEqual([]);
+            });
+        });
     });
 });
 

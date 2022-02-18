@@ -1,15 +1,39 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { render } from "react-dom";
+import isEmpty from "lodash/isEmpty";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import { IInsightDefinition } from "@gooddata/sdk-model";
+import { IInsightDefinition, localIdRef, newAttributeAreaSort, newMeasureSort } from "@gooddata/sdk-model";
 import { PluggableColumnBarCharts } from "../PluggableColumnBarCharts";
 import { IReferencePoint, IVisConstruct } from "../../../interfaces/Visualization";
 import { BAR_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 import BarChartConfigurationPanel from "../../configurationPanels/BarChartConfigurationPanel";
 import { AXIS, AXIS_NAME } from "../../../constants/axis";
-import { ISortConfig } from "../../../interfaces/SortConfig";
+import { ISortConfig, newMeasureSortSuggestion } from "../../../interfaces/SortConfig";
 import { getBucketItems } from "../../../utils/bucketHelper";
+import { IAxisConfig } from "@gooddata/sdk-ui-charts";
+
+function areAllMeasuresOnSingleAxis(
+    buckets: IReferencePoint["buckets"],
+    secondaryYAxis: IAxisConfig,
+): boolean {
+    const measures = getBucketItems(buckets, BucketNames.MEASURES);
+    const measureCount = measures.length;
+    const numberOfMeasureOnSecondaryAxis = secondaryYAxis.measures?.length ?? 0;
+    return numberOfMeasureOnSecondaryAxis === 0 || measureCount === numberOfMeasureOnSecondaryAxis;
+}
+
+function canSortStackTotalValue(
+    buckets: IReferencePoint["buckets"],
+    properties: IReferencePoint["properties"],
+): boolean {
+    const supportedControls = properties?.controls;
+    const stackMeasures = supportedControls?.stackMeasures ?? false;
+    const secondaryAxis: IAxisConfig = supportedControls?.secondary_yaxis ?? { measures: [] };
+    const allMeasuresOnSingleAxis = areAllMeasuresOnSingleAxis(buckets, secondaryAxis);
+
+    return stackMeasures && allMeasuresOnSingleAxis;
+}
 
 export class PluggableBarChart extends PluggableColumnBarCharts {
     constructor(props: IVisConstruct) {
@@ -48,13 +72,120 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
         }
     }
 
+    protected getDefaultAndAvailableSort(
+        referencePoint: IReferencePoint,
+        canSortStackTotalValue: boolean,
+    ): {
+        currentSort: ISortConfig["currentSort"];
+        availableSorts: ISortConfig["availableSorts"];
+    } {
+        const { buckets } = referencePoint;
+        const measures = getBucketItems(buckets, BucketNames.MEASURES);
+        const viewBy = getBucketItems(buckets, BucketNames.VIEW);
+        const stackBy = getBucketItems(buckets, BucketNames.STACK);
+
+        if (viewBy.length === 2) {
+            if (measures.length >= 2 && !canSortStackTotalValue) {
+                return {
+                    currentSort: [
+                        newAttributeAreaSort(viewBy[0].localIdentifier, "desc"),
+                        newMeasureSort(measures[0].localIdentifier, "desc"),
+                    ],
+                    availableSorts: [
+                        {
+                            itemId: localIdRef(viewBy[0].localIdentifier),
+                            attributeSort: {
+                                normalSortEnabled: true,
+                                areaSortEnabled: true,
+                            },
+                        },
+                        {
+                            itemId: localIdRef(viewBy[1].localIdentifier),
+                            attributeSort: {
+                                normalSortEnabled: true,
+                                areaSortEnabled: true,
+                            },
+                            metricSorts: [
+                                ...measures.map((m) => newMeasureSortSuggestion(m.localIdentifier)),
+                            ],
+                        },
+                    ],
+                };
+            }
+
+            return {
+                currentSort: [
+                    newAttributeAreaSort(viewBy[0].localIdentifier, "desc"),
+                    newAttributeAreaSort(viewBy[1].localIdentifier, "desc"),
+                ],
+                availableSorts: [
+                    {
+                        itemId: localIdRef(viewBy[0].localIdentifier),
+                        attributeSort: {
+                            normalSortEnabled: true,
+                            areaSortEnabled: true,
+                        },
+                    },
+                    {
+                        itemId: localIdRef(viewBy[1].localIdentifier),
+                        attributeSort: {
+                            normalSortEnabled: true,
+                            areaSortEnabled: true,
+                        },
+                        metricSorts: [...measures.map((m) => newMeasureSortSuggestion(m.localIdentifier))],
+                    },
+                ],
+            };
+        }
+
+        if (!isEmpty(viewBy) && (!isEmpty(stackBy) || canSortStackTotalValue)) {
+            return {
+                currentSort: [newAttributeAreaSort(viewBy[0].localIdentifier, "desc")],
+                availableSorts: [
+                    {
+                        itemId: localIdRef(viewBy[0].localIdentifier),
+                        attributeSort: {
+                            normalSortEnabled: true,
+                            areaSortEnabled: true,
+                        },
+                    },
+                ],
+            };
+        }
+
+        if (!isEmpty(viewBy) && !isEmpty(measures)) {
+            return {
+                currentSort: [newMeasureSort(measures[0].localIdentifier, "desc")],
+                availableSorts: [
+                    {
+                        itemId: localIdRef(viewBy[0].localIdentifier),
+                        attributeSort: {
+                            normalSortEnabled: true,
+                            areaSortEnabled: false,
+                        },
+                        metricSorts: [...measures.map((m) => newMeasureSortSuggestion(m.localIdentifier))],
+                    },
+                ],
+            };
+        }
+
+        return {
+            currentSort: [],
+            availableSorts: [],
+        };
+    }
     public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
         const { buckets } = referencePoint;
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
+        const disabled = viewBy.length < 1;
+        const { currentSort } = this.getDefaultAndAvailableSort(
+            referencePoint,
+            canSortStackTotalValue(referencePoint.buckets, referencePoint.properties),
+        );
         return Promise.resolve({
             supported: true,
-            disabled: viewBy.length < 1,
-            currentSort: [],
+            disabled,
+            currentSort,
             availableSorts: [],
         });
     }

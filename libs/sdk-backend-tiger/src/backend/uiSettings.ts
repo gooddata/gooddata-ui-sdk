@@ -73,6 +73,8 @@ export const DefaultUiSettings: ISettings = {
     enableRenamingMeasureToMetric: true,
 
     enableAxisLabelFormat: true,
+
+    enableChartsSorting: false,
 };
 
 /**
