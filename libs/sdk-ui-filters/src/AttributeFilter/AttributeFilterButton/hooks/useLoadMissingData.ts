@@ -1,12 +1,17 @@
 // (C) 2022 GoodData Corporation
 
 import { useCancelablePromise } from "@gooddata/sdk-ui";
-import { needsLoading } from "../../utils/AttributeFilterUtils";
-import { prepareElementsQuery } from "../AttributeFilterButtonUtils";
-import { IElementsQueryResult } from "@gooddata/sdk-backend-spi";
-import { IAttributeFilter } from "@gooddata/sdk-model";
+import {
+    getValidElementsFilters,
+    isParentFilteringEnabled,
+    isParentFiltersElementsByRef,
+    needsLoading,
+} from "../../utils/AttributeFilterUtils";
+import { IAnalyticalBackend, IElementsQueryResult } from "@gooddata/sdk-backend-spi";
+import { IAttributeFilter, ObjRef } from "@gooddata/sdk-model";
 import { AttributeFilterButtonContextProps, AttributeFilterButtonHookOwnProps } from "./types";
 import { IAttributeFilterButtonState } from "./useAttributeFilterButtonState";
+import isEmpty from "lodash/isEmpty";
 
 interface IUseLoadMissingDataProps {
     context: Pick<AttributeFilterButtonContextProps, "backend" | "workspace" | "filterObjRef">;
@@ -27,6 +32,41 @@ interface IUseLoadMissingDataProps {
     ) => void;
     ownProps: AttributeFilterButtonHookOwnProps;
 }
+
+const prepareElementsQuery = (
+    backend: IAnalyticalBackend,
+    workspace: string,
+    filterObjRef: ObjRef,
+    parentFilters: IAttributeFilter[],
+    parentFilterOverAttribute: ObjRef | ((parentFilter: IAttributeFilter, index: number) => ObjRef),
+    offset: number,
+    limit: number,
+    searchQuery: string,
+) => {
+    const preparedElementQuery = backend
+        .workspace(workspace)
+        .attributes()
+        .elements()
+        .forDisplayForm(filterObjRef)
+        .withOptions({
+            ...(!isEmpty(searchQuery) ? { filter: searchQuery } : {}),
+        })
+        .withOffset(offset)
+        .withLimit(limit);
+
+    if (isParentFilteringEnabled(backend)) {
+        if (parentFilters && !isParentFiltersElementsByRef(parentFilters)) {
+            // eslint-disable-next-line no-console
+            console.error("Parent filters must be defined by uris to enable parent-child filtering feature");
+        } else {
+            preparedElementQuery.withAttributeFilters(
+                getValidElementsFilters(parentFilters, parentFilterOverAttribute),
+            );
+        }
+    }
+
+    return preparedElementQuery;
+};
 
 export const useLoadMissingData = (props: IUseLoadMissingDataProps) => {
     const { context, state, ownProps, callback } = props;

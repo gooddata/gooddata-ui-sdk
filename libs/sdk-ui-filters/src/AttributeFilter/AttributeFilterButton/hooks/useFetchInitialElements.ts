@@ -2,18 +2,35 @@
 import { useMemo } from "react";
 import { useCancelablePromise } from "@gooddata/sdk-ui";
 import isEmpty from "lodash/isEmpty";
-import { IElementsQueryResult } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IAttributeElement, IElementsQueryResult } from "@gooddata/sdk-backend-spi";
 import stringify from "json-stable-stringify";
-import { prepareElementsTitleQuery } from "../AttributeFilterButtonUtils";
 import { getObjRef } from "../../utils/AttributeFilterUtils";
 import { AttributeFilterButtonContextProps } from "./types";
 import { IAttributeFilterButtonState } from "./useAttributeFilterButtonState";
+import { IAttributeFilter } from "@gooddata/sdk-model";
 
 interface IUseFetchInitialElementsProps {
     context: Omit<AttributeFilterButtonContextProps, "filterObjRef">;
     state: Pick<IAttributeFilterButtonState, "selectedFilterOptions" | "appliedFilterOptions">;
     callback: (elements: IElementsQueryResult) => void;
 }
+
+const prepareElementsTitleQuery = (
+    appliedElements: IAttributeElement[],
+    backend: IAnalyticalBackend,
+    workspace: string,
+    currentFilter: IAttributeFilter,
+    identifier: string,
+) => {
+    return backend
+        .workspace(workspace)
+        .attributes()
+        .elements()
+        .forDisplayForm(getObjRef(currentFilter, identifier))
+        .withOptions({
+            uris: appliedElements.map((opt) => opt.uri),
+        });
+};
 
 export const useFetchInitialElements = (props: IUseFetchInitialElementsProps) => {
     const { context, state, callback } = props;
