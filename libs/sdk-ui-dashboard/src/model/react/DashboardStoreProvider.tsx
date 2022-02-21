@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React from "react";
 import { AnyAction, Dispatch } from "@reduxjs/toolkit";
 import { createDispatchHook, createSelectorHook, Provider, TypedUseSelectorHook } from "react-redux";
@@ -18,7 +18,24 @@ export const ReactDashboardContext: any = React.createContext(null);
 export const useDashboardDispatch: () => Dispatch<AnyAction> = createDispatchHook(ReactDashboardContext);
 
 /**
- * @alpha
+ * Hook for retrieving data from the dashboard state.
+ *
+ * @example
+ * Example how to obtain all insights stored on the dashboard:
+ *
+ * ```tsx
+ * import { useDashboardSelector, selectInsights } from "@gooddata/sdk-ui-dashboard";
+ *
+ * const CustomDashboardWidget = () => {
+ *   const insights = useDashboardSelector(selectInsights);
+ *
+ *   return (
+ *      <pre>{JSON.stringify(insights, null, 2)}</pre>
+ *   );
+ * }
+ * ```
+ *
+ * @public
  */
 export const useDashboardSelector: TypedUseSelectorHook<DashboardState> =
     createSelectorHook(ReactDashboardContext);

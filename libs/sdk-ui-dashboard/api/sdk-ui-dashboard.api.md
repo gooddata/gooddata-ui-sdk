@@ -5033,7 +5033,7 @@ export type UseDashboardQueryProcessingResult<TQueryCreatorArgs extends any[], T
     run: (...args: TQueryCreatorArgs) => void;
 };
 
-// @alpha (undocumented)
+// @public
 export const useDashboardSelector: TypedUseSelectorHook<DashboardState>;
 
 // @internal
