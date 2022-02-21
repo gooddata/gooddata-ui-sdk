@@ -129,6 +129,11 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
             nextProps.referencePoint,
         );
 
+        const propertiesChanged = BaseVisualization.propertiesHasChanged(
+            this.props.referencePoint,
+            nextProps.referencePoint,
+        );
+
         if (visualizationClassChanged) {
             this.visElementId = uuidv4();
             this.setupVisualization(nextProps);
@@ -140,6 +145,8 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
                 // only pass current props if the visualization class is the same (see getExtendedReferencePoint JSDoc)
                 visualizationClassChanged ? undefined : this.props,
             );
+        } else if (propertiesChanged) {
+            this.triggerPropertiesChanged(nextProps);
         }
     }
 
@@ -261,11 +268,26 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         }
     }
 
+    private triggerPropertiesChanged(newProps: IBaseVisualizationProps) {
+        const { referencePoint: newReferencePoint, onSortingChanged } = newProps;
+        // Some of the properties eg. stacking of measures, dual axes influence sorting
+        if (this.visualization && newReferencePoint && onSortingChanged) {
+            this.visualization.getSortConfig(newReferencePoint).then(onSortingChanged);
+        }
+    }
+
     private static bucketReferencePointHasChanged(
         currentReferencePoint: IReferencePoint,
         nextReferencePoint: IReferencePoint,
     ) {
         return !isEqual(omit(currentReferencePoint, "properties"), omit(nextReferencePoint, "properties"));
+    }
+
+    private static propertiesHasChanged(
+        currentReferencePoint: IReferencePoint,
+        nextReferencePoint: IReferencePoint,
+    ) {
+        return !isEqual(currentReferencePoint.properties, nextReferencePoint.properties);
     }
 
     private getVisualizationProps(): IVisProps {
