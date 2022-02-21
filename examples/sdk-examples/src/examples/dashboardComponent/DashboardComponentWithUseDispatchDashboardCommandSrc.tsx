@@ -18,11 +18,12 @@ import {
     useDashboardSelector,
     useDispatchDashboardCommand,
 } from "@gooddata/sdk-ui-dashboard";
-import { idRef, uriRef } from "@gooddata/sdk-model";
+import { idRef, attributeDisplayFormRef } from "@gooddata/sdk-model";
 import { useDashboardLoader } from "@gooddata/sdk-ui-loaders";
 import { LoadingComponent } from "@gooddata/sdk-ui";
 
 import { MAPBOX_TOKEN } from "../../constants/fixtures";
+import * as Md from "../../md/full";
 
 const dashboardRef = idRef("aeO5PVgShc0T");
 const config: DashboardConfig = { mapboxToken: MAPBOX_TOKEN, isReadOnly: true };
@@ -44,9 +45,7 @@ const MyCustomWidget: CustomDashboardWidgetComponent = () => {
      * Select the attribute filter's local identifier from the filter's display form.
      */
     const restaurantCategoryFilterLocalId = useDashboardSelector(
-        selectFilterContextAttributeFilterByDisplayForm(
-            uriRef("/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2197"),
-        ),
+        selectFilterContextAttributeFilterByDisplayForm(attributeDisplayFormRef(Md.RestaurantCategory)),
     )?.attributeFilter.localIdentifier;
 
     /**
