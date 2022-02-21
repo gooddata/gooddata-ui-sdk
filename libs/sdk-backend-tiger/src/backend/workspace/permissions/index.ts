@@ -23,7 +23,6 @@ export class TigerWorkspacePermissionsFactory implements IWorkspacePermissionsSe
             canExportReport: false,
             canUploadNonProductionCSV: false,
             canManageACL: false,
-            canRefreshData: false,
             canManageDomain: false,
             canInviteUserToProject: false,
             canCreateScheduledMail: false,
@@ -37,6 +36,7 @@ export class TigerWorkspacePermissionsFactory implements IWorkspacePermissionsSe
             canCreateAnalyticalDashboard: canAnalyzeWorkspace,
             canManageMetric: canAnalyzeWorkspace,
             canManageReport: canAnalyzeWorkspace,
+            canRefreshData: canAnalyzeWorkspace,
             //based on group: MANAGE
             canManageProject: canManageWorkspace,
             //NOTE: Data source MANAGE in future
