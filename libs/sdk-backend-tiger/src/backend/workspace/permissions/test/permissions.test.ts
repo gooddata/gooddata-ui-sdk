@@ -71,7 +71,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
             canManageMetric: true,
             canManageProject: false,
             canManageReport: true,
-            canRefreshData: false,
+            canRefreshData: true,
             canUploadNonProductionCSV: false,
         });
     });
@@ -98,7 +98,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
             canManageMetric: true,
             canManageProject: true,
             canManageReport: true,
-            canRefreshData: false,
+            canRefreshData: true,
             canUploadNonProductionCSV: false,
         });
     });
