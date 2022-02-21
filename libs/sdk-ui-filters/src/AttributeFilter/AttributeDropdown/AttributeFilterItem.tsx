@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 
@@ -26,9 +26,14 @@ export class AttributeFilterItem extends React.PureComponent<IAttributeFilterIte
             return this.renderLoadingItem();
         }
 
-        const classes = cx("gd-list-item", "s-attribute-filter-list-item", {
-            "s-attribute-filter-list-item-selected": item.selected,
-        });
+        const classes = cx(
+            "gd-list-item",
+            "s-attribute-filter-list-item",
+            `s-attribute-filter-list-item-${item.source.title}`,
+            {
+                "s-attribute-filter-list-item-selected": item.selected,
+            },
+        );
         return (
             <div className={classes} onClick={this.handleSelect}>
                 <input

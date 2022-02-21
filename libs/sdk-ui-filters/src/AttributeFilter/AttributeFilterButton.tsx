@@ -232,6 +232,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             selectedFilterOptions: state.selectedFilterOptions,
             appliedFilterOptions: state.appliedFilterOptions,
         },
+        isElementsByRef,
         callback: mapInitialSelectionElements,
     });
 

@@ -4,7 +4,7 @@ import { IAttributeElement, IElementsQueryResult } from "@gooddata/sdk-backend-s
 import { IElementQueryResultWithEmptyItems, isNonEmptyListItem } from "../../AttributeDropdown/types";
 import { useCallback, useEffect, useState } from "react";
 import { ATTRIBUTE_FILTER_BUTTON_LIMIT } from "../constants";
-import { IAttributeFilter, isAttributeElementsByRef } from "@gooddata/sdk-model";
+import { IAttributeFilter } from "@gooddata/sdk-model";
 import { getInitialIsInverted, getInitialSelectedOptions } from "../AttributeFilterButtonUtils";
 import isEqual from "lodash/isEqual";
 import { mergeElementQueryResults } from "../../AttributeDropdown/mergeElementQueryResults";
@@ -48,6 +48,8 @@ export const useAttributeFilterButtonState = (currentFilter: IAttributeFilter) =
     const [state, setState] = useState<IAttributeFilterButtonState>(() => {
         const initialSelection = getInitialSelectedOptions(currentFilter);
         const initialIsInverted = getInitialIsInverted(currentFilter);
+
+        console.log("initial selection", initialSelection);
 
         return {
             selectedFilterOptions: initialSelection,
@@ -127,13 +129,18 @@ export const useAttributeFilterButtonState = (currentFilter: IAttributeFilter) =
         });
     };
 
-    const mapInitialSelectionElements = (initialElements: IElementsQueryResult) => {
+    const mapInitialSelectionElements = (initialElements: IElementsQueryResult, isElementsByRef: boolean) => {
+        console.log("initialElements", initialElements);
+        console.log("usAttributeElementsByRef", isElementsByRef);
+
         setState((prevState) => {
             const uriToAttributeElementMap = new Map(prevState.uriToAttributeElementMap);
             initialElements.items?.forEach((item) => {
-                const key = isAttributeElementsByRef(initialElements) ? item.uri : item.title;
+                const key = isElementsByRef ? item.uri : item.title;
                 uriToAttributeElementMap.set(key, item);
             });
+
+            console.log("uriToAttributeElement", uriToAttributeElementMap);
 
             return {
                 ...prevState,
