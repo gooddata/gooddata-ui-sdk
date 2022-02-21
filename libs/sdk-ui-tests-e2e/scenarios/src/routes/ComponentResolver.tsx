@@ -1,5 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import React from "react";
+import { AttributeFilterButtonPreselectedScenario } from "../components/Scenarios/AttributeFilterButtonPreselectedScenario";
+import { AttributeFilterButtonScenario } from "../components/Scenarios/AttributeFilterButtonScenario";
 
 import { DashboardScenario } from "../components/Scenarios/Dashboard/DashboardScenario";
 import { DateFilterScenario } from "../components/Scenarios/Filters/DateFilterScenario";
@@ -15,10 +17,14 @@ const ComponentResolver: React.FC = () => {
             return <DashboardScenario />;
         case "#dashboard/implicit-drill-to-attribute-url":
             return <ImplicitDrillToAttributeUrlScenario />;
-        case "#filters/dateFilter":
+        case "#filters/date-filter":
             return <DateFilterScenario />;
         case "#visualizations/barchart/bar-chart-drilling-scenario":
             return <BarChartDrillingScenario />;
+        case "#filters/attribute-filter-button":
+            return <AttributeFilterButtonScenario />;
+        case "#filters/attribute-filter-button-with-selection":
+            return <AttributeFilterButtonPreselectedScenario />;
         default:
             return <div>No component specified. Specify what component should be tested in URL hash.</div>;
     }
