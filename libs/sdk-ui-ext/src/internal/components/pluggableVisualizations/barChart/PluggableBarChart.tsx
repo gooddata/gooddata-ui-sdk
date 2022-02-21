@@ -177,7 +177,8 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
     public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
         const { buckets } = referencePoint;
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
-        const disabled = viewBy.length < 1;
+        const measures = getBucketItems(buckets, BucketNames.MEASURES);
+        const disabled = viewBy.length < 1 || measures.length < 1;
         const { currentSort } = this.getDefaultAndAvailableSort(
             referencePoint,
             canSortStackTotalValue(referencePoint.buckets, referencePoint.properties),

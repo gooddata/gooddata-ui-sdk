@@ -550,6 +550,27 @@ const columnWidths: ColumnWidthItem[] = [
     },
 ];
 
+export const justViewByReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: [],
+        },
+        {
+            localIdentifier: "view",
+            items: attributeItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "stack",
+            items: [],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
 export const secondaryMeasuresAndAttributeReferencePoint: IReferencePoint = {
     buckets: [
         {

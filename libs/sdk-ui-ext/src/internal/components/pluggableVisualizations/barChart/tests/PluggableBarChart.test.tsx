@@ -153,6 +153,15 @@ describe("PluggableBarChart", () => {
             expect(sortConfig.disabled).toBeTruthy();
         });
 
+        it("should create sort config with sorting disabled when there is no measure", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(referencePointMocks.justViewByReferencePoint);
+
+            expect(sortConfig.supported).toBeTruthy();
+            expect(sortConfig.disabled).toBeTruthy();
+        });
+
         it("should create sort config with sorting enabled when there is view by attribute", async () => {
             const chart = createComponent(defaultProps);
 
