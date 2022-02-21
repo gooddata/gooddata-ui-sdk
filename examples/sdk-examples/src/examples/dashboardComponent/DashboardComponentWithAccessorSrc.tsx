@@ -31,7 +31,7 @@ const DashboardComponentWithAccessorSrc: React.FC = () => {
     const [selectResult, setSelectResult] = useState<any>();
 
     /**
-     * Sample of how to dispatch `changeDateFilterSelection` event from outside of the dashboard component.
+     * Sample of how to dispatch `changeDateFilterSelection` command from outside of the dashboard component.
      */
     const onDispatchClick = useCallback(() => {
         if (DashboardStoreAccessorRepository.isAccessorInitializedForDashboard(DASHBOARD_ID)) {
@@ -58,13 +58,13 @@ const DashboardComponentWithAccessorSrc: React.FC = () => {
     return (
         <div>
             <div>
-                <button onClick={onDispatchClick}>Dispatch changeDateFilterSelection event</button>
+                <button onClick={onDispatchClick}>Dispatch changeDateFilterSelection command</button>
                 <button onClick={onSelectClick}>Select selectEffectiveDateFilterOptions</button>
             </div>
             {selectResult && (
                 <React.Fragment>
                     <h3>Select result</h3>
-                    <div>{JSON.stringify(selectResult)}</div>
+                    <pre>{JSON.stringify(selectResult, null, 2)}</pre>
                 </React.Fragment>
             )}
             <Dashboard

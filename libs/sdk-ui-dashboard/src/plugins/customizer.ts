@@ -21,6 +21,8 @@ import {
 import { IDashboardLayout, IDashboardLayoutItem, IDashboardLayoutSection } from "@gooddata/sdk-backend-spi";
 
 /**
+ * Set of functions you can use to customize how insights are rendered.
+ *
  * @public
  */
 export interface IDashboardInsightCustomizer {
@@ -101,6 +103,8 @@ export interface IDashboardInsightCustomizer {
 }
 
 /**
+ * Set of functions you can use to customize how KPIs are rendered.
+ *
  * @public
  */
 export interface IDashboardKpiCustomizer {
@@ -168,6 +172,8 @@ export interface IDashboardKpiCustomizer {
 }
 
 /**
+ * Set of functions you can use to customize custom widgets.
+ *
  * @public
  */
 export interface IDashboardWidgetCustomizer {
@@ -175,7 +181,7 @@ export interface IDashboardWidgetCustomizer {
      * Adds a new custom widget type. Custom widget's can be used to render arbitrary content.
      *
      * The custom widget must be wrapped inside an element which sets the height and width CSS sizing
-     * properties in order to align the behaviour with the provided widget types.
+     * properties in order to align the behavior with the provided widget types.
      *
      * @param widgetType - unique type name of the custom widget; if plugins register multiple custom
      *  widgets for the same widget type, then the last-registered custom widget wins
@@ -188,6 +194,8 @@ export interface IDashboardWidgetCustomizer {
 }
 
 /**
+ * Set of functions you can use to customize the fluid layout of the dashboard rendered.
+ *
  * @public
  */
 export interface IFluidLayoutCustomizer {
@@ -234,12 +242,15 @@ export type FluidLayoutCustomizationFn = (
 ) => void;
 
 /**
+ * Set of functions you can use to customize the layout of the dashboard rendered.
+ *
  * @public
  */
 export interface IDashboardLayoutCustomizer {
     /**
      * Register customization of the fluid layout that is used to render the dashboard.
      *
+     * @remarks
      * At this point, you can register a function which will be called after dashboard component loads
      * the dashboard and before it starts initializing the layout itself. The function will be called
      * with two arguments:
@@ -249,7 +260,7 @@ export interface IDashboardLayoutCustomizer {
      *
      * Your customization function may introspect the original layout and then register its customizations.
      *
-     * @remarks If the dashboard is not rendering fluid layout, then the registered function will not
+     * If the dashboard is not rendering fluid layout, then the registered function will not
      * be called.
      */
     customizeFluidLayout(fun: FluidLayoutCustomizationFn): IDashboardLayoutCustomizer;
@@ -265,6 +276,8 @@ export interface IDashboardLayoutCustomizer {
 export type FilterBarRenderingMode = "default" | "hidden";
 
 /**
+ * Set of functions you can use to customize some aspects of the FilterBar.
+ *
  * @public
  */
 export interface IFilterBarCustomizer {
@@ -296,7 +309,10 @@ export interface IDashboardCustomizer {
     customWidgets(): IDashboardWidgetCustomizer;
 
     /**
-     * Customize dashboard layout - this allows the plugin step in during initialization and modify
+     * Customize dashboard layout.
+     *
+     * @remarks
+     * This allows the plugin to step in during initialization and modify
      * the existing dashboard layout before it gets stored into dashboard component's state and
      * before it is rendered.
      */
@@ -330,7 +346,7 @@ export interface IDashboardEventHandling {
      * function will be triggered.
      *
      * @param eventType - type of the event to handle; this can be either built-event event type (see {@link DashboardEventType}), a custom
-     *  event type or '*' to register handler for all events
+     *  event type or `'*'` to register handler for all events
      * @param callback - function to call when the event occurs
      */
     addEventHandler<TEvents extends DashboardEvents | ICustomDashboardEvent>(
@@ -339,15 +355,17 @@ export interface IDashboardEventHandling {
     ): IDashboardEventHandling;
 
     /**
-     * Removes a handler for particular event type. This is reverse operation to {@link IDashboardEventHandling.addEventHandler}. In order for
-     * this method to remove a handler, the arguments must be the same when you added the handler.
+     * Removes a handler for particular event type. This is reverse operation to {@link IDashboardEventHandling.addEventHandler}.
      *
-     * E.g. it is not possible to add a handler for all events using '*' and then subtract just one particular event
+     * @remarks
+     * In order for this method to remove a handler, the arguments must be the same when you added the handler.
+     *
+     * E.g. it is not possible to add a handler for all events using `'*'` and then subtract just one particular event
      * from handling.
      *
      * @param eventType - type of the event to stop handling; this can be either built-event event type (see {@link DashboardEventType}), a custom
-     *  event type or '*' to register handler for all events
-     * @param callback  - originally registered callback function
+     *  event type or `'*'` to register handler for all events
+     * @param callback - originally registered callback function
      * @returns self, for call chaining sakes
      */
     removeEventHandler<TEvents extends DashboardEvents | ICustomDashboardEvent>(
@@ -359,7 +377,8 @@ export interface IDashboardEventHandling {
      * Adds a custom event handler. This is a lower-level API where the handler can include both the function to
      * evaluate events and the function to trigger when the evaluation succeeds.
      *
-     * Note: attempts to register same handler twice will be ignored.
+     * @remarks
+     * Attempts to register same handler twice will be ignored.
      *
      * @param handler - event handler to add
      * @returns self, for call chaining sakes
@@ -378,12 +397,16 @@ export interface IDashboardEventHandling {
     /**
      * Subscribe to state changes of the dashboard.
      *
-     * Note: there is no need to use this if all you need is your custom React components to get up-to-date state. Your
+     * @remarks
+     * There is no need to use this if all you need is your custom React components to get up-to-date state. Your
      * React component code can (and really should) use the {@link @gooddata/sdk-ui-dashboard#useDashboardSelector} and
      * {@link @gooddata/sdk-ui-dashboard#useDashboardDispatch} hooks instead.
      *
      * Subscription to state changes is only really needed if you have custom code outside of React components and
      * you need to extract custom data from state using the selectors API.
+     *
+     * See also {@link SingleDashboardStoreAccessor} and {@link DashboardStoreAccessorRepository} for utility classes
+     * that make managing the callback subscriptions more convenient.
      *
      * @param callback - function to call when dashboard state changes; the function will be called with
      *  two parameters: the new state and an instance of dispatch to use.
@@ -393,7 +416,7 @@ export interface IDashboardEventHandling {
 
     /**
      * Unsubscribe from receiving calls about state changes of the dashboard.
-     **
+     *
      * @param callback - callback that was previously used for subscription
      * @returns self, for call chaining sakes
      */

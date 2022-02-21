@@ -10,12 +10,16 @@ import DashboardComponentWithUseDispatchDashboardCommandSRCJS from "./DashboardC
 
 const DashboardWithUseDispatchDashboardCommand = (): JSX.Element => (
     <div>
-        <h1>Dashboard with useDispatchDashboardCommand hook</h1>
+        <h1>Dashboard with command dispatch</h1>
 
         <p>
-            Example on how to use useDispatchDashboardCommand hook to dispatch commands related to filter
-            selection handling. This example uses plugin to add a section with custom widget. This widget
-            contains buttons to dispatch filter selection change related commands.
+            Example on how to use{" "}
+            <a href="https://sdk.gooddata.com/gooddata-ui-apidocs/docs/sdk-ui-dashboard.usedispatchdashboardcommand.html">
+                useDispatchDashboardCommand
+            </a>{" "}
+            hook to dispatch commands related to filter selection handling. This example uses plugin to add a
+            section with custom widget. This widget contains buttons to dispatch filter selection change
+            related commands.
         </p>
 
         <ExampleWithSource
