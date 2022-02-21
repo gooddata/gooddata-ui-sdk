@@ -2559,7 +2559,7 @@ export interface IDashboardExtensionProps extends IDashboardEventing, IDashboard
 // @beta
 export type IDashboardFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter;
 
-// @public (undocumented)
+// @public
 export interface IDashboardInsightCustomizer {
     withCustomDecorator(providerFactory: (next: InsightComponentProvider) => OptionalInsightComponentProvider): IDashboardInsightCustomizer;
     withCustomProvider(provider: OptionalInsightComponentProvider): IDashboardInsightCustomizer;
@@ -2632,7 +2632,7 @@ export interface IDashboardInsightProps {
     workspace?: string;
 }
 
-// @public (undocumented)
+// @public
 export interface IDashboardKpiCustomizer {
     withCustomDecorator(providerFactory: (next: KpiComponentProvider) => OptionalKpiComponentProvider): IDashboardKpiCustomizer;
     withCustomProvider(provider: OptionalKpiComponentProvider): IDashboardKpiCustomizer;
@@ -2660,7 +2660,7 @@ export interface IDashboardKpiProps {
     workspace?: string;
 }
 
-// @public (undocumented)
+// @public
 export interface IDashboardLayoutCustomizer {
     customizeFluidLayout(fun: FluidLayoutCustomizationFn): IDashboardLayoutCustomizer;
 }
@@ -2740,7 +2740,7 @@ export interface IDashboardThemingProps {
     themeModifier?: (theme: ITheme) => ITheme;
 }
 
-// @public (undocumented)
+// @public
 export interface IDashboardWidgetCustomizer {
     addCustomWidget(widgetType: string, Component: CustomDashboardWidgetComponent): IDashboardWidgetCustomizer;
 }
@@ -2824,7 +2824,7 @@ export interface IExecutionResultEnvelope {
 // @alpha (undocumented)
 export type IExportConfig = ICsvExportConfig | IXlsxExportConfig;
 
-// @public (undocumented)
+// @public
 export interface IFilterBarCustomizer {
     setRenderingMode(mode: FilterBarRenderingMode): IFilterBarCustomizer;
 }
@@ -2837,7 +2837,7 @@ export interface IFilterBarProps {
     onDateFilterChanged: (filter: IDashboardDateFilter | undefined, dateFilterOptionLocalId?: string) => void;
 }
 
-// @public (undocumented)
+// @public
 export interface IFluidLayoutCustomizer {
     addItem(sectionIdx: number, itemIdx: number, item: IDashboardLayoutItem<ICustomWidget>): IFluidLayoutCustomizer;
     addSection(sectionIdx: number, section: IDashboardLayoutSection<ICustomWidget>): IFluidLayoutCustomizer;

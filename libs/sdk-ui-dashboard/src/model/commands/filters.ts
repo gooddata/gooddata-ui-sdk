@@ -75,6 +75,10 @@ export interface DateFilterSelection {
 /**
  * Command for date filter selection change.
  *
+ * @remarks
+ * See {@link changeDateFilterSelection} and {@link applyDateFilter} factory functions you can use to create
+ * this command more easily from raw data and {@link @gooddata/sdk-model#IDateFilter}, respectively.
+ *
  * @public
  */
 export interface ChangeDateFilterSelection extends IDashboardCommand {
@@ -93,7 +97,7 @@ export interface ChangeDateFilterSelection extends IDashboardCommand {
  * @param dateFilterOptionLocalId - localId of the {@link @gooddata/sdk-backend-spi#IDateFilterOption} selected
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
- * @remarks see {@link ChangeDateFilterSelection} for a more complete description of the different parameters
+ * @see {@link ChangeDateFilterSelection} for a more complete description of the different parameters
  *
  * @public
  */
@@ -386,6 +390,10 @@ export interface ChangeAttributeFilterSelectionPayload {
 /**
  * Command for attribute filter selection change.
  *
+ * @remarks
+ * See {@link changeAttributeFilterSelection} and {@link applyAttributeFilter} factory functions you can use to create
+ * this command more easily from raw data and {@link @gooddata/sdk-model#IAttributeFilter}, respectively.
+ *
  * @public
  */
 export interface ChangeAttributeFilterSelection extends IDashboardCommand {
@@ -440,9 +448,9 @@ export function changeAttributeFilterSelection(
 
 /**
  * Creates the ChangeAttributeFilterSelection command. Dispatching this command will result in application
- * of element selection for the dashboard attribute filter with the provided id, or error in case of invalid update (e.g. non-existing filterLocalId).
+ * of element selection for the dashboard attribute filter with the provided id, or error in case of invalid update (e.g. non-existing `filterLocalId`).
  *
- * The {@link ChangeAttributeFilterSelectionPayload}'s selectionType and elements are derived from the
+ * The {@link ChangeAttributeFilterSelectionPayload}'s `selectionType` and `elements` are derived from the
  * provided attribute filter.
  *
  * To convert {@link IDashboardFilter} to {@link @gooddata/sdk-model#IFilter} use {@link dashboardAttributeFilterToAttributeFilter}.

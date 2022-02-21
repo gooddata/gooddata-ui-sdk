@@ -26,8 +26,6 @@ import { IDashboardFilter } from "../types";
 /**
  * Gets {@link IDashboardFilter} items for filters specified in given filterContext in relation to the given widget.
  *
- * forWidget...
- *
  * @param filterContext - filter context to get filters for
  * @param widget - widget to use to get dateDataSet for date filters
  * @public

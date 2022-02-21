@@ -111,7 +111,7 @@ export const dashboardComponentUseCasesRoutes = [
     },
     {
         path: "/dashboard/dispatch-dashboard-command-hook",
-        title: "With useDispatchDashboardCommand hook",
+        title: "With command dispatch",
         Component: DashboardWithUseDispatchDashboardCommand,
     },
     {
