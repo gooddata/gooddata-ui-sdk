@@ -30,6 +30,10 @@ export const getInitialSelectedOptions = (currentFilter: IAttributeFilter): IAtt
     // the as any cast is ok here, the data will get fixed once the element load completes
     // this serves only to have some initial state here so that when full element data is loaded
     // it automatically sets the props.filter.elements as selected
+    console.log(
+        "init elements",
+        attributeElementsToAttributeElementArray(filterAttributeElements(currentFilter)) as any,
+    );
     return currentFilter
         ? (attributeElementsToAttributeElementArray(filterAttributeElements(currentFilter)) as any)
         : [];

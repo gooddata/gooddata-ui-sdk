@@ -58,12 +58,18 @@ const AttributeFilterButtonDropdownButton: React.FC<IAttributeFilterButtonDropdo
         >
             <div className="button-content">
                 <div className="button-title">
-                    <ShortenedText tooltipAlignPoints={ATTRIBUTE_FILTER_BITTON_TOOLTIP_ALIGN_POINT}>
+                    <ShortenedText
+                        tooltipAlignPoints={ATTRIBUTE_FILTER_BITTON_TOOLTIP_ALIGN_POINT}
+                        className={"s-attribute-filter-button-title"}
+                    >
                         {title}
                     </ShortenedText>
                 </div>
                 <div className="button-subtitle">
-                    <span className="button-selected-items" ref={subtitleSelectedItemsRef}>
+                    <span
+                        className="button-selected-items s-attribute-filter-button-subtitle"
+                        ref={subtitleSelectedItemsRef}
+                    >
                         {subtitle}
                     </span>
                     {displayItemCount && (
