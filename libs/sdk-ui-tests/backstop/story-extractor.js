@@ -1,5 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { configure, getStorybook } from "@storybook/react";
+import { toId } from "@componentdriven/csf";
 import * as fs from "fs";
 import flatMap from "lodash/flatMap";
 const OutputFilename = "backstop/stories.json";
@@ -45,13 +46,7 @@ describe("story-extractor", () => {
                 return {
                     name: story.name,
                     kind: group.kind,
-                    // try to match storybook id-generating logic
-                    id: `${group.kind.replace(/[ /]/g, "-").toLowerCase()}--${story.name
-                        .replace(/^\W*/g, "") // remove non-word prefixes
-                        .replace(/[^A-z0-9 \-/]/g, "") // remove useless characters
-                        .replace(/ \W /g, " ") // replace non words with a space
-                        .replace(/[ /]+/g, "-") // replace consecutive spaces or slashes by a dash
-                        .toLowerCase()}`,
+                    id: toId(group.kind, story.name),
                     render: story.render,
                 };
             }),

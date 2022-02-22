@@ -1665,6 +1665,12 @@ packages:
     resolution: {integrity: sha512-NBEJlHWrhQucLhZGHtSxM2loSaNUMajC7KOYJLyfcdW/6goVoff2HoYI3bz8YCDN0wKGbxtUL0gx2dvHpvnWlw==}
     dev: false
 
+  /@componentdriven/csf/0.0.2-alpha.0:
+    resolution: {integrity: sha512-x3HJNDispcZSY90COxoCGxajqDNw28yWf8cn9r4dZzpPQd/nGmTThJoHMhH90o4SGJQaPl/NhHHoor31rmFD/A==}
+    dependencies:
+      lodash: 4.17.21
+    dev: false
+
   /@cspotcode/source-map-consumer/0.8.0:
     resolution: {integrity: sha512-41qniHzTU8yAGbCp04ohlmSrZf8bkf/iJsl3V0dRGsQN/5GFfx+LbCSsCpp2gqrqjTVg/K6O8ycoV35JIwAzAg==}
     engines: {node: '>= 12'}
@@ -7145,16 +7151,6 @@ packages:
     engines: {node: '>=6'}
     dev: false
 
-  /cli-table3/0.6.0:
-    resolution: {integrity: sha512-gnB85c3MGC7Nm9I/FkiasNBOKjOiO1RNuXXarQms37q4QMpWdlbBgD/VnOStA2faG1dpXMv31RFApjX1/QdgWQ==}
-    engines: {node: 10.* || >= 12.*}
-    dependencies:
-      object-assign: 4.1.1
-      string-width: 4.2.3
-    optionalDependencies:
-      colors: 1.4.0
-    dev: false
-
   /cli-table3/0.6.1:
     resolution: {integrity: sha512-w0q/enDHhPLq44ovMGdQeeDLvwxwavsJX7oQGYt/LrBlYsyaxyDnp6z3QzFut/6kLLKnlcUVJLrpB7KBfgG/RA==}
     engines: {node: 10.* || >= 12.*}
@@ -7944,7 +7940,7 @@ packages:
       chalk: 4.1.2
       check-more-types: 2.24.0
       cli-cursor: 3.1.0
-      cli-table3: 0.6.0
+      cli-table3: 0.6.1
       commander: 5.1.0
       common-tags: 1.8.2
       dayjs: 1.10.7
@@ -23209,7 +23205,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-tests.tgz:
-    resolution: {integrity: sha512-4FklQsRytJPKH0tbnqRmlmHNqJTiLhA+YinCVatUba1SHwMR3xm0cIbiS2ebr9wK/V8NJFKA2k4d6fYZDuj9UA==, tarball: file:projects/sdk-ui-tests.tgz}
+    resolution: {integrity: sha512-EG+rVWFYU0cK+6TZWW8mvjpuWVzSQeUmLaDrEFCDgv2M9elE7UGFrWpQjgUHcULuUHzqXtFrmISpJ/LltcxweA==, tarball: file:projects/sdk-ui-tests.tgz}
     name: '@rush-temp/sdk-ui-tests'
     version: 0.0.0
     dependencies:
@@ -23219,6 +23215,7 @@ packages:
       '@babel/preset-env': 7.16.4_@babel+core@7.16.0
       '@babel/preset-react': 7.16.0_@babel+core@7.16.0
       '@babel/runtime': 7.16.3
+      '@componentdriven/csf': 0.0.2-alpha.0
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
       '@gooddata/numberjs': 4.0.1
       '@gooddata/stylelint-config': 5.0.0
