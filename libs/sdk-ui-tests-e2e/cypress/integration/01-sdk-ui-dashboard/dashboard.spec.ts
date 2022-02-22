@@ -20,7 +20,7 @@ describe("Dashboard", () => {
         beforeEach(() => {
             cy.login();
 
-            Navigation.visit("dashboard");
+            Navigation.visit("dashboard/dashboard");
         });
 
         it("should render topBar", () => {
@@ -32,7 +32,7 @@ describe("Dashboard", () => {
         it("should render title", () => {
             const topBar = new TopBar();
 
-            topBar.dashboardTitleExist().dashboardTitleHasValue("E2E RAIL Tests");
+            topBar.dashboardTitleExist().dashboardTitleHasValue("E2E RAIL Dashboard Tests");
         });
 
         it("should not render edit button", () => {
@@ -64,7 +64,7 @@ describe("Dashboard", () => {
         beforeEach(() => {
             cy.login();
 
-            Navigation.visit("dashboard");
+            Navigation.visit("dashboard/dashboard");
         });
 
         it("should render filter bar", () => {
@@ -105,7 +105,7 @@ describe("Dashboard", () => {
         beforeEach(() => {
             cy.login();
 
-            Navigation.visit("dashboard");
+            Navigation.visit("dashboard/dashboard");
         });
 
         it("should render single insight", () => {

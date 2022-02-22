@@ -7,7 +7,7 @@ import {
 } from "@gooddata/sdk-ui-dashboard";
 import { idRef } from "@gooddata/sdk-model";
 
-const dashboardIdRef = idRef("aab2Ug8SFzAC");
+const dashboardIdRef = idRef("aackEGSRSdLz");
 
 export const ImplicitDrillToAttributeUrlScenario: React.FC = () => {
     const [attributeUrl, setAttributeUrl] = useState(null);

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { DateFilter, DateFilterOption } from "@gooddata/sdk-ui-filters";
-import { availableGranularities, defaultDateFilterOptions } from "../constants/dateFilterConstants";
+import { availableGranularities, defaultDateFilterOptions } from "../../constants/dateFilterConstants";
 
 interface IDateFilterScenarioState {
     selectedFilterOption: DateFilterOption;

@@ -1,4 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
+
+// migrated
 import { navigateToStory } from "../_infra/testcafeUtils";
 import {
     assertAbsoluteCalendarFromVisibility,

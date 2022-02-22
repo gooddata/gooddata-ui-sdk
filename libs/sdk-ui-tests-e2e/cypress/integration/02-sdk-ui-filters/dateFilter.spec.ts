@@ -7,7 +7,7 @@ import { DateFilterRelativeForm } from "../../tools/dateFilterRelativeForm";
 
 describe("DateFilter", () => {
     beforeEach(() => {
-        Navigation.visit("dateFilter");
+        Navigation.visit("filters/dateFilter");
     });
 
     it("Filter should not be applied when we change filter and press cancel", () => {
