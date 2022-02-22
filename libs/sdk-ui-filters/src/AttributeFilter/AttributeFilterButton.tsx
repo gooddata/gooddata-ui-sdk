@@ -184,7 +184,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         onRangeChange,
         onDropdownClosed,
         onDropdownOpen,
-    } = useAttributeFilterButtonState(currentFilter);
+    } = useAttributeFilterButtonState(currentFilter, backendWithTelemetry);
 
     const resolvedParentFilters = useResolveValueWithPlaceholders(props.parentFilters);
 
