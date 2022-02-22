@@ -14,7 +14,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 module.exports = async (env, argv) => {
     const backendParam = "stg3";
-    const [backendUrl, workspace] = ["https://staging3.intgdc.com", "mbuumy476p78ybcceiru61hcyr8i8lo8"];
+    const [backendUrl, workspace] = ["https://staging3.intgdc.com", "frho3i7qc6epdek7mcgergm9vtm6o5ty"];
 
     // eslint-disable-next-line no-mixed-operators
     const basePath = (env && env.basePath) || "";
