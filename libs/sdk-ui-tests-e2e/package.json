@@ -56,7 +56,7 @@
         "run-isolated-ci": "npm run docker-build && IMAGE_ID=gooddata-ui-sdk npm run run-isolated",
         "run-scenarios-local": "node ./scripts/run-scenarios-local.js",
         "build-scenarios": "webpack --config scenarios/webpack.config.js",
-        "refresh-md": "node ./scripts/refresh-md.js"
+        "refresh-md": "./scripts/refresh-md.sh"
     },
     "dependencies": {
         "@gooddata/catalog-export": "^8.9.0-alpha.54.fix.0",
