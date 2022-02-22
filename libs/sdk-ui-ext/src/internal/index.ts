@@ -44,7 +44,7 @@ export {
     isDrillDownDefinition,
 } from "./interfaces/Visualization";
 
-export { ISortConfig } from "./interfaces/SortConfig";
+export { ISortConfig, IAvailableSortsGroup, MeasureSortSuggestion } from "./interfaces/SortConfig";
 
 export { isDateFilter, isMeasureValueFilter, isAttributeFilter, isRankingFilter } from "./utils/bucketHelper";
 export { createInternalIntl, InternalIntlWrapper } from "./utils/internalIntlProvider";

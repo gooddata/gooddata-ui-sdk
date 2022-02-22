@@ -196,6 +196,11 @@ export interface ISettings {
      */
     enableAxisLabelFormat?: boolean;
 
+    /**
+     * Enable charts sorting customization
+     */
+    enableChartsSorting?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

@@ -8,7 +8,7 @@ import {
     newMeasureSort,
 } from "@gooddata/sdk-model";
 
-type MeasureSortSuggestion = {
+export type MeasureSortSuggestion = {
     type: "measureSort";
 } & IMeasureSortTarget;
 

@@ -1382,6 +1382,7 @@ export interface ISettings {
     enableAxisLabelFormat?: boolean;
     enableAxisNameConfiguration?: boolean;
     enableBulletChart?: boolean;
+    enableChartsSorting?: boolean;
     enableClickableAttributeURL?: boolean;
     enableCompanyLogoInEmbeddedUI?: boolean;
     enableCustomColorPicker?: boolean;

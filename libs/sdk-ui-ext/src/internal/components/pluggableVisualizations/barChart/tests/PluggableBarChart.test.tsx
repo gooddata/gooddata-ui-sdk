@@ -152,6 +152,15 @@ describe("PluggableBarChart", () => {
             expect(sortConfig.disabled).toBeTruthy();
         });
 
+        it("should create sort config with sorting disabled when there is no measure", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(referencePointMocks.justViewByReferencePoint);
+
+            expect(sortConfig.supported).toBeTruthy();
+            expect(sortConfig.disabled).toBeTruthy();
+        });
+
         it("should create sort config with sorting enabled when there is view by attribute", async () => {
             const chart = createComponent(defaultProps);
 
@@ -161,6 +170,52 @@ describe("PluggableBarChart", () => {
 
             expect(sortConfig.supported).toBeTruthy();
             expect(sortConfig.disabled).toBeFalsy();
+        });
+
+        it("should provide measureSort as default sort for 1M + 1 VB", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(referencePointMocks.oneMetricOneCategory);
+
+            expect(sortConfig.currentSort).toMatchSnapshot();
+        });
+
+        it("should provide measureSort by first measure as default sort for 2M + 1 VB", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(referencePointMocks.twoMetricAndOneCategoryRefPoint);
+
+            expect(sortConfig.currentSort).toMatchSnapshot();
+        });
+
+        it("should provide attribute area sort as default sort for 2 stacked M + 1 VB", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(
+                referencePointMocks.twoStackedMetricAndOneCategoryRefPoint,
+            );
+
+            expect(sortConfig.currentSort).toMatchSnapshot();
+        });
+
+        it("should provide areaSort+measureSort by first measure as default sort for 2M + 2 VB", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(
+                referencePointMocks.twoMetricAndTwoCategoriesRefPoint,
+            );
+
+            expect(sortConfig.currentSort).toMatchSnapshot();
+        });
+
+        it("should provide two areaSorts as default sort for 2 stacked M + 2 VB", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(
+                referencePointMocks.twoStackedMetricAndTwoCategoriesRefPoint,
+            );
+
+            expect(sortConfig.currentSort).toMatchSnapshot();
         });
     });
 });
