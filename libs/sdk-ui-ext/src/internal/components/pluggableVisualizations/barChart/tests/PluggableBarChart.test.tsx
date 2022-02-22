@@ -5,7 +5,6 @@ import { PluggableBarChart } from "../PluggableBarChart";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
 import { AXIS } from "../../../../constants/axis";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { newAttributeAreaSort, newMeasureSort } from "@gooddata/sdk-model";
 
 describe("PluggableBarChart", () => {
     const defaultProps = {
@@ -178,12 +177,7 @@ describe("PluggableBarChart", () => {
 
             const sortConfig = await chart.getSortConfig(referencePointMocks.oneMetricOneCategory);
 
-            expect(sortConfig.currentSort).toEqual([
-                newMeasureSort(
-                    referencePointMocks.oneMetricOneCategory.buckets[0].items[0].localIdentifier,
-                    "desc",
-                ),
-            ]);
+            expect(sortConfig.currentSort).toMatchSnapshot();
         });
 
         it("should provide measureSort by first measure as default sort for 2M + 1 VB", async () => {
@@ -191,12 +185,7 @@ describe("PluggableBarChart", () => {
 
             const sortConfig = await chart.getSortConfig(referencePointMocks.twoMetricAndOneCategoryRefPoint);
 
-            expect(sortConfig.currentSort).toEqual([
-                newMeasureSort(
-                    referencePointMocks.twoMetricAndOneCategoryRefPoint.buckets[0].items[0].localIdentifier,
-                    "desc",
-                ),
-            ]);
+            expect(sortConfig.currentSort).toMatchSnapshot();
         });
 
         it("should provide attribute area sort as default sort for 2 stacked M + 1 VB", async () => {
@@ -206,12 +195,7 @@ describe("PluggableBarChart", () => {
                 referencePointMocks.twoStackedMetricAndOneCategoryRefPoint,
             );
 
-            expect(sortConfig.currentSort).toEqual([
-                newAttributeAreaSort(
-                    referencePointMocks.twoMetricAndTwoCategoriesRefPoint.buckets[1].items[0].localIdentifier,
-                    "desc",
-                ),
-            ]);
+            expect(sortConfig.currentSort).toMatchSnapshot();
         });
 
         it("should provide areaSort+measureSort by first measure as default sort for 2M + 2 VB", async () => {
@@ -221,16 +205,7 @@ describe("PluggableBarChart", () => {
                 referencePointMocks.twoMetricAndTwoCategoriesRefPoint,
             );
 
-            expect(sortConfig.currentSort).toEqual([
-                newAttributeAreaSort(
-                    referencePointMocks.twoMetricAndTwoCategoriesRefPoint.buckets[1].items[0].localIdentifier,
-                    "desc",
-                ),
-                newMeasureSort(
-                    referencePointMocks.twoMetricAndTwoCategoriesRefPoint.buckets[0].items[0].localIdentifier,
-                    "desc",
-                ),
-            ]);
+            expect(sortConfig.currentSort).toMatchSnapshot();
         });
 
         it("should provide two areaSorts as default sort for 2 stacked M + 2 VB", async () => {
@@ -240,18 +215,7 @@ describe("PluggableBarChart", () => {
                 referencePointMocks.twoStackedMetricAndTwoCategoriesRefPoint,
             );
 
-            expect(sortConfig.currentSort).toEqual([
-                newAttributeAreaSort(
-                    referencePointMocks.twoStackedMetricAndTwoCategoriesRefPoint.buckets[1].items[0]
-                        .localIdentifier,
-                    "desc",
-                ),
-                newAttributeAreaSort(
-                    referencePointMocks.twoStackedMetricAndTwoCategoriesRefPoint.buckets[1].items[1]
-                        .localIdentifier,
-                    "desc",
-                ),
-            ]);
+            expect(sortConfig.currentSort).toMatchSnapshot();
         });
     });
 });

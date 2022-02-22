@@ -11,29 +11,7 @@ import BarChartConfigurationPanel from "../../configurationPanels/BarChartConfig
 import { AXIS, AXIS_NAME } from "../../../constants/axis";
 import { ISortConfig, newMeasureSortSuggestion } from "../../../interfaces/SortConfig";
 import { getBucketItems } from "../../../utils/bucketHelper";
-import { IAxisConfig } from "@gooddata/sdk-ui-charts";
-
-function areAllMeasuresOnSingleAxis(
-    buckets: IReferencePoint["buckets"],
-    secondaryAxis: IAxisConfig,
-): boolean {
-    const measures = getBucketItems(buckets, BucketNames.MEASURES);
-    const measureCount = measures.length;
-    const numberOfMeasureOnSecondaryAxis = secondaryAxis.measures?.length ?? 0;
-    return numberOfMeasureOnSecondaryAxis === 0 || measureCount === numberOfMeasureOnSecondaryAxis;
-}
-
-function canSortStackTotalValue(
-    buckets: IReferencePoint["buckets"],
-    properties: IReferencePoint["properties"],
-): boolean {
-    const supportedControls = properties?.controls;
-    const stackMeasures = supportedControls?.stackMeasures ?? false;
-    const secondaryAxis: IAxisConfig = supportedControls?.secondary_xaxis ?? { measures: [] };
-    const allMeasuresOnSingleAxis = areAllMeasuresOnSingleAxis(buckets, secondaryAxis);
-
-    return stackMeasures && allMeasuresOnSingleAxis;
-}
+import { canSortStackTotalValue } from "./sortHelpers";
 
 export class PluggableBarChart extends PluggableColumnBarCharts {
     constructor(props: IVisConstruct) {
