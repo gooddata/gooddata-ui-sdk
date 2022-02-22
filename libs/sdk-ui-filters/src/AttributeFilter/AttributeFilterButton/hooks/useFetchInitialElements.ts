@@ -29,13 +29,10 @@ const prepareElementsTitleQuery = (
     const options = {
         uris: appliedElements
             .map((element) => {
-                console.log(element);
                 return supportsElementUris && isElementsByRef ? element.uri : element.title;
             })
             .filter(Boolean),
     };
-
-    console.log("options", options);
 
     return backend
         .workspace(workspace)

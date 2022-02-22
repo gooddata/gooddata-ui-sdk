@@ -1,11 +1,15 @@
 // (C) 2022 GoodData Corporation
 
-import { IAttributeElement, IElementsQueryResult } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IAttributeElement, IElementsQueryResult } from "@gooddata/sdk-backend-spi";
 import { IElementQueryResultWithEmptyItems, isNonEmptyListItem } from "../../AttributeDropdown/types";
 import { useCallback, useEffect, useState } from "react";
 import { ATTRIBUTE_FILTER_BUTTON_LIMIT } from "../constants";
 import { IAttributeFilter } from "@gooddata/sdk-model";
-import { getInitialIsInverted, getInitialSelectedOptions } from "../AttributeFilterButtonUtils";
+import {
+    checkFilterSetupForBackend,
+    getInitialIsInverted,
+    getInitialSelectedOptions,
+} from "../AttributeFilterButtonUtils";
 import isEqual from "lodash/isEqual";
 import { mergeElementQueryResults } from "../../AttributeDropdown/mergeElementQueryResults";
 import { updateSelectedOptionsWithDataByMap } from "../../utils/AttributeFilterUtils";
@@ -41,15 +45,18 @@ export interface IAttributeFilterButtonState {
  *
  * @param currentFilter - the filter object to initialize the component's state.
  */
-export const useAttributeFilterButtonState = (currentFilter: IAttributeFilter) => {
+export const useAttributeFilterButtonState = (
+    currentFilter: IAttributeFilter,
+    backend: IAnalyticalBackend,
+) => {
     /**
      * AttributeFilterButton state initialization
      */
     const [state, setState] = useState<IAttributeFilterButtonState>(() => {
+        checkFilterSetupForBackend(currentFilter, backend);
+
         const initialSelection = getInitialSelectedOptions(currentFilter);
         const initialIsInverted = getInitialIsInverted(currentFilter);
-
-        console.log("initial selection", initialSelection);
 
         return {
             selectedFilterOptions: initialSelection,
@@ -130,17 +137,12 @@ export const useAttributeFilterButtonState = (currentFilter: IAttributeFilter) =
     };
 
     const mapInitialSelectionElements = (initialElements: IElementsQueryResult, isElementsByRef: boolean) => {
-        console.log("initialElements", initialElements);
-        console.log("usAttributeElementsByRef", isElementsByRef);
-
         setState((prevState) => {
             const uriToAttributeElementMap = new Map(prevState.uriToAttributeElementMap);
             initialElements.items?.forEach((item) => {
                 const key = isElementsByRef ? item.uri : item.title;
                 uriToAttributeElementMap.set(key, item);
             });
-
-            console.log("uriToAttributeElement", uriToAttributeElementMap);
 
             return {
                 ...prevState,

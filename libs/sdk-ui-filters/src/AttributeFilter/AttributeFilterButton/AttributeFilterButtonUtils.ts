@@ -30,10 +30,6 @@ export const getInitialSelectedOptions = (currentFilter: IAttributeFilter): IAtt
     // the as any cast is ok here, the data will get fixed once the element load completes
     // this serves only to have some initial state here so that when full element data is loaded
     // it automatically sets the props.filter.elements as selected
-    console.log(
-        "init elements",
-        attributeElementsToAttributeElementArray(filterAttributeElements(currentFilter)) as any,
-    );
     return currentFilter
         ? (attributeElementsToAttributeElementArray(filterAttributeElements(currentFilter)) as any)
         : [];
@@ -202,4 +198,19 @@ export const getSubtitle = (props: GetSubtitleProps) => {
               )}`;
     }
     return "";
+};
+
+export const checkFilterSetupForBackend = (filter: IAttributeFilter, backend: IAnalyticalBackend): void => {
+    const isSupportElementUris = backend.capabilities.supportsElementUris;
+    const isElementsByRef = isAttributeElementsByRef(filterAttributeElements(filter));
+
+    if (isSupportElementUris && !isElementsByRef) {
+        // eslint-disable-next-line no-console
+        console.error("The attribute elements must be defined by URIs for this backend.");
+    }
+
+    if (!isSupportElementUris && isElementsByRef) {
+        // eslint-disable-next-line no-console
+        console.error("The current backend does not support attribute elements defined by URIs.");
+    }
 };
