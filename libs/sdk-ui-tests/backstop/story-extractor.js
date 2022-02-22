@@ -1,7 +1,12 @@
 // (C) 2007-2019 GoodData Corporation
-import { configure, raw } from "@storybook/react";
+import { configure, getStorybook } from "@storybook/react";
 import * as fs from "fs";
+import flatMap from "lodash/flatMap";
 const OutputFilename = "backstop/stories.json";
+
+// see https://storybook.js.org/docs/react/faq#why-is-there-no-addons-channel
+import { addons, mockChannel } from "@storybook/addons";
+addons.setChannel(mockChannel());
 
 /*
  * This is a quick-and-dirty way to dump JSON with information about stories that are available in storybook.
@@ -15,7 +20,7 @@ const OutputFilename = "backstop/stories.json";
  *
  * Ideally this extractor would be a stand-alone command line tool using something like 'browser-env'...
  *
- * Also see: https://www.npmjs.com/package/@storybook/addon-storyshots - the steps neded to make require.context()
+ * Also see: https://www.npmjs.com/package/@storybook/addon-storyshots - the steps needed to make require.context()
  * working are taken from there.
  */
 
@@ -34,7 +39,23 @@ describe("story-extractor", () => {
         }
 
         configure(loadStories, module);
-        return raw();
+
+        return flatMap(getStorybook(), (group) =>
+            group.stories.map((story) => {
+                return {
+                    name: story.name,
+                    kind: group.kind,
+                    // try to match storybook id-generating logic
+                    id: `${group.kind.replace(/[ /]/g, "-").toLowerCase()}--${story.name
+                        .replace(/^\W*/g, "") // remove non-word prefixes
+                        .replace(/[^A-z0-9 \-/]/g, "") // remove useless characters
+                        .replace(/ \W /g, " ") // replace non words with a space
+                        .replace(/[ /]+/g, "-") // replace consecutive spaces or slashes by a dash
+                        .toLowerCase()}`,
+                    render: story.render,
+                };
+            }),
+        );
     }
 
     it("dumps stories into a file", () => {
@@ -52,7 +73,7 @@ describe("story-extractor", () => {
         const storyDump = [];
 
         stories.forEach((rawStory) => {
-            const storyElement = rawStory.getOriginal()();
+            const storyElement = rawStory.render();
             let config = {};
 
             /*
