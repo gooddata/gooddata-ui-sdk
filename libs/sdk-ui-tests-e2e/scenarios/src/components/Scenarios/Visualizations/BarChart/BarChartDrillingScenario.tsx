@@ -1,82 +1,105 @@
 // (C) 2020-2022 GoodData Corporation
 
-import React from "react";
-import { Dashboard } from "@gooddata/sdk-ui-dashboard";
-import { idRef } from "@gooddata/sdk-model";
-
-export const BarChartDrillingScenario: React.FC = () => {
-    return (
-        <div>
-            BarChartDrillingScenario
-            <Dashboard dashboard={idRef("aab58o6sdLRF")} />
-        </div>
-    );
-};
-
-/*
-
 import React, { useState } from "react";
-import { ReferenceMd } from "@gooddata/reference-workspace";
-import { BarChart } from "@gooddata/sdk-ui-charts";
-import { HeaderPredicates, ExplicitDrill, IDrillEvent } from "@gooddata/sdk-ui";
-import { storiesOf } from "@storybook/react";
-import { ReferenceWorkspaceId, StorybookBackend } from "../../_infra/backend";
-import { StoriesForEndToEndTests } from "../../_infra/storyGroups";
 import {
-    attributeIdentifier,
-    attributeLocalId,
-    measureIdentifier,
+    IDrillEvent,
+    ExplicitDrill,
+    HeaderPredicates,
+    useBackendStrict,
+    useWorkspaceStrict,
+} from "@gooddata/sdk-ui";
+import { BarChart } from "@gooddata/sdk-ui-charts";
+import { Amount, Won, Product, Region } from "../../../../md/full";
+import {
     measureLocalId,
+    measureIdentifier,
+    attributeLocalId,
+    attributeIdentifier,
 } from "@gooddata/sdk-model";
 
-const backend = StorybookBackend();
-const measures = [ReferenceMd.Amount, ReferenceMd.Won];
-const viewBy = [ReferenceMd.Product.Name, ReferenceMd.Region];
+interface IBarChartDrillingProps {
+    drillableItems: ExplicitDrill[] | undefined;
+}
 
-const BarChartDrilling: React.FC<{ drillableItems: ExplicitDrill[] }> = ({ drillableItems }) => {
+const BarChartDrilling: React.FC<IBarChartDrillingProps> = (props) => {
+    const { drillableItems } = props;
+
+    const backend = useBackendStrict();
+    const workspace = useWorkspaceStrict();
     const [lastEvent, setLastEvent] = useState<IDrillEvent | null>(null);
 
     return (
         <div className="s-visualization-chart">
             <BarChart
                 backend={backend}
-                workspace={ReferenceWorkspaceId}
-                measures={measures}
-                viewBy={viewBy}
+                workspace={workspace}
+                measures={[Amount, Won]}
+                viewBy={[Product.Name, Region]}
                 onDrill={setLastEvent}
                 drillableItems={drillableItems}
             />
 
-            <pre className="s-last-event" style={{ marginTop: 400 }}>
+            <pre className="s-last-event" style={{ marginTop: 100 }}>
                 {JSON.stringify(lastEvent?.drillContext, null, 2) ?? "null"}
             </pre>
         </div>
     );
 };
 
-storiesOf(`${StoriesForEndToEndTests}/Drilling`, module)
-    .add("bar chart with localId measure drilling", () => (
-        <BarChartDrilling
-            drillableItems={[HeaderPredicates.localIdentifierMatch(measureLocalId(ReferenceMd.Amount))]}
-        />
-    ))
-    .add("bar chart with identifier measure drilling", () => (
-        <BarChartDrilling
-            drillableItems={[HeaderPredicates.identifierMatch(measureIdentifier(ReferenceMd.Amount)!)]}
-        />
-    ))
-    .add("bar chart with localId attribute drilling", () => (
-        <BarChartDrilling
-            drillableItems={[
-                HeaderPredicates.localIdentifierMatch(attributeLocalId(ReferenceMd.Product.Name)),
-            ]}
-        />
-    ))
-    .add("bar chart with identifier attribute drilling", () => (
-        <BarChartDrilling
-            drillableItems={[
-                HeaderPredicates.identifierMatch(attributeIdentifier(ReferenceMd.Product.Name)!),
-            ]}
-        />
-    ));
-*/
+interface DrillItems {
+    id: string;
+    label: string;
+    drillableItems: ExplicitDrill[] | undefined;
+}
+
+const drillExamples: DrillItems[] = [
+    {
+        id: "localId-measure-drilling",
+        label: "localId measure drilling",
+        drillableItems: [HeaderPredicates.localIdentifierMatch(measureLocalId(Amount))],
+    },
+    {
+        id: "identifier-measure-drilling",
+        label: "identifier measure drilling",
+        drillableItems: [HeaderPredicates.identifierMatch(measureIdentifier(Amount)!)],
+    },
+    {
+        id: "localId-attribute-drilling",
+        label: "localId attribute drilling",
+        drillableItems: [HeaderPredicates.localIdentifierMatch(attributeLocalId(Product.Name))],
+    },
+    {
+        id: "identifier-attribute-drilling",
+        label: "identifier attribute drilling",
+        drillableItems: [HeaderPredicates.identifierMatch(attributeIdentifier(Product.Name)!)],
+    },
+];
+
+export const BarChartDrillingScenario: React.FC = () => {
+    const [currentDrillExample, setCurrentDrillExample] = useState<DrillItems>(drillExamples[0]);
+
+    return (
+        <div>
+            Current drillItems: {currentDrillExample.label}
+            <br />
+            {drillExamples.map((ex) => {
+                return (
+                    <button
+                        key={ex.id}
+                        onClick={() => {
+                            setCurrentDrillExample(ex);
+                        }}
+                    >
+                        {ex.label}
+                    </button>
+                );
+            })}
+            <div>
+                <BarChartDrilling
+                    key={`barchart-${currentDrillExample.id}`}
+                    drillableItems={currentDrillExample.drillableItems}
+                />
+            </div>
+        </div>
+    );
+};
