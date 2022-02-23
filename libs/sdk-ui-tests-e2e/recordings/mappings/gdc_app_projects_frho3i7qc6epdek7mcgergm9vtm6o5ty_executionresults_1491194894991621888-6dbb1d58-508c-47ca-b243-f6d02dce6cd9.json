@@ -1,0 +1,21 @@
+{
+    "id": "6dbb1d58-508c-47ca-b243-f6d02dce6cd9",
+    "name": "gdc_app_projects_frho3i7qc6epdek7mcgergm9vtm6o5ty_executionresults_1491194894991621888",
+    "request": {
+        "url": "/gdc/app/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/executionResults/1491194894991621888?c=b474fa6436165fd14ea967c5c1e1fe60&q=eAGlkk1Pg0AQhv9Ks1yJi9JSbGKMidb0YpPGnhoOCzvg2v3A3UVDGv67i5T6gSd63Zl958kzc0Ba%0AfRi02B1QSgw8cBAg7XazQguEC5phQXGuX1TI5m9ZBCWF%2FVxkBehCXL9bEamZrbFKX%2FFlEIUYuu%2Fm%0AltEb5CPO5P7OWs3SysL9ckRk5FJIn%2FDMLAcXsi5LpW0lma1d2f77aiohiK5dt2uhzJSc1EulxYqO%0AoJj%2BpBiVELagyhLeqt4lSeOf7zse%2BB6Y2kDBlDzfQNwa%2BKW0t36acJo9xk888JP4SIC7nKy7zX6c%0AN1nnk%2B%2F9MzB%2FwXK3ZGLdkj3f84KLIHANXdIIsKvpDDUOJVO8ErJFOWY9alWVyFU0tLf4RER7mFv5%0AxUlR8wlnLyIz%0A&offset=0%2C0&limit=100%2C1000&dimensions=2&totals=0%2C0",
+        "method": "GET"
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"executionResult\":{\"data\":[[\"1\"]],\"paging\":{\"count\":[1,1],\"offset\":[0,0],\"total\":[1,1]},\"headerItems\":[[[{\"attributeHeaderItem\":{\"name\":\"1000Bulbs.com > Educationly\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1063/elements?id=53441\"}}],[{\"attributeHeaderItem\":{\"name\":\"East Coast\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1083/elements?id=460488\"}}]],[[{\"measureHeaderItem\":{\"name\":\"# Of Opportunities\",\"order\":0}}]]]}}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+            "Cache-Control": "max-age=86400,private",
+            "vary": "Accept,origin,X-GDC-VERSION",
+            "Content-Type": "application/json;charset=utf-8"
+        }
+    },
+    "uuid": "6dbb1d58-508c-47ca-b243-f6d02dce6cd9",
+    "persistent": true,
+    "insertionIndex": 124
+}

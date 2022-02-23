@@ -1,0 +1,28 @@
+{
+    "id": "3c92d903-bcaa-48ab-9bc6-3cc6555c75f6",
+    "name": "gdc_md_frho3i7qc6epdek7mcgergm9vtm6o5ty_identifiers",
+    "request": {
+        "url": "/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/identifiers",
+        "method": "POST",
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"identifierToUri\":[\"aabko5VzQ210\"]}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"identifiers\":[{\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1255\",\"identifier\":\"aabko5VzQ210\"}]}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+            "vary": "origin,X-GDC-VERSION",
+            "content-type": "application/json;charset=UTF-8",
+            "cache-control": "no-cache, no-store, must-revalidate"
+        }
+    },
+    "uuid": "3c92d903-bcaa-48ab-9bc6-3cc6555c75f6",
+    "persistent": true,
+    "insertionIndex": 66
+}

@@ -1,0 +1,21 @@
+{
+    "id": "e494ef6a-b4b1-44d8-816c-d09d1330d581",
+    "name": "gdc_md_frho3i7qc6epdek7mcgergm9vtm6o5ty_query_analyticaldashboard",
+    "request": {
+        "url": "/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/query/analyticaldashboard?showAll=0",
+        "method": "GET"
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"query\":{\"meta\":{\"category\":\"query\",\"summary\":\"Metadata Query Resources for project 'frho3i7qc6epdek7mcgergm9vtm6o5ty'\",\"title\":\"List of analyticaldashboard\"},\"entries\":[{\"category\":\"analyticalDashboard\",\"unlisted\":0,\"tags\":\"\",\"isProduction\":1,\"summary\":\"\",\"title\":\"E2E RAIL Dashboard Tests\",\"identifier\":\"aabko5VzQ210\",\"deprecated\":\"0\",\"updated\":\"2022-02-22 11:31:49\",\"locked\":0,\"author\":\"/gdc/account/profile/b4ca6d6ec31ff764130a13893950091c\",\"created\":\"2022-02-22 11:31:28\",\"contributor\":\"/gdc/account/profile/b4ca6d6ec31ff764130a13893950091c\",\"link\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1255\"},{\"created\":\"2022-02-22 12:35:56\",\"contributor\":\"/gdc/account/profile/b4ca6d6ec31ff764130a13893950091c\",\"link\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1259\",\"author\":\"/gdc/account/profile/b4ca6d6ec31ff764130a13893950091c\",\"updated\":\"2022-02-22 12:39:41\",\"locked\":0,\"identifier\":\"aackEGSRSdLz\",\"deprecated\":\"0\",\"tags\":\"\",\"summary\":\"\",\"isProduction\":1,\"title\":\"Implicit drill to attribute url\",\"category\":\"analyticalDashboard\",\"unlisted\":0}]}}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+            "vary": "origin,X-GDC-VERSION",
+            "content-type": "application/json;charset=UTF-8",
+            "cache-control": "no-cache, no-store, must-revalidate"
+        }
+    },
+    "uuid": "e494ef6a-b4b1-44d8-816c-d09d1330d581",
+    "persistent": true,
+    "insertionIndex": 70
+}

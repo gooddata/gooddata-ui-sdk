@@ -1,0 +1,28 @@
+{
+    "id": "f293c450-b938-4903-8935-71bfb78b5c2b",
+    "name": "gdc_md_frho3i7qc6epdek7mcgergm9vtm6o5ty_objects_get",
+    "request": {
+        "url": "/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/objects/get",
+        "method": "POST",
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"get\":{\"items\":[\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1258\",\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1257\"]}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"objects\":{\"items\":[{\"visualizationWidget\":{\"meta\":{\"isProduction\":1,\"author\":\"/gdc/account/profile/b4ca6d6ec31ff764130a13893950091c\",\"updated\":\"2022-02-22 12:39:41\",\"summary\":\"\",\"title\":\"Implicit drill to attribute url\",\"deprecated\":\"0\",\"category\":\"visualizationWidget\",\"created\":\"2022-02-22 12:35:56\",\"contributor\":\"/gdc/account/profile/b4ca6d6ec31ff764130a13893950091c\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1257\",\"tags\":\"\",\"identifier\":\"aankwjV7QbIm\"},\"content\":{\"ignoreDashboardFilters\":[],\"drills\":[{\"drillToVisualization\":{\"toVisualization\":{\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1256\"},\"target\":\"pop-up\",\"from\":{\"drillFromAttribute\":{\"localIdentifier\":\"b0c2960f45f54f0ba87c75c1db52cd8a\"}}}}],\"dateDataSet\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/558\",\"visualization\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1256\"}}},{\"filterContext\":{\"meta\":{\"identifier\":\"aadkE4IhTBg5\",\"tags\":\"\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1258\",\"created\":\"2022-02-22 12:35:56\",\"contributor\":\"/gdc/account/profile/b4ca6d6ec31ff764130a13893950091c\",\"category\":\"filterContext\",\"deprecated\":\"0\",\"title\":\"filterContext\",\"updated\":\"2022-02-22 12:35:56\",\"summary\":\"\",\"author\":\"/gdc/account/profile/b4ca6d6ec31ff764130a13893950091c\",\"isProduction\":1},\"content\":{\"filters\":[]}}}]}}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+            "vary": "origin,X-GDC-VERSION",
+            "content-type": "application/json;charset=UTF-8",
+            "cache-control": "no-cache, no-store, must-revalidate"
+        }
+    },
+    "uuid": "f293c450-b938-4903-8935-71bfb78b5c2b",
+    "persistent": true,
+    "insertionIndex": 107
+}

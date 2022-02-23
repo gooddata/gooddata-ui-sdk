@@ -1,0 +1,21 @@
+{
+    "id": "a6499270-1f73-442d-b70b-dc91ec7dc5ec",
+    "name": "gdc_account_token",
+    "request": {
+        "url": "/gdc/account/token",
+        "method": "GET"
+    },
+    "response": {
+        "status": 401,
+        "base64Body": "",
+        "headers": {
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "WWW-Authenticate": "GoodData realm=\"GoodData API\" cookie=GDCAuthSST location=/gdc/account/login"
+        }
+    },
+    "uuid": "a6499270-1f73-442d-b70b-dc91ec7dc5ec",
+    "persistent": true,
+    "insertionIndex": 132
+}
