@@ -1,0 +1,28 @@
+{
+    "id": "8d61909c-6aca-46fa-a723-ab3b2af8898f",
+    "name": "gdc_app_projects_frho3i7qc6epdek7mcgergm9vtm6o5ty_executeafm",
+    "request": {
+        "url": "/gdc/app/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/executeAfm",
+        "method": "POST",
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"execution\":{\"afm\":{\"measures\":[{\"localIdentifier\":\"7f3fb28bd64941519059ea22c2185d37\",\"definition\":{\"measure\":{\"item\":{\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1245\"}}}}],\"attributes\":[{\"displayForm\":{\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1064\"},\"localIdentifier\":\"91c799aa2b8b49c89662cc8dafec5589\"},{\"displayForm\":{\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1084\"},\"localIdentifier\":\"b0c2960f45f54f0ba87c75c1db52cd8a\"}]},\"resultSpec\":{\"sorts\":[{\"attributeSortItem\":{\"attributeIdentifier\":\"91c799aa2b8b49c89662cc8dafec5589\",\"direction\":\"asc\"}}],\"dimensions\":[{\"itemIdentifiers\":[\"91c799aa2b8b49c89662cc8dafec5589\",\"b0c2960f45f54f0ba87c75c1db52cd8a\"]},{\"itemIdentifiers\":[\"measureGroup\"]}]}}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 201,
+        "body": "{\"executionResponse\":{\"dimensions\":[{\"headers\":[{\"attributeHeader\":{\"name\":\"Opportunity Name\",\"localIdentifier\":\"91c799aa2b8b49c89662cc8dafec5589\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1064\",\"identifier\":\"label.opportunity.id.name\",\"formOf\":{\"name\":\"Opportunity\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1063\",\"identifier\":\"attr.opportunity.id\"}}},{\"attributeHeader\":{\"name\":\"Region\",\"localIdentifier\":\"b0c2960f45f54f0ba87c75c1db52cd8a\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1084\",\"identifier\":\"label.owner.region\",\"formOf\":{\"name\":\"Region\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1083\",\"identifier\":\"attr.owner.region\"}}}]},{\"headers\":[{\"measureGroupHeader\":{\"items\":[{\"measureHeaderItem\":{\"name\":\"# Of Opportunities\",\"format\":\"#,##0.00\",\"localIdentifier\":\"7f3fb28bd64941519059ea22c2185d37\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1245\",\"identifier\":\"abQgDWx4gOUu\"}}]}}]}],\"links\":{\"executionResult\":\"/gdc/app/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/executionResults/8998715555382950912?c=4c59cbd604afef0967b89d639ffc48c3&q=eAGtkk1Pg0AQhv9Ks1yJoLQUmxhjojW92KSxp6aHhR1wLcvi7qAhhP%2FubkutGC9ib%2FORmXnmzduQ%0AROaVKDSZbYgAVDx5VLIqydbtUttpunjByIx4GUs8wbxUvciAT9%2BSEEoGu6lIMlCZuH5HEcoJ1p6M%0AX73Lq%2FGEuERXQlBVm2mTIMccTOiMluloWZZSYVVw5KBNM5VKULRd13H8C98nrUFR8uPAgRJpbsPN%0A1pQpGuC4QhgA5oeBOfe14bmDOvHU31D7VcZ1mdN6blAHHR6bzT1Fcl7s7o6%2F3M%2F%2FLLIfhmZlTDU8%0A5CCgwPVqMWBJ4MFhXN9ydkNatyFn1Duyevfe%2FqeOkdXxaKYVZFwWZ1Ah%2BqHCLx7pbu2NCda%2BT1RY%0AQ6%2BLPQ0j7Sdd1CIz%0A&offset=0%2C0&limit=1000%2C1000&dimensions=2&totals=0%2C0\"}}}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "vary": "accept-encoding,origin,X-GDC-VERSION",
+            "Content-Type": "application/json;charset=utf-8"
+        }
+    },
+    "uuid": "8d61909c-6aca-46fa-a723-ab3b2af8898f",
+    "persistent": true,
+    "insertionIndex": 110
+}
