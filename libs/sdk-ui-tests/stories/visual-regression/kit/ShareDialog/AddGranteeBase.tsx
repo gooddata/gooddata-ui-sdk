@@ -1,10 +1,9 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import { action } from "@storybook/addon-actions";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
 import { UiKit } from "../../../_infra/storyGroups";
-import { withScreenshot } from "../../../_infra/backstopWrapper";
 import { wrapWithTheme } from "../../themeWrapper";
 import { AddGranteeBase, ComponentLabelsProvider } from "@gooddata/sdk-ui-kit";
 
@@ -120,9 +119,6 @@ export const AddGranteeExamples = (): JSX.Element => {
     );
 };
 
-storiesOf(`${UiKit}/ShareDialog/AddGranteeBase`, module).add("full-featured", () =>
-    withScreenshot(<AddGranteeExamples />),
-);
-storiesOf(`${UiKit}/ShareDialog/AddGranteeBase`, module).add("themed", () =>
-    withScreenshot(wrapWithTheme(<AddGranteeExamples />)),
-);
+storiesOf(`${UiKit}/ShareDialog/AddGranteeBase`)
+    .add("full-featured", () => <AddGranteeExamples />, { screenshot: true })
+    .add("themed", () => wrapWithTheme(<AddGranteeExamples />), { screenshot: true });

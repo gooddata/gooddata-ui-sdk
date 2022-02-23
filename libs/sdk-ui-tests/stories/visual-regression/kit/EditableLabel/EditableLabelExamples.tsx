@@ -1,11 +1,10 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { PureComponent } from "react";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import { EditableLabel } from "@gooddata/sdk-ui-kit";
 import { WrappedComponentProps } from "react-intl";
 
 import { UiKit } from "../../../_infra/storyGroups";
-import { withMultipleScreenshots } from "../../../_infra/backstopWrapper";
 
 interface IEditableLabelExamplesState {
     text: string;
@@ -53,6 +52,6 @@ const screenshotProps = {
     "edited-label": editLabelClickProps,
 };
 
-storiesOf(`${UiKit}/EditableLabel`, module).add("full-featured", () =>
-    withMultipleScreenshots(<EditableLabelExamples />, screenshotProps),
-);
+storiesOf(`${UiKit}/EditableLabel`).add("full-featured", () => <EditableLabelExamples />, {
+    screenshots: screenshotProps,
+});

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { BarChart } from "@gooddata/sdk-ui-charts";
 import { HeaderPredicates, ExplicitDrill, IDrillEvent } from "@gooddata/sdk-ui";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../_infra/storyRepository";
 import { ReferenceWorkspaceId, StorybookBackend } from "../../_infra/backend";
 import { StoriesForEndToEndTests } from "../../_infra/storyGroups";
 import {
@@ -39,7 +39,7 @@ const BarChartDrilling: React.FC<{ drillableItems: ExplicitDrill[] }> = ({ drill
     );
 };
 
-storiesOf(`${StoriesForEndToEndTests}/Drilling`, module)
+storiesOf(`${StoriesForEndToEndTests}/Drilling`)
     .add("bar chart with localId measure drilling", () => (
         <BarChartDrilling
             drillableItems={[HeaderPredicates.localIdentifierMatch(measureLocalId(ReferenceMd.Amount))]}

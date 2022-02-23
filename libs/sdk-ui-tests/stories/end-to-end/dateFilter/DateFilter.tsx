@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
 import { DateFilter, defaultDateFilterOptions, DateFilterOption } from "@gooddata/sdk-ui-filters";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../_infra/storyRepository";
 import React, { useState } from "react";
 import { StoriesForEndToEndTests } from "../../_infra/storyGroups";
 
@@ -45,4 +45,4 @@ const DateFilterE2E: React.FC = () => {
     );
 };
 
-storiesOf(`${StoriesForEndToEndTests}/Date Filter`, module).add("date filter", () => <DateFilterE2E />);
+storiesOf(`${StoriesForEndToEndTests}/Date Filter`).add("date filter", () => <DateFilterE2E />);

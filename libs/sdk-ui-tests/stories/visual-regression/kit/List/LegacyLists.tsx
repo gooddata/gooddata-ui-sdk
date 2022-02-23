@@ -6,7 +6,7 @@ import { LegacyInvertableList, LegacySingleSelectList } from "@gooddata/sdk-ui-k
 import { withIntl } from "@gooddata/sdk-ui";
 import { wrapWithTheme } from "../../themeWrapper";
 
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import { UiKit } from "../../../_infra/storyGroups";
 
 import "./styles.scss";
@@ -150,5 +150,6 @@ const customMessages = {
 
 const WithIntl = withIntl<unknown>(LegacyListExamples, undefined, customMessages);
 
-storiesOf(`${UiKit}/Legacy Lists`, module).add("full-featured", () => <WithIntl />);
-storiesOf(`${UiKit}/Legacy Lists`, module).add("themed", () => wrapWithTheme(<WithIntl />));
+storiesOf(`${UiKit}/Legacy Lists`)
+    .add("full-featured", () => <WithIntl />, { screenshot: true })
+    .add("themed", () => wrapWithTheme(<WithIntl />), { screenshot: true });

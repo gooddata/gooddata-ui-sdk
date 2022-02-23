@@ -33,6 +33,7 @@
         "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml $npm_package_config_eslint",
         "populate-ref": "GDC_STORE_DEFS=\"../../tools\" jest --config \"smoke-and-capture.config.js\" --watchAll=false",
         "story-extractor": "jest --config \"story-extractor.config.js\" --watchAll=false",
+        "generate-stories": "node ./stories/generateStories.mjs",
         "prettier-check": "prettier --check '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
@@ -41,8 +42,8 @@
         "stylelint-ci": "stylelint '**/*.scss' --custom-formatter=node_modules/stylelint-checkstyle-formatter > ./ci/results/stylelint-results.xml",
         "validate": "npm run dep-cruiser && npm run eslint && npm run stylelint && npm run prettier-check",
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run stylelint-ci && npm run prettier-check",
-        "storybook": "npm run build && start-storybook -p 9001 -c .storybook",
-        "build-storybook": "npm run build && build-storybook -c .storybook -o dist-storybook",
+        "storybook": "npm run generate-stories && npm run build && start-storybook -p 9001 -c .storybook",
+        "build-storybook": "npm run generate-stories && npm run build && build-storybook -c .storybook -o dist-storybook",
         "storybook-serve": "bash stories/serve-storybook.sh",
         "backstop-prepare": "npm run build-storybook && npm run story-extractor ",
         "backstop-test": "npm run backstop-prepare && bash backstop/run-backstop.sh test",
@@ -109,6 +110,7 @@
         "typescript": ">= 2.5.3"
     },
     "devDependencies": {
+        "@componentdriven/csf": "^0.0.2-alpha.0",
         "@gooddata/eslint-config": "^2.1.0",
         "@gooddata/sdk-ui-charts": "^8.10.0-alpha.0",
         "@gooddata/sdk-ui-ext": "^8.10.0-alpha.0",
@@ -142,6 +144,8 @@
         "eslint-plugin-react-hooks": "^4.0.8",
         "eslint-plugin-react": "^7.20.5",
         "eslint-plugin-sonarjs": "^0.11.0",
+        "eslint-plugin-tsdoc": "^0.2.14",
+        "globby": "^11.0.4",
         "mapbox-gl": "^2.6.1",
         "prettier": "~2.5.0",
         "react": "^17.0.2",
@@ -153,7 +157,6 @@
         "stylelint-config-prettier": "^8.0.2",
         "testcafe": "^1.18.3",
         "ts-node": "^10.4.0",
-        "typescript": "4.0.2",
-        "eslint-plugin-tsdoc": "^0.2.14"
+        "typescript": "4.0.2"
     }
 }

@@ -7,7 +7,6 @@ import { ScenarioGroup } from "../../../src";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
 import "@gooddata/sdk-ui-geo/styles/css/main.css";
-import { withScreenshot } from "../../_infra/backstopWrapper";
 import { StorybookBackend } from "../../_infra/backend";
 import { storyGroupFor } from "./storyGroupFactory";
 import groupBy from "lodash/groupBy";
@@ -23,15 +22,13 @@ const ScenarioGroupsByVis = values(groupBy<ScenarioGroup<any>>(allScenarios, (g)
 
 function buildStory(Component: React.ComponentType, props: any, wrapperStyle: any, tags: string[] = []) {
     return () => {
-        return withScreenshot(
-            wrapWithTheme(
-                <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
-                    <div style={wrapperStyle}>
-                        <Component {...props} />
-                    </div>
-                </ScreenshotReadyWrapper>,
-                tags,
-            ),
+        return wrapWithTheme(
+            <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
+                <div style={wrapperStyle}>
+                    <Component {...props} />
+                </div>
+            </ScreenshotReadyWrapper>,
+            tags,
         );
     };
 }
@@ -39,8 +36,8 @@ function buildStory(Component: React.ComponentType, props: any, wrapperStyle: an
 function groupedStory(group: ScenarioGroup<any>, wrapperStyle: any) {
     const scenarios = group.asScenarioDescAndScenario();
 
-    return () => {
-        return withScreenshot(
+    return function Grouped() {
+        return (
             <ScreenshotReadyWrapper resolver={createElementCountResolver(scenarios.length)}>
                 {scenarios.map(([name, scenario], idx) => {
                     const { propsFactory, workspaceType, component: Component } = scenario;
@@ -55,7 +52,7 @@ function groupedStory(group: ScenarioGroup<any>, wrapperStyle: any) {
                         </div>
                     );
                 })}
-            </ScreenshotReadyWrapper>,
+            </ScreenshotReadyWrapper>
         );
     };
 }
@@ -82,7 +79,9 @@ ScenarioGroupsByVis.forEach((groups) => {
 
         if (group.testConfig.visual.groupUnder) {
             // group may specify, that the scenarios should be grouped under a single story
-            storiesForChart.add(group.testConfig.visual.groupUnder, groupedStory(visualOnly, wrapperStyle));
+            storiesForChart.add(group.testConfig.visual.groupUnder, groupedStory(visualOnly, wrapperStyle), {
+                screenshot: true,
+            });
         } else {
             // otherwise there will be story-per-scenario
             const scenarios = visualOnly.asScenarioDescAndScenario();
@@ -91,7 +90,9 @@ ScenarioGroupsByVis.forEach((groups) => {
                 const { propsFactory, workspaceType, component: Component } = scenario;
                 const props = propsFactory(backend, workspaceType);
 
-                storiesForChart.add(name, buildStory(Component, props, wrapperStyle, scenario.tags));
+                storiesForChart.add(name, buildStory(Component, props, wrapperStyle, scenario.tags), {
+                    screenshot: true,
+                });
             });
         }
     }

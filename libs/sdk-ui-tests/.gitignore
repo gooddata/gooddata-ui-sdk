@@ -2,3 +2,4 @@ dist-storybook
 backstop/stories.json
 backstop/output/**
 report*.json
+generated.stories.js

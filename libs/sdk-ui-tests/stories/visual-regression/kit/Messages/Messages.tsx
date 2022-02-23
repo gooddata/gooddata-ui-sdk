@@ -6,7 +6,7 @@ import { v4 as uuid } from "uuid";
 import { Button, Messages, Message, IMessage, MessageType } from "@gooddata/sdk-ui-kit";
 import { wrapWithTheme } from "../../themeWrapper";
 
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import { UiKit } from "../../../_infra/storyGroups";
 
 const info = {
@@ -127,5 +127,6 @@ class MessagesExamples extends React.Component<unknown, IMessagesExamplesState> 
     }
 }
 
-storiesOf(`${UiKit}/Messages`, module).add("full-featured", () => <MessagesExamples />);
-storiesOf(`${UiKit}/Messages`, module).add("themed", () => wrapWithTheme(<MessagesExamples />));
+storiesOf(`${UiKit}/Messages`)
+    .add("full-featured", () => <MessagesExamples />, { screenshot: true })
+    .add("themed", () => wrapWithTheme(<MessagesExamples />), { screenshot: true });

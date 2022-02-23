@@ -1,8 +1,7 @@
 // (C) 2021 GoodData Corporation
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import React from "react";
 import { ColumnChart, IColumnChartProps } from "@gooddata/sdk-ui-charts";
-import { withScreenshot } from "../../../_infra/backstopWrapper";
 import { CustomStories } from "../../../_infra/storyGroups";
 import { StorybookBackend, ReferenceWorkspaceId } from "../../../_infra/backend";
 
@@ -43,10 +42,14 @@ const ColumnChartWithHierarchicalLabelsTest = (config: Partial<IColumnChartProps
     </div>
 );
 
-storiesOf(`${CustomStories}/ColumnChart`, module).add("hidding of hierarchical axis labels", () => {
-    return withScreenshot(
-        <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
-            <ColumnChartWithHierarchicalLabelsTest />
-        </ScreenshotReadyWrapper>,
-    );
-});
+storiesOf(`${CustomStories}/ColumnChart`).add(
+    "hidding of hierarchical axis labels",
+    () => {
+        return (
+            <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
+                <ColumnChartWithHierarchicalLabelsTest />
+            </ScreenshotReadyWrapper>
+        );
+    },
+    { screenshot: true },
+);

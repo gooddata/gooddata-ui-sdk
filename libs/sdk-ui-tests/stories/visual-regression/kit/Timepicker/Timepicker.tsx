@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import React, { useState } from "react";
 import { Timepicker } from "@gooddata/sdk-ui-kit";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import { UiKit } from "../../../_infra/storyGroups";
 import { wrapWithTheme } from "../../themeWrapper";
 
@@ -27,5 +27,6 @@ const TimePickerExamples: React.FC = () => {
     );
 };
 
-storiesOf(`${UiKit}/TimePicker`, module).add("full-featured", () => <TimePickerExamples />);
-storiesOf(`${UiKit}/TimePicker`, module).add("themed", () => wrapWithTheme(<TimePickerExamples />));
+storiesOf(`${UiKit}/TimePicker`)
+    .add("full-featured", () => <TimePickerExamples />, { screenshot: true })
+    .add("themed", () => wrapWithTheme(<TimePickerExamples />), { screenshot: true });

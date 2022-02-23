@@ -1,9 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
 import { AttributeFilter } from "@gooddata/sdk-ui-filters";
 import React from "react";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import { action } from "@storybook/addon-actions";
-import { LongPostInteractionTimeout, withMultipleScreenshots } from "../../../_infra/backstopWrapper";
+import { LongPostInteractionTimeout } from "../../../_infra/backstopWrapper";
 import { FilterStories } from "../../../_infra/storyGroups";
 
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilter.css";
@@ -22,18 +22,23 @@ const backend = StorybookBackend();
  *  not visible)
  */
 
-storiesOf(`${FilterStories}/AttributeFilter`, module)
-    .add("empty default selection", () => {
-        return withMultipleScreenshots(
-            <div style={wrapperStyle} className="screenshot-target">
-                <AttributeFilter
-                    backend={backend}
-                    workspace={ReferenceWorkspaceId}
-                    filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
-                    onApply={action("on-apply")}
-                />
-            </div>,
-            {
+storiesOf(`${FilterStories}/AttributeFilter`)
+    .add(
+        "empty default selection",
+        () => {
+            return (
+                <div style={wrapperStyle} className="screenshot-target">
+                    <AttributeFilter
+                        backend={backend}
+                        workspace={ReferenceWorkspaceId}
+                        filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
+                        onApply={action("on-apply")}
+                    />
+                </div>
+            );
+        },
+        {
+            screenshots: {
                 closed: {},
                 opened: { clickSelector: ".s-product", postInteractionWait: LongPostInteractionTimeout },
                 "select-all": {
@@ -41,20 +46,25 @@ storiesOf(`${FilterStories}/AttributeFilter`, module)
                     postInteractionWait: LongPostInteractionTimeout,
                 },
             },
-        );
-    })
-    .add("empty default selection - localized", () => {
-        return withMultipleScreenshots(
-            <div style={wrapperStyle} className="screenshot-target">
-                <AttributeFilter
-                    backend={backend}
-                    workspace={ReferenceWorkspaceId}
-                    locale="de-DE"
-                    filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
-                    onApply={action("on-apply")}
-                />
-            </div>,
-            {
+        },
+    )
+    .add(
+        "empty default selection - localized",
+        () => {
+            return (
+                <div style={wrapperStyle} className="screenshot-target">
+                    <AttributeFilter
+                        backend={backend}
+                        workspace={ReferenceWorkspaceId}
+                        locale="de-DE"
+                        filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
+                        onApply={action("on-apply")}
+                    />
+                </div>
+            );
+        },
+        {
+            screenshots: {
                 closed: {},
                 opened: { clickSelector: ".s-product", postInteractionWait: LongPostInteractionTimeout },
                 "select-all": {
@@ -62,19 +72,27 @@ storiesOf(`${FilterStories}/AttributeFilter`, module)
                     postInteractionWait: LongPostInteractionTimeout,
                 },
             },
-        );
-    })
-    .add("pre-selected elements", () => {
-        return withMultipleScreenshots(
-            <div style={wrapperStyle} className="screenshot-target">
-                <AttributeFilter
-                    backend={backend}
-                    workspace={ReferenceWorkspaceId}
-                    filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, ["WonderKid", "Explorer"])}
-                    onApply={action("on-apply")}
-                />
-            </div>,
-            {
+        },
+    )
+    .add(
+        "pre-selected elements",
+        () => {
+            return (
+                <div style={wrapperStyle} className="screenshot-target">
+                    <AttributeFilter
+                        backend={backend}
+                        workspace={ReferenceWorkspaceId}
+                        filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [
+                            "WonderKid",
+                            "Explorer",
+                        ])}
+                        onApply={action("on-apply")}
+                    />
+                </div>
+            );
+        },
+        {
+            screenshots: {
                 opened: { clickSelector: ".s-product", postInteractionWait: LongPostInteractionTimeout },
                 "select-all": {
                     clickSelectors: [".s-product", ".s-select_all"],
@@ -85,25 +103,30 @@ storiesOf(`${FilterStories}/AttributeFilter`, module)
                     postInteractionWait: LongPostInteractionTimeout,
                 },
             },
-        );
-    })
+        },
+    )
 
-    .add("title with pre-selected elements - positive AttributeFilter", () => {
-        return withMultipleScreenshots(
-            <div style={wrapperStyle} className="screenshot-target">
-                <AttributeFilter
-                    backend={backend}
-                    workspace={ReferenceWorkspaceId}
-                    filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [
-                        "WonderKid",
-                        "Explorer",
-                        "TouchAll",
-                    ])}
-                    onApply={action("on-apply")}
-                    titleWithSelection={true}
-                />
-            </div>,
-            {
+    .add(
+        "title with pre-selected elements - positive AttributeFilter",
+        () => {
+            return (
+                <div style={wrapperStyle} className="screenshot-target">
+                    <AttributeFilter
+                        backend={backend}
+                        workspace={ReferenceWorkspaceId}
+                        filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [
+                            "WonderKid",
+                            "Explorer",
+                            "TouchAll",
+                        ])}
+                        onApply={action("on-apply")}
+                        titleWithSelection={true}
+                    />
+                </div>
+            );
+        },
+        {
+            screenshots: {
                 closed: {},
                 opened: {
                     clickSelector: ".s-product__wonderkid__explorer__touch___3_",
@@ -118,24 +141,29 @@ storiesOf(`${FilterStories}/AttributeFilter`, module)
                     postInteractionWait: LongPostInteractionTimeout,
                 },
             },
-        );
-    })
-    .add("title with pre-selected elements - negative AttributeFilter", () => {
-        return withMultipleScreenshots(
-            <div style={wrapperStyle} className="screenshot-target">
-                <AttributeFilter
-                    backend={backend}
-                    workspace={ReferenceWorkspaceId}
-                    filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [
-                        "WonderKid",
-                        "Explorer",
-                        "TouchAll",
-                    ])}
-                    onApply={action("on-apply")}
-                    titleWithSelection={true}
-                />
-            </div>,
-            {
+        },
+    )
+    .add(
+        "title with pre-selected elements - negative AttributeFilter",
+        () => {
+            return (
+                <div style={wrapperStyle} className="screenshot-target">
+                    <AttributeFilter
+                        backend={backend}
+                        workspace={ReferenceWorkspaceId}
+                        filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [
+                            "WonderKid",
+                            "Explorer",
+                            "TouchAll",
+                        ])}
+                        onApply={action("on-apply")}
+                        titleWithSelection={true}
+                    />
+                </div>
+            );
+        },
+        {
+            screenshots: {
                 closed: {},
                 opened: {
                     clickSelector: ".s-product__all_except_wonderkid__expl___3_",
@@ -150,11 +178,12 @@ storiesOf(`${FilterStories}/AttributeFilter`, module)
                     postInteractionWait: LongPostInteractionTimeout,
                 },
             },
-        );
-    })
-    .add("themed", () => {
-        return withMultipleScreenshots(
-            wrapWithTheme(
+        },
+    )
+    .add(
+        "themed",
+        () => {
+            return wrapWithTheme(
                 <div style={wrapperStyle} className="screenshot-target">
                     <AttributeFilter
                         backend={backend}
@@ -163,8 +192,10 @@ storiesOf(`${FilterStories}/AttributeFilter`, module)
                         onApply={action("on-apply")}
                     />
                 </div>,
-            ),
-            {
+            );
+        },
+        {
+            screenshots: {
                 closed: {},
                 opened: { clickSelector: ".s-product", postInteractionWait: LongPostInteractionTimeout },
                 "select-all": {
@@ -172,5 +203,5 @@ storiesOf(`${FilterStories}/AttributeFilter`, module)
                     postInteractionWait: LongPostInteractionTimeout,
                 },
             },
-        );
-    });
+        },
+    );

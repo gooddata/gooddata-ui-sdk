@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 import React, { useCallback, useState } from "react";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
 import { ComponentLabelsProvider, getGranteeItemTestId, ShareDialogBase } from "@gooddata/sdk-ui-kit";
 import { Button } from "@gooddata/sdk-ui-kit";
@@ -11,7 +11,6 @@ import { action } from "@storybook/addon-actions";
 import { uriRef } from "@gooddata/sdk-model";
 
 import { UiKit } from "../../../_infra/storyGroups";
-import { withMultipleScreenshots } from "../../../_infra/backstopWrapper";
 import { wrapWithTheme } from "../../themeWrapper";
 import { BackstopConfig } from "../../../_infra/backstopScenario";
 
@@ -131,15 +130,10 @@ const drillAvailabilityScenarios: BackstopConfig = {
     },
 };
 
-storiesOf(`${UiKit}/ShareDialog/ShareDialog`, module).add("full-featured", () =>
-    withMultipleScreenshots(<ShareDialogExamples />, scenarios),
-);
-storiesOf(`${UiKit}/ShareDialog/ShareDialog`, module).add("themed", () =>
-    withMultipleScreenshots(wrapWithTheme(<ShareDialogExamples />), scenarios),
-);
-storiesOf(`${UiKit}/ShareDialog/ShareDialog`, module).add("lock-interaction", () =>
-    withMultipleScreenshots(<ShareDialogExamples />, lockScenarios),
-);
-storiesOf(`${UiKit}/ShareDialog/ShareDialog`, module).add("drill-availability-interaction", () =>
-    withMultipleScreenshots(<ShareDialogExamples />, drillAvailabilityScenarios),
-);
+storiesOf(`${UiKit}/ShareDialog/ShareDialog`)
+    .add("full-featured", () => <ShareDialogExamples />, { screenshots: scenarios })
+    .add("themed", () => wrapWithTheme(<ShareDialogExamples />), { screenshots: scenarios })
+    .add("lock-interaction", () => <ShareDialogExamples />, { screenshots: lockScenarios })
+    .add("drill-availability-interaction", () => <ShareDialogExamples />, {
+        screenshots: drillAvailabilityScenarios,
+    });

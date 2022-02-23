@@ -6,7 +6,7 @@ import {
     MeasureNumberFormat,
 } from "@gooddata/sdk-ui-kit";
 import React from "react";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import { action } from "@storybook/addon-actions";
 import { UiKit } from "../../../_infra/storyGroups";
 import { wrapWithTheme } from "../../themeWrapper";
@@ -98,10 +98,9 @@ const MeasureNumberFormatTest = () => (
     </div>
 );
 
-storiesOf(`${UiKit}/MeasureNumberFormat`, module).add("full-featured", () => <MeasureNumberFormatTest />);
-storiesOf(`${UiKit}/MeasureNumberFormat`, module).add("themed", () =>
-    wrapWithTheme(<MeasureNumberFormatTest />),
-);
+storiesOf(`${UiKit}/MeasureNumberFormat`)
+    .add("full-featured", () => <MeasureNumberFormatTest />, { screenshot: true })
+    .add("themed", () => wrapWithTheme(<MeasureNumberFormatTest />), { screenshot: true });
 /*
         {
             closed: {},

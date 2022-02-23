@@ -1,99 +1,33 @@
-// (C) 2007-2019 GoodData Corporation
-import { configure, raw } from "@storybook/react";
-import * as fs from "fs";
-const OutputFilename = "backstop/stories.json";
+// (C) 2022 GoodData Corporation
+import globby from "globby";
+import path from "path";
+import { writeFile } from "fs/promises";
+import { existsSync } from "fs";
 
-/*
- * This is a quick-and-dirty way to dump JSON with information about stories that are available in storybook.
- *
- * To achieve this on server/workstation is somewhat tricky, because storybook configuration is normally
- * expected to be done in browser => extra setup is needed (JSDOM, static assets).
- *
- * This code takes shortcut to get all this extra setup for free - it misuses Jest to prepare the right
- * environment and then the test runs and it's side-effect is the dump. Definitely not nice thing to do but
- * fast and reliable and not maintained by us.
- *
- * Ideally this extractor would be a stand-alone command line tool using something like 'browser-env'...
- *
- * Also see: https://www.npmjs.com/package/@storybook/addon-storyshots - the steps neded to make require.context()
- * working are taken from there.
- */
+import { toBackstopJson } from "../stories/_infra/storyRepository";
+
+const storiesGlob = path.resolve(__dirname, "../stories/**/*.@(ts|tsx)");
+const targetFile = path.resolve(__dirname, "stories.json");
 
 describe("story-extractor", () => {
-    function getAvailableStories(onError) {
-        const req = require.context("../stories/visual-regression", true, /\.tsx?$/);
+    it("dumps stories into a file", async () => {
+        try {
+            const files = await globby(storiesGlob, { cwd: path.resolve(__dirname) });
 
-        function loadStories() {
-            req.keys().forEach((filename) => {
-                try {
-                    req(filename);
-                } catch (e) {
-                    onError(e);
-                }
-            });
-        }
+            await Promise.all(
+                files.map((file) => {
+                    return import(file);
+                }),
+            );
 
-        configure(loadStories, module);
-        return raw();
-    }
+            const fileContents = toBackstopJson();
 
-    it("dumps stories into a file", () => {
-        const errors = [];
-        const onStoryError = (err) => {
+            await writeFile(targetFile, fileContents, { encoding: "utf-8" });
+            expect(existsSync(targetFile)).toBe(true);
+        } catch (e) {
             // eslint-disable-next-line no-console
-            console.error(err);
-            errors.push(err);
-        };
-
-        const stories = getAvailableStories(onStoryError);
-
-        expect(errors.length).toEqual(0);
-
-        const storyDump = [];
-
-        stories.forEach((rawStory) => {
-            const storyElement = rawStory.getOriginal()();
-            let config = {};
-
-            /*
-             * See if story defined global configuration for backstop scenario(s) that will be derived from it.
-             */
-            if (storyElement.props !== undefined && storyElement.props.config !== undefined) {
-                config = storyElement.props.config;
-            }
-
-            if (storyElement.props === undefined || storyElement.props.scenarios === undefined) {
-                /*
-                 * The story does not explicitly define any backstop scenarios... falling back to
-                 * implicit scenarios-for-story
-                 */
-                storyDump.push({
-                    storyId: rawStory.id,
-                    storyKind: rawStory.kind,
-                    storyName: rawStory.name,
-                    scenarioConfig: config,
-                });
-            } else {
-                /*
-                 * The story explicitly tells what backstop scenarios there should be & specifies
-                 * backstop config for them. Dump all listed scenarios.
-                 */
-                Object.entries(storyElement.props.scenarios).forEach(([name, scenarioConfig]) => {
-                    storyDump.push({
-                        storyId: rawStory.id,
-                        storyKind: rawStory.kind,
-                        storyName: rawStory.name,
-                        scenarioName: name,
-                        scenarioConfig: {
-                            ...config,
-                            ...scenarioConfig,
-                        },
-                    });
-                });
-            }
-        });
-
-        fs.writeFileSync(OutputFilename, JSON.stringify(storyDump, null, 4), { encoding: "utf-8" });
-        expect(fs.existsSync(OutputFilename)).toBe(true);
+            console.error("Error extracting stories: ", e);
+            throw e;
+        }
     });
 });

@@ -2,9 +2,8 @@
 import { Tabs } from "@gooddata/sdk-ui-kit";
 import React from "react";
 import { IntlProvider } from "react-intl";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import { UiKit } from "../../../_infra/storyGroups";
-import { withScreenshot } from "../../../_infra/backstopWrapper";
 import { wrapWithTheme } from "../../themeWrapper";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
@@ -28,5 +27,6 @@ const TabsTest: React.FC = () => {
     );
 };
 
-storiesOf(`${UiKit}/Tabs`, module).add("full-featured", () => withScreenshot(<TabsTest />));
-storiesOf(`${UiKit}/Tabs`, module).add("themed", () => withScreenshot(wrapWithTheme(<TabsTest />)));
+storiesOf(`${UiKit}/Tabs`)
+    .add("full-featured", () => <TabsTest />, { screenshot: true })
+    .add("themed", () => wrapWithTheme(<TabsTest />), { screenshot: true });

@@ -1,8 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import { UiKit } from "../../../_infra/storyGroups";
-import { withMultipleScreenshots, withScreenshot } from "../../../_infra/backstopWrapper";
 import { withIntl } from "@gooddata/sdk-ui";
 import {
     AppHeader,
@@ -360,9 +359,6 @@ const screenshotProps = {
     },
 };
 
-storiesOf(`${UiKit}/AppHeader`, module).add("full-featured", () =>
-    withMultipleScreenshots(<WithIntl />, screenshotProps),
-);
-storiesOf(`${UiKit}/AppHeader`, module).add("themed", () =>
-    withScreenshot(wrapWithTheme(<WithIntl />), screenshotProps.openedProjectPicker),
-);
+storiesOf(`${UiKit}/AppHeader`)
+    .add("full-featured", () => <WithIntl />, { screenshots: screenshotProps })
+    .add("themed", () => wrapWithTheme(<WithIntl />), { screenshot: screenshotProps.openedProjectPicker });

@@ -1,9 +1,8 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { PureComponent } from "react";
 import { Button, Dialog, ConfirmDialog, ExportDialog, CommunityEditionDialog } from "@gooddata/sdk-ui-kit";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import { UiKit } from "../../../_infra/storyGroups";
-import { withMultipleScreenshots } from "../../../_infra/backstopWrapper";
 import { wrapWithTheme } from "../../themeWrapper";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
@@ -313,9 +312,6 @@ const screenshotPropsThemed = {
     "export-dialog": exportDialogProps,
 };
 
-storiesOf(`${UiKit}/Dialog`, module).add("full-featured", () =>
-    withMultipleScreenshots(<DialogExamples />, screenshotProps),
-);
-storiesOf(`${UiKit}/Dialog`, module).add("themed", () =>
-    withMultipleScreenshots(wrapWithTheme(<DialogExamples />), screenshotPropsThemed),
-);
+storiesOf(`${UiKit}/Dialog`)
+    .add("full-featured", () => <DialogExamples />, { screenshots: screenshotProps })
+    .add("themed", () => wrapWithTheme(<DialogExamples />), { screenshots: screenshotPropsThemed });

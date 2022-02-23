@@ -10,10 +10,9 @@ import {
     DropdownButton,
     IDropdownButtonProps,
 } from "@gooddata/sdk-ui-kit";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import { UiKit } from "../../../_infra/storyGroups";
 import { wrapWithTheme } from "../../themeWrapper";
-import { withScreenshot } from "../../../_infra/backstopWrapper";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 
@@ -149,5 +148,6 @@ export const customMessages = {
 
 const WithIntl = withIntl<unknown>(DropdownExamples, undefined, customMessages);
 
-storiesOf(`${UiKit}/Dropdown`, module).add("full-featured", () => withScreenshot(<WithIntl />));
-storiesOf(`${UiKit}/Dropdown`, module).add("themed", () => withScreenshot(wrapWithTheme(<WithIntl />)));
+storiesOf(`${UiKit}/Dropdown`)
+    .add("full-featured", () => <WithIntl />, { screenshot: true })
+    .add("themed", () => wrapWithTheme(<WithIntl />), { screenshot: true });

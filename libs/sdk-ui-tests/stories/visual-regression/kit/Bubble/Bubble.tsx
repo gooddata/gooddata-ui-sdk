@@ -1,9 +1,8 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
 import { Bubble, BubbleHoverTrigger, BubbleFocusTrigger, Button } from "@gooddata/sdk-ui-kit";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import { UiKit } from "../../../_infra/storyGroups";
-import { withMultipleScreenshots } from "../../../_infra/backstopWrapper";
 import { wrapWithTheme } from "../../themeWrapper";
 
 import "./styles.scss";
@@ -214,32 +213,39 @@ class BubbleExamples extends Component {
     }
 }
 
-storiesOf(`${UiKit}/Bubble`, module).add("full-featured", () => {
-    return withMultipleScreenshots(<BubbleExamples />, {
-        "primary-skin": {
-            hoverSelector: ".primary-skin",
-            postInteractionWait: 1000,
+storiesOf(`${UiKit}/Bubble`)
+    .add(
+        "full-featured",
+        () => {
+            return <BubbleExamples />;
         },
-        "secondary-skin": {
-            hoverSelector: ".secondary-skin",
-            postInteractionWait: 1000,
+        {
+            screenshots: {
+                "primary-skin": {
+                    hoverSelector: ".primary-skin",
+                    postInteractionWait: 1000,
+                },
+                "secondary-skin": {
+                    hoverSelector: ".secondary-skin",
+                    postInteractionWait: 1000,
+                },
+                "negative-skin": {
+                    hoverSelector: ".negative-skin",
+                    postInteractionWait: 1000,
+                },
+                "light-skin": {
+                    hoverSelector: ".light-skin",
+                    postInteractionWait: 1000,
+                },
+                "dark-skin": {
+                    hoverSelector: ".dark-skin",
+                    postInteractionWait: 1000,
+                },
+                "warning-skin": {
+                    hoverSelector: ".warning-skin",
+                    postInteractionWait: 1000,
+                },
+            },
         },
-        "negative-skin": {
-            hoverSelector: ".negative-skin",
-            postInteractionWait: 1000,
-        },
-        "light-skin": {
-            hoverSelector: ".light-skin",
-            postInteractionWait: 1000,
-        },
-        "dark-skin": {
-            hoverSelector: ".dark-skin",
-            postInteractionWait: 1000,
-        },
-        "warning-skin": {
-            hoverSelector: ".warning-skin",
-            postInteractionWait: 1000,
-        },
-    });
-});
-storiesOf(`${UiKit}/Bubble`, module).add("themed", () => wrapWithTheme(<BubbleExamples />));
+    )
+    .add("themed", () => wrapWithTheme(<BubbleExamples />), { screenshot: true });

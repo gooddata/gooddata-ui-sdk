@@ -1,11 +1,10 @@
 // (C) 2007-2020 GoodData Corporation
 import React from "react";
 import { FilterLabel } from "@gooddata/sdk-ui-kit";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import { withIntl } from "@gooddata/sdk-ui";
 
 import { UiKit } from "../../../_infra/storyGroups";
-import { withScreenshot } from "../../../_infra/backstopWrapper";
 
 const FilterLabelExamples: React.FC = () => {
     return (
@@ -29,4 +28,4 @@ const customMessages = {
 
 const WithIntl = withIntl<unknown>(FilterLabelExamples, undefined, customMessages);
 
-storiesOf(`${UiKit}/FilterLabel`, module).add("full-featured", () => withScreenshot(<WithIntl />));
+storiesOf(`${UiKit}/FilterLabel`).add("full-featured", () => <WithIntl />, { screenshot: true });

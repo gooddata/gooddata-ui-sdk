@@ -3,7 +3,7 @@ import React from "react";
 
 import { ItemsWrapper, Separator, Header, Item } from "@gooddata/sdk-ui-kit";
 
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import { UiKit } from "../../../_infra/storyGroups";
 import { wrapWithTheme } from "../../themeWrapper";
 
@@ -33,5 +33,6 @@ const ListExamples = () => (
     </div>
 );
 
-storiesOf(`${UiKit}/Menu List`, module).add("full-featured", () => <ListExamples />);
-storiesOf(`${UiKit}/Menu List`, module).add("themed", () => wrapWithTheme(<ListExamples />));
+storiesOf(`${UiKit}/Menu List`)
+    .add("full-featured", () => <ListExamples />, { screenshot: true })
+    .add("themed", () => wrapWithTheme(<ListExamples />), { screenshot: true });

@@ -1,10 +1,9 @@
 // (C) 2019-2020 GoodData Corporation
 import React, { useState } from "react";
 import { ResponsiveText } from "@gooddata/sdk-ui-kit";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import { UiKit } from "../../../_infra/storyGroups";
 import { wrapWithTheme } from "../../themeWrapper";
-import { withScreenshot, withMultipleScreenshots } from "../../../_infra/backstopWrapper";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "./ResponsiveText.css";
@@ -79,22 +78,19 @@ const ResponsiveTextDynamicExamples: React.FC = () => {
     );
 };
 
-storiesOf(`${UiKit}/ResponsiveText`, module).add("full-featured", () =>
-    withScreenshot(<ResponsiveTextExamples />),
-);
-storiesOf(`${UiKit}/ResponsiveText`, module).add("dynamic", () =>
-    withMultipleScreenshots(<ResponsiveTextDynamicExamples />, {
-        default: {},
-        "tagClassName prop change": {
-            clickSelectors: [".s-change-class"],
-            postInteractionWait: 200,
+storiesOf(`${UiKit}/ResponsiveText`)
+    .add("full-featured", () => <ResponsiveTextExamples />, { screenshot: true })
+    .add("dynamic", () => <ResponsiveTextDynamicExamples />, {
+        screenshots: {
+            default: {},
+            "tagClassName prop change": {
+                clickSelectors: [".s-change-class"],
+                postInteractionWait: 200,
+            },
+            "children prop change": {
+                clickSelectors: [".s-change-text"],
+                postInteractionWait: 200,
+            },
         },
-        "children prop change": {
-            clickSelectors: [".s-change-text"],
-            postInteractionWait: 200,
-        },
-    }),
-);
-storiesOf(`${UiKit}/ResponsiveText`, module).add("themed", () =>
-    withScreenshot(wrapWithTheme(<ResponsiveTextExamples />)),
-);
+    })
+    .add("themed", () => wrapWithTheme(<ResponsiveTextExamples />), { screenshot: true });

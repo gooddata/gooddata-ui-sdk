@@ -3,9 +3,8 @@ import { Button } from "@gooddata/sdk-ui-kit";
 import React from "react";
 import { v4 as uuid } from "uuid";
 
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import { UiKit } from "../../../_infra/storyGroups";
-import { withScreenshot } from "../../../_infra/backstopWrapper";
 import { wrapWithTheme } from "../../themeWrapper";
 
 import "@gooddata/sdk-ui-kit/styles/css/button.css";
@@ -314,5 +313,6 @@ const ButtonTest: React.FC = () => (
     </div>
 );
 
-storiesOf(`${UiKit}/Button`, module).add("full-featured button", () => withScreenshot(<ButtonTest />));
-storiesOf(`${UiKit}/Button`, module).add("themed", () => withScreenshot(wrapWithTheme(<ButtonTest />)));
+storiesOf(`${UiKit}/Button`)
+    .add("full-featured button", () => <ButtonTest />, { screenshot: true })
+    .add("themed", () => wrapWithTheme(<ButtonTest />), { screenshot: true });

@@ -1,10 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
 import { IScenarioGroup } from "../../../src";
-import { StoryApi } from "@storybook/addons";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../_infra/storyRepository";
 
 type GroupedStories = {
-    [visAndGroup: string]: StoryApi<any>;
+    [visAndGroup: string]: ReturnType<typeof storiesOf>;
 };
 
 const stories: GroupedStories = {};
@@ -16,12 +15,15 @@ const stories: GroupedStories = {};
  * @param category - story category
  * @param scenarioGroup - group of scenarios which will be added using the StoryApi
  */
-export function storyGroupFor(category: string, scenarioGroup: IScenarioGroup<any>): StoryApi<any> {
+export function storyGroupFor(
+    category: string,
+    scenarioGroup: IScenarioGroup<any>,
+): ReturnType<typeof storiesOf> {
     const name = [category, scenarioGroup.vis, ...scenarioGroup.groupNames].join("/");
     let storyApi = stories[name];
 
     if (!storyApi) {
-        storyApi = storiesOf(name, module);
+        storyApi = storiesOf(name);
         stories[name] = storyApi;
     }
 

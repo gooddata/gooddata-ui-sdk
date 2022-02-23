@@ -11,4 +11,6 @@ module.exports = {
     testPathIgnorePatterns: ["/node_modules/", "/dist/"],
     testEnvironment: "jsdom",
     setupFilesAfterEnv: ["<rootDir>/jest.setup.ts", "jest-enzyme"],
+    // we need to give this a bit more time than the default 5000ms, it can take up to a minute on CI...
+    testTimeout: 90000,
 };
