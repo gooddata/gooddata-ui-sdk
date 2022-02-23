@@ -1,0 +1,21 @@
+{
+    "id": "87ba0831-2072-4472-88bb-a30e95ee6b6a",
+    "name": "gdc_app_projects_frho3i7qc6epdek7mcgergm9vtm6o5ty_executionresults_7550437070377253888",
+    "request": {
+        "url": "/gdc/app/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/executionResults/7550437070377253888?c=894abc003aa127201b1e83218b62d76a&q=eAEljs0OgkAMhN%2BleCQu%2FkHgBYwXb8aD4YC7C65SimXREMK7W%2BQ237QzmRHYtsT%2BXKCFDC6Nd762%0ABkLQVPfYdJDd8hCYvrMCtJ6dPjL1LYi94HwZoSTGwkvHKgiDIFpHkZQsDycjtqqMVmhUyQ%2FaueSt%0AY9sa%2B0pQV5YrTD8eYzr4QdH9qTbbfSrx%2FxjJXqkR6nrEggdhmPLpB52qPPI%3D%0A&offset=0&limit=1000&dimensions=1&totals=0",
+        "method": "GET"
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"executionResult\":{\"data\":[\"38310753.45\"],\"paging\":{\"count\":[1],\"offset\":[0],\"total\":[1]},\"headerItems\":[[[{\"measureHeaderItem\":{\"name\":\"Won\",\"order\":0}}]]]}}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+            "Cache-Control": "max-age=86400,private",
+            "vary": "Accept,origin,X-GDC-VERSION",
+            "Content-Type": "application/json;charset=utf-8"
+        }
+    },
+    "uuid": "87ba0831-2072-4472-88bb-a30e95ee6b6a",
+    "persistent": true,
+    "insertionIndex": 95
+}

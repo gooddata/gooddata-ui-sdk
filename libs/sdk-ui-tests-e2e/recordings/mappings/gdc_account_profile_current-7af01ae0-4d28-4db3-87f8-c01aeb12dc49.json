@@ -1,0 +1,21 @@
+{
+    "id": "7af01ae0-4d28-4db3-87f8-c01aeb12dc49",
+    "name": "gdc_account_profile_current",
+    "request": {
+        "url": "/gdc/account/profile/current",
+        "method": "GET"
+    },
+    "response": {
+        "status": 307,
+        "base64Body": "",
+        "headers": {
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+            "vary": "origin,X-GDC-VERSION",
+            "location": "/gdc/account/profile/b388eefffab41947076a75fd36d0bad1",
+            "cache-control": "no-cache, no-store, must-revalidate"
+        }
+    },
+    "uuid": "7af01ae0-4d28-4db3-87f8-c01aeb12dc49",
+    "persistent": true,
+    "insertionIndex": 65
+}

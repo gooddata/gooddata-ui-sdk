@@ -1,0 +1,28 @@
+{
+    "id": "311df3b1-903e-4637-86d1-b6d900f4231d",
+    "name": "gdc_md_frho3i7qc6epdek7mcgergm9vtm6o5ty_objects_get",
+    "request": {
+        "url": "/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/objects/get",
+        "method": "POST",
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"get\":{\"items\":[\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1253\",\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1254\"]}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"objects\":{\"items\":[{\"visualizationWidget\":{\"meta\":{\"updated\":\"2022-02-22 11:31:27\",\"isProduction\":1,\"identifier\":\"aabko5QSPS17\",\"deprecated\":\"0\",\"tags\":\"\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1253\",\"created\":\"2022-02-22 11:31:27\",\"title\":\"Headline won\",\"category\":\"visualizationWidget\",\"author\":\"/gdc/account/profile/b4ca6d6ec31ff764130a13893950091c\",\"contributor\":\"/gdc/account/profile/b4ca6d6ec31ff764130a13893950091c\",\"summary\":\"\"},\"content\":{\"ignoreDashboardFilters\":[],\"visualization\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1252\",\"dateDataSet\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/558\"}}},{\"filterContext\":{\"content\":{\"filters\":[]},\"meta\":{\"isProduction\":1,\"identifier\":\"aafkoZSeRe5M\",\"deprecated\":\"0\",\"updated\":\"2022-02-22 11:31:28\",\"title\":\"filterContext\",\"created\":\"2022-02-22 11:31:28\",\"category\":\"filterContext\",\"summary\":\"\",\"contributor\":\"/gdc/account/profile/b4ca6d6ec31ff764130a13893950091c\",\"author\":\"/gdc/account/profile/b4ca6d6ec31ff764130a13893950091c\",\"tags\":\"\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1254\"}}}]}}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+            "vary": "origin,X-GDC-VERSION",
+            "content-type": "application/json;charset=UTF-8",
+            "cache-control": "no-cache, no-store, must-revalidate"
+        }
+    },
+    "uuid": "311df3b1-903e-4637-86d1-b6d900f4231d",
+    "persistent": true,
+    "insertionIndex": 93
+}

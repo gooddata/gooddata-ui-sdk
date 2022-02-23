@@ -1,5 +1,10 @@
 // (C) 2021-2022 GoodData Corporation
 import React from "react";
+<<<<<<< HEAD
+=======
+import { AttributeFilterButtonPreselectedScenario } from "../components/Scenarios/Filters/AttributeFilterButtonPreselectedScenario";
+import { AttributeFilterButtonScenario } from "../components/Scenarios/Filters/AttributeFilterButtonScenario";
+>>>>>>> 30491dc6c (Refactoring of the AttributeFilterButton E2E tests)
 
 import { DashboardScenario } from "../components/Scenarios/Dashboard/DashboardScenario";
 import { DateFilterScenario } from "../components/Scenarios/Filters/DateFilterScenario";

@@ -1,7 +1,7 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-
+import camelCase from "lodash/camelCase";
 export interface ISource {
     title?: string;
     uri?: string;
@@ -29,7 +29,7 @@ export class AttributeFilterItem extends React.PureComponent<IAttributeFilterIte
         const classes = cx(
             "gd-list-item",
             "s-attribute-filter-list-item",
-            `s-attribute-filter-list-item-${item.source.title}`,
+            `s-attribute-filter-list-item-${camelCase(item.source.title)}`,
             {
                 "s-attribute-filter-list-item-selected": item.selected,
             },
