@@ -25,7 +25,7 @@ interface IUseLoadMissingDataProps {
         | "offset"
         | "limit"
     >;
-    callback: (
+    onLoadMissingDataSuccess: (
         elements: IElementsQueryResult,
         parentFilters: IAttributeFilter[],
         isElementsByRef: boolean,
@@ -72,7 +72,7 @@ const prepareElementsQuery = (
  * Fetches missing attribute elements on scrolling.
  */
 export const useLoadMissingData = (props: IUseLoadMissingDataProps) => {
-    const { context, state, ownProps, callback } = props;
+    const { context, state, ownProps, onLoadMissingDataSuccess } = props;
 
     const promise =
         needsLoading(state.validOptions, state.offset, state.limit) || state.needsReloadAfterSearch
@@ -95,7 +95,7 @@ export const useLoadMissingData = (props: IUseLoadMissingDataProps) => {
         {
             promise,
             onSuccess: (newElements) => {
-                callback(newElements, ownProps.parentFilters, ownProps.isElementsByRef);
+                onLoadMissingDataSuccess(newElements, ownProps.parentFilters, ownProps.isElementsByRef);
             },
         },
         [

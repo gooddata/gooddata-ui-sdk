@@ -13,7 +13,7 @@ interface IUseFetchInitialElementsProps {
     context: Omit<AttributeFilterButtonContextProps, "filterObjRef">;
     state: Pick<IAttributeFilterButtonState, "selectedFilterOptions" | "appliedFilterOptions">;
     isElementsByRef: boolean;
-    callback: (elements: IElementsQueryResult, isElementsByRef: boolean) => void;
+    onFetchInitialElementsSuccess: (elements: IElementsQueryResult, isElementsByRef: boolean) => void;
 }
 
 const prepareElementsTitleQuery = (
@@ -46,7 +46,7 @@ const prepareElementsTitleQuery = (
  * Fetches data for the initial selection.
  */
 export const useFetchInitialElements = (props: IUseFetchInitialElementsProps) => {
-    const { context, state, callback, isElementsByRef } = props;
+    const { context, state, onFetchInitialElementsSuccess, isElementsByRef } = props;
 
     const filterObjRef = useMemo(
         () => getObjRef(context.filter, context.identifier),
@@ -66,7 +66,7 @@ export const useFetchInitialElements = (props: IUseFetchInitialElementsProps) =>
                           context.identifier,
                       ).query(),
             onSuccess: (initialElements) => {
-                callback(initialElements, isElementsByRef);
+                onFetchInitialElementsSuccess(initialElements, isElementsByRef);
             },
         },
         [

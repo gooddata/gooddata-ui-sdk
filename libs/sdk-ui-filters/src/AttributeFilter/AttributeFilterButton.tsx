@@ -233,7 +233,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             appliedFilterOptions: state.appliedFilterOptions,
         },
         isElementsByRef,
-        callback: mapInitialSelectionElements,
+        onFetchInitialElementsSuccess: mapInitialSelectionElements,
     });
 
     /**
@@ -260,7 +260,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             parentFilterOverAttribute: props.parentFilterOverAttribute,
             isElementsByRef,
         },
-        callback: resolveAttributeElements,
+        onLoadMissingDataSuccess: resolveAttributeElements,
     });
 
     const {
