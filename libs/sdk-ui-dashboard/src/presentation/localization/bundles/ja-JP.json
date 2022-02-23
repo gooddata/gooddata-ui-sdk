@@ -153,5 +153,6 @@
     "attributesDropdown.attributeNameWithData": "データの",
     "attributesDropdown.noConnectionMessage": "<strong>{childTitle}</strong> フィルターが無効 <strong>{parentTitle}</strong>。フィルターアトリビュートとデータモデルが無関係です。",
     "attributesDropdown.filterConfiguredMessage": "直接フィルターか、他のフィルターで<strong>{parentTitle}</strong> すでにフィルター済み <strong>{childTitle}</strong>。",
-    "attributesDropdown.removeTooltip": "ダッシュボードから削除"
+    "attributesDropdown.removeTooltip": "ダッシュボードから削除",
+    "error": "エラー"
 }

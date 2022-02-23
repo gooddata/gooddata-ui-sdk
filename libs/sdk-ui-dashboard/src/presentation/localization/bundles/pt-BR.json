@@ -153,5 +153,6 @@
     "attributesDropdown.attributeNameWithData": "com dados de",
     "attributesDropdown.noConnectionMessage": "<strong>{childTitle}</strong> não pode ser filtrado por <strong>{parentTitle}</strong>. Não há conexão entre os atributos do filtro e o modelo de dados.",
     "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> já foi filtrado por <strong>{childTitle}</strong> diretamente ou por meio de outros filtros.",
-    "attributesDropdown.removeTooltip": "Remover do dashboard"
+    "attributesDropdown.removeTooltip": "Remover do dashboard",
+    "error": "Erro"
 }

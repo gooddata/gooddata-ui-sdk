@@ -153,5 +153,6 @@
     "attributesDropdown.attributeNameWithData": "с данными",
     "attributesDropdown.noConnectionMessage": "<strong>{childTitle}</strong> нельзя фильтровать по <strong>{parentTitle}</strong>. В модели данных нет связи между атрибутами фильтра.",
     "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> уже отфильтрован фильтром <strong>{childTitle}</strong> напрямую или через другие фильтры.",
-    "attributesDropdown.removeTooltip": "Удалить с информационной панели"
+    "attributesDropdown.removeTooltip": "Удалить с информационной панели",
+    "error": "Ошибка"
 }

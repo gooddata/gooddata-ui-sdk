@@ -827,5 +827,10 @@
         "value": "Remove from dashboard",
         "comment": "Tooltip text of button for deleting filter",
         "limit": 0
+    },
+    "error": {
+        "value": "Error",
+        "comment": "",
+        "limit": 0
     }
 }
