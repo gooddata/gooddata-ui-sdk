@@ -1,3 +1,4 @@
+// (C) 2022 GoodData Corporation
 export class AttributeFilterButton {
     open(): this {
         cy.get(".s-attribute-filter").click();

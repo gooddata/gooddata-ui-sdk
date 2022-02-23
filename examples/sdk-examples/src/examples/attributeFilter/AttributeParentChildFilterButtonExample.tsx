@@ -39,10 +39,22 @@ export const AttributeParentChildFilterButtonExample: React.FC = () => {
         console.info("AttributeFilterExample onLoadingChanged", ...params);
     };
 
+    /**
+     * What happens with the component depending on the child filters is handled outside the AttributeFilterButton component.
+     */
+    const onParentApply = (filter: IAttributeFilter) => {
+        setFilter(
+            newNegativeAttributeFilter(attributeDisplayFormRef(Md.LocationCity), {
+                uris: [],
+            }),
+        );
+        setParentFilter(filter);
+    };
+
     return (
         <div className="s-attribute-filter">
             <div style={{ display: "flex" }}>
-                <AttributeFilterButton filter={parentFilter} onApply={setParentFilter} />
+                <AttributeFilterButton filter={parentFilter} onApply={onParentApply} />
                 <AttributeFilterButton
                     filter={filter}
                     parentFilters={parentFilter ? [parentFilter] : []}
