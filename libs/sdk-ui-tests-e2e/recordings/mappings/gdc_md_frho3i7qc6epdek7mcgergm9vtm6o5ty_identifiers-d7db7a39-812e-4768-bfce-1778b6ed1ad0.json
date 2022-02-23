@@ -1,0 +1,28 @@
+{
+    "id": "d7db7a39-812e-4768-bfce-1778b6ed1ad0",
+    "name": "gdc_md_frho3i7qc6epdek7mcgergm9vtm6o5ty_identifiers",
+    "request": {
+        "url": "/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/identifiers",
+        "method": "POST",
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"identifierToUri\":[\"label.opportunity.id.name\"]}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"identifiers\":[{\"identifier\":\"label.opportunity.id.name\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1064\"}]}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+            "vary": "origin,X-GDC-VERSION",
+            "content-type": "application/json;charset=UTF-8",
+            "cache-control": "no-cache, no-store, must-revalidate"
+        }
+    },
+    "uuid": "d7db7a39-812e-4768-bfce-1778b6ed1ad0",
+    "persistent": true,
+    "insertionIndex": 126
+}

@@ -1,3 +1,4 @@
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { BackendProvider } from "@gooddata/sdk-ui";
 

@@ -7,12 +7,13 @@ import stringify from "json-stable-stringify";
 import { getObjRef } from "../../utils/AttributeFilterUtils";
 import { AttributeFilterButtonContextProps } from "./types";
 import { IAttributeFilterButtonState } from "./useAttributeFilterButtonState";
-import { IAttributeFilter } from "@gooddata/sdk-model";
+import { filterAttributeElements, IAttributeFilter, isAttributeElementsByRef } from "@gooddata/sdk-model";
 
 interface IUseFetchInitialElementsProps {
     context: Omit<AttributeFilterButtonContextProps, "filterObjRef">;
     state: Pick<IAttributeFilterButtonState, "selectedFilterOptions" | "appliedFilterOptions">;
-    callback: (elements: IElementsQueryResult) => void;
+    isElementsByRef: boolean;
+    onFetchInitialElementsSuccess: (elements: IElementsQueryResult, isElementsByRef: boolean) => void;
 }
 
 const prepareElementsTitleQuery = (
@@ -22,21 +23,30 @@ const prepareElementsTitleQuery = (
     currentFilter: IAttributeFilter,
     identifier: string,
 ) => {
+    const supportsElementUris = backend.capabilities.supportsElementUris;
+    const isElementsByRef = isAttributeElementsByRef(filterAttributeElements(currentFilter));
+
+    const options = {
+        uris: appliedElements
+            .map((element) => {
+                return supportsElementUris && isElementsByRef ? element.uri : element.title;
+            })
+            .filter(Boolean),
+    };
+
     return backend
         .workspace(workspace)
         .attributes()
         .elements()
         .forDisplayForm(getObjRef(currentFilter, identifier))
-        .withOptions({
-            uris: appliedElements.map((opt) => opt.uri),
-        });
+        .withOptions(options);
 };
 
 /**
  * Fetches data for the initial selection.
  */
 export const useFetchInitialElements = (props: IUseFetchInitialElementsProps) => {
-    const { context, state, callback } = props;
+    const { context, state, onFetchInitialElementsSuccess, isElementsByRef } = props;
 
     const filterObjRef = useMemo(
         () => getObjRef(context.filter, context.identifier),
@@ -56,7 +66,7 @@ export const useFetchInitialElements = (props: IUseFetchInitialElementsProps) =>
                           context.identifier,
                       ).query(),
             onSuccess: (initialElements) => {
-                callback(initialElements);
+                onFetchInitialElementsSuccess(initialElements, isElementsByRef);
             },
         },
         [

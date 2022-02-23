@@ -199,3 +199,18 @@ export const getSubtitle = (props: GetSubtitleProps) => {
     }
     return "";
 };
+
+export const checkFilterSetupForBackend = (filter: IAttributeFilter, backend: IAnalyticalBackend): void => {
+    const isSupportElementUris = backend.capabilities.supportsElementUris;
+    const isElementsByRef = isAttributeElementsByRef(filterAttributeElements(filter));
+
+    if (isSupportElementUris && !isElementsByRef) {
+        // eslint-disable-next-line no-console
+        console.error("The attribute elements must be defined by URIs for this backend.");
+    }
+
+    if (!isSupportElementUris && isElementsByRef) {
+        // eslint-disable-next-line no-console
+        console.error("The current backend does not support attribute elements defined by URIs.");
+    }
+};

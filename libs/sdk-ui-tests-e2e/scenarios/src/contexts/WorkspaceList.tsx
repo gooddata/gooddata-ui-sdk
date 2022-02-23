@@ -1,3 +1,4 @@
+// (C) 2020-2022 GoodData Corporation
 import React, { createContext, useState, useContext, useEffect } from "react";
 import last from "lodash/last";
 import isEmpty from "lodash/isEmpty";

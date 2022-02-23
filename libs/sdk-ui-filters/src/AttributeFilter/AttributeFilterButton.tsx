@@ -184,7 +184,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         onRangeChange,
         onDropdownClosed,
         onDropdownOpen,
-    } = useAttributeFilterButtonState(currentFilter);
+    } = useAttributeFilterButtonState(currentFilter, backendWithTelemetry);
 
     const resolvedParentFilters = useResolveValueWithPlaceholders(props.parentFilters);
 
@@ -232,7 +232,8 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             selectedFilterOptions: state.selectedFilterOptions,
             appliedFilterOptions: state.appliedFilterOptions,
         },
-        callback: mapInitialSelectionElements,
+        isElementsByRef,
+        onFetchInitialElementsSuccess: mapInitialSelectionElements,
     });
 
     /**
@@ -259,7 +260,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             parentFilterOverAttribute: props.parentFilterOverAttribute,
             isElementsByRef,
         },
-        callback: resolveAttributeElements,
+        onLoadMissingDataSuccess: resolveAttributeElements,
     });
 
     const {
