@@ -150,7 +150,10 @@ export function* resolveDashboardConfig(
         call(resolveColorPalette, ctx, config),
     ]);
 
-    const [validDateFilterConfig, configValidation] = getValidDateFilterConfig(dateFilterConfig, settings);
+    const [validDateFilterConfig, configValidation] = getValidDateFilterConfig(
+        dateFilterConfig,
+        settings.settings,
+    );
 
     if (configValidation !== "Valid") {
         yield dispatchDashboardEvent(dateFilterValidationFailed(ctx, configValidation, cmd.correlationId));
