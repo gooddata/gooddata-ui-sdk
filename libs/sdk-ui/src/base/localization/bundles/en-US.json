@@ -431,7 +431,6 @@
         "comment": "Menu option that adds row aggregation (sub-total) for specific attribute to the table. Example: 'Sum within Attribute A'. Don't translate placeholder '{attributeName}'.",
         "limit": 50
     },
-
     "apply": {
         "value": "Apply",
         "comment": "",
@@ -472,7 +471,6 @@
         "comment": "Do not translate non-breakable space '{nbsp}'",
         "limit": 0
     },
-
     "filters.thisDay.title": {
         "value": "Today",
         "comment": "",
@@ -598,7 +596,6 @@
         "comment": "In '{n, plural, one {NEXT # YEAR} other {NEXT # YEARS}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
         "limit": 0
     },
-
     "filters.interval.days.past": {
         "value": "From {from} to {to} {to, plural, one {day} other {days}} ago",
         "comment": "Example: 'From 5 to 3 days ago'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {DAY} other {DAYS}}' translate only uppercase words.",
@@ -724,7 +721,6 @@
         "comment": "Example: 'From 5 years ago to 3 years ahead'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {YEAR} other {YEARS}}' translate only uppercase words.",
         "limit": 0
     },
-
     "filters.granularity.days": {
         "value": "Days",
         "comment": "",
@@ -760,7 +756,6 @@
         "comment": "Displayed as placeholder in static period inputs where user enters date",
         "limit": 0
     },
-
     "filters.floatingRange": {
         "value": "Floating range",
         "comment": "",
@@ -916,13 +911,11 @@
         "comment": "",
         "limit": 0
     },
-
     "filters.excludeCurrentPeriod.unavailable": {
         "value": "Not available for the selected date range",
         "comment": "",
         "limit": 0
     },
-
     "filters.staticPeriod": {
         "value": "Static period",
         "comment": "",
@@ -1259,6 +1252,41 @@
     "shareDialog.share.grantee.item.remove.selection": {
         "value": "Remove from selection.",
         "comment": "Text of the tooltip shown above button that removes user or group from unsaved selection of newly added grantees that will gain access right to the dashboard after changes in share dialog are saved.",
+        "limit": 0
+    },
+    "sorting.dropdown.header": {
+        "value": "Sort insight",
+        "comment": "The title of sorting dropdown where you can choose which sort options you want to use. For example sort by attribute A1.",
+        "limit": 0
+    },
+    "sorting.type.alphabetical.asc": {
+        "value": "A to Z",
+        "comment": "Title of sort option when is sorted alphabetically and in ascending order.",
+        "limit": 0
+    },
+    "sorting.type.alphabetical.desc": {
+        "value": "Z to A",
+        "comment": "Title of sort option when is sorted alphabetically and in descencing order.",
+        "limit": 0
+    },
+    "sorting.type.numerical.asc": {
+        "value": "Smallest to largest",
+        "comment": "Title of sort option when is sorted numerically and in ascending order.",
+        "limit": 0
+    },
+    "sorting.type.numerical.desc": {
+        "value": "Largest to smallest",
+        "comment": "Title of sort option when is sorted alphabetically and in descending order.",
+        "limit": 0
+    },
+    "sorting.sum.of.all.measure._measure": {
+        "value": "Sum of all measures (total)",
+        "comment": "Title of sort option when is sorted by sum of all measures.",
+        "limit": 0
+    },
+    "sorting.sum.of.all.measure._metric": {
+        "value": "Sum of all metrics (total)",
+        "comment": "Title of sort option when is sorted by sum of all metrics.",
         "limit": 0
     }
 }

@@ -3,13 +3,14 @@ import React from "react";
 import { render } from "react-dom";
 import isEmpty from "lodash/isEmpty";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+import { ISortConfig } from "@gooddata/sdk-ui-kit";
 import { IInsightDefinition, localIdRef, newAttributeAreaSort, newMeasureSort } from "@gooddata/sdk-model";
 import { PluggableColumnBarCharts } from "../PluggableColumnBarCharts";
 import { IReferencePoint, IVisConstruct } from "../../../interfaces/Visualization";
 import { BAR_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 import BarChartConfigurationPanel from "../../configurationPanels/BarChartConfigurationPanel";
 import { AXIS, AXIS_NAME } from "../../../constants/axis";
-import { ISortConfig, newMeasureSortSuggestion } from "../../../interfaces/SortConfig";
+import { newMeasureSortSuggestion } from "../../../interfaces/SortConfig";
 import { getBucketItems } from "../../../utils/bucketHelper";
 import { canSortStackTotalValue } from "./sortHelpers";
 

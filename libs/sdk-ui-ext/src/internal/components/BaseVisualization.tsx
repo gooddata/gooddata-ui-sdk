@@ -8,6 +8,7 @@ import {
     visClassUrl,
     IExecutionConfig,
 } from "@gooddata/sdk-model";
+import { ISortConfig } from "@gooddata/sdk-ui-kit";
 import React from "react";
 import { render } from "react-dom";
 import { v4 as uuidv4 } from "uuid";
@@ -37,7 +38,6 @@ import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
 import noop from "lodash/noop";
 import omit from "lodash/omit";
-import { ISortConfig } from "../interfaces/SortConfig";
 
 export interface IBaseVisualizationProps extends IVisCallbacks {
     backend: IAnalyticalBackend;

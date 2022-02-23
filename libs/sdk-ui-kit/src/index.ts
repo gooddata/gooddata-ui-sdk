@@ -49,3 +49,4 @@ export * from "./ColorPicker";
 export * from "./FilterLabel";
 export * from "./Menu";
 export * from "./ScrollGradient";
+export * from "./ChartSorting";

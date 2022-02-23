@@ -41,6 +41,17 @@ $base_path: "~@gooddata/sdk-ui-kit/styles";
     }
 }
 
+.gd-icon-aggregation {
+    @include gd-svg-icon("sum");
+
+    &.gd-button-small,
+    &.gd-button-link {
+        &::before {
+            margin-top: -1px;
+        }
+    }
+}
+
 .gd-icon-metric {
     @include gd-svg-icon("metric");
 
