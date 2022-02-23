@@ -153,5 +153,6 @@
     "attributesDropdown.attributeNameWithData": "met gegevens van",
     "attributesDropdown.noConnectionMessage": "<strong>{childTitle}</strong> kan niet worden gefilterd op <strong>{parentTitle}</strong>. Er is geen verbinding tussen de filterattributen in het gegevensmodel.",
     "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> is al gefilterd op <strong>{childTitle}</strong>, rechtstreeks of via andere filters.",
-    "attributesDropdown.removeTooltip": "Verwijderen van dashboard"
+    "attributesDropdown.removeTooltip": "Verwijderen van dashboard",
+    "error": "Fout"
 }
