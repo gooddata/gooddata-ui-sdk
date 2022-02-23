@@ -1,5 +1,6 @@
+// (C) 2022 GoodData Corporation
 import * as Navigation from "../../tools/navigation";
-import { AttributeFilterButton } from "../../tools/attributeFIlterButton";
+import { AttributeFilterButton } from "../../tools/attributeFilterButton";
 import camelCase from "lodash/camelCase";
 
 describe("AttributeFilterButton", () => {
