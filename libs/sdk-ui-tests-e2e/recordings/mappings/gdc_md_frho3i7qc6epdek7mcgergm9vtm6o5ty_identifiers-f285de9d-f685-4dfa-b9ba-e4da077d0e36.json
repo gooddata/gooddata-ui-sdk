@@ -1,0 +1,28 @@
+{
+    "id": "f285de9d-f685-4dfa-b9ba-e4da077d0e36",
+    "name": "gdc_md_frho3i7qc6epdek7mcgergm9vtm6o5ty_identifiers",
+    "request": {
+        "url": "/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/identifiers",
+        "method": "POST",
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"identifierToUri\":[\"aabko5VzQ210\"]}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"identifiers\":[{\"identifier\":\"aabko5VzQ210\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1255\"}]}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+            "vary": "origin,X-GDC-VERSION",
+            "content-type": "application/json;charset=UTF-8",
+            "cache-control": "no-cache, no-store, must-revalidate"
+        }
+    },
+    "uuid": "f285de9d-f685-4dfa-b9ba-e4da077d0e36",
+    "persistent": true,
+    "insertionIndex": 64
+}

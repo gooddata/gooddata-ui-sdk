@@ -1,0 +1,28 @@
+{
+    "id": "f8b4e073-f1b2-4183-bf5f-70dab593e5f1",
+    "name": "gdc_app_projects_frho3i7qc6epdek7mcgergm9vtm6o5ty_executeafm",
+    "request": {
+        "url": "/gdc/app/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/executeAfm",
+        "method": "POST",
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"execution\":{\"afm\":{\"measures\":[{\"localIdentifier\":\"de3c0eef644a4145ab4d9c29de543d27\",\"definition\":{\"measure\":{\"item\":{\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1249\"}}}}],\"filters\":[{\"relativeDateFilter\":{\"dataSet\":{\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/558\"},\"granularity\":\"GDC.time.date\",\"from\":-6,\"to\":0}}]},\"resultSpec\":{\"dimensions\":[{\"itemIdentifiers\":[\"measureGroup\"]}]}}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 201,
+        "body": "{\"executionResponse\":{\"dimensions\":[{\"headers\":[{\"measureGroupHeader\":{\"items\":[{\"measureHeaderItem\":{\"name\":\"Won\",\"format\":\"$#,##0.00\",\"localIdentifier\":\"de3c0eef644a4145ab4d9c29de543d27\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1249\",\"identifier\":\"acugFHNJgsBy\"}}]}}]}],\"links\":{\"executionResult\":\"/gdc/app/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/executionResults/9129356705671674880?c=c5ecadd6063526df18b3725d644dcc41&q=eAE1jr0OgkAQhN9lsSQe%2FkHgBYyNnbEwFnh3IMiyuCwaQnh37zR2M9%2FMJDOBpmbAtofscg2B6e0V%0AoBWu9J5p6MDhn%2FXJBAUx5gIZLIIwCKJlFMG%2FcDAOq9JohUYVfKdNlTx1bDtjHwnq0nKJ6Uswpp2M%0Aim61Wq23qZv3A2LOo1s7I5U01skztTD7T7YjlmOOHp7ab2xg%2FgA8wjzy%0A&offset=0%2C0&limit=1000%2C1000&dimensions=1&totals=0\"}}}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Content-Type": "application/json;charset=utf-8"
+        }
+    },
+    "uuid": "f8b4e073-f1b2-4183-bf5f-70dab593e5f1",
+    "persistent": true,
+    "insertionIndex": 100
+}

@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import React from "react";
-import { AttributeFilterButtonPreselectedScenario } from "../components/Scenarios/AttributeFilterButtonPreselectedScenario";
-import { AttributeFilterButtonScenario } from "../components/Scenarios/AttributeFilterButtonScenario";
+import { AttributeFilterButtonPreselectedScenario } from "../components/Scenarios/Filters/AttributeFilterButtonPreselectedScenario";
+import { AttributeFilterButtonScenario } from "../components/Scenarios/Filters/AttributeFilterButtonScenario";
 
 import { DashboardScenario } from "../components/Scenarios/Dashboard/DashboardScenario";
 import { DateFilterScenario } from "../components/Scenarios/Filters/DateFilterScenario";

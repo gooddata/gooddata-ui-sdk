@@ -1,0 +1,28 @@
+{
+    "id": "1005b2ea-42d7-4008-9d8c-60071219bd68",
+    "name": "gdc_md_frho3i7qc6epdek7mcgergm9vtm6o5ty_using2",
+    "request": {
+        "url": "/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/using2",
+        "method": "POST",
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"inUse\":{\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1259\",\"types\":[\"visualizationObject\"],\"nearest\":0}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"entries\":[{\"contributor\":\"/gdc/account/profile/b4ca6d6ec31ff764130a13893950091c\",\"updated\":\"2022-02-22 12:35:25\",\"unlisted\":0,\"category\":\"visualizationObject\",\"link\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1256\",\"deprecated\":\"0\",\"summary\":\"\",\"identifier\":\"aabkE4IhTBg5\",\"locked\":0,\"created\":\"2022-02-22 12:34:56\",\"title\":\"Implicit drill to attribute url\",\"author\":\"/gdc/account/profile/b4ca6d6ec31ff764130a13893950091c\"}]}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+            "vary": "origin,X-GDC-VERSION",
+            "content-type": "application/json;charset=UTF-8",
+            "cache-control": "no-cache, no-store, must-revalidate"
+        }
+    },
+    "uuid": "1005b2ea-42d7-4008-9d8c-60071219bd68",
+    "persistent": true,
+    "insertionIndex": 106
+}

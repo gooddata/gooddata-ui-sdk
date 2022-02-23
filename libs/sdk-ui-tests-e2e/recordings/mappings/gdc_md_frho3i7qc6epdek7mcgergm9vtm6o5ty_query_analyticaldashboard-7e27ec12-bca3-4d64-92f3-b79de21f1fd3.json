@@ -1,0 +1,21 @@
+{
+    "id": "7e27ec12-bca3-4d64-92f3-b79de21f1fd3",
+    "name": "gdc_md_frho3i7qc6epdek7mcgergm9vtm6o5ty_query_analyticaldashboard",
+    "request": {
+        "url": "/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/query/analyticaldashboard?showAll=1",
+        "method": "GET"
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"query\":{\"entries\":[{\"deprecated\":\"0\",\"link\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1255\",\"category\":\"analyticalDashboard\",\"unlisted\":0,\"contributor\":\"/gdc/account/profile/b4ca6d6ec31ff764130a13893950091c\",\"updated\":\"2022-02-22 11:31:49\",\"author\":\"/gdc/account/profile/b4ca6d6ec31ff764130a13893950091c\",\"title\":\"E2E RAIL Dashboard Tests\",\"isProduction\":1,\"created\":\"2022-02-22 11:31:28\",\"locked\":0,\"identifier\":\"aabko5VzQ210\",\"tags\":\"\",\"summary\":\"\"},{\"updated\":\"2022-02-22 12:39:41\",\"contributor\":\"/gdc/account/profile/b4ca6d6ec31ff764130a13893950091c\",\"unlisted\":0,\"category\":\"analyticalDashboard\",\"link\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1259\",\"deprecated\":\"0\",\"tags\":\"\",\"summary\":\"\",\"identifier\":\"aackEGSRSdLz\",\"created\":\"2022-02-22 12:35:56\",\"locked\":0,\"isProduction\":1,\"title\":\"Implicit drill to attribute url\",\"author\":\"/gdc/account/profile/b4ca6d6ec31ff764130a13893950091c\"}],\"meta\":{\"title\":\"List of analyticaldashboard\",\"category\":\"query\",\"summary\":\"Metadata Query Resources for project 'frho3i7qc6epdek7mcgergm9vtm6o5ty'\"}}}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+            "vary": "origin,X-GDC-VERSION",
+            "content-type": "application/json;charset=UTF-8",
+            "cache-control": "no-cache, no-store, must-revalidate"
+        }
+    },
+    "uuid": "7e27ec12-bca3-4d64-92f3-b79de21f1fd3",
+    "persistent": true,
+    "insertionIndex": 83
+}

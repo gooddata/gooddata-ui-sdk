@@ -1,0 +1,19 @@
+{
+    "id": "c9c92a10-8721-4769-a47e-77b89973dedd",
+    "name": "gdc_projects_frho3i7qc6epdek7mcgergm9vtm6o5ty_stylesettings",
+    "request": {
+        "url": "/gdc/projects/frho3i7qc6epdek7mcgergm9vtm6o5ty/styleSettings",
+        "method": "GET"
+    },
+    "response": {
+        "status": 204,
+        "headers": {
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+            "vary": "origin,X-GDC-VERSION",
+            "cache-control": "no-cache, no-store, must-revalidate"
+        }
+    },
+    "uuid": "c9c92a10-8721-4769-a47e-77b89973dedd",
+    "persistent": true,
+    "insertionIndex": 66
+}

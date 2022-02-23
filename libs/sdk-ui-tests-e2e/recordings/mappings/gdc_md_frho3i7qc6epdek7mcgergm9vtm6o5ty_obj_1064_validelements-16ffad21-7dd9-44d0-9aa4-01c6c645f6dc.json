@@ -1,0 +1,28 @@
+{
+    "id": "16ffad21-7dd9-44d0-9aa4-01c6c645f6dc",
+    "name": "gdc_md_frho3i7qc6epdek7mcgergm9vtm6o5ty_obj_1064_validelements",
+    "request": {
+        "url": "/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1064/validElements?limit=50&offset=0",
+        "method": "POST",
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"validElementsRequest\":{\"uris\":[\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1063/elements?id=108112\"]}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"validElements\":{\"elementsMeta\":{\"filter\":\"\",\"attributeDisplayForm\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1064\",\"order\":\"asc\",\"attribute\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1063\"},\"paging\":{\"count\":1,\"total\":\"1\",\"offset\":\"0\"},\"items\":[{\"element\":{\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1063/elements?id=108112\",\"title\":\"Zoup! Fresh Soup > CompuSci\"}}]}}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+            "vary": "origin,X-GDC-VERSION",
+            "content-type": "application/json;charset=UTF-8",
+            "cache-control": "no-cache, no-store, must-revalidate"
+        }
+    },
+    "uuid": "16ffad21-7dd9-44d0-9aa4-01c6c645f6dc",
+    "persistent": true,
+    "insertionIndex": 129
+}

@@ -2,16 +2,16 @@ import * as Navigation from "../../tools/navigation";
 import { AttributeFilterButton } from "../../tools/attributeFIlterButton";
 import camelCase from "lodash/camelCase";
 
-describe("AttributeFilterButton", () => {
+describe("AttributeFilterButton with initial selection", () => {
     beforeEach(() => {
         cy.login();
 
-        Navigation.visit("filters/attribute-filter-button");
+        Navigation.visit("filters/attribute-filter-button-with-selection");
     });
 
     it("attribute filter loaded", () => {
         const attributeFilter = new AttributeFilterButton();
-        attributeFilter.titleHasText("Opportunity").subtitleHasText("All");
+        attributeFilter.titleHasText("Opportunity").subtitleHasText("Zoup! Fresh Soup > CompuSci");
     });
 
     it("attribute filter basic operations", () => {
@@ -27,6 +27,6 @@ describe("AttributeFilterButton", () => {
                 "1000Bulbs.com > Educationly, 1000Bulbs.com > PhoenixSoft, 101 Financial > Educationly",
             );
 
-        attributeFilter.clickCancel().subtitleHasText("All");
+        attributeFilter.clickCancel().subtitleHasText("Zoup! Fresh Soup > CompuSci");
     });
 });
