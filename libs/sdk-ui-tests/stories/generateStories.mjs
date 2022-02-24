@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import globby from "globby";
+import fg from "fast-glob";
 import path from "path";
 import { writeFile } from "fs/promises";
 import { fileURLToPath } from "url";
@@ -15,7 +15,7 @@ const targetFile = path.resolve(__dirname, "generated.stories.js");
  * This has to be done ahead of time, because the stuff in .storybook/main.js must be synchronous.
  */
 async function main() {
-    const files = await globby(storiesGlob, { cwd: path.resolve(__dirname) });
+    const files = await fg(storiesGlob, { cwd: path.resolve(__dirname) });
 
     const header = `// (C) ${new Date().getFullYear()} GoodData Corporation`;
 

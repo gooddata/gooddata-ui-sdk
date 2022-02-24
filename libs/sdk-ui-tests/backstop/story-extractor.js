@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import globby from "globby";
+import fg from "fast-glob";
 import path from "path";
 import { writeFile } from "fs/promises";
 import { existsSync } from "fs";
@@ -12,7 +12,7 @@ const targetFile = path.resolve(__dirname, "stories.json");
 describe("story-extractor", () => {
     it("dumps stories into a file", async () => {
         try {
-            const files = await globby(storiesGlob, { cwd: path.resolve(__dirname) });
+            const files = await fg(storiesGlob, { cwd: path.resolve(__dirname) });
 
             await Promise.all(
                 files.map((file) => {

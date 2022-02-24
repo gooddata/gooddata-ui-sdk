@@ -23278,7 +23278,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-tests.tgz:
-    resolution: {integrity: sha512-q34LEFaNZyboi1ag0U25lmaSlC2XA7Y5as+FjhUJ2mP74RAN8GCGPIR93p6SWsT3B++J2rZw/DMmMMoOlZbY9w==, tarball: file:projects/sdk-ui-tests.tgz}
+    resolution: {integrity: sha512-IonD1Um3+tsOzielByZrA0yuKw0r20dJkxP2sLa3H8BPDrnJSH1nPAXY0dlmnuyTWtF5gCXKc6O55HVh55lTKA==, tarball: file:projects/sdk-ui-tests.tgz}
     name: '@rush-temp/sdk-ui-tests'
     version: 0.0.0
     dependencies:
@@ -23327,7 +23327,7 @@ packages:
       eslint-plugin-react-hooks: 4.3.0_eslint@8.3.0
       eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       eslint-plugin-tsdoc: 0.2.14
-      globby: 11.0.4
+      fast-glob: 3.2.11
       jest: 27.4.2_ts-node@10.4.0
       jest-enzyme: 7.1.2_dcd819bac097a5b7573de7f8a8275d1c
       jest-junit: 3.7.0

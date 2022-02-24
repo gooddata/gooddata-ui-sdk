@@ -612,7 +612,7 @@
     },
     {
       "name": "fast-glob",
-      "allowedCategories": [ "tools" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "fast-levenshtein",
@@ -652,10 +652,6 @@
     },
     {
       "name": "full-icu",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "globby",
       "allowedCategories": [ "production" ]
     },
     {
