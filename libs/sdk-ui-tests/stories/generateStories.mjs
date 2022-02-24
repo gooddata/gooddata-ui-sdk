@@ -13,6 +13,7 @@ const targetFile = path.resolve(__dirname, "generated.stories.js");
 /**
  * Generate a barrel file with imports of all the story files.
  * This has to be done ahead of time, because the stuff in .storybook/main.js must be synchronous.
+ * It also helps jest avoiding need for async imports.
  */
 async function main() {
     const files = await fg(storiesGlob, { cwd: path.resolve(__dirname) });
@@ -21,10 +22,7 @@ async function main() {
 
     const requires = files.map((file) => `import "${file}";`).join("\n");
 
-    const footer = `import { populateStorybook } from "./_infra/storyRepository";
-populateStorybook();`;
-
-    const fileContents = `${header}\n${requires}\n\n${footer}`;
+    const fileContents = `${header}\n${requires}\n`;
 
     await writeFile(targetFile, fileContents, { encoding: "utf8" });
 }
