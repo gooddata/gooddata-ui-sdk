@@ -16,6 +16,8 @@ describe("story-extractor", () => {
 
             await Promise.all(
                 files.map((file) => {
+                    // eslint-disable-next-line no-console
+                    console.log("Importing story file: ", file);
                     return import(file);
                 }),
             );
