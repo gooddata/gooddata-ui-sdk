@@ -13,7 +13,7 @@ import {
     InputValidator,
 } from "../_base/inputHandling/validators";
 import isEmpty from "lodash/isEmpty";
-import { promptPluginParameters } from "../_base/terminal/prompts";
+import { promptDashboardIdWithoutChoice, promptPluginParameters } from "../_base/terminal/prompts";
 import { logError } from "../_base/terminal/loggers";
 import { convertToPluginEntrypoint, convertToPluginIdentifier } from "../_base/utils";
 
@@ -129,7 +129,10 @@ export async function getLinkCmdActionConfig(
 ): Promise<LinkCmdActionConfig> {
     const workspaceTargetConfig = await createWorkspaceTargetConfig(options);
     const { hostname, backend, credentials, env, packageJson } = workspaceTargetConfig;
-    const dashboard = getDashboardFromOptions(options) ?? env.DASHBOARD_ID;
+    const dashboard =
+        getDashboardFromOptions(options) ??
+        env.DASHBOARD_ID ??
+        (await promptDashboardIdWithoutChoice("Enter identifier of the dashboard to link the plugin to:"));
 
     const backendInstance = createBackend({
         hostname,
