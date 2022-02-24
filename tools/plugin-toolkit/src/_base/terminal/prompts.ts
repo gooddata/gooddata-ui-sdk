@@ -65,11 +65,11 @@ export async function promptWorkspaceIdWithoutChoice(): Promise<string> {
     return response.id;
 }
 
-export async function promptDashboardIdWithoutChoice(): Promise<string> {
+export async function promptDashboardIdWithoutChoice(wording: string): Promise<string> {
     const question: DistinctQuestion = {
         type: "input",
         name: "id",
-        message: `Enter identifier of a dashboard to use during plugin development:`,
+        message: wording,
     };
 
     const response = await prompt(question);

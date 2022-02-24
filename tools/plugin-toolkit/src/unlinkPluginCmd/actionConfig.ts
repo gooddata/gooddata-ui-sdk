@@ -13,6 +13,7 @@ import {
 } from "../_base/inputHandling/validators";
 import isEmpty from "lodash/isEmpty";
 import { convertToPluginEntrypoint, convertToPluginIdentifier } from "../_base/utils";
+import { promptDashboardIdWithoutChoice } from "../_base/terminal/prompts";
 
 export type UnlinkCmdActionConfig = WorkspaceTargetConfig & {
     /**
@@ -95,7 +96,12 @@ export async function getUnlinkCmdActionConfig(
 ): Promise<UnlinkCmdActionConfig> {
     const workspaceTargetConfig = await createWorkspaceTargetConfig(options);
     const { hostname, backend, credentials, env, packageJson } = workspaceTargetConfig;
-    const dashboard = getDashboardFromOptions(options) ?? env.DASHBOARD_ID;
+    const dashboard =
+        getDashboardFromOptions(options) ??
+        env.DASHBOARD_ID ??
+        (await promptDashboardIdWithoutChoice(
+            "Enter identifier of the dashboard to unlink the plugin from:",
+        ));
 
     const backendInstance = createBackend({
         hostname,

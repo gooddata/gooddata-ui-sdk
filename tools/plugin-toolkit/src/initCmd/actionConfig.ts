@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { ActionOptions, SupportedPackageManager, TargetAppLanguage, TargetBackendType } from "../_base/types";
 import {
     createHostnameValidator,
@@ -93,7 +93,11 @@ export async function getInitCmdActionConfig(
     const hostname = hostnameFromOptions ?? (await promptHostname(backend));
     const language = languageFromOptions ?? (await promptLanguage());
     const workspace = workspaceFromOptions ?? (await promptWorkspaceIdWithoutChoice());
-    const dashboard = dashboardFromOptions ?? (await promptDashboardIdWithoutChoice());
+    const dashboard =
+        dashboardFromOptions ??
+        (await promptDashboardIdWithoutChoice(
+            "Enter identifier of a dashboard to use during plugin development:",
+        ));
 
     // validate hostname once again; this is to catch the case when hostname is provided as
     // option but the backend is not and user is prompted for it. the user may select backend
