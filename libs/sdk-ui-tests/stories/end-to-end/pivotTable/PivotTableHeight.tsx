@@ -50,15 +50,7 @@ class PivotTableHeight extends Component {
     }
 }
 
-const screenshotProps = {
-    pivotTableHeight: {
-        clickSelector: "#s-height-change",
-        postInteractionWait: 200,
-    },
-};
-
 storiesOf(`${StoriesForEndToEndTests}/Pivot Table`).add(
     "complex table with multiple columns and with height change",
     () => <PivotTableHeight />,
-    { screenshot: screenshotProps },
 );
