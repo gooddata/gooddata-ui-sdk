@@ -13,7 +13,6 @@ interface ChartSortingProps {
     intl: IntlShape;
     onSelect: (item: ISortItem[]) => void;
 
-    disabledExplanationTooltip?: string;
     enableRenamingMeasureToMetric?: boolean;
 }
 
@@ -26,7 +25,6 @@ export const ChartSortingDropdown: React.FC<ChartSortingProps> = ({
     bucketItemNames,
     intl,
     onSelect,
-    disabledExplanationTooltip,
     enableRenamingMeasureToMetric,
 }) => {
     const onSortChanged = useCallback(
@@ -58,7 +56,6 @@ export const ChartSortingDropdown: React.FC<ChartSortingProps> = ({
                                     currentSortItem={currentSortItem}
                                     availableSorts={available}
                                     bucketItemNames={bucketItemNames}
-                                    disabledExplanationTooltip={disabledExplanationTooltip}
                                     intl={intl}
                                     onSelect={(newSort: ISortItem) => {
                                         onSortChanged(newSort, index);

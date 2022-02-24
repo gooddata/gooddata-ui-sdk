@@ -1,9 +1,14 @@
 // (C) 2022 GoodData Corporation
-import { ISortConfig } from "@gooddata/sdk-ui-kit";
+import { ChartSortingOwnProps } from "@gooddata/sdk-ui-kit";
 import { attributeLocalId, localIdRef, measureLocalId } from "@gooddata/sdk-model";
 import { ExperimentalMd } from "@gooddata/experimental-workspace";
 
-export const singleAttributeSortConfig: ISortConfig = {
+type SortingPropsMock = {
+    currentSort: ChartSortingOwnProps["currentSort"];
+    availableSorts: ChartSortingOwnProps["availableSorts"];
+};
+
+export const singleAttributeSortConfig: SortingPropsMock = {
     currentSort: [
         {
             attributeSortItem: {
@@ -21,11 +26,9 @@ export const singleAttributeSortConfig: ISortConfig = {
             },
         },
     ],
-    supported: true,
-    disabled: false,
 };
 
-export const singleAttributeWithSingleMetricSortConfig: ISortConfig = {
+export const singleAttributeWithSingleMetricSortConfig: SortingPropsMock = {
     currentSort: [
         {
             measureSortItem: {
@@ -61,11 +64,9 @@ export const singleAttributeWithSingleMetricSortConfig: ISortConfig = {
             ],
         },
     ],
-    supported: true,
-    disabled: false,
 };
 
-export const singleAttributeWithMultipleMetrics: ISortConfig = {
+export const singleAttributeWithMultipleMetrics: SortingPropsMock = {
     currentSort: [
         {
             measureSortItem: {
@@ -121,11 +122,9 @@ export const singleAttributeWithMultipleMetrics: ISortConfig = {
             ],
         },
     ],
-    supported: true,
-    disabled: false,
 };
 
-export const multipleAttributesMultipleMetricsSortConfig: ISortConfig = {
+export const multipleAttributesMultipleMetricsSortConfig: SortingPropsMock = {
     currentSort: [
         {
             attributeSortItem: {
@@ -195,6 +194,4 @@ export const multipleAttributesMultipleMetricsSortConfig: ISortConfig = {
             ],
         },
     ],
-    supported: true,
-    disabled: false,
 };

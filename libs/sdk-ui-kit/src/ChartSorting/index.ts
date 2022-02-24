@@ -3,7 +3,6 @@
 export { ChartSortingWithIntl, ChartSortingOwnProps, ChartSortingProps } from "./ChartSorting";
 
 export {
-    ISortConfig,
     IAvailableSortsGroup,
     MeasureSortSuggestion,
     SORT_TARGET_TYPE,

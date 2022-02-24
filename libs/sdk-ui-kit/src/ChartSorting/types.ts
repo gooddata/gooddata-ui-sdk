@@ -1,38 +1,16 @@
 // (C) 2022 GoodData Corporation
-import { ISortItem, LocalIdRef, SortDirection, IMeasureSortTarget } from "@gooddata/sdk-model";
+import { IMeasureSortTarget, LocalIdRef, SortDirection } from "@gooddata/sdk-model";
 
 /**
  * @internal
  */
-export interface ISortConfig {
-    /**
-     * Current sort - default or chosen from inside of visualization
-     */
-    currentSort: ISortItem[];
-    /**
-     * All available sorts for current buckets
-     * - should contain current sort too
-     */
-    availableSorts: IAvailableSortsGroup[];
-    /**
-     * Whether sorting is supported by viz
-     */
-    supported: boolean;
-    /**
-     * Whether sorting is disabled for current buckets
-     */
-    disabled: boolean;
-    /**
-     * When sorting is disabled, this can contain explanation of reason
-     */
-    disabledExplanation?: string;
-}
+export type MeasureSortSuggestion = {
+    type: "measureSort";
+} & IMeasureSortTarget;
 
 /**
- * Specifies set of available sorts for given level of hierarchy:
- * Specific attribute to which sort is related - for eg. multiple ViewBy attributes, each can specify its sorting
- */
-/**
+ * For now it is completely the same as IAvailableSortsGroup in sdk-ui-ext
+ *
  * @internal
  */
 export interface IAvailableSortsGroup {
@@ -54,13 +32,6 @@ export interface IAvailableSortsGroup {
      */
     explanation?: string;
 }
-
-/**
- * @internal
- */
-export type MeasureSortSuggestion = {
-    type: "measureSort";
-} & IMeasureSortTarget;
 
 /**
  * @internal

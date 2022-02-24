@@ -140,7 +140,8 @@ storiesOf(`${UiKit}/ChartSorting`)
                     <InternalIntlWrapper>
                         <ChartSortingWithIntl
                             bucketItemNames={bucketItemNames}
-                            sortConfig={multipleAttributesMultipleMetricsSortConfig}
+                            currentSort={multipleAttributesMultipleMetricsSortConfig.currentSort}
+                            availableSorts={multipleAttributesMultipleMetricsSortConfig.availableSorts}
                             onApply={action("apply")}
                             onCancel={action("cancel")}
                             enableRenamingMeasureToMetric={true}

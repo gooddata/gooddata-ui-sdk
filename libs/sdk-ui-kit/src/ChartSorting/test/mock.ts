@@ -1,9 +1,14 @@
 // (C) 2022 GoodData Corporation
 
 import { localIdRef } from "@gooddata/sdk-model";
-import { ISortConfig } from "../types";
+import { ChartSortingOwnProps } from "../ChartSorting";
 
-export const singleNormalAttributeSortConfig: ISortConfig = {
+type SortingPropsMock = {
+    currentSort: ChartSortingOwnProps["currentSort"];
+    availableSorts: ChartSortingOwnProps["availableSorts"];
+};
+
+export const singleNormalAttributeSortConfig: SortingPropsMock = {
     currentSort: [
         {
             attributeSortItem: {
@@ -21,11 +26,9 @@ export const singleNormalAttributeSortConfig: ISortConfig = {
             },
         },
     ],
-    supported: true,
-    disabled: false,
 };
 
-export const singleAreaAttributeSortConfig: ISortConfig = {
+export const singleAreaAttributeSortConfig: SortingPropsMock = {
     currentSort: [
         {
             attributeSortItem: {
@@ -44,11 +47,9 @@ export const singleAreaAttributeSortConfig: ISortConfig = {
             },
         },
     ],
-    supported: true,
-    disabled: false,
 };
 
-export const multipleAttributesSortConfig: ISortConfig = {
+export const multipleAttributesSortConfig: SortingPropsMock = {
     currentSort: [
         {
             measureSortItem: {
@@ -108,6 +109,4 @@ export const multipleAttributesSortConfig: ISortConfig = {
             },
         },
     ],
-    supported: true,
-    disabled: false,
 };

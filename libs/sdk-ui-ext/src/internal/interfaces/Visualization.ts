@@ -32,7 +32,7 @@ import {
     SdkErrorType,
     VisualizationEnvironment,
 } from "@gooddata/sdk-ui";
-import { ISortConfig } from "@gooddata/sdk-ui-kit";
+import { ISortConfig } from "./SortConfig";
 
 export type RenderFunction = (component: any, target: Element) => void;
 
