@@ -83,7 +83,7 @@
         "eslint-plugin-sonarjs": "^0.11.0",
         "fast-levenshtein": "^2.0.6",
         "fetch-mock": "^9.11.0",
-        "jest": "^27.4.1",
+        "jest": "^27.5.1",
         "jest-junit": "^3.0.0",
         "js-object-pretty-print": "^0.2.0",
         "lodash-webpack-plugin": "^0.11.0",

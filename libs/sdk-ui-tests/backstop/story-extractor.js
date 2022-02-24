@@ -1,4 +1,5 @@
 // (C) 2022 GoodData Corporation
+/* eslint-disable no-console */
 import fg from "fast-glob";
 import path from "path";
 import { writeFile } from "fs/promises";
@@ -12,11 +13,11 @@ const targetFile = path.resolve(__dirname, "stories.json");
 describe("story-extractor", () => {
     it("dumps stories into a file", async () => {
         try {
+            console.log("Going to extract stories for backstop...");
             const files = await fg(storiesGlob, { cwd: path.resolve(__dirname) });
 
             await Promise.all(
                 files.map((file) => {
-                    // eslint-disable-next-line no-console
                     console.log("Importing story file: ", file);
                     return import(file);
                 }),
@@ -27,7 +28,6 @@ describe("story-extractor", () => {
             await writeFile(targetFile, fileContents, { encoding: "utf-8" });
             expect(existsSync(targetFile)).toBe(true);
         } catch (e) {
-            // eslint-disable-next-line no-console
             console.error("Error extracting stories: ", e);
             throw e;
         }
