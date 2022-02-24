@@ -146,7 +146,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
                 visualizationClassChanged ? undefined : this.props,
             );
         } else if (propertiesChanged) {
-            this.triggerPropertiesChanged(nextProps);
+            this.triggerPropertiesChanged(nextProps, this.props);
         }
     }
 
@@ -268,11 +268,18 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         }
     }
 
-    private triggerPropertiesChanged(newProps: IBaseVisualizationProps) {
+    private triggerPropertiesChanged(
+        newProps: IBaseVisualizationProps,
+        currentProps?: IBaseVisualizationProps,
+    ) {
         const { referencePoint: newReferencePoint, onSortingChanged } = newProps;
         // Some of the properties eg. stacking of measures, dual axes influence sorting
         if (this.visualization && newReferencePoint && onSortingChanged) {
-            this.visualization.getSortConfig(newReferencePoint).then(onSortingChanged);
+            this.visualization
+                .getExtendedReferencePoint(newReferencePoint, currentProps && currentProps.referencePoint)
+                .then((extendedRefPoint) => {
+                    this.visualization.getSortConfig(extendedRefPoint).then(onSortingChanged);
+                });
         }
     }
 
