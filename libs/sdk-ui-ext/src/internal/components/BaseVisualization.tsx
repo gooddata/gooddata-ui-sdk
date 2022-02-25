@@ -8,7 +8,6 @@ import {
     visClassUrl,
     IExecutionConfig,
 } from "@gooddata/sdk-model";
-import { ISortConfig } from "@gooddata/sdk-ui-kit";
 import React from "react";
 import { render } from "react-dom";
 import { v4 as uuidv4 } from "uuid";
@@ -38,6 +37,7 @@ import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
 import noop from "lodash/noop";
 import omit from "lodash/omit";
+import { ISortConfig } from "../interfaces/SortConfig";
 
 export interface IBaseVisualizationProps extends IVisCallbacks {
     backend: IAnalyticalBackend;
@@ -129,7 +129,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
             nextProps.referencePoint,
         );
 
-        const propertiesChanged = BaseVisualization.propertiesHasChanged(
+        const propertiesControlsChanged = BaseVisualization.propertiesControlsHasChanged(
             this.props.referencePoint,
             nextProps.referencePoint,
         );
@@ -145,8 +145,9 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
                 // only pass current props if the visualization class is the same (see getExtendedReferencePoint JSDoc)
                 visualizationClassChanged ? undefined : this.props,
             );
-        } else if (propertiesChanged) {
-            this.triggerPropertiesChanged(nextProps);
+            // Some of the properties eg. stacking of measures, dual axes influence sorting
+        } else if (propertiesControlsChanged) {
+            this.triggerPropertiesChanged(nextProps, this.props);
         }
     }
 
@@ -268,11 +269,18 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         }
     }
 
-    private triggerPropertiesChanged(newProps: IBaseVisualizationProps) {
+    private triggerPropertiesChanged(
+        newProps: IBaseVisualizationProps,
+        currentProps?: IBaseVisualizationProps,
+    ) {
         const { referencePoint: newReferencePoint, onSortingChanged } = newProps;
         // Some of the properties eg. stacking of measures, dual axes influence sorting
         if (this.visualization && newReferencePoint && onSortingChanged) {
-            this.visualization.getSortConfig(newReferencePoint).then(onSortingChanged);
+            this.visualization
+                .getExtendedReferencePoint(newReferencePoint, currentProps && currentProps.referencePoint)
+                .then((extendedRefPoint) => {
+                    this.visualization.getSortConfig(extendedRefPoint).then(onSortingChanged);
+                });
         }
     }
 
@@ -283,11 +291,14 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         return !isEqual(omit(currentReferencePoint, "properties"), omit(nextReferencePoint, "properties"));
     }
 
-    private static propertiesHasChanged(
+    private static propertiesControlsHasChanged(
         currentReferencePoint: IReferencePoint,
         nextReferencePoint: IReferencePoint,
     ) {
-        return !isEqual(currentReferencePoint.properties, nextReferencePoint.properties);
+        return !isEqual(
+            currentReferencePoint?.properties?.controls,
+            nextReferencePoint?.properties?.controls,
+        );
     }
 
     private getVisualizationProps(): IVisProps {

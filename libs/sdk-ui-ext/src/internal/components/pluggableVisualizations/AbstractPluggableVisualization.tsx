@@ -18,7 +18,6 @@ import {
 import { findDerivedBucketItem, hasDerivedBucketItems, isDerivedBucketItem } from "../../utils/bucketHelper";
 import { IInsight, IInsightDefinition, insightHasDataDefined, insightProperties } from "@gooddata/sdk-model";
 import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { ISortConfig } from "@gooddata/sdk-ui-kit";
 import {
     DefaultLocale,
     GoodDataSdkError,
@@ -33,6 +32,7 @@ import {
 import { IntlShape } from "react-intl";
 import { createInternalIntl } from "../../utils/internalIntlProvider";
 import { getSupportedProperties } from "../../utils/propertiesHelper";
+import { ISortConfig } from "../../interfaces/SortConfig";
 
 export abstract class AbstractPluggableVisualization implements IVisualization {
     protected intl: IntlShape;

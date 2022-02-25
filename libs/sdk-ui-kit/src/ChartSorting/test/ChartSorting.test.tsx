@@ -51,7 +51,7 @@ const messages = pickCorrectWording(messagesMap[DefaultLocale], {
 
 const renderComponent = (props?: Partial<ChartSortingOwnProps>) => {
     const defaultProps: ChartSortingOwnProps = {
-        sortConfig: singleNormalAttributeSortConfig,
+        ...singleNormalAttributeSortConfig,
         bucketItemNames,
         onApply: noop,
         onCancel: noop,
@@ -81,7 +81,9 @@ describe("ChartSorting", () => {
     });
 
     describe("Attribute Area Sort with no metrics", () => {
-        const component = renderComponent({ sortConfig: singleAreaAttributeSortConfig });
+        const component = renderComponent({
+            ...singleAreaAttributeSortConfig,
+        });
 
         it("should render dialog with correct values and measure dropdown disabled", () => {
             expect(findSelector(component, "Sum of all metrics (total)")).toEqual(true);
@@ -105,7 +107,9 @@ describe("ChartSorting", () => {
     });
 
     describe("Attribute Area sort with multiple Metrics", () => {
-        const component = renderComponent({ sortConfig: multipleAttributesSortConfig });
+        const component = renderComponent({
+            ...multipleAttributesSortConfig,
+        });
 
         it("should render dialog with correct values", () => {
             const firstAttribute = component.find(buildAttributeButtonSelector(0)).hostNodes().text();
@@ -146,7 +150,10 @@ describe("ChartSorting", () => {
 
         it("should call onApply for simple normal attribute with correct SortItem payload", () => {
             const onApply = jest.fn();
-            const component = renderComponent({ onApply, sortConfig: singleNormalAttributeSortConfig });
+            const component = renderComponent({
+                onApply,
+                ...singleNormalAttributeSortConfig,
+            });
             component.find(".s-sorting-dropdown-apply").hostNodes().simulate("click");
 
             expect(onApply).toHaveBeenCalledWith([
@@ -161,7 +168,10 @@ describe("ChartSorting", () => {
 
         it("should call onApply for simple area attribute with correct SortItem payload", () => {
             const onApply = jest.fn();
-            const component = renderComponent({ onApply, sortConfig: singleAreaAttributeSortConfig });
+            const component = renderComponent({
+                onApply,
+                ...singleAreaAttributeSortConfig,
+            });
             component.find(".s-sorting-dropdown-apply").hostNodes().simulate("click");
 
             expect(onApply).toHaveBeenCalledWith([
@@ -177,7 +187,10 @@ describe("ChartSorting", () => {
 
         it("should call onApply for multiple attributes with correct SortItem payload", () => {
             const onApply = jest.fn();
-            const component = renderComponent({ onApply, sortConfig: multipleAttributesSortConfig });
+            const component = renderComponent({
+                onApply,
+                ...multipleAttributesSortConfig,
+            });
             component.find(".s-sorting-dropdown-apply").hostNodes().simulate("click");
 
             expect(onApply).toHaveBeenCalledWith([

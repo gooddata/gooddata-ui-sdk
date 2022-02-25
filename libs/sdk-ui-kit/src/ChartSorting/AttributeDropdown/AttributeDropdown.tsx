@@ -24,7 +24,6 @@ interface AttributeDropdownProps {
     index: number;
     onSelect: (item: ISortItem) => void;
 
-    disabledExplanationTooltip?: string;
     enableRenamingMeasureToMetric?: boolean;
 }
 
@@ -95,7 +94,6 @@ export const AttributeDropdown: React.FC<AttributeDropdownProps> = ({
     intl,
     index,
     onSelect,
-    disabledExplanationTooltip,
     enableRenamingMeasureToMetric,
 }) => {
     const [width, setWidth] = useState<number>(0);
@@ -190,7 +188,7 @@ export const AttributeDropdown: React.FC<AttributeDropdownProps> = ({
                     availableSorts={availableSorts}
                     bucketItemNames={bucketItemNames}
                     onSelect={measureSelectHandler}
-                    disabledExplanationTooltip={disabledExplanationTooltip}
+                    disabledExplanationTooltip={availableSorts.explanation}
                     enableRenamingMeasureToMetric={enableRenamingMeasureToMetric}
                 />
             )}

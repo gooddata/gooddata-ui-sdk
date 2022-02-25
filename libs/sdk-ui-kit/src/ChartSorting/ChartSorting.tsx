@@ -5,14 +5,16 @@ import { ISortItem } from "@gooddata/sdk-model";
 
 import { ChartSortingDropdownBody } from "./ChartSortingDropdownBody";
 import { ChartSortingDropdown } from "./ChartSortingDropdown";
-import { IBucketItemNames, ISortConfig } from "./types";
+import { IBucketItemNames, IAvailableSortsGroup } from "./types";
 import { Button } from "../Button";
 
 /**
  * @internal
  */
 export interface ChartSortingOwnProps {
-    sortConfig: ISortConfig;
+    currentSort: ISortItem[];
+    // Available Sorts - from which will generate dropdowns
+    availableSorts: IAvailableSortsGroup[];
     bucketItemNames: IBucketItemNames;
     onApply: (sortItems: ISortItem[]) => void;
     onCancel: () => void;
@@ -30,7 +32,8 @@ export type ChartSortingProps = ChartSortingOwnProps & WrappedComponentProps;
  * @internal
  */
 export const ChartSorting: React.FC<ChartSortingProps> = ({
-    sortConfig,
+    currentSort,
+    availableSorts,
     intl,
     bucketItemNames,
     onCancel,
@@ -38,15 +41,11 @@ export const ChartSorting: React.FC<ChartSortingProps> = ({
     onClose,
     enableRenamingMeasureToMetric,
 }) => {
-    const [currentSort, setCurrentSort] = useState<ISortItem[]>(sortConfig.currentSort);
-    const disabledExplanationTooltip = sortConfig.disabledExplanation;
-
-    // Available Sorts - from which will generate dropdowns
-    const availableSorts = sortConfig.availableSorts;
+    const [currentSelectedSort, setCurrentSort] = useState<ISortItem[]>(currentSort);
 
     const handleApply = useCallback(() => {
-        onApply(currentSort);
-    }, [currentSort]);
+        onApply(currentSelectedSort);
+    }, [currentSelectedSort]);
 
     const onSelect = (item: ISortItem[]) => {
         setCurrentSort(item);
@@ -60,10 +59,9 @@ export const ChartSorting: React.FC<ChartSortingProps> = ({
                 </div>
                 <div className="section chart-sorting-body gd-sort-charting-dropdown">
                     <ChartSortingDropdown
-                        currentSort={currentSort}
+                        currentSort={currentSelectedSort}
                         availableSorts={availableSorts}
                         bucketItemNames={bucketItemNames}
-                        disabledExplanationTooltip={disabledExplanationTooltip}
                         intl={intl}
                         onSelect={onSelect}
                         enableRenamingMeasureToMetric={enableRenamingMeasureToMetric}

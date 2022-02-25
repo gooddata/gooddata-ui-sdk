@@ -180,7 +180,11 @@ export class Button extends React_2.Component<IButtonProps> {
 // @internal (undocumented)
 export interface ChartSortingOwnProps {
     // (undocumented)
+    availableSorts: IAvailableSortsGroup[];
+    // (undocumented)
     bucketItemNames: IBucketItemNames;
+    // (undocumented)
+    currentSort: ISortItem[];
     // (undocumented)
     enableRenamingMeasureToMetric?: boolean;
     // (undocumented)
@@ -189,8 +193,6 @@ export interface ChartSortingOwnProps {
     onCancel: () => void;
     // (undocumented)
     onClose?: () => void;
-    // (undocumented)
-    sortConfig: ISortConfig;
 }
 
 // @internal (undocumented)
@@ -697,7 +699,7 @@ export interface IAutoSizeProps {
     children: ({ width, height }: IAutoSizeChildren) => React_2.ReactNode;
 }
 
-// @internal (undocumented)
+// @internal
 export interface IAvailableSortsGroup {
     attributeSort?: {
         normalSortEnabled: boolean;
@@ -2798,15 +2800,6 @@ export interface ISnapPoints {
     child: SnapPoint;
     // (undocumented)
     parent: SnapPoint;
-}
-
-// @internal (undocumented)
-export interface ISortConfig {
-    availableSorts: IAvailableSortsGroup[];
-    currentSort: ISortItem[];
-    disabled: boolean;
-    disabledExplanation?: string;
-    supported: boolean;
 }
 
 // @internal (undocumented)

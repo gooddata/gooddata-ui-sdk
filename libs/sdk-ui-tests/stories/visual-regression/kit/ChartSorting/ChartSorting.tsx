@@ -64,7 +64,8 @@ storiesOf(`${UiKit}/ChartSorting`)
                     <InternalIntlWrapper>
                         <ChartSortingWithIntl
                             bucketItemNames={bucketItemNames}
-                            sortConfig={singleAttributeSortConfig}
+                            currentSort={singleAttributeSortConfig.currentSort}
+                            availableSorts={singleAttributeSortConfig.availableSorts}
                             onApply={action("apply")}
                             onCancel={action("cancel")}
                             enableRenamingMeasureToMetric={true}
@@ -83,7 +84,8 @@ storiesOf(`${UiKit}/ChartSorting`)
                     <InternalIntlWrapper>
                         <ChartSortingWithIntl
                             bucketItemNames={bucketItemNames}
-                            sortConfig={singleAttributeWithSingleMetricSortConfig}
+                            currentSort={singleAttributeWithSingleMetricSortConfig.currentSort}
+                            availableSorts={singleAttributeWithSingleMetricSortConfig.availableSorts}
                             onApply={action("apply")}
                             onCancel={action("cancel")}
                             enableRenamingMeasureToMetric={true}
@@ -102,7 +104,8 @@ storiesOf(`${UiKit}/ChartSorting`)
                     <InternalIntlWrapper>
                         <ChartSortingWithIntl
                             bucketItemNames={bucketItemNames}
-                            sortConfig={singleAttributeWithMultipleMetrics}
+                            currentSort={singleAttributeWithMultipleMetrics.currentSort}
+                            availableSorts={singleAttributeWithMultipleMetrics.availableSorts}
                             onApply={action("apply")}
                             onCancel={action("cancel")}
                             enableRenamingMeasureToMetric={true}
@@ -121,7 +124,8 @@ storiesOf(`${UiKit}/ChartSorting`)
                     <InternalIntlWrapper>
                         <ChartSortingWithIntl
                             bucketItemNames={bucketItemNames}
-                            sortConfig={multipleAttributesMultipleMetricsSortConfig}
+                            currentSort={multipleAttributesMultipleMetricsSortConfig.currentSort}
+                            availableSorts={multipleAttributesMultipleMetricsSortConfig.availableSorts}
                             onApply={action("apply")}
                             onCancel={action("cancel")}
                             enableRenamingMeasureToMetric={true}
@@ -140,7 +144,8 @@ storiesOf(`${UiKit}/ChartSorting`)
                     <InternalIntlWrapper>
                         <ChartSortingWithIntl
                             bucketItemNames={bucketItemNames}
-                            sortConfig={multipleAttributesMultipleMetricsSortConfig}
+                            currentSort={multipleAttributesMultipleMetricsSortConfig.currentSort}
+                            availableSorts={multipleAttributesMultipleMetricsSortConfig.availableSorts}
                             onApply={action("apply")}
                             onCancel={action("cancel")}
                             enableRenamingMeasureToMetric={true}

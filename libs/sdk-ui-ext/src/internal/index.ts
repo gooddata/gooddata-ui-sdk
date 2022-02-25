@@ -50,6 +50,8 @@ export { createInternalIntl, InternalIntlWrapper } from "./utils/internalIntlPro
 export { IVisualizationSizeInfo, ISizeInfo } from "./interfaces/VisualizationDescriptor";
 export { IFluidLayoutDescriptor, ILayoutDescriptor, LayoutType } from "./interfaces/LayoutDescriptor";
 
+export { ISortConfig, IAvailableSortsGroup } from "./interfaces/SortConfig";
+
 export { addIntersectionFiltersToInsight } from "./components/pluggableVisualizations/drillDownUtil";
 export * from "./components/pluggableVisualizations/constants";
 
