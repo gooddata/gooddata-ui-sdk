@@ -1,11 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import {
-    combineReducers,
-    configureStore,
-    EnhancedStore,
-    getDefaultMiddleware,
-    Middleware,
-} from "@reduxjs/toolkit";
+import { combineReducers, configureStore, EnhancedStore, Middleware } from "@reduxjs/toolkit";
 import createSagaMiddleware, { Saga, SagaIterator, Task } from "redux-saga";
 import { enableBatching } from "redux-batched-actions";
 import { v4 as uuidv4 } from "uuid";
@@ -263,37 +257,6 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         },
     });
 
-    const middleware = [
-        actionMetaFillingMiddleware,
-        ...getDefaultMiddleware({
-            thunk: false,
-            /*
-             * All events that fly through the store have the dashboard context in the `ctx` prop. This is
-             * for the receiver of the event (who may be well off redux).
-             *
-             * Additionally, some events - namely those reporting on error scenarios may include the actual
-             * error instance in them.
-             */
-            serializableCheck: {
-                ignoredActions: nonSerializableEventsAndCommands,
-                // events always include ctx
-                // various envelopes allow sending explicit callback functions that will be fired
-                // while processing the enveloped content. the envelopes are purely for 'promisification' of
-                // command or query handling, they have no impact on state; it is no problem that they
-                // have such content in them
-                ignoredActionPaths: ["ctx", "onStart", "onError", "onSuccess"],
-                ignoredPaths: [
-                    // drillableItems can be functions (header predicates)
-                    "drill.drillableItems",
-                    // executions can have Errors stored, also some decorated execution results are non-serializable too
-                    "executionResults",
-                ],
-            },
-        }),
-        ...(config.additionalMiddleware ? [config.additionalMiddleware] : []),
-        sagaMiddleware,
-    ];
-
     const rootReducer = combineReducers({
         loading: loadingSliceReducer,
         saving: savingSliceReducer,
@@ -319,7 +282,40 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
 
     const store = configureStore({
         reducer: enableBatching(rootReducer),
-        middleware,
+        middleware: (getDefaultMiddleware) => {
+            return getDefaultMiddleware({
+                thunk: false,
+                /*
+                 * All events that fly through the store have the dashboard context in the `ctx` prop. This is
+                 * for the receiver of the event (who may be well off redux).
+                 *
+                 * Additionally, some events - namely those reporting on error scenarios may include the actual
+                 * error instance in them.
+                 */
+                serializableCheck: {
+                    ignoredActions: nonSerializableEventsAndCommands,
+                    // events always include ctx
+                    // various envelopes allow sending explicit callback functions that will be fired
+                    // while processing the enveloped content. the envelopes are purely for 'promisification' of
+                    // command or query handling, they have no impact on state; it is no problem that they
+                    // have such content in them
+                    ignoredActionPaths: ["ctx", "onStart", "onError", "onSuccess"],
+                    ignoredPaths: [
+                        // drillableItems can be functions (header predicates)
+                        "drill.drillableItems",
+                        // executions can have Errors stored, also some decorated execution results are non-serializable too
+                        "executionResults",
+                    ],
+                    // prolong the check limit, otherwise this will flood the logs on CI with non-actionable warnings
+                    warnAfter: 128,
+                },
+            })
+                .prepend(actionMetaFillingMiddleware)
+                .concat(
+                    ...(config.additionalMiddleware ? [config.additionalMiddleware] : []),
+                    sagaMiddleware,
+                );
+        },
     });
 
     const { eventing = {} } = config;
