@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { FilterContextItem, IDashboard } from "@gooddata/sdk-backend-spi";
 import { areObjRefsEqual, filterObjRef, ObjRef, IFilter, isDateFilter } from "@gooddata/sdk-model";
 import { IDashboardFilter } from "./types";
@@ -10,7 +10,7 @@ import { filterArrayToFilterContextItems } from "../internal";
  * @param dashboard - dashboard to get the filters from
  * @param additionalFilters - filters to apply on top of the filters from the dashboard
  * @beta
- * @deprecated superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
+ * @deprecated Will be removed in the 8.10.0 release. Superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
  */
 export function mergeFiltersWithDashboard(
     dashboard: IDashboard | undefined,
