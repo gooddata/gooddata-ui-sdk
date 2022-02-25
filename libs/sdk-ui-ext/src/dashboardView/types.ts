@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import {
     IAnalyticalBackend,
     ITheme,
@@ -41,7 +41,7 @@ export {
 
 /**
  * @beta
- * @deprecated superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
+ * @deprecated Will be removed in the 8.10.0 release. Superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
  */
 export interface IDashboardLayoutTransformAdditionalProps {
     /**
@@ -62,7 +62,7 @@ export interface IDashboardLayoutTransformAdditionalProps {
 
 /**
  * @beta
- * @deprecated superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
+ * @deprecated Will be removed in the 8.10.0 release. Superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
  */
 export type DashboardLayoutTransform<TContent = any> = (
     layoutBuilder: IDashboardLayoutBuilder<TContent>,
@@ -71,7 +71,7 @@ export type DashboardLayoutTransform<TContent = any> = (
 
 /**
  * @beta
- * @deprecated superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
+ * @deprecated Will be removed in the 8.10.0 release. Superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
  */
 export interface IDashboardViewProps {
     /**
@@ -251,7 +251,7 @@ export interface IDashboardViewProps {
  * Render props for custom widget rendering.
  *
  * @beta
- * @deprecated superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
+ * @deprecated Will be removed in the 8.10.0 release. Superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
  */
 export type IDashboardWidgetRenderProps = {
     /**
@@ -306,7 +306,7 @@ export type IDashboardWidgetRenderProps = {
 /**
  * Component used for the widget rendering.
  * @beta
- * @deprecated superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
+ * @deprecated Will be removed in the 8.10.0 release. Superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
  */
 export type IDashboardWidgetRenderer = (renderProps: IDashboardWidgetRenderProps) => JSX.Element;
 
@@ -314,7 +314,7 @@ export type IDashboardWidgetRenderer = (renderProps: IDashboardWidgetRenderProps
  * Interface for testing the widget against common predicates
  *
  * @beta
- * @deprecated superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
+ * @deprecated Will be removed in the 8.10.0 release. Superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
  */
 export interface IWidgetPredicates {
     /**
