@@ -3,6 +3,7 @@ import React from "react";
 import {
     changeAttributeFilterSelection,
     changeDateFilterSelection,
+    changeFilterContextSelection,
     clearDateFilterSelection,
     CustomDashboardWidgetComponent,
     DashboardConfig,
@@ -18,7 +19,12 @@ import {
     useDashboardSelector,
     useDispatchDashboardCommand,
 } from "@gooddata/sdk-ui-dashboard";
-import { idRef, attributeDisplayFormRef } from "@gooddata/sdk-model";
+import {
+    idRef,
+    attributeDisplayFormRef,
+    newNegativeAttributeFilter,
+    newRelativeDateFilter,
+} from "@gooddata/sdk-model";
 import { useDashboardLoader } from "@gooddata/sdk-ui-loaders";
 import { LoadingComponent } from "@gooddata/sdk-ui";
 
@@ -40,6 +46,7 @@ const MyCustomWidget: CustomDashboardWidgetComponent = () => {
     const resetAttributeFilter = useDispatchDashboardCommand(resetAttributeFilterSelection);
     const changeDateFilterSelectionCmd = useDispatchDashboardCommand(changeDateFilterSelection);
     const resetDateFilter = useDispatchDashboardCommand(clearDateFilterSelection);
+    const changeFilterContextSelectionCmd = useDispatchDashboardCommand(changeFilterContextSelection);
 
     /**
      * Select the attribute filter's local identifier from the filter's display form.
@@ -79,6 +86,16 @@ const MyCustomWidget: CustomDashboardWidgetComponent = () => {
         resetDateFilter();
     };
 
+    const changeMultipleFilters = () => {
+        // set the restaurant category filter and date filter using a single command
+        changeFilterContextSelectionCmd([
+            newNegativeAttributeFilter(Md.RestaurantCategory, {
+                uris: ["/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2196/elements?id=1"],
+            }),
+            newRelativeDateFilter(Md.DateDatasets.Date, "GDC.time.year", -10, 0),
+        ]);
+    };
+
     return (
         <div>
             <button onClick={changeRestaurantCategoryFilterSelection}>
@@ -87,6 +104,7 @@ const MyCustomWidget: CustomDashboardWidgetComponent = () => {
             <button onClick={resetRestaurantCategoryFilterSelection}>Reset Restaurant category filter</button>
             <button onClick={changeDashboardDateFilterSelection}>Change date filter selection</button>
             <button onClick={resetDashboardDateFilter}>Clear date filter selection</button>
+            <button onClick={changeMultipleFilters}>Change multiple filters at once</button>
         </div>
     );
 };
