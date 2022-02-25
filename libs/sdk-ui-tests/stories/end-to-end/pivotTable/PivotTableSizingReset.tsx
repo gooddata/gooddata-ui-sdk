@@ -14,7 +14,7 @@ import {
     isMeasureColumnWidthItem,
     PivotTable,
 } from "@gooddata/sdk-ui-pivot";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../_infra/storyRepository";
 import React, { Component } from "react";
 import { ReferenceWorkspaceId, StorybookBackend } from "../../_infra/backend";
 import { StoriesForEndToEndTests } from "../../_infra/storyGroups";
@@ -207,6 +207,6 @@ class PivotTableSizingReset extends Component {
     };
 }
 
-storiesOf(`${StoriesForEndToEndTests}/Pivot Table`, module).add("complex table with resizing", () => (
+storiesOf(`${StoriesForEndToEndTests}/Pivot Table`).add("complex table with resizing", () => (
     <PivotTableSizingReset />
 ));

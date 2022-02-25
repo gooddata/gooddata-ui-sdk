@@ -1,11 +1,10 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import { withIntl } from "@gooddata/sdk-ui";
 import { DropdownList, SingleSelectListItem, ISingleSelectListItemProps } from "@gooddata/sdk-ui-kit";
 
 import { UiKit } from "../../../_infra/storyGroups";
-import { withScreenshot } from "../../../_infra/backstopWrapper";
 import { wrapWithTheme } from "../../themeWrapper";
 
 const items: ISingleSelectListItemProps[] = [
@@ -54,5 +53,6 @@ const DropdownListExamples: React.FC = () => {
 
 const WithIntl = withIntl<unknown>(DropdownListExamples, undefined, {});
 
-storiesOf(`${UiKit}/DropdownList`, module).add("full-featured", () => withScreenshot(<WithIntl />));
-storiesOf(`${UiKit}/DropdownList`, module).add("themed", () => withScreenshot(wrapWithTheme(<WithIntl />)));
+storiesOf(`${UiKit}/DropdownList`)
+    .add("full-featured", () => <WithIntl />, { screenshot: true })
+    .add("themed", () => wrapWithTheme(<WithIntl />), { screenshot: true });

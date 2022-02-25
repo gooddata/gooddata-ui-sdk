@@ -1,9 +1,8 @@
 // (C) 2021 GoodData Corporation
 import { Icon } from "@gooddata/sdk-ui-kit";
 import React from "react";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import { UiKit } from "../../../_infra/storyGroups";
-import { withScreenshot } from "../../../_infra/backstopWrapper";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "./styles.scss";
@@ -82,4 +81,4 @@ const IconTest: React.FC = () => {
     );
 };
 
-storiesOf(`${UiKit}/Icon`, module).add("icons-list", () => withScreenshot(<IconTest />));
+storiesOf(`${UiKit}/Icon`).add("icons-list", () => <IconTest />, { screenshot: true });

@@ -1,12 +1,11 @@
 // (C) 2020 GoodData Corporation
 
 import { action } from "@storybook/addon-actions";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import React, { useState } from "react";
 import NameSubsection from "@gooddata/sdk-ui-ext/dist/internal/components/configurationControls/axis/NameSubsection";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
-import { withMultipleScreenshots, withScreenshot } from "../../../_infra/backstopWrapper";
 import { ConfigurationControls } from "../../../_infra/storyGroups";
 import "../controlStyles.css";
 
@@ -25,70 +24,82 @@ const commonScenarios = {
         postInteractionWait: 200,
     },
 };
-storiesOf(`${ConfigurationControls}/Axis/NameSubsection`, module)
-    .add("x-axis: Disabled", () => {
-        return withScreenshot(
-            <div style={wrapperStyle} className="screenshot-target">
-                <InternalIntlWrapper>
-                    <NameSubsection
-                        disabled={true}
-                        configPanelDisabled={false}
-                        axis="xaxis"
-                        properties={defaultProps}
-                        pushData={action("onSubsectionToggle")}
-                    />
-                </InternalIntlWrapper>
-            </div>,
-        );
-    })
-    .add("x-axis: Enabled", () => {
-        const HandleState = () => {
-            const [axisProperties, setAxisProperties] = useState({});
-            const onPushData = (data: any) => {
-                action("onSubsectionToggle")(data);
-                const { properties } = data;
-                setAxisProperties({ ...properties });
-            };
-
+storiesOf(`${ConfigurationControls}/Axis/NameSubsection`)
+    .add(
+        "x-axis: Disabled",
+        () => {
             return (
                 <div style={wrapperStyle} className="screenshot-target">
                     <InternalIntlWrapper>
                         <NameSubsection
-                            disabled={false}
+                            disabled={true}
                             configPanelDisabled={false}
                             axis="xaxis"
-                            properties={axisProperties}
-                            pushData={onPushData}
+                            properties={defaultProps}
+                            pushData={action("onSubsectionToggle")}
                         />
                     </InternalIntlWrapper>
                 </div>
             );
-        };
+        },
+        { screenshot: true },
+    )
+    .add(
+        "x-axis: Enabled",
+        () => {
+            const HandleState = () => {
+                const [axisProperties, setAxisProperties] = useState({});
+                const onPushData = (data: any) => {
+                    action("onSubsectionToggle")(data);
+                    const { properties } = data;
+                    setAxisProperties({ ...properties });
+                };
 
-        return withMultipleScreenshots(<HandleState />, commonScenarios);
-    })
-    .add("y-axis: Enabled - localize", () => {
-        const HandleState = () => {
-            const [axisProperties, setAxisProperties] = useState({});
-            const onPushData = (data: any) => {
-                const { properties } = data;
-                action("onSubsectionSelect")(data);
-                setAxisProperties({ ...properties });
+                return (
+                    <div style={wrapperStyle} className="screenshot-target">
+                        <InternalIntlWrapper>
+                            <NameSubsection
+                                disabled={false}
+                                configPanelDisabled={false}
+                                axis="xaxis"
+                                properties={axisProperties}
+                                pushData={onPushData}
+                            />
+                        </InternalIntlWrapper>
+                    </div>
+                );
             };
 
-            return (
-                <div style={wrapperStyle} className="screenshot-target">
-                    <InternalIntlWrapper locale={german}>
-                        <NameSubsection
-                            disabled={false}
-                            configPanelDisabled={false}
-                            axis="yaxis"
-                            properties={axisProperties}
-                            pushData={onPushData}
-                        />
-                    </InternalIntlWrapper>
-                </div>
-            );
-        };
-        return withMultipleScreenshots(<HandleState />, commonScenarios);
-    });
+            return <HandleState />;
+        },
+        { screenshots: commonScenarios },
+    )
+    .add(
+        "y-axis: Enabled - localize",
+        () => {
+            const HandleState = () => {
+                const [axisProperties, setAxisProperties] = useState({});
+                const onPushData = (data: any) => {
+                    const { properties } = data;
+                    action("onSubsectionSelect")(data);
+                    setAxisProperties({ ...properties });
+                };
+
+                return (
+                    <div style={wrapperStyle} className="screenshot-target">
+                        <InternalIntlWrapper locale={german}>
+                            <NameSubsection
+                                disabled={false}
+                                configPanelDisabled={false}
+                                axis="yaxis"
+                                properties={axisProperties}
+                                pushData={onPushData}
+                            />
+                        </InternalIntlWrapper>
+                    </div>
+                );
+            };
+            return <HandleState />;
+        },
+        { screenshots: commonScenarios },
+    );

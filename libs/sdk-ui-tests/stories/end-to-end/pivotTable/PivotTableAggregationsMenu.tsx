@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../_infra/storyRepository";
 import React, { Component } from "react";
 import { ReferenceWorkspaceId, StorybookBackend } from "../../_infra/backend";
 import { StoriesForEndToEndTests } from "../../_infra/storyGroups";
@@ -36,7 +36,6 @@ class PivotTableAggregationsMenu extends Component {
     }
 }
 
-storiesOf(`${StoriesForEndToEndTests}/Pivot Table`, module).add(
-    "complex table with aggregations menu",
-    () => <PivotTableAggregationsMenu />,
-);
+storiesOf(`${StoriesForEndToEndTests}/Pivot Table`).add("complex table with aggregations menu", () => (
+    <PivotTableAggregationsMenu />
+));

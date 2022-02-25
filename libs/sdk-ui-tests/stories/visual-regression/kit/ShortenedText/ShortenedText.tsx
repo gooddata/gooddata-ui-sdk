@@ -1,10 +1,9 @@
 // (C) 2007-2020 GoodData Corporation
 import React from "react";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import { UiKit } from "../../../_infra/storyGroups";
 import { wrapWithTheme } from "../../themeWrapper";
-import { withScreenshot } from "../../../_infra/backstopWrapper";
 
 import "./ShortenedText.css";
 
@@ -58,9 +57,6 @@ const ShortenedTextExamples: React.FC = () => {
     );
 };
 
-storiesOf(`${UiKit}/ShortenedText`, module).add("full-featured", () =>
-    withScreenshot(<ShortenedTextExamples />),
-);
-storiesOf(`${UiKit}/ShortenedText`, module).add("themed", () =>
-    withScreenshot(wrapWithTheme(<ShortenedTextExamples />)),
-);
+storiesOf(`${UiKit}/ShortenedText`)
+    .add("full-featured", () => <ShortenedTextExamples />, { screenshot: true })
+    .add("themed", () => wrapWithTheme(<ShortenedTextExamples />), { screenshot: true });

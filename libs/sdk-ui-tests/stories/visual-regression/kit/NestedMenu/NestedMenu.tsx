@@ -10,11 +10,10 @@ import {
     Button,
     IOnOpenedChangeParams,
 } from "@gooddata/sdk-ui-kit";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 
 import { UiKit } from "../../../_infra/storyGroups";
 import { wrapWithTheme } from "../../themeWrapper";
-import { withMultipleScreenshots } from "../../../_infra/backstopWrapper";
 
 import "./NestedMenu.scss";
 
@@ -80,9 +79,6 @@ const screenshotProps = {
     },
 };
 
-storiesOf(`${UiKit}/Nested Menu`, module).add("full-featured", () =>
-    withMultipleScreenshots(<NestedMenuExamples />, screenshotProps),
-);
-storiesOf(`${UiKit}/Nested Menu`, module).add("themed", () =>
-    withMultipleScreenshots(wrapWithTheme(<NestedMenuExamples />), screenshotProps),
-);
+storiesOf(`${UiKit}/Nested Menu`)
+    .add("full-featured", () => <NestedMenuExamples />, { screenshots: screenshotProps })
+    .add("themed", () => wrapWithTheme(<NestedMenuExamples />), { screenshots: screenshotProps });

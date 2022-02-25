@@ -4,10 +4,9 @@ import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import React from "react";
 import { v4 as uuid } from "uuid";
 
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import { UiKit } from "../../../_infra/storyGroups";
 import { wrapWithTheme } from "../../themeWrapper";
-import { withScreenshot } from "../../../_infra/backstopWrapper";
 
 import "@gooddata/sdk-ui-kit/styles/css/scrollGradient.css";
 
@@ -135,12 +134,7 @@ const GradientTextCustom: React.FC = () => {
     );
 };
 
-storiesOf(`${UiKit}/ScrollGradient`, module).add("full-featured", () =>
-    withScreenshot(<GradientTextNormal />),
-);
-storiesOf(`${UiKit}/ScrollGradient`, module).add("themed", () =>
-    withScreenshot(wrapWithTheme(<GradientTextThemed />)),
-);
-storiesOf(`${UiKit}/ScrollGradient`, module).add("custom", () =>
-    withScreenshot(wrapWithTheme(<GradientTextCustom />)),
-);
+storiesOf(`${UiKit}/ScrollGradient`)
+    .add("full-featured", () => <GradientTextNormal />, { screenshot: true })
+    .add("themed", () => wrapWithTheme(<GradientTextThemed />), { screenshot: true })
+    .add("custom", () => wrapWithTheme(<GradientTextCustom />), { screenshot: true });

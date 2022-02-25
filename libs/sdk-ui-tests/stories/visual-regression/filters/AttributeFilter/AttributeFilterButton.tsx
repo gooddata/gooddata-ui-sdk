@@ -1,8 +1,9 @@
+// (C) 2022 GoodData Corporation
 import React from "react";
 import { AttributeFilterButton } from "@gooddata/sdk-ui-filters";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import { action } from "@storybook/addon-actions";
-import { LongPostInteractionTimeout, withMultipleScreenshots } from "../../../_infra/backstopWrapper";
+import { LongPostInteractionTimeout } from "../../../_infra/backstopWrapper";
 import { FilterStories } from "../../../_infra/storyGroups";
 
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilter.css";
@@ -14,18 +15,23 @@ import { wrapWithTheme } from "../../themeWrapper";
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 const backend = StorybookBackend();
 
-storiesOf(`${FilterStories}/AttributeFilterButton`, module)
-    .add("full-featured", () => {
-        return withMultipleScreenshots(
-            <div style={wrapperStyle} className="screenshot-target">
-                <AttributeFilterButton
-                    backend={backend}
-                    workspace={ReferenceWorkspaceId}
-                    filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
-                    onApply={action("on-apply")}
-                />
-            </div>,
-            {
+storiesOf(`${FilterStories}/AttributeFilterButton`)
+    .add(
+        "full-featured",
+        () => {
+            return (
+                <div style={wrapperStyle} className="screenshot-target">
+                    <AttributeFilterButton
+                        backend={backend}
+                        workspace={ReferenceWorkspaceId}
+                        filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
+                        onApply={action("on-apply")}
+                    />
+                </div>
+            );
+        },
+        {
+            screenshots: {
                 closed: {},
                 opened: {
                     clickSelector: ".s-attribute-filter",
@@ -36,11 +42,12 @@ storiesOf(`${FilterStories}/AttributeFilterButton`, module)
                     postInteractionWait: LongPostInteractionTimeout,
                 },
             },
-        );
-    })
-    .add("themed", () => {
-        return withMultipleScreenshots(
-            wrapWithTheme(
+        },
+    )
+    .add(
+        "themed",
+        () => {
+            return wrapWithTheme(
                 <div style={wrapperStyle} className="screenshot-target">
                     <AttributeFilterButton
                         backend={backend}
@@ -49,8 +56,10 @@ storiesOf(`${FilterStories}/AttributeFilterButton`, module)
                         onApply={action("on-apply")}
                     />
                 </div>,
-            ),
-            {
+            );
+        },
+        {
+            screenshots: {
                 closed: {},
                 opened: {
                     clickSelector: ".s-attribute-filter",
@@ -61,5 +70,5 @@ storiesOf(`${FilterStories}/AttributeFilterButton`, module)
                     postInteractionWait: LongPostInteractionTimeout,
                 },
             },
-        );
-    });
+        },
+    );

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { Headline } from "@gooddata/sdk-ui-charts";
 import { HeaderPredicates, ExplicitDrill, IDrillEvent } from "@gooddata/sdk-ui";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../_infra/storyRepository";
 import { ReferenceWorkspaceId, StorybookBackend } from "../../_infra/backend";
 import { StoriesForEndToEndTests } from "../../_infra/storyGroups";
 import { measureIdentifier, measureLocalId } from "@gooddata/sdk-model";
@@ -31,7 +31,7 @@ const HeadlineDrilling: React.FC<{ drillableItems: ExplicitDrill[] }> = ({ drill
     );
 };
 
-storiesOf(`${StoriesForEndToEndTests}/Drilling`, module)
+storiesOf(`${StoriesForEndToEndTests}/Drilling`)
     .add("headline with localId measure drilling", () => (
         <HeadlineDrilling
             drillableItems={[HeaderPredicates.localIdentifierMatch(measureLocalId(ReferenceMd.Won))]}

@@ -1,9 +1,8 @@
 // (C) 2021 GoodData Corporation
 import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
 import React from "react";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import { UiKit } from "../../../_infra/storyGroups";
-import { withScreenshot } from "../../../_infra/backstopWrapper";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "./styles.scss";
@@ -24,6 +23,4 @@ const LoadingSpinnerTest: React.FC = () => {
     );
 };
 
-storiesOf(`${UiKit}/LoadingSpinner`, module).add("full-featured", () =>
-    withScreenshot(<LoadingSpinnerTest />),
-);
+storiesOf(`${UiKit}/LoadingSpinner`).add("full-featured", () => <LoadingSpinnerTest />, { screenshot: true });

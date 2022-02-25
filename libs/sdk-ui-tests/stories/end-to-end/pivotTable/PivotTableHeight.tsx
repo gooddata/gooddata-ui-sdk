@@ -1,11 +1,10 @@
 // (C) 2021 GoodData Corporation
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../_infra/storyRepository";
 import React, { Component, Fragment } from "react";
 import { ReferenceWorkspaceId, StorybookBackend } from "../../_infra/backend";
 import { StoriesForEndToEndTests } from "../../_infra/storyGroups";
-import { withMultipleScreenshots } from "../../_infra/backstopWrapper";
 
 const backend = StorybookBackend();
 const measures = [ReferenceMd.Amount, ReferenceMd.Won];
@@ -51,14 +50,7 @@ class PivotTableHeight extends Component {
     }
 }
 
-const screenshotProps = {
-    pivotTableHeight: {
-        clickSelector: "#s-height-change",
-        postInteractionWait: 200,
-    },
-};
-
-storiesOf(`${StoriesForEndToEndTests}/Pivot Table`, module).add(
+storiesOf(`${StoriesForEndToEndTests}/Pivot Table`).add(
     "complex table with multiple columns and with height change",
-    () => withMultipleScreenshots(<PivotTableHeight />, screenshotProps),
+    () => <PivotTableHeight />,
 );

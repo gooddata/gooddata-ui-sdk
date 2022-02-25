@@ -1,8 +1,7 @@
 // (C) 2020 GoodData Corporation
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import React from "react";
 import { BarChart, IBarChartProps } from "@gooddata/sdk-ui-charts";
-import { withMultipleScreenshots, withScreenshot } from "../../../_infra/backstopWrapper";
 import { CustomStories } from "../../../_infra/storyGroups";
 import { StorybookBackend, ReferenceWorkspaceId } from "../../../_infra/backend";
 
@@ -75,46 +74,57 @@ const BarChartWithHierarchicalLabelsTest = (config: Partial<IBarChartProps> = {}
     </div>
 );
 
-storiesOf(`${CustomStories}/BarChart`, module).add("responsive popup legend", () => {
-    return withMultipleScreenshots(
-        <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
-            <BarChartTest />
-        </ScreenshotReadyWrapper>,
+storiesOf(`${CustomStories}/BarChart`)
+    .add(
+        "responsive popup legend",
+        () => {
+            return (
+                <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
+                    <BarChartTest />
+                </ScreenshotReadyWrapper>
+            );
+        },
         {
-            closed: {},
-            menuLegendClick: {
-                clickSelector: ".s-legend-popup-icon",
-                postInteractionWait: 300,
-            },
-            paginatorClick: {
-                clickSelectors: [".s-legend-popup-icon", 200, ".gd-icon-chevron-right"],
-                postInteractionWait: 300,
+            screenshots: {
+                closed: {},
+                menuLegendClick: {
+                    clickSelector: ".s-legend-popup-icon",
+                    postInteractionWait: 300,
+                },
+                paginatorClick: {
+                    clickSelectors: [".s-legend-popup-icon", 200, ".gd-icon-chevron-right"],
+                    postInteractionWait: 300,
+                },
             },
         },
-    );
-});
-
-storiesOf(`${CustomStories}/BarChart`, module).add("themed popup legend", () => {
-    return withMultipleScreenshots(
-        wrapWithTheme(
-            <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
-                <BarChartTest />
-            </ScreenshotReadyWrapper>,
-        ),
+    )
+    .add(
+        "themed popup legend",
+        () => {
+            return wrapWithTheme(
+                <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
+                    <BarChartTest />
+                </ScreenshotReadyWrapper>,
+            );
+        },
         {
-            closed: {},
-            menuLegendClick: {
-                clickSelector: ".s-legend-popup-icon",
-                postInteractionWait: 300,
+            screenshots: {
+                closed: {},
+                menuLegendClick: {
+                    clickSelector: ".s-legend-popup-icon",
+                    postInteractionWait: 300,
+                },
             },
         },
+    )
+    .add(
+        "hidding of hierarchical axis labels",
+        () => {
+            return (
+                <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
+                    <BarChartWithHierarchicalLabelsTest />
+                </ScreenshotReadyWrapper>
+            );
+        },
+        { screenshot: true },
     );
-});
-
-storiesOf(`${CustomStories}/BarChart`, module).add("hidding of hierarchical axis labels", () => {
-    return withScreenshot(
-        <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
-            <BarChartWithHierarchicalLabelsTest />
-        </ScreenshotReadyWrapper>,
-    );
-});

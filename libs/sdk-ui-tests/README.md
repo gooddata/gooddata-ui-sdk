@@ -167,24 +167,66 @@ complete refresh.
 This project comes with tools and lightweight infrastructure to provide a fairly seamless integration of
 Storybook and BackstopJS.
 
-A component rendered in a story can be wrapped with `withScreenshot` or `withMultipleScreenshots`. With this
-in place you can run `npm run build-storybook` and `npm run backstop-*` commands to create or verify screenshots
+A story used to render a component can specify options to opt-in to being included in the visual regression tests.
+See [Stories to screenshots](#stories-to-screenshots) for more info.
+
+With this in place you can run `npm run build-storybook` and `npm run backstop-*` commands to create or verify screenshots
 for the stories.
 
 ### Stories to screenshots
 
--   Story wrapped in `withScreenshot` will result in a single screenshot; optionally the wrapper can be customized
-    with any available BackstopJS scenario parameters
+The stories can use the optional third parameter of `storiesOf().add()` to provide additional config and opt in to being included in the screenshots.
+For example:
 
--   Story wrapped in `withMultipleScreenshots` will result in N screenshots; the wrapper must be customized with
-    a mapping of screenshot scenario name => BackstopJS parameters. Optionally a base BackstopJS config can be
-    provided to the wrapper. The parameters in the base config will be applied to all scenarios defined in it; per
-    scenario config will overwrite any parameters coming from base.
+```js
+storiesOf("Some component").add("my story", () => <SomeComponent />, { screenshot: true });
+```
 
--   Finally, under both of these is a possibility to specify configuration globally and en-masse in the
-    [backstop/scenarios.config.js](scenarios.config.js). There are some sane defaults for chart and
-    pivot table stories. The global configuration is used as base; story or scenario specific configuration will
-    overwrite any parameters coming from base.
+See the following section for more details.
+
+#### Single screenshot
+
+To take a single screenshot with the default settings, use:
+
+```js
+{
+    screenshot: true,
+}
+```
+
+To provide specific BackstopJS options, use:
+
+```js
+{
+    screenshot: {
+        clickSelector: "something",
+        // other backstop configuration options, your IDE should suggest all the options available
+    }
+}
+```
+
+#### Multiple screenshots
+
+To take multiple screenshots of the same story with interactions etc., use:
+
+```js
+{
+    screenshots: {
+        step1: {}, // leave empty to use the defaults
+        step2: {
+            clickSelector: "something",
+            // other backstop configuration options, your IDE should suggest all the options available
+        },
+    },
+}
+```
+
+#### Global screenshot configuration
+
+Finally, there is a possibility to specify configuration globally and en-masse in the
+[backstop/scenarios.config.js](./backstop/scenarios.config.js). There are some sane defaults for chart and
+pivot table stories. The global configuration is used as base; story or scenario specific configuration will
+overwrite any parameters coming from base.
 
 ### Building and running
 
@@ -278,7 +320,7 @@ on where exactly the error occurs.
 
 -   After every change call `npm run backstop-prepare` even when you see changes in your running storybook.
 -   If you need call screening just for some stories use --filter where regex is applied to name of stories that you can see in running storybook. Example: `npm run backstop-prepare ./backstop/run-backstop.sh test --filter=".*legend responsive.*`
--   If you use `withMultipleScreenshots` always use `ScreenshotReadyWrapper`
+-   If you use [Multiple screenshots](#multiple-screenshots) always use `ScreenshotReadyWrapper`
 -   scenarios: BackstopConfig - Scenarios in one story are running form scratch they are not starting where previous ended.
 -   Be aware of method overloading `clickSelector: ".s-legend-popup-icon"` - do just one action, vs `clickSelectors: [".s-legend-popup-icon", 200, ".icon-chevron-right"]` do multiple actions/click
     between click selectors you can define timeout as number

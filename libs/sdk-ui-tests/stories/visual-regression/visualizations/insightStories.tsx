@@ -27,7 +27,7 @@ import {
     createElementCountResolver,
     ScreenshotReadyWrapper,
 } from "../../_infra/ScreenshotReadyWrapper";
-import { ShortPostInteractionTimeout, withScreenshot } from "../../_infra/backstopWrapper";
+import { ShortPostInteractionTimeout } from "../../_infra/backstopWrapper";
 import { ConfigurationPanelWrapper } from "../../_infra/ConfigurationPanelWrapper";
 import { StorybookBackend } from "../../_infra/backend";
 import { ExamplesRecordings } from "@gooddata/live-examples-workspace";
@@ -161,17 +161,7 @@ function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
     const visClass = createVisualizationClass(insight);
     const gdcConfig = createGdcConfig(backend, testScenario);
 
-    const screenshotWrapper = (child: any) =>
-        withScreenshot(child, {
-            clickSelector: `.${ConfigurationPanelWrapper.DefaultExpandAllClassName}`,
-            readySelector: `.${ScreenshotReadyWrapper.OnReadyClassName}`,
-            // give tables some more time to finish rendering
-            postInteractionWait: insightVisualizationUrl(insight).includes("table")
-                ? ShortPostInteractionTimeout
-                : 200,
-        });
-
-    const wrapper = (child: any) => screenshotWrapper(wrapWithTheme(child, testScenario.tags)); // since themes are global anyway, wrap only once
+    const wrapper = (child: any) => wrapWithTheme(child, testScenario.tags); // since themes are global anyway, wrap only once
     const effectiveTheme = getTheme(testScenario.tags);
 
     /*
@@ -301,7 +291,16 @@ ScenarioGroupsByVis.forEach((groups) => {
                 return;
             }
 
-            storiesForChart.add(scenario.name, plugVizStory(insight, scenario));
+            storiesForChart.add(scenario.name, plugVizStory(insight, scenario), {
+                screenshot: {
+                    clickSelector: `.${ConfigurationPanelWrapper.DefaultExpandAllClassName}`,
+                    readySelector: `.${ScreenshotReadyWrapper.OnReadyClassName}`,
+                    // give tables some more time to finish rendering
+                    postInteractionWait: insightVisualizationUrl(insight).includes("table")
+                        ? ShortPostInteractionTimeout
+                        : 200,
+                },
+            });
         });
     }
 });

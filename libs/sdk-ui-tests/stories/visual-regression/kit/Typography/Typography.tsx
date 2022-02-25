@@ -1,10 +1,9 @@
 // (C) 2019-2020 GoodData Corporation
 import React from "react";
 import { Typography } from "@gooddata/sdk-ui-kit";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import { UiKit } from "../../../_infra/storyGroups";
 import { wrapWithTheme } from "../../themeWrapper";
-import { withScreenshot } from "../../../_infra/backstopWrapper";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 
@@ -37,7 +36,6 @@ const TypographyExamples: React.FC = () => {
     );
 };
 
-storiesOf(`${UiKit}/Typography`, module).add("full-featured", () => withScreenshot(<TypographyExamples />));
-storiesOf(`${UiKit}/Typography`, module).add("themed", () =>
-    withScreenshot(wrapWithTheme(<TypographyExamples />)),
-);
+storiesOf(`${UiKit}/Typography`)
+    .add("full-featured", () => <TypographyExamples />, { screenshot: true })
+    .add("themed", () => wrapWithTheme(<TypographyExamples />), { screenshot: true });

@@ -1,9 +1,8 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
 import { UiKit } from "../../../_infra/storyGroups";
-import { withMultipleScreenshots } from "../../../_infra/backstopWrapper";
 import { wrapWithTheme } from "../../themeWrapper";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
@@ -151,9 +150,6 @@ const scenarios: BackstopConfig = {
     },
 };
 
-storiesOf(`${UiKit}/ShareDialog/GranteeItem`, module).add("full-featured", () =>
-    withMultipleScreenshots(<GranteeItemExamples />, scenarios),
-);
-storiesOf(`${UiKit}/ShareDialog/GranteeItem`, module).add("themed", () =>
-    withMultipleScreenshots(wrapWithTheme(<GranteeItemExamples />), scenarios),
-);
+storiesOf(`${UiKit}/ShareDialog/GranteeItem`)
+    .add("full-featured", () => <GranteeItemExamples />, { screenshots: scenarios })
+    .add("themed", () => wrapWithTheme(<GranteeItemExamples />), { screenshots: scenarios });

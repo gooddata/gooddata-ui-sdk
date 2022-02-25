@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
 import { Input, InputWithNumberFormat } from "@gooddata/sdk-ui-kit";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import { UiKit } from "../../../_infra/storyGroups";
 import { wrapWithTheme } from "../../themeWrapper";
 
@@ -175,5 +175,6 @@ class FormExamples extends React.PureComponent {
     }
 }
 
-storiesOf(`${UiKit}/Form`, module).add("full-featured", () => <FormExamples />);
-storiesOf(`${UiKit}/Form`, module).add("themed", () => wrapWithTheme(<FormExamples />));
+storiesOf(`${UiKit}/Form`)
+    .add("full-featured", () => <FormExamples />, { screenshot: true })
+    .add("themed", () => wrapWithTheme(<FormExamples />), { screenshot: true });

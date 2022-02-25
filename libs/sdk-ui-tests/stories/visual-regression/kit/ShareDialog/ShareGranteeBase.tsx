@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
 import { uriRef } from "@gooddata/sdk-model";
 import { action } from "@storybook/addon-actions";
@@ -13,7 +13,6 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import { UiKit } from "../../../_infra/storyGroups";
-import { withScreenshot } from "../../../_infra/backstopWrapper";
 import { wrapWithTheme } from "../../themeWrapper";
 
 import { grantees, inactiveUser, owner } from "./GranteeMock";
@@ -140,9 +139,6 @@ export const ShareGranteeBaseInteractionExamples: React.FC = () => {
     );
 };
 
-storiesOf(`${UiKit}/ShareDialog/ShareGranteeBase`, module).add("full-featured", () =>
-    withScreenshot(<ShareGranteeBaseExamples />),
-);
-storiesOf(`${UiKit}/ShareDialog/ShareGranteeBase`, module).add("themed", () =>
-    withScreenshot(wrapWithTheme(<ShareGranteeBaseExamples />)),
-);
+storiesOf(`${UiKit}/ShareDialog/ShareGranteeBase`)
+    .add("full-featured", () => <ShareGranteeBaseExamples />, { screenshot: true })
+    .add("themed", () => wrapWithTheme(<ShareGranteeBaseExamples />), { screenshot: true });

@@ -2,7 +2,7 @@
 import React from "react";
 import { injectIntl, FormattedMessage, IntlShape, IntlProvider } from "react-intl";
 import MediaQuery from "react-responsive";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import { UiKit } from "../../../_infra/storyGroups";
 import { Button, Overlay, FullScreenOverlay } from "@gooddata/sdk-ui-kit";
 
@@ -216,4 +216,4 @@ class OverlayExamples extends React.Component {
     }
 }
 
-storiesOf(`${UiKit}/Overlay`, module).add("full-featured", () => <OverlayExamples />);
+storiesOf(`${UiKit}/Overlay`).add("full-featured", () => <OverlayExamples />, { screenshot: true });

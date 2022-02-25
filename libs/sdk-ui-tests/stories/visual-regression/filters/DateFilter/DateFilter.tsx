@@ -6,9 +6,8 @@ import {
     IDateFilterOptionsByType,
 } from "@gooddata/sdk-ui-filters";
 import React from "react";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import { action } from "@storybook/addon-actions";
-import { withMultipleScreenshots, withScreenshot } from "../../../_infra/backstopWrapper";
 import { FilterStories } from "../../../_infra/storyGroups";
 import { wrapWithTheme } from "../../themeWrapper";
 
@@ -30,29 +29,34 @@ const filterOptions: IDateFilterOptionsByType = {
     absoluteForm: fixedAbsoluteDateForm,
 };
 
-storiesOf(`${FilterStories}/DateFilter`, module)
-    .add("full-featured", () => {
-        return withMultipleScreenshots(
-            <div style={wrapperStyle} className="screenshot-target">
-                <DateFilter
-                    excludeCurrentPeriod={false}
-                    selectedFilterOption={defaultDateFilterOptions.allTime}
-                    filterOptions={filterOptions}
-                    availableGranularities={[
-                        "GDC.time.date",
-                        "GDC.time.month",
-                        "GDC.time.quarter",
-                        "GDC.time.year",
-                    ]}
-                    isEditMode={false}
-                    dateFilterMode="active"
-                    onApply={action("applyClick")}
-                    onCancel={action("cancelClick")}
-                    onOpen={action("onOpen")}
-                    onClose={action("onClose")}
-                />
-            </div>,
-            {
+storiesOf(`${FilterStories}/DateFilter`)
+    .add(
+        "full-featured",
+        () => {
+            return (
+                <div style={wrapperStyle} className="screenshot-target">
+                    <DateFilter
+                        excludeCurrentPeriod={false}
+                        selectedFilterOption={defaultDateFilterOptions.allTime}
+                        filterOptions={filterOptions}
+                        availableGranularities={[
+                            "GDC.time.date",
+                            "GDC.time.month",
+                            "GDC.time.quarter",
+                            "GDC.time.year",
+                        ]}
+                        isEditMode={false}
+                        dateFilterMode="active"
+                        onApply={action("applyClick")}
+                        onCancel={action("cancelClick")}
+                        onOpen={action("onOpen")}
+                        onClose={action("onClose")}
+                    />
+                </div>
+            );
+        },
+        {
+            screenshots: {
                 closed: {},
                 opened: { clickSelector: ".s-date-filter-button", postInteractionWait: 200 },
                 "absolute-form": {
@@ -64,27 +68,32 @@ storiesOf(`${FilterStories}/DateFilter`, module)
                     postInteractionWait: 200,
                 },
             },
-        );
-    })
-    .add("localized", () => {
-        return withMultipleScreenshots(
-            <div style={wrapperStyle} className="screenshot-target">
-                <DateFilter
-                    locale="de-DE"
-                    excludeCurrentPeriod={false}
-                    selectedFilterOption={defaultDateFilterOptions.allTime}
-                    filterOptions={filterOptions}
-                    availableGranularities={[
-                        "GDC.time.date",
-                        "GDC.time.month",
-                        "GDC.time.quarter",
-                        "GDC.time.year",
-                    ]}
-                    isEditMode={false}
-                    dateFilterMode="active"
-                />
-            </div>,
-            {
+        },
+    )
+    .add(
+        "localized",
+        () => {
+            return (
+                <div style={wrapperStyle} className="screenshot-target">
+                    <DateFilter
+                        locale="de-DE"
+                        excludeCurrentPeriod={false}
+                        selectedFilterOption={defaultDateFilterOptions.allTime}
+                        filterOptions={filterOptions}
+                        availableGranularities={[
+                            "GDC.time.date",
+                            "GDC.time.month",
+                            "GDC.time.quarter",
+                            "GDC.time.year",
+                        ]}
+                        isEditMode={false}
+                        dateFilterMode="active"
+                    />
+                </div>
+            );
+        },
+        {
+            screenshots: {
                 closed: {},
                 opened: { clickSelector: ".s-date-filter-button", postInteractionWait: 200 },
                 "absolute-form": {
@@ -96,25 +105,30 @@ storiesOf(`${FilterStories}/DateFilter`, module)
                     postInteractionWait: 200,
                 },
             },
-        );
-    })
-    .add("dateFormat", () => {
-        return withScreenshot(
-            <div style={wrapperStyle} className="screenshot-target">
-                <DateFilter
-                    excludeCurrentPeriod={false}
-                    selectedFilterOption={defaultDateFilterOptions.absoluteForm}
-                    filterOptions={filterOptions}
-                    isEditMode={false}
-                    dateFilterMode="active"
-                    dateFormat="yyyy/MM/dd"
-                />
-            </div>,
-        );
-    })
-    .add("themed", () => {
-        return withMultipleScreenshots(
-            wrapWithTheme(
+        },
+    )
+    .add(
+        "dateFormat",
+        () => {
+            return (
+                <div style={wrapperStyle} className="screenshot-target">
+                    <DateFilter
+                        excludeCurrentPeriod={false}
+                        selectedFilterOption={defaultDateFilterOptions.absoluteForm}
+                        filterOptions={filterOptions}
+                        isEditMode={false}
+                        dateFilterMode="active"
+                        dateFormat="yyyy/MM/dd"
+                    />
+                </div>
+            );
+        },
+        { screenshot: true },
+    )
+    .add(
+        "themed",
+        () => {
+            return wrapWithTheme(
                 <div style={wrapperStyle} className="screenshot-target">
                     <DateFilter
                         excludeCurrentPeriod={false}
@@ -134,8 +148,10 @@ storiesOf(`${FilterStories}/DateFilter`, module)
                         onClose={action("onClose")}
                     />
                 </div>,
-            ),
-            {
+            );
+        },
+        {
+            screenshots: {
                 closed: {},
                 opened: { clickSelector: ".s-date-filter-button", postInteractionWait: 200 },
                 "absolute-form": {
@@ -147,30 +163,35 @@ storiesOf(`${FilterStories}/DateFilter`, module)
                     postInteractionWait: 200,
                 },
             },
-        );
-    })
-    .add("Date filter aligned to the right", () => {
-        return withMultipleScreenshots(
-            <div style={{ width: 300, position: "absolute", right: 0 }} className="screenshot-target">
-                <DateFilter
-                    excludeCurrentPeriod={false}
-                    selectedFilterOption={defaultDateFilterOptions.allTime}
-                    filterOptions={filterOptions}
-                    availableGranularities={[
-                        "GDC.time.date",
-                        "GDC.time.month",
-                        "GDC.time.quarter",
-                        "GDC.time.year",
-                    ]}
-                    isEditMode={false}
-                    dateFilterMode="active"
-                    onApply={action("applyClick")}
-                    onCancel={action("cancelClick")}
-                    onOpen={action("onOpen")}
-                    onClose={action("onClose")}
-                />
-            </div>,
-            {
+        },
+    )
+    .add(
+        "Date filter aligned to the right",
+        () => {
+            return (
+                <div style={{ width: 300, position: "absolute", right: 0 }} className="screenshot-target">
+                    <DateFilter
+                        excludeCurrentPeriod={false}
+                        selectedFilterOption={defaultDateFilterOptions.allTime}
+                        filterOptions={filterOptions}
+                        availableGranularities={[
+                            "GDC.time.date",
+                            "GDC.time.month",
+                            "GDC.time.quarter",
+                            "GDC.time.year",
+                        ]}
+                        isEditMode={false}
+                        dateFilterMode="active"
+                        onApply={action("applyClick")}
+                        onCancel={action("cancelClick")}
+                        onOpen={action("onOpen")}
+                        onClose={action("onClose")}
+                    />
+                </div>
+            );
+        },
+        {
+            screenshots: {
                 closed: {},
                 opened: { clickSelector: ".s-date-filter-button", postInteractionWait: 200 },
                 "absolute-form": {
@@ -182,5 +203,5 @@ storiesOf(`${FilterStories}/DateFilter`, module)
                     postInteractionWait: 200,
                 },
             },
-        );
-    });
+        },
+    );

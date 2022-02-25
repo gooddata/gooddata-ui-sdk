@@ -1,9 +1,8 @@
 // (C) 2020 GoodData Corporation
 import { Datepicker } from "@gooddata/sdk-ui-kit";
 import React, { useState } from "react";
-import { storiesOf } from "@storybook/react";
+import { storiesOf } from "../../../_infra/storyRepository";
 import { UiKit } from "../../../_infra/storyGroups";
-import { withMultipleScreenshots, withScreenshot } from "../../../_infra/backstopWrapper";
 import { wrapWithTheme } from "../../themeWrapper";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
@@ -74,7 +73,7 @@ const openedProps = {
     postInteractionWait: 200,
 };
 
-const screenshotProps = {
+const screenshotScenarios = {
     closed: {},
     opened: openedProps,
     "next-month": {
@@ -83,9 +82,6 @@ const screenshotProps = {
     },
 };
 
-storiesOf(`${UiKit}/DatePicker`, module).add("full-featured", () =>
-    withMultipleScreenshots(<DatePickerTest />, screenshotProps),
-);
-storiesOf(`${UiKit}/DatePicker`, module).add("themed", () =>
-    withScreenshot(wrapWithTheme(<DatePickerTest />), openedProps),
-);
+storiesOf(`${UiKit}/DatePicker`)
+    .add("full-featured", () => <DatePickerTest />, { screenshots: screenshotScenarios })
+    .add("themed", () => wrapWithTheme(<DatePickerTest />), { screenshot: openedProps });
