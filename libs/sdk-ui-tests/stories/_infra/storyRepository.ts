@@ -51,6 +51,12 @@ class StoryRepository {
             render,
             config,
         });
+        const renderFunction =
+            isSingleScreenshotConfig(config) || isMultipleScreenshotConfig(config)
+                ? wrapForBackstop(render)
+                : render;
+
+        storiesOfInternal(kind, module).add(name, renderFunction);
     }
 
     public toBackstopJson(): string {
@@ -96,19 +102,6 @@ class StoryRepository {
 
         return JSON.stringify(flattened, null, 4);
     }
-
-    public populateStorybook(): void {
-        Object.entries(this.stories).forEach(([kind, stories]) => {
-            stories.forEach((story) => {
-                const renderFunction =
-                    isSingleScreenshotConfig(story.config) || isMultipleScreenshotConfig(story.config)
-                        ? wrapForBackstop(story.render)
-                        : story.render;
-
-                storiesOfInternal(kind, module).add(story.name, renderFunction);
-            });
-        });
-    }
 }
 
 const singleton = new StoryRepository();
@@ -124,8 +117,4 @@ export function storiesOf(kind: Kind) {
 
 export function toBackstopJson(): string {
     return singleton.toBackstopJson();
-}
-
-export function populateStorybook(): void {
-    return singleton.populateStorybook();
 }
