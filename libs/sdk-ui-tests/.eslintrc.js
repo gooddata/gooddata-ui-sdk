@@ -14,4 +14,18 @@ module.exports = {
     globals: {
         fixture: true,
     },
+    rules: {
+        "no-restricted-imports": [
+            "error",
+            {
+                paths: [
+                    {
+                        name: "@storybook/react",
+                        importNames: ["storiesOf"],
+                        message: "Please use storiesOf from stories/_infra/storyRepository instead.",
+                    },
+                ],
+            },
+        ],
+    },
 };

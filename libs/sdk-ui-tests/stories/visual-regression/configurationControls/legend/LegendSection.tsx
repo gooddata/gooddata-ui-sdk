@@ -1,4 +1,5 @@
 // (C) 2020 GoodData Corporation
+/* eslint-disable sonarjs/no-identical-functions */
 
 import { action } from "@storybook/addon-actions";
 import { storiesOf } from "../../../_infra/storyRepository";

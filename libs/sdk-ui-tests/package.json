@@ -20,7 +20,7 @@
         ".storybook"
     ],
     "config": {
-        "eslint": "-c .eslintrc.js --ext js,jsx,ts,tsx src/ tests/"
+        "eslint": "-c .eslintrc.js --ext js,jsx,ts,tsx src/ tests/ stories/"
     },
     "scripts": {
         "clean": "rm -rf ci dist esm coverage *.log && jest --clearCache",

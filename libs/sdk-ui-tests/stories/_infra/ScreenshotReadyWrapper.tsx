@@ -4,7 +4,7 @@ import sumBy from "lodash/sumBy";
 
 /**
  * Ready resolver function is called to determine whether the screenshot div has
- * all content ready => image can be captured.
+ * all content ready =\> image can be captured.
  */
 export type ReadyResolverFunction = (element: HTMLElement) => boolean;
 
@@ -100,8 +100,6 @@ export type ElementCountSelector = string | ElementCountSelectorFun;
 /**
  * This is a specialized element count selector, which returns number of pivot tables that are already
  * loaded == the s-loading indicator is no longer present.
- *
- * @param element
  */
 function loadedPivotTableSelector(element: HTMLElement): number {
     const tables = element.querySelectorAll<HTMLElement>(".s-pivot-table");
@@ -116,7 +114,7 @@ const DefaultSelectors = ["highcharts-container", "s-headline-value", "s-error",
  * that match the provided element count selectors. These selectors can be of two types:
  *
  * -  string: this is then used as input to getElementsByClassName
- * -  function (HTMLElement) => number: this will be called to obtain element count using whatever intricate way
+ * -  function (HTMLElement) =\> number: this will be called to obtain element count using whatever intricate way
  *    is needed
  *
  * @param numOfElements - number of elements that must be found before

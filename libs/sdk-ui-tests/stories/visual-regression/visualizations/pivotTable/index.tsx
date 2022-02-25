@@ -1,4 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
+/* eslint-disable sonarjs/no-identical-functions */
 import { storiesOf } from "../../../_infra/storyRepository";
 import React from "react";
 import {
