@@ -29,10 +29,23 @@ async function main() {
         return;
     }
 
+    const authorization = {
+        credentials: {
+            userName: USER_NAME,
+            password: PASSWORD,
+        },
+    };
+
     const workspaceId = withRecordings ? getRecordingsWorkspaceId() : TEST_WORKSPACE_ID;
 
     process.stderr.write("Running the isolated tests locally\n");
-    runCypress(true, host, mockServer, !withRecordings, "", workspaceId, USER_NAME, PASSWORD);
+    runCypress({
+        visual: true,
+        appHost: host,
+        mockServer: mockServer,
+        authorization: authorization,
+        workspaceId,
+    });
 }
 
 main();

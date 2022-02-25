@@ -1,7 +1,7 @@
 {
     "mappings": [
         {
-            "id": "c0ec3526-336c-4bbc-94a7-49893d0a34ab",
+            "id": "c44d6d26-e822-478b-97ed-19016a471e18",
             "name": "gdc_account_login",
             "request": {
                 "url": "/gdc/account/login",
@@ -19,8 +19,8 @@
                 "body": "{\"userLogin\":{\"profile\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1\",\"state\":\"/gdc/account/login/b388eefffab41947076a75fd36d0bad1\"}}",
                 "headers": {
                     "Set-Cookie": [
-                        "GDCAuthTT=pqeMnqxJGt9nfAnF_E3TivgzdoG4_mmLtRoUALtaYPvpe8Wjswp7VXPXIbqidcngQYkTOzqVOXmc2X5m1r5L7NSnoBYVA7s-dsyy9B3jQ86TVCitlVUmpIrrKx5mItydh1CaZUQVwNDOSeDleVRc3Jb0Lx7JGMPAL6qi5-oYHjF7ImwiOiIwIiwidSI6IjIzNzIxMDciLCJ2IjoxNjQ1NzcxNzU5LCJrIjoiNWRlZTJmZDctOGM5NC00MWMxLWI0NDctMWU0MTlhY2RjNjE1IiwicyI6ImYxY2IxNDBmZjE0ZWUyMWYifQ; Path=/gdc",
-                        "GDCAuthSST=YWI1MjVmODQtN2NhZC00YjYyLThiYzQtNzIzNDFiNzNmODJiIRWXwHKCYBRErIOlBh1cChgV4v2M; Max-Age=1382400; Expires=Sun, 13 Mar 2022 06:39:19 GMT; Path=/gdc/account"
+                        "GDCAuthTT=qadOMFLUFMMjPb4ucY98tDTvUe3KNRH8VveVmIDkC6RZB8bYkUTXR9YA2A3z4t9oI7QB7lirD3R1BJglfn2sI5wL4sndqfYf1j6NzACM4fhVovWr3jiHd3qGq_EemLdvgfG3uvbe-Jbbw444CTC1K_hKOURl_T8u5YQEsGuRxKh7ImwiOiIwIiwidSI6IjIzNzIxMDciLCJ2IjoxNjQ1Nzc5NTcwLCJrIjoiNWRlZTJmZDctOGM5NC00MWMxLWI0NDctMWU0MTlhY2RjNjE1IiwicyI6IjQ2NjU3M2U2MDcxMDQyZGEifQ; Path=/gdc",
+                        "GDCAuthSST=YThkMTU3NmQtZTQxNi00MzYzLTk4YTMtNmFjNjdlMWVmYzUzIRWXwHKCYBRErIOlBh1cChgV4v2M; Max-Age=1382400; Expires=Sun, 13 Mar 2022 08:49:30 GMT; Path=/gdc/account"
                     ],
                     "expires": "Thu, 01 Jan 1970 00:00:00 GMT",
                     "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
@@ -31,10 +31,10 @@
                     "pragma": "no-cache"
                 }
             },
-            "uuid": "c0ec3526-336c-4bbc-94a7-49893d0a34ab"
+            "uuid": "c44d6d26-e822-478b-97ed-19016a471e18"
         },
         {
-            "id": "bc8c8b18-cc9b-488f-9b21-f3196bf3be04",
+            "id": "253cd2c2-8258-490c-aa64-ff0ad74db131",
             "name": "gdc_account_profile_current",
             "request": {
                 "url": "/gdc/account/profile/current",
@@ -50,10 +50,33 @@
                     "cache-control": "no-cache, no-store, must-revalidate"
                 }
             },
-            "uuid": "bc8c8b18-cc9b-488f-9b21-f3196bf3be04"
+            "uuid": "253cd2c2-8258-490c-aa64-ff0ad74db131"
         },
         {
-            "id": "6b6a5b4a-5f03-4448-99cf-b163d83a07ad",
+            "id": "21d09343-fa80-4386-97cd-415f831cbd68",
+            "name": "gdc_account_profile_b388eefffab41947076a75fd36d0bad1",
+            "request": {
+                "url": "/gdc/account/profile/b388eefffab41947076a75fd36d0bad1",
+                "method": "GET"
+            },
+            "response": {
+                "status": 401,
+                "body": "{\n    \"error\": {\n        \"code\": 401,\n        \"message\": \"Authorization Required\",\n        \"description\": \"This server could not verify that you are authorized to access the document requested. Either you supplied the wrong credentials (e.g., bad password), or your browser doesn't understand how to supply the credentials required\",\n        \"links\": {\n            \"documentation\": \"https://help.gooddata.com/display/developer/API+Reference#/reference/authentication/log-in\"\n        }\n    }\n}\n",
+                "headers": {
+                    "expires": "Thu, 01 Jan 1970 00:00:00 GMT",
+                    "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+                    "vary": "origin",
+                    "www-authenticate": "GoodData realm=\"GoodData API\" cookie=GDCAuthTT",
+                    "content-type": "application/json; charset=utf-8",
+                    "cache-control": "no-store, no-cache, must-revalidate, max-age=0",
+                    "P3P": "CP='IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT'",
+                    "pragma": "no-cache"
+                }
+            },
+            "uuid": "21d09343-fa80-4386-97cd-415f831cbd68"
+        },
+        {
+            "id": "123cb1c5-b860-4faf-a1cb-569e5a9af034",
             "name": "gdc_account_token",
             "request": {
                 "url": "/gdc/account/token",
@@ -69,7 +92,7 @@
                     "WWW-Authenticate": "GoodData realm=\"GoodData API\" cookie=GDCAuthSST location=/gdc/account/login"
                 }
             },
-            "uuid": "6b6a5b4a-5f03-4448-99cf-b163d83a07ad"
+            "uuid": "123cb1c5-b860-4faf-a1cb-569e5a9af034"
         }
     ]
 }
