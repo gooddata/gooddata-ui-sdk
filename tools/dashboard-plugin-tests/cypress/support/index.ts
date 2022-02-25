@@ -1,14 +1,18 @@
 // (C) 2019-2022 GoodData Corporation
-import uniq from "lodash/uniq";
-import uniqBy from "lodash/uniqBy";
-import isEqual from "lodash/isEqual";
-import { SERVER_URL } from "../../src/constants";
-import { CapturedData } from "../../src/app/backend/withCapturing";
+import merge from "lodash/merge";
+import { IExecutionDefinition } from "@gooddata/sdk-model";
+import { DashboardEventType } from "@gooddata/sdk-ui-dashboard";
+import { DataViewWindow } from "@gooddata/sdk-ui";
+import { IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-backend-spi";
 
-const WEBPACK_DEV_SERVER_PORT = 8443;
+import { SERVER_URL } from "../../src/constants";
+import { CapturedData, CapturedElementQuery, emptyCapturedData } from "../../src/capturing";
+import { listenForDashboardPluginEvents } from "../../src/infra";
+
+const WEBPACK_DEV_SERVER_PORT = 8446;
 const WEBPACK_DEV_SERVER_URL = `https://localhost:${WEBPACK_DEV_SERVER_PORT}`;
 
-export function getDashboardUrl(id: string) {
+function getDashboardUrl(id: string) {
     if (Cypress.env("mode") === "dev") {
         return `${WEBPACK_DEV_SERVER_URL}/#${id}`;
     }
@@ -16,38 +20,70 @@ export function getDashboardUrl(id: string) {
     return `${SERVER_URL}/#${id}`;
 }
 
-const emptyCapturedData: CapturedData = {
-    dashboards: [],
-    executions: [],
-    insights: [],
-    // elements: []
-};
+export function visitDashboardAndWaitForFullRender(identifier: string) {
+    function waitForFulLRender(doc: Document) {
+        return new Cypress.Promise((resolve) => {
+            const unsubscribe = listenForDashboardPluginEvents(doc, (e) => {
+                if ((e.type as DashboardEventType) === "GDC.DASH/EVT.RENDER.RESOLVED") {
+                    resolve(true);
+                    unsubscribe();
+                }
+            });
+        });
+    }
+
+    cy.visit(getDashboardUrl(identifier));
+    cy.document().then(waitForFulLRender);
+}
 export class CapturedDataSniffer {
-    private dashboards = [];
-    private executions = [];
-    private insights = [];
-    // private elements = [];
+    private dashboards: string[] = [];
+    private executions: {
+        [executionId: string]: {
+            definition: IExecutionDefinition;
+            windows: DataViewWindow[];
+        };
+    } = {};
+    private insights: string[] = [];
+    private elements: CapturedElementQuery[] = [];
+    private displayForms: IAttributeDisplayFormMetadataObject[] = [];
 
     constructor(private name: string) {}
 
     public sniffCapturedData() {
         cy.window().then((w) => {
-            const capturedData = w["CapturedData"] ?? emptyCapturedData;
+            const capturedData: CapturedData = w["CapturedData"] ?? emptyCapturedData;
             this.dashboards = this.dashboards.concat(capturedData.dashboards);
             this.insights = this.insights.concat(capturedData.insights);
-            this.executions = this.executions.concat(capturedData.executions);
+            this.elements = this.elements.concat(capturedData.elements);
+            this.displayForms = this.displayForms.concat(capturedData.displayForms);
+            this.executions = merge(this.executions, capturedData.executions);
         });
     }
 
     public commitCapturedData() {
-        cy.writeFile(`./generated/captured/${this.name}.json`, {
-            dashboards: uniq(this.dashboards),
-            insights: uniq(this.insights),
-            executions: uniqBy(this.executions, isEqual),
+        return cy.writeFile(`./generated/captured/${this.name}.json`, {
+            dashboards: this.dashboards,
+            insights: this.insights,
+            executions: this.executions,
+            elements: this.elements,
+            displayForms: this.displayForms,
         });
     }
+}
 
-    public updateRecordedBackendSpecs() {
-        // TODO: RAIL-3888 - get captured data and generate specs for mock-handling
+export function sniffCapturings(spec: string) {
+    if (Cypress.env("capturing")) {
+        const capturedDataSniffer = new CapturedDataSniffer(spec);
+
+        afterEach(() => {
+            capturedDataSniffer.sniffCapturedData();
+        });
+
+        after((done) => {
+            // Wait for executions running after pushData etc
+            cy.wait(2000).then(() => {
+                capturedDataSniffer.commitCapturedData().then(done);
+            });
+        });
     }
 }

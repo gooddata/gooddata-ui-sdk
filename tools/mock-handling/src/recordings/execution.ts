@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 
 import { defFingerprint, IExecutionDefinition } from "@gooddata/sdk-model";
 import {
@@ -177,7 +177,8 @@ export class ExecutionRecording implements IRecording {
         // exec definitions are stored with some test workspace in them; make sure the exec definition that will actually
         //  contain ID of workspace specified by the user
         const workspaceBoundDef: IExecutionDefinition = {
-            ...this.definition,
+            // Replace nested uris as well
+            ...(newWorkspaceId ? replaceWorkspaceId(this.definition, newWorkspaceId, workspace) : {}),
             workspace,
             postProcessing: undefined, // Ignore postProcessing property as it is irrelevant to the server side
         };
@@ -279,6 +280,10 @@ export class ExecutionRecording implements IRecording {
 
         return files;
     }
+}
+
+function replaceWorkspaceId(obj: Record<string, any>, workspaceId: string, replaceWithWorkspaceId: string) {
+    return JSON.parse(JSON.stringify(obj).replace(new RegExp(workspaceId, "g"), replaceWithWorkspaceId));
 }
 
 function stripRefsFromDimensions(dims: IDimensionDescriptor[]) {

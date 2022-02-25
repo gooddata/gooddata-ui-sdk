@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import {
     IElementsQuery,
@@ -10,18 +10,30 @@ import {
     IAttributeElement,
     IFilterElementsQuery,
     FilterWithResolvableElements,
+    IElementsQueryAttributeFilter,
 } from "@gooddata/sdk-backend-spi";
 import {
     filterAttributeElements,
     filterObjRef,
+    IMeasure,
+    IRelativeDateFilter,
     isAttributeElementsByRef,
     isAttributeFilter,
     isUriRef,
     ObjRef,
+    objRefToString,
+    UriRef,
 } from "@gooddata/sdk-model";
-import { RecordingIndex } from "./types";
-import { identifierToRecording } from "./utils";
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
+import { RecordingIndex } from "./types";
+import { elementsQueryParamsToElementsEntryId, identifierToRecording } from "./utils";
+
+function getIdentifierFromUriRef(ref: UriRef, recordings: RecordingIndex): string | undefined {
+    const allDisplayFormsIdentifiers = Object.keys(recordings?.metadata?.displayForms ?? {});
+    return allDisplayFormsIdentifiers
+        .map((id) => recordings?.metadata?.displayForms?.[id].obj)
+        .find((displayForm) => displayForm?.uri === ref.uri)?.id;
+}
 
 /**
  * @internal
@@ -41,7 +53,10 @@ export class RecordedElementQueryFactory implements IElementsQueryFactory {
 class RecordedElements implements IElementsQuery {
     private limit = 50;
     private offset = 0;
-    private options: IElementsQueryOptions = {};
+    private options?: IElementsQueryOptions;
+    private attributeFilters?: IElementsQueryAttributeFilter[];
+    private dateFilters?: IRelativeDateFilter[];
+    private measures?: IMeasure[];
 
     constructor(private ref: ObjRef, private recordings: RecordingIndex) {}
 
@@ -50,21 +65,38 @@ class RecordedElements implements IElementsQuery {
             return Promise.reject(new UnexpectedResponseError("No displayForm recordings", 404, {}));
         }
 
-        if (isUriRef(this.ref)) {
-            return Promise.reject(new NotImplemented("Identifying displayForm by uri is not supported yet"));
-        }
+        const identifier = isUriRef(this.ref)
+            ? getIdentifierFromUriRef(this.ref, this.recordings)
+            : this.ref.identifier;
 
-        const recording =
-            this.recordings.metadata.displayForms["df_" + identifierToRecording(this.ref.identifier)];
-
-        if (!recording) {
+        if (!identifier) {
             return Promise.reject(
-                new UnexpectedResponseError(`No element recordings for df ${this.ref.identifier}`, 404, {}),
+                new UnexpectedResponseError(
+                    `No element recordings for df ${objRefToString(this.ref)}`,
+                    404,
+                    {},
+                ),
             );
         }
 
-        let elements = recording.elements;
-        const { filter } = this.options;
+        const elementsEntry = elementsQueryParamsToElementsEntryId({
+            options: this.options,
+            attributeFilters: this.attributeFilters,
+            dateFilters: this.dateFilters,
+            measures: this.measures,
+        });
+
+        let elements = this.recordings.metadata.displayForms[`df_${identifierToRecording(identifier)}`]?.[
+            elementsEntry
+        ] as IAttributeElement[];
+
+        if (!elements) {
+            return Promise.reject(
+                new UnexpectedResponseError(`No element recordings for df ${identifier}`, 404, {}),
+            );
+        }
+
+        const { filter } = this.options ?? {};
 
         if (filter !== undefined) {
             elements = elements.filter((item) => item.title.toLowerCase().includes(filter.toLowerCase()));
@@ -95,20 +127,20 @@ class RecordedElements implements IElementsQuery {
         return this;
     }
 
-    public withDateFilters(): IElementsQuery {
-        // eslint-disable-next-line no-console
-        console.warn("recorded backend does not support withDateFilters yet, ignoring...");
+    public withDateFilters(dateFilters: IRelativeDateFilter[]): IElementsQuery {
+        this.dateFilters = dateFilters;
+
         return this;
     }
-    public withAttributeFilters(): IElementsQuery {
-        // eslint-disable-next-line no-console
-        console.warn("recorded backend does not support withAttributeFilters yet, ignoring...");
+    public withAttributeFilters(attributeFilters: IElementsQueryAttributeFilter[]): IElementsQuery {
+        this.attributeFilters = attributeFilters;
+
         return this;
     }
 
-    public withMeasures(): IElementsQuery {
-        // eslint-disable-next-line no-console
-        console.warn("recorded backend does not support withMeasures yet, ignoring...");
+    public withMeasures(measures: IMeasure[]): IElementsQuery {
+        this.measures = measures;
+
         return this;
     }
 }
@@ -145,21 +177,33 @@ class RecordedFilterElements implements IFilterElementsQuery {
             return Promise.reject(new UnexpectedResponseError("No displayForm recordings", 404, {}));
         }
 
-        if (isUriRef(this.ref)) {
-            return Promise.reject(new NotImplemented("Identifying displayForm by uri is not supported yet"));
+        const identifier = isUriRef(this.ref)
+            ? getIdentifierFromUriRef(this.ref, this.recordings)
+            : this.ref.identifier;
+
+        if (!identifier) {
+            return Promise.reject(
+                new UnexpectedResponseError(
+                    `No element recordings for df ${objRefToString(this.ref)}`,
+                    404,
+                    {},
+                ),
+            );
         }
 
-        const recording =
-            this.recordings.metadata.displayForms["df_" + identifierToRecording(this.ref.identifier)];
+        const elementsEntry = elementsQueryParamsToElementsEntryId();
 
-        if (!recording) {
+        let elements = this.recordings.metadata.displayForms[`df_${identifierToRecording(identifier)}`]?.[
+            elementsEntry
+        ] as IAttributeElement[];
+
+        if (!elements) {
             return Promise.reject(
-                new UnexpectedResponseError(`No element recordings for df ${this.ref.identifier}`, 404, {}),
+                new UnexpectedResponseError(`No element recordings for df ${identifier}`, 404, {}),
             );
         }
 
         if (isAttributeFilter(this.filter)) {
-            let elements = recording.elements;
             const selectedElements = filterAttributeElements(this.filter);
             if (isAttributeElementsByRef(selectedElements)) {
                 elements = elements.filter((element) =>

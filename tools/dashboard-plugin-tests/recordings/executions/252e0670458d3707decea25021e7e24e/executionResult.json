@@ -1,0 +1,53 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "attr.product.id",
+                            "name": "Product",
+                            "uri": "/gdc/md/reference-workspace/obj/1054"
+                        },
+                        "identifier": "label.product.id.name",
+                        "localIdentifier": "3b196b9f8de04b61ba37762fa28fcf4f",
+                        "name": "Product Name",
+                        "uri": "/gdc/md/reference-workspace/obj/1055"
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "attr.owner.department",
+                            "name": "Department",
+                            "uri": "/gdc/md/reference-workspace/obj/1088"
+                        },
+                        "identifier": "label.owner.department",
+                        "localIdentifier": "d25f36e4914f4ed18ee6b057d18decd9",
+                        "name": "Department",
+                        "uri": "/gdc/md/reference-workspace/obj/1089"
+                    }
+                },
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "acugFHNJgsBy",
+                                    "localIdentifier": "31c22194386b408aa80ab90b966e85a7",
+                                    "name": "Won",
+                                    "uri": "/gdc/md/reference-workspace/obj/1272"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

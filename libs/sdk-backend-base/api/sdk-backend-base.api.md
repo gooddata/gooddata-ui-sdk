@@ -40,6 +40,8 @@ import { IDataSetMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IDimension } from '@gooddata/sdk-model';
 import { IDimensionDescriptor } from '@gooddata/sdk-backend-spi';
+import { IElementsQueryAttributeFilter } from '@gooddata/sdk-backend-spi';
+import { IElementsQueryOptions } from '@gooddata/sdk-backend-spi';
 import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IExecutionFactory } from '@gooddata/sdk-backend-spi';
@@ -69,6 +71,7 @@ import { INullableFilter } from '@gooddata/sdk-model';
 import { IPagedResource } from '@gooddata/sdk-backend-spi';
 import { IPostProcessing } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
+import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { IResultHeader } from '@gooddata/sdk-backend-spi';
 import { IScheduledMail } from '@gooddata/sdk-backend-spi';
 import { IScheduledMailDefinition } from '@gooddata/sdk-backend-spi';
@@ -126,6 +129,39 @@ export type AnalyticalBackendCallbacks = {
     failedResultReadAll?: (error: any, executionId: string) => void;
     successfulResultReadWindow?: (offset: number[], size: number[], dataView: IDataView, executionId: string) => void;
     failedResultReadWindow?: (offset: number[], size: number[], error: any, executionId: string) => void;
+    dashboards?: {
+        dashboardWithReferencesSuccess?: (dashboardWithReferenes: IDashboardWithReferences) => void;
+        dashboardWithReferencedObjectsSuccess?: (dashboardReferences: IDashboardReferences) => void;
+    };
+    attributes?: {
+        attributeDisplayFormSuccess?: (attributeDisplayForm: IAttributeDisplayFormMetadataObject) => void;
+        attributeDisplayFormsSuccess?: (attributeDisplayForms: IAttributeDisplayFormMetadataObject[]) => void;
+        attributeSuccess?: (attributeDisplayForm: IAttributeMetadataObject) => void;
+        attributesSuccess?: (attributeDisplayForm: IAttributeMetadataObject[]) => void;
+        commonAttributesSuccess?: (attributeRefs: ObjRef[]) => void;
+        commonAttributesBatchSuccess?: (attributeRefs: ObjRef[][]) => void;
+        attributeDatasetMetaSuccess?: (dataSet: IMetadataObject) => void;
+    };
+    elements?: {
+        displayFormElementsQuery?: (options: {
+            ref: ObjRef;
+            offset?: number;
+            limit?: number;
+            options?: IElementsQueryOptions;
+            attributeFilters?: IElementsQueryAttributeFilter[];
+            dateFilters?: IRelativeDateFilter[];
+            measures?: IMeasure[];
+        }) => void;
+        displayFormElementsQueryPage?: (options: {
+            ref: ObjRef;
+            offset?: number;
+            limit?: number;
+            options?: IElementsQueryOptions;
+            attributeFilters?: IElementsQueryAttributeFilter[];
+            dateFilters?: IRelativeDateFilter[];
+            measures?: IMeasure[];
+        }) => void;
+    };
 };
 
 // @public

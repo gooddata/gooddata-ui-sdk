@@ -1,0 +1,109 @@
+{
+    "workspace": "reference-workspace",
+    "buckets": [
+        {
+            "items": [
+                {
+                    "measure": {
+                        "title": "Sum of Days to Close",
+                        "localIdentifier": "1efdcdfefecb465fb6bee274df905f35",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "uri": "/gdc/md/reference-workspace/obj/1104"
+                                },
+                                "aggregation": "sum",
+                                "filters": []
+                            }
+                        },
+                        "format": "#,##0.00"
+                    }
+                }
+            ],
+            "localIdentifier": "measures"
+        },
+        {
+            "items": [
+                {
+                    "attribute": {
+                        "localIdentifier": "454ca1db05c646e291fad2dd0f7d4174",
+                        "displayForm": {
+                            "uri": "/gdc/md/reference-workspace/obj/1089"
+                        }
+                    }
+                }
+            ],
+            "localIdentifier": "view"
+        }
+    ],
+    "attributes": [
+        {
+            "attribute": {
+                "localIdentifier": "454ca1db05c646e291fad2dd0f7d4174",
+                "displayForm": {
+                    "uri": "/gdc/md/reference-workspace/obj/1089"
+                }
+            }
+        }
+    ],
+    "measures": [
+        {
+            "measure": {
+                "title": "Sum of Days to Close",
+                "localIdentifier": "1efdcdfefecb465fb6bee274df905f35",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/reference-workspace/obj/1104"
+                        },
+                        "aggregation": "sum",
+                        "filters": []
+                    }
+                },
+                "format": "#,##0.00"
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["measureGroup"]
+        },
+        {
+            "itemIdentifiers": ["454ca1db05c646e291fad2dd0f7d4174"]
+        }
+    ],
+    "filters": [
+        {
+            "relativeDateFilter": {
+                "dataSet": {
+                    "uri": "/gdc/md/reference-workspace/obj/557"
+                },
+                "granularity": "GDC.time.date",
+                "from": -6,
+                "to": 0
+            }
+        },
+        {
+            "negativeAttributeFilter": {
+                "displayForm": {
+                    "uri": "/gdc/md/reference-workspace/obj/1089"
+                },
+                "notIn": {
+                    "uris": []
+                }
+            }
+        },
+        {
+            "negativeAttributeFilter": {
+                "displayForm": {
+                    "uri": "/gdc/md/reference-workspace/obj/1071"
+                },
+                "notIn": {
+                    "uris": []
+                }
+            }
+        }
+    ],
+    "sortBy": [],
+    "postProcessing": {}
+}

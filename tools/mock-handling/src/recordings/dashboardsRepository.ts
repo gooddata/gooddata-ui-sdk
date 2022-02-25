@@ -1,16 +1,16 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import flatMap from "lodash/flatMap";
 import * as path from "path";
 import { findFiles } from "../base/utils";
 import { logWarn } from "../cli/loggers";
 import { IRecording, isNonNullRecording, readJsonSync } from "./common";
 import { DashboardsDefinition } from "./displayForms";
-import { DashboardRecording } from "./dashboards";
+import { DashboardRecording, DashboardRecordingSpec, DashboardsEntryFile } from "./dashboards";
 
 function createRecording(
     directory: string,
     dashboard: string,
-    dashboardRecordingMeta: any,
+    dashboardRecordingMeta: DashboardRecordingSpec,
 ): IRecording | null {
     try {
         return new DashboardRecording(directory, dashboard, dashboardRecordingMeta);
@@ -25,7 +25,7 @@ function createRecording(
 
 function loadRecordings(recordingDefinition: string): IRecording[] {
     const directory = path.dirname(recordingDefinition);
-    const requestedDashboards = readJsonSync(recordingDefinition);
+    const requestedDashboards: DashboardsEntryFile = readJsonSync(recordingDefinition);
 
     return Object.entries(requestedDashboards)
         .map(([dashboard, dashboardRecordingMeta]) =>

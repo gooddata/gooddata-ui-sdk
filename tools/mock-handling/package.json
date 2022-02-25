@@ -42,6 +42,7 @@
     "dependencies": {
         "@gooddata/api-model-bear": "^8.10.0-alpha.0",
         "@gooddata/sdk-backend-bear": "^8.10.0-alpha.0",
+        "@gooddata/sdk-backend-mockingbird": "^8.10.0-alpha.0",
         "@gooddata/sdk-backend-spi": "^8.10.0-alpha.0",
         "@gooddata/sdk-model": "^8.10.0-alpha.0",
         "chalk": "^4.1.1",

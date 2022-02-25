@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { idRef } from "@gooddata/sdk-model";
@@ -13,6 +13,10 @@ import { logError } from "../cli/loggers";
 //
 // Public API
 //
+
+export type DashboardsEntryFile = {
+    [dashboardId: string]: DashboardRecordingSpec;
+};
 
 export type DashboardRecordingSpec = {
     offline?: boolean;

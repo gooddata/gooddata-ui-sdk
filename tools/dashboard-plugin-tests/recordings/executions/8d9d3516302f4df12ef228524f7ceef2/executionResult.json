@@ -1,0 +1,31 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "aangOxLSeztu",
+                                    "localIdentifier": "m__gdc_md_reference-workspace_obj_1271",
+                                    "name": "Amount",
+                                    "uri": "/gdc/md/reference-workspace/obj/1271"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "localIdentifier": "m_m__gdc_md_reference-workspace_obj_1271_previous_period",
+                                    "name": "m_m__gdc_md_reference-workspace_obj_1271_previous_period"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        { "headers": [] }
+    ]
+}

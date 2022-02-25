@@ -1,9 +1,9 @@
 {
-    "label.activity.id.subject": { "elementCount": 10 },
-    "label.product.id.name": {},
-    "label.owner.department": {},
-    "label.owner.region": {},
-    "label.stage.status": {},
-    "label.opportunitysnapshot.forecastcategory": {},
-    "label.stage.name.stagename": {}
+    "label.activity.id.subject": [{ "elementCount": 10 }],
+    "label.product.id.name": [{}],
+    "label.owner.department": [{}],
+    "label.owner.region": [{}],
+    "label.stage.status": [{}],
+    "label.opportunitysnapshot.forecastcategory": [{}],
+    "label.stage.name.stagename": [{}]
 }

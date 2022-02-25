@@ -1,0 +1,100 @@
+{
+    "workspace": "reference-workspace",
+    "buckets": [
+        {
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "uri": "/gdc/md/reference-workspace/obj/1268"
+                                },
+                                "filters": []
+                            }
+                        },
+                        "localIdentifier": "8e874c44107d41809d0d5e7bbd1c19ff"
+                    }
+                }
+            ],
+            "localIdentifier": "measures"
+        },
+        {
+            "items": [
+                {
+                    "attribute": {
+                        "localIdentifier": "a75a78a7e2194c339b4f6b8694777803",
+                        "displayForm": {
+                            "uri": "/gdc/md/reference-workspace/obj/1067"
+                        }
+                    }
+                }
+            ],
+            "localIdentifier": "attribute"
+        }
+    ],
+    "attributes": [
+        {
+            "attribute": {
+                "localIdentifier": "a75a78a7e2194c339b4f6b8694777803",
+                "displayForm": {
+                    "uri": "/gdc/md/reference-workspace/obj/1067"
+                }
+            }
+        }
+    ],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/reference-workspace/obj/1268"
+                        },
+                        "filters": []
+                    }
+                },
+                "localIdentifier": "8e874c44107d41809d0d5e7bbd1c19ff"
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["a75a78a7e2194c339b4f6b8694777803"]
+        },
+        {
+            "itemIdentifiers": ["measureGroup"]
+        }
+    ],
+    "filters": [
+        {
+            "negativeAttributeFilter": {
+                "displayForm": {
+                    "uri": "/gdc/md/reference-workspace/obj/1089"
+                },
+                "notIn": {
+                    "uris": []
+                }
+            }
+        },
+        {
+            "negativeAttributeFilter": {
+                "displayForm": {
+                    "uri": "/gdc/md/reference-workspace/obj/1071"
+                },
+                "notIn": {
+                    "uris": []
+                }
+            }
+        }
+    ],
+    "sortBy": [
+        {
+            "attributeSortItem": {
+                "attributeIdentifier": "a75a78a7e2194c339b4f6b8694777803",
+                "direction": "asc"
+            }
+        }
+    ],
+    "postProcessing": {}
+}

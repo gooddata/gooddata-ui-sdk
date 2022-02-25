@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import {
     IAttributeDisplayFormMetadataObject,
@@ -13,37 +13,37 @@ import { ObjRef } from "@gooddata/sdk-model";
  * @alpha
  */
 export abstract class DecoratedWorkspaceAttributesService implements IWorkspaceAttributesService {
-    protected constructor(protected decorated: IWorkspaceAttributesService) {}
+    protected constructor(protected readonly decorated: IWorkspaceAttributesService) {}
 
-    elements(): IElementsQueryFactory {
+    public elements(): IElementsQueryFactory {
         return this.decorated.elements();
     }
 
-    getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject> {
+    public getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject> {
         return this.decorated.getAttributeDisplayForm(ref);
     }
 
-    getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]> {
+    public getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]> {
         return this.decorated.getAttributeDisplayForms(refs);
     }
 
-    getAttribute(ref: ObjRef): Promise<IAttributeMetadataObject> {
+    public getAttribute(ref: ObjRef): Promise<IAttributeMetadataObject> {
         return this.decorated.getAttribute(ref);
     }
 
-    getAttributes(refs: ObjRef[]): Promise<IAttributeMetadataObject[]> {
+    public getAttributes(refs: ObjRef[]): Promise<IAttributeMetadataObject[]> {
         return this.decorated.getAttributes(refs);
     }
 
-    getCommonAttributes(attributeRefs: ObjRef[]): Promise<ObjRef[]> {
+    public getCommonAttributes(attributeRefs: ObjRef[]): Promise<ObjRef[]> {
         return this.decorated.getCommonAttributes(attributeRefs);
     }
 
-    getCommonAttributesBatch(attributesRefsBatch: ObjRef[][]): Promise<ObjRef[][]> {
+    public getCommonAttributesBatch(attributesRefsBatch: ObjRef[][]): Promise<ObjRef[][]> {
         return this.decorated.getCommonAttributesBatch(attributesRefsBatch);
     }
 
-    getAttributeDatasetMeta(ref: ObjRef): Promise<IMetadataObject> {
+    public getAttributeDatasetMeta(ref: ObjRef): Promise<IMetadataObject> {
         return this.decorated.getAttributeDatasetMeta(ref);
     }
 }

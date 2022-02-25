@@ -11,6 +11,9 @@ export function withTestWorkspaceSettings(backend: IAnalyticalBackend): IAnalyti
         commonSettingsWrapper: (settings) => ({
             ...settings,
             enableKDWidgetCustomHeight: true,
+            enableTableColumnsManualResizing: true,
+            enableTableColumnsAutoResizing: true,
+            enableTableColumnsGrowToFit: true,
         }),
     });
 }

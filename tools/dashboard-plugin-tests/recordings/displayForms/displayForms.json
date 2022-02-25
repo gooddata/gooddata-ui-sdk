@@ -1,0 +1,16 @@
+{
+    "label.owner.department": [
+        {
+            "params": {},
+            "offset": 0,
+            "elementCount": 550
+        }
+    ],
+    "label.activity.id.subject": [
+        {
+            "params": {},
+            "offset": 0,
+            "elementCount": 550
+        }
+    ]
+}

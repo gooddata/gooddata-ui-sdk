@@ -3,7 +3,6 @@ import {
     CatalogItem,
     IAnalyticalBackendConfig,
     IAttributeDisplayFormMetadataObject,
-    IAttributeElement,
     ICatalogAttribute,
     ICatalogDateDataset,
     ICatalogFact,
@@ -210,7 +209,7 @@ export type ScenarioRecording = {
  */
 export type DisplayFormRecording = {
     obj: IAttributeDisplayFormMetadataObject;
-    elements: IAttributeElement[];
+    [elementsAndRequests: string]: any;
 };
 
 /**

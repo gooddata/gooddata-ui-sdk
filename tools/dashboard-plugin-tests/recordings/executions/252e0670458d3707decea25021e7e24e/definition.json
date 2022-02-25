@@ -1,0 +1,135 @@
+{
+    "workspace": "reference-workspace",
+    "buckets": [
+        {
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "uri": "/gdc/md/reference-workspace/obj/1272"
+                                },
+                                "computeRatio": false,
+                                "filters": []
+                            }
+                        },
+                        "localIdentifier": "31c22194386b408aa80ab90b966e85a7"
+                    }
+                }
+            ],
+            "localIdentifier": "measures"
+        },
+        {
+            "items": [
+                {
+                    "attribute": {
+                        "localIdentifier": "3b196b9f8de04b61ba37762fa28fcf4f",
+                        "displayForm": {
+                            "uri": "/gdc/md/reference-workspace/obj/1055"
+                        }
+                    }
+                }
+            ],
+            "localIdentifier": "attribute"
+        },
+        {
+            "items": [
+                {
+                    "attribute": {
+                        "localIdentifier": "d25f36e4914f4ed18ee6b057d18decd9",
+                        "displayForm": {
+                            "uri": "/gdc/md/reference-workspace/obj/1089"
+                        }
+                    }
+                }
+            ],
+            "localIdentifier": "columns"
+        }
+    ],
+    "attributes": [
+        {
+            "attribute": {
+                "localIdentifier": "3b196b9f8de04b61ba37762fa28fcf4f",
+                "displayForm": {
+                    "uri": "/gdc/md/reference-workspace/obj/1055"
+                }
+            }
+        },
+        {
+            "attribute": {
+                "localIdentifier": "d25f36e4914f4ed18ee6b057d18decd9",
+                "displayForm": {
+                    "uri": "/gdc/md/reference-workspace/obj/1089"
+                }
+            }
+        }
+    ],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/reference-workspace/obj/1272"
+                        },
+                        "computeRatio": false,
+                        "filters": []
+                    }
+                },
+                "localIdentifier": "31c22194386b408aa80ab90b966e85a7"
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["3b196b9f8de04b61ba37762fa28fcf4f"]
+        },
+        {
+            "itemIdentifiers": ["d25f36e4914f4ed18ee6b057d18decd9", "measureGroup"]
+        }
+    ],
+    "filters": [
+        {
+            "negativeAttributeFilter": {
+                "displayForm": {
+                    "uri": "/gdc/md/reference-workspace/obj/1089"
+                },
+                "notIn": {
+                    "uris": []
+                }
+            }
+        },
+        {
+            "negativeAttributeFilter": {
+                "displayForm": {
+                    "uri": "/gdc/md/reference-workspace/obj/1071"
+                },
+                "notIn": {
+                    "uris": []
+                }
+            }
+        }
+    ],
+    "sortBy": [
+        {
+            "measureSortItem": {
+                "direction": "desc",
+                "locators": [
+                    {
+                        "attributeLocatorItem": {
+                            "attributeIdentifier": "d25f36e4914f4ed18ee6b057d18decd9",
+                            "element": "/gdc/md/reference-workspace/obj/1088/elements?id=460487"
+                        }
+                    },
+                    {
+                        "measureLocatorItem": {
+                            "measureIdentifier": "31c22194386b408aa80ab90b966e85a7"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    "postProcessing": {}
+}

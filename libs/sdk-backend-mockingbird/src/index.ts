@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 /**
  * This package provides a mock Analytical Backend implementation used mainly for testing.
  *
@@ -53,4 +53,9 @@ export {
     LegacyWorkspaceRecordings,
 } from "./legacyRecordedBackend";
 
-export { objRefsToStringKey } from "./recordedBackend/utils";
+export {
+    objRefsToStringKey,
+    elementsQueryParamsFingerprint,
+    elementsQueryParamsToElementsEntryId,
+    elementsQueryParamsToRequestEntryId,
+} from "./recordedBackend/utils";

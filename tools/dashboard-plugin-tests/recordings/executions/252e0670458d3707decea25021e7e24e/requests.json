@@ -1,0 +1,9 @@
+{
+    "windows": [
+        {
+            "offset": [0, 0],
+            "size": [100, 1000]
+        }
+    ],
+    "allData": false
+}

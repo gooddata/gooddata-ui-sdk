@@ -1,0 +1,61 @@
+{
+    "workspace": "reference-workspace",
+    "buckets": [],
+    "attributes": [],
+    "measures": [
+        {
+            "measure": {
+                "localIdentifier": "m__gdc_md_reference-workspace_obj_1271",
+                "definition": {
+                    "measureDefinition": {
+                        "item": {
+                            "uri": "/gdc/md/reference-workspace/obj/1271"
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "dimensions": [
+        {
+            "itemIdentifiers": ["measureGroup"]
+        },
+        {
+            "itemIdentifiers": []
+        }
+    ],
+    "filters": [
+        {
+            "relativeDateFilter": {
+                "dataSet": {
+                    "uri": "/gdc/md/reference-workspace/obj/557"
+                },
+                "granularity": "GDC.time.date",
+                "from": -6,
+                "to": 0
+            }
+        },
+        {
+            "negativeAttributeFilter": {
+                "displayForm": {
+                    "uri": "/gdc/md/reference-workspace/obj/1089"
+                },
+                "notIn": {
+                    "uris": []
+                }
+            }
+        },
+        {
+            "negativeAttributeFilter": {
+                "displayForm": {
+                    "uri": "/gdc/md/reference-workspace/obj/1071"
+                },
+                "notIn": {
+                    "uris": []
+                }
+            }
+        }
+    ],
+    "sortBy": [],
+    "postProcessing": {}
+}

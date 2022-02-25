@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import { OptionalKind, VariableDeclarationKind, VariableStatementStructure } from "ts-morph";
 import * as path from "path";
 import { createUniqueVariableName } from "../base/variableNaming";
@@ -75,12 +75,10 @@ export function generateConstantsForDataSamples(
         return {
             declarationKind: VariableDeclarationKind.Const,
             isExported: false,
-            declarations: [
-                {
-                    name: rec.getRecordingName(),
-                    initializer: `require('./${path.relative(targetDir, rec.elementFile)}')`,
-                },
-            ],
+            declarations: rec.elementFiles.map((elementsFile) => ({
+                name: rec.getRecordingName(),
+                initializer: `require('./${path.relative(targetDir, elementsFile)}')`,
+            })),
         };
     });
     return [...recConsts, generateDataSampleConst(recordings)];

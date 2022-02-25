@@ -1,0 +1,40 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "attr.opportunity.id",
+                            "name": "Opportunity",
+                            "uri": "/gdc/md/reference-workspace/obj/1066"
+                        },
+                        "identifier": "label.opportunity.id.name",
+                        "localIdentifier": "a75a78a7e2194c339b4f6b8694777803",
+                        "name": "Opportunity Name",
+                        "uri": "/gdc/md/reference-workspace/obj/1067"
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.00",
+                                    "identifier": "abQgDWx4gOUu",
+                                    "localIdentifier": "8e874c44107d41809d0d5e7bbd1c19ff",
+                                    "name": "# Of Opportunities",
+                                    "uri": "/gdc/md/reference-workspace/obj/1268"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

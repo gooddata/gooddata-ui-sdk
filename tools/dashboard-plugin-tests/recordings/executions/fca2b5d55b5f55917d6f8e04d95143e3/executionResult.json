@@ -1,0 +1,38 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.00",
+                                    "localIdentifier": "1efdcdfefecb465fb6bee274df905f35",
+                                    "name": "Sum of Days to Close"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "attr.owner.department",
+                            "name": "Department",
+                            "uri": "/gdc/md/reference-workspace/obj/1088"
+                        },
+                        "identifier": "label.owner.department",
+                        "localIdentifier": "454ca1db05c646e291fad2dd0f7d4174",
+                        "name": "Department",
+                        "uri": "/gdc/md/reference-workspace/obj/1089"
+                    }
+                }
+            ]
+        }
+    ]
+}

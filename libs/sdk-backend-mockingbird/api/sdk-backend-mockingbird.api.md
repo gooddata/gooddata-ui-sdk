@@ -23,8 +23,12 @@ import { IColorPalette } from '@gooddata/sdk-model';
 import { IDashboardWithReferences } from '@gooddata/sdk-backend-spi';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IDateFilterConfig } from '@gooddata/sdk-backend-spi';
+import { IElementsQueryAttributeFilter } from '@gooddata/sdk-backend-spi';
+import { IElementsQueryOptions } from '@gooddata/sdk-backend-spi';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
+import { IMeasure } from '@gooddata/sdk-model';
+import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-backend-spi';
 import { ITheme } from '@gooddata/sdk-backend-spi';
 import { IUser } from '@gooddata/sdk-model';
@@ -72,7 +76,7 @@ export const defaultRecordedBackendCapabilities: IBackendCapabilities;
 // @internal (undocumented)
 export type DisplayFormRecording = {
     obj: IAttributeDisplayFormMetadataObject;
-    elements: IAttributeElement[];
+    [elementsAndRequests: string]: any;
 };
 
 export { dummyBackend }
@@ -80,6 +84,30 @@ export { dummyBackend }
 export { dummyBackendEmptyData }
 
 export { dummyDataView }
+
+// @internal
+export function elementsQueryParamsFingerprint(params?: {
+    options?: IElementsQueryOptions;
+    attributeFilters?: IElementsQueryAttributeFilter[];
+    dateFilters?: IRelativeDateFilter[];
+    measures?: IMeasure[];
+}): string;
+
+// @internal
+export function elementsQueryParamsToElementsEntryId(params?: {
+    options?: IElementsQueryOptions;
+    attributeFilters?: IElementsQueryAttributeFilter[];
+    dateFilters?: IRelativeDateFilter[];
+    measures?: IMeasure[];
+}): string;
+
+// @internal
+export function elementsQueryParamsToRequestEntryId(params?: {
+    options?: IElementsQueryOptions;
+    attributeFilters?: IElementsQueryAttributeFilter[];
+    dateFilters?: IRelativeDateFilter[];
+    measures?: IMeasure[];
+}): string;
 
 // @internal (undocumented)
 export type ExecutionRecording = {

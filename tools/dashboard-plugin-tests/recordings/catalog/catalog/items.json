@@ -1,0 +1,3426 @@
+[
+    {
+        "groups": [],
+        "measure": {
+            "deprecated": false,
+            "description": "",
+            "expression": "SELECT MAX([/gdc/md/reference-workspace/obj/1105]) BY ALL IN ALL OTHER DIMENSIONS EXCEPT [/gdc/md/reference-workspace/obj/679] WHERE [/gdc/md/reference-workspace/obj/1105] <= [/gdc/md/reference-workspace/obj/1266]\n",
+            "format": "#,##0.00",
+            "id": "abxgDICQav2J",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1267" },
+            "title": "_Snapshot [EOP]",
+            "type": "measure",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1267"
+        },
+        "type": "measure"
+    },
+    {
+        "groups": [],
+        "measure": {
+            "deprecated": false,
+            "description": "",
+            "expression": "SELECT MAX([/gdc/md/reference-workspace/obj/1111]) BY ALL IN ALL OTHER DIMENSIONS EXCEPT [/gdc/md/reference-workspace/obj/1009]",
+            "format": "#,##0.00",
+            "id": "abYgDBRagANw",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1266" },
+            "title": "_Timeline [EOP]",
+            "type": "measure",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1266"
+        },
+        "type": "measure"
+    },
+    {
+        "groups": [],
+        "measure": {
+            "deprecated": false,
+            "description": "",
+            "expression": "SELECT COUNT([/gdc/md/reference-workspace/obj/1066], [/gdc/md/reference-workspace/obj/1060]) WHERE [/gdc/md/reference-workspace/obj/1105] = [/gdc/md/reference-workspace/obj/1267]",
+            "format": "#,##0.00",
+            "id": "abQgDWx4gOUu",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1268" },
+            "title": "# Of Opportunities",
+            "type": "measure",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1268"
+        },
+        "type": "measure"
+    },
+    {
+        "groups": [],
+        "measure": {
+            "deprecated": false,
+            "description": "",
+            "expression": "SELECT [/gdc/md/reference-workspace/obj/1268] WHERE [/gdc/md/reference-workspace/obj/1100]=[/gdc/md/reference-workspace/obj/1100/elements?id=460495]",
+            "format": "#,##0.00",
+            "id": "aa4gLlQhcmLO",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1269" },
+            "title": "# Of Opportunities Won",
+            "type": "measure",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1269"
+        },
+        "type": "measure"
+    },
+    {
+        "attribute": {
+            "deprecated": false,
+            "description": "",
+            "displayForms": [
+                {
+                    "attribute": { "uri": "/gdc/md/reference-workspace/obj/1057" },
+                    "deprecated": false,
+                    "description": "",
+                    "id": "label.account.id.name",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1058" },
+                    "title": "Name",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1058"
+                },
+                {
+                    "attribute": { "uri": "/gdc/md/reference-workspace/obj/1057" },
+                    "deprecated": false,
+                    "description": "",
+                    "id": "label.account.id",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1059" },
+                    "title": "Account",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1059"
+                }
+            ],
+            "id": "attr.account.id",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1057" },
+            "title": "Account",
+            "type": "attribute",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1057"
+        },
+        "defaultDisplayForm": {
+            "attribute": { "uri": "/gdc/md/reference-workspace/obj/1057" },
+            "deprecated": false,
+            "description": "",
+            "id": "label.account.id.name",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1058" },
+            "title": "Name",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1058"
+        },
+        "displayForms": [
+            {
+                "attribute": { "uri": "/gdc/md/reference-workspace/obj/1057" },
+                "deprecated": false,
+                "description": "",
+                "id": "label.account.id.name",
+                "production": true,
+                "ref": { "uri": "/gdc/md/reference-workspace/obj/1058" },
+                "title": "Name",
+                "type": "displayForm",
+                "unlisted": false,
+                "uri": "/gdc/md/reference-workspace/obj/1058"
+            },
+            {
+                "attribute": { "uri": "/gdc/md/reference-workspace/obj/1057" },
+                "deprecated": false,
+                "description": "",
+                "id": "label.account.id",
+                "production": true,
+                "ref": { "uri": "/gdc/md/reference-workspace/obj/1059" },
+                "title": "Account",
+                "type": "displayForm",
+                "unlisted": false,
+                "uri": "/gdc/md/reference-workspace/obj/1059"
+            }
+        ],
+        "geoPinDisplayForms": [],
+        "groups": [],
+        "type": "attribute"
+    },
+    {
+        "attribute": {
+            "deprecated": false,
+            "description": "",
+            "displayForms": [
+                {
+                    "attribute": { "uri": "/gdc/md/reference-workspace/obj/1070" },
+                    "deprecated": false,
+                    "description": "",
+                    "id": "label.activity.id.subject",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1071" },
+                    "title": "Subject",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1071"
+                },
+                {
+                    "attribute": { "uri": "/gdc/md/reference-workspace/obj/1070" },
+                    "deprecated": false,
+                    "description": "",
+                    "id": "label.activity.id",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1072" },
+                    "title": "Activity",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1072"
+                }
+            ],
+            "id": "attr.activity.id",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1070" },
+            "title": "Activity",
+            "type": "attribute",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1070"
+        },
+        "defaultDisplayForm": {
+            "attribute": { "uri": "/gdc/md/reference-workspace/obj/1070" },
+            "deprecated": false,
+            "description": "",
+            "id": "label.activity.id.subject",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1071" },
+            "title": "Subject",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1071"
+        },
+        "displayForms": [
+            {
+                "attribute": { "uri": "/gdc/md/reference-workspace/obj/1070" },
+                "deprecated": false,
+                "description": "",
+                "id": "label.activity.id.subject",
+                "production": true,
+                "ref": { "uri": "/gdc/md/reference-workspace/obj/1071" },
+                "title": "Subject",
+                "type": "displayForm",
+                "unlisted": false,
+                "uri": "/gdc/md/reference-workspace/obj/1071"
+            },
+            {
+                "attribute": { "uri": "/gdc/md/reference-workspace/obj/1070" },
+                "deprecated": false,
+                "description": "",
+                "id": "label.activity.id",
+                "production": true,
+                "ref": { "uri": "/gdc/md/reference-workspace/obj/1072" },
+                "title": "Activity",
+                "type": "displayForm",
+                "unlisted": false,
+                "uri": "/gdc/md/reference-workspace/obj/1072"
+            }
+        ],
+        "geoPinDisplayForms": [],
+        "groups": [],
+        "type": "attribute"
+    },
+    {
+        "fact": {
+            "deprecated": false,
+            "description": "",
+            "id": "dt.activity.activity",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1110" },
+            "title": "Activity (Date)",
+            "type": "fact",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1110"
+        },
+        "groups": [],
+        "type": "fact"
+    },
+    {
+        "attribute": {
+            "deprecated": false,
+            "description": "",
+            "displayForms": [
+                {
+                    "attribute": { "uri": "/gdc/md/reference-workspace/obj/1081" },
+                    "deprecated": false,
+                    "description": "",
+                    "id": "label.activity.activitytype",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1082" },
+                    "title": "Activity Type",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1082"
+                }
+            ],
+            "id": "attr.activity.activitytype",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1081" },
+            "title": "Activity Type",
+            "type": "attribute",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1081"
+        },
+        "defaultDisplayForm": {
+            "attribute": { "uri": "/gdc/md/reference-workspace/obj/1081" },
+            "deprecated": false,
+            "description": "",
+            "id": "label.activity.activitytype",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1082" },
+            "title": "Activity Type",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1082"
+        },
+        "displayForms": [
+            {
+                "attribute": { "uri": "/gdc/md/reference-workspace/obj/1081" },
+                "deprecated": false,
+                "description": "",
+                "id": "label.activity.activitytype",
+                "production": true,
+                "ref": { "uri": "/gdc/md/reference-workspace/obj/1082" },
+                "title": "Activity Type",
+                "type": "displayForm",
+                "unlisted": false,
+                "uri": "/gdc/md/reference-workspace/obj/1082"
+            }
+        ],
+        "geoPinDisplayForms": [],
+        "groups": [],
+        "type": "attribute"
+    },
+    {
+        "fact": {
+            "deprecated": false,
+            "description": "",
+            "id": "fact.opportunitysnapshot.amount",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1102" },
+            "title": "Amount",
+            "type": "fact",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1102"
+        },
+        "groups": [],
+        "type": "fact"
+    },
+    {
+        "groups": [],
+        "measure": {
+            "deprecated": false,
+            "description": "",
+            "expression": "SELECT SUM([/gdc/md/reference-workspace/obj/1102]) WHERE [/gdc/md/reference-workspace/obj/1105] = [/gdc/md/reference-workspace/obj/1267]",
+            "format": "$#,##0.00",
+            "id": "aangOxLSeztu",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1271" },
+            "title": "Amount",
+            "type": "measure",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1271"
+        },
+        "type": "measure"
+    },
+    {
+        "fact": {
+            "deprecated": false,
+            "description": "",
+            "id": "fact.opportunitysnapshot.daystoclose",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1104" },
+            "title": "Days to Close",
+            "type": "fact",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1104"
+        },
+        "groups": [],
+        "type": "fact"
+    },
+    {
+        "attribute": {
+            "deprecated": false,
+            "description": "",
+            "displayForms": [
+                {
+                    "attribute": { "uri": "/gdc/md/reference-workspace/obj/1088" },
+                    "deprecated": false,
+                    "description": "",
+                    "id": "label.owner.department",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1089" },
+                    "title": "Department",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1089"
+                }
+            ],
+            "id": "attr.owner.department",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1088" },
+            "title": "Department",
+            "type": "attribute",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1088"
+        },
+        "defaultDisplayForm": {
+            "attribute": { "uri": "/gdc/md/reference-workspace/obj/1088" },
+            "deprecated": false,
+            "description": "",
+            "id": "label.owner.department",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1089" },
+            "title": "Department",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1089"
+        },
+        "displayForms": [
+            {
+                "attribute": { "uri": "/gdc/md/reference-workspace/obj/1088" },
+                "deprecated": false,
+                "description": "",
+                "id": "label.owner.department",
+                "production": true,
+                "ref": { "uri": "/gdc/md/reference-workspace/obj/1089" },
+                "title": "Department",
+                "type": "displayForm",
+                "unlisted": false,
+                "uri": "/gdc/md/reference-workspace/obj/1089"
+            }
+        ],
+        "geoPinDisplayForms": [],
+        "groups": [],
+        "type": "attribute"
+    },
+    {
+        "fact": {
+            "deprecated": false,
+            "description": "",
+            "id": "fact.stagehistory.duration",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1107" },
+            "title": "Duration",
+            "type": "fact",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1107"
+        },
+        "groups": [],
+        "type": "fact"
+    },
+    {
+        "attribute": {
+            "deprecated": false,
+            "description": "",
+            "displayForms": [
+                {
+                    "attribute": { "uri": "/gdc/md/reference-workspace/obj/1062" },
+                    "deprecated": false,
+                    "description": "",
+                    "id": "label.opportunitysnapshot.forecastcategory",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1063" },
+                    "title": "Forecast Category",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1063"
+                }
+            ],
+            "id": "attr.opportunitysnapshot.forecastcategory",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1062" },
+            "title": "Forecast Category",
+            "type": "attribute",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1062"
+        },
+        "defaultDisplayForm": {
+            "attribute": { "uri": "/gdc/md/reference-workspace/obj/1062" },
+            "deprecated": false,
+            "description": "",
+            "id": "label.opportunitysnapshot.forecastcategory",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1063" },
+            "title": "Forecast Category",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1063"
+        },
+        "displayForms": [
+            {
+                "attribute": { "uri": "/gdc/md/reference-workspace/obj/1062" },
+                "deprecated": false,
+                "description": "",
+                "id": "label.opportunitysnapshot.forecastcategory",
+                "production": true,
+                "ref": { "uri": "/gdc/md/reference-workspace/obj/1063" },
+                "title": "Forecast Category",
+                "type": "displayForm",
+                "unlisted": false,
+                "uri": "/gdc/md/reference-workspace/obj/1063"
+            }
+        ],
+        "geoPinDisplayForms": [],
+        "groups": [],
+        "type": "attribute"
+    },
+    {
+        "attribute": {
+            "deprecated": false,
+            "description": "",
+            "displayForms": [
+                {
+                    "attribute": { "uri": "/gdc/md/reference-workspace/obj/1098" },
+                    "deprecated": false,
+                    "description": "",
+                    "id": "label.stage.isactive",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1099" },
+                    "title": "Is Active?",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1099"
+                }
+            ],
+            "id": "attr.stage.isactive",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1098" },
+            "title": "Is Active?",
+            "type": "attribute",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1098"
+        },
+        "defaultDisplayForm": {
+            "attribute": { "uri": "/gdc/md/reference-workspace/obj/1098" },
+            "deprecated": false,
+            "description": "",
+            "id": "label.stage.isactive",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1099" },
+            "title": "Is Active?",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1099"
+        },
+        "displayForms": [
+            {
+                "attribute": { "uri": "/gdc/md/reference-workspace/obj/1098" },
+                "deprecated": false,
+                "description": "",
+                "id": "label.stage.isactive",
+                "production": true,
+                "ref": { "uri": "/gdc/md/reference-workspace/obj/1099" },
+                "title": "Is Active?",
+                "type": "displayForm",
+                "unlisted": false,
+                "uri": "/gdc/md/reference-workspace/obj/1099"
+            }
+        ],
+        "geoPinDisplayForms": [],
+        "groups": [],
+        "type": "attribute"
+    },
+    {
+        "attribute": {
+            "deprecated": false,
+            "description": "",
+            "displayForms": [
+                {
+                    "attribute": { "uri": "/gdc/md/reference-workspace/obj/1073" },
+                    "deprecated": false,
+                    "description": "",
+                    "id": "label.activity.isclosed",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1074" },
+                    "title": "Is Closed?",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1074"
+                }
+            ],
+            "id": "attr.activity.isclosed",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1073" },
+            "title": "Is Closed?",
+            "type": "attribute",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1073"
+        },
+        "defaultDisplayForm": {
+            "attribute": { "uri": "/gdc/md/reference-workspace/obj/1073" },
+            "deprecated": false,
+            "description": "",
+            "id": "label.activity.isclosed",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1074" },
+            "title": "Is Closed?",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1074"
+        },
+        "displayForms": [
+            {
+                "attribute": { "uri": "/gdc/md/reference-workspace/obj/1073" },
+                "deprecated": false,
+                "description": "",
+                "id": "label.activity.isclosed",
+                "production": true,
+                "ref": { "uri": "/gdc/md/reference-workspace/obj/1074" },
+                "title": "Is Closed?",
+                "type": "displayForm",
+                "unlisted": false,
+                "uri": "/gdc/md/reference-workspace/obj/1074"
+            }
+        ],
+        "geoPinDisplayForms": [],
+        "groups": [],
+        "type": "attribute"
+    },
+    {
+        "attribute": {
+            "deprecated": false,
+            "description": "",
+            "displayForms": [
+                {
+                    "attribute": { "uri": "/gdc/md/reference-workspace/obj/1094" },
+                    "deprecated": false,
+                    "description": "",
+                    "id": "label.stage.isclosed",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1095" },
+                    "title": "Is Closed?",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1095"
+                }
+            ],
+            "id": "attr.stage.isclosed",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1094" },
+            "title": "Is Closed?",
+            "type": "attribute",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1094"
+        },
+        "defaultDisplayForm": {
+            "attribute": { "uri": "/gdc/md/reference-workspace/obj/1094" },
+            "deprecated": false,
+            "description": "",
+            "id": "label.stage.isclosed",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1095" },
+            "title": "Is Closed?",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1095"
+        },
+        "displayForms": [
+            {
+                "attribute": { "uri": "/gdc/md/reference-workspace/obj/1094" },
+                "deprecated": false,
+                "description": "",
+                "id": "label.stage.isclosed",
+                "production": true,
+                "ref": { "uri": "/gdc/md/reference-workspace/obj/1095" },
+                "title": "Is Closed?",
+                "type": "displayForm",
+                "unlisted": false,
+                "uri": "/gdc/md/reference-workspace/obj/1095"
+            }
+        ],
+        "geoPinDisplayForms": [],
+        "groups": [],
+        "type": "attribute"
+    },
+    {
+        "attribute": {
+            "deprecated": false,
+            "description": "",
+            "displayForms": [
+                {
+                    "attribute": { "uri": "/gdc/md/reference-workspace/obj/1075" },
+                    "deprecated": false,
+                    "description": "",
+                    "id": "label.activity.istask",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1076" },
+                    "title": "Is Task?",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1076"
+                }
+            ],
+            "id": "attr.activity.istask",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1075" },
+            "title": "Is Task?",
+            "type": "attribute",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1075"
+        },
+        "defaultDisplayForm": {
+            "attribute": { "uri": "/gdc/md/reference-workspace/obj/1075" },
+            "deprecated": false,
+            "description": "",
+            "id": "label.activity.istask",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1076" },
+            "title": "Is Task?",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1076"
+        },
+        "displayForms": [
+            {
+                "attribute": { "uri": "/gdc/md/reference-workspace/obj/1075" },
+                "deprecated": false,
+                "description": "",
+                "id": "label.activity.istask",
+                "production": true,
+                "ref": { "uri": "/gdc/md/reference-workspace/obj/1076" },
+                "title": "Is Task?",
+                "type": "displayForm",
+                "unlisted": false,
+                "uri": "/gdc/md/reference-workspace/obj/1076"
+            }
+        ],
+        "geoPinDisplayForms": [],
+        "groups": [],
+        "type": "attribute"
+    },
+    {
+        "attribute": {
+            "deprecated": false,
+            "description": "",
+            "displayForms": [
+                {
+                    "attribute": { "uri": "/gdc/md/reference-workspace/obj/1096" },
+                    "deprecated": false,
+                    "description": "",
+                    "id": "label.stage.iswon",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1097" },
+                    "title": "Is Won?",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1097"
+                }
+            ],
+            "id": "attr.stage.iswon",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1096" },
+            "title": "Is Won?",
+            "type": "attribute",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1096"
+        },
+        "defaultDisplayForm": {
+            "attribute": { "uri": "/gdc/md/reference-workspace/obj/1096" },
+            "deprecated": false,
+            "description": "",
+            "id": "label.stage.iswon",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1097" },
+            "title": "Is Won?",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1097"
+        },
+        "displayForms": [
+            {
+                "attribute": { "uri": "/gdc/md/reference-workspace/obj/1096" },
+                "deprecated": false,
+                "description": "",
+                "id": "label.stage.iswon",
+                "production": true,
+                "ref": { "uri": "/gdc/md/reference-workspace/obj/1097" },
+                "title": "Is Won?",
+                "type": "displayForm",
+                "unlisted": false,
+                "uri": "/gdc/md/reference-workspace/obj/1097"
+            }
+        ],
+        "geoPinDisplayForms": [],
+        "groups": [],
+        "type": "attribute"
+    },
+    {
+        "fact": {
+            "deprecated": false,
+            "description": "",
+            "id": "dt.opportunitysnapshot.closedate",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1106" },
+            "title": "Opp. Close (Date)",
+            "type": "fact",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1106"
+        },
+        "groups": [],
+        "type": "fact"
+    },
+    {
+        "fact": {
+            "deprecated": false,
+            "description": "",
+            "id": "dt.opportunity.oppcreated",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1109" },
+            "title": "Opp. Created (Date)",
+            "type": "fact",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1109"
+        },
+        "groups": [],
+        "type": "fact"
+    },
+    {
+        "attribute": {
+            "deprecated": false,
+            "description": "",
+            "displayForms": [
+                {
+                    "attribute": { "uri": "/gdc/md/reference-workspace/obj/1060" },
+                    "deprecated": false,
+                    "description": "",
+                    "id": "label.opportunitysnapshot.id",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1061" },
+                    "title": "Opp. Snapshot",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1061"
+                }
+            ],
+            "id": "attr.opportunitysnapshot.id",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1060" },
+            "title": "Opp. Snapshot",
+            "type": "attribute",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1060"
+        },
+        "defaultDisplayForm": {
+            "attribute": { "uri": "/gdc/md/reference-workspace/obj/1060" },
+            "deprecated": false,
+            "description": "",
+            "id": "label.opportunitysnapshot.id",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1061" },
+            "title": "Opp. Snapshot",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1061"
+        },
+        "displayForms": [
+            {
+                "attribute": { "uri": "/gdc/md/reference-workspace/obj/1060" },
+                "deprecated": false,
+                "description": "",
+                "id": "label.opportunitysnapshot.id",
+                "production": true,
+                "ref": { "uri": "/gdc/md/reference-workspace/obj/1061" },
+                "title": "Opp. Snapshot",
+                "type": "displayForm",
+                "unlisted": false,
+                "uri": "/gdc/md/reference-workspace/obj/1061"
+            }
+        ],
+        "geoPinDisplayForms": [],
+        "groups": [],
+        "type": "attribute"
+    },
+    {
+        "fact": {
+            "deprecated": false,
+            "description": "",
+            "id": "dt.opportunitysnapshot.snapshotdate",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1105" },
+            "title": "Opp. Snapshot (Date)",
+            "type": "fact",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1105"
+        },
+        "groups": [],
+        "type": "fact"
+    },
+    {
+        "attribute": {
+            "deprecated": false,
+            "description": "",
+            "displayForms": [
+                {
+                    "attribute": { "uri": "/gdc/md/reference-workspace/obj/1066" },
+                    "deprecated": false,
+                    "description": "",
+                    "id": "label.opportunity.id.name",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1067" },
+                    "title": "Opportunity Name",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1067"
+                },
+                {
+                    "attribute": { "uri": "/gdc/md/reference-workspace/obj/1066" },
+                    "deprecated": false,
+                    "description": "",
+                    "id": "label.opportunity.id",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1068" },
+                    "title": "Opportunity",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1068"
+                },
+                {
+                    "attribute": { "uri": "/gdc/md/reference-workspace/obj/1066" },
+                    "deprecated": false,
+                    "description": "",
+                    "displayFormType": "GDC.link",
+                    "id": "label.opportunity.id.url",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1069" },
+                    "title": "SFDC URL",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1069"
+                }
+            ],
+            "drillToAttributeLink": { "uri": "/gdc/md/reference-workspace/obj/1069" },
+            "id": "attr.opportunity.id",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1066" },
+            "title": "Opportunity",
+            "type": "attribute",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1066"
+        },
+        "defaultDisplayForm": {
+            "attribute": { "uri": "/gdc/md/reference-workspace/obj/1066" },
+            "deprecated": false,
+            "description": "",
+            "id": "label.opportunity.id.name",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1067" },
+            "title": "Opportunity Name",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1067"
+        },
+        "displayForms": [
+            {
+                "attribute": { "uri": "/gdc/md/reference-workspace/obj/1066" },
+                "deprecated": false,
+                "description": "",
+                "id": "label.opportunity.id.name",
+                "production": true,
+                "ref": { "uri": "/gdc/md/reference-workspace/obj/1067" },
+                "title": "Opportunity Name",
+                "type": "displayForm",
+                "unlisted": false,
+                "uri": "/gdc/md/reference-workspace/obj/1067"
+            },
+            {
+                "attribute": { "uri": "/gdc/md/reference-workspace/obj/1066" },
+                "deprecated": false,
+                "description": "",
+                "id": "label.opportunity.id",
+                "production": true,
+                "ref": { "uri": "/gdc/md/reference-workspace/obj/1068" },
+                "title": "Opportunity",
+                "type": "displayForm",
+                "unlisted": false,
+                "uri": "/gdc/md/reference-workspace/obj/1068"
+            },
+            {
+                "attribute": { "uri": "/gdc/md/reference-workspace/obj/1066" },
+                "deprecated": false,
+                "description": "",
+                "displayFormType": "GDC.link",
+                "id": "label.opportunity.id.url",
+                "production": true,
+                "ref": { "uri": "/gdc/md/reference-workspace/obj/1069" },
+                "title": "SFDC URL",
+                "type": "displayForm",
+                "unlisted": false,
+                "uri": "/gdc/md/reference-workspace/obj/1069"
+            }
+        ],
+        "geoPinDisplayForms": [],
+        "groups": [],
+        "type": "attribute"
+    },
+    {
+        "attribute": {
+            "deprecated": false,
+            "description": "",
+            "displayForms": [
+                {
+                    "attribute": { "uri": "/gdc/md/reference-workspace/obj/1079" },
+                    "deprecated": false,
+                    "description": "",
+                    "id": "label.activity.priority",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1080" },
+                    "title": "Priority",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1080"
+                }
+            ],
+            "id": "attr.activity.priority",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1079" },
+            "title": "Priority",
+            "type": "attribute",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1079"
+        },
+        "defaultDisplayForm": {
+            "attribute": { "uri": "/gdc/md/reference-workspace/obj/1079" },
+            "deprecated": false,
+            "description": "",
+            "id": "label.activity.priority",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1080" },
+            "title": "Priority",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1080"
+        },
+        "displayForms": [
+            {
+                "attribute": { "uri": "/gdc/md/reference-workspace/obj/1079" },
+                "deprecated": false,
+                "description": "",
+                "id": "label.activity.priority",
+                "production": true,
+                "ref": { "uri": "/gdc/md/reference-workspace/obj/1080" },
+                "title": "Priority",
+                "type": "displayForm",
+                "unlisted": false,
+                "uri": "/gdc/md/reference-workspace/obj/1080"
+            }
+        ],
+        "geoPinDisplayForms": [],
+        "groups": [],
+        "type": "attribute"
+    },
+    {
+        "fact": {
+            "deprecated": false,
+            "description": "",
+            "id": "fact.opportunitysnapshot.probability",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1103" },
+            "title": "Probability",
+            "type": "fact",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1103"
+        },
+        "groups": [],
+        "type": "fact"
+    },
+    {
+        "groups": [],
+        "measure": {
+            "deprecated": false,
+            "description": "",
+            "expression": "SELECT AVG([/gdc/md/reference-workspace/obj/1103]) WHERE [/gdc/md/reference-workspace/obj/1105] = [/gdc/md/reference-workspace/obj/1267]",
+            "format": "#,##0.0%",
+            "id": "abEgMnq5hyJQ",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1273" },
+            "title": "Probability",
+            "type": "measure",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1273"
+        },
+        "type": "measure"
+    },
+    {
+        "attribute": {
+            "deprecated": false,
+            "description": "",
+            "displayForms": [
+                {
+                    "attribute": { "uri": "/gdc/md/reference-workspace/obj/1054" },
+                    "deprecated": false,
+                    "description": "",
+                    "id": "label.product.id.name",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1055" },
+                    "title": "Product Name",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1055"
+                },
+                {
+                    "attribute": { "uri": "/gdc/md/reference-workspace/obj/1054" },
+                    "deprecated": false,
+                    "description": "",
+                    "id": "label.product.id",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1056" },
+                    "title": "Product",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1056"
+                }
+            ],
+            "id": "attr.product.id",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1054" },
+            "title": "Product",
+            "type": "attribute",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1054"
+        },
+        "defaultDisplayForm": {
+            "attribute": { "uri": "/gdc/md/reference-workspace/obj/1054" },
+            "deprecated": false,
+            "description": "",
+            "id": "label.product.id.name",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1055" },
+            "title": "Product Name",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1055"
+        },
+        "displayForms": [
+            {
+                "attribute": { "uri": "/gdc/md/reference-workspace/obj/1054" },
+                "deprecated": false,
+                "description": "",
+                "id": "label.product.id.name",
+                "production": true,
+                "ref": { "uri": "/gdc/md/reference-workspace/obj/1055" },
+                "title": "Product Name",
+                "type": "displayForm",
+                "unlisted": false,
+                "uri": "/gdc/md/reference-workspace/obj/1055"
+            },
+            {
+                "attribute": { "uri": "/gdc/md/reference-workspace/obj/1054" },
+                "deprecated": false,
+                "description": "",
+                "id": "label.product.id",
+                "production": true,
+                "ref": { "uri": "/gdc/md/reference-workspace/obj/1056" },
+                "title": "Product",
+                "type": "displayForm",
+                "unlisted": false,
+                "uri": "/gdc/md/reference-workspace/obj/1056"
+            }
+        ],
+        "geoPinDisplayForms": [],
+        "groups": [],
+        "type": "attribute"
+    },
+    {
+        "attribute": {
+            "deprecated": false,
+            "description": "",
+            "displayForms": [
+                {
+                    "attribute": { "uri": "/gdc/md/reference-workspace/obj/1086" },
+                    "deprecated": false,
+                    "description": "",
+                    "id": "label.owner.region",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1087" },
+                    "title": "Region",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1087"
+                }
+            ],
+            "id": "attr.owner.region",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1086" },
+            "title": "Region",
+            "type": "attribute",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1086"
+        },
+        "defaultDisplayForm": {
+            "attribute": { "uri": "/gdc/md/reference-workspace/obj/1086" },
+            "deprecated": false,
+            "description": "",
+            "id": "label.owner.region",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1087" },
+            "title": "Region",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1087"
+        },
+        "displayForms": [
+            {
+                "attribute": { "uri": "/gdc/md/reference-workspace/obj/1086" },
+                "deprecated": false,
+                "description": "",
+                "id": "label.owner.region",
+                "production": true,
+                "ref": { "uri": "/gdc/md/reference-workspace/obj/1087" },
+                "title": "Region",
+                "type": "displayForm",
+                "unlisted": false,
+                "uri": "/gdc/md/reference-workspace/obj/1087"
+            }
+        ],
+        "geoPinDisplayForms": [],
+        "groups": [],
+        "type": "attribute"
+    },
+    {
+        "attribute": {
+            "deprecated": false,
+            "description": "",
+            "displayForms": [
+                {
+                    "attribute": { "uri": "/gdc/md/reference-workspace/obj/1083" },
+                    "deprecated": false,
+                    "description": "",
+                    "id": "label.owner.id.name",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1084" },
+                    "title": "Owner Name",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1084"
+                },
+                {
+                    "attribute": { "uri": "/gdc/md/reference-workspace/obj/1083" },
+                    "deprecated": false,
+                    "description": "",
+                    "id": "label.owner.id",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1085" },
+                    "title": "Owner",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1085"
+                }
+            ],
+            "id": "attr.owner.id",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1083" },
+            "title": "Sales Rep",
+            "type": "attribute",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1083"
+        },
+        "defaultDisplayForm": {
+            "attribute": { "uri": "/gdc/md/reference-workspace/obj/1083" },
+            "deprecated": false,
+            "description": "",
+            "id": "label.owner.id.name",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1084" },
+            "title": "Owner Name",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1084"
+        },
+        "displayForms": [
+            {
+                "attribute": { "uri": "/gdc/md/reference-workspace/obj/1083" },
+                "deprecated": false,
+                "description": "",
+                "id": "label.owner.id.name",
+                "production": true,
+                "ref": { "uri": "/gdc/md/reference-workspace/obj/1084" },
+                "title": "Owner Name",
+                "type": "displayForm",
+                "unlisted": false,
+                "uri": "/gdc/md/reference-workspace/obj/1084"
+            },
+            {
+                "attribute": { "uri": "/gdc/md/reference-workspace/obj/1083" },
+                "deprecated": false,
+                "description": "",
+                "id": "label.owner.id",
+                "production": true,
+                "ref": { "uri": "/gdc/md/reference-workspace/obj/1085" },
+                "title": "Owner",
+                "type": "displayForm",
+                "unlisted": false,
+                "uri": "/gdc/md/reference-workspace/obj/1085"
+            }
+        ],
+        "geoPinDisplayForms": [],
+        "groups": [],
+        "type": "attribute"
+    },
+    {
+        "groups": [],
+        "measure": {
+            "deprecated": false,
+            "description": "",
+            "expression": "SELECT CASE WHEN [/gdc/md/reference-workspace/obj/992] = 2018 THEN -123400, WHEN [/gdc/md/reference-workspace/obj/992] = 2019 THEN 36200, WHEN [/gdc/md/reference-workspace/obj/992] = 2020 THEN 54800, WHEN [/gdc/md/reference-workspace/obj/992] = 2021 THEN 48100 END WHERE [/gdc/md/reference-workspace/obj/992] BETWEEN 2018 AND 2021",
+            "format": "#,##0.00",
+            "id": "aadpHDMBecIy",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1274" },
+            "title": "Sample XIRR",
+            "type": "measure",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1274"
+        },
+        "type": "measure"
+    },
+    {
+        "attribute": {
+            "deprecated": false,
+            "description": "",
+            "displayForms": [
+                {
+                    "attribute": { "uri": "/gdc/md/reference-workspace/obj/1064" },
+                    "deprecated": false,
+                    "description": "",
+                    "id": "label.stagehistory.id",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1065" },
+                    "title": "Stage History",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1065"
+                }
+            ],
+            "id": "attr.stagehistory.id",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1064" },
+            "title": "Stage History",
+            "type": "attribute",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1064"
+        },
+        "defaultDisplayForm": {
+            "attribute": { "uri": "/gdc/md/reference-workspace/obj/1064" },
+            "deprecated": false,
+            "description": "",
+            "id": "label.stagehistory.id",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1065" },
+            "title": "Stage History",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1065"
+        },
+        "displayForms": [
+            {
+                "attribute": { "uri": "/gdc/md/reference-workspace/obj/1064" },
+                "deprecated": false,
+                "description": "",
+                "id": "label.stagehistory.id",
+                "production": true,
+                "ref": { "uri": "/gdc/md/reference-workspace/obj/1065" },
+                "title": "Stage History",
+                "type": "displayForm",
+                "unlisted": false,
+                "uri": "/gdc/md/reference-workspace/obj/1065"
+            }
+        ],
+        "geoPinDisplayForms": [],
+        "groups": [],
+        "type": "attribute"
+    },
+    {
+        "attribute": {
+            "deprecated": false,
+            "description": "",
+            "displayForms": [
+                {
+                    "attribute": { "uri": "/gdc/md/reference-workspace/obj/1091" },
+                    "deprecated": false,
+                    "description": "",
+                    "id": "label.stage.name.stagename",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1092" },
+                    "title": "Stage Name",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1092"
+                },
+                {
+                    "attribute": { "uri": "/gdc/md/reference-workspace/obj/1091" },
+                    "deprecated": false,
+                    "description": "",
+                    "id": "label.stage.name.order",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1093" },
+                    "title": "Order",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1093"
+                }
+            ],
+            "id": "attr.stage.name",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1091" },
+            "title": "Stage Name",
+            "type": "attribute",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1091"
+        },
+        "defaultDisplayForm": {
+            "attribute": { "uri": "/gdc/md/reference-workspace/obj/1091" },
+            "deprecated": false,
+            "description": "",
+            "id": "label.stage.name.stagename",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1092" },
+            "title": "Stage Name",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1092"
+        },
+        "displayForms": [
+            {
+                "attribute": { "uri": "/gdc/md/reference-workspace/obj/1091" },
+                "deprecated": false,
+                "description": "",
+                "id": "label.stage.name.stagename",
+                "production": true,
+                "ref": { "uri": "/gdc/md/reference-workspace/obj/1092" },
+                "title": "Stage Name",
+                "type": "displayForm",
+                "unlisted": false,
+                "uri": "/gdc/md/reference-workspace/obj/1092"
+            },
+            {
+                "attribute": { "uri": "/gdc/md/reference-workspace/obj/1091" },
+                "deprecated": false,
+                "description": "",
+                "id": "label.stage.name.order",
+                "production": true,
+                "ref": { "uri": "/gdc/md/reference-workspace/obj/1093" },
+                "title": "Order",
+                "type": "displayForm",
+                "unlisted": false,
+                "uri": "/gdc/md/reference-workspace/obj/1093"
+            }
+        ],
+        "geoPinDisplayForms": [],
+        "groups": [],
+        "type": "attribute"
+    },
+    {
+        "attribute": {
+            "deprecated": false,
+            "description": "",
+            "displayForms": [
+                {
+                    "attribute": { "uri": "/gdc/md/reference-workspace/obj/1077" },
+                    "deprecated": false,
+                    "description": "",
+                    "id": "label.activity.status",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1078" },
+                    "title": "Status",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1078"
+                }
+            ],
+            "id": "attr.activity.status",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1077" },
+            "title": "Status",
+            "type": "attribute",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1077"
+        },
+        "defaultDisplayForm": {
+            "attribute": { "uri": "/gdc/md/reference-workspace/obj/1077" },
+            "deprecated": false,
+            "description": "",
+            "id": "label.activity.status",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1078" },
+            "title": "Status",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1078"
+        },
+        "displayForms": [
+            {
+                "attribute": { "uri": "/gdc/md/reference-workspace/obj/1077" },
+                "deprecated": false,
+                "description": "",
+                "id": "label.activity.status",
+                "production": true,
+                "ref": { "uri": "/gdc/md/reference-workspace/obj/1078" },
+                "title": "Status",
+                "type": "displayForm",
+                "unlisted": false,
+                "uri": "/gdc/md/reference-workspace/obj/1078"
+            }
+        ],
+        "geoPinDisplayForms": [],
+        "groups": [],
+        "type": "attribute"
+    },
+    {
+        "attribute": {
+            "deprecated": false,
+            "description": "",
+            "displayForms": [
+                {
+                    "attribute": { "uri": "/gdc/md/reference-workspace/obj/1100" },
+                    "deprecated": false,
+                    "description": "",
+                    "id": "label.stage.status",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1101" },
+                    "title": "Status",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1101"
+                }
+            ],
+            "id": "attr.stage.status",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1100" },
+            "title": "Status",
+            "type": "attribute",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1100"
+        },
+        "defaultDisplayForm": {
+            "attribute": { "uri": "/gdc/md/reference-workspace/obj/1100" },
+            "deprecated": false,
+            "description": "",
+            "id": "label.stage.status",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1101" },
+            "title": "Status",
+            "type": "displayForm",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1101"
+        },
+        "displayForms": [
+            {
+                "attribute": { "uri": "/gdc/md/reference-workspace/obj/1100" },
+                "deprecated": false,
+                "description": "",
+                "id": "label.stage.status",
+                "production": true,
+                "ref": { "uri": "/gdc/md/reference-workspace/obj/1101" },
+                "title": "Status",
+                "type": "displayForm",
+                "unlisted": false,
+                "uri": "/gdc/md/reference-workspace/obj/1101"
+            }
+        ],
+        "geoPinDisplayForms": [],
+        "groups": [],
+        "type": "attribute"
+    },
+    {
+        "fact": {
+            "deprecated": false,
+            "description": "",
+            "id": "dt.timeline.timeline",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1111" },
+            "title": "Timeline (Date)",
+            "type": "fact",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1111"
+        },
+        "groups": [],
+        "type": "fact"
+    },
+    {
+        "fact": {
+            "deprecated": false,
+            "description": "",
+            "id": "fact.stagehistory.velocity",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1108" },
+            "title": "Velocity",
+            "type": "fact",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1108"
+        },
+        "groups": [],
+        "type": "fact"
+    },
+    {
+        "groups": [],
+        "measure": {
+            "deprecated": false,
+            "description": "",
+            "expression": "SELECT [/gdc/md/reference-workspace/obj/1269] / [/gdc/md/reference-workspace/obj/1268]",
+            "format": "#,##0.0%",
+            "id": "abZgFKGPaGYM",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1270" },
+            "title": "Win Rate",
+            "type": "measure",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1270"
+        },
+        "type": "measure"
+    },
+    {
+        "groups": [],
+        "measure": {
+            "deprecated": false,
+            "description": "",
+            "expression": "SELECT [/gdc/md/reference-workspace/obj/1271] WHERE [/gdc/md/reference-workspace/obj/1100]=[/gdc/md/reference-workspace/obj/1100/elements?id=460495]",
+            "format": "$#,##0.00",
+            "id": "acugFHNJgsBy",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1272" },
+            "title": "Won",
+            "type": "measure",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1272"
+        },
+        "type": "measure"
+    },
+    {
+        "dataSet": {
+            "deprecated": false,
+            "description": "DataSet Date",
+            "id": "activity.dataset.dt",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/887" },
+            "title": "Date (Activity)",
+            "type": "dataSet",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/887"
+        },
+        "dateAttributes": [
+            {
+                "attribute": {
+                    "deprecated": false,
+                    "description": "Year",
+                    "displayForms": [
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/827" },
+                            "deprecated": false,
+                            "description": "DisplayForm Year.",
+                            "id": "activity.aag81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/845" },
+                            "title": "Year (Activity)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/845"
+                        }
+                    ],
+                    "drillDownStep": { "uri": "/gdc/md/reference-workspace/obj/877" },
+                    "id": "activity.year",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/827" },
+                    "title": "Year (Activity)",
+                    "type": "attribute",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/827"
+                },
+                "defaultDisplayForm": {
+                    "deprecated": false,
+                    "description": "DisplayForm Year.",
+                    "id": "activity.aag81lMifn6q",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/845" },
+                    "title": "Year (Activity)",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/845"
+                },
+                "granularity": "GDC.time.year"
+            },
+            {
+                "attribute": {
+                    "deprecated": false,
+                    "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \"Continuous\" show both weeks (W53/2009 - W1/2010).",
+                    "displayForms": [
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/829" },
+                            "deprecated": false,
+                            "description": "DisplayForm Week #/Year (W1/2010).",
+                            "id": "activity.aaA81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/851" },
+                            "title": "Week #/Year (W1/2010) (Activity)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/851"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/829" },
+                            "deprecated": false,
+                            "description": "DisplayForm Week Starting.",
+                            "id": "activity.aaw81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/849" },
+                            "title": "Week Starting (Activity)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/849"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/829" },
+                            "deprecated": false,
+                            "description": "DisplayForm From - To.",
+                            "id": "activity.aau81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/848" },
+                            "title": "From - To (Activity)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/848"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/829" },
+                            "deprecated": false,
+                            "description": "DisplayForm Week #/Year (Cont.).",
+                            "id": "activity.aay81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/850" },
+                            "title": "Week #/Year (Cont.) (Activity)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/850"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/829" },
+                            "deprecated": false,
+                            "description": "DisplayForm Wk/Qtr/Year (Cont.).",
+                            "id": "activity.aaC81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/852" },
+                            "title": "Wk/Qtr/Year (Cont.) (Activity)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/852"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/829" },
+                            "deprecated": false,
+                            "description": "DisplayForm Wk/Qtr/Year.",
+                            "id": "activity.aas81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/847" },
+                            "title": "Wk/Qtr/Year (Activity)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/847"
+                        }
+                    ],
+                    "drillDownStep": { "uri": "/gdc/md/reference-workspace/obj/883" },
+                    "id": "activity.week",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/829" },
+                    "title": "Week (Sun-Sat)/Year (Activity)",
+                    "type": "attribute",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/829"
+                },
+                "defaultDisplayForm": {
+                    "deprecated": false,
+                    "description": "DisplayForm Week #/Year (W1/2010).",
+                    "id": "activity.aaA81lMifn6q",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/851" },
+                    "title": "Week #/Year (W1/2010) (Activity)",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/851"
+                },
+                "granularity": "GDC.time.week_us"
+            },
+            {
+                "attribute": {
+                    "deprecated": false,
+                    "description": "Quarter and Year (Q1/2010)",
+                    "displayForms": [
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/842" },
+                            "deprecated": false,
+                            "description": "DisplayForm US Short.",
+                            "id": "activity.aci81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/877" },
+                            "title": "US Short (Activity)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/877"
+                        }
+                    ],
+                    "drillDownStep": { "uri": "/gdc/md/reference-workspace/obj/878" },
+                    "id": "activity.quarter",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/842" },
+                    "title": "Quarter/Year (Activity)",
+                    "type": "attribute",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/842"
+                },
+                "defaultDisplayForm": {
+                    "deprecated": false,
+                    "description": "DisplayForm US Short.",
+                    "id": "activity.aci81lMifn6q",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/877" },
+                    "title": "US Short (Activity)",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/877"
+                },
+                "granularity": "GDC.time.quarter"
+            },
+            {
+                "attribute": {
+                    "deprecated": false,
+                    "description": "Month and Year",
+                    "displayForms": [
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/843" },
+                            "deprecated": false,
+                            "description": "DisplayForm Short (Jan 2010).",
+                            "id": "activity.act81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/878" },
+                            "title": "Short (Jan 2010) (Activity)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/878"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/843" },
+                            "deprecated": false,
+                            "description": "DisplayForm Long (January 2010).",
+                            "id": "activity.acx81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/880" },
+                            "title": "Long (January 2010) (Activity)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/880"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/843" },
+                            "deprecated": false,
+                            "description": "DisplayForm Number (1/2010).",
+                            "id": "activity.acv81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/879" },
+                            "title": "Number (1/2010) (Activity)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/879"
+                        }
+                    ],
+                    "drillDownStep": { "uri": "/gdc/md/reference-workspace/obj/883" },
+                    "id": "activity.month",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/843" },
+                    "title": "Month/Year (Activity)",
+                    "type": "attribute",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/843"
+                },
+                "defaultDisplayForm": {
+                    "deprecated": false,
+                    "description": "DisplayForm Short (Jan 2010).",
+                    "id": "activity.act81lMifn6q",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/878" },
+                    "title": "Short (Jan 2010) (Activity)",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/878"
+                },
+                "granularity": "GDC.time.month"
+            },
+            {
+                "attribute": {
+                    "deprecated": false,
+                    "description": "Date",
+                    "displayForms": [
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/844" },
+                            "deprecated": false,
+                            "description": "DisplayForm mm/dd/yyyy.",
+                            "displayFormType": "GDC.time.day_us",
+                            "id": "activity.date.mmddyyyy",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/883" },
+                            "title": "mm/dd/yyyy (Activity)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/883"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/844" },
+                            "deprecated": false,
+                            "description": "DisplayForm yyyy-mm-dd.",
+                            "displayFormType": "GDC.time.day",
+                            "id": "activity.date.yyyymmdd",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/882" },
+                            "title": "yyyy-mm-dd (Activity)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/882"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/844" },
+                            "deprecated": false,
+                            "description": "DisplayForm m/d/yy (no leading zeroes).",
+                            "displayFormType": "GDC.time.day_us_noleading",
+                            "id": "activity.date.mdyy",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/886" },
+                            "title": "m/d/yy (no leading zeroes) (Activity)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/886"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/844" },
+                            "deprecated": false,
+                            "description": "DisplayForm Long (Mon, Jan 1, 2010).",
+                            "displayFormType": "GDC.time.day_us_long",
+                            "id": "activity.date.long",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/885" },
+                            "title": "Long (Mon, Jan 1, 2010) (Activity)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/885"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/844" },
+                            "deprecated": false,
+                            "description": "DisplayForm dd/mm/yyyy.",
+                            "displayFormType": "GDC.time.day_eu",
+                            "id": "activity.date.ddmmyyyy",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/881" },
+                            "title": "dd/mm/yyyy (Activity)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/881"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/844" },
+                            "deprecated": false,
+                            "description": "DisplayForm dd-mm-yyyy.",
+                            "displayFormType": "GDC.time.day_iso",
+                            "id": "activity.date.eddmmyyyy",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/884" },
+                            "title": "dd-mm-yyyy (Activity)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/884"
+                        }
+                    ],
+                    "id": "activity.date",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/844" },
+                    "title": "Date (Activity)",
+                    "type": "attribute",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/844"
+                },
+                "defaultDisplayForm": {
+                    "deprecated": false,
+                    "description": "DisplayForm mm/dd/yyyy.",
+                    "id": "activity.date.mmddyyyy",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/883" },
+                    "title": "mm/dd/yyyy (Activity)",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/883"
+                },
+                "granularity": "GDC.time.date"
+            }
+        ],
+        "relevance": 0,
+        "type": "dateDataset"
+    },
+    {
+        "dataSet": {
+            "deprecated": false,
+            "description": "DataSet Date",
+            "id": "closed.dataset.dt",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/557" },
+            "title": "Date (Closed)",
+            "type": "dataSet",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/557"
+        },
+        "dateAttributes": [
+            {
+                "attribute": {
+                    "deprecated": false,
+                    "description": "Year",
+                    "displayForms": [
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/497" },
+                            "deprecated": false,
+                            "description": "DisplayForm Year.",
+                            "id": "closed.aag81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/515" },
+                            "title": "Year (Closed)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/515"
+                        }
+                    ],
+                    "drillDownStep": { "uri": "/gdc/md/reference-workspace/obj/547" },
+                    "id": "closed.year",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/497" },
+                    "title": "Year (Closed)",
+                    "type": "attribute",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/497"
+                },
+                "defaultDisplayForm": {
+                    "deprecated": false,
+                    "description": "DisplayForm Year.",
+                    "id": "closed.aag81lMifn6q",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/515" },
+                    "title": "Year (Closed)",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/515"
+                },
+                "granularity": "GDC.time.year"
+            },
+            {
+                "attribute": {
+                    "deprecated": false,
+                    "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \"Continuous\" show both weeks (W53/2009 - W1/2010).",
+                    "displayForms": [
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/499" },
+                            "deprecated": false,
+                            "description": "DisplayForm Week #/Year (W1/2010).",
+                            "id": "closed.aaA81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/521" },
+                            "title": "Week #/Year (W1/2010) (Closed)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/521"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/499" },
+                            "deprecated": false,
+                            "description": "DisplayForm Week Starting.",
+                            "id": "closed.aaw81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/519" },
+                            "title": "Week Starting (Closed)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/519"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/499" },
+                            "deprecated": false,
+                            "description": "DisplayForm From - To.",
+                            "id": "closed.aau81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/518" },
+                            "title": "From - To (Closed)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/518"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/499" },
+                            "deprecated": false,
+                            "description": "DisplayForm Week #/Year (Cont.).",
+                            "id": "closed.aay81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/520" },
+                            "title": "Week #/Year (Cont.) (Closed)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/520"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/499" },
+                            "deprecated": false,
+                            "description": "DisplayForm Wk/Qtr/Year (Cont.).",
+                            "id": "closed.aaC81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/522" },
+                            "title": "Wk/Qtr/Year (Cont.) (Closed)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/522"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/499" },
+                            "deprecated": false,
+                            "description": "DisplayForm Wk/Qtr/Year.",
+                            "id": "closed.aas81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/517" },
+                            "title": "Wk/Qtr/Year (Closed)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/517"
+                        }
+                    ],
+                    "drillDownStep": { "uri": "/gdc/md/reference-workspace/obj/553" },
+                    "id": "closed.week",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/499" },
+                    "title": "Week (Sun-Sat)/Year (Closed)",
+                    "type": "attribute",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/499"
+                },
+                "defaultDisplayForm": {
+                    "deprecated": false,
+                    "description": "DisplayForm Week #/Year (W1/2010).",
+                    "id": "closed.aaA81lMifn6q",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/521" },
+                    "title": "Week #/Year (W1/2010) (Closed)",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/521"
+                },
+                "granularity": "GDC.time.week_us"
+            },
+            {
+                "attribute": {
+                    "deprecated": false,
+                    "description": "Quarter and Year (Q1/2010)",
+                    "displayForms": [
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/512" },
+                            "deprecated": false,
+                            "description": "DisplayForm US Short.",
+                            "id": "closed.aci81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/547" },
+                            "title": "US Short (Closed)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/547"
+                        }
+                    ],
+                    "drillDownStep": { "uri": "/gdc/md/reference-workspace/obj/548" },
+                    "id": "closed.quarter",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/512" },
+                    "title": "Quarter/Year (Closed)",
+                    "type": "attribute",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/512"
+                },
+                "defaultDisplayForm": {
+                    "deprecated": false,
+                    "description": "DisplayForm US Short.",
+                    "id": "closed.aci81lMifn6q",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/547" },
+                    "title": "US Short (Closed)",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/547"
+                },
+                "granularity": "GDC.time.quarter"
+            },
+            {
+                "attribute": {
+                    "deprecated": false,
+                    "description": "Month and Year",
+                    "displayForms": [
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/513" },
+                            "deprecated": false,
+                            "description": "DisplayForm Short (Jan 2010).",
+                            "id": "closed.act81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/548" },
+                            "title": "Short (Jan 2010) (Closed)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/548"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/513" },
+                            "deprecated": false,
+                            "description": "DisplayForm Long (January 2010).",
+                            "id": "closed.acx81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/550" },
+                            "title": "Long (January 2010) (Closed)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/550"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/513" },
+                            "deprecated": false,
+                            "description": "DisplayForm Number (1/2010).",
+                            "id": "closed.acv81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/549" },
+                            "title": "Number (1/2010) (Closed)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/549"
+                        }
+                    ],
+                    "drillDownStep": { "uri": "/gdc/md/reference-workspace/obj/553" },
+                    "id": "closed.month",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/513" },
+                    "title": "Month/Year (Closed)",
+                    "type": "attribute",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/513"
+                },
+                "defaultDisplayForm": {
+                    "deprecated": false,
+                    "description": "DisplayForm Short (Jan 2010).",
+                    "id": "closed.act81lMifn6q",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/548" },
+                    "title": "Short (Jan 2010) (Closed)",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/548"
+                },
+                "granularity": "GDC.time.month"
+            },
+            {
+                "attribute": {
+                    "deprecated": false,
+                    "description": "Date",
+                    "displayForms": [
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/514" },
+                            "deprecated": false,
+                            "description": "DisplayForm mm/dd/yyyy.",
+                            "displayFormType": "GDC.time.day_us",
+                            "id": "closed.date.mmddyyyy",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/553" },
+                            "title": "mm/dd/yyyy (Closed)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/553"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/514" },
+                            "deprecated": false,
+                            "description": "DisplayForm yyyy-mm-dd.",
+                            "displayFormType": "GDC.time.day",
+                            "id": "closed.date.yyyymmdd",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/552" },
+                            "title": "yyyy-mm-dd (Closed)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/552"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/514" },
+                            "deprecated": false,
+                            "description": "DisplayForm m/d/yy (no leading zeroes).",
+                            "displayFormType": "GDC.time.day_us_noleading",
+                            "id": "closed.date.mdyy",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/556" },
+                            "title": "m/d/yy (no leading zeroes) (Closed)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/556"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/514" },
+                            "deprecated": false,
+                            "description": "DisplayForm Long (Mon, Jan 1, 2010).",
+                            "displayFormType": "GDC.time.day_us_long",
+                            "id": "closed.date.long",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/555" },
+                            "title": "Long (Mon, Jan 1, 2010) (Closed)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/555"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/514" },
+                            "deprecated": false,
+                            "description": "DisplayForm dd/mm/yyyy.",
+                            "displayFormType": "GDC.time.day_eu",
+                            "id": "closed.date.ddmmyyyy",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/551" },
+                            "title": "dd/mm/yyyy (Closed)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/551"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/514" },
+                            "deprecated": false,
+                            "description": "DisplayForm dd-mm-yyyy.",
+                            "displayFormType": "GDC.time.day_iso",
+                            "id": "closed.date.eddmmyyyy",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/554" },
+                            "title": "dd-mm-yyyy (Closed)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/554"
+                        }
+                    ],
+                    "id": "closed.date",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/514" },
+                    "title": "Date (Closed)",
+                    "type": "attribute",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/514"
+                },
+                "defaultDisplayForm": {
+                    "deprecated": false,
+                    "description": "DisplayForm mm/dd/yyyy.",
+                    "id": "closed.date.mmddyyyy",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/553" },
+                    "title": "mm/dd/yyyy (Closed)",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/553"
+                },
+                "granularity": "GDC.time.date"
+            }
+        ],
+        "relevance": 0,
+        "type": "dateDataset"
+    },
+    {
+        "dataSet": {
+            "deprecated": false,
+            "description": "DataSet Date",
+            "id": "created.dataset.dt",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/392" },
+            "title": "Date (Created)",
+            "type": "dataSet",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/392"
+        },
+        "dateAttributes": [
+            {
+                "attribute": {
+                    "deprecated": false,
+                    "description": "Year",
+                    "displayForms": [
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/332" },
+                            "deprecated": false,
+                            "description": "DisplayForm Year.",
+                            "id": "created.aag81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/350" },
+                            "title": "Year (Created)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/350"
+                        }
+                    ],
+                    "drillDownStep": { "uri": "/gdc/md/reference-workspace/obj/382" },
+                    "id": "created.year",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/332" },
+                    "title": "Year (Created)",
+                    "type": "attribute",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/332"
+                },
+                "defaultDisplayForm": {
+                    "deprecated": false,
+                    "description": "DisplayForm Year.",
+                    "id": "created.aag81lMifn6q",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/350" },
+                    "title": "Year (Created)",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/350"
+                },
+                "granularity": "GDC.time.year"
+            },
+            {
+                "attribute": {
+                    "deprecated": false,
+                    "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \"Continuous\" show both weeks (W53/2009 - W1/2010).",
+                    "displayForms": [
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/334" },
+                            "deprecated": false,
+                            "description": "DisplayForm Week #/Year (W1/2010).",
+                            "id": "created.aaA81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/356" },
+                            "title": "Week #/Year (W1/2010) (Created)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/356"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/334" },
+                            "deprecated": false,
+                            "description": "DisplayForm Week Starting.",
+                            "id": "created.aaw81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/354" },
+                            "title": "Week Starting (Created)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/354"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/334" },
+                            "deprecated": false,
+                            "description": "DisplayForm From - To.",
+                            "id": "created.aau81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/353" },
+                            "title": "From - To (Created)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/353"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/334" },
+                            "deprecated": false,
+                            "description": "DisplayForm Week #/Year (Cont.).",
+                            "id": "created.aay81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/355" },
+                            "title": "Week #/Year (Cont.) (Created)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/355"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/334" },
+                            "deprecated": false,
+                            "description": "DisplayForm Wk/Qtr/Year (Cont.).",
+                            "id": "created.aaC81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/357" },
+                            "title": "Wk/Qtr/Year (Cont.) (Created)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/357"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/334" },
+                            "deprecated": false,
+                            "description": "DisplayForm Wk/Qtr/Year.",
+                            "id": "created.aas81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/352" },
+                            "title": "Wk/Qtr/Year (Created)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/352"
+                        }
+                    ],
+                    "drillDownStep": { "uri": "/gdc/md/reference-workspace/obj/388" },
+                    "id": "created.week",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/334" },
+                    "title": "Week (Sun-Sat)/Year (Created)",
+                    "type": "attribute",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/334"
+                },
+                "defaultDisplayForm": {
+                    "deprecated": false,
+                    "description": "DisplayForm Week #/Year (W1/2010).",
+                    "id": "created.aaA81lMifn6q",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/356" },
+                    "title": "Week #/Year (W1/2010) (Created)",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/356"
+                },
+                "granularity": "GDC.time.week_us"
+            },
+            {
+                "attribute": {
+                    "deprecated": false,
+                    "description": "Quarter and Year (Q1/2010)",
+                    "displayForms": [
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/347" },
+                            "deprecated": false,
+                            "description": "DisplayForm US Short.",
+                            "id": "created.aci81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/382" },
+                            "title": "US Short (Created)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/382"
+                        }
+                    ],
+                    "drillDownStep": { "uri": "/gdc/md/reference-workspace/obj/383" },
+                    "id": "created.quarter",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/347" },
+                    "title": "Quarter/Year (Created)",
+                    "type": "attribute",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/347"
+                },
+                "defaultDisplayForm": {
+                    "deprecated": false,
+                    "description": "DisplayForm US Short.",
+                    "id": "created.aci81lMifn6q",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/382" },
+                    "title": "US Short (Created)",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/382"
+                },
+                "granularity": "GDC.time.quarter"
+            },
+            {
+                "attribute": {
+                    "deprecated": false,
+                    "description": "Month and Year",
+                    "displayForms": [
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/348" },
+                            "deprecated": false,
+                            "description": "DisplayForm Short (Jan 2010).",
+                            "id": "created.act81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/383" },
+                            "title": "Short (Jan 2010) (Created)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/383"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/348" },
+                            "deprecated": false,
+                            "description": "DisplayForm Long (January 2010).",
+                            "id": "created.acx81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/385" },
+                            "title": "Long (January 2010) (Created)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/385"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/348" },
+                            "deprecated": false,
+                            "description": "DisplayForm Number (1/2010).",
+                            "id": "created.acv81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/384" },
+                            "title": "Number (1/2010) (Created)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/384"
+                        }
+                    ],
+                    "drillDownStep": { "uri": "/gdc/md/reference-workspace/obj/388" },
+                    "id": "created.month",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/348" },
+                    "title": "Month/Year (Created)",
+                    "type": "attribute",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/348"
+                },
+                "defaultDisplayForm": {
+                    "deprecated": false,
+                    "description": "DisplayForm Short (Jan 2010).",
+                    "id": "created.act81lMifn6q",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/383" },
+                    "title": "Short (Jan 2010) (Created)",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/383"
+                },
+                "granularity": "GDC.time.month"
+            },
+            {
+                "attribute": {
+                    "deprecated": false,
+                    "description": "Date",
+                    "displayForms": [
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/349" },
+                            "deprecated": false,
+                            "description": "DisplayForm mm/dd/yyyy.",
+                            "displayFormType": "GDC.time.day_us",
+                            "id": "created.date.mmddyyyy",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/388" },
+                            "title": "mm/dd/yyyy (Created)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/388"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/349" },
+                            "deprecated": false,
+                            "description": "DisplayForm yyyy-mm-dd.",
+                            "displayFormType": "GDC.time.day",
+                            "id": "created.date.yyyymmdd",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/387" },
+                            "title": "yyyy-mm-dd (Created)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/387"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/349" },
+                            "deprecated": false,
+                            "description": "DisplayForm m/d/yy (no leading zeroes).",
+                            "displayFormType": "GDC.time.day_us_noleading",
+                            "id": "created.date.mdyy",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/391" },
+                            "title": "m/d/yy (no leading zeroes) (Created)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/391"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/349" },
+                            "deprecated": false,
+                            "description": "DisplayForm Long (Mon, Jan 1, 2010).",
+                            "displayFormType": "GDC.time.day_us_long",
+                            "id": "created.date.long",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/390" },
+                            "title": "Long (Mon, Jan 1, 2010) (Created)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/390"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/349" },
+                            "deprecated": false,
+                            "description": "DisplayForm dd/mm/yyyy.",
+                            "displayFormType": "GDC.time.day_eu",
+                            "id": "created.date.ddmmyyyy",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/386" },
+                            "title": "dd/mm/yyyy (Created)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/386"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/349" },
+                            "deprecated": false,
+                            "description": "DisplayForm dd-mm-yyyy.",
+                            "displayFormType": "GDC.time.day_iso",
+                            "id": "created.date.eddmmyyyy",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/389" },
+                            "title": "dd-mm-yyyy (Created)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/389"
+                        }
+                    ],
+                    "id": "created.date",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/349" },
+                    "title": "Date (Created)",
+                    "type": "attribute",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/349"
+                },
+                "defaultDisplayForm": {
+                    "deprecated": false,
+                    "description": "DisplayForm mm/dd/yyyy.",
+                    "id": "created.date.mmddyyyy",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/388" },
+                    "title": "mm/dd/yyyy (Created)",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/388"
+                },
+                "granularity": "GDC.time.date"
+            }
+        ],
+        "relevance": 0,
+        "type": "dateDataset"
+    },
+    {
+        "dataSet": {
+            "deprecated": false,
+            "description": "DataSet Date",
+            "id": "snapshot.dataset.dt",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/722" },
+            "title": "Date (Snapshot)",
+            "type": "dataSet",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/722"
+        },
+        "dateAttributes": [
+            {
+                "attribute": {
+                    "deprecated": false,
+                    "description": "Year",
+                    "displayForms": [
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/662" },
+                            "deprecated": false,
+                            "description": "DisplayForm Year.",
+                            "id": "snapshot.aag81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/680" },
+                            "title": "Year (Snapshot)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/680"
+                        }
+                    ],
+                    "drillDownStep": { "uri": "/gdc/md/reference-workspace/obj/712" },
+                    "id": "snapshot.year",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/662" },
+                    "title": "Year (Snapshot)",
+                    "type": "attribute",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/662"
+                },
+                "defaultDisplayForm": {
+                    "deprecated": false,
+                    "description": "DisplayForm Year.",
+                    "id": "snapshot.aag81lMifn6q",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/680" },
+                    "title": "Year (Snapshot)",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/680"
+                },
+                "granularity": "GDC.time.year"
+            },
+            {
+                "attribute": {
+                    "deprecated": false,
+                    "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \"Continuous\" show both weeks (W53/2009 - W1/2010).",
+                    "displayForms": [
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/664" },
+                            "deprecated": false,
+                            "description": "DisplayForm Week #/Year (W1/2010).",
+                            "id": "snapshot.aaA81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/686" },
+                            "title": "Week #/Year (W1/2010) (Snapshot)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/686"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/664" },
+                            "deprecated": false,
+                            "description": "DisplayForm Week Starting.",
+                            "id": "snapshot.aaw81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/684" },
+                            "title": "Week Starting (Snapshot)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/684"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/664" },
+                            "deprecated": false,
+                            "description": "DisplayForm From - To.",
+                            "id": "snapshot.aau81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/683" },
+                            "title": "From - To (Snapshot)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/683"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/664" },
+                            "deprecated": false,
+                            "description": "DisplayForm Week #/Year (Cont.).",
+                            "id": "snapshot.aay81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/685" },
+                            "title": "Week #/Year (Cont.) (Snapshot)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/685"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/664" },
+                            "deprecated": false,
+                            "description": "DisplayForm Wk/Qtr/Year (Cont.).",
+                            "id": "snapshot.aaC81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/687" },
+                            "title": "Wk/Qtr/Year (Cont.) (Snapshot)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/687"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/664" },
+                            "deprecated": false,
+                            "description": "DisplayForm Wk/Qtr/Year.",
+                            "id": "snapshot.aas81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/682" },
+                            "title": "Wk/Qtr/Year (Snapshot)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/682"
+                        }
+                    ],
+                    "drillDownStep": { "uri": "/gdc/md/reference-workspace/obj/718" },
+                    "id": "snapshot.week",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/664" },
+                    "title": "Week (Sun-Sat)/Year (Snapshot)",
+                    "type": "attribute",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/664"
+                },
+                "defaultDisplayForm": {
+                    "deprecated": false,
+                    "description": "DisplayForm Week #/Year (W1/2010).",
+                    "id": "snapshot.aaA81lMifn6q",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/686" },
+                    "title": "Week #/Year (W1/2010) (Snapshot)",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/686"
+                },
+                "granularity": "GDC.time.week_us"
+            },
+            {
+                "attribute": {
+                    "deprecated": false,
+                    "description": "Quarter and Year (Q1/2010)",
+                    "displayForms": [
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/677" },
+                            "deprecated": false,
+                            "description": "DisplayForm US Short.",
+                            "id": "snapshot.aci81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/712" },
+                            "title": "US Short (Snapshot)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/712"
+                        }
+                    ],
+                    "drillDownStep": { "uri": "/gdc/md/reference-workspace/obj/713" },
+                    "id": "snapshot.quarter",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/677" },
+                    "title": "Quarter/Year (Snapshot)",
+                    "type": "attribute",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/677"
+                },
+                "defaultDisplayForm": {
+                    "deprecated": false,
+                    "description": "DisplayForm US Short.",
+                    "id": "snapshot.aci81lMifn6q",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/712" },
+                    "title": "US Short (Snapshot)",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/712"
+                },
+                "granularity": "GDC.time.quarter"
+            },
+            {
+                "attribute": {
+                    "deprecated": false,
+                    "description": "Month and Year",
+                    "displayForms": [
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/678" },
+                            "deprecated": false,
+                            "description": "DisplayForm Short (Jan 2010).",
+                            "id": "snapshot.act81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/713" },
+                            "title": "Short (Jan 2010) (Snapshot)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/713"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/678" },
+                            "deprecated": false,
+                            "description": "DisplayForm Long (January 2010).",
+                            "id": "snapshot.acx81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/715" },
+                            "title": "Long (January 2010) (Snapshot)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/715"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/678" },
+                            "deprecated": false,
+                            "description": "DisplayForm Number (1/2010).",
+                            "id": "snapshot.acv81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/714" },
+                            "title": "Number (1/2010) (Snapshot)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/714"
+                        }
+                    ],
+                    "drillDownStep": { "uri": "/gdc/md/reference-workspace/obj/718" },
+                    "id": "snapshot.month",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/678" },
+                    "title": "Month/Year (Snapshot)",
+                    "type": "attribute",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/678"
+                },
+                "defaultDisplayForm": {
+                    "deprecated": false,
+                    "description": "DisplayForm Short (Jan 2010).",
+                    "id": "snapshot.act81lMifn6q",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/713" },
+                    "title": "Short (Jan 2010) (Snapshot)",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/713"
+                },
+                "granularity": "GDC.time.month"
+            },
+            {
+                "attribute": {
+                    "deprecated": false,
+                    "description": "Date",
+                    "displayForms": [
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/679" },
+                            "deprecated": false,
+                            "description": "DisplayForm mm/dd/yyyy.",
+                            "displayFormType": "GDC.time.day_us",
+                            "id": "snapshot.date.mmddyyyy",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/718" },
+                            "title": "mm/dd/yyyy (Snapshot)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/718"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/679" },
+                            "deprecated": false,
+                            "description": "DisplayForm yyyy-mm-dd.",
+                            "displayFormType": "GDC.time.day",
+                            "id": "snapshot.date.yyyymmdd",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/717" },
+                            "title": "yyyy-mm-dd (Snapshot)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/717"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/679" },
+                            "deprecated": false,
+                            "description": "DisplayForm m/d/yy (no leading zeroes).",
+                            "displayFormType": "GDC.time.day_us_noleading",
+                            "id": "snapshot.date.mdyy",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/721" },
+                            "title": "m/d/yy (no leading zeroes) (Snapshot)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/721"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/679" },
+                            "deprecated": false,
+                            "description": "DisplayForm Long (Mon, Jan 1, 2010).",
+                            "displayFormType": "GDC.time.day_us_long",
+                            "id": "snapshot.date.long",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/720" },
+                            "title": "Long (Mon, Jan 1, 2010) (Snapshot)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/720"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/679" },
+                            "deprecated": false,
+                            "description": "DisplayForm dd/mm/yyyy.",
+                            "displayFormType": "GDC.time.day_eu",
+                            "id": "snapshot.date.ddmmyyyy",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/716" },
+                            "title": "dd/mm/yyyy (Snapshot)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/716"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/679" },
+                            "deprecated": false,
+                            "description": "DisplayForm dd-mm-yyyy.",
+                            "displayFormType": "GDC.time.day_iso",
+                            "id": "snapshot.date.eddmmyyyy",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/719" },
+                            "title": "dd-mm-yyyy (Snapshot)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/719"
+                        }
+                    ],
+                    "id": "snapshot.date",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/679" },
+                    "title": "Date (Snapshot)",
+                    "type": "attribute",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/679"
+                },
+                "defaultDisplayForm": {
+                    "deprecated": false,
+                    "description": "DisplayForm mm/dd/yyyy.",
+                    "id": "snapshot.date.mmddyyyy",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/718" },
+                    "title": "mm/dd/yyyy (Snapshot)",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/718"
+                },
+                "granularity": "GDC.time.date"
+            }
+        ],
+        "relevance": 0,
+        "type": "dateDataset"
+    },
+    {
+        "dataSet": {
+            "deprecated": false,
+            "description": "DataSet Date",
+            "id": "timeline.dataset.dt",
+            "production": true,
+            "ref": { "uri": "/gdc/md/reference-workspace/obj/1052" },
+            "title": "Date (Timeline)",
+            "type": "dataSet",
+            "unlisted": false,
+            "uri": "/gdc/md/reference-workspace/obj/1052"
+        },
+        "dateAttributes": [
+            {
+                "attribute": {
+                    "deprecated": false,
+                    "description": "Year",
+                    "displayForms": [
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/992" },
+                            "deprecated": false,
+                            "description": "DisplayForm Year.",
+                            "id": "timeline.aag81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/1010" },
+                            "title": "Year (Timeline)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/1010"
+                        }
+                    ],
+                    "drillDownStep": { "uri": "/gdc/md/reference-workspace/obj/1042" },
+                    "id": "timeline.year",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/992" },
+                    "title": "Year (Timeline)",
+                    "type": "attribute",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/992"
+                },
+                "defaultDisplayForm": {
+                    "deprecated": false,
+                    "description": "DisplayForm Year.",
+                    "id": "timeline.aag81lMifn6q",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1010" },
+                    "title": "Year (Timeline)",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1010"
+                },
+                "granularity": "GDC.time.year"
+            },
+            {
+                "attribute": {
+                    "deprecated": false,
+                    "description": "Week/Year based on US Weeks (Sun-Sat). By default, if a week spans multiple years or quarters (ie, end of the year/quarter), it is marked as first or last week of the period according to particular standards (ie, US or EU). Labels marked as \"Continuous\" show both weeks (W53/2009 - W1/2010).",
+                    "displayForms": [
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/994" },
+                            "deprecated": false,
+                            "description": "DisplayForm Week #/Year (W1/2010).",
+                            "id": "timeline.aaA81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/1016" },
+                            "title": "Week #/Year (W1/2010) (Timeline)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/1016"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/994" },
+                            "deprecated": false,
+                            "description": "DisplayForm Week Starting.",
+                            "id": "timeline.aaw81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/1014" },
+                            "title": "Week Starting (Timeline)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/1014"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/994" },
+                            "deprecated": false,
+                            "description": "DisplayForm From - To.",
+                            "id": "timeline.aau81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/1013" },
+                            "title": "From - To (Timeline)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/1013"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/994" },
+                            "deprecated": false,
+                            "description": "DisplayForm Week #/Year (Cont.).",
+                            "id": "timeline.aay81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/1015" },
+                            "title": "Week #/Year (Cont.) (Timeline)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/1015"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/994" },
+                            "deprecated": false,
+                            "description": "DisplayForm Wk/Qtr/Year (Cont.).",
+                            "id": "timeline.aaC81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/1017" },
+                            "title": "Wk/Qtr/Year (Cont.) (Timeline)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/1017"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/994" },
+                            "deprecated": false,
+                            "description": "DisplayForm Wk/Qtr/Year.",
+                            "id": "timeline.aas81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/1012" },
+                            "title": "Wk/Qtr/Year (Timeline)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/1012"
+                        }
+                    ],
+                    "drillDownStep": { "uri": "/gdc/md/reference-workspace/obj/1048" },
+                    "id": "timeline.week",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/994" },
+                    "title": "Week (Sun-Sat)/Year (Timeline)",
+                    "type": "attribute",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/994"
+                },
+                "defaultDisplayForm": {
+                    "deprecated": false,
+                    "description": "DisplayForm Week #/Year (W1/2010).",
+                    "id": "timeline.aaA81lMifn6q",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1016" },
+                    "title": "Week #/Year (W1/2010) (Timeline)",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1016"
+                },
+                "granularity": "GDC.time.week_us"
+            },
+            {
+                "attribute": {
+                    "deprecated": false,
+                    "description": "Quarter and Year (Q1/2010)",
+                    "displayForms": [
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/1007" },
+                            "deprecated": false,
+                            "description": "DisplayForm US Short.",
+                            "id": "timeline.aci81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/1042" },
+                            "title": "US Short (Timeline)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/1042"
+                        }
+                    ],
+                    "drillDownStep": { "uri": "/gdc/md/reference-workspace/obj/1043" },
+                    "id": "timeline.quarter",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1007" },
+                    "title": "Quarter/Year (Timeline)",
+                    "type": "attribute",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1007"
+                },
+                "defaultDisplayForm": {
+                    "deprecated": false,
+                    "description": "DisplayForm US Short.",
+                    "id": "timeline.aci81lMifn6q",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1042" },
+                    "title": "US Short (Timeline)",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1042"
+                },
+                "granularity": "GDC.time.quarter"
+            },
+            {
+                "attribute": {
+                    "deprecated": false,
+                    "description": "Month and Year",
+                    "displayForms": [
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/1008" },
+                            "deprecated": false,
+                            "description": "DisplayForm Short (Jan 2010).",
+                            "id": "timeline.act81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/1043" },
+                            "title": "Short (Jan 2010) (Timeline)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/1043"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/1008" },
+                            "deprecated": false,
+                            "description": "DisplayForm Long (January 2010).",
+                            "id": "timeline.acx81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/1045" },
+                            "title": "Long (January 2010) (Timeline)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/1045"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/1008" },
+                            "deprecated": false,
+                            "description": "DisplayForm Number (1/2010).",
+                            "id": "timeline.acv81lMifn6q",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/1044" },
+                            "title": "Number (1/2010) (Timeline)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/1044"
+                        }
+                    ],
+                    "drillDownStep": { "uri": "/gdc/md/reference-workspace/obj/1048" },
+                    "id": "timeline.month",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1008" },
+                    "title": "Month/Year (Timeline)",
+                    "type": "attribute",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1008"
+                },
+                "defaultDisplayForm": {
+                    "deprecated": false,
+                    "description": "DisplayForm Short (Jan 2010).",
+                    "id": "timeline.act81lMifn6q",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1043" },
+                    "title": "Short (Jan 2010) (Timeline)",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1043"
+                },
+                "granularity": "GDC.time.month"
+            },
+            {
+                "attribute": {
+                    "deprecated": false,
+                    "description": "Date",
+                    "displayForms": [
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/1009" },
+                            "deprecated": false,
+                            "description": "DisplayForm mm/dd/yyyy.",
+                            "displayFormType": "GDC.time.day_us",
+                            "id": "timeline.date.mmddyyyy",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/1048" },
+                            "title": "mm/dd/yyyy (Timeline)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/1048"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/1009" },
+                            "deprecated": false,
+                            "description": "DisplayForm yyyy-mm-dd.",
+                            "displayFormType": "GDC.time.day",
+                            "id": "timeline.date.yyyymmdd",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/1047" },
+                            "title": "yyyy-mm-dd (Timeline)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/1047"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/1009" },
+                            "deprecated": false,
+                            "description": "DisplayForm m/d/yy (no leading zeroes).",
+                            "displayFormType": "GDC.time.day_us_noleading",
+                            "id": "timeline.date.mdyy",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/1051" },
+                            "title": "m/d/yy (no leading zeroes) (Timeline)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/1051"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/1009" },
+                            "deprecated": false,
+                            "description": "DisplayForm Long (Mon, Jan 1, 2010).",
+                            "displayFormType": "GDC.time.day_us_long",
+                            "id": "timeline.date.long",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/1050" },
+                            "title": "Long (Mon, Jan 1, 2010) (Timeline)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/1050"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/1009" },
+                            "deprecated": false,
+                            "description": "DisplayForm dd/mm/yyyy.",
+                            "displayFormType": "GDC.time.day_eu",
+                            "id": "timeline.date.ddmmyyyy",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/1046" },
+                            "title": "dd/mm/yyyy (Timeline)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/1046"
+                        },
+                        {
+                            "attribute": { "uri": "/gdc/md/reference-workspace/obj/1009" },
+                            "deprecated": false,
+                            "description": "DisplayForm dd-mm-yyyy.",
+                            "displayFormType": "GDC.time.day_iso",
+                            "id": "timeline.date.eddmmyyyy",
+                            "production": true,
+                            "ref": { "uri": "/gdc/md/reference-workspace/obj/1049" },
+                            "title": "dd-mm-yyyy (Timeline)",
+                            "type": "displayForm",
+                            "unlisted": false,
+                            "uri": "/gdc/md/reference-workspace/obj/1049"
+                        }
+                    ],
+                    "id": "timeline.date",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1009" },
+                    "title": "Date (Timeline)",
+                    "type": "attribute",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1009"
+                },
+                "defaultDisplayForm": {
+                    "deprecated": false,
+                    "description": "DisplayForm mm/dd/yyyy.",
+                    "id": "timeline.date.mmddyyyy",
+                    "production": true,
+                    "ref": { "uri": "/gdc/md/reference-workspace/obj/1048" },
+                    "title": "mm/dd/yyyy (Timeline)",
+                    "type": "displayForm",
+                    "unlisted": false,
+                    "uri": "/gdc/md/reference-workspace/obj/1048"
+                },
+                "granularity": "GDC.time.date"
+            }
+        ],
+        "relevance": 0,
+        "type": "dateDataset"
+    }
+]

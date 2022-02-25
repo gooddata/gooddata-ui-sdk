@@ -41,7 +41,8 @@ export { DecoratedSecuritySettingsService } from "./decoratedBackend/securitySet
 
 export { DecoratedWorkspaceSettingsService } from "./decoratedBackend/workspaceSettings";
 
-export { withEventing, AnalyticalBackendCallbacks } from "./eventingBackend";
+export { AnalyticalBackendCallbacks } from "./eventingBackend/types";
+export { withEventing } from "./eventingBackend";
 export {
     withCaching,
     CachingConfiguration,
