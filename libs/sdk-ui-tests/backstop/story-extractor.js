@@ -5,7 +5,7 @@ import { existsSync, writeFileSync } from "fs";
 
 import { toBackstopJson } from "../stories/_infra/storyRepository";
 
-import "../stories/generated.stories";
+import "./generated.stories";
 
 const targetFile = path.resolve(__dirname, "stories.json");
 
