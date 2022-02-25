@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import {
     IAnalyticalBackend,
     IDashboardLayout,
@@ -21,7 +21,7 @@ import { backendInvariant, workspaceInvariant } from "../utils";
 
 /**
  * @beta
- * @deprecated superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
+ * @deprecated Will be removed in the 8.10.0 release. Superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
  */
 export interface IUseDashboardLayoutDataResult {
     getVisType: (widget: IWidget) => VisType | undefined;
@@ -30,7 +30,7 @@ export interface IUseDashboardLayoutDataResult {
 
 /**
  * @beta
- * @deprecated superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
+ * @deprecated Will be removed in the 8.10.0 release. Superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
  */
 export interface IUseDashboardLayoutDataConfig
     extends UseCancelablePromiseCallbacks<IUseDashboardLayoutDataResult, GoodDataSdkError> {
@@ -60,7 +60,7 @@ export interface IUseDashboardLayoutDataConfig
  * Hook allowing to download additional dashboard layout data (visualization classes and insights)
  * @param config - configuration of the hook
  * @beta
- * @deprecated superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
+ * @deprecated Will be removed in the 8.10.0 release. Superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
  */
 export const useDashboardLayoutData = ({
     dashboardLayout,

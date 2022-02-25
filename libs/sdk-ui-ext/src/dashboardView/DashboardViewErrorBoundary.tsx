@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { ErrorComponent as DefaultError } from "@gooddata/sdk-ui";
 import { DashboardView } from "./DashboardView";
@@ -6,7 +6,7 @@ import { IDashboardViewProps } from "./types";
 
 /**
  * @beta
- * @deprecated superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
+ * @deprecated Will be removed in the 8.10.0 release. Superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
  */
 export interface IDashboardViewErrorBoundaryState {
     error: Error | undefined;
@@ -16,7 +16,7 @@ export interface IDashboardViewErrorBoundaryState {
  * Component allowing you to embed a KPI dashboard into your application.
  *
  * @beta
- * @deprecated superseded by Dashboard component; please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
+ * @deprecated Will be removed in the 8.10.0 release. please see `@gooddata/sdk-ui-dashboard` and GoodData.UI documentation for v8.7
  */
 export class DashboardViewErrorBoundary extends React.Component<
     IDashboardViewProps,
