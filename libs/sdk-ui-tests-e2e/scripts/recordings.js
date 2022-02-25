@@ -3,6 +3,7 @@
 
 const { execSync } = require("child_process");
 const fs = require("fs");
+const { WORKSPACE_ID } = require("../cypress/constants.ts");
 
 function deleteRecordings(specFilter) {
     process.stdout.write("Deleting recordings\n");
@@ -25,7 +26,7 @@ function ensureRecordingsDirectory() {
 
 function sanitizeCredentials() {
     try {
-        const stdout = execSync("ls ./recordings/mappings").toString();
+        const stdout = execSync("ls ./recordings/mappings/*").toString();
         if (stdout) {
             const testRecordings = stdout.split("\n");
             testRecordings.forEach((testRecordingFile) => {
@@ -59,7 +60,7 @@ function recordingsPresent() {
 }
 
 function getRecordingsWorkspaceId() {
-    return "frho3i7qc6epdek7mcgergm9vtm6o5ty";
+    return WORKSPACE_ID;
 }
 
 module.exports = {

@@ -1,13 +1,14 @@
 // (C) 2021 GoodData Corporation
-
 const util = require("util");
 const fs = require("fs");
 const path = require("path");
+
 const xml = require("xml2js");
 
 const RESULTS_DIR = path.resolve("./cypress/results");
 
 function handleError(e) {
+    // eslint-disable-next-line no-console
     console.error(e);
     process.exit(1);
 }
@@ -22,13 +23,14 @@ async function getTestResults() {
         const content = await xml.parseStringPromise(strContent);
 
         const file = content.testsuites.testsuite[0].$.file;
-        const { time, tests, failures } = content.testsuites.$;
+        const { time, tests, failures, skipped } = content.testsuites.$;
 
         result.push({
             file,
             tests,
             failures,
             time,
+            skipped,
         });
     }
 

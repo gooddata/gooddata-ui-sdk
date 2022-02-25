@@ -5,23 +5,12 @@
             "name": "gdc_account_login",
             "request": {
                 "url": "/gdc/account/login",
-                "method": "POST",
-                "bodyPatterns": [
-                    {
-                        "equalToJson": "{\"postUserLogin\":{\"login\":\"martin.plavek@gooddata.com\",\"password\":\"P4ssw0rd092\",\"remember\":1,\"captcha\":\"\",\"verifyCaptcha\":\"\"}}",
-                        "ignoreArrayOrder": false,
-                        "ignoreExtraElements": false
-                    }
-                ]
+                "method": "POST"
             },
             "response": {
                 "status": 200,
                 "body": "{\"userLogin\":{\"profile\":\"/gdc/account/profile/b388eefffab41947076a75fd36d0bad1\",\"state\":\"/gdc/account/login/b388eefffab41947076a75fd36d0bad1\"}}",
                 "headers": {
-                    "Set-Cookie": [
-                        "GDCAuthTT=HqYq-wEVfTM-Ntj6XSXmNcXjFNj4DuAB_wZCnudWw2wGnzZkaxefUT5Vaub9j98Zm5aczwE3Dgd2DsKnnCLBf5SDholYMQb1cnqkrYqSs09czPBAQ3t03xDslXQxJ48YnJYF3m0gLe2DNKpFCkf3BZNBfucPpMzzmM3_yEKIuOR7ImwiOiIwIiwidSI6IjIzNzIxMDciLCJ2IjoxNjQ1Nzc5MjIyLCJrIjoiMWNkODNmNmEtZjBmNC00OTY2LTljZTItM2JmNGExYzA5YjQzIiwicyI6IjMzNmI2NTc0NDJiNGM3MjQifQ; Path=/gdc",
-                        "GDCAuthSST=OGQxYzE2ZTMtMTkxZi00OGM0LWIxZGMtNTY2ZGUzYjAyMDc1IRWXwHKCYBRErIOlBh1cChgV4v2M; Max-Age=1382400; Expires=Sun, 13 Mar 2022 08:43:42 GMT; Path=/gdc/account"
-                    ],
                     "expires": "Thu, 01 Jan 1970 00:00:00 GMT",
                     "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
                     "vary": "origin",
