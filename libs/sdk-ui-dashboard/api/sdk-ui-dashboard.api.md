@@ -332,7 +332,7 @@ export interface ChangeDrillableItemsPayload {
     readonly drillableItems: ExplicitDrill[];
 }
 
-// @alpha (undocumented)
+// @public
 export interface ChangeFilterContextSelection extends IDashboardCommand {
     // (undocumented)
     readonly payload: ChangeFilterContextSelectionPayload;
@@ -340,10 +340,10 @@ export interface ChangeFilterContextSelection extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION";
 }
 
-// @alpha
+// @public
 export function changeFilterContextSelection(filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean, correlationId?: string): ChangeFilterContextSelection;
 
-// @alpha
+// @public
 export interface ChangeFilterContextSelectionPayload {
     filters: (IDashboardFilter | FilterContextItem)[];
     resetOthers: boolean;
