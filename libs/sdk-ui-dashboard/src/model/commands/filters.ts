@@ -560,9 +560,13 @@ export function setAttributeFilterParent(
     };
 }
 
+//
+//
+//
+
 /**
  * Payload of the {@link ChangeFilterContextSelection} command.
- * @alpha
+ * @public
  */
 export interface ChangeFilterContextSelectionPayload {
     /**
@@ -576,7 +580,12 @@ export interface ChangeFilterContextSelectionPayload {
 }
 
 /**
- * @alpha
+ * Command for changing multiple filters at once.
+ *
+ * @remarks
+ * See {@link changeFilterContextSelection} for a factory function that will help you create this command.
+ *
+ * @public
  */
 export interface ChangeFilterContextSelection extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION";
@@ -591,9 +600,9 @@ export interface ChangeFilterContextSelection extends IDashboardCommand {
  * Filters will be matched via display form ref, duplicities will be omitted.
  * Date filter that does not match any visible option by the current date filter config will be also omitted.
  *
- * @alpha
+ * @public
  * @param filters - attribute filters and date filter to apply.
- * @param resetOthers - should filters not mentioned in the payload reset to All items selected/All time? Defaults to false.
+ * @param resetOthers - If true, filters not mentioned in the payload will be reset to All items selected/All time. Defaults to false.
  * @param correlationId - optionally specify correlation id. It will be included in all events that will be emitted during the command processing.
  * @returns change filter selection command
  */
