@@ -1,9 +1,17 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
 import { IChartConfig } from "../../../interfaces";
 import { IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
 import { IAxis, ISeriesItem } from "../../typings/unsafe";
-import { isBarChart, isBubbleChart, isHeatmap, isOneOfTypes, isScatterPlot, unwrap } from "../_util/common";
+import {
+    isBarChart,
+    isBubbleChart,
+    isHeatmap,
+    isOneOfTypes,
+    isScatterPlot,
+    unwrap,
+    isSupportingJoinedAttributeAxisName,
+} from "../_util/common";
 import { supportedDualAxesChartTypes } from "./chartCapabilities";
 import isEmpty from "lodash/isEmpty";
 import compact from "lodash/compact";
@@ -35,8 +43,9 @@ export function getXAxes(
     config: IChartConfig,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
+    viewByParentAttribute: IUnwrappedAttributeHeadersWithItems,
 ): IAxis[] {
-    const { type } = config;
+    const { type, enableJoinedAttributeAxisName } = config;
 
     if (isScatterPlot(type) || isBubbleChart(type)) {
         const measureGroupItems = preprocessMeasureGroupItems(measureGroup, {
@@ -61,6 +70,22 @@ export function getXAxes(
                 },
             ];
         }
+    }
+
+    if (enableJoinedAttributeAxisName && isSupportingJoinedAttributeAxisName(type)) {
+        let xLabel = "";
+        if (config.xLabel) {
+            xLabel = config.xLabel;
+        } else if (viewByAttribute && viewByParentAttribute) {
+            xLabel = [viewByParentAttribute.formOf.name, viewByAttribute.formOf.name].join(" \u203a ");
+        } else if (viewByAttribute) {
+            xLabel = viewByAttribute.formOf.name;
+        }
+        return [
+            {
+                label: xLabel,
+            },
+        ];
     }
 
     const xLabel = config.xLabel || (viewByAttribute ? viewByAttribute.formOf.name : "");

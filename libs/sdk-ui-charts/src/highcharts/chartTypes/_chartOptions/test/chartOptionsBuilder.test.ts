@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import range from "lodash/range";
 import set from "lodash/set";
 import isNil from "lodash/isNil";
@@ -3068,6 +3068,23 @@ describe("chartOptionsBuilder", () => {
                     {
                         label: "_Snapshot [EOP-2]",
                         format: "#,##0.00",
+                    },
+                ];
+
+                expect(chartOptions.xAxes).toEqual(expectedAxes);
+            });
+
+            it("should generate joined label when chart config 'enableJoinedAttributeAxisName' is true", () => {
+                const chartOptions = generateChartOptions(
+                    fixtures.barChartWith4MetricsAndViewByTwoAttributes,
+                    {
+                        type: "bar",
+                        enableJoinedAttributeAxisName: true,
+                    },
+                );
+                const expectedAxes = [
+                    {
+                        label: "Department \u203a Region",
                     },
                 ];
 

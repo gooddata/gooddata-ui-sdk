@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import clone from "lodash/clone";
 import includes from "lodash/includes";
 import isNil from "lodash/isNil";
@@ -97,6 +97,12 @@ export const isTreemap = isEqual(VisualizationTypes.TREEMAP);
  * @internal
  */
 export const isHeatmap = isEqual(VisualizationTypes.HEATMAP);
+
+/**
+ * @internal
+ */
+export const isSupportingJoinedAttributeAxisName = (type: string): boolean =>
+    isBarChart(type) || isColumnChart(type) || isBulletChart(type);
 
 /**
  * @internal

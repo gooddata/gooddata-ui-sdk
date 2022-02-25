@@ -1381,6 +1381,7 @@ export interface ISettings {
     enableApproxCount?: boolean;
     enableAxisLabelFormat?: boolean;
     enableAxisNameConfiguration?: boolean;
+    enableAxisNameViewByTwoAttributes?: boolean;
     enableBulletChart?: boolean;
     enableChartsSorting?: boolean;
     enableClickableAttributeURL?: boolean;

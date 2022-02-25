@@ -482,6 +482,21 @@ describe("getCustomizedConfiguration", () => {
             expect(result.xAxis[0].lineWidth).toEqual(0);
             expect(result.yAxis[0].lineWidth).toEqual(0);
         });
+
+        it("should set attribute axis title when chart config 'enableJoinedAttributeAxisName' is true", () => {
+            const result = getCustomizedConfiguration(
+                {
+                    ...chartOptions,
+                    type: VisualizationTypes.BAR,
+                    isViewByTwoAttributes: true,
+                },
+                {
+                    enableJoinedAttributeAxisName: true,
+                },
+            );
+
+            expect(result.xAxis[0].title.text).toEqual(chartOptions.xAxes[0].label);
+        });
     });
 
     describe("gridline configuration", () => {

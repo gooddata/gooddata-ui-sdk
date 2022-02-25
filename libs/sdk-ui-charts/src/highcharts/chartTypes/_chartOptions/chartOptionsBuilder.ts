@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { IDataView, IMeasureDescriptor, IMeasureGroupDescriptor, ITheme } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
 
@@ -355,7 +355,7 @@ export function getChartOptions(
     const gridEnabled = config?.grid?.enabled ?? true;
     const stacking = getStackingConfig(stackByAttribute, config);
     const measureGroup = findMeasureGroupInDimensions(dimensions);
-    const xAxes = getXAxes(dv, config, measureGroup, viewByAttribute);
+    const xAxes = getXAxes(dv, config, measureGroup, viewByAttribute, viewByParentAttribute);
     const yAxes = getYAxes(dv, config, measureGroup, stackByAttribute);
 
     const seriesWithoutDrillability = getSeries(

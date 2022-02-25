@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
@@ -34,6 +34,11 @@ export default class BulletChartConfigurationPanel extends ConfigurationPanelCon
         const xAxisNameSectionDisabled = controlsDisabled || itemsOnXAxis !== 1;
         const isNameSubsectionVisible: boolean = featureFlags.enableAxisNameConfiguration as boolean;
         const isAxisLabelsFormatEnabled: boolean = featureFlags.enableAxisLabelFormat as boolean;
+        const isAxisNameViewByTwoAttributesEnabled: boolean =
+            featureFlags.enableAxisNameViewByTwoAttributes as boolean;
+        const yAxisNameSubsectionDisabled = isAxisNameViewByTwoAttributesEnabled
+            ? controlsDisabled || itemsOnYAxis === 0
+            : controlsDisabled || itemsOnYAxis !== 1;
 
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
@@ -82,7 +87,7 @@ export default class BulletChartConfigurationPanel extends ConfigurationPanelCon
                     >
                         {isNameSubsectionVisible && (
                             <NameSubsection
-                                disabled={controlsDisabled || itemsOnYAxis !== 1}
+                                disabled={yAxisNameSubsectionDisabled}
                                 configPanelDisabled={controlsDisabled}
                                 axis={"yaxis"}
                                 properties={properties}
