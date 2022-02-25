@@ -7,27 +7,45 @@ import { DashboardScenario } from "../components/Scenarios/Dashboard/DashboardSc
 import { DateFilterScenario } from "../components/Scenarios/Filters/DateFilterScenario";
 import { ImplicitDrillToAttributeUrlScenario } from "../components/Scenarios/Dashboard/ImplicitDrillToAttributeUrlScenario";
 import { BarChartDrillingScenario } from "../components/Scenarios/Visualizations/BarChart/BarChartDrillingScenario";
+import { AttributeFilterButtonParentChildScenario } from "../components/Scenarios/Filters/AttributeFilterButtonParentChildScenario";
 
 // todo add path to other scenarios
 
+/**
+ * Add key here for your new E2E test. Use the key in the map below with the scenario as well as in
+ * the test spec within Navigation.
+ */
+const SCENARIO_KEYS = {
+    DASHBOARD: "dashboard/dashboard",
+    IMPLICIT_DRILL_TO_ATTRIBUTE: "dashboard/implicit-drill-to-attribute-url",
+    FILTERS_DATE_FILTER: "filters/date-filter",
+    VIS_BAR_CHART_DRILL: "visualizations/barchart/bar-chart-drilling-scenario",
+    FILTERS_ATTRIBUTE_FILTER_BUTTON: "filters/attribute-filter-button",
+    FILTERS_ATTRIBUTE_FILTER_BUTTON_WITH_SELECTION: "filters/attribute-filter-button-with-selection",
+    FILTERS_ATTRIBUTE_FILTER_BUTTON_PARENT_CHILD: "filters/attribute-filter-button-parent-child",
+};
+
+const scenarios = new Map<string, React.ComponentType>([
+    [SCENARIO_KEYS.DASHBOARD, DashboardScenario],
+    [SCENARIO_KEYS.IMPLICIT_DRILL_TO_ATTRIBUTE, ImplicitDrillToAttributeUrlScenario],
+    [SCENARIO_KEYS.FILTERS_DATE_FILTER, DateFilterScenario],
+    [SCENARIO_KEYS.VIS_BAR_CHART_DRILL, BarChartDrillingScenario],
+    [SCENARIO_KEYS.FILTERS_ATTRIBUTE_FILTER_BUTTON, AttributeFilterButtonScenario],
+    [SCENARIO_KEYS.FILTERS_ATTRIBUTE_FILTER_BUTTON_WITH_SELECTION, AttributeFilterButtonPreselectedScenario],
+    [SCENARIO_KEYS.FILTERS_ATTRIBUTE_FILTER_BUTTON_PARENT_CHILD, AttributeFilterButtonParentChildScenario],
+]);
+
 const ComponentResolver: React.FC = () => {
-    const hash = window.location.hash;
-    switch (hash) {
-        case "#dashboard/dashboard":
-            return <DashboardScenario />;
-        case "#dashboard/implicit-drill-to-attribute-url":
-            return <ImplicitDrillToAttributeUrlScenario />;
-        case "#filters/date-filter":
-            return <DateFilterScenario />;
-        case "#visualizations/barchart/bar-chart-drilling-scenario":
-            return <BarChartDrillingScenario />;
-        case "#filters/attribute-filter-button":
-            return <AttributeFilterButtonScenario />;
-        case "#filters/attribute-filter-button-with-selection":
-            return <AttributeFilterButtonPreselectedScenario />;
-        default:
-            return <div>No component specified. Specify what component should be tested in URL hash.</div>;
-    }
+    const searchParams = window.location.search;
+    const scenario = searchParams
+        .substring(1)
+        .split("&")
+        .find((param) => param.includes("scenario"))
+        ?.split("=")[1];
+
+    const ScenarioComponent =
+        scenario && scenarios.has(scenario) ? scenarios.get(scenario)! : DashboardScenario;
+    return <ScenarioComponent />;
 };
 
 export default ComponentResolver;

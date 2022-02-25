@@ -54,4 +54,4 @@ function mockSensitiveData(accountSetting) {
     }
 
     process.stdout.write(`Sensitive data were cleared\n`);
-})();
+});

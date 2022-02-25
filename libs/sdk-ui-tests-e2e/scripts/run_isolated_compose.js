@@ -5,12 +5,18 @@
 This file is supposed to run within the Cypress container, controlling the execution of the isolated tests in docker-compose
  */
 const dotenv = require("dotenv");
+const fs = require("fs");
+const { execSync } = require("child_process");
 
 const {
     wiremockStartRecording,
     wiremockStopRecording,
     wiremockMockLogRequests,
     wiremockWait,
+    wiremockSettings,
+    wiremockExportMappings,
+    wiremockImportMappings,
+    wiremockReset,
 } = require("./wiremock.js");
 
 const {
@@ -18,10 +24,8 @@ const {
     getRecordingsWorkspaceId,
     recordingsPresent,
     sanitizeCredentials,
-    saveRecordingsWorkspaceId,
 } = require("./recordings.js");
 const { runCypress } = require("./cypress.js");
-const createGitHubReport = require("./create_github_report.js");
 const wiremockHost = "backend-mock:8080";
 
 async function main() {
@@ -29,12 +33,12 @@ async function main() {
         process.stderr.write("Running the isolated tests. Run only in docker-compose\n");
         const recording = process.argv.indexOf("--record") != -1;
         const filterArg = process.argv.find((arg) => arg.indexOf("--filter") === 0);
-        const filter = filterArg ? filterArg.slice("--filter=".length) : "";
+        const specFilesFilter = filterArg ? filterArg.slice("--filter=".length) : "";
 
         dotenv.config({ path: ".env" });
 
-        const { HOST, USER_NAME, PASSWORD, CYPRESS_HOST } = process.env;
-        let { TEST_WORKSPACE_ID } = process.env;
+        const { HOST, USER_NAME, PASSWORD, TEST_WORKSPACE_ID, CYPRESS_HOST } = process.env;
+
         if (recording && !HOST && !USER_NAME && !PASSWORD && !TEST_WORKSPACE_ID) {
             process.stderr.write(
                 "For recording HOST, USER_NAME, PASSWORD, and TEST_WORKSPACE_ID has to be specified in the .env file\n",
@@ -43,7 +47,7 @@ async function main() {
         }
 
         if (recording) {
-            deleteRecordings();
+            deleteRecordings(specFilesFilter);
         } else if (!recordingsPresent()) {
             process.stderr.write("Recordings are missing. Run again with the --record parameter.\n");
             process.exit(0);
@@ -53,38 +57,97 @@ async function main() {
         await wiremockWait(wiremockHost);
         process.stdout.write("Wiremock ready\n");
 
-        if (recording) {
-            saveRecordingsWorkspaceId(TEST_WORKSPACE_ID);
-            await wiremockStartRecording(wiremockHost, HOST);
-        } else {
-            TEST_WORKSPACE_ID = getRecordingsWorkspaceId();
+        await wiremockSettings(wiremockHost);
+
+        let testWorkspaceId = TEST_WORKSPACE_ID;
+        if (!recording) {
+            testWorkspaceId = getRecordingsWorkspaceId();
         }
 
-        await wiremockMockLogRequests(wiremockHost);
+        const authorization = recording
+            ? {
+                  credentials: {
+                      userName: USER_NAME,
+                      password: PASSWORD,
+                  },
+              }
+            : {};
 
-        const cypressProcess = runCypress(
-            false,
-            CYPRESS_HOST,
-            wiremockHost,
-            recording,
-            filter,
-            TEST_WORKSPACE_ID,
-            USER_NAME,
-            PASSWORD,
-        );
+        const TESTS_DIR = "./cypress/integration/";
 
-        console.log("Cypress process created.");
+        const getAllFiles = function (dirPath, arrayOfFiles) {
+            let files = fs.readdirSync(dirPath);
 
-        cypressProcess.on("exit", async (e) => {
-            if (recording) {
-                await wiremockStopRecording(wiremockHost);
-                sanitizeCredentials();
+            arrayOfFiles = arrayOfFiles || [];
+
+            files.forEach(function (file) {
+                if (fs.statSync(dirPath + "/" + file).isDirectory()) {
+                    arrayOfFiles = getAllFiles(dirPath + "/" + file, arrayOfFiles);
+                } else {
+                    arrayOfFiles.push(file);
+                }
+            });
+
+            return arrayOfFiles.filter((file) => file.includes(".spec.ts"));
+        };
+
+        process.stdout.write(`Running tests for filter: ${specFilesFilter}\n`);
+
+        const files = getAllFiles(TESTS_DIR).filter((file) => {
+            if (specFilesFilter === "") {
+                return true;
             }
 
-            await createGitHubReport();
-
-            process.exit(e);
+            return file.startsWith(specFilesFilter);
         });
+
+        process.stdout.write(`number of specs to test: ${files.length}\n`);
+
+        execSync(`rm -rf ./cypress/results`);
+
+        for (let i = 0; i < files.length; i++) {
+            let file = files[i];
+            process.stdout.write(`file: ${file} (${i + 1} of ${files.length})\n`);
+
+            const currentTestFileMappings = `./recordings/mappings/mapping-${file}.json`;
+
+            if (recording) {
+                await wiremockStartRecording(wiremockHost, HOST);
+            } else {
+                await wiremockImportMappings(wiremockHost, currentTestFileMappings);
+            }
+            await wiremockMockLogRequests(wiremockHost);
+
+            await new Promise((resolve) => {
+                const cypressProcess = runCypress({
+                    visual: false,
+                    appHost: CYPRESS_HOST,
+                    mockServer: wiremockHost,
+                    authorization,
+                    specFilesFilter: file,
+                    workspaceId: testWorkspaceId,
+                    config: recording ? "retries=0" : undefined, // override cypress.json and have no retries when recording, this breaks mappings storage
+                });
+
+                cypressProcess.on("exit", async (_e) => {
+                    if (recording) {
+                        process.stdout.write(`starting wiremock mappings export for: ${file}\n`);
+                        const result = await wiremockStopRecording(wiremockHost);
+                        await wiremockExportMappings(currentTestFileMappings, result);
+                    }
+
+                    resolve();
+                });
+            });
+            await wiremockReset(wiremockHost);
+        }
+
+        if (recording) {
+            sanitizeCredentials();
+        }
+
+        // all done, create github report
+        execSync(`node ./scripts/create_github_report.js`);
     } catch (e) {
         process.stderr.write(`${e.toString()}\n`);
         process.exit(e);

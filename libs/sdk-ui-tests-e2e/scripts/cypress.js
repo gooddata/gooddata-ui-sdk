@@ -1,41 +1,73 @@
 #!/usr/bin/env node
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
-const { spawn, execSync } = require("child_process");
+const { spawn } = require("child_process");
+const DEFAULT_CONFIG = {
+    specFilesFilter: "",
+    tagsFilter: [],
+    workspaceId: "",
+    customCypressConfig: {},
+    updateSnapshots: false,
+};
 
-function runCypress(
-    visual,
-    appHost,
-    mockServer,
-    withAuthentication,
-    filter = "",
-    workspaceId = "",
-    username = "",
-    password = "",
-) {
-    process.stdout.write("Running cypress\n");
+function runCypress(configParam = {}) {
+    process.stdout.write("Running Cypress\n");
+
+    const {
+        visual,
+        appHost,
+        mockServer,
+        authorization,
+        specFilesFilter,
+        tagsFilter,
+        workspaceId,
+        customCypressConfig,
+        updateSnapshots,
+        config,
+        browser,
+    } = { ...DEFAULT_CONFIG, ...configParam };
 
     const cypressProps = {
         CYPRESS_HOST: appHost,
-        CYPRESS_WORKSPACE: workspaceId,
+        CYPRESS_TEST_WORKSPACE_ID: workspaceId,
     };
 
-    if (withAuthentication) {
-        console.log("Setting up USERNAME with", username);
-        cypressProps["CYPRESS_USERNAME"] = username;
-        cypressProps["CYPRESS_PASSWORD"] = password;
+    cypressProps["CYPRESS_updateSnapshots"] = updateSnapshots;
+
+    if (authorization.credentials) {
+        cypressProps["CYPRESS_USERNAME"] = authorization.credentials.userName;
+        cypressProps["CYPRESS_PASSWORD"] = authorization.credentials.password;
+    }
+
+    if (authorization.token) {
+        cypressProps["CYPRESS_TIGER_API_TOKEN"] = authorization.token;
+    }
+
+    if (customCypressConfig) {
+        Object.assign(cypressProps, customCypressConfig);
     }
 
     if (mockServer) {
         cypressProps["CYPRESS_MOCK_SERVER"] = `http://${mockServer}`;
     }
 
-    const args = [visual ? "open" : "run"];
-    if (filter !== "") {
-        args.push("--spec", `./**/*${filter}*`);
+    if (!visual) {
+        cypressProps["CYPRESS_COMMAND_DELAY"] = 0;
     }
 
-    execSync(`rm -rf cypress/results`);
+    const args = [visual ? "open" : "run"];
+    if (specFilesFilter) {
+        args.push("--spec", `./**/${specFilesFilter}*`);
+    }
+    if (tagsFilter && tagsFilter.length > 0) {
+        args.push("--env", `grepTags="${tagsFilter.join(" ")}"`);
+    }
+    if (config) {
+        args.push("--config", config);
+    }
+    if (browser) {
+        args.push("--browser", browser);
+    }
 
     const cypressProcess = spawn("cypress", args, {
         env: {

@@ -4,30 +4,47 @@
 const { execSync } = require("child_process");
 const fs = require("fs");
 
-function deleteRecordings() {
+function deleteRecordings(specFilter) {
     process.stdout.write("Deleting recordings\n");
-    deleteFilesInDir("./recordings/__files");
-    deleteFilesInDir("./recordings/mappings");
+    ensureRecordingsDirectory();
+    deleteFilesInDir("./recordings/__files", specFilter);
+    deleteFilesInDir("./recordings/mappings", specFilter);
 }
 
-function deleteFilesInDir(directory) {
-    execSync(`rm -rf ${directory}/*`);
+function deleteFilesInDir(directory, specFilter) {
+    if (specFilter && specFilter !== "" && specFilter.trim() !== "") {
+        execSync(`rm -rf ${directory}/mapping-${specFilter}*`);
+    } else {
+        execSync(`rm -rf ${directory}/*`);
+    }
+}
+
+function ensureRecordingsDirectory() {
+    fs.mkdirSync("./recordings/mappings", { recursive: true });
 }
 
 function sanitizeCredentials() {
     try {
-        const stdout = execSync("ls ./recordings/mappings/gdc_account_login*").toString();
+        const stdout = execSync("ls ./recordings/mappings").toString();
         if (stdout) {
-            const loginRecordings = stdout.split("\n");
-            loginRecordings.forEach((loginRecording) => {
-                if (loginRecording === "") {
+            const testRecordings = stdout.split("\n");
+            testRecordings.forEach((testRecordingFile) => {
+                if (testRecordingFile === "") {
                     return;
                 }
-                const data = fs.readFileSync(loginRecording);
+                const data = fs.readFileSync(testRecordingFile);
                 const json = JSON.parse(data);
-                delete json["request"]["bodyPatterns"];
-                delete json["response"]["headers"]["Set-Cookie"];
-                fs.writeFileSync(loginRecording, JSON.stringify(json, null, 2));
+
+                if (json.mappings) {
+                    json.mappings.forEach((mapping) => {
+                        if (mapping && mapping.request && mapping.request.url === "/gdc/account/login") {
+                            delete mapping.request.bodyPatterns;
+                            delete mapping.response.headers["Set-Cookie"];
+                        }
+                    });
+                }
+
+                fs.writeFileSync(testRecordingFile, JSON.stringify(json, null, 2) + "\n");
             });
         }
     } catch (error) {
@@ -41,27 +58,13 @@ function recordingsPresent() {
     return recordingsLength !== 0;
 }
 
-function saveRecordingsWorkspaceId(workspaceId) {
-    fs.writeFileSync(
-        "./recordings/recordings_workspace.json",
-        JSON.stringify(
-            {
-                workspaceId,
-            },
-            null,
-            2,
-        ),
-    );
-}
-
 function getRecordingsWorkspaceId() {
-    return JSON.parse(fs.readFileSync("./recordings/recordings_workspace.json")).workspaceId;
+    return "frho3i7qc6epdek7mcgergm9vtm6o5ty";
 }
 
 module.exports = {
     sanitizeCredentials,
     recordingsPresent,
-    saveRecordingsWorkspaceId,
     deleteRecordings,
     getRecordingsWorkspaceId,
 };
