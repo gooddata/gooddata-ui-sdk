@@ -28,6 +28,8 @@ const {
 const { runCypress } = require("./cypress.js");
 const wiremockHost = "backend-mock:8080";
 
+const { getAllFiles } = require("./getSpecFiles.js");
+
 async function main() {
     try {
         process.stderr.write("Running the isolated tests. Run only in docker-compose\n");
@@ -75,24 +77,6 @@ async function main() {
 
         const TESTS_DIR = "./cypress/integration/";
 
-        const getAllFiles = function (dirPath, arrayOfFiles) {
-            let files = fs.readdirSync(dirPath);
-
-            arrayOfFiles = arrayOfFiles || [];
-
-            files.forEach(function (file) {
-                if (fs.statSync(dirPath + "/" + file).isDirectory()) {
-                    arrayOfFiles = getAllFiles(dirPath + "/" + file, arrayOfFiles);
-                } else {
-                    arrayOfFiles.push(file);
-                }
-            });
-
-            return arrayOfFiles.filter((file) => file.includes(".spec.ts"));
-        };
-
-        process.stdout.write(`Running tests for filter: ${specFilesFilter}\n`);
-
         const files = getAllFiles(TESTS_DIR).filter((file) => {
             if (specFilesFilter === "") {
                 return true;
@@ -100,8 +84,6 @@ async function main() {
 
             return file.startsWith(specFilesFilter);
         });
-
-        process.stdout.write(`number of specs to test: ${files.length}\n`);
 
         execSync(`rm -rf ./cypress/results`);
 
