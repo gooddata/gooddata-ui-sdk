@@ -8,12 +8,10 @@ Cypress.on("test:before:run", (_attributes, test) => {
 });
 
 before(() => {
-    cy.task("log", "Logging in");
     cy.login();
 });
 
 beforeEach(() => {
-    cy.task("log", "For recordings");
     const testName = `${testInfo.parent.title} - It ${testInfo.title}`;
     let heading = "TEST:";
     if (testInfo._currentRetry !== 0) {
