@@ -1,14 +1,11 @@
 // (C) 2022 GoodData Corporation
-import fg from "fast-glob";
-import path from "path";
-import { writeFile } from "fs/promises";
-import { fileURLToPath } from "url";
+const fg = require("fast-glob");
+const path = require("path");
+const { writeFile } = require("fs/promises");
+const storybookMain = require("../.storybook/main");
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const storiesGlob = "../stories/**/*.@(ts|tsx)";
 const targetFile = path.resolve(__dirname, "generated.stories.js");
+const storiesGlob = storybookMain.stories;
 
 /**
  * Generate a barrel file with imports of all the story files.
