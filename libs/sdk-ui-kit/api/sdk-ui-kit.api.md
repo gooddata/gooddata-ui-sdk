@@ -178,15 +178,22 @@ export class Button extends React_2.Component<IButtonProps> {
 }
 
 // @internal (undocumented)
+export const ChartSortingDialog: React_2.FC<ChartSortingOwnProps>;
+
+// @internal (undocumented)
 export interface ChartSortingOwnProps {
     // (undocumented)
     availableSorts: IAvailableSortsGroup[];
     // (undocumented)
     bucketItemNames: IBucketItemNames;
     // (undocumented)
+    buttonNode?: HTMLElement | string;
+    // (undocumented)
     currentSort: ISortItem[];
     // (undocumented)
     enableRenamingMeasureToMetric?: boolean;
+    // (undocumented)
+    locale?: string;
     // (undocumented)
     onApply: (sortItems: ISortItem[]) => void;
     // (undocumented)

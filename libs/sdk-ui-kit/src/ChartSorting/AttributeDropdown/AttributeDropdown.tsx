@@ -9,6 +9,7 @@ import {
     newAttributeSort,
     newAttributeAreaSort,
     newMeasureSort,
+    isMeasureLocator,
 } from "@gooddata/sdk-model";
 
 import { IAvailableSortsGroup, SORT_TARGET_TYPE, ISortTypeItem, IBucketItemNames } from "../types";
@@ -114,7 +115,10 @@ export const AttributeDropdown: React.FC<AttributeDropdownProps> = ({
             } else if (availableSorts.attributeSort.areaSortEnabled) {
                 newCurrentItem = newAttributeAreaSort(item.localIdentifier, item.sortDirection);
             } else {
-                newCurrentItem = newMeasureSort(item.localIdentifier, item.sortDirection);
+                const {
+                    measureLocatorItem: { measureIdentifier },
+                } = availableSorts.metricSorts[0].locators.find(isMeasureLocator);
+                newCurrentItem = newMeasureSort(measureIdentifier, item.sortDirection);
             }
 
             setCurrentItem(newCurrentItem);
