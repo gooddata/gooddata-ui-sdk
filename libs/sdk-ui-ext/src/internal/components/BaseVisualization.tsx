@@ -287,7 +287,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         currentReferencePoint: IReferencePoint,
         nextReferencePoint: IReferencePoint,
     ) {
-        return !isEqual(currentReferencePoint.properties, nextReferencePoint.properties);
+        return !isEqual(currentReferencePoint?.properties, nextReferencePoint?.properties);
     }
 
     private getVisualizationProps(): IVisProps {
