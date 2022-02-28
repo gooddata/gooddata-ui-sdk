@@ -181,7 +181,7 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
             supported: true,
             disabled,
             currentSort: newCurrentSort.filter((item) => item !== undefined),
-            availableSorts: [],
+            availableSorts: availableSorts,
         });
     }
 }
