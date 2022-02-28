@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { IMappingHeader } from "@gooddata/sdk-ui";
 import { ROW_TOTAL } from "../base/constants";
 
@@ -13,12 +13,12 @@ import { ROW_TOTAL } from "../base/constants";
  */
 export interface IGridRow {
     /**
-     * Mapping of column ID =\> data value
+     * Mapping of column ID ⇒ data value
      */
     [key: string]: any;
 
     /**
-     * Mapping of slice column ID =\> mapping header (detail about slice value)
+     * Mapping of slice column ID ⇒ mapping header (detail about slice value)
      */
     headerItemMap: {
         [key: string]: IMappingHeader;

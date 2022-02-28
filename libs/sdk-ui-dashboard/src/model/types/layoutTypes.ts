@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import {
     IBaseWidget,
@@ -250,7 +250,7 @@ export type DashboardItemDefinition =
  * This type should be used in handlers that add new items onto dashboard.
  *
  * First thing those handlers need to do is to assign a temporary identity to all new KPI and Insight widget
- * definitions -\> thus ensure that anything that gets added onto a dashboard has identifier and can be referenced.
+ * definitions → thus ensure that anything that gets added onto a dashboard has identifier and can be referenced.
  *
  * This type narrows down the DashboardItemDefinition to contain just KPI and Insight widgets that have identity.
  *

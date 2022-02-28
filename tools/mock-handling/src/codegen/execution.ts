@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 
 import * as path from "path";
 import { OptionalKind, VariableDeclarationKind, VariableStatementStructure } from "ts-morph";
@@ -77,7 +77,7 @@ function generateScenariosConst(recordings: ExecutionRecording[]): OptionalKind<
 
 /**
  * Generate constants for the execution recordings. This function will return non-exported constant per recording
- * and then also an exported 'Scenarios' constant that is a map from vis =\> scenario =\> recording.
+ * and then also an exported 'Scenarios' constant that is a map from vis ⇒ scenario ⇒ recording.
  *
  * @param recordings - recordings to generate constants for
  * @param targetDir - absolute path to directory where index will be stored, this is needed so that paths can be
