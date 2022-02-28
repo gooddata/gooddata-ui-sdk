@@ -1,6 +1,6 @@
 # (C) 2021 GoodData Corporation
 
-FROM harbor.intgdc.com/tools/gdc-frontend-node:node-12.16.1-yarn-1.22.4 as build-stage
+FROM harbor.intgdc.com/tools/gdc-frontend-node-16:node-16.13.0-yarn-1.22.17 as build-stage
 
 COPY . .
 
