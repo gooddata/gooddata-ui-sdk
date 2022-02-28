@@ -1,6 +1,11 @@
 // (C) 2022 GoodData Corporation
 
-export { ChartSortingWithIntl, ChartSortingOwnProps, ChartSortingProps } from "./ChartSorting";
+export {
+    ChartSortingDialog,
+    ChartSortingOwnProps,
+    ChartSortingProps,
+    ChartSortingWithIntl,
+} from "./ChartSorting";
 
 export {
     IAvailableSortsGroup,

@@ -9,13 +9,18 @@ import { IAlignPoint } from "../typings/positioning";
 const dropdownAlignPoints: IAlignPoint[] = [{ align: "bl tl" }];
 
 interface ChartSortingDropdownBodyProps {
+    buttonNode?: HTMLElement | string;
     onClose?: () => void;
 }
 
 /**
  * @internal
  */
-export const ChartSortingDropdownBody: React.FC<ChartSortingDropdownBodyProps> = ({ children, onClose }) => {
+export const ChartSortingDropdownBody: React.FC<ChartSortingDropdownBodyProps> = ({
+    children,
+    buttonNode,
+    onClose,
+}) => {
     const getDialogClasses = () => {
         return cx([
             "overlay",
@@ -28,11 +33,15 @@ export const ChartSortingDropdownBody: React.FC<ChartSortingDropdownBodyProps> =
     };
     return (
         <Overlay
-            alignTo=".s-chart-sorting-button"
+            alignTo={buttonNode}
             alignPoints={dropdownAlignPoints}
             closeOnOutsideClick={true}
             closeOnParentScroll={true}
             closeOnMouseDrag={true}
+            ignoreClicksOnByClass={[
+                ".gd-measure-sorting-dropdown-body",
+                ".gd-attribute-sorting-dropdown-body",
+            ]}
             onClose={onClose}
         >
             <div className={getDialogClasses()}>{children}</div>

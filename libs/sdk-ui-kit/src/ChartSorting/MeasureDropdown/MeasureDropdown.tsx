@@ -170,6 +170,7 @@ export const MeasureDropdown: React.FC<MeasureDropdownProps> = ({
                     </>
                 ) : (
                     <Dropdown
+                        className="gd-measure-sorting-dropdown-body s-measure-sorting-dropdown-body"
                         closeOnMouseDrag
                         closeOnParentScroll
                         renderButton={({ isOpen, toggleDropdown }) => (

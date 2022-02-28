@@ -3,7 +3,7 @@ import React from "react";
 import { storiesOf } from "../../../_infra/storyRepository";
 import { action } from "@storybook/addon-actions";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
-import { ChartSortingWithIntl, IBucketItemNames } from "@gooddata/sdk-ui-kit";
+import { ChartSortingDialog, IBucketItemNames } from "@gooddata/sdk-ui-kit";
 import { measureLocalId, attributeLocalId } from "@gooddata/sdk-model";
 import { ExperimentalMd } from "@gooddata/experimental-workspace";
 
@@ -62,7 +62,8 @@ storiesOf(`${UiKit}/ChartSorting`)
             return (
                 <div style={wrapperStyle} className="screenshot-target">
                     <InternalIntlWrapper>
-                        <ChartSortingWithIntl
+                        <ChartSortingDialog
+                            buttonNode="screenshot-target"
                             bucketItemNames={bucketItemNames}
                             currentSort={singleAttributeSortConfig.currentSort}
                             availableSorts={singleAttributeSortConfig.availableSorts}
@@ -82,7 +83,8 @@ storiesOf(`${UiKit}/ChartSorting`)
             return (
                 <div style={wrapperStyle} className="screenshot-target">
                     <InternalIntlWrapper>
-                        <ChartSortingWithIntl
+                        <ChartSortingDialog
+                            buttonNode="screenshot-target"
                             bucketItemNames={bucketItemNames}
                             currentSort={singleAttributeWithSingleMetricSortConfig.currentSort}
                             availableSorts={singleAttributeWithSingleMetricSortConfig.availableSorts}
@@ -102,7 +104,8 @@ storiesOf(`${UiKit}/ChartSorting`)
             return (
                 <div style={wrapperStyle} className="screenshot-target">
                     <InternalIntlWrapper>
-                        <ChartSortingWithIntl
+                        <ChartSortingDialog
+                            buttonNode="screenshot-target"
                             bucketItemNames={bucketItemNames}
                             currentSort={singleAttributeWithMultipleMetrics.currentSort}
                             availableSorts={singleAttributeWithMultipleMetrics.availableSorts}
@@ -122,7 +125,8 @@ storiesOf(`${UiKit}/ChartSorting`)
             return (
                 <div style={wrapperStyle} className="screenshot-target">
                     <InternalIntlWrapper>
-                        <ChartSortingWithIntl
+                        <ChartSortingDialog
+                            buttonNode="screenshot-target"
                             bucketItemNames={bucketItemNames}
                             currentSort={multipleAttributesMultipleMetricsSortConfig.currentSort}
                             availableSorts={multipleAttributesMultipleMetricsSortConfig.availableSorts}
@@ -142,7 +146,8 @@ storiesOf(`${UiKit}/ChartSorting`)
             return wrapWithTheme(
                 <div style={wrapperStyle} className="screenshot-target">
                     <InternalIntlWrapper>
-                        <ChartSortingWithIntl
+                        <ChartSortingDialog
+                            buttonNode="screenshot-target"
                             bucketItemNames={bucketItemNames}
                             currentSort={multipleAttributesMultipleMetricsSortConfig.currentSort}
                             availableSorts={multipleAttributesMultipleMetricsSortConfig.availableSorts}

@@ -2,6 +2,7 @@
 import React, { useState, useCallback } from "react";
 import { injectIntl, WrappedComponentProps, FormattedMessage } from "react-intl";
 import { ISortItem } from "@gooddata/sdk-model";
+import { IntlWrapper } from "@gooddata/sdk-ui";
 
 import { ChartSortingDropdownBody } from "./ChartSortingDropdownBody";
 import { ChartSortingDropdown } from "./ChartSortingDropdown";
@@ -20,6 +21,8 @@ export interface ChartSortingOwnProps {
     onCancel: () => void;
     onClose?: () => void;
 
+    buttonNode?: HTMLElement | string;
+    locale?: string;
     enableRenamingMeasureToMetric?: boolean;
 }
 
@@ -36,9 +39,9 @@ export const ChartSorting: React.FC<ChartSortingProps> = ({
     availableSorts,
     intl,
     bucketItemNames,
+    buttonNode,
     onCancel,
     onApply,
-    onClose,
     enableRenamingMeasureToMetric,
 }) => {
     const [currentSelectedSort, setCurrentSort] = useState<ISortItem[]>(currentSort);
@@ -50,10 +53,9 @@ export const ChartSorting: React.FC<ChartSortingProps> = ({
     const onSelect = (item: ISortItem[]) => {
         setCurrentSort(item);
     };
-
     return (
         <>
-            <ChartSortingDropdownBody onClose={onClose}>
+            <ChartSortingDropdownBody buttonNode={buttonNode} onClose={onCancel}>
                 <div className="gd-sort-charting-dropdown-header s-sort-charting-dropdown-header">
                     <FormattedMessage tagName="div" id="sorting.dropdown.header" />
                 </div>
@@ -88,3 +90,12 @@ export const ChartSorting: React.FC<ChartSortingProps> = ({
  * @internal
  */
 export const ChartSortingWithIntl = injectIntl(ChartSorting);
+
+/**
+ * @internal
+ */
+export const ChartSortingDialog: React.FC<ChartSortingOwnProps> = (props) => (
+    <IntlWrapper locale={props.locale}>
+        <ChartSortingWithIntl {...props} />
+    </IntlWrapper>
+);

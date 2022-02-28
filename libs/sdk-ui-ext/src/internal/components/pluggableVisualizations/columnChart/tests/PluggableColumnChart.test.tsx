@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import noop from "lodash/noop";
 import { PluggableColumnChart } from "../PluggableColumnChart";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
