@@ -2,6 +2,7 @@
 import React from "react";
 import { render } from "react-dom";
 import isEmpty from "lodash/isEmpty";
+
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IInsightDefinition, localIdRef, newAttributeAreaSort, newMeasureSort } from "@gooddata/sdk-model";
 import { PluggableColumnBarCharts } from "../PluggableColumnBarCharts";
@@ -11,7 +12,7 @@ import BarChartConfigurationPanel from "../../configurationPanels/BarChartConfig
 import { AXIS, AXIS_NAME } from "../../../constants/axis";
 import { ISortConfig, newMeasureSortSuggestion } from "../../../interfaces/SortConfig";
 import { getBucketItems } from "../../../utils/bucketHelper";
-import { canSortStackTotalValue } from "./sortHelpers";
+import { canSortStackTotalValue, validateCurrentSorts } from "./sortHelpers";
 
 export class PluggableBarChart extends PluggableColumnBarCharts {
     constructor(props: IVisConstruct) {
@@ -54,7 +55,7 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
         referencePoint: IReferencePoint,
         canSortStackTotalValue: boolean,
     ): {
-        currentSort: ISortConfig["currentSort"];
+        defaultSort: ISortConfig["currentSort"];
         availableSorts: ISortConfig["availableSorts"];
     } {
         const { buckets } = referencePoint;
@@ -65,7 +66,7 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
         if (viewBy.length === 2) {
             if (measures.length >= 2 && !canSortStackTotalValue) {
                 return {
-                    currentSort: [
+                    defaultSort: [
                         newAttributeAreaSort(viewBy[0].localIdentifier, "desc"),
                         newMeasureSort(measures[0].localIdentifier, "desc"),
                     ],
@@ -92,7 +93,7 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
             }
 
             return {
-                currentSort: [
+                defaultSort: [
                     newAttributeAreaSort(viewBy[0].localIdentifier, "desc"),
                     newAttributeAreaSort(viewBy[1].localIdentifier, "desc"),
                 ],
@@ -118,7 +119,7 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
 
         if (!isEmpty(viewBy) && (!isEmpty(stackBy) || canSortStackTotalValue)) {
             return {
-                currentSort: [newAttributeAreaSort(viewBy[0].localIdentifier, "desc")],
+                defaultSort: [newAttributeAreaSort(viewBy[0].localIdentifier, "desc")],
                 availableSorts: [
                     {
                         itemId: localIdRef(viewBy[0].localIdentifier),
@@ -133,7 +134,7 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
 
         if (!isEmpty(viewBy) && !isEmpty(measures)) {
             return {
-                currentSort: [newMeasureSort(measures[0].localIdentifier, "desc")],
+                defaultSort: [newMeasureSort(measures[0].localIdentifier, "desc")],
                 availableSorts: [
                     {
                         itemId: localIdRef(viewBy[0].localIdentifier),
@@ -148,23 +149,38 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
         }
 
         return {
-            currentSort: [],
+            defaultSort: [],
             availableSorts: [],
         };
     }
     public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
-        const { buckets } = referencePoint;
+        const { buckets, properties } = referencePoint;
+        const currentSort =
+            properties && properties.sortItems && properties.sortItems.length
+                ? properties.sortItems
+                : undefined;
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
         const measures = getBucketItems(buckets, BucketNames.MEASURES);
         const disabled = viewBy.length < 1 || measures.length < 1;
-        const { currentSort } = this.getDefaultAndAvailableSort(
+        const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(
             referencePoint,
             canSortStackTotalValue(referencePoint.buckets, referencePoint.properties),
         );
+        let newCurrentSort = defaultSort;
+        if (currentSort) {
+            const validityOfCurrentSortItems = validateCurrentSorts(currentSort, availableSorts);
+            newCurrentSort = defaultSort.map((defaultSortItem, index) => {
+                if (validityOfCurrentSortItems[index]) {
+                    return currentSort[index];
+                } else {
+                    return defaultSortItem;
+                }
+            });
+        }
         return Promise.resolve({
             supported: true,
             disabled,
-            currentSort,
+            currentSort: newCurrentSort.filter((item) => item !== undefined),
             availableSorts: [],
         });
     }
