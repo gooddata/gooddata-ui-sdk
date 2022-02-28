@@ -107,6 +107,12 @@ export interface DashboardDeinitializedPayload {
  * This event is emitted when a dashboard is deinitialized. The event contains contextual information such as
  * the ref of dashboard being deinitialized if the dashboard being deinitialized contained a persisted dashboard object.
  *
+ * @remarks
+ * This event is useful when your application switches between different dashboards (similar to what the Dashboards application does)
+ * and you want to handle that. Note that this event WILL NOT be fired when navigating to a completely different
+ * application/site in the browser or closing the tab etc., if you want to handle that, you need to do it yourself
+ * using the appropriate events on the Window object.
+ *
  * @public
  */
 export interface DashboardDeinitialized extends IDashboardEvent {
