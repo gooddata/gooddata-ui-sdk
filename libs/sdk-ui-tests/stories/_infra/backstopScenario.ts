@@ -2,7 +2,7 @@
 
 /*
  * These types were taken mostly as-is from the @types/backstopjs package. renamed interfaces to start with 'I'
- * removed legacy viewport and removed label and URL as those are added automatically by our storybook =\> backstop scenarios
+ * removed legacy viewport and removed label and URL as those are added automatically by our storybook ⇒ backstop scenarios
  * builder
  */
 
@@ -154,7 +154,7 @@ export interface IViewportNext {
 
 export type BackstopConfig = {
     /**
-     * Backstop scenario =\> scenario configuration mapping. Key will be used to name the test scenario.
+     * Backstop scenario ⇒ scenario configuration mapping. Key will be used to name the test scenario.
      */
     [name: string]: IBackstopScenarioConfig;
 };

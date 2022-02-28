@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import identity from "lodash/identity";
 import isEmpty from "lodash/isEmpty";
 import React from "react";
@@ -116,7 +116,7 @@ export interface IScenario<T extends VisProps> {
     readonly customDataCapture: ScenarioDataCapture;
 
     /**
-     * Props factory which transforms unbound props + backend + workspace =\> real component props
+     * Props factory which transforms unbound props + backend + workspace ⇒ real component props
      */
     readonly propsFactory: PropsFactory<T>;
 

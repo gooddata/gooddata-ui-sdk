@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import {
     Dimension,
     SortDirection as TigerSortDirection,
@@ -47,7 +47,7 @@ function convertSortDirection(direction: SortDirection): TigerSortDirection {
  *
  * To avoid that (because it will likely be several weeks worth of effort and testing), we opted for a dirty 'trick'
  * where tiger backend constructs attribute element URIs so that they resemble the bear URIs. The element ID is
- * actually the primaryLabelValue --\> thing that can be used for sorting.
+ * actually the primaryLabelValue -→ thing that can be used for sorting.
  *
  * This function caters for the dirty trick + in case the sorts were created 'normally', programmatically by the
  * user who specified primaryLabelValue directly, it has logic to fall back to using the uri as-is.

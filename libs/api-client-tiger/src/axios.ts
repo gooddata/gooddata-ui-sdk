@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import a, { AxiosInstance, AxiosRequestConfig } from "axios";
 import cloneDeep from "lodash/cloneDeep";
 import merge from "lodash/merge";
@@ -120,7 +120,7 @@ export function newAxiosRequestConfig(
  * Creates a new instance of axios.
  *
  * @param baseUrl - hostname, optional, will default to current origin
- * @param headers - object mapping header name -\> header value
+ * @param headers - object mapping header name → header value
  * @returns always new instance
  * @public
  */

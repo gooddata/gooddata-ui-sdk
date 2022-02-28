@@ -4,7 +4,7 @@ import sumBy from "lodash/sumBy";
 
 /**
  * Ready resolver function is called to determine whether the screenshot div has
- * all content ready =\> image can be captured.
+ * all content ready ⇒ image can be captured.
  */
 export type ReadyResolverFunction = (element: HTMLElement) => boolean;
 
@@ -114,7 +114,7 @@ const DefaultSelectors = ["highcharts-container", "s-headline-value", "s-error",
  * that match the provided element count selectors. These selectors can be of two types:
  *
  * -  string: this is then used as input to getElementsByClassName
- * -  function (HTMLElement) =\> number: this will be called to obtain element count using whatever intricate way
+ * -  function (HTMLElement) ⇒ number: this will be called to obtain element count using whatever intricate way
  *    is needed
  *
  * @param numOfElements - number of elements that must be found before

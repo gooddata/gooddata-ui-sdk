@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import flatten from "lodash/flatten";
 import {
     ImportDeclarationStructure,
@@ -210,9 +210,9 @@ function generateDisplayFormPropertyInitializers(
 /**
  * Generates attribute constant. Works as follows:
  *
- * - If the attribute has single display form, generates a constant of DfTitle =\> newAttribute(id)
+ * - If the attribute has single display form, generates a constant of DfTitle ⇒ newAttribute(id)
  * - If the attribute has multiple display forms, generates a constant that is an object mapping different
- *   DfTitles =\> newAttribute(dfId)
+ *   DfTitles ⇒ newAttribute(dfId)
  *
  * **NOTE**: this function has side effect. as it generates the statement (which it returns) it will update the
  * attribute instance with name of the generated constant.
@@ -408,7 +408,7 @@ function generateDateDataSetInitialzier(
  * Given date datasets, this generates a DateDataSets constants which is an object with a property per-dataset. For each
  * data set, there is another object with: `ref` property which contains data set's idRef and then property per-attribute.
  *
- * These per-attribute properties reference existing constants generated for the date attributes =\> this function MUST
+ * These per-attribute properties reference existing constants generated for the date attributes ⇒ this function MUST
  * be called after generateAttributes.
  *
  * @param dds - date data sets
@@ -450,7 +450,7 @@ function generateDateDataSets(
 }
 
 /**
- * Declares a constant initialized to object mapping InsightTitle =\> insight identifier.
+ * Declares a constant initialized to object mapping InsightTitle ⇒ insight identifier.
  *
  * @param projectMeta - project metadata containing the insights
  */
@@ -475,7 +475,7 @@ function generateInsights(projectMeta: WorkspaceMetadata): OptionalKind<Variable
 }
 
 /**
- * Declares a constant initialized to object mapping analyticalDashboard =\> analyticalDashboard identifier.
+ * Declares a constant initialized to object mapping analyticalDashboard ⇒ analyticalDashboard identifier.
  *
  * @param projectMeta - project metadata containing the analyticalDashboards
  */
@@ -506,9 +506,9 @@ function generateAnalyticalDashboards(
  * constant declarations for the various objects in the metadata:
  *
  * - Attributes with single display form are transformed to constants initialized with respective newAttribute()
- * - Attributes with multiple display forms are transformed to constants initialized to map of df name =\> newAttribute()
+ * - Attributes with multiple display forms are transformed to constants initialized to map of df name ⇒ newAttribute()
  * - Metrics (MAQL) will be transformed to constants initialized with respective newMeasure()
- * - Metrics from facts will be transformed to constants initialized to map of aggregation =\> newMeasure()
+ * - Metrics from facts will be transformed to constants initialized to map of aggregation ⇒ newMeasure()
  * - Date data set attributes will be transformed using the same logic as normal attributes, albeit with slightly
  *   modified variable naming strategy
  *

@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     IAttributeDescriptor,
     IDataView,
@@ -59,7 +59,7 @@ export type DataSeriesDigest = {
     allAttributeHeaders: IResultAttributeHeader[][];
 
     /**
-     * Index of measure local id -\> index into the series dimension
+     * Index of measure local id → index into the series dimension
      */
     measureIndexes: { [localId: string]: number[] };
 

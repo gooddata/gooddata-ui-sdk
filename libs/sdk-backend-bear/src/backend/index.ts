@@ -144,7 +144,7 @@ type FactoryFunction = {
  *
  * - Authentication is done at construction time; the constructor MAY receive an instance of deferred authentication -
  *   this is to cater for cases when withCredentials is called, new instance of backend is returned and then
- *   someone calls withTelemetry on this instance =\> in that case there is no need to re-initiate login.
+ *   someone calls withTelemetry on this instance ⇒ in that case there is no need to re-initiate login.
  *
  */
 export class BearBackend implements IAnalyticalBackend {
