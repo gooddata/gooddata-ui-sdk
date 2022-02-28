@@ -158,6 +158,8 @@ export interface IGeoConfig {
     // (undocumented)
     colors?: string[];
     // (undocumented)
+    cooperativeGestures?: boolean;
+    // (undocumented)
     isExportMode?: boolean;
     // (undocumented)
     legend?: IGeoLegendConfig;

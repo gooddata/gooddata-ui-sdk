@@ -1556,5 +1556,15 @@
         "value": "You can sort only by metrics already used on the insight.",
         "comment": "Tooltip that is shown in Sort dropdown when a metric is selected.",
         "limit": 0
+    },
+    "geochart.scroll.zoom.blocker": {
+        "value": "Use {button} + scroll to zoom the map",
+        "comment": "This message will appear when map zooming on GeoChart is disabled and available only, while the button is pressed.",
+        "limit": 0
+    },
+    "geochart.touch.pan.blocker": {
+        "value": "Use two fingers to move the map",
+        "comment": "This message will appear when moving map on GeoChart is disabled by one finger and available only with two.",
+        "limit": 0
     }
 }
