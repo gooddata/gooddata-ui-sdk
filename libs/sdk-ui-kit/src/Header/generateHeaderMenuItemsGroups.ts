@@ -176,13 +176,6 @@ function createInsightsItemsGroup(
         canShowMetricsItem(hasMeasures, workspacePermissions),
     );
 
-    const loadUrl = loadItemUrl(workspaceRef, workspaceId);
-    pushConditionally(
-        insightItemsGroup,
-        createIHeaderMenuItem(HEADER_ITEM_ID_LOAD, "s-menu-load", loadUrl),
-        canShowLoadItem(featureFlags, workspacePermissions, isFreemiumCustomer, backendSupportsCsvUploader),
-    );
-
     const dataUrl = dataItemUrl(
         workspaceRef,
         workspaceId,
@@ -194,6 +187,13 @@ function createInsightsItemsGroup(
         insightItemsGroup,
         createIHeaderMenuItem(HEADER_ITEM_ID_DATA, "s-menu-data", dataUrl),
         canShowDataItem(featureFlags, workspacePermissions),
+    );
+
+    const loadUrl = loadItemUrl(workspaceRef, workspaceId);
+    pushConditionally(
+        insightItemsGroup,
+        createIHeaderMenuItem(HEADER_ITEM_ID_LOAD, "s-menu-load", loadUrl),
+        canShowLoadItem(featureFlags, workspacePermissions, isFreemiumCustomer, backendSupportsCsvUploader),
     );
     return insightItemsGroup;
 }

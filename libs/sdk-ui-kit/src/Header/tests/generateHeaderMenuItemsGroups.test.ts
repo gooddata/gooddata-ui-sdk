@@ -39,14 +39,14 @@ describe("generateHeaderMenuItemsGroups", () => {
                     key: "gs.header.analyze",
                 },
                 {
-                    className: "s-menu-load",
-                    href: "/data/#/projects/TestWorkspaceId/datasets",
-                    key: "gs.header.load",
-                },
-                {
                     className: "s-menu-data",
                     href: "/modeler/#/projects/TestWorkspaceId",
                     key: "gs.header.data",
+                },
+                {
+                    className: "s-menu-load",
+                    href: "/data/#/projects/TestWorkspaceId/datasets",
+                    key: "gs.header.load",
                 },
             ],
             [
@@ -95,14 +95,14 @@ describe("generateHeaderMenuItemsGroups", () => {
                     key: "gs.header.analyze",
                 },
                 {
-                    className: "s-menu-load",
-                    href: "/data/#/workspaces/TestWorkspaceId/datasets",
-                    key: "gs.header.load",
-                },
-                {
                     className: "s-menu-data",
                     href: "/modeler/#/workspaces/TestWorkspaceId",
                     key: "gs.header.data",
+                },
+                {
+                    className: "s-menu-load",
+                    href: "/data/#/workspaces/TestWorkspaceId/datasets",
+                    key: "gs.header.load",
                 },
             ],
             [
@@ -129,14 +129,14 @@ describe("generateHeaderMenuItemsGroups", () => {
         expect(items).toEqual([
             [
                 {
-                    className: "s-menu-load",
-                    href: "/data/#/projects/TestWorkspaceId/datasets",
-                    key: "gs.header.load",
-                },
-                {
                     className: "s-menu-data",
                     href: "/modeler/#/projects/TestWorkspaceId",
                     key: "gs.header.data",
+                },
+                {
+                    className: "s-menu-load",
+                    href: "/data/#/projects/TestWorkspaceId/datasets",
+                    key: "gs.header.load",
                 },
             ],
             [
@@ -163,14 +163,14 @@ describe("generateHeaderMenuItemsGroups", () => {
         expect(items).toEqual([
             [
                 {
-                    className: "s-menu-load",
-                    href: "/data/#/workspaces/TestWorkspaceId/datasets",
-                    key: "gs.header.load",
-                },
-                {
                     className: "s-menu-data",
                     href: "/modeler/#/workspaces/TestWorkspaceId",
                     key: "gs.header.data",
+                },
+                {
+                    className: "s-menu-load",
+                    href: "/data/#/workspaces/TestWorkspaceId/datasets",
+                    key: "gs.header.load",
                 },
             ],
             [
@@ -361,14 +361,14 @@ describe("generateHeaderMenuItemsGroups", () => {
         expect(items).toEqual([
             [
                 {
-                    className: "s-menu-load",
-                    href: "/data/#/projects/TestWorkspaceId/datasets",
-                    key: "gs.header.load",
-                },
-                {
                     className: "s-menu-data",
                     href: "/modeler/#/projects/TestWorkspaceId",
                     key: "gs.header.data",
+                },
+                {
+                    className: "s-menu-load",
+                    href: "/data/#/projects/TestWorkspaceId/datasets",
+                    key: "gs.header.load",
                 },
             ],
         ]);
@@ -388,14 +388,14 @@ describe("generateHeaderMenuItemsGroups", () => {
         expect(items).toEqual([
             [
                 {
-                    className: "s-menu-load",
-                    href: "/data/#/workspaces/TestWorkspaceId/datasets",
-                    key: "gs.header.load",
-                },
-                {
                     className: "s-menu-data",
                     href: "/modeler/#/workspaces/TestWorkspaceId",
                     key: "gs.header.data",
+                },
+                {
+                    className: "s-menu-load",
+                    href: "/data/#/workspaces/TestWorkspaceId/datasets",
+                    key: "gs.header.load",
                 },
             ],
         ]);
@@ -548,14 +548,14 @@ describe("generateHeaderMenuItemsGroups", () => {
                     key: "gs.header.metrics",
                 },
                 {
-                    className: "s-menu-load",
-                    href: "/data/#/projects/TestWorkspaceId/datasets",
-                    key: "gs.header.load",
-                },
-                {
                     className: "s-menu-data",
                     href: "/modeler/#/projects/TestWorkspaceId",
                     key: "gs.header.data",
+                },
+                {
+                    className: "s-menu-load",
+                    href: "/data/#/projects/TestWorkspaceId/datasets",
+                    key: "gs.header.load",
                 },
             ],
             [
@@ -606,14 +606,14 @@ describe("generateHeaderMenuItemsGroups", () => {
                     key: "gs.header.analyze",
                 },
                 {
-                    className: "s-menu-load",
-                    href: "/data/#/projects/TestWorkspaceId/datasets",
-                    key: "gs.header.load",
-                },
-                {
                     className: "s-menu-data",
                     href: "/modeler/#/projects/TestWorkspaceId",
                     key: "gs.header.data",
+                },
+                {
+                    className: "s-menu-load",
+                    href: "/data/#/projects/TestWorkspaceId/datasets",
+                    key: "gs.header.load",
                 },
             ],
         ]);
@@ -663,14 +663,14 @@ describe("generateHeaderMenuItemsGroups", () => {
                     key: "gs.header.metrics",
                 },
                 {
-                    className: "s-menu-load",
-                    href: "/data/#/projects/TestWorkspaceId/datasets",
-                    key: "gs.header.load",
-                },
-                {
                     className: "s-menu-data",
                     href: "/modeler/#/projects/TestWorkspaceId",
                     key: "gs.header.data",
+                },
+                {
+                    className: "s-menu-load",
+                    href: "/data/#/projects/TestWorkspaceId/datasets",
+                    key: "gs.header.load",
                 },
             ],
         ]);
