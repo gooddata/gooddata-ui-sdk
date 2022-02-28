@@ -124,6 +124,14 @@ dependencies:
 
 packages:
 
+  /@aaronhayes/react-use-hubspot-form/2.1.0:
+    resolution: {integrity: sha512-ClFNQnvWp3AKrS7eKcJXMjiHndTAys1XTFcioOpsSk0E/J+dfxF9ARuoY1FST7xvlI4sKyesOEpSKR1ucm8IEA==}
+    engines: {node: '>=10.16'}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dev: false
+
   /@aaronhayes/react-use-hubspot-form/2.1.0_react-dom@17.0.2+react@17.0.2:
     resolution: {integrity: sha512-ClFNQnvWp3AKrS7eKcJXMjiHndTAys1XTFcioOpsSk0E/J+dfxF9ARuoY1FST7xvlI4sKyesOEpSKR1ucm8IEA==}
     engines: {node: '>=10.16'}
@@ -164,6 +172,16 @@ packages:
     resolution: {integrity: sha512-VvPRHjVn70/tt4K7xE682Hcax1cwgEFRXgpR1PEL7n4Q+RH9A2dunFlhktPfXQdCWWrdouzgpN1Oqcn7I+QIIQ==}
     dependencies:
       '@ag-grid-community/core': 25.3.0
+    dev: false
+
+  /@ag-grid-community/react/25.3.0:
+    resolution: {integrity: sha512-jLvhJoYnRFDV9e1TjkQj3KN5I1p8NDzjg+WIMyVgz1xl2fTYcWCpg5GAVCHTN4PYl+EhTHnbhNpE2oip/OBusA==}
+    peerDependencies:
+      '@ag-grid-community/core': ~25.3.0
+      react: ^16.3.0 || ^17.0.0
+      react-dom: ^16.3.0 || ^17.0.0
+    dependencies:
+      prop-types: 15.7.2
     dev: false
 
   /@ag-grid-community/react/25.3.0_react-dom@17.0.2+react@17.0.2:
@@ -1728,6 +1746,19 @@ packages:
       '@emotion/weak-memoize': 0.2.5
     dev: false
 
+  /@emotion/core/10.3.0:
+    resolution: {integrity: sha512-C4+RI1gNycUbfg2Zojt3lcVQVWocMLK4jiwl5tO/Z5I3zyGmG+oKJl6+/uPtQeUDPN7WXHN8TQ7bqc+dnljZ0w==}
+    peerDependencies:
+      react: '>=16.3.0'
+    dependencies:
+      '@babel/runtime': 7.16.3
+      '@emotion/cache': 10.0.29
+      '@emotion/css': 10.0.27
+      '@emotion/serialize': 0.11.16
+      '@emotion/sheet': 0.9.4
+      '@emotion/utils': 0.11.3
+    dev: false
+
   /@emotion/core/10.3.0_react@17.0.2:
     resolution: {integrity: sha512-C4+RI1gNycUbfg2Zojt3lcVQVWocMLK4jiwl5tO/Z5I3zyGmG+oKJl6+/uPtQeUDPN7WXHN8TQ7bqc+dnljZ0w==}
     peerDependencies:
@@ -1919,6 +1950,68 @@ packages:
     resolution: {integrity: sha512-82cpyJyKRoQoRi+14ibCeGPu0CwypgtBAdBhq1WfvagpCZNKqwXbKwXllYSMG91DhmG4jt9gN8eP6lGOtozuaw==}
     dev: false
 
+  /@gooddata/api-client-bear/8.9.0-beta.0:
+    resolution: {integrity: sha512-M1Fei1Iaq+Y4jsjHCqZ7azij5DXYUSDdHTBgxkHZPH95pjMS9/cf2iiO5SunIYKlHD1B34pt0YeKkR+0tcoYKg==}
+    dependencies:
+      '@gooddata/api-model-bear': 8.9.0-beta.0
+      fetch-cookie: 0.7.3
+      isomorphic-fetch: 3.0.0
+      lodash: 4.17.21
+      node-fetch: 2.6.6
+      qs: 6.10.1
+      spark-md5: 3.0.2
+      ts-invariant: 0.7.5
+      tslib: 2.3.1
+    dev: false
+
+  /@gooddata/api-client-tiger/8.9.0-beta.0:
+    resolution: {integrity: sha512-i1UX9DBjCT2tK1A3YUDrCyBlix8tZJCr5XTsGy+uRbU6Lbk6LhiL+f2FShcMHcOQE/KOxSpbBG88XXo8RMA2YQ==}
+    dependencies:
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      axios: 0.21.4
+      lodash: 4.17.21
+      qs: 6.10.1
+      spark-md5: 3.0.2
+      tslib: 2.3.1
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
+  /@gooddata/api-model-bear/8.9.0-beta.0:
+    resolution: {integrity: sha512-ksLck7v0bgIoEmpTqf+vKi8drNptk4v8EvpTxGZbCDQ7grTDZLHa50ym6HRhf5eceR9rA4pAuHdV4xMXpHeCxA==}
+    dependencies:
+      lodash: 4.17.21
+      tslib: 2.3.1
+    dev: false
+
+  /@gooddata/catalog-export/8.9.0-beta.0:
+    resolution: {integrity: sha512-AyKv1wkUb9xQSN9W0oI2ONT3JMdsyBbzkiYiTFz2MIg2WFTFo/JIUjC6eU8OmiPgu3yAOB3tLmQ3IeZP50lqIw==}
+    hasBin: true
+    dependencies:
+      '@babel/core': 7.16.0
+      '@babel/plugin-transform-typescript': 7.16.1_@babel+core@7.16.0
+      '@gooddata/api-client-bear': 8.9.0-beta.0
+      '@gooddata/api-client-tiger': 8.9.0-beta.0
+      '@gooddata/api-model-bear': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      chalk: 4.1.2
+      commander: 8.3.0
+      dotenv: 10.0.0
+      inquirer: 7.3.3
+      lodash: 4.17.21
+      open: 7.4.2
+      ora: 5.4.1
+      p-map: 3.0.0
+      prettier: 2.5.0
+      strip-ansi: 6.0.1
+      ts-morph: 13.0.2
+      tslib: 2.3.1
+    transitivePeerDependencies:
+      - debug
+      - supports-color
+    dev: false
+
   /@gooddata/eslint-config/2.1.0_c7f7388c517bf46ad3dd940129cd580f:
     resolution: {integrity: sha512-DwB//alPfbTXMTYlvEyj1nsLTRt/5xcYm/ytZ58Mb70stBBY7/FD3jL9QTcZVXa2Ox0hmDw0yFtzX2yM/1IyzA==}
     peerDependencies:
@@ -1941,6 +2034,15 @@ packages:
       - typescript
     dev: false
 
+  /@gooddata/experimental-workspace/8.9.0-beta.0:
+    resolution: {integrity: sha512-TPklvBXy3aJyV+bgJiCKQRn0KifVIK0w1w61WOpcKXp5UGNeu1imvZVg6USUtwUEwtyaQ/Uy9znyMJEbee8GxQ==}
+    dependencies:
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      lodash: 4.17.21
+      tslib: 2.3.1
+    dev: false
+
   /@gooddata/frontend-npm-scripts/1.2.0:
     resolution: {integrity: sha512-USBFmscQBlDf7V5jL3r5qTEBt/4yekUG8G8694gWZXvT6usN+9mZyMTvxVSdTWDRFS/6PDMQ1+YT74e4kVBGdw==}
     hasBin: true
@@ -1949,9 +2051,801 @@ packages:
       linebyline: 1.3.0
     dev: false
 
+  /@gooddata/live-examples-workspace/8.9.0-beta.0:
+    resolution: {integrity: sha512-aTf4FD0mDBWHy9eFo5hgaALZ/MyTRWlDYnN6rF3duQOlZbuiLVxAznFfiXDfKvGitMYGoUvMwBm/3G+vqKmm2w==}
+    dependencies:
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      lodash: 4.17.21
+      tslib: 2.3.1
+    dev: false
+
+  /@gooddata/mock-handling/8.9.0-beta.0:
+    resolution: {integrity: sha512-tx4pKEuDa6BawdLCaJTCW2wBd9GqbHeNKMd4SIJuY7B4JnsmNolzRD7DQvKwhqkc0mtE5d/K33cDrDScuM6s9w==}
+    hasBin: true
+    dependencies:
+      '@gooddata/api-model-bear': 8.9.0-beta.0
+      '@gooddata/sdk-backend-bear': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      chalk: 4.1.2
+      commander: 8.3.0
+      inquirer: 7.3.3
+      json-stable-stringify: 1.0.1
+      lodash: 4.17.21
+      ora: 5.4.1
+      p-map: 3.0.0
+      prettier: 2.5.0
+      rimraf: 3.0.2
+      ts-morph: 13.0.2
+      tslib: 2.3.1
+    dev: false
+
   /@gooddata/numberjs/4.0.1:
     resolution: {integrity: sha512-H0PRtc75s6e7xT+LBS63Z5mxgvNJokjM02Hr2G7qglt+Fdhr8TotI3HRn/Ww29WBMLMPUupnfo7S4Razes4BIA==}
     engines: {node: '>=0.6.0'}
+    dev: false
+
+  /@gooddata/plugin-toolkit/8.9.0-beta.0:
+    resolution: {integrity: sha512-r/kzI1Jc7gZQU5sMWthK+V80+smFQuIia9HMkRmCIgcg7NheR94Kl+XoN3Bz/jhwBUZZ/wxv2V1A/XNYiJcJLg==}
+    hasBin: true
+    dependencies:
+      '@babel/cli': 7.16.0_@babel+core@7.16.0
+      '@babel/core': 7.16.0
+      '@babel/preset-env': 7.16.4_@babel+core@7.16.0
+      '@babel/preset-typescript': 7.16.0_@babel+core@7.16.0
+      '@gooddata/sdk-backend-bear': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-backend-tiger': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      axios: 0.21.4
+      chalk: 4.1.2
+      columnify: 1.5.4
+      commander: 8.3.0
+      cross-spawn: 7.0.3
+      dotenv: 10.0.0
+      fast-glob: 3.2.7
+      fs-extra: 10.0.0
+      inquirer: 7.3.3
+      lodash: 4.17.21
+      ora: 5.4.1
+      strip-ansi: 6.0.1
+      tar: 6.1.11
+      tslib: 2.3.1
+    transitivePeerDependencies:
+      - debug
+      - supports-color
+    dev: false
+
+  /@gooddata/reference-workspace/8.9.0-beta.0:
+    resolution: {integrity: sha512-ioig8iwpjVd8YJotLfUbScqpqS5R01hvAU1sSIALgvH0mKO/yasXiJFdxbkMhc1iHZNz3v33Qx7ex9qJnHZ/OA==}
+    dependencies:
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      lodash: 4.17.21
+      tslib: 2.3.1
+    dev: false
+
+  /@gooddata/sdk-backend-base/8.9.0-beta.0:
+    resolution: {integrity: sha512-j16pFt3XfZHevI8VS2JGNWOSYN8rXJQ9bFIF7yLGcMznTKJSIrUzZXiYLKv1mUkNZnCh7bLSwHpKJv+JXWNvJQ==}
+    dependencies:
+      '@braintree/sanitize-url': 5.0.2
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/util': 8.9.0-beta.0
+      json-stable-stringify: 1.0.1
+      lodash: 4.17.21
+      spark-md5: 3.0.2
+      ts-invariant: 0.7.5
+      tslib: 2.3.1
+      uuid: 8.3.2
+    dev: false
+
+  /@gooddata/sdk-backend-bear/8.9.0-beta.0:
+    resolution: {integrity: sha512-eqKBeaD/PDD87URIF3E2IsgfPbinC33il7/AALEGWJl27QGUez16r9jNfoP3sj6q91ecgAk8zuejEGkVxG1kYg==}
+    dependencies:
+      '@gooddata/api-client-bear': 8.9.0-beta.0
+      '@gooddata/api-model-bear': 8.9.0-beta.0
+      '@gooddata/sdk-backend-base': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-embedding': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      date-fns: 2.27.0
+      http-status-codes: 2.1.4
+      json-stable-stringify: 1.0.1
+      lodash: 4.17.21
+      spark-md5: 3.0.2
+      ts-invariant: 0.7.5
+      tslib: 2.3.1
+      uuid: 8.3.2
+    dev: false
+
+  /@gooddata/sdk-backend-mockingbird/8.9.0-beta.0:
+    resolution: {integrity: sha512-YqqX6ZwoUoQBBAvUbz4jUfbpPkJ8LN3M0tBGR5XVIE0zjSOKPdXcmXxKbS297szt1GnU7+4AYrXXQtO63hB/0A==}
+    dependencies:
+      '@gooddata/sdk-backend-base': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      lodash: 4.17.21
+      ts-invariant: 0.7.5
+      tslib: 2.3.1
+      uuid: 8.3.2
+    dev: false
+
+  /@gooddata/sdk-backend-spi/8.9.0-beta.0:
+    resolution: {integrity: sha512-UoX7hVQsVS2hZ5kkkwDt3qfIufjDxh4RzKeFoyvPWnUbTfi9XrcjnJBYAhhGBT9oecWvGXrfh9RcvLmoAJetCQ==}
+    dependencies:
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      lodash: 4.17.21
+      spark-md5: 3.0.2
+      ts-invariant: 0.7.5
+      tslib: 2.3.1
+    dev: false
+
+  /@gooddata/sdk-backend-tiger/8.9.0-beta.0:
+    resolution: {integrity: sha512-Hxz4XQWGqqyFMJnxOUh3YISmMnDrSvpGCx+oLJFSgd8tJu/MTcqRmwBEoKyOQkERhw8mTfcMMTppZQOQr8Mb9w==}
+    dependencies:
+      '@gooddata/api-client-tiger': 8.9.0-beta.0
+      '@gooddata/sdk-backend-base': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      axios: 0.21.4
+      date-fns: 2.27.0
+      http-status-codes: 2.1.4
+      lodash: 4.17.21
+      spark-md5: 3.0.2
+      ts-invariant: 0.7.5
+      tslib: 2.3.1
+      url: 0.11.0
+      uuid: 8.3.2
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
+  /@gooddata/sdk-embedding/8.9.0-beta.0:
+    resolution: {integrity: sha512-EgbBO6SPyLOtQqKHTekgGcyVpXX1qV0KcwLyk57j9oY4haSJdwIaWNTr/V7nrqjKo/KLhakvH/hkV3AqC3ECNA==}
+    dependencies:
+      '@gooddata/api-model-bear': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      lodash: 4.17.21
+      ts-invariant: 0.7.5
+      tslib: 2.3.1
+    dev: false
+
+  /@gooddata/sdk-model/8.9.0-beta.0:
+    resolution: {integrity: sha512-hBuXx0GeYScMnV6SD42gRc2KEOX6iDie9hP4JWXVZxaMtEz7z9TOMVJSsoGAysttr8jvKVu4RshL6aRTTTitMA==}
+    dependencies:
+      json-stable-stringify: 1.0.1
+      lodash: 4.17.21
+      spark-md5: 3.0.2
+      stringify-object: 2.4.0
+      ts-invariant: 0.7.5
+      tslib: 2.3.1
+    dev: false
+
+  /@gooddata/sdk-ui-charts/8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46:
+    resolution: {integrity: sha512-p6gX7hKCYLELRkvmT+lCgFN4Dzm0CzZCilqei8GaNWMRhu9er/RDOoZ+l7lO1ej/pnkaxb/Oy4dvft7GKZiGhA==}
+    peerDependencies:
+      react: ^16.10.0 || ^17.0.0
+      react-dom: ^16.10.0 || ^17.0.0
+    dependencies:
+      '@gooddata/numberjs': 4.0.1
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-kit': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-theme-provider': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-vis-commons': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/util': 8.9.0-beta.0
+      classnames: 2.3.1
+      custom-event: 1.0.1
+      date-fns: 2.27.0
+      highcharts: 9.3.0
+      hoist-non-react-statics: 3.3.2
+      lodash: 4.17.21
+      polished: 3.7.2
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      react-intl: 5.23.0_react@17.0.2+typescript@4.0.2
+      react-measure: 2.5.2_react-dom@17.0.2+react@17.0.2
+      svg-classlist-polyfill: 1.0.6
+      ts-invariant: 0.7.5
+      tslib: 2.3.1
+      uuid: 8.3.2
+    transitivePeerDependencies:
+      - '@types/react'
+      - typescript
+    dev: false
+
+  /@gooddata/sdk-ui-charts/8.9.0-beta.0_typescript@4.0.2:
+    resolution: {integrity: sha512-p6gX7hKCYLELRkvmT+lCgFN4Dzm0CzZCilqei8GaNWMRhu9er/RDOoZ+l7lO1ej/pnkaxb/Oy4dvft7GKZiGhA==}
+    peerDependencies:
+      react: ^16.10.0 || ^17.0.0
+      react-dom: ^16.10.0 || ^17.0.0
+    dependencies:
+      '@gooddata/numberjs': 4.0.1
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_typescript@4.0.2
+      '@gooddata/sdk-ui-kit': 8.9.0-beta.0_typescript@4.0.2
+      '@gooddata/sdk-ui-theme-provider': 8.9.0-beta.0_typescript@4.0.2
+      '@gooddata/sdk-ui-vis-commons': 8.9.0-beta.0_typescript@4.0.2
+      '@gooddata/util': 8.9.0-beta.0
+      classnames: 2.3.1
+      custom-event: 1.0.1
+      date-fns: 2.27.0
+      highcharts: 9.3.0
+      hoist-non-react-statics: 3.3.2
+      lodash: 4.17.21
+      polished: 3.7.2
+      react-intl: 5.23.0_typescript@4.0.2
+      react-measure: 2.5.2
+      svg-classlist-polyfill: 1.0.6
+      ts-invariant: 0.7.5
+      tslib: 2.3.1
+      uuid: 8.3.2
+    transitivePeerDependencies:
+      - '@types/react'
+      - typescript
+    dev: false
+
+  /@gooddata/sdk-ui-dashboard/8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46:
+    resolution: {integrity: sha512-Tv/31+234IsUVig5ofnR/muW5VgbO8/TRoQkVb3PRqnsE+XYZSJTVXzfmkVWBzpJDAROC/gNd6ntfLF7vwrwNA==}
+    peerDependencies:
+      react: ^16.10.0 || ^17.0.0
+      react-dom: ^16.10.0 || ^17.0.0
+    dependencies:
+      '@gooddata/numberjs': 4.0.1
+      '@gooddata/sdk-backend-base': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-ext': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-filters': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-kit': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-theme-provider': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-vis-commons': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/util': 8.9.0-beta.0
+      '@reduxjs/toolkit': 1.6.2_react-redux@7.2.6+react@17.0.2
+      classnames: 2.3.1
+      date-fns: 2.27.0
+      immer: 9.0.7
+      json-stable-stringify: 1.0.1
+      lodash: 4.17.21
+      normalize.css: 8.0.1
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      react-grid-system: 7.3.2_react@17.0.2
+      react-intl: 5.23.0_react@17.0.2+typescript@4.0.2
+      react-measure: 2.5.2_react-dom@17.0.2+react@17.0.2
+      react-redux: 7.2.6_react-dom@17.0.2+react@17.0.2
+      react-select: 3.2.0_react-dom@17.0.2+react@17.0.2
+      react-transition-group: 4.4.2_react-dom@17.0.2+react@17.0.2
+      react-truncate: 2.4.0_react@17.0.2
+      redux-batched-actions: 0.5.0
+      redux-saga: 1.1.3
+      ts-invariant: 0.7.5
+      tslib: 2.3.1
+      uuid: 8.3.2
+    transitivePeerDependencies:
+      - '@ag-grid-community/core'
+      - '@types/react'
+      - prop-types
+      - react-native
+      - redux
+      - typescript
+    dev: false
+
+  /@gooddata/sdk-ui-ext/8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46:
+    resolution: {integrity: sha512-MThQ31LLk1WGmHM8XX/FOrlS9Gjw+TKGvXOyaFv+UCHLyTkWrcjZ+4xkacN+NOrS0kxsCyA4YyW0PkQywfOeCw==}
+    peerDependencies:
+      react: ^16.10.0 || ^17.0.0
+      react-dom: ^16.10.0 || ^17.0.0
+    dependencies:
+      '@formatjs/intl-pluralrules': 1.3.9
+      '@gooddata/numberjs': 4.0.1
+      '@gooddata/sdk-backend-base': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-embedding': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-charts': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-filters': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-geo': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-kit': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-pivot': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-theme-provider': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-vis-commons': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/util': 8.9.0-beta.0
+      classnames: 2.3.1
+      custom-event: 1.0.1
+      date-fns: 2.27.0
+      fixed-data-table-2: 1.2.2_react-dom@17.0.2+react@17.0.2
+      lodash: 4.17.21
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      react-grid-system: 7.3.2_react@17.0.2
+      react-intl: 5.23.0_react@17.0.2+typescript@4.0.2
+      react-measure: 2.5.2_react-dom@17.0.2+react@17.0.2
+      react-select: 3.2.0_react-dom@17.0.2+react@17.0.2
+      react-transition-group: 4.4.2_react-dom@17.0.2+react@17.0.2
+      react-truncate: 2.4.0_react@17.0.2
+      ts-invariant: 0.7.5
+      tslib: 2.3.1
+      uuid: 8.3.2
+    transitivePeerDependencies:
+      - '@ag-grid-community/core'
+      - '@types/react'
+      - prop-types
+      - typescript
+    dev: false
+
+  /@gooddata/sdk-ui-ext/8.9.0-beta.0_typescript@4.0.2:
+    resolution: {integrity: sha512-MThQ31LLk1WGmHM8XX/FOrlS9Gjw+TKGvXOyaFv+UCHLyTkWrcjZ+4xkacN+NOrS0kxsCyA4YyW0PkQywfOeCw==}
+    peerDependencies:
+      react: ^16.10.0 || ^17.0.0
+      react-dom: ^16.10.0 || ^17.0.0
+    dependencies:
+      '@formatjs/intl-pluralrules': 1.3.9
+      '@gooddata/numberjs': 4.0.1
+      '@gooddata/sdk-backend-base': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-embedding': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_typescript@4.0.2
+      '@gooddata/sdk-ui-charts': 8.9.0-beta.0_typescript@4.0.2
+      '@gooddata/sdk-ui-filters': 8.9.0-beta.0_typescript@4.0.2
+      '@gooddata/sdk-ui-geo': 8.9.0-beta.0_typescript@4.0.2
+      '@gooddata/sdk-ui-kit': 8.9.0-beta.0_typescript@4.0.2
+      '@gooddata/sdk-ui-pivot': 8.9.0-beta.0_typescript@4.0.2
+      '@gooddata/sdk-ui-theme-provider': 8.9.0-beta.0_typescript@4.0.2
+      '@gooddata/sdk-ui-vis-commons': 8.9.0-beta.0_typescript@4.0.2
+      '@gooddata/util': 8.9.0-beta.0
+      classnames: 2.3.1
+      custom-event: 1.0.1
+      date-fns: 2.27.0
+      fixed-data-table-2: 1.2.2
+      lodash: 4.17.21
+      react-grid-system: 7.3.2
+      react-intl: 5.23.0_typescript@4.0.2
+      react-measure: 2.5.2
+      react-select: 3.2.0
+      react-transition-group: 4.4.2
+      react-truncate: 2.4.0
+      ts-invariant: 0.7.5
+      tslib: 2.3.1
+      uuid: 8.3.2
+    transitivePeerDependencies:
+      - '@ag-grid-community/core'
+      - '@types/react'
+      - prop-types
+      - typescript
+    dev: false
+
+  /@gooddata/sdk-ui-filters/8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46:
+    resolution: {integrity: sha512-WpNyiP2Ggz5K5X2z4Rq967Fp9Gi5zwM8nMy5afJv2Xdu2uVauDV73+dzHeQT2K/4mVyvj7MDvUZoMTSCY41uRg==}
+    peerDependencies:
+      react: ^16.10.0 || ^17.0.0
+      react-dom: ^16.10.0 || ^17.0.0
+    dependencies:
+      '@gooddata/numberjs': 4.0.1
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-kit': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/util': 8.9.0-beta.0
+      classnames: 2.3.1
+      date-fns: 2.27.0
+      downshift: 3.4.8_react@17.0.2
+      fixed-data-table-2: 1.2.2_react-dom@17.0.2+react@17.0.2
+      hoist-non-react-statics: 3.3.2
+      json-stable-stringify: 1.0.1
+      lodash: 4.17.21
+      moment: 2.29.1
+      react: 17.0.2
+      react-day-picker: 7.4.10_react@17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      react-intl: 5.23.0_react@17.0.2+typescript@4.0.2
+      react-responsive: 8.2.0_react@17.0.2
+      react-window: 1.8.6_react-dom@17.0.2+react@17.0.2
+      ts-invariant: 0.7.5
+      tslib: 2.3.1
+    transitivePeerDependencies:
+      - '@types/react'
+      - typescript
+    dev: false
+
+  /@gooddata/sdk-ui-filters/8.9.0-beta.0_typescript@4.0.2:
+    resolution: {integrity: sha512-WpNyiP2Ggz5K5X2z4Rq967Fp9Gi5zwM8nMy5afJv2Xdu2uVauDV73+dzHeQT2K/4mVyvj7MDvUZoMTSCY41uRg==}
+    peerDependencies:
+      react: ^16.10.0 || ^17.0.0
+      react-dom: ^16.10.0 || ^17.0.0
+    dependencies:
+      '@gooddata/numberjs': 4.0.1
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_typescript@4.0.2
+      '@gooddata/sdk-ui-kit': 8.9.0-beta.0_typescript@4.0.2
+      '@gooddata/util': 8.9.0-beta.0
+      classnames: 2.3.1
+      date-fns: 2.27.0
+      downshift: 3.4.8
+      fixed-data-table-2: 1.2.2
+      hoist-non-react-statics: 3.3.2
+      json-stable-stringify: 1.0.1
+      lodash: 4.17.21
+      moment: 2.29.1
+      react-day-picker: 7.4.10
+      react-intl: 5.23.0_typescript@4.0.2
+      react-responsive: 8.2.0
+      react-window: 1.8.6
+      ts-invariant: 0.7.5
+      tslib: 2.3.1
+    transitivePeerDependencies:
+      - '@types/react'
+      - typescript
+    dev: false
+
+  /@gooddata/sdk-ui-geo/8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46:
+    resolution: {integrity: sha512-8P1962YGm95Oq3PdBhuw8T6U0VyAa4HoImNraFJjLdk2KLY0YkgQkCjHpNkl1h4RT2tx0Qm6WWMFFo5jZ9+92A==}
+    peerDependencies:
+      react: ^16.10.0 || ^17.0.0
+      react-dom: ^16.10.0 || ^17.0.0
+    dependencies:
+      '@gooddata/numberjs': 4.0.1
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-kit': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-theme-provider': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-vis-commons': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      classnames: 2.3.1
+      custom-event: 1.0.1
+      lodash: 4.17.21
+      mapbox-gl: 2.6.1
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      react-intl: 5.23.0_react@17.0.2+typescript@4.0.2
+      react-measure: 2.5.2_react-dom@17.0.2+react@17.0.2
+      ts-invariant: 0.7.5
+      tslib: 2.3.1
+      uuid: 8.3.2
+    transitivePeerDependencies:
+      - '@types/react'
+      - typescript
+    dev: false
+
+  /@gooddata/sdk-ui-geo/8.9.0-beta.0_typescript@4.0.2:
+    resolution: {integrity: sha512-8P1962YGm95Oq3PdBhuw8T6U0VyAa4HoImNraFJjLdk2KLY0YkgQkCjHpNkl1h4RT2tx0Qm6WWMFFo5jZ9+92A==}
+    peerDependencies:
+      react: ^16.10.0 || ^17.0.0
+      react-dom: ^16.10.0 || ^17.0.0
+    dependencies:
+      '@gooddata/numberjs': 4.0.1
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_typescript@4.0.2
+      '@gooddata/sdk-ui-kit': 8.9.0-beta.0_typescript@4.0.2
+      '@gooddata/sdk-ui-theme-provider': 8.9.0-beta.0_typescript@4.0.2
+      '@gooddata/sdk-ui-vis-commons': 8.9.0-beta.0_typescript@4.0.2
+      classnames: 2.3.1
+      custom-event: 1.0.1
+      lodash: 4.17.21
+      mapbox-gl: 2.6.1
+      react-intl: 5.23.0_typescript@4.0.2
+      react-measure: 2.5.2
+      ts-invariant: 0.7.5
+      tslib: 2.3.1
+      uuid: 8.3.2
+    transitivePeerDependencies:
+      - '@types/react'
+      - typescript
+    dev: false
+
+  /@gooddata/sdk-ui-kit/8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46:
+    resolution: {integrity: sha512-5E0Uq5s9tSH6OgrQEBbWmdkSQNDtfep3aAYrm3ELRhHBtk7ri4Ry2v6/uajZ3jYDipxjFnlLPaSviqGTCjkR9g==}
+    peerDependencies:
+      react: ^16.10.0 || ^17.0.0
+      react-dom: ^16.10.0 || ^17.0.0
+    dependencies:
+      '@aaronhayes/react-use-hubspot-form': 2.1.0_react-dom@17.0.2+react@17.0.2
+      '@gooddata/numberjs': 4.0.1
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-theme-provider': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/util': 8.9.0-beta.0
+      '@types/node': 16.11.11
+      classnames: 2.3.1
+      codemirror: 5.64.0
+      date-fns: 2.27.0
+      debounce-promise: 3.1.2
+      element-closest-polyfill: 1.0.4
+      fixed-data-table-2: 1.2.2_react-dom@17.0.2+react@17.0.2
+      foundation-sites: 5.5.3
+      lodash: 4.17.21
+      moment: 2.29.1
+      moment-timezone: 0.5.34
+      react: 17.0.2
+      react-codemirror2: 7.2.1_codemirror@5.64.0+react@17.0.2
+      react-day-picker: 7.4.10_react@17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      react-helmet: 6.1.0_react@17.0.2
+      react-intl: 5.23.0_react@17.0.2+typescript@4.0.2
+      react-native-listener: 1.1.0
+      react-portal: 4.2.1_react@17.0.2
+      react-responsive: 8.2.0_react@17.0.2
+      react-select: 3.2.0_react-dom@17.0.2+react@17.0.2
+      react-textarea-autosize: 8.3.3_cfedea9b3ed0faf0dded75c187406c5e
+      react-transition-group: 4.4.2_react-dom@17.0.2+react@17.0.2
+      tinycolor2: 1.4.2
+      ts-invariant: 0.7.5
+      tslib: 2.3.1
+      uuid: 8.3.2
+    transitivePeerDependencies:
+      - '@types/react'
+      - typescript
+    dev: false
+
+  /@gooddata/sdk-ui-kit/8.9.0-beta.0_typescript@4.0.2:
+    resolution: {integrity: sha512-5E0Uq5s9tSH6OgrQEBbWmdkSQNDtfep3aAYrm3ELRhHBtk7ri4Ry2v6/uajZ3jYDipxjFnlLPaSviqGTCjkR9g==}
+    peerDependencies:
+      react: ^16.10.0 || ^17.0.0
+      react-dom: ^16.10.0 || ^17.0.0
+    dependencies:
+      '@aaronhayes/react-use-hubspot-form': 2.1.0
+      '@gooddata/numberjs': 4.0.1
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_typescript@4.0.2
+      '@gooddata/sdk-ui-theme-provider': 8.9.0-beta.0_typescript@4.0.2
+      '@gooddata/util': 8.9.0-beta.0
+      '@types/node': 16.11.11
+      classnames: 2.3.1
+      codemirror: 5.64.0
+      date-fns: 2.27.0
+      debounce-promise: 3.1.2
+      element-closest-polyfill: 1.0.4
+      fixed-data-table-2: 1.2.2
+      foundation-sites: 5.5.3
+      lodash: 4.17.21
+      moment: 2.29.1
+      moment-timezone: 0.5.34
+      react-codemirror2: 7.2.1_codemirror@5.64.0
+      react-day-picker: 7.4.10
+      react-helmet: 6.1.0
+      react-intl: 5.23.0_typescript@4.0.2
+      react-native-listener: 1.1.0
+      react-portal: 4.2.1
+      react-responsive: 8.2.0
+      react-select: 3.2.0
+      react-textarea-autosize: 8.3.3
+      react-transition-group: 4.4.2
+      tinycolor2: 1.4.2
+      ts-invariant: 0.7.5
+      tslib: 2.3.1
+      uuid: 8.3.2
+    transitivePeerDependencies:
+      - '@types/react'
+      - typescript
+    dev: false
+
+  /@gooddata/sdk-ui-loaders/8.9.0-beta.0_8337f4f68907ca4575587785714ec839:
+    resolution: {integrity: sha512-4xW0frBY42cBX0ay7mG8r2EfYb3LjReZqK8DW+YYvIHUX5BZ9mTap8JiFwp+/JeMtJZTt/VI4LxzGixS9lSdiw==}
+    peerDependencies:
+      '@gooddata/sdk-ui-dashboard': ^8.9.0-beta.0
+      react: ^16.10.0 || ^17.0.0
+      react-dom: ^16.10.0 || ^17.0.0
+    dependencies:
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-dashboard': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      lodash: 4.17.21
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      react-intl: 5.23.0_react@17.0.2+typescript@4.0.2
+      semver: 7.3.5
+      ts-invariant: 0.7.5
+      tslib: 2.3.1
+    transitivePeerDependencies:
+      - typescript
+    dev: false
+
+  /@gooddata/sdk-ui-pivot/8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46:
+    resolution: {integrity: sha512-3k4syiECLdNcYih6Tuszi7dkP1aC16GyjKHxc5JhajFf7qJIhRikhDIapBEwzNeUZc+RoGOS6Dl+CRH+9JeOqw==}
+    peerDependencies:
+      react: ^16.10.0 || ^17.0.0
+      react-dom: ^16.10.0 || ^17.0.0
+    dependencies:
+      '@ag-grid-community/all-modules': 25.3.0
+      '@ag-grid-community/react': 25.3.0_react-dom@17.0.2+react@17.0.2
+      '@formatjs/intl-pluralrules': 1.3.9
+      '@gooddata/numberjs': 4.0.1
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-kit': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-theme-provider': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-vis-commons': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      classnames: 2.3.1
+      custom-event: 1.0.1
+      fixed-data-table-2: 1.2.2_react-dom@17.0.2+react@17.0.2
+      lodash: 4.17.21
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      react-intl: 5.23.0_react@17.0.2+typescript@4.0.2
+      ts-invariant: 0.7.5
+      tslib: 2.3.1
+      uuid: 8.3.2
+    transitivePeerDependencies:
+      - '@ag-grid-community/core'
+      - '@types/react'
+      - typescript
+    dev: false
+
+  /@gooddata/sdk-ui-pivot/8.9.0-beta.0_typescript@4.0.2:
+    resolution: {integrity: sha512-3k4syiECLdNcYih6Tuszi7dkP1aC16GyjKHxc5JhajFf7qJIhRikhDIapBEwzNeUZc+RoGOS6Dl+CRH+9JeOqw==}
+    peerDependencies:
+      react: ^16.10.0 || ^17.0.0
+      react-dom: ^16.10.0 || ^17.0.0
+    dependencies:
+      '@ag-grid-community/all-modules': 25.3.0
+      '@ag-grid-community/react': 25.3.0
+      '@formatjs/intl-pluralrules': 1.3.9
+      '@gooddata/numberjs': 4.0.1
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_typescript@4.0.2
+      '@gooddata/sdk-ui-kit': 8.9.0-beta.0_typescript@4.0.2
+      '@gooddata/sdk-ui-theme-provider': 8.9.0-beta.0_typescript@4.0.2
+      '@gooddata/sdk-ui-vis-commons': 8.9.0-beta.0_typescript@4.0.2
+      classnames: 2.3.1
+      custom-event: 1.0.1
+      fixed-data-table-2: 1.2.2
+      lodash: 4.17.21
+      react-intl: 5.23.0_typescript@4.0.2
+      ts-invariant: 0.7.5
+      tslib: 2.3.1
+      uuid: 8.3.2
+    transitivePeerDependencies:
+      - '@ag-grid-community/core'
+      - '@types/react'
+      - typescript
+    dev: false
+
+  /@gooddata/sdk-ui-theme-provider/8.9.0-beta.0_5e360d3d7093013c861db126e3464f82:
+    resolution: {integrity: sha512-zehyY8ui/4ZG4Oh4mp+Dif4+xcUB6Q7g/bOfonp5sfr3xkUyxTK5vuWUsnWvcExbhtCwnrbDSeTJzvZluXAVcA==}
+    peerDependencies:
+      react: ^16.10.0 || ^17.0.0
+      react-dom: ^16.10.0 || ^17.0.0
+    dependencies:
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      lodash: 4.17.21
+      polished: 3.7.2
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      react-intl: 5.23.0_react@17.0.2+typescript@4.0.2
+      ts-invariant: 0.7.5
+      tslib: 2.3.1
+    transitivePeerDependencies:
+      - typescript
+    dev: false
+
+  /@gooddata/sdk-ui-theme-provider/8.9.0-beta.0_typescript@4.0.2:
+    resolution: {integrity: sha512-zehyY8ui/4ZG4Oh4mp+Dif4+xcUB6Q7g/bOfonp5sfr3xkUyxTK5vuWUsnWvcExbhtCwnrbDSeTJzvZluXAVcA==}
+    peerDependencies:
+      react: ^16.10.0 || ^17.0.0
+      react-dom: ^16.10.0 || ^17.0.0
+    dependencies:
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_typescript@4.0.2
+      lodash: 4.17.21
+      polished: 3.7.2
+      react-intl: 5.23.0_typescript@4.0.2
+      ts-invariant: 0.7.5
+      tslib: 2.3.1
+    transitivePeerDependencies:
+      - typescript
+    dev: false
+
+  /@gooddata/sdk-ui-vis-commons/8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46:
+    resolution: {integrity: sha512-M8DpUj2yCxP2UUEcXNtGRbNt7aSLp3raYBxxKspQNG11LlNGx+Gdyx2ysh2VvEQPGjct1Bi4BSE1jhoZ+69iIg==}
+    peerDependencies:
+      react: ^16.10.0 || ^17.0.0
+      react-dom: ^16.10.0 || ^17.0.0
+    dependencies:
+      '@gooddata/numberjs': 4.0.1
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-kit': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-theme-provider': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      classnames: 2.3.1
+      lodash: 4.17.21
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      react-intl: 5.23.0_react@17.0.2+typescript@4.0.2
+      react-measure: 2.5.2_react-dom@17.0.2+react@17.0.2
+      tslib: 2.3.1
+    transitivePeerDependencies:
+      - '@types/react'
+      - typescript
+    dev: false
+
+  /@gooddata/sdk-ui-vis-commons/8.9.0-beta.0_typescript@4.0.2:
+    resolution: {integrity: sha512-M8DpUj2yCxP2UUEcXNtGRbNt7aSLp3raYBxxKspQNG11LlNGx+Gdyx2ysh2VvEQPGjct1Bi4BSE1jhoZ+69iIg==}
+    peerDependencies:
+      react: ^16.10.0 || ^17.0.0
+      react-dom: ^16.10.0 || ^17.0.0
+    dependencies:
+      '@gooddata/numberjs': 4.0.1
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_typescript@4.0.2
+      '@gooddata/sdk-ui-kit': 8.9.0-beta.0_typescript@4.0.2
+      '@gooddata/sdk-ui-theme-provider': 8.9.0-beta.0_typescript@4.0.2
+      classnames: 2.3.1
+      lodash: 4.17.21
+      react-intl: 5.23.0_typescript@4.0.2
+      react-measure: 2.5.2
+      tslib: 2.3.1
+    transitivePeerDependencies:
+      - '@types/react'
+      - typescript
+    dev: false
+
+  /@gooddata/sdk-ui/8.9.0-beta.0_5e360d3d7093013c861db126e3464f82:
+    resolution: {integrity: sha512-YlqGPQqF4+wdceHsPuq4pSJRWeTVRIvq/73gu5LIh47IJfQa9wiinw/S6E8w5GCUEDHBEItE8zI4o1DvtEwlqg==}
+    peerDependencies:
+      react: ^16.10.0 || ^17.0.0
+      react-dom: ^16.10.0 || ^17.0.0
+    dependencies:
+      '@formatjs/intl-pluralrules': 1.3.9
+      '@gooddata/numberjs': 4.0.1
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/util': 8.9.0-beta.0
+      custom-event: 1.0.1
+      hoist-non-react-statics: 3.3.2
+      http-status-codes: 2.1.4
+      json-stable-stringify: 1.0.1
+      lodash: 4.17.21
+      memoize-one: 6.0.0
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+      react-intl: 5.23.0_react@17.0.2+typescript@4.0.2
+      ts-invariant: 0.7.5
+      tslib: 2.3.1
+      uuid: 8.3.2
+    transitivePeerDependencies:
+      - typescript
+    dev: false
+
+  /@gooddata/sdk-ui/8.9.0-beta.0_typescript@4.0.2:
+    resolution: {integrity: sha512-YlqGPQqF4+wdceHsPuq4pSJRWeTVRIvq/73gu5LIh47IJfQa9wiinw/S6E8w5GCUEDHBEItE8zI4o1DvtEwlqg==}
+    peerDependencies:
+      react: ^16.10.0 || ^17.0.0
+      react-dom: ^16.10.0 || ^17.0.0
+    dependencies:
+      '@formatjs/intl-pluralrules': 1.3.9
+      '@gooddata/numberjs': 4.0.1
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/util': 8.9.0-beta.0
+      custom-event: 1.0.1
+      hoist-non-react-statics: 3.3.2
+      http-status-codes: 2.1.4
+      json-stable-stringify: 1.0.1
+      lodash: 4.17.21
+      memoize-one: 6.0.0
+      react-intl: 5.23.0_typescript@4.0.2
+      ts-invariant: 0.7.5
+      tslib: 2.3.1
+      uuid: 8.3.2
+    transitivePeerDependencies:
+      - typescript
     dev: false
 
   /@gooddata/stylelint-config/5.0.0:
@@ -1959,12 +2853,20 @@ packages:
     engines: {node: '>= 4'}
     dependencies:
       stylelint: 13.13.1
-      stylelint-config-standard: 20.0.0_stylelint@13.13.1
       stylelint-checkstyle-formatter: 0.1.2
+      stylelint-config-standard: 20.0.0_stylelint@13.13.1
       stylelint-order: 4.1.0_stylelint@13.13.1
       stylelint-scss: 3.21.0_stylelint@13.13.1
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /@gooddata/util/8.9.0-beta.0:
+    resolution: {integrity: sha512-+78gYMZQVe5fnOFGLLIFf6Ovg0sucvQCYisWM5JGcvt89uxHt7s9+kANlgMttAf7qZz8+jBPzckfLj199zxkuw==}
+    dependencies:
+      lodash: 4.17.21
+      ts-invariant: 0.7.5
+      tslib: 2.3.1
     dev: false
 
   /@hapi/hoek/9.2.1:
@@ -2089,10 +2991,10 @@ packages:
       '@heroku-cli/command': 8.5.0
       '@oclif/command': 1.8.6
       '@oclif/config': 1.18.1
+      chalk: 2.4.2
       cli-ux: 4.9.3
       debug: 4.3.3
       fs-extra: 7.0.1
-      chalk: 2.4.2
       lodash.flatten: 4.4.0
       tslib: 1.9.3
     transitivePeerDependencies:
@@ -2491,13 +3393,13 @@ packages:
       '@jest/types': 27.4.2
       '@types/node': 16.11.11
       ansi-escapes: 4.3.2
+      chalk: 4.1.2
       emittery: 0.8.1
       exit: 0.1.2
       graceful-fs: 4.2.8
-      chalk: 4.1.2
+      jest-changed-files: 27.4.2
       jest-config: 27.4.2_ts-node@10.4.0
       jest-haste-map: 27.4.2
-      jest-changed-files: 27.4.2
       jest-message-util: 27.4.2
       jest-regex-util: 27.4.0
       jest-resolve: 27.4.2
@@ -2566,11 +3468,11 @@ packages:
       '@jest/transform': 27.4.2
       '@jest/types': 27.4.2
       '@types/node': 16.11.11
+      chalk: 4.1.2
       collect-v8-coverage: 1.0.1
       exit: 0.1.2
       glob: 7.2.0
       graceful-fs: 4.2.8
-      chalk: 4.1.2
       istanbul-lib-coverage: 3.2.0
       istanbul-lib-instrument: 4.0.3
       istanbul-lib-report: 3.0.0
@@ -2627,10 +3529,10 @@ packages:
       '@babel/core': 7.16.0
       '@jest/types': 27.4.2
       babel-plugin-istanbul: 6.1.1
+      chalk: 4.1.2
       convert-source-map: 1.8.0
       fast-json-stable-stringify: 2.1.0
       graceful-fs: 4.2.8
-      chalk: 4.1.2
       jest-haste-map: 27.4.2
       jest-regex-util: 27.4.0
       jest-util: 27.4.2
@@ -3090,11 +3992,11 @@ packages:
     dependencies:
       '@oclif/color': 0.0.0
       '@oclif/command': 1.5.18
+      chalk: 2.4.2
       cli-ux: 5.6.4
       debug: 4.3.3
       fs-extra: 7.0.1
       http-call: 5.3.0
-      chalk: 2.4.2
       load-json-file: 5.3.0
       npm-run-path: 3.1.0
       semver: 5.7.1
@@ -3134,10 +4036,10 @@ packages:
       '@oclif/command': 1.5.18
       '@oclif/config': 1.13.2
       '@oclif/errors': 1.2.2
+      chalk: 2.4.2
       debug: 4.3.3
       fs-extra: 7.0.1
       http-call: 5.3.0
-      chalk: 2.4.2
       lodash.template: 4.5.0
       semver: 5.7.1
     transitivePeerDependencies:
@@ -3388,9 +4290,9 @@ packages:
       react-dom: ^16.8.0 || ^17.0.0
     dependencies:
       '@storybook/api': 6.3.0_react-dom@17.0.2+react@17.0.2
+      '@storybook/channels': 6.3.0
       '@storybook/client-logger': 6.3.0
       '@storybook/core-events': 6.3.0
-      '@storybook/channels': 6.3.0
       '@storybook/router': 6.3.0_react-dom@17.0.2+react@17.0.2
       '@storybook/theming': 6.3.0_react-dom@17.0.2+react@17.0.2
       core-js: 3.19.2
@@ -3407,10 +4309,10 @@ packages:
       react-dom: ^16.8.0 || ^17.0.0
     dependencies:
       '@reach/router': 1.3.4_react-dom@17.0.2+react@17.0.2
+      '@storybook/channels': 6.3.0
       '@storybook/client-logger': 6.3.0
       '@storybook/core-events': 6.3.0
       '@storybook/csf': 0.0.1
-      '@storybook/channels': 6.3.0
       '@storybook/router': 6.3.0_react-dom@17.0.2+react@17.0.2
       '@storybook/semver': 7.3.2
       '@storybook/theming': 6.3.0_react-dom@17.0.2+react@17.0.2
@@ -3463,13 +4365,13 @@ packages:
       '@babel/preset-typescript': 7.16.0_@babel+core@7.16.0
       '@storybook/addons': 6.3.0_react-dom@17.0.2+react@17.0.2
       '@storybook/api': 6.3.0_react-dom@17.0.2+react@17.0.2
+      '@storybook/channel-postmessage': 6.3.0
+      '@storybook/channels': 6.3.0
       '@storybook/client-api': 6.3.0_react-dom@17.0.2+react@17.0.2
       '@storybook/client-logger': 6.3.0
       '@storybook/components': 6.3.0_5539cae010396b202b015f3568914e95
       '@storybook/core-common': 6.3.0_490e12531c2c2a61a1bc9392dbcf4fae
       '@storybook/core-events': 6.3.0
-      '@storybook/channel-postmessage': 6.3.0
-      '@storybook/channels': 6.3.0
       '@storybook/node-logger': 6.3.0
       '@storybook/router': 6.3.0_react-dom@17.0.2+react@17.0.2
       '@storybook/semver': 7.3.2
@@ -3526,9 +4428,9 @@ packages:
   /@storybook/channel-postmessage/6.3.0:
     resolution: {integrity: sha512-q7FeNWIIrvZxycIMBscqahFLygxAa2L4eJ9oxZFF9zJpSV80bxDalMou3Uo7RvDJFrAeHCanF1Y7bnEDMus4yg==}
     dependencies:
+      '@storybook/channels': 6.3.0
       '@storybook/client-logger': 6.3.0
       '@storybook/core-events': 6.3.0
-      '@storybook/channels': 6.3.0
       core-js: 3.19.2
       global: 4.4.0
       qs: 6.10.1
@@ -3550,11 +4452,11 @@ packages:
       react-dom: ^16.8.0 || ^17.0.0
     dependencies:
       '@storybook/addons': 6.3.0_react-dom@17.0.2+react@17.0.2
+      '@storybook/channel-postmessage': 6.3.0
+      '@storybook/channels': 6.3.0
       '@storybook/client-logger': 6.3.0
       '@storybook/core-events': 6.3.0
       '@storybook/csf': 0.0.1
-      '@storybook/channel-postmessage': 6.3.0
-      '@storybook/channels': 6.3.0
       '@types/qs': 6.9.7
       '@types/webpack-env': 1.16.3
       core-js: 3.19.2
@@ -3626,11 +4528,11 @@ packages:
         optional: true
     dependencies:
       '@storybook/addons': 6.3.0_react-dom@17.0.2+react@17.0.2
+      '@storybook/channel-postmessage': 6.3.0
       '@storybook/client-api': 6.3.0_react-dom@17.0.2+react@17.0.2
       '@storybook/client-logger': 6.3.0
       '@storybook/core-events': 6.3.0
       '@storybook/csf': 0.0.1
-      '@storybook/channel-postmessage': 6.3.0
       '@storybook/ui': 6.3.0_5539cae010396b202b015f3568914e95
       airbnb-js-shims: 2.2.1
       ansi-to-html: 0.6.15
@@ -3690,6 +4592,7 @@ packages:
       babel-loader: 8.2.3_1bd60a6cd0f7024f034efd75ae733a3f
       babel-plugin-macros: 3.1.0
       babel-plugin-polyfill-corejs3: 0.1.7_@babel+core@7.16.0
+      chalk: 4.1.2
       core-js: 3.19.2
       express: 4.17.1
       file-system-cache: 1.0.5
@@ -3697,7 +4600,6 @@ packages:
       fork-ts-checker-webpack-plugin: 6.5.0_9db5b9194b10a90f10e212947d7942e4
       glob: 7.2.0
       glob-base: 0.3.0
-      chalk: 4.1.2
       interpret: 2.2.0
       json5: 2.2.0
       lazy-universal-dotenv: 3.0.1
@@ -3754,6 +4656,7 @@ packages:
       '@types/webpack': 4.41.32
       better-opn: 2.1.1
       boxen: 4.2.0
+      chalk: 4.1.2
       cli-table3: 0.6.0
       commander: 6.2.1
       compression: 1.7.4
@@ -3764,7 +4667,6 @@ packages:
       file-system-cache: 1.0.5
       fs-extra: 9.1.0
       globby: 11.0.4
-      chalk: 4.1.2
       ip: 1.1.5
       node-fetch: 2.6.6
       pretty-hrtime: 1.0.3
@@ -3870,6 +4772,7 @@ packages:
       '@types/webpack': 4.41.32
       babel-loader: 8.2.3_1bd60a6cd0f7024f034efd75ae733a3f
       case-sensitive-paths-webpack-plugin: 2.4.0
+      chalk: 4.1.2
       core-js: 3.19.2
       css-loader: 3.6.0_webpack@4.46.0
       dotenv-webpack: 1.8.0_webpack@4.46.0
@@ -3879,7 +4782,6 @@ packages:
       find-up: 5.0.0
       fs-extra: 9.1.0
       html-webpack-plugin: 4.5.2_webpack@4.46.0
-      chalk: 4.1.2
       node-fetch: 2.6.6
       pnp-webpack-plugin: 1.6.4_typescript@4.0.2
       react: 17.0.2
@@ -3911,8 +4813,8 @@ packages:
     resolution: {integrity: sha512-gxvYOwDzHSYDTvnrwsyonCk88lRQ9gHrEvu3J8sM/0G/0br8g7G8+jSakKR8miE7urcwxd0uoYK+Y4KwJHkJpg==}
     dependencies:
       '@types/npmlog': 4.1.3
-      core-js: 3.19.2
       chalk: 4.1.2
+      core-js: 3.19.2
       npmlog: 4.1.2
       pretty-hrtime: 1.0.3
     dev: false
@@ -4068,10 +4970,10 @@ packages:
       '@emotion/core': 10.3.0_react@17.0.2
       '@storybook/addons': 6.3.0_react-dom@17.0.2+react@17.0.2
       '@storybook/api': 6.3.0_react-dom@17.0.2+react@17.0.2
+      '@storybook/channels': 6.3.0
       '@storybook/client-logger': 6.3.0
       '@storybook/components': 6.3.0_5539cae010396b202b015f3568914e95
       '@storybook/core-events': 6.3.0
-      '@storybook/channels': 6.3.0
       '@storybook/router': 6.3.0_react-dom@17.0.2+react@17.0.2
       '@storybook/semver': 7.3.2
       '@storybook/theming': 6.3.0_react-dom@17.0.2+react@17.0.2
@@ -5777,10 +6679,10 @@ packages:
     engines: {node: '>=8.0'}
     hasBin: true
     dependencies:
+      chromium-pickle-js: 0.2.0
       commander: 2.20.3
       cuint: 0.2.2
       glob: 7.2.0
-      chromium-pickle-js: 0.2.0
       minimatch: 3.0.4
       mkdirp: 0.5.5
       tmp-promise: 1.1.0
@@ -5934,8 +6836,8 @@ packages:
       '@types/babel__core': 7.1.16
       babel-plugin-istanbul: 6.1.1
       babel-preset-jest: 27.4.0_@babel+core@7.16.0
-      graceful-fs: 4.2.8
       chalk: 4.1.2
+      graceful-fs: 4.2.8
       slash: 3.0.0
     transitivePeerDependencies:
       - supports-color
@@ -6369,8 +7271,8 @@ packages:
     dependencies:
       ansi-align: 3.0.1
       camelcase: 5.3.1
-      cli-boxes: 2.2.1
       chalk: 3.0.0
+      cli-boxes: 2.2.1
       string-width: 4.2.3
       term-size: 2.2.1
       type-fest: 0.8.1
@@ -6609,10 +7511,10 @@ packages:
     resolution: {integrity: sha512-a0tMB40oefvuInr4Cwb3GerbL9xTj1D5yg0T5xrjGCGyfvbxseIXX7BAO/u/hIXdafzOI5JC3wDwHyf24buOAQ==}
     dependencies:
       bluebird: 3.7.2
+      chownr: 1.1.4
       figgy-pudding: 3.5.2
       glob: 7.2.0
       graceful-fs: 4.2.8
-      chownr: 1.1.4
       infer-owner: 1.0.4
       lru-cache: 5.1.1
       mississippi: 3.0.0
@@ -6631,9 +7533,9 @@ packages:
     dependencies:
       '@npmcli/fs': 1.0.0
       '@npmcli/move-file': 1.1.2
+      chownr: 2.0.0
       fs-minipass: 2.1.0
       glob: 7.2.0
-      chownr: 2.0.0
       infer-owner: 1.0.4
       lru-cache: 6.0.0
       minipass: 3.1.5
@@ -6711,9 +7613,9 @@ packages:
       '@types/error-stack-parser': 1.3.18
       '@types/lodash': 4.14.177
       callsite: 1.0.0
+      chalk: 2.4.2
       error-stack-parser: 1.3.6
       highlight-es: 1.0.3
-      chalk: 2.4.2
       lodash: 4.17.21
       pinkie-promise: 2.0.1
     dev: false
@@ -6795,9 +7697,9 @@ packages:
     engines: {node: '>=4'}
     dependencies:
       assertion-error: 1.1.0
+      check-error: 1.0.2
       deep-eql: 3.0.1
       get-func-name: 2.0.0
-      check-error: 1.0.2
       pathval: 1.1.1
       type-detect: 4.0.8
     dev: false
@@ -6905,10 +7807,10 @@ packages:
     resolution: {integrity: sha512-g0J0q/O6mW8z5zxQ3A8E8J1hUgp4SMOvEoW/x84OwyHKe/Zccz83PVT4y5Crcr530FV6NgmKI1qvGTKVl9XXVw==}
     engines: {node: '>= 6'}
     dependencies:
+      cheerio-select: 1.5.0
       dom-serializer: 1.3.2
       domhandler: 4.2.2
       htmlparser2: 6.1.0
-      cheerio-select: 1.5.0
       parse5: 6.0.1
       parse5-htmlparser2-tree-adapter: 6.0.1
       tslib: 2.3.1
@@ -7129,11 +8031,11 @@ packages:
       ansi-escapes: 3.2.0
       ansi-styles: 3.2.1
       cardinal: 2.1.1
+      chalk: 2.4.2
       clean-stack: 2.2.0
       extract-stack: 1.0.0
       fs-extra: 7.0.1
       hyperlinker: 1.0.0
-      chalk: 2.4.2
       indent-string: 3.2.0
       is-wsl: 1.1.0
       lodash: 4.17.21
@@ -7157,12 +8059,12 @@ packages:
       ansi-escapes: 4.3.2
       ansi-styles: 4.3.0
       cardinal: 2.1.1
+      chalk: 4.1.2
       clean-stack: 3.0.1
       cli-progress: 3.9.1
       extract-stack: 2.0.0
       fs-extra: 8.1.0
       hyperlinker: 1.0.0
-      chalk: 4.1.2
       indent-string: 4.0.0
       is-wsl: 2.2.0
       js-yaml: 3.14.1
@@ -7393,8 +8295,8 @@ packages:
     peerDependencies:
       webpack: ^5.1.0
     dependencies:
-      serialize-javascript: 5.0.1
       schema-utils: 3.1.1
+      serialize-javascript: 5.0.1
       webpack: 5.64.4
     dev: false
 
@@ -7434,8 +8336,8 @@ packages:
     engines: {node: '>=10.0.0'}
     hasBin: true
     dependencies:
-      date-fns: 2.27.0
       chalk: 4.1.2
+      date-fns: 2.27.0
       lodash: 4.17.21
       rxjs: 6.6.7
       spawn-command: 0.0.2-1
@@ -7729,8 +8631,8 @@ packages:
       postcss-modules-scope: 2.2.0
       postcss-modules-values: 3.0.0
       postcss-value-parser: 4.2.0
-      semver: 6.3.0
       schema-utils: 2.7.1
+      semver: 6.3.0
       webpack: 4.46.0
     dev: false
 
@@ -7748,8 +8650,8 @@ packages:
       postcss-modules-scope: 3.0.0_postcss@8.4.4
       postcss-modules-values: 4.0.0_postcss@8.4.4
       postcss-value-parser: 4.2.0
-      semver: 7.3.5
       schema-utils: 3.1.1
+      semver: 7.3.5
     dev: false
 
   /css-loader/5.2.7_webpack@5.64.4:
@@ -7766,8 +8668,8 @@ packages:
       postcss-modules-scope: 3.0.0_postcss@8.4.4
       postcss-modules-values: 4.0.0_postcss@8.4.4
       postcss-value-parser: 4.2.0
-      semver: 7.3.5
       schema-utils: 3.1.1
+      semver: 7.3.5
       webpack: 5.64.4_webpack-cli@4.9.1
     dev: false
 
@@ -7891,6 +8793,8 @@ packages:
       blob-util: 2.0.2
       bluebird: 3.7.2
       cachedir: 2.3.0
+      chalk: 4.1.2
+      check-more-types: 2.24.0
       cli-cursor: 3.1.0
       cli-table3: 0.6.0
       commander: 5.1.0
@@ -7905,8 +8809,6 @@ packages:
       figures: 3.2.0
       fs-extra: 9.1.0
       getos: 3.2.1
-      chalk: 4.1.2
-      check-more-types: 2.24.0
       is-ci: 3.0.1
       is-installed-globally: 0.4.0
       lazy-ass: 1.6.0
@@ -8277,13 +9179,13 @@ packages:
       acorn-loose: 8.2.1
       acorn-walk: 8.2.0
       ajv: 8.8.2
+      chalk: 4.1.2
       commander: 8.3.0
       enhanced-resolve: 5.8.3
       figures: 3.2.0
       get-stream: 6.0.1
       glob: 7.2.0
       handlebars: 4.7.7
-      chalk: 4.1.2
       indent-string: 4.0.0
       inquirer: 8.2.0
       json5: 2.2.0
@@ -8572,6 +9474,17 @@ packages:
     engines: {node: '>=10'}
     dev: false
 
+  /downshift/3.4.8:
+    resolution: {integrity: sha512-dZL3iNL/LbpHNzUQAaVq/eTD1ocnGKKjbAl/848Q0KEp6t81LJbS37w3f93oD6gqqAnjdgM7Use36qZSipHXBw==}
+    peerDependencies:
+      react: '>=0.14.9'
+    dependencies:
+      '@babel/runtime': 7.16.3
+      compute-scroll-into-view: 1.0.17
+      prop-types: 15.7.2
+      react-is: 16.13.1
+    dev: false
+
   /downshift/3.4.8_react@17.0.2:
     resolution: {integrity: sha512-dZL3iNL/LbpHNzUQAaVq/eTD1ocnGKKjbAl/848Q0KEp6t81LJbS37w3f93oD6gqqAnjdgM7Use36qZSipHXBw==}
     peerDependencies:
@@ -8819,11 +9732,11 @@ packages:
     resolution: {integrity: sha512-Dw8/Gs4vRjxY6/6i9wU0V+utmQO9kvh9XLnz3LIudviOnVYDEe2ec+0k+NQoMamn1VrjKgCUOWj5jG/5M5M0Qw==}
     dependencies:
       array.prototype.flat: 1.2.5
+      cheerio: 1.0.0-rc.10
       enzyme-shallow-equal: 1.0.4
       function.prototype.name: 1.1.5
       has: 1.0.3
       html-element-map: 1.3.1
-      cheerio: 1.0.0-rc.10
       is-boolean-object: 1.1.2
       is-callable: 1.2.4
       is-number-object: 1.0.6
@@ -8988,8 +9901,8 @@ packages:
     dependencies:
       '@types/eslint': 7.29.0
       ansi-escapes: 4.3.2
-      eslint-rule-docs: 1.1.231
       chalk: 4.1.2
+      eslint-rule-docs: 1.1.231
       log-symbols: 4.1.0
       plur: 4.0.0
       string-width: 4.2.3
@@ -9201,6 +10114,7 @@ packages:
       '@eslint/eslintrc': 1.0.4
       '@humanwhocodes/config-array': 0.6.0
       ajv: 6.12.6
+      chalk: 4.1.2
       cross-spawn: 7.0.3
       debug: 4.3.3
       doctrine: 3.0.0
@@ -9217,7 +10131,6 @@ packages:
       functional-red-black-tree: 1.0.1
       glob-parent: 6.0.2
       globals: 13.12.0
-      chalk: 4.1.2
       ignore: 4.0.6
       import-fresh: 3.3.0
       imurmurhash: 0.1.4
@@ -9841,6 +10754,19 @@ packages:
       resolve-dir: 1.0.1
     dev: false
 
+  /fixed-data-table-2/1.2.2:
+    resolution: {integrity: sha512-Mkv/K7nuqNpCsWZtbBz7KaUCQzRz/3h+7+yDqKM6a5X81jlww+uCBD2uYN3wSiZ4pIPYqt6bK2aSZzl8V5r3Sg==}
+    peerDependencies:
+      react: '>=15.3.0'
+      react-dom: '>=15.3.0'
+    dependencies:
+      lodash: 4.17.21
+      prop-types: 15.7.2
+      react-lifecycles-compat: 3.0.4
+      redux: 4.1.2
+      reselect: 4.1.5
+    dev: false
+
   /fixed-data-table-2/1.2.2_react-dom@17.0.2+react@17.0.2:
     resolution: {integrity: sha512-Mkv/K7nuqNpCsWZtbBz7KaUCQzRz/3h+7+yDqKM6a5X81jlww+uCBD2uYN3wSiZ4pIPYqt6bK2aSZzl8V5r3Sg==}
     peerDependencies:
@@ -9962,17 +10888,17 @@ packages:
     dependencies:
       '@babel/code-frame': 7.16.0
       '@types/json-schema': 7.0.9
+      chalk: 4.1.2
+      chokidar: 3.5.2
       cosmiconfig: 6.0.0
       deepmerge: 4.2.2
       eslint: 8.3.0
       fs-extra: 9.1.0
       glob: 7.2.0
-      chalk: 4.1.2
-      chokidar: 3.5.2
       memfs: 3.4.0
       minimatch: 3.0.4
-      semver: 7.3.5
       schema-utils: 2.7.0
+      semver: 7.3.5
       tapable: 1.1.3
       typescript: 4.0.2
       webpack: 4.46.0
@@ -9994,17 +10920,17 @@ packages:
     dependencies:
       '@babel/code-frame': 7.16.0
       '@types/json-schema': 7.0.9
+      chalk: 4.1.2
+      chokidar: 3.5.2
       cosmiconfig: 6.0.0
       deepmerge: 4.2.2
       eslint: 8.3.0
       fs-extra: 9.1.0
       glob: 7.2.0
-      chalk: 4.1.2
-      chokidar: 3.5.2
       memfs: 3.4.0
       minimatch: 3.0.4
-      semver: 7.3.5
       schema-utils: 2.7.0
+      semver: 7.3.5
       tapable: 1.1.3
       typescript: 4.0.2
       webpack: 5.64.4
@@ -10888,10 +11814,10 @@ packages:
       ansi-escapes: 3.2.0
       ansi-styles: 3.2.1
       cardinal: 2.1.1
+      chalk: 2.4.2
       co: 4.6.0
       got: 8.3.2
       heroku-client: 3.1.0
-      chalk: 2.4.2
       lodash: 4.17.21
       netrc-parser: 3.1.6
       opn: 3.0.3
@@ -11511,11 +12437,11 @@ packages:
     engines: {node: '>=6.0.0'}
     dependencies:
       ansi-escapes: 3.2.0
+      chalk: 2.4.2
       cli-cursor: 2.1.0
       cli-width: 2.2.1
       external-editor: 3.1.0
       figures: 2.0.0
-      chalk: 2.4.2
       lodash: 4.17.21
       mute-stream: 0.0.7
       run-async: 2.4.1
@@ -11530,11 +12456,11 @@ packages:
     engines: {node: '>=8.0.0'}
     dependencies:
       ansi-escapes: 4.3.2
+      chalk: 4.1.2
       cli-cursor: 3.1.0
       cli-width: 3.0.0
       external-editor: 3.1.0
       figures: 3.2.0
-      chalk: 4.1.2
       lodash: 4.17.21
       mute-stream: 0.0.8
       run-async: 2.4.1
@@ -11549,11 +12475,11 @@ packages:
     engines: {node: '>=8.0.0'}
     dependencies:
       ansi-escapes: 4.3.2
+      chalk: 4.1.2
       cli-cursor: 3.1.0
       cli-width: 3.0.0
       external-editor: 3.1.0
       figures: 3.2.0
-      chalk: 4.1.2
       lodash: 4.17.21
       mute-stream: 0.0.8
       ora: 5.4.1
@@ -12339,10 +13265,10 @@ packages:
       '@jest/test-result': 27.4.2
       '@jest/types': 27.4.2
       '@types/node': 16.11.11
+      chalk: 4.1.2
       co: 4.6.0
       dedent: 0.7.0
       expect: 27.4.2
-      chalk: 4.1.2
       is-generator-fn: 2.1.0
       jest-each: 27.4.2
       jest-matcher-utils: 27.4.2
@@ -12371,9 +13297,9 @@ packages:
       '@jest/core': 27.4.2_ts-node@10.4.0
       '@jest/test-result': 27.4.2
       '@jest/types': 27.4.2
+      chalk: 4.1.2
       exit: 0.1.2
       graceful-fs: 4.2.8
-      chalk: 4.1.2
       import-local: 3.0.3
       jest-config: 27.4.2_ts-node@10.4.0
       jest-util: 27.4.2
@@ -12401,11 +13327,11 @@ packages:
       '@jest/test-sequencer': 27.4.2
       '@jest/types': 27.4.2
       babel-jest: 27.4.2_@babel+core@7.16.0
+      chalk: 4.1.2
       ci-info: 3.3.0
       deepmerge: 4.2.2
       glob: 7.2.0
       graceful-fs: 4.2.8
-      chalk: 4.1.2
       jest-circus: 27.4.2
       jest-environment-jsdom: 27.4.2
       jest-environment-node: 27.4.2
@@ -12431,8 +13357,8 @@ packages:
     resolution: {integrity: sha512-ujc9ToyUZDh9KcqvQDkk/gkbf6zSaeEg9AiBxtttXW59H/AcqEYp1ciXAtJp+jXWva5nAf/ePtSsgWwE5mqp4Q==}
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
     dependencies:
-      diff-sequences: 27.4.0
       chalk: 4.1.2
+      diff-sequences: 27.4.0
       jest-get-type: 27.4.0
       pretty-format: 27.4.2
     dev: false
@@ -12558,9 +13484,9 @@ packages:
       '@jest/test-result': 27.4.2
       '@jest/types': 27.4.2
       '@types/node': 16.11.11
+      chalk: 4.1.2
       co: 4.6.0
       expect: 27.4.2
-      chalk: 4.1.2
       is-generator-fn: 2.1.0
       jest-each: 27.4.2
       jest-matcher-utils: 27.4.2
@@ -12608,8 +13534,8 @@ packages:
       '@babel/code-frame': 7.16.0
       '@jest/types': 27.4.2
       '@types/stack-utils': 2.0.1
-      graceful-fs: 4.2.8
       chalk: 4.1.2
+      graceful-fs: 4.2.8
       micromatch: 4.0.4
       pretty-format: 27.4.2
       slash: 3.0.0
@@ -12657,8 +13583,8 @@ packages:
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
     dependencies:
       '@jest/types': 27.4.2
-      graceful-fs: 4.2.8
       chalk: 4.1.2
+      graceful-fs: 4.2.8
       jest-haste-map: 27.4.2
       jest-pnp-resolver: 1.2.2_jest-resolve@27.4.2
       jest-util: 27.4.2
@@ -12678,10 +13604,10 @@ packages:
       '@jest/transform': 27.4.2
       '@jest/types': 27.4.2
       '@types/node': 16.11.11
+      chalk: 4.1.2
       emittery: 0.8.1
       exit: 0.1.2
       graceful-fs: 4.2.8
-      chalk: 4.1.2
       jest-docblock: 27.4.0
       jest-environment-jsdom: 27.4.2
       jest-environment-node: 27.4.2
@@ -12713,13 +13639,13 @@ packages:
       '@jest/transform': 27.4.2
       '@jest/types': 27.4.2
       '@types/yargs': 16.0.4
+      chalk: 4.1.2
       cjs-module-lexer: 1.2.2
       collect-v8-coverage: 1.0.1
       execa: 5.1.1
       exit: 0.1.2
       glob: 7.2.0
       graceful-fs: 4.2.8
-      chalk: 4.1.2
       jest-haste-map: 27.4.2
       jest-message-util: 27.4.2
       jest-mock: 27.4.2
@@ -12758,9 +13684,9 @@ packages:
       '@types/babel__traverse': 7.14.2
       '@types/prettier': 2.4.2
       babel-preset-current-node-syntax: 1.0.1_@babel+core@7.16.0
+      chalk: 4.1.2
       expect: 27.4.2
       graceful-fs: 4.2.8
-      chalk: 4.1.2
       jest-diff: 27.4.2
       jest-get-type: 27.4.0
       jest-haste-map: 27.4.2
@@ -12781,9 +13707,9 @@ packages:
     dependencies:
       '@jest/types': 27.4.2
       '@types/node': 16.11.11
+      chalk: 4.1.2
       ci-info: 3.3.0
       graceful-fs: 4.2.8
-      chalk: 4.1.2
       picomatch: 2.3.0
     dev: false
 
@@ -14477,11 +15403,11 @@ packages:
     requiresBuild: true
     dependencies:
       async-foreach: 0.1.3
+      chalk: 1.1.3
       cross-spawn: 7.0.3
       gaze: 1.1.3
       get-stdin: 4.0.1
       glob: 7.2.0
-      chalk: 1.1.3
       lodash: 4.17.21
       meow: 9.0.0
       nan: 2.15.0
@@ -14583,8 +15509,8 @@ packages:
     hasBin: true
     dependencies:
       ansi-styles: 3.2.1
-      cross-spawn: 6.0.5
       chalk: 2.4.2
+      cross-spawn: 6.0.5
       memorystream: 0.3.1
       minimatch: 3.0.4
       pidtree: 0.3.1
@@ -14864,9 +15790,9 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       bl: 4.1.0
+      chalk: 4.1.2
       cli-cursor: 3.1.0
       cli-spinners: 2.6.1
-      chalk: 4.1.2
       is-interactive: 1.0.0
       is-unicode-supported: 0.1.0
       log-symbols: 4.1.0
@@ -15502,8 +16428,8 @@ packages:
       klona: 2.0.5
       loader-utils: 2.0.2
       postcss: 7.0.39
-      semver: 7.3.5
       schema-utils: 3.1.1
+      semver: 7.3.5
       webpack: 4.46.0
     dev: false
 
@@ -15759,9 +16685,9 @@ packages:
     peerDependencies:
       prettier: '>=2.0.0'
     dependencies:
+      chalk: 3.0.0
       execa: 4.1.0
       find-up: 4.1.0
-      chalk: 3.0.0
       ignore: 5.1.9
       mri: 1.2.0
       multimatch: 4.0.0
@@ -16113,6 +17039,15 @@ packages:
       react: 17.0.2
     dev: false
 
+  /react-codemirror2/7.2.1_codemirror@5.64.0:
+    resolution: {integrity: sha512-t7YFmz1AXdlImgHXA9Ja0T6AWuopilub24jRaQdPVbzUJVNKIYuy3uCFZYa7CE5S3UW6SrSa5nAqVQvtzRF9gw==}
+    peerDependencies:
+      codemirror: 5.x
+      react: '>=15.5 <=16.x'
+    dependencies:
+      codemirror: 5.64.0
+    dev: false
+
   /react-codemirror2/7.2.1_codemirror@5.64.0+react@17.0.2:
     resolution: {integrity: sha512-t7YFmz1AXdlImgHXA9Ja0T6AWuopilub24jRaQdPVbzUJVNKIYuy3uCFZYa7CE5S3UW6SrSa5nAqVQvtzRF9gw==}
     peerDependencies:
@@ -16149,6 +17084,14 @@ packages:
       react-popper: 2.2.5_dc71eca6f47a6289504c8be4d8a96e45
     dev: false
 
+  /react-day-picker/7.4.10:
+    resolution: {integrity: sha512-/QkK75qLKdyLmv0kcVzhL7HoJPazoZXS8a6HixbVoK6vWey1Od1WRLcxfyEiUsRfccAlIlf6oKHShqY2SM82rA==}
+    peerDependencies:
+      react: ~0.13.x || ~0.14.x || ^15.0.0 || ^16.0.0 || ^17.0.0
+    dependencies:
+      prop-types: 15.7.2
+    dev: false
+
   /react-day-picker/7.4.10_react@17.0.2:
     resolution: {integrity: sha512-/QkK75qLKdyLmv0kcVzhL7HoJPazoZXS8a6HixbVoK6vWey1Od1WRLcxfyEiUsRfccAlIlf6oKHShqY2SM82rA==}
     peerDependencies:
@@ -16165,6 +17108,7 @@ packages:
       '@babel/code-frame': 7.10.4
       address: 1.1.2
       browserslist: 4.14.2
+      chalk: 2.4.2
       cross-spawn: 7.0.3
       detect-port-alt: 1.1.6
       escape-string-regexp: 2.0.0
@@ -16174,7 +17118,6 @@ packages:
       global-modules: 2.0.0
       globby: 11.0.1
       gzip-size: 5.1.1
-      chalk: 2.4.2
       immer: 8.0.1
       is-root: 2.1.0
       loader-utils: 2.0.0
@@ -16265,6 +17208,14 @@ packages:
       react-async-script: 1.2.0_react@17.0.2
     dev: false
 
+  /react-grid-system/7.3.2:
+    resolution: {integrity: sha512-SR5FKJvvN+Sl/OqSpyhLaesfc2cHKxFlP5xL53jUp3m+vF40OYiJbCuW+U43YeNEZQUfR38K3Ec+dVxl9y6MUg==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.x
+    dependencies:
+      prop-types: 15.7.2
+    dev: false
+
   /react-grid-system/7.3.2_react@17.0.2:
     resolution: {integrity: sha512-SR5FKJvvN+Sl/OqSpyhLaesfc2cHKxFlP5xL53jUp3m+vF40OYiJbCuW+U43YeNEZQUfR38K3Ec+dVxl9y6MUg==}
     peerDependencies:
@@ -16289,6 +17240,17 @@ packages:
       shallowequal: 1.1.0
     dev: false
 
+  /react-helmet/6.1.0:
+    resolution: {integrity: sha512-4uMzEY9nlDlgxr61NL3XbKRy1hEkXmKNXhjbAIOVw5vcFrsdYbH2FEwcNyWvWinl103nXgzYNlns9ca+8kFiWw==}
+    peerDependencies:
+      react: '>=16.3.0'
+    dependencies:
+      object-assign: 4.1.1
+      prop-types: 15.7.2
+      react-fast-compare: 3.2.0
+      react-side-effect: 2.1.1
+    dev: false
+
   /react-helmet/6.1.0_react@17.0.2:
     resolution: {integrity: sha512-4uMzEY9nlDlgxr61NL3XbKRy1hEkXmKNXhjbAIOVw5vcFrsdYbH2FEwcNyWvWinl103nXgzYNlns9ca+8kFiWw==}
     peerDependencies:
@@ -16299,6 +17261,14 @@ packages:
       react: 17.0.2
       react-fast-compare: 3.2.0
       react-side-effect: 2.1.1_react@17.0.2
+    dev: false
+
+  /react-input-autosize/3.0.0:
+    resolution: {integrity: sha512-nL9uS7jEs/zu8sqwFE5MAPx6pPkNAriACQ2rGLlqmKr2sPGtN7TXTyDdQt4lbNXVx7Uzadb40x8qotIuru6Rhg==}
+    peerDependencies:
+      react: ^16.3.0 || ^17.0.0
+    dependencies:
+      prop-types: 15.7.2
     dev: false
 
   /react-input-autosize/3.0.0_react@17.0.2:
@@ -16344,6 +17314,28 @@ packages:
       typescript: 4.0.2
     dev: false
 
+  /react-intl/5.23.0_typescript@4.0.2:
+    resolution: {integrity: sha512-SK1m9tA9QmYbcRY7NJhKoVZAG1QCd1KjwzP2guPzrPf3xEKU8hbzuJSHPES1UCncGtPaqFrtKyDzs1+iQivazw==}
+    peerDependencies:
+      react: ^16.3.0 || 17
+      typescript: ^4.5
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@formatjs/ecma402-abstract': 1.11.0
+      '@formatjs/icu-messageformat-parser': 2.0.15
+      '@formatjs/intl': 1.17.0_typescript@4.0.2
+      '@formatjs/intl-displaynames': 5.2.6
+      '@formatjs/intl-listformat': 6.3.6
+      '@types/hoist-non-react-statics': 3.3.1
+      '@types/react': 17.0.37
+      hoist-non-react-statics: 3.3.2
+      intl-messageformat: 9.10.0
+      tslib: 2.3.1
+      typescript: 4.0.2
+    dev: false
+
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: false
@@ -16354,6 +17346,18 @@ packages:
 
   /react-lifecycles-compat/3.0.4:
     resolution: {integrity: sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==}
+    dev: false
+
+  /react-measure/2.5.2:
+    resolution: {integrity: sha512-M+rpbTLWJ3FD6FXvYV6YEGvQ5tMayQ3fGrZhRPHrE9bVlBYfDCLuDcgNttYfk8IqfOI03jz6cbpqMRTUclQnaA==}
+    peerDependencies:
+      react: '>0.13.0'
+      react-dom: '>0.13.0'
+    dependencies:
+      '@babel/runtime': 7.16.3
+      get-node-dimensions: 1.2.1
+      prop-types: 15.7.2
+      resize-observer-polyfill: 1.5.1
     dev: false
 
   /react-measure/2.5.2_react-dom@17.0.2+react@17.0.2:
@@ -16410,6 +17414,14 @@ packages:
       warning: 4.0.3
     dev: false
 
+  /react-portal/4.2.1:
+    resolution: {integrity: sha512-fE9kOBagwmTXZ3YGRYb4gcMy+kSA+yLO0xnPankjRlfBv4uCpFXqKPfkpsGQQR15wkZ9EssnvTOl1yMzbkxhPQ==}
+    peerDependencies:
+      react: ^15.0.0-0 || ^16.0.0-0 || ^17.0.0-0
+    dependencies:
+      prop-types: 15.7.2
+    dev: false
+
   /react-portal/4.2.1_react@17.0.2:
     resolution: {integrity: sha512-fE9kOBagwmTXZ3YGRYb4gcMy+kSA+yLO0xnPankjRlfBv4uCpFXqKPfkpsGQQR15wkZ9EssnvTOl1yMzbkxhPQ==}
     peerDependencies:
@@ -16460,6 +17472,18 @@ packages:
       resize-observer-polyfill: 1.5.1
     dev: false
 
+  /react-responsive/8.2.0:
+    resolution: {integrity: sha512-iagCqVrw4QSjhxKp3I/YK6+ODkWY6G+YPElvdYKiUUbywwh9Ds0M7r26Fj2/7dWFFbOpcGnJE6uE7aMck8j5Qg==}
+    engines: {node: '>= 0.10'}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
+      hyphenate-style-name: 1.0.4
+      matchmediaquery: 0.3.1
+      prop-types: 15.7.2
+      shallow-equal: 1.2.1
+    dev: false
+
   /react-responsive/8.2.0_react@17.0.2:
     resolution: {integrity: sha512-iagCqVrw4QSjhxKp3I/YK6+ODkWY6G+YPElvdYKiUUbywwh9Ds0M7r26Fj2/7dWFFbOpcGnJE6uE7aMck8j5Qg==}
     engines: {node: '>= 0.10'}
@@ -16506,6 +17530,22 @@ packages:
       tiny-warning: 1.0.3
     dev: false
 
+  /react-select/3.2.0:
+    resolution: {integrity: sha512-B/q3TnCZXEKItO0fFN/I0tWOX3WJvi/X2wtdffmwSQVRwg5BpValScTO1vdic9AxlUgmeSzib2hAZAwIUQUZGQ==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0
+      react-dom: ^16.8.0 || ^17.0.0
+    dependencies:
+      '@babel/runtime': 7.16.3
+      '@emotion/cache': 10.0.29
+      '@emotion/core': 10.3.0
+      '@emotion/css': 10.0.27
+      memoize-one: 5.2.1
+      prop-types: 15.7.2
+      react-input-autosize: 3.0.0
+      react-transition-group: 4.4.2
+    dev: false
+
   /react-select/3.2.0_react-dom@17.0.2+react@17.0.2:
     resolution: {integrity: sha512-B/q3TnCZXEKItO0fFN/I0tWOX3WJvi/X2wtdffmwSQVRwg5BpValScTO1vdic9AxlUgmeSzib2hAZAwIUQUZGQ==}
     peerDependencies:
@@ -16532,6 +17572,12 @@ packages:
       object-assign: 4.1.1
       react: 17.0.2
       react-is: 17.0.2
+    dev: false
+
+  /react-side-effect/2.1.1:
+    resolution: {integrity: sha512-2FoTQzRNTncBVtnzxFOk2mCpcfxQpenBMbk5kSVBg5UcPqV9fRbgY2zhb7GTWWOlpFmAxhClBDlIq8Rsubz1yQ==}
+    peerDependencies:
+      react: ^16.3.0 || ^17.0.0
     dev: false
 
   /react-side-effect/2.1.1_react@17.0.2:
@@ -16603,6 +17649,19 @@ packages:
       scheduler: 0.20.2
     dev: false
 
+  /react-textarea-autosize/8.3.3:
+    resolution: {integrity: sha512-2XlHXK2TDxS6vbQaoPbMOfQ8GK7+irc2fVK6QFIcC8GOnH3zI/v481n+j1L0WaPVvKxwesnY93fEfH++sus2rQ==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0
+    dependencies:
+      '@babel/runtime': 7.16.3
+      use-composed-ref: 1.1.0
+      use-latest: 1.2.0
+    transitivePeerDependencies:
+      - '@types/react'
+    dev: false
+
   /react-textarea-autosize/8.3.3_cfedea9b3ed0faf0dded75c187406c5e:
     resolution: {integrity: sha512-2XlHXK2TDxS6vbQaoPbMOfQ8GK7+irc2fVK6QFIcC8GOnH3zI/v481n+j1L0WaPVvKxwesnY93fEfH++sus2rQ==}
     engines: {node: '>=10'}
@@ -16631,6 +17690,18 @@ packages:
       react-lifecycles-compat: 3.0.4
     dev: false
 
+  /react-transition-group/4.4.2:
+    resolution: {integrity: sha512-/RNYfRAMlZwDSr6z4zNKV6xu53/e2BuaBbGhbyYIXTrmgu/bGHzmqOs7mJSJBHy9Ud+ApHx3QjrkKSp1pxvlFg==}
+    peerDependencies:
+      react: '>=16.6.0'
+      react-dom: '>=16.6.0'
+    dependencies:
+      '@babel/runtime': 7.16.3
+      dom-helpers: 5.2.1
+      loose-envify: 1.4.0
+      prop-types: 15.7.2
+    dev: false
+
   /react-transition-group/4.4.2_react-dom@17.0.2+react@17.0.2:
     resolution: {integrity: sha512-/RNYfRAMlZwDSr6z4zNKV6xu53/e2BuaBbGhbyYIXTrmgu/bGHzmqOs7mJSJBHy9Ud+ApHx3QjrkKSp1pxvlFg==}
     peerDependencies:
@@ -16645,6 +17716,13 @@ packages:
       react-dom: 17.0.2_react@17.0.2
     dev: false
 
+  /react-truncate/2.4.0:
+    resolution: {integrity: sha512-3QW11/COYwi6iPUaunUhl06DW5NJBJD1WkmxW5YxqqUu6kvP+msB3jfoLg8WRbu57JqgebjVW8Lknw6T5/QZdA==}
+    peerDependencies:
+      prop-types: <= 15.x.x
+      react: <= 16.x.x
+    dev: false
+
   /react-truncate/2.4.0_react@17.0.2:
     resolution: {integrity: sha512-3QW11/COYwi6iPUaunUhl06DW5NJBJD1WkmxW5YxqqUu6kvP+msB3jfoLg8WRbu57JqgebjVW8Lknw6T5/QZdA==}
     peerDependencies:
@@ -16652,6 +17730,17 @@ packages:
       react: <= 16.x.x
     dependencies:
       react: 17.0.2
+    dev: false
+
+  /react-window/1.8.6:
+    resolution: {integrity: sha512-8VwEEYyjz6DCnGBsd+MgkD0KJ2/OXFULyDtorIiTz+QzwoP94tBoA7CnbtyXMm+cCeAUER5KJcPtWl9cpKbOBg==}
+    engines: {node: '>8.0.0'}
+    peerDependencies:
+      react: ^15.0.0 || ^16.0.0 || ^17.0.0
+      react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0
+    dependencies:
+      '@babel/runtime': 7.16.3
+      memoize-one: 5.2.1
     dev: false
 
   /react-window/1.8.6_react-dom@17.0.2+react@17.0.2:
@@ -16772,8 +17861,8 @@ packages:
       react-is: 16.13.1
       react-resize-detector: 6.7.6_react-dom@17.0.2+react@17.0.2
       react-smooth: 2.0.0_react-dom@17.0.2+react@17.0.2
-      reduce-css-calc: 2.1.8
       recharts-scale: 0.4.5
+      reduce-css-calc: 2.1.8
     transitivePeerDependencies:
       - prop-types
     dev: false
@@ -17409,8 +18498,8 @@ packages:
       klona: 2.0.5
       loader-utils: 2.0.2
       neo-async: 2.6.2
-      semver: 7.3.5
       schema-utils: 3.1.1
+      semver: 7.3.5
     dev: false
 
   /sass-loader/10.2.0_341eb52569068637b7d77d447d0b9b8d:
@@ -17434,8 +18523,8 @@ packages:
       neo-async: 2.6.2
       node-sass: 6.0.1
       sass: 1.44.0
-      semver: 7.3.5
       schema-utils: 3.1.1
+      semver: 7.3.5
       webpack: 5.64.4_webpack-cli@4.9.1
     dev: false
 
@@ -17459,8 +18548,8 @@ packages:
       loader-utils: 2.0.2
       neo-async: 2.6.2
       sass: 1.44.0
-      semver: 7.3.5
       schema-utils: 3.1.1
+      semver: 7.3.5
       webpack: 5.64.4_webpack-cli@4.9.1
     dev: false
 
@@ -18562,6 +19651,7 @@ packages:
       '@stylelint/postcss-markdown': 0.36.2_4f7b71a942b8b7a555b8adf78f88122b
       autoprefixer: 9.8.8
       balanced-match: 2.0.0
+      chalk: 4.1.2
       cosmiconfig: 7.0.1
       debug: 4.3.3
       execall: 2.0.0
@@ -18573,7 +19663,6 @@ packages:
       globby: 11.0.4
       globjoin: 0.1.4
       html-tags: 3.1.0
-      chalk: 4.1.2
       ignore: 5.1.9
       import-lazy: 4.0.0
       imurmurhash: 0.1.4
@@ -18773,8 +19862,8 @@ packages:
     resolution: {integrity: sha512-an/KZQzQUkZCkuoAA64hM92X0Urb6VpRhAFllDzz44U2mcD5scmT3zBc4VgVpkugF580+DQn8eAFSyoQt0tznA==}
     engines: {node: '>= 10'}
     dependencies:
-      fs-minipass: 2.1.0
       chownr: 2.0.0
+      fs-minipass: 2.1.0
       minipass: 3.1.5
       minizlib: 2.1.2
       mkdirp: 1.0.4
@@ -18843,8 +19932,8 @@ packages:
       cacache: 12.0.4
       find-cache-dir: 2.1.0
       is-wsl: 1.1.0
-      serialize-javascript: 4.0.0
       schema-utils: 1.0.0
+      serialize-javascript: 4.0.0
       source-map: 0.6.1
       terser: 4.8.0
       webpack: 4.46.0
@@ -18862,8 +19951,8 @@ packages:
       find-cache-dir: 3.3.2
       jest-worker: 26.6.2
       p-limit: 3.1.0
-      serialize-javascript: 5.0.1
       schema-utils: 3.1.1
+      serialize-javascript: 5.0.1
       source-map: 0.6.1
       terser: 5.10.0
       webpack: 4.46.0
@@ -18889,8 +19978,8 @@ packages:
         optional: true
     dependencies:
       jest-worker: 27.4.2
-      serialize-javascript: 6.0.0
       schema-utils: 3.1.1
+      serialize-javascript: 6.0.0
       source-map: 0.6.1
       terser: 5.10.0_acorn@8.6.0
       webpack: 5.64.4_webpack-cli@4.9.1
@@ -19093,6 +20182,9 @@ packages:
       bowser: 2.11.0
       callsite: 1.0.0
       callsite-record: 4.1.3
+      chai: 4.3.4
+      chalk: 2.4.2
+      chrome-remote-interface: 0.30.1
       coffeescript: 2.6.1
       commander: 8.3.0
       debug: 4.3.3
@@ -19109,9 +20201,6 @@ packages:
       graceful-fs: 4.2.8
       graphlib: 2.1.8
       humanize-duration: 3.27.0
-      chai: 4.3.4
-      chalk: 2.4.2
-      chrome-remote-interface: 0.30.1
       import-lazy: 3.1.0
       indent-string: 1.2.2
       is-ci: 1.2.1
@@ -19516,8 +20605,8 @@ packages:
       typescript: '*'
       webpack: '*'
     dependencies:
-      enhanced-resolve: 4.5.0
       chalk: 4.1.2
+      enhanced-resolve: 4.5.0
       loader-utils: 2.0.2
       micromatch: 4.0.4
       semver: 7.3.5
@@ -19531,8 +20620,8 @@ packages:
       typescript: '*'
       webpack: '*'
     dependencies:
-      enhanced-resolve: 4.5.0
       chalk: 4.1.2
+      enhanced-resolve: 4.5.0
       loader-utils: 2.0.2
       micromatch: 4.0.4
       semver: 7.3.5
@@ -19592,8 +20681,8 @@ packages:
   /tsconfig-paths-webpack-plugin/3.5.2:
     resolution: {integrity: sha512-EhnfjHbzm5IYI9YPNVIxx1moxMI4bpHD2e0zTXeDNQcwjjRaGepP7IhTHJkyDBG0CAOoxRfe7jCG630Ou+C6Pw==}
     dependencies:
-      enhanced-resolve: 5.8.3
       chalk: 4.1.2
+      enhanced-resolve: 5.8.3
       tsconfig-paths: 3.12.0
     dev: false
 
@@ -19972,9 +21061,9 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       boxen: 4.2.0
+      chalk: 3.0.0
       configstore: 5.0.1
       has-yarn: 2.1.0
-      chalk: 3.0.0
       import-lazy: 2.1.0
       is-ci: 2.0.0
       is-installed-globally: 0.3.2
@@ -20054,6 +21143,14 @@ packages:
       querystring: 0.2.0
     dev: false
 
+  /use-composed-ref/1.1.0:
+    resolution: {integrity: sha512-my1lNHGWsSDAhhVAT4MKs6IjBUtG6ZG11uUqexPH9PptiIZDQOzaF4f5tEbJ2+7qvNbtXNBbU3SfmN+fXlWDhg==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0
+    dependencies:
+      ts-essentials: 2.0.12
+    dev: false
+
   /use-composed-ref/1.1.0_react@17.0.2:
     resolution: {integrity: sha512-my1lNHGWsSDAhhVAT4MKs6IjBUtG6ZG11uUqexPH9PptiIZDQOzaF4f5tEbJ2+7qvNbtXNBbU3SfmN+fXlWDhg==}
     peerDependencies:
@@ -20061,6 +21158,16 @@ packages:
     dependencies:
       react: 17.0.2
       ts-essentials: 2.0.12
+    dev: false
+
+  /use-isomorphic-layout-effect/1.1.1:
+    resolution: {integrity: sha512-L7Evj8FGcwo/wpbv/qvSfrkHFtOpCzvM5yl2KVyDJoylVuSvzphiiasmjgQPttIGBAy2WKiBNR98q8w7PiNgKQ==}
+    peerDependencies:
+      '@types/react': '*'
+      react: ^16.8.0 || ^17.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
     dev: false
 
   /use-isomorphic-layout-effect/1.1.1_cfedea9b3ed0faf0dded75c187406c5e:
@@ -20074,6 +21181,18 @@ packages:
     dependencies:
       '@types/react': 17.0.37
       react: 17.0.2
+    dev: false
+
+  /use-latest/1.2.0:
+    resolution: {integrity: sha512-d2TEuG6nSLKQLAfW3By8mKr8HurOlTkul0sOpxbClIv4SQ4iOd7BYr7VIzdbktUCnv7dua/60xzd8igMU6jmyw==}
+    peerDependencies:
+      '@types/react': '*'
+      react: ^16.8.0 || ^17.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+    dependencies:
+      use-isomorphic-layout-effect: 1.1.1
     dev: false
 
   /use-latest/1.2.0_cfedea9b3ed0faf0dded75c187406c5e:
@@ -20381,9 +21500,9 @@ packages:
     dependencies:
       acorn: 8.6.0
       acorn-walk: 8.2.0
+      chalk: 4.1.2
       commander: 7.2.0
       gzip-size: 6.0.0
-      chalk: 4.1.2
       lodash: 4.17.21
       opener: 1.5.2
       sirv: 1.0.18
@@ -20542,6 +21661,7 @@ packages:
     dependencies:
       ansi-html-community: 0.0.8
       bonjour: 3.5.0
+      chokidar: 2.1.8
       compression: 1.7.4
       connect-history-api-fallback: 1.6.0
       debug: 4.3.3_supports-color@6.1.0
@@ -20549,7 +21669,6 @@ packages:
       express: 4.17.1
       html-entities: 1.4.0
       http-proxy-middleware: 0.19.1_debug@4.3.3
-      chokidar: 2.1.8
       import-local: 2.0.0
       internal-ip: 4.3.0
       ip: 1.1.5
@@ -20559,10 +21678,10 @@ packages:
       opn: 5.5.0
       p-retry: 3.0.1
       portfinder: 1.0.28
+      schema-utils: 1.0.0
       selfsigned: 1.10.11
       semver: 6.3.0
       serve-index: 1.9.1
-      schema-utils: 1.0.0
       sockjs: 0.3.21
       sockjs-client: 1.5.2
       spdy: 4.0.2_supports-color@6.1.0
@@ -20649,9 +21768,9 @@ packages:
       acorn: 6.4.2
       ajv: 6.12.6
       ajv-keywords: 3.5.2_ajv@6.12.6
+      chrome-trace-event: 1.0.3
       enhanced-resolve: 4.5.0
       eslint-scope: 4.0.3
-      chrome-trace-event: 1.0.3
       json-parse-better-errors: 1.0.2
       loader-runner: 2.4.0
       loader-utils: 1.4.0
@@ -20685,13 +21804,13 @@ packages:
       acorn: 8.6.0
       acorn-import-assertions: 1.8.0_acorn@8.6.0
       browserslist: 4.18.1
+      chrome-trace-event: 1.0.3
       enhanced-resolve: 5.8.3
       es-module-lexer: 0.9.3
       eslint-scope: 5.1.1
       events: 3.3.0
       glob-to-regexp: 0.4.1
       graceful-fs: 4.2.8
-      chrome-trace-event: 1.0.3
       json-parse-better-errors: 1.0.2
       loader-runner: 4.2.0
       mime-types: 2.1.34
@@ -20725,13 +21844,13 @@ packages:
       acorn: 8.6.0
       acorn-import-assertions: 1.8.0_acorn@8.6.0
       browserslist: 4.18.1
+      chrome-trace-event: 1.0.3
       enhanced-resolve: 5.8.3
       es-module-lexer: 0.9.3
       eslint-scope: 5.1.1
       events: 3.3.0
       glob-to-regexp: 0.4.1
       graceful-fs: 4.2.8
-      chrome-trace-event: 1.0.3
       json-parse-better-errors: 1.0.2
       loader-runner: 4.2.0
       mime-types: 2.1.34
@@ -21142,11 +22261,12 @@ packages:
     dev: false
 
   file:projects/api-client-bear.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-JbbPd3yVPA/JqDCf6Yy41eFFIHTPP73WIcGVXdod0oe6Du+XnfP/xxuNl83bE7BOMd1mYLIMnyvMx4JbRZdQVg==, tarball: file:projects/api-client-bear.tgz}
+    resolution: {integrity: sha512-FUdGSdvM3bTjVhb4Gb40rgVNPWh7VwVJ5Ga0OQAQroN/zm3n28lfpOtp5OpVCCYlOaGGYX+kS9GVKHuI5IJJww==, tarball: file:projects/api-client-bear.tgz}
     id: file:projects/api-client-bear.tgz
     name: '@rush-temp/api-client-bear'
     version: 0.0.0
     dependencies:
+      '@gooddata/api-model-bear': 8.9.0-beta.0
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
       '@types/fast-levenshtein': 0.0.1
       '@types/isomorphic-fetch': 0.0.34
@@ -21208,12 +22328,15 @@ packages:
     dev: false
 
   file:projects/api-client-tiger.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-kf3PyUC2RrmtgwS/u/ik+36WUmuoPo43S5LPZcab3bPVgFawDJQu5UwhRrfNCbZcWTvQFa645PbReBFoTeBKsQ==, tarball: file:projects/api-client-tiger.tgz}
+    resolution: {integrity: sha512-wf+AFCEAkwODSUra/WiUOb9owSqjvZSzWpb0XMua8nCxLFnXyQS2xEBjQ8WMhsbHtdklA69zjIVGVw60xDkPdw==, tarball: file:projects/api-client-tiger.tgz}
     id: file:projects/api-client-tiger.tgz
     name: '@rush-temp/api-client-tiger'
     version: 0.0.0
     dependencies:
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
+      '@gooddata/reference-workspace': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
       '@microsoft/api-documenter': 7.13.69
       '@microsoft/api-extractor': 7.18.19
       '@openapitools/openapi-generator-cli': 1.0.10-4.3.1
@@ -21316,6 +22439,7 @@ packages:
       '@typescript-eslint/eslint-plugin': 5.5.0_0b653047a985f39af74c471038804c7e
       '@typescript-eslint/parser': 5.5.0_eslint@8.3.0+typescript@4.0.2
       blessed: 0.1.81
+      chokidar: 3.5.2
       commander: 8.3.0
       cross-spawn: 7.0.3
       dependency-cruiser: 10.8.0
@@ -21328,7 +22452,6 @@ packages:
       eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       eslint-plugin-tsdoc: 0.2.14
       find-up: 5.0.0
-      chokidar: 3.5.2
       jest: 27.4.2_ts-node@10.4.0
       jest-junit: 3.7.0
       json5: 2.2.0
@@ -21352,13 +22475,17 @@ packages:
     dev: false
 
   file:projects/catalog-export.tgz:
-    resolution: {integrity: sha512-lZeTkH0Q3Bgrq/y678V1Monpw5MBb3Odq8ohZZ1MD9hNjhpaRfzaCjfMI064S4yHsPYEhb16Z0xh55iRsZj1ng==, tarball: file:projects/catalog-export.tgz}
+    resolution: {integrity: sha512-zlqsz8wy/A+FZDXRQI0yO8T9gKC7qUgNP65owQ/1erpmkbrZ2nTntM91aF91zdQR93sj6bhUaT3YlfCfUxRnFA==, tarball: file:projects/catalog-export.tgz}
     name: '@rush-temp/catalog-export'
     version: 0.0.0
     dependencies:
       '@babel/core': 7.16.0
       '@babel/plugin-transform-typescript': 7.16.1_@babel+core@7.16.0
+      '@gooddata/api-client-bear': 8.9.0-beta.0
+      '@gooddata/api-client-tiger': 8.9.0-beta.0
+      '@gooddata/api-model-bear': 8.9.0-beta.0
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
+      '@gooddata/sdk-model': 8.9.0-beta.0
       '@types/inquirer': 7.3.3
       '@types/jest': 27.0.3
       '@types/lodash': 4.14.177
@@ -21366,6 +22493,7 @@ packages:
       '@types/prettier': 1.18.4
       '@typescript-eslint/eslint-plugin': 5.5.0_0b653047a985f39af74c471038804c7e
       '@typescript-eslint/parser': 5.5.0_eslint@8.3.0+typescript@4.0.2
+      chalk: 4.1.2
       commander: 8.3.0
       dependency-cruiser: 10.8.0
       dotenv: 10.0.0
@@ -21377,7 +22505,6 @@ packages:
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
       eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       eslint-plugin-tsdoc: 0.2.14
-      chalk: 4.1.2
       inquirer: 7.3.3
       jest: 27.4.2_ts-node@10.4.0
       jest-junit: 3.7.0
@@ -21398,6 +22525,7 @@ packages:
       - babel-jest
       - bufferutil
       - canvas
+      - debug
       - eslint-config-prettier
       - node-notifier
       - supports-color
@@ -21405,7 +22533,7 @@ packages:
     dev: false
 
   file:projects/dashboard-plugin-template.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-9qRXsy8IjHsOHYkgupoYt3WN04O0Ns6hJqalXVhfa/FPZbfexk5nSqUAcmNQFlsHLg/ZtIjzZoaP03jHou35kQ==, tarball: file:projects/dashboard-plugin-template.tgz}
+    resolution: {integrity: sha512-R6yNE/mYPA8Ug61bMF93OraGMRVk5ZTHlIxgTIHZGNhulzQ5f+mk2D6F8wIprvpZnx0gcSzfTgfMDdeAKTuJ/w==, tarball: file:projects/dashboard-plugin-template.tgz}
     id: file:projects/dashboard-plugin-template.tgz
     name: '@rush-temp/dashboard-plugin-template'
     version: 0.0.0
@@ -21413,7 +22541,18 @@ packages:
       '@babel/core': 7.16.0
       '@babel/preset-env': 7.16.4_@babel+core@7.16.0
       '@babel/preset-react': 7.16.0_@babel+core@7.16.0
+      '@gooddata/catalog-export': 8.9.0-beta.0
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
+      '@gooddata/plugin-toolkit': 8.9.0-beta.0
+      '@gooddata/sdk-backend-bear': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-backend-tiger': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-charts': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-dashboard': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-ext': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-loaders': 8.9.0-beta.0_8337f4f68907ca4575587785714ec839
       '@types/enzyme': 3.10.10
       '@types/jest': 27.0.3
       '@types/json-stable-stringify': 1.0.33
@@ -21466,6 +22605,7 @@ packages:
       webpack-cli: 4.9.1_fd6b8f8043d7f46f83ab186250ec224f
       webpack-dev-server: 3.11.3_webpack-cli@4.9.1+webpack@5.64.4
     transitivePeerDependencies:
+      - '@ag-grid-community/core'
       - '@swc/core'
       - '@webpack-cli/generators'
       - '@webpack-cli/migrate'
@@ -21473,9 +22613,13 @@ packages:
       - babel-jest
       - bufferutil
       - canvas
+      - debug
       - esbuild
       - eslint-config-prettier
       - node-notifier
+      - prop-types
+      - react-native
+      - redux
       - supports-color
       - ts-node
       - uglify-js
@@ -21483,7 +22627,7 @@ packages:
     dev: false
 
   file:projects/dashboard-plugin-tests.tgz:
-    resolution: {integrity: sha512-Qv9pjCVsKg3A7v40+JpbJ3t4M+eoOgg4s6nBZCkTb1ZTW8Ly9jxD1Q25bayb04OkThGnCyk8idD8fr9U+3a/tQ==, tarball: file:projects/dashboard-plugin-tests.tgz}
+    resolution: {integrity: sha512-hA1s+nTFHdB0gShyEBvlWhW/a0pNENrPnLC45pvieFg52CjWSIrc0+rN84KrKpn3sIemjAqjkqEYl7aovr4D0A==, tarball: file:projects/dashboard-plugin-tests.tgz}
     name: '@rush-temp/dashboard-plugin-tests'
     version: 0.0.0
     dependencies:
@@ -21499,6 +22643,23 @@ packages:
       '@babel/preset-typescript': 7.16.0_@babel+core@7.16.0
       '@babel/runtime': 7.16.3
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
+      '@gooddata/plugin-toolkit': 8.9.0-beta.0
+      '@gooddata/reference-workspace': 8.9.0-beta.0
+      '@gooddata/sdk-backend-base': 8.9.0-beta.0
+      '@gooddata/sdk-backend-bear': 8.9.0-beta.0
+      '@gooddata/sdk-backend-mockingbird': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-charts': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-dashboard': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-ext': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-filters': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-geo': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-kit': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-loaders': 8.9.0-beta.0_8337f4f68907ca4575587785714ec839
+      '@gooddata/sdk-ui-pivot': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-theme-provider': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
       '@microsoft/api-documenter': 7.13.69
       '@microsoft/api-extractor': 7.18.19
       '@types/enzyme': 3.10.10
@@ -21553,15 +22714,20 @@ packages:
       typescript: 4.0.2
       webpack: 5.64.4
     transitivePeerDependencies:
+      - '@ag-grid-community/core'
       - '@swc/core'
       - '@swc/wasm'
       - acorn
       - babel-jest
       - bufferutil
       - canvas
+      - debug
       - esbuild
       - eslint-config-prettier
       - node-notifier
+      - prop-types
+      - react-native
+      - redux
       - supports-color
       - uglify-js
       - utf-8-validate
@@ -21570,12 +22736,16 @@ packages:
     dev: false
 
   file:projects/experimental-workspace.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-fDgATPXW2zB2g/WNfDDMwNc/a04fX37rOeknYffR+ZBJButgiRwYkZlHB+vJiifABWoq3YBwrHp1Lz35JNj2vg==, tarball: file:projects/experimental-workspace.tgz}
+    resolution: {integrity: sha512-TxaIi5ZbPCSG3W7k7QHFg95kRIwAO1JhdFDvrJQXbeWSyRyb7QqOupjMvgcL8GJJp0riu63J3X2Xh8LeyRydrw==, tarball: file:projects/experimental-workspace.tgz}
     id: file:projects/experimental-workspace.tgz
     name: '@rush-temp/experimental-workspace'
     version: 0.0.0
     dependencies:
+      '@gooddata/catalog-export': 8.9.0-beta.0
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
+      '@gooddata/mock-handling': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
       '@microsoft/api-extractor': 7.18.19
       '@types/jest': 27.0.3
       '@types/lodash': 4.14.177
@@ -21603,6 +22773,7 @@ packages:
       - babel-jest
       - bufferutil
       - canvas
+      - debug
       - eslint-config-prettier
       - node-notifier
       - supports-color
@@ -21611,12 +22782,16 @@ packages:
     dev: false
 
   file:projects/live-examples-workspace.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-/FEPo36yiA4twh+NL5bzOhxxij8dNcSJjh8EYlosXl9uFIstzh09Rj8SjlJNRe/4yj9KWkXz7g9NYq1KfsaKbA==, tarball: file:projects/live-examples-workspace.tgz}
+    resolution: {integrity: sha512-RfYq/MeB6pMVUNdrPbm99/IH/+CgDHpLG1VdqJMzsIsQXN7DhdVr6NbBG4Mc5MwJDget/WUImJpoBeS9RszrQg==, tarball: file:projects/live-examples-workspace.tgz}
     id: file:projects/live-examples-workspace.tgz
     name: '@rush-temp/live-examples-workspace'
     version: 0.0.0
     dependencies:
+      '@gooddata/catalog-export': 8.9.0-beta.0
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
+      '@gooddata/mock-handling': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
       '@types/jest': 27.0.3
       '@types/lodash': 4.14.177
       '@types/node': 16.11.11
@@ -21643,6 +22818,7 @@ packages:
       - babel-jest
       - bufferutil
       - canvas
+      - debug
       - eslint-config-prettier
       - node-notifier
       - supports-color
@@ -21651,11 +22827,15 @@ packages:
     dev: false
 
   file:projects/mock-handling.tgz:
-    resolution: {integrity: sha512-3axTv7+Jyjb7hvj/KVB/PtPU9F87MRDOcqM80dDxcheYVHJcN3hegEIFk+IcDQmMwribLmw7tKMW6GhmqKhVtA==, tarball: file:projects/mock-handling.tgz}
+    resolution: {integrity: sha512-7LhoZNY1DgLYyroekw/aDwFWaBlGgUABgKtP3ouMQPWiyVwYnMTYNov4I87MF+4tMvtfcj5wzhMY3PpGlAG7bA==, tarball: file:projects/mock-handling.tgz}
     name: '@rush-temp/mock-handling'
     version: 0.0.0
     dependencies:
+      '@gooddata/api-model-bear': 8.9.0-beta.0
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
+      '@gooddata/sdk-backend-bear': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
       '@types/inquirer': 7.3.3
       '@types/jest': 27.0.3
       '@types/json-stable-stringify': 1.0.33
@@ -21665,6 +22845,7 @@ packages:
       '@types/rimraf': 2.0.5
       '@typescript-eslint/eslint-plugin': 5.5.0_0b653047a985f39af74c471038804c7e
       '@typescript-eslint/parser': 5.5.0_eslint@8.3.0+typescript@4.0.2
+      chalk: 4.1.2
       commander: 8.3.0
       dependency-cruiser: 10.8.0
       eslint: 8.3.0
@@ -21675,7 +22856,6 @@ packages:
       eslint-plugin-prettier: 4.0.0_eslint@8.3.0+prettier@2.5.0
       eslint-plugin-sonarjs: 0.11.0_eslint@8.3.0
       eslint-plugin-tsdoc: 0.2.14
-      chalk: 4.1.2
       inquirer: 7.3.3
       jest: 27.4.2_ts-node@10.4.0
       jest-junit: 3.7.0
@@ -21704,7 +22884,7 @@ packages:
     dev: false
 
   file:projects/playground.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-mIkyYd9eVzTa680mHAzC53vAVlfvYQe7GtsaEpxMNbMyoQU1PUecJu7DMnLTgzGVdCT2C/kg3dIc1Y70khgWNw==, tarball: file:projects/playground.tgz}
+    resolution: {integrity: sha512-swTbUoOTs1nfyYtQjHopyAW5lHGbBBihVD621xdPPFmsLUcu9zKBBtX1qJmbtEJMKvJBQT+aecZYOZIQ/r8kBA==, tarball: file:projects/playground.tgz}
     id: file:projects/playground.tgz
     name: '@rush-temp/playground'
     version: 0.0.0
@@ -21720,7 +22900,22 @@ packages:
       '@babel/preset-react': 7.16.0_@babel+core@7.16.0
       '@babel/preset-typescript': 7.16.0_@babel+core@7.16.0
       '@babel/runtime': 7.16.3
+      '@gooddata/catalog-export': 8.9.0-beta.0
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
+      '@gooddata/sdk-backend-base': 8.9.0-beta.0
+      '@gooddata/sdk-backend-bear': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-charts': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-dashboard': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-ext': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-filters': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-geo': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-kit': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-loaders': 8.9.0-beta.0_8337f4f68907ca4575587785714ec839
+      '@gooddata/sdk-ui-pivot': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-theme-provider': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
       '@types/lodash': 4.14.177
       '@types/react': 17.0.37
       '@types/react-dom': 17.0.11
@@ -21769,17 +22964,22 @@ packages:
       webpack-cli: 4.9.1_ebd85c744cbb1318b980a616378acc2d
       webpack-dev-server: 3.11.3_webpack-cli@4.9.1+webpack@5.64.4
     transitivePeerDependencies:
+      - '@ag-grid-community/core'
       - '@swc/core'
       - '@webpack-cli/generators'
       - '@webpack-cli/migrate'
       - acorn
       - bufferutil
       - canvas
+      - debug
       - esbuild
       - eslint-config-prettier
       - fibers
       - node-notifier
       - node-sass
+      - prop-types
+      - react-native
+      - redux
       - supports-color
       - ts-node
       - uglify-js
@@ -21789,7 +22989,7 @@ packages:
     dev: false
 
   file:projects/plugin-toolkit.tgz:
-    resolution: {integrity: sha512-lMqf3ILKzWb09voiz7CdBHGt0ApE/bqJsckvGaN70KvmQAqWapg58WrAbSwk32EYGGVN1Ev3UkC8IDb/R2ODSQ==, tarball: file:projects/plugin-toolkit.tgz}
+    resolution: {integrity: sha512-eSN4ulFf2svzTLU4DvsFjW2J3nRmdlbcO2HGB6iNv623LKpIREvMbgB7bQBltXzYSZq5iZxSPGkoE0S77LEQ3Q==, tarball: file:projects/plugin-toolkit.tgz}
     name: '@rush-temp/plugin-toolkit'
     version: 0.0.0
     dependencies:
@@ -21798,6 +22998,10 @@ packages:
       '@babel/preset-env': 7.16.4_@babel+core@7.16.0
       '@babel/preset-typescript': 7.16.0_@babel+core@7.16.0
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
+      '@gooddata/sdk-backend-bear': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-backend-tiger': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
       '@types/columnify': 1.5.1
       '@types/cross-spawn': 6.0.2
       '@types/fs-extra': 9.0.13
@@ -21809,6 +23013,7 @@ packages:
       '@typescript-eslint/eslint-plugin': 5.5.0_0b653047a985f39af74c471038804c7e
       '@typescript-eslint/parser': 5.5.0_eslint@8.3.0+typescript@4.0.2
       axios: 0.21.4
+      chalk: 4.1.2
       columnify: 1.5.4
       commander: 8.3.0
       concurrently: 6.4.0
@@ -21825,7 +23030,6 @@ packages:
       eslint-plugin-tsdoc: 0.2.14
       fast-glob: 3.2.7
       fs-extra: 10.0.0
-      chalk: 4.1.2
       inquirer: 7.3.3
       jest: 27.4.2_ts-node@10.4.0
       jest-junit: 3.7.0
@@ -21852,12 +23056,14 @@ packages:
     dev: false
 
   file:projects/reference-workspace-mgmt.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-aHgPoe6MljBbgnpyBFlVyTOim+8vKBpzDBz95NxezinWOR6kl3sAVRNZnytvm0IVKAE9Gz/kIfAdO/rDuFRpjg==, tarball: file:projects/reference-workspace-mgmt.tgz}
+    resolution: {integrity: sha512-opLGVzVtCN9lyAgonGp8Rtv1aXGIlbQxebdCL5dX5FlBavAipJo83gVBftNhqVqmid+1VXqdWMz1BI1aHvryLQ==, tarball: file:projects/reference-workspace-mgmt.tgz}
     id: file:projects/reference-workspace-mgmt.tgz
     name: '@rush-temp/reference-workspace-mgmt'
     version: 0.0.0
     dependencies:
+      '@gooddata/catalog-export': 8.9.0-beta.0
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
+      '@gooddata/mock-handling': 8.9.0-beta.0
       '@types/jest': 27.0.3
       '@types/lodash': 4.14.177
       '@types/node': 16.11.11
@@ -21883,6 +23089,7 @@ packages:
       - babel-jest
       - bufferutil
       - canvas
+      - debug
       - eslint-config-prettier
       - node-notifier
       - supports-color
@@ -21891,12 +23098,14 @@ packages:
     dev: false
 
   file:projects/reference-workspace.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-z6X55z9238+hLcfJX+RTKCj3htoSDFcykOaRKJh9fMa/3NMbfVcmwAB2JHAHxE9ssE4HalbitpIBh2aanONF0w==, tarball: file:projects/reference-workspace.tgz}
+    resolution: {integrity: sha512-ir8FGDAraY+B8W6FCD882jamy68dgkdQjsSEC4GscUANhNOxpCWCQBhAZlsj070ErvCtzXuJ5VRmHUkC3ek9+w==, tarball: file:projects/reference-workspace.tgz}
     id: file:projects/reference-workspace.tgz
     name: '@rush-temp/reference-workspace'
     version: 0.0.0
     dependencies:
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
       '@types/jest': 27.0.3
       '@types/lodash': 4.14.177
       '@types/node': 16.11.11
@@ -21931,13 +23140,17 @@ packages:
     dev: false
 
   file:projects/sdk-backend-base.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-yRdMxBCK4l9MeicXTabYRt6LMM2UckDgI+e9vMUkbPuPhhzMLDOsK83K4t1h3u6mFTyUz0JZQSh9CMinaPOp1w==, tarball: file:projects/sdk-backend-base.tgz}
+    resolution: {integrity: sha512-oT4oHjnGkjqotO5ay8pPdtGkz9eZ0729dZ4oN52nJHWCB4HmJ4kEBe9R3vtY2767xvBaFzK2xGBAZDpQ6nhw/Q==, tarball: file:projects/sdk-backend-base.tgz}
     id: file:projects/sdk-backend-base.tgz
     name: '@rush-temp/sdk-backend-base'
     version: 0.0.0
     dependencies:
       '@braintree/sanitize-url': 5.0.2
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
+      '@gooddata/reference-workspace': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/util': 8.9.0-beta.0
       '@microsoft/api-documenter': 7.13.69
       '@microsoft/api-extractor': 7.18.19
       '@types/jest': 27.0.3
@@ -21983,12 +23196,20 @@ packages:
     dev: false
 
   file:projects/sdk-backend-bear.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-r9m7neHj9EASlcFrR9WLL4S9uDhAEVKF+/m1JF8+d/WR+fmABSVyvsUTL/kIOVBoZjja5cj10D21IJHfnjbFsQ==, tarball: file:projects/sdk-backend-bear.tgz}
+    resolution: {integrity: sha512-J9QnZmw2yMstaAebVyXGfYrK1oI/CnZaRA0BDzBCWLzKuFPKJ2smgRnxfKVfAOdDxrRYF1gVm4HFuqjHqWrcMQ==, tarball: file:projects/sdk-backend-bear.tgz}
     id: file:projects/sdk-backend-bear.tgz
     name: '@rush-temp/sdk-backend-bear'
     version: 0.0.0
     dependencies:
+      '@gooddata/api-client-bear': 8.9.0-beta.0
+      '@gooddata/api-model-bear': 8.9.0-beta.0
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
+      '@gooddata/reference-workspace': 8.9.0-beta.0
+      '@gooddata/sdk-backend-base': 8.9.0-beta.0
+      '@gooddata/sdk-backend-mockingbird': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-embedding': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
       '@microsoft/api-documenter': 7.13.69
       '@microsoft/api-extractor': 7.18.19
       '@types/jest': 27.0.3
@@ -22035,12 +23256,17 @@ packages:
     dev: false
 
   file:projects/sdk-backend-mockingbird.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-bajg2G2o8gXnXZFap2ywLIA+0rXe2xK6B6EPah/Dvzr1jQ23S90J6Du5GUiEfG93Q/L4FqmmRqpvqHqr1OOUAw==, tarball: file:projects/sdk-backend-mockingbird.tgz}
+    resolution: {integrity: sha512-wSDybX7ucaHzdozAWOmo2MjrtIxs0w6/iRbBY3kOT34pf47h/fDuI9nNIxOEgMB5ots8mH+PCYPT8reZX74NPA==, tarball: file:projects/sdk-backend-mockingbird.tgz}
     id: file:projects/sdk-backend-mockingbird.tgz
     name: '@rush-temp/sdk-backend-mockingbird'
     version: 0.0.0
     dependencies:
+      '@gooddata/api-model-bear': 8.9.0-beta.0
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
+      '@gooddata/reference-workspace': 8.9.0-beta.0
+      '@gooddata/sdk-backend-base': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
       '@microsoft/api-documenter': 7.13.69
       '@microsoft/api-extractor': 7.18.19
       '@types/jest': 27.0.3
@@ -22080,12 +23306,13 @@ packages:
     dev: false
 
   file:projects/sdk-backend-spi.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-FCsqZP3yyzTnmlwQGJdi5caqqCfMIbhKHnwAv4qx8XA63VufcxfvBT1+pbM/HGIfJYVnqx9lAxqTTjUlUUIMBQ==, tarball: file:projects/sdk-backend-spi.tgz}
+    resolution: {integrity: sha512-hi4LKsJ76JSV6DoXPOplM8IaGVg9fkWKF8TAo/LZp+v8J32vAbz9oO7EiOr6YYh9mh669hAoFSolmw4vsNyMLA==, tarball: file:projects/sdk-backend-spi.tgz}
     id: file:projects/sdk-backend-spi.tgz
     name: '@rush-temp/sdk-backend-spi'
     version: 0.0.0
     dependencies:
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
+      '@gooddata/sdk-model': 8.9.0-beta.0
       '@microsoft/api-documenter': 7.13.69
       '@microsoft/api-extractor': 7.18.19
       '@types/jest': 27.0.3
@@ -22125,12 +23352,18 @@ packages:
     dev: false
 
   file:projects/sdk-backend-tiger.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-0h9au08cPLXKCbBiHXESPLEeA83nHaCrXubPNRtbFS65aFvN1Ga+HecMwym/z/6Q2gdq/31gBa2Prg6j2R15JQ==, tarball: file:projects/sdk-backend-tiger.tgz}
+    resolution: {integrity: sha512-NY/Cn5nNEj7vxJs5EZfyvADhgVMNHMeB8hw+FVh/4SZOzX/HAZYJ/opEvy41wnNPuRn39XntJHKTSplb1JggpA==, tarball: file:projects/sdk-backend-tiger.tgz}
     id: file:projects/sdk-backend-tiger.tgz
     name: '@rush-temp/sdk-backend-tiger'
     version: 0.0.0
     dependencies:
+      '@gooddata/api-client-tiger': 8.9.0-beta.0
+      '@gooddata/catalog-export': 8.9.0-beta.0
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
+      '@gooddata/reference-workspace': 8.9.0-beta.0
+      '@gooddata/sdk-backend-base': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
       '@microsoft/api-documenter': 7.13.69
       '@microsoft/api-extractor': 7.18.19
       '@types/jest': 27.0.3
@@ -22178,12 +23411,14 @@ packages:
     dev: false
 
   file:projects/sdk-embedding.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-s3Gsv6lMcT8kZCeoa1drn4faRM/ddTpQe/U9S4kNAyPsPMoB5Lac+fc/E+0O+upwAW2HK2/e7oMfNSzMogg7uA==, tarball: file:projects/sdk-embedding.tgz}
+    resolution: {integrity: sha512-9bHa7l/6SvJyTwmoLGhvmB6swD7NavbyPD16nbJts8E1Vx1Q0XQuyynST9BstOAl1vaS63qG5FxYd1/Dis+nTQ==, tarball: file:projects/sdk-embedding.tgz}
     id: file:projects/sdk-embedding.tgz
     name: '@rush-temp/sdk-embedding'
     version: 0.0.0
     dependencies:
+      '@gooddata/api-model-bear': 8.9.0-beta.0
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
+      '@gooddata/sdk-model': 8.9.0-beta.0
       '@microsoft/api-documenter': 7.13.69
       '@microsoft/api-extractor': 7.18.19
       '@types/jest': 27.0.3
@@ -22221,7 +23456,7 @@ packages:
     dev: false
 
   file:projects/sdk-examples.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-wcKdMoWJogRwxFTUeAV6ODkz92vUJeNoRgWhZ8BRSlR74ek3yf7s4nijAZDGm498VswzOlSec+SDbR/Ud+aQYg==, tarball: file:projects/sdk-examples.tgz}
+    resolution: {integrity: sha512-5EI9GRBYhp3PiQlH088Z5Ijycdnl8dpfbep67VAlh1v/yGJG44ImCmKUJiB47HcAJJAewW8tue7ud3ZhPuvgNQ==, tarball: file:projects/sdk-examples.tgz}
     id: file:projects/sdk-examples.tgz
     name: '@rush-temp/sdk-examples'
     version: 0.0.0
@@ -22237,7 +23472,24 @@ packages:
       '@babel/preset-react': 7.16.0_@babel+core@7.16.0
       '@babel/preset-typescript': 7.16.0_@babel+core@7.16.0
       '@babel/runtime': 7.16.3
+      '@gooddata/api-client-bear': 8.9.0-beta.0
+      '@gooddata/api-model-bear': 8.9.0-beta.0
+      '@gooddata/catalog-export': 8.9.0-beta.0
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
+      '@gooddata/sdk-backend-base': 8.9.0-beta.0
+      '@gooddata/sdk-backend-bear': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-charts': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-dashboard': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-ext': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-filters': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-geo': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-kit': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-loaders': 8.9.0-beta.0_8337f4f68907ca4575587785714ec839
+      '@gooddata/sdk-ui-pivot': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-theme-provider': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
       '@types/history': 4.7.9
       '@types/isomorphic-fetch': 0.0.34
       '@types/lodash': 4.14.177
@@ -22314,18 +23566,22 @@ packages:
       webpack-dev-server: 3.11.3_webpack-cli@4.9.1+webpack@5.64.4
       yup: 0.32.11
     transitivePeerDependencies:
+      - '@ag-grid-community/core'
       - '@swc/core'
       - '@webpack-cli/generators'
       - '@webpack-cli/migrate'
       - acorn
       - bufferutil
       - canvas
+      - debug
       - esbuild
       - eslint-config-prettier
       - fibers
       - node-notifier
       - node-sass
       - prop-types
+      - react-native
+      - redux
       - supports-color
       - ts-node
       - uglify-js
@@ -22483,12 +23739,20 @@ packages:
     dev: false
 
   file:projects/sdk-ui-all.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-ic1vTkhE3JhxtPCXQ28GVkMCbJOswDYnaS2W4TuxylDORjZSZWqGtxF0N4VAMoyI+gopHAYECKJuhhtpF1hUYg==, tarball: file:projects/sdk-ui-all.tgz}
+    resolution: {integrity: sha512-FMmfIODMqLBdlAhLTmgEhgxqxPaIbWD6AEH8BrayLTSVjN9zY84L2Gcpi32Gx5b7Iqm8IAnnM1+WBOaTJw//3w==, tarball: file:projects/sdk-ui-all.tgz}
     id: file:projects/sdk-ui-all.tgz
     name: '@rush-temp/sdk-ui-all'
     version: 0.0.0
     dependencies:
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_typescript@4.0.2
+      '@gooddata/sdk-ui-charts': 8.9.0-beta.0_typescript@4.0.2
+      '@gooddata/sdk-ui-ext': 8.9.0-beta.0_typescript@4.0.2
+      '@gooddata/sdk-ui-filters': 8.9.0-beta.0_typescript@4.0.2
+      '@gooddata/sdk-ui-geo': 8.9.0-beta.0_typescript@4.0.2
+      '@gooddata/sdk-ui-pivot': 8.9.0-beta.0_typescript@4.0.2
       '@microsoft/api-documenter': 7.13.69
       '@microsoft/api-extractor': 7.18.19
       '@types/jest': 27.0.3
@@ -22511,26 +23775,40 @@ packages:
       tslib: 2.3.1
       typescript: 4.0.2
     transitivePeerDependencies:
+      - '@ag-grid-community/core'
       - '@babel/core'
+      - '@types/react'
       - babel-jest
       - bufferutil
       - canvas
       - eslint-config-prettier
       - node-notifier
+      - prop-types
+      - react
+      - react-dom
       - supports-color
       - ts-node
       - utf-8-validate
     dev: false
 
   file:projects/sdk-ui-charts.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-n1RPNFn+TOBx89nCrnZpei5BWBzun84ZCMWHRomQQtVwWOC1uq6A/1o/ihXXHhvb5Eer5yZhkAdbB39iMHOWSg==, tarball: file:projects/sdk-ui-charts.tgz}
+    resolution: {integrity: sha512-TP1QZjwTtMByTQU6OZw5gsW9ERtKpuHkVPTmgT2Ca6J9sjdvCfhAVNN45UdS+vKSQAuo0Z7oiIgvDY21sSfsjg==, tarball: file:projects/sdk-ui-charts.tgz}
     id: file:projects/sdk-ui-charts.tgz
     name: '@rush-temp/sdk-ui-charts'
     version: 0.0.0
     dependencies:
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
       '@gooddata/numberjs': 4.0.1
+      '@gooddata/reference-workspace': 8.9.0-beta.0
+      '@gooddata/sdk-backend-mockingbird': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-kit': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-theme-provider': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-vis-commons': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
       '@gooddata/stylelint-config': 5.0.0
+      '@gooddata/util': 8.9.0-beta.0
       '@microsoft/api-documenter': 7.13.69
       '@microsoft/api-extractor': 7.18.19
       '@types/enzyme': 3.10.10
@@ -22579,8 +23857,8 @@ packages:
       react-intl: 5.23.0_react@17.0.2+typescript@4.0.2
       react-measure: 2.5.2_react-dom@17.0.2+react@17.0.2
       stylelint: 13.13.1
-      stylelint-config-prettier: 8.0.2_stylelint@13.13.1
       stylelint-checkstyle-formatter: 0.1.2
+      stylelint-config-prettier: 8.0.2_stylelint@13.13.1
       svg-classlist-polyfill: 1.0.6
       ts-invariant: 0.7.5
       ts-jest: 27.0.7_2775690c852eaeee158508de6867e4cb
@@ -22600,13 +23878,25 @@ packages:
     dev: false
 
   file:projects/sdk-ui-dashboard.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-XU/o/ss8k9CZgzyXGAd4PLTrPCqMQ5mQkU8xuvVRS/Y1h5fl10igdag3P2lYKuGiNK414Ph/WcFWqS7UKNjnNg==, tarball: file:projects/sdk-ui-dashboard.tgz}
+    resolution: {integrity: sha512-CmfPje0h70ehc4zFLipH0o+dFl+XAaQncxEEKJ/6qr0QY7I9aE4RcmFQNuqyt8mg9tGM0YPVYJ+n03+aeDyDsg==, tarball: file:projects/sdk-ui-dashboard.tgz}
     id: file:projects/sdk-ui-dashboard.tgz
     name: '@rush-temp/sdk-ui-dashboard'
     version: 0.0.0
     dependencies:
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
       '@gooddata/numberjs': 4.0.1
+      '@gooddata/reference-workspace': 8.9.0-beta.0
+      '@gooddata/sdk-backend-base': 8.9.0-beta.0
+      '@gooddata/sdk-backend-mockingbird': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-ext': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-filters': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-kit': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-theme-provider': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-vis-commons': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/util': 8.9.0-beta.0
       '@microsoft/api-documenter': 7.13.69
       '@microsoft/api-extractor': 7.18.19
       '@reduxjs/toolkit': 1.6.2_react-redux@7.2.6+react@17.0.2
@@ -22665,8 +23955,8 @@ packages:
       redux-batched-actions: 0.5.0
       redux-saga: 1.1.3
       stylelint: 13.13.1
-      stylelint-config-prettier: 8.0.2_stylelint@13.13.1
       stylelint-checkstyle-formatter: 0.1.2
+      stylelint-config-prettier: 8.0.2_stylelint@13.13.1
       svgo: 2.8.0
       ts-invariant: 0.7.5
       ts-jest: 27.0.7_2775690c852eaeee158508de6867e4cb
@@ -22674,6 +23964,7 @@ packages:
       typescript: 4.0.2
       uuid: 8.3.2
     transitivePeerDependencies:
+      - '@ag-grid-community/core'
       - '@babel/core'
       - babel-jest
       - bufferutil
@@ -22689,15 +23980,31 @@ packages:
     dev: false
 
   file:projects/sdk-ui-ext.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-xOBBennUSg/crBOHRND5rNnOmDMWt0TbODRwSVnh2VHOnHnabkWUoQc0YYuoH1FS2UomWDoSg0JWDvoUvCFa4Q==, tarball: file:projects/sdk-ui-ext.tgz}
+    resolution: {integrity: sha512-LTFAjJovnKEczPpiFisLLuroESkQ6NEJ3WrUTStdIgIrc0MP8xUAO1w2LcPSgPLz5b123fisHlLJwuPEoxmclw==, tarball: file:projects/sdk-ui-ext.tgz}
     id: file:projects/sdk-ui-ext.tgz
     name: '@rush-temp/sdk-ui-ext'
     version: 0.0.0
     dependencies:
       '@formatjs/intl-pluralrules': 1.3.9
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
+      '@gooddata/live-examples-workspace': 8.9.0-beta.0
       '@gooddata/numberjs': 4.0.1
+      '@gooddata/reference-workspace': 8.9.0-beta.0
+      '@gooddata/sdk-backend-base': 8.9.0-beta.0
+      '@gooddata/sdk-backend-mockingbird': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-embedding': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-charts': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-filters': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-geo': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-kit': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-pivot': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-theme-provider': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-vis-commons': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
       '@gooddata/stylelint-config': 5.0.0
+      '@gooddata/util': 8.9.0-beta.0
       '@microsoft/api-documenter': 7.13.69
       '@microsoft/api-extractor': 7.18.19
       '@types/enzyme': 3.10.10
@@ -22752,8 +24059,8 @@ packages:
       react-transition-group: 4.4.2_react-dom@17.0.2+react@17.0.2
       react-truncate: 2.4.0_react@17.0.2
       stylelint: 13.13.1
-      stylelint-config-prettier: 8.0.2_stylelint@13.13.1
       stylelint-checkstyle-formatter: 0.1.2
+      stylelint-config-prettier: 8.0.2_stylelint@13.13.1
       svgo: 2.8.0
       ts-invariant: 0.7.5
       ts-jest: 27.0.7_2775690c852eaeee158508de6867e4cb
@@ -22761,6 +24068,7 @@ packages:
       typescript: 4.0.2
       uuid: 8.3.2
     transitivePeerDependencies:
+      - '@ag-grid-community/core'
       - '@babel/core'
       - babel-jest
       - bufferutil
@@ -22774,14 +24082,21 @@ packages:
     dev: false
 
   file:projects/sdk-ui-filters.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-3juMZRq06liBc/WOyGBa1C7M/BuKcedbLyfHCPhQn61t2DIvOZWAoKXPMABVx/zEuY6eotDkwubOTctddcgoXA==, tarball: file:projects/sdk-ui-filters.tgz}
+    resolution: {integrity: sha512-/ZPpjQU6qvK0klfJ/5NzDlVj4SxSizBRhdL7BCWjpLVDYYv4SWsnS+h7V2wP7oJ5RmUIptaspJh+aIwDoqKsPA==, tarball: file:projects/sdk-ui-filters.tgz}
     id: file:projects/sdk-ui-filters.tgz
     name: '@rush-temp/sdk-ui-filters'
     version: 0.0.0
     dependencies:
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
       '@gooddata/numberjs': 4.0.1
+      '@gooddata/reference-workspace': 8.9.0-beta.0
+      '@gooddata/sdk-backend-mockingbird': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-kit': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
       '@gooddata/stylelint-config': 5.0.0
+      '@gooddata/util': 8.9.0-beta.0
       '@microsoft/api-documenter': 7.13.69
       '@microsoft/api-extractor': 7.18.19
       '@types/enzyme': 3.10.10
@@ -22834,8 +24149,8 @@ packages:
       react-responsive: 8.2.0_react@17.0.2
       react-window: 1.8.6_react-dom@17.0.2+react@17.0.2
       stylelint: 13.13.1
-      stylelint-config-prettier: 8.0.2_stylelint@13.13.1
       stylelint-checkstyle-formatter: 0.1.2
+      stylelint-config-prettier: 8.0.2_stylelint@13.13.1
       ts-invariant: 0.7.5
       ts-jest: 27.0.7_2775690c852eaeee158508de6867e4cb
       tslib: 2.3.1
@@ -22853,13 +24168,21 @@ packages:
     dev: false
 
   file:projects/sdk-ui-geo.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-VdXGQD/5KX08Kr69A7wHu1bnmbBmAGkSC5V70ApCusVslzoYk8EvUAiXLu9SpAazW37c6NoX/IAus9cve66yRw==, tarball: file:projects/sdk-ui-geo.tgz}
+    resolution: {integrity: sha512-b2kfgW0wLvE8VxPybP8xPTamvCDO6iuWpD3PDCGc6qQ36mIAgD3MFDO0GZ7ew19NcBVOjz6h+7vr1iRhtuzSJA==, tarball: file:projects/sdk-ui-geo.tgz}
     id: file:projects/sdk-ui-geo.tgz
     name: '@rush-temp/sdk-ui-geo'
     version: 0.0.0
     dependencies:
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
+      '@gooddata/live-examples-workspace': 8.9.0-beta.0
       '@gooddata/numberjs': 4.0.1
+      '@gooddata/sdk-backend-mockingbird': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-kit': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-theme-provider': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-vis-commons': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
       '@gooddata/stylelint-config': 5.0.0
       '@microsoft/api-documenter': 7.13.69
       '@microsoft/api-extractor': 7.18.19
@@ -22904,8 +24227,8 @@ packages:
       react-intl: 5.23.0_react@17.0.2+typescript@4.0.2
       react-measure: 2.5.2_react-dom@17.0.2+react@17.0.2
       stylelint: 13.13.1
-      stylelint-config-prettier: 8.0.2_stylelint@13.13.1
       stylelint-checkstyle-formatter: 0.1.2
+      stylelint-config-prettier: 8.0.2_stylelint@13.13.1
       ts-invariant: 0.7.5
       ts-jest: 27.0.7_2775690c852eaeee158508de6867e4cb
       tslib: 2.3.1
@@ -22924,7 +24247,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-kit.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-LKC5STSR43Vm2Elpq2mKTBx1z5caiogASRmx9WEJwzw4a3vo810vyG8kcie0+jTw6j8CCr0ndPXnFIoS1E6KZQ==, tarball: file:projects/sdk-ui-kit.tgz}
+    resolution: {integrity: sha512-OY7NDBHNqsEbv73O2HGZN8unJZZZmqh+uzj2UlxI3iRmowzjzGpgJ3wq0ucsWXFBEEMxwRwT826jAYUag4kWqw==, tarball: file:projects/sdk-ui-kit.tgz}
     id: file:projects/sdk-ui-kit.tgz
     name: '@rush-temp/sdk-ui-kit'
     version: 0.0.0
@@ -22932,7 +24255,14 @@ packages:
       '@aaronhayes/react-use-hubspot-form': 2.1.0_react-dom@17.0.2+react@17.0.2
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
       '@gooddata/numberjs': 4.0.1
+      '@gooddata/reference-workspace': 8.9.0-beta.0
+      '@gooddata/sdk-backend-mockingbird': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-theme-provider': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
       '@gooddata/stylelint-config': 5.0.0
+      '@gooddata/util': 8.9.0-beta.0
       '@microsoft/api-documenter': 7.13.69
       '@microsoft/api-extractor': 7.18.19
       '@types/codemirror': 0.0.95
@@ -22999,8 +24329,8 @@ packages:
       react-textarea-autosize: 8.3.3_cfedea9b3ed0faf0dded75c187406c5e
       react-transition-group: 4.4.2_react-dom@17.0.2+react@17.0.2
       stylelint: 13.13.1
-      stylelint-config-prettier: 8.0.2_stylelint@13.13.1
       stylelint-checkstyle-formatter: 0.1.2
+      stylelint-config-prettier: 8.0.2_stylelint@13.13.1
       svgo: 2.8.0
       tinycolor2: 1.4.2
       ts-invariant: 0.7.5
@@ -23021,12 +24351,16 @@ packages:
     dev: false
 
   file:projects/sdk-ui-loaders.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-JNlyYrSqd3PA0Clor4nggZt49lEIE63Ul7BtA0s6DkXqxGN8wR1E/VoFfxLe8ONrRgc1fwUyBrG4i/GD12mfDw==, tarball: file:projects/sdk-ui-loaders.tgz}
+    resolution: {integrity: sha512-PaaVktCHJVXm6K7ChPtXWcDBw8XInNwjTxMHvyeqG3xGtlPRrxay/KLsXCd8FOuTSRKM8yWvTsWNxdMW2HLcMQ==, tarball: file:projects/sdk-ui-loaders.tgz}
     id: file:projects/sdk-ui-loaders.tgz
     name: '@rush-temp/sdk-ui-loaders'
     version: 0.0.0
     dependencies:
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-dashboard': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
       '@microsoft/api-documenter': 7.13.69
       '@microsoft/api-extractor': 7.18.19
       '@types/enzyme': 3.10.10
@@ -23069,19 +24403,23 @@ packages:
       tslib: 2.3.1
       typescript: 4.0.2
     transitivePeerDependencies:
+      - '@ag-grid-community/core'
       - '@babel/core'
       - babel-jest
       - bufferutil
       - canvas
       - eslint-config-prettier
       - node-notifier
+      - prop-types
+      - react-native
+      - redux
       - supports-color
       - ts-node
       - utf-8-validate
     dev: false
 
   file:projects/sdk-ui-pivot.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-X66HemkYDtR0eEpoPUJmsH2VFfaDV+nB2aI/ky6izblpXxrauBoFb28tuqlhaqTArSy9JI5GAJu4g7EKeN5EUg==, tarball: file:projects/sdk-ui-pivot.tgz}
+    resolution: {integrity: sha512-dTeRsDw7u8DGkq6j52zIhFjchu+aur9xKxEQBSTpJW6/AZhrMGKGgkwbHjCjJWjzenixw2GteHxqq3793+R2lg==, tarball: file:projects/sdk-ui-pivot.tgz}
     id: file:projects/sdk-ui-pivot.tgz
     name: '@rush-temp/sdk-ui-pivot'
     version: 0.0.0
@@ -23091,6 +24429,14 @@ packages:
       '@formatjs/intl-pluralrules': 1.3.9
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
       '@gooddata/numberjs': 4.0.1
+      '@gooddata/reference-workspace': 8.9.0-beta.0
+      '@gooddata/sdk-backend-mockingbird': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-kit': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-theme-provider': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-vis-commons': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
       '@gooddata/stylelint-config': 5.0.0
       '@microsoft/api-documenter': 7.13.69
       '@microsoft/api-extractor': 7.18.19
@@ -23134,8 +24480,8 @@ packages:
       react-dom: 17.0.2_react@17.0.2
       react-intl: 5.23.0_react@17.0.2+typescript@4.0.2
       stylelint: 13.13.1
-      stylelint-config-prettier: 8.0.2_stylelint@13.13.1
       stylelint-checkstyle-formatter: 0.1.2
+      stylelint-config-prettier: 8.0.2_stylelint@13.13.1
       ts-invariant: 0.7.5
       ts-jest: 27.0.7_2775690c852eaeee158508de6867e4cb
       tslib: 2.3.1
@@ -23155,7 +24501,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-tests-e2e.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-+/3pV6a5M1Fs/igMz5pjhJD+GvTr2zE01mV7h56FXljhOdPbqxt9EGpsfH/vLskY3st8+bNULeROWa5pblKvrQ==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
+    resolution: {integrity: sha512-EOX9CLax6J6w9r5s6viNJWNyiDoa3fSY0WDN0+ERSY64PvejDbLUZfBGVmnjq2iPXAcwasqXySbS84kkrrfv9Q==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
     id: file:projects/sdk-ui-tests-e2e.tgz
     name: '@rush-temp/sdk-ui-tests-e2e'
     version: 0.0.0
@@ -23171,7 +24517,20 @@ packages:
       '@babel/preset-react': 7.16.0_@babel+core@7.16.0
       '@babel/preset-typescript': 7.16.0_@babel+core@7.16.0
       '@babel/runtime': 7.16.3
+      '@gooddata/catalog-export': 8.9.0-beta.0
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
+      '@gooddata/sdk-backend-bear': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-charts': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-dashboard': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-ext': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-filters': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-geo': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-kit': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-pivot': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/util': 8.9.0-beta.0
       '@microsoft/api-documenter': 7.13.69
       '@microsoft/api-extractor': 7.18.19
       '@types/enzyme': 3.10.10
@@ -23236,6 +24595,7 @@ packages:
       webpack-dev-server: 3.11.3_webpack-cli@4.9.1+webpack@5.64.4
       xml2js: 0.4.23
     transitivePeerDependencies:
+      - '@ag-grid-community/core'
       - '@swc/core'
       - '@webpack-cli/generators'
       - '@webpack-cli/migrate'
@@ -23247,6 +24607,9 @@ packages:
       - eslint-config-prettier
       - fibers
       - node-notifier
+      - prop-types
+      - react-native
+      - redux
       - supports-color
       - ts-node
       - uglify-js
@@ -23256,7 +24619,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-tests.tgz:
-    resolution: {integrity: sha512-CZWJkKrRvO7ZB+TOk6aZsk6UGLt94ssHfYcklOi2ZiYiWE5tXXukE+PtUCKtMqf0bLYgeqzOBE5jqtZXprqc/Q==, tarball: file:projects/sdk-ui-tests.tgz}
+    resolution: {integrity: sha512-Duem0tBa9DDOwNqzLoe6o/Fu6dptaaFpAdwwizFfgNhc9dqsI3PXR9jeGd71whAdyaf/VT5k8aDpfFYM8xZcKA==, tarball: file:projects/sdk-ui-tests.tgz}
     name: '@rush-temp/sdk-ui-tests'
     version: 0.0.0
     dependencies:
@@ -23267,7 +24630,23 @@ packages:
       '@babel/preset-react': 7.16.0_@babel+core@7.16.0
       '@babel/runtime': 7.16.3
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
+      '@gooddata/experimental-workspace': 8.9.0-beta.0
+      '@gooddata/live-examples-workspace': 8.9.0-beta.0
+      '@gooddata/mock-handling': 8.9.0-beta.0
       '@gooddata/numberjs': 4.0.1
+      '@gooddata/reference-workspace': 8.9.0-beta.0
+      '@gooddata/sdk-backend-base': 8.9.0-beta.0
+      '@gooddata/sdk-backend-mockingbird': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-charts': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-ext': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-filters': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-geo': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-kit': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-pivot': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-theme-provider': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
       '@gooddata/stylelint-config': 5.0.0
       '@storybook/addon-actions': 6.3.0_5539cae010396b202b015f3568914e95
       '@storybook/addons': 6.3.0_react-dom@17.0.2+react@17.0.2
@@ -23320,8 +24699,8 @@ packages:
       spark-md5: 3.0.2
       style-loader: 1.3.0
       stylelint: 13.13.1
-      stylelint-config-prettier: 8.0.2_stylelint@13.13.1
       stylelint-checkstyle-formatter: 0.1.2
+      stylelint-config-prettier: 8.0.2_stylelint@13.13.1
       testcafe: 1.18.3
       ts-invariant: 0.7.5
       ts-jest: 27.0.7_0c1d779e00072c44d0a6a9615a4f0a08
@@ -23331,6 +24710,7 @@ packages:
       typescript: 4.0.2
       uuid: 8.3.2
     transitivePeerDependencies:
+      - '@ag-grid-community/core'
       - '@storybook/builder-webpack5'
       - '@storybook/manager-webpack5'
       - '@swc/core'
@@ -23344,6 +24724,7 @@ packages:
       - fibers
       - node-notifier
       - node-sass
+      - prop-types
       - sass
       - sockjs-client
       - supports-color
@@ -23359,12 +24740,16 @@ packages:
     dev: false
 
   file:projects/sdk-ui-theme-provider.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-ZsgLFpFsap3WXIl2ao0GbzJlsFMSDubmeBNhijL7FWe25ER/qtcl5K2i9akTht4D8mN9wz8zcWXZMQitRRz1sw==, tarball: file:projects/sdk-ui-theme-provider.tgz}
+    resolution: {integrity: sha512-SXkelVT/rg/H+e2p4lxmlAXASNifiw+Y66w9Fj41eIJKEEO22DQ9YCWL0ktjKuw/dQ4CrR6G4Eo7OFdjl/Kyhw==, tarball: file:projects/sdk-ui-theme-provider.tgz}
     id: file:projects/sdk-ui-theme-provider.tgz
     name: '@rush-temp/sdk-ui-theme-provider'
     version: 0.0.0
     dependencies:
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
+      '@gooddata/reference-workspace': 8.9.0-beta.0
+      '@gooddata/sdk-backend-mockingbird': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
       '@microsoft/api-documenter': 7.13.69
       '@microsoft/api-extractor': 7.18.19
       '@types/enzyme': 3.10.10
@@ -23418,13 +24803,20 @@ packages:
     dev: false
 
   file:projects/sdk-ui-vis-commons.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-pzHOxa8hSV7kHpoIfHMOwsJJUfWeCEOSrYFYfjkiezbSWXy7VOH/VHSl/xk0C2VFvLpRaz8/imUtHkO6xvqnvw==, tarball: file:projects/sdk-ui-vis-commons.tgz}
+    resolution: {integrity: sha512-cqv1YZJmnnA498B0hy4IwkwTFusgqlKnAoN8vwj5xsx8gYfbNCQfu+oYl3kmqKOCMISMvlzhuHunU46qOJysjw==, tarball: file:projects/sdk-ui-vis-commons.tgz}
     id: file:projects/sdk-ui-vis-commons.tgz
     name: '@rush-temp/sdk-ui-vis-commons'
     version: 0.0.0
     dependencies:
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
       '@gooddata/numberjs': 4.0.1
+      '@gooddata/reference-workspace': 8.9.0-beta.0
+      '@gooddata/sdk-backend-mockingbird': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
+      '@gooddata/sdk-ui': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
+      '@gooddata/sdk-ui-kit': 8.9.0-beta.0_11f1f8209432fa0b8a0ed58aa0ffac46
+      '@gooddata/sdk-ui-theme-provider': 8.9.0-beta.0_5e360d3d7093013c861db126e3464f82
       '@gooddata/stylelint-config': 5.0.0
       '@microsoft/api-documenter': 7.13.69
       '@microsoft/api-extractor': 7.18.19
@@ -23465,8 +24857,8 @@ packages:
       react-intl: 5.23.0_react@17.0.2+typescript@4.0.2
       react-measure: 2.5.2_react-dom@17.0.2+react@17.0.2
       stylelint: 13.13.1
-      stylelint-config-prettier: 8.0.2_stylelint@13.13.1
       stylelint-checkstyle-formatter: 0.1.2
+      stylelint-config-prettier: 8.0.2_stylelint@13.13.1
       ts-jest: 27.0.7_2775690c852eaeee158508de6867e4cb
       tslib: 2.3.1
       typescript: 4.0.2
@@ -23483,7 +24875,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-7U+ndYNjGDSegwIbF+ApwwPe0Qp+yC0ZLTBLqtvJzeC7FQwK13haxoEXmfZ4tuxT6sSzJyziqF7dHUq5pwV1nw==, tarball: file:projects/sdk-ui.tgz}
+    resolution: {integrity: sha512-iWNLg89vKEbBMVHcudTibQ/e0pBWiE4hf8itDPqRnSpygJ+3dr17l3Hjl3z6PfPTpkrjPwK3Cre98Yp6L2W8qg==, tarball: file:projects/sdk-ui.tgz}
     id: file:projects/sdk-ui.tgz
     name: '@rush-temp/sdk-ui'
     version: 0.0.0
@@ -23491,7 +24883,13 @@ packages:
       '@formatjs/intl-pluralrules': 1.3.9
       '@gooddata/eslint-config': 2.1.0_c7f7388c517bf46ad3dd940129cd580f
       '@gooddata/numberjs': 4.0.1
+      '@gooddata/reference-workspace': 8.9.0-beta.0
+      '@gooddata/sdk-backend-base': 8.9.0-beta.0
+      '@gooddata/sdk-backend-mockingbird': 8.9.0-beta.0
+      '@gooddata/sdk-backend-spi': 8.9.0-beta.0
+      '@gooddata/sdk-model': 8.9.0-beta.0
       '@gooddata/stylelint-config': 5.0.0
+      '@gooddata/util': 8.9.0-beta.0
       '@microsoft/api-documenter': 7.13.69
       '@microsoft/api-extractor': 7.18.19
       '@types/enzyme': 3.10.10
@@ -23538,8 +24936,8 @@ packages:
       react-dom: 17.0.2_react@17.0.2
       react-intl: 5.23.0_react@17.0.2+typescript@4.0.2
       stylelint: 13.13.1
-      stylelint-config-prettier: 8.0.2_stylelint@13.13.1
       stylelint-checkstyle-formatter: 0.1.2
+      stylelint-config-prettier: 8.0.2_stylelint@13.13.1
       ts-invariant: 0.7.5
       ts-jest: 27.0.7_2775690c852eaeee158508de6867e4cb
       tsd: 0.15.1
