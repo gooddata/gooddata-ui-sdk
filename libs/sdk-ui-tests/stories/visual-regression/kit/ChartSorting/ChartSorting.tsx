@@ -18,6 +18,8 @@ import {
     multipleAttributesMultipleMetricsSortConfig,
 } from "./ChartSortingMock";
 
+import "./styles.scss";
+
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 
 const dropdownSingleAttributeScenario: BackstopConfig = {
