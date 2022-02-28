@@ -18,7 +18,7 @@ function visitUrl(url: string, options: Partial<VisitOptions>) {
 
 export function visit(componentName: string, workspaceSettings?: ISettings): void {
     const dashboardUrl = getDashboardUrl();
-    visitUrl(`${dashboardUrl}/gooddata-ui-sdk#${componentName}`, {
+    visitUrl(`${dashboardUrl}/gooddata-ui-sdk?scenario=${componentName}`, {
         onBeforeLoad(win: Cypress.AUTWindow) {
             win["customWorkspaceSettings"] = workspaceSettings;
         },

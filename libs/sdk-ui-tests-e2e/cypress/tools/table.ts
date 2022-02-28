@@ -18,6 +18,10 @@ export class Table {
 
         this.getElement()
             .find(`.gd-cell-drillable.s-cell-${rowIndex}-${columnIndex} .s-value`)
+            .should("exist");
+
+        this.getElement()
+            .find(`.gd-cell-drillable.s-cell-${rowIndex}-${columnIndex} .s-value`)
             .first()
             .click();
     }

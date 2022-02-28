@@ -1,7 +1,5 @@
 #!/usr/bin/env node
-
-// (C) 2021 GoodData Corporation
-
+// (C) 2021-2022 GoodData Corporation
 const fs = require("fs");
 const path = require("path");
 const util = require("util");
@@ -13,6 +11,7 @@ const GITHUB_MESSAGE_FILE = path.resolve(RESULTS_DIR, "github_message.md");
 const { BUILD_URL } = process.env;
 
 function handleError(e) {
+    // eslint-disable-next-line no-console
     console.error(e);
     process.exit(1);
 }
@@ -35,7 +34,7 @@ function createSuitesMessage(testResults) {
     const result = [];
 
     testResults.forEach((spec) => {
-        const { file, tests, failures, time } = spec;
+        const { file, tests, failures, time, skipped } = spec;
 
         const isFailing = parseInt(failures) > 0;
 
@@ -50,13 +49,18 @@ function createSuitesMessage(testResults) {
 
         const formattedFile = isFailing ? `[🎥 ${shortFileName}](${videoFile})` : shortFileName;
 
-        result.push(`|${formattedStatus}|**${formattedFile}**|${tests}|${formattedFailures}|${time}s|`);
+        if (tests !== skipped) {
+            const skippedDetail = !skipped ? "" : `(${skipped} skipped)`;
+            result.push(
+                `|${formattedStatus}|**${formattedFile}**|${tests}${skippedDetail}|${formattedFailures}|${time}s|`,
+            );
+        }
     });
 
     return "" + "|Status|Name|Tests|Failures|Time|\n" + "|:--:|:--|:--:|:--:|--:|\n" + result.join("\n");
 }
 
-async function createGitHubReport() {
+async function main() {
     const testResults = await getTestResults();
 
     const result =
@@ -71,4 +75,4 @@ async function createGitHubReport() {
     await util.promisify(fs.writeFile)(GITHUB_MESSAGE_FILE, result).catch(handleError);
 }
 
-module.exports = createGitHubReport;
+main();
