@@ -24,6 +24,34 @@ function ensureRecordingsDirectory() {
     fs.mkdirSync("./recordings/mappings", { recursive: true });
 }
 
+function mockSensitiveData(accountSetting) {
+    const modifiedAccountSetting = { ...accountSetting };
+    modifiedAccountSetting.firstName = "First";
+    modifiedAccountSetting.lastName = "Last";
+    modifiedAccountSetting.email = "first.last@gooddata.com";
+    modifiedAccountSetting.login = "first.last@gooddata.com";
+    modifiedAccountSetting.phoneNumber = "000000000";
+    return modifiedAccountSetting;
+}
+
+function sanitizeResponseBody(jsonBody) {
+    try {
+        if (jsonBody.accountSetting) {
+            jsonBody.accountSetting = mockSensitiveData(jsonBody.accountSetting);
+        }
+
+        if (jsonBody.bootstrapResource && jsonBody.bootstrapResource.accountSetting) {
+            jsonBody.bootstrapResource.accountSetting = mockSensitiveData(
+                jsonBody.bootstrapResource.accountSetting,
+            );
+        }
+
+        return jsonBody;
+    } catch (e) {
+        process.stderr.write("SanitizeResponseBody: " + e + "\n");
+    }
+}
+
 function sanitizeCredentials() {
     try {
         const stdout = execSync("ls ./recordings/mappings/*").toString();
@@ -41,6 +69,11 @@ function sanitizeCredentials() {
                         if (mapping && mapping.request && mapping.request.url === "/gdc/account/login") {
                             delete mapping.request.bodyPatterns;
                             delete mapping.response.headers["Set-Cookie"];
+                        }
+                        if (mapping?.response?.body) {
+                            mapping.response.body = JSON.stringify(
+                                sanitizeResponseBody(JSON.parse(mapping.response.body)),
+                            );
                         }
                     });
                 }

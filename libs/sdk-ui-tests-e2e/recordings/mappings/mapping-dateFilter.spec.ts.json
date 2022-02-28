@@ -1,7 +1,7 @@
 {
     "mappings": [
         {
-            "id": "9a803aed-defd-46e9-a141-e24fdcc5a228",
+            "id": "f5910000-51d8-43d0-8db0-ae137abab9af",
             "name": "gdc_account_login",
             "request": {
                 "url": "/gdc/account/login",
@@ -20,10 +20,10 @@
                     "pragma": "no-cache"
                 }
             },
-            "uuid": "9a803aed-defd-46e9-a141-e24fdcc5a228"
+            "uuid": "f5910000-51d8-43d0-8db0-ae137abab9af"
         },
         {
-            "id": "88fbc915-aec2-44c6-92fc-93b51838181c",
+            "id": "1d7c17af-2d6e-4d2e-822f-0cbc45382b11",
             "name": "gdc_account_profile_current",
             "request": {
                 "url": "/gdc/account/profile/current",
@@ -39,10 +39,10 @@
                     "cache-control": "no-cache, no-store, must-revalidate"
                 }
             },
-            "uuid": "88fbc915-aec2-44c6-92fc-93b51838181c"
+            "uuid": "1d7c17af-2d6e-4d2e-822f-0cbc45382b11"
         },
         {
-            "id": "fa6fab87-ab97-4259-af42-2f0402398d15",
+            "id": "7e104637-bb8d-45f7-be12-0e008db548dc",
             "name": "gdc_account_token",
             "request": {
                 "url": "/gdc/account/token",
@@ -58,7 +58,7 @@
                     "WWW-Authenticate": "GoodData realm=\"GoodData API\" cookie=GDCAuthSST location=/gdc/account/login"
                 }
             },
-            "uuid": "fa6fab87-ab97-4259-af42-2f0402398d15"
+            "uuid": "7e104637-bb8d-45f7-be12-0e008db548dc"
         }
     ]
 }
