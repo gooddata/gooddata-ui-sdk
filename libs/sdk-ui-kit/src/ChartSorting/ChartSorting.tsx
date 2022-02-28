@@ -59,7 +59,7 @@ export const ChartSorting: React.FC<ChartSortingProps> = ({
                 <div className="gd-sort-charting-dropdown-header s-sort-charting-dropdown-header">
                     <FormattedMessage tagName="div" id="sorting.dropdown.header" />
                 </div>
-                <div className="section chart-sorting-body gd-sort-charting-dropdown">
+                <div className="gd-sort-charting-body gd-sort-charting-dropdown">
                     <ChartSortingDropdown
                         currentSort={currentSelectedSort}
                         availableSorts={availableSorts}
@@ -69,7 +69,7 @@ export const ChartSorting: React.FC<ChartSortingProps> = ({
                         enableRenamingMeasureToMetric={enableRenamingMeasureToMetric}
                     />
                 </div>
-                <div className="chart-sorting-dropdown-footer">
+                <div className="gd-chart-sorting-dropdown-footer">
                     <Button
                         className="gd-button-secondary gd-button-small s-sorting-dropdown-cancel"
                         value={intl.formatMessage({ id: "cancel" })}

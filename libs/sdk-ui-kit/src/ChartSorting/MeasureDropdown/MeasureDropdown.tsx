@@ -34,6 +34,7 @@ interface MeasureDropdownProps {
     availableSorts: IAvailableSortsGroup;
     intl: IntlShape;
     onSelect: (newSortItem: ISortItem) => void;
+    index: number;
 
     disabledExplanationTooltip?: string;
     enableRenamingMeasureToMetric?: boolean;
@@ -113,7 +114,9 @@ export const MeasureDropdown: React.FC<MeasureDropdownProps> = ({
     bucketItemNames,
     intl,
     onSelect,
+    index,
     enableRenamingMeasureToMetric,
+    disabledExplanationTooltip,
 }) => {
     const [width, setWidth] = useState<number>(0);
     const buttonRef = useRef<HTMLInputElement>();
@@ -148,14 +151,14 @@ export const MeasureDropdown: React.FC<MeasureDropdownProps> = ({
     return (
         <div className="sort-measure-section">
             <span className="select-label">
-                <span>by</span>
+                <span>{intl.formatMessage({ id: "sorting.by" })}</span>
             </span>
             <div className="measure-sorting-dropdown">
                 {disableDropdown ? (
                     <>
                         <BubbleHoverTrigger>
                             <DropdownButton
-                                className="s-inner-aggregation-disabled-button s-inner-measure-dropdown-button"
+                                className="s-inner-aggregation-disabled-button s-measure-dropdown-button"
                                 value={measureName}
                                 disabled={true}
                                 iconLeft={getMeasureIconClassNameBySelected(
@@ -163,9 +166,11 @@ export const MeasureDropdown: React.FC<MeasureDropdownProps> = ({
                                     enableRenamingMeasureToMetric,
                                 )}
                             />
-                            <Bubble alignPoints={[{ align: "cr cl" }, { align: "cl cr" }]}>
-                                {/* TODO: TNT-466 - Tooltip explanation message provided by PV  */}
-                            </Bubble>
+                            {disabledExplanationTooltip && (
+                                <Bubble alignPoints={[{ align: "cr cl" }, { align: "cl cr" }]}>
+                                    {/* TODO: TNT-466 - Tooltip explanation message provided by PV  */}
+                                </Bubble>
+                            )}
                         </BubbleHoverTrigger>
                     </>
                 ) : (
@@ -174,31 +179,26 @@ export const MeasureDropdown: React.FC<MeasureDropdownProps> = ({
                         closeOnMouseDrag
                         closeOnParentScroll
                         renderButton={({ isOpen, toggleDropdown }) => (
-                            <BubbleHoverTrigger>
-                                <div ref={buttonRef}>
-                                    <DropdownButton
-                                        className="s-sort-type-measure-button s-inner-measure-dropdown-button"
-                                        value={measureName}
-                                        isOpen={isOpen}
-                                        disabled={disableDropdown}
-                                        onClick={toggleDropdown}
-                                        iconLeft={getMeasureIconClassNameBySelected(
-                                            buttonValue.id,
-                                            enableRenamingMeasureToMetric,
-                                        )}
-                                    />
-                                </div>
-                                <Bubble alignPoints={[{ align: "cr cl" }, { align: "cl cr" }]}>
-                                    {/* TODO: TNT-466 - Tooltip explanation message provided by PV  */}
-                                </Bubble>
-                            </BubbleHoverTrigger>
+                            <div ref={buttonRef}>
+                                <DropdownButton
+                                    className={`s-sort-type-measure-button s-measure-dropdown-button-${index}`}
+                                    value={measureName}
+                                    isOpen={isOpen}
+                                    disabled={disableDropdown}
+                                    onClick={toggleDropdown}
+                                    iconLeft={getMeasureIconClassNameBySelected(
+                                        buttonValue.id,
+                                        enableRenamingMeasureToMetric,
+                                    )}
+                                />
+                            </div>
                         )}
                         renderBody={({ closeDropdown }) => (
                             <DropdownList
                                 width={width}
                                 items={items}
                                 className="gd-measure-sorting-dropdown-body s-measure-sorting-dropdown-body"
-                                renderItem={({ item }) => {
+                                renderItem={({ item, rowIndex }) => {
                                     const isSelected =
                                         item.title === buttonValue.title &&
                                         item.sequenceNumber === buttonValue.sequenceNumber;
@@ -215,6 +215,7 @@ export const MeasureDropdown: React.FC<MeasureDropdownProps> = ({
                                             "is-selected": isSelected,
                                         },
                                         `s-sorting-measure-${stringUtils.simplifyText(item.title)}`,
+                                        `s-sorting-measure-${rowIndex}`,
                                     );
 
                                     return (

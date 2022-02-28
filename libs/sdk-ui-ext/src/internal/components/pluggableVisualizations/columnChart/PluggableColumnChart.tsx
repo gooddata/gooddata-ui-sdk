@@ -1,9 +1,14 @@
 // (C) 2019-2022 GoodData Corporation
+import isEmpty from "lodash/isEmpty";
+import { VisualizationTypes, BucketNames } from "@gooddata/sdk-ui";
+import { localIdRef, newAttributeSort } from "@gooddata/sdk-model";
 import { PluggableColumnBarCharts } from "../PluggableColumnBarCharts";
 import { AXIS, AXIS_NAME } from "../../../constants/axis";
 import { COLUMN_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
-import { IVisConstruct } from "../../../interfaces/Visualization";
-import { VisualizationTypes } from "@gooddata/sdk-ui";
+import { IVisConstruct, IReferencePoint, IBucketItem } from "../../../interfaces/Visualization";
+import { getBucketItems } from "../../../utils/bucketHelper";
+import { canSortStackTotalValue } from "../barChart/sortHelpers";
+import { newMeasureSortSuggestion, ISortConfig } from "../../../interfaces/SortConfig";
 
 export class PluggableColumnChart extends PluggableColumnBarCharts {
     constructor(props: IVisConstruct) {
@@ -18,5 +23,125 @@ export class PluggableColumnChart extends PluggableColumnBarCharts {
 
     public getSupportedPropertiesList(): string[] {
         return COLUMN_CHART_SUPPORTED_PROPERTIES[this.axis || AXIS.DUAL] || [];
+    }
+
+    protected getDefaultAndAvailableSort(
+        measures: IBucketItem[],
+        viewBy: IBucketItem[],
+        stackBy: IBucketItem[],
+        canSortStackTotalValue: boolean,
+    ): {
+        defaultSort: ISortConfig["currentSort"];
+        availableSorts: ISortConfig["availableSorts"];
+    } {
+        const defaultSort = viewBy.map((vb) => newAttributeSort(vb.localIdentifier, "asc"));
+
+        if (viewBy.length === 2) {
+            if (measures.length >= 2 && !canSortStackTotalValue) {
+                return {
+                    defaultSort,
+                    availableSorts: [
+                        {
+                            itemId: localIdRef(viewBy[0].localIdentifier),
+                            attributeSort: {
+                                normalSortEnabled: true,
+                                areaSortEnabled: true,
+                            },
+                            metricSorts: [
+                                ...measures.map((m) => newMeasureSortSuggestion(m.localIdentifier)),
+                            ],
+                        },
+                        {
+                            itemId: localIdRef(viewBy[1].localIdentifier),
+                            attributeSort: {
+                                normalSortEnabled: true,
+                                areaSortEnabled: true,
+                            },
+                            metricSorts: [
+                                ...measures.map((m) => newMeasureSortSuggestion(m.localIdentifier)),
+                            ],
+                        },
+                    ],
+                };
+            }
+
+            return {
+                defaultSort,
+                availableSorts: [
+                    {
+                        itemId: localIdRef(viewBy[0].localIdentifier),
+                        attributeSort: {
+                            normalSortEnabled: true,
+                            areaSortEnabled: true,
+                        },
+                    },
+                    {
+                        itemId: localIdRef(viewBy[1].localIdentifier),
+                        attributeSort: {
+                            normalSortEnabled: true,
+                            areaSortEnabled: true,
+                        },
+                        metricSorts: [...measures.map((m) => newMeasureSortSuggestion(m.localIdentifier))],
+                    },
+                ],
+            };
+        }
+
+        if (!isEmpty(viewBy) && (!isEmpty(stackBy) || canSortStackTotalValue)) {
+            return {
+                defaultSort,
+                availableSorts: [
+                    {
+                        itemId: localIdRef(viewBy[0].localIdentifier),
+                        attributeSort: {
+                            normalSortEnabled: true,
+                            areaSortEnabled: true,
+                        },
+                        metricSorts: [...measures.map((m) => newMeasureSortSuggestion(m.localIdentifier))],
+                    },
+                ],
+            };
+        }
+
+        if (!isEmpty(viewBy) && !isEmpty(measures)) {
+            return {
+                defaultSort,
+                availableSorts: [
+                    {
+                        itemId: localIdRef(viewBy[0].localIdentifier),
+                        attributeSort: {
+                            normalSortEnabled: true,
+                            areaSortEnabled: measures.length > 1,
+                        },
+                        metricSorts: [...measures.map((m) => newMeasureSortSuggestion(m.localIdentifier))],
+                    },
+                ],
+            };
+        }
+
+        return {
+            defaultSort: [],
+            availableSorts: [],
+        };
+    }
+
+    public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
+        const { buckets, properties } = referencePoint;
+        const viewBy = getBucketItems(buckets, BucketNames.VIEW);
+        const stackBy = getBucketItems(buckets, BucketNames.STACK);
+        const measures = getBucketItems(buckets, BucketNames.MEASURES);
+        const disabled = viewBy.length < 1 || measures.length < 1;
+        const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(
+            measures,
+            viewBy,
+            stackBy,
+            canSortStackTotalValue(buckets, properties),
+        );
+        return Promise.resolve({
+            supported: true,
+            disabled,
+            currentSort: defaultSort,
+            availableSorts,
+        });
     }
 }

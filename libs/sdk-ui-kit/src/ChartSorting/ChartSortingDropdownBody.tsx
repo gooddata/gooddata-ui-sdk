@@ -28,7 +28,7 @@ export const ChartSortingDropdownBody: React.FC<ChartSortingDropdownBodyProps> =
             "gd-dropdown",
             "gd-sort-charting-dropdown",
             "gd-sort-charting-dropdown-wide",
-            "s-sort-charting-dropddown",
+            "s-sort-charting-dropdown",
         ]);
     };
     return (

@@ -127,4 +127,82 @@ describe("PluggableColumnChart", () => {
             expect(axis).toEqual(AXIS.DUAL);
         });
     });
+
+    describe("Sort config", () => {
+        it("should create sort config with sorting supported but disabled when there is no view by attribute", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(
+                referencePointMocks.oneMetricNoCategoriesReferencePoint,
+            );
+
+            expect(sortConfig.supported).toBeTruthy();
+            expect(sortConfig.disabled).toBeTruthy();
+        });
+
+        it("should create sort config with sorting disabled when there is no measure", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(referencePointMocks.justViewByReferencePoint);
+
+            expect(sortConfig.supported).toBeTruthy();
+            expect(sortConfig.disabled).toBeTruthy();
+        });
+
+        it("should create sort config with sorting enabled when there is view by attribute", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(
+                referencePointMocks.oneMetricAndCategoryAndStackReferencePoint,
+            );
+
+            expect(sortConfig.supported).toBeTruthy();
+            expect(sortConfig.disabled).toBeFalsy();
+        });
+
+        it("should provide attribute normal sort as default sort, attribute normal and measure sort as available sorts for 1M + 1VB", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(referencePointMocks.oneMetricOneCategory);
+
+            expect(sortConfig).toMatchSnapshot();
+        });
+
+        it("should provide attribute normal sort as default sort, attribute area and measure sort as available sorts for 2M + 1VB", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(referencePointMocks.twoMetricAndOneCategoryRefPoint);
+            expect(sortConfig).toMatchSnapshot();
+        });
+
+        it("should provide attribute normal sort as default sort, one attribute area and two measure sorts as available sorts for 2 stacked M + 1VB", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(
+                referencePointMocks.twoStackedMetricAndOneCategoryRefPoint,
+            );
+
+            expect(sortConfig).toMatchSnapshot();
+        });
+
+        it("should provide two attribute normal sorts as default sort, two attribute area and two measure sorts as available sorts for 2M + 2VB", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(
+                referencePointMocks.twoMetricAndTwoCategoriesRefPoint,
+            );
+
+            expect(sortConfig).toMatchSnapshot();
+        });
+
+        it("should provide two attribute normal sorts as default sort, two attribute area and one measure sorts as available sorts for 2 stacked M + 2VB", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(
+                referencePointMocks.twoStackedMetricAndTwoCategoriesRefPoint,
+            );
+
+            expect(sortConfig).toMatchSnapshot();
+        });
+    });
 });

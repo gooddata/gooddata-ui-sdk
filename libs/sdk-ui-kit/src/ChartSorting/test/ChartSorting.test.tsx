@@ -124,7 +124,7 @@ describe("ChartSorting", () => {
 
             changeMeasureDropdownValue(component, "Timeline");
 
-            expect(component.find(".s-inner-measure-dropdown-button").at(1).text()).toBe("Timeline (M2)");
+            expect(component.find(".s-measure-dropdown-button-0").at(1).text()).toBe("Timeline (M2)");
         });
     });
 
