@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { IHeaderPredicate, IHeaderPredicateContext } from "./HeaderPredicate";
 import {
     getMappingHeaderIdentifier,
@@ -111,9 +111,28 @@ function matchHeaderUri(uri: string, header: IMappingHeader): boolean {
     return headerUri ? headerUri === uri : false;
 }
 
-function matchHeaderIdentifier(identifier: string, header: IMappingHeader): boolean {
+function matchHeaderIdentifierWithCompositeSupport(
+    identifier: string,
+    header: IMappingHeader,
+    currentWorkspace: string,
+): boolean {
     const headerIdentifier = getMappingHeaderIdentifier(header);
-    return headerIdentifier ? headerIdentifier === identifier : false;
+    if (!headerIdentifier) {
+        return false;
+    }
+
+    if (headerIdentifier === identifier) {
+        return true;
+    }
+
+    // also try stripping current workspace prefix in case we are in a workspace with composite ids
+    const compositeIdFromCurrentWorkspaceRegex = new RegExp(`^${currentWorkspace}:`);
+    const isCompositeIdFromCurrentWorkspace = compositeIdFromCurrentWorkspaceRegex.test(identifier);
+
+    return (
+        isCompositeIdFromCurrentWorkspace &&
+        headerIdentifier === identifier.replace(compositeIdFromCurrentWorkspaceRegex, "")
+    );
 }
 
 function matchUri(uri: string, measure: IMeasure): boolean {
@@ -121,9 +140,28 @@ function matchUri(uri: string, measure: IMeasure): boolean {
     return simpleMeasureUri ? simpleMeasureUri === uri : false;
 }
 
-function matchMeasureIdentifier(identifier: string, measure: IMeasure): boolean {
+function matchMeasureIdentifierWithCompositeSupport(
+    identifier: string,
+    measure: IMeasure,
+    currentWorkspace: string,
+): boolean {
     const simpleMeasureIdentifier = measureIdentifier(measure);
-    return simpleMeasureIdentifier ? simpleMeasureIdentifier === identifier : false;
+    if (!simpleMeasureIdentifier) {
+        return false;
+    }
+
+    if (simpleMeasureIdentifier === identifier) {
+        return true;
+    }
+
+    // also try stripping current workspace prefix in case we are in a workspace with composite ids
+    const compositeIdFromCurrentWorkspaceRegex = new RegExp(`^${currentWorkspace}:`);
+    const isCompositeIdFromCurrentWorkspace = compositeIdFromCurrentWorkspaceRegex.test(identifier);
+
+    return (
+        isCompositeIdFromCurrentWorkspace &&
+        simpleMeasureIdentifier === identifier.replace(compositeIdFromCurrentWorkspaceRegex, "")
+    );
 }
 
 function matchDerivedMeasureByMasterUri(
@@ -163,13 +201,13 @@ function matchDerivedMeasureByMasterIdentifier(
 
     const masterMeasureHeader = dv.meta().measureDescriptor(masterMeasureLocalIdentifier)!;
 
-    if (matchHeaderIdentifier(identifier, masterMeasureHeader)) {
+    if (matchHeaderIdentifierWithCompositeSupport(identifier, masterMeasureHeader, dv.definition.workspace)) {
         return true;
     }
 
     const masterMeasure = dv.def().measure(masterMeasureLocalIdentifier)!;
 
-    return matchMeasureIdentifier(identifier, masterMeasure);
+    return matchMeasureIdentifierWithCompositeSupport(identifier, masterMeasure, dv.definition.workspace);
 }
 
 /**
@@ -224,7 +262,7 @@ export function identifierMatch(identifier: string): IHeaderPredicate {
             return false;
         }
 
-        if (matchHeaderIdentifier(identifier, header)) {
+        if (matchHeaderIdentifierWithCompositeSupport(identifier, header, dv.definition.workspace)) {
             return true;
         }
 
@@ -238,7 +276,7 @@ export function identifierMatch(identifier: string): IHeaderPredicate {
             return false;
         }
 
-        if (matchMeasureIdentifier(identifier, measure)) {
+        if (matchMeasureIdentifierWithCompositeSupport(identifier, measure, dv.definition.workspace)) {
             return true;
         }
 

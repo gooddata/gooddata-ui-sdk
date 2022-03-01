@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { IHeaderPredicateContext } from "../HeaderPredicate";
 import { barChartForDrillTests } from "../../../../__mocks__/fixtures";
 import { IAttributeDescriptor, IMeasureDescriptor, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
@@ -186,3 +186,5 @@ export const attributeHeaderItem: IResultAttributeHeader = {
 export const context: IHeaderPredicateContext = {
     dv: barChartForDrillTests,
 };
+
+export const workspace = context.dv.definition.workspace;
