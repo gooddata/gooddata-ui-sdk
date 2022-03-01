@@ -237,5 +237,12 @@
     "shareDialog.share.grantee.item.user.all": "Все пользователи",
     "shareDialog.share.grantee.item.user.inactive": "Неактивный пользователь",
     "shareDialog.share.grantee.item.user.inactive.description": "Пользователь удален из этой рабочей области",
-    "shareDialog.share.grantee.item.remove.selection": "Удалить из выбора."
+    "shareDialog.share.grantee.item.remove.selection": "Удалить из выбора.",
+    "sorting.dropdown.header": "Сортировка анализа",
+    "sorting.type.alphabetical.asc": "От А до Я",
+    "sorting.type.alphabetical.desc": "От Я до А",
+    "sorting.type.numerical.asc": "От меньшего к большему",
+    "sorting.type.numerical.desc": "От большего к меньшему",
+    "sorting.sum.of.all.measure._measure": "Сумма всех показателей (всего)",
+    "sorting.sum.of.all.measure._metric": "Сумма всех метрик (всего)"
 }

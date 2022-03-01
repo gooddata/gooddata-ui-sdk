@@ -237,5 +237,12 @@
     "shareDialog.share.grantee.item.user.all": "Todos os utilizadores",
     "shareDialog.share.grantee.item.user.inactive": "Utilizador inativo",
     "shareDialog.share.grantee.item.user.inactive.description": "O utilizador foi eliminado desta área de trabalho",
-    "shareDialog.share.grantee.item.remove.selection": "Remover da seleção."
+    "shareDialog.share.grantee.item.remove.selection": "Remover da seleção.",
+    "sorting.dropdown.header": "Ordenar insight",
+    "sorting.type.alphabetical.asc": "A a Z",
+    "sorting.type.alphabetical.desc": "Z a A",
+    "sorting.type.numerical.asc": "Menor para maior",
+    "sorting.type.numerical.desc": "Maior para menor",
+    "sorting.sum.of.all.measure._measure": "Soma de todas as medidas (total)",
+    "sorting.sum.of.all.measure._metric": "Soma de todas as métricas (total)"
 }

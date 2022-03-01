@@ -278,5 +278,9 @@
     "kpiAlertDialog.unsaved.changes.headline": "KPI ダッシュボードを終了しますか？",
     "kpiAlertDialog.unsaved.changes.message": "未公開の変更は破棄されます。",
     "kpiAlertDialog.unsaved.changes.leave.anyway": "終了",
-    "kpiAlertDialog.unsaved.changes.stay": "終了しない"
+    "kpiAlertDialog.unsaved.changes.stay": "終了しない",
+    "sorting.tooltip.sum._measure": "インサイトは 2 つの属性でスライスされます。最初の属性は、常にすべての測定値の合計で並べ替えられます。",
+    "sorting.tooltip.sum._metric": "インサイトは 2 つの属性でスライスされます。最初の属性は、常にすべてのメトリックの合計で並べ替えられます。",
+    "sorting.tooltip.measure._measure": "インサイトですでに使用されている測定値でのみ並べ替えができます。",
+    "sorting.tooltip.measure._metric": "インサイトですでに使用されているメトリックでのみ並べ替えができます。"
 }

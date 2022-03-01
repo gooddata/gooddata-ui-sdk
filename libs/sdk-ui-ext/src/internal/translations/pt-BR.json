@@ -278,5 +278,9 @@
     "kpiAlertDialog.unsaved.changes.headline": "Deixar o dashboard de KPI?",
     "kpiAlertDialog.unsaved.changes.message": "Há alterações não publicadas que serão perdidas.",
     "kpiAlertDialog.unsaved.changes.leave.anyway": "Deixar mesmo assim",
-    "kpiAlertDialog.unsaved.changes.stay": "Manter"
+    "kpiAlertDialog.unsaved.changes.stay": "Manter",
+    "sorting.tooltip.sum._measure": "O insight foi dividido por dois atributos. O primeiro atributo é classificado sempre pelos valores da soma de todas as medidas.",
+    "sorting.tooltip.sum._metric": "O insight foi dividido por dois atributos. O primeiro atributo é classificado sempre pelos valores da soma de todas as métricas.",
+    "sorting.tooltip.measure._measure": "Você pode classificar apenas pelas medidas já usadas no insight.",
+    "sorting.tooltip.measure._metric": "Você pode classificar apenas pelas métricas já usadas no insight."
 }

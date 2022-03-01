@@ -278,5 +278,9 @@
     "kpiAlertDialog.unsaved.changes.headline": "Quitter le tableau de bord de KPI ?",
     "kpiAlertDialog.unsaved.changes.message": "Certaines modifications ne sont pas publiées et seront perdues.",
     "kpiAlertDialog.unsaved.changes.leave.anyway": "Quitter quand même",
-    "kpiAlertDialog.unsaved.changes.stay": "Rester"
+    "kpiAlertDialog.unsaved.changes.stay": "Rester",
+    "sorting.tooltip.sum._measure": "La perception est découpée par deux attributs. Le premier attribut est toujours trié par la somme de toutes les valeurs de mesure.",
+    "sorting.tooltip.sum._metric": "La perception est découpée par deux attributs. Le premier attribut est toujours trié par la somme de toutes les valeurs de métrique.",
+    "sorting.tooltip.measure._measure": "Vous pouvez effectuer un tri uniquement avec les mesures déjà utilisées dans la perception.",
+    "sorting.tooltip.measure._metric": "Vous pouvez effectuer un tri uniquement avec les métriques déjà utilisées dans la perception."
 }

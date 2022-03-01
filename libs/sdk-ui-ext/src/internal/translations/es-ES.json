@@ -278,5 +278,9 @@
     "kpiAlertDialog.unsaved.changes.headline": "¿Salir del panel de KPI?",
     "kpiAlertDialog.unsaved.changes.message": "Hay cambios sin publicar que se perderán.",
     "kpiAlertDialog.unsaved.changes.leave.anyway": "Salir de todas formas",
-    "kpiAlertDialog.unsaved.changes.stay": "Quedarse"
+    "kpiAlertDialog.unsaved.changes.stay": "Quedarse",
+    "sorting.tooltip.sum._measure": "La perspectiva está segmentada por dos atributos. El primer atributo siempre se ordena por la suma de todos los valores de medida.",
+    "sorting.tooltip.sum._metric": "La perspectiva está segmentada por dos atributos. El primer atributo siempre se ordena por la suma de todos los valores de métrica.",
+    "sorting.tooltip.measure._measure": "Solo puede ordenar por medidas ya usadas en la perspectiva.",
+    "sorting.tooltip.measure._metric": "Solo puede ordenar por métricas ya usadas en la perspectiva."
 }

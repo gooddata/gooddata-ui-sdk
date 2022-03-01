@@ -278,5 +278,9 @@
     "kpiAlertDialog.unsaved.changes.headline": "KPI-Dashboard verlassen?",
     "kpiAlertDialog.unsaved.changes.message": "Unveröffentlichte Änderungen gehen verloren.",
     "kpiAlertDialog.unsaved.changes.leave.anyway": "Trotzdem verlassen",
-    "kpiAlertDialog.unsaved.changes.stay": "Bleiben"
+    "kpiAlertDialog.unsaved.changes.stay": "Bleiben",
+    "sorting.tooltip.sum._measure": "Die Betrachtung wird durch zwei Attribute geteilt. Das erste Attribut wird immer nach der Summe aller Messwerte sortiert.",
+    "sorting.tooltip.sum._metric": "Die Betrachtung wird durch zwei Attribute geteilt. Das erste Attribut wird immer nach der Summe aller Metriken sortiert.",
+    "sorting.tooltip.measure._measure": "Sie können nur nach Messwerten sortieren, die bereits für die Betrachtung verwendet wurden.",
+    "sorting.tooltip.measure._metric": "Sie können nur nach Metriken sortieren, die bereits für die Betrachtung verwendet wurden."
 }
