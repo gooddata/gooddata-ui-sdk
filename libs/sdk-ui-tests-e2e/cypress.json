@@ -5,6 +5,7 @@
     "viewportWidth": 1400,
     "viewportHeight": 800,
     "defaultCommandTimeout": 20000,
+    "trashAssetsBeforeRuns": false,
     "reporter": "junit",
     "reporterOptions": {
         "mochaFile": "./cypress/results/result.[hash].xml"
