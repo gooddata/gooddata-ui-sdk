@@ -141,7 +141,7 @@ export const getElementTotalCount = async (
         });
 
     // only set the parent filters if needed to avoid errors on backends that do not support this feature
-    if (parentFilters?.length > 0) {
+    if (parentFilters?.length > 0 && isParentFilteringEnabled(backend)) {
         elementsLoader = elementsLoader.withAttributeFilters(parentFilters);
     }
 
