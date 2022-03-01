@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { TableDescriptor } from "./structure/tableDescriptor";
 import { IDataView, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
@@ -560,14 +560,6 @@ export class TableFacade {
         invariant(this.columnApi);
 
         let columnsToReset = columns;
-
-        /*
-         * Ensures that all columns have the correct width to use during column reset
-         * resetResizedColumn uses updateAutoResizedColumns to properly reset columns
-         */
-        if (!Object.keys(this.autoResizedColumns).length) {
-            this.updateAutoResizedColumns(resizingConfig);
-        }
 
         if (this.isAllMeasureResizeOperation(resizingConfig, columns)) {
             this.resizedColumnsStore.removeAllMeasureColumns();
