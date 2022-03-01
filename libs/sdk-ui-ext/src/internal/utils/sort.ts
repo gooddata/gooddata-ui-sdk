@@ -1,10 +1,9 @@
 // (C) 2019-2022 GoodData Corporation
-import every from "lodash/every";
-import includes from "lodash/includes";
 import isEmpty from "lodash/isEmpty";
 import isNil from "lodash/isNil";
 import omitBy from "lodash/omitBy";
-import set from "lodash/set";
+import isEqual from "lodash/isEqual";
+
 import {
     bucketAttributes,
     IBucket,
@@ -16,20 +15,19 @@ import {
     newAttributeSort,
     newMeasureSort,
     SortDirection,
-    SortEntityIds,
-    sortEntityIds,
     ISortItem,
     newAttributeAreaSort,
+    ILocatorItem,
+    isAttributeAreaSort,
+    isAttributeSort,
+    isMeasureSort,
+    sortMeasureLocators,
 } from "@gooddata/sdk-model";
+
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import { SORT_DIR_ASC, SORT_DIR_DESC } from "../constants/sort";
+import { SORT_DIR_DESC } from "../constants/sort";
 import { IBucketItem, IBucketOfFun, IExtendedReferencePoint } from "../interfaces/Visualization";
-
-import { getFirstAttribute, getFirstValidMeasure } from "./bucketHelper";
-
-function getMeasureSortItems(identifier: string, direction: SortDirection): ISortItem[] {
-    return [newMeasureSort(identifier, direction)];
-}
+import { IAvailableSortsGroup } from "../interfaces/SortConfig";
 
 export function getAttributeSortItem(
     identifier: string,
@@ -158,12 +156,6 @@ export function getBucketItemIdentifiers(referencePoint: IExtendedReferencePoint
     }, []);
 }
 
-function isSortItemValid(item: ISortItem, identifiers: string[]) {
-    const sortIdentifiers: SortEntityIds = sortEntityIds(item);
-
-    return every(sortIdentifiers.allIdentifiers, (id) => includes(identifiers, id));
-}
-
 export function removeSort(referencePoint: Readonly<IExtendedReferencePoint>): IExtendedReferencePoint {
     if (referencePoint.properties) {
         const properties = omitBy(
@@ -183,52 +175,77 @@ export function removeSort(referencePoint: Readonly<IExtendedReferencePoint>): I
     return referencePoint;
 }
 
-export function removeInvalidSort(
-    referencePoint: Readonly<IExtendedReferencePoint>,
-): IExtendedReferencePoint {
-    if (referencePoint.properties) {
-        const identifiers = getBucketItemIdentifiers(referencePoint);
-
-        let sortItems = referencePoint.properties.sortItems || [];
-        sortItems = sortItems.filter((item: ISortItem) => {
-            return isSortItemValid(item, identifiers);
-        });
-
-        return {
-            ...referencePoint,
-            properties: {
-                ...referencePoint.properties,
-                sortItems,
-            },
-        };
-    }
-
-    return referencePoint;
+function validateAreaSort(areaSort: ISortItem, availableSort: IAvailableSortsGroup) {
+    return (
+        isAttributeAreaSort(areaSort) &&
+        availableSort &&
+        areaSort.attributeSortItem.attributeIdentifier === availableSort.itemId.localIdentifier &&
+        availableSort.attributeSort?.areaSortEnabled
+    );
 }
 
-export function setSortItems(referencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
-    const buckets = referencePoint.buckets;
-    const sortItems = referencePoint?.properties?.sortItems ?? [];
+function validateAttributeSort(attributeSort: ISortItem, availableSort: IAvailableSortsGroup) {
+    return (
+        isAttributeSort(attributeSort) &&
+        availableSort &&
+        attributeSort.attributeSortItem.attributeIdentifier === availableSort.itemId.localIdentifier &&
+        availableSort.attributeSort?.normalSortEnabled
+    );
+}
 
-    if (sortItems.length > 0) {
-        return referencePoint;
+function validateMeasureSortLocators(sortLocators: ILocatorItem[], availableLocators: ILocatorItem[]) {
+    return (
+        sortLocators.length === availableLocators.length &&
+        sortLocators.every((sortLocator, index) => isEqual(sortLocator, availableLocators[index]))
+    );
+}
+
+function validateMeasureSort(measureSort: ISortItem, availableSort: IAvailableSortsGroup) {
+    return (
+        isMeasureSort(measureSort) &&
+        availableSort &&
+        !!availableSort.metricSorts?.find((availableMetricSort) =>
+            validateMeasureSortLocators(availableMetricSort.locators, sortMeasureLocators(measureSort)),
+        )
+    );
+}
+
+function getSortsValidity(currentSort: ISortItem[], availableSorts: IAvailableSortsGroup[]): boolean[] {
+    return currentSort.map((sortItem, index) => {
+        if (isAttributeAreaSort(sortItem)) {
+            return validateAreaSort(sortItem, availableSorts[index]);
+        }
+        if (isAttributeSort(sortItem)) {
+            return validateAttributeSort(sortItem, availableSorts[index]);
+        }
+        if (isMeasureSort(sortItem)) {
+            return validateMeasureSort(sortItem, availableSorts[index]);
+        }
+        return false;
+    });
+}
+
+const isValid = (valid: boolean): boolean => valid;
+
+/**
+ * TODO INE: use it in TNT-463
+ * Validates the current sort in context of available sorts for current moment.
+ * If current sort is not valid it is replaced by default one for current moment.
+ * @param currentSort - current sort to validate
+ * @param availableSorts - available sorts for current moment (buckets content, set properties)
+ * @param defaultSort - default sort for current moment
+ */
+export function validateCurrentSort(
+    currentSort: ISortItem[],
+    availableSorts: IAvailableSortsGroup[],
+    defaultSort: ISortItem[],
+): ISortItem[] {
+    const validityOfCurrentSortItems = getSortsValidity(currentSort, availableSorts);
+    if (
+        validityOfCurrentSortItems.length === availableSorts.length &&
+        validityOfCurrentSortItems.every(isValid)
+    ) {
+        return currentSort;
     }
-
-    const firstMeasure = getFirstValidMeasure(buckets);
-    const firstAttribute = getFirstAttribute(buckets);
-    if (firstMeasure !== null && firstAttribute == null) {
-        set(
-            referencePoint,
-            ["properties", "sortItems"],
-            getMeasureSortItems(firstMeasure.localIdentifier, SORT_DIR_DESC),
-        );
-    } else if (firstAttribute !== null) {
-        set(
-            referencePoint,
-            ["properties", "sortItems"],
-            [getAttributeSortItem(firstAttribute.localIdentifier, SORT_DIR_ASC)],
-        );
-    }
-
-    return referencePoint;
+    return defaultSort;
 }

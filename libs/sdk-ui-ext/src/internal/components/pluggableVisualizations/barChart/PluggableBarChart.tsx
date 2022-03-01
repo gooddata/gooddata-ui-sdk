@@ -12,7 +12,7 @@ import BarChartConfigurationPanel from "../../configurationPanels/BarChartConfig
 import { AXIS, AXIS_NAME } from "../../../constants/axis";
 import { ISortConfig, newMeasureSortSuggestion } from "../../../interfaces/SortConfig";
 import { getBucketItems } from "../../../utils/bucketHelper";
-import { canSortStackTotalValue, validateCurrentSorts } from "./sortHelpers";
+import { canSortStackTotalValue } from "./sortHelpers";
 
 export class PluggableBarChart extends PluggableColumnBarCharts {
     constructor(props: IVisConstruct) {
@@ -155,32 +155,17 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
     }
     public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
         const { buckets, properties } = referencePoint;
-        const currentSort =
-            properties && properties.sortItems && properties.sortItems.length
-                ? properties.sortItems
-                : undefined;
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
         const measures = getBucketItems(buckets, BucketNames.MEASURES);
         const disabled = viewBy.length < 1 || measures.length < 1;
         const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(
             referencePoint,
-            canSortStackTotalValue(referencePoint.buckets, referencePoint.properties),
+            canSortStackTotalValue(buckets, properties),
         );
-        let newCurrentSort = defaultSort;
-        if (currentSort) {
-            const validityOfCurrentSortItems = validateCurrentSorts(currentSort, availableSorts);
-            newCurrentSort = defaultSort.map((defaultSortItem, index) => {
-                if (validityOfCurrentSortItems[index]) {
-                    return currentSort[index];
-                } else {
-                    return defaultSortItem;
-                }
-            });
-        }
         return Promise.resolve({
             supported: true,
             disabled,
-            currentSort: newCurrentSort.filter((item) => item !== undefined),
+            currentSort: defaultSort,
             availableSorts: availableSorts,
         });
     }
