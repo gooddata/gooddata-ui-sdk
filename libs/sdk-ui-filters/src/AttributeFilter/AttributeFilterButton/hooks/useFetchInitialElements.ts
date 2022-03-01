@@ -39,7 +39,7 @@ const prepareElementsTitleQuery = (
         .attributes()
         .elements()
         .forDisplayForm(getObjRef(currentFilter, identifier))
-        .withOptions(options);
+        .withOptions(options.uris.length > 0 ? options : {});
 };
 
 /**
