@@ -1,8 +1,7 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { CorePivotTableAgImpl } from "./CorePivotTable";
 import {
-    attributeLocalId,
     bucketAttributes,
     bucketIsEmpty,
     bucketsFind,
@@ -17,6 +16,7 @@ import {
     ITotal,
     MeasureGroupIdentifier,
     newBucket,
+    newTwoDimensional,
 } from "@gooddata/sdk-model";
 import {
     ICorePivotTableProps,
@@ -74,23 +74,16 @@ function pivotDimensions(def: IExecutionDefinition): IDimension[] {
     const columns = bucketsFind(buckets, BucketNames.COLUMNS);
     const measures = bucketsFind(buckets, BucketNames.MEASURES);
 
-    const rowAttributeIds = row ? bucketAttributes(row).map(attributeLocalId) : [];
-    const columnAttributeIds = columns ? bucketAttributes(columns).map(attributeLocalId) : [];
+    const rowAttributes = row ? bucketAttributes(row) : [];
+    const columnAttributes = columns ? bucketAttributes(columns) : [];
 
     const measuresItemIdentifiers = measures && !bucketIsEmpty(measures) ? [MeasureGroupIdentifier] : [];
-
     const totals = row ? bucketTotals(row) : [];
-    const totalsProp = totals.length ? { totals } : {};
 
-    return [
-        {
-            itemIdentifiers: rowAttributeIds,
-            ...totalsProp,
-        },
-        {
-            itemIdentifiers: [...columnAttributeIds, ...measuresItemIdentifiers],
-        },
-    ];
+    return newTwoDimensional(
+        [...rowAttributes, ...totals],
+        [...columnAttributes, ...measuresItemIdentifiers],
+    );
 }
 
 type IPivotTableNonBucketProps = Subtract<IPivotTableProps, IPivotTableBucketProps>;

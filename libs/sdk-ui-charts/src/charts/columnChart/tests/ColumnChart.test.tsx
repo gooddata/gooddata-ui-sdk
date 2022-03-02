@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { mount, ReactWrapper } from "enzyme";
 import { ColumnChart } from "../ColumnChart";
@@ -8,7 +8,6 @@ import {
     IAttributeOrMeasure,
     newMeasureSort,
     newTwoDimensional,
-    attributeLocalId,
     MeasureGroupIdentifier,
 } from "@gooddata/sdk-model";
 import { CoreColumnChart } from "../CoreColumnChart";
@@ -39,8 +38,8 @@ describe("ColumnChart", () => {
         );
 
         const expectedDims = newTwoDimensional(
-            [attributeLocalId(ReferenceMd.Region)],
-            [attributeLocalId(ReferenceMd.Product.Name), MeasureGroupIdentifier],
+            [ReferenceMd.Region],
+            [ReferenceMd.Product.Name, MeasureGroupIdentifier],
         );
 
         expect(wrapper.find(CoreColumnChart)).toHaveLength(1);

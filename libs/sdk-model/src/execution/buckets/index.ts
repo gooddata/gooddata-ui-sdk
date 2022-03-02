@@ -158,7 +158,7 @@ export function newBucket(
     const items: IAttributeOrMeasure[] = [];
     const totals: ITotal[] = [];
 
-    (content ? content : []).forEach((i) => {
+    (content ?? []).forEach((i) => {
         if (!i) {
             return;
         }

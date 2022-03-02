@@ -1,13 +1,13 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
-    attributeLocalId,
     bucketsAttributes,
     IAttribute,
     IBucket,
     IMeasure,
     INullableFilter,
+    MeasureGroupIdentifier,
     newBucket,
     newDimension,
 } from "@gooddata/sdk-model";
@@ -117,11 +117,6 @@ function createExecution(buckets: IBucket[], props: IXirrProps): IPreparedExecut
         .workspace(workspace)
         .execution()
         .forBuckets(buckets, props.filters as INullableFilter[])
-        .withDimensions(
-            newDimension([
-                "measureGroup",
-                ...bucketsAttributes(buckets).map((attribute) => attributeLocalId(attribute)),
-            ]),
-        )
+        .withDimensions(newDimension([MeasureGroupIdentifier, ...bucketsAttributes(buckets)]))
         .withExecConfig(execConfig);
 }

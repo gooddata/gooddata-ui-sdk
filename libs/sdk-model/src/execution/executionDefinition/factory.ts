@@ -1,5 +1,5 @@
-// (C) 2019-2021 GoodData Corporation
-import { attributeLocalId, isAttribute } from "../attribute";
+// (C) 2019-2022 GoodData Corporation
+import { isAttribute } from "../attribute";
 import {
     IDimension,
     isDimension,
@@ -267,33 +267,26 @@ function defaultDimensionsWithBuckets(buckets: IBucket[]): IDimension[] {
 
     if (bucketsIsEmpty(otherBuckets)) {
         if (bucketMeasures(firstBucket).length) {
-            return newTwoDimensional(
-                [MeasureGroupIdentifier],
-                bucketAttributes(firstBucket).map(attributeLocalId),
-            );
+            return newTwoDimensional([MeasureGroupIdentifier], bucketAttributes(firstBucket));
         }
 
-        return [newDimension(bucketAttributes(firstBucket).map(attributeLocalId))];
+        return [newDimension(bucketAttributes(firstBucket))];
     }
 
-    const firstDim = bucketAttributes(firstBucket).map(attributeLocalId);
-    const secondDim = bucketsAttributes(otherBuckets).map(attributeLocalId);
+    const firstDim = bucketAttributes(firstBucket);
+    const secondDim = bucketsAttributes(otherBuckets);
 
-    if (bucketMeasures(firstBucket).length) {
-        firstDim.push(MeasureGroupIdentifier);
-    } else {
-        secondDim.push(MeasureGroupIdentifier);
-    }
-
-    return newTwoDimensional(firstDim, secondDim);
+    return bucketMeasures(firstBucket).length
+        ? newTwoDimensional([...firstDim, MeasureGroupIdentifier], secondDim)
+        : newTwoDimensional(firstDim, [...secondDim, MeasureGroupIdentifier]);
 }
 
 function defaultDimensionsWithoutBuckets(definition: IExecutionDefinition): IDimension[] {
     if (definition.measures.length) {
-        return newTwoDimensional([MeasureGroupIdentifier], definition.attributes.map(attributeLocalId));
+        return newTwoDimensional([MeasureGroupIdentifier], definition.attributes);
     }
 
-    return [newDimension(definition.attributes.map(attributeLocalId))];
+    return [newDimension(definition.attributes)];
 }
 
 /**

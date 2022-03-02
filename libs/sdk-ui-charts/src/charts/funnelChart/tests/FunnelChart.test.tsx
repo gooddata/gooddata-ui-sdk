@@ -1,13 +1,8 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { mount } from "enzyme";
 import { FunnelChart } from "../FunnelChart";
-import {
-    newAttributeSort,
-    attributeLocalId,
-    newTwoDimensional,
-    MeasureGroupIdentifier,
-} from "@gooddata/sdk-model";
+import { newAttributeSort, newTwoDimensional, MeasureGroupIdentifier } from "@gooddata/sdk-model";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { CoreFunnelChart } from "../CoreFunnelChart";
@@ -31,10 +26,7 @@ describe("FunnelChart", () => {
             />,
         );
 
-        const expectedDims = newTwoDimensional(
-            [MeasureGroupIdentifier],
-            [attributeLocalId(ReferenceMd.Product.Name)],
-        );
+        const expectedDims = newTwoDimensional([MeasureGroupIdentifier], [ReferenceMd.Product.Name]);
 
         expect(wrapper.find(CoreFunnelChart)).toHaveLength(1);
         expect(wrapper.find(CoreFunnelChart).prop("execution").definition.dimensions).toEqual(expectedDims);

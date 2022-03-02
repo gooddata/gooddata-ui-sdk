@@ -1,7 +1,14 @@
 // (C) 2019-2022 GoodData Corporation
 
 import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
-import { bucketIsEmpty, IInsightDefinition, insightBucket, insightHasDataDefined } from "@gooddata/sdk-model";
+import {
+    bucketIsEmpty,
+    IInsightDefinition,
+    insightBucket,
+    insightHasDataDefined,
+    MeasureGroupIdentifier,
+    newDimension,
+} from "@gooddata/sdk-model";
 
 import { BucketNames } from "@gooddata/sdk-ui";
 import { CoreHeadline, updateConfigWithSettings } from "@gooddata/sdk-ui-charts";
@@ -124,7 +131,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
 
         return executionFactory
             .forInsight(insight)
-            .withDimensions({ itemIdentifiers: ["measureGroup"] })
+            .withDimensions(newDimension([MeasureGroupIdentifier]))
             .withDateFormat(dateFormat)
             .withExecConfig(executionConfig);
     }

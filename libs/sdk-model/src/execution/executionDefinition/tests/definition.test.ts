@@ -1,7 +1,6 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import {
-    attributeLocalId,
     DateGranularity,
     defFingerprint,
     defSetDimensions,
@@ -144,7 +143,7 @@ describe("defFingerprint", () => {
     const DefWithAttrAndMeasureAndFilter = defWithFilters(DefWithAttrAndMeasure, [PositiveFilter]);
     const DefWithAttrAndMeasureAndDims = defSetDimensions(
         DefWithAttrAndMeasure,
-        newTwoDimensional([attributeLocalId(Account.Name)], [MeasureGroupIdentifier]),
+        newTwoDimensional([Account.Name], [MeasureGroupIdentifier]),
     );
 
     const DefWithAttrFromBuckets = newDefForBuckets(Workspace, [newBucket("attr", Account.Name)]);

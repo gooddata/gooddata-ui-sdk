@@ -1,16 +1,11 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { mount } from "enzyme";
 import { BubbleChart } from "../BubbleChart";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { CoreBubbleChart } from "../CoreBubbleChart";
-import {
-    newAttributeSort,
-    newTwoDimensional,
-    MeasureGroupIdentifier,
-    attributeLocalId,
-} from "@gooddata/sdk-model";
+import { newAttributeSort, newTwoDimensional, MeasureGroupIdentifier } from "@gooddata/sdk-model";
 
 describe("BubbleChart", () => {
     it("should render with custom SDK", () => {
@@ -33,10 +28,7 @@ describe("BubbleChart", () => {
             />,
         );
 
-        const expectedDims = newTwoDimensional(
-            [attributeLocalId(ReferenceMd.Product.Name)],
-            [MeasureGroupIdentifier],
-        );
+        const expectedDims = newTwoDimensional([ReferenceMd.Product.Name], [MeasureGroupIdentifier]);
 
         expect(wrapper.find(CoreBubbleChart)).toHaveLength(1);
         expect(wrapper.find(CoreBubbleChart).prop("execution")).toBeDefined();

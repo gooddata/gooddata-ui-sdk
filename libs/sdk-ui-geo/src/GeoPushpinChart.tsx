@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import omit from "lodash/omit";
 import { CoreGeoChart } from "./core/CoreGeoChart";
@@ -13,7 +13,6 @@ import {
 } from "@gooddata/sdk-ui";
 import { IGeoPushpinChartProps } from "./GeoChart";
 import {
-    attributeLocalId,
     bucketsAttributes,
     bucketsMeasures,
     disableComputeRatio,
@@ -71,7 +70,7 @@ export function getGeoChartDimensions(def: IExecutionDefinition): IDimension[] {
     if (measures.length > 0) {
         chartDimensions.push(newDimension([MeasureGroupIdentifier]));
     }
-    chartDimensions.push(newDimension(attributes.map(attributeLocalId)));
+    chartDimensions.push(newDimension(attributes));
 
     return chartDimensions;
 }
