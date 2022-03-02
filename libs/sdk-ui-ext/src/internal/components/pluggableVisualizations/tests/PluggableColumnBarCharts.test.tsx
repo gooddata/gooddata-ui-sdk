@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
 import * as referencePointMocks from "../../../tests/mocks/referencePointMocks";
@@ -153,6 +153,7 @@ describe("PluggableColumnBarCharts", () => {
                         measures: ["m3", "m4"],
                     },
                 },
+                sortItems: mockRefPoint.properties.sortItems,
             };
             const extendedReferencePoint = await columnChart.getExtendedReferencePoint(mockRefPoint);
 
@@ -225,7 +226,7 @@ describe("PluggableColumnBarCharts", () => {
                 buckets: expectedBuckets,
                 filters: expectedFilters,
                 uiConfig: uiConfigMocks.oneStackAndNoCategoryColumnUiConfig,
-                properties: {},
+                properties: referencePointMocks.multipleMetricsOneStackByReferencePoint.properties,
             });
         });
 

@@ -57,6 +57,7 @@ import isEmpty from "lodash/isEmpty";
 import includes from "lodash/includes";
 import cloneDeep from "lodash/cloneDeep";
 import { configurePercent } from "../../../utils/bucketConfig";
+import { removeSort } from "../../../utils/sort";
 
 const NUMBER_MEASURES_IN_BUCKETS_LIMIT = 2;
 
@@ -90,6 +91,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
                     this.type,
                 );
                 newReferencePoint = configurePercent(newReferencePoint, true);
+                newReferencePoint = removeSort(newReferencePoint);
                 return this.updateSupportedProperties(newReferencePoint);
             });
     }

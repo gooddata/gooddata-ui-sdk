@@ -63,7 +63,7 @@ import {
     hasColorMapping,
     isEmptyObject,
 } from "../../../utils/propertiesHelper";
-import { createSorts, removeSort } from "../../../utils/sort";
+import { createSorts } from "../../../utils/sort";
 import { getTranslation } from "../../../utils/translations";
 
 import {
@@ -141,7 +141,6 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
             this.supportedPropertiesList,
         );
         newReferencePoint = setBaseChartUiConfig(newReferencePoint, this.intl, this.type);
-        newReferencePoint = removeSort(newReferencePoint);
 
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }

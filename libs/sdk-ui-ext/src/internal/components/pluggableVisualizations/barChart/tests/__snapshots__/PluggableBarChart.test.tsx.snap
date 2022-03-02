@@ -88,3 +88,169 @@ Array [
   },
 ]
 `;
+
+exports[`PluggableBarChart Sort config should return valid available sorts for 1M + 1 VB 1`] = `
+Array [
+  Object {
+    "attributeSort": Object {
+      "areaSortEnabled": false,
+      "normalSortEnabled": true,
+    },
+    "itemId": Object {
+      "localIdentifier": "a1",
+    },
+    "metricSorts": Array [
+      Object {
+        "locators": Array [
+          Object {
+            "measureLocatorItem": Object {
+              "measureIdentifier": "m1",
+            },
+          },
+        ],
+        "type": "measureSort",
+      },
+    ],
+  },
+]
+`;
+
+exports[`PluggableBarChart Sort config should return valid available sorts for 2 stacked M + 1 VB 1`] = `
+Array [
+  Object {
+    "attributeSort": Object {
+      "areaSortEnabled": true,
+      "normalSortEnabled": true,
+    },
+    "itemId": Object {
+      "localIdentifier": "a1",
+    },
+  },
+]
+`;
+
+exports[`PluggableBarChart Sort config should return valid available sorts for 2 stacked M + 2 VB 1`] = `
+Array [
+  Object {
+    "attributeSort": Object {
+      "areaSortEnabled": true,
+      "normalSortEnabled": true,
+    },
+    "itemId": Object {
+      "localIdentifier": "a1",
+    },
+  },
+  Object {
+    "attributeSort": Object {
+      "areaSortEnabled": true,
+      "normalSortEnabled": true,
+    },
+    "itemId": Object {
+      "localIdentifier": "a2",
+    },
+    "metricSorts": Array [
+      Object {
+        "locators": Array [
+          Object {
+            "measureLocatorItem": Object {
+              "measureIdentifier": "m1",
+            },
+          },
+        ],
+        "type": "measureSort",
+      },
+      Object {
+        "locators": Array [
+          Object {
+            "measureLocatorItem": Object {
+              "measureIdentifier": "m2",
+            },
+          },
+        ],
+        "type": "measureSort",
+      },
+    ],
+  },
+]
+`;
+
+exports[`PluggableBarChart Sort config should return valid available sorts for 2M + 1 VB 1`] = `
+Array [
+  Object {
+    "attributeSort": Object {
+      "areaSortEnabled": true,
+      "normalSortEnabled": true,
+    },
+    "itemId": Object {
+      "localIdentifier": "a1",
+    },
+    "metricSorts": Array [
+      Object {
+        "locators": Array [
+          Object {
+            "measureLocatorItem": Object {
+              "measureIdentifier": "m1",
+            },
+          },
+        ],
+        "type": "measureSort",
+      },
+      Object {
+        "locators": Array [
+          Object {
+            "measureLocatorItem": Object {
+              "measureIdentifier": "m2",
+            },
+          },
+        ],
+        "type": "measureSort",
+      },
+    ],
+  },
+]
+`;
+
+exports[`PluggableBarChart Sort config should return valid available sorts for 2M + 2 VB 1`] = `
+Array [
+  Object {
+    "attributeSort": Object {
+      "areaSortEnabled": true,
+      "normalSortEnabled": true,
+    },
+    "itemId": Object {
+      "localIdentifier": "a1",
+    },
+  },
+  Object {
+    "attributeSort": Object {
+      "areaSortEnabled": true,
+      "normalSortEnabled": true,
+    },
+    "itemId": Object {
+      "localIdentifier": "a2",
+    },
+    "metricSorts": Array [
+      Object {
+        "locators": Array [
+          Object {
+            "measureLocatorItem": Object {
+              "measureIdentifier": "m1",
+            },
+          },
+        ],
+        "type": "measureSort",
+      },
+      Object {
+        "locators": Array [
+          Object {
+            "measureLocatorItem": Object {
+              "measureIdentifier": "m2",
+            },
+          },
+        ],
+        "type": "measureSort",
+      },
+    ],
+  },
+]
+`;

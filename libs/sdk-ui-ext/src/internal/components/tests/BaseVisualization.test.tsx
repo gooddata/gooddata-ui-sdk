@@ -384,6 +384,12 @@ describe("BaseVisualization", () => {
                 expect.objectContaining({
                     referencePoint: {},
                 }),
+                expect.objectContaining({
+                    availableSorts: [],
+                    currentSort: [],
+                    disabled: false,
+                    supported: false,
+                }),
             );
             expect(tableConstructorCall).toHaveBeenCalledTimes(1);
         });
