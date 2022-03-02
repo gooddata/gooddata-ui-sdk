@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { bucketsItems, IInsight, IInsightDefinition, insightBuckets } from "@gooddata/sdk-model";
 import { BucketNames, IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
 import React from "react";
@@ -61,6 +61,30 @@ import {
     reverseAndTrimIntersection,
 } from "../drillDownUtil";
 
+/**
+ * PluggableAreaChart
+ *
+ * ## Buckets
+ * - Measures - accepts only measures
+ * - ViewBy - accepts attributes or dates (max one date if enableMultipleDates FF is off, more if it is on)
+ * - StackBy - accepts only attributes
+ *
+ * ### Bucket axioms
+ * - |ViewBy| ≤ 2
+ * - |StackBy| ≤ 1
+ * - |ViewBy| + |StackBy| ≤ 2
+ * - |ViewBy| + |StackBy| = 2 ⇒ |Measures| ≤ 1
+ * - |ViewBy| + |StackBy| \< 2 ⇒ |Measures| ≤ 20
+ *
+ * ## Dimensions
+ * The PluggableAreaChart always creates two dimensional execution.
+ *
+ * - If there is a StackBy attribute and a ViewBy attribute, the dimensions are [[StackBy[0]], [ViewBy[0], MeasureGroupIdentifier]].
+ * - If there is a StackBy attribute and no ViewBy attribute, the dimensions are [[StackBy[0]], [MeasureGroupIdentifier]].
+ * - If there is no StackBy attribute and two ViewBy attribute, the dimensions are [[ViewBy[1]], [ViewBy[0], MeasureGroupIdentifier]].
+ * - If there is no StackBy attribute and one ViewBy attribute, the dimensions are [[MeasureGroupIdentifier], [ViewBy[0]]].
+ * - If there is no StackBy attribute and no ViewBy attribute, the dimensions are [[MeasureGroupIdentifier], []]].
+ */
 export class PluggableAreaChart extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
         super(props);
