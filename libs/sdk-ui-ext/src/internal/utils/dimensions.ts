@@ -1,18 +1,26 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
+import compact from "lodash/compact";
 import {
     attributeLocalId,
     bucketAttribute,
     bucketAttributes,
     bucketIsEmpty,
+    BucketPredicate,
+    IAttribute,
     IDimension,
     IInsightDefinition,
     insightAttributes,
     insightBucket,
     insightTotals,
     MeasureGroupIdentifier,
+    newTwoDimensional,
 } from "@gooddata/sdk-model";
 import { BucketNames, VisType, VisualizationTypes } from "@gooddata/sdk-ui";
-import { ViewByAttributesLimit } from "@gooddata/sdk-ui-charts";
+
+function safeBucketAttributes(insight: IInsightDefinition, idOrFun: string | BucketPredicate): IAttribute[] {
+    const matchingBucket = insightBucket(insight, idOrFun);
+    return matchingBucket ? bucketAttributes(matchingBucket) : [];
+}
 
 export function getPivotTableDimensions(insight: IInsightDefinition): IDimension[] {
     const row = insightBucket(insight, BucketNames.ATTRIBUTE);
@@ -89,44 +97,15 @@ function getBarDimensions(insight: IInsightDefinition): IDimension[] {
 }
 
 function getAreaDimensions(insight: IInsightDefinition): IDimension[] {
-    const viewBucket = insightBucket(insight, BucketNames.VIEW);
-    const viewByAttributes = viewBucket ? bucketAttributes(viewBucket) : [];
-    const stackBucket = insightBucket(insight, BucketNames.STACK);
+    const viewByAttributes = safeBucketAttributes(insight, BucketNames.VIEW);
+    const stackByAttributes = safeBucketAttributes(insight, BucketNames.STACK);
 
-    if (viewByAttributes.length > 1) {
-        // only take first two view items
-        const [viewItemIdentifier, stackItemIdentifier] = viewByAttributes
-            .slice(0, ViewByAttributesLimit)
-            .map(attributeLocalId);
-        return [
-            {
-                itemIdentifiers: [stackItemIdentifier],
-            },
-            {
-                itemIdentifiers: [viewItemIdentifier, MeasureGroupIdentifier],
-            },
-        ];
-    }
+    const seriesAttribute = viewByAttributes[0];
+    const sliceAttribute = stackByAttributes[0] ?? viewByAttributes[1];
 
-    if (!stackBucket || bucketIsEmpty(stackBucket)) {
-        return [
-            {
-                itemIdentifiers: [MeasureGroupIdentifier],
-            },
-            {
-                itemIdentifiers: viewByAttributes.map(attributeLocalId),
-            },
-        ];
-    }
-
-    return [
-        {
-            itemIdentifiers: bucketAttributes(stackBucket).map(attributeLocalId),
-        },
-        {
-            itemIdentifiers: [...viewByAttributes.map(attributeLocalId), MeasureGroupIdentifier],
-        },
-    ];
+    return sliceAttribute
+        ? newTwoDimensional([sliceAttribute], compact([seriesAttribute, MeasureGroupIdentifier]))
+        : newTwoDimensional([MeasureGroupIdentifier], compact([seriesAttribute]));
 }
 
 function getLineDimensions(insight: IInsightDefinition): IDimension[] {
