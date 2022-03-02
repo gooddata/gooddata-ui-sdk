@@ -6,7 +6,7 @@ export class Headline {
     }
 
     noValue(): this {
-        cy.get(".s-dash-item.viz-type-headline .s-headline-value", { timeout: 30000 }).should("not.exist");
+        cy.get(".s-dash-item.viz-type-headline .s-headline-value", { timeout: 50000 }).should("not.exist");
         return this;
     }
 }
