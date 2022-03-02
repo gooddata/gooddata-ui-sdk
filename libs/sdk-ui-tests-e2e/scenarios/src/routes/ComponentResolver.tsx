@@ -9,6 +9,7 @@ import { ImplicitDrillToAttributeUrlScenario } from "../components/Scenarios/Das
 import { BarChartDrillingScenario } from "../components/Scenarios/Visualizations/BarChart/BarChartDrillingScenario";
 import { AttributeFilterButtonParentChildScenario } from "../components/Scenarios/Filters/AttributeFilterButtonParentChildScenario";
 import { ParentChildFiltersWithPlaceholders } from "../components/Scenarios/Filters/ParentChildFiltersWithPlaceholders";
+import { DashboardFilteringScenario } from "../components/Scenarios/Dashboard/DashboardFilteringScenario";
 
 // todo add path to other scenarios
 
@@ -18,6 +19,7 @@ import { ParentChildFiltersWithPlaceholders } from "../components/Scenarios/Filt
  */
 export const SCENARIO_KEYS = {
     DASHBOARD: "dashboard/dashboard",
+    DASHBOARD_FILTERING: "dashboard/filtering",
     IMPLICIT_DRILL_TO_ATTRIBUTE: "dashboard/implicit-drill-to-attribute-url",
     FILTERS_DATE_FILTER: "filters/date-filter",
     VIS_BAR_CHART_DRILL: "visualizations/barchart/bar-chart-drilling-scenario",
@@ -36,6 +38,7 @@ const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.FILTERS_ATTRIBUTE_FILTER_BUTTON_WITH_SELECTION, AttributeFilterButtonPreselectedScenario],
     [SCENARIO_KEYS.FILTERS_ATTRIBUTE_FILTER_BUTTON_PARENT_CHILD, AttributeFilterButtonParentChildScenario],
     [SCENARIO_KEYS.FILTERS_PARENT_CHILD_FILTERS_WITH_PLACEHOLDERS, ParentChildFiltersWithPlaceholders],
+    [SCENARIO_KEYS.DASHBOARD_FILTERING, DashboardFilteringScenario],
 ]);
 
 const ComponentResolver: React.FC = () => {
