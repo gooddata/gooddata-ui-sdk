@@ -64,7 +64,7 @@ export interface IBaseVisualizationProps extends IVisCallbacks {
     isMdObjectValid?: boolean;
     configPanelClassName?: string;
     theme?: ITheme;
-    onExtendedReferencePointChanged?(referencePoint: IExtendedReferencePoint): void;
+    onExtendedReferencePointChanged?(referencePoint: IExtendedReferencePoint, sortConfig?: ISortConfig): void;
     onSortingChanged?(sortConfig: ISortConfig): void;
 
     onNewDerivedBucketItemsPlaced?(): void;
@@ -252,19 +252,15 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         newProps: IBaseVisualizationProps,
         currentProps?: IBaseVisualizationProps,
     ) {
-        const {
-            referencePoint: newReferencePoint,
-            onExtendedReferencePointChanged,
-            onSortingChanged,
-        } = newProps;
+        const { referencePoint: newReferencePoint, onExtendedReferencePointChanged } = newProps;
 
         if (this.visualization && newReferencePoint && onExtendedReferencePointChanged) {
             this.visualization
                 .getExtendedReferencePoint(newReferencePoint, currentProps && currentProps.referencePoint)
                 .then(async (extendedReferencePoint) => {
-                    onExtendedReferencePointChanged(extendedReferencePoint);
                     const sortConfig = await this.visualization.getSortConfig(extendedReferencePoint);
-                    return onSortingChanged && onSortingChanged(sortConfig);
+                    // new sort config needs to be sent together with new reference point to avoid double executions with old invalid sort until new one arrives by its own handler
+                    onExtendedReferencePointChanged(extendedReferencePoint, sortConfig);
                 });
         }
     }
