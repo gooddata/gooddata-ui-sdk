@@ -2,7 +2,7 @@
 
 import * as Navigation from "../../tools/navigation";
 import { AttributeFilterButtonParentChild } from "../../tools/attributeFilterButtonParentChild";
-import { Headline } from "sdk-ui-tests-e2e/cypress/tools/headline";
+import { Headline } from "../../tools/headline";
 
 Cypress.Cookies.defaults({
     preserve: ["GDCAuthTT", "GDCAuthSTT", "_csrfToken"],
