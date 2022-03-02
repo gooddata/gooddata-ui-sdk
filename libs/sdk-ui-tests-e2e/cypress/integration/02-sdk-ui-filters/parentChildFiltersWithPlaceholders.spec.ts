@@ -28,10 +28,22 @@ describe("Parent-child filtering on AttributeFilterButton", () => {
             CHILD_FILTER_SELECTOR,
         );
 
-        parentChildFilters.getParentFilter().open().clearSelection().selectElement("touchAll").clickApply();
+        parentChildFilters
+            .getParentFilter()
+            .open()
+            .waitElementsLoaded()
+            .waitElementsLoaded()
+            .clearSelection()
+            .selectElement("touchAll")
+            .clickApply();
         parentChildFilters.getChildFilter().waitFilteringFinished().subtitleHasText("All");
 
-        parentChildFilters.getChildFilter().open().isAllElementsFilteredByParent().applyDisabled();
+        parentChildFilters
+            .getChildFilter()
+            .open()
+            .waitElementsLoaded()
+            .isAllElementsFilteredByParent()
+            .applyDisabled();
     });
 
     it("Child selection resets to all if parent selection changed", () => {
@@ -43,6 +55,7 @@ describe("Parent-child filtering on AttributeFilterButton", () => {
         parentChildFilters
             .getChildFilter()
             .open()
+            .waitElementsLoaded()
             .clearSelection()
             .selectElement("directSales")
             .clickApply()
@@ -50,11 +63,17 @@ describe("Parent-child filtering on AttributeFilterButton", () => {
         parentChildFilters
             .getParentFilter()
             .open()
+            .waitElementsLoaded()
             .clearSelection()
             .selectElement("compuSci")
             .clickApply()
             .subtitleHasText("CompuSci");
 
-        parentChildFilters.getChildFilter().waitFilteringFinished().open().allElementsSelected();
+        parentChildFilters
+            .getChildFilter()
+            .waitFilteringFinished()
+            .open()
+            .waitElementsLoaded()
+            .allElementsSelected();
     });
 });
