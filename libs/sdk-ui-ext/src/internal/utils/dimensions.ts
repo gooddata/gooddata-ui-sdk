@@ -1,8 +1,6 @@
 // (C) 2007-2022 GoodData Corporation
 import compact from "lodash/compact";
 import {
-    attributeLocalId,
-    bucketAttribute,
     bucketAttributes,
     bucketIsEmpty,
     BucketPredicate,
@@ -13,6 +11,7 @@ import {
     insightBucket,
     insightTotals,
     MeasureGroupIdentifier,
+    newDimension,
     newTwoDimensional,
 } from "@gooddata/sdk-model";
 import { BucketNames, VisType, VisualizationTypes } from "@gooddata/sdk-ui";
@@ -23,77 +22,33 @@ function safeBucketAttributes(insight: IInsightDefinition, idOrFun: string | Buc
 }
 
 export function getPivotTableDimensions(insight: IInsightDefinition): IDimension[] {
-    const row = insightBucket(insight, BucketNames.ATTRIBUTE);
-    const columns = insightBucket(insight, BucketNames.COLUMNS);
     const measures = insightBucket(insight, BucketNames.MEASURES);
-
-    const rowAttributeIds = row ? bucketAttributes(row).map(attributeLocalId) : [];
-    const columnAttributeIds = columns ? bucketAttributes(columns).map(attributeLocalId) : [];
-
     const measuresItemIdentifiers = measures && !bucketIsEmpty(measures) ? [MeasureGroupIdentifier] : [];
 
-    const totals = insightTotals(insight);
-    const totalsProp = totals.length ? { totals } : {};
+    const rowAttributes = safeBucketAttributes(insight, BucketNames.ATTRIBUTE);
+    const columnAttributes = safeBucketAttributes(insight, BucketNames.COLUMNS);
 
-    return [
-        {
-            itemIdentifiers: rowAttributeIds,
-            ...totalsProp,
-        },
-        {
-            itemIdentifiers: [...columnAttributeIds, ...measuresItemIdentifiers],
-        },
-    ];
+    return newTwoDimensional(
+        [...rowAttributes, ...insightTotals(insight)],
+        [...columnAttributes, ...measuresItemIdentifiers],
+    );
 }
 
 function getPieOrDonutDimensions(insight: IInsightDefinition): IDimension[] {
-    const viewBy = insightBucket(insight, BucketNames.VIEW);
+    const viewByAttributes = safeBucketAttributes(insight, BucketNames.VIEW);
 
-    if (viewBy && !bucketIsEmpty(viewBy)) {
-        return [
-            {
-                itemIdentifiers: [MeasureGroupIdentifier],
-            },
-            {
-                itemIdentifiers: bucketAttributes(viewBy).map(attributeLocalId),
-            },
-        ];
-    }
-
-    return [
-        {
-            itemIdentifiers: [],
-        },
-        {
-            itemIdentifiers: [MeasureGroupIdentifier],
-        },
-    ];
+    return viewByAttributes.length
+        ? newTwoDimensional([MeasureGroupIdentifier], viewByAttributes)
+        : newTwoDimensional([], [MeasureGroupIdentifier]);
 }
 
 function getBarDimensions(insight: IInsightDefinition): IDimension[] {
-    const viewBy = insightBucket(insight, BucketNames.VIEW);
-    const viewByAttributes = viewBy ? bucketAttributes(viewBy) : [];
-    const stack = insightBucket(insight, BucketNames.STACK);
+    const viewByAttributes = safeBucketAttributes(insight, BucketNames.VIEW);
+    const stackByAttributes = safeBucketAttributes(insight, BucketNames.STACK);
 
-    if (!stack || bucketIsEmpty(stack)) {
-        return [
-            {
-                itemIdentifiers: [MeasureGroupIdentifier],
-            },
-            {
-                itemIdentifiers: viewByAttributes.map(attributeLocalId),
-            },
-        ];
-    }
-
-    return [
-        {
-            itemIdentifiers: bucketAttributes(stack).map(attributeLocalId),
-        },
-        {
-            itemIdentifiers: [...viewByAttributes.map(attributeLocalId), MeasureGroupIdentifier],
-        },
-    ];
+    return stackByAttributes.length
+        ? newTwoDimensional(stackByAttributes, [...viewByAttributes, MeasureGroupIdentifier])
+        : newTwoDimensional([MeasureGroupIdentifier], viewByAttributes);
 }
 
 function getAreaDimensions(insight: IInsightDefinition): IDimension[] {
@@ -109,217 +64,101 @@ function getAreaDimensions(insight: IInsightDefinition): IDimension[] {
 }
 
 function getLineDimensions(insight: IInsightDefinition): IDimension[] {
-    const trend = insightBucket(insight, BucketNames.TREND);
-    const trendAttributes = trend ? bucketAttributes(trend) : [];
-    const segment = insightBucket(insight, BucketNames.SEGMENT);
+    const trendAttributes = safeBucketAttributes(insight, BucketNames.TREND);
+    const segmentAttributes = safeBucketAttributes(insight, BucketNames.SEGMENT);
 
-    if (!segment || bucketIsEmpty(segment)) {
-        return [
-            {
-                itemIdentifiers: [MeasureGroupIdentifier],
-            },
-            {
-                itemIdentifiers: trendAttributes.map(attributeLocalId),
-            },
-        ];
-    }
-
-    return [
-        {
-            itemIdentifiers: bucketAttributes(segment).map(attributeLocalId),
-        },
-        {
-            itemIdentifiers: [...trendAttributes.map(attributeLocalId), MeasureGroupIdentifier],
-        },
-    ];
+    return segmentAttributes.length
+        ? newTwoDimensional(segmentAttributes, [...trendAttributes, MeasureGroupIdentifier])
+        : newTwoDimensional([MeasureGroupIdentifier], trendAttributes);
 }
 
 export function getHeadlinesDimensions(): IDimension[] {
-    return [{ itemIdentifiers: [MeasureGroupIdentifier] }];
+    return [newDimension([MeasureGroupIdentifier])];
 }
 
 function getScatterDimensions(insight: IInsightDefinition): IDimension[] {
-    const attribute = insightBucket(insight, BucketNames.ATTRIBUTE);
+    const attributes = safeBucketAttributes(insight, BucketNames.ATTRIBUTE);
 
-    if (attribute && !bucketIsEmpty(attribute)) {
-        return [
-            {
-                itemIdentifiers: bucketAttributes(attribute).map(attributeLocalId),
-            },
-            {
-                itemIdentifiers: [MeasureGroupIdentifier],
-            },
-        ];
-    }
-
-    return [
-        {
-            itemIdentifiers: [],
-        },
-        {
-            itemIdentifiers: [MeasureGroupIdentifier],
-        },
-    ];
+    return attributes.length
+        ? newTwoDimensional(attributes, [MeasureGroupIdentifier])
+        : newTwoDimensional([], [MeasureGroupIdentifier]);
 }
 
-// Heatmap
 function getHeatmapDimensionsFromMdObj(insight: IInsightDefinition): IDimension[] {
-    return getHeatmapDimensionsFromBuckets(insight);
-}
+    const viewByAttributes = safeBucketAttributes(insight, BucketNames.VIEW);
+    const stackByAttributes = safeBucketAttributes(insight, BucketNames.STACK);
 
-function getHeatmapDimensionsFromBuckets(insight: IInsightDefinition): IDimension[] {
-    const view = insightBucket(insight, BucketNames.VIEW);
-    const viewAttributes = view ? bucketAttributes(view) : [];
-    const stack = insightBucket(insight, BucketNames.STACK);
-
-    if (!stack || bucketIsEmpty(stack)) {
-        return [
-            {
-                itemIdentifiers: viewAttributes.map(attributeLocalId),
-            },
-            {
-                itemIdentifiers: [MeasureGroupIdentifier],
-            },
-        ];
-    }
-
-    return [
-        {
-            itemIdentifiers: viewAttributes.map(attributeLocalId),
-        },
-        {
-            itemIdentifiers: [...bucketAttributes(stack).map(attributeLocalId), MeasureGroupIdentifier],
-        },
-    ];
+    return stackByAttributes.length
+        ? newTwoDimensional(viewByAttributes, [...stackByAttributes, MeasureGroupIdentifier])
+        : newTwoDimensional(viewByAttributes, [MeasureGroupIdentifier]);
 }
 
 function getBubbleDimensions(insight: IInsightDefinition): IDimension[] {
-    const view = insightBucket(insight, BucketNames.VIEW);
-    const viewAttributes = view ? bucketAttributes(view) : [];
-    const stack = insightBucket(insight, BucketNames.STACK);
+    const viewByAttributes = safeBucketAttributes(insight, BucketNames.VIEW);
+    const stackByAttributes = safeBucketAttributes(insight, BucketNames.STACK);
 
-    if (!stack || bucketIsEmpty(stack)) {
-        return [
-            {
-                itemIdentifiers: viewAttributes.map(attributeLocalId),
-            },
-            {
-                itemIdentifiers: [MeasureGroupIdentifier],
-            },
-        ];
-    }
-
-    return [
-        {
-            itemIdentifiers: [
-                ...viewAttributes.map(attributeLocalId),
-                ...bucketAttributes(stack).map(attributeLocalId),
-            ],
-        },
-        {
-            itemIdentifiers: [MeasureGroupIdentifier],
-        },
-    ];
+    return newTwoDimensional([...viewByAttributes, ...stackByAttributes], [MeasureGroupIdentifier]);
 }
 
 /**
- * generateDimensions
- * is a function that generates dimensions based on buckets and visualization objects.
- * WARNING: It duplicates logic from pluggable visualizations.
- *          Remove once react components support pluggable visualizations.
+ * Generates dimensions based on buckets and visualization objects.
+ *
  * @param insight - insight being visualized
  * @param type - visualization type string
  * @internal
  */
 export function generateDimensions(insight: IInsightDefinition, type: VisType): IDimension[] {
     switch (type) {
-        case VisualizationTypes.TABLE: {
+        case VisualizationTypes.TABLE:
             return getPivotTableDimensions(insight);
-        }
+
         case VisualizationTypes.PIE:
         case VisualizationTypes.DONUT:
-        case VisualizationTypes.FUNNEL: {
+        case VisualizationTypes.FUNNEL:
             return getPieOrDonutDimensions(insight);
-        }
-        case VisualizationTypes.TREEMAP: {
+
+        case VisualizationTypes.TREEMAP:
             return getTreemapDimensionsFromMdObj(insight);
-        }
 
-        case VisualizationTypes.LINE: {
+        case VisualizationTypes.LINE:
             return getLineDimensions(insight);
-        }
 
-        case VisualizationTypes.AREA: {
+        case VisualizationTypes.AREA:
             return getAreaDimensions(insight);
-        }
 
         case VisualizationTypes.BAR:
         case VisualizationTypes.BULLET:
         case VisualizationTypes.COMBO:
         case VisualizationTypes.COMBO2:
-        case VisualizationTypes.COLUMN: {
+        case VisualizationTypes.COLUMN:
             return getBarDimensions(insight);
-        }
-        case VisualizationTypes.HEADLINE: {
+
+        case VisualizationTypes.HEADLINE:
             return getHeadlinesDimensions();
-        }
-        case VisualizationTypes.SCATTER: {
+
+        case VisualizationTypes.SCATTER:
             return getScatterDimensions(insight);
-        }
-        case VisualizationTypes.HEATMAP: {
+
+        case VisualizationTypes.HEATMAP:
             return getHeatmapDimensionsFromMdObj(insight);
-        }
-        case VisualizationTypes.BUBBLE: {
+
+        case VisualizationTypes.BUBBLE:
             return getBubbleDimensions(insight);
-        }
     }
     return [];
 }
 
 export function generateStackedDimensions(insight: IInsightDefinition): IDimension[] {
-    const viewBucket = insightBucket(insight, BucketNames.ATTRIBUTE);
-    const viewAttributes = viewBucket ? bucketAttributes(viewBucket) : [];
-    const stackAttribute = bucketAttribute(insightBucket(insight, BucketNames.STACK));
+    const viewByAttributes = safeBucketAttributes(insight, BucketNames.ATTRIBUTE);
+    const stackByAttributes = safeBucketAttributes(insight, BucketNames.STACK);
 
-    return [
-        {
-            itemIdentifiers: stackAttribute ? [attributeLocalId(stackAttribute)] : [],
-        },
-        {
-            itemIdentifiers: [...viewAttributes.map(attributeLocalId), MeasureGroupIdentifier],
-        },
-    ];
+    return newTwoDimensional(stackByAttributes, [...viewByAttributes, MeasureGroupIdentifier]);
 }
 
-// Treemap
 function getTreemapDimensionsFromMdObj(insight: IInsightDefinition): IDimension[] {
-    return getTreemapDimensionsFromBuckets(insight);
-}
-
-function getTreemapDimensionsFromBuckets(insight: IInsightDefinition): IDimension[] {
-    return getTreemapDimensionsFromAFM(insight);
-}
-
-function getTreemapDimensionsFromAFM(insight: IInsightDefinition): IDimension[] {
     const attributes = insightAttributes(insight);
 
-    if (attributes.length === 1) {
-        return [
-            {
-                itemIdentifiers: [MeasureGroupIdentifier],
-            },
-            {
-                itemIdentifiers: attributes.map(attributeLocalId),
-            },
-        ];
-    }
-
-    return [
-        {
-            itemIdentifiers: attributes.map(attributeLocalId),
-        },
-        {
-            itemIdentifiers: [MeasureGroupIdentifier],
-        },
-    ];
+    return attributes.length === 1
+        ? newTwoDimensional([MeasureGroupIdentifier], attributes)
+        : newTwoDimensional(attributes, [MeasureGroupIdentifier]);
 }
