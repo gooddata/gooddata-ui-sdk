@@ -285,7 +285,7 @@ describe("PluggableBaseChart", () => {
         expect(extendedReferencePoint).toEqual({
             uiConfig: uiConfigMocks.multipleMetricsAndCategoriesBaseUiConfig,
             filters: expectedFilters,
-            properties: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.properties,
+            properties: {},
             buckets: expectedBuckets,
         });
     });
@@ -343,10 +343,6 @@ describe("PluggableBaseChart", () => {
             localIdentifier: "filters",
             items: referencePointMocks.simpleStackedReferencePoint.filters.items,
         };
-        // should keep only supported properties
-        const expectedProperties = {
-            sortItems: referencePointMocks.simpleStackedReferencePoint.properties.sortItems,
-        };
 
         const extendedReferencePoint = await baseChart.getExtendedReferencePoint(
             referencePointMocks.simpleStackedReferencePoint,
@@ -355,7 +351,7 @@ describe("PluggableBaseChart", () => {
         expect(extendedReferencePoint).toEqual({
             buckets: expectedBuckets,
             filters: expectedFilters,
-            properties: expectedProperties,
+            properties: {},
             uiConfig: uiConfigMocks.simpleStackedBaseUiConfig,
         });
     });
@@ -458,7 +454,7 @@ describe("PluggableBaseChart", () => {
         expect(extendedReferencePoint).toEqual({
             uiConfig: uiConfigMocks.multipleMetricsAndCategoriesBaseUiConfig,
             filters: expectedFilters,
-            properties: referencePointMocks.multipleMetricBucketsAndCategoryReferencePoint.properties,
+            properties: {},
             buckets: expectedBuckets,
         });
     });
@@ -641,9 +637,18 @@ describe("PluggableBaseChart", () => {
         expect(extendedReferencePoint).toEqual({
             buckets: expectedBuckets,
             filters: expectedFilters,
+            properties: {},
             uiConfig: expectedUiConfig,
-            properties: referencePointMocks.multipleMetricsOneStackByReferencePoint.properties,
         });
+    });
+
+    it("should remove invalid sorts from reference point", async () => {
+        const baseChart = createComponent();
+
+        const extendedReferencePoint = await baseChart.getExtendedReferencePoint(
+            referencePointMocks.oneMetricAndManyCategoriesReferencePointWithInvalidSort,
+        );
+        expect(extendedReferencePoint.properties).toEqual({});
     });
 
     it("should not return derived measures when stack-by is there", async () => {

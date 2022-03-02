@@ -153,7 +153,6 @@ describe("PluggableColumnBarCharts", () => {
                         measures: ["m3", "m4"],
                     },
                 },
-                sortItems: mockRefPoint.properties.sortItems,
             };
             const extendedReferencePoint = await columnChart.getExtendedReferencePoint(mockRefPoint);
 
@@ -226,7 +225,7 @@ describe("PluggableColumnBarCharts", () => {
                 buckets: expectedBuckets,
                 filters: expectedFilters,
                 uiConfig: uiConfigMocks.oneStackAndNoCategoryColumnUiConfig,
-                properties: referencePointMocks.multipleMetricsOneStackByReferencePoint.properties,
+                properties: {},
             });
         });
 

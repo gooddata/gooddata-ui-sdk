@@ -571,6 +571,27 @@ export const justViewByReferencePoint: IReferencePoint = {
     },
 };
 
+export const justTrendByRefPoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: [],
+        },
+        {
+            localIdentifier: "trend",
+            items: attributeItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "segment",
+            items: [],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
 export const secondaryMeasuresAndAttributeReferencePoint: IReferencePoint = {
     buckets: [
         {
@@ -739,6 +760,27 @@ export const oneMetricOneCategory: IReferencePoint = {
         },
         {
             localIdentifier: "stack",
+            items: [],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const oneMetricOneTrendBy: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "trend",
+            items: attributeItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "segment",
             items: [],
         },
     ],
@@ -1054,6 +1096,48 @@ export const oneMetricAndManyCategoriesReferencePoint: IReferencePoint = {
     },
 };
 
+export const oneMetricAndTwoCategoriesReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "view",
+            items: attributeItems.slice(0, 2),
+        },
+        {
+            localIdentifier: "stack",
+            items: [],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: attributeFilters,
+    },
+};
+
+export const oneMetricAndTwoTrendByRefPoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "trend",
+            items: attributeItems.slice(0, 2),
+        },
+        {
+            localIdentifier: "segment",
+            items: [],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: attributeFilters,
+    },
+};
+
 export const twoMetricAndTwoCategoriesRefPoint: IReferencePoint = {
     buckets: [
         {
@@ -1066,6 +1150,27 @@ export const twoMetricAndTwoCategoriesRefPoint: IReferencePoint = {
         },
         {
             localIdentifier: "stack",
+            items: [],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const twoMetricAndTwoTrendByRefPoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 2),
+        },
+        {
+            localIdentifier: "trend",
+            items: attributeItems.slice(0, 2),
+        },
+        {
+            localIdentifier: "segment",
             items: [],
         },
     ],
@@ -1101,6 +1206,32 @@ export const twoStackedMetricAndTwoCategoriesRefPoint: IReferencePoint = {
     },
 };
 
+export const twoSegmentedMetricAndTwoTrendByRefPoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 2),
+        },
+        {
+            localIdentifier: "trend",
+            items: attributeItems.slice(0, 2),
+        },
+        {
+            localIdentifier: "segment",
+            items: [],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+    properties: {
+        controls: {
+            stackMeasures: true,
+        },
+    },
+};
+
 export const twoMetricAndOneCategoryRefPoint: IReferencePoint = {
     buckets: [
         {
@@ -1113,6 +1244,27 @@ export const twoMetricAndOneCategoryRefPoint: IReferencePoint = {
         },
         {
             localIdentifier: "stack",
+            items: [],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const twoMetricAndOneTrendByRefPoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 2),
+        },
+        {
+            localIdentifier: "trend",
+            items: attributeItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "segment",
             items: [],
         },
     ],
@@ -1145,6 +1297,116 @@ export const twoStackedMetricAndOneCategoryRefPoint: IReferencePoint = {
         controls: {
             stackMeasures: true,
         },
+    },
+};
+
+export const oneMetricAndOneCategoryAndOneStackRefPoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "view",
+            items: attributeItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "stack",
+            items: attributeItems.slice(1, 2),
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const twoMetricsAndOneCategoryAndOneStackRefPoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 2),
+        },
+        {
+            localIdentifier: "view",
+            items: attributeItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "stack",
+            items: attributeItems.slice(1, 2),
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const twoSegmentedMetricAndOneTrendByRefPoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 2),
+        },
+        {
+            localIdentifier: "trend",
+            items: attributeItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "segment",
+            items: [],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+    properties: {
+        controls: {
+            stackMeasures: true,
+        },
+    },
+};
+
+export const oneMetricAndOneTrendAndOneSegmentByRefPoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "trend",
+            items: attributeItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "segment",
+            items: attributeItems.slice(1, 2),
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const twoMetricAndOneTrendAndOneSegmentByRefPoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 2),
+        },
+        {
+            localIdentifier: "trend",
+            items: attributeItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "segment",
+            items: attributeItems.slice(1, 2),
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
     },
 };
 
@@ -1958,6 +2220,27 @@ export const oneMetricNoCategoriesReferencePoint: IReferencePoint = {
         },
         {
             localIdentifier: "stack",
+            items: [],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const oneMetricNoTrendByRefPoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "trend",
+            items: [],
+        },
+        {
+            localIdentifier: "segment",
             items: [],
         },
     ],
