@@ -25,7 +25,7 @@ describe("Dashboard Filtering", () => {
         Navigation.visit("dashboard/filtering");
     });
 
-    it("AttributeFilterButton on dashboard", () => {
+    it("AttributeFilterButton on dashboard (SEPARATE)", () => {
         const parentAttributeFilters = new AttributeFilterButtonParentChild(
             PARENT_FILTER_SELECTOR,
             CHILD_FILTER_SELECTOR,
@@ -35,7 +35,7 @@ describe("Dashboard Filtering", () => {
         parentAttributeFilters.getParentFilter().titleHasText("Product").subtitleHasText("All");
         parentAttributeFilters.getChildFilter().titleHasText("Department").subtitleHasText("All");
 
-        headline.hasValue("$38,310,753.45");
+        headline.waitHeadlineLoaded().hasValue("$38,310,753.45");
 
         parentAttributeFilters
             .getParentFilter()
@@ -50,10 +50,10 @@ describe("Dashboard Filtering", () => {
             .subtitleHasText("All")
             .open()
             .isAllElementsFilteredByParent();
-        headline.noValue();
+        headline.waitHeadlineLoaded().noValue();
     });
 
-    it("Headline value changes after filters change", () => {
+    it("Headline value changes after filters change (SEPARATE)", () => {
         const parentAttributeFilters = new AttributeFilterButtonParentChild(
             PARENT_FILTER_SELECTOR,
             CHILD_FILTER_SELECTOR,
@@ -63,7 +63,7 @@ describe("Dashboard Filtering", () => {
         parentAttributeFilters.getParentFilter().titleHasText("Product").subtitleHasText("All");
         parentAttributeFilters.getChildFilter().titleHasText("Department").subtitleHasText("All");
 
-        headline.hasValue("$38,310,753.45");
+        headline.waitHeadlineLoaded().hasValue("$38,310,753.45");
 
         parentAttributeFilters
             .getParentFilter()
@@ -71,7 +71,7 @@ describe("Dashboard Filtering", () => {
             .clearSelection()
             .selectElement("compuSci")
             .clickApply();
-        headline.hasValue("$9,237,969.87");
+        headline.waitHeadlineLoaded().hasValue("$9,237,969.87");
 
         parentAttributeFilters
             .getChildFilter()
@@ -79,6 +79,6 @@ describe("Dashboard Filtering", () => {
             .clearSelection()
             .selectElement("directSales")
             .clickApply();
-        headline.hasValue("$6,111,808.02");
+        headline.waitHeadlineLoaded().hasValue("$6,111,808.02");
     });
 });
