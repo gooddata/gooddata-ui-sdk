@@ -451,6 +451,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             isAllFiltered={isAllFiltered}
             hasNoData={hasNoData}
             getDropdownBodyProps={getDropdownBodyProps}
+            renderBody={props.renderBody}
         />
     );
 };

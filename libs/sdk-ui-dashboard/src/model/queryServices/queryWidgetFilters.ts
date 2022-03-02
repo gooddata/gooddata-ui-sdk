@@ -48,12 +48,43 @@ import { ExtendedDashboardWidget, ICustomWidget } from "../types/layoutTypes";
 
 export const QueryWidgetFiltersService = createQueryService("GDC.DASH/QUERY.WIDGET.FILTERS", queryService);
 
-function refMatchesMdObject(ref: ObjRef, mdObject: IMetadataObject, type?: ObjectType): boolean {
-    return (
-        areObjRefsEqual(ref, mdObject.ref) ||
-        areObjRefsEqual(ref, idRef(mdObject.id, type)) ||
-        areObjRefsEqual(ref, uriRef(mdObject.uri))
-    );
+function matchRef(ref: ObjRef, mdObject: IMetadataObject): boolean {
+    return areObjRefsEqual(ref, mdObject.ref);
+}
+
+function matchUri(ref: ObjRef, mdObject: IMetadataObject): boolean {
+    return areObjRefsEqual(ref, uriRef(mdObject.uri));
+}
+
+function matchId(ref: ObjRef, mdObject: IMetadataObject, type: ObjectType): boolean {
+    return areObjRefsEqual(ref, idRef(mdObject.id, type));
+}
+
+function matchCompositeId(
+    ref: ObjRef,
+    mdObject: IMetadataObject,
+    type: ObjectType,
+    workspace: string,
+): boolean {
+    // try adding a workspace prefix for backends with support for composite identifiers
+    if (!mdObject.id.includes(":")) {
+        return areObjRefsEqual(ref, idRef(`${workspace}:${mdObject.id}`, type));
+    }
+    return false;
+}
+
+function refMatchesMdObject(
+    ref: ObjRef,
+    mdObject: IMetadataObject,
+    type: ObjectType,
+    workspace: string,
+): boolean {
+    return [
+        matchRef(ref, mdObject),
+        matchId(ref, mdObject, type),
+        matchUri(ref, mdObject),
+        matchCompositeId(ref, mdObject, type, workspace),
+    ].some(Boolean);
 }
 
 interface IFilterDisplayFormPair {
@@ -132,6 +163,7 @@ function* getResolvedAttributeFilters(
 
     const attributeFilterDisplayFormPairsWithIgnoreResolved = resolveWidgetFilterIgnore(
         widget,
+        ctx.workspace,
         attributeFilterDisplayFormPairs,
     );
 
@@ -140,6 +172,7 @@ function* getResolvedAttributeFilters(
 
 function resolveWidgetFilterIgnore(
     widget: ExtendedDashboardWidget,
+    workspace: string,
     dashboardNonDateFilterDisplayFormPairs: IFilterDisplayFormPair[],
 ): IFilterDisplayFormPair[] {
     return dashboardNonDateFilterDisplayFormPairs.filter(({ displayForm }) => {
@@ -147,7 +180,9 @@ function resolveWidgetFilterIgnore(
             displayForm &&
             widget.ignoreDashboardFilters
                 ?.filter(isDashboardAttributeFilterReference)
-                .some((ignored) => refMatchesMdObject(ignored.displayForm, displayForm, "displayForm"));
+                .some((ignored) =>
+                    refMatchesMdObject(ignored.displayForm, displayForm, "displayForm", workspace),
+                );
 
         return !matches;
     });
@@ -167,6 +202,7 @@ export function isDashboardDateFilterIgnoredForInsight(insight: IInsightDefiniti
 
 function selectResolvedInsightDateFilters(
     state: DashboardState,
+    workspace: string,
     insight: IInsightDefinition,
     dashboardDateFilters: IDateFilter[],
     insightDateFilters: IDateFilter[],
@@ -175,22 +211,29 @@ function selectResolvedInsightDateFilters(
         return insightDateFilters;
     }
 
-    return selectResolvedDateFilters(state, [...insightDateFilters, ...dashboardDateFilters]);
+    return selectResolvedDateFilters(state, workspace, [...insightDateFilters, ...dashboardDateFilters]);
 }
 
-function selectResolvedDateFilters(state: DashboardState, dateFilters: IDateFilter[]): IDateFilter[] {
+function selectResolvedDateFilters(
+    state: DashboardState,
+    workspace: string,
+    dateFilters: IDateFilter[],
+): IDateFilter[] {
     const allDateFilterDateDatasetPairs = selectDateDatasetsForDateFilters(state, dateFilters);
-    return resolveDateFilters(allDateFilterDateDatasetPairs);
+    return resolveDateFilters(allDateFilterDateDatasetPairs, workspace);
 }
 
-function resolveDateFilters(allDateFilterDateDatasetPairs: IFilterDateDatasetPair[]): IDateFilter[] {
+function resolveDateFilters(
+    allDateFilterDateDatasetPairs: IFilterDateDatasetPair[],
+    workspace: string,
+): IDateFilter[] {
     // go through the filters in reverse order using the first filter for a given dimension encountered
     // and strip useless all time filters at the end
     return allDateFilterDateDatasetPairs
         .filter((item) => !!item.dateDataset)
         .reduceRight((acc: IDateFilter[], curr) => {
             const alreadyPresent = acc.some((item) =>
-                refMatchesMdObject(filterObjRef(item), curr.dateDataset!.dataSet, "dataSet"),
+                refMatchesMdObject(filterObjRef(item), curr.dateDataset!.dataSet, "dataSet", workspace),
             );
 
             if (!alreadyPresent) {
@@ -224,6 +267,7 @@ function* queryWithInsight(
     const [dateFilters, attributeFilters] = yield all([
         select(
             selectResolvedInsightDateFilters,
+            ctx.workspace,
             insight,
             widgetAwareDashboardFilters.filter(isDateFilter),
             effectiveInsightFilters.filter(isDateFilter),
@@ -265,7 +309,7 @@ function* queryWithoutInsight(
     );
 
     const [dateFilters, attributeFilters] = yield all([
-        select(selectResolvedDateFilters, widgetAwareDashboardFilters.filter(isDateFilter)),
+        select(selectResolvedDateFilters, ctx.workspace, widgetAwareDashboardFilters.filter(isDateFilter)),
         call(getResolvedAttributeFilters, ctx, widget, widgetAwareDashboardFilters.filter(isAttributeFilter)),
     ]);
 

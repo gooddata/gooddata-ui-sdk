@@ -129,7 +129,7 @@ class LocalPlugin extends DashboardPluginV1 {
                         newCustomWidget("myWidget1", "myCustomWidget", {
                             // specify which date data set to used when applying the date filter to this widget
                             // if not specified, the date filter is ignored
-                            dateDataSet: Md.DateDatasets.Date,
+                            dateDataSet: Md.DateDatasets.Date.ref,
                             // specify which attribute filters to ignore for this widget
                             // if empty or not specified, all attribute filters are used
                             ignoreDashboardFilters: [
