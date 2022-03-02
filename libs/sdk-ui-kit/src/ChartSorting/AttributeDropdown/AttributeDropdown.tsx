@@ -194,6 +194,7 @@ export const AttributeDropdown: React.FC<AttributeDropdownProps> = ({
                     onSelect={measureSelectHandler}
                     disabledExplanationTooltip={availableSorts.explanation}
                     enableRenamingMeasureToMetric={enableRenamingMeasureToMetric}
+                    index={index}
                 />
             )}
         </>

@@ -38,14 +38,17 @@ export const ChartSortingDropdown: React.FC<ChartSortingProps> = ({
 
     return (
         <>
-            <div className="sort-attribute-section">
+            <div className="gd-sort-attribute-section">
                 {currentSort &&
                     currentSort.map((currentSortItem: ISortItem, index: number) => {
                         // Obtain availables items with same id as current index
                         const available: IAvailableSortsGroup = availableSorts[index];
 
                         return (
-                            <div key={index} className="sort-attribute-item">
+                            <div
+                                key={index}
+                                className={`gd-sort-attribute-item s-sort-attribute-item-${index}`}
+                            >
                                 {currentSort.length > 1 && (
                                     <div className="attribute-sorting-title">
                                         {getAttributeName(bucketItemNames, available)}

@@ -1276,7 +1276,12 @@
     },
     "sorting.type.numerical.desc": {
         "value": "Largest to smallest",
-        "comment": "Title of sort option when is sorted alphabetically and in descending order.",
+        "comment": "Title of sort option when is sorted numerically and in descending order.",
+        "limit": 0
+    },
+    "sorting.by": {
+        "value": "by",
+        "comment": "Text that will appear before the measures from which attribute will be sorted.",
         "limit": 0
     },
     "sorting.sum.of.all.measure._measure": {

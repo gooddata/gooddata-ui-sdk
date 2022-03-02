@@ -12,6 +12,7 @@
     height: 16px;
     margin-right: 10px;
     vertical-align: bottom;
+    background-repeat: no-repeat;
 }
 
 .gd-sort-charting-dropdown {
@@ -36,15 +37,15 @@
         }
     }
 
-    .sort-attribute-section {
+    .gd-sort-attribute-section {
         margin-bottom: 10px;
 
-        .sort-attribute-item:not(:first-child) {
+        .gd-sort-attribute-item:not(:first-child) {
             margin-top: 10px;
         }
     }
 
-    .section {
+    .gd-sort-charting-body {
         padding: 10px;
     }
 
@@ -60,7 +61,7 @@
         }
     }
 
-    .chart-sorting-dropdown-footer {
+    .gd-chart-sorting-dropdown-footer {
         margin: 0 10px;
         padding: 10px 0;
         border-top: 1px solid $gd-border-color;
@@ -119,7 +120,7 @@
 }
 
 // icons
-.sort-attribute-section,
+.gd-sort-attribute-section,
 .gd-attribute-sorting-dropdown-body {
     .gd-icon-sort-numerical-asc::before {
         @extend %sorting-icon;
