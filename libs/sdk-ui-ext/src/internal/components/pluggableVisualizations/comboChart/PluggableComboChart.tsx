@@ -1,17 +1,28 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { render } from "react-dom";
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
 import without from "lodash/without";
+import isEmpty from "lodash/isEmpty";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { isAreaChart, isLineChart } from "@gooddata/sdk-ui-charts";
-import { AXIS, AXIS_NAME } from "../../../constants/axis";
+import {
+    insightBuckets,
+    bucketsIsEmpty,
+    IInsightDefinition,
+    localIdRef,
+    newAttributeSort,
+} from "@gooddata/sdk-model";
 
+import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
+
+import { AXIS, AXIS_NAME } from "../../../constants/axis";
 import { BUCKETS, METRIC } from "../../../constants/bucket";
 import { PROPERTY_CONTROLS_DUAL_AXIS } from "../../../constants/properties";
 import { COMBO_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 import { COMBO_CHART_UICONFIG } from "../../../constants/uiConfig";
+
 import {
     IBucketItem,
     IExtendedReferencePoint,
@@ -19,9 +30,12 @@ import {
     IUiConfig,
     IVisConstruct,
     IVisualizationProperties,
+    IBucketOfFun,
 } from "../../../interfaces/Visualization";
-import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
+import { ISortConfig, newMeasureSortSuggestion } from "../../../interfaces/SortConfig";
 
+import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
+import { removeSort } from "../../../utils/sort";
 import {
     applyUiConfig,
     findBucket,
@@ -33,6 +47,7 @@ import {
     hasBucket,
     sanitizeFilters,
     setMeasuresShowOnSecondaryAxis,
+    getBucketItems,
 } from "../../../utils/bucketHelper";
 import { getMasterMeasuresCount } from "../../../utils/bucketRules";
 import {
@@ -40,12 +55,9 @@ import {
     isDualAxisOrSomeSecondaryAxisMeasure,
     setSecondaryMeasures,
 } from "../../../utils/propertiesHelper";
-import { removeSort } from "../../../utils/sort";
-
 import { setComboChartUiConfig } from "../../../utils/uiConfigHelpers/comboChartUiConfigHelper";
 import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChartBasedConfigurationPanel";
-import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
-import { insightBuckets, bucketsIsEmpty, IInsightDefinition } from "@gooddata/sdk-model";
+
 export class PluggableComboChart extends PluggableBaseChart {
     private primaryChartType: string = VisualizationTypes.COLUMN;
     private secondaryChartType: string = VisualizationTypes.COLUMN;
@@ -233,6 +245,89 @@ export class PluggableComboChart extends PluggableBaseChart {
             measureBucketsOfNonColumnCharts.length === 0 ||
             measureBucketsOfNonColumnCharts.every((bucket) => bucketsIsEmpty(bucket))
         );
+    }
+
+    protected getDefaultAndAvailableSort(
+        buckets: IBucketOfFun[],
+        properties: IVisualizationProperties,
+    ): {
+        defaultSort: ISortConfig["currentSort"];
+        availableSorts: ISortConfig["availableSorts"];
+    } {
+        const measures = getBucketItemsByType(buckets, BucketNames.MEASURES, [METRIC]);
+        const secondaryMeasures = getBucketItemsByType(buckets, BucketNames.SECONDARY_MEASURES, [METRIC]);
+        const viewBy = getBucketItems(buckets, BucketNames.VIEW);
+        const canSortStackTotal =
+            properties?.controls?.stackMeasures ?? this.getUiConfig().optionalStacking.stackMeasures;
+        const defaultSort = viewBy.map((vb) => newAttributeSort(vb.localIdentifier, "asc"));
+
+        if (!isEmpty(viewBy) && (!isEmpty(measures) || !isEmpty(secondaryMeasures))) {
+            const mergedMeasures = [...measures, ...secondaryMeasures];
+
+            if (canSortStackTotal) {
+                return {
+                    defaultSort,
+                    availableSorts: [
+                        {
+                            itemId: localIdRef(viewBy[0].localIdentifier),
+                            attributeSort: {
+                                areaSortEnabled: true,
+                                normalSortEnabled: true,
+                            },
+                        },
+                    ],
+                };
+            }
+
+            return {
+                defaultSort,
+                availableSorts: [
+                    {
+                        itemId: localIdRef(viewBy[0].localIdentifier),
+                        attributeSort: {
+                            areaSortEnabled: mergedMeasures.length > 1,
+                            normalSortEnabled: true,
+                        },
+                        metricSorts: mergedMeasures.map((m) => newMeasureSortSuggestion(m.localIdentifier)),
+                    },
+                ],
+            };
+        }
+
+        return {
+            defaultSort: [],
+            availableSorts: [],
+        };
+    }
+
+    private isSortDisabled(
+        referencePoint: IReferencePoint,
+        availableSorts: ISortConfig["availableSorts"],
+    ): boolean {
+        const { buckets } = referencePoint;
+        const measures = getBucketItemsByType(buckets, BucketNames.MEASURES, [METRIC]);
+        const secondaryMeasures = getBucketItemsByType(buckets, BucketNames.SECONDARY_MEASURES, [METRIC]);
+        const viewBy = getBucketItems(buckets, BucketNames.VIEW);
+
+        return (
+            viewBy.length < 1 ||
+            availableSorts.length === 0 ||
+            (measures.length < 1 && secondaryMeasures.length < 1)
+        );
+    }
+
+    public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
+        const { buckets, properties } = referencePoint;
+
+        const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(buckets, properties);
+        const disabled = this.isSortDisabled(referencePoint, availableSorts);
+
+        return Promise.resolve({
+            supported: true,
+            disabled,
+            currentSort: defaultSort,
+            availableSorts,
+        });
     }
 
     protected renderConfigurationPanel(insight: IInsightDefinition): void {
