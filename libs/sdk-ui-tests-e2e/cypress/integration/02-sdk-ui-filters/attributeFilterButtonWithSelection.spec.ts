@@ -11,12 +11,12 @@ describe("AttributeFilterButton with initial selection", () => {
     });
 
     it("attribute filter loaded", () => {
-        const attributeFilter = new AttributeFilterButton();
+        const attributeFilter = new AttributeFilterButton(".s-attribute-filter.s-opportunity");
         attributeFilter.titleHasText("Opportunity").subtitleHasText("Zoup! Fresh Soup > CompuSci");
     });
 
     it("attribute filter basic operations", () => {
-        const attributeFilter = new AttributeFilterButton();
+        const attributeFilter = new AttributeFilterButton(".s-attribute-filter.s-opportunity");
 
         attributeFilter.open().clearSelection().subtitleHasText("None").applyDisabled();
 

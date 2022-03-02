@@ -8,6 +8,7 @@ import { DateFilterScenario } from "../components/Scenarios/Filters/DateFilterSc
 import { ImplicitDrillToAttributeUrlScenario } from "../components/Scenarios/Dashboard/ImplicitDrillToAttributeUrlScenario";
 import { BarChartDrillingScenario } from "../components/Scenarios/Visualizations/BarChart/BarChartDrillingScenario";
 import { AttributeFilterButtonParentChildScenario } from "../components/Scenarios/Filters/AttributeFilterButtonParentChildScenario";
+import { ParentChildFiltersWithPlaceholders } from "../components/Scenarios/Filters/ParentChildFiltersWithPlaceholders";
 
 // todo add path to other scenarios
 
@@ -15,7 +16,7 @@ import { AttributeFilterButtonParentChildScenario } from "../components/Scenario
  * Add key here for your new E2E test. Use the key in the map below with the scenario as well as in
  * the test spec within Navigation.
  */
-const SCENARIO_KEYS = {
+export const SCENARIO_KEYS = {
     DASHBOARD: "dashboard/dashboard",
     IMPLICIT_DRILL_TO_ATTRIBUTE: "dashboard/implicit-drill-to-attribute-url",
     FILTERS_DATE_FILTER: "filters/date-filter",
@@ -23,6 +24,7 @@ const SCENARIO_KEYS = {
     FILTERS_ATTRIBUTE_FILTER_BUTTON: "filters/attribute-filter-button",
     FILTERS_ATTRIBUTE_FILTER_BUTTON_WITH_SELECTION: "filters/attribute-filter-button-with-selection",
     FILTERS_ATTRIBUTE_FILTER_BUTTON_PARENT_CHILD: "filters/attribute-filter-button-parent-child",
+    FILTERS_PARENT_CHILD_FILTERS_WITH_PLACEHOLDERS: "filters/parent-child-filters-with-placeholder",
 };
 
 const scenarios = new Map<string, React.ComponentType>([
@@ -33,6 +35,7 @@ const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.FILTERS_ATTRIBUTE_FILTER_BUTTON, AttributeFilterButtonScenario],
     [SCENARIO_KEYS.FILTERS_ATTRIBUTE_FILTER_BUTTON_WITH_SELECTION, AttributeFilterButtonPreselectedScenario],
     [SCENARIO_KEYS.FILTERS_ATTRIBUTE_FILTER_BUTTON_PARENT_CHILD, AttributeFilterButtonParentChildScenario],
+    [SCENARIO_KEYS.FILTERS_PARENT_CHILD_FILTERS_WITH_PLACEHOLDERS, ParentChildFiltersWithPlaceholders],
 ]);
 
 const ComponentResolver: React.FC = () => {

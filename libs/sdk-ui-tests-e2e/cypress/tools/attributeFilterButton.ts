@@ -1,17 +1,29 @@
 // (C) 2022 GoodData Corporation
 export class AttributeFilterButton {
+    private attributeFilterUniqueSelector;
+
+    constructor(selector: string) {
+        this.attributeFilterUniqueSelector = selector;
+    }
+
     open(): this {
-        cy.get(".s-attribute-filter").click();
+        cy.get(this.attributeFilterUniqueSelector).click();
         return this;
     }
 
     titleHasText(expectedTitle: string): this {
-        cy.get(".s-attribute-filter-button-title").should("have.text", expectedTitle);
+        cy.get(`${this.attributeFilterUniqueSelector} .s-attribute-filter-button-title`).should(
+            "have.text",
+            expectedTitle,
+        );
         return this;
     }
 
     subtitleHasText(expectedSubtitle: string): this {
-        cy.get(".s-attribute-filter-button-subtitle").should("have.text", expectedSubtitle);
+        cy.get(`${this.attributeFilterUniqueSelector} .s-attribute-filter-button-subtitle`).should(
+            "have.text",
+            expectedSubtitle,
+        );
         return this;
     }
 
@@ -51,10 +63,8 @@ export class AttributeFilterButton {
     }
 
     waitElementsLoaded(): this {
-        // wait until loading is initialized
-        cy.get(".s-isLoading").should("exist");
         // wait until loading is finished
-        cy.get(".s-isLoading").should("not.exist");
+        cy.wait(500).get(".s-isLoading").should("not.exist");
         return this;
     }
 
@@ -77,6 +87,28 @@ export class AttributeFilterButton {
 
     isAllElementsFiltered(): this {
         cy.get(".s-list-no-results").should("exist");
+        return this;
+    }
+
+    isAllElementsFilteredByParent(): this {
+        cy.get(".s-attribute-filter-dropdown-all-items-filtered").should("exist");
+        return this;
+    }
+
+    waitFilteringFinished(): this {
+        cy.get(`${this.attributeFilterUniqueSelector}.gd-attribute-filter-button-is-filtering`).should(
+            "exist",
+        );
+        cy.get(`${this.attributeFilterUniqueSelector}.gd-attribute-filter-button-is-filtering`).should(
+            "not.exist",
+        );
+        return this;
+    }
+
+    allElementsSelected(): this {
+        cy.get(".s-attribute-filter-list-item").each((listItem) => {
+            cy.wrap(listItem).should("have.class", "s-attribute-filter-list-item-selected");
+        });
         return this;
     }
 }
