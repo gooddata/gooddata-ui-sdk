@@ -278,5 +278,9 @@
     "kpiAlertDialog.unsaved.changes.headline": "Покинуть панель КПЭ?",
     "kpiAlertDialog.unsaved.changes.message": "Есть неопубликованные изменения, которые будут потеряны.",
     "kpiAlertDialog.unsaved.changes.leave.anyway": "Все равно покинуть",
-    "kpiAlertDialog.unsaved.changes.stay": "Остаться"
+    "kpiAlertDialog.unsaved.changes.stay": "Остаться",
+    "sorting.tooltip.sum._measure": "Анализ детализирован по двум атрибутам. Первый атрибут всегда сортируется по значению суммы всех показателей.",
+    "sorting.tooltip.sum._metric": "Анализ детализирован по двум атрибутам. Первый атрибут всегда сортируется по значению суммы всех метрик.",
+    "sorting.tooltip.measure._measure": "Можно сортировать только по показателям, уже использованным в анализе.",
+    "sorting.tooltip.measure._metric": "Можно сортировать только по метрикам, уже использованным в анализе."
 }

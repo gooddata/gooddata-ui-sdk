@@ -237,5 +237,12 @@
     "shareDialog.share.grantee.item.user.all": "全部用户",
     "shareDialog.share.grantee.item.user.inactive": "非活跃用户",
     "shareDialog.share.grantee.item.user.inactive.description": "用户已从此工作区中删除",
-    "shareDialog.share.grantee.item.remove.selection": "从选择中删除。"
+    "shareDialog.share.grantee.item.remove.selection": "从选择中删除。",
+    "sorting.dropdown.header": "排序洞察",
+    "sorting.type.alphabetical.asc": "A 到 Z。",
+    "sorting.type.alphabetical.desc": "Z到A",
+    "sorting.type.numerical.asc": "从最小到最大",
+    "sorting.type.numerical.desc": "从最大到最小",
+    "sorting.sum.of.all.measure._measure": "所有度量的总和（总计）",
+    "sorting.sum.of.all.measure._metric": "所有指标的总和（总计）"
 }

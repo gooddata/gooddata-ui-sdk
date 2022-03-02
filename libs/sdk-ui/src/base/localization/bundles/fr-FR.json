@@ -237,5 +237,12 @@
     "shareDialog.share.grantee.item.user.all": "Tous les utilisateurs",
     "shareDialog.share.grantee.item.user.inactive": "Utilisateur inactif",
     "shareDialog.share.grantee.item.user.inactive.description": "L'utilisateur a été supprimé de cet espace de travail",
-    "shareDialog.share.grantee.item.remove.selection": "Retirer de la sélection."
+    "shareDialog.share.grantee.item.remove.selection": "Retirer de la sélection.",
+    "sorting.dropdown.header": "Trier la perception",
+    "sorting.type.alphabetical.asc": "A à Z",
+    "sorting.type.alphabetical.desc": "Z à A",
+    "sorting.type.numerical.asc": "Du plus petit au plus grand",
+    "sorting.type.numerical.desc": "Du plus grand au plus petit",
+    "sorting.sum.of.all.measure._measure": "Somme de toutes les mesures (total)",
+    "sorting.sum.of.all.measure._metric": "Somme de toutes les métriques (total)"
 }

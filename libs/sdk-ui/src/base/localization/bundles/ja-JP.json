@@ -237,5 +237,12 @@
     "shareDialog.share.grantee.item.user.all": "すべてのユーザー",
     "shareDialog.share.grantee.item.user.inactive": "非アクティブなユーザー",
     "shareDialog.share.grantee.item.user.inactive.description": "ユーザーはこのワークスペースから削除されています",
-    "shareDialog.share.grantee.item.remove.selection": "この選択範囲から削除。"
+    "shareDialog.share.grantee.item.remove.selection": "この選択範囲から削除。",
+    "sorting.dropdown.header": "インサイトの並べ替え",
+    "sorting.type.alphabetical.asc": "A から Z",
+    "sorting.type.alphabetical.desc": "Z から A",
+    "sorting.type.numerical.asc": "最小から最大の順",
+    "sorting.type.numerical.desc": "最大から最小の順",
+    "sorting.sum.of.all.measure._measure": "すべての測定値の合計（合計）",
+    "sorting.sum.of.all.measure._metric": "すべてのメトリックの合計（合計）"
 }

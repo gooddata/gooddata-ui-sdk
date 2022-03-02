@@ -278,5 +278,9 @@
     "kpiAlertDialog.unsaved.changes.headline": "离开 KPI 控制面板？",
     "kpiAlertDialog.unsaved.changes.message": "有未发布的更改，它们将丢失。",
     "kpiAlertDialog.unsaved.changes.leave.anyway": "离开",
-    "kpiAlertDialog.unsaved.changes.stay": "留下"
+    "kpiAlertDialog.unsaved.changes.stay": "留下",
+    "sorting.tooltip.sum._measure": "洞察被两个属性分割。第一个属性始终按所有度量值总和排序。",
+    "sorting.tooltip.sum._metric": "洞察被两个属性分割。第一个属性始终按所有指标值总和排序。",
+    "sorting.tooltip.measure._measure": "您只能按洞察中使用的度量进行排序。",
+    "sorting.tooltip.measure._metric": "您只能按洞察中使用的指标进行排序。"
 }

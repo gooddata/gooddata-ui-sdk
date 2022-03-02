@@ -278,5 +278,9 @@
     "kpiAlertDialog.unsaved.changes.headline": "Het KPI-dashboard verlaten?",
     "kpiAlertDialog.unsaved.changes.message": "Er zijn ongepubliceerde wijzigingen die verloren gaan.",
     "kpiAlertDialog.unsaved.changes.leave.anyway": "Toch verlaten",
-    "kpiAlertDialog.unsaved.changes.stay": "Blijven"
+    "kpiAlertDialog.unsaved.changes.stay": "Blijven",
+    "sorting.tooltip.sum._measure": "Het inzicht wordt gesplitst door twee attributen. Het eerste attribuut wordt altijd gesorteerd volgens de som van alle maatwaarden.",
+    "sorting.tooltip.sum._metric": "Het inzicht wordt gesplitst door twee attributen. Het eerste attribuut wordt altijd gesorteerd volgens de som van alle meetgegevenswaarden.",
+    "sorting.tooltip.measure._measure": "U kunt alleen sorteren op maten die al worden gebruikt in het inzicht.",
+    "sorting.tooltip.measure._metric": "U kunt alleen sorteren op meetgegevens die al worden gebruikt in het inzicht."
 }
