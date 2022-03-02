@@ -5,6 +5,7 @@ import { PluggableBarChart } from "../PluggableBarChart";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
 import { AXIS } from "../../../../constants/axis";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { IReferencePoint } from "../../../../interfaces/Visualization";
 
 describe("PluggableBarChart", () => {
     const defaultProps = {
@@ -217,5 +218,24 @@ describe("PluggableBarChart", () => {
 
             expect(sortConfig.currentSort).toMatchSnapshot();
         });
+
+        const Scenarios: Array<[string, IReferencePoint]> = [
+            ["1M + 1 VB", referencePointMocks.oneMetricOneCategory],
+            ["2M + 1 VB", referencePointMocks.twoMetricAndOneCategoryRefPoint],
+            ["2 stacked M + 1 VB", referencePointMocks.twoStackedMetricAndOneCategoryRefPoint],
+            ["2M + 2 VB", referencePointMocks.twoMetricAndTwoCategoriesRefPoint],
+            ["2 stacked M + 2 VB", referencePointMocks.twoStackedMetricAndTwoCategoriesRefPoint],
+        ];
+
+        it.each(Scenarios)(
+            "should return valid available sorts for %s",
+            async (_name, referencePointMock) => {
+                const chart = createComponent(defaultProps);
+
+                const sortConfig = await chart.getSortConfig(referencePointMock);
+
+                expect(sortConfig.availableSorts).toMatchSnapshot();
+            },
+        );
     });
 });

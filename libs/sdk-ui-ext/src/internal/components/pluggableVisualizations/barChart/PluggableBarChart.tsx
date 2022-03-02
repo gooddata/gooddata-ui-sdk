@@ -140,7 +140,7 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
                         itemId: localIdRef(viewBy[0].localIdentifier),
                         attributeSort: {
                             normalSortEnabled: true,
-                            areaSortEnabled: false,
+                            areaSortEnabled: measures.length > 1,
                         },
                         metricSorts: [...measures.map((m) => newMeasureSortSuggestion(m.localIdentifier))],
                     },
