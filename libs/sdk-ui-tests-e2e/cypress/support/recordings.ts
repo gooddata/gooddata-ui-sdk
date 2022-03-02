@@ -36,9 +36,7 @@ beforeEach(() => {
     if (separateRecordings) {
         const separateRecordingsKey = testName.replace(/\s/g, "-");
         cy.intercept("POST", "*", (request) => {
-            if (request.url.indexOf("executeAfm") === -1) {
-                request.headers["X-GDC-TEST-NAME"] = separateRecordingsKey;
-            }
+            request.headers["X-GDC-TEST-NAME"] = separateRecordingsKey;
         });
         cy.intercept("PUT", "*", (request) => {
             request.headers["X-GDC-TEST-NAME"] = separateRecordingsKey;
