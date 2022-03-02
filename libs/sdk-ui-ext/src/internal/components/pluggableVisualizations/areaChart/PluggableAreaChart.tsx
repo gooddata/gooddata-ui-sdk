@@ -81,7 +81,7 @@ import {
  *
  * - If there is a StackBy attribute and a ViewBy attribute, the dimensions are [[StackBy[0]], [ViewBy[0], MeasureGroupIdentifier]].
  * - If there is a StackBy attribute and no ViewBy attribute, the dimensions are [[StackBy[0]], [MeasureGroupIdentifier]].
- * - If there is no StackBy attribute and two ViewBy attribute, the dimensions are [[ViewBy[1]], [ViewBy[0], MeasureGroupIdentifier]].
+ * - If there is no StackBy attribute and two ViewBy attributes, the dimensions are [[ViewBy[1]], [ViewBy[0], MeasureGroupIdentifier]].
  * - If there is no StackBy attribute and one ViewBy attribute, the dimensions are [[MeasureGroupIdentifier], [ViewBy[0]]].
  * - If there is no StackBy attribute and no ViewBy attribute, the dimensions are [[MeasureGroupIdentifier], []]].
  */
