@@ -39,7 +39,7 @@ import { newMeasureSortSuggestion, ISortConfig } from "../../../interfaces/SortC
  *
  * ## Default sorts
  *
- * The PluggableAreaChart does not use any sorts.
+ * The PluggableColumnChart does not use any sorts.
  */
 export class PluggableColumnChart extends PluggableColumnBarCharts {
     constructor(props: IVisConstruct) {

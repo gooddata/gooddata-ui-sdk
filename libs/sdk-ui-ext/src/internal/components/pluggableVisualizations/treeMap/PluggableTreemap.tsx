@@ -42,6 +42,37 @@ import {
     reverseAndTrimIntersection,
 } from "../drillDownUtil";
 
+/**
+ * PluggableTreemap
+ *
+ * ## Buckets
+ *
+ * | Name      | Id       | Accepts             |
+ * |-----------|----------|---------------------|
+ * | Measures  | measures | measures only       |
+ * | ViewBy    | view     | attributes or dates |
+ * | SegmentBy | segment  | attributes or dates |
+ *
+ * ### Bucket axioms
+ *
+ * - |ViewBy| ≥ 1 ⇒ |Measures| ≤ 1
+ * - |ViewBy| = 0 ⇒ |Measures| ≤ 20
+ * - |Measures| ≥ 1 ⇒ |ViewBy| = 0
+ * - |Measures| ≤ 1 ⇒ |ViewBy| ≤ 1
+ * - |SegmentBy| ≤ 1
+ *
+ * ## Dimensions
+ *
+ * The PluggableTreemap always creates two dimensional execution.
+ *
+ * - |ViewBy| + |SegmentBy| = 1 ⇒ [[MeasureGroupIdentifier], [...ViewBy, ...SegmentBy]]
+ * - |ViewBy| + |SegmentBy| != 1 ⇒ [[...ViewBy, ...SegmentBy], [MeasureGroupIdentifier]]
+ *
+ * ## Default sorts
+ *
+ * - |ViewBy| ≥ 1 ∧ |SegmentBy| ≥ 1 ⇒ [attributeSort(ViewBy[0]), measureSort(...Measures)]
+ * - |ViewBy| = 0 ∧ |SegmentBy| = 0 ⇒ []
+ */
 export class PluggableTreemap extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
         super(props);
