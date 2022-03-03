@@ -1,12 +1,13 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import noop from "lodash/noop";
 import { DefaultLocale } from "@gooddata/sdk-ui";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+
 import { PluggablePieChart } from "../PluggablePieChart";
+
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
 import * as uiConfigMocks from "../../../../tests/mocks/uiConfigMocks";
-
 import { IBucketOfFun, IFilters } from "../../../../interfaces/Visualization";
-import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 describe("PluggablePieChart", () => {
     const defaultProps = {
@@ -223,6 +224,38 @@ describe("PluggablePieChart", () => {
                     items: [],
                 },
             ]);
+        });
+    });
+
+    describe("Sort config", () => {
+        it("should create sort config with sorting supported but disabled when there is no view by attribute", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(
+                referencePointMocks.multipleMetricsNoCategoriesReferencePoint,
+            );
+
+            expect(sortConfig.supported).toBeTruthy();
+            expect(sortConfig.disabled).toBeTruthy();
+        });
+
+        it("should create sort config with sorting supported but disabled when there is no measure", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(
+                referencePointMocks.mixOfMeasuresWithDerivedAndArithmeticFromDerivedAreaReferencePoint,
+            );
+
+            expect(sortConfig.supported).toBeTruthy();
+            expect(sortConfig.disabled).toBeTruthy();
+        });
+
+        it("should provide measure sort as default sort, measure sort as available sorts for 1M + 1 VB", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(referencePointMocks.simpleStackedReferencePoint);
+
+            expect(sortConfig).toMatchSnapshot();
         });
     });
 });

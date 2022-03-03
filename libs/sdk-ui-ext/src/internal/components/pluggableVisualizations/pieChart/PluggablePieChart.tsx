@@ -1,12 +1,19 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
+import { render } from "react-dom";
+import isEmpty from "lodash/isEmpty";
+import cloneDeep from "lodash/cloneDeep";
+import set from "lodash/set";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IChartConfig, TOP } from "@gooddata/sdk-ui-charts";
-import { render } from "react-dom";
+import { IInsightDefinition, newMeasureSort, localIdRef } from "@gooddata/sdk-model";
+
+import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
+import PieChartConfigurationPanel from "../../configurationPanels/PieChartConfigurationPanel";
+
 import { BUCKETS } from "../../../constants/bucket";
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
 import { PIECHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
-
 import {
     DEFAULT_PIE_UICONFIG,
     PIE_UICONFIG_WITH_MULTIPLE_METRICS,
@@ -20,9 +27,11 @@ import {
     IVisConstruct,
     IVisProps,
     IVisualizationProperties,
+    IBucketItem,
 } from "../../../interfaces/Visualization";
-import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
+import { newMeasureSortSuggestion, ISortConfig } from "../../../interfaces/SortConfig";
 
+import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 import {
     getAttributeItems,
     getMeasureItems,
@@ -30,16 +39,11 @@ import {
     removeAllArithmeticMeasuresFromDerived,
     removeAllDerivedMeasures,
     sanitizeFilters,
+    getBucketItems,
 } from "../../../utils/bucketHelper";
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
 import { removeSort } from "../../../utils/sort";
-
 import { setPieChartUiConfig } from "../../../utils/uiConfigHelpers/pieChartUiConfigHelper";
-import PieChartConfigurationPanel from "../../configurationPanels/PieChartConfigurationPanel";
-import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
-import cloneDeep from "lodash/cloneDeep";
-import set from "lodash/set";
-import { IInsightDefinition } from "@gooddata/sdk-model";
 
 export class PluggablePieChart extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -108,6 +112,50 @@ export class PluggablePieChart extends PluggableBaseChart {
         newReferencePoint = removeSort(newReferencePoint);
 
         return Promise.resolve(sanitizeFilters(newReferencePoint));
+    }
+
+    protected getDefaultAndAvailableSort(
+        measures: IBucketItem[],
+        viewBy: IBucketItem[],
+    ): {
+        defaultSort: ISortConfig["currentSort"];
+        availableSorts: ISortConfig["availableSorts"];
+    } {
+        if (!isEmpty(measures) && !isEmpty(viewBy)) {
+            return {
+                defaultSort: [newMeasureSort(measures[0].localIdentifier, "desc")],
+                availableSorts: [
+                    {
+                        itemId: localIdRef(viewBy[0].localIdentifier),
+                        attributeSort: {
+                            normalSortEnabled: true,
+                            areaSortEnabled: false,
+                        },
+                        metricSorts: [newMeasureSortSuggestion(measures[0].localIdentifier)],
+                    },
+                ],
+            };
+        }
+
+        return {
+            defaultSort: [],
+            availableSorts: [],
+        };
+    }
+
+    public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
+        const { buckets } = referencePoint;
+        const measures = getMeasureItems(buckets);
+        const viewBy = getBucketItems(buckets, BucketNames.VIEW);
+        const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(measures, viewBy);
+        const disabled = viewBy.length < 1 || measures.length < 1 || availableSorts.length === 0;
+
+        return Promise.resolve({
+            supported: true,
+            disabled,
+            currentSort: defaultSort,
+            availableSorts,
+        });
     }
 
     protected renderConfigurationPanel(insight: IInsightDefinition): void {

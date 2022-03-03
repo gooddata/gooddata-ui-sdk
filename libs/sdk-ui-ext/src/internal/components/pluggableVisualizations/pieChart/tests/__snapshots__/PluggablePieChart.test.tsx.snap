@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PluggablePieChart Sort config should provide measure sort as default sort, measure sort as available sorts for 1M + 1 VB 1`] = `
+Object {
+  "availableSorts": Array [
+    Object {
+      "attributeSort": Object {
+        "areaSortEnabled": false,
+        "normalSortEnabled": true,
+      },
+      "itemId": Object {
+        "localIdentifier": "a1",
+      },
+      "metricSorts": Array [
+        Object {
+          "locators": Array [
+            Object {
+              "measureLocatorItem": Object {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+      ],
+    },
+  ],
+  "currentSort": Array [
+    Object {
+      "measureSortItem": Object {
+        "direction": "desc",
+        "locators": Array [
+          Object {
+            "measureLocatorItem": Object {
+              "measureIdentifier": "m1",
+            },
+          },
+        ],
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
