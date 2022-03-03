@@ -34,7 +34,7 @@ export function getPivotTableDimensions(insight: IInsightDefinition): IDimension
     );
 }
 
-function getPieOrDonutDimensions(insight: IInsightDefinition): IDimension[] {
+function getPieDonutFunnelDimensions(insight: IInsightDefinition): IDimension[] {
     const viewByAttributes = safeBucketAttributes(insight, BucketNames.VIEW);
 
     return viewByAttributes.length
@@ -115,7 +115,7 @@ export function generateDimensions(insight: IInsightDefinition, type: VisType): 
         case VisualizationTypes.PIE:
         case VisualizationTypes.DONUT:
         case VisualizationTypes.FUNNEL:
-            return getPieOrDonutDimensions(insight);
+            return getPieDonutFunnelDimensions(insight);
 
         case VisualizationTypes.TREEMAP:
             return getTreemapDimensionsFromMdObj(insight);
