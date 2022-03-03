@@ -65,9 +65,9 @@ import {
  * PluggableAreaChart
  *
  * ## Buckets
- * - Measures - accepts only measures
- * - ViewBy - accepts attributes or dates (max one date if enableMultipleDates FF is off, more if it is on)
- * - StackBy - accepts only attributes
+ * - Measures (id: "measures") - accepts only measures
+ * - ViewBy (id: "view") - accepts attributes or dates (max one date if enableMultipleDates FF is off, more if it is on)
+ * - StackBy (id: "stack") - accepts only attributes
  *
  * ### Bucket axioms
  * - |ViewBy| ≤ 2
