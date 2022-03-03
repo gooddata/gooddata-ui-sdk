@@ -20,7 +20,7 @@ describe("Drilling", () => {
         beforeEach(() => {
             cy.login();
 
-            Navigation.visit("implicit-drill-to-attribute-url");
+            Navigation.visit("dashboard/implicit-drill-to-attribute-url");
         });
 
         it("should drill to correct url after clicking on attribute", () => {
@@ -30,7 +30,7 @@ describe("Drilling", () => {
 
             cy.get(".s-attribute-url").should(
                 "have.text",
-                "https://financial-services-gd.com/devops/?page=server_detail&id=27564&name=Aaron%20Clements",
+                "https://www.google.com/search?q=1000Bulbs.com%20%3E%20Educationly",
             );
         });
 
@@ -45,7 +45,7 @@ describe("Drilling", () => {
 
             cy.get(".s-attribute-url").should(
                 "have.text",
-                "https://financial-services-gd.com/devops/?page=server_detail&id=27564&name=Aaron%20Clements",
+                "https://www.google.com/search?q=1000Bulbs.com%20%3E%20Educationly",
             );
         });
     });

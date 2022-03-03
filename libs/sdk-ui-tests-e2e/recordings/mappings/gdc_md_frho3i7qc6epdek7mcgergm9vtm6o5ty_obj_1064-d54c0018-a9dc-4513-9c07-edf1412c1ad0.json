@@ -1,0 +1,21 @@
+{
+    "id": "d54c0018-a9dc-4513-9c07-edf1412c1ad0",
+    "name": "gdc_md_frho3i7qc6epdek7mcgergm9vtm6o5ty_obj_1064",
+    "request": {
+        "url": "/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1064",
+        "method": "GET"
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"attributeDisplayForm\":{\"links\":{\"elements\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1064/elements\"},\"content\":{\"default\":1,\"formOf\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1063\",\"expression\":\"[/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/26]\"},\"meta\":{\"category\":\"attributeDisplayForm\",\"summary\":\"\",\"isProduction\":1,\"tags\":\"\",\"title\":\"Opportunity Name\",\"identifier\":\"label.opportunity.id.name\",\"deprecated\":\"0\",\"uri\":\"/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1064\",\"updated\":\"2022-02-22 11:18:55\",\"author\":\"/gdc/account/profile/b4ca6d6ec31ff764130a13893950091c\",\"created\":\"2022-02-22 11:18:55\",\"contributor\":\"/gdc/account/profile/b4ca6d6ec31ff764130a13893950091c\"}}}",
+        "headers": {
+            "Strict-Transport-Security": "max-age=15552000; includeSubDomains; preload",
+            "vary": "origin,X-GDC-VERSION",
+            "content-type": "application/json;charset=UTF-8",
+            "cache-control": "no-cache, no-store, must-revalidate"
+        }
+    },
+    "uuid": "d54c0018-a9dc-4513-9c07-edf1412c1ad0",
+    "persistent": true,
+    "insertionIndex": 127
+}
