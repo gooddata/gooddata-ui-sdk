@@ -58,6 +58,33 @@ import {
 import { setComboChartUiConfig } from "../../../utils/uiConfigHelpers/comboChartUiConfigHelper";
 import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChartBasedConfigurationPanel";
 
+/**
+ * PluggableComboChart
+ *
+ * ## Buckets
+ *
+ * | Name                | Id                 | Accepts             |
+ * |---------------------|--------------------|---------------------|
+ * | Measure (Primary)   | measures           | measures only       |
+ * | Measure (Secondary) | secondary_measures | measures only       |
+ * | ViewBy              | view               | attributes or dates |
+ *
+ * ### Bucket axioms
+ *
+ * - |MeasurePrimary| ≤ 20
+ * - |MeasureSecondary| ≤ 20
+ * - |ViewBy| ≤ 1
+ *
+ * ## Dimensions
+ *
+ * The PluggableComboChart always creates the same two dimensional execution.
+ *
+ * - ⊤ ⇒ [[MeasureGroupIdentifier], [...ViewBy]]
+ *
+ * ## Default sorts
+ *
+ * The PluggableComboChart does not use any sorts.
+ */
 export class PluggableComboChart extends PluggableBaseChart {
     private primaryChartType: string = VisualizationTypes.COLUMN;
     private secondaryChartType: string = VisualizationTypes.COLUMN;
