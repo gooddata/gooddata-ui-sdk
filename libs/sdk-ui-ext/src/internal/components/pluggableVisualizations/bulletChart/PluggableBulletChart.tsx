@@ -61,7 +61,7 @@ import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownH
  *
  * The PluggableBulletChart always creates the same two dimensional execution.
  *
- * - ⊤ ⇒ [[...ViewBy], [MeasureGroupIdentifier]]
+ * - ⊤ ⇒ [[MeasureGroupIdentifier], [...ViewBy]]
  *
  * ## Default sorts
  *

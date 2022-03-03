@@ -93,7 +93,7 @@ function getHeatmapDimensions(insight: IInsightDefinition): IDimension[] {
         : newTwoDimensional(viewByAttributes, [MeasureGroupIdentifier]);
 }
 
-function getBubbleOrBulletDimensions(insight: IInsightDefinition): IDimension[] {
+function getBubbleDimensions(insight: IInsightDefinition): IDimension[] {
     const viewByAttributes = safeBucketAttributes(insight, BucketNames.VIEW);
 
     return newTwoDimensional(viewByAttributes, [MeasureGroupIdentifier]);
@@ -126,6 +126,7 @@ export function generateDimensions(insight: IInsightDefinition, type: VisType): 
             return getAreaDimensions(insight);
 
         case VisualizationTypes.BAR:
+        case VisualizationTypes.BULLET:
         case VisualizationTypes.COMBO:
         case VisualizationTypes.COMBO2:
         case VisualizationTypes.COLUMN:
@@ -141,8 +142,7 @@ export function generateDimensions(insight: IInsightDefinition, type: VisType): 
             return getHeatmapDimensions(insight);
 
         case VisualizationTypes.BUBBLE:
-        case VisualizationTypes.BULLET:
-            return getBubbleOrBulletDimensions(insight);
+            return getBubbleDimensions(insight);
     }
     return [];
 }
