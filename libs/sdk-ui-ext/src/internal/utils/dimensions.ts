@@ -42,7 +42,7 @@ function getPieDonutFunnelDimensions(insight: IInsightDefinition): IDimension[] 
         : newTwoDimensional([], [MeasureGroupIdentifier]);
 }
 
-function getBarDimensions(insight: IInsightDefinition): IDimension[] {
+function getBarColumnDimensions(insight: IInsightDefinition): IDimension[] {
     const viewByAttributes = safeBucketAttributes(insight, BucketNames.VIEW);
     const stackByAttributes = safeBucketAttributes(insight, BucketNames.STACK);
 
@@ -93,6 +93,12 @@ function getHeatmapDimensions(insight: IInsightDefinition): IDimension[] {
         : newTwoDimensional(viewByAttributes, [MeasureGroupIdentifier]);
 }
 
+function getBulletComboDimensions(insight: IInsightDefinition): IDimension[] {
+    const viewByAttributes = safeBucketAttributes(insight, BucketNames.VIEW);
+
+    return newTwoDimensional([MeasureGroupIdentifier], viewByAttributes);
+}
+
 function getBubbleDimensions(insight: IInsightDefinition): IDimension[] {
     const viewByAttributes = safeBucketAttributes(insight, BucketNames.VIEW);
 
@@ -126,11 +132,13 @@ export function generateDimensions(insight: IInsightDefinition, type: VisType): 
             return getAreaDimensions(insight);
 
         case VisualizationTypes.BAR:
+        case VisualizationTypes.COLUMN:
+            return getBarColumnDimensions(insight);
+
         case VisualizationTypes.BULLET:
         case VisualizationTypes.COMBO:
         case VisualizationTypes.COMBO2:
-        case VisualizationTypes.COLUMN:
-            return getBarDimensions(insight);
+            return getBulletComboDimensions(insight);
 
         case VisualizationTypes.HEADLINE:
             return getHeadlinesDimensions();
