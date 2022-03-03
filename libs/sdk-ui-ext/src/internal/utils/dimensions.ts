@@ -84,7 +84,7 @@ function getScatterDimensions(insight: IInsightDefinition): IDimension[] {
         : newTwoDimensional([], [MeasureGroupIdentifier]);
 }
 
-function getHeatmapDimensionsFromMdObj(insight: IInsightDefinition): IDimension[] {
+function getHeatmapDimensions(insight: IInsightDefinition): IDimension[] {
     const viewByAttributes = safeBucketAttributes(insight, BucketNames.VIEW);
     const stackByAttributes = safeBucketAttributes(insight, BucketNames.STACK);
 
@@ -95,9 +95,8 @@ function getHeatmapDimensionsFromMdObj(insight: IInsightDefinition): IDimension[
 
 function getBubbleDimensions(insight: IInsightDefinition): IDimension[] {
     const viewByAttributes = safeBucketAttributes(insight, BucketNames.VIEW);
-    const stackByAttributes = safeBucketAttributes(insight, BucketNames.STACK);
 
-    return newTwoDimensional([...viewByAttributes, ...stackByAttributes], [MeasureGroupIdentifier]);
+    return newTwoDimensional(viewByAttributes, [MeasureGroupIdentifier]);
 }
 
 /**
@@ -118,7 +117,7 @@ export function generateDimensions(insight: IInsightDefinition, type: VisType): 
             return getPieDonutFunnelDimensions(insight);
 
         case VisualizationTypes.TREEMAP:
-            return getTreemapDimensionsFromMdObj(insight);
+            return getTreemapDimensions(insight);
 
         case VisualizationTypes.LINE:
             return getLineDimensions(insight);
@@ -140,7 +139,7 @@ export function generateDimensions(insight: IInsightDefinition, type: VisType): 
             return getScatterDimensions(insight);
 
         case VisualizationTypes.HEATMAP:
-            return getHeatmapDimensionsFromMdObj(insight);
+            return getHeatmapDimensions(insight);
 
         case VisualizationTypes.BUBBLE:
             return getBubbleDimensions(insight);
@@ -155,7 +154,7 @@ export function generateStackedDimensions(insight: IInsightDefinition): IDimensi
     return newTwoDimensional(stackByAttributes, [...viewByAttributes, MeasureGroupIdentifier]);
 }
 
-function getTreemapDimensionsFromMdObj(insight: IInsightDefinition): IDimension[] {
+function getTreemapDimensions(insight: IInsightDefinition): IDimension[] {
     const attributes = insightAttributes(insight);
 
     return attributes.length === 1
