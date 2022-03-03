@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import noop from "lodash/noop";
 import {
     IBucketOfFun,
@@ -826,5 +826,29 @@ describe("PluggableLineChart", () => {
                 expect(result).toEqual(expectedInsight);
             },
         );
+    });
+
+    describe("Sort config", () => {
+        const scenarios: Array<[string, IReferencePoint]> = [
+            ["0 M + 0 VB", referencePointMocks.emptyReferencePoint],
+            ["1 M + 0 VB", referencePointMocks.oneMetricNoTrendByRefPoint],
+            ["0 M + 1 VB", referencePointMocks.justTrendByRefPoint],
+            ["1 M + 1 VB", referencePointMocks.oneMetricOneTrendBy],
+            ["1 M + 2 VB", referencePointMocks.oneMetricAndTwoTrendByRefPoint],
+            ["2 M + 1 VB", referencePointMocks.twoMetricAndOneTrendByRefPoint],
+            ["2 M + 2 VB", referencePointMocks.twoMetricAndTwoTrendByRefPoint],
+            ["2 stacked M + 1 VB", referencePointMocks.twoSegmentedMetricAndOneTrendByRefPoint],
+            ["2 stacked M + 2 VB", referencePointMocks.twoSegmentedMetricAndTwoTrendByRefPoint],
+            ["1 M + 1 VB + 1 SEG", referencePointMocks.oneMetricAndOneTrendAndOneSegmentByRefPoint],
+            ["2 M + 1 VB + 1 SEG", referencePointMocks.twoMetricAndOneTrendAndOneSegmentByRefPoint],
+        ];
+
+        it.each(scenarios)("should return expected sort config for %s", async (_name, referencePointMock) => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(referencePointMock);
+
+            expect(sortConfig).toMatchSnapshot();
+        });
     });
 });

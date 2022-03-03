@@ -48,6 +48,33 @@ Object {
 }
 `;
 
+exports[`PluggableColumnChart Sort config should provide attribute normal sort as default sort, attribute normal and attribute area available sorts for 1M + 1VB + 1SB 1`] = `
+Object {
+  "availableSorts": Array [
+    Object {
+      "attributeSort": Object {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": Object {
+        "localIdentifier": "a1",
+      },
+      "metricSorts": Array [],
+    },
+  ],
+  "currentSort": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
+
 exports[`PluggableColumnChart Sort config should provide attribute normal sort as default sort, attribute normal and measure sort as available sorts for 1M + 1VB 1`] = `
 Object {
   "availableSorts": Array [

@@ -1,8 +1,18 @@
 // (C) 2019-2022 GoodData Corporation
-import { bucketsItems, IInsight, IInsightDefinition, insightBuckets } from "@gooddata/sdk-model";
+import {
+    bucketsItems,
+    IInsight,
+    IInsightDefinition,
+    insightBuckets,
+    newAttributeSort,
+    localIdRef,
+} from "@gooddata/sdk-model";
 import { BucketNames, IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
 import React from "react";
 import { render } from "react-dom";
+import cloneDeep from "lodash/cloneDeep";
+import set from "lodash/set";
+import isEmpty from "lodash/isEmpty";
 
 import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket";
 import {
@@ -28,7 +38,6 @@ import {
     IDrillDownDefinition,
 } from "../../../interfaces/Visualization";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
-
 import {
     getAllAttributeItemsWithPreference,
     getAllCategoriesAttributeItems,
@@ -42,24 +51,22 @@ import {
     removeAllDerivedMeasures,
     sanitizeFilters,
     getMainDateItem,
+    getBucketItems,
 } from "../../../utils/bucketHelper";
 import {
     getReferencePointWithSupportedProperties,
     removeImmutableOptionalStackingProperties,
 } from "../../../utils/propertiesHelper";
 import { removeSort } from "../../../utils/sort";
-
 import { setAreaChartUiConfig } from "../../../utils/uiConfigHelpers/areaChartUiConfigHelper";
 import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChartBasedConfigurationPanel";
-
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
-import cloneDeep from "lodash/cloneDeep";
-import set from "lodash/set";
 import {
     addIntersectionFiltersToInsight,
     modifyBucketsAttributesForDrillDown,
     reverseAndTrimIntersection,
 } from "../drillDownUtil";
+import { ISortConfig, newMeasureSortSuggestion } from "../../../interfaces/SortConfig";
 
 /**
  * PluggableAreaChart
@@ -112,17 +119,6 @@ export class PluggableAreaChart extends PluggableBaseChart {
         );
     }
 
-    protected updateInstanceProperties(
-        options: IVisProps,
-        insight: IInsightDefinition,
-        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-        insightPropertiesMeta: any,
-    ): void {
-        super.updateInstanceProperties(options, insight, insightPropertiesMeta);
-
-        this.updateCustomSupportedProperties(insight);
-    }
-
     public getExtendedReferencePoint(referencePoint: IReferencePoint): Promise<IExtendedReferencePoint> {
         const clonedReferencePoint = cloneDeep(referencePoint);
         let newReferencePoint: IExtendedReferencePoint = {
@@ -153,6 +149,33 @@ export class PluggableAreaChart extends PluggableBaseChart {
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
+    public getInsightWithDrillDownApplied(source: IInsight, drillDownContext: IDrillDownContext): IInsight {
+        const withFilters = this.addFilters(source, drillDownContext.drillDefinition, drillDownContext.event);
+        return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
+    }
+
+    public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
+        const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(referencePoint);
+        const disabled = this.isSortDisabled(referencePoint, availableSorts);
+        return Promise.resolve({
+            supported: true,
+            disabled,
+            currentSort: defaultSort,
+            availableSorts,
+        });
+    }
+
+    protected updateInstanceProperties(
+        options: IVisProps,
+        insight: IInsightDefinition,
+        // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+        insightPropertiesMeta: any,
+    ): void {
+        super.updateInstanceProperties(options, insight, insightPropertiesMeta);
+
+        this.updateCustomSupportedProperties(insight);
+    }
+
     protected configureBuckets(extendedReferencePoint: IExtendedReferencePoint): void {
         const { measures, views, stacks } = this.isMultipleDatesEnabled()
             ? this.getBucketItemsWithMultipleDates(extendedReferencePoint)
@@ -178,16 +201,6 @@ export class PluggableAreaChart extends PluggableBaseChart {
         return AREA_CHART_SUPPORTED_PROPERTIES;
     }
 
-    private addFilters(source: IInsight, drillConfig: IDrillDownDefinition, event: IDrillEvent) {
-        const cutIntersection = reverseAndTrimIntersection(drillConfig, event.drillContext.intersection);
-        return addIntersectionFiltersToInsight(source, cutIntersection);
-    }
-
-    public getInsightWithDrillDownApplied(source: IInsight, drillDownContext: IDrillDownContext): IInsight {
-        const withFilters = this.addFilters(source, drillDownContext.drillDefinition, drillDownContext.event);
-        return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
-    }
-
     protected renderConfigurationPanel(insight: IInsightDefinition): void {
         if (document.querySelector(this.configPanelElement)) {
             render(
@@ -207,6 +220,11 @@ export class PluggableAreaChart extends PluggableBaseChart {
                 document.querySelector(this.configPanelElement),
             );
         }
+    }
+
+    private addFilters(source: IInsight, drillConfig: IDrillDownDefinition, event: IDrillEvent) {
+        const cutIntersection = reverseAndTrimIntersection(drillConfig, event.drillContext.intersection);
+        return addIntersectionFiltersToInsight(source, cutIntersection);
     }
 
     private updateCustomSupportedProperties(insight: IInsightDefinition): void {
@@ -305,5 +323,89 @@ export class PluggableAreaChart extends PluggableBaseChart {
             views,
             stacks,
         };
+    }
+
+    private getDefaultAndAvailableSort(referencePoint: IReferencePoint): {
+        defaultSort: ISortConfig["currentSort"];
+        availableSorts: ISortConfig["availableSorts"];
+    } {
+        const { buckets, properties } = referencePoint;
+        const measures = getBucketItems(buckets, BucketNames.MEASURES);
+        const viewBy = getBucketItems(buckets, BucketNames.VIEW);
+        const stackBy = getBucketItems(buckets, BucketNames.STACK);
+        const canSortStackTotal =
+            properties?.controls?.stackMeasures ?? this.getUiConfig().optionalStacking.stackMeasures;
+
+        const defaultSort = viewBy.length > 0 ? [newAttributeSort(viewBy[0].localIdentifier, "asc")] : [];
+
+        if (measures.length >= 2 && viewBy.length === 1 && !canSortStackTotal) {
+            return {
+                defaultSort,
+                availableSorts: [
+                    {
+                        itemId: localIdRef(viewBy[0].localIdentifier),
+                        attributeSort: {
+                            normalSortEnabled: true,
+                            areaSortEnabled: true,
+                        },
+                        metricSorts: measures.map((m) => newMeasureSortSuggestion(m.localIdentifier)),
+                    },
+                ],
+            };
+        }
+        if (measures.length === 1 && isEmpty(stackBy)) {
+            if (viewBy.length >= 2) {
+                return {
+                    defaultSort,
+                    availableSorts: viewBy.map((attribute) => ({
+                        itemId: localIdRef(attribute.localIdentifier),
+                        attributeSort: {
+                            normalSortEnabled: true,
+                            areaSortEnabled: true,
+                        },
+                    })),
+                };
+            }
+            if (viewBy.length === 1) {
+                return {
+                    defaultSort,
+                    availableSorts: [
+                        {
+                            itemId: localIdRef(viewBy[0].localIdentifier),
+                            attributeSort: {
+                                normalSortEnabled: true,
+                                areaSortEnabled: false,
+                            },
+                            metricSorts: measures.map((m) => newMeasureSortSuggestion(m.localIdentifier)),
+                        },
+                    ],
+                };
+            }
+        }
+        if (measures.length > 0 && viewBy.length === 1 && (stackBy.length === 1 || canSortStackTotal)) {
+            return {
+                defaultSort,
+                availableSorts: [
+                    {
+                        itemId: localIdRef(viewBy[0].localIdentifier),
+                        attributeSort: {
+                            normalSortEnabled: true,
+                            areaSortEnabled: true,
+                        },
+                    },
+                ],
+            };
+        }
+        return {
+            defaultSort: [],
+            availableSorts: [],
+        };
+    }
+
+    private isSortDisabled(referencePoint: IReferencePoint, availableSorts: ISortConfig["availableSorts"]) {
+        const { buckets } = referencePoint;
+        const measures = getBucketItems(buckets, BucketNames.MEASURES);
+        const viewBy = getBucketItems(buckets, BucketNames.VIEW);
+        return viewBy.length < 1 || measures.length < 1 || availableSorts.length === 0;
     }
 }

@@ -167,6 +167,9 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
                             normalSortEnabled: true,
                             areaSortEnabled: true,
                         },
+                        metricSorts: isEmpty(stackBy)
+                            ? [...measures.map((m) => newMeasureSortSuggestion(m.localIdentifier))]
+                            : [],
                     },
                 ],
             };
@@ -197,11 +200,11 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
         const { buckets, properties } = referencePoint;
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
         const measures = getBucketItems(buckets, BucketNames.MEASURES);
-        const disabled = viewBy.length < 1 || measures.length < 1;
         const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(
             referencePoint,
             canSortStackTotalValue(buckets, properties),
         );
+        const disabled = viewBy.length < 1 || measures.length < 1 || availableSorts.length === 0;
         return Promise.resolve({
             supported: true,
             disabled,

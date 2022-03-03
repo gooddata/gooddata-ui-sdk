@@ -1,0 +1,223 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PluggableAreaChart Sort config should return expected sort config for 0 M + 0 VB 1`] = `
+Object {
+  "availableSorts": Array [],
+  "currentSort": Array [],
+  "disabled": true,
+  "supported": true,
+}
+`;
+
+exports[`PluggableAreaChart Sort config should return expected sort config for 0 M + 1 VB 1`] = `
+Object {
+  "availableSorts": Array [],
+  "currentSort": Array [],
+  "disabled": true,
+  "supported": true,
+}
+`;
+
+exports[`PluggableAreaChart Sort config should return expected sort config for 1 M + 0 VB 1`] = `
+Object {
+  "availableSorts": Array [],
+  "currentSort": Array [],
+  "disabled": true,
+  "supported": true,
+}
+`;
+
+exports[`PluggableAreaChart Sort config should return expected sort config for 1 M + 1 VB + 1 ST 1`] = `
+Object {
+  "availableSorts": Array [
+    Object {
+      "attributeSort": Object {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": Object {
+        "localIdentifier": "a1",
+      },
+    },
+  ],
+  "currentSort": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
+
+exports[`PluggableAreaChart Sort config should return expected sort config for 1 M + 1 VB 1`] = `
+Object {
+  "availableSorts": Array [
+    Object {
+      "attributeSort": Object {
+        "areaSortEnabled": false,
+        "normalSortEnabled": true,
+      },
+      "itemId": Object {
+        "localIdentifier": "a1",
+      },
+      "metricSorts": Array [
+        Object {
+          "locators": Array [
+            Object {
+              "measureLocatorItem": Object {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+      ],
+    },
+  ],
+  "currentSort": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
+
+exports[`PluggableAreaChart Sort config should return expected sort config for 1 M + 2 VB 1`] = `
+Object {
+  "availableSorts": Array [
+    Object {
+      "attributeSort": Object {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": Object {
+        "localIdentifier": "a1",
+      },
+    },
+    Object {
+      "attributeSort": Object {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": Object {
+        "localIdentifier": "a2",
+      },
+    },
+  ],
+  "currentSort": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
+
+exports[`PluggableAreaChart Sort config should return expected sort config for 2 M + 1 VB + 1 ST 1`] = `
+Object {
+  "availableSorts": Array [
+    Object {
+      "attributeSort": Object {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": Object {
+        "localIdentifier": "a1",
+      },
+    },
+  ],
+  "currentSort": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
+
+exports[`PluggableAreaChart Sort config should return expected sort config for 2 M + 1 VB 1`] = `
+Object {
+  "availableSorts": Array [
+    Object {
+      "attributeSort": Object {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": Object {
+        "localIdentifier": "a1",
+      },
+    },
+  ],
+  "currentSort": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
+
+exports[`PluggableAreaChart Sort config should return expected sort config for 2 M + 2 VB 1`] = `
+Object {
+  "availableSorts": Array [],
+  "currentSort": Array [],
+  "disabled": true,
+  "supported": true,
+}
+`;
+
+exports[`PluggableAreaChart Sort config should return expected sort config for 2 stacked M + 1 VB 1`] = `
+Object {
+  "availableSorts": Array [
+    Object {
+      "attributeSort": Object {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": Object {
+        "localIdentifier": "a1",
+      },
+    },
+  ],
+  "currentSort": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
+
+exports[`PluggableAreaChart Sort config should return expected sort config for 2 stacked M + 2 VB 1`] = `
+Object {
+  "availableSorts": Array [],
+  "currentSort": Array [],
+  "disabled": true,
+  "supported": true,
+}
+`;

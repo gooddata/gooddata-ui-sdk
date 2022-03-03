@@ -128,7 +128,9 @@ export class PluggableColumnChart extends PluggableColumnBarCharts {
                             normalSortEnabled: true,
                             areaSortEnabled: true,
                         },
-                        metricSorts: [...measures.map((m) => newMeasureSortSuggestion(m.localIdentifier))],
+                        metricSorts: isEmpty(stackBy)
+                            ? [...measures.map((m) => newMeasureSortSuggestion(m.localIdentifier))]
+                            : [],
                     },
                 ],
             };
@@ -161,13 +163,13 @@ export class PluggableColumnChart extends PluggableColumnBarCharts {
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
         const stackBy = getBucketItems(buckets, BucketNames.STACK);
         const measures = getBucketItems(buckets, BucketNames.MEASURES);
-        const disabled = viewBy.length < 1 || measures.length < 1;
         const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(
             measures,
             viewBy,
             stackBy,
             canSortStackTotalValue(buckets, properties),
         );
+        const disabled = viewBy.length < 1 || measures.length < 1 || availableSorts.length === 0;
         return Promise.resolve({
             supported: true,
             disabled,
