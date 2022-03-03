@@ -1,5 +1,4 @@
 // (C) 2007-2022 GoodData Corporation
-import { IHeaderPredicate } from "../HeaderPredicate";
 import * as headerPredicateFactory from "../HeaderPredicateFactory";
 import {
     measureDescriptors,
@@ -7,37 +6,38 @@ import {
     attributeHeaderItem,
     attributeDescriptor,
     workspace,
+    compositeAttributeDescriptor,
 } from "./HeaderPredicateFactory.fixtures";
 import { attributeDisplayFormRef, measureItem, newAttribute, newMeasure, uriRef } from "@gooddata/sdk-model";
+import { IAttributeDescriptor, IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 
 describe("uriMatch", () => {
     describe("measure headers", () => {
         describe("simple measure headers", () => {
             it("should match when uri-based measure uri matches header uri", () => {
-                const predicate: IHeaderPredicate = headerPredicateFactory.uriMatch("/uriBasedMeasureUri");
+                const predicate = headerPredicateFactory.uriMatch("/uriBasedMeasureUri");
 
                 expect(predicate(measureDescriptors.uriBasedMeasure, context)).toBe(true);
             });
             it("should match when identifier-based measure uri matches header uri", () => {
-                const predicate: IHeaderPredicate =
-                    headerPredicateFactory.uriMatch("identifierBasedMeasureUri");
+                const predicate = headerPredicateFactory.uriMatch("identifierBasedMeasureUri");
 
                 expect(predicate(measureDescriptors.identifierBasedMeasure, context)).toBe(true);
             });
 
             it("should NOT match when measure uri does not match header uri", () => {
-                const predicate: IHeaderPredicate = headerPredicateFactory.uriMatch("/someOtherUri");
+                const predicate = headerPredicateFactory.uriMatch("/someOtherUri");
 
                 expect(predicate(measureDescriptors.uriBasedMeasure, context)).toBe(false);
             });
             it("should NOT match when measure uri is null", () => {
                 // @ts-expect-error Testing possible inputs not allowed by types but possible if used from JavaScript
-                const predicate: IHeaderPredicate = headerPredicateFactory.uriMatch(null);
+                const predicate = headerPredicateFactory.uriMatch(null);
 
                 expect(predicate(measureDescriptors.uriBasedMeasure, context)).toBe(false);
             });
             it("should NOT match when measure uri is empty", () => {
-                const predicate: IHeaderPredicate = headerPredicateFactory.uriMatch("");
+                const predicate = headerPredicateFactory.uriMatch("");
 
                 expect(predicate(measureDescriptors.uriBasedMeasure, context)).toBe(false);
             });
@@ -45,16 +45,13 @@ describe("uriMatch", () => {
 
         describe("show in % ad-hoc measure headers", () => {
             it("should match when show in % ad-hoc measure matches uri used to define measure in afm", () => {
-                const predicate: IHeaderPredicate =
-                    headerPredicateFactory.uriMatch("/uriBasedRatioMeasureUri");
+                const predicate = headerPredicateFactory.uriMatch("/uriBasedRatioMeasureUri");
 
                 expect(predicate(measureDescriptors.uriBasedRatioMeasure, context)).toBe(true);
             });
 
             it("should NOT match when show in % ad-hoc measure since identifier was used to define measure in afm and ad-hoc headers does not contain identifiers", () => {
-                const predicate: IHeaderPredicate = headerPredicateFactory.uriMatch(
-                    "/identifierBasedRatioMeasureUri",
-                );
+                const predicate = headerPredicateFactory.uriMatch("/identifierBasedRatioMeasureUri");
 
                 expect(predicate(measureDescriptors.identifierBasedRatioMeasure, context)).toBe(false);
             });
@@ -62,13 +59,13 @@ describe("uriMatch", () => {
 
         describe("ad-hoc measure headers", () => {
             it("should NOT match when ad-hoc measure is created from identifier-based attribute matching uri since uri of attribute not available in execution response or afm", () => {
-                const predicate: IHeaderPredicate = headerPredicateFactory.uriMatch("/attributeUri");
+                const predicate = headerPredicateFactory.uriMatch("/attributeUri");
 
                 expect(predicate(measureDescriptors.identifierBasedAdhocMeasure, context)).toBe(false);
             });
 
             it("should match when ad-hoc measure is created from uri-based attribute matching uri", () => {
-                const predicate: IHeaderPredicate = headerPredicateFactory.uriMatch("/attributeUri");
+                const predicate = headerPredicateFactory.uriMatch("/attributeUri");
 
                 expect(predicate(measureDescriptors.uriBasedAdhocMeasure, context)).toBe(true);
             });
@@ -76,25 +73,23 @@ describe("uriMatch", () => {
 
         describe("derived measure headers", () => {
             it("should match when uri-based PP derived measure uri matches header uri", () => {
-                const predicate: IHeaderPredicate = headerPredicateFactory.uriMatch("/uriBasedMeasureUri");
+                const predicate = headerPredicateFactory.uriMatch("/uriBasedMeasureUri");
 
                 expect(predicate(measureDescriptors.uriBasedPPMeasure, context)).toBe(true);
             });
             it("should match when identifier-based PP derived measure uri matches header uri", () => {
-                const predicate: IHeaderPredicate =
-                    headerPredicateFactory.uriMatch("identifierBasedMeasureUri");
+                const predicate = headerPredicateFactory.uriMatch("identifierBasedMeasureUri");
 
                 expect(predicate(measureDescriptors.identifierBasedPPMeasure, context)).toBe(true);
             });
 
             it("should match when uri-based SP derived measure uri matches header identifier", () => {
-                const predicate: IHeaderPredicate = headerPredicateFactory.uriMatch("/uriBasedMeasureUri");
+                const predicate = headerPredicateFactory.uriMatch("/uriBasedMeasureUri");
 
                 expect(predicate(measureDescriptors.uriBasedSPMeasure, context)).toBe(true);
             });
             it("should match when identifier-based SP derived measure uri matches header uri", () => {
-                const predicate: IHeaderPredicate =
-                    headerPredicateFactory.uriMatch("identifierBasedMeasureUri");
+                const predicate = headerPredicateFactory.uriMatch("identifierBasedMeasureUri");
 
                 expect(predicate(measureDescriptors.identifierBasedSPMeasure, context)).toBe(true);
             });
@@ -102,31 +97,25 @@ describe("uriMatch", () => {
 
         describe("derived show in % measure headers", () => {
             it("should match when uri-based PP derived ratio measure uri matches header uri", () => {
-                const predicate: IHeaderPredicate =
-                    headerPredicateFactory.uriMatch("/uriBasedRatioMeasureUri");
+                const predicate = headerPredicateFactory.uriMatch("/uriBasedRatioMeasureUri");
 
                 expect(predicate(measureDescriptors.uriBasedPPRatioMeasure, context)).toBe(true);
             });
 
             it("should NOT match when identifier-based PP derived ratio measure uri matches header uri since measure was defined using identifier in afm and ratio measure headers does not contain uri", () => {
-                const predicate: IHeaderPredicate = headerPredicateFactory.uriMatch(
-                    "/identifierBasedRatioMeasureUri",
-                );
+                const predicate = headerPredicateFactory.uriMatch("/identifierBasedRatioMeasureUri");
 
                 expect(predicate(measureDescriptors.identifierBasedPPRatioMeasure, context)).toBe(false);
             });
 
             it("should match when uri-based SP derived ratio measure uri matches header uri", () => {
-                const predicate: IHeaderPredicate =
-                    headerPredicateFactory.uriMatch("/uriBasedRatioMeasureUri");
+                const predicate = headerPredicateFactory.uriMatch("/uriBasedRatioMeasureUri");
 
                 expect(predicate(measureDescriptors.uriBasedSPRatioMeasure, context)).toBe(true);
             });
 
             it("should NOT match when identifier-based SP derived ratio measure uri matches header uri since measure was defined using identifier in afm and ration measure headers does not contain uri", () => {
-                const predicate: IHeaderPredicate = headerPredicateFactory.uriMatch(
-                    "/identifierBasedRatioMeasureUri",
-                );
+                const predicate = headerPredicateFactory.uriMatch("/identifierBasedRatioMeasureUri");
 
                 expect(predicate(measureDescriptors.identifierBasedSPRatioMeasure, context)).toBe(false);
             });
@@ -134,13 +123,12 @@ describe("uriMatch", () => {
 
         describe("AM headers", () => {
             it("should NOT match when AM uri-based operand uri matches header uri", () => {
-                const predicate: IHeaderPredicate = headerPredicateFactory.uriMatch("/uriBasedMeasureUri");
+                const predicate = headerPredicateFactory.uriMatch("/uriBasedMeasureUri");
 
                 expect(predicate(measureDescriptors.arithmeticMeasure, context)).toBe(false);
             });
             it("should NOT match when AM identifier-based operand uri matches header uri", () => {
-                const predicate: IHeaderPredicate =
-                    headerPredicateFactory.uriMatch("identifierBasedMeasureUri");
+                const predicate = headerPredicateFactory.uriMatch("identifierBasedMeasureUri");
 
                 expect(predicate(measureDescriptors.arithmeticMeasure, context)).toBe(false);
             });
@@ -149,12 +137,12 @@ describe("uriMatch", () => {
 
     describe("attribute headers", () => {
         it("should match when measure item uri matches", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.uriMatch("/attributeUri");
+            const predicate = headerPredicateFactory.uriMatch("/attributeUri");
 
             expect(predicate(attributeDescriptor, context)).toBe(true);
         });
         it("should NOT match when measure item uri does not match", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.uriMatch("/someOtherUri");
+            const predicate = headerPredicateFactory.uriMatch("/someOtherUri");
 
             expect(predicate(attributeDescriptor, context)).toBe(false);
         });
@@ -162,12 +150,12 @@ describe("uriMatch", () => {
 
     describe("attribute item header", () => {
         it("should match when attributeHeaderItem matches uri", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.uriMatch("/attributeItemUri");
+            const predicate = headerPredicateFactory.uriMatch("/attributeItemUri");
 
             expect(predicate(attributeHeaderItem, context)).toBe(true);
         });
         it("should NOT match when attributeHeaderItem does not match uri", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.uriMatch("/someOtherUri");
+            const predicate = headerPredicateFactory.uriMatch("/someOtherUri");
 
             expect(predicate(attributeHeaderItem, context)).toBe(false);
         });
@@ -177,63 +165,74 @@ describe("uriMatch", () => {
 describe("identifierMatch", () => {
     describe("measure headers", () => {
         describe("simple measure headers", () => {
-            it("should match when uri-based measure identifier matches header identifier", () => {
-                const predicate: IHeaderPredicate =
-                    headerPredicateFactory.identifierMatch("uriBasedMeasureIdentifier");
-
-                expect(predicate(measureDescriptors.uriBasedMeasure, context)).toBe(true);
-            });
-            it("should match when identifier-based measure identifier matches header identifier", () => {
-                const predicate: IHeaderPredicate = headerPredicateFactory.identifierMatch(
+            const positiveScenarios: [string, string, IMeasureDescriptor][] = [
+                [
+                    "uri-based measure identifier matches header identifier",
+                    "uriBasedMeasureIdentifier",
+                    measureDescriptors.uriBasedMeasure,
+                ],
+                [
+                    "identifier-based measure identifier matches header identifier",
                     "identifierBasedMeasureIdentifier",
-                );
-
-                expect(predicate(measureDescriptors.identifierBasedMeasure, context)).toBe(true);
-            });
-            it("should match when identifier-based measure identifier matches header composite identifier", () => {
-                const predicate: IHeaderPredicate = headerPredicateFactory.identifierMatch(
+                    measureDescriptors.identifierBasedMeasure,
+                ],
+                [
+                    "identifier-based measure identifier matches header composite identifier",
                     `${workspace}:identifierBasedMeasureIdentifier`,
-                );
+                    measureDescriptors.identifierBasedMeasure,
+                ],
+                [
+                    "composite-identifier-based measure identifier matches header identifier",
+                    "compositeIdentifierId",
+                    measureDescriptors.compositeIdentifierBasedMeasure,
+                ],
+                [
+                    "composite-identifier-based measure identifier matches header composite identifier",
+                    `${workspace}:compositeIdentifierId`,
+                    measureDescriptors.compositeIdentifierBasedMeasure,
+                ],
+            ];
 
-                expect(predicate(measureDescriptors.identifierBasedMeasure, context)).toBe(true);
+            it.each(positiveScenarios)("should match when %s", (_, identifier, descriptor) => {
+                const predicate = headerPredicateFactory.identifierMatch(identifier);
+                expect(predicate(descriptor, context)).toBe(true);
             });
 
-            it("should NOT match when measure identifier does not match header identifier", () => {
-                const predicate: IHeaderPredicate = headerPredicateFactory.identifierMatch("someOtherId");
+            const negativeScenarios: [string, string, IMeasureDescriptor][] = [
+                [
+                    "measure identifier does not match header identifier",
+                    "someOtherId",
+                    measureDescriptors.uriBasedMeasure,
+                ],
+                ["measure identifier is empty", "", measureDescriptors.uriBasedMeasure],
+                [
+                    "identifier-based measure identifier matches header composite identifier but it is not the current workspace",
+                    `some_other_${workspace}:identifierBasedMeasureIdentifier`,
+                    measureDescriptors.identifierBasedMeasure,
+                ],
+            ];
 
-                expect(predicate(measureDescriptors.uriBasedMeasure, context)).toBe(false);
+            it.each(negativeScenarios)("should NOT match when %s", (_, identifier, descriptor) => {
+                const predicate = headerPredicateFactory.identifierMatch(identifier);
+                expect(predicate(descriptor, context)).toBe(false);
             });
+
             it("should NOT match when measure identifier is null", () => {
                 // @ts-expect-error Testing possible inputs not allowed by types but possible if used from JavaScript
-                const predicate: IHeaderPredicate = headerPredicateFactory.identifierMatch(null);
-
+                const predicate = headerPredicateFactory.identifierMatch(null);
                 expect(predicate(measureDescriptors.uriBasedMeasure, context)).toBe(false);
-            });
-            it("should NOT match when measure identifier is empty", () => {
-                const predicate: IHeaderPredicate = headerPredicateFactory.identifierMatch("");
-
-                expect(predicate(measureDescriptors.uriBasedMeasure, context)).toBe(false);
-            });
-            it("should NOT match when identifier-based measure identifier matches header composite identifier but it is not the current workspace", () => {
-                const predicate: IHeaderPredicate = headerPredicateFactory.identifierMatch(
-                    `some_other_${workspace}:identifierBasedMeasureIdentifier`,
-                );
-
-                expect(predicate(measureDescriptors.identifierBasedMeasure, context)).toBe(false);
             });
         });
 
         describe("show in % ad-hoc measure headers", () => {
             it("should NOT match when show in % ad-hoc measure since uri was used to define measure in afm and ad-hoc headers does not contain uris", () => {
-                const predicate: IHeaderPredicate = headerPredicateFactory.identifierMatch(
-                    "uriBasedRatioMeasureIdentifier",
-                );
+                const predicate = headerPredicateFactory.identifierMatch("uriBasedRatioMeasureIdentifier");
 
                 expect(predicate(measureDescriptors.uriBasedRatioMeasure, context)).toBe(false);
             });
 
             it("should match when show in % ad-hoc measure matches identifier used to define measure in afm", () => {
-                const predicate: IHeaderPredicate = headerPredicateFactory.identifierMatch(
+                const predicate = headerPredicateFactory.identifierMatch(
                     "identifierBasedRatioMeasureIdentifier",
                 );
 
@@ -243,57 +242,59 @@ describe("identifierMatch", () => {
 
         describe("ad-hoc measure headers", () => {
             it("should NOT match when ad-hoc measure is created from uri-based attribute matching identifier since identifier of attribute not available in execution response or afm", () => {
-                const predicate: IHeaderPredicate =
-                    headerPredicateFactory.identifierMatch("uriBasedMeasureIdentifier");
+                const predicate = headerPredicateFactory.identifierMatch("uriBasedMeasureIdentifier");
 
                 expect(predicate(measureDescriptors.uriBasedAdhocMeasure, context)).toBe(false);
             });
 
             it("should match when ad-hoc measure is created from identifier-based attribute matching identifier", () => {
-                const predicate: IHeaderPredicate =
-                    headerPredicateFactory.identifierMatch("attributeIdentifier");
+                const predicate = headerPredicateFactory.identifierMatch("attributeIdentifier");
 
                 expect(predicate(measureDescriptors.identifierBasedAdhocMeasure, context)).toBe(true);
             });
         });
 
         describe("derived measure headers", () => {
-            it("should match when uri-based PP derived measure identifier matches header identifier", () => {
-                const predicate: IHeaderPredicate =
-                    headerPredicateFactory.identifierMatch("uriBasedMeasureIdentifier");
-
-                expect(predicate(measureDescriptors.uriBasedPPMeasure, context)).toBe(true);
-            });
-            it("should match when identifier-based PP derived measure identifier matches header identifier", () => {
-                const predicate: IHeaderPredicate = headerPredicateFactory.identifierMatch(
+            const positiveScenarios: [string, string, IMeasureDescriptor][] = [
+                [
+                    "uri-based PP derived measure identifier matches header identifier",
+                    "uriBasedMeasureIdentifier",
+                    measureDescriptors.uriBasedPPMeasure,
+                ],
+                [
+                    "identifier-based PP derived measure identifier matches header identifier",
                     "identifierBasedMeasureIdentifier",
-                );
-
-                expect(predicate(measureDescriptors.identifierBasedPPMeasure, context)).toBe(true);
-            });
-
-            it("should match when uri-based SP derived measure identifier matches header identifier", () => {
-                const predicate: IHeaderPredicate =
-                    headerPredicateFactory.identifierMatch("uriBasedMeasureIdentifier");
-
-                expect(predicate(measureDescriptors.uriBasedSPMeasure, context)).toBe(true);
-            });
-            it("should match when identifier-based SP derived measure identifier matches header identifier", () => {
-                const predicate: IHeaderPredicate = headerPredicateFactory.identifierMatch(
-                    "identifierBasedMeasureIdentifier",
-                );
-
-                expect(predicate(measureDescriptors.identifierBasedSPMeasure, context)).toBe(true);
-            });
-            it("should match when identifier-based SP derived measure identifier matches header composite identifier", () => {
-                const predicate: IHeaderPredicate = headerPredicateFactory.identifierMatch(
+                    measureDescriptors.identifierBasedPPMeasure,
+                ],
+                [
+                    "identifier-based PP derived measure identifier matches header composite identifier",
                     `${workspace}:identifierBasedMeasureIdentifier`,
-                );
+                    measureDescriptors.identifierBasedPPMeasure,
+                ],
+                [
+                    "uri-based SP derived measure identifier matches header identifier",
+                    "uriBasedMeasureIdentifier",
+                    measureDescriptors.uriBasedSPMeasure,
+                ],
+                [
+                    "identifier-based SP derived measure identifier matches header identifier",
+                    "identifierBasedMeasureIdentifier",
+                    measureDescriptors.identifierBasedSPMeasure,
+                ],
+                [
+                    "identifier-based SP derived measure identifier matches header composite identifier",
+                    `${workspace}:identifierBasedMeasureIdentifier`,
+                    measureDescriptors.identifierBasedSPMeasure,
+                ],
+            ];
 
-                expect(predicate(measureDescriptors.identifierBasedSPMeasure, context)).toBe(true);
+            it.each(positiveScenarios)("should match when %s", (_, identifier, descriptor) => {
+                const predicate = headerPredicateFactory.identifierMatch(identifier);
+                expect(predicate(descriptor, context)).toBe(true);
             });
-            it("should match when identifier-based SP derived measure identifier matches header composite identifier but it is not the current workspace", () => {
-                const predicate: IHeaderPredicate = headerPredicateFactory.identifierMatch(
+
+            it("should NOT match when identifier-based SP derived measure identifier matches header composite identifier but it is not the current workspace", () => {
+                const predicate = headerPredicateFactory.identifierMatch(
                     `some_other_${workspace}:identifierBasedMeasureIdentifier`,
                 );
 
@@ -303,15 +304,13 @@ describe("identifierMatch", () => {
 
         describe("derived show in % measure headers", () => {
             it("should NOT match when uri-based PP derived ratio measure identifier matches header identifier since measure was defined using uri in afm and ratio measure headers does not contain identifier", () => {
-                const predicate: IHeaderPredicate = headerPredicateFactory.identifierMatch(
-                    "uriBasedRatioMeasureIdentifier",
-                );
+                const predicate = headerPredicateFactory.identifierMatch("uriBasedRatioMeasureIdentifier");
 
                 expect(predicate(measureDescriptors.uriBasedPPRatioMeasure, context)).toBe(false);
             });
 
             it("should match when identifier-based PP derived ratio measure identifier matches header identifier", () => {
-                const predicate: IHeaderPredicate = headerPredicateFactory.identifierMatch(
+                const predicate = headerPredicateFactory.identifierMatch(
                     "identifierBasedRatioMeasureIdentifier",
                 );
 
@@ -319,15 +318,13 @@ describe("identifierMatch", () => {
             });
 
             it("should NOT match when uri-based SP derived ratio measure identifier matches header identifier since measure was defined using uri in afm and ratio measure headers does not contain identifier", () => {
-                const predicate: IHeaderPredicate = headerPredicateFactory.identifierMatch(
-                    "uriBasedRatioMeasureIdentifier",
-                );
+                const predicate = headerPredicateFactory.identifierMatch("uriBasedRatioMeasureIdentifier");
 
                 expect(predicate(measureDescriptors.uriBasedSPRatioMeasure, context)).toBe(false);
             });
 
             it("should match when identifier-based SP derived ratio measure identifier matches header identifier", () => {
-                const predicate: IHeaderPredicate = headerPredicateFactory.identifierMatch(
+                const predicate = headerPredicateFactory.identifierMatch(
                     "identifierBasedRatioMeasureIdentifier",
                 );
 
@@ -337,16 +334,13 @@ describe("identifierMatch", () => {
 
         describe("AM headers", () => {
             it("should NOT match when AM uri-based operand identifier matches header identifier since AMs are not supported", () => {
-                const predicate: IHeaderPredicate =
-                    headerPredicateFactory.identifierMatch("uriBasedMeasureIdentifier");
+                const predicate = headerPredicateFactory.identifierMatch("uriBasedMeasureIdentifier");
 
                 expect(predicate(measureDescriptors.arithmeticMeasure, context)).toBe(false);
             });
 
             it("should NOT match when AM identifier-based operand identifier matches header identifier since AMs are not supported", () => {
-                const predicate: IHeaderPredicate = headerPredicateFactory.identifierMatch(
-                    "identifierBasedMeasureIdentifier",
-                );
+                const predicate = headerPredicateFactory.identifierMatch("identifierBasedMeasureIdentifier");
 
                 expect(predicate(measureDescriptors.arithmeticMeasure, context)).toBe(false);
             });
@@ -354,25 +348,36 @@ describe("identifierMatch", () => {
     });
 
     describe("attribute headers", () => {
-        it("should match when measure item identifier matches", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.identifierMatch("attributeIdentifier");
-
-            expect(predicate(attributeDescriptor, context)).toBe(true);
-        });
-        it("should match when identifier-based measure identifier matches header composite identifier", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.identifierMatch(
+        const positiveScenarios: [string, string, IAttributeDescriptor][] = [
+            ["measure item identifier matches", "attributeIdentifier", attributeDescriptor],
+            [
+                "identifier-based measure identifier matches header composite identifier",
                 `${workspace}:attributeIdentifier`,
-            );
+                attributeDescriptor,
+            ],
+            [
+                "composite-identifier-based measure item identifier matches",
+                "attributeIdentifier",
+                compositeAttributeDescriptor,
+            ],
+            [
+                "composite-identifier-based measure identifier matches header composite identifier",
+                `${workspace}:attributeIdentifier`,
+                compositeAttributeDescriptor,
+            ],
+        ];
 
-            expect(predicate(attributeDescriptor, context)).toBe(true);
+        it.each(positiveScenarios)("should match when %s", (_, identifier, descriptor) => {
+            const predicate = headerPredicateFactory.identifierMatch(identifier);
+            expect(predicate(descriptor, context)).toBe(true);
         });
-        it("should NOT match when measure item identifier does not match", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.identifierMatch("someOtherIdentifier");
 
+        it("should NOT match when measure item identifier does not match", () => {
+            const predicate = headerPredicateFactory.identifierMatch("someOtherIdentifier");
             expect(predicate(attributeDescriptor, context)).toBe(false);
         });
         it("should NOT match when identifier-based measure identifier matches header composite identifier but it is not the current workspace", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.identifierMatch(
+            const predicate = headerPredicateFactory.identifierMatch(
                 `some_other_${workspace}:attributeIdentifier`,
             );
 
@@ -383,7 +388,7 @@ describe("identifierMatch", () => {
     describe("attribute item headers", () => {
         it("should NOT match since attributeHeaderItem does not have identifier", () => {
             // @ts-expect-error Testing possible inputs not allowed by types but possible if used from JavaScript
-            const predicate: IHeaderPredicate = headerPredicateFactory.identifierMatch(null);
+            const predicate = headerPredicateFactory.identifierMatch(null);
 
             expect(predicate(attributeHeaderItem, context)).toBe(false);
         });
@@ -393,13 +398,12 @@ describe("identifierMatch", () => {
 describe("composedFromUri", () => {
     describe("simple measure headers (not supported)", () => {
         it("should NOT match when uri-based measure identifier matches header identifier", () => {
-            const predicate: IHeaderPredicate =
-                headerPredicateFactory.composedFromIdentifier("uriBasedMeasureIdentifier");
+            const predicate = headerPredicateFactory.composedFromIdentifier("uriBasedMeasureIdentifier");
 
             expect(predicate(measureDescriptors.uriBasedMeasure, context)).toBe(false);
         });
         it("should NOT match when identifier-based measure identifier matches header identifier", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.composedFromIdentifier(
+            const predicate = headerPredicateFactory.composedFromIdentifier(
                 "identifierBasedMeasureIdentifier",
             );
 
@@ -409,13 +413,13 @@ describe("composedFromUri", () => {
 
     describe("ad-hoc measure headers (not supported)", () => {
         it("should NOT match when ad-hoc measure is created from identifier-based attribute matching uri", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.composedFromUri("/attributeUri");
+            const predicate = headerPredicateFactory.composedFromUri("/attributeUri");
 
             expect(predicate(measureDescriptors.identifierBasedAdhocMeasure, context)).toBe(false);
         });
 
         it("should NOT match when ad-hoc measure is created from uri-based attribute matching uri", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.composedFromUri("/attributeUri");
+            const predicate = headerPredicateFactory.composedFromUri("/attributeUri");
 
             expect(predicate(measureDescriptors.uriBasedAdhocMeasure, context)).toBe(false);
         });
@@ -423,13 +427,12 @@ describe("composedFromUri", () => {
 
     describe("derived measure headers (not supported)", () => {
         it("should NOT match when uri-based PP derived measure uri matches header uri", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.composedFromUri("/uriBasedPPMeasure");
+            const predicate = headerPredicateFactory.composedFromUri("/uriBasedPPMeasure");
 
             expect(predicate(measureDescriptors.uriBasedPPMeasure, context)).toBe(false);
         });
         it("should NOT match when identifier-based PP derived measure uri matches header uri", () => {
-            const predicate: IHeaderPredicate =
-                headerPredicateFactory.composedFromUri("/identifierBasedPPMeasure");
+            const predicate = headerPredicateFactory.composedFromUri("/identifierBasedPPMeasure");
 
             expect(predicate(measureDescriptors.identifierBasedPPMeasure, context)).toBe(false);
         });
@@ -437,18 +440,17 @@ describe("composedFromUri", () => {
 
     describe("AM headers", () => {
         it("should match when AM uri-based operand uri matches header uri", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.composedFromUri("/uriBasedMeasureUri");
+            const predicate = headerPredicateFactory.composedFromUri("/uriBasedMeasureUri");
 
             expect(predicate(measureDescriptors.arithmeticMeasure, context)).toBe(true);
         });
         it("should match when AM identifier-based operand uri matches header uri", () => {
-            const predicate: IHeaderPredicate =
-                headerPredicateFactory.composedFromUri("identifierBasedMeasureUri");
+            const predicate = headerPredicateFactory.composedFromUri("identifierBasedMeasureUri");
 
             expect(predicate(measureDescriptors.arithmeticMeasure, context)).toBe(true);
         });
         it("should NOT match when AM uri-based operand uri does not match header uri", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.composedFromUri("/someUri");
+            const predicate = headerPredicateFactory.composedFromUri("/someUri");
 
             expect(predicate(measureDescriptors.arithmeticMeasure, context)).toBe(false);
         });
@@ -456,19 +458,18 @@ describe("composedFromUri", () => {
 
     describe("2nd order AM headers", () => {
         it("should match when 2nd order AM uri-based operand uri matches header uri", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.composedFromUri("/uriBasedMeasureUri");
+            const predicate = headerPredicateFactory.composedFromUri("/uriBasedMeasureUri");
 
             expect(predicate(measureDescriptors.arithmeticMeasureOf2ndOrder, context)).toBe(true);
         });
 
         it("should match when 2nd order AM identifier-based operand uri matches header uri", () => {
-            const predicate: IHeaderPredicate =
-                headerPredicateFactory.composedFromUri("identifierBasedMeasureUri");
+            const predicate = headerPredicateFactory.composedFromUri("identifierBasedMeasureUri");
 
             expect(predicate(measureDescriptors.arithmeticMeasureOf2ndOrder, context)).toBe(true);
         });
         it("should NOT match when 2nd order AM uri-based operand uri does not match header uri", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.composedFromUri("/someOtherUri");
+            const predicate = headerPredicateFactory.composedFromUri("/someOtherUri");
 
             expect(predicate(measureDescriptors.arithmeticMeasureOf2ndOrder, context)).toBe(false);
         });
@@ -476,13 +477,12 @@ describe("composedFromUri", () => {
 
     describe("derived AM headers", () => {
         it("should match when AM uri-based PP+SP derived operand uri matches header uri", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.composedFromUri("/uriBasedMeasureUri");
+            const predicate = headerPredicateFactory.composedFromUri("/uriBasedMeasureUri");
 
             expect(predicate(measureDescriptors.uriBasedCompareArithmeticMeasure, context)).toBe(true);
         });
         it("should match when AM identifier-based PP+SP derived operand uri matches header uri", () => {
-            const predicate: IHeaderPredicate =
-                headerPredicateFactory.composedFromUri("identifierBasedMeasureUri");
+            const predicate = headerPredicateFactory.composedFromUri("identifierBasedMeasureUri");
 
             expect(predicate(measureDescriptors.identifierBasedCompareArithmeticMeasure, context)).toBe(true);
         });
@@ -490,25 +490,25 @@ describe("composedFromUri", () => {
 
     describe("derived from AM", () => {
         it("should match when derived PP from AM matches header uri", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.composedFromUri("/uriBasedMeasureUri");
+            const predicate = headerPredicateFactory.composedFromUri("/uriBasedMeasureUri");
 
             expect(predicate(measureDescriptors.derivedPPFromArithmeticMeasure, context)).toEqual(true);
         });
 
         it("should not match when derived PP from AM doesn't match header uri", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.composedFromUri("/someOtherUri");
+            const predicate = headerPredicateFactory.composedFromUri("/someOtherUri");
 
             expect(predicate(measureDescriptors.derivedPPFromArithmeticMeasure, context)).toEqual(false);
         });
 
         it("should match when derived SP from AM matches header uri", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.composedFromUri("/uriBasedMeasureUri");
+            const predicate = headerPredicateFactory.composedFromUri("/uriBasedMeasureUri");
 
             expect(predicate(measureDescriptors.derivedSPFromArithmeticMeasure, context)).toEqual(true);
         });
 
         it("should not match when derived SP from AM doesn't match header uri", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.composedFromUri("/someOtherUri");
+            const predicate = headerPredicateFactory.composedFromUri("/someOtherUri");
 
             expect(predicate(measureDescriptors.derivedSPFromArithmeticMeasure, context)).toEqual(false);
         });
@@ -518,13 +518,12 @@ describe("composedFromUri", () => {
 describe("composedFromIdentifier", () => {
     describe("simple measure headers (not supported)", () => {
         it("should NOT match when uri-based measure identifier matches header identifier", () => {
-            const predicate: IHeaderPredicate =
-                headerPredicateFactory.composedFromIdentifier("uriBasedMeasureIdentifier");
+            const predicate = headerPredicateFactory.composedFromIdentifier("uriBasedMeasureIdentifier");
 
             expect(predicate(measureDescriptors.uriBasedMeasure, context)).toBe(false);
         });
         it("should NOT match when identifier-based measure identifier matches header identifier", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.composedFromIdentifier(
+            const predicate = headerPredicateFactory.composedFromIdentifier(
                 "identifierBasedMeasureIdentifier",
             );
 
@@ -534,15 +533,13 @@ describe("composedFromIdentifier", () => {
 
     describe("ad-hoc measure headers (not supported)", () => {
         it("should NOT match when ad-hoc measure is created from uri-based attribute matching identifier", () => {
-            const predicate: IHeaderPredicate =
-                headerPredicateFactory.composedFromIdentifier("uriBasedIdentifier");
+            const predicate = headerPredicateFactory.composedFromIdentifier("uriBasedIdentifier");
 
             expect(predicate(measureDescriptors.uriBasedAdhocMeasure, context)).toBe(false);
         });
 
         it("should NOT match when ad-hoc measure is created from identifier-based attribute matching identifier", () => {
-            const predicate: IHeaderPredicate =
-                headerPredicateFactory.composedFromIdentifier("attributeIdentifier");
+            const predicate = headerPredicateFactory.composedFromIdentifier("attributeIdentifier");
 
             expect(predicate(measureDescriptors.identifierBasedAdhocMeasure, context)).toBe(false);
         });
@@ -550,14 +547,12 @@ describe("composedFromIdentifier", () => {
 
     describe("derived measure headers (not supported)", () => {
         it("should NOT match when uri-based PP derived measure identifier matches header identifier", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.composedFromIdentifier(
-                "uriBasedPPMeasureIdentifier",
-            );
+            const predicate = headerPredicateFactory.composedFromIdentifier("uriBasedPPMeasureIdentifier");
 
             expect(predicate(measureDescriptors.uriBasedPPMeasure, context)).toBe(false);
         });
         it("should NOT match when identifier-based PP derived measure identifier matches header identifier", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.composedFromIdentifier(
+            const predicate = headerPredicateFactory.composedFromIdentifier(
                 "identifierBasedPPMeasureIdentifier",
             );
 
@@ -566,34 +561,36 @@ describe("composedFromIdentifier", () => {
     });
 
     describe("AM headers", () => {
-        it("should match when AM uri-based operand identifier matches header identifier", () => {
-            const predicate: IHeaderPredicate =
-                headerPredicateFactory.composedFromIdentifier("uriBasedMeasureIdentifier");
-
-            expect(predicate(measureDescriptors.arithmeticMeasure, context)).toBe(true);
-        });
-        it("should match when AM identifier-based operand identifier matches header identifier", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.composedFromIdentifier(
+        const positiveScenarios: [string, string, IMeasureDescriptor][] = [
+            [
+                "uri-based operand identifier matches header identifier",
+                "uriBasedMeasureIdentifier",
+                measureDescriptors.arithmeticMeasure,
+            ],
+            [
+                "identifier-based operand identifier matches header identifier",
                 "identifierBasedMeasureIdentifier",
-            );
-
-            expect(predicate(measureDescriptors.arithmeticMeasure, context)).toBe(true);
-        });
-        it("should match when AM identifier-based operand identifier matches header composite identifier", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.composedFromIdentifier(
+                measureDescriptors.arithmeticMeasure,
+            ],
+            [
+                "identifier-based operand identifier matches header composite identifier",
                 `${workspace}:identifierBasedMeasureIdentifier`,
-            );
+                measureDescriptors.arithmeticMeasure,
+            ],
+        ];
 
-            expect(predicate(measureDescriptors.arithmeticMeasure, context)).toBe(true);
+        it.each(positiveScenarios)("should match when AM %s", (_, identifier, descriptor) => {
+            const predicate = headerPredicateFactory.composedFromIdentifier(identifier);
+            expect(predicate(descriptor, context)).toBe(true);
         });
+
         it("should NOT match when AM uri-based operand identifier does not match header identifier", () => {
-            const predicate: IHeaderPredicate =
-                headerPredicateFactory.composedFromIdentifier("someIdentifier");
+            const predicate = headerPredicateFactory.composedFromIdentifier("someIdentifier");
 
             expect(predicate(measureDescriptors.arithmeticMeasure, context)).toBe(false);
         });
         it("should NOT match when AM identifier-based operand identifier matches header composite identifier but it is not the current workspace", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.composedFromIdentifier(
+            const predicate = headerPredicateFactory.composedFromIdentifier(
                 `some_other_${workspace}:identifierBasedMeasureIdentifier`,
             );
 
@@ -602,34 +599,36 @@ describe("composedFromIdentifier", () => {
     });
 
     describe("2nd order AM headers", () => {
-        it("should match when 2nd order AM uri-based operand identifier matches header identifier", () => {
-            const predicate: IHeaderPredicate =
-                headerPredicateFactory.composedFromIdentifier("uriBasedMeasureIdentifier");
-
-            expect(predicate(measureDescriptors.arithmeticMeasureOf2ndOrder, context)).toBe(true);
-        });
-
-        it("should match when 2nd order AM identifier-based operand identifier matches header identifier", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.composedFromIdentifier(
+        const positiveScenarios: [string, string, IMeasureDescriptor][] = [
+            [
+                "uri-based operand identifier matches header identifier",
+                "uriBasedMeasureIdentifier",
+                measureDescriptors.arithmeticMeasureOf2ndOrder,
+            ],
+            [
+                "identifier-based operand identifier matches header identifier",
                 "identifierBasedMeasureIdentifier",
-            );
-
-            expect(predicate(measureDescriptors.arithmeticMeasureOf2ndOrder, context)).toBe(true);
-        });
-        it("should match when 2nd order AM identifier-based operand identifier matches header composite identifier", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.composedFromIdentifier(
+                measureDescriptors.arithmeticMeasureOf2ndOrder,
+            ],
+            [
+                "identifier-based operand identifier matches header composite identifier",
                 `${workspace}:identifierBasedMeasureIdentifier`,
-            );
+                measureDescriptors.arithmeticMeasureOf2ndOrder,
+            ],
+        ];
 
-            expect(predicate(measureDescriptors.arithmeticMeasureOf2ndOrder, context)).toBe(true);
+        it.each(positiveScenarios)("should match when 2nd order AM %s", (_, identifier, descriptor) => {
+            const predicate = headerPredicateFactory.composedFromIdentifier(identifier);
+            expect(predicate(descriptor, context)).toBe(true);
         });
+
         it("should NOT match when 2nd order AM uri-based operand identifier does not match header identifier", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.composedFromIdentifier("someOtherId");
+            const predicate = headerPredicateFactory.composedFromIdentifier("someOtherId");
 
             expect(predicate(measureDescriptors.arithmeticMeasureOf2ndOrder, context)).toBe(false);
         });
         it("should NOT match when 2nd order AM identifier-based operand identifier matches header composite identifier but it is not the current workspace", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.composedFromIdentifier(
+            const predicate = headerPredicateFactory.composedFromIdentifier(
                 `some_other_${workspace}:identifierBasedMeasureIdentifier`,
             );
 
@@ -638,96 +637,90 @@ describe("composedFromIdentifier", () => {
     });
 
     describe("derived AM headers", () => {
-        it("should match when AM uri-based PP+SP derived operand identifier matches header identifier", () => {
-            const predicate: IHeaderPredicate =
-                headerPredicateFactory.composedFromIdentifier("uriBasedMeasureIdentifier");
-
-            expect(predicate(measureDescriptors.uriBasedCompareArithmeticMeasure, context)).toBe(true);
-        });
-        it("should match when AM uri-based PP+SP derived operand identifier matches header composite identifier", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.composedFromIdentifier(
+        const positiveScenarios: [string, string, IMeasureDescriptor][] = [
+            [
+                "uri-based PP+SP derived operand identifier matches header identifier",
+                "uriBasedMeasureIdentifier",
+                measureDescriptors.uriBasedCompareArithmeticMeasure,
+            ],
+            [
+                "uri-based PP+SP derived operand identifier matches header composite identifier",
                 `${workspace}:uriBasedMeasureIdentifier`,
-            );
-
-            expect(predicate(measureDescriptors.uriBasedCompareArithmeticMeasure, context)).toBe(true);
-        });
-        it("should match when AM identifier-based PP+SP derived operand identifier matches header identifier", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.composedFromIdentifier(
+                measureDescriptors.uriBasedCompareArithmeticMeasure,
+            ],
+            [
+                "identifier-based PP+SP derived operand identifier matches header identifier",
                 "identifierBasedMeasureIdentifier",
-            );
-
-            expect(predicate(measureDescriptors.identifierBasedCompareArithmeticMeasure, context)).toBe(true);
-        });
-        it("should match when AM identifier-based PP+SP derived operand identifier matches header composite identifier", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.composedFromIdentifier(
+                measureDescriptors.identifierBasedCompareArithmeticMeasure,
+            ],
+            [
+                "identifier-based PP+SP derived operand identifier matches header composite identifier",
                 `${workspace}:identifierBasedMeasureIdentifier`,
-            );
+                measureDescriptors.identifierBasedCompareArithmeticMeasure,
+            ],
+        ];
 
-            expect(predicate(measureDescriptors.identifierBasedCompareArithmeticMeasure, context)).toBe(true);
+        it.each(positiveScenarios)("should match when AM %s", (_, identifier, descriptor) => {
+            const predicate = headerPredicateFactory.composedFromIdentifier(identifier);
+            expect(predicate(descriptor, context)).toBe(true);
         });
     });
 
     describe("derived from AM", () => {
-        it("should match when derived PP from AM matches header identifier", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.composedFromIdentifier(
+        const positiveScenarios: [string, string, IMeasureDescriptor][] = [
+            [
+                "PP from AM matches header identifier",
                 "identifierBasedMeasureIdentifier",
-            );
-
-            expect(predicate(measureDescriptors.derivedPPFromArithmeticMeasure, context)).toEqual(true);
-        });
-
-        it("should match when derived PP from AM matches header composite identifier", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.composedFromIdentifier(
+                measureDescriptors.derivedPPFromArithmeticMeasure,
+            ],
+            [
+                "PP from AM matches header composite identifier",
                 `${workspace}:identifierBasedMeasureIdentifier`,
-            );
-
-            expect(predicate(measureDescriptors.derivedPPFromArithmeticMeasure, context)).toEqual(true);
-        });
-
-        it("should not match when derived PP from AM doesn't match header identifier", () => {
-            const predicate: IHeaderPredicate =
-                headerPredicateFactory.composedFromIdentifier("someOtherIdentifier");
-
-            expect(predicate(measureDescriptors.derivedPPFromArithmeticMeasure, context)).toEqual(false);
-        });
-
-        it("should not match when derived PP from AM doesn't match header composite identifier", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.composedFromIdentifier(
-                `${workspace}:someOtherIdentifier`,
-            );
-
-            expect(predicate(measureDescriptors.derivedPPFromArithmeticMeasure, context)).toEqual(false);
-        });
-
-        it("should match when derived SP from AM matches header identifier", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.composedFromIdentifier(
+                measureDescriptors.derivedPPFromArithmeticMeasure,
+            ],
+            [
+                "SP from AM matches header identifier",
                 "identifierBasedMeasureIdentifier",
-            );
-
-            expect(predicate(measureDescriptors.derivedSPFromArithmeticMeasure, context)).toEqual(true);
-        });
-
-        it("should match when derived SP from AM matches header composite identifier", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.composedFromIdentifier(
+                measureDescriptors.derivedSPFromArithmeticMeasure,
+            ],
+            [
+                "SP from AM matches header composite identifier",
                 `${workspace}:identifierBasedMeasureIdentifier`,
-            );
+                measureDescriptors.derivedSPFromArithmeticMeasure,
+            ],
+        ];
 
-            expect(predicate(measureDescriptors.derivedSPFromArithmeticMeasure, context)).toEqual(true);
+        it.each(positiveScenarios)("should match when derived %s", (_, identifier, descriptor) => {
+            const predicate = headerPredicateFactory.composedFromIdentifier(identifier);
+            expect(predicate(descriptor, context)).toBe(true);
         });
 
-        it("should not match when derived SP from AM doesn't match header identifier", () => {
-            const predicate: IHeaderPredicate =
-                headerPredicateFactory.composedFromIdentifier("someOtherIdentifier");
-
-            expect(predicate(measureDescriptors.derivedSPFromArithmeticMeasure, context)).toEqual(false);
-        });
-
-        it("should not match when derived SP from AM doesn't match header composite identifier", () => {
-            const predicate: IHeaderPredicate = headerPredicateFactory.composedFromIdentifier(
+        const negativeScenarios: [string, string, IMeasureDescriptor][] = [
+            [
+                "PP from AM doesn't match header identifier",
+                "someOtherIdentifier",
+                measureDescriptors.derivedPPFromArithmeticMeasure,
+            ],
+            [
+                "PP from AM doesn't match header composite identifier",
                 `${workspace}:someOtherIdentifier`,
-            );
+                measureDescriptors.derivedPPFromArithmeticMeasure,
+            ],
+            [
+                "SP from AM doesn't match header identifier",
+                "someOtherIdentifier",
+                measureDescriptors.derivedSPFromArithmeticMeasure,
+            ],
+            [
+                "SP from AM doesn't match header composite identifier",
+                `${workspace}:someOtherIdentifier`,
+                measureDescriptors.derivedSPFromArithmeticMeasure,
+            ],
+        ];
 
-            expect(predicate(measureDescriptors.derivedSPFromArithmeticMeasure, context)).toEqual(false);
+        it.each(negativeScenarios)("should NOT match when derived %s", (_, identifier, descriptor) => {
+            const predicate = headerPredicateFactory.composedFromIdentifier(identifier);
+            expect(predicate(descriptor, context)).toBe(false);
         });
     });
 });
