@@ -128,7 +128,9 @@ export class PluggableColumnChart extends PluggableColumnBarCharts {
                             normalSortEnabled: true,
                             areaSortEnabled: true,
                         },
-                        metricSorts: [...measures.map((m) => newMeasureSortSuggestion(m.localIdentifier))],
+                        metricSorts: isEmpty(stackBy)
+                            ? [...measures.map((m) => newMeasureSortSuggestion(m.localIdentifier))]
+                            : [],
                     },
                 ],
             };

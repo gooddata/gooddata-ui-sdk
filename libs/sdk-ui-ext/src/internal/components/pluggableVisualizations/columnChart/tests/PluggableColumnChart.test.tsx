@@ -168,6 +168,14 @@ describe("PluggableColumnChart", () => {
             expect(sortConfig).toMatchSnapshot();
         });
 
+        it("should provide attribute normal sort as default sort, attribute normal and attribute area available sorts for 1M + 1VB + 1SB", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(referencePointMocks.simpleStackedReferencePoint);
+
+            expect(sortConfig).toMatchSnapshot();
+        });
+
         it("should provide attribute normal sort as default sort, attribute area and measure sort as available sorts for 2M + 1VB", async () => {
             const chart = createComponent(defaultProps);
 

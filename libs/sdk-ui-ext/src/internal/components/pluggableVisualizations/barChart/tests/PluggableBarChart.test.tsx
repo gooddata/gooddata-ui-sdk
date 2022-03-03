@@ -221,6 +221,7 @@ describe("PluggableBarChart", () => {
 
         const Scenarios: Array<[string, IReferencePoint]> = [
             ["1M + 1 VB", referencePointMocks.oneMetricOneCategory],
+            ["1M + 1 VB + 1SB", referencePointMocks.simpleStackedReferencePoint],
             ["2M + 1 VB", referencePointMocks.twoMetricAndOneCategoryRefPoint],
             ["2 stacked M + 1 VB", referencePointMocks.twoStackedMetricAndOneCategoryRefPoint],
             ["2M + 2 VB", referencePointMocks.twoMetricAndTwoCategoriesRefPoint],

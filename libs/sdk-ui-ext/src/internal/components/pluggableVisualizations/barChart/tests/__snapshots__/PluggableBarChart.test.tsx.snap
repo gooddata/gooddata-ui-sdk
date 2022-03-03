@@ -89,6 +89,21 @@ Array [
 ]
 `;
 
+exports[`PluggableBarChart Sort config should return valid available sorts for 1M + 1 VB + 1SB 1`] = `
+Array [
+  Object {
+    "attributeSort": Object {
+      "areaSortEnabled": true,
+      "normalSortEnabled": true,
+    },
+    "itemId": Object {
+      "localIdentifier": "a1",
+    },
+    "metricSorts": Array [],
+  },
+]
+`;
+
 exports[`PluggableBarChart Sort config should return valid available sorts for 1M + 1 VB 1`] = `
 Array [
   Object {
@@ -125,6 +140,28 @@ Array [
     "itemId": Object {
       "localIdentifier": "a1",
     },
+    "metricSorts": Array [
+      Object {
+        "locators": Array [
+          Object {
+            "measureLocatorItem": Object {
+              "measureIdentifier": "m1",
+            },
+          },
+        ],
+        "type": "measureSort",
+      },
+      Object {
+        "locators": Array [
+          Object {
+            "measureLocatorItem": Object {
+              "measureIdentifier": "m2",
+            },
+          },
+        ],
+        "type": "measureSort",
+      },
+    ],
   },
 ]
 `;
