@@ -30,12 +30,15 @@ describe("Dashboard Filtering", () => {
             PARENT_FILTER_SELECTOR,
             CHILD_FILTER_SELECTOR,
         );
-        const headline = new Headline();
+        const headline = new Headline(".s-dash-item.viz-type-headline");
 
         parentAttributeFilters.getParentFilter().titleHasText("Product").subtitleHasText("All");
         parentAttributeFilters.getChildFilter().titleHasText("Department").subtitleHasText("All");
 
-        headline.waitHeadlineLoaded().hasValue("$38,310,753.45");
+        // wait until filters applied to headline
+        cy.wait(200);
+
+        headline.waitLoaded().hasValue("$38,310,753.45");
 
         parentAttributeFilters
             .getParentFilter()
@@ -50,7 +53,10 @@ describe("Dashboard Filtering", () => {
             .subtitleHasText("All")
             .open()
             .isAllElementsFilteredByParent();
-        headline.waitHeadlineLoaded().noValue();
+        // wait until filters applied to headline
+        cy.wait(200);
+
+        headline.waitLoaded().isValue();
     });
 
     it("Headline value changes after filters change (SEPARATE)", () => {
@@ -58,12 +64,15 @@ describe("Dashboard Filtering", () => {
             PARENT_FILTER_SELECTOR,
             CHILD_FILTER_SELECTOR,
         );
-        const headline = new Headline();
+        const headline = new Headline(".s-dash-item.viz-type-headline");
 
         parentAttributeFilters.getParentFilter().titleHasText("Product").subtitleHasText("All");
         parentAttributeFilters.getChildFilter().titleHasText("Department").subtitleHasText("All");
 
-        headline.waitHeadlineLoaded().hasValue("$38,310,753.45");
+        // wait until filters applied to headline
+        cy.wait(200);
+
+        headline.waitLoaded().hasValue("$38,310,753.45");
 
         parentAttributeFilters
             .getParentFilter()
@@ -71,7 +80,11 @@ describe("Dashboard Filtering", () => {
             .clearSelection()
             .selectElement("compuSci")
             .clickApply();
-        headline.waitHeadlineLoaded().hasValue("$9,237,969.87");
+
+        // wait until filters applied to headline
+        cy.wait(200);
+
+        headline.waitLoaded().hasValue("$9,237,969.87");
 
         parentAttributeFilters
             .getChildFilter()
@@ -79,6 +92,9 @@ describe("Dashboard Filtering", () => {
             .clearSelection()
             .selectElement("directSales")
             .clickApply();
-        headline.waitHeadlineLoaded().hasValue("$6,111,808.02");
+
+        // wait until filters applied to headline
+        cy.wait(200);
+        headline.waitLoaded().hasValue("$6,111,808.02");
     });
 });
