@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { mount, ReactWrapper } from "enzyme";
 import { BarChart } from "../BarChart";
@@ -6,7 +6,6 @@ import { IChartConfig } from "../../../interfaces";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import {
-    attributeLocalId,
     IAttributeOrMeasure,
     MeasureGroupIdentifier,
     newTwoDimensional,
@@ -39,8 +38,8 @@ describe("BarChart", () => {
         );
 
         const exceptedDimensions = newTwoDimensional(
-            [attributeLocalId(ReferenceMd.Region)],
-            [attributeLocalId(ReferenceMd.Product.Name), MeasureGroupIdentifier],
+            [ReferenceMd.Region],
+            [ReferenceMd.Product.Name, MeasureGroupIdentifier],
         );
 
         expect(wrapper.find(CoreBarChart)).toHaveLength(1);

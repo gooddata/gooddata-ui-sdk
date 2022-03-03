@@ -1,13 +1,8 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { mount } from "enzyme";
 import { PieChart } from "../PieChart";
-import {
-    newAttributeSort,
-    MeasureGroupIdentifier,
-    newTwoDimensional,
-    attributeLocalId,
-} from "@gooddata/sdk-model";
+import { newAttributeSort, MeasureGroupIdentifier, newTwoDimensional } from "@gooddata/sdk-model";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { CorePieChart } from "../CorePieChart";
@@ -31,10 +26,7 @@ describe("PieChart", () => {
             />,
         );
 
-        const expectedDims = newTwoDimensional(
-            [MeasureGroupIdentifier],
-            [attributeLocalId(ReferenceMd.Product.Name)],
-        );
+        const expectedDims = newTwoDimensional([MeasureGroupIdentifier], [ReferenceMd.Product.Name]);
 
         expect(wrapper.find(CorePieChart)).toHaveLength(1);
         expect(wrapper.find(CorePieChart).prop("execution")).toBeDefined();

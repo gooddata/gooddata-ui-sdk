@@ -1,15 +1,10 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { mount } from "enzyme";
 import { BulletChart } from "../BulletChart";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
-import {
-    attributeLocalId,
-    MeasureGroupIdentifier,
-    newAttributeSort,
-    newTwoDimensional,
-} from "@gooddata/sdk-model";
+import { MeasureGroupIdentifier, newAttributeSort, newTwoDimensional } from "@gooddata/sdk-model";
 import { CoreBulletChart } from "../CoreBulletChart";
 
 describe("BarChart", () => {
@@ -26,10 +21,7 @@ describe("BarChart", () => {
             />,
         );
 
-        const exceptedDimensions = newTwoDimensional(
-            [MeasureGroupIdentifier],
-            [attributeLocalId(ReferenceMd.Product.Name)],
-        );
+        const exceptedDimensions = newTwoDimensional([MeasureGroupIdentifier], [ReferenceMd.Product.Name]);
 
         expect(wrapper.find(CoreBulletChart)).toHaveLength(1);
         expect(wrapper.find(CoreBulletChart).prop("execution")).toBeDefined();

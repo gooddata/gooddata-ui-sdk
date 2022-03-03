@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { bucketsItems, IInsight, IInsightDefinition, insightBuckets } from "@gooddata/sdk-model";
 import { BucketNames, IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
 import React from "react";
@@ -61,6 +61,41 @@ import {
     reverseAndTrimIntersection,
 } from "../drillDownUtil";
 
+/**
+ * PluggableAreaChart
+ *
+ * ## Buckets
+ *
+ * | Name     | Id       | Accepts             |
+ * |----------|----------|---------------------|
+ * | Measures | measures | measures only       |
+ * | ViewBy   | view     | attributes or dates |
+ * | StackBy  | stack    | attributes only     |
+ *
+ * The ViewBy can accept one date at most, unless "enableMultipleDates" FF is on.
+ *
+ * ### Bucket axioms
+ *
+ * - |ViewBy| ≤ 2
+ * - |StackBy| ≤ 1
+ * - |ViewBy| + |StackBy| ≤ 2
+ * - |ViewBy| + |StackBy| = 2 ⇒ |Measures| ≤ 1
+ * - |ViewBy| + |StackBy| \< 2 ⇒ |Measures| ≤ 20
+ *
+ * ## Dimensions
+ *
+ * The PluggableAreaChart always creates two dimensional execution.
+ *
+ * - |StackBy| = 1 ∧ |ViewBy| ≥ 1 ⇒ [[StackBy[0]], [ViewBy[0], MeasureGroupIdentifier]]
+ * - |StackBy| = 1 ∧ |ViewBy| = 0 ⇒ [[StackBy[0]], [MeasureGroupIdentifier]]
+ * - |StackBy| = 0 ∧ |ViewBy| = 2 ⇒ [[ViewBy[1]], [ViewBy[0], MeasureGroupIdentifier]]
+ * - |StackBy| = 0 ∧ |ViewBy| = 1 ⇒ [[MeasureGroupIdentifier], [ViewBy[0]]]
+ * - |StackBy| = 0 ∧ |ViewBy| = 0 ⇒ [[MeasureGroupIdentifier], []]]
+ *
+ * ## Default sorts
+ *
+ * The PluggableAreaChart does not use any sorts.
+ */
 export class PluggableAreaChart extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
         super(props);

@@ -27,6 +27,35 @@ import includes from "lodash/includes";
 import set from "lodash/set";
 import { IInsightDefinition } from "@gooddata/sdk-model";
 
+/**
+ * PluggableBubbleChart
+ *
+ * ## Buckets
+ *
+ * | Name             | Id                 | Accepts             |
+ * |------------------|--------------------|---------------------|
+ * | Measure (X-axis) | measures           | measures only       |
+ * | Measure (Y-axis) | secondary_measures | measures only       |
+ * | Measure (Size)   | tertiary_measures  | measures only       |
+ * | ViewBy           | view               | attributes or dates |
+ *
+ * ### Bucket axioms
+ *
+ * - |MeasureX| ≤ 1
+ * - |MeasureY| ≤ 1
+ * - |MeasureSize| ≤ 1
+ * - |ViewBy| ≤ 1
+ *
+ * ## Dimensions
+ *
+ * The PluggableBubbleChart always creates the same two dimensional execution.
+ *
+ * - ⊤ ⇒ [[...ViewBy], [MeasureGroupIdentifier]]
+ *
+ * ## Default sorts
+ *
+ * The PluggableAreaChart does not use any sorts.
+ */
 export class PluggableBubbleChart extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
         super(props);

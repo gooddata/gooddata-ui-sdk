@@ -1,7 +1,5 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
-    attributeLocalId,
-    DimensionItem,
     IAttribute,
     IAttributeOrMeasure,
     IDimension,
@@ -77,7 +75,7 @@ export type CreateExecutionOptions = {
  * When caller desires just data series and no slicing, create a single-dim result.
  */
 function seriesOnlyDim(seriesBy: IAttributeOrMeasure[]): IDimension[] {
-    return [newDimension(seriesBy.filter(isAttribute).map(attributeLocalId).concat(MeasureGroupIdentifier))];
+    return [newDimension([...seriesBy.filter(isAttribute), MeasureGroupIdentifier])];
 }
 
 /**
@@ -92,12 +90,9 @@ function seriesAndSlicesDim(
     slices: IAttribute[],
     totals: ITotal[],
 ): IDimension[] {
-    const firstDimItems: DimensionItem[] = slices.map(attributeLocalId);
-    firstDimItems.push(...totals);
-
     return newTwoDimensional(
-        firstDimItems,
-        seriesBy.filter(isAttribute).map(attributeLocalId).concat(MeasureGroupIdentifier),
+        [...slices, ...totals],
+        [...seriesBy.filter(isAttribute), MeasureGroupIdentifier],
     );
 }
 

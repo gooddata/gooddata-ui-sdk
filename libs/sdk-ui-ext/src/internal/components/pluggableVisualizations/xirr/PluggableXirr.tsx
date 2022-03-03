@@ -2,7 +2,6 @@
 
 import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
 import {
-    attributeLocalId,
     bucketAttributes,
     IDimension,
     IInsightDefinition,
@@ -142,15 +141,10 @@ export class PluggableXirr extends AbstractPluggableVisualization {
     }
 
     private getXirrDimensions(insight: IInsightDefinition): IDimension[] {
-        const attribute = insightBucket(insight, BucketNames.ATTRIBUTE);
+        const attributeBucket = insightBucket(insight, BucketNames.ATTRIBUTE);
+        const attributes = attributeBucket ? bucketAttributes(attributeBucket) : [];
 
-        if (attribute && attribute.items.length) {
-            return [
-                newDimension([MeasureGroupIdentifier, ...bucketAttributes(attribute).map(attributeLocalId)]),
-            ];
-        }
-
-        return [newDimension([MeasureGroupIdentifier])];
+        return [newDimension([MeasureGroupIdentifier, ...attributes])];
     }
 
     private withEmptyAttributeTargets(data: IPushData): IPushData {

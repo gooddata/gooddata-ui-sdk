@@ -38,6 +38,35 @@ import { transformBuckets } from "./bucketHelper";
 import { modifyBucketsAttributesForDrillDown, addIntersectionFiltersToInsight } from "../drillDownUtil";
 import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper";
 
+/**
+ * PluggableBulletChart
+ *
+ * ## Buckets
+ *
+ * | Name                  | Id                 | Accepts             |
+ * |-----------------------|--------------------|---------------------|
+ * | Measure (Primary)     | measures           | measures only       |
+ * | Measure (Target)      | secondary_measures | measures only       |
+ * | Measure (Comparative) | tertiary_measures  | measures only       |
+ * | ViewBy                | view               | attributes or dates |
+ *
+ * ### Bucket axioms
+ *
+ * - |MeasurePrimary| ≤ 1
+ * - |MeasureTarget| ≤ 1
+ * - |MeasureComparative| ≤ 1
+ * - |ViewBy| ≤ 1
+ *
+ * ## Dimensions
+ *
+ * The PluggableBulletChart always creates the same two dimensional execution.
+ *
+ * - ⊤ ⇒ [[MeasureGroupIdentifier], [...ViewBy]]
+ *
+ * ## Default sorts
+ *
+ * The PluggableBulletChart does not use any sorts.
+ */
 export class PluggableBulletChart extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
         super(props);
@@ -156,7 +185,7 @@ export class PluggableBulletChart extends PluggableBaseChart {
 
         const measureBucket = insightBucket(insight, BucketNames.MEASURES);
         if (!measureBucket || bucketIsEmpty(measureBucket)) {
-            // unmount on error, AD cant recover in some scenarions
+            // unmount on error, AD cant recover in some scenarios
             this.unmount();
 
             throw new InvalidBucketsSdkError();

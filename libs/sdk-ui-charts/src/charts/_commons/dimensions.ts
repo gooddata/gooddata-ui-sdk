@@ -1,7 +1,6 @@
-// (C) 2019-2020 GoodData Corporation
-
+// (C) 2019-2022 GoodData Corporation
+import compact from "lodash/compact";
 import {
-    attributeLocalId,
     bucketAttribute,
     bucketAttributes,
     bucketIsEmpty,
@@ -27,27 +26,16 @@ function stackedDimensions(
     stackBucketName: string,
 ): IDimension[] {
     const viewBucket = bucketsFind(buckets, viewBucketName);
-    const stackBucket = bucketsFind(buckets, stackBucketName);
-
     const viewByAttributes = viewBucket ? bucketAttributes(viewBucket) : [];
+
+    const stackBucket = bucketsFind(buckets, stackBucketName);
     const stackByAttribute = stackBucket && bucketAttribute(stackBucket);
 
-    const stackByAttributeLocalIdentifier = stackByAttribute
-        ? stackByAttribute.attribute.localIdentifier
-        : undefined;
-
-    const viewByAttributeLocalIdentifiers = viewByAttributes && viewByAttributes.map(attributeLocalId);
-
-    return newTwoDimensional(
-        stackByAttributeLocalIdentifier ? [stackByAttributeLocalIdentifier] : [],
-        viewByAttributeLocalIdentifiers
-            ? [...viewByAttributeLocalIdentifiers, MeasureGroupIdentifier]
-            : [MeasureGroupIdentifier],
-    );
+    return newTwoDimensional(compact([stackByAttribute]), [...viewByAttributes, MeasureGroupIdentifier]);
 }
 
 export function defaultDimensions(def: IExecutionDefinition): IDimension[] {
-    return newTwoDimensional([MeasureGroupIdentifier], bucketsAttributes(def.buckets).map(attributeLocalId));
+    return newTwoDimensional([MeasureGroupIdentifier], bucketsAttributes(def.buckets));
 }
 
 export function stackedChartDimensions(
@@ -63,41 +51,31 @@ export function stackedChartDimensions(
 }
 
 export function pointyChartDimensions(def: IExecutionDefinition): IDimension[] {
-    return newTwoDimensional(bucketsAttributes(def.buckets).map(attributeLocalId), [MeasureGroupIdentifier]);
+    return newTwoDimensional(bucketsAttributes(def.buckets), [MeasureGroupIdentifier]);
 }
 
 export function roundChartDimensions(def: IExecutionDefinition): IDimension[] {
-    const attributes = bucketsAttributes(def.buckets).map(attributeLocalId);
+    const attributes = bucketsAttributes(def.buckets);
 
-    if (attributes.length === 0) {
-        return newTwoDimensional([], [MeasureGroupIdentifier]);
-    }
-
-    return newTwoDimensional([MeasureGroupIdentifier], attributes);
+    return attributes.length
+        ? newTwoDimensional([MeasureGroupIdentifier], attributes)
+        : newTwoDimensional([], [MeasureGroupIdentifier]);
 }
 
 export function heatmapDimensions(def: IExecutionDefinition): IDimension[] {
-    const view = bucketsFind(def.buckets, BucketNames.VIEW);
-    const viewAttributeLocalIdentifiers = view ? bucketAttributes(view).map(attributeLocalId) : [];
+    const viewBucket = bucketsFind(def.buckets, BucketNames.VIEW);
+    const viewByAttributes = viewBucket ? bucketAttributes(viewBucket) : [];
 
-    const stack = bucketsFind(def.buckets, BucketNames.STACK);
+    const stackBucket = bucketsFind(def.buckets, BucketNames.STACK);
+    const stackByAttribute = stackBucket ? bucketAttributes(stackBucket) : [];
 
-    if (!stack || bucketIsEmpty(stack)) {
-        return newTwoDimensional(viewAttributeLocalIdentifiers, [MeasureGroupIdentifier]);
-    }
-
-    return newTwoDimensional(
-        viewAttributeLocalIdentifiers,
-        bucketAttributes(stack).map(attributeLocalId).concat([MeasureGroupIdentifier]),
-    );
+    return newTwoDimensional(viewByAttributes, compact([...stackByAttribute, MeasureGroupIdentifier]));
 }
 
 export function treemapDimensions(def: IExecutionDefinition): IDimension[] {
     const attributes = bucketsAttributes(def.buckets);
 
-    if (attributes.length === 1) {
-        return newTwoDimensional([MeasureGroupIdentifier], attributes.map(attributeLocalId));
-    }
-
-    return newTwoDimensional(attributes.map(attributeLocalId), [MeasureGroupIdentifier]);
+    return attributes.length === 1
+        ? newTwoDimensional([MeasureGroupIdentifier], attributes)
+        : newTwoDimensional(attributes, [MeasureGroupIdentifier]);
 }
