@@ -65,15 +65,17 @@ import {
  * PluggableAreaChart
  *
  * ## Buckets
- * | Name     | Id       | Accepts              |
- * |----------|----------|----------------------|
- * | Measures | measures | measures only        |
- * | ViewBy   | view     | attributes or dates  |
- * | StackBy  | stack    | attributes only      |
+ *
+ * | Name     | Id       | Accepts             |
+ * |----------|----------|---------------------|
+ * | Measures | measures | measures only       |
+ * | ViewBy   | view     | attributes or dates |
+ * | StackBy  | stack    | attributes only     |
  *
  * The ViewBy can accept one date at most, unless "enableMultipleDates" FF is on.
  *
  * ### Bucket axioms
+ *
  * - |ViewBy| ≤ 2
  * - |StackBy| ≤ 1
  * - |ViewBy| + |StackBy| ≤ 2
@@ -81,6 +83,7 @@ import {
  * - |ViewBy| + |StackBy| \< 2 ⇒ |Measures| ≤ 20
  *
  * ## Dimensions
+ *
  * The PluggableAreaChart always creates two dimensional execution.
  *
  * - If there is a StackBy attribute and a ViewBy attribute, the dimensions are [[StackBy[0]], [ViewBy[0], MeasureGroupIdentifier]].
@@ -88,6 +91,10 @@ import {
  * - If there is no StackBy attribute and two ViewBy attributes, the dimensions are [[ViewBy[1]], [ViewBy[0], MeasureGroupIdentifier]].
  * - If there is no StackBy attribute and one ViewBy attribute, the dimensions are [[MeasureGroupIdentifier], [ViewBy[0]]].
  * - If there is no StackBy attribute and no ViewBy attribute, the dimensions are [[MeasureGroupIdentifier], []]].
+ *
+ * ## Default sorts
+ *
+ * The PluggableAreaChart does not use any sorts.
  */
 export class PluggableAreaChart extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
