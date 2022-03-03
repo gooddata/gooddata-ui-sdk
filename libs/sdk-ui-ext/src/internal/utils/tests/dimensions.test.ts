@@ -16,6 +16,10 @@ import {
     ITotal,
     newBucket,
     insightSetProperties,
+    newTotal,
+    newMeasure,
+    uriRef,
+    newAttribute,
 } from "@gooddata/sdk-model";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
@@ -47,19 +51,9 @@ function getVisualizationBucket(newVis: IInsightDefinition, bucketName: string):
 
 function addMeasure(visualization: IInsightDefinition, index: number): IInsightDefinition {
     const newVis = cloneDeep(visualization);
-    const measure = {
-        measure: {
-            localIdentifier: `m${index}`,
-            title: `# Users Opened AD ${index}`,
-            definition: {
-                measureDefinition: {
-                    item: {
-                        uri: `/gdc/md/myproject/obj/150${index}`,
-                    },
-                },
-            },
-        },
-    };
+    const measure = newMeasure(uriRef(`/gdc/md/myproject/obj/150${index}`), (m) =>
+        m.localId(`m${index}`).title(`# Users Opened AD ${index}`),
+    );
 
     const bucket = insightBucket(newVis);
     bucket.items.push(measure);
@@ -73,14 +67,9 @@ function addAttribute(
     bucketName: string,
 ): IInsightDefinition {
     const newVis = cloneDeep(visualization);
-    const attribute = {
-        attribute: {
-            localIdentifier: `a${index}`,
-            displayForm: {
-                uri: `/gdc/md/myproject/obj/400${index}`,
-            },
-        },
-    };
+    const attribute = newAttribute(uriRef(`/gdc/md/myproject/obj/400${index}`), (a) =>
+        a.localId(`a${index}`),
+    );
 
     const bucket = getVisualizationBucket(newVis, bucketName);
     bucket.items.push(attribute);
@@ -130,51 +119,20 @@ describe("getHeadlinesDimensions", () => {
 describe("getPivotTableDimensions", () => {
     it("should return row attributes in the first dimensions, column attributes and measureGroup in second dimension", () => {
         const buckets = [
-            {
-                localIdentifier: BucketNames.MEASURES,
-                items: [
-                    {
-                        measure: {
-                            localIdentifier: "m1",
-                            title: "# Accounts with AD Query",
-                            definition: {
-                                measureDefinition: {
-                                    item: {
-                                        uri: "/gdc/md/myproject/obj/m1",
-                                    },
-                                },
-                            },
-                        },
-                    },
-                ],
-            },
-            {
-                // ATTRIBUTE for backwards compatibility with Table component. Actually ROWS
-                localIdentifier: BucketNames.ATTRIBUTE,
-                items: [
-                    {
-                        attribute: {
-                            localIdentifier: "a1",
-                            displayForm: {
-                                uri: "/gdc/md/myproject/obj/a1",
-                            },
-                        },
-                    },
-                ],
-            },
-            {
-                localIdentifier: BucketNames.COLUMNS,
-                items: [
-                    {
-                        attribute: {
-                            localIdentifier: "a2",
-                            displayForm: {
-                                uri: "/gdc/md/myproject/obj/a2",
-                            },
-                        },
-                    },
-                ],
-            },
+            newBucket(
+                BucketNames.MEASURES,
+                newMeasure(uriRef("/gdc/md/myproject/obj/m1"), (m) =>
+                    m.localId("m1").title("# Accounts with AD Query"),
+                ),
+            ),
+            newBucket(
+                BucketNames.ATTRIBUTE,
+                newAttribute(uriRef("/gdc/md/myproject/obj/a1"), (a) => a.localId("a1")),
+            ),
+            newBucket(
+                BucketNames.COLUMNS,
+                newAttribute(uriRef("/gdc/md/myproject/obj/a2"), (a) => a.localId("a2")),
+            ),
         ];
 
         expect(getPivotTableDimensions(newInsight(buckets))).toMatchSnapshot();
@@ -190,7 +148,7 @@ describe("generateDimensions", () => {
 
         it("should generate dimensions for one measure and view attribute", () => {
             const visualization = singleMeasureInsight;
-            const visualizationWithViewAttribute = addAttribute(visualization, 1, "view");
+            const visualizationWithViewAttribute = addAttribute(visualization, 1, BucketNames.VIEW);
 
             expect(
                 generateDimensions(visualizationWithViewAttribute, VisualizationTypes.COLUMN),
@@ -202,7 +160,7 @@ describe("generateDimensions", () => {
 
         it("should generate dimensions for one measure and stack attribute", () => {
             const visualization = singleMeasureInsight;
-            const visualizationWithStackAttribute = addAttribute(visualization, 1, "stack");
+            const visualizationWithStackAttribute = addAttribute(visualization, 1, BucketNames.STACK);
 
             expect(
                 generateDimensions(visualizationWithStackAttribute, VisualizationTypes.COLUMN),
@@ -215,9 +173,9 @@ describe("generateDimensions", () => {
         it("should generate dimensions for one measure, view attribute and stack attribute", () => {
             const visualization = singleMeasureInsight;
             const visualizationWithViewAndStackAttribute = addAttribute(
-                addAttribute(visualization, 1, "view"),
+                addAttribute(visualization, 1, BucketNames.VIEW),
                 2,
-                "stack",
+                BucketNames.STACK,
             );
 
             expect(
@@ -236,7 +194,7 @@ describe("generateDimensions", () => {
 
         it("should generate dimensions for area with one measure and view attribute", () => {
             const visualization = singleMeasureInsight;
-            const visualizationWithViewAttribute = addAttribute(visualization, 1, "view");
+            const visualizationWithViewAttribute = addAttribute(visualization, 1, BucketNames.VIEW);
             const dimensions = generateDimensions(visualizationWithViewAttribute, VisualizationTypes.AREA);
 
             expect(dimensions).toMatchSnapshot();
@@ -244,7 +202,7 @@ describe("generateDimensions", () => {
 
         it("should generate dimensions for area with one measure and stack attribute", () => {
             const visualization = singleMeasureInsight;
-            const visualizationWithStackAttribute = addAttribute(visualization, 1, "stack");
+            const visualizationWithStackAttribute = addAttribute(visualization, 1, BucketNames.STACK);
             const dimensions = generateDimensions(visualizationWithStackAttribute, VisualizationTypes.AREA);
 
             expect(dimensions).toMatchSnapshot();
@@ -253,9 +211,9 @@ describe("generateDimensions", () => {
         it("should generate dimensions for area with one measure, view attribute and stack attribute", () => {
             const visualization = singleMeasureInsight;
             const visualizationWithViewAndStackAttribute = addAttribute(
-                addAttribute(visualization, 1, "view"),
+                addAttribute(visualization, 1, BucketNames.VIEW),
                 2,
-                "stack",
+                BucketNames.STACK,
             );
             const dimensions = generateDimensions(
                 visualizationWithViewAndStackAttribute,
@@ -268,9 +226,9 @@ describe("generateDimensions", () => {
         it("should generate dimensions for area with one measure, two view attribute", () => {
             const visualization = singleMeasureInsight;
             const visualizationWithTwoViewAttributes = addAttribute(
-                addAttribute(visualization, 1, "view"),
+                addAttribute(visualization, 1, BucketNames.VIEW),
                 2,
-                "view",
+                BucketNames.VIEW,
             );
             const dimensions = generateDimensions(
                 visualizationWithTwoViewAttributes,
@@ -287,7 +245,7 @@ describe("generateDimensions", () => {
 
         it("should generate dimensions for one measure and view attribute", () => {
             const visualization = singleMeasureInsight;
-            const visualizationWithViewAttribute = addAttribute(visualization, 1, "view");
+            const visualizationWithViewAttribute = addAttribute(visualization, 1, BucketNames.VIEW);
 
             expect(
                 generateDimensions(visualizationWithViewAttribute, VisualizationTypes.HEATMAP),
@@ -296,7 +254,7 @@ describe("generateDimensions", () => {
 
         it("should generate dimensions for one measure and stack attribute", () => {
             const visualization = singleMeasureInsight;
-            const visualizationWithStackAttribute = addAttribute(visualization, 1, "stack");
+            const visualizationWithStackAttribute = addAttribute(visualization, 1, BucketNames.STACK);
 
             expect(
                 generateDimensions(visualizationWithStackAttribute, VisualizationTypes.HEATMAP),
@@ -306,9 +264,9 @@ describe("generateDimensions", () => {
         it("should generate dimensions for one measure, view attribute and stack attribute", () => {
             const visualization = singleMeasureInsight;
             const visualizationWithViewAndStackAttribute = addAttribute(
-                addAttribute(visualization, 1, "view"),
+                addAttribute(visualization, 1, BucketNames.VIEW),
                 2,
-                "stack",
+                BucketNames.STACK,
             );
 
             expect(
@@ -323,7 +281,7 @@ describe("generateDimensions", () => {
 
         it("should generate dimensions for one measure and view attribute", () => {
             const visualization = singleMeasureInsight;
-            const visualizationWithViewAttribute = addAttribute(visualization, 1, "trend");
+            const visualizationWithViewAttribute = addAttribute(visualization, 1, BucketNames.TREND);
 
             expect(
                 generateDimensions(visualizationWithViewAttribute, VisualizationTypes.LINE),
@@ -332,7 +290,7 @@ describe("generateDimensions", () => {
 
         it("should generate dimensions for one measure and stack attribute", () => {
             const visualization = singleMeasureInsight;
-            const visualizationWithViewAttribute = addAttribute(visualization, 1, "segment");
+            const visualizationWithViewAttribute = addAttribute(visualization, 1, BucketNames.SEGMENT);
 
             expect(
                 generateDimensions(visualizationWithViewAttribute, VisualizationTypes.LINE),
@@ -342,9 +300,9 @@ describe("generateDimensions", () => {
         it("should generate dimensions for one measure, view attribute and stack attribute", () => {
             const visualization = singleMeasureInsight;
             const visualizationWithViewAndStackAttribute = addAttribute(
-                addAttribute(visualization, 1, "trend"),
+                addAttribute(visualization, 1, BucketNames.TREND),
                 2,
-                "segment",
+                BucketNames.SEGMENT,
             );
 
             expect(
@@ -359,7 +317,7 @@ describe("generateDimensions", () => {
 
         it("should generate dimensions for one measure and view attribute", () => {
             const visualization = singleMeasureInsight;
-            const visualizationWithViewAttribute = addAttribute(visualization, 1, "view");
+            const visualizationWithViewAttribute = addAttribute(visualization, 1, BucketNames.VIEW);
 
             expect(
                 generateDimensions(visualizationWithViewAttribute, VisualizationTypes.PIE),
@@ -369,9 +327,9 @@ describe("generateDimensions", () => {
         it("should generate dimensions for one measure and 2 view attributes", () => {
             const visualization = singleMeasureInsight;
             const visualizationWith2ViewAttributes = addAttribute(
-                addAttribute(visualization, 1, "view"),
+                addAttribute(visualization, 1, BucketNames.VIEW),
                 2,
-                "view",
+                BucketNames.VIEW,
             );
 
             expect(
@@ -393,7 +351,7 @@ describe("generateDimensions", () => {
 
         it("should generate dimensions for one measure and view attribute", () => {
             const visualization = singleMeasureInsight;
-            const visualizationWithViewAttribute = addAttribute(visualization, 1, "view");
+            const visualizationWithViewAttribute = addAttribute(visualization, 1, BucketNames.VIEW);
 
             expect(
                 generateDimensions(visualizationWithViewAttribute, VisualizationTypes.TREEMAP),
@@ -420,7 +378,7 @@ describe("generateDimensions", () => {
 
         it("should generate dimensions for one measure and attribute", () => {
             const visualization = singleMeasureInsight;
-            const visualizationWithAttribute = addAttribute(visualization, 1, "attribute");
+            const visualizationWithAttribute = addAttribute(visualization, 1, BucketNames.ATTRIBUTE);
 
             expect(
                 generateDimensions(visualizationWithAttribute, VisualizationTypes.TABLE),
@@ -430,9 +388,9 @@ describe("generateDimensions", () => {
         it("should generate dimensions for one measure and 2 attributes", () => {
             const visualization = singleMeasureInsight;
             const visualizationWith2Attributes = addAttribute(
-                addAttribute(visualization, 1, "attribute"),
+                addAttribute(visualization, 1, BucketNames.ATTRIBUTE),
                 2,
-                "attribute",
+                BucketNames.ATTRIBUTE,
             );
 
             expect(
@@ -451,23 +409,10 @@ describe("generateDimensions", () => {
 
         it("should generate dimensions with totals", () => {
             const visualization = insightWithProperties;
-            const visualizationWithTotals = addTotals(visualization, "attribute", [
-                {
-                    measureIdentifier: "m1",
-                    attributeIdentifier: "a1",
-                    type: "sum",
-                    alias: "Sum",
-                },
-                {
-                    measureIdentifier: "m2",
-                    attributeIdentifier: "a1",
-                    type: "sum",
-                },
-                {
-                    measureIdentifier: "m1",
-                    attributeIdentifier: "a1",
-                    type: "nat",
-                },
+            const visualizationWithTotals = addTotals(visualization, BucketNames.ATTRIBUTE, [
+                newTotal("sum", "m1", "a1", "Sum"),
+                newTotal("sum", "m2", "a1"),
+                newTotal("nat", "m1", "a1"),
             ]);
 
             expect(generateDimensions(visualizationWithTotals, VisualizationTypes.TABLE)).toMatchSnapshot();
@@ -478,37 +423,16 @@ describe("generateDimensions", () => {
 describe("generateStackedDimensions", () => {
     it("measure and stack by only", () => {
         const buckets = [
-            {
-                localIdentifier: "measures",
-                items: [
-                    {
-                        measure: {
-                            localIdentifier: "m1",
-                            title: "# Accounts with AD Query",
-                            definition: {
-                                measureDefinition: {
-                                    item: {
-                                        uri: "/gdc/md/myproject/obj/m1",
-                                    },
-                                },
-                            },
-                        },
-                    },
-                ],
-            },
-            {
-                localIdentifier: "stack",
-                items: [
-                    {
-                        attribute: {
-                            localIdentifier: "a2",
-                            displayForm: {
-                                uri: "/gdc/md/myproject/obj/a2",
-                            },
-                        },
-                    },
-                ],
-            },
+            newBucket(
+                BucketNames.MEASURES,
+                newMeasure(uriRef("/gdc/md/myproject/obj/m1"), (m) =>
+                    m.localId("m1").title("# Accounts with AD Query"),
+                ),
+            ),
+            newBucket(
+                BucketNames.STACK,
+                newAttribute(uriRef("/gdc/md/myproject/obj/a2"), (a) => a.localId("a2")),
+            ),
         ];
 
         expect(generateStackedDimensions(newInsight(buckets))).toMatchSnapshot();
@@ -516,48 +440,16 @@ describe("generateStackedDimensions", () => {
 
     it("should return 2 attributes along with measureGroup", () => {
         const buckets = [
-            {
-                localIdentifier: "measures",
-                items: [
-                    {
-                        measure: {
-                            localIdentifier: "m1",
-                            definition: {
-                                measureDefinition: {
-                                    item: {
-                                        uri: "/gdc/md/storybook/obj/1",
-                                    },
-                                },
-                            },
-                        },
-                    },
-                ],
-            },
-            {
-                localIdentifier: "attribute",
-                items: [
-                    {
-                        attribute: {
-                            displayForm: {
-                                uri: "/gdc/md/storybook/obj/1.df",
-                            },
-                            localIdentifier: "a1",
-                        },
-                    },
-                    {
-                        attribute: {
-                            displayForm: {
-                                uri: "/gdc/md/storybook/obj/2.df",
-                            },
-                            localIdentifier: "a2",
-                        },
-                    },
-                ],
-            },
-            {
-                localIdentifier: "stack",
-                items: [],
-            },
+            newBucket(
+                BucketNames.MEASURES,
+                newMeasure(uriRef("/gdc/md/storybook/obj/m1"), (m) => m.localId("m1")),
+            ),
+            newBucket(
+                BucketNames.ATTRIBUTE,
+                newAttribute(uriRef("/gdc/md/storybook/obj/1.df"), (a) => a.localId("a1")),
+                newAttribute(uriRef("/gdc/md/storybook/obj/2.df"), (a) => a.localId("a2")),
+            ),
+            newBucket(BucketNames.STACK),
         ];
 
         expect(generateStackedDimensions(newInsight(buckets))).toMatchSnapshot();
@@ -565,57 +457,19 @@ describe("generateStackedDimensions", () => {
 
     it("should return 2 attributes along with measureGroup and return 1 stack attribute", () => {
         const buckets = [
-            {
-                localIdentifier: "measures",
-                items: [
-                    {
-                        measure: {
-                            localIdentifier: "m1",
-                            definition: {
-                                measureDefinition: {
-                                    item: {
-                                        uri: "/gdc/md/storybook/obj/1",
-                                    },
-                                },
-                            },
-                        },
-                    },
-                ],
-            },
-            {
-                localIdentifier: "attribute",
-                items: [
-                    {
-                        attribute: {
-                            displayForm: {
-                                uri: "/gdc/md/storybook/obj/1.df",
-                            },
-                            localIdentifier: "a1",
-                        },
-                    },
-                    {
-                        attribute: {
-                            displayForm: {
-                                uri: "/gdc/md/storybook/obj/3.df",
-                            },
-                            localIdentifier: "a3",
-                        },
-                    },
-                ],
-            },
-            {
-                localIdentifier: "stack",
-                items: [
-                    {
-                        attribute: {
-                            displayForm: {
-                                uri: "/gdc/md/storybook/obj/2.df",
-                            },
-                            localIdentifier: "a2",
-                        },
-                    },
-                ],
-            },
+            newBucket(
+                BucketNames.MEASURES,
+                newMeasure(uriRef("/gdc/md/storybook/obj/m1"), (m) => m.localId("m1")),
+            ),
+            newBucket(
+                BucketNames.ATTRIBUTE,
+                newAttribute(uriRef("/gdc/md/storybook/obj/1.df"), (a) => a.localId("a1")),
+                newAttribute(uriRef("/gdc/md/storybook/obj/3.df"), (a) => a.localId("a3")),
+            ),
+            newBucket(
+                BucketNames.STACK,
+                newAttribute(uriRef("/gdc/md/storybook/obj/2.df"), (a) => a.localId("a2")),
+            ),
         ];
 
         expect(generateStackedDimensions(newInsight(buckets))).toMatchSnapshot();
