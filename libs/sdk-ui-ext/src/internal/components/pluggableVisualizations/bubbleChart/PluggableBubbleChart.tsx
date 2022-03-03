@@ -32,18 +32,18 @@ import { IInsightDefinition } from "@gooddata/sdk-model";
  *
  * ## Buckets
  *
- * | Name            | Id                 | Accepts             |
- * |-----------------|--------------------|---------------------|
- * | Metric (X-axis) | measures           | measures only       |
- * | Metric (Y-axis) | secondary_measures | measures only       |
- * | Metric (Size)   | tertiary_measures  | measures only       |
- * | ViewBy          | view               | attributes or dates |
+ * | Name             | Id                 | Accepts             |
+ * |------------------|--------------------|---------------------|
+ * | Measure (X-axis) | measures           | measures only       |
+ * | Measure (Y-axis) | secondary_measures | measures only       |
+ * | Measure (Size)   | tertiary_measures  | measures only       |
+ * | ViewBy           | view               | attributes or dates |
  *
  * ### Bucket axioms
  *
- * - |MetricX| ≤ 1
- * - |MetricY| ≤ 1
- * - |MetricSize| ≤ 1
+ * - |MeasureX| ≤ 1
+ * - |MeasureY| ≤ 1
+ * - |MeasureSize| ≤ 1
  * - |ViewBy| ≤ 1
  *
  * ## Dimensions

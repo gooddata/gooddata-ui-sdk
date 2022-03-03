@@ -43,18 +43,18 @@ import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownH
  *
  * ## Buckets
  *
- * | Name                 | Id                 | Accepts         |
- * |----------------------|--------------------|-----------------|
- * | Metric (Primary)     | measures           | measures only   |
- * | Metric (Target)      | secondary_measures | measures only   |
- * | Metric (Comparative) | tertiary_measures  | measures only   |
- * | ViewBy               | view               | attributes only |
+ * | Name                  | Id                 | Accepts             |
+ * |-----------------------|--------------------|---------------------|
+ * | Measure (Primary)     | measures           | measures only       |
+ * | Measure (Target)      | secondary_measures | measures only       |
+ * | Measure (Comparative) | tertiary_measures  | measures only       |
+ * | ViewBy                | view               | attributes or dates |
  *
  * ### Bucket axioms
  *
- * - |MetricPrimary| ≤ 1
- * - |MetricTarget| ≤ 1
- * - |MetricComparative| ≤ 1
+ * - |MeasurePrimary| ≤ 1
+ * - |MeasureTarget| ≤ 1
+ * - |MeasureComparative| ≤ 1
  * - |ViewBy| ≤ 1
  *
  * ## Dimensions
