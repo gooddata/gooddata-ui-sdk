@@ -2,10 +2,12 @@
 
 import { PayloadAction } from "@reduxjs/toolkit";
 import {
+    FilterContextItem,
     IAttributeDisplayFormMetadataObject,
     IDashboard,
     IDashboardLayout,
     IDateFilterConfig,
+    isDashboardAttributeFilter,
     ISettings,
     IWidget,
 } from "@gooddata/sdk-backend-spi";
@@ -15,7 +17,7 @@ import { createDefaultFilterContext } from "../../../../_staging/dashboard/defau
 import { layoutActions } from "../../../store/layout";
 import { insightsActions } from "../../../store/insights";
 import { metaActions } from "../../../store/meta";
-import { IInsight } from "@gooddata/sdk-model";
+import { areObjRefsEqual, IInsight } from "@gooddata/sdk-model";
 import {
     dashboardFilterContextDefinition,
     dashboardFilterContextIdentity,
@@ -28,6 +30,10 @@ import { DashboardContext, PrivateDashboardContext } from "../../../types/common
 import { ObjRefMap } from "../../../../_staging/metadata/objRefMap";
 import { ExtendedDashboardWidget } from "../../../types/layoutTypes";
 import { getPrivateContext } from "../../../store/_infra/contexts";
+import { loadAvailableDisplayFormRefs } from "./loadAvailableDisplayFormRefs";
+import { PromiseFnReturnType } from "../../../types/sagas";
+import update from "lodash/fp/update";
+import isEmpty from "lodash/isEmpty";
 
 export const EmptyDashboardLayout: IDashboardLayout<IWidget> = {
     type: "IDashboardLayout",
@@ -53,6 +59,43 @@ export function actionsToInitializeNewDashboard(
         insightsActions.setInsights([]),
         metaActions.setMeta({}),
     ];
+}
+
+function* sanitizeFilterContext(
+    ctx: DashboardContext,
+    filterContext: IDashboard["filterContext"],
+): SagaIterator<IDashboard["filterContext"]> {
+    // we don't need sanitize filter references, if backend guarantees consistent references
+    if (!ctx.backend.capabilities.allowsInconsistentRelations) {
+        return filterContext;
+    }
+
+    if (!filterContext || isEmpty(filterContext.filters)) {
+        return filterContext;
+    }
+
+    const usedFilterDisplayForms = filterContext.filters
+        .filter(isDashboardAttributeFilter)
+        .map((f) => f.attributeFilter.displayForm);
+
+    const availableRefs: PromiseFnReturnType<typeof loadAvailableDisplayFormRefs> = yield call(
+        loadAvailableDisplayFormRefs,
+        ctx,
+        usedFilterDisplayForms,
+    );
+
+    return update(
+        "filters",
+        (filters: FilterContextItem[]) =>
+            filters.filter((filter) => {
+                if (!isDashboardAttributeFilter(filter)) {
+                    return true;
+                }
+
+                return availableRefs.some((ref) => areObjRefsEqual(ref, filter.attributeFilter.displayForm));
+            }),
+        filterContext,
+    );
 }
 
 /**
@@ -85,9 +128,12 @@ export function* actionsToInitializeExistingDashboard(
     dateFilterConfig: IDateFilterConfig,
     displayForms?: ObjRefMap<IAttributeDisplayFormMetadataObject>,
 ): SagaIterator<Array<PayloadAction<any>>> {
+    const sanitizedFilterContext = yield call(sanitizeFilterContext, ctx, dashboard.filterContext);
+
     const sanitizedDashboard: IDashboard<ExtendedDashboardWidget> = {
         ...dashboard,
         layout: (dashboard.layout as IDashboardLayout<IWidget>) ?? EmptyDashboardLayout,
+        filterContext: sanitizedFilterContext,
     };
 
     const privateCtx: PrivateDashboardContext = yield call(getPrivateContext);

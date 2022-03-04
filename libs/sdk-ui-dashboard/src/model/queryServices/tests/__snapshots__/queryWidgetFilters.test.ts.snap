@@ -223,6 +223,7 @@ Object {
     "backend": Object {
       "authenticate": [Function],
       "capabilities": Object {
+        "allowsInconsistentRelations": false,
         "canCalculateGrandTotals": true,
         "canCalculateNativeTotals": true,
         "canCalculateSubTotals": true,
