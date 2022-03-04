@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import {
     bucketAttribute,
@@ -41,14 +41,14 @@ const heatmapDefinition: IChartDefinition<IHeatmapBucketProps, IHeatmapProps> = 
     },
     executionFactory: (props, buckets) => {
         const { backend, workspace, execConfig } = props;
-        const sortBy = getDefaultHeatmapSort(buckets);
+        const sortBy = props.sortBy ?? getDefaultHeatmapSort(buckets);
 
         return backend
             .withTelemetry("Heatmap", props)
             .workspace(workspace)
             .execution()
             .forBuckets(buckets, props.filters as INullableFilter[])
-            .withSorting(...sortBy)
+            .withSorting(...(sortBy as ISortItem[]))
             .withDimensions(heatmapDimensions)
             .withExecConfig(execConfig);
     },
