@@ -1,18 +1,19 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import {
     IAnalyticalBackend,
+    IAttributeDisplayFormMetadataObject,
+    IBackendCapabilities,
     IDataView,
     IExecutionFactory,
     IExecutionResult,
+    IMetadataObject,
     IPreparedExecution,
+    ISecuritySettingsService,
+    IWorkspaceAttributesService,
     IWorkspaceCatalog,
     IWorkspaceCatalogFactory,
     IWorkspaceCatalogFactoryOptions,
     ValidationContext,
-    ISecuritySettingsService,
-    IAttributeDisplayFormMetadataObject,
-    IWorkspaceAttributesService,
-    IMetadataObject,
 } from "@gooddata/sdk-backend-spi";
 import {
     AttributesDecoratorFactory,
@@ -24,11 +25,11 @@ import {
 import { LRUCache } from "@gooddata/util";
 import { DecoratedSecuritySettingsService } from "../decoratedBackend/securitySettings";
 import {
+    DecoratedDataView,
     DecoratedExecutionFactory,
     DecoratedExecutionResult,
     DecoratedPreparedExecution,
     PreparedExecutionWrapper,
-    DecoratedDataView,
 } from "../decoratedBackend/execution";
 import { DecoratedWorkspaceCatalogFactory } from "../decoratedBackend/catalog";
 import stringify from "json-stable-stringify";
@@ -78,6 +79,7 @@ type CachingContext = {
         workspaceAttributes?: LRUCache<AttributeCacheEntry>;
     };
     config: CachingConfiguration;
+    capabilities: IBackendCapabilities;
 };
 
 //
@@ -412,11 +414,13 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
             ({ cacheHit }) => !!cacheHit,
         );
 
+        const refsToLoad = withoutCacheHits.map((item) => item.ref);
+
         const [alreadyInCache, loadedFromServer] = await Promise.all([
             // await the stuff from cache, we need the data available (we cannot just return the promises)
             Promise.all(withCacheHits.map((item) => item.cacheHit!)),
             // load items not in cache using the bulk operation
-            this.decorated.getAttributeDisplayForms(withoutCacheHits.map((item) => item.ref)),
+            this.decorated.getAttributeDisplayForms(refsToLoad),
         ]);
 
         // save newly loaded to cache for future reference
@@ -427,10 +431,15 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
             cache.set(loaded.uri, promisifiedResult);
         });
 
+        const loadedRefs = loadedFromServer.map((item) => item.ref);
+        const outputRefs = this.ctx.capabilities.allowsInconsistentRelations
+            ? skipMissingReferences(refs, refsToLoad, loadedRefs)
+            : refs;
+
         // reconstruct the original ordering
         const candidates = [...loadedFromServer, ...alreadyInCache];
 
-        return refs.map((ref) => {
+        return outputRefs.map((ref) => {
             const match = candidates.find((item) => refMatchesMdObject(ref, item, "displayForm"));
             // if this bombs, some data got lost in the process
             invariant(match);
@@ -749,6 +758,7 @@ export function withCaching(
                 : undefined,
         },
         config,
+        capabilities: realBackend.capabilities,
     };
 
     const execution = execCaching ? cachedExecutions(ctx) : identity;
@@ -761,4 +771,18 @@ export function withCaching(
     }
 
     return decoratedBackend(realBackend, { execution, catalog, securitySettings, attributes });
+}
+
+function skipMissingReferences(
+    requestedRefs: ObjRef[],
+    refsToLoad: ObjRef[],
+    refsLoadedFromServer: ObjRef[],
+) {
+    const missingRefs = refsToLoad.filter(
+        (ref) => !refsLoadedFromServer.some((loadedRef) => areObjRefsEqual(loadedRef, ref)),
+    );
+
+    return requestedRefs.filter(
+        (inputRef) => !missingRefs.some((missingRef) => areObjRefsEqual(missingRef, inputRef)),
+    );
 }
