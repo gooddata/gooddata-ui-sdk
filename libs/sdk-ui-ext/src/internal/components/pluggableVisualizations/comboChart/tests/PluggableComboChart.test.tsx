@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
 import merge from "lodash/merge";
@@ -527,6 +527,64 @@ describe("PluggableComboChart", () => {
 
             expect(controls.primaryChartType).toBe("line");
             expect(controls.secondaryChartType).toBe("area");
+        });
+    });
+
+    describe("Sort config", () => {
+        it("should create sort config with sorting supported but disabled when there is no view by attribute", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(referencePointMocks.twoMetricNoViewByRefpoint);
+
+            expect(sortConfig.supported).toBeTruthy();
+            expect(sortConfig.disabled).toBeTruthy();
+        });
+
+        it("should create sort config with sorting supported but disabled when there is no primary measure and no secondary measure", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(referencePointMocks.noMetricInAnyBucketRefPoint);
+
+            expect(sortConfig.supported).toBeTruthy();
+            expect(sortConfig.disabled).toBeTruthy();
+        });
+
+        it("should provide attribute sort as default sort, attribute normal and measure sort as available sorts for 1 primary measure + 1 VB", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(
+                referencePointMocks.onePrimaryMetricAndOneViewByRefPoint,
+            );
+
+            expect(sortConfig).toMatchSnapshot();
+        });
+
+        it("should provide attribute sort as default sort, attribute normal and measue sort as available sorts for 1 seconday measure + 1 VB", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(
+                referencePointMocks.oneSecondaryMetricAndOneViewByRefPoint,
+            );
+
+            expect(sortConfig).toMatchSnapshot();
+        });
+
+        it("should provide attribute sort as default sort, attribute area and two measure sorts as available sorts for 2M + 1 VB", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(referencePointMocks.twoMetricsAndOneViewByRefPoint);
+
+            expect(sortConfig).toMatchSnapshot();
+        });
+
+        it("should provide attribute sort as default sort, attribute area as available sorts for 2 primary measures stacked + 1 VB", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(
+                referencePointMocks.twoPrimaryStackedMetricAndOneViewByReferencePoint,
+            );
+
+            expect(sortConfig).toMatchSnapshot();
         });
     });
 });

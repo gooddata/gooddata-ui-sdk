@@ -1,0 +1,151 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PluggableComboChart Sort config should provide attribute sort as default sort, attribute area and two measure sorts as available sorts for 2M + 1 VB 1`] = `
+Object {
+  "availableSorts": Array [
+    Object {
+      "attributeSort": Object {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": Object {
+        "localIdentifier": "a1",
+      },
+      "metricSorts": Array [
+        Object {
+          "locators": Array [
+            Object {
+              "measureLocatorItem": Object {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+        Object {
+          "locators": Array [
+            Object {
+              "measureLocatorItem": Object {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+      ],
+    },
+  ],
+  "currentSort": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
+
+exports[`PluggableComboChart Sort config should provide attribute sort as default sort, attribute area as available sorts for 2 primary measures stacked + 1 VB 1`] = `
+Object {
+  "availableSorts": Array [
+    Object {
+      "attributeSort": Object {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": Object {
+        "localIdentifier": "a1",
+      },
+    },
+  ],
+  "currentSort": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
+
+exports[`PluggableComboChart Sort config should provide attribute sort as default sort, attribute normal and measue sort as available sorts for 1 seconday measure + 1 VB 1`] = `
+Object {
+  "availableSorts": Array [
+    Object {
+      "attributeSort": Object {
+        "areaSortEnabled": false,
+        "normalSortEnabled": true,
+      },
+      "itemId": Object {
+        "localIdentifier": "a1",
+      },
+      "metricSorts": Array [
+        Object {
+          "locators": Array [
+            Object {
+              "measureLocatorItem": Object {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+      ],
+    },
+  ],
+  "currentSort": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
+
+exports[`PluggableComboChart Sort config should provide attribute sort as default sort, attribute normal and measure sort as available sorts for 1 primary measure + 1 VB 1`] = `
+Object {
+  "availableSorts": Array [
+    Object {
+      "attributeSort": Object {
+        "areaSortEnabled": false,
+        "normalSortEnabled": true,
+      },
+      "itemId": Object {
+        "localIdentifier": "a1",
+      },
+      "metricSorts": Array [
+        Object {
+          "locators": Array [
+            Object {
+              "measureLocatorItem": Object {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+      ],
+    },
+  ],
+  "currentSort": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;

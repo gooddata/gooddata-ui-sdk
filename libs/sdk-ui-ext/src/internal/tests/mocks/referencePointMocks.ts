@@ -2208,6 +2208,137 @@ export const multipleMetricsNoCategoriesReferencePoint: IReferencePoint = {
     },
 };
 
+export const twoMetricNoViewByRefpoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "secondary_measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "view",
+            items: [],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const noMetricInAnyBucketRefPoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: [],
+        },
+        {
+            localIdentifier: "secondary_measures",
+            items: [],
+        },
+        {
+            localIdentifier: "view",
+            items: attributeItems.slice(0, 2),
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const onePrimaryMetricAndOneViewByRefPoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "secondary_measures",
+            items: [],
+        },
+        {
+            localIdentifier: "view",
+            items: attributeItems.slice(0, 1),
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const oneSecondaryMetricAndOneViewByRefPoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: [],
+        },
+        {
+            localIdentifier: "secondary_measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "view",
+            items: attributeItems.slice(0, 1),
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const twoPrimaryStackedMetricAndOneViewByReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 2),
+        },
+        {
+            localIdentifier: "secondary_measures",
+            items: [],
+        },
+        {
+            localIdentifier: "view",
+            items: attributeItems.slice(0, 1),
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+    properties: {
+        controls: {
+            stackMeasures: true,
+        },
+    },
+};
+
+export const twoMetricsAndOneViewByRefPoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "secondary_measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "view",
+            items: attributeItems.slice(0, 1),
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
 export const oneMetricNoCategoriesReferencePoint: IReferencePoint = {
     buckets: [
         {
