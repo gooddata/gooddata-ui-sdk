@@ -46,7 +46,7 @@ import {
     selectDrillableItems,
     selectPermissions,
     selectSettings,
-    selectUser,
+    selectCurrentUser,
     useDashboardAsyncRender,
     useDashboardSelector,
     useDashboardUserInteraction,
@@ -133,7 +133,7 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
 
     const intl = useIntl();
 
-    const currentUser = useDashboardSelector(selectUser);
+    const currentUser = useDashboardSelector(selectCurrentUser);
     const permissions = useDashboardSelector(selectPermissions);
     const settings = useDashboardSelector(selectSettings);
     const drillableItems = useDashboardSelector(selectDrillableItems);

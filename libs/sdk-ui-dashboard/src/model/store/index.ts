@@ -123,7 +123,7 @@ export {
     selectAlertByRef,
 } from "./alerts/alertsSelectors";
 export { UserState } from "./user/userState";
-export { selectUser, selectCurrentUserRef } from "./user/userSelectors";
+export { selectCurrentUser, selectCurrentUserRef } from "./user/userSelectors";
 export { DashboardMetaState, DashboardDescriptor } from "./meta/metaState";
 export {
     selectDashboardRef,
