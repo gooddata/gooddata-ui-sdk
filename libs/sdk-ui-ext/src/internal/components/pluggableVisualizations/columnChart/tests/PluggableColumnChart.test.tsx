@@ -168,10 +168,29 @@ describe("PluggableColumnChart", () => {
             expect(sortConfig).toMatchSnapshot();
         });
 
+        it("should provide attribute normal sorts as default sort, two attribute normal, one area sort and one measure sort as available sort for 1M + 2 VB", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(
+                referencePointMocks.oneMetricAndTwoCategoriesReferencePoint,
+            );
+            expect(sortConfig).toMatchSnapshot();
+        });
+
         it("should provide attribute normal sort as default sort, attribute normal and attribute area available sorts for 1M + 1VB + 1SB", async () => {
             const chart = createComponent(defaultProps);
 
             const sortConfig = await chart.getSortConfig(referencePointMocks.simpleStackedReferencePoint);
+
+            expect(sortConfig).toMatchSnapshot();
+        });
+
+        it("should provide attribute normal sort as default sort, attribute normal and attribute area available sorts for 1M + 2VB + 1SB", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(
+                referencePointMocks.oneMetricAndManyCategoriesAndOneStackRefPoint,
+            );
 
             expect(sortConfig).toMatchSnapshot();
         });

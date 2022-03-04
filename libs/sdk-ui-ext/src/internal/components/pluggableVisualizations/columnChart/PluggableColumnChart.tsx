@@ -38,9 +38,11 @@ import { newMeasureSortSuggestion, ISortConfig } from "../../../interfaces/SortC
  * - |StackBy| != 0 ⇒ [[StackBy[0]], [...ViewBy, MeasureGroupIdentifier]]
  * - |StackBy| = 0 ⇒ [[MeasureGroupIdentifier], [...ViewBy]]
  *
- * ## Sorts
+ * ##  Sorts
  *
  * The PluggableColumnChart does not use any sorts.
+ *
+ * If "enableChartsSorting" is enabled, the sorts can be changed by the user.
  */
 export class PluggableColumnChart extends PluggableColumnBarCharts {
     constructor(props: IVisConstruct) {
@@ -67,6 +69,7 @@ export class PluggableColumnChart extends PluggableColumnBarCharts {
         availableSorts: ISortConfig["availableSorts"];
     } {
         const defaultSort = viewBy.map((vb) => newAttributeSort(vb.localIdentifier, "asc"));
+        const isStacked = !isEmpty(stackBy) || canSortStackTotalValue;
 
         if (viewBy.length === 2) {
             if (measures.length >= 2 && !canSortStackTotalValue) {
@@ -111,9 +114,11 @@ export class PluggableColumnChart extends PluggableColumnBarCharts {
                         itemId: localIdRef(viewBy[1].localIdentifier),
                         attributeSort: {
                             normalSortEnabled: true,
-                            areaSortEnabled: true,
+                            areaSortEnabled: isStacked || measures.length > 1,
                         },
-                        metricSorts: [...measures.map((m) => newMeasureSortSuggestion(m.localIdentifier))],
+                        metricSorts: isEmpty(stackBy)
+                            ? [...measures.map((m) => newMeasureSortSuggestion(m.localIdentifier))]
+                            : [],
                     },
                 ],
             };
