@@ -69,10 +69,11 @@ import {
  * - |ViewBy| + |SegmentBy| = 1 ⇒ [[MeasureGroupIdentifier], [...ViewBy, ...SegmentBy]]
  * - |ViewBy| + |SegmentBy| != 1 ⇒ [[...ViewBy, ...SegmentBy], [MeasureGroupIdentifier]]
  *
- * ## Default sorts
+ * ## Sorts
+ *
+ * Unless the user specifies otherwise, the sorts used by default are:
  *
  * - |ViewBy| ≥ 1 ∧ |SegmentBy| ≥ 1 ⇒ [attributeSort(ViewBy[0]), measureSort(...Measures)]
- * - |ViewBy| = 0 ∧ |SegmentBy| = 0 ⇒ []
  */
 export class PluggableTreemap extends PluggableBaseChart {
     constructor(props: IVisConstruct) {

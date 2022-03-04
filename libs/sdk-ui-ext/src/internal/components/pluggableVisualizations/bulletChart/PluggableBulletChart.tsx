@@ -63,7 +63,7 @@ import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownH
  *
  * - ⊤ ⇒ [[MeasureGroupIdentifier], [...ViewBy]]
  *
- * ## Default sorts
+ * ## Sorts
  *
  * The PluggableBulletChart does not use any sorts.
  */

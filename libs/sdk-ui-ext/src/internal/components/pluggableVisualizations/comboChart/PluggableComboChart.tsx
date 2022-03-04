@@ -82,7 +82,7 @@ import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChar
  *
  * - ⊤ ⇒ [[MeasureGroupIdentifier], [...ViewBy]]
  *
- * ## Default sorts
+ * ## Sorts
  *
  * The PluggableComboChart does not use any sorts.
  */

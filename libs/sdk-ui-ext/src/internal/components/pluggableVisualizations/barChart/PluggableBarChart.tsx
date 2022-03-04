@@ -42,9 +42,9 @@ import { canSortStackTotalValue } from "./sortHelpers";
  * - |StackBy| != 0 ⇒ [[StackBy[0]], [...ViewBy, MeasureGroupIdentifier]]
  * - |StackBy| = 0 ⇒ [[MeasureGroupIdentifier], [...ViewBy]]
  *
- * ## Default sorts
+ * ## Sorts
  *
- * There are four different sort set ups:
+ * Unless the user specifies otherwise, the sorts used by default are:
  *
  * - |ViewBy| = 2 ∧ |Measures| ≥ 2 ∧ ¬stackMeasures ⇒ [attributeAreaSort(ViewBy[0]), measureSort(Measures[0])]
  * - |ViewBy| = 2 ∧ ¬(|Measures| ≥ 2 ∧ ¬stackMeasures) ⇒ [attributeAreaSort(ViewBy[0]), attributeAreaSort(ViewBy[1])]

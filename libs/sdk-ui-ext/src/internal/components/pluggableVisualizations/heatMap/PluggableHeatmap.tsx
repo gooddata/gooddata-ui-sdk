@@ -66,10 +66,11 @@ import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } 
  *
  * - ⊤ ⇒ [[...Rows], [...Columns, MeasureGroupIdentifier]]
  *
- * ## Default sorts
+ * ## Sorts
+ *
+ * Unless the user specifies otherwise, the sorts used by default are:
  *
  * - |Rows| ≥ 1 ⇒ [attributeAreaSort(Rows[0])]
- * - |Rows| = 0 ⇒ []
  */
 export class PluggableHeatmap extends PluggableBaseChart {
     constructor(props: IVisConstruct) {

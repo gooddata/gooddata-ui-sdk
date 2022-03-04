@@ -38,7 +38,7 @@ import { newMeasureSortSuggestion, ISortConfig } from "../../../interfaces/SortC
  * - |StackBy| != 0 ⇒ [[StackBy[0]], [...ViewBy, MeasureGroupIdentifier]]
  * - |StackBy| = 0 ⇒ [[MeasureGroupIdentifier], [...ViewBy]]
  *
- * ## Default sorts
+ * ## Sorts
  *
  * The PluggableColumnChart does not use any sorts.
  */
