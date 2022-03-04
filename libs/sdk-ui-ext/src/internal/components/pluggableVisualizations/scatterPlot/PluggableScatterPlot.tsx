@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import React from "react";
 import { render } from "react-dom";
@@ -22,6 +22,34 @@ import { IInsightDefinition } from "@gooddata/sdk-model";
 import { transformBuckets } from "./bucketHelper";
 import cloneDeep from "lodash/cloneDeep";
 
+/**
+ * PluggableScatterPlot
+ *
+ * ## Buckets
+ *
+ * | Name             | Id                 | Accepts             |
+ * |------------------|--------------------|---------------------|
+ * | Measure (X-axis) | measures           | measures only       |
+ * | Measure (Y-axis) | secondary_measures | measures only       |
+ * | ViewBy           | attribute          | attributes or dates |
+ *
+ * ### Bucket axioms
+ *
+ * - |MeasureX| ≤ 1
+ * - |MeasureY| ≤ 1
+ * - |ViewBy| ≤ 1
+ * - |MeasureX| + |MeasureY| ≥ 1
+ *
+ * ## Dimensions
+ *
+ * The PluggableScatterPlot always creates the same two dimensional execution.
+ *
+ * - ⊤ ⇒ [[...ViewBy], [MeasureGroupIdentifier]]
+ *
+ * ## Sorts
+ *
+ * The PluggableScatterPlot does not use any sorts.
+ */
 export class PluggableScatterPlot extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
         super(props);

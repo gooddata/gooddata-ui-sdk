@@ -83,6 +83,7 @@ import { ISortConfig, newMeasureSortSuggestion } from "../../../interfaces/SortC
  *
  * ### Bucket axioms
  *
+ * - |Measures| ≥ 1
  * - |ViewBy| ≤ 2
  * - |StackBy| ≤ 1
  * - |ViewBy| + |StackBy| ≤ 2
@@ -99,7 +100,7 @@ import { ISortConfig, newMeasureSortSuggestion } from "../../../interfaces/SortC
  * - |StackBy| = 0 ∧ |ViewBy| = 1 ⇒ [[MeasureGroupIdentifier], [ViewBy[0]]]
  * - |StackBy| = 0 ∧ |ViewBy| = 0 ⇒ [[MeasureGroupIdentifier], []]]
  *
- * ## Default sorts
+ * ## Sorts
  *
  * The PluggableAreaChart does not use any sorts.
  */

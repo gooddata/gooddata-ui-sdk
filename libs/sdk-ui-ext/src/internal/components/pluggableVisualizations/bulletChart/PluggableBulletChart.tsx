@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { render } from "react-dom";
 import { configurePercent, configureOverTimeComparison } from "../../../utils/bucketConfig";
@@ -52,7 +52,7 @@ import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownH
  *
  * ### Bucket axioms
  *
- * - |MeasurePrimary| ≤ 1
+ * - |MeasurePrimary| = 1
  * - |MeasureTarget| ≤ 1
  * - |MeasureComparative| ≤ 1
  * - |ViewBy| ≤ 1
@@ -63,7 +63,7 @@ import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownH
  *
  * - ⊤ ⇒ [[MeasureGroupIdentifier], [...ViewBy]]
  *
- * ## Default sorts
+ * ## Sorts
  *
  * The PluggableBulletChart does not use any sorts.
  */

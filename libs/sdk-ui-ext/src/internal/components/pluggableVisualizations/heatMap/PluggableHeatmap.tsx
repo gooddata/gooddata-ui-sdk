@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     BucketNames,
     IDrillEvent,
@@ -43,6 +43,35 @@ import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
 import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper";
 import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil";
 
+/**
+ * PluggableHeatmap
+ *
+ * ## Buckets
+ *
+ * | Name    | Id       | Accepts             |
+ * |---------|----------|---------------------|
+ * | Measure | measures | measures only       |
+ * | Rows    | view     | attributes or dates |
+ * | Columns | stack    | attributes or dates |
+ *
+ * ### Bucket axioms
+ *
+ * - |Measure| = 1
+ * - |Rows| ≤ 1
+ * - |Columns| ≤ 1
+ *
+ * ## Dimensions
+ *
+ * The PluggableHeatmap always creates the same two dimensional execution.
+ *
+ * - ⊤ ⇒ [[...Rows], [...Columns, MeasureGroupIdentifier]]
+ *
+ * ## Sorts
+ *
+ * Unless the user specifies otherwise, the sorts used by default are:
+ *
+ * - |Rows| ≥ 1 ⇒ [attributeAreaSort(Rows[0])]
+ */
 export class PluggableHeatmap extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
         super(props);

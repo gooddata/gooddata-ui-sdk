@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import React from "react";
 import { render } from "react-dom";
@@ -45,6 +45,7 @@ import { IInsightDefinition } from "@gooddata/sdk-model";
  * - |MeasureY| ≤ 1
  * - |MeasureSize| ≤ 1
  * - |ViewBy| ≤ 1
+ * - |MeasureX| + |MeasureY| + |MeasureSize| ≥ 1
  *
  * ## Dimensions
  *
@@ -52,9 +53,9 @@ import { IInsightDefinition } from "@gooddata/sdk-model";
  *
  * - ⊤ ⇒ [[...ViewBy], [MeasureGroupIdentifier]]
  *
- * ## Default sorts
+ * ## Sorts
  *
- * The PluggableAreaChart does not use any sorts.
+ * The PluggableBubbleChart does not use any sorts.
  */
 export class PluggableBubbleChart extends PluggableBaseChart {
     constructor(props: IVisConstruct) {

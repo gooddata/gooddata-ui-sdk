@@ -23,6 +23,7 @@ import { newMeasureSortSuggestion, ISortConfig } from "../../../interfaces/SortC
  *
  * ### Bucket axioms
  *
+ * - |Measures| ≥ 1
  * - |ViewBy| ≤ 2
  * - |StackBy| ≤ 1
  * - |StackBy| = 1 ⇒ |Measures| ≤ 1
@@ -37,9 +38,9 @@ import { newMeasureSortSuggestion, ISortConfig } from "../../../interfaces/SortC
  * - |StackBy| != 0 ⇒ [[StackBy[0]], [...ViewBy, MeasureGroupIdentifier]]
  * - |StackBy| = 0 ⇒ [[MeasureGroupIdentifier], [...ViewBy]]
  *
- * ## Default sorts
+ * ## Sorts
  *
- * The PluggableAreaChart does not use any sorts.
+ * The PluggableColumnChart does not use any sorts.
  */
 export class PluggableColumnChart extends PluggableColumnBarCharts {
     constructor(props: IVisConstruct) {

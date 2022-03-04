@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import cloneDeep from "lodash/cloneDeep";
 import isEmpty from "lodash/isEmpty";
@@ -42,6 +42,39 @@ import {
     reverseAndTrimIntersection,
 } from "../drillDownUtil";
 
+/**
+ * PluggableTreemap
+ *
+ * ## Buckets
+ *
+ * | Name      | Id       | Accepts             |
+ * |-----------|----------|---------------------|
+ * | Measures  | measures | measures only       |
+ * | ViewBy    | view     | attributes or dates |
+ * | SegmentBy | segment  | attributes or dates |
+ *
+ * ### Bucket axioms
+ *
+ * - |Measures| ≥ 1
+ * - |ViewBy| ≥ 1 ⇒ |Measures| ≤ 1
+ * - |ViewBy| = 0 ⇒ |Measures| ≤ 20
+ * - |Measures| ≥ 1 ⇒ |ViewBy| = 0
+ * - |Measures| ≤ 1 ⇒ |ViewBy| ≤ 1
+ * - |SegmentBy| ≤ 1
+ *
+ * ## Dimensions
+ *
+ * The PluggableTreemap always creates two dimensional execution.
+ *
+ * - |ViewBy| + |SegmentBy| = 1 ⇒ [[MeasureGroupIdentifier], [...ViewBy, ...SegmentBy]]
+ * - |ViewBy| + |SegmentBy| != 1 ⇒ [[...ViewBy, ...SegmentBy], [MeasureGroupIdentifier]]
+ *
+ * ## Sorts
+ *
+ * Unless the user specifies otherwise, the sorts used by default are:
+ *
+ * - |ViewBy| ≥ 1 ∧ |SegmentBy| ≥ 1 ⇒ [attributeSort(ViewBy[0]), measureSort(...Measures)]
+ */
 export class PluggableTreemap extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
         super(props);
