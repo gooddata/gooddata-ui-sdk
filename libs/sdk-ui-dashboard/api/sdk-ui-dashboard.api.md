@@ -4203,7 +4203,7 @@ export const selectConfiguredAndImplicitDrillsByWidgetRef: (ref: ObjRef) => Outp
 // @internal (undocumented)
 export const selectConfiguredDrillsByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IDrillToLegacyDashboard[] | InsightDrillDefinition[], res2: boolean, res3: boolean, res4: boolean, res5: boolean, res6: boolean, res7: boolean, res8: boolean) => IImplicitDrillWithPredicates[]>;
 
-// @alpha
+// @public
 export const selectCurrentUserRef: OutputSelector<DashboardState, ObjRef, (res: IUser) => ObjRef>;
 
 // @public
@@ -4464,7 +4464,7 @@ export const selectSettings: OutputSelector<DashboardState, ISettings, (res: Res
 // @internal
 export const selectStash: OutputSelector<DashboardState, Record<string, ExtendedDashboardItem<ExtendedDashboardWidget>[]>, (res: LayoutState) => Record<string, ExtendedDashboardItem<ExtendedDashboardWidget>[]>>;
 
-// @alpha
+// @public
 export const selectUser: OutputSelector<DashboardState, IUser, (res: UserState) => IUser>;
 
 // @internal (undocumented)
