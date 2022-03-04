@@ -78,6 +78,7 @@ export const defaultRecordedBackendCapabilities: IBackendCapabilities = {
     supportsKpiWidget: true,
     supportsWidgetEntity: true,
     supportsOwners: true,
+    allowsInconsistentRelations: false,
 };
 
 /**

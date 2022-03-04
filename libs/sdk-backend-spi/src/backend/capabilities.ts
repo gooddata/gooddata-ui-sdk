@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 /**
  * Analytical Backend communicates its capabilities via objects of this type. In return, the capabilities
@@ -136,6 +136,11 @@ export interface IBackendCapabilities {
      * Indicates whether backend supports filtering object by owner/creator.
      */
     supportsOwners?: boolean;
+
+    /**
+     * Indicates whether backend allows objects with damaged references.
+     */
+    allowsInconsistentRelations?: boolean;
 
     /**
      * Catchall for additional capabilities
