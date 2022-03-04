@@ -28,7 +28,12 @@ describe("Parent-child filtering on AttributeFilterButton", () => {
             CHILD_FILTER_SELECTOR,
         );
 
-        parentChildFilters.getParentFilter().open().clearSelection().selectElement("touchAll").clickApply();
+        parentChildFilters
+            .getParentFilter()
+            .open()
+            .clearSelection()
+            .selectElement(".s-attribute-filter-list-item-touchAll")
+            .clickApply();
         parentChildFilters.getChildFilter().waitFilteringFinished().subtitleHasText("All");
 
         parentChildFilters.getChildFilter().open().isAllElementsFilteredByParent().applyDisabled();
@@ -44,14 +49,14 @@ describe("Parent-child filtering on AttributeFilterButton", () => {
             .getChildFilter()
             .open()
             .clearSelection()
-            .selectElement("directSales")
+            .selectElement(".s-attribute-filter-list-item-directSales")
             .clickApply()
             .subtitleHasText("Direct Sales");
         parentChildFilters
             .getParentFilter()
             .open()
             .clearSelection()
-            .selectElement("compuSci")
+            .selectElement(".s-attribute-filter-list-item-compuSci")
             .clickApply()
             .subtitleHasText("CompuSci");
 

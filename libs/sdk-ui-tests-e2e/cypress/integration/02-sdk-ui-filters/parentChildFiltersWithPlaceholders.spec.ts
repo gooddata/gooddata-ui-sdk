@@ -34,7 +34,7 @@ describe("Parent-child filtering on AttributeFilterButton", () => {
             .waitElementsLoaded()
             .waitElementsLoaded()
             .clearSelection()
-            .selectElement("touchAll")
+            .selectElement(".s-attribute-filter-list-item-touchAll")
             .clickApply();
         parentChildFilters.getChildFilter().waitFilteringFinished().subtitleHasText("All");
 
@@ -57,7 +57,7 @@ describe("Parent-child filtering on AttributeFilterButton", () => {
             .open()
             .waitElementsLoaded()
             .clearSelection()
-            .selectElement("directSales")
+            .selectElement(".s-attribute-filter-list-item-directSales")
             .clickApply()
             .subtitleHasText("Direct Sales");
         parentChildFilters
@@ -65,7 +65,7 @@ describe("Parent-child filtering on AttributeFilterButton", () => {
             .open()
             .waitElementsLoaded()
             .clearSelection()
-            .selectElement("compuSci")
+            .selectElement(".s-attribute-filter-list-item-compuSci")
             .clickApply()
             .subtitleHasText("CompuSci");
 

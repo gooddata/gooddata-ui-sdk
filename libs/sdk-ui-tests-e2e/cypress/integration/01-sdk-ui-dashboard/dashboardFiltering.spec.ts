@@ -45,7 +45,7 @@ describe("Dashboard Filtering", () => {
             .open()
             .waitElementsLoaded()
             .clearSelection()
-            .selectElement("touchAll")
+            .selectElement(".s-touchall")
             .clickApply();
         parentAttributeFilters
             .getChildFilter()
@@ -78,7 +78,7 @@ describe("Dashboard Filtering", () => {
             .getParentFilter()
             .open()
             .clearSelection()
-            .selectElement("compuSci")
+            .selectElement(".s-compusci")
             .clickApply();
 
         // wait until filters applied to headline
@@ -90,7 +90,7 @@ describe("Dashboard Filtering", () => {
             .getChildFilter()
             .open()
             .clearSelection()
-            .selectElement("directSales")
+            .selectElement(".s-direct_sales")
             .clickApply();
 
         // wait until filters applied to headline
