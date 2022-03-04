@@ -1,13 +1,8 @@
 // (C) 2019-2022 GoodData Corporation
 import { useCallback } from "react";
-import {
-    IScheduledMailDefinition,
-    IScheduledMail,
-    FilterContextItem,
-    IUser,
-} from "@gooddata/sdk-backend-spi";
+import { IScheduledMailDefinition, IScheduledMail, FilterContextItem } from "@gooddata/sdk-backend-spi";
 import { GoodDataSdkError, ILocale } from "@gooddata/sdk-ui";
-import { UriRef } from "@gooddata/sdk-model";
+import { UriRef, IUser } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
 
 import {
@@ -15,7 +10,7 @@ import {
     useDashboardSelector,
     selectDashboardTitle,
     selectDashboardUriRef,
-    selectUser,
+    selectCurrentUser,
     selectLocale,
     selectFilterContextFilters,
     selectDateFormat,
@@ -119,7 +114,7 @@ export const useScheduledEmail = (props: UseScheduledEmailProps): UseScheduledEm
     invariant(dashboardUriRef, "attempting to schedule email for unsaved dashboard");
 
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
-    const currentUser = useDashboardSelector(selectUser);
+    const currentUser = useDashboardSelector(selectCurrentUser);
     const locale = useDashboardSelector(selectLocale);
     const filters = useDashboardSelector(selectFilterContextFilters);
     const originalFilters = useDashboardSelector(selectOriginalFilterContextFilters);

@@ -4204,6 +4204,9 @@ export const selectConfiguredAndImplicitDrillsByWidgetRef: (ref: ObjRef) => Outp
 export const selectConfiguredDrillsByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IDrillToLegacyDashboard[] | InsightDrillDefinition[], res2: boolean, res3: boolean, res4: boolean, res5: boolean, res6: boolean, res7: boolean, res8: boolean) => IImplicitDrillWithPredicates[]>;
 
 // @public
+export const selectCurrentUser: OutputSelector<DashboardState, IUser, (res: UserState) => IUser>;
+
+// @public
 export const selectCurrentUserRef: OutputSelector<DashboardState, ObjRef, (res: IUser) => ObjRef>;
 
 // @public
@@ -4463,9 +4466,6 @@ export const selectSettings: OutputSelector<DashboardState, ISettings, (res: Res
 
 // @internal
 export const selectStash: OutputSelector<DashboardState, Record<string, ExtendedDashboardItem<ExtendedDashboardWidget>[]>, (res: LayoutState) => Record<string, ExtendedDashboardItem<ExtendedDashboardWidget>[]>>;
-
-// @public
-export const selectUser: OutputSelector<DashboardState, IUser, (res: UserState) => IUser>;
 
 // @internal (undocumented)
 export const selectValidConfiguredDrillsByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IImplicitDrillWithPredicates[], res2: ObjRefMap<IAttributeDisplayFormMetadataObject>, res3: ObjRefMap<IListedDashboard>, res4: ObjRefMap<IInsight>) => IImplicitDrillWithPredicates[]>;

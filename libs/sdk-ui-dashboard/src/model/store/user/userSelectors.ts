@@ -15,7 +15,7 @@ const selectSelf = createSelector(
  * @returns - an {@link @gooddata/sdk-model#IUser} object for logged in user.
  * @public
  */
-export const selectUser = createSelector(selectSelf, (state) => {
+export const selectCurrentUser = createSelector(selectSelf, (state) => {
     invariant(state.user, "attempting to access uninitialized user state");
 
     return state.user!;
@@ -28,6 +28,6 @@ export const selectUser = createSelector(selectSelf, (state) => {
  * @returns - an {@link @gooddata/sdk-model#ObjRef} of the logged in user.
  * @public
  */
-export const selectCurrentUserRef = createSelector(selectUser, (user) => {
+export const selectCurrentUserRef = createSelector(selectCurrentUser, (user) => {
     return user.ref;
 });
