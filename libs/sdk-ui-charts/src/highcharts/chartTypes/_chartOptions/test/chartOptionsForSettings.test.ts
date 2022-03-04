@@ -32,10 +32,23 @@ describe("updateConfigWithSettings", () => {
     });
 
     describe("enableAxisNameViewByTwoAttributes", () => {
-        it("should return correct config from feature flags", async () => {
+        it("should return correct config from feature flags if enableJoinedAttributeAxisName is not provided", async () => {
             const config: IChartConfig = {};
             const settings: ISettings = {
-                enableAxisNameViewByTwoAttributes: true,
+                enableAxisNameViewByTwoAttributes: false,
+            };
+            const expectedConfig = {
+                enableJoinedAttributeAxisName: false,
+            };
+            expect(updateConfigWithSettings(config, settings)).toEqual(expectedConfig);
+        });
+
+        it("should return correct config from feature flags if enableJoinedAttributeAxisName is provided", async () => {
+            const config: IChartConfig = {
+                enableJoinedAttributeAxisName: true,
+            };
+            const settings: ISettings = {
+                enableAxisNameViewByTwoAttributes: false,
             };
             const expectedConfig = {
                 enableJoinedAttributeAxisName: true,

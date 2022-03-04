@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React, { useCallback, useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { render } from "react-dom";
@@ -214,6 +214,7 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
         const needsNewSetup =
             !isEqual(this.props.insight, prevProps.insight) ||
             !isEqual(this.props.filters, prevProps.filters) ||
+            !isEqual(this.props.settings, prevProps.settings) ||
             this.props.workspace !== prevProps.workspace;
 
         if (needsNewSetup) {

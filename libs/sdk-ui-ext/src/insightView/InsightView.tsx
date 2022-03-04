@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import {

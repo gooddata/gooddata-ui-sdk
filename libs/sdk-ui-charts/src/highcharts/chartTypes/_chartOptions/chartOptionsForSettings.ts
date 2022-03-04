@@ -17,8 +17,11 @@ export function updateConfigWithSettings(config: IChartConfig, settings: ISettin
             updatedConfig = { ...updatedConfig, enableCompactSize: true };
         }
 
-        if (settings["enableAxisNameViewByTwoAttributes"] === true) {
-            updatedConfig = { ...updatedConfig, enableJoinedAttributeAxisName: true };
+        if (updatedConfig === undefined || updatedConfig.enableJoinedAttributeAxisName === undefined) {
+            updatedConfig = {
+                ...updatedConfig,
+                enableJoinedAttributeAxisName: settings["enableAxisNameViewByTwoAttributes"],
+            };
         }
     }
 
