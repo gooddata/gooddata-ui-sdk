@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     BucketNames,
     IDrillEvent,
@@ -56,7 +56,7 @@ import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } 
  *
  * ### Bucket axioms
  *
- * - |Measure| ≤ 1
+ * - |Measure| = 1
  * - |Rows| ≤ 1
  * - |Columns| ≤ 1
  *

@@ -83,6 +83,7 @@ import { ISortConfig, newMeasureSortSuggestion } from "../../../interfaces/SortC
  *
  * ### Bucket axioms
  *
+ * - |Measures| ≥ 1
  * - |ViewBy| ≤ 2
  * - |StackBy| ≤ 1
  * - |ViewBy| + |StackBy| ≤ 2

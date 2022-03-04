@@ -27,6 +27,7 @@ import { canSortStackTotalValue } from "./sortHelpers";
  *
  * ### Bucket axioms
  *
+ * - |Measures| ≥ 1
  * - |ViewBy| ≤ 2
  * - |StackBy| ≤ 1
  * - |StackBy| = 1 ⇒ |Measures| ≤ 1

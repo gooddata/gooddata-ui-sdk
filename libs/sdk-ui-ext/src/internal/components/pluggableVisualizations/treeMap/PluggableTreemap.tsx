@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import cloneDeep from "lodash/cloneDeep";
 import isEmpty from "lodash/isEmpty";
@@ -55,6 +55,7 @@ import {
  *
  * ### Bucket axioms
  *
+ * - |Measures| ≥ 1
  * - |ViewBy| ≥ 1 ⇒ |Measures| ≤ 1
  * - |ViewBy| = 0 ⇒ |Measures| ≤ 20
  * - |Measures| ≥ 1 ⇒ |ViewBy| = 0

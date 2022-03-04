@@ -74,6 +74,7 @@ import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChar
  * - |MeasurePrimary| ≤ 20
  * - |MeasureSecondary| ≤ 20
  * - |ViewBy| ≤ 1
+ * - |MeasurePrimary| + |MeasureSecondary| ≥ 1
  *
  * ## Dimensions
  *
