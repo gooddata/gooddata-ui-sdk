@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { Component } from "react";
 import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
 import cx from "classnames";
@@ -16,7 +16,7 @@ import { guidFor } from "./guid";
 
 const NoItemsFound: React.FC = () => {
     return (
-        <div className="gd-list-noResults">
+        <div className="gd-list-noResults s-list-no-results">
             <FormattedMessage id="gs.list.noItemsFound" />
         </div>
     );
@@ -295,7 +295,7 @@ export class LegacyInvertableList<T> extends Component<
         return this.props.showSearchField ? (
             <Input
                 autofocus
-                className="gd-list-searchfield gd-flex-item-mobile"
+                className="gd-list-searchfield gd-flex-item-mobile s-attribute-filter-button-search-field"
                 clearOnEsc
                 isSearch
                 isSmall={this.props.smallSearch}

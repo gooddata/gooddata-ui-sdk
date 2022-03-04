@@ -52,9 +52,12 @@ function sanitizeResponseBody(jsonBody) {
     }
 }
 
-function sanitizeCredentials() {
+function sanitizeCredentials(specFilesFilter) {
     try {
-        const stdout = execSync("ls ./recordings/mappings/*").toString();
+        const filesPath = specFilesFilter
+            ? `ls ./recordings/mappings/mapping-${specFilesFilter}.json`
+            : "ls ./recordings/mappings/*";
+        const stdout = execSync(filesPath).toString();
         if (stdout) {
             const testRecordings = stdout.split("\n");
             testRecordings.forEach((testRecordingFile) => {

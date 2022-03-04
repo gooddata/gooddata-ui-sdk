@@ -24,9 +24,14 @@ export const AttributeFilterButtonParentChildScenario: React.FC = () => {
     const [parentFilter, setParentFilter] = useState<IAttributeFilter>(parentAttrFilter);
     const [childFilter, setChildFilter] = useState<IAttributeFilter>(childAttrFilter);
 
+    const onParentFilterChanged = (filter: IAttributeFilter) => {
+        setChildFilter(childAttrFilter);
+        setParentFilter(filter);
+    };
+
     return (
         <div>
-            <AttributeFilterButton filter={parentFilter} onApply={setParentFilter} />
+            <AttributeFilterButton filter={parentFilter} onApply={onParentFilterChanged} />
             <AttributeFilterButton
                 filter={childFilter}
                 onApply={setChildFilter}

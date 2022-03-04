@@ -43,9 +43,7 @@ function createSuitesMessage(testResults) {
 
         const shortFileName = file.split("/").slice(-1)[0];
 
-        const videoFile = BUILD_URL
-            ? `${BUILD_URL}/artifact/libs/sdk-ui-tests-e2e/cypress/videos/${shortFileName}.mp4`
-            : `#`;
+        const videoFile = BUILD_URL ? `${BUILD_URL}artifact/libs/sdk-ui-tests-e2e/cypress/videos/` : `#`;
 
         const formattedFile = isFailing ? `[🎥 ${shortFileName}](${videoFile})` : shortFileName;
 

@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { Component } from "react";
 import { FormattedMessage, injectIntl, IntlShape } from "react-intl";
 import cx from "classnames";
@@ -247,7 +247,7 @@ export class InvertableList<T> extends Component<IInvertableListProps<T>, IInver
 
     /**
      * If change in selection happens to select all or unselect all items it is converted
-     * to the respective empty selectionj.
+     * to the respective empty selection.
      */
     private notifyUpstreamOfSelectionChange = (newSelection: T[]) => {
         const { itemsCount } = this.props;

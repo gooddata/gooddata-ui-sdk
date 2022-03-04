@@ -125,7 +125,7 @@ async function main() {
         }
 
         if (recording) {
-            sanitizeCredentials();
+            sanitizeCredentials(specFilesFilter);
         }
 
         // all done, create github report
