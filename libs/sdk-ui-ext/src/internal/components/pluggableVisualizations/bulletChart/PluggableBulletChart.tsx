@@ -23,9 +23,11 @@ import {
     hasDerivedBucketItems,
     isComparisonAvailable,
     removeAllDerivedMeasures,
+    getBucketItems,
+    getAllItemsByType,
 } from "../../../utils/bucketHelper";
 
-import { BUCKETS } from "../../../constants/bucket";
+import { BUCKETS, METRIC } from "../../../constants/bucket";
 import { removeSort } from "../../../utils/sort";
 import { getBulletChartUiConfig } from "../../../utils/uiConfigHelpers/bulletChartUiConfigHelper";
 import { BULLET_CHART_CONFIG_MULTIPLE_DATES, DEFAULT_BULLET_CHART_CONFIG } from "../../../constants/uiConfig";
@@ -33,10 +35,18 @@ import { BULLET_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedP
 import BulletChartConfigurationPanel from "../../configurationPanels/BulletChartConfigurationPanel";
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
 import { VisualizationTypes, IDrillEvent, getIntersectionPartAfter, BucketNames } from "@gooddata/sdk-ui";
-import { bucketIsEmpty, IInsight, IInsightDefinition, insightBucket } from "@gooddata/sdk-model";
+import {
+    bucketIsEmpty,
+    IInsight,
+    IInsightDefinition,
+    insightBucket,
+    localIdRef,
+    newAttributeSort,
+} from "@gooddata/sdk-model";
 import { transformBuckets } from "./bucketHelper";
 import { modifyBucketsAttributesForDrillDown, addIntersectionFiltersToInsight } from "../drillDownUtil";
 import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper";
+import { ISortConfig, newMeasureSortSuggestion } from "../../../interfaces/SortConfig";
 
 /**
  * PluggableBulletChart
@@ -192,5 +202,76 @@ export class PluggableBulletChart extends PluggableBaseChart {
         }
 
         return true;
+    }
+
+    private isSortDisabled(referencePoint: IReferencePoint, availableSorts: ISortConfig["availableSorts"]) {
+        const { buckets } = referencePoint;
+        const primaryMeasures = getBucketItems(buckets, BucketNames.MEASURES);
+        const viewBy = getBucketItems(buckets, BucketNames.VIEW);
+        return viewBy.length < 1 || primaryMeasures.length < 1 || availableSorts.length === 0;
+    }
+
+    private getDefaultAndAvailableSort(referencePoint: IReferencePoint): {
+        defaultSort: ISortConfig["currentSort"];
+        availableSorts: ISortConfig["availableSorts"];
+    } {
+        const { buckets } = referencePoint;
+        const measures = getAllItemsByType(buckets, [METRIC]);
+        const viewBy = getBucketItems(buckets, BucketNames.VIEW);
+
+        const defaultSort = viewBy.map((vb) => newAttributeSort(vb.localIdentifier, "asc"));
+
+        if (viewBy.length >= 2) {
+            return {
+                defaultSort,
+                availableSorts: [
+                    {
+                        itemId: localIdRef(viewBy[0].localIdentifier),
+                        attributeSort: {
+                            normalSortEnabled: true,
+                            areaSortEnabled: true,
+                        },
+                    },
+                    {
+                        itemId: localIdRef(viewBy[1].localIdentifier),
+                        attributeSort: {
+                            normalSortEnabled: true,
+                            areaSortEnabled: measures.length > 1,
+                        },
+                        metricSorts: measures.map((m) => newMeasureSortSuggestion(m.localIdentifier)),
+                    },
+                ],
+            };
+        }
+        if (viewBy.length === 1) {
+            return {
+                defaultSort,
+                availableSorts: [
+                    {
+                        itemId: localIdRef(viewBy[0].localIdentifier),
+                        attributeSort: {
+                            normalSortEnabled: true,
+                            areaSortEnabled: measures.length > 1,
+                        },
+                        metricSorts: measures.map((m) => newMeasureSortSuggestion(m.localIdentifier)),
+                    },
+                ],
+            };
+        }
+        return {
+            defaultSort: [],
+            availableSorts: [],
+        };
+    }
+
+    public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
+        const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(referencePoint);
+        const disabled = this.isSortDisabled(referencePoint, availableSorts);
+        return Promise.resolve({
+            supported: true,
+            disabled,
+            currentSort: defaultSort,
+            availableSorts,
+        });
     }
 }

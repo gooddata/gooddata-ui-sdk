@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
 import { PluggableBulletChart } from "../PluggableBulletChart";
@@ -798,5 +798,27 @@ describe("PluggableBulletChart", () => {
                 expect(result).toEqual(expectedInsight);
             },
         );
+    });
+
+    describe("Sort config", () => {
+        const scenarios: Array<[string, IReferencePoint]> = [
+            ["0 M + 0 VB", referencePointMocks.emptyReferencePoint],
+            ["1 M + 0 VB", referencePointMocks.oneMetricNoCategoriesReferencePoint],
+            ["0 M + 1 VB", referencePointMocks.justViewByReferencePoint],
+            ["1 M + 1 VB", referencePointMocks.onePrimaryMetricAndOneViewByRefPoint],
+            ["1 M + 2 VB", referencePointMocks.oneMetricAndTwoCategoriesReferencePoint],
+            ["2 M + 1 VB", referencePointMocks.twoMetricsAndOneViewByRefPoint],
+            ["2 M + 2 VB", referencePointMocks.twoMeasuresBucketsTwoViewByReferencePoint],
+            ["3 M + 1 VB", referencePointMocks.threeMeasuresBucketsReferencePoint],
+            ["3 M + 2 VB", referencePointMocks.threeMeasuresTwoViewByReferencePoint],
+        ];
+
+        it.each(scenarios)("should return expected sort config for %s", async (_name, referencePointMock) => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(referencePointMock);
+
+            expect(sortConfig).toMatchSnapshot();
+        });
     });
 });

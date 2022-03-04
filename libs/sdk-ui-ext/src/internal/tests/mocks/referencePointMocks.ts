@@ -2326,7 +2326,7 @@ export const twoMetricsAndOneViewByRefPoint: IReferencePoint = {
         },
         {
             localIdentifier: "secondary_measures",
-            items: masterMeasureItems.slice(0, 1),
+            items: masterMeasureItems.slice(1, 2),
         },
         {
             localIdentifier: "view",
@@ -2854,6 +2854,31 @@ export const bulletChartWithMeasureInSecondaryBucket: IReferencePoint = {
     },
 };
 
+export const twoMeasuresBucketsTwoViewByReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "secondary_measures",
+            items: masterMeasureItems.slice(1, 2),
+        },
+        {
+            localIdentifier: "tertiary_measures",
+            items: [],
+        },
+        {
+            localIdentifier: "view",
+            items: attributeItems.slice(0, 2),
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
 export const threeMeasuresBucketsReferencePoint: IReferencePoint = {
     buckets: [
         {
@@ -2871,6 +2896,31 @@ export const threeMeasuresBucketsReferencePoint: IReferencePoint = {
         {
             localIdentifier: "view",
             items: attributeItems.slice(0, 1),
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const threeMeasuresTwoViewByReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "secondary_measures",
+            items: masterMeasureItems.slice(1, 2),
+        },
+        {
+            localIdentifier: "tertiary_measures",
+            items: masterMeasureItems.slice(2, 3),
+        },
+        {
+            localIdentifier: "view",
+            items: attributeItems.slice(0, 2),
         },
     ],
     filters: {

@@ -26,7 +26,7 @@ Object {
           "locators": Array [
             Object {
               "measureLocatorItem": Object {
-                "measureIdentifier": "m1",
+                "measureIdentifier": "m2",
               },
             },
           ],
