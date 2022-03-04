@@ -21,6 +21,7 @@ import { fixWidgetLegacyElementUris } from "../../fixLegacyElementUris";
 import { cloneWithSanitizedIds } from "../../IdSanitization";
 import { isInheritedObject } from "../../utils";
 import { convertDrillToCustomUrlInLayoutFromBackend } from "../DrillToCustomUrlConverter";
+import { defaultWidgetConfiguration } from "../widgetConfiguration";
 
 function setWidgetRefsInLayout(layout: IDashboardLayout<IDashboardWidget> | undefined) {
     if (!layout) {
@@ -41,6 +42,7 @@ function setWidgetRefsInLayout(layout: IDashboardLayout<IDashboardWidget> | unde
                 ref: idRef(temporaryWidgetId),
                 uri: temporaryWidgetId,
                 identifier: temporaryWidgetId,
+                configuration: widget.configuration || defaultWidgetConfiguration,
             };
 
             return fixWidgetLegacyElementUris(convertedWidget);
