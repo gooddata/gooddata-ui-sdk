@@ -103,15 +103,6 @@ Object {
         "localIdentifier": "a1",
       },
     },
-    Object {
-      "attributeSort": Object {
-        "areaSortEnabled": true,
-        "normalSortEnabled": true,
-      },
-      "itemId": Object {
-        "localIdentifier": "a2",
-      },
-    },
   ],
   "currentSort": Array [
     Object {

@@ -102,7 +102,8 @@ import { ISortConfig, newMeasureSortSuggestion } from "../../../interfaces/SortC
  *
  * ## Sorts
  *
- * The PluggableAreaChart does not use any sorts.
+ * Unless the user specifies otherwise, PluggableAreaChart does not use any sorts.
+ *
  */
 export class PluggableAreaChart extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -358,13 +359,15 @@ export class PluggableAreaChart extends PluggableBaseChart {
             if (viewBy.length >= 2) {
                 return {
                     defaultSort,
-                    availableSorts: viewBy.map((attribute) => ({
-                        itemId: localIdRef(attribute.localIdentifier),
-                        attributeSort: {
-                            normalSortEnabled: true,
-                            areaSortEnabled: true,
+                    availableSorts: [
+                        {
+                            itemId: localIdRef(viewBy[0].localIdentifier),
+                            attributeSort: {
+                                normalSortEnabled: true,
+                                areaSortEnabled: true,
+                            },
                         },
-                    })),
+                    ],
                 };
             }
             if (viewBy.length === 1) {
