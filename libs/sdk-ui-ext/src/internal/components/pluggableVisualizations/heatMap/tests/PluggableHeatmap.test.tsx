@@ -1,14 +1,9 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import noop from "lodash/noop";
-import { PluggableHeatmap } from "../PluggableHeatmap";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
-import * as uiConfigMocks from "../../../../tests/mocks/uiConfigMocks";
-import { IBucketOfFun, IFilters, IReferencePoint } from "../../../../interfaces/Visualization";
+import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
+import { IAttribute, IInsight, IInsightDefinition } from "@gooddata/sdk-model";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { Department, Region } from "@gooddata/reference-workspace/dist/md/full";
-import { IAttribute, IInsight, IInsightDefinition } from "@gooddata/sdk-model";
-import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
-import { createDrillDefinition, createDrillEvent, insightDefinitionToInsight } from "../../tests/testHelpers";
 
 import {
     expectedInsightDefDepartment,
@@ -17,6 +12,11 @@ import {
     sourceInsightDef,
     targetUri,
 } from "./getInsightWithDrillDownAppliedMock";
+import { PluggableHeatmap } from "../PluggableHeatmap";
+import { createDrillDefinition, createDrillEvent, insightDefinitionToInsight } from "../../tests/testHelpers";
+import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
+import * as uiConfigMocks from "../../../../tests/mocks/uiConfigMocks";
+import { IBucketOfFun, IFilters, IReferencePoint } from "../../../../interfaces/Visualization";
 
 describe("PluggableHeatmap", () => {
     const defaultProps = {
@@ -246,5 +246,52 @@ describe("PluggableHeatmap", () => {
                 expect(result).toEqual(expectedInsight);
             },
         );
+    });
+    describe("Sort config", () => {
+        it("should create sort config with sorting supported but disabled when there is no view by attribute", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(
+                referencePointMocks.oneMetricNoCategoriesReferencePoint,
+            );
+
+            expect(sortConfig.supported).toBeTruthy();
+            expect(sortConfig.disabled).toBeTruthy();
+        });
+
+        it("should create sort config with sorting disabled when there is no measure", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(referencePointMocks.justViewByReferencePoint);
+
+            expect(sortConfig.supported).toBeTruthy();
+            expect(sortConfig.disabled).toBeTruthy();
+        });
+
+        it("should provide attribute normal as default sort, attribute normal and measuree sorts as available sorts for 1M + 1VB", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(referencePointMocks.oneMetricOneCategory);
+
+            expect(sortConfig).toMatchSnapshot();
+        });
+
+        it("should provide attribute normal as default sort, attribute area sorts as available sorts for 1M + 1SB", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(referencePointMocks.oneMetricOneStackReferencePoint);
+
+            expect(sortConfig).toMatchSnapshot();
+        });
+
+        it("should provide attribute normal as default sort, attribute are sorts as available sorts for 1M + 1VB + 1SB", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(
+                referencePointMocks.oneMetricAndCategoryAndStackReferencePoint,
+            );
+
+            expect(sortConfig).toMatchSnapshot();
+        });
     });
 });

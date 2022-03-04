@@ -1,25 +1,39 @@
 // (C) 2019-2022 GoodData Corporation
+import React from "react";
+import { render } from "react-dom";
+import isEmpty from "lodash/isEmpty";
+import cloneDeep from "lodash/cloneDeep";
+import includes from "lodash/includes";
+import set from "lodash/set";
+import tail from "lodash/tail";
 import {
     BucketNames,
     IDrillEvent,
     isDrillIntersectionAttributeItem,
     VisualizationTypes,
 } from "@gooddata/sdk-ui";
-import React from "react";
-import { render } from "react-dom";
+import { IInsight, IInsightDefinition, newAttributeSort, localIdRef } from "@gooddata/sdk-model";
+
+import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
+import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil";
+
+import HeatMapConfigurationPanel from "../../configurationPanels/HeatMapConfigurationPanel";
 
 import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket";
 import { HEATMAP_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 import { DEFAULT_HEATMAP_UICONFIG } from "../../../constants/uiConfig";
+
 import {
     IDrillDownContext,
     IExtendedReferencePoint,
     IReferencePoint,
     IVisConstruct,
     IDrillDownDefinition,
+    IBucketItem,
 } from "../../../interfaces/Visualization";
-import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
+import { ISortConfig, newMeasureSortSuggestion } from "../../../interfaces/SortConfig";
 
+import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 import {
     getAllAttributeItemsWithPreference,
     getMeasureItems,
@@ -28,20 +42,13 @@ import {
     removeAllArithmeticMeasuresFromDerived,
     removeAllDerivedMeasures,
     sanitizeFilters,
+    getBucketItems,
 } from "../../../utils/bucketHelper";
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
 import { removeSort } from "../../../utils/sort";
-
 import { setHeatmapUiConfig } from "../../../utils/uiConfigHelpers/heatmapUiConfigHelper";
-import HeatMapConfigurationPanel from "../../configurationPanels/HeatMapConfigurationPanel";
-import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
-import cloneDeep from "lodash/cloneDeep";
-import includes from "lodash/includes";
-import set from "lodash/set";
-import tail from "lodash/tail";
-import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
+
 import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper";
-import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil";
 
 /**
  * PluggableHeatmap
@@ -154,6 +161,91 @@ export class PluggableHeatmap extends PluggableBaseChart {
     public getInsightWithDrillDownApplied(source: IInsight, drillDownContext: IDrillDownContext): IInsight {
         const withFilters = this.addFilters(source, drillDownContext.drillDefinition, drillDownContext.event);
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
+    }
+
+    protected getDefaultAndAvailableSort(
+        measures: IBucketItem[],
+        viewBy: IBucketItem[],
+        stackBy: IBucketItem[],
+    ): {
+        defaultSort: ISortConfig["currentSort"];
+        availableSorts: ISortConfig["availableSorts"];
+    } {
+        if (!isEmpty(viewBy) && !isEmpty(stackBy) && !isEmpty(measures)) {
+            return {
+                defaultSort: [
+                    newAttributeSort(viewBy[0].localIdentifier, "asc"),
+                    newAttributeSort(stackBy[0].localIdentifier, "asc"),
+                ],
+                availableSorts: [
+                    {
+                        itemId: localIdRef(viewBy[0].localIdentifier),
+                        attributeSort: {
+                            normalSortEnabled: true,
+                            areaSortEnabled: true,
+                        },
+                    },
+                    {
+                        itemId: localIdRef(stackBy[0].localIdentifier),
+                        attributeSort: {
+                            normalSortEnabled: true,
+                            areaSortEnabled: true,
+                        },
+                    },
+                ],
+            };
+        }
+        if (!isEmpty(measures) && !isEmpty(viewBy)) {
+            return {
+                defaultSort: [newAttributeSort(viewBy[0].localIdentifier, "asc")],
+                availableSorts: [
+                    {
+                        itemId: localIdRef(viewBy[0].localIdentifier),
+                        attributeSort: {
+                            normalSortEnabled: true,
+                            areaSortEnabled: false,
+                        },
+                        metricSorts: [newMeasureSortSuggestion(measures[0].localIdentifier)],
+                    },
+                ],
+            };
+        }
+        if (!isEmpty(measures) && !isEmpty(stackBy)) {
+            return {
+                defaultSort: [newAttributeSort(stackBy[0].localIdentifier, "asc")],
+                availableSorts: [
+                    {
+                        itemId: localIdRef(stackBy[0].localIdentifier),
+                        attributeSort: {
+                            normalSortEnabled: true,
+                            areaSortEnabled: true,
+                        },
+                    },
+                ],
+            };
+        }
+
+        return {
+            defaultSort: [],
+            availableSorts: [],
+        };
+    }
+
+    public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
+        const { buckets } = referencePoint;
+        const measures = getMeasureItems(buckets);
+        const viewBy = getBucketItems(buckets, BucketNames.VIEW);
+        const stackBy = getBucketItems(buckets, BucketNames.STACK);
+        const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(measures, viewBy, stackBy);
+        const disabled =
+            (viewBy.length < 1 && stackBy.length < 1) || measures.length < 1 || availableSorts.length === 0;
+
+        return Promise.resolve({
+            supported: true,
+            disabled,
+            currentSort: defaultSort,
+            availableSorts,
+        });
     }
 
     protected renderConfigurationPanel(insight: IInsightDefinition): React.ReactNode {

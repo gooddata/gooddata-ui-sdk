@@ -1,0 +1,106 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PluggableHeatmap Sort config should provide attribute normal as default sort, attribute are sorts as available sorts for 1M + 1VB + 1SB 1`] = `
+Object {
+  "availableSorts": Array [
+    Object {
+      "attributeSort": Object {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": Object {
+        "localIdentifier": "a1",
+      },
+    },
+    Object {
+      "attributeSort": Object {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": Object {
+        "localIdentifier": "a2",
+      },
+    },
+  ],
+  "currentSort": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a2",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
+
+exports[`PluggableHeatmap Sort config should provide attribute normal as default sort, attribute area sorts as available sorts for 1M + 1SB 1`] = `
+Object {
+  "availableSorts": Array [
+    Object {
+      "attributeSort": Object {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": Object {
+        "localIdentifier": "a3",
+      },
+    },
+  ],
+  "currentSort": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a3",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
+
+exports[`PluggableHeatmap Sort config should provide attribute normal as default sort, attribute normal and measuree sorts as available sorts for 1M + 1VB 1`] = `
+Object {
+  "availableSorts": Array [
+    Object {
+      "attributeSort": Object {
+        "areaSortEnabled": false,
+        "normalSortEnabled": true,
+      },
+      "itemId": Object {
+        "localIdentifier": "a1",
+      },
+      "metricSorts": Array [
+        Object {
+          "locators": Array [
+            Object {
+              "measureLocatorItem": Object {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+      ],
+    },
+  ],
+  "currentSort": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
