@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { Attribute, Catalog, Fact, Metric } from "../../base/types";
 import {
     JsonApiAttributeOutList,
@@ -8,14 +8,14 @@ import {
     MetadataUtilities,
     ValidateRelationsHeader,
 } from "@gooddata/api-client-tiger";
-import { convertAttribute, createLabelMap, toFullyQualifiedId } from "./tigerCommon";
+import { convertAttribute, createLabelMap } from "./tigerCommon";
 
-function convertMetrics(metrics: JsonApiMetricOutList, workspaceId: string): Metric[] {
+function convertMetrics(metrics: JsonApiMetricOutList): Metric[] {
     return metrics.data.map((metric) => {
         return {
             metric: {
                 meta: {
-                    identifier: toFullyQualifiedId(metric.id, workspaceId),
+                    identifier: metric.id,
                     title: metric.attributes?.title ?? metric.id,
                     tags: metric.attributes?.tags?.join(",") ?? "",
                 },
@@ -24,12 +24,12 @@ function convertMetrics(metrics: JsonApiMetricOutList, workspaceId: string): Met
     });
 }
 
-function convertFacts(facts: JsonApiFactOutList, workspaceId: string): Fact[] {
+function convertFacts(facts: JsonApiFactOutList): Fact[] {
     return facts.data.map((fact) => {
         return {
             fact: {
                 meta: {
-                    identifier: toFullyQualifiedId(fact.id, workspaceId),
+                    identifier: fact.id,
                     title: fact.attributes?.title ?? fact.id,
                     tags: fact.attributes?.tags?.join(",") ?? "",
                 },
@@ -38,7 +38,7 @@ function convertFacts(facts: JsonApiFactOutList, workspaceId: string): Fact[] {
     });
 }
 
-function convertAttributes(attributes: JsonApiAttributeOutList, workspaceId: string): Attribute[] {
+function convertAttributes(attributes: JsonApiAttributeOutList): Attribute[] {
     const labels = createLabelMap(attributes.included);
 
     /*
@@ -49,7 +49,7 @@ function convertAttributes(attributes: JsonApiAttributeOutList, workspaceId: str
 
     return attributes.data
         .filter((attribute) => attribute.attributes?.granularity === undefined)
-        .map((attribute) => convertAttribute(attribute, labels, workspaceId))
+        .map((attribute) => convertAttribute(attribute, labels))
         .filter((a): a is Attribute => a !== undefined);
 }
 
@@ -78,8 +78,8 @@ export async function loadCatalog(client: ITigerClient, workspaceId: string): Pr
     ]);
 
     return {
-        metrics: convertMetrics(metricsResult, workspaceId),
-        facts: convertFacts(factsResult, workspaceId),
-        attributes: convertAttributes(attributesResult, workspaceId),
+        metrics: convertMetrics(metricsResult),
+        facts: convertFacts(factsResult),
+        attributes: convertAttributes(attributesResult),
     };
 }
