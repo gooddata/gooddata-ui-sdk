@@ -1,0 +1,379 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PluggableBulletChart Sort config should return expected sort config for 0 M + 0 VB 1`] = `
+Object {
+  "availableSorts": Array [],
+  "currentSort": Array [],
+  "disabled": true,
+  "supported": true,
+}
+`;
+
+exports[`PluggableBulletChart Sort config should return expected sort config for 0 M + 1 VB 1`] = `
+Object {
+  "availableSorts": Array [
+    Object {
+      "attributeSort": Object {
+        "areaSortEnabled": false,
+        "normalSortEnabled": true,
+      },
+      "itemId": Object {
+        "localIdentifier": "a1",
+      },
+      "metricSorts": Array [],
+    },
+  ],
+  "currentSort": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": true,
+  "supported": true,
+}
+`;
+
+exports[`PluggableBulletChart Sort config should return expected sort config for 1 M + 0 VB 1`] = `
+Object {
+  "availableSorts": Array [],
+  "currentSort": Array [],
+  "disabled": true,
+  "supported": true,
+}
+`;
+
+exports[`PluggableBulletChart Sort config should return expected sort config for 1 M + 1 VB 1`] = `
+Object {
+  "availableSorts": Array [
+    Object {
+      "attributeSort": Object {
+        "areaSortEnabled": false,
+        "normalSortEnabled": true,
+      },
+      "itemId": Object {
+        "localIdentifier": "a1",
+      },
+      "metricSorts": Array [
+        Object {
+          "locators": Array [
+            Object {
+              "measureLocatorItem": Object {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+      ],
+    },
+  ],
+  "currentSort": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
+
+exports[`PluggableBulletChart Sort config should return expected sort config for 1 M + 2 VB 1`] = `
+Object {
+  "availableSorts": Array [
+    Object {
+      "attributeSort": Object {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": Object {
+        "localIdentifier": "a1",
+      },
+    },
+    Object {
+      "attributeSort": Object {
+        "areaSortEnabled": false,
+        "normalSortEnabled": true,
+      },
+      "itemId": Object {
+        "localIdentifier": "a2",
+      },
+      "metricSorts": Array [
+        Object {
+          "locators": Array [
+            Object {
+              "measureLocatorItem": Object {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+      ],
+    },
+  ],
+  "currentSort": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a2",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
+
+exports[`PluggableBulletChart Sort config should return expected sort config for 2 M + 1 VB 1`] = `
+Object {
+  "availableSorts": Array [
+    Object {
+      "attributeSort": Object {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": Object {
+        "localIdentifier": "a1",
+      },
+      "metricSorts": Array [
+        Object {
+          "locators": Array [
+            Object {
+              "measureLocatorItem": Object {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+        Object {
+          "locators": Array [
+            Object {
+              "measureLocatorItem": Object {
+                "measureIdentifier": "m2",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+      ],
+    },
+  ],
+  "currentSort": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
+
+exports[`PluggableBulletChart Sort config should return expected sort config for 2 M + 2 VB 1`] = `
+Object {
+  "availableSorts": Array [
+    Object {
+      "attributeSort": Object {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": Object {
+        "localIdentifier": "a1",
+      },
+    },
+    Object {
+      "attributeSort": Object {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": Object {
+        "localIdentifier": "a2",
+      },
+      "metricSorts": Array [
+        Object {
+          "locators": Array [
+            Object {
+              "measureLocatorItem": Object {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+        Object {
+          "locators": Array [
+            Object {
+              "measureLocatorItem": Object {
+                "measureIdentifier": "m2",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+      ],
+    },
+  ],
+  "currentSort": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a2",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
+
+exports[`PluggableBulletChart Sort config should return expected sort config for 3 M + 1 VB 1`] = `
+Object {
+  "availableSorts": Array [
+    Object {
+      "attributeSort": Object {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": Object {
+        "localIdentifier": "a1",
+      },
+      "metricSorts": Array [
+        Object {
+          "locators": Array [
+            Object {
+              "measureLocatorItem": Object {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+        Object {
+          "locators": Array [
+            Object {
+              "measureLocatorItem": Object {
+                "measureIdentifier": "m2",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+        Object {
+          "locators": Array [
+            Object {
+              "measureLocatorItem": Object {
+                "measureIdentifier": "m3",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+      ],
+    },
+  ],
+  "currentSort": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
+
+exports[`PluggableBulletChart Sort config should return expected sort config for 3 M + 2 VB 1`] = `
+Object {
+  "availableSorts": Array [
+    Object {
+      "attributeSort": Object {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": Object {
+        "localIdentifier": "a1",
+      },
+    },
+    Object {
+      "attributeSort": Object {
+        "areaSortEnabled": true,
+        "normalSortEnabled": true,
+      },
+      "itemId": Object {
+        "localIdentifier": "a2",
+      },
+      "metricSorts": Array [
+        Object {
+          "locators": Array [
+            Object {
+              "measureLocatorItem": Object {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+        Object {
+          "locators": Array [
+            Object {
+              "measureLocatorItem": Object {
+                "measureIdentifier": "m2",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+        Object {
+          "locators": Array [
+            Object {
+              "measureLocatorItem": Object {
+                "measureIdentifier": "m3",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+      ],
+    },
+  ],
+  "currentSort": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a2",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
