@@ -25,7 +25,7 @@ export const findSelector = (wrapper: ReactWrapper, selector: string): boolean =
 
 export const changeDropdownValue = (wrapper: ReactWrapper, selector: string): void => {
     wrapper
-        .find(`.s-${stringUtils.simplifyText(selector)}`)
+        .find(`.s-attribute-sorting-dropdown-body .s-${stringUtils.simplifyText(selector)}`)
         .hostNodes()
         .simulate("click");
     wrapper.update();
@@ -41,4 +41,12 @@ export const changeMeasureDropdownValue = (wrapper: ReactWrapper, selector: stri
 
 export const getTextValue = (wrapper: ReactWrapper, selector: string): string => {
     return wrapper.find(selector).hostNodes().text();
+};
+
+export const clickApplyButton = (wrapper: ReactWrapper): void => {
+    wrapper.find(".s-sorting-dropdown-apply").hostNodes().simulate("click");
+};
+
+export const isApplyButtonEnabled = (wrapper: ReactWrapper) => {
+    return !wrapper.find(".s-sorting-dropdown-apply").hostNodes().hasClass("disabled");
 };

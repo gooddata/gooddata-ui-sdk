@@ -1261,22 +1261,37 @@
     },
     "sorting.type.alphabetical.asc": {
         "value": "A to Z",
-        "comment": "Title of sort option when is sorted alphabetically and in ascending order.",
+        "comment": "Title of sort option when insight is sorted alphabetically and in ascending order.",
         "limit": 0
     },
     "sorting.type.alphabetical.desc": {
         "value": "Z to A",
-        "comment": "Title of sort option when is sorted alphabetically and in descencing order.",
+        "comment": "Title of sort option when insight is sorted alphabetically and in descending order.",
+        "limit": 0
+    },
+    "sorting.type.date.asc": {
+        "value": "Oldest to newest",
+        "comment": "Title of sort option when insight is sorted by date and in ascending order.",
+        "limit": 0
+    },
+    "sorting.type.date.desc": {
+        "value": "Newest to oldest",
+        "comment": "Title of sort option when insight is sorted by date and in descending order.",
+        "limit": 0
+    },
+    "sorting.type.default": {
+        "value": "Default",
+        "comment": "Title of sort option when insight is sorted by default order.",
         "limit": 0
     },
     "sorting.type.numerical.asc": {
         "value": "Smallest to largest",
-        "comment": "Title of sort option when is sorted numerically and in ascending order.",
+        "comment": "Title of sort option when insight is sorted numerically and in ascending order.",
         "limit": 0
     },
     "sorting.type.numerical.desc": {
         "value": "Largest to smallest",
-        "comment": "Title of sort option when is sorted numerically and in descending order.",
+        "comment": "Title of sort option when insight is sorted numerically and in descending order.",
         "limit": 0
     },
     "sorting.by": {
@@ -1292,6 +1307,11 @@
     "sorting.sum.of.all.measure._metric": {
         "value": "Sum of all metrics (total)",
         "comment": "Title of sort option when is sorted by sum of all metrics.",
+        "limit": 0
+    },
+    "sorting.default.tooltip": {
+        "value": "Use the order defined in the attribute.",
+        "comment": "Tooltip that explains user that default sorting of the selected attribute will be applied on the insight.",
         "limit": 0
     }
 }

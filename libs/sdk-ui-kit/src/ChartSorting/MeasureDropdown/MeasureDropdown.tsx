@@ -17,20 +17,18 @@ import { stringUtils } from "@gooddata/util";
 
 import {
     MeasureSortSuggestion,
-    IBucketItemNames,
+    IBucketItemDescriptors,
     IMeasureSortItem,
     IMeasureDropdownValue,
     IAvailableSortsGroup,
 } from "../types";
 
-import { DropdownButton } from "../../Dropdown/DropdownButton";
-import { BubbleHoverTrigger } from "../../Bubble/BubbleHoverTrigger";
-import { Bubble } from "../../Bubble/Bubble";
-import { Dropdown, DropdownList } from "../../Dropdown";
+import { Bubble, BubbleHoverTrigger } from "../../Bubble";
+import { DropdownButton, Dropdown, DropdownList } from "../../Dropdown";
 
 interface MeasureDropdownProps {
     currentItem: ISortItem;
-    bucketItemNames: IBucketItemNames;
+    bucketItems: IBucketItemDescriptors;
     availableSorts: IAvailableSortsGroup;
     intl: IntlShape;
     onSelect: (newSortItem: ISortItem) => void;
@@ -43,7 +41,7 @@ interface MeasureDropdownProps {
 const getItems = (
     intl: IntlShape,
     measures: MeasureSortSuggestion[],
-    measureNames: IBucketItemNames,
+    measureNames: IBucketItemDescriptors,
     areaSortEnabled: boolean,
     availableId: LocalIdRef,
 ): IMeasureSortItem[] => {
@@ -78,7 +76,7 @@ const getItems = (
 const getButtonValue = (
     currentItem: ISortItem,
     intl: IntlShape,
-    measureNames: IBucketItemNames,
+    measureNames: IBucketItemDescriptors,
 ): IMeasureDropdownValue => {
     let buttonValue: IMeasureDropdownValue;
     if (isAttributeAreaSort(currentItem)) {
@@ -111,7 +109,7 @@ const getMeasureIconClassNameBySelected = (id: string, enableRenamingMeasureToMe
 export const MeasureDropdown: React.FC<MeasureDropdownProps> = ({
     currentItem,
     availableSorts,
-    bucketItemNames,
+    bucketItems,
     intl,
     onSelect,
     index,
@@ -122,9 +120,9 @@ export const MeasureDropdown: React.FC<MeasureDropdownProps> = ({
     const buttonRef = useRef<HTMLInputElement>();
     const measures: MeasureSortSuggestion[] = availableSorts.metricSorts;
     const areaSortEnabled = availableSorts.attributeSort.areaSortEnabled;
-    const items = getItems(intl, measures, bucketItemNames, areaSortEnabled, availableSorts.itemId);
+    const items = getItems(intl, measures, bucketItems, areaSortEnabled, availableSorts.itemId);
     const disableDropdown = items.length === 1;
-    const buttonValue = getButtonValue(currentItem, intl, bucketItemNames);
+    const buttonValue = getButtonValue(currentItem, intl, bucketItems);
     const measureName = buttonValue.sequenceNumber
         ? `${buttonValue.title} (${buttonValue.sequenceNumber})`
         : buttonValue.title;
@@ -155,24 +153,22 @@ export const MeasureDropdown: React.FC<MeasureDropdownProps> = ({
             </span>
             <div className="measure-sorting-dropdown">
                 {disableDropdown ? (
-                    <>
-                        <BubbleHoverTrigger>
-                            <DropdownButton
-                                className="s-inner-aggregation-disabled-button s-measure-dropdown-button"
-                                value={measureName}
-                                disabled={true}
-                                iconLeft={getMeasureIconClassNameBySelected(
-                                    buttonValue.id,
-                                    enableRenamingMeasureToMetric,
-                                )}
-                            />
-                            {disabledExplanationTooltip && (
-                                <Bubble alignPoints={[{ align: "cr cl" }, { align: "cl cr" }]}>
-                                    {/* TODO: TNT-466 - Tooltip explanation message provided by PV  */}
-                                </Bubble>
+                    <BubbleHoverTrigger>
+                        <DropdownButton
+                            className="s-inner-aggregation-disabled-button s-measure-dropdown-button"
+                            value={measureName}
+                            disabled={true}
+                            iconLeft={getMeasureIconClassNameBySelected(
+                                buttonValue.id,
+                                enableRenamingMeasureToMetric,
                             )}
-                        </BubbleHoverTrigger>
-                    </>
+                        />
+                        {disabledExplanationTooltip && (
+                            <Bubble alignPoints={[{ align: "cr cl" }, { align: "cl cr" }]}>
+                                {/* TODO: TNT-466 - Tooltip explanation message provided by PV  */}
+                            </Bubble>
+                        )}
+                    </BubbleHoverTrigger>
                 ) : (
                     <Dropdown
                         className="gd-measure-sorting-dropdown-body s-measure-sorting-dropdown-body"

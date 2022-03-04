@@ -12,7 +12,7 @@ import {
     isMeasureLocator,
 } from "@gooddata/sdk-model";
 
-import { IAvailableSortsGroup, SORT_TARGET_TYPE, ISortTypeItem, IBucketItemNames } from "../types";
+import { IAvailableSortsGroup, SORT_TARGET_TYPE, ISortTypeItem, IBucketItemDescriptors } from "../types";
 import { Dropdown, DropdownButton, DropdownList } from "../../Dropdown";
 import { SingleSelectListItem } from "../../List";
 import { MeasureDropdown } from "../MeasureDropdown/MeasureDropdown";
@@ -20,27 +20,34 @@ import { MeasureDropdown } from "../MeasureDropdown/MeasureDropdown";
 interface AttributeDropdownProps {
     currentSortItem: ISortItem;
     availableSorts: IAvailableSortsGroup;
-    bucketItemNames: IBucketItemNames;
+    bucketItems: IBucketItemDescriptors;
     intl: IntlShape;
     index: number;
     onSelect: (item: ISortItem) => void;
-
     enableRenamingMeasureToMetric?: boolean;
 }
 
 const icons = {
     [SORT_TARGET_TYPE.ALPHABETICAL_ASC]: `gd-icon-sort-alphabetical-asc`,
     [SORT_TARGET_TYPE.ALPHABETICAL_DESC]: `gd-icon-sort-alphabetical-desc`,
+    [SORT_TARGET_TYPE.DATE_ASC]: `gd-icon-sort-date-asc`,
+    [SORT_TARGET_TYPE.DATE_DESC]: `gd-icon-sort-date-desc`,
+    [SORT_TARGET_TYPE.DEFAULT]: `gd-icon-sort-default`,
     [SORT_TARGET_TYPE.NUMERICAL_ASC]: `gd-icon-sort-numerical-asc`,
     [SORT_TARGET_TYPE.NUMERICAL_DESC]: `gd-icon-sort-numerical-desc`,
 };
 
-const getIconClassNameBySelection = (sortType: string): string => icons[sortType];
+const getIconClassName = (sortType: SORT_TARGET_TYPE): string => icons[sortType];
 
-const getSortTypeItems = (available: IAvailableSortsGroup, intl: IntlShape): ISortTypeItem[] => {
+const getSortTypeItems = (
+    available: IAvailableSortsGroup,
+    bucketItems: IBucketItemDescriptors,
+    intl: IntlShape,
+): ISortTypeItem[] => {
     const sortTypeItems: ISortTypeItem[] = [];
+    const bucketItem = bucketItems[available.itemId.localIdentifier];
 
-    if (available.attributeSort.normalSortEnabled) {
+    if (available.attributeSort.normalSortEnabled && bucketItem.type === "attribute") {
         sortTypeItems.push(
             {
                 id: SORT_TARGET_TYPE.ALPHABETICAL_ASC,
@@ -58,7 +65,24 @@ const getSortTypeItems = (available: IAvailableSortsGroup, intl: IntlShape): ISo
             },
         );
     }
-
+    if (available.attributeSort.normalSortEnabled && bucketItem.type === "chronologicalDate") {
+        sortTypeItems.push(
+            {
+                id: SORT_TARGET_TYPE.DATE_ASC,
+                title: intl.formatMessage({ id: "sorting.type.date.asc" }),
+                sortDirection: "asc",
+                type: "date",
+                localIdentifier: available.itemId.localIdentifier,
+            },
+            {
+                id: SORT_TARGET_TYPE.DATE_DESC,
+                title: intl.formatMessage({ id: "sorting.type.date.desc" }),
+                sortDirection: "desc",
+                type: "date",
+                localIdentifier: available.itemId.localIdentifier,
+            },
+        );
+    }
     if (
         available.attributeSort.areaSortEnabled ||
         (available.metricSorts && available.metricSorts.length > 0)
@@ -80,18 +104,67 @@ const getSortTypeItems = (available: IAvailableSortsGroup, intl: IntlShape): ISo
             },
         );
     }
-
+    if (available.attributeSort.normalSortEnabled && bucketItem.type === "genericDate") {
+        sortTypeItems.push({
+            id: SORT_TARGET_TYPE.DEFAULT,
+            title: intl.formatMessage({ id: "sorting.type.default" }),
+            sortDirection: "asc",
+            type: "default",
+            localIdentifier: available.itemId.localIdentifier,
+        });
+    }
     return sortTypeItems;
 };
 
-const getButtonValue = (sortTypeItems: ISortTypeItem[], type: string, direction: string): ISortTypeItem => {
-    return sortTypeItems.find((sortTypeItems: ISortTypeItem) => sortTypeItems.id === `${type}-${direction}`);
+const getNumericSortTargetType = (currentItem: ISortItem) =>
+    sortDirection(currentItem) === "asc" ? SORT_TARGET_TYPE.NUMERICAL_ASC : SORT_TARGET_TYPE.NUMERICAL_DESC;
+
+const getAlphabeticalSortTargetType = (currentItem: ISortItem) =>
+    sortDirection(currentItem) === "asc"
+        ? SORT_TARGET_TYPE.ALPHABETICAL_ASC
+        : SORT_TARGET_TYPE.ALPHABETICAL_DESC;
+
+const getDateSortTargetType = (currentItem: ISortItem) =>
+    sortDirection(currentItem) === "asc" ? SORT_TARGET_TYPE.DATE_ASC : SORT_TARGET_TYPE.DATE_DESC;
+
+const getSelectedItemId = (currentItem: ISortItem, bucketItems: IBucketItemDescriptors): SORT_TARGET_TYPE => {
+    if (isAttributeSort(currentItem)) {
+        const bucketItem = bucketItems[currentItem.attributeSortItem.attributeIdentifier];
+        if (isAttributeAreaSort(currentItem)) {
+            return getNumericSortTargetType(currentItem);
+        }
+        if (bucketItem.type === "chronologicalDate") {
+            return getDateSortTargetType(currentItem);
+        }
+        if (bucketItem.type === "genericDate") {
+            return SORT_TARGET_TYPE.DEFAULT;
+        }
+        return getAlphabeticalSortTargetType(currentItem);
+    }
+    return getNumericSortTargetType(currentItem);
+};
+
+const getButtonValue = (sortTypeItems: ISortTypeItem[], type: SORT_TARGET_TYPE) =>
+    sortTypeItems.find((sortTypeItems: ISortTypeItem) => sortTypeItems.id === type).title;
+
+const buildSortItem = (
+    { type, localIdentifier, sortDirection }: ISortTypeItem,
+    availableSorts: IAvailableSortsGroup,
+) => {
+    if (type === "alphabetical" || type === "date" || type === "default") {
+        return newAttributeSort(localIdentifier, sortDirection);
+    } else if (availableSorts.attributeSort.areaSortEnabled) {
+        return newAttributeAreaSort(localIdentifier, sortDirection);
+    } else {
+        const { measureLocatorItem } = availableSorts.metricSorts[0].locators.find(isMeasureLocator);
+        return newMeasureSort(measureLocatorItem.measureIdentifier, sortDirection);
+    }
 };
 
 export const AttributeDropdown: React.FC<AttributeDropdownProps> = ({
     currentSortItem,
     availableSorts,
-    bucketItemNames,
+    bucketItems,
     intl,
     index,
     onSelect,
@@ -108,23 +181,12 @@ export const AttributeDropdown: React.FC<AttributeDropdownProps> = ({
     }, []);
 
     const attributeSelectHandler = useCallback(
-        (item: ISortTypeItem) => {
-            let newCurrentItem;
-            if (item.type === "alphabetical") {
-                newCurrentItem = newAttributeSort(item.localIdentifier, item.sortDirection);
-            } else if (availableSorts.attributeSort.areaSortEnabled) {
-                newCurrentItem = newAttributeAreaSort(item.localIdentifier, item.sortDirection);
-            } else {
-                const {
-                    measureLocatorItem: { measureIdentifier },
-                } = availableSorts.metricSorts[0].locators.find(isMeasureLocator);
-                newCurrentItem = newMeasureSort(measureIdentifier, item.sortDirection);
-            }
-
+        (selectedSortType: ISortTypeItem) => {
+            const newCurrentItem = buildSortItem(selectedSortType, availableSorts);
             setCurrentItem(newCurrentItem);
             onSelect(newCurrentItem);
         },
-        [currentItem, setCurrentItem, onSelect],
+        [currentItem, onSelect, availableSorts],
     );
 
     const measureSelectHandler = useCallback(
@@ -132,14 +194,15 @@ export const AttributeDropdown: React.FC<AttributeDropdownProps> = ({
             setCurrentItem(newCurrentItem);
             onSelect(newCurrentItem);
         },
-        [currentItem, setCurrentItem, onSelect],
+        [currentItem, onSelect],
     );
 
-    const sortTypeItems = getSortTypeItems(availableSorts, intl);
-    const currentType =
-        isAttributeSort(currentItem) && !isAttributeAreaSort(currentItem) ? "alphabetical" : "numerical";
-    const direction = sortDirection(currentItem);
-    const buttonValue = getButtonValue(sortTypeItems, currentType, direction);
+    const sortTypeItems = getSortTypeItems(availableSorts, bucketItems, intl);
+    const selectedSortType = getSelectedItemId(currentItem, bucketItems);
+    const buttonValue = getButtonValue(sortTypeItems, selectedSortType);
+    const renderMeasureDropdown =
+        selectedSortType === SORT_TARGET_TYPE.NUMERICAL_ASC ||
+        selectedSortType === SORT_TARGET_TYPE.NUMERICAL_DESC;
 
     return (
         <>
@@ -149,11 +212,11 @@ export const AttributeDropdown: React.FC<AttributeDropdownProps> = ({
                 renderButton={({ isOpen, toggleDropdown }) => (
                     <div ref={buttonRef}>
                         <DropdownButton
-                            className={`s-sort-type-attribute-button-${index} s-${currentType}-dropdown-button`}
-                            value={buttonValue.title}
+                            className={`s-sort-type-attribute-button-${index} s-${selectedSortType}-dropdown-button s-attribute-dropdown-button`}
+                            value={buttonValue}
                             isOpen={isOpen}
                             onClick={toggleDropdown}
-                            iconLeft={getIconClassNameBySelection(`${currentType}-${direction}`)}
+                            iconLeft={getIconClassName(selectedSortType)}
                         />
                     </div>
                 )}
@@ -163,19 +226,23 @@ export const AttributeDropdown: React.FC<AttributeDropdownProps> = ({
                         items={sortTypeItems}
                         width={width}
                         renderItem={({ item }) => {
-                            const isSelected = item.id === `${currentType}-${direction}`;
-                            const iconClass = getIconClassNameBySelection(
-                                `${item.type}-${item.sortDirection}`,
-                            );
+                            const { id, title } = item;
+                            const isSelected = id === selectedSortType;
+                            const iconClass = getIconClassName(id);
+                            const tooltip =
+                                id === SORT_TARGET_TYPE.DEFAULT
+                                    ? intl.formatMessage({ id: "sorting.default.tooltip" })
+                                    : undefined;
                             return (
                                 <SingleSelectListItem
                                     isSelected={isSelected}
                                     className={iconClass}
-                                    title={item.title}
+                                    title={title}
                                     onClick={() => {
                                         attributeSelectHandler(item);
                                         closeDropdown();
                                     }}
+                                    info={tooltip}
                                 />
                             );
                         }}
@@ -185,12 +252,12 @@ export const AttributeDropdown: React.FC<AttributeDropdownProps> = ({
 
             {/* Inner dropdown with measures/aggregation per currentItem -
                 only shown when top attribute is filter by "Largest to smallest" */}
-            {currentType === "numerical" && (
+            {renderMeasureDropdown && (
                 <MeasureDropdown
                     currentItem={currentItem}
                     intl={intl}
                     availableSorts={availableSorts}
-                    bucketItemNames={bucketItemNames}
+                    bucketItems={bucketItems}
                     onSelect={measureSelectHandler}
                     disabledExplanationTooltip={availableSorts.explanation}
                     enableRenamingMeasureToMetric={enableRenamingMeasureToMetric}

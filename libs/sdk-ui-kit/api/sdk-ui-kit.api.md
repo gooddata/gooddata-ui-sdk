@@ -185,7 +185,7 @@ export interface ChartSortingOwnProps {
     // (undocumented)
     availableSorts: IAvailableSortsGroup[];
     // (undocumented)
-    bucketItemNames: IBucketItemNames;
+    bucketItems: IBucketItemDescriptors;
     // (undocumented)
     buttonNode?: HTMLElement | string;
     // (undocumented)
@@ -792,12 +792,9 @@ export interface IBubbleTriggerState {
 }
 
 // @internal (undocumented)
-export interface IBucketItemNames {
+export interface IBucketItemDescriptors {
     // (undocumented)
-    [localIdentifier: string]: {
-        name: string;
-        sequenceNumber?: string;
-    };
+    [localIdentifier: string]: IIBucketItemDescriptor;
 }
 
 // @internal (undocumented)
@@ -1558,6 +1555,16 @@ export interface IHubspotConversionTouchPointDialogBaseProps {
 export interface IHubspotFormValue {
     // (undocumented)
     [key: string]: string | number | boolean;
+}
+
+// @internal (undocumented)
+export interface IIBucketItemDescriptor {
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    sequenceNumber?: string;
+    // (undocumented)
+    type: "attribute" | "chronologicalDate" | "genericDate" | "measure";
 }
 
 // @internal (undocumented)
@@ -2820,7 +2827,7 @@ export interface ISortTypeItem {
     // (undocumented)
     title: string;
     // (undocumented)
-    type: "alphabetical" | "numerical";
+    type: "alphabetical" | "date" | "default" | "numerical";
 }
 
 // @internal (undocumented)
@@ -3285,6 +3292,12 @@ export enum SORT_TARGET_TYPE {
     ALPHABETICAL_ASC = "alphabetical-asc",
     // (undocumented)
     ALPHABETICAL_DESC = "alphabetical-desc",
+    // (undocumented)
+    DATE_ASC = "date-asc",
+    // (undocumented)
+    DATE_DESC = "date-desc",
+    // (undocumented)
+    DEFAULT = "default",
     // (undocumented)
     NUMERICAL_ASC = "numerical-asc",
     // (undocumented)
