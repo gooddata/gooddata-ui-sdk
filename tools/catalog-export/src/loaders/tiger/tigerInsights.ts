@@ -1,8 +1,7 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 
 import { ObjectMeta } from "../../base/types";
 import { ITigerClient, MetadataUtilities, ValidateRelationsHeader } from "@gooddata/api-client-tiger";
-import { toFullyQualifiedId } from "./tigerCommon";
 
 /**
  * Load insights that are stored in workspace metadata so that their links can be included
@@ -24,7 +23,7 @@ export async function loadInsights(client: ITigerClient, workspaceId: string): P
     return result.data.map((vis) => {
         return {
             title: vis.attributes?.title ?? vis.id,
-            identifier: toFullyQualifiedId(vis.id, workspaceId),
+            identifier: vis.id,
             tags: vis.attributes?.tags?.join(",") ?? "",
         };
     });
