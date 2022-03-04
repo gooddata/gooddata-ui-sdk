@@ -11,7 +11,6 @@ import { IMeasureDescriptor, isMeasureDescriptor, isResultAttributeHeader } from
 import {
     attributeDisplayFormRef,
     attributeLocalId,
-    Identifier,
     IMeasure,
     isArithmeticMeasure,
     isAttribute,
@@ -33,11 +32,6 @@ import { DataViewFacade } from "../results/facade";
  * compatibility with the previous more lenient behavior.
  */
 const alwaysFalsePredicate = () => false;
-
-function toCompositeId(originalId: Identifier, currentWorkspace: string): Identifier {
-    const alreadyComposite = originalId.includes(":");
-    return alreadyComposite ? originalId : `${currentWorkspace}:${originalId}`;
-}
 
 function arithmeticMeasureLocalIdentifierDeepMatch(
     dv: DataViewFacade,
@@ -131,8 +125,14 @@ function matchHeaderIdentifierWithCompositeSupport(
         return true;
     }
 
-    // also try converting both to composite ids and compare those
-    return toCompositeId(headerIdentifier, currentWorkspace) === toCompositeId(identifier, currentWorkspace);
+    // also try stripping current workspace prefix in case we are in a workspace with composite ids
+    const compositeIdFromCurrentWorkspaceRegex = new RegExp(`^${currentWorkspace}:`);
+    const isCompositeIdFromCurrentWorkspace = compositeIdFromCurrentWorkspaceRegex.test(identifier);
+
+    return (
+        isCompositeIdFromCurrentWorkspace &&
+        headerIdentifier === identifier.replace(compositeIdFromCurrentWorkspaceRegex, "")
+    );
 }
 
 function matchUri(uri: string, measure: IMeasure): boolean {
@@ -154,10 +154,13 @@ function matchMeasureIdentifierWithCompositeSupport(
         return true;
     }
 
-    // also try converting both to composite ids and compare those
+    // also try stripping current workspace prefix in case we are in a workspace with composite ids
+    const compositeIdFromCurrentWorkspaceRegex = new RegExp(`^${currentWorkspace}:`);
+    const isCompositeIdFromCurrentWorkspace = compositeIdFromCurrentWorkspaceRegex.test(identifier);
+
     return (
-        toCompositeId(simpleMeasureIdentifier, currentWorkspace) ===
-        toCompositeId(identifier, currentWorkspace)
+        isCompositeIdFromCurrentWorkspace &&
+        simpleMeasureIdentifier === identifier.replace(compositeIdFromCurrentWorkspaceRegex, "")
     );
 }
 

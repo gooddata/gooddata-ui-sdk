@@ -4,13 +4,7 @@ import { barChartForDrillTests } from "../../../../__mocks__/fixtures";
 import { IAttributeDescriptor, IMeasureDescriptor, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import { uriRef } from "@gooddata/sdk-model";
 
-export const context: IHeaderPredicateContext = {
-    dv: barChartForDrillTests,
-};
-
-export const workspace = context.dv.definition.workspace;
-
-export const measureDescriptors: Record<string, IMeasureDescriptor> = {
+export const measureDescriptors: { [key: string]: IMeasureDescriptor } = {
     uriBasedMeasure: {
         measureHeaderItem: {
             uri: "/uriBasedMeasureUri",
@@ -26,15 +20,6 @@ export const measureDescriptors: Record<string, IMeasureDescriptor> = {
             localIdentifier: "identifierBasedMeasureLocalIdentifier",
             identifier: "identifierBasedMeasureIdentifier",
             name: "identifierBasedMeasureName",
-            format: "#,##0.00",
-        },
-    },
-    compositeIdentifierBasedMeasure: {
-        measureHeaderItem: {
-            uri: "compositeIdentifierUri",
-            localIdentifier: "compositeIdentifierLocalId",
-            identifier: `${workspace}:compositeIdentifierId`,
-            name: "compositeIdentifierBasedMeasure",
             format: "#,##0.00",
         },
     },
@@ -72,14 +57,14 @@ export const measureDescriptors: Record<string, IMeasureDescriptor> = {
     uriBasedPPMeasure: {
         measureHeaderItem: {
             localIdentifier: "uriBasedPPMeasureLocalIdentifier",
-            name: "uriBasedPPMeasureName",
+            name: "uriBasedSPMeasureName",
             format: "#,##0.00",
         },
     },
     identifierBasedPPMeasure: {
         measureHeaderItem: {
             localIdentifier: "identifierBasedPPMeasureLocalIdentifier",
-            name: "uriBasedPPMeasureName",
+            name: "uriBasedSPMeasureName",
             format: "#,##0.00",
         },
     },
@@ -191,25 +176,15 @@ export const attributeDescriptor: IAttributeDescriptor = {
     },
 };
 
-export const compositeAttributeDescriptor: IAttributeDescriptor = {
-    attributeHeader: {
-        uri: "/attributeUri",
-        identifier: `${workspace}:attributeIdentifier`,
-        localIdentifier: "attributeLocalIdentifier",
-        name: "attributeName",
-        ref: uriRef("/attributeUri"),
-        formOf: {
-            uri: "/attributeElementUri",
-            identifier: "attributeElementIdentifier",
-            name: "attributeElementName",
-            ref: uriRef("/attributeElementUri"),
-        },
-    },
-};
-
 export const attributeHeaderItem: IResultAttributeHeader = {
     attributeHeaderItem: {
         uri: "/attributeItemUri",
         name: "attributeItemName",
     },
 };
+
+export const context: IHeaderPredicateContext = {
+    dv: barChartForDrillTests,
+};
+
+export const workspace = context.dv.definition.workspace;
