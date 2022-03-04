@@ -104,6 +104,8 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
         const stackBy = getBucketItems(buckets, BucketNames.STACK);
 
+        const isStacked = !isEmpty(stackBy) || canSortStackTotalValue;
+
         if (viewBy.length === 2) {
             if (measures.length >= 2 && !canSortStackTotalValue) {
                 return {
@@ -136,7 +138,9 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
             return {
                 defaultSort: [
                     newAttributeAreaSort(viewBy[0].localIdentifier, "desc"),
-                    newAttributeAreaSort(viewBy[1].localIdentifier, "desc"),
+                    isStacked
+                        ? newAttributeAreaSort(viewBy[1].localIdentifier, "desc")
+                        : newMeasureSort(measures[0].localIdentifier, "desc"),
                 ],
                 availableSorts: [
                     {
@@ -150,15 +154,17 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
                         itemId: localIdRef(viewBy[1].localIdentifier),
                         attributeSort: {
                             normalSortEnabled: true,
-                            areaSortEnabled: true,
+                            areaSortEnabled: isStacked || measures.length > 1,
                         },
-                        metricSorts: [...measures.map((m) => newMeasureSortSuggestion(m.localIdentifier))],
+                        metricSorts: isEmpty(stackBy)
+                            ? [...measures.map((m) => newMeasureSortSuggestion(m.localIdentifier))]
+                            : [],
                     },
                 ],
             };
         }
 
-        if (!isEmpty(viewBy) && (!isEmpty(stackBy) || canSortStackTotalValue)) {
+        if (!isEmpty(viewBy) && isStacked) {
             return {
                 defaultSort: [newAttributeAreaSort(viewBy[0].localIdentifier, "desc")],
                 availableSorts: [

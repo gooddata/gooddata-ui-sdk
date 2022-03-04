@@ -125,6 +125,10 @@ function getDefaultHeatmapSort(insight: IInsightDefinition): ISortItem[] {
     return getDefaultHeatmapSortFromBuckets(insightBucket(insight, BucketNames.VIEW));
 }
 
+/**
+ * Defaults created by this helper need to be the same
+ * as defaults created by method getDefaultAndAvailableSort in each PV's class
+ */
 // Consider dissolving this function into individual components
 export function createSorts(
     type: string,

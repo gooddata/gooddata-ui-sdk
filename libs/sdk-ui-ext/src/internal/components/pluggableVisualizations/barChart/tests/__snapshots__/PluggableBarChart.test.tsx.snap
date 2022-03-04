@@ -24,6 +24,30 @@ Array [
 ]
 `;
 
+exports[`PluggableBarChart Sort config should provide attribute area sort and measureSort as default sort for 1M + 2 VB 1`] = `
+Array [
+  Object {
+    "attributeSortItem": Object {
+      "aggregation": "sum",
+      "attributeIdentifier": "a1",
+      "direction": "desc",
+    },
+  },
+  Object {
+    "measureSortItem": Object {
+      "direction": "desc",
+      "locators": Array [
+        Object {
+          "measureLocatorItem": Object {
+            "measureIdentifier": "m1",
+          },
+        },
+      ],
+    },
+  },
+]
+`;
+
 exports[`PluggableBarChart Sort config should provide attribute area sort as default sort for 2 stacked M + 1 VB 1`] = `
 Array [
   Object {
@@ -89,6 +113,25 @@ Array [
 ]
 `;
 
+exports[`PluggableBarChart Sort config should provide two attribute area sorts as default sort for 1M + 2 VB + 1SB 1`] = `
+Array [
+  Object {
+    "attributeSortItem": Object {
+      "aggregation": "sum",
+      "attributeIdentifier": "a1",
+      "direction": "desc",
+    },
+  },
+  Object {
+    "attributeSortItem": Object {
+      "aggregation": "sum",
+      "attributeIdentifier": "a2",
+      "direction": "desc",
+    },
+  },
+]
+`;
+
 exports[`PluggableBarChart Sort config should return valid available sorts for 1M + 1 VB + 1SB 1`] = `
 Array [
   Object {
@@ -126,6 +169,30 @@ Array [
         "type": "measureSort",
       },
     ],
+  },
+]
+`;
+
+exports[`PluggableBarChart Sort config should return valid available sorts for 1M + 2 VB + 1SB 1`] = `
+Array [
+  Object {
+    "attributeSort": Object {
+      "areaSortEnabled": true,
+      "normalSortEnabled": true,
+    },
+    "itemId": Object {
+      "localIdentifier": "a1",
+    },
+  },
+  Object {
+    "attributeSort": Object {
+      "areaSortEnabled": true,
+      "normalSortEnabled": true,
+    },
+    "itemId": Object {
+      "localIdentifier": "a2",
+    },
+    "metricSorts": Array [],
   },
 ]
 `;

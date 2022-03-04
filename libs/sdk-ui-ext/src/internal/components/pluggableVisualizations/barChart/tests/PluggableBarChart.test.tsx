@@ -181,6 +181,26 @@ describe("PluggableBarChart", () => {
             expect(sortConfig.currentSort).toMatchSnapshot();
         });
 
+        it("should provide attribute area sort and measureSort as default sort for 1M + 2 VB", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(
+                referencePointMocks.oneMetricAndTwoCategoriesReferencePoint,
+            );
+
+            expect(sortConfig.currentSort).toMatchSnapshot();
+        });
+
+        it("should provide two attribute area sorts as default sort for 1M + 2 VB + 1SB", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(
+                referencePointMocks.oneMetricAndManyCategoriesAndOneStackRefPoint,
+            );
+
+            expect(sortConfig.currentSort).toMatchSnapshot();
+        });
+
         it("should provide measureSort by first measure as default sort for 2M + 1 VB", async () => {
             const chart = createComponent(defaultProps);
 
@@ -222,6 +242,7 @@ describe("PluggableBarChart", () => {
         const Scenarios: Array<[string, IReferencePoint]> = [
             ["1M + 1 VB", referencePointMocks.oneMetricOneCategory],
             ["1M + 1 VB + 1SB", referencePointMocks.simpleStackedReferencePoint],
+            ["1M + 2 VB + 1SB", referencePointMocks.oneMetricAndManyCategoriesAndOneStackRefPoint],
             ["2M + 1 VB", referencePointMocks.twoMetricAndOneCategoryRefPoint],
             ["2 stacked M + 1 VB", referencePointMocks.twoStackedMetricAndOneCategoryRefPoint],
             ["2M + 2 VB", referencePointMocks.twoMetricAndTwoCategoriesRefPoint],
