@@ -110,6 +110,39 @@ export const getRowAttributes = (buckets: IBucketOfFun[]): IBucketItem[] => {
     );
 };
 
+/**
+ * PluggablePivotTable
+ *
+ * ## Buckets
+ *
+ * | Name     | Id         | Accepts             |
+ * |----------|------------|---------------------|
+ * | Measures | measures   | measures only       |
+ * | Rows     | attributes | attributes or dates |
+ * | Columns  | columns    | attributes or dates |
+ *
+ * The Rows and Columns can each accept one date at most, unless "enableMultipleDates" FF is on.
+ *
+ * ### Bucket axioms
+ *
+ * - |Measures| ≤ 20
+ * - |Rows| ≤ 20
+ * - |Columns| ≤ 20
+ * - |Measures| + |Rows| + |Columns| ≥ 1
+ *
+ * ## Dimensions
+ *
+ * The PluggablePivotTable always creates two dimensional execution.
+ *
+ * - |Measures| ≥ 1 ⇒ [[...Rows], [...Columns, MeasureGroupIdentifier]]
+ * - |Measures| = 0 ⇒ [[...Rows], [...Columns]]
+ *
+ * ## Sorts
+ *
+ * Unless the user specifies otherwise, the sorts used by default are:
+ *
+ * - |Rows| ≥ 1 ⇒ [attributeSort(Rows[0])]
+ */
 export class PluggablePivotTable extends AbstractPluggableVisualization {
     private environment: VisualizationEnvironment;
     private renderFun: RenderFunction;
@@ -452,15 +485,15 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
 }
 
 function isManualResizingEnabled(settings: ISettings): boolean {
-    return settings["enableTableColumnsManualResizing"] === true;
+    return settings.enableTableColumnsManualResizing === true;
 }
 
 function multipleDatesEnabled(settings: ISettings): boolean {
-    return settings["enableMultipleDates"] === true;
+    return settings.enableMultipleDates === true;
 }
 
 function tableSortingCheckDisabled(settings: ISettings): boolean {
-    return settings["tableSortingCheckDisabled"] === true;
+    return settings.tableSortingCheckDisabled === true;
 }
 
 /**
@@ -489,12 +522,12 @@ export function createPivotTableConfig(
         };
     }
 
-    const autoSize = settings["enableTableColumnsAutoResizing"];
+    const autoSize = settings.enableTableColumnsAutoResizing;
 
     // the growToFit can only be enabled in dashboards
-    const growToFit = environment === DASHBOARDS_ENVIRONMENT && settings["enableTableColumnsGrowToFit"];
+    const growToFit = environment === DASHBOARDS_ENVIRONMENT && settings.enableTableColumnsGrowToFit;
 
-    const manualResizing = settings["enableTableColumnsManualResizing"];
+    const manualResizing = settings.enableTableColumnsManualResizing;
 
     let columnSizing: Partial<IColumnSizing> = {};
     if (autoSize) {
