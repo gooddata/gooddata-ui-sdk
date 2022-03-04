@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 
 import { Attribute, DateDataSet } from "../../base/types";
 import {
@@ -57,7 +57,6 @@ function findDateDatasetsWithAttributes(
 function convertToExportableFormat(
     dateDatasets: DatasetWithAttributes[],
     labelsMap: LabelMap,
-    workspaceId: string,
 ): DateDataSet[] {
     return dateDatasets.map(({ dataset, attributes }) => {
         return {
@@ -69,7 +68,7 @@ function convertToExportableFormat(
                 },
                 content: {
                     attributes: attributes
-                        .map((attribute) => convertAttribute(attribute, labelsMap, workspaceId))
+                        .map((attribute) => convertAttribute(attribute, labelsMap))
                         .filter((a): a is Attribute => a !== undefined),
                 },
             },
@@ -88,5 +87,5 @@ export async function loadDateDataSets(client: ITigerClient, workspaceId: string
 
     const dateDatasets = findDateDatasetsWithAttributes(result, datasetsMap);
 
-    return convertToExportableFormat(dateDatasets, labelsMap, workspaceId);
+    return convertToExportableFormat(dateDatasets, labelsMap);
 }
