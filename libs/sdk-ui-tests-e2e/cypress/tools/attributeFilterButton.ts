@@ -38,7 +38,7 @@ export class AttributeFilterButton {
     }
 
     selectElement(element: string): this {
-        cy.get(`.s-attribute-filter-list-item-${element}`).click();
+        cy.wait(200).get(`.s-attribute-filter-list-item-${element}`).click();
         return this;
     }
 
