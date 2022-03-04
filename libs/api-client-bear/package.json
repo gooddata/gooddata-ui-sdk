@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/api-client-bear",
-    "version": "8.9.0-beta.2",
+    "version": "8.9.0-beta.3",
     "author": "GoodData",
     "description": "API Client for the GoodData platform",
     "repository": {
@@ -50,7 +50,7 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/api-model-bear": "^8.9.0-beta.2",
+        "@gooddata/api-model-bear": "^8.9.0-beta.3",
         "fetch-cookie": "^0.7.0",
         "isomorphic-fetch": "^3.0.0",
         "lodash": "^4.17.19",
