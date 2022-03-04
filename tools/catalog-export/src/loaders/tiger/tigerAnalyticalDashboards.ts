@@ -2,7 +2,6 @@
 
 import { ObjectMeta } from "../../base/types";
 import { ITigerClient, MetadataUtilities } from "@gooddata/api-client-tiger";
-import { toFullyQualifiedId } from "./tigerCommon";
 
 /**
  * Load analytical dashboards that are stored in workspace metadata so that their links can be included
@@ -28,7 +27,7 @@ export async function loadAnalyticalDashboards(
     return result.data.map((dashboard) => {
         return {
             title: dashboard.attributes?.title ?? dashboard.id,
-            identifier: toFullyQualifiedId(dashboard.id, workspaceId),
+            identifier: dashboard.id,
             tags: dashboard.attributes?.tags?.join(",") ?? "",
         };
     });
