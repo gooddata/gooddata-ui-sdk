@@ -69,10 +69,6 @@ describe("PluggableBaseChart", () => {
         );
     }
 
-    afterAll(() => {
-        document.clear();
-    });
-
     it("should create visualization", () => {
         const visualization = createComponent();
         expect(visualization).toBeTruthy();

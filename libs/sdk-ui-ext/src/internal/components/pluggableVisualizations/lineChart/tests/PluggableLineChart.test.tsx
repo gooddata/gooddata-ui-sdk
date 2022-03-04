@@ -60,10 +60,6 @@ describe("PluggableLineChart", () => {
         return new PluggableLineChart(props);
     }
 
-    afterAll(() => {
-        document.clear();
-    });
-
     it("should reuse all measures, only one category and no stacks", async () => {
         const lineChart = createComponent();
 

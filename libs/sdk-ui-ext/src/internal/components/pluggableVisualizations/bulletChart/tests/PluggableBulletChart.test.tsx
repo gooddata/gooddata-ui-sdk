@@ -23,7 +23,6 @@ import {
     expectedInsightDefDepartment,
     targetUri,
 } from "./getInsightWithDrillDownAppliedMock";
-import { attributeItems, dateItem, masterMeasureItems } from "../../../../tests/mocks/referencePointMocks";
 
 const defaultProps: IVisConstruct = {
     backend: dummyBackend(),
@@ -249,7 +248,7 @@ describe("PluggableBulletChart", () => {
                         buckets: [
                             {
                                 localIdentifier: "measures",
-                                items: masterMeasureItems.slice(0, 1),
+                                items: referencePointMocks.masterMeasureItems.slice(0, 1),
                             },
                             {
                                 localIdentifier: "secondary_measures",
@@ -261,7 +260,7 @@ describe("PluggableBulletChart", () => {
                             },
                             {
                                 localIdentifier: "view",
-                                items: [dateItem, dateItem],
+                                items: [referencePointMocks.dateItem, referencePointMocks.dateItem],
                             },
                         ],
                         filters: {
@@ -277,7 +276,7 @@ describe("PluggableBulletChart", () => {
                         buckets: [
                             {
                                 localIdentifier: "measures",
-                                items: masterMeasureItems.slice(0, 1),
+                                items: referencePointMocks.masterMeasureItems.slice(0, 1),
                             },
                             {
                                 localIdentifier: "secondary_measures",
@@ -289,7 +288,7 @@ describe("PluggableBulletChart", () => {
                             },
                             {
                                 localIdentifier: "view",
-                                items: [dateItem],
+                                items: [referencePointMocks.dateItem],
                             },
                         ],
                         filters: {
@@ -305,7 +304,7 @@ describe("PluggableBulletChart", () => {
                         buckets: [
                             {
                                 localIdentifier: "measures",
-                                items: masterMeasureItems.slice(0, 1),
+                                items: referencePointMocks.masterMeasureItems.slice(0, 1),
                             },
                             {
                                 localIdentifier: "secondary_measures",
@@ -317,7 +316,7 @@ describe("PluggableBulletChart", () => {
                             },
                             {
                                 localIdentifier: "view",
-                                items: [dateItem, dateItem],
+                                items: [referencePointMocks.dateItem, referencePointMocks.dateItem],
                             },
                         ],
                         filters: {
@@ -333,7 +332,7 @@ describe("PluggableBulletChart", () => {
                         buckets: [
                             {
                                 localIdentifier: "measures",
-                                items: masterMeasureItems.slice(0, 1),
+                                items: referencePointMocks.masterMeasureItems.slice(0, 1),
                             },
                             {
                                 localIdentifier: "secondary_measures",
@@ -345,7 +344,7 @@ describe("PluggableBulletChart", () => {
                             },
                             {
                                 localIdentifier: "view",
-                                items: [attributeItems[0], dateItem],
+                                items: [referencePointMocks.attributeItems[0], referencePointMocks.dateItem],
                             },
                         ],
                         filters: {
