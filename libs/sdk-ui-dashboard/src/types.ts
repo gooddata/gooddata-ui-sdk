@@ -42,7 +42,7 @@ export function isDashboardFilter(obj: unknown): obj is IDashboardFilter {
 export type DashboardDrillDefinition = DrillDefinition | IDrillDownDefinition;
 
 /**
- * A {@link @gooddata/sdk-ui#IDrillEvent} with added information about the drill event specific to the DashboardView context.
+ * A {@link @gooddata/sdk-ui#IDrillEvent} with added information about the drill event specific to the Dashboard context.
  * @beta
  */
 export interface IDashboardDrillEvent extends IDrillEvent {
@@ -61,7 +61,7 @@ export interface IDashboardDrillEvent extends IDrillEvent {
  * Callback called when a drill event occurs.
  * @beta
  */
-export type OnFiredDashboardViewDrillEvent = (event: IDashboardDrillEvent) => ReturnType<OnFiredDrillEvent>;
+export type OnFiredDashboardDrillEvent = (event: IDashboardDrillEvent) => ReturnType<OnFiredDrillEvent>;
 
 /**
  * Implicit drill down context

@@ -58,7 +58,7 @@ import {
     selectIsKpiAlertHighlightedByWidgetRef,
 } from "../../../../model";
 import { DashboardItemHeadline } from "../../../presentationComponents";
-import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../../../../types";
+import { IDashboardFilter, OnFiredDashboardDrillEvent } from "../../../../types";
 
 import { KpiRenderer } from "./KpiRenderer";
 import { KpiAlertDialogWrapper } from "./KpiAlertDialogWrapper";
@@ -85,7 +85,7 @@ interface IKpiExecutorProps {
      */
     allFilters?: IDashboardFilter[];
     onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
-    onDrill?: OnFiredDashboardViewDrillEvent;
+    onDrill?: OnFiredDashboardDrillEvent;
     onError?: OnError;
     backend: IAnalyticalBackend;
     workspace: string;
@@ -178,7 +178,7 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
     }, [result]);
 
     const handleOnDrill = useCallback(
-        (drillContext: IDrillEventContext): ReturnType<OnFiredDashboardViewDrillEvent> => {
+        (drillContext: IDrillEventContext): ReturnType<OnFiredDashboardDrillEvent> => {
             if (!onDrill) {
                 return false;
             }

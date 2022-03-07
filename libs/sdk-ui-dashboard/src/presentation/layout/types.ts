@@ -1,9 +1,9 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import { ComponentType } from "react";
 import { IErrorProps, OnError } from "@gooddata/sdk-ui";
 import { FilterContextItem } from "@gooddata/sdk-backend-spi";
 
-import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../../types";
+import { IDashboardFilter, OnFiredDashboardDrillEvent } from "../../types";
 
 /**
  * @alpha
@@ -12,7 +12,7 @@ export interface IDashboardLayoutProps {
     ErrorComponent?: React.ComponentType<IErrorProps>;
     // TODO: is this necessary? (there are events for it)
     onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
-    onDrill?: OnFiredDashboardViewDrillEvent;
+    onDrill?: OnFiredDashboardDrillEvent;
     onError?: OnError;
 }
 

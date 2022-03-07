@@ -1,10 +1,10 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React, { useCallback } from "react";
 import { GoodDataSdkError, IDrillEventContext } from "@gooddata/sdk-ui";
 import { ISeparators, IKpiWidget, IKpiWidgetDefinition } from "@gooddata/sdk-backend-spi";
 import { IFilter } from "@gooddata/sdk-model";
 
-import { OnFiredDashboardViewDrillEvent } from "../../../../types";
+import { OnFiredDashboardDrillEvent } from "../../../../types";
 
 import { KpiContent } from "./KpiContent";
 import { IKpiResult } from "./types";
@@ -16,7 +16,7 @@ interface IKpiRendererProps {
     separators: ISeparators;
     disableDrillUnderline?: boolean;
     isDrillable?: boolean;
-    onDrill?: (drillContext: IDrillEventContext) => ReturnType<OnFiredDashboardViewDrillEvent>;
+    onDrill?: (drillContext: IDrillEventContext) => ReturnType<OnFiredDashboardDrillEvent>;
     enableCompactSize?: boolean;
     error?: GoodDataSdkError;
     errorHelp?: string;

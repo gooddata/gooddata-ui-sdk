@@ -1,9 +1,9 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import { ComponentType } from "react";
 import { FilterContextItem, IAnalyticalBackend, ScreenSize } from "@gooddata/sdk-backend-spi";
 import { IErrorProps, ILoadingProps, OnError } from "@gooddata/sdk-ui";
 
-import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../../../types";
+import { IDashboardFilter, OnFiredDashboardDrillEvent } from "../../../types";
 import { ObjRef, ObjRefInScope } from "@gooddata/sdk-model";
 import { ExtendedDashboardWidget } from "../../../model";
 
@@ -81,7 +81,7 @@ export interface IDashboardWidgetProps {
     /**
      * @alpha
      */
-    onDrill?: OnFiredDashboardViewDrillEvent;
+    onDrill?: OnFiredDashboardDrillEvent;
 
     /**
      * @alpha

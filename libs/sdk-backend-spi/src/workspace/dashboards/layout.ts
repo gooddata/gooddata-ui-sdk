@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import isArray from "lodash/isArray";
 import { isWidget, isWidgetDefinition, IWidget, IWidgetDefinition } from "./widget";
@@ -26,7 +26,7 @@ export const isDashboardWidget = (obj: unknown): obj is IDashboardWidget =>
 
 /**
  * Dashboard layout item - usually contains kpi widget, insight widget or another nested layout.
- * Generic TWidget param is here to support type checking with custom widgets (e.g. in DashboardView).
+ * Generic TWidget param is here to support type checking with custom widgets (e.g. in Dashboard component).
  *
  * @alpha
  */
@@ -57,7 +57,7 @@ export function isDashboardLayoutItem<TWidget>(obj: unknown): obj is IDashboardL
 
 /**
  * Dashboard layout describes the data to be displayed on the dashboard, and their structure for UI rendering.
- * Generic TWidget param is here to support type checking with custom widgets (e.g. in DashboardView).
+ * Generic TWidget param is here to support type checking with custom widgets (e.g. in Dashboard component).
  *
  * @alpha
  */

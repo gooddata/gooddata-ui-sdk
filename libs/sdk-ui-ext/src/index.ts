@@ -5,8 +5,8 @@
  * @remarks
  * The extensions land here instead of their own project as part of their staged development.
  *
- * Notable members of the package are InsightView and DashboardView, the components that allow you to embed
- * Analytical Designer insights and Dashboards/KPI Dashboards, respectively.
+ * Notable member of the package is InsightView, the component that allows you to embed
+ * Analytical Designer insights.
  *
  * @packageDocumentation
  */
