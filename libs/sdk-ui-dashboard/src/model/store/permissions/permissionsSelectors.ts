@@ -21,18 +21,18 @@ export const selectPermissions = createSelector(selectSelf, (filterContextState)
 });
 
 /**
- * Returns whether the current user has permissions to list other users in the workspace.
+ * Returns whether the current user has permissions to list users, roles, and permissions.
  *
- * @alpha
+ * @public
  */
 export const selectCanListUsersInWorkspace = createSelector(selectPermissions, (state) => {
     return state?.canListUsersInProject ?? false;
 });
 
 /**
- * Returns whether the current user has permissions to manage current workspace.
+ * Returns whether the current user has permissions to modify workspace metadata, see the workspace token, lock and unlock objects, delete locked objects, set and unset the restricted flag on objects, clear cache, delete a workspace.
  *
- * @alpha
+ * @public
  */
 export const selectCanManageWorkspace = createSelector(selectPermissions, (state) => {
     return state?.canManageProject ?? false;
@@ -41,44 +41,143 @@ export const selectCanManageWorkspace = createSelector(selectPermissions, (state
 /**
  * Returns whether the current user has permissions to export the report.
  *
- * @alpha
+ * @public
  */
 export const selectCanExportReport = createSelector(selectPermissions, (state) => {
     return state?.canExportReport ?? false;
 });
 
 /**
- * Returns whether the current user has permissions to create the analytical dashboard.
+ * Returns whether the current user has permissions to create a KPI dashboard object via API.
  *
- * @alpha
+ * @public
  */
 export const selectCanCreateAnalyticalDashboard = createSelector(selectPermissions, (state) => {
     return state?.canCreateAnalyticalDashboard ?? false;
 });
 
 /**
- * Returns whether the current user has permissions to edit the analytical dashboard.
+ * Returns whether the current user has permissions to modify and delete a KPI dashboard object.
  *
- * @alpha
+ * @public
  */
 export const selectCanManageAnalyticalDashboard = createSelector(selectPermissions, (state) => {
     return state?.canManageAnalyticalDashboard ?? false;
 });
 
 /**
- * Returns whether the current user has permissions to manage access rights.
+ * Returns whether the current user has permissions to add, remove, and list ACLs (Access Control Lists) on an object.
  *
- * @alpha
+ * @public
  */
 export const selectCanManageACL = createSelector(selectPermissions, (state) => {
     return state?.canManageACL ?? false;
 });
 
 /**
- * Returns whether the current user has permissions to create scheduled emails.
+ * Returns whether the current user has permissions to create a scheduled email object and a KPI alert object.
  *
- * @alpha
+ * @public
  */
 export const selectCanCreateScheduledMail = createSelector(selectPermissions, (state) => {
     return state?.canCreateScheduledMail ?? false;
+});
+
+/**
+ * Returns whether the current user has permissions to run MAQL DDL and DML, access a workspace staging directory.
+ *
+ * @public
+ */
+export const selectCanInitData = createSelector(selectPermissions, (state) => {
+    return state?.canInitData ?? false;
+});
+
+/**
+ * Returns whether the current user has permissions to upload CSV files via CSV Uploader.
+ *
+ * @public
+ */
+export const selectCanUploadNonProductionCSV = createSelector(selectPermissions, (state) => {
+    return state?.canUploadNonProductionCSV ?? false;
+});
+
+/**
+ * Returns whether the current user has permissions to download a complete report.
+ *
+ * @public
+ */
+export const selectCanExecuteRaw = createSelector(selectPermissions, (state) => {
+    return state?.canExecuteRaw ?? false;
+});
+
+/**
+ * Returns whether the current user has permissions to access workbench.
+ *
+ * @public
+ */
+export const selectCanAccessWorkbench = createSelector(selectPermissions, (state) => {
+    return state?.canAccessWorkbench ?? false;
+});
+
+/**
+ * Returns whether the current user has permissions to create a report object via API.
+ *
+ * @public
+ */
+export const selectCanCreateReport = createSelector(selectPermissions, (state) => {
+    return state?.canCreateReport ?? false;
+});
+
+/**
+ * Returns whether the current user has permissions to create a KPI object, KPI widget object, and an insight object via API.
+ *
+ * @public
+ */
+export const selectCanCreateVisualization = createSelector(selectPermissions, (state) => {
+    return state?.canCreateVisualization ?? false;
+});
+
+/**
+ * Returns whether the current user has permissions to modify and delete a metric, run MAQL DDL, run the MAQL validator, change metric visibility via the `unlisted` flag.
+ *
+ * @public
+ */
+export const selectCanManageMetric = createSelector(selectPermissions, (state) => {
+    return state?.canManageMetric ?? false;
+});
+
+/**
+ * Returns whether the current user has permissions to modify and delete a report object, change report visibility via the `unlisted` flag.
+ *
+ * @public
+ */
+export const selectCanManageReport = createSelector(selectPermissions, (state) => {
+    return state?.canManageReport ?? false;
+});
+
+/**
+ * Returns whether the current user has permissions to modify and delete a domain, run MAQL DDL.
+ *
+ * @public
+ */
+export const selectCanManageDomain = createSelector(selectPermissions, (state) => {
+    return state?.canManageDomain ?? false;
+});
+
+/**
+ * Returns whether the current user has permissions to invite a user to a workspace or delete an invitation.
+ *
+ * @public
+ */
+export const selectCanInviteUserToWorkspace = createSelector(selectPermissions, (state) => {
+    return state?.canInviteUserToProject ?? false;
+});
+
+/**
+ * Returns whether the current user has permissions to run uploads, load date dimensions, access a workspace staging directory.
+ *
+ * @public
+ */
+export const selectCanRefreshData = createSelector(selectPermissions, (state) => {
+    return state?.canRefreshData ?? false;
 });
