@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { render } from "react-dom";
 import { IVisConstruct, IReferencePoint, IExtendedReferencePoint } from "../../../interfaces/Visualization";
@@ -8,6 +8,35 @@ import { setFunnelChartUiConfig } from "../../../utils/uiConfigHelpers/funnelCha
 import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
+/**
+ * PluggableFunnelChart
+ *
+ * ## Buckets
+ *
+ * | Name     | Id       | Accepts             |
+ * |----------|----------|---------------------|
+ * | Measures | measures | measures only       |
+ * | ViewBy   | view     | attribute or date   |
+ *
+ * ### Bucket axioms
+ *
+ * - |ViewBy| ≤ 1
+ * - |Measures| ≥ 1 ∧ ≤ 20
+ * - |ViewBy| = 1 ⇒ |Measures| = 1
+ * - |ViewBy| = 0 ⇒ |Measures| ≥ 1
+ *
+ * ## Dimensions
+ *
+ * The PluggableFunnelChart always creates two dimensional execution.
+ *
+ * - |ViewBy| = 0 ⇒ [[], [MeasureGroupIdentifier]]
+ * - |ViewBy| = 1 ⇒ [[MeasureGroupIdentifier], [ViewBy]]
+ *
+ * ## Default sorts
+ *
+ * The PluggableFunnelChart does not use any sorts.
+ *
+ */
 export class PluggableFunnelChart extends PluggablePieChart {
     constructor(props: IVisConstruct) {
         super(props);
