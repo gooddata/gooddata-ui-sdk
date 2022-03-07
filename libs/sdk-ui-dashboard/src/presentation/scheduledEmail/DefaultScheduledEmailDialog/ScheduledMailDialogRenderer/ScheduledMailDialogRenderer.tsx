@@ -35,7 +35,7 @@ import { DateTime } from "./DateTime";
 import { Attachment } from "./Attachment";
 import { RecipientsSelect } from "./RecipientsSelect/RecipientsSelect";
 import { IntlWrapper } from "../../../localization";
-import { DASHBOARD_TITLE_MAX_LENGTH } from "../../../constants/dashboard";
+import { DASHBOARD_TITLE_MAX_LENGTH } from "../../../constants";
 
 const MAX_MESSAGE_LENGTH = 200;
 const MAX_SUBJECT_LENGTH = 200;
