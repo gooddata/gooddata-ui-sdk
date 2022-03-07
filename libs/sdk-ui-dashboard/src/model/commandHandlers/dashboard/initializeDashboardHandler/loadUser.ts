@@ -1,5 +1,5 @@
-// (C) 2021 GoodData Corporation
-import { IUser } from "@gooddata/sdk-backend-spi";
+// (C) 2021-2022 GoodData Corporation
+import { IUser } from "@gooddata/sdk-model";
 import { DashboardContext } from "../../../types/commonTypes";
 
 export function loadUser(ctx: DashboardContext): Promise<IUser> {
