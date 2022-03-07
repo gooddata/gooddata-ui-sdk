@@ -1,12 +1,12 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { ConfirmDialog, Input, Message, Typography } from "@gooddata/sdk-ui-kit";
 import compact from "lodash/compact";
 import first from "lodash/first";
-import { IntlWrapper } from "../../localization";
 import noop from "lodash/noop";
-import { DASHBOARD_TITLE_MAX_LENGTH } from "../../constants/dashboard";
+import { IntlWrapper } from "../../localization";
+import { DASHBOARD_TITLE_MAX_LENGTH } from "../../constants";
 
 interface ISaveAsNewDashboardDialogState {
     dashboardTitle: string;
