@@ -1,5 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
+import { WrappedComponentProps } from "react-intl";
 
 import {
     EmptyAfmSdkError,
@@ -51,7 +52,7 @@ import {
     uriRef,
 } from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
-import { CoreGeoChart, getGeoChartDimensions, IGeoConfig } from "@gooddata/sdk-ui-geo";
+import { CoreGeoChart, getGeoChartDimensions, IGeoConfig, ICoreGeoChartProps } from "@gooddata/sdk-ui-geo";
 import set from "lodash/set";
 import isEmpty from "lodash/isEmpty";
 import includes from "lodash/includes";
@@ -61,6 +62,39 @@ import { removeSort } from "../../../utils/sort";
 
 const NUMBER_MEASURES_IN_BUCKETS_LIMIT = 2;
 
+/**
+ * PluggableGeoPushpinChart
+ *
+ * ## Buckets
+ *
+ * | Name        | Id          | Accepts                                                   |
+ * |-------------|-------------|-----------------------------------------------------------|
+ * | Location    | location    | geo attributes only                                       |
+ * | Size        | size        | measures only                                             |
+ * | Color       | color       | measures only                                             |
+ * | Segment     | segment     | attributes only                                           |
+ * | TooltipText | tooltipText | attributes only, added internally, not accessible from UI |
+ *
+ * ### Bucket axioms
+ *
+ * - |Location| = 1
+ * - |Size| ≤ 1
+ * - |Color| ≤ 1
+ * - |Segment| ≤ 1
+ *
+ * ## Dimensions
+ *
+ * The PluggableGeoPushpinChart creates either one- or two dimensional execution.
+ *
+ * - |Size| + |Color| ≥ 1 ⇒ [[MeasureGroupIdentifier], [Location, Segment, TooltipText]]
+ * - |Size| + |Color| = 0 ⇒ [[Location, Segment, TooltipText]]
+ *
+ * ## Sorts
+ *
+ * Unless the user specifies otherwise, the sorts used by default are:
+ *
+ * - |Segment| ≥ 1 ⇒ [attributeSort(Segment[0])]
+ */
 export class PluggableGeoPushpinChart extends PluggableBaseChart {
     private geoPushpinElement: string;
 
@@ -242,13 +276,13 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         // keep height undef for AD; causes indigo-visualizations to pick default 100%
         const resultingHeight = this.environment === DASHBOARDS_ENVIRONMENT ? height : undefined;
         const { drillableItems } = custom;
-        const supportedControls: IVisualizationProperties = this.visualizationProperties.controls || {};
+        const supportedControls = this.visualizationProperties.controls || {};
         const fullConfig = this.buildVisualizationConfig(options, supportedControls);
         const execution = this.getExecution(options, insight, executionFactory);
 
-        const geoPushpinProps = {
+        const geoPushpinProps: ICoreGeoChartProps & WrappedComponentProps = {
             drillableItems,
-            config: fullConfig as IGeoConfig,
+            config: fullConfig,
             height: resultingHeight,
             intl,
             locale,
@@ -259,8 +293,8 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             onError: this.onError,
             onExportReady: this.onExportReady,
             onLoadingChanged: this.onLoadingChanged,
-            LoadingComponent: null as any,
-            ErrorComponent: null as any,
+            LoadingComponent: null,
+            ErrorComponent: null,
             theme,
         };
 
@@ -318,8 +352,8 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         if (nonSegmentAttributes.length > 1 && isEmpty(segments)) {
             const locationItems = this.getLocationItems(buckets);
             segments = nonSegmentAttributes
-                .filter((attribute: IBucketItem): boolean => !includes(locationItems, attribute))
-                .filter((attribute: IBucketItem): boolean => !isDateBucketItem(attribute))
+                .filter((attribute) => !includes(locationItems, attribute))
+                .filter((attribute) => !isDateBucketItem(attribute))
                 .slice(0, 1);
         }
         return segments.slice(0, this.getPreferredBucketItemLimit(BucketNames.SEGMENT));
@@ -330,7 +364,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             buckets,
             [BucketNames.ATTRIBUTE, BucketNames.VIEW, BucketNames.LOCATION, BucketNames.TREND],
             [ATTRIBUTE],
-        ).filter((bucketItem: IBucketItem): boolean => Boolean(bucketItem.locationDisplayFormRef));
+        ).filter((bucketItem) => Boolean(bucketItem.locationDisplayFormRef));
 
         return locationItems.slice(0, this.getPreferredBucketItemLimit(BucketNames.LOCATION));
     }
@@ -350,12 +384,12 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         const { dfRef } = locationItem;
         const visualizationProperties = this.visualizationProperties || {};
         const { controls = {} } = visualizationProperties;
-        const hasSizeMesure = getItemsCount(buckets, BucketNames.SIZE) > 0;
-        const hasColorMesure = getItemsCount(buckets, BucketNames.COLOR) > 0;
+        const hasSizeMeasure = getItemsCount(buckets, BucketNames.SIZE) > 0;
+        const hasColorMeasure = getItemsCount(buckets, BucketNames.COLOR) > 0;
         const hasLocationAttribute = getItemsCount(buckets, BucketNames.LOCATION) > 0;
         const hasSegmentAttribute = getItemsCount(buckets, BucketNames.SEGMENT) > 0;
         const groupNearbyPoints =
-            hasLocationAttribute && !hasColorMesure && !hasSizeMesure && !hasSegmentAttribute;
+            hasLocationAttribute && !hasColorMeasure && !hasSizeMeasure && !hasSegmentAttribute;
 
         // for tooltip, prefer standard text display form (whose type is `undefined`) over geo or hyperlink display forms
         const tooltipDfRef =
