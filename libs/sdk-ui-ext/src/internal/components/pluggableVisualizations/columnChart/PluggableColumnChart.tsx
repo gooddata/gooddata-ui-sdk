@@ -82,9 +82,6 @@ export class PluggableColumnChart extends PluggableColumnBarCharts {
                                 normalSortEnabled: true,
                                 areaSortEnabled: true,
                             },
-                            metricSorts: [
-                                ...measures.map((m) => newMeasureSortSuggestion(m.localIdentifier)),
-                            ],
                         },
                         {
                             itemId: localIdRef(viewBy[1].localIdentifier),
@@ -124,7 +121,7 @@ export class PluggableColumnChart extends PluggableColumnBarCharts {
             };
         }
 
-        if (!isEmpty(viewBy) && (!isEmpty(stackBy) || canSortStackTotalValue)) {
+        if (!isEmpty(viewBy) && isStacked) {
             return {
                 defaultSort,
                 availableSorts: [
