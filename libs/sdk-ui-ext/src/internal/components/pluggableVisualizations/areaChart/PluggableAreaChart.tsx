@@ -396,6 +396,9 @@ export class PluggableAreaChart extends PluggableBaseChart {
                             normalSortEnabled: true,
                             areaSortEnabled: true,
                         },
+                        metricSorts: isEmpty(stackBy)
+                            ? measures.map((m) => newMeasureSortSuggestion(m.localIdentifier))
+                            : [],
                     },
                 ],
             };
