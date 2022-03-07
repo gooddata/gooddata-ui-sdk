@@ -9,6 +9,7 @@ import { IVisConstruct, IReferencePoint, IBucketItem } from "../../../interfaces
 import { getBucketItems } from "../../../utils/bucketHelper";
 import { canSortStackTotalValue } from "../barChart/sortHelpers";
 import { newMeasureSortSuggestion, ISortConfig } from "../../../interfaces/SortConfig";
+import { getCustomSortDisabledExplanation } from "../../../utils/sort";
 
 /**
  * PluggableColumnChart
@@ -161,6 +162,18 @@ export class PluggableColumnChart extends PluggableColumnBarCharts {
         };
     }
 
+    private isSortDisabled(referencePoint: IReferencePoint, availableSorts: ISortConfig["availableSorts"]) {
+        const { buckets } = referencePoint;
+        const measures = getBucketItems(buckets, BucketNames.MEASURES);
+        const viewBy = getBucketItems(buckets, BucketNames.VIEW);
+        const disabled = viewBy.length < 1 || measures.length < 1 || availableSorts.length === 0;
+        const disabledExplanation = getCustomSortDisabledExplanation(measures, viewBy, this.intl);
+        return {
+            disabled,
+            disabledExplanation,
+        };
+    }
+
     public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
         const { buckets, properties } = referencePoint;
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
@@ -172,13 +185,16 @@ export class PluggableColumnChart extends PluggableColumnBarCharts {
             stackBy,
             canSortStackTotalValue(buckets, properties),
         );
-        const disabled = viewBy.length < 1 || measures.length < 1 || availableSorts.length === 0;
+
+        const { disabled, disabledExplanation } = this.isSortDisabled(referencePoint, availableSorts);
+
         return Promise.resolve({
             supported: true,
             disabled,
             appliedSort: super.reuseCurrentSort(properties, availableSorts, defaultSort),
             defaultSort,
             availableSorts,
+            ...(disabledExplanation && { disabledExplanation }),
         });
     }
 }

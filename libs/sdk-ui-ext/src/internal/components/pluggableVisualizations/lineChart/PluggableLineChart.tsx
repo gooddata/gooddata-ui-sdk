@@ -38,7 +38,7 @@ import {
     getReferencePointWithSupportedProperties,
     setSecondaryMeasures,
 } from "../../../utils/propertiesHelper";
-import { removeSort } from "../../../utils/sort";
+import { removeSort, getCustomSortDisabledExplanation } from "../../../utils/sort";
 import { setLineChartUiConfig } from "../../../utils/uiConfigHelpers/lineChartUiConfigHelper";
 import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChartBasedConfigurationPanel";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
@@ -140,7 +140,8 @@ export class PluggableLineChart extends PluggableBaseChart {
 
     public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
         const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(referencePoint);
-        const disabled = this.isSortDisabled(referencePoint, availableSorts);
+        const { disabled, disabledExplanation } = this.isSortDisabled(referencePoint, availableSorts);
+
         const { properties } = referencePoint;
         return Promise.resolve({
             supported: true,
@@ -148,6 +149,7 @@ export class PluggableLineChart extends PluggableBaseChart {
             appliedSort: super.reuseCurrentSort(properties, availableSorts, defaultSort),
             defaultSort,
             availableSorts,
+            ...(disabledExplanation && { disabledExplanation }),
         });
     }
 
@@ -333,6 +335,10 @@ export class PluggableLineChart extends PluggableBaseChart {
         const { buckets } = referencePoint;
         const measures = getBucketItems(buckets, BucketNames.MEASURES);
         const viewBy = getBucketItems(buckets, BucketNames.TREND);
-        return viewBy.length < 1 || measures.length < 1 || availableSorts.length === 0;
+        const disabledExplanation = getCustomSortDisabledExplanation(measures, viewBy, this.intl);
+        return {
+            disabled: viewBy.length < 1 || measures.length < 1 || availableSorts.length === 0,
+            disabledExplanation,
+        };
     }
 }

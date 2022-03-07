@@ -1,9 +1,9 @@
 // (C) 2019-2022 GoodData Corporation
+import { IntlShape } from "react-intl";
 import isEmpty from "lodash/isEmpty";
 import isNil from "lodash/isNil";
 import omitBy from "lodash/omitBy";
 import isEqual from "lodash/isEqual";
-
 import {
     bucketAttributes,
     IBucket,
@@ -26,8 +26,10 @@ import {
     IMeasureSortItem,
     sortDirection,
 } from "@gooddata/sdk-model";
-
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+
+import { getTranslation } from "./translations";
+
 import { SORT_DIR_DESC } from "../constants/sort";
 import { IBucketItem, IBucketOfFun, IExtendedReferencePoint } from "../interfaces/Visualization";
 import { IAvailableSortsGroup } from "../interfaces/SortConfig";
@@ -331,4 +333,18 @@ export function validateCurrentSort(
             return reuseSortItemType(currentSortItem, availableSortGroup) ?? defaultSort[index];
         })
         .filter(Boolean);
+}
+
+export function getCustomSortDisabledExplanation(
+    relevantMeasures: IBucketItem[],
+    relevantAttributes: IBucketItem[],
+    intl: IntlShape,
+): string {
+    if (relevantAttributes.length === 0 && relevantMeasures.length >= 2) {
+        return getTranslation("sorting.disabled.explanation.measure", intl);
+    }
+
+    if (relevantAttributes.length === 0) {
+        return getTranslation("sorting.disabled.explanation.attribute", intl);
+    }
 }

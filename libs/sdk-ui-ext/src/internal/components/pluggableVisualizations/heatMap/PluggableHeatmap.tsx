@@ -45,7 +45,7 @@ import {
     getBucketItems,
 } from "../../../utils/bucketHelper";
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
-import { removeSort } from "../../../utils/sort";
+import { removeSort, getCustomSortDisabledExplanation } from "../../../utils/sort";
 import { setHeatmapUiConfig } from "../../../utils/uiConfigHelpers/heatmapUiConfigHelper";
 
 import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper";
@@ -233,14 +233,32 @@ export class PluggableHeatmap extends PluggableBaseChart {
         };
     }
 
+    private isSortDisabled(referencePoint: IReferencePoint, availableSorts: ISortConfig["availableSorts"]) {
+        const { buckets } = referencePoint;
+        const measures = getMeasureItems(buckets);
+        const viewBy = getBucketItems(buckets, BucketNames.VIEW);
+        const stackBy = getBucketItems(buckets, BucketNames.STACK);
+        const disabled =
+            (viewBy.length < 1 && stackBy.length < 1) || measures.length < 1 || availableSorts.length === 0;
+        const disabledExplanation = getCustomSortDisabledExplanation(
+            measures,
+            [...viewBy, ...stackBy],
+            this.intl,
+        );
+        return {
+            disabled,
+            disabledExplanation,
+        };
+    }
+
     public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
         const { buckets, properties } = referencePoint;
         const measures = getMeasureItems(buckets);
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
         const stackBy = getBucketItems(buckets, BucketNames.STACK);
         const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(measures, viewBy, stackBy);
-        const disabled =
-            (viewBy.length < 1 && stackBy.length < 1) || measures.length < 1 || availableSorts.length === 0;
+
+        const { disabled, disabledExplanation } = this.isSortDisabled(referencePoint, availableSorts);
 
         return Promise.resolve({
             supported: true,
@@ -248,6 +266,7 @@ export class PluggableHeatmap extends PluggableBaseChart {
             appliedSort: super.reuseCurrentSort(properties, availableSorts, defaultSort),
             defaultSort,
             availableSorts,
+            ...(disabledExplanation && { disabledExplanation }),
         });
     }
 

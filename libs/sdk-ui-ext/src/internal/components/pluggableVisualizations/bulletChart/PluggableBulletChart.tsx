@@ -28,7 +28,7 @@ import {
 } from "../../../utils/bucketHelper";
 
 import { BUCKETS, METRIC } from "../../../constants/bucket";
-import { removeSort } from "../../../utils/sort";
+import { removeSort, getCustomSortDisabledExplanation } from "../../../utils/sort";
 import { getBulletChartUiConfig } from "../../../utils/uiConfigHelpers/bulletChartUiConfigHelper";
 import { BULLET_CHART_CONFIG_MULTIPLE_DATES, DEFAULT_BULLET_CHART_CONFIG } from "../../../constants/uiConfig";
 import { BULLET_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
@@ -210,7 +210,11 @@ export class PluggableBulletChart extends PluggableBaseChart {
         const { buckets } = referencePoint;
         const primaryMeasures = getBucketItems(buckets, BucketNames.MEASURES);
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
-        return viewBy.length < 1 || primaryMeasures.length < 1 || availableSorts.length === 0;
+        const disabledExplanation = getCustomSortDisabledExplanation(primaryMeasures, viewBy, this.intl);
+        return {
+            disabled: viewBy.length < 1 || primaryMeasures.length < 1 || availableSorts.length === 0,
+            disabledExplanation,
+        };
     }
 
     private getDefaultAndAvailableSort(referencePoint: IReferencePoint): {
@@ -268,7 +272,7 @@ export class PluggableBulletChart extends PluggableBaseChart {
 
     public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
         const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(referencePoint);
-        const disabled = this.isSortDisabled(referencePoint, availableSorts);
+        const { disabled, disabledExplanation } = this.isSortDisabled(referencePoint, availableSorts);
         const { properties } = referencePoint;
         return Promise.resolve({
             supported: true,
@@ -276,6 +280,7 @@ export class PluggableBulletChart extends PluggableBaseChart {
             appliedSort: super.reuseCurrentSort(properties, availableSorts, defaultSort),
             defaultSort,
             availableSorts,
+            ...(disabledExplanation && { disabledExplanation }),
         });
     }
 }

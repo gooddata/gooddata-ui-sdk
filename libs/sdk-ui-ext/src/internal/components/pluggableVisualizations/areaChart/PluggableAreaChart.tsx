@@ -57,7 +57,7 @@ import {
     getReferencePointWithSupportedProperties,
     removeImmutableOptionalStackingProperties,
 } from "../../../utils/propertiesHelper";
-import { removeSort } from "../../../utils/sort";
+import { removeSort, getCustomSortDisabledExplanation } from "../../../utils/sort";
 import { setAreaChartUiConfig } from "../../../utils/uiConfigHelpers/areaChartUiConfigHelper";
 import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChartBasedConfigurationPanel";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
@@ -161,13 +161,14 @@ export class PluggableAreaChart extends PluggableBaseChart {
     public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
         const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(referencePoint);
         const { properties } = referencePoint;
-        const disabled = this.isSortDisabled(referencePoint, availableSorts);
+        const { disabled, disabledExplanation } = this.isSortDisabled(referencePoint, availableSorts);
         return Promise.resolve({
             supported: true,
             disabled,
             appliedSort: super.reuseCurrentSort(properties, availableSorts, defaultSort),
             defaultSort,
             availableSorts,
+            ...(disabledExplanation && { disabledExplanation }),
         });
     }
 
@@ -417,6 +418,10 @@ export class PluggableAreaChart extends PluggableBaseChart {
         const { buckets } = referencePoint;
         const measures = getBucketItems(buckets, BucketNames.MEASURES);
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
-        return viewBy.length < 1 || measures.length < 1 || availableSorts.length === 0;
+        const disabledExplanation = getCustomSortDisabledExplanation(measures, viewBy, this.intl);
+        return {
+            disabled: viewBy.length < 1 || measures.length < 1 || availableSorts.length === 0,
+            disabledExplanation,
+        };
     }
 }

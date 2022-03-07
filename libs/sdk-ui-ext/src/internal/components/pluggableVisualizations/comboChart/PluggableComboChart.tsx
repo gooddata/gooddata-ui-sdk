@@ -35,7 +35,7 @@ import {
 import { ISortConfig, newMeasureSortSuggestion } from "../../../interfaces/SortConfig";
 
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
-import { removeSort } from "../../../utils/sort";
+import { removeSort, getCustomSortDisabledExplanation } from "../../../utils/sort";
 import {
     applyUiConfig,
     findBucket,
@@ -318,24 +318,35 @@ export class PluggableComboChart extends PluggableBaseChart {
     private isSortDisabled(
         referencePoint: IReferencePoint,
         availableSorts: ISortConfig["availableSorts"],
-    ): boolean {
+    ): {
+        disabled: boolean;
+        disabledExplanation: string;
+    } {
         const { buckets } = referencePoint;
         const measures = getBucketItemsByType(buckets, BucketNames.MEASURES, [METRIC]);
         const secondaryMeasures = getBucketItemsByType(buckets, BucketNames.SECONDARY_MEASURES, [METRIC]);
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
-
-        return (
+        const disabled =
             viewBy.length < 1 ||
             availableSorts.length === 0 ||
-            (measures.length < 1 && secondaryMeasures.length < 1)
+            (measures.length < 1 && secondaryMeasures.length < 1);
+        const disabledExplanation = getCustomSortDisabledExplanation(
+            [...measures, ...secondaryMeasures],
+            viewBy,
+            this.intl,
         );
+
+        return {
+            disabled,
+            disabledExplanation,
+        };
     }
 
     public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
         const { buckets, properties } = referencePoint;
 
         const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(buckets, properties);
-        const disabled = this.isSortDisabled(referencePoint, availableSorts);
+        const { disabled, disabledExplanation } = this.isSortDisabled(referencePoint, availableSorts);
 
         return Promise.resolve({
             supported: true,
@@ -343,6 +354,7 @@ export class PluggableComboChart extends PluggableBaseChart {
             appliedSort: super.reuseCurrentSort(properties, availableSorts, defaultSort),
             defaultSort,
             availableSorts,
+            ...(disabledExplanation && { disabledExplanation }),
         });
     }
 

@@ -13,6 +13,7 @@ import { AXIS, AXIS_NAME } from "../../../constants/axis";
 import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig";
 import { getBucketItems } from "../../../utils/bucketHelper";
 import { canSortStackTotalValue } from "./sortHelpers";
+import { getCustomSortDisabledExplanation } from "../../../utils/sort";
 
 /**
  * PluggableBarChart
@@ -171,21 +172,34 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
             availableSorts: [],
         };
     }
-    public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
-        const { buckets, properties } = referencePoint;
+    private isSortDisabled(referencePoint: IReferencePoint, availableSorts: ISortConfig["availableSorts"]) {
+        const { buckets } = referencePoint;
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
         const measures = getBucketItems(buckets, BucketNames.MEASURES);
+        const disabled = viewBy.length < 1 || measures.length < 1 || availableSorts.length === 0;
+        const disabledExplanation = getCustomSortDisabledExplanation(measures, viewBy, this.intl);
+        return {
+            disabled,
+            disabledExplanation,
+        };
+    }
+    public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
+        const { buckets, properties } = referencePoint;
+
         const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(
             referencePoint,
             canSortStackTotalValue(buckets, properties),
         );
-        const disabled = viewBy.length < 1 || measures.length < 1 || availableSorts.length === 0;
+
+        const { disabled, disabledExplanation } = this.isSortDisabled(referencePoint, availableSorts);
+
         return Promise.resolve({
             supported: true,
             disabled,
             appliedSort: super.reuseCurrentSort(properties, availableSorts, defaultSort),
             defaultSort,
             availableSorts: availableSorts,
+            ...(disabledExplanation && { disabledExplanation }),
         });
     }
 }
