@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 /**
  * This package contains various extensions on top of the stable components included in GoodData.UI.
  *
@@ -21,8 +21,7 @@ import {
     IVisualizationSizeInfo,
 } from "./internal";
 
-export { clearInsightViewCaches, clearDashboardViewCaches } from "./dataLoaders";
-export * from "./dashboardView";
+export { clearInsightViewCaches } from "./dataLoaders";
 export * from "./insightView";
 
 // exported for sdk-ui-dashboard
@@ -36,6 +35,7 @@ export {
     fluidLayoutDescriptor,
     FluidLayoutDescriptor,
     IFluidLayoutDescriptor,
+    IDashboardDrillEvent,
     ILayoutDescriptor,
     LayoutType,
     isEmptyAfm,
