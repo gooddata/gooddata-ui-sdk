@@ -134,7 +134,7 @@ function scenarioLabel(storyKind, storyName, scenarioName) {
 }
 
 function scenarioUrlForId(id) {
-    return `http://storybook/iframe.html?id=${encodeURIComponent(id)}`;
+    return `http://storybook:8080/iframe.html?id=${encodeURIComponent(id)}`;
 }
 
 /**

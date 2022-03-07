@@ -2,7 +2,7 @@
 import { t as testController, Selector } from "testcafe";
 
 function storybookHostname() {
-    return process.env.CI === true ? "http://storybook" : "http://localhost:9001";
+    return process.env.CI === true ? "http://storybook:8080" : "http://localhost:9001";
 }
 
 function storyUrl(storyId) {
