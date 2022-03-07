@@ -1,6 +1,7 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
-import { IUser, IWorkspaceUser } from "@gooddata/sdk-backend-spi";
+import { IWorkspaceUser } from "@gooddata/sdk-backend-spi";
+import { IUser } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 
 /**
