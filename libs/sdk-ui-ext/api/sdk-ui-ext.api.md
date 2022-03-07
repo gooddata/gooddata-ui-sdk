@@ -73,7 +73,7 @@ export const fluidLayoutDescriptor: FluidLayoutDescriptor;
 export function getInsightSizeInfo(insight: IInsightDefinition, settings: ISettings): IVisualizationSizeInfo;
 
 // @internal (undocumented)
-export function getInsightWithAppliedDrillDown(insight: IInsight, drillEvent: IDashboardDrillEvent, drillDefinition: IDrillDownDefinition): IInsight;
+export function getInsightWithAppliedDrillDown(insight: IInsight, drillEvent: IDrillEvent, drillDefinition: IDrillDownDefinition): IInsight;
 
 // @beta
 export interface IDashboardDrillEvent extends IDrillEvent {

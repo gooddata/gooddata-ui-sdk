@@ -13,10 +13,10 @@
 
 import { ISettings } from "@gooddata/sdk-backend-spi";
 import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
+import { IDrillEvent } from "@gooddata/sdk-ui";
 import {
     fluidLayoutDescriptor,
     FullVisualizationCatalog,
-    IDashboardDrillEvent,
     IDrillDownDefinition,
     IVisualizationSizeInfo,
 } from "./internal";
@@ -63,7 +63,7 @@ export function getInsightSizeInfo(insight: IInsightDefinition, settings: ISetti
  */
 export function getInsightWithAppliedDrillDown(
     insight: IInsight,
-    drillEvent: IDashboardDrillEvent,
+    drillEvent: IDrillEvent,
     drillDefinition: IDrillDownDefinition,
 ): IInsight {
     return FullVisualizationCatalog.forInsight(insight).applyDrillDown(insight, {
