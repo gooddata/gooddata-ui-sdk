@@ -292,28 +292,13 @@ export class PluggableComboChart extends PluggableBaseChart {
         if (!isEmpty(viewBy) && (!isEmpty(measures) || !isEmpty(secondaryMeasures))) {
             const mergedMeasures = [...measures, ...secondaryMeasures];
 
-            if (canSortStackTotal) {
-                return {
-                    defaultSort,
-                    availableSorts: [
-                        {
-                            itemId: localIdRef(viewBy[0].localIdentifier),
-                            attributeSort: {
-                                areaSortEnabled: true,
-                                normalSortEnabled: true,
-                            },
-                        },
-                    ],
-                };
-            }
-
             return {
                 defaultSort,
                 availableSorts: [
                     {
                         itemId: localIdRef(viewBy[0].localIdentifier),
                         attributeSort: {
-                            areaSortEnabled: mergedMeasures.length > 1,
+                            areaSortEnabled: canSortStackTotal || mergedMeasures.length > 1,
                             normalSortEnabled: true,
                         },
                         metricSorts: mergedMeasures.map((m) => newMeasureSortSuggestion(m.localIdentifier)),

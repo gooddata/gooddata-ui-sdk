@@ -103,10 +103,9 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
         const measures = getBucketItems(buckets, BucketNames.MEASURES);
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
         const stackBy = getBucketItems(buckets, BucketNames.STACK);
-
         const isStacked = !isEmpty(stackBy) || canSortStackTotalValue;
 
-        if (viewBy.length === 2) {
+        if (viewBy.length === 2 && !isEmpty(measures)) {
             if (measures.length >= 2 && !canSortStackTotalValue) {
                 return {
                     defaultSort: [

@@ -577,7 +577,7 @@ describe("PluggableComboChart", () => {
             expect(sortConfig).toMatchSnapshot();
         });
 
-        it("should provide attribute sort as default sort, attribute area as available sorts for 2 primary measures stacked + 1 VB", async () => {
+        it("should provide attribute sort as default sort, attribute area  and two measures sorts as available sorts for 2 primary measures stacked + 1 VB", async () => {
             const chart = createComponent(defaultProps);
 
             const sortConfig = await chart.getSortConfig(

@@ -38,6 +38,7 @@ Object {
       "itemId": Object {
         "localIdentifier": "a1",
       },
+      "metricSorts": Array [],
     },
   ],
   "currentSort": Array [
@@ -128,6 +129,7 @@ Object {
       "itemId": Object {
         "localIdentifier": "a1",
       },
+      "metricSorts": Array [],
     },
   ],
   "currentSort": Array [
@@ -154,6 +156,28 @@ Object {
       "itemId": Object {
         "localIdentifier": "a1",
       },
+      "metricSorts": Array [
+        Object {
+          "locators": Array [
+            Object {
+              "measureLocatorItem": Object {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+        Object {
+          "locators": Array [
+            Object {
+              "measureLocatorItem": Object {
+                "measureIdentifier": "m2",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+      ],
     },
   ],
   "currentSort": Array [
@@ -189,6 +213,28 @@ Object {
       "itemId": Object {
         "localIdentifier": "a1",
       },
+      "metricSorts": Array [
+        Object {
+          "locators": Array [
+            Object {
+              "measureLocatorItem": Object {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+        Object {
+          "locators": Array [
+            Object {
+              "measureLocatorItem": Object {
+                "measureIdentifier": "m2",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+      ],
     },
   ],
   "currentSort": Array [

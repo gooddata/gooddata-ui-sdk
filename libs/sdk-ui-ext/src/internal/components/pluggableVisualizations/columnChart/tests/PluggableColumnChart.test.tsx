@@ -212,7 +212,7 @@ describe("PluggableColumnChart", () => {
             expect(sortConfig).toMatchSnapshot();
         });
 
-        it("should provide two attribute normal sorts as default sort, two attribute area and two measure sorts as available sorts for 2M + 2VB", async () => {
+        it("should provide two attribute normal sorts as default sort, two attribute area and one measure sorts as available sorts for 2M + 2VB", async () => {
             const chart = createComponent(defaultProps);
 
             const sortConfig = await chart.getSortConfig(

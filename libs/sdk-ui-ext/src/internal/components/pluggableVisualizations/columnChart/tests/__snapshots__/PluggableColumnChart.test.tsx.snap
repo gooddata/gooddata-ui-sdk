@@ -319,7 +319,7 @@ Object {
 }
 `;
 
-exports[`PluggableColumnChart Sort config should provide two attribute normal sorts as default sort, two attribute area and two measure sorts as available sorts for 2M + 2VB 1`] = `
+exports[`PluggableColumnChart Sort config should provide two attribute normal sorts as default sort, two attribute area and one measure sorts as available sorts for 2M + 2VB 1`] = `
 Object {
   "availableSorts": Array [
     Object {
@@ -330,28 +330,6 @@ Object {
       "itemId": Object {
         "localIdentifier": "a1",
       },
-      "metricSorts": Array [
-        Object {
-          "locators": Array [
-            Object {
-              "measureLocatorItem": Object {
-                "measureIdentifier": "m1",
-              },
-            },
-          ],
-          "type": "measureSort",
-        },
-        Object {
-          "locators": Array [
-            Object {
-              "measureLocatorItem": Object {
-                "measureIdentifier": "m2",
-              },
-            },
-          ],
-          "type": "measureSort",
-        },
-      ],
     },
     Object {
       "attributeSort": Object {

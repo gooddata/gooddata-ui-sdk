@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PluggableComboChart Sort config should provide attribute sort as default sort, attribute area and two measure sorts as available sorts for 2M + 1 VB 1`] = `
+exports[`PluggableComboChart Sort config should provide attribute sort as default sort, attribute area  and two measures sorts as available sorts for 2 primary measures stacked + 1 VB 1`] = `
 Object {
   "availableSorts": Array [
     Object {
@@ -48,7 +48,7 @@ Object {
 }
 `;
 
-exports[`PluggableComboChart Sort config should provide attribute sort as default sort, attribute area as available sorts for 2 primary measures stacked + 1 VB 1`] = `
+exports[`PluggableComboChart Sort config should provide attribute sort as default sort, attribute area and two measure sorts as available sorts for 2M + 1 VB 1`] = `
 Object {
   "availableSorts": Array [
     Object {
@@ -59,6 +59,28 @@ Object {
       "itemId": Object {
         "localIdentifier": "a1",
       },
+      "metricSorts": Array [
+        Object {
+          "locators": Array [
+            Object {
+              "measureLocatorItem": Object {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+        Object {
+          "locators": Array [
+            Object {
+              "measureLocatorItem": Object {
+                "measureIdentifier": "m2",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+      ],
     },
   ],
   "currentSort": Array [
