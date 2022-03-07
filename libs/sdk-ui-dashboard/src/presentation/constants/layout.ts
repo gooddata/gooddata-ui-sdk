@@ -1,7 +1,6 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { Configuration } from "react-grid-system";
 import { ScreenSize } from "@gooddata/sdk-backend-spi";
-import { VisType } from "@gooddata/sdk-ui";
 
 export const ALL_SCREENS: ScreenSize[] = ["xl", "lg", "md", "sm", "xs"];
 
@@ -48,27 +47,6 @@ export const DASHBOARD_LAYOUT_CONTAINER_WIDTHS = {
 };
 
 export const DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH = 180;
-
-export const DASHBOARD_LAYOUT_VIS_TYPE: {
-    [widgetClass in VisType]?: VisType;
-} = {
-    headline: "headline",
-    xirr: "xirr",
-    column: "column",
-    bar: "bar",
-    line: "line",
-    area: "area",
-    combo: "combo",
-    combo2: "combo2",
-    scatter: "scatter",
-    bubble: "bubble",
-    pie: "pie",
-    donut: "donut",
-    treemap: "treemap",
-    heatmap: "heatmap",
-    table: "table",
-    pushpin: "pushpin",
-};
 
 export const DASHBOARD_LAYOUT_MAX_HEIGHT_AS_RATIO_XS = 150;
 export const GRID_ROW_HEIGHT_IN_PX = 20;
