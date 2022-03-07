@@ -37,13 +37,6 @@ import { Login } from "../components/login";
 import { WithSubRoutes } from "../components/WithSubRoutes";
 import { AboutThisWorkspace } from "../components/AboutThisWorkspace";
 
-import SimpleDashboardView from "../examples/dashboardEmbedding/SimpleDashboardView";
-import DashboardViewWithCustomCharts from "../examples/dashboardEmbedding/DashboardViewWithCustomCharts";
-import DashboardViewWithFilters from "../examples/dashboardEmbedding/DashboardViewWithFilters";
-import DashboardViewWithMergedFilters from "../examples/dashboardEmbedding/DashboardViewWithMergedFilters";
-import DashboardViewWithDrilling from "../examples/dashboardEmbedding/DashboardViewWithDrilling";
-import DashboardExport from "../examples/dashboardEmbedding/DashboardExport";
-import DashboardViewAdvancedCustomizations from "../examples/dashboardEmbedding/DashboardViewAdvancedCustomizations";
 import SingleValuePlaceholders from "../examples/placeholders/SingleValuePlaceholder";
 import MultiValuePlaceholders from "../examples/placeholders/MultiValuePlaceholder";
 import ComposedPlaceholder from "../examples/placeholders/ComposedPlaceholder";
@@ -111,44 +104,6 @@ export const dashboardComponentUseCasesRoutes = [
     },
 ];
 
-export const dashboardViewUseCasesRoutes = [
-    {
-        path: "/dashboardView/simple",
-        title: "Simple",
-        Component: SimpleDashboardView,
-    },
-    {
-        path: "/dashboardView/with-filters",
-        title: "With filters",
-        Component: DashboardViewWithFilters,
-    },
-    {
-        path: "/dashboardView/with-merged-filters",
-        title: "With merged filters",
-        Component: DashboardViewWithMergedFilters,
-    },
-    {
-        path: "/dashboardView/with-drilling",
-        title: "With drilling",
-        Component: DashboardViewWithDrilling,
-    },
-    {
-        path: "/dashboardView/with-export",
-        title: "With export",
-        Component: DashboardExport,
-    },
-    {
-        path: "/dashboardView/custom-chart",
-        title: "With custom charts",
-        Component: DashboardViewWithCustomCharts,
-    },
-    {
-        path: "/dashboardView/advanced-customizations",
-        title: "With advanced customizations",
-        Component: DashboardViewAdvancedCustomizations,
-    },
-];
-
 export const drillingUseCasesRoutes = [
     {
         path: "/drilling/drill-with-external-data",
@@ -203,10 +158,6 @@ const DashboardComponentUseCasesRoutes = (props: any): JSX.Element =>
     WithSubRoutes({ ...props, subRoutes: dashboardComponentUseCasesRoutes });
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const DashboardViewUseCasesRoutes = (props: any): JSX.Element =>
-    WithSubRoutes({ ...props, subRoutes: dashboardViewUseCasesRoutes });
-
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const AdvancedUseCasesRoutes = (props: any): JSX.Element =>
     WithSubRoutes({ ...props, subRoutes: advancedUseCasesRoutes });
 
@@ -253,13 +204,6 @@ export const sideNavigationRoutes: RouteDefinition[] = [
         redirectTo: dashboardComponentUseCasesRoutes[0].path,
         title: "Dashboard Component",
         Component: DashboardComponentUseCasesRoutes,
-    },
-    {
-        path: "/dashboardView",
-        pathMatch: "full",
-        redirectTo: dashboardViewUseCasesRoutes[0].path,
-        title: "DashboardView Component",
-        Component: DashboardViewUseCasesRoutes,
     },
     { path: "/sorting", title: "Sorting", Component: Sorting },
     {
@@ -337,7 +281,6 @@ export const routes = [
     ...sideNavigationRoutes,
     ...insightViewUseCasesRoutes,
     ...dashboardComponentUseCasesRoutes,
-    ...dashboardViewUseCasesRoutes,
     ...advancedUseCasesRoutes,
     ...drillingUseCasesRoutes,
     ...measureValueFilterUseCasesRoutes,
