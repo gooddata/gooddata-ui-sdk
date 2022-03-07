@@ -1,5 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
+import compact from "lodash/compact";
 import omit from "lodash/omit";
 import { CoreGeoChart } from "./core/CoreGeoChart";
 
@@ -24,6 +25,7 @@ import {
     INullableFilter,
     ISortItem,
     MeasureGroupIdentifier,
+    newBucket,
     newDimension,
 } from "@gooddata/sdk-model";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
@@ -31,29 +33,14 @@ import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 const getBuckets = (props: IGeoPushpinChartProps): IBucket[] => {
     const { color, location, segmentBy, size, config } = props;
     const buckets: IBucket[] = [
-        {
-            localIdentifier: BucketNames.SIZE,
-            items: size ? [disableComputeRatio(size as IAttributeOrMeasure)] : [],
-        },
-        {
-            localIdentifier: BucketNames.COLOR,
-            items: color ? [disableComputeRatio(color as IAttributeOrMeasure)] : [],
-        },
-        {
-            localIdentifier: BucketNames.LOCATION,
-            items: location ? [location as IAttribute] : [],
-        },
-        {
-            localIdentifier: BucketNames.SEGMENT,
-            items: segmentBy ? [segmentBy as IAttribute] : [],
-        },
+        newBucket(BucketNames.SIZE, ...(size ? [disableComputeRatio(size as IAttributeOrMeasure)] : [])),
+        newBucket(BucketNames.COLOR, ...(color ? [disableComputeRatio(color as IAttributeOrMeasure)] : [])),
+        newBucket(BucketNames.LOCATION, ...(location ? [location as IAttribute] : [])),
+        newBucket(BucketNames.SEGMENT, ...(segmentBy ? [segmentBy as IAttribute] : [])),
     ];
     const tooltipText = config?.[BucketNames.TOOLTIP_TEXT];
     if (tooltipText) {
-        buckets.push({
-            localIdentifier: BucketNames.TOOLTIP_TEXT,
-            items: [tooltipText],
-        });
+        buckets.push(newBucket(BucketNames.TOOLTIP_TEXT, tooltipText));
     }
     return buckets;
 };
@@ -65,14 +52,8 @@ export function getGeoChartDimensions(def: IExecutionDefinition): IDimension[] {
     const buckets = def.buckets;
     const measures = bucketsMeasures(buckets);
     const attributes = bucketsAttributes(buckets);
-    const chartDimensions: IDimension[] = [];
 
-    if (measures.length > 0) {
-        chartDimensions.push(newDimension([MeasureGroupIdentifier]));
-    }
-    chartDimensions.push(newDimension(attributes));
-
-    return chartDimensions;
+    return compact([measures.length > 0 && newDimension([MeasureGroupIdentifier]), newDimension(attributes)]);
 }
 
 /**
@@ -93,7 +74,7 @@ const NON_CORE_PROPS: Array<keyof IGeoPushpinChartProps> = [
 function GeoPushpinChartInner(props: IGeoPushpinChartProps): JSX.Element {
     const { backend, workspace, sortBy, filters, exportTitle, execConfig = {} } = props;
 
-    const buckets: IBucket[] = getBuckets(props);
+    const buckets = getBuckets(props);
     const newProps = omit(props, NON_CORE_PROPS);
 
     const execution = backend!

@@ -424,12 +424,12 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
 
         supportedControls = getHighchartsAxisNameConfiguration(
             supportedControls,
-            this.featureFlags["enableAxisNameConfiguration"] as boolean,
+            this.featureFlags.enableAxisNameConfiguration,
         );
 
         supportedControls = getDataPointsConfiguration(
             supportedControls,
-            this.featureFlags["enableHidingOfDataPoints"] as boolean,
+            this.featureFlags.enableHidingOfDataPoints,
         );
 
         return {

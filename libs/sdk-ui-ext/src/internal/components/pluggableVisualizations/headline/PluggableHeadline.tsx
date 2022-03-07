@@ -58,15 +58,38 @@ import {
 } from "./headlineBucketHelper";
 import cloneDeep from "lodash/cloneDeep";
 
+/**
+ * PluggableHeadline
+ *
+ * ## Buckets
+ *
+ * | Name             | Id                 | Accepts       |
+ * |------------------|--------------------|---------------|
+ * | MeasurePrimary   | measures           | measures only |
+ * | MeasureSecondary | secondary_measures | measures only |
+ *
+ * ### Bucket axioms
+ *
+ * - |MeasurePrimary| = 1
+ * - |MeasureSecondary| ≤ 1
+ *
+ * ## Dimensions
+ *
+ * The PluggableHeadline always creates one dimensional execution.
+ *
+ * - ⊤ ⇒ [[MeasureGroupIdentifier]]
+ *
+ * ## Sorts
+ *
+ * The PluggableHeadline does not use any sorts.
+ */
 export class PluggableHeadline extends AbstractPluggableVisualization {
-    // private projectId: string;
     private readonly settings?: ISettings;
     private readonly renderFun: RenderFunction;
 
     constructor(props: IVisConstruct) {
         super(props);
 
-        //  this.projectId = props.projectId;
         this.settings = props.featureFlags;
         this.renderFun = props.renderFun;
     }

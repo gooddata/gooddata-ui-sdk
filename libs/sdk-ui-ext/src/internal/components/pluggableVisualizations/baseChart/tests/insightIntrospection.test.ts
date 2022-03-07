@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import { IInsightDefinition } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
@@ -15,9 +15,9 @@ describe("countItemsOnAxesInMdObject", () => {
                 title: "My Insight",
                 visualizationUrl: "vcId",
                 buckets: [
-                    { localIdentifier: BucketNames.VIEW, items: Array(2) as any[] },
-                    { localIdentifier: BucketNames.MEASURES, items: Array(3) as any[] },
-                    { localIdentifier: BucketNames.SECONDARY_MEASURES, items: Array(4) as any[] },
+                    { localIdentifier: BucketNames.VIEW, items: Array(2) },
+                    { localIdentifier: BucketNames.MEASURES, items: Array(3) },
+                    { localIdentifier: BucketNames.SECONDARY_MEASURES, items: Array(4) },
                 ],
             },
         };
@@ -40,8 +40,8 @@ describe("countItemsOnAxes", () => {
                 title: "My Insight",
                 visualizationUrl: "vcId",
                 buckets: [
-                    { localIdentifier: BucketNames.VIEW, items: Array(2) as any[] },
-                    { localIdentifier: BucketNames.MEASURES, items: Array(3) as any[] },
+                    { localIdentifier: BucketNames.VIEW, items: Array(2) },
+                    { localIdentifier: BucketNames.MEASURES, items: Array(3) },
                 ],
             },
         };
@@ -67,8 +67,8 @@ describe("countItemsOnAxes", () => {
                 title: "My Insight",
                 visualizationUrl: "vcId",
                 buckets: [
-                    { localIdentifier: BucketNames.VIEW, items: Array(2) as any[] },
-                    { localIdentifier: BucketNames.MEASURES, items: Array(3) as any[] },
+                    { localIdentifier: BucketNames.VIEW, items: Array(2) },
+                    { localIdentifier: BucketNames.MEASURES, items: Array(3) },
                 ],
             },
         };
@@ -94,9 +94,9 @@ describe("countItemsOnAxes", () => {
                 title: "My Insight",
                 visualizationUrl: "vcId",
                 buckets: [
-                    { localIdentifier: BucketNames.VIEW, items: Array(2) as any[] },
-                    { localIdentifier: BucketNames.MEASURES, items: Array(3) as any[] },
-                    { localIdentifier: BucketNames.SECONDARY_MEASURES, items: Array(4) as any[] },
+                    { localIdentifier: BucketNames.VIEW, items: Array(2) },
+                    { localIdentifier: BucketNames.MEASURES, items: Array(3) },
+                    { localIdentifier: BucketNames.SECONDARY_MEASURES, items: Array(4) },
                 ],
             },
         };

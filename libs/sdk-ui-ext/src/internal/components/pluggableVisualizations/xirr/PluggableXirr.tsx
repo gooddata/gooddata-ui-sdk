@@ -42,6 +42,31 @@ import { AbstractPluggableVisualization } from "../AbstractPluggableVisualizatio
 import { getXirrBuckets } from "./xirrBucketHelper";
 import cloneDeep from "lodash/cloneDeep";
 
+/**
+ * PluggableXirr
+ *
+ * ## Buckets
+ *
+ * | Name           | Id        | Accepts       |
+ * |----------------|-----------|---------------|
+ * | Measure        | measures  | measures only |
+ * | Date Attribute | attribute | dates only    |
+ *
+ * ### Bucket axioms
+ *
+ * - |Measure| = 1
+ * - |DateAttribute| = 1
+ *
+ * ## Dimensions
+ *
+ * The PluggableXirr always creates one dimensional execution.
+ *
+ * - ⊤ ⇒ [[MeasureGroupIdentifier, DateAttribute]]
+ *
+ * ## Sorts
+ *
+ * The PluggableXirr does not use any sorts.
+ */
 export class PluggableXirr extends AbstractPluggableVisualization {
     private settings?: ISettings;
     private renderFun: RenderFunction;
@@ -164,7 +189,7 @@ export class PluggableXirr extends AbstractPluggableVisualization {
 
     protected pushData = (data: IPushData, options?: IVisualizationOptions): void => {
         // For xirr chart we do not support drilling from attributes.
-        const filterAtrributes = this.withEmptyAttributeTargets(data);
-        this.superPushData(filterAtrributes, options);
+        const filterAttributes = this.withEmptyAttributeTargets(data);
+        this.superPushData(filterAttributes, options);
     };
 }

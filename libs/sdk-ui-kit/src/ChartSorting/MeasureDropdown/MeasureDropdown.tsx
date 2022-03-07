@@ -60,7 +60,7 @@ const getItems = (
     }
 
     if (measures) {
-        measures.map((measure) => {
+        measures.forEach((measure) => {
             const measureLocator = measure.locators.find(isMeasureLocator);
             const bucket = measureNames[measureLocator.measureLocatorItem.measureIdentifier];
             measureValues.push({

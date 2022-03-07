@@ -51,10 +51,6 @@ describe("PluggableAreaChart", () => {
         return new PluggableAreaChart(props);
     }
 
-    afterAll(() => {
-        document.clear();
-    });
-
     it("should return reference point when no categories and only stacks", async () => {
         const areaChart = createComponent();
 

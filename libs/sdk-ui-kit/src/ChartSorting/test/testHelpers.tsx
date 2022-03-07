@@ -13,7 +13,7 @@ export const clickAttributeDropdown = (wrapper: ReactWrapper, index: number): vo
 
 export const clickMeasureDropdown = (wrapper: ReactWrapper): void => {
     wrapper.find(".s-sort-type-measure-button").hostNodes().simulate("click");
-    wrapper.update;
+    wrapper.update();
 };
 
 export const findSelector = (wrapper: ReactWrapper, selector: string): boolean => {
