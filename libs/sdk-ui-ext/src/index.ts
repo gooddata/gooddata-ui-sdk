@@ -26,8 +26,6 @@ export * from "./insightView";
 
 // exported for sdk-ui-dashboard
 export {
-    validateDashboardLayoutWidgetSize,
-    MeasurableWidgetContent,
     IDrillDownDefinition,
     isDrillDownDefinition,
     IVisualizationSizeInfo,
@@ -35,7 +33,6 @@ export {
     fluidLayoutDescriptor,
     FluidLayoutDescriptor,
     IFluidLayoutDescriptor,
-    IDashboardDrillEvent,
     ILayoutDescriptor,
     LayoutType,
     isEmptyAfm,

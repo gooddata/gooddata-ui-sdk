@@ -4,8 +4,6 @@
 
 ```ts
 
-import { AnalyticalWidgetType } from '@gooddata/sdk-backend-spi';
-import { DrillDefinition } from '@gooddata/sdk-backend-spi';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
@@ -19,7 +17,6 @@ import { IFilter } from '@gooddata/sdk-model';
 import { IGeoConfig } from '@gooddata/sdk-ui-geo';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
-import { ILegacyKpi } from '@gooddata/sdk-backend-spi';
 import { ILoadingProps } from '@gooddata/sdk-ui';
 import { ILocale } from '@gooddata/sdk-ui';
 import { IPivotTableConfig } from '@gooddata/sdk-ui-pivot';
@@ -74,12 +71,6 @@ export function getInsightSizeInfo(insight: IInsightDefinition, settings: ISetti
 
 // @internal (undocumented)
 export function getInsightWithAppliedDrillDown(insight: IInsight, drillEvent: IDrillEvent, drillDefinition: IDrillDownDefinition): IInsight;
-
-// @beta
-export interface IDashboardDrillEvent extends IDrillEvent {
-    drillDefinitions?: Array<DrillDefinition | IDrillDownDefinition>;
-    widgetRef?: ObjRef;
-}
 
 // @beta
 export interface IDrillDownDefinition {
@@ -211,9 +202,6 @@ export const KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationSizeInfo;
 // @alpha (undocumented)
 export type LayoutType = "fluid";
 
-// @internal (undocumented)
-export type MeasurableWidgetContent = IInsightDefinition | ILegacyKpi;
-
 // @alpha (undocumented)
 export const PluggableVisualizationErrorCodes: {
     INVALID_BUCKETS: string;
@@ -222,11 +210,5 @@ export const PluggableVisualizationErrorCodes: {
 
 // @alpha (undocumented)
 export type PluggableVisualizationErrorType = keyof typeof PluggableVisualizationErrorCodes;
-
-// @internal (undocumented)
-export function validateDashboardLayoutWidgetSize(currentWidth: number, currentHeight: number | undefined, widgetType: AnalyticalWidgetType, widgetContent: MeasurableWidgetContent, settings: ISettings): {
-    validWidth: number;
-    validHeight: number;
-};
 
 ```

@@ -55,4 +55,4 @@ export { ISortConfig, IAvailableSortsGroup } from "./interfaces/SortConfig";
 export { addIntersectionFiltersToInsight } from "./components/pluggableVisualizations/drillDownUtil";
 export * from "./components/pluggableVisualizations/constants";
 
-export * from "./dashboardEmbedding";
+export * from "./FluidLayoutDescriptor";

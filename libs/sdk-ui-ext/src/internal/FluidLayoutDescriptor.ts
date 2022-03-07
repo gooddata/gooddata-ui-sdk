@@ -1,6 +1,9 @@
 // (C) 2021 GoodData Corporation
-import { IFluidLayoutDescriptor } from "../../interfaces/LayoutDescriptor";
-import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT, GRID_ROW_HEIGHT_IN_PX } from "./constants";
+import { IFluidLayoutDescriptor } from "./interfaces/LayoutDescriptor";
+
+// keep in sync with sdk-ui-dashboard
+const DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT = 12;
+const GRID_ROW_HEIGHT_IN_PX = 20;
 
 /**
  * @alpha
