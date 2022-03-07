@@ -243,6 +243,16 @@ $font-stack-roman: gdcustomfont, "Avenir", "Helvetica Neue", arial, sans-serif;
     pointer-events: none;
 }
 
+/* Partially overwrite Mapbox blocker CSS */
+.mapboxgl-scroll-zoom-blocker,
+.mapboxgl-touch-pan-blocker {
+    font-family: $font-stack-roman;
+    // stylelint-disable-next-line declaration-no-important
+    font-size: 16px !important;
+    color: $default-gd-color-text;
+    background: rgba($gd-outside-background-color, 0.9);
+}
+
 // this will fix the scale problem of mapbox canvas when exporting
 .isExportMode .mapboxgl-canvas {
     // stylelint-disable-next-line declaration-no-important

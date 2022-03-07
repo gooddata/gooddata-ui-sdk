@@ -29,7 +29,7 @@ import {
     removeShowOnSecondaryAxis,
 } from "../../../utils/bucketHelper";
 import { setGeoPushpinUiConfig } from "../../../utils/uiConfigHelpers/geoPushpinChartUiConfigHelper";
-import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
+import { DASHBOARDS_ENVIRONMENT, ANALYTICAL_ENVIRONMENT } from "../../../constants/properties";
 import { GEOPUSHPIN_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 import GeoPushpinConfigurationPanel from "../../configurationPanels/GeoPushpinConfigurationPanel";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
@@ -253,6 +253,10 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             ...legendProp,
             ...viewportProp,
         };
+        const cooperativeGestures =
+            customVisualizationConfig?.cooperativeGestures !== undefined
+                ? customVisualizationConfig.cooperativeGestures
+                : this.environment !== ANALYTICAL_ENVIRONMENT;
         return {
             separators: config.separators,
             colorPalette: config.colorPalette,
@@ -261,6 +265,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             ...geoChartConfig,
             colorMapping,
             ...customVisualizationConfig,
+            cooperativeGestures,
         };
     }
 

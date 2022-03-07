@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import isEqual from "lodash/isEqual";
@@ -132,11 +132,28 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
         this.chartRef = ref;
     };
 
+    private generateLocale() {
+        const { intl } = this.props;
+
+        return {
+            "ScrollZoomBlocker.CtrlMessage": intl.formatMessage(
+                { id: "geochart.scroll.zoom.blocker" },
+                { button: "ctrl" },
+            ),
+            "ScrollZoomBlocker.CmdMessage": intl.formatMessage(
+                { id: "geochart.scroll.zoom.blocker" },
+                { button: "⌘" },
+            ),
+            "TouchPanBlocker.Message": intl.formatMessage({ id: "geochart.touch.pan.blocker" }),
+        };
+    }
+
     public createMap = (): void => {
         const { config, geoData } = this.props;
         const data = geoData.location!.data;
-        const { isExportMode = false } = config || {};
+        const { isExportMode = false, cooperativeGestures = true } = config || {};
         const isViewportFrozen = this.isViewportFrozen();
+        const locale = cooperativeGestures ? this.generateLocale() : {};
 
         this.chart = new mapboxgl.Map({
             ...DEFAULT_MAPBOX_OPTIONS,
@@ -146,6 +163,8 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
             // This is false by default as a performance optimization.
             interactive: !isViewportFrozen,
             preserveDrawingBuffer: isExportMode,
+            cooperativeGestures,
+            locale,
         });
     };
 

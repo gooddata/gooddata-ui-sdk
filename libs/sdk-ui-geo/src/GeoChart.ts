@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import { IAttribute, IColorPalette, IExecutionConfig } from "@gooddata/sdk-model";
 import {
     AttributeOrPlaceholder,
@@ -180,6 +180,7 @@ export interface IGeoConfig {
     colorPalette?: IColorPalette;
     colorMapping?: IColorMapping[];
     showLabels?: boolean;
+    cooperativeGestures?: boolean;
 }
 
 /**
