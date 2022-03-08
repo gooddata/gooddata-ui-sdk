@@ -12,6 +12,32 @@ const selectSelf = createSelector(
  * This selector returns user's permissions in the workspace where the dashboard is stored. It is expected that the
  * selector is called only after the permission state is correctly initialized. Invocations before initialization lead to invariant errors.
  *
+ * See {@link @gooddata/sdk-backend-spi#WorkspacePermission} for all available permissions.
+ *
+ * If the permission is not supported by GoodData.CN backend, the selector always returns `false` value.
+ *
+ * In case you need multiple permissions available in your application, use common selector.
+ *
+ * @example
+ * ```
+ *      const permissions = useDashboardSelector(selectPermissions);
+ *
+ *      if (permissions.canCreateAnalyticalDashboard) {
+ *          // allow user to do a action for which the `canCreateAnalyticalDashboard` permission is needed
+ *      }
+ * ```
+ *
+ * If there is only limited number of permissions, use specific selector instead (available selectors are all below).
+ *
+ * @example
+ * ```
+ *      const canCreateAnalyticalDashboard = useDashboardSelector(selectCanCreateAnalyticalDashboard);
+ *
+ *      if (canCreateAnalyticalDashboard) {
+ *          // allow user to do a action for which the `canCreateAnalyticalDashboard` permission is needed
+ *      }
+ * ```
+ *
  * @public
  */
 export const selectPermissions = createSelector(selectSelf, (filterContextState) => {
