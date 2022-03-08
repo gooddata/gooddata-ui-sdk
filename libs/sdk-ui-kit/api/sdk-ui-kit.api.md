@@ -198,8 +198,6 @@ export interface ChartSortingOwnProps {
     onApply: (sortItems: ISortItem[]) => void;
     // (undocumented)
     onCancel: () => void;
-    // (undocumented)
-    onClose?: () => void;
 }
 
 // @internal (undocumented)
@@ -792,9 +790,19 @@ export interface IBubbleTriggerState {
 }
 
 // @internal (undocumented)
+export interface IBucketItemDescriptor {
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    sequenceNumber?: string;
+    // (undocumented)
+    type: "attribute" | "chronologicalDate" | "genericDate" | "measure";
+}
+
+// @internal (undocumented)
 export interface IBucketItemDescriptors {
     // (undocumented)
-    [localIdentifier: string]: IIBucketItemDescriptor;
+    [localIdentifier: string]: IBucketItemDescriptor;
 }
 
 // @internal (undocumented)
@@ -1555,16 +1563,6 @@ export interface IHubspotConversionTouchPointDialogBaseProps {
 export interface IHubspotFormValue {
     // (undocumented)
     [key: string]: string | number | boolean;
-}
-
-// @internal (undocumented)
-export interface IIBucketItemDescriptor {
-    // (undocumented)
-    name: string;
-    // (undocumented)
-    sequenceNumber?: string;
-    // (undocumented)
-    type: "attribute" | "chronologicalDate" | "genericDate" | "measure";
 }
 
 // @internal (undocumented)

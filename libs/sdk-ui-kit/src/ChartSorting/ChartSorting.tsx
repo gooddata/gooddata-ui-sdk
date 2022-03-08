@@ -19,7 +19,6 @@ export interface ChartSortingOwnProps {
     bucketItems: IBucketItemDescriptors;
     onApply: (sortItems: ISortItem[]) => void;
     onCancel: () => void;
-    onClose?: () => void;
     buttonNode?: HTMLElement | string;
     locale?: string;
     enableRenamingMeasureToMetric?: boolean;
