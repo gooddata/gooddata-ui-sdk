@@ -1,8 +1,8 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Button, Bubble, BubbleHoverTrigger, ShortenedText, IAlignPoint } from "@gooddata/sdk-ui-kit";
-import { selectPermissions, selectSettings, useDashboardSelector } from "../../../../../model";
+import { selectCanExportReport, selectSettings, useDashboardSelector } from "../../../../../model";
 import { PoweredByGDLogo } from "./PoweredByGDLogo";
 import { DrillModalFooter } from "./DrillModalFooter";
 import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs";
@@ -42,9 +42,8 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
     isLoading,
 }) => {
     const settings = useDashboardSelector(selectSettings);
-    const permissions = useDashboardSelector(selectPermissions);
-    const shouldShowDrilledInsightExport =
-        settings?.enableDrilledInsightExport && permissions.canExportReport;
+    const canExportReport = useDashboardSelector(selectCanExportReport);
+    const shouldShowDrilledInsightExport = settings?.enableDrilledInsightExport && canExportReport;
 
     const titleWithBreadcrumbs = getTitleWithBreadcrumbs(insightTitle, breadcrumbs);
 

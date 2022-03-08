@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 
@@ -8,7 +8,7 @@ import { executionResultsAdapter } from "./executionResultsEntityAdapter";
 import { IExecutionResultEnvelope } from "./types";
 import { selectAnalyticalWidgetByRef } from "../layout/layoutSelectors";
 import { isNonExportableError } from "../../../_staging/errors/errorPredicates";
-import { selectPermissions } from "../permissions/permissionsSelectors";
+import { selectCanExportReport, selectCanExecuteRaw } from "../permissions/permissionsSelectors";
 import { selectSettings } from "../config/configSelectors";
 
 const selectSelf = createSelector(
@@ -62,11 +62,12 @@ export const selectIsExecutionResultReadyForExportByRef = createMemoizedSelector
 export const selectIsExecutionResultExportableToCsvByRef = createMemoizedSelector((ref: ObjRef) =>
     createSelector(
         selectIsExecutionResultReadyForExportByRef(ref),
-        selectPermissions,
+        selectCanExportReport,
+        selectCanExecuteRaw,
         selectSettings,
-        (isReadyForExport, permissions, settings): boolean => {
-            const isExportEnabled = Boolean(settings.enableKPIDashboardExport && permissions.canExportReport);
-            const isRawExportEnabled = Boolean(isExportEnabled && permissions.canExecuteRaw);
+        (isReadyForExport, canExportReport, canExecuteRaw, settings): boolean => {
+            const isExportEnabled = Boolean(settings.enableKPIDashboardExport && canExportReport);
+            const isRawExportEnabled = Boolean(isExportEnabled && canExecuteRaw);
             return isReadyForExport && isRawExportEnabled;
         },
     ),
@@ -78,10 +79,10 @@ export const selectIsExecutionResultExportableToCsvByRef = createMemoizedSelecto
 export const selectIsExecutionResultExportableToXlsxByRef = createMemoizedSelector((ref: ObjRef) =>
     createSelector(
         selectIsExecutionResultReadyForExportByRef(ref),
-        selectPermissions,
+        selectCanExportReport,
         selectSettings,
-        (isReadyForExport, permissions, settings): boolean => {
-            const isExportEnabled = Boolean(settings.enableKPIDashboardExport && permissions.canExportReport);
+        (isReadyForExport, canExportReport, settings): boolean => {
+            const isExportEnabled = Boolean(settings.enableKPIDashboardExport && canExportReport);
             return isReadyForExport && isExportEnabled;
         },
     ),

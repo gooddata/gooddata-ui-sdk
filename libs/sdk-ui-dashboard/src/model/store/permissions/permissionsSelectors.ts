@@ -39,7 +39,7 @@ export const selectCanManageWorkspace = createSelector(selectPermissions, (state
 });
 
 /**
- * Returns whether the current user has permissions to export the report.
+ * Returns whether the current user has permissions necessary to export insights to CSV and XLSX.
  *
  * @public
  */
@@ -102,30 +102,12 @@ export const selectCanUploadNonProductionCSV = createSelector(selectPermissions,
 });
 
 /**
- * Returns whether the current user has permissions to download a complete report.
+ * Returns whether the current user has permissions necessary to export insights to CSV..
  *
  * @public
  */
 export const selectCanExecuteRaw = createSelector(selectPermissions, (state) => {
     return state?.canExecuteRaw ?? false;
-});
-
-/**
- * Returns whether the current user has permissions to access workbench.
- *
- * @public
- */
-export const selectCanAccessWorkbench = createSelector(selectPermissions, (state) => {
-    return state?.canAccessWorkbench ?? false;
-});
-
-/**
- * Returns whether the current user has permissions to create a report object via API.
- *
- * @public
- */
-export const selectCanCreateReport = createSelector(selectPermissions, (state) => {
-    return state?.canCreateReport ?? false;
 });
 
 /**
@@ -144,15 +126,6 @@ export const selectCanCreateVisualization = createSelector(selectPermissions, (s
  */
 export const selectCanManageMetric = createSelector(selectPermissions, (state) => {
     return state?.canManageMetric ?? false;
-});
-
-/**
- * Returns whether the current user has permissions to modify and delete a report object, change report visibility via the `unlisted` flag.
- *
- * @public
- */
-export const selectCanManageReport = createSelector(selectPermissions, (state) => {
-    return state?.canManageReport ?? false;
 });
 
 /**
