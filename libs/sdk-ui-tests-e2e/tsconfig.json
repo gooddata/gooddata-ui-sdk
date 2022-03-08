@@ -17,7 +17,8 @@
         "outDir": "dist",
         "sourceMap": true,
         "suppressImplicitAnyIndexErrors": true,
-        "baseUrl": ".."
+        "baseUrl": "..",
+        "types": ["cypress-real-events", "node"]
     },
     "compileOnSave": false,
     "exclude": ["**/node_modules", "dist", "esm"]
