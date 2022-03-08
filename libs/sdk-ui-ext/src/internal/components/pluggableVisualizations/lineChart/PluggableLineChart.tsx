@@ -126,7 +126,9 @@ export class PluggableLineChart extends PluggableBaseChart {
             newReferencePoint,
             this.supportedPropertiesList,
         );
-        newReferencePoint = removeSort(newReferencePoint);
+        if (!this.featureFlags.enableChartsSorting) {
+            newReferencePoint = removeSort(newReferencePoint);
+        }
 
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
@@ -142,7 +144,7 @@ export class PluggableLineChart extends PluggableBaseChart {
         return Promise.resolve({
             supported: true,
             disabled,
-            currentSort: defaultSort,
+            defaultSort,
             availableSorts,
         });
     }
@@ -280,7 +282,7 @@ export class PluggableLineChart extends PluggableBaseChart {
     }
 
     private getDefaultAndAvailableSort(referencePoint: IReferencePoint): {
-        defaultSort: ISortConfig["currentSort"];
+        defaultSort: ISortConfig["defaultSort"];
         availableSorts: ISortConfig["availableSorts"];
     } {
         const { buckets } = referencePoint;

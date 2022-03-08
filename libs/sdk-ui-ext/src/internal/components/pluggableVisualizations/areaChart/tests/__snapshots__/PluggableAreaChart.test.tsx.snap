@@ -3,7 +3,7 @@
 exports[`PluggableAreaChart Sort config should return expected sort config for 0 M + 0 VB 1`] = `
 Object {
   "availableSorts": Array [],
-  "currentSort": Array [],
+  "defaultSort": Array [],
   "disabled": true,
   "supported": true,
 }
@@ -12,7 +12,7 @@ Object {
 exports[`PluggableAreaChart Sort config should return expected sort config for 0 M + 1 VB 1`] = `
 Object {
   "availableSorts": Array [],
-  "currentSort": Array [],
+  "defaultSort": Array [],
   "disabled": true,
   "supported": true,
 }
@@ -21,7 +21,7 @@ Object {
 exports[`PluggableAreaChart Sort config should return expected sort config for 1 M + 0 VB 1`] = `
 Object {
   "availableSorts": Array [],
-  "currentSort": Array [],
+  "defaultSort": Array [],
   "disabled": true,
   "supported": true,
 }
@@ -41,7 +41,7 @@ Object {
       "metricSorts": Array [],
     },
   ],
-  "currentSort": Array [
+  "defaultSort": Array [
     Object {
       "attributeSortItem": Object {
         "attributeIdentifier": "a1",
@@ -79,7 +79,7 @@ Object {
       ],
     },
   ],
-  "currentSort": Array [
+  "defaultSort": Array [
     Object {
       "attributeSortItem": Object {
         "attributeIdentifier": "a1",
@@ -105,7 +105,7 @@ Object {
       },
     },
   ],
-  "currentSort": Array [
+  "defaultSort": Array [
     Object {
       "attributeSortItem": Object {
         "attributeIdentifier": "a1",
@@ -132,7 +132,7 @@ Object {
       "metricSorts": Array [],
     },
   ],
-  "currentSort": Array [
+  "defaultSort": Array [
     Object {
       "attributeSortItem": Object {
         "attributeIdentifier": "a1",
@@ -180,7 +180,7 @@ Object {
       ],
     },
   ],
-  "currentSort": Array [
+  "defaultSort": Array [
     Object {
       "attributeSortItem": Object {
         "attributeIdentifier": "a1",
@@ -196,7 +196,7 @@ Object {
 exports[`PluggableAreaChart Sort config should return expected sort config for 2 M + 2 VB 1`] = `
 Object {
   "availableSorts": Array [],
-  "currentSort": Array [],
+  "defaultSort": Array [],
   "disabled": true,
   "supported": true,
 }
@@ -237,7 +237,7 @@ Object {
       ],
     },
   ],
-  "currentSort": Array [
+  "defaultSort": Array [
     Object {
       "attributeSortItem": Object {
         "attributeIdentifier": "a1",
@@ -253,7 +253,7 @@ Object {
 exports[`PluggableAreaChart Sort config should return expected sort config for 2 stacked M + 2 VB 1`] = `
 Object {
   "availableSorts": Array [],
-  "currentSort": Array [],
+  "defaultSort": Array [],
   "disabled": true,
   "supported": true,
 }

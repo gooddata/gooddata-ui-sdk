@@ -143,7 +143,9 @@ export class PluggableHeatmap extends PluggableBaseChart {
             newReferencePoint,
             this.supportedPropertiesList,
         );
-        newReferencePoint = removeSort(newReferencePoint);
+        if (!this.featureFlags.enableChartsSorting) {
+            newReferencePoint = removeSort(newReferencePoint);
+        }
 
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
@@ -168,7 +170,7 @@ export class PluggableHeatmap extends PluggableBaseChart {
         viewBy: IBucketItem[],
         stackBy: IBucketItem[],
     ): {
-        defaultSort: ISortConfig["currentSort"];
+        defaultSort: ISortConfig["defaultSort"];
         availableSorts: ISortConfig["availableSorts"];
     } {
         if (!isEmpty(viewBy) && !isEmpty(stackBy) && !isEmpty(measures)) {
@@ -243,7 +245,7 @@ export class PluggableHeatmap extends PluggableBaseChart {
         return Promise.resolve({
             supported: true,
             disabled,
-            currentSort: defaultSort,
+            defaultSort,
             availableSorts,
         });
     }

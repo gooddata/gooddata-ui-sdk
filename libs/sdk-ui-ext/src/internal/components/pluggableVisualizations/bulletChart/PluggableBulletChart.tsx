@@ -124,7 +124,9 @@ export class PluggableBulletChart extends PluggableBaseChart {
             newReferencePoint,
             this.supportedPropertiesList,
         );
-        newReferencePoint = removeSort(newReferencePoint);
+        if (!this.featureFlags.enableChartsSorting) {
+            newReferencePoint = removeSort(newReferencePoint);
+        }
 
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
@@ -212,7 +214,7 @@ export class PluggableBulletChart extends PluggableBaseChart {
     }
 
     private getDefaultAndAvailableSort(referencePoint: IReferencePoint): {
-        defaultSort: ISortConfig["currentSort"];
+        defaultSort: ISortConfig["defaultSort"];
         availableSorts: ISortConfig["availableSorts"];
     } {
         const { buckets } = referencePoint;
@@ -270,7 +272,7 @@ export class PluggableBulletChart extends PluggableBaseChart {
         return Promise.resolve({
             supported: true,
             disabled,
-            currentSort: defaultSort,
+            defaultSort,
             availableSorts,
         });
     }

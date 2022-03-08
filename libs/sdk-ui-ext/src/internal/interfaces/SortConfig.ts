@@ -61,9 +61,14 @@ export interface IAvailableSortsGroup {
  */
 export interface ISortConfig {
     /**
-     * Current sort - default or chosen from inside of visualization
+     * Applied sort - when custom sort was provided, it is validated in current context of visualization and can be fully or partially applied.
+     * When defined it has priority over defaultSort
      */
-    currentSort: ISortItem[];
+    appliedSort?: ISortItem[];
+    /**
+     * Default sort - default or chosen from inside of visualization
+     */
+    defaultSort: ISortItem[];
     /**
      * All available sorts for current buckets
      * - should contain current sort too

@@ -65,7 +65,7 @@ export class PluggableColumnChart extends PluggableColumnBarCharts {
         stackBy: IBucketItem[],
         canSortStackTotalValue: boolean,
     ): {
-        defaultSort: ISortConfig["currentSort"];
+        defaultSort: ISortConfig["defaultSort"];
         availableSorts: ISortConfig["availableSorts"];
     } {
         const defaultSort = viewBy.map((vb) => newAttributeSort(vb.localIdentifier, "asc"));
@@ -176,7 +176,7 @@ export class PluggableColumnChart extends PluggableColumnBarCharts {
         return Promise.resolve({
             supported: true,
             disabled,
-            currentSort: defaultSort,
+            defaultSort,
             availableSorts,
         });
     }

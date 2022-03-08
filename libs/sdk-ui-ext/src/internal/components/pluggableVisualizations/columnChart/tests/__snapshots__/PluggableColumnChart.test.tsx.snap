@@ -35,7 +35,7 @@ Object {
       ],
     },
   ],
-  "currentSort": Array [
+  "defaultSort": Array [
     Object {
       "attributeSortItem": Object {
         "attributeIdentifier": "a1",
@@ -62,7 +62,7 @@ Object {
       "metricSorts": Array [],
     },
   ],
-  "currentSort": Array [
+  "defaultSort": Array [
     Object {
       "attributeSortItem": Object {
         "attributeIdentifier": "a1",
@@ -98,7 +98,7 @@ Object {
       "metricSorts": Array [],
     },
   ],
-  "currentSort": Array [
+  "defaultSort": Array [
     Object {
       "attributeSortItem": Object {
         "attributeIdentifier": "a1",
@@ -142,7 +142,7 @@ Object {
       ],
     },
   ],
-  "currentSort": Array [
+  "defaultSort": Array [
     Object {
       "attributeSortItem": Object {
         "attributeIdentifier": "a1",
@@ -190,7 +190,7 @@ Object {
       ],
     },
   ],
-  "currentSort": Array [
+  "defaultSort": Array [
     Object {
       "attributeSortItem": Object {
         "attributeIdentifier": "a1",
@@ -237,7 +237,7 @@ Object {
       ],
     },
   ],
-  "currentSort": Array [
+  "defaultSort": Array [
     Object {
       "attributeSortItem": Object {
         "attributeIdentifier": "a1",
@@ -300,7 +300,7 @@ Object {
       ],
     },
   ],
-  "currentSort": Array [
+  "defaultSort": Array [
     Object {
       "attributeSortItem": Object {
         "attributeIdentifier": "a1",
@@ -363,7 +363,7 @@ Object {
       ],
     },
   ],
-  "currentSort": Array [
+  "defaultSort": Array [
     Object {
       "attributeSortItem": Object {
         "attributeIdentifier": "a1",

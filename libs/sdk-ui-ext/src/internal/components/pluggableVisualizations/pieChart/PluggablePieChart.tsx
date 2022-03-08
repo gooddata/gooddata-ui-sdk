@@ -143,7 +143,9 @@ export class PluggablePieChart extends PluggableBaseChart {
             newReferencePoint,
             this.supportedPropertiesList,
         );
-        newReferencePoint = removeSort(newReferencePoint);
+        if (!this.featureFlags.enableChartsSorting) {
+            newReferencePoint = removeSort(newReferencePoint);
+        }
 
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
@@ -152,7 +154,7 @@ export class PluggablePieChart extends PluggableBaseChart {
         measures: IBucketItem[],
         viewBy: IBucketItem[],
     ): {
-        defaultSort: ISortConfig["currentSort"];
+        defaultSort: ISortConfig["defaultSort"];
         availableSorts: ISortConfig["availableSorts"];
     } {
         if (!isEmpty(measures) && !isEmpty(viewBy)) {
@@ -187,7 +189,7 @@ export class PluggablePieChart extends PluggableBaseChart {
         return Promise.resolve({
             supported: true,
             disabled,
-            currentSort: defaultSort,
+            defaultSort,
             availableSorts,
         });
     }

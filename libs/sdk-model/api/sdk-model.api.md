@@ -897,6 +897,9 @@ export function isAttributeFilter(obj: unknown): obj is IAttributeFilter;
 export function isAttributeLocator(obj: unknown): obj is IAttributeLocatorItem;
 
 // @public
+export function isAttributeSimpleSort(obj: unknown): obj is IAttributeSortItem;
+
+// @public
 export function isAttributeSort(obj: unknown): obj is IAttributeSortItem;
 
 // @public

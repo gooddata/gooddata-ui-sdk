@@ -152,6 +152,15 @@ export function isAttributeAreaSort(obj: unknown): obj is IAttributeSortItem {
 }
 
 /**
+ * Type guard checking whether an object is a simple attribute sort item, not the area one.
+ *
+ * @public
+ */
+export function isAttributeSimpleSort(obj: unknown): obj is IAttributeSortItem {
+    return isAttributeSort(obj) && !isAttributeAreaSort(obj);
+}
+
+/**
  * Type guard checking whether an object is a measure sort item.
  *
  * @public

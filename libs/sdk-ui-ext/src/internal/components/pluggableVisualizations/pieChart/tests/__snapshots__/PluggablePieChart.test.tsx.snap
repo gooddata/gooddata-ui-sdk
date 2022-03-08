@@ -25,7 +25,7 @@ Object {
       ],
     },
   ],
-  "currentSort": Array [
+  "defaultSort": Array [
     Object {
       "measureSortItem": Object {
         "direction": "desc",

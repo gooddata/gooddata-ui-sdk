@@ -22,7 +22,7 @@ Object {
       },
     },
   ],
-  "currentSort": Array [
+  "defaultSort": Array [
     Object {
       "attributeSortItem": Object {
         "attributeIdentifier": "a1",
@@ -54,7 +54,7 @@ Object {
       },
     },
   ],
-  "currentSort": Array [
+  "defaultSort": Array [
     Object {
       "attributeSortItem": Object {
         "attributeIdentifier": "a3",
@@ -92,7 +92,7 @@ Object {
       ],
     },
   ],
-  "currentSort": Array [
+  "defaultSort": Array [
     Object {
       "attributeSortItem": Object {
         "attributeIdentifier": "a1",

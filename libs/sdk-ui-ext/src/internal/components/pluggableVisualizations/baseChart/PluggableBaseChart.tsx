@@ -141,7 +141,9 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
             this.supportedPropertiesList,
         );
         newReferencePoint = setBaseChartUiConfig(newReferencePoint, this.intl, this.type);
-        newReferencePoint = removeSort(newReferencePoint);
+        if (!this.featureFlags.enableChartsSorting) {
+            newReferencePoint = removeSort(newReferencePoint);
+        }
 
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
