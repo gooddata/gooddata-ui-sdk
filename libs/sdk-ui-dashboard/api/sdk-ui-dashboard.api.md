@@ -4155,26 +4155,50 @@ export const selectAttributesWithDrillDown: OutputSelector<DashboardState, (ICat
 // @public
 export const selectBackendCapabilities: OutputSelector<DashboardState, IBackendCapabilities, (res: BackendCapabilitiesState) => IBackendCapabilities>;
 
-// @alpha
+// @public
 export const selectCanCreateAnalyticalDashboard: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
-// @alpha
+// @public
 export const selectCanCreateScheduledMail: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
-// @alpha
+// @public
+export const selectCanCreateVisualization: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+
+// @public
+export const selectCanExecuteRaw: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+
+// @public
 export const selectCanExportReport: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
-// @alpha
+// @public
+export const selectCanInitData: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+
+// @public
+export const selectCanInviteUserToWorkspace: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+
+// @public
 export const selectCanListUsersInWorkspace: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
-// @alpha
+// @public
 export const selectCanManageACL: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
-// @alpha
+// @public
 export const selectCanManageAnalyticalDashboard: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
-// @alpha
+// @public
+export const selectCanManageDomain: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+
+// @public
+export const selectCanManageMetric: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+
+// @public
 export const selectCanManageWorkspace: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+
+// @public
+export const selectCanRefreshData: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+
+// @public
+export const selectCanUploadNonProductionCSV: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @public (undocumented)
 export const selectCatalogAttributeDisplayForms: OutputSelector<DashboardState, IAttributeDisplayFormMetadataObject[], (res: ICatalogAttribute[]) => IAttributeDisplayFormMetadataObject[]>;
@@ -4390,10 +4414,10 @@ export const selectIsDashboardSaving: OutputSelector<DashboardState, boolean, (r
 export const selectIsEmbedded: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @alpha (undocumented)
-export const selectIsExecutionResultExportableToCsvByRef: (ref: ObjRef) => OutputSelector<DashboardState, boolean, (res1: boolean, res2: IWorkspacePermissions, res3: ISettings) => boolean>;
+export const selectIsExecutionResultExportableToCsvByRef: (ref: ObjRef) => OutputSelector<DashboardState, boolean, (res1: boolean, res2: boolean, res3: boolean, res4: ISettings) => boolean>;
 
 // @alpha (undocumented)
-export const selectIsExecutionResultExportableToXlsxByRef: (ref: ObjRef) => OutputSelector<DashboardState, boolean, (res1: boolean, res2: IWorkspacePermissions, res3: ISettings) => boolean>;
+export const selectIsExecutionResultExportableToXlsxByRef: (ref: ObjRef) => OutputSelector<DashboardState, boolean, (res1: boolean, res2: boolean, res3: ISettings) => boolean>;
 
 // @alpha (undocumented)
 export const selectIsExecutionResultReadyForExportByRef: (ref: ObjRef) => OutputSelector<DashboardState, boolean, (res1: IExecutionResultEnvelope | undefined, res2: IKpiWidget | IInsightWidget | undefined) => boolean>;

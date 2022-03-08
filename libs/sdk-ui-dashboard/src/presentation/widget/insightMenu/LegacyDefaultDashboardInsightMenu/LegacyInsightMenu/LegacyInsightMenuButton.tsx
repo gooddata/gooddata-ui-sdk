@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React, { useCallback } from "react";
 import { insightVisualizationUrl, objRefToString } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
@@ -8,7 +8,7 @@ import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
 import { widgetRef } from "@gooddata/sdk-backend-spi";
 import { VisType } from "@gooddata/sdk-ui";
 
-import { selectPermissions, selectSettings, useDashboardSelector } from "../../../../../model";
+import { selectCanExportReport, selectSettings, useDashboardSelector } from "../../../../../model";
 import { IDashboardInsightMenuButtonProps } from "../../types";
 
 const nonExportableVisTypes: VisType[] = ["headline", "xirr"];
@@ -34,9 +34,9 @@ const LegacyInsightMenuButtonCore: React.FC<IDashboardInsightMenuButtonProps & W
     );
 
     const settings = useDashboardSelector(selectSettings);
-    const permissions = useDashboardSelector(selectPermissions);
+    const canExportReport = useDashboardSelector(selectCanExportReport);
     const areExportsEnabled = settings.enableKPIDashboardExport;
-    const hasExportReportPermissions = permissions.canExportReport;
+    const hasExportReportPermissions = canExportReport;
 
     const visType = insightVisualizationUrl(insight).split(":")[1] as VisType;
     const isExportableVisType = isExportableVisualization(visType);

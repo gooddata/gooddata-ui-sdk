@@ -44,7 +44,7 @@ import {
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters";
 import {
     selectDrillableItems,
-    selectPermissions,
+    selectCanCreateScheduledMail,
     selectSettings,
     selectCurrentUser,
     useDashboardAsyncRender,
@@ -134,7 +134,7 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
     const intl = useIntl();
 
     const currentUser = useDashboardSelector(selectCurrentUser);
-    const permissions = useDashboardSelector(selectPermissions);
+    const canCreateScheduledMail = useDashboardSelector(selectCanCreateScheduledMail);
     const settings = useDashboardSelector(selectSettings);
     const drillableItems = useDashboardSelector(selectDrillableItems);
     const widgetDrills = useDashboardSelector(selectValidConfiguredDrillsByWidgetRef(kpiWidget.ref));
@@ -194,7 +194,7 @@ const KpiExecutorCore: React.FC<IKpiProps> = (props) => {
     );
 
     const kpiAlertOperations = useKpiAlertOperations(closeAlertDialog);
-    const canSetAlert = permissions?.canCreateScheduledMail;
+    const canSetAlert = canCreateScheduledMail;
 
     const { onRequestAsyncRender, onResolveAsyncRender } = useDashboardAsyncRender(
         objRefToString(widgetRef(kpiWidget)),

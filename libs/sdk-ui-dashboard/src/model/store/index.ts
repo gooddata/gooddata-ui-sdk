@@ -46,6 +46,14 @@ export {
     selectCanManageACL,
     selectCanManageAnalyticalDashboard,
     selectCanCreateScheduledMail,
+    selectCanInitData,
+    selectCanUploadNonProductionCSV,
+    selectCanExecuteRaw,
+    selectCanCreateVisualization,
+    selectCanManageMetric,
+    selectCanManageDomain,
+    selectCanInviteUserToWorkspace,
+    selectCanRefreshData,
 } from "./permissions/permissionsSelectors";
 export { FilterContextState } from "./filterContext/filterContextState";
 export {
