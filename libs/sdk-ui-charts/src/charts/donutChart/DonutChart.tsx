@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { IAttribute, IAttributeOrMeasure, INullableFilter, ISortItem, newBucket } from "@gooddata/sdk-model";
 import {
@@ -112,6 +112,12 @@ export const DonutChart = (props: IDonutChartProps) => {
         [props.measures, props.viewBy, props.filters, props.sortBy],
         props.placeholdersResolutionContext,
     );
+
+    // In case enableChartSorting is set to true and sort was not specified,
+    // we need to change its value, so visualization is able to take default sort
+    if (props.config && props.config.enableChartSorting && !sortBy) {
+        props.config.enableChartSorting = false;
+    }
 
     return (
         <WrappedDonutChart

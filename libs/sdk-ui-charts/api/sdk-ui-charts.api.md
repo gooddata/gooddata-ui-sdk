@@ -190,6 +190,7 @@ export interface IChartConfig {
     dataPoints?: IDataPointsConfig;
     disableDrillUnderline?: boolean;
     dualAxis?: boolean;
+    enableChartSorting?: boolean;
     enableCompactSize?: boolean;
     enableJoinedAttributeAxisName?: boolean;
     forceDisableDrillOnAxes?: boolean;
@@ -433,6 +434,9 @@ export const isComboChart: (type: string) => boolean;
 
 // @internal (undocumented)
 export const isDonutChart: LodashIsEqual1x1;
+
+// @internal (undocumented)
+export const isFunnel: LodashIsEqual1x1;
 
 // @internal (undocumented)
 export const isHeatmap: LodashIsEqual1x1;

@@ -22,6 +22,8 @@ import {
     isChartSupported,
     isComboChart,
     isHeatmap,
+    isFunnel,
+    isPieOrDonutChart,
     isOneOfTypes,
     isScatterPlot,
     isTreemap,
@@ -383,8 +385,9 @@ export function getChartOptions(
         ? getCategoriesForTwoAttributes(viewByAttribute, viewByParentAttribute)
         : getCategories(type, measureGroup, viewByAttribute, stackByAttribute);
 
-    // Pie charts dataPoints are sorted by default by value in descending order
-    if (isOneOfTypes(type, sortedByMeasureTypes)) {
+    // When custom sorting is enabled and is Pie|Donut chart, need to skip this, so the sort specified by the user does not get override.
+    if ((isPieOrDonutChart(type) && !config.enableChartSorting) || isFunnel(type)) {
+        // Pie|Donut charts dataPoints are sorted by default by value in descending order
         const dataPoints = series[0].data;
         const indexSortOrder: number[] = [];
         const sortedDataPoints = dataPoints

@@ -101,6 +101,11 @@ export const isHeatmap = isEqual(VisualizationTypes.HEATMAP);
 /**
  * @internal
  */
+export const isFunnel = isEqual(VisualizationTypes.FUNNEL);
+
+/**
+ * @internal
+ */
 export const isSupportingJoinedAttributeAxisName = (type: string): boolean =>
     isBarChart(type) || isColumnChart(type) || isBulletChart(type);
 

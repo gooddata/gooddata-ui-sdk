@@ -183,6 +183,14 @@ export interface IChartConfig {
      */
     enableJoinedAttributeAxisName?: boolean;
 
+    /**
+     * Enables custom sorting of visualizations.
+     *
+     * Note: this property might not be supported in all the visualizations.
+     *
+     */
+    enableChartSorting?: boolean;
+
     //
     //
     //
