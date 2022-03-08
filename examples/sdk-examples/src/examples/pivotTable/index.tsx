@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 /* eslint-disable import/no-unresolved,import/default */
 import React from "react";
 
@@ -30,9 +30,6 @@ import PivotTableColumnsGrowToFitExampleSRCJS from "./PivotTableColumnsGrowToFit
 import PivotTableManualResizingExample from "./PivotTableManualResizingExample";
 import PivotTableManualResizingExampleSRC from "./PivotTableManualResizingExample?raw";
 import PivotTableManualResizingExampleSRCJS from "./PivotTableManualResizingExample?rawJS";
-// import { PivotTableExample } from "./PivotTableExample";
-// import PivotTableExampleSRC from "./PivotTableExample?raw";
-// import PivotTableExampleSRCJS from "./PivotTableExample?rawJS";
 
 export const PivotTable: React.FC = () => (
     <div>
@@ -104,71 +101,3 @@ export const PivotTable: React.FC = () => (
         />
     </div>
 );
-
-// const PivotTableWithAttributesWithMeasuresWithPivot: React.FC = () => (
-//     <PivotTableExample
-//         withAttributes
-//         withMeasures
-//         withPivot
-//         className="s-measures-row-attributes-and-column-attributes"
-//     />
-// );
-
-// const PivotTableWithMeasuresWithPivot: React.FC = () => (
-//     <PivotTableExample withMeasures withPivot className="s-measures-and-column-attributes" />
-// );
-
-// const PivotTableWithAttributesWithMeasures: React.FC = () => (
-//     <PivotTableExample withAttributes withMeasures className="s-measures-and-attributes" />
-// );
-
-// const PivotTableWithMeasures: React.FC = () => (
-//     <PivotTableExample withMeasures className="s-measures-only" />
-// );
-
-// const PivotTableWithAttributes: React.FC = () => (
-//     <PivotTableExample withAttributes className="s-row-attributes-only" />
-// );
-
-// const PivotTableWithError: React.FC = () => <PivotTableExample hasError className="s-error" />;
-
-// export const PivotTable: React.FC = () => (
-//     <div>
-//         <h1>Pivot Table</h1>
-
-//         <hr className="separator" />
-
-//         <h2 id="measures-row-attributes-and-column-attributes">
-//             Measures, row attributes and column attributes
-//         </h2>
-//         <ExampleWithSource
-//             for={PivotTableWithAttributesWithMeasuresWithPivot}
-//             source={PivotTableExampleSRC}
-//         />
-
-//         <hr className="separator" />
-
-//         <h2 id="measures-and-column-attributes">Measures and column attributes</h2>
-//         <ExampleWithSource for={PivotTableWithMeasuresWithPivot} source={PivotTableExampleSRC} />
-
-//         <hr className="separator" />
-
-//         <h2 id="measures-and-attributes">Measures and row attributes</h2>
-//         <ExampleWithSource for={PivotTableWithAttributesWithMeasures} source={PivotTableExampleSRC} />
-
-//         <hr className="separator" />
-
-//         <h2 id="measures-only">Measures only</h2>
-//         <ExampleWithSource for={PivotTableWithMeasures} source={PivotTableExampleSRC} />
-
-//         <hr className="separator" />
-
-//         <h2 id="row-attributes-only">Row attributes only</h2>
-//         <ExampleWithSource for={PivotTableWithAttributes} source={PivotTableExampleSRC} />
-
-//         <hr className="separator" />
-
-//         <h2 id="error">Error</h2>
-//         <ExampleWithSource for={PivotTableWithError} source={PivotTableExampleSRC} />
-//     </div>
-// );

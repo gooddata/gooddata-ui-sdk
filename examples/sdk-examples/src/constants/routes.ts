@@ -33,12 +33,6 @@ import { ThemedComponents } from "../examples/theming";
 
 import { ChartResponsiveness } from "../examples/chartResponsiveness";
 
-// import { MeasureValueFilter } from "../examples/hidden/measureValueFilter";
-// import { MeasureValueFilterComponent } from "../examples/hidden/measureValueFilterComponent";
-import { OnDrillHandling } from "../examples/hidden/onDrillHandling";
-import { PivotTableDynamic } from "../examples/hidden/pivotTableDynamic";
-import { PivotTableSizing } from "../examples/hidden/pivotTableSizing";
-
 import { Login } from "../components/login";
 import { WithSubRoutes } from "../components/WithSubRoutes";
 import { AboutThisWorkspace } from "../components/AboutThisWorkspace";
@@ -57,10 +51,6 @@ import SimpleDashboardComponent from "../examples/dashboardComponent/SimpleDashb
 import DashboardComponentWithLocalPlugin from "../examples/dashboardComponent/DashboardComponentWithLocalPlugin";
 import DashboardWithAccessor from "../examples/dashboardComponent/DashboardComponentWithAccessor";
 import DashboardWithUseDispatchDashboardCommand from "../examples/dashboardComponent/DashboardComponentWithUseDispatchDashboardCommand";
-
-// import PivotTableDynamic from "./PivotTableDynamic";
-// import MultipleDomains from "./MultipleDomains";
-// import AggregationTest from "./AggregationTest";
 
 export const advancedUseCasesRoutes = [
     { path: "/advanced/global-filters", title: "Global Filters", Component: GlobalFilters },
@@ -335,18 +325,6 @@ export const sideNavigationRoutes: RouteDefinition[] = [
     },
 ];
 
-export const hiddenPaths = [
-    // { path: "/hidden/multiple-domains", title: "Multiple Domains", Component: MultipleDomains },
-    // { path: "/hidden/aggregation-test", title: "Aggregation Test", Component: AggregationTest },
-    { path: "/hidden/pivot-table-dynamic", title: "Pivot Table Dynamic", Component: PivotTableDynamic },
-    {
-        path: "/hidden/pivot-table-sizing",
-        title: "Pivot Table Sizing",
-        Component: PivotTableSizing,
-    },
-    { path: "/hidden/on-drill-drilling", title: "New drill handling by onDrill", Component: OnDrillHandling },
-];
-
 export const backendInfoRoutes = [
     // we keep this route for backward compatibility
     { path: "/about-this-project", title: "About This Workspace", Component: AboutThisWorkspace },
@@ -364,7 +342,6 @@ export const routes = [
     ...drillingUseCasesRoutes,
     ...measureValueFilterUseCasesRoutes,
     ...placeholdersUseCasesRoutes,
-    ...hiddenPaths,
     ...backendInfoRoutes,
     ...internationalDateFormatUseCasesRoutes,
 ];
