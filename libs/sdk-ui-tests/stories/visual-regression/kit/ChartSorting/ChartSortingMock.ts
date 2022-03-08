@@ -28,6 +28,58 @@ export const singleAttributeSortConfig: SortingPropsMock = {
     ],
 };
 
+export const singleChronologicalDateSortConfig: SortingPropsMock = {
+    currentSort: [
+        {
+            attributeSortItem: {
+                direction: "desc",
+                attributeIdentifier: attributeLocalId(ExperimentalMd.DateDatasets.Closed.Year.Default),
+            },
+        },
+    ],
+    availableSorts: [
+        {
+            itemId: localIdRef(attributeLocalId(ExperimentalMd.DateDatasets.Closed.Year.Default)),
+            attributeSort: {
+                normalSortEnabled: true,
+                areaSortEnabled: false,
+            },
+        },
+    ],
+};
+
+export const singleGenericDateAndMetricSortConfig: SortingPropsMock = {
+    currentSort: [
+        {
+            attributeSortItem: {
+                direction: "desc",
+                attributeIdentifier: attributeLocalId(ExperimentalMd.DateDatasets.Closed.MonthYear.Long),
+            },
+        },
+    ],
+    availableSorts: [
+        {
+            itemId: localIdRef(attributeLocalId(ExperimentalMd.DateDatasets.Closed.MonthYear.Long)),
+            attributeSort: {
+                normalSortEnabled: true,
+                areaSortEnabled: false,
+            },
+            metricSorts: [
+                {
+                    type: "measureSort",
+                    locators: [
+                        {
+                            measureLocatorItem: {
+                                measureIdentifier: measureLocalId(ExperimentalMd.SnapshotEOP),
+                            },
+                        },
+                    ],
+                },
+            ],
+        },
+    ],
+};
+
 export const singleAttributeWithSingleMetricSortConfig: SortingPropsMock = {
     currentSort: [
         {

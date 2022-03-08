@@ -39,6 +39,9 @@ export interface IAvailableSortsGroup {
 export enum SORT_TARGET_TYPE {
     ALPHABETICAL_ASC = "alphabetical-asc",
     ALPHABETICAL_DESC = "alphabetical-desc",
+    DATE_ASC = "date-asc",
+    DATE_DESC = "date-desc",
+    DEFAULT = "default",
     NUMERICAL_ASC = "numerical-asc",
     NUMERICAL_DESC = "numerical-desc",
 }
@@ -50,7 +53,7 @@ export interface ISortTypeItem {
     id: SORT_TARGET_TYPE;
     title: string;
     sortDirection: SortDirection;
-    type: "alphabetical" | "numerical";
+    type: "alphabetical" | "date" | "default" | "numerical";
     localIdentifier: string;
 }
 
@@ -66,11 +69,17 @@ export interface IMeasureDropdownValue {
 /**
  * @internal
  */
-export interface IBucketItemNames {
-    [localIdentifier: string]: {
-        name: string;
-        sequenceNumber?: string;
-    };
+export interface IIBucketItemDescriptor {
+    type: "attribute" | "chronologicalDate" | "genericDate" | "measure";
+    name: string;
+    sequenceNumber?: string;
+}
+
+/**
+ * @internal
+ */
+export interface IBucketItemDescriptors {
+    [localIdentifier: string]: IIBucketItemDescriptor;
 }
 
 /**

@@ -4,25 +4,24 @@ import { IntlShape } from "react-intl";
 import { ISortItem } from "@gooddata/sdk-model";
 
 import { AttributeDropdown } from "./AttributeDropdown/AttributeDropdown";
-import { IAvailableSortsGroup, IBucketItemNames } from "./types";
+import { IAvailableSortsGroup, IBucketItemDescriptors } from "./types";
 
 interface ChartSortingProps {
     currentSort: ISortItem[];
     availableSorts: IAvailableSortsGroup[];
-    bucketItemNames: IBucketItemNames;
+    bucketItems: IBucketItemDescriptors;
     intl: IntlShape;
     onSelect: (item: ISortItem[]) => void;
-
     enableRenamingMeasureToMetric?: boolean;
 }
 
-const getAttributeName = (bucketItemNames: IBucketItemNames, available: IAvailableSortsGroup) =>
+const getAttributeName = (bucketItemNames: IBucketItemDescriptors, available: IAvailableSortsGroup) =>
     bucketItemNames[available.itemId.localIdentifier].name;
 
 export const ChartSortingDropdown: React.FC<ChartSortingProps> = ({
     currentSort,
     availableSorts,
-    bucketItemNames,
+    bucketItems,
     intl,
     onSelect,
     enableRenamingMeasureToMetric,
@@ -37,38 +36,33 @@ export const ChartSortingDropdown: React.FC<ChartSortingProps> = ({
     );
 
     return (
-        <>
-            <div className="gd-sort-attribute-section">
-                {currentSort &&
-                    currentSort.map((currentSortItem: ISortItem, index: number) => {
-                        // Obtain availables items with same id as current index
-                        const available: IAvailableSortsGroup = availableSorts[index];
+        <div className="gd-sort-attribute-section">
+            {currentSort &&
+                currentSort.map((currentSortItem: ISortItem, index: number) => {
+                    // Obtain available items with the same id as current index
+                    const available: IAvailableSortsGroup = availableSorts[index];
 
-                        return (
-                            <div
-                                key={index}
-                                className={`gd-sort-attribute-item s-sort-attribute-item-${index}`}
-                            >
-                                {currentSort.length > 1 && (
-                                    <div className="attribute-sorting-title">
-                                        {getAttributeName(bucketItemNames, available)}
-                                    </div>
-                                )}
-                                <AttributeDropdown
-                                    index={index}
-                                    currentSortItem={currentSortItem}
-                                    availableSorts={available}
-                                    bucketItemNames={bucketItemNames}
-                                    intl={intl}
-                                    onSelect={(newSort: ISortItem) => {
-                                        onSortChanged(newSort, index);
-                                    }}
-                                    enableRenamingMeasureToMetric={enableRenamingMeasureToMetric}
-                                />
-                            </div>
-                        );
-                    })}
-            </div>
-        </>
+                    return (
+                        <div key={index} className={`gd-sort-attribute-item s-sort-attribute-item-${index}`}>
+                            {currentSort.length > 1 && (
+                                <div className="attribute-sorting-title">
+                                    {getAttributeName(bucketItems, available)}
+                                </div>
+                            )}
+                            <AttributeDropdown
+                                index={index}
+                                currentSortItem={currentSortItem}
+                                availableSorts={available}
+                                bucketItems={bucketItems}
+                                intl={intl}
+                                onSelect={(newSort: ISortItem) => {
+                                    onSortChanged(newSort, index);
+                                }}
+                                enableRenamingMeasureToMetric={enableRenamingMeasureToMetric}
+                            />
+                        </div>
+                    );
+                })}
+        </div>
     );
 };

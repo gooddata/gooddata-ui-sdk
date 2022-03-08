@@ -1,12 +1,13 @@
 // (C) 2022 GoodData Corporation
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import { injectIntl, WrappedComponentProps, FormattedMessage } from "react-intl";
 import { ISortItem } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
+import isEqual from "lodash/isEqual";
 
 import { ChartSortingDropdownBody } from "./ChartSortingDropdownBody";
 import { ChartSortingDropdown } from "./ChartSortingDropdown";
-import { IBucketItemNames, IAvailableSortsGroup } from "./types";
+import { IBucketItemDescriptors, IAvailableSortsGroup } from "./types";
 import { Button } from "../Button";
 
 /**
@@ -14,13 +15,11 @@ import { Button } from "../Button";
  */
 export interface ChartSortingOwnProps {
     currentSort: ISortItem[];
-    // Available Sorts - from which will generate dropdowns
     availableSorts: IAvailableSortsGroup[];
-    bucketItemNames: IBucketItemNames;
+    bucketItems: IBucketItemDescriptors;
     onApply: (sortItems: ISortItem[]) => void;
     onCancel: () => void;
     onClose?: () => void;
-
     buttonNode?: HTMLElement | string;
     locale?: string;
     enableRenamingMeasureToMetric?: boolean;
@@ -38,7 +37,7 @@ export const ChartSorting: React.FC<ChartSortingProps> = ({
     currentSort,
     availableSorts,
     intl,
-    bucketItemNames,
+    bucketItems,
     buttonNode,
     onCancel,
     onApply,
@@ -53,36 +52,39 @@ export const ChartSorting: React.FC<ChartSortingProps> = ({
     const onSelect = (item: ISortItem[]) => {
         setCurrentSort(item);
     };
+    const isApplyEnabled = useMemo(
+        () => !isEqual(currentSort, currentSelectedSort),
+        [currentSort, currentSelectedSort],
+    );
     return (
-        <>
-            <ChartSortingDropdownBody buttonNode={buttonNode} onClose={onCancel}>
-                <div className="gd-sort-charting-dropdown-header s-sort-charting-dropdown-header">
-                    <FormattedMessage tagName="div" id="sorting.dropdown.header" />
-                </div>
-                <div className="gd-sort-charting-body gd-sort-charting-dropdown">
-                    <ChartSortingDropdown
-                        currentSort={currentSelectedSort}
-                        availableSorts={availableSorts}
-                        bucketItemNames={bucketItemNames}
-                        intl={intl}
-                        onSelect={onSelect}
-                        enableRenamingMeasureToMetric={enableRenamingMeasureToMetric}
-                    />
-                </div>
-                <div className="gd-chart-sorting-dropdown-footer">
-                    <Button
-                        className="gd-button-secondary gd-button-small s-sorting-dropdown-cancel"
-                        value={intl.formatMessage({ id: "cancel" })}
-                        onClick={onCancel}
-                    />
-                    <Button
-                        className="gd-button-action gd-button-small s-sorting-dropdown-apply"
-                        value={intl.formatMessage({ id: "apply" })}
-                        onClick={handleApply}
-                    />
-                </div>
-            </ChartSortingDropdownBody>
-        </>
+        <ChartSortingDropdownBody buttonNode={buttonNode} onClose={onCancel}>
+            <div className="gd-sort-charting-dropdown-header s-sort-charting-dropdown-header">
+                <FormattedMessage tagName="div" id="sorting.dropdown.header" />
+            </div>
+            <div className="gd-sort-charting-body gd-sort-charting-dropdown">
+                <ChartSortingDropdown
+                    currentSort={currentSelectedSort}
+                    availableSorts={availableSorts}
+                    bucketItems={bucketItems}
+                    intl={intl}
+                    onSelect={onSelect}
+                    enableRenamingMeasureToMetric={enableRenamingMeasureToMetric}
+                />
+            </div>
+            <div className="gd-chart-sorting-dropdown-footer">
+                <Button
+                    className="gd-button-secondary gd-button-small s-sorting-dropdown-cancel"
+                    value={intl.formatMessage({ id: "cancel" })}
+                    onClick={onCancel}
+                />
+                <Button
+                    className="gd-button-action gd-button-small s-sorting-dropdown-apply"
+                    value={intl.formatMessage({ id: "apply" })}
+                    onClick={handleApply}
+                    disabled={!isApplyEnabled}
+                />
+            </div>
+        </ChartSortingDropdownBody>
     );
 };
 

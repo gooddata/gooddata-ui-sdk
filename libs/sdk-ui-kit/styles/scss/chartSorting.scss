@@ -26,13 +26,14 @@
 
     .gd-sort-charting-dropdown-header {
         flex: 0 0 auto;
-        padding: 10px;
+        padding: 5px 11px;
         background-color: $is-focused-background;
         border-bottom: 1px solid $gd-border-color;
 
         & > div {
+            line-height: 19px;
+            font-size: 11px;
             color: $gd-color-link;
-            font-size: 12px;
             text-transform: uppercase;
         }
     }
@@ -50,7 +51,7 @@
     }
 
     .gd-sort-charting-dropdown {
-        padding: 8px;
+        padding: 8px 8px 4px;
         border-top-left-radius: 3px;
         border-top-right-radius: 3px;
         font-size: 12px;
@@ -75,7 +76,7 @@
     .sort-measure-section {
         display: flex;
         align-items: center;
-        margin: 8px 0 10px 6px;
+        margin: 8px 0 0 6px;
         white-space: nowrap;
         border-left: 2px dashed rgba(176, 190, 202, 0.45);
 
@@ -101,7 +102,6 @@
         width: 100%;
         text-align: left;
         font-size: 12px;
-        color: $gd-color-text;
     }
 
     .gd-sorting-measure-title {
@@ -125,24 +125,42 @@
     .gd-icon-sort-numerical-asc::before {
         @extend %sorting-icon;
 
-        background-image: url("~@gooddata/sdk-ui-kit/styles/icons/icon-0-9.svg");
+        background-image: url("~@gooddata/sdk-ui-kit/styles/icons/sort-numerical-asc.svg");
     }
 
     .gd-icon-sort-numerical-desc::before {
         @extend %sorting-icon;
 
-        background-image: url("~@gooddata/sdk-ui-kit/styles/icons/icon-9-0.svg");
+        background-image: url("~@gooddata/sdk-ui-kit/styles/icons/sort-numerical-desc.svg");
     }
 
     .gd-icon-sort-alphabetical-asc::before {
         @extend %sorting-icon;
 
-        background-image: url("~@gooddata/sdk-ui-kit/styles/icons/icon-a-z.svg");
+        background-image: url("~@gooddata/sdk-ui-kit/styles/icons/sort-alphabetical-asc.svg");
     }
 
     .gd-icon-sort-alphabetical-desc::before {
         @extend %sorting-icon;
 
-        background-image: url("~@gooddata/sdk-ui-kit/styles/icons/icon-z-a.svg");
+        background-image: url("~@gooddata/sdk-ui-kit/styles/icons/sort-alphabetical-desc.svg");
+    }
+
+    .gd-icon-sort-date-asc::before {
+        @extend %sorting-icon;
+
+        background-image: url("~@gooddata/sdk-ui-kit/styles/icons/sort-date-asc.svg");
+    }
+
+    .gd-icon-sort-date-desc::before {
+        @extend %sorting-icon;
+
+        background-image: url("~@gooddata/sdk-ui-kit/styles/icons/sort-date-desc.svg");
+    }
+
+    .gd-icon-sort-default::before {
+        @extend %sorting-icon;
+
+        background-image: url("~@gooddata/sdk-ui-kit/styles/icons/sort-default.svg");
     }
 }

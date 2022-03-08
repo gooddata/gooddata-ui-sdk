@@ -6,7 +6,7 @@ import cx from "classnames";
 import { Overlay } from "../Overlay";
 import { IAlignPoint } from "../typings/positioning";
 
-const dropdownAlignPoints: IAlignPoint[] = [{ align: "bl tl" }];
+const dropdownAlignPoints: IAlignPoint[] = [{ align: "bl tl" }, { align: "br tr" }];
 
 interface ChartSortingDropdownBodyProps {
     buttonNode?: HTMLElement | string;

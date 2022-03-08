@@ -18,26 +18,33 @@ import {
     buildAttributeButtonSelector,
     changeMeasureDropdownValue,
     clickMeasureDropdown,
+    clickApplyButton,
+    isApplyButtonEnabled,
 } from "./testHelpers";
-import { IBucketItemNames } from "../types";
+import { IBucketItemDescriptors } from "../types";
 
-const bucketItemNames: IBucketItemNames = {
+const bucketItems: IBucketItemDescriptors = {
     m1: {
+        type: "measure",
         name: "Snapshot",
         sequenceNumber: "M1",
     },
     m2: {
+        type: "measure",
         name: "Timeline",
         sequenceNumber: "M2",
     },
     m3: {
+        type: "measure",
         name: "NrOfOppor.",
         sequenceNumber: "M3",
     },
     a1: {
+        type: "attribute",
         name: "Account",
     },
     a2: {
+        type: "attribute",
         name: "Activity",
     },
 };
@@ -52,7 +59,7 @@ const messages = pickCorrectWording(messagesMap[DefaultLocale], {
 const renderComponent = (props?: Partial<ChartSortingOwnProps>) => {
     const defaultProps: ChartSortingOwnProps = {
         ...singleNormalAttributeSortConfig,
-        bucketItemNames,
+        bucketItems: bucketItems,
         onApply: noop,
         onCancel: noop,
     };
@@ -77,6 +84,44 @@ describe("ChartSorting", () => {
             changeDropdownValue(component, "A to Z");
 
             expect(getTextValue(component, buildAttributeButtonSelector(0))).toEqual("A to Z");
+        });
+    });
+
+    describe("Chronological date sorts", () => {
+        const component = renderComponent({
+            bucketItems: {
+                ...bucketItems,
+                a1: {
+                    type: "chronologicalDate",
+                    name: "Activity",
+                },
+            },
+        });
+
+        it("should render dialog with correctly preselected value when config with just one chronological asc date is provided", () => {
+            expect(getTextValue(component, buildAttributeButtonSelector(0))).toEqual("Newest to oldest");
+        });
+
+        it("should render dialog with correctly preselected value when config with just one chronological desc date is provided", () => {
+            clickAttributeDropdown(component, 0);
+            changeDropdownValue(component, "Oldest to newest");
+            expect(getTextValue(component, buildAttributeButtonSelector(0))).toEqual("Oldest to newest");
+        });
+    });
+
+    describe("Generic date sorts", () => {
+        const component = renderComponent({
+            bucketItems: {
+                ...bucketItems,
+                a1: {
+                    type: "genericDate",
+                    name: "Activity",
+                },
+            },
+        });
+
+        it("should render dialog with correctly preselected value when config with just one chronological asc date is provided", () => {
+            expect(getTextValue(component, buildAttributeButtonSelector(0))).toEqual("Default");
         });
     });
 
@@ -140,11 +185,25 @@ describe("ChartSorting", () => {
     });
 
     describe("onApply", () => {
+        it("should not call onApply when disabled Apply button is clicked", () => {
+            const onApply = jest.fn();
+            const component = renderComponent({ onApply });
+            clickApplyButton(component);
+
+            expect(isApplyButtonEnabled(component)).toBe(false);
+            expect(onApply).not.toHaveBeenCalled();
+        });
+
         it("should call onApply when Apply button is clicked", () => {
             const onApply = jest.fn();
             const component = renderComponent({ onApply });
-            component.find(".s-sorting-dropdown-apply").hostNodes().simulate("click");
 
+            clickAttributeDropdown(component, 0);
+            changeDropdownValue(component, "A to Z");
+
+            clickApplyButton(component);
+
+            expect(isApplyButtonEnabled(component)).toBe(true);
             expect(onApply).toHaveBeenCalled();
         });
 
@@ -154,13 +213,17 @@ describe("ChartSorting", () => {
                 onApply,
                 ...singleNormalAttributeSortConfig,
             });
-            component.find(".s-sorting-dropdown-apply").hostNodes().simulate("click");
+
+            clickAttributeDropdown(component, 0);
+            changeDropdownValue(component, "A to Z");
+
+            clickApplyButton(component);
 
             expect(onApply).toHaveBeenCalledWith([
                 {
                     attributeSortItem: {
                         attributeIdentifier: "a1",
-                        direction: "desc",
+                        direction: "asc",
                     },
                 },
             ]);
@@ -172,14 +235,17 @@ describe("ChartSorting", () => {
                 onApply,
                 ...singleAreaAttributeSortConfig,
             });
-            component.find(".s-sorting-dropdown-apply").hostNodes().simulate("click");
+
+            clickAttributeDropdown(component, 0);
+            changeDropdownValue(component, "Largest to smallest");
+            clickApplyButton(component);
 
             expect(onApply).toHaveBeenCalledWith([
                 {
                     attributeSortItem: {
                         aggregation: "sum",
                         attributeIdentifier: "a1",
-                        direction: "asc",
+                        direction: "desc",
                     },
                 },
             ]);
@@ -191,7 +257,9 @@ describe("ChartSorting", () => {
                 onApply,
                 ...multipleAttributesSortConfig,
             });
-            component.find(".s-sorting-dropdown-apply").hostNodes().simulate("click");
+            clickAttributeDropdown(component, 1);
+            changeDropdownValue(component, "Largest to smallest");
+            clickApplyButton(component);
 
             expect(onApply).toHaveBeenCalledWith([
                 {
@@ -209,7 +277,7 @@ describe("ChartSorting", () => {
                 {
                     attributeSortItem: {
                         attributeIdentifier: "a2",
-                        direction: "asc",
+                        direction: "desc",
                         aggregation: "sum",
                     },
                 },
