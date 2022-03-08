@@ -539,6 +539,10 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
+      "name": "cypress-real-events",
+      "allowedCategories": [ "production", "tools"  ]
+    },
+    {
       "name": "date-fns",
       "allowedCategories": [ "production" ]
     },
@@ -984,7 +988,7 @@
     },
     {
       "name": "testcafe",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples" ]
     },
     {
       "name": "tinycolor2",

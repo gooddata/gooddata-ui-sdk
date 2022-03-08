@@ -5949,7 +5949,7 @@ packages:
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.14.8_debug@4.3.3
+      follow-redirects: 1.14.8
     transitivePeerDependencies:
       - debug
     dev: false
@@ -9879,6 +9879,16 @@ packages:
     dependencies:
       inherits: 2.0.4
       readable-stream: 2.3.7
+    dev: false
+
+  /follow-redirects/1.14.8:
+    resolution: {integrity: sha512-1x0S9UVJHsQprFcEC/qnNzBLcIxsjAV905f/UkQxbclCsoTWlacCNOpQa/anodLl2uaEKFhfWOvM2Qg77+15zA==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
     dev: false
 
   /follow-redirects/1.14.8_debug@4.1.1:
@@ -23181,7 +23191,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-tests.tgz:
-    resolution: {integrity: sha512-dHUFRaLFvtHPKUi22e7yYPrg1RMd7UuBGTjIhS7WP50OHrDAXR5/Je8XtUWAKsPcJSHK2anFSX9KmkaCDCytZw==, tarball: file:projects/sdk-ui-tests.tgz}
+    resolution: {integrity: sha512-uGkZfL99bFfEfDPQXA42fggXIS1t09YswKiRJJgWe43wq9DUfy3o4RYcXtqYy9PZ+n2wg3wvezxMXNxGMuaBnQ==, tarball: file:projects/sdk-ui-tests.tgz}
     name: '@rush-temp/sdk-ui-tests'
     version: 0.0.0
     dependencies:

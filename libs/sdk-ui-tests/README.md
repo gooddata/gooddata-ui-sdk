@@ -40,13 +40,6 @@ The tests contained in this package can be divided into three distinct groups:
     These tests are implemented using Storybook & backstop.js; charts are actually rendered in the
     headless browser, screenshots are captured and verified during test run.
 
--   End-to-end tests
-
-    These tests verify interactions with the different components.
-
-    These tests are implemented using Storybook & TestCafe; charts are actually rendered in the
-    headless browser, manipulated and asserted in TestCafe.
-
 ### Test scenarios
 
 Inputs to Public API Regression tests and most Visual Regression tests are coded using a lightweight
@@ -339,21 +332,6 @@ It is possible to override default Backstop concurrency settings using environme
     When tweaking this, we have found that setting the value to number > 50 makes backstop crash badly at
     the very end. Since the comparison is done at the end and is pretty fast anyway, tweaking this option
     is usually not needed.
-
-## End-to-end tests with Storybook and TestCafe
-
-To enable some more involved interaction testing that would not be possible or practical with BackstopJS, the project also comes with TestCafe support.
-
-It uses the Storybook described in the previous sections and runs standard TestCafe tests on top os selected stories (those in the `50 Stories for e2e Tests` section).
-
-### Building and running
-
-To run the TestCafe tests
-
--   Make sure you have the Storybook running by executing `npm run storybook`
--   Run the TestCafe tests
-    -   either in visual mode by `npm run testcafe-visual` (this is useful debugging as you can see what is happening)
-    -   or in headless mode by `npm run testcafe` (this is much faster as tests are run in parallel)
 
 ## Technical Funny Stuff
 

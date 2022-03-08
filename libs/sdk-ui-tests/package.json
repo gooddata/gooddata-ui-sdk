@@ -47,10 +47,7 @@
         "backstop-prepare": "npm run build-storybook && npm run story-extractor ",
         "backstop-test": "npm run backstop-prepare && bash backstop/run-backstop.sh test",
         "backstop-approve": "bash backstop/run-backstop.sh approve",
-        "backstop-reference": "npm run backstop-prepare && bash backstop/run-backstop.sh reference",
-        "testcafe-visual": "bash testcafe/run-testcafe.sh visual",
-        "testcafe-live": "bash testcafe/run-testcafe.sh live",
-        "testcafe": "bash testcafe/run-testcafe.sh"
+        "backstop-reference": "npm run backstop-prepare && bash backstop/run-backstop.sh reference"
     },
     "typings": "dist/index.d.ts",
     "dependencies": {
@@ -154,7 +151,6 @@
         "stylelint": "^13.8.0",
         "stylelint-checkstyle-formatter": "^0.1.2",
         "stylelint-config-prettier": "^8.0.2",
-        "testcafe": "^1.18.3",
         "ts-node": "^10.4.0",
         "typescript": "4.0.2"
     }
