@@ -274,7 +274,7 @@ export function validateCurrentSort(
                 }
                 if (isAttributeAreaSort(currentSortItem)) {
                     if (availableSortGroup.attributeSort.areaSortEnabled) {
-                        return newAttributeSort(
+                        return newAttributeAreaSort(
                             availableSortGroup.itemId.localIdentifier,
                             currentSortDirection,
                         );
