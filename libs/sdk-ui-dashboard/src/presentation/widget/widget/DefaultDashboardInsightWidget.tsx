@@ -121,11 +121,9 @@ const DefaultDashboardInsightWidgetCore: React.FC<
             screen={screen}
         >
             <DashboardItemVisualization
-                renderHeadline={(clientHeight) =>
-                    !widget.configuration.hideTitle && (
-                        <DashboardItemHeadline title={widget.title} clientHeight={clientHeight} />
-                    )
-                }
+                renderHeadline={(clientHeight) => (
+                    <DashboardItemHeadline title={widget.title} clientHeight={clientHeight} />
+                )}
                 renderBeforeVisualization={() => (
                     <InsightMenuButtonComponent
                         insight={insight}

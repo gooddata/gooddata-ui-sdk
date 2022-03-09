@@ -481,9 +481,6 @@ exports[`dashboard converter convert widget should convert visualization widget 
 Object {
   "visualizationWidget": Object {
     "content": Object {
-      "configuration": Object {
-        "hideTitle": false,
-      },
       "dateDataSet": undefined,
       "drills": Array [],
       "ignoreDashboardFilters": Array [],

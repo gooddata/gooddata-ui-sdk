@@ -172,9 +172,6 @@ Object {
             },
             "type": "IDashboardLayoutItem",
             "widget": Object {
-              "configuration": Object {
-                "hideTitle": false,
-              },
               "dateDataSet": undefined,
               "description": "",
               "drills": Array [
@@ -221,9 +218,6 @@ Object {
             },
             "type": "IDashboardLayoutItem",
             "widget": Object {
-              "configuration": Object {
-                "hideTitle": false,
-              },
               "dateDataSet": undefined,
               "description": "",
               "drills": Array [
@@ -340,9 +334,6 @@ Object {
             },
             "type": "IDashboardLayoutItem",
             "widget": Object {
-              "configuration": Object {
-                "hideTitle": false,
-              },
               "dateDataSet": undefined,
               "description": "",
               "drills": Array [
@@ -390,9 +381,6 @@ Object {
             },
             "type": "IDashboardLayoutItem",
             "widget": Object {
-              "configuration": Object {
-                "hideTitle": false,
-              },
               "dateDataSet": undefined,
               "description": "",
               "drills": Array [
@@ -509,9 +497,6 @@ Object {
             },
             "type": "IDashboardLayoutItem",
             "widget": Object {
-              "configuration": Object {
-                "hideTitle": false,
-              },
               "dateDataSet": undefined,
               "description": "",
               "drills": Array [
@@ -594,9 +579,6 @@ Object {
             },
             "type": "IDashboardLayoutItem",
             "widget": Object {
-              "configuration": Object {
-                "hideTitle": false,
-              },
               "dateDataSet": undefined,
               "description": "",
               "drills": Array [

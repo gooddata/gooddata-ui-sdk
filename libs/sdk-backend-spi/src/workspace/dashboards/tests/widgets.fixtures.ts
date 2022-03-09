@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import { uriRef } from "@gooddata/sdk-model";
 import { IWidget, IWidgetDefinition } from "../widget";
@@ -10,9 +10,6 @@ export const widgetDefinition: IWidgetDefinition = {
     description: "",
     drills: [],
     ignoreDashboardFilters: [],
-    configuration: {
-        hideTitle: false,
-    },
 };
 export const widget: IWidget = {
     ...widgetDefinition,

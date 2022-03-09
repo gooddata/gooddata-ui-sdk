@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import { GdcVisualizationWidget, GdcKpi, GdcExtendedDateFilters } from "@gooddata/api-model-bear";
 import { uriRef } from "@gooddata/sdk-model";
@@ -30,17 +30,7 @@ export const convertVisualizationWidget = (
 ): IWidget => {
     const {
         visualizationWidget: {
-            content: {
-                visualization,
-                ignoreDashboardFilters,
-                dateDataSet,
-                drills,
-                references,
-                properties,
-                configuration = {
-                    hideTitle: false,
-                },
-            },
+            content: { visualization, ignoreDashboardFilters, dateDataSet, drills, references, properties },
             meta: { identifier, uri, title, summary },
         },
     } = visualizationWidget;
@@ -64,7 +54,6 @@ export const convertVisualizationWidget = (
             : [],
         drills: drills ? drills.map(convertVisualizationWidgetDrill) : [],
         properties: convertedProperties,
-        configuration,
     };
 };
 
