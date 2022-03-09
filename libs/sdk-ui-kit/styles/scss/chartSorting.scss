@@ -25,22 +25,14 @@
     }
 
     .gd-sort-charting-dropdown-header {
-        flex: 0 0 auto;
-        padding: 5px 11px;
-        background-color: $is-focused-background;
-        border-bottom: 1px solid $gd-border-color;
-
-        & > div {
-            line-height: 19px;
-            font-size: 11px;
-            color: $gd-color-link;
-            text-transform: uppercase;
-        }
+        padding: 6px 6px 6px 10px;
+        color: $gd-color-state-blank;
+        background: $is-focused-background;
+        font-size: 12px;
+        text-transform: uppercase;
     }
 
     .gd-sort-attribute-section {
-        margin-bottom: 10px;
-
         .gd-sort-attribute-item:not(:first-child) {
             margin-top: 10px;
         }
@@ -51,7 +43,7 @@
     }
 
     .gd-sort-charting-dropdown {
-        padding: 8px 8px 4px;
+        padding: 10px;
         border-top-left-radius: 3px;
         border-top-right-radius: 3px;
         font-size: 12px;
@@ -78,7 +70,7 @@
         align-items: center;
         margin: 8px 0 0 6px;
         white-space: nowrap;
-        border-left: 2px dashed rgba(176, 190, 202, 0.45);
+        border-left: 2px dotted $gd-border-color;
 
         .select-label {
             flex: 0 0 auto;
