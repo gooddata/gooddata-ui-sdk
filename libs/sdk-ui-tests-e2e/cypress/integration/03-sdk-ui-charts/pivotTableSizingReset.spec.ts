@@ -4,6 +4,11 @@ import * as Md from "../../../scenarios/src/md/full";
 import * as Navigation from "../../tools/navigation";
 import { Table } from "../../tools/table";
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const constants = require("../../constants");
+
+constants.WORKSPACE_ID;
+
 const TABLE_SELECTOR_STR_COMPLEX = ".s-pivot-table-sizing-complex";
 const CHANGE_WIDTH_BUTTON_ATTRIBUTE_STR = ".s-change-width-button-attribute";
 const CHANGE_WIDTH_BUTTON_MEASURE_STR = ".s-change-width-button-measure";
@@ -25,7 +30,7 @@ const MEASURE_LOCATOR_ITEM = measureLocalId(Md.Amount);
 const ATTRIBUTE_LOCATOR_ITEM_ATT_ID = attributeLocalId(Md.Region);
 
 // rep from workspace variable
-const ATTRIBUTE_LOCATOR_ITEM_ATT_ELM = `/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1083/elements?id=460488`;
+const ATTRIBUTE_LOCATOR_ITEM_ATT_ELM = `/gdc/md/${constants.WORKSPACE_ID}/obj/1083/elements?id=460488`;
 
 export const getCallbackArray = () => {
     const callbackSelector = `.s-pivot-table-sizing-complex-callback`;

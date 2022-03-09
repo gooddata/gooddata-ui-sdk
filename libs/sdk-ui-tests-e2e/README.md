@@ -22,7 +22,7 @@ Tests in this library verify various go-through scenarios for GoodData.UI compon
 The test application runs on `http://localhost:9500/gooddata-ui-sdk#<resolver-hash>`, to show the Scenario you want to test, replace the `<resolver-hash>` variable
 with the hash respective to you Scenario. You can find all available hashes in the `ComponentResolver.tsx`.
 
-Login to scenario app visit `http://localhost:9500/gdc/account/login`
+To log in to the scenario app, visit `http://localhost:9500/gdc/account/login`
 
 ### Adding new test
 

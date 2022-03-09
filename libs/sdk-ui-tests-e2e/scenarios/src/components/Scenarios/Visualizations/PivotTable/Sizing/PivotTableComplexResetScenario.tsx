@@ -21,6 +21,9 @@ import {
     newAttributeLocator,
 } from "@gooddata/sdk-model";
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const constants = require("../../../../../../../cypress/constants");
+
 const measures = [ReferenceMd.Amount];
 const attributes = [ReferenceMd.Product.Name];
 const columns = [ReferenceMd.Region];
@@ -106,7 +109,7 @@ const isSameWidthItem = (item: any, newItem: any) => {
     return false;
 };
 
-const EastCoastUri = "/gdc/md/frho3i7qc6epdek7mcgergm9vtm6o5ty/obj/1083/elements?id=460488";
+const EastCoastUri = `/gdc/md/${constants.WORKSPACE_ID}/obj/1083/elements?id=460488`;
 
 const measureWidth = (width: number) =>
     measureColumnWidthItemSimple(measures[0], width, [newAttributeLocator(ReferenceMd.Region, EastCoastUri)]);

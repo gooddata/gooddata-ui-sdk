@@ -18,7 +18,6 @@ export class Chart {
 
     waitLoaded() {
         this.getElement().find(".s-loading").should("not.exist");
-        //this.getElement().find(".s-loading-done").should("exist");
         return this;
     }
 
