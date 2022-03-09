@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { ISettings } from "@gooddata/sdk-backend-spi";
 import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
 import { IFluidLayoutDescriptor } from "./LayoutDescriptor";
@@ -31,6 +31,10 @@ export interface ISizeInfo {
 export interface IVisualizationSizeInfo {
     width: ISizeInfo;
     height: ISizeInfo;
+}
+
+export interface IEmbeddingCodeConfig {
+    height?: number | string;
 }
 
 /**
@@ -73,4 +77,13 @@ export interface IVisualizationDescriptor {
      * @returns {@link @gooddata/sdk-model#IInsight} with modified buckets and filters according to the provided drill down context.
      */
     applyDrillDown(insight: IInsight, drillDownContext: IDrillDownContext): IInsight;
+
+    /**
+     * When called, returns a source code that can be used to embed the visualization in a custom application.
+     *
+     * @param insight - the insight to generate the embedding code for
+     * @param config - configuration of the resulting code
+     * @returns the source code as a string
+     */
+    getEmbeddingCode?(insight: IInsightDefinition, config?: IEmbeddingCodeConfig): string;
 }

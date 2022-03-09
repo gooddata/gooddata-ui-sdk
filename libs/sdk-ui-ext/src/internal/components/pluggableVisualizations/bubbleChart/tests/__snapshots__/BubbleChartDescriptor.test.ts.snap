@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BubbleChartDescriptor should generate embedding code with height as number 1`] = `
+"import React from \\"react\\";
+import { idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { BubbleChart } from \\"@gooddata/sdk-ui-charts\\";
+
+function MyComponent() {
+    return (
+        <div style={{ height: 400 }}>
+            <BubbleChart
+                xAxisMeasure={newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))}
+                viewBy={newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`BubbleChartDescriptor should generate embedding code with height as string 1`] = `
+"import React from \\"react\\";
+import { idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { BubbleChart } from \\"@gooddata/sdk-ui-charts\\";
+
+function MyComponent() {
+    return (
+        <div style={{ height: \\"20rem\\" }}>
+            <BubbleChart
+                xAxisMeasure={newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))}
+                viewBy={newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`BubbleChartDescriptor should generate embedding code without height 1`] = `
+"import React from \\"react\\";
+import { idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { BubbleChart } from \\"@gooddata/sdk-ui-charts\\";
+
+function MyComponent() {
+    return (
+        <BubbleChart
+            xAxisMeasure={newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))}
+            viewBy={newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))}
+        />
+    );
+}
+"
+`;
