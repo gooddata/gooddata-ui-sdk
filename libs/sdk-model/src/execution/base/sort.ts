@@ -388,6 +388,27 @@ export function newMeasureSort(
 }
 
 /**
+ * Creates a new measure sort - sorting the result by values of the provided measure. New measure sort is created from provided parts. Helpful eg. for just switching the direction of existing sort
+ *
+ * @param locators - complete locators
+ * @param sortDirection - asc or desc, defaults to "asc"
+ * @returns new sort item
+ * @public
+ */
+export function newMeasureSortFromParts(
+    locators: ILocatorItem[],
+    sortDirection: SortDirection = "asc",
+): IMeasureSortItem {
+    invariant(locators.length !== 0, "locators must be specified");
+    return {
+        measureSortItem: {
+            direction: sortDirection,
+            locators,
+        },
+    };
+}
+
+/**
  * Creates a new attribute locator for an attribute element.
  *
  * @param attributeOrId - attribute, can be specified by either the attribute object or its local identifier
