@@ -59,7 +59,6 @@ async function loadProjectMetadataFromBackend(config: CatalogExportConfig): Prom
 
 async function checkFolderExists(filePath: string) {
     const directory = path.dirname(filePath);
-    process.stdout.write(`dirname: ${directory}\n`);
     if (!fs.existsSync(directory)) {
         fs.mkdirSync(directory);
     }
