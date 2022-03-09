@@ -23,6 +23,10 @@ export function updateConfigWithSettings(config: IChartConfig, settings: ISettin
                 enableJoinedAttributeAxisName: settings["enableAxisNameViewByTwoAttributes"],
             };
         }
+
+        if (settings.enableChartsSorting) {
+            updatedConfig = { ...updatedConfig, enableChartSorting: true };
+        }
     }
 
     return updatedConfig;

@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { Chart, IChartProps } from "./adapter/Chart";
 import { ChartTransformation, IChartTransformationProps } from "./ChartTransformation";
 export { IHighChartsRendererProps } from "./adapter/HighChartsRenderer";
@@ -22,6 +22,7 @@ export {
     isComboChart,
     isDonutChart,
     isHeatmap,
+    isFunnel,
     isTreemap,
     isScatterPlot,
     isPieChart,
