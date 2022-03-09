@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021 GoodData Corporation
 import {
     IDashboardLayoutItem,
     IDashboardLayoutSectionHeader,
@@ -63,9 +63,6 @@ export function createTestInsightItem(
             drills: [],
             title: "Test Insight Item",
             description: "",
-            configuration: {
-                hideTitle: false,
-            },
         },
         size: {
             xl: {

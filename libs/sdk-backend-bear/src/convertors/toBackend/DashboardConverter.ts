@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import {
     isDashboardLayout,
     IDashboard,
@@ -432,7 +432,7 @@ export const convertWidget = (
         };
     }
 
-    const { insight, properties: widgetProperties = {}, configuration } = widget;
+    const { insight, properties: widgetProperties = {} } = widget;
 
     const { properties, references } = convertUrisToReferences({
         properties: widgetProperties,
@@ -454,7 +454,6 @@ export const convertWidget = (
                     properties: serializeProperties(nonEmptyProperties),
                 }),
                 ...(!isEmpty(references) && { references }),
-                configuration,
             },
             meta,
         },

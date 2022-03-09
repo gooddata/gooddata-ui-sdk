@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021 GoodData Corporation
 import { ILegacyKpi } from "./kpi";
 import { InsightDrillDefinition, KpiDrillDefinition } from "./drills";
 import { IDashboardObjectIdentity } from "./common";
@@ -84,18 +84,6 @@ export interface IInsightWidgetBase extends IAnalyticalWidget {
      * Drill interactions configured for the insight widget.
      */
     readonly drills: InsightDrillDefinition[];
-
-    /**
-     * Configuration of the widget itself regardless of the visualization type
-     */
-    readonly configuration: IInsightWidgetConfiguration;
-}
-
-/**
- * @alpha
- */
-export interface IInsightWidgetConfiguration {
-    hideTitle: boolean;
 }
 
 /**

@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { FilterContextItem, IFilterContext, IWidgetDefinition } from "@gooddata/sdk-backend-spi";
 import { idRef } from "@gooddata/sdk-model";
@@ -14,9 +14,6 @@ describe("filterContextToFiltersForWidget", () => {
         type: "insight",
         dateDataSet: ReferenceMd.DateDatasets.Activity.ref,
         insight: idRef(ReferenceMd.Insights.Test),
-        configuration: {
-            hideTitle: false,
-        },
     };
 
     const getFilterContext = (filters: FilterContextItem[]): IFilterContext => ({

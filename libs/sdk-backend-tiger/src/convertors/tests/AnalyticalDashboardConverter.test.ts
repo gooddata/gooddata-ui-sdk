@@ -33,9 +33,6 @@ const layout: IDashboardLayout = {
                             },
                         ],
                         properties: {},
-                        configuration: {
-                            hideTitle: false,
-                        },
                     },
                 },
                 {
@@ -64,9 +61,6 @@ const layout: IDashboardLayout = {
                             },
                         ],
                         properties: {},
-                        configuration: {
-                            hideTitle: false,
-                        },
                     },
                 },
             ],
@@ -99,9 +93,6 @@ const layout: IDashboardLayout = {
                             },
                         ],
                         properties: {},
-                        configuration: {
-                            hideTitle: false,
-                        },
                     },
                 },
                 {
@@ -129,9 +120,6 @@ const layout: IDashboardLayout = {
                             },
                         ],
                         properties: {},
-                        configuration: {
-                            hideTitle: false,
-                        },
                     },
                 },
                 {
@@ -149,9 +137,6 @@ const layout: IDashboardLayout = {
                         },
                         drills: [],
                         properties: {},
-                        configuration: {
-                            hideTitle: false,
-                        },
                     },
                 },
                 {
@@ -165,9 +150,6 @@ const layout: IDashboardLayout = {
                         insight: { identifier: "842a24d3-4455-45e1-b345-f97e582c2264", type: "insight" },
                         drills: [],
                         properties: {},
-                        configuration: {
-                            hideTitle: false,
-                        },
                     },
                 },
                 {
@@ -203,9 +185,6 @@ const layout: IDashboardLayout = {
                             },
                         ],
                         properties: {},
-                        configuration: {
-                            hideTitle: false,
-                        },
                     },
                 },
             ],
