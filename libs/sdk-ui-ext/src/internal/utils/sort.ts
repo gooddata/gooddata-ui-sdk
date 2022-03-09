@@ -14,6 +14,7 @@ import {
     insightSorts,
     newAttributeSort,
     newMeasureSort,
+    newMeasureSortFromParts,
     SortDirection,
     ISortItem,
     newAttributeAreaSort,
@@ -217,21 +218,77 @@ function isValidMeasureSort(measureSort: IMeasureSortItem, availableSort: IAvail
     );
 }
 
-function handleDifferentOrder(currentSort: ISortItem[], availableSortGroup: IAvailableSortsGroup) {
+function findReusableSort(
+    currentSort: ISortItem[],
+    availableSortGroup: IAvailableSortsGroup,
+    groupIndex: number,
+    attributeValidationFce: (attributeSort: ISortItem, availableSort: IAvailableSortsGroup) => boolean,
+) {
+    const modifiedSorts = [...currentSort];
+
+    const attributeSortIndex = currentSort.findIndex((sortItem) =>
+        attributeValidationFce(sortItem, availableSortGroup),
+    );
+    if (attributeSortIndex !== -1) {
+        const reusedItem = currentSort[attributeSortIndex];
+        modifiedSorts[attributeSortIndex] = modifiedSorts[groupIndex];
+        modifiedSorts[groupIndex] = reusedItem;
+        return {
+            modifiedSorts,
+            reusedItem,
+        };
+    }
+}
+
+function handleDifferentOrder(
+    currentSort: ISortItem[],
+    availableSortGroup: IAvailableSortsGroup,
+    groupIndex: number,
+): {
+    modifiedSorts?: ISortItem[];
+    reusedItem?: ISortItem;
+} {
     if (availableSortGroup.attributeSort.normalSortEnabled) {
-        const attributeSort = currentSort.find((sortItem) =>
-            isValidAttributeSort(sortItem, availableSortGroup),
-        );
-        if (attributeSort) {
-            return attributeSort;
+        const found = findReusableSort(currentSort, availableSortGroup, groupIndex, isValidAttributeSort);
+        if (found) {
+            return found;
         }
     }
     if (availableSortGroup.attributeSort.areaSortEnabled) {
-        const attributeSort = currentSort.find((sortItem) =>
-            isValidateAreaSort(sortItem, availableSortGroup),
-        );
-        if (attributeSort) {
-            return attributeSort;
+        const found = findReusableSort(currentSort, availableSortGroup, groupIndex, isValidateAreaSort);
+        if (found) {
+            return found;
+        }
+    }
+    return {};
+}
+
+function reuseSortItemType(currentSortItem: ISortItem, availableSortGroup: IAvailableSortsGroup) {
+    if (currentSortItem) {
+        const currentSortDirection = sortDirection(currentSortItem);
+        if (isAttributeValueSort(currentSortItem) && availableSortGroup.attributeSort.normalSortEnabled) {
+            return newAttributeSort(availableSortGroup.itemId.localIdentifier, currentSortDirection);
+        }
+        if (isAttributeAreaSort(currentSortItem)) {
+            if (availableSortGroup.attributeSort.areaSortEnabled) {
+                return newAttributeAreaSort(availableSortGroup.itemId.localIdentifier, currentSortDirection);
+            }
+            const availableMetricSort = availableSortGroup.metricSorts && availableSortGroup.metricSorts[0];
+            if (availableMetricSort) {
+                return newMeasureSortFromParts(availableMetricSort.locators, currentSortDirection);
+            }
+        }
+        if (isMeasureSort(currentSortItem)) {
+            if (isValidMeasureSort(currentSortItem, availableSortGroup)) {
+                return currentSortItem;
+            }
+            const availableMetricSort = availableSortGroup.metricSorts && availableSortGroup.metricSorts[0];
+            if (availableMetricSort) {
+                return newMeasureSortFromParts(availableMetricSort.locators, currentSortDirection);
+            }
+            if (availableSortGroup.attributeSort.areaSortEnabled) {
+                return newAttributeAreaSort(availableSortGroup.itemId.localIdentifier, currentSortDirection);
+            }
         }
     }
 }
@@ -255,66 +312,23 @@ export function validateCurrentSort(
     if (currentSort.length === 0) {
         return [];
     }
+    let currentSortsToReuse = [...currentSort];
     return availableSorts
         .map((availableSortGroup, index) => {
             // reuse existing sort item with only changed order
-            const reusedItem = handleDifferentOrder(currentSort, availableSortGroup);
+            // it may affect also order of items in current sort
+            const { reusedItem, modifiedSorts } = handleDifferentOrder(
+                currentSortsToReuse,
+                availableSortGroup,
+                index,
+            );
             if (reusedItem) {
+                currentSortsToReuse = modifiedSorts;
                 return reusedItem;
             }
-            const currentSortItem = currentSort[index];
+            const currentSortItem = currentSortsToReuse[index];
             // reuse at least type of sort item
-            if (currentSortItem) {
-                const currentSortDirection = sortDirection(currentSortItem);
-                if (
-                    isAttributeValueSort(currentSortItem) &&
-                    availableSortGroup.attributeSort.normalSortEnabled
-                ) {
-                    return newAttributeSort(availableSortGroup.itemId.localIdentifier, currentSortDirection);
-                }
-                if (isAttributeAreaSort(currentSortItem)) {
-                    if (availableSortGroup.attributeSort.areaSortEnabled) {
-                        return newAttributeAreaSort(
-                            availableSortGroup.itemId.localIdentifier,
-                            currentSortDirection,
-                        );
-                    }
-                    const availableMetricSort =
-                        availableSortGroup.metricSorts && availableSortGroup.metricSorts[0];
-                    if (availableMetricSort) {
-                        // TODO INE replace by some constructor
-                        return {
-                            measureSortItem: {
-                                locators: availableMetricSort.locators,
-                                direction: currentSortDirection,
-                            },
-                        };
-                    }
-                }
-                if (isMeasureSort(currentSortItem)) {
-                    if (isValidMeasureSort(currentSortItem, availableSortGroup)) {
-                        return currentSortItem;
-                    }
-                    const availableMetricSort =
-                        availableSortGroup.metricSorts && availableSortGroup.metricSorts[0];
-                    if (availableMetricSort) {
-                        // TODO INE replace by some constructor
-                        return {
-                            measureSortItem: {
-                                locators: availableMetricSort.locators,
-                                direction: currentSortDirection,
-                            },
-                        };
-                    }
-                    if (availableSortGroup.attributeSort.areaSortEnabled) {
-                        return newAttributeAreaSort(
-                            availableSortGroup.itemId.localIdentifier,
-                            currentSortDirection,
-                        );
-                    }
-                }
-            }
-            return defaultSort[index];
+            return reuseSortItemType(currentSortItem, availableSortGroup) ?? defaultSort[index];
         })
         .filter(Boolean);
 }
