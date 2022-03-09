@@ -5949,7 +5949,7 @@ packages:
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.14.8_debug@4.3.3
+      follow-redirects: 1.14.8
     transitivePeerDependencies:
       - debug
     dev: false
@@ -7905,6 +7905,14 @@ packages:
 
   /cyclist/1.0.1:
     resolution: {integrity: sha1-WW6WmP0MgOEgOMK4LW6xs1tiJNk=}
+    dev: false
+
+  /cypress-real-events/1.7.0_cypress@7.7.0:
+    resolution: {integrity: sha512-iyXp07j0V9sG3YClVDcvHN2DAQDgr+EjTID82uWDw6OZBlU3pXEBqTMNYqroz3bxlb0k+F74U81aZwzMNaKyew==}
+    peerDependencies:
+      cypress: ^4.x || ^5.x || ^6.x || ^7.x || ^8.x || ^9.x
+    dependencies:
+      cypress: 7.7.0
     dev: false
 
   /cypress/7.7.0:
@@ -9879,6 +9887,16 @@ packages:
     dependencies:
       inherits: 2.0.4
       readable-stream: 2.3.7
+    dev: false
+
+  /follow-redirects/1.14.8:
+    resolution: {integrity: sha512-1x0S9UVJHsQprFcEC/qnNzBLcIxsjAV905f/UkQxbclCsoTWlacCNOpQa/anodLl2uaEKFhfWOvM2Qg77+15zA==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
     dev: false
 
   /follow-redirects/1.14.8_debug@4.1.1:
@@ -23080,7 +23098,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-tests-e2e.tgz_ts-node@10.4.0:
-    resolution: {integrity: sha512-qKEJrVylzJDgSwlKn5G3YysIkeSdbgQ+VicQZCnrO9HIwxQC6VfImslSkjvBZbgO8cB3ATr1pm6yuu69Gjp4RQ==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
+    resolution: {integrity: sha512-GEifjINejdtNShVd70ClyRHgOQV+TnCa29U9FDtHA0eyZ+p4NrmtOMx7Cnm3kSQw90FqjRt4NrhDXfXADh1lPQ==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
     id: file:projects/sdk-ui-tests-e2e.tgz
     name: '@rush-temp/sdk-ui-tests-e2e'
     version: 0.0.0
@@ -23101,6 +23119,7 @@ packages:
       '@microsoft/api-extractor': 7.18.19
       '@types/enzyme': 3.10.10
       '@types/lodash': 4.14.177
+      '@types/node': 16.11.11
       '@types/raf': 3.4.0
       '@types/react': 17.0.37
       '@types/react-dom': 17.0.11
@@ -23117,6 +23136,7 @@ packages:
       compression-webpack-plugin: 7.1.2_webpack@5.64.4
       css-loader: 5.2.7_webpack@5.64.4
       cypress: 7.7.0
+      cypress-real-events: 1.7.0_cypress@7.7.0
       dependency-cruiser: 10.8.0
       dotenv: 10.0.0
       dotenv-webpack: 7.0.3_webpack@5.64.4
@@ -23181,7 +23201,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-tests.tgz:
-    resolution: {integrity: sha512-dHUFRaLFvtHPKUi22e7yYPrg1RMd7UuBGTjIhS7WP50OHrDAXR5/Je8XtUWAKsPcJSHK2anFSX9KmkaCDCytZw==, tarball: file:projects/sdk-ui-tests.tgz}
+    resolution: {integrity: sha512-uGkZfL99bFfEfDPQXA42fggXIS1t09YswKiRJJgWe43wq9DUfy3o4RYcXtqYy9PZ+n2wg3wvezxMXNxGMuaBnQ==, tarball: file:projects/sdk-ui-tests.tgz}
     name: '@rush-temp/sdk-ui-tests'
     version: 0.0.0
     dependencies:

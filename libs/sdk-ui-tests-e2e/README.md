@@ -22,12 +22,14 @@ Tests in this library verify various go-through scenarios for GoodData.UI compon
 The test application runs on `http://localhost:9500/gooddata-ui-sdk#<resolver-hash>`, to show the Scenario you want to test, replace the `<resolver-hash>` variable
 with the hash respective to you Scenario. You can find all available hashes in the `ComponentResolver.tsx`.
 
+To log in to the scenario app, visit `http://localhost:9500/gdc/account/login`
+
 ### Adding new test
 
 -   In folder `cypres/integration` you can either create new folder for the tests you're writing. You can then add new `*.spec.ts` file into either this new folder or to suitable existing one.
 -   In the `scenarios/src/components/Scenarios`, create new Scenario file and within the new file use the component you are about to test.
 -   In the `scenarios/src/routes/ComponentResolver`, add the `ScenarioComponent` you just created with a new unique hash. Navigation component takes this hash as its parameter and navigates the application to matching component.
--   In the `.env` file, type the spec file name into `FILTER` variable. This will keep all the recordings untouched and creates the recording for the new spec only.
+-   In the `.env` file, type the spec file name into `FILTER` variable, file name must be fully specified (e.g. dateFilter.spec.ts). This will keep all the recordings untouched and creates the recording for the new spec only.
 -   Run command `npm run run-isolated-record` to create new recordings for tests.
 
 ### Test results

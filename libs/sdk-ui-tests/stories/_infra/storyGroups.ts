@@ -7,4 +7,3 @@ export const EmbeddingStories = "05 Stories For Embedding using InsightView";
 export const FilterStories = "10 Filters";
 export const ConfigurationControls = "11 Configuration Controls";
 export const UiKit = "12 UI Kit";
-export const StoriesForEndToEndTests = "50 Stories For e2e Tests";
