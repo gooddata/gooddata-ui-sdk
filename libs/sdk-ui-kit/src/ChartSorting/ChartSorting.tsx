@@ -59,7 +59,7 @@ export const ChartSorting: React.FC<ChartSortingProps> = ({
     return (
         <ChartSortingDropdownBody buttonNode={buttonNode} onClose={onCancel}>
             <div className="gd-sort-charting-dropdown-header s-sort-charting-dropdown-header">
-                <FormattedMessage tagName="div" id="sorting.dropdown.header" />
+                <FormattedMessage id="sorting.dropdown.header" />
             </div>
             <div className="gd-sort-charting-body gd-sort-charting-dropdown">
                 <ChartSortingDropdown
