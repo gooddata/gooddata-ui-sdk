@@ -19,7 +19,7 @@ import {
     newAttributeAreaSort,
     ILocatorItem,
     isAttributeAreaSort,
-    isAttributeSimpleSort,
+    isAttributeValueSort,
     isMeasureSort,
     sortMeasureLocators,
     IMeasureSortItem,
@@ -192,7 +192,7 @@ function isValidateAreaSort(areaSort: ISortItem, availableSort: IAvailableSortsG
 
 function isValidAttributeSort(attributeSort: ISortItem, availableSort: IAvailableSortsGroup) {
     return (
-        isAttributeSimpleSort(attributeSort) &&
+        isAttributeValueSort(attributeSort) &&
         availableSort &&
         attributeSort.attributeSortItem.attributeIdentifier === availableSort.itemId.localIdentifier &&
         availableSort.attributeSort?.normalSortEnabled
@@ -267,7 +267,7 @@ export function validateCurrentSort(
             if (currentSortItem) {
                 const currentSortDirection = sortDirection(currentSortItem);
                 if (
-                    isAttributeSimpleSort(currentSortItem) &&
+                    isAttributeValueSort(currentSortItem) &&
                     availableSortGroup.attributeSort.normalSortEnabled
                 ) {
                     return newAttributeSort(availableSortGroup.itemId.localIdentifier, currentSortDirection);

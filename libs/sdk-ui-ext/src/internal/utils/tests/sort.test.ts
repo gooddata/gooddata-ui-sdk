@@ -5,6 +5,7 @@ import {
     getAttributeSortItem,
     getBucketItemIdentifiers,
     getDefaultTreemapSortFromBuckets,
+    validateCurrentSort,
 } from "../sort";
 import { IExtendedReferencePoint } from "../../interfaces/Visualization";
 import * as referencePointMocks from "../../tests/mocks/referencePointMocks";
@@ -22,9 +23,13 @@ import {
     IMeasureSortItem,
     ISortItem,
     newAttribute,
+    newAttributeAreaSort,
+    newAttributeSort,
     newBucket,
     newMeasure,
+    newMeasureSort,
 } from "@gooddata/sdk-model";
+import { newAvailableSortsGroup } from "../../interfaces/SortConfig";
 
 const attributeSort: IAttributeSortItem = {
     attributeSortItem: {
@@ -234,5 +239,23 @@ describe("getDefaultTreemapSortFromBuckets", () => {
                 },
             },
         ]);
+    });
+});
+
+describe("validateCurrentSort", () => {
+    it("should handle empty currentSort", () => {
+        expect(
+            validateCurrentSort([], [newAvailableSortsGroup("a1")], [newAttributeSort("a1", "asc")]),
+        ).toEqual([]);
+    });
+
+    it("should reuse attribute sort which changed only the order", () => {
+        expect(
+            validateCurrentSort(
+                [newMeasureSort("m1", "desc"), newAttributeSort("a1", "asc")],
+                [newAvailableSortsGroup("a1"), newAvailableSortsGroup("a2", ["m1"])],
+                [newAttributeAreaSort("a1", "asc"), newMeasureSort("m1", "desc")],
+            ),
+        ).toEqual([newAttributeSort("a1", "asc"), newMeasureSort("m1", "desc")]);
     });
 });

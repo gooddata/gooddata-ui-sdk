@@ -142,7 +142,6 @@ Array [
     "itemId": Object {
       "localIdentifier": "a1",
     },
-    "metricSorts": Array [],
   },
 ]
 `;
@@ -192,7 +191,6 @@ Array [
     "itemId": Object {
       "localIdentifier": "a2",
     },
-    "metricSorts": Array [],
   },
 ]
 `;

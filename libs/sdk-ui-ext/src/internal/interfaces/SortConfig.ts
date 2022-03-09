@@ -7,6 +7,7 @@ import {
     IMeasureSortTarget,
     LocalIdRef,
     ISortItem,
+    localIdRef,
 } from "@gooddata/sdk-model";
 
 /**
@@ -55,6 +56,39 @@ export interface IAvailableSortsGroup {
      */
     explanation?: string;
 }
+
+/**
+ * @internal
+ */
+export const newAvailableSortsGroup = (
+    attributeId: string,
+    measureIds: string[] = [],
+    normalSortEnabled: boolean = true,
+    areaSortEnabled: boolean = true,
+    explanation?: string,
+): IAvailableSortsGroup => {
+    const metricSortsProp = measureIds.length
+        ? {
+              metricSorts: [
+                  ...measureIds.map((localIdentifier) => newMeasureSortSuggestion(localIdentifier)),
+              ],
+          }
+        : {};
+    const explanationProp = explanation
+        ? {
+              explanation,
+          }
+        : {};
+    return {
+        itemId: localIdRef(attributeId),
+        attributeSort: {
+            normalSortEnabled,
+            areaSortEnabled,
+        },
+        ...metricSortsProp,
+        ...explanationProp,
+    };
+};
 
 /**
  * @internal
