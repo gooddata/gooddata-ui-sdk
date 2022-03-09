@@ -89,7 +89,7 @@ export {
     isMeasureSort,
     isAttributeSort,
     isAttributeAreaSort,
-    isAttributeSimpleSort,
+    isAttributeValueSort,
     newMeasureSort,
     newAttributeSort,
     newAttributeAreaSort,

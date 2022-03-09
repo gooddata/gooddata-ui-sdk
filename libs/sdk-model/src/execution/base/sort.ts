@@ -152,11 +152,11 @@ export function isAttributeAreaSort(obj: unknown): obj is IAttributeSortItem {
 }
 
 /**
- * Type guard checking whether an object is a simple attribute sort item, not the area one.
+ * Type guard checking whether an object is a normal attribute value sort item, not the area one.
  *
  * @public
  */
-export function isAttributeSimpleSort(obj: unknown): obj is IAttributeSortItem {
+export function isAttributeValueSort(obj: unknown): obj is IAttributeSortItem {
     return isAttributeSort(obj) && !isAttributeAreaSort(obj);
 }
 
