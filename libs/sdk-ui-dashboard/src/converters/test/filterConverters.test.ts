@@ -29,9 +29,6 @@ describe("filterConverters tests", () => {
             type: "insight",
             dateDataSet: ReferenceMd.DateDatasets.Activity.ref,
             insight: idRef(ReferenceMd.Insights.Test),
-            configuration: {
-                hideTitle: false,
-            },
         };
 
         const scenarios: Scenario[] = [

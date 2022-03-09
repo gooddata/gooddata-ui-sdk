@@ -949,18 +949,11 @@ export interface IInsightWidget extends IInsightWidgetBase, IDashboardObjectIden
 
 // @alpha (undocumented)
 export interface IInsightWidgetBase extends IAnalyticalWidget {
-    readonly configuration: IInsightWidgetConfiguration;
     readonly drills: InsightDrillDefinition[];
     readonly insight: ObjRef;
     readonly properties?: VisualizationProperties;
     // (undocumented)
     readonly type: "insight";
-}
-
-// @alpha (undocumented)
-export interface IInsightWidgetConfiguration {
-    // (undocumented)
-    hideTitle: boolean;
 }
 
 // @alpha (undocumented)

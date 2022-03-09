@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import isEmpty from "lodash/fp/isEmpty";
 import has from "lodash/has";
 import { GdcMetadata } from "../meta/GdcMetadata";
@@ -21,7 +21,6 @@ export namespace GdcVisualizationWidget {
             drills?: IDrillDefinition[];
             properties?: string;
             references?: GdcVisualizationObject.IReferenceItems;
-            configuration?: IVisualizationWidgetConfiguration;
         };
     }
 
@@ -76,10 +75,6 @@ export namespace GdcVisualizationWidget {
             insightAttributeDisplayForm: GdcVisualizationObject.IObjUriQualifier;
             drillToAttributeDisplayForm: GdcVisualizationObject.IObjUriQualifier;
         };
-    }
-
-    export interface IVisualizationWidgetConfiguration {
-        hideTitle: boolean;
     }
 
     export function isDrillToVisualization(obj: unknown): obj is IDrillToVisualization {
