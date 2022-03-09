@@ -1,11 +1,11 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
+import compact from "lodash/compact";
 import flow from "lodash/flow";
-import identity from "lodash/identity";
 import isArray from "lodash/isArray";
 import isObject from "lodash/isObject";
 import isString from "lodash/isString";
 import stringifyObject from "stringify-object";
-import { ObjRef, isUriRef } from "../../objRef";
+import { isUriRef, ObjRefInScope, isIdentifierRef } from "../../objRef";
 import {
     isMeasureLocator,
     IAttributeLocatorItem,
@@ -56,7 +56,15 @@ const stringify = (input: any) =>
 
 const ARRAY_JOINER = ", ";
 
-const getObjQualifierValue = (value: ObjRef): string => (isUriRef(value) ? value.uri : value.identifier);
+const stringifyObjRef = (ref: ObjRefInScope): string => {
+    if (isUriRef(ref)) {
+        return `uriRef("${ref.uri}")`;
+    } else if (isIdentifierRef(ref)) {
+        return ref.type ? `idRef("${ref.identifier}", "${ref.type}")` : `idRef("${ref.identifier}")`;
+    } else {
+        return `localIdRef("${ref.localIdentifier}")`;
+    }
+};
 
 type Converter<T> = (input: T) => string;
 
@@ -92,7 +100,7 @@ const getBuilder = <T>(defaultBuilder: string, builderSegmentHandlers: Array<Con
 // converters for each supported object to Model notation string
 const convertAttribute: Converter<IAttribute> = ({ attribute }) => {
     const builder = getBuilder("a => a", [addAlias(attribute), addLocalId(attribute)]);
-    return `newAttribute(${stringify(attribute.displayForm)}, ${builder})`;
+    return `newAttribute(${stringifyObjRef(attribute.displayForm)}, ${builder})`;
 };
 
 const baseMeasureDotAdders = (measure: IMeasure["measure"]) => [
@@ -109,7 +117,7 @@ const convertSimpleMeasure = (measure: IMeasure["measure"], definition: IMeasure
         addFilters(definition.measureDefinition),
         addRatio(definition.measureDefinition),
     ]);
-    return `newMeasure(${stringify(definition.measureDefinition.item)}, ${builder})`;
+    return `newMeasure(${stringifyObjRef(definition.measureDefinition.item)}, ${builder})`;
 };
 
 const convertArithmeticMeasure = (measure: IMeasure["measure"], definition: IArithmeticMeasureDefinition) => {
@@ -121,9 +129,9 @@ const convertArithmeticMeasure = (measure: IMeasure["measure"], definition: IAri
 
 const convertPopMeasure = (measure: IMeasure["measure"], definition: IPoPMeasureDefinition) => {
     const builder = getBuilder("m => m", baseMeasureDotAdders(measure));
-    return `newPopMeasure("${definition.popMeasureDefinition.measureIdentifier}", "${getObjQualifierValue(
+    return `newPopMeasure("${definition.popMeasureDefinition.measureIdentifier}", ${stringifyObjRef(
         definition.popMeasureDefinition.popAttribute,
-    )}", ${builder})`;
+    )}, ${builder})`;
 };
 
 const convertPreviousPeriodMeasure = (
@@ -131,17 +139,15 @@ const convertPreviousPeriodMeasure = (
     definition: IPreviousPeriodMeasureDefinition,
 ) => {
     const builder = getBuilder("m => m", baseMeasureDotAdders(measure));
-    return `newPreviousPeriodMeasure("${definition.previousPeriodMeasure.measureIdentifier}", [${
-        definition.previousPeriodMeasure.dateDataSets &&
-        definition.previousPeriodMeasure.dateDataSets
-            .map((s) =>
-                stringify({
-                    dataSet: getObjQualifierValue(s.dataSet),
-                    periodsAgo: s.periodsAgo,
-                }),
-            )
-            .join(ARRAY_JOINER)
-    }], ${builder})`;
+    const stringifiedDateDatasets = definition.previousPeriodMeasure.dateDataSets
+        ?.map(
+            (s) => `{
+    dataSet: ${stringifyObjRef(s.dataSet)},
+    periodsAgo: ${s.periodsAgo}
+}`,
+        )
+        .join(ARRAY_JOINER);
+    return `newPreviousPeriodMeasure("${definition.previousPeriodMeasure.measureIdentifier}", [${stringifiedDateDatasets}], ${builder})`;
 };
 
 const convertMeasure: Converter<IMeasure> = ({ measure }) => {
@@ -179,35 +185,35 @@ const convertMeasureSortItem: Converter<IMeasureSortItem> = ({ measureSortItem }
 const convertAbsoluteDateFilter: Converter<IAbsoluteDateFilter> = ({
     absoluteDateFilter: { dataSet, from, to },
 }) => {
-    const args = [dataSet, from, to].filter(identity).map(stringify);
-    return `newAbsoluteDateFilter(${args.join(ARRAY_JOINER)})`;
+    const restArgs = compact([from, to]).map(stringify);
+    return `newAbsoluteDateFilter(${[stringifyObjRef(dataSet), ...restArgs].join(ARRAY_JOINER)})`;
 };
 
 const convertRelativeDateFilter: Converter<IRelativeDateFilter> = ({
     relativeDateFilter: { dataSet, granularity, from, to },
 }) => {
-    const args = [dataSet, granularity, from, to].filter(identity).map(stringify);
-    return `newRelativeDateFilter(${args.join(ARRAY_JOINER)})`;
+    const restArgs = compact([granularity, from, to]).map(stringify);
+    return `newRelativeDateFilter(${[stringifyObjRef(dataSet), ...restArgs].join(ARRAY_JOINER)})`;
 };
 
 const convertPositiveAttributeFilter: Converter<IPositiveAttributeFilter> = ({
     positiveAttributeFilter: { displayForm, in: inValues },
 }) => {
-    const args = [displayForm, inValues].filter(identity).map(stringify);
-    return `newPositiveAttributeFilter(${args.join(ARRAY_JOINER)})`;
+    const restArgs = compact([inValues]).map(stringify);
+    return `newPositiveAttributeFilter(${[stringifyObjRef(displayForm), ...restArgs].join(ARRAY_JOINER)})`;
 };
 
 const convertNegativeAttributeFilter: Converter<INegativeAttributeFilter> = ({
     negativeAttributeFilter: { displayForm, notIn },
 }) => {
-    const args = [displayForm, notIn].filter(identity).map(stringify);
-    return `newNegativeAttributeFilter(${args.join(ARRAY_JOINER)})`;
+    const restArgs = compact([notIn]).map(stringify);
+    return `newNegativeAttributeFilter(${[stringifyObjRef(displayForm), ...restArgs].join(ARRAY_JOINER)})`;
 };
 
 const convertMeasureValueFilter: Converter<IMeasureValueFilter> = ({
     measureValueFilter: { measure, condition },
 }) => {
-    const ref = stringify(measure);
+    const ref = stringifyObjRef(measure);
 
     if (isComparisonCondition(condition)) {
         return `newMeasureValueFilter(${ref}, "${condition.comparison.operator}", ${condition.comparison.value})`;
@@ -221,10 +227,10 @@ const convertMeasureValueFilter: Converter<IMeasureValueFilter> = ({
 const convertRankingFilter: Converter<IRankingFilter> = ({
     rankingFilter: { measure, attributes, value, operator },
 }) => {
-    const attributesString = attributes?.map(stringify).join(ARRAY_JOINER);
+    const attributesString = attributes?.map(stringifyObjRef).join(ARRAY_JOINER);
 
     const args = [
-        stringify(measure),
+        stringifyObjRef(measure),
         attributesString && `[${attributesString}]`,
         `"${operator}"`,
         `${value}`,

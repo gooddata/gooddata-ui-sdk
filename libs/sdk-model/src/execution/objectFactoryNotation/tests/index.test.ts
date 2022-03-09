@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { factoryNotationFor } from "../index";
 import { IAttribute } from "../../attribute";
 import { newAttribute } from "../../attribute/factory";
@@ -32,6 +32,7 @@ import {
     newPopMeasure,
     newPreviousPeriodMeasure,
 } from "../../measure/factory";
+import { idRef, localIdRef, uriRef } from "../../../objRef/factory";
 
 // object with all the factory functions to be DI'd into the testing function
 const factories = {
@@ -52,6 +53,10 @@ const factories = {
     newAttributeSort,
     newAttributeAreaSort,
     newMeasureSort,
+
+    idRef,
+    localIdRef,
+    uriRef,
 };
 
 /**
