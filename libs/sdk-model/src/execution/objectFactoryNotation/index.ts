@@ -46,6 +46,7 @@ import {
     IPreviousPeriodMeasureDefinition,
 } from "../measure";
 import { isAttribute, IAttribute } from "../attribute";
+import { isTotal, ITotal } from "../base/totals";
 
 const stringify = (input: any) =>
     stringifyObject(input, {
@@ -239,6 +240,11 @@ const convertRankingFilter: Converter<IRankingFilter> = ({
     return `newRankingFilter(${args.join(ARRAY_JOINER)})`;
 };
 
+const convertTotal: Converter<ITotal> = ({ attributeIdentifier, measureIdentifier, type, alias }) => {
+    const args = compact([`"${type}"`, `"${measureIdentifier}"`, `"${attributeIdentifier}"`, `"${alias}"`]);
+    return `newTotal(${args.join(ARRAY_JOINER)})`;
+};
+
 /**
  * Returns a code for generating the provided input using convenience factory methods where possible.
  * @param data - data to return the generating code for
@@ -270,6 +276,8 @@ export const factoryNotationFor = (data: any): string => {
         return convertMeasureValueFilter(data);
     } else if (isRankingFilter(data)) {
         return convertRankingFilter(data);
+    } else if (isTotal(data)) {
+        return convertTotal(data);
     }
 
     return isObject(data) || isString(data) ? stringify(data) : data;

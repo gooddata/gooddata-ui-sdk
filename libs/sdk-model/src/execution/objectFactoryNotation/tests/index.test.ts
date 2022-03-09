@@ -33,6 +33,7 @@ import {
     newPreviousPeriodMeasure,
 } from "../../measure/factory";
 import { idRef, localIdRef, uriRef } from "../../../objRef/factory";
+import { ITotal, newTotal } from "../../base/totals";
 
 // object with all the factory functions to be DI'd into the testing function
 const factories = {
@@ -53,6 +54,8 @@ const factories = {
     newAttributeSort,
     newAttributeAreaSort,
     newMeasureSort,
+
+    newTotal,
 
     idRef,
     localIdRef,
@@ -514,6 +517,28 @@ describe("factoryNotationFor", () => {
                 const actual = factoryNotationFor(input);
                 testModelNotation(actual, input);
             });
+        });
+    });
+    describe("totals", () => {
+        it("should handle total without alias", () => {
+            const input: ITotal = {
+                attributeIdentifier: "attr",
+                measureIdentifier: "measure",
+                type: "sum",
+            };
+            const actual = factoryNotationFor(input);
+            testModelNotation(actual, input);
+        });
+
+        it("should handle total with alias", () => {
+            const input: ITotal = {
+                attributeIdentifier: "attr",
+                measureIdentifier: "measure",
+                type: "sum",
+                alias: "some alias",
+            };
+            const actual = factoryNotationFor(input);
+            testModelNotation(actual, input);
         });
     });
 });
