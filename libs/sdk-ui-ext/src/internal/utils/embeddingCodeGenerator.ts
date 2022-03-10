@@ -54,17 +54,13 @@ function detectSdkModelImports(serializedProps: string): string[] {
 }
 
 const TAB_SIZE = 4;
+const DEFAULT_HEIGHT = 400;
 
 function indent(str: string, tabs: number): string {
     return str
         .split("\n")
         .map((chunk) => `${repeat(" ", tabs * TAB_SIZE)}${chunk}`)
         .join("\n");
-}
-
-function wrapWithDiv(code: string, height: number | string): string {
-    const stringifiedHeight = isString(height) ? `"${height}"` : height.toString();
-    return `<div style={{ height: ${stringifiedHeight} }}>\n${indent(code, 1)}\n</div>`;
 }
 
 export function getReactEmbeddingCodeGenerator(
@@ -99,16 +95,21 @@ export function getReactEmbeddingCodeGenerator(
             toComponentImport(componentInfo),
         ]);
 
+        const height = config?.height ?? DEFAULT_HEIGHT;
+        const stringifiedHeight = isString(height) ? `"${height}"` : height.toString();
+
         const componentBody = `<${componentInfo.name}\n${indent(serializedProps, 1)}\n/>`;
-        const wrapped = config?.height ? wrapWithDiv(componentBody, config.height) : componentBody;
 
         return `${imports.join("\n")}
 
 ${propDeclarations}
+const style = { height: ${stringifiedHeight} };
 
 function MyComponent() {
     return (
-${indent(wrapped, 2)}
+        <div style={style}>
+${indent(componentBody, 3)}
+        </div>
     );
 }
 `;

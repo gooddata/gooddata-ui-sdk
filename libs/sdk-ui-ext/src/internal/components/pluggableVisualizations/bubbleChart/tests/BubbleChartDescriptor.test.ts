@@ -17,7 +17,7 @@ describe("BubbleChartDescriptor", () => {
     type Scenario = [string, number | string];
     const scenarios: Scenario[] = [
         ["without height", undefined],
-        ["with height as number", 400],
+        ["with height as number", 1000],
         ["with height as string", "20rem"],
     ];
 

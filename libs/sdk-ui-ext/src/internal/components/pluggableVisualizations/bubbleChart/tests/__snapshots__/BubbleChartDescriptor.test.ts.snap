@@ -7,10 +7,11 @@ import { BubbleChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const xAxisMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const viewBy = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
+const style = { height: 1000 };
 
 function MyComponent() {
     return (
-        <div style={{ height: 400 }}>
+        <div style={style}>
             <BubbleChart
                 xAxisMeasure={xAxisMeasure}
                 viewBy={viewBy}
@@ -28,10 +29,11 @@ import { BubbleChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const xAxisMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const viewBy = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
+const style = { height: \\"20rem\\" };
 
 function MyComponent() {
     return (
-        <div style={{ height: \\"20rem\\" }}>
+        <div style={style}>
             <BubbleChart
                 xAxisMeasure={xAxisMeasure}
                 viewBy={viewBy}
@@ -49,13 +51,16 @@ import { BubbleChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const xAxisMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const viewBy = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
+const style = { height: 400 };
 
 function MyComponent() {
     return (
-        <BubbleChart
-            xAxisMeasure={xAxisMeasure}
-            viewBy={viewBy}
-        />
+        <div style={style}>
+            <BubbleChart
+                xAxisMeasure={xAxisMeasure}
+                viewBy={viewBy}
+            />
+        </div>
     );
 }
 "
