@@ -30,10 +30,9 @@ function visit(config: IDashboardPluginTestConfig): void {
 export function withTestConfig(config: IDashboardPluginTestConfig) {
     function waitForFullRender(win: Window) {
         return new Cypress.Promise((resolve) => {
-            const unsubscribe = listenForDashboardPluginEvents(win, (e) => {
+            listenForDashboardPluginEvents(win, (e) => {
                 if ((e.type as DashboardEventType) === "GDC.DASH/EVT.RENDER.RESOLVED") {
                     resolve(true);
-                    unsubscribe();
                 }
             });
         });
