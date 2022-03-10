@@ -152,6 +152,15 @@ export function isAttributeAreaSort(obj: unknown): obj is IAttributeSortItem {
 }
 
 /**
+ * Type guard checking whether an object is a normal attribute value sort item, not the area one.
+ *
+ * @public
+ */
+export function isAttributeValueSort(obj: unknown): obj is IAttributeSortItem {
+    return isAttributeSort(obj) && !isAttributeAreaSort(obj);
+}
+
+/**
  * Type guard checking whether an object is a measure sort item.
  *
  * @public
@@ -374,6 +383,27 @@ export function newMeasureSort(
                     },
                 },
             ],
+        },
+    };
+}
+
+/**
+ * Creates a new measure sort - sorting the result by values of the provided measure. New measure sort is created from provided parts. Helpful eg. for just switching the direction of existing sort
+ *
+ * @param locators - complete locators
+ * @param sortDirection - asc or desc, defaults to "asc"
+ * @returns new sort item
+ * @public
+ */
+export function newMeasureSortFromLocators(
+    locators: ILocatorItem[],
+    sortDirection: SortDirection = "asc",
+): IMeasureSortItem {
+    invariant(locators.length !== 0, "locators must be specified");
+    return {
+        measureSortItem: {
+            direction: sortDirection,
+            locators,
         },
     };
 }

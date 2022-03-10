@@ -318,7 +318,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
      */
     public getSortConfig(_referencePoint: IReferencePoint): Promise<ISortConfig> {
         return Promise.resolve({
-            currentSort: [],
+            defaultSort: [],
             availableSorts: [],
             supported: false,
             disabled: false,

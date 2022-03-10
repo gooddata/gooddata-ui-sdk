@@ -4,13 +4,13 @@ import { render } from "react-dom";
 import isEmpty from "lodash/isEmpty";
 
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import { IInsightDefinition, localIdRef, newAttributeAreaSort, newMeasureSort } from "@gooddata/sdk-model";
+import { IInsightDefinition, newAttributeAreaSort, newMeasureSort } from "@gooddata/sdk-model";
 import { PluggableColumnBarCharts } from "../PluggableColumnBarCharts";
 import { IReferencePoint, IVisConstruct } from "../../../interfaces/Visualization";
 import { BAR_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 import BarChartConfigurationPanel from "../../configurationPanels/BarChartConfigurationPanel";
 import { AXIS, AXIS_NAME } from "../../../constants/axis";
-import { ISortConfig, newMeasureSortSuggestion } from "../../../interfaces/SortConfig";
+import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig";
 import { getBucketItems } from "../../../utils/bucketHelper";
 import { canSortStackTotalValue } from "./sortHelpers";
 
@@ -96,7 +96,7 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
         referencePoint: IReferencePoint,
         canSortStackTotalValue: boolean,
     ): {
-        defaultSort: ISortConfig["currentSort"];
+        defaultSort: ISortConfig["defaultSort"];
         availableSorts: ISortConfig["availableSorts"];
     } {
         const { buckets } = referencePoint;
@@ -113,23 +113,10 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
                         newMeasureSort(measures[0].localIdentifier, "desc"),
                     ],
                     availableSorts: [
-                        {
-                            itemId: localIdRef(viewBy[0].localIdentifier),
-                            attributeSort: {
-                                normalSortEnabled: true,
-                                areaSortEnabled: true,
-                            },
-                        },
-                        {
-                            itemId: localIdRef(viewBy[1].localIdentifier),
-                            attributeSort: {
-                                normalSortEnabled: true,
-                                areaSortEnabled: true,
-                            },
-                            metricSorts: [
-                                ...measures.map((m) => newMeasureSortSuggestion(m.localIdentifier)),
-                            ],
-                        },
+                        newAvailableSortsGroup(viewBy[0].localIdentifier),
+                        newAvailableSortsGroup(viewBy[1].localIdentifier, [
+                            ...measures.map((m) => m.localIdentifier),
+                        ]),
                     ],
                 };
             }
@@ -142,23 +129,13 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
                         : newMeasureSort(measures[0].localIdentifier, "desc"),
                 ],
                 availableSorts: [
-                    {
-                        itemId: localIdRef(viewBy[0].localIdentifier),
-                        attributeSort: {
-                            normalSortEnabled: true,
-                            areaSortEnabled: true,
-                        },
-                    },
-                    {
-                        itemId: localIdRef(viewBy[1].localIdentifier),
-                        attributeSort: {
-                            normalSortEnabled: true,
-                            areaSortEnabled: isStacked || measures.length > 1,
-                        },
-                        metricSorts: isEmpty(stackBy)
-                            ? [...measures.map((m) => newMeasureSortSuggestion(m.localIdentifier))]
-                            : [],
-                    },
+                    newAvailableSortsGroup(viewBy[0].localIdentifier),
+                    newAvailableSortsGroup(
+                        viewBy[1].localIdentifier,
+                        isEmpty(stackBy) ? [...measures.map((m) => m.localIdentifier)] : [],
+                        true,
+                        isStacked || measures.length > 1,
+                    ),
                 ],
             };
         }
@@ -167,16 +144,10 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
             return {
                 defaultSort: [newAttributeAreaSort(viewBy[0].localIdentifier, "desc")],
                 availableSorts: [
-                    {
-                        itemId: localIdRef(viewBy[0].localIdentifier),
-                        attributeSort: {
-                            normalSortEnabled: true,
-                            areaSortEnabled: true,
-                        },
-                        metricSorts: isEmpty(stackBy)
-                            ? [...measures.map((m) => newMeasureSortSuggestion(m.localIdentifier))]
-                            : [],
-                    },
+                    newAvailableSortsGroup(
+                        viewBy[0].localIdentifier,
+                        isEmpty(stackBy) ? [...measures.map((m) => m.localIdentifier)] : [],
+                    ),
                 ],
             };
         }
@@ -185,14 +156,12 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
             return {
                 defaultSort: [newMeasureSort(measures[0].localIdentifier, "desc")],
                 availableSorts: [
-                    {
-                        itemId: localIdRef(viewBy[0].localIdentifier),
-                        attributeSort: {
-                            normalSortEnabled: true,
-                            areaSortEnabled: measures.length > 1,
-                        },
-                        metricSorts: [...measures.map((m) => newMeasureSortSuggestion(m.localIdentifier))],
-                    },
+                    newAvailableSortsGroup(
+                        viewBy[0].localIdentifier,
+                        [...measures.map((m) => m.localIdentifier)],
+                        true,
+                        measures.length > 1,
+                    ),
                 ],
             };
         }
@@ -214,7 +183,8 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
         return Promise.resolve({
             supported: true,
             disabled,
-            currentSort: defaultSort,
+            appliedSort: super.reuseCurrentSort(properties, availableSorts, defaultSort),
+            defaultSort,
             availableSorts: availableSorts,
         });
     }

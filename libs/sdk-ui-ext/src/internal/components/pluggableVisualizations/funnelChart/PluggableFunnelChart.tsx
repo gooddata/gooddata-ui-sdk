@@ -7,6 +7,7 @@ import { PluggablePieChart } from "../pieChart/PluggablePieChart";
 import { setFunnelChartUiConfig } from "../../../utils/uiConfigHelpers/funnelChartUiConfigHelper";
 import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
+import { ISortConfig } from "../../../interfaces/SortConfig";
 
 /**
  * PluggableFunnelChart
@@ -60,5 +61,14 @@ export class PluggableFunnelChart extends PluggablePieChart {
                 document.querySelector(this.configPanelElement),
             );
         }
+    }
+
+    public getSortConfig(_referencePoint: IReferencePoint): Promise<ISortConfig> {
+        return Promise.resolve({
+            defaultSort: [],
+            availableSorts: [],
+            supported: false,
+            disabled: false,
+        });
     }
 }

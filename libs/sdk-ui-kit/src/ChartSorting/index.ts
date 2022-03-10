@@ -12,6 +12,6 @@ export {
     MeasureSortSuggestion,
     SORT_TARGET_TYPE,
     ISortTypeItem,
-    IIBucketItemDescriptor,
+    IBucketItemDescriptor,
     IBucketItemDescriptors,
 } from "./types";

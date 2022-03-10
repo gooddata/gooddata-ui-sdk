@@ -157,7 +157,9 @@ export class PluggableComboChart extends PluggableBaseChart {
             this.supportedPropertiesList,
         );
         newReferencePoint = applyUiConfig(newReferencePoint);
-        newReferencePoint = removeSort(newReferencePoint);
+        if (!this.featureFlags.enableChartsSorting) {
+            newReferencePoint = removeSort(newReferencePoint);
+        }
 
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
@@ -279,7 +281,7 @@ export class PluggableComboChart extends PluggableBaseChart {
         buckets: IBucketOfFun[],
         properties: IVisualizationProperties,
     ): {
-        defaultSort: ISortConfig["currentSort"];
+        defaultSort: ISortConfig["defaultSort"];
         availableSorts: ISortConfig["availableSorts"];
     } {
         const measures = getBucketItemsByType(buckets, BucketNames.MEASURES, [METRIC]);
@@ -338,7 +340,8 @@ export class PluggableComboChart extends PluggableBaseChart {
         return Promise.resolve({
             supported: true,
             disabled,
-            currentSort: defaultSort,
+            appliedSort: super.reuseCurrentSort(properties, availableSorts, defaultSort),
+            defaultSort,
             availableSorts,
         });
     }

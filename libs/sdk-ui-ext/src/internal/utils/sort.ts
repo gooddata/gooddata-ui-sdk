@@ -14,14 +14,17 @@ import {
     insightSorts,
     newAttributeSort,
     newMeasureSort,
+    newMeasureSortFromLocators,
     SortDirection,
     ISortItem,
     newAttributeAreaSort,
     ILocatorItem,
     isAttributeAreaSort,
-    isAttributeSort,
+    isAttributeValueSort,
     isMeasureSort,
     sortMeasureLocators,
+    IMeasureSortItem,
+    sortDirection,
 } from "@gooddata/sdk-model";
 
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
@@ -179,7 +182,7 @@ export function removeSort(referencePoint: Readonly<IExtendedReferencePoint>): I
     return referencePoint;
 }
 
-function validateAreaSort(areaSort: ISortItem, availableSort: IAvailableSortsGroup) {
+function isValidAreaSort(areaSort: ISortItem, availableSort: IAvailableSortsGroup) {
     return (
         isAttributeAreaSort(areaSort) &&
         availableSort &&
@@ -188,9 +191,9 @@ function validateAreaSort(areaSort: ISortItem, availableSort: IAvailableSortsGro
     );
 }
 
-function validateAttributeSort(attributeSort: ISortItem, availableSort: IAvailableSortsGroup) {
+function isValidAttributeSort(attributeSort: ISortItem, availableSort: IAvailableSortsGroup) {
     return (
-        isAttributeSort(attributeSort) &&
+        isAttributeValueSort(attributeSort) &&
         availableSort &&
         attributeSort.attributeSortItem.attributeIdentifier === availableSort.itemId.localIdentifier &&
         availableSort.attributeSort?.normalSortEnabled
@@ -200,13 +203,14 @@ function validateAttributeSort(attributeSort: ISortItem, availableSort: IAvailab
 function validateMeasureSortLocators(sortLocators: ILocatorItem[], availableLocators: ILocatorItem[]) {
     return (
         sortLocators.length === availableLocators.length &&
-        sortLocators.every((sortLocator, index) => isEqual(sortLocator, availableLocators[index]))
+        sortLocators.every((sortLocator, locatorIndex) =>
+            isEqual(sortLocator, availableLocators[locatorIndex]),
+        )
     );
 }
 
-function validateMeasureSort(measureSort: ISortItem, availableSort: IAvailableSortsGroup) {
+function isValidMeasureSort(measureSort: IMeasureSortItem, availableSort: IAvailableSortsGroup) {
     return (
-        isMeasureSort(measureSort) &&
         availableSort &&
         !!availableSort.metricSorts?.find((availableMetricSort) =>
             validateMeasureSortLocators(availableMetricSort.locators, sortMeasureLocators(measureSort)),
@@ -214,42 +218,117 @@ function validateMeasureSort(measureSort: ISortItem, availableSort: IAvailableSo
     );
 }
 
-function getSortsValidity(currentSort: ISortItem[], availableSorts: IAvailableSortsGroup[]): boolean[] {
-    return currentSort.map((sortItem, index) => {
-        if (isAttributeAreaSort(sortItem)) {
-            return validateAreaSort(sortItem, availableSorts[index]);
-        }
-        if (isAttributeSort(sortItem)) {
-            return validateAttributeSort(sortItem, availableSorts[index]);
-        }
-        if (isMeasureSort(sortItem)) {
-            return validateMeasureSort(sortItem, availableSorts[index]);
-        }
-        return false;
-    });
+function findReusableSort(
+    currentSort: ISortItem[],
+    availableSortGroup: IAvailableSortsGroup,
+    groupIndex: number,
+    attributeValidationPredicate: (attributeSort: ISortItem, availableSort: IAvailableSortsGroup) => boolean,
+) {
+    const modifiedSorts = [...currentSort];
+
+    const attributeSortIndex = currentSort.findIndex((sortItem) =>
+        attributeValidationPredicate(sortItem, availableSortGroup),
+    );
+    if (attributeSortIndex !== -1) {
+        const reusedItem = currentSort[attributeSortIndex];
+        modifiedSorts[attributeSortIndex] = modifiedSorts[groupIndex];
+        modifiedSorts[groupIndex] = reusedItem;
+        return {
+            modifiedSorts,
+            reusedItem,
+        };
+    }
 }
 
-const isValid = (valid: boolean): boolean => valid;
+function handleDifferentOrder(
+    currentSort: ISortItem[],
+    availableSortGroup: IAvailableSortsGroup,
+    groupIndex: number,
+): {
+    modifiedSorts?: ISortItem[];
+    reusedItem?: ISortItem;
+} {
+    if (availableSortGroup.attributeSort.normalSortEnabled) {
+        const found = findReusableSort(currentSort, availableSortGroup, groupIndex, isValidAttributeSort);
+        if (found) {
+            return found;
+        }
+    }
+    if (availableSortGroup.attributeSort.areaSortEnabled) {
+        const found = findReusableSort(currentSort, availableSortGroup, groupIndex, isValidAreaSort);
+        if (found) {
+            return found;
+        }
+    }
+    return {};
+}
+
+function reuseSortItemType(currentSortItem: ISortItem, availableSortGroup: IAvailableSortsGroup) {
+    if (currentSortItem) {
+        const currentSortDirection = sortDirection(currentSortItem);
+        if (isAttributeValueSort(currentSortItem) && availableSortGroup.attributeSort.normalSortEnabled) {
+            return newAttributeSort(availableSortGroup.itemId.localIdentifier, currentSortDirection);
+        }
+        if (isAttributeAreaSort(currentSortItem)) {
+            if (availableSortGroup.attributeSort.areaSortEnabled) {
+                return newAttributeAreaSort(availableSortGroup.itemId.localIdentifier, currentSortDirection);
+            }
+            const availableMetricSort = availableSortGroup.metricSorts && availableSortGroup.metricSorts[0];
+            if (availableMetricSort) {
+                return newMeasureSortFromLocators(availableMetricSort.locators, currentSortDirection);
+            }
+        }
+        if (isMeasureSort(currentSortItem)) {
+            if (isValidMeasureSort(currentSortItem, availableSortGroup)) {
+                return currentSortItem;
+            }
+            const availableMetricSort = availableSortGroup.metricSorts && availableSortGroup.metricSorts[0];
+            if (availableMetricSort) {
+                return newMeasureSortFromLocators(availableMetricSort.locators, currentSortDirection);
+            }
+            if (availableSortGroup.attributeSort.areaSortEnabled) {
+                return newAttributeAreaSort(availableSortGroup.itemId.localIdentifier, currentSortDirection);
+            }
+        }
+    }
+}
 
 /**
- * TODO INE: use it in TNT-463
  * Validates the current sort in context of available sorts for current moment.
- * If current sort is not valid it is replaced by default one for current moment.
- * @param currentSort - current sort to validate
+ * Keeps current sort item if valid.
+ * If current sort is not valid it is replaced by the most similar sort or default one for current moment.
+ * - metric sort replaced by area sort if available
+ * - area sort replaced by metric sort if available
+ * - attribute sort used regardless its position
+ * @param currentSort - current sorts to validate
  * @param availableSorts - available sorts for current moment (buckets content, set properties)
- * @param defaultSort - default sort for current moment
+ * @param defaultSort - default sorts for current moment
  */
 export function validateCurrentSort(
-    currentSort: ISortItem[],
-    availableSorts: IAvailableSortsGroup[],
-    defaultSort: ISortItem[],
+    currentSort: ISortItem[] = [],
+    availableSorts: IAvailableSortsGroup[] = [],
+    defaultSort: ISortItem[] = [],
 ): ISortItem[] {
-    const validityOfCurrentSortItems = getSortsValidity(currentSort, availableSorts);
-    if (
-        validityOfCurrentSortItems.length === availableSorts.length &&
-        validityOfCurrentSortItems.every(isValid)
-    ) {
-        return currentSort;
+    if (currentSort.length === 0) {
+        return [];
     }
-    return defaultSort;
+    let currentSortsToReuse = [...currentSort];
+    return availableSorts
+        .map((availableSortGroup, index) => {
+            // reuse existing sort item with only changed order
+            // it may affect also order of items in current sort
+            const { reusedItem, modifiedSorts } = handleDifferentOrder(
+                currentSortsToReuse,
+                availableSortGroup,
+                index,
+            );
+            if (reusedItem) {
+                currentSortsToReuse = modifiedSorts;
+                return reusedItem;
+            }
+            const currentSortItem = currentSortsToReuse[index];
+            // reuse at least type of sort item
+            return reuseSortItemType(currentSortItem, availableSortGroup) ?? defaultSort[index];
+        })
+        .filter(Boolean);
 }

@@ -147,7 +147,9 @@ export class PluggableAreaChart extends PluggableBaseChart {
             newReferencePoint,
             this.supportedPropertiesList,
         );
-        newReferencePoint = removeSort(newReferencePoint);
+        if (!this.featureFlags.enableChartsSorting) {
+            newReferencePoint = removeSort(newReferencePoint);
+        }
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
@@ -158,11 +160,13 @@ export class PluggableAreaChart extends PluggableBaseChart {
 
     public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
         const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(referencePoint);
+        const { properties } = referencePoint;
         const disabled = this.isSortDisabled(referencePoint, availableSorts);
         return Promise.resolve({
             supported: true,
             disabled,
-            currentSort: defaultSort,
+            appliedSort: super.reuseCurrentSort(properties, availableSorts, defaultSort),
+            defaultSort,
             availableSorts,
         });
     }
@@ -328,7 +332,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
     }
 
     private getDefaultAndAvailableSort(referencePoint: IReferencePoint): {
-        defaultSort: ISortConfig["currentSort"];
+        defaultSort: ISortConfig["defaultSort"];
         availableSorts: ISortConfig["availableSorts"];
     } {
         const { buckets, properties } = referencePoint;

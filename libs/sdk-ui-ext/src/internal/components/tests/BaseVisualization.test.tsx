@@ -386,7 +386,7 @@ describe("BaseVisualization", () => {
                 }),
                 expect.objectContaining({
                     availableSorts: [],
-                    currentSort: [],
+                    defaultSort: [],
                     disabled: false,
                     supported: false,
                 }),

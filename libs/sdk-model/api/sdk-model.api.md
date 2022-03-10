@@ -900,6 +900,9 @@ export function isAttributeLocator(obj: unknown): obj is IAttributeLocatorItem;
 export function isAttributeSort(obj: unknown): obj is IAttributeSortItem;
 
 // @public
+export function isAttributeValueSort(obj: unknown): obj is IAttributeSortItem;
+
+// @public
 export function isBucket(obj: unknown): obj is IBucket;
 
 // @public
@@ -1252,6 +1255,9 @@ export function newMeasure(measure: ObjRef | Identifier, modifications?: Measure
 
 // @public
 export function newMeasureSort(measureOrId: IMeasure | string, sortDirection?: SortDirection, attributeLocators?: IAttributeLocatorItem[]): IMeasureSortItem;
+
+// @public
+export function newMeasureSortFromLocators(locators: ILocatorItem[], sortDirection?: SortDirection): IMeasureSortItem;
 
 // @public
 export function newMeasureValueFilter(measureOrRef: IMeasure | ObjRefInScope | string, operator: ComparisonConditionOperator, value: number, treatNullValuesAs?: number): IMeasureValueFilter;

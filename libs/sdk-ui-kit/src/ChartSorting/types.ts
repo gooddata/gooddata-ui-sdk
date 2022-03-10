@@ -69,7 +69,7 @@ export interface IMeasureDropdownValue {
 /**
  * @internal
  */
-export interface IIBucketItemDescriptor {
+export interface IBucketItemDescriptor {
     type: "attribute" | "chronologicalDate" | "genericDate" | "measure";
     name: string;
     sequenceNumber?: string;
@@ -79,7 +79,7 @@ export interface IIBucketItemDescriptor {
  * @internal
  */
 export interface IBucketItemDescriptors {
-    [localIdentifier: string]: IIBucketItemDescriptor;
+    [localIdentifier: string]: IBucketItemDescriptor;
 }
 
 /**

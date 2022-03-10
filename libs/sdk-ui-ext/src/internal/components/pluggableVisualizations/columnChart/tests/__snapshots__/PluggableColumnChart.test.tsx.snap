@@ -2,6 +2,7 @@
 
 exports[`PluggableColumnChart Sort config should provide attribute normal sort as default sort, attribute area and measure sort as available sorts for 2M + 1VB 1`] = `
 Object {
+  "appliedSort": Array [],
   "availableSorts": Array [
     Object {
       "attributeSort": Object {
@@ -35,7 +36,7 @@ Object {
       ],
     },
   ],
-  "currentSort": Array [
+  "defaultSort": Array [
     Object {
       "attributeSortItem": Object {
         "attributeIdentifier": "a1",
@@ -50,6 +51,7 @@ Object {
 
 exports[`PluggableColumnChart Sort config should provide attribute normal sort as default sort, attribute normal and attribute area available sorts for 1M + 1VB + 1SB 1`] = `
 Object {
+  "appliedSort": Array [],
   "availableSorts": Array [
     Object {
       "attributeSort": Object {
@@ -62,7 +64,7 @@ Object {
       "metricSorts": Array [],
     },
   ],
-  "currentSort": Array [
+  "defaultSort": Array [
     Object {
       "attributeSortItem": Object {
         "attributeIdentifier": "a1",
@@ -77,6 +79,7 @@ Object {
 
 exports[`PluggableColumnChart Sort config should provide attribute normal sort as default sort, attribute normal and attribute area available sorts for 1M + 2VB + 1SB 1`] = `
 Object {
+  "appliedSort": Array [],
   "availableSorts": Array [
     Object {
       "attributeSort": Object {
@@ -98,7 +101,7 @@ Object {
       "metricSorts": Array [],
     },
   ],
-  "currentSort": Array [
+  "defaultSort": Array [
     Object {
       "attributeSortItem": Object {
         "attributeIdentifier": "a1",
@@ -119,6 +122,7 @@ Object {
 
 exports[`PluggableColumnChart Sort config should provide attribute normal sort as default sort, attribute normal and measure sort as available sorts for 1M + 1VB 1`] = `
 Object {
+  "appliedSort": Array [],
   "availableSorts": Array [
     Object {
       "attributeSort": Object {
@@ -142,7 +146,7 @@ Object {
       ],
     },
   ],
-  "currentSort": Array [
+  "defaultSort": Array [
     Object {
       "attributeSortItem": Object {
         "attributeIdentifier": "a1",
@@ -157,6 +161,7 @@ Object {
 
 exports[`PluggableColumnChart Sort config should provide attribute normal sort as default sort, one attribute area and two measure sorts as available sorts for 2 stacked M + 1VB 1`] = `
 Object {
+  "appliedSort": Array [],
   "availableSorts": Array [
     Object {
       "attributeSort": Object {
@@ -190,7 +195,7 @@ Object {
       ],
     },
   ],
-  "currentSort": Array [
+  "defaultSort": Array [
     Object {
       "attributeSortItem": Object {
         "attributeIdentifier": "a1",
@@ -205,6 +210,7 @@ Object {
 
 exports[`PluggableColumnChart Sort config should provide attribute normal sorts as default sort, two attribute normal, one area sort and one measure sort as available sort for 1M + 2 VB 1`] = `
 Object {
+  "appliedSort": Array [],
   "availableSorts": Array [
     Object {
       "attributeSort": Object {
@@ -237,7 +243,7 @@ Object {
       ],
     },
   ],
-  "currentSort": Array [
+  "defaultSort": Array [
     Object {
       "attributeSortItem": Object {
         "attributeIdentifier": "a1",
@@ -258,6 +264,7 @@ Object {
 
 exports[`PluggableColumnChart Sort config should provide two attribute normal sorts as default sort, two attribute area and one measure sorts as available sorts for 2 stacked M + 2VB 1`] = `
 Object {
+  "appliedSort": Array [],
   "availableSorts": Array [
     Object {
       "attributeSort": Object {
@@ -300,7 +307,7 @@ Object {
       ],
     },
   ],
-  "currentSort": Array [
+  "defaultSort": Array [
     Object {
       "attributeSortItem": Object {
         "attributeIdentifier": "a1",
@@ -321,6 +328,7 @@ Object {
 
 exports[`PluggableColumnChart Sort config should provide two attribute normal sorts as default sort, two attribute area and one measure sorts as available sorts for 2M + 2VB 1`] = `
 Object {
+  "appliedSort": Array [],
   "availableSorts": Array [
     Object {
       "attributeSort": Object {
@@ -363,7 +371,7 @@ Object {
       ],
     },
   ],
-  "currentSort": Array [
+  "defaultSort": Array [
     Object {
       "attributeSortItem": Object {
         "attributeIdentifier": "a1",

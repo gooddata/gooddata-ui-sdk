@@ -7,6 +7,7 @@ import {
     IMeasureSortTarget,
     LocalIdRef,
     ISortItem,
+    localIdRef,
 } from "@gooddata/sdk-model";
 
 /**
@@ -59,11 +60,49 @@ export interface IAvailableSortsGroup {
 /**
  * @internal
  */
+export const newAvailableSortsGroup = (
+    attributeId: string,
+    measureIds: string[] = [],
+    normalSortEnabled: boolean = true,
+    areaSortEnabled: boolean = true,
+    explanation?: string,
+): IAvailableSortsGroup => {
+    const metricSortsProp = measureIds.length
+        ? {
+              metricSorts: [
+                  ...measureIds.map((localIdentifier) => newMeasureSortSuggestion(localIdentifier)),
+              ],
+          }
+        : {};
+    const explanationProp = explanation
+        ? {
+              explanation,
+          }
+        : {};
+    return {
+        itemId: localIdRef(attributeId),
+        attributeSort: {
+            normalSortEnabled,
+            areaSortEnabled,
+        },
+        ...metricSortsProp,
+        ...explanationProp,
+    };
+};
+
+/**
+ * @internal
+ */
 export interface ISortConfig {
     /**
-     * Current sort - default or chosen from inside of visualization
+     * Applied sort - when custom sort was provided, it is validated in current context of visualization and can be fully or partially applied.
+     * When defined it has priority over defaultSort
      */
-    currentSort: ISortItem[];
+    appliedSort?: ISortItem[];
+    /**
+     * Default sort - default or chosen from inside of visualization
+     */
+    defaultSort: ISortItem[];
     /**
      * All available sorts for current buckets
      * - should contain current sort too
