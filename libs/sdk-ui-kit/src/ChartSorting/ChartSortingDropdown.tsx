@@ -37,32 +37,34 @@ export const ChartSortingDropdown: React.FC<ChartSortingProps> = ({
 
     return (
         <div className="gd-sort-attribute-section">
-            {currentSort &&
-                currentSort.map((currentSortItem: ISortItem, index: number) => {
-                    // Obtain available items with the same id as current index
-                    const available: IAvailableSortsGroup = availableSorts[index];
+            {availableSorts?.map((availableSort: IAvailableSortsGroup, index: number) => {
+                // Obtain current sort item with the same id as current index
+                const currentSortItem: ISortItem = currentSort[index];
 
-                    return (
-                        <div key={index} className={`gd-sort-attribute-item s-sort-attribute-item-${index}`}>
-                            {currentSort.length > 1 && (
-                                <div className="attribute-sorting-title">
-                                    {getAttributeName(bucketItems, available)}
-                                </div>
-                            )}
-                            <AttributeDropdown
-                                index={index}
-                                currentSortItem={currentSortItem}
-                                availableSorts={available}
-                                bucketItems={bucketItems}
-                                intl={intl}
-                                onSelect={(newSort: ISortItem) => {
-                                    onSortChanged(newSort, index);
-                                }}
-                                enableRenamingMeasureToMetric={enableRenamingMeasureToMetric}
-                            />
-                        </div>
-                    );
-                })}
+                if (!currentSortItem) {
+                    return null;
+                }
+                return (
+                    <div key={index} className={`gd-sort-attribute-item s-sort-attribute-item-${index}`}>
+                        {availableSorts.length > 1 && (
+                            <div className="attribute-sorting-title">
+                                {getAttributeName(bucketItems, availableSort)}
+                            </div>
+                        )}
+                        <AttributeDropdown
+                            index={index}
+                            currentSortItem={currentSortItem}
+                            availableSorts={availableSort}
+                            bucketItems={bucketItems}
+                            intl={intl}
+                            onSelect={(newSort: ISortItem) => {
+                                onSortChanged(newSort, index);
+                            }}
+                            enableRenamingMeasureToMetric={enableRenamingMeasureToMetric}
+                        />
+                    </div>
+                );
+            })}
         </div>
     );
 };

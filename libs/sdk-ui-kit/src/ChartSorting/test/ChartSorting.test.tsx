@@ -283,5 +283,13 @@ describe("ChartSorting", () => {
                 },
             ]);
         });
+
+        it("should render when current sort does not match available sorts length", () => {
+            const component = renderComponent({
+                availableSorts: multipleAttributesSortConfig.availableSorts,
+                currentSort: singleNormalAttributeSortConfig.currentSort,
+            });
+            expect(component.find(".s-attribute-dropdown-button").hostNodes().length).toBe(1);
+        });
     });
 });
