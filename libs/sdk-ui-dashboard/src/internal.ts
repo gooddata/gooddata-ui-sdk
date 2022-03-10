@@ -11,6 +11,7 @@ export * from "./presentation/layout/DefaultDashboardLayoutRenderer";
 export * from "./presentation/presentationComponents";
 export * from "./presentation/scheduledEmail";
 export * from "./presentation/scheduledEmail/DefaultScheduledEmailDialog/ScheduledMailDialogRenderer/ScheduledMailDialogRenderer";
+export { PLATFORM_DATE_FORMAT } from "./presentation/scheduledEmail/DefaultScheduledEmailDialog/constants";
 export * from "./presentation/widget/kpi/DefaultDashboardKpi/KpiAlerts";
 export * from "./presentation/widget/kpi/DefaultDashboardKpi/KpiContent";
 export * from "./presentation/widget/kpi/DefaultDashboardKpi/types";
