@@ -8,11 +8,7 @@ describe("Pivot Table Aggregations remove all totals", () => {
         Navigation.visit("visualizations/pivot-table/pivot-table-all-total-aggregations-menu");
     });
 
-    // this test is running well on live backend but on recorded backend it failed
-    // table not get correct response after total removed
-
-    // eslint-disable-next-line jest/no-disabled-tests
-    it.skip("should remove totals for one measure and one keep the other total (SEPARATE)", () => {
+    it("should remove totals for one measure and one keep the other total (SEPARATE)", () => {
         const table = new Table(".s-pivot-table-aggregations-menu");
         table.waitLoaded();
 
