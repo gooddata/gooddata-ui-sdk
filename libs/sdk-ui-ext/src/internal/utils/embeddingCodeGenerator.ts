@@ -16,8 +16,10 @@ import {
     factoryNotationFor,
     IInsightDefinition,
     insightBuckets,
+    insightProperties,
     insightSetBuckets,
     insightSetFilters,
+    insightSetProperties,
     insightSetSorts,
     isAttribute,
     measureAlias,
@@ -29,9 +31,10 @@ import {
     newBucket,
     newDefForInsight,
     newTotal,
+    VisualizationProperties,
 } from "@gooddata/sdk-model";
+import { LocalIdMap, Normalizer } from "@gooddata/sdk-backend-base";
 import { IEmbeddingCodeConfig } from "../interfaces/VisualizationDescriptor";
-import { Normalizer } from "@gooddata/sdk-backend-base";
 
 export interface IComponentInfo {
     name: string;
@@ -88,6 +91,21 @@ function indent(str: string, tabs: number): string {
         .join("\n");
 }
 
+function normalizeProperties(
+    properties: VisualizationProperties,
+    o2nMap: LocalIdMap,
+): VisualizationProperties {
+    // do simple search/replace of all the original items
+    const stringified = JSON.stringify(properties);
+
+    const replaced = toPairs(o2nMap).reduce((acc, [original, normalized]) => {
+        const regex = new RegExp(original, "g");
+        return acc.replace(regex, normalized);
+    }, stringified);
+
+    return JSON.parse(replaced);
+}
+
 /**
  * Creates an insight that has reasonable local ids instead of potentially long illegible ones in the original insight.
  *
@@ -141,12 +159,14 @@ function normalizeInsight(insight: IInsightDefinition): IInsightDefinition {
         return newBucket(originalBucket.localIdentifier, ...processedItems, ...processedTotals);
     });
 
-    // TODO properties
+    const properties = insightProperties(insight);
+    const processedProperties = properties && normalizeProperties(properties, o2nMap);
 
     return flow(
         (i) => insightSetBuckets(i, processedBuckets),
         (i) => insightSetFilters(i, normalized.filters),
         (i) => insightSetSorts(i, normalized.sortBy),
+        (i) => insightSetProperties(i, processedProperties),
     )(insight);
 }
 
