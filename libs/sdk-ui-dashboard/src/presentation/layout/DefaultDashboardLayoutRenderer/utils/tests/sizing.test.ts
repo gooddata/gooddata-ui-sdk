@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import chunk from "lodash/chunk";
 import flatMap from "lodash/flatMap";
 import { IDashboardLayoutSize, ScreenSize, AnalyticalWidgetType } from "@gooddata/sdk-backend-spi";
@@ -23,7 +23,7 @@ import {
     DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,
 } from "../../../../../_staging/dashboard/fluidLayout";
 import { idRef, newInsightDefinition } from "@gooddata/sdk-model";
-import { ALL_SCREENS, DASHBOARD_LAYOUT_VIS_TYPE } from "../../../../constants";
+import { ALL_SCREENS } from "../../../../constants";
 
 export const allVisTypes: VisType[] = [
     "area",
@@ -236,23 +236,25 @@ describe("sizing", () => {
                 expect(getDashboardLayoutWidgetDefaultGridWidth(settings, "kpi")).toBe(2);
             });
 
-            it.each([
-                ["Headline", DASHBOARD_LAYOUT_VIS_TYPE.headline, 2],
-                ["Column Chart", DASHBOARD_LAYOUT_VIS_TYPE.column, 6],
-                ["Bar Chart", DASHBOARD_LAYOUT_VIS_TYPE.bar, 6],
-                ["Line Chart", DASHBOARD_LAYOUT_VIS_TYPE.line, 6],
-                ["Area Chart", DASHBOARD_LAYOUT_VIS_TYPE.area, 6],
-                ["Combo Chart", DASHBOARD_LAYOUT_VIS_TYPE.combo, 6],
-                ["Combo2 Chart", DASHBOARD_LAYOUT_VIS_TYPE.combo2, 6],
-                ["Scatter Plot", DASHBOARD_LAYOUT_VIS_TYPE.scatter, 6],
-                ["Bubble Chart", DASHBOARD_LAYOUT_VIS_TYPE.bubble, 6],
-                ["Pie Chart", DASHBOARD_LAYOUT_VIS_TYPE.pie, 6],
-                ["Donut Chart", DASHBOARD_LAYOUT_VIS_TYPE.donut, 6],
-                ["Treemap", DASHBOARD_LAYOUT_VIS_TYPE.treemap, 6],
-                ["Heatmap", DASHBOARD_LAYOUT_VIS_TYPE.heatmap, 6],
-                ["Table", DASHBOARD_LAYOUT_VIS_TYPE.table, 12],
-                ["Geochart", DASHBOARD_LAYOUT_VIS_TYPE.pushpin, 6],
-            ])("should get default width for %s", (_name, visType, width) => {
+            type Scenario = [string, VisType, number];
+            const scenarios: Scenario[] = [
+                ["Headline", "headline", 2],
+                ["Column Chart", "column", 6],
+                ["Bar Chart", "bar", 6],
+                ["Line Chart", "line", 6],
+                ["Area Chart", "area", 6],
+                ["Combo Chart", "combo", 6],
+                ["Combo2 Chart", "combo2", 6],
+                ["Scatter Plot", "scatter", 6],
+                ["Bubble Chart", "bubble", 6],
+                ["Pie Chart", "pie", 6],
+                ["Donut Chart", "donut", 6],
+                ["Treemap", "treemap", 6],
+                ["Heatmap", "heatmap", 6],
+                ["Table", "table", 12],
+                ["Geochart", "pushpin", 6],
+            ];
+            it.each(scenarios)("should get default width for %s", (_name, visType, width) => {
                 expect(
                     getDashboardLayoutWidgetDefaultGridWidth(
                         settings,
@@ -277,24 +279,26 @@ describe("sizing", () => {
                 expect(getDashboardLayoutWidgetMinGridWidth(settings, "kpi")).toBe(2);
             });
 
-            it.each([
+            type Scenario = [string, string, VisType | undefined, number];
+            const scenarios: Scenario[] = [
                 ["KPI", "kpi", undefined, 2],
-                ["Headline", "insight", DASHBOARD_LAYOUT_VIS_TYPE.headline, 2],
-                ["Column Chart", "insight", DASHBOARD_LAYOUT_VIS_TYPE.column, 4],
-                ["Bar Chart", "insight", DASHBOARD_LAYOUT_VIS_TYPE.bar, 4],
-                ["Line Chart", "insight", DASHBOARD_LAYOUT_VIS_TYPE.line, 4],
-                ["Area Chart", "insight", DASHBOARD_LAYOUT_VIS_TYPE.area, 4],
-                ["Combo Chart", "insight", DASHBOARD_LAYOUT_VIS_TYPE.combo, 4],
-                ["Combo2 Chart", "insight", DASHBOARD_LAYOUT_VIS_TYPE.combo2, 4],
-                ["Scatter Plot", "insight", DASHBOARD_LAYOUT_VIS_TYPE.scatter, 4],
-                ["Bubble Chart", "insight", DASHBOARD_LAYOUT_VIS_TYPE.bubble, 4],
-                ["Pie Chart", "insight", DASHBOARD_LAYOUT_VIS_TYPE.pie, 4],
-                ["Donut Chart", "insight", DASHBOARD_LAYOUT_VIS_TYPE.donut, 4],
-                ["Treemap", "insight", DASHBOARD_LAYOUT_VIS_TYPE.treemap, 4],
-                ["Heatmap", "insight", DASHBOARD_LAYOUT_VIS_TYPE.heatmap, 4],
-                ["Table", "insight", DASHBOARD_LAYOUT_VIS_TYPE.table, 3],
-                ["Geochart", "insight", DASHBOARD_LAYOUT_VIS_TYPE.pushpin, 6],
-            ])(
+                ["Headline", "insight", "headline", 2],
+                ["Column Chart", "insight", "column", 4],
+                ["Bar Chart", "insight", "bar", 4],
+                ["Line Chart", "insight", "line", 4],
+                ["Area Chart", "insight", "area", 4],
+                ["Combo Chart", "insight", "combo", 4],
+                ["Combo2 Chart", "insight", "combo2", 4],
+                ["Scatter Plot", "insight", "scatter", 4],
+                ["Bubble Chart", "insight", "bubble", 4],
+                ["Pie Chart", "insight", "pie", 4],
+                ["Donut Chart", "insight", "donut", 4],
+                ["Treemap", "insight", "treemap", 4],
+                ["Heatmap", "insight", "heatmap", 4],
+                ["Table", "insight", "table", 3],
+                ["Geochart", "insight", "pushpin", 6],
+            ];
+            it.each(scenarios)(
                 "should get default height for %s found in widgets by qualifier",
                 (_name, widgetType, visType, width) => {
                     expect(
@@ -352,19 +356,14 @@ describe("sizing", () => {
         const settings = {
             enableKDWidgetCustomHeight: true,
         };
-        it.each([
-            ["Headline with too big height", DASHBOARD_LAYOUT_VIS_TYPE.headline, 2, 80, 2, 40],
-            ["Column Chart with too low width", DASHBOARD_LAYOUT_VIS_TYPE.column, 2, 14, 4, 14],
-            ["Table with too low height", DASHBOARD_LAYOUT_VIS_TYPE.table, 3, 10, 3, 12],
-            [
-                "Geochart with too big width and undefined height",
-                DASHBOARD_LAYOUT_VIS_TYPE.pushpin,
-                14,
-                undefined,
-                12,
-                undefined,
-            ],
-        ])(
+        type Scenario = [string, VisType, number, number | undefined, number, number | undefined];
+        const scenarios: Scenario[] = [
+            ["Headline with too big height", "headline", 2, 80, 2, 40],
+            ["Column Chart with too low width", "column", 2, 14, 4, 14],
+            ["Table with too low height", "table", 3, 10, 3, 12],
+            ["Geochart with too big width and undefined height", "pushpin", 14, undefined, 12, undefined],
+        ];
+        it.each(scenarios)(
             "should get valid width and height for %s",
             (_name, visType, currentWidth, currentHeight, validWidth, validHeight) => {
                 expect(

@@ -2651,7 +2651,7 @@ export interface IDashboardKpiProps {
     // @alpha
     LoadingComponent?: React_2.ComponentType<ILoadingProps>;
     // @alpha
-    onDrill?: OnFiredDashboardViewDrillEvent;
+    onDrill?: OnFiredDashboardDrillEvent;
     // @alpha
     onError?: OnError;
     // @alpha
@@ -2670,7 +2670,7 @@ export interface IDashboardLayoutProps {
     // (undocumented)
     ErrorComponent?: React.ComponentType<IErrorProps>;
     // (undocumented)
-    onDrill?: OnFiredDashboardViewDrillEvent;
+    onDrill?: OnFiredDashboardDrillEvent;
     // (undocumented)
     onError?: OnError;
     // (undocumented)
@@ -2756,7 +2756,7 @@ export interface IDashboardWidgetProps {
     // @alpha
     LoadingComponent: ComponentType<ILoadingProps>;
     // @alpha (undocumented)
-    onDrill?: OnFiredDashboardViewDrillEvent;
+    onDrill?: OnFiredDashboardDrillEvent;
     // @alpha (undocumented)
     onError?: OnError;
     // @alpha (undocumented)
@@ -3650,7 +3650,7 @@ export type OnDrillToLegacyDashboard = (cmd: DrillToLegacyDashboard) => void;
 export type OnDrillToLegacyDashboardSuccess = (event: DashboardDrillToLegacyDashboardResolved) => void;
 
 // @beta
-export type OnFiredDashboardViewDrillEvent = (event: IDashboardDrillEvent) => ReturnType<OnFiredDrillEvent>;
+export type OnFiredDashboardDrillEvent = (event: IDashboardDrillEvent) => ReturnType<OnFiredDrillEvent>;
 
 // @alpha (undocumented)
 export type OnWidgetDrill = (drillEvent: IDashboardDrillEvent, drillContext: DashboardDrillContext) => void;

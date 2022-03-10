@@ -4,26 +4,11 @@
 
 ```ts
 
-/// <reference types="react" />
-
-import { AnalyticalBackendError } from '@gooddata/sdk-backend-spi';
-import { AnalyticalWidgetType } from '@gooddata/sdk-backend-spi';
-import { DrillDefinition } from '@gooddata/sdk-backend-spi';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
-import { FilterContextItem } from '@gooddata/sdk-backend-spi';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
-import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IChartConfig } from '@gooddata/sdk-ui-charts';
 import { IColorPalette } from '@gooddata/sdk-model';
-import { IDashboard } from '@gooddata/sdk-backend-spi';
-import { IDashboardLayout } from '@gooddata/sdk-backend-spi';
-import { IDashboardLayoutItem } from '@gooddata/sdk-backend-spi';
-import { IDashboardLayoutSection } from '@gooddata/sdk-backend-spi';
-import { IDashboardLayoutSectionHeader } from '@gooddata/sdk-backend-spi';
-import { IDashboardLayoutSize } from '@gooddata/sdk-backend-spi';
-import { IDashboardLayoutSizeByScreenSize } from '@gooddata/sdk-backend-spi';
-import { IDashboardWidget } from '@gooddata/sdk-backend-spi';
 import { IDrillEvent } from '@gooddata/sdk-ui';
 import { IDrillEventIntersectionElement } from '@gooddata/sdk-ui';
 import { IErrorProps } from '@gooddata/sdk-ui';
@@ -32,86 +17,28 @@ import { IFilter } from '@gooddata/sdk-model';
 import { IGeoConfig } from '@gooddata/sdk-ui-geo';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
-import { IInsightWidget } from '@gooddata/sdk-backend-spi';
-import { IInsightWidgetDefinition } from '@gooddata/sdk-backend-spi';
-import { IKpiWidget } from '@gooddata/sdk-backend-spi';
-import { IKpiWidgetDefinition } from '@gooddata/sdk-backend-spi';
-import { ILegacyKpi } from '@gooddata/sdk-backend-spi';
 import { ILoadingProps } from '@gooddata/sdk-ui';
 import { ILocale } from '@gooddata/sdk-ui';
-import { INegativeAttributeFilter } from '@gooddata/sdk-model';
-import { InsightWidgetBuilder } from '@gooddata/sdk-backend-base';
 import { IPivotTableConfig } from '@gooddata/sdk-ui-pivot';
-import { IPositiveAttributeFilter } from '@gooddata/sdk-model';
-import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
-import { IRelativeDateFilter } from '@gooddata/sdk-model';
-import { IScheduledMail } from '@gooddata/sdk-backend-spi';
-import { IScheduledMailDefinition } from '@gooddata/sdk-backend-spi';
-import { ISeparators } from '@gooddata/sdk-backend-spi';
 import { ISettings } from '@gooddata/sdk-backend-spi';
 import { ITheme } from '@gooddata/sdk-backend-spi';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
-import { IWidget } from '@gooddata/sdk-backend-spi';
-import { IWidgetAlert } from '@gooddata/sdk-backend-spi';
-import { IWidgetDefinition } from '@gooddata/sdk-backend-spi';
-import { KpiWidgetBuilder } from '@gooddata/sdk-backend-base';
 import { LocalIdRef } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { OnError } from '@gooddata/sdk-ui';
-import { OnFiredDrillEvent } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
-import { ScreenSize } from '@gooddata/sdk-backend-spi';
-import { UseCancelablePromiseCallbacks } from '@gooddata/sdk-ui';
-import { UseCancelablePromiseState } from '@gooddata/sdk-ui';
-import { UseCancelablePromiseStatus } from '@gooddata/sdk-ui';
-import { ValueOrUpdateCallback } from '@gooddata/sdk-backend-base';
-import { VisType } from '@gooddata/sdk-ui';
 import { WithIntlProps } from 'react-intl';
 import { WrappedComponentProps } from 'react-intl';
 
 // @internal (undocumented)
 export function addIntersectionFiltersToInsight(source: IInsight, intersection: IDrillEventIntersectionElement[]): IInsight;
 
-// @beta
-export function clearDashboardViewCaches(): void;
-
 // @public
 export function clearInsightViewCaches(): void;
 
 // @internal (undocumented)
 export const DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT_PX = 450;
-
-// @beta
-export type DashboardLayoutItemModifications<TWidget = IDashboardWidget> = (itemBuilder: IDashboardLayoutItemBuilder<TWidget>, itemFacade: IDashboardLayoutItemFacade<TWidget>) => IDashboardLayoutItemBuilder<TWidget>;
-
-// @beta
-export type DashboardLayoutItemsSelector<TWidget = IDashboardWidget> = (itemsFacade: IDashboardLayoutItemsFacade<TWidget>) => IDashboardLayoutItemFacade<TWidget>[] | IDashboardLayoutItemFacade<TWidget> | undefined;
-
-// @beta
-export type DashboardLayoutModifications<TWidget = IDashboardWidget> = (layoutBuilder: IDashboardLayoutBuilder<TWidget>, layoutFacade: IDashboardLayoutFacade<TWidget>) => IDashboardLayoutBuilder<TWidget>;
-
-// @beta
-export type DashboardLayoutSectionModifications<TWidget = IDashboardWidget> = (sectionBuilder: IDashboardLayoutSectionBuilder<TWidget>, sectionFacade: IDashboardLayoutSectionFacade<TWidget>) => IDashboardLayoutSectionBuilder<TWidget>;
-
-// @beta
-export type DashboardLayoutSectionsSelector<TWidget = IDashboardWidget> = (sectionsFacade: IDashboardLayoutSectionsFacade<TWidget>) => IDashboardLayoutSectionFacade<TWidget>[] | IDashboardLayoutSectionFacade<TWidget> | undefined;
-
-// @beta @deprecated (undocumented)
-export type DashboardLayoutTransform<TContent = any> = (layoutBuilder: IDashboardLayoutBuilder<TContent>, additionalProps: IDashboardLayoutTransformAdditionalProps) => IDashboardLayoutBuilder<TContent>;
-
-// @beta @deprecated
-export class DashboardView extends React_2.Component<IDashboardViewProps, IDashboardViewErrorBoundaryState> {
-    // (undocumented)
-    static getDerivedStateFromError(error: Error): IDashboardViewErrorBoundaryState;
-    // (undocumented)
-    render(): React_2.ReactNode;
-    // (undocumented)
-    state: IDashboardViewErrorBoundaryState;
-}
-
-// @beta @deprecated
-export const defaultDashboardThemeModifier: (theme: ITheme) => ITheme;
 
 // @alpha (undocumented)
 export class EmptyAfmSdkError extends GoodDataSdkError {
@@ -143,297 +70,7 @@ export const fluidLayoutDescriptor: FluidLayoutDescriptor;
 export function getInsightSizeInfo(insight: IInsightDefinition, settings: ISettings): IVisualizationSizeInfo;
 
 // @internal (undocumented)
-export function getInsightWithAppliedDrillDown(insight: IInsight, drillEvent: IDashboardDrillEvent, drillDefinition: IDrillDownDefinition): IInsight;
-
-// @beta
-export interface IDashboardDrillEvent extends IDrillEvent {
-    drillDefinitions?: Array<DrillDefinition | IDrillDownDefinition>;
-    widgetRef?: ObjRef;
-}
-
-// @beta
-export type IDashboardFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter;
-
-// @beta
-export interface IDashboardLayoutBuilder<TWidget = IDashboardWidget> {
-    addSection(create?: (builder: IDashboardLayoutSectionBuilder<TWidget>) => IDashboardLayoutSectionBuilder<TWidget>, index?: number): this;
-    build(): IDashboardLayout<TWidget>;
-    facade(): IDashboardLayoutFacade<TWidget>;
-    modify(modifications: DashboardLayoutModifications<TWidget>): this;
-    modifySection(index: number, modify: DashboardLayoutSectionModifications<TWidget>): this;
-    modifySections(modify: DashboardLayoutSectionModifications<TWidget>, selector?: DashboardLayoutSectionsSelector<TWidget>): this;
-    moveSection(fromIndex: number, toIndex: number): this;
-    removeEmptySections(): this;
-    removeSection(index: number): this;
-    removeSections(selector?: DashboardLayoutSectionsSelector<TWidget>): this;
-    setLayout(valueOrUpdateCallback: ValueOrUpdateCallback<IDashboardLayout<TWidget>>): this;
-    size(valueOrUpdateCallback: ValueOrUpdateCallback<IDashboardLayoutSize | undefined>): this;
-}
-
-// @beta
-export interface IDashboardLayoutFacade<TWidget> {
-    // (undocumented)
-    raw(): IDashboardLayout<TWidget>;
-    // (undocumented)
-    section(sectionIndex: number): IDashboardLayoutSectionFacade<TWidget> | undefined;
-    // (undocumented)
-    sections(): IDashboardLayoutSectionsFacade<TWidget>;
-    // (undocumented)
-    size(): IDashboardLayoutSize | undefined;
-}
-
-// @beta
-export interface IDashboardLayoutItemBuilder<TWidget = IDashboardWidget> {
-    build(): IDashboardLayoutItem<TWidget>;
-    facade(): IDashboardLayoutItemFacade<TWidget>;
-    modify(modifications: DashboardLayoutItemModifications<TWidget>): this;
-    modifyInsightWidget(modify: (builder: InsightWidgetBuilder) => InsightWidgetBuilder): this;
-    modifyKpiWidget(modify: (builder: KpiWidgetBuilder) => KpiWidgetBuilder): this;
-    newInsightWidget(insight: ObjRef, create?: (builder: InsightWidgetBuilder) => InsightWidgetBuilder): this;
-    newKpiWidget(measure: ObjRef, create?: (builder: KpiWidgetBuilder) => KpiWidgetBuilder): this;
-    setItem(valueOrUpdateCallback: ValueOrUpdateCallback<IDashboardLayoutItem<TWidget>>): this;
-    size(valueOrTransform: ValueOrUpdateCallback<IDashboardLayoutSizeByScreenSize>): this;
-    widget(valueOrTransform: ValueOrUpdateCallback<TWidget | undefined>): this;
-}
-
-// @beta
-export interface IDashboardLayoutItemFacade<TWidget> {
-    // (undocumented)
-    hasSizeForScreen(screen: ScreenSize): boolean;
-    // (undocumented)
-    index(): number;
-    // (undocumented)
-    indexIs(index: number): boolean;
-    // (undocumented)
-    isCustomItem(): this is IDashboardLayoutItemFacade<Exclude<TWidget, IDashboardWidget>>;
-    // (undocumented)
-    isEmpty(): boolean;
-    // (undocumented)
-    isFirst(): boolean;
-    // (undocumented)
-    isInsightWidgetDefinitionItem(): this is IDashboardLayoutItemFacade<IInsightWidgetDefinition>;
-    // (undocumented)
-    isInsightWidgetItem(): this is IDashboardLayoutItemFacade<IInsightWidget>;
-    // (undocumented)
-    isKpiWidgetDefinitionItem(): this is IDashboardLayoutItemFacade<IKpiWidgetDefinition>;
-    // (undocumented)
-    isKpiWidgetItem(): this is IDashboardLayoutItemFacade<IKpiWidget>;
-    // (undocumented)
-    isLast(): boolean;
-    // (undocumented)
-    isLayoutItem(): this is IDashboardLayoutItemFacade<IDashboardLayout<TWidget>>;
-    // (undocumented)
-    isWidgetDefinitionItem(): this is IDashboardLayoutItemFacade<IWidgetDefinition>;
-    // (undocumented)
-    isWidgetItem(): this is IDashboardLayoutItemFacade<IWidget>;
-    // (undocumented)
-    isWidgetItemWithInsightRef(ref: ObjRef): boolean;
-    // (undocumented)
-    isWidgetItemWithKpiRef(ref: ObjRef): boolean;
-    // (undocumented)
-    isWidgetItemWithRef(ref: ObjRef): boolean;
-    // (undocumented)
-    raw(): IDashboardLayoutItem<TWidget>;
-    // (undocumented)
-    section(): IDashboardLayoutSectionFacade<TWidget>;
-    // (undocumented)
-    size(): IDashboardLayoutSizeByScreenSize;
-    // (undocumented)
-    sizeForScreen(screen: ScreenSize): IDashboardLayoutSize | undefined;
-    // (undocumented)
-    test(pred: (item: IDashboardLayoutItemFacade<TWidget>) => boolean): boolean;
-    // (undocumented)
-    testRaw(pred: (item: IDashboardLayoutItem<TWidget>) => boolean): boolean;
-    // (undocumented)
-    widget(): TWidget | undefined;
-    // (undocumented)
-    widgetEquals(widget: TWidget): boolean;
-    // (undocumented)
-    widgetIs(widget: TWidget): boolean;
-}
-
-// @beta
-export interface IDashboardLayoutItemsFacade<TWidget> {
-    // (undocumented)
-    all(): IDashboardLayoutItemFacade<TWidget>[];
-    // (undocumented)
-    asGridRows(screen: ScreenSize): IDashboardLayoutItemFacade<TWidget>[][];
-    // (undocumented)
-    count(): number;
-    // (undocumented)
-    every(pred: (item: IDashboardLayoutItemFacade<TWidget>) => boolean): boolean;
-    // (undocumented)
-    filter(pred: (item: IDashboardLayoutItemFacade<TWidget>) => boolean): IDashboardLayoutItemFacade<TWidget>[];
-    // (undocumented)
-    find(pred: (item: IDashboardLayoutItemFacade<TWidget>) => boolean): IDashboardLayoutItemFacade<TWidget> | undefined;
-    // (undocumented)
-    flatMap<TReturn>(callback: (widgetFacade: IDashboardLayoutItemFacade<TWidget>) => TReturn[]): TReturn[];
-    // (undocumented)
-    item(index: number): IDashboardLayoutItemFacade<TWidget> | undefined;
-    // (undocumented)
-    map<TReturn>(callback: (item: IDashboardLayoutItemFacade<TWidget>) => TReturn): TReturn[];
-    // (undocumented)
-    raw(): IDashboardLayoutItem<TWidget>[];
-    // (undocumented)
-    reduce<TReturn>(callback: (acc: TReturn, item: IDashboardLayoutItemFacade<TWidget>) => TReturn, initialValue: TReturn): TReturn;
-    // (undocumented)
-    some(pred: (item: IDashboardLayoutItemFacade<TWidget>) => boolean): boolean;
-}
-
-// @beta
-export interface IDashboardLayoutSectionBuilder<TWidget = IDashboardWidget> {
-    addItem(xlSize: IDashboardLayoutSize, create?: (builder: IDashboardLayoutItemBuilder<TWidget>) => IDashboardLayoutItemBuilder<TWidget>, index?: number): this;
-    build(): IDashboardLayoutSection<TWidget>;
-    facade(): IDashboardLayoutSectionFacade<TWidget>;
-    header(valueOrTransform: ValueOrUpdateCallback<IDashboardLayoutSectionHeader | undefined>): this;
-    modify(modifications: DashboardLayoutSectionModifications<TWidget>): this;
-    modifyItem(index: number, modify: DashboardLayoutItemModifications<TWidget>): this;
-    modifyItems(modify: DashboardLayoutItemModifications<TWidget>, selector?: DashboardLayoutItemsSelector<TWidget>): this;
-    moveItem(fromIndex: number, toIndex: number): this;
-    removeEmptyItems(): this;
-    removeItem(index: number): this;
-    removeItems(selector?: DashboardLayoutItemsSelector<TWidget>): this;
-    setSection(valueOrUpdateCallback: ValueOrUpdateCallback<IDashboardLayoutSection<TWidget>>): this;
-}
-
-// @beta
-export interface IDashboardLayoutSectionFacade<TWidget> {
-    // (undocumented)
-    description(): string | undefined;
-    // (undocumented)
-    descriptionEquals(title: string): boolean;
-    // (undocumented)
-    hasDescription(): boolean;
-    // (undocumented)
-    hasHeader(): boolean;
-    // (undocumented)
-    hasTitle(): boolean;
-    // (undocumented)
-    header(): IDashboardLayoutSectionHeader | undefined;
-    // (undocumented)
-    headerEquals(header: IDashboardLayoutSectionHeader): boolean;
-    // (undocumented)
-    index(): number;
-    // (undocumented)
-    indexIs(index: number): boolean;
-    // (undocumented)
-    isEmpty(): boolean;
-    // (undocumented)
-    isFirst(): boolean;
-    // (undocumented)
-    isLast(): boolean;
-    // (undocumented)
-    item(itemIndex: number): IDashboardLayoutItemFacade<TWidget> | undefined;
-    // (undocumented)
-    items(): IDashboardLayoutItemsFacade<TWidget>;
-    // (undocumented)
-    layout(): IDashboardLayoutFacade<TWidget>;
-    // (undocumented)
-    raw(): IDashboardLayoutSection<TWidget>;
-    // (undocumented)
-    test(pred: (section: IDashboardLayoutSectionFacade<TWidget>) => boolean): boolean;
-    // (undocumented)
-    testRaw(pred: (section: IDashboardLayoutSection<TWidget>) => boolean): boolean;
-    // (undocumented)
-    title(): string | undefined;
-    // (undocumented)
-    titleEquals(title: string): boolean;
-}
-
-// @beta
-export interface IDashboardLayoutSectionsFacade<TWidget> {
-    // (undocumented)
-    all(): IDashboardLayoutSectionFacade<TWidget>[];
-    // (undocumented)
-    count(): number;
-    // (undocumented)
-    every(pred: (section: IDashboardLayoutSectionFacade<TWidget>) => boolean): boolean;
-    // (undocumented)
-    filter(pred: (section: IDashboardLayoutSectionFacade<TWidget>) => boolean): IDashboardLayoutSectionFacade<TWidget>[];
-    // (undocumented)
-    find(pred: (section: IDashboardLayoutSectionFacade<TWidget>) => boolean): IDashboardLayoutSectionFacade<TWidget> | undefined;
-    // (undocumented)
-    flatMap<TReturn>(callback: (section: IDashboardLayoutSectionFacade<TWidget>) => TReturn[]): TReturn[];
-    // (undocumented)
-    map<TReturn>(callback: (section: IDashboardLayoutSectionFacade<TWidget>) => TReturn): TReturn[];
-    // (undocumented)
-    raw(): IDashboardLayoutSection<TWidget>[];
-    // (undocumented)
-    reduce<TReturn>(callback: (acc: TReturn, section: IDashboardLayoutSectionFacade<TWidget>) => TReturn, initialValue: TReturn): TReturn;
-    // (undocumented)
-    section(sectionIndex: number): IDashboardLayoutSectionFacade<TWidget> | undefined;
-    // (undocumented)
-    some(pred: (section: IDashboardLayoutSectionFacade<TWidget>) => boolean): boolean;
-}
-
-// @beta @deprecated (undocumented)
-export interface IDashboardLayoutTransformAdditionalProps {
-    filters?: FilterContextItem[];
-    getInsight: (insightRef: ObjRef) => IInsight | undefined;
-    getWidgetAlert: (widgetRef: ObjRef) => IWidgetAlert;
-}
-
-// @beta (undocumented)
-export interface IDashboardViewConfig {
-    disableKpiDrillUnderline?: boolean;
-    locale?: ILocale;
-    mapboxToken: string;
-    separators?: ISeparators;
-}
-
-// @beta @deprecated (undocumented)
-export interface IDashboardViewErrorBoundaryState {
-    // (undocumented)
-    error: Error | undefined;
-}
-
-// @beta @deprecated (undocumented)
-export interface IDashboardViewProps {
-    applyFiltersToScheduledMail?: boolean;
-    backend?: IAnalyticalBackend;
-    config?: IDashboardViewConfig;
-    dashboard: ObjRef | string;
-    disableThemeLoading?: boolean;
-    drillableItems?: ExplicitDrill[];
-    ErrorComponent?: React.ComponentType<IErrorProps>;
-    execConfig?: IExecutionConfig;
-    filters?: Array<IDashboardFilter | FilterContextItem>;
-    isReadOnly?: boolean;
-    isScheduledMailDialogVisible?: boolean;
-    LoadingComponent?: React.ComponentType<ILoadingProps>;
-    onDashboardLoaded?: (params: {
-        dashboard: IDashboard;
-        alerts: IWidgetAlert[];
-    }) => void;
-    onDrill?: OnFiredDashboardViewDrillEvent;
-    onError?: OnError;
-    onFiltersChange?: (filters: IDashboardFilter[]) => void;
-    onScheduledMailDialogCancel?: () => void;
-    onScheduledMailDialogSubmit?: (scheduledEmailDefinition: IScheduledMailDefinition) => void;
-    onScheduledMailSubmitError?: OnError;
-    onScheduledMailSubmitSuccess?: (scheduledEmail: IScheduledMail) => void;
-    theme?: ITheme;
-    themeModifier?: (theme: ITheme) => ITheme;
-    transformLayout?: DashboardLayoutTransform<any>;
-    widgetRenderer?: IDashboardWidgetRenderer;
-    workspace?: string;
-}
-
-// @beta @deprecated
-export type IDashboardWidgetRenderer = (renderProps: IDashboardWidgetRenderProps) => JSX.Element;
-
-// @beta @deprecated
-export type IDashboardWidgetRenderProps = {
-    ErrorComponent: React.ComponentType<IErrorProps>;
-    LoadingComponent: React.ComponentType<ILoadingProps>;
-    renderedWidget: React.ReactElement;
-    predicates: IWidgetPredicates;
-    alert?: IWidgetAlert;
-    widget: IWidget;
-    insight?: IInsight;
-    customWidget?: any;
-    filters?: FilterContextItem[];
-};
+export function getInsightWithAppliedDrillDown(insight: IInsight, drillEvent: IDrillEvent, drillDefinition: IDrillDownDefinition): IInsight;
 
 // @beta
 export interface IDrillDownDefinition {
@@ -548,58 +185,12 @@ export interface ISizeInfo {
     min?: number;
 }
 
-// @beta @deprecated (undocumented)
-export interface IUseDashboardAlertsConfig extends UseCancelablePromiseCallbacks<IWidgetAlert[], GoodDataSdkError> {
-    backend?: IAnalyticalBackend;
-    dashboard: ObjRef;
-    workspace?: string;
-}
-
-// @beta @deprecated (undocumented)
-export interface IUseDashboardConfig extends UseCancelablePromiseCallbacks<IDashboard, GoodDataSdkError> {
-    backend?: IAnalyticalBackend;
-    dashboard: ObjRef;
-    workspace?: string;
-}
-
-// @beta @deprecated (undocumented)
-export interface IUseDashboardPdfExporterConfig extends UseCancelablePromiseCallbacks<string, AnalyticalBackendError> {
-    backend?: IAnalyticalBackend;
-    workspace?: string;
-}
-
-// @beta @deprecated (undocumented)
-export interface IUseDashboardPdfExporterResult {
-    error: AnalyticalBackendError | undefined;
-    exportDashboard: (dashboard: ObjRef, filters?: IDashboardFilter[]) => void;
-    status: UseCancelablePromiseStatus;
-}
-
-// @beta @deprecated (undocumented)
-export interface IUseDashboardWidgetExecutionConfig {
-    backend?: IAnalyticalBackend;
-    dashboard: ObjRef;
-    filters?: FilterContextItem[];
-    widget: ObjRef;
-    workspace?: string;
-}
-
 // @alpha
 export interface IVisualizationSizeInfo {
     // (undocumented)
     height: ISizeInfo;
     // (undocumented)
     width: ISizeInfo;
-}
-
-// @beta @deprecated
-export interface IWidgetPredicates {
-    isCustomWidget: () => boolean;
-    isWidgetWithInsightRef: (ref: ObjRef) => boolean;
-    isWidgetWithInsightType: (type: VisType) => boolean;
-    isWidgetWithKpiRef: (ref: ObjRef) => boolean;
-    isWidgetWithKpiType: (comparisonType: ILegacyKpi["comparisonType"]) => boolean;
-    isWidgetWithRef: (ref: ObjRef) => boolean;
 }
 
 // @internal (undocumented)
@@ -611,15 +202,6 @@ export const KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationSizeInfo;
 // @alpha (undocumented)
 export type LayoutType = "fluid";
 
-// @internal (undocumented)
-export type MeasurableWidgetContent = IInsightDefinition | ILegacyKpi;
-
-// @beta @deprecated
-export function mergeFiltersWithDashboard(dashboard: IDashboard | undefined, additionalFilters: Array<IDashboardFilter | FilterContextItem>): FilterContextItem[];
-
-// @beta
-export type OnFiredDashboardViewDrillEvent = (event: IDashboardDrillEvent) => ReturnType<OnFiredDrillEvent>;
-
 // @alpha (undocumented)
 export const PluggableVisualizationErrorCodes: {
     INVALID_BUCKETS: string;
@@ -628,23 +210,5 @@ export const PluggableVisualizationErrorCodes: {
 
 // @alpha (undocumented)
 export type PluggableVisualizationErrorType = keyof typeof PluggableVisualizationErrorCodes;
-
-// @beta @deprecated
-export function useDashboard({ dashboard, backend, onCancel, onError, onLoading, onPending, onSuccess, workspace, }: IUseDashboardConfig): UseCancelablePromiseState<IDashboard, any>;
-
-// @beta @deprecated
-export function useDashboardAlerts({ dashboard, backend, onCancel, onError, onLoading, onPending, onSuccess, workspace, }: IUseDashboardAlertsConfig): UseCancelablePromiseState<IWidgetAlert[], GoodDataSdkError>;
-
-// @beta @deprecated
-export function useDashboardPdfExporter({ backend, workspace, onError, onCancel, onLoading, onPending, onSuccess, }?: IUseDashboardPdfExporterConfig): IUseDashboardPdfExporterResult;
-
-// @beta @deprecated
-export function useDashboardWidgetExecution({ dashboard, widget: widgetRef, filters, backend, workspace, }: IUseDashboardWidgetExecutionConfig): UseCancelablePromiseState<IPreparedExecution, GoodDataSdkError>;
-
-// @internal (undocumented)
-export function validateDashboardLayoutWidgetSize(currentWidth: number, currentHeight: number | undefined, widgetType: AnalyticalWidgetType, widgetContent: MeasurableWidgetContent, settings: ISettings): {
-    validWidth: number;
-    validHeight: number;
-};
 
 ```
