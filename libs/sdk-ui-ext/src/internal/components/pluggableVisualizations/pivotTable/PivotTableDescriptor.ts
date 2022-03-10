@@ -1,4 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
+import isEmpty from "lodash/isEmpty";
+import isNil from "lodash/isNil";
 import {
     bucketAttributes,
     bucketMeasures,
@@ -12,17 +14,23 @@ import {
     insightTotals,
     VisualizationProperties,
 } from "@gooddata/sdk-model";
-import { IColumnSizing, IPivotTableConfig, IPivotTableProps } from "@gooddata/sdk-ui-pivot";
+import {
+    IColumnSizing,
+    IPivotTableConfig,
+    IPivotTableProps,
+    pivotTableMenuForCapabilities,
+} from "@gooddata/sdk-ui-pivot";
 import { BucketNames } from "@gooddata/sdk-ui";
+import { ISettings } from "@gooddata/sdk-backend-spi";
 
 import {
+    IEmbeddingCodeContext,
     IVisualizationSizeInfo,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor";
 import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor";
 import { PluggablePivotTable } from "./PluggablePivotTable";
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
-import { ISettings } from "@gooddata/sdk-backend-spi";
 import { IDrillDownContext } from "../../../interfaces/Visualization";
 import {
     addIntersectionFiltersToInsight,
@@ -73,7 +81,7 @@ export class PivotTableDescriptor extends BaseChartDescriptor {
             name: "PivotTable",
             package: "@gooddata/sdk-ui-pivot",
         },
-        (insight): IPivotTableProps => {
+        (insight, ctx): IPivotTableProps => {
             const measureBucket = insightBucket(insight, BucketNames.MEASURES);
             const rowsBucket = insightBucket(insight, BucketNames.ATTRIBUTE);
             const columnsBucket = insightBucket(insight, BucketNames.COLUMNS);
@@ -87,7 +95,7 @@ export class PivotTableDescriptor extends BaseChartDescriptor {
             const totals = insightTotals(insight);
 
             const properties = insightProperties(insight);
-            const config = getConfigFromProperties(properties);
+            const config = getConfigFromProperties(properties, ctx);
 
             return {
                 measures,
@@ -102,26 +110,40 @@ export class PivotTableDescriptor extends BaseChartDescriptor {
     );
 }
 
-function getColumnSizingFromControls(controls: Record<string, any>): IColumnSizing | undefined {
+function getColumnSizingFromControls(
+    controls: Record<string, any>,
+    ctx: IEmbeddingCodeContext | undefined,
+): IColumnSizing | undefined {
     const { columnWidths } = controls;
-    if (!columnWidths) {
-        return undefined;
-    }
+    const columnWidthsProp = !isEmpty(columnWidths) ? { columnWidths } : {};
+
+    const growToFitConfig = ctx?.settings?.enableTableColumnsGrowToFit;
+    const growToFitProp = !isNil(growToFitConfig) ? { growToFit: growToFitConfig } : {};
 
     return {
-        columnWidths,
+        ...columnWidthsProp,
+        ...growToFitProp,
         // the user can fill the rest on their own later
     };
 }
 
-function getConfigFromProperties(properties: VisualizationProperties | undefined): IPivotTableConfig {
+function getConfigFromProperties(
+    properties: VisualizationProperties | undefined,
+    ctx: IEmbeddingCodeContext | undefined,
+): IPivotTableConfig {
     const controls = properties?.controls;
-    const columnSizing = controls && getColumnSizingFromControls(controls);
+    const columnSizing = controls && getColumnSizingFromControls(controls, ctx);
+
+    const menuConfig = ctx?.backend && pivotTableMenuForCapabilities(ctx.backend.capabilities);
+    const menuProp = !isEmpty(menuConfig) ? { menu: menuConfig } : {};
+
+    const separatorsConfig = ctx?.settings?.separators;
+    const separatorsProp = !isEmpty(separatorsConfig) ? { separators: separatorsConfig } : {};
 
     return {
         columnSizing,
-        // menu: undefined, // TODO maybe use pivotTableMenuForCapabilities? we would need backend capabilities though
-        // separators: undefined, // TODO fill from somewhere
+        ...menuProp,
+        ...separatorsProp,
         // the user can fill the rest on their own later
     };
 }

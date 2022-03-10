@@ -7,7 +7,7 @@ import repeat from "lodash/repeat";
 import toPairs from "lodash/fp/toPairs";
 import { factoryNotationFor, IInsightDefinition } from "@gooddata/sdk-model";
 
-import { IEmbeddingCodeConfig } from "../../interfaces/VisualizationDescriptor";
+import { IEmbeddingCodeConfig, IEmbeddingCodeContext } from "../../interfaces/VisualizationDescriptor";
 
 import { normalizeInsight } from "./normalizeInsight";
 
@@ -68,11 +68,11 @@ function indent(str: string, tabs: number): string {
 
 export function getReactEmbeddingCodeGenerator(
     componentInfo: IComponentInfo,
-    insightToProps: (insight: IInsightDefinition) => Record<string, any>,
+    insightToProps: (insight: IInsightDefinition, ctx?: IEmbeddingCodeContext) => Record<string, any>,
 ): (insight: IInsightDefinition, config?: IEmbeddingCodeConfig) => string {
     return (insight, config) => {
         const normalizedInsight = normalizeInsight(insight);
-        const props = insightToProps(normalizedInsight);
+        const props = insightToProps(normalizedInsight, config?.context);
         const propPairs = toPairs(props)
             // we ignore functions as there is no bullet-proof way to serialize them
             .filter(([_, value]) => !isFunction(value))
