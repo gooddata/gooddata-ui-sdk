@@ -253,7 +253,9 @@ describe("PluggablePieChart", () => {
         it("should provide measure sort as default sort, measure sort as available sorts for 1M + 1 VB", async () => {
             const chart = createComponent(defaultProps);
 
-            const sortConfig = await chart.getSortConfig(referencePointMocks.simpleStackedReferencePoint);
+            const sortConfig = await chart.getSortConfig(
+                referencePointMocks.simpleStackedWithoutPropertiesReferencePoint,
+            );
 
             expect(sortConfig).toMatchSnapshot();
         });

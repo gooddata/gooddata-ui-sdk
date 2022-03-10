@@ -160,10 +160,12 @@ export class PluggableAreaChart extends PluggableBaseChart {
 
     public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
         const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(referencePoint);
+        const { properties } = referencePoint;
         const disabled = this.isSortDisabled(referencePoint, availableSorts);
         return Promise.resolve({
             supported: true,
             disabled,
+            appliedSort: super.reuseCurrentSort(properties, availableSorts, defaultSort),
             defaultSort,
             availableSorts,
         });

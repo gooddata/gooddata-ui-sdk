@@ -727,6 +727,11 @@ export const simpleStackedReferencePoint: IReferencePoint = {
     },
 };
 
+export const simpleStackedWithoutPropertiesReferencePoint: IReferencePoint = {
+    ...simpleStackedReferencePoint,
+    properties: {},
+};
+
 export const oneMetricReferencePoint: IReferencePoint = {
     buckets: [
         {

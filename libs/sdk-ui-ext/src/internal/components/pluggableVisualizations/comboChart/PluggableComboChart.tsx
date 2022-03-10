@@ -340,6 +340,7 @@ export class PluggableComboChart extends PluggableBaseChart {
         return Promise.resolve({
             supported: true,
             disabled,
+            appliedSort: super.reuseCurrentSort(properties, availableSorts, defaultSort),
             defaultSort,
             availableSorts,
         });

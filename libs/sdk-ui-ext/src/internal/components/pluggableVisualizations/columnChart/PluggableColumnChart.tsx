@@ -176,6 +176,7 @@ export class PluggableColumnChart extends PluggableColumnBarCharts {
         return Promise.resolve({
             supported: true,
             disabled,
+            appliedSort: super.reuseCurrentSort(properties, availableSorts, defaultSort),
             defaultSort,
             availableSorts,
         });

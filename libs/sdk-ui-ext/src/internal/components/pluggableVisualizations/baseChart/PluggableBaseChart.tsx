@@ -9,6 +9,7 @@ import {
     insightBuckets,
     insightHasMeasures,
     insightMeasures,
+    ISortItem,
 } from "@gooddata/sdk-model";
 import { BucketNames, ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
@@ -40,6 +41,7 @@ import {
     IVisProps,
     IVisualizationProperties,
 } from "../../../interfaces/Visualization";
+import { IAvailableSortsGroup } from "../../../interfaces/SortConfig";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 
 import {
@@ -63,7 +65,7 @@ import {
     hasColorMapping,
     isEmptyObject,
 } from "../../../utils/propertiesHelper";
-import { createSorts, removeSort } from "../../../utils/sort";
+import { createSorts, removeSort, validateCurrentSort } from "../../../utils/sort";
 import { getTranslation } from "../../../utils/translations";
 
 import {
@@ -461,6 +463,15 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected isMultipleDatesEnabled(): boolean {
         //this is development FF and will be removed in the end of dev cycle
         return !!this.featureFlags["enableMultipleDates"];
+    }
+
+    protected reuseCurrentSort(
+        properties: IVisualizationProperties,
+        availableSorts: IAvailableSortsGroup[],
+        defaultSort: ISortItem[],
+    ) {
+        const currentSort = properties && properties.sortItems;
+        return validateCurrentSort(currentSort, availableSorts, defaultSort);
     }
 }
 

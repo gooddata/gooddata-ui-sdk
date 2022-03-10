@@ -13,7 +13,6 @@ import { AXIS, AXIS_NAME } from "../../../constants/axis";
 import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig";
 import { getBucketItems } from "../../../utils/bucketHelper";
 import { canSortStackTotalValue } from "./sortHelpers";
-import { validateCurrentSort } from "../../../utils/sort";
 
 /**
  * PluggableBarChart
@@ -174,19 +173,17 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
     }
     public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
         const { buckets, properties } = referencePoint;
-        const currentSort = properties && properties.sortItems;
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
         const measures = getBucketItems(buckets, BucketNames.MEASURES);
         const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(
             referencePoint,
             canSortStackTotalValue(buckets, properties),
         );
-        const keptCurrentSort = validateCurrentSort(currentSort, availableSorts, defaultSort);
         const disabled = viewBy.length < 1 || measures.length < 1 || availableSorts.length === 0;
         return Promise.resolve({
             supported: true,
             disabled,
-            appliedSort: currentSort && currentSort.length ? keptCurrentSort : [],
+            appliedSort: super.reuseCurrentSort(properties, availableSorts, defaultSort),
             defaultSort,
             availableSorts: availableSorts,
         });

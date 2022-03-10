@@ -180,7 +180,7 @@ export class PluggablePieChart extends PluggableBaseChart {
     }
 
     public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
-        const { buckets } = referencePoint;
+        const { buckets, properties } = referencePoint;
         const measures = getMeasureItems(buckets);
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
         const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(measures, viewBy);
@@ -189,6 +189,7 @@ export class PluggablePieChart extends PluggableBaseChart {
         return Promise.resolve({
             supported: true,
             disabled,
+            appliedSort: super.reuseCurrentSort(properties, availableSorts, defaultSort),
             defaultSort,
             availableSorts,
         });

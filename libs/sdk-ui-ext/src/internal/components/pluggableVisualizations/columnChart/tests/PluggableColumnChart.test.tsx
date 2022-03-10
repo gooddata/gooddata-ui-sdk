@@ -180,7 +180,9 @@ describe("PluggableColumnChart", () => {
         it("should provide attribute normal sort as default sort, attribute normal and attribute area available sorts for 1M + 1VB + 1SB", async () => {
             const chart = createComponent(defaultProps);
 
-            const sortConfig = await chart.getSortConfig(referencePointMocks.simpleStackedReferencePoint);
+            const sortConfig = await chart.getSortConfig(
+                referencePointMocks.simpleStackedWithoutPropertiesReferencePoint,
+            );
 
             expect(sortConfig).toMatchSnapshot();
         });

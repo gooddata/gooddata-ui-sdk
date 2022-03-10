@@ -2,6 +2,7 @@
 
 exports[`PluggableBulletChart Sort config should return expected sort config for 0 M + 0 VB 1`] = `
 Object {
+  "appliedSort": Array [],
   "availableSorts": Array [],
   "defaultSort": Array [],
   "disabled": true,
@@ -11,6 +12,7 @@ Object {
 
 exports[`PluggableBulletChart Sort config should return expected sort config for 0 M + 1 VB 1`] = `
 Object {
+  "appliedSort": Array [],
   "availableSorts": Array [
     Object {
       "attributeSort": Object {
@@ -38,6 +40,7 @@ Object {
 
 exports[`PluggableBulletChart Sort config should return expected sort config for 1 M + 0 VB 1`] = `
 Object {
+  "appliedSort": Array [],
   "availableSorts": Array [],
   "defaultSort": Array [],
   "disabled": true,
@@ -47,6 +50,7 @@ Object {
 
 exports[`PluggableBulletChart Sort config should return expected sort config for 1 M + 1 VB 1`] = `
 Object {
+  "appliedSort": Array [],
   "availableSorts": Array [
     Object {
       "attributeSort": Object {
@@ -85,6 +89,7 @@ Object {
 
 exports[`PluggableBulletChart Sort config should return expected sort config for 1 M + 2 VB 1`] = `
 Object {
+  "appliedSort": Array [],
   "availableSorts": Array [
     Object {
       "attributeSort": Object {
@@ -138,6 +143,7 @@ Object {
 
 exports[`PluggableBulletChart Sort config should return expected sort config for 2 M + 1 VB 1`] = `
 Object {
+  "appliedSort": Array [],
   "availableSorts": Array [
     Object {
       "attributeSort": Object {
@@ -186,6 +192,7 @@ Object {
 
 exports[`PluggableBulletChart Sort config should return expected sort config for 2 M + 2 VB 1`] = `
 Object {
+  "appliedSort": Array [],
   "availableSorts": Array [
     Object {
       "attributeSort": Object {
@@ -249,6 +256,7 @@ Object {
 
 exports[`PluggableBulletChart Sort config should return expected sort config for 3 M + 1 VB 1`] = `
 Object {
+  "appliedSort": Array [],
   "availableSorts": Array [
     Object {
       "attributeSort": Object {
@@ -307,6 +315,7 @@ Object {
 
 exports[`PluggableBulletChart Sort config should return expected sort config for 3 M + 2 VB 1`] = `
 Object {
+  "appliedSort": Array [],
   "availableSorts": Array [
     Object {
       "attributeSort": Object {

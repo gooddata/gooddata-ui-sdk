@@ -269,9 +269,11 @@ export class PluggableBulletChart extends PluggableBaseChart {
     public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
         const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(referencePoint);
         const disabled = this.isSortDisabled(referencePoint, availableSorts);
+        const { properties } = referencePoint;
         return Promise.resolve({
             supported: true,
             disabled,
+            appliedSort: super.reuseCurrentSort(properties, availableSorts, defaultSort),
             defaultSort,
             availableSorts,
         });

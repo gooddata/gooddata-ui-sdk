@@ -2,6 +2,7 @@
 
 exports[`PluggableHeatmap Sort config should provide attribute normal as default sort, attribute are sorts as available sorts for 1M + 1VB + 1SB 1`] = `
 Object {
+  "appliedSort": Array [],
   "availableSorts": Array [
     Object {
       "attributeSort": Object {
@@ -43,6 +44,7 @@ Object {
 
 exports[`PluggableHeatmap Sort config should provide attribute normal as default sort, attribute area sorts as available sorts for 1M + 1SB 1`] = `
 Object {
+  "appliedSort": Array [],
   "availableSorts": Array [
     Object {
       "attributeSort": Object {
@@ -69,6 +71,7 @@ Object {
 
 exports[`PluggableHeatmap Sort config should provide attribute normal as default sort, attribute normal and measuree sorts as available sorts for 1M + 1VB 1`] = `
 Object {
+  "appliedSort": Array [],
   "availableSorts": Array [
     Object {
       "attributeSort": Object {

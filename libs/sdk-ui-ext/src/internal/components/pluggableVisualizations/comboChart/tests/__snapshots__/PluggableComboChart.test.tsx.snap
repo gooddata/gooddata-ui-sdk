@@ -2,6 +2,7 @@
 
 exports[`PluggableComboChart Sort config should provide attribute sort as default sort, attribute area  and two measures sorts as available sorts for 2 primary measures stacked + 1 VB 1`] = `
 Object {
+  "appliedSort": Array [],
   "availableSorts": Array [
     Object {
       "attributeSort": Object {
@@ -50,6 +51,7 @@ Object {
 
 exports[`PluggableComboChart Sort config should provide attribute sort as default sort, attribute area and two measure sorts as available sorts for 2M + 1 VB 1`] = `
 Object {
+  "appliedSort": Array [],
   "availableSorts": Array [
     Object {
       "attributeSort": Object {
@@ -98,6 +100,7 @@ Object {
 
 exports[`PluggableComboChart Sort config should provide attribute sort as default sort, attribute normal and measue sort as available sorts for 1 seconday measure + 1 VB 1`] = `
 Object {
+  "appliedSort": Array [],
   "availableSorts": Array [
     Object {
       "attributeSort": Object {
@@ -136,6 +139,7 @@ Object {
 
 exports[`PluggableComboChart Sort config should provide attribute sort as default sort, attribute normal and measure sort as available sorts for 1 primary measure + 1 VB 1`] = `
 Object {
+  "appliedSort": Array [],
   "availableSorts": Array [
     Object {
       "attributeSort": Object {
