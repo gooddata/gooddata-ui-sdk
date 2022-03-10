@@ -25,6 +25,7 @@ import { ISettings } from "@gooddata/sdk-backend-spi";
 
 import {
     IEmbeddingCodeContext,
+    IVisualizationDescriptor,
     IVisualizationSizeInfo,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor";
@@ -39,7 +40,7 @@ import {
 } from "../drillDownUtil";
 import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator";
 
-export class PivotTableDescriptor extends BaseChartDescriptor {
+export class PivotTableDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
         return (params) => new PluggablePivotTable(params);
     }
