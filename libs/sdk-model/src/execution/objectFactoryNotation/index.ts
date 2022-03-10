@@ -169,9 +169,7 @@ const convertAttributeAreaSortItem: Converter<IAttributeSortItem> = ({ attribute
     `newAttributeAreaSort("${attributeSortItem.attributeIdentifier}", "${attributeSortItem.direction}", "${attributeSortItem.aggregation}")`;
 
 const convertAttributeSortItem: Converter<IAttributeSortItem> = ({ attributeSortItem }) =>
-    `newAttributeSort("${attributeSortItem.attributeIdentifier}", "${
-        attributeSortItem.direction
-    }", ${!!attributeSortItem.aggregation})`;
+    `newAttributeSort("${attributeSortItem.attributeIdentifier}", "${attributeSortItem.direction}")`;
 
 const convertMeasureSortItem: Converter<IMeasureSortItem> = ({ measureSortItem }) => {
     const locators = measureSortItem.locators || [];
