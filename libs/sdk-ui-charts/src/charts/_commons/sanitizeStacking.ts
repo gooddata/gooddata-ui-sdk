@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import {
     IAttributeOrMeasure,
@@ -49,16 +49,25 @@ export function getSanitizedStackingConfig(
     executionDef: IExecutionDefinition,
     chartConfig: IChartConfig,
 ): IChartConfig {
+    let updatedChartConfig = chartConfig;
+
+    // In case enableChartSorting is set to true and sort was not specified,
+    // we need to change its value, so visualization is able to take default sort
+    if (executionDef.sortBy.length === 0 && chartConfig.enableChartSorting) {
+        updatedChartConfig = { ...updatedChartConfig, enableChartSorting: false };
+    }
+
     if (executionDef.measures.length === 1) {
         const { stackMeasures, stackMeasuresToPercent } = chartConfig;
         const singleMeasure = executionDef.measures[0];
         const isComputeRatio = measureDoesComputeRatio(singleMeasure);
 
         return {
-            ...chartConfig,
+            ...updatedChartConfig,
             stackMeasures: stackMeasures && !isComputeRatio,
             stackMeasuresToPercent: stackMeasuresToPercent && !isComputeRatio,
         };
     }
-    return chartConfig;
+
+    return updatedChartConfig;
 }

@@ -250,7 +250,6 @@ describe("PluggableHeatmap", () => {
     describe("Sort config", () => {
         it("should create sort config with sorting supported but disabled when there is no view by attribute", async () => {
             const chart = createComponent(defaultProps);
-
             const sortConfig = await chart.getSortConfig(
                 referencePointMocks.oneMetricNoCategoriesReferencePoint,
             );
@@ -261,7 +260,6 @@ describe("PluggableHeatmap", () => {
 
         it("should create sort config with sorting disabled when there is no measure", async () => {
             const chart = createComponent(defaultProps);
-
             const sortConfig = await chart.getSortConfig(referencePointMocks.justViewByReferencePoint);
 
             expect(sortConfig.supported).toBeTruthy();
@@ -270,7 +268,6 @@ describe("PluggableHeatmap", () => {
 
         it("should provide attribute normal as default sort, attribute normal and measuree sorts as available sorts for 1M + 1VB", async () => {
             const chart = createComponent(defaultProps);
-
             const sortConfig = await chart.getSortConfig(referencePointMocks.oneMetricOneCategory);
 
             expect(sortConfig).toMatchSnapshot();
@@ -278,7 +275,6 @@ describe("PluggableHeatmap", () => {
 
         it("should provide attribute normal as default sort, attribute area sorts as available sorts for 1M + 1SB", async () => {
             const chart = createComponent(defaultProps);
-
             const sortConfig = await chart.getSortConfig(referencePointMocks.oneMetricOneStackReferencePoint);
 
             expect(sortConfig).toMatchSnapshot();
@@ -286,7 +282,6 @@ describe("PluggableHeatmap", () => {
 
         it("should provide attribute normal as default sort, attribute are sorts as available sorts for 1M + 1VB + 1SB", async () => {
             const chart = createComponent(defaultProps);
-
             const sortConfig = await chart.getSortConfig(
                 referencePointMocks.oneMetricAndCategoryAndStackReferencePoint,
             );

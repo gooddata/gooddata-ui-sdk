@@ -174,8 +174,8 @@ export class PluggableHeatmap extends PluggableBaseChart {
         if (!isEmpty(viewBy) && !isEmpty(stackBy) && !isEmpty(measures)) {
             return {
                 defaultSort: [
-                    newAttributeSort(viewBy[0].localIdentifier, "asc"),
-                    newAttributeSort(stackBy[0].localIdentifier, "asc"),
+                    newAttributeSort(viewBy[0].localIdentifier, "desc"),
+                    newAttributeSort(stackBy[0].localIdentifier, "desc"),
                 ],
                 availableSorts: [
                     {
@@ -197,7 +197,7 @@ export class PluggableHeatmap extends PluggableBaseChart {
         }
         if (!isEmpty(measures) && !isEmpty(viewBy)) {
             return {
-                defaultSort: [newAttributeSort(viewBy[0].localIdentifier, "asc")],
+                defaultSort: [newAttributeSort(viewBy[0].localIdentifier, "desc")],
                 availableSorts: [
                     {
                         itemId: localIdRef(viewBy[0].localIdentifier),
@@ -212,7 +212,7 @@ export class PluggableHeatmap extends PluggableBaseChart {
         }
         if (!isEmpty(measures) && !isEmpty(stackBy)) {
             return {
-                defaultSort: [newAttributeSort(stackBy[0].localIdentifier, "asc")],
+                defaultSort: [newAttributeSort(stackBy[0].localIdentifier, "desc")],
                 availableSorts: [
                     {
                         itemId: localIdRef(stackBy[0].localIdentifier),

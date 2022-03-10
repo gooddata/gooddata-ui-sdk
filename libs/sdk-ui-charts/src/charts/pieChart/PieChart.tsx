@@ -103,12 +103,6 @@ export const PieChart = (props: IPieChartProps) => {
         props.placeholdersResolutionContext,
     );
 
-    // In case enableChartSorting is set to true and sort was not specified,
-    // we need to change its value, so visualization is able to take default sort
-    if (props.config && props.config.enableChartSorting && !sortBy) {
-        props.config.enableChartSorting = false;
-    }
-
     return (
         <WrappedPieChart
             {...props}

@@ -26,13 +26,13 @@ Object {
     Object {
       "attributeSortItem": Object {
         "attributeIdentifier": "a1",
-        "direction": "asc",
+        "direction": "desc",
       },
     },
     Object {
       "attributeSortItem": Object {
         "attributeIdentifier": "a2",
-        "direction": "asc",
+        "direction": "desc",
       },
     },
   ],
@@ -58,7 +58,7 @@ Object {
     Object {
       "attributeSortItem": Object {
         "attributeIdentifier": "a3",
-        "direction": "asc",
+        "direction": "desc",
       },
     },
   ],
@@ -96,7 +96,7 @@ Object {
     Object {
       "attributeSortItem": Object {
         "attributeIdentifier": "a1",
-        "direction": "asc",
+        "direction": "desc",
       },
     },
   ],
