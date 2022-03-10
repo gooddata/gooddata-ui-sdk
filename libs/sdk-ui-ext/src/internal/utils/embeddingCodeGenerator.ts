@@ -73,16 +73,22 @@ export function getReactEmbeddingCodeGenerator(
 ): (insight: IInsightDefinition, config?: IEmbeddingCodeConfig) => string {
     return (insight, config) => {
         const props = insightToProps(insight);
-        const serializedProps = toPairs(props)
+        const propPairs = toPairs(props)
             // we ignore functions as there is no bullet-proof way to serialize them
             .filter(([_, value]) => !isFunction(value))
-            .filter(([_, value]) => !isEmpty(value))
+            .filter(([_, value]) => !isEmpty(value));
+
+        const propDeclarations = propPairs
             .map(([key, value]) =>
-                isString(value) ? `${key}="${value}"` : `${key}={${factoryNotationFor(value)}}`,
+                isString(value)
+                    ? `const ${key} = "${value}";`
+                    : `const ${key} = ${factoryNotationFor(value)};`,
             )
             .join("\n");
 
-        const detectedFactories = detectSdkModelImports(serializedProps);
+        const serializedProps = propPairs.map(([key]) => `${key}={${key}}`).join("\n");
+
+        const detectedFactories = detectSdkModelImports(propDeclarations);
         const factoriesImport = detectedFactories.length
             ? `import { ${detectedFactories.join(", ")} } from "@gooddata/sdk-model";`
             : "";
@@ -97,6 +103,8 @@ export function getReactEmbeddingCodeGenerator(
         const wrapped = config?.height ? wrapWithDiv(componentBody, config.height) : componentBody;
 
         return `${imports.join("\n")}
+
+${propDeclarations}
 
 function MyComponent() {
     return (

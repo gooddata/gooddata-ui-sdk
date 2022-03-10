@@ -5,12 +5,15 @@ exports[`BubbleChartDescriptor should generate embedding code with height as num
 import { idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
 import { BubbleChart } from \\"@gooddata/sdk-ui-charts\\";
 
+const xAxisMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const viewBy = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
+
 function MyComponent() {
     return (
         <div style={{ height: 400 }}>
             <BubbleChart
-                xAxisMeasure={newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))}
-                viewBy={newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))}
+                xAxisMeasure={xAxisMeasure}
+                viewBy={viewBy}
             />
         </div>
     );
@@ -23,12 +26,15 @@ exports[`BubbleChartDescriptor should generate embedding code with height as str
 import { idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
 import { BubbleChart } from \\"@gooddata/sdk-ui-charts\\";
 
+const xAxisMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const viewBy = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
+
 function MyComponent() {
     return (
         <div style={{ height: \\"20rem\\" }}>
             <BubbleChart
-                xAxisMeasure={newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))}
-                viewBy={newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))}
+                xAxisMeasure={xAxisMeasure}
+                viewBy={viewBy}
             />
         </div>
     );
@@ -41,11 +47,14 @@ exports[`BubbleChartDescriptor should generate embedding code without height 1`]
 import { idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
 import { BubbleChart } from \\"@gooddata/sdk-ui-charts\\";
 
+const xAxisMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
+const viewBy = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
+
 function MyComponent() {
     return (
         <BubbleChart
-            xAxisMeasure={newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))}
-            viewBy={newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))}
+            xAxisMeasure={xAxisMeasure}
+            viewBy={viewBy}
         />
     );
 }
