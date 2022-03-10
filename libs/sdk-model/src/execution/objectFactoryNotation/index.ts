@@ -241,7 +241,7 @@ const convertRankingFilter: Converter<IRankingFilter> = ({
 };
 
 const convertTotal: Converter<ITotal> = ({ attributeIdentifier, measureIdentifier, type, alias }) => {
-    const args = compact([`"${type}"`, `"${measureIdentifier}"`, `"${attributeIdentifier}"`, `"${alias}"`]);
+    const args = compact([type, measureIdentifier, attributeIdentifier, alias]).map(stringify);
     return `newTotal(${args.join(ARRAY_JOINER)})`;
 };
 
