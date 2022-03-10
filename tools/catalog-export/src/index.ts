@@ -15,6 +15,7 @@ import { exportMetadataToTypescript } from "./exports/metaToTypescript";
 import { exportMetadataToJavascript } from "./exports/metaToJavascript";
 import { loadWorkspaceMetadataFromBear } from "./loaders/bear";
 import { loadWorkspaceMetadataFromTiger } from "./loaders/tiger";
+import fs from "fs";
 
 program
     .version(pkg.version)
@@ -56,6 +57,13 @@ async function loadProjectMetadataFromBackend(config: CatalogExportConfig): Prom
     return loadWorkspaceMetadataFromBear(config);
 }
 
+async function checkFolderExists(filePath: string) {
+    const directory = path.dirname(filePath);
+    if (!fs.existsSync(directory)) {
+        fs.mkdirSync(directory);
+    }
+}
+
 async function run() {
     clearTerminal();
     printHeader(pkg.version);
@@ -75,6 +83,8 @@ async function run() {
     try {
         const filePath = path.resolve(output || (await requestFilePath()));
         const projectMetadata = await loadProjectMetadataFromBackend(mergedConfig);
+
+        await checkFolderExists(filePath);
 
         if (filePath.endsWith(".ts")) {
             await exportMetadataToTypescript(projectMetadata, filePath, backend === "tiger");
