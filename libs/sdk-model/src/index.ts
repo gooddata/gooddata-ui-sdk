@@ -91,7 +91,7 @@ export {
     isAttributeAreaSort,
     isAttributeValueSort,
     newMeasureSort,
-    newMeasureSortFromParts,
+    newMeasureSortFromLocators,
     newAttributeSort,
     newAttributeAreaSort,
     newAttributeLocator,

@@ -395,7 +395,7 @@ export function newMeasureSort(
  * @returns new sort item
  * @public
  */
-export function newMeasureSortFromParts(
+export function newMeasureSortFromLocators(
     locators: ILocatorItem[],
     sortDirection: SortDirection = "asc",
 ): IMeasureSortItem {

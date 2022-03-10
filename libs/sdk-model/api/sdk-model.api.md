@@ -1257,7 +1257,7 @@ export function newMeasure(measure: ObjRef | Identifier, modifications?: Measure
 export function newMeasureSort(measureOrId: IMeasure | string, sortDirection?: SortDirection, attributeLocators?: IAttributeLocatorItem[]): IMeasureSortItem;
 
 // @public
-export function newMeasureSortFromParts(locators: ILocatorItem[], sortDirection?: SortDirection): IMeasureSortItem;
+export function newMeasureSortFromLocators(locators: ILocatorItem[], sortDirection?: SortDirection): IMeasureSortItem;
 
 // @public
 export function newMeasureValueFilter(measureOrRef: IMeasure | ObjRefInScope | string, operator: ComparisonConditionOperator, value: number, treatNullValuesAs?: number): IMeasureValueFilter;

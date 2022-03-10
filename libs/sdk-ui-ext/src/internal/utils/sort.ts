@@ -14,7 +14,7 @@ import {
     insightSorts,
     newAttributeSort,
     newMeasureSort,
-    newMeasureSortFromParts,
+    newMeasureSortFromLocators,
     SortDirection,
     ISortItem,
     newAttributeAreaSort,
@@ -182,7 +182,7 @@ export function removeSort(referencePoint: Readonly<IExtendedReferencePoint>): I
     return referencePoint;
 }
 
-function isValidateAreaSort(areaSort: ISortItem, availableSort: IAvailableSortsGroup) {
+function isValidAreaSort(areaSort: ISortItem, availableSort: IAvailableSortsGroup) {
     return (
         isAttributeAreaSort(areaSort) &&
         availableSort &&
@@ -222,12 +222,12 @@ function findReusableSort(
     currentSort: ISortItem[],
     availableSortGroup: IAvailableSortsGroup,
     groupIndex: number,
-    attributeValidationFce: (attributeSort: ISortItem, availableSort: IAvailableSortsGroup) => boolean,
+    attributeValidationPredicate: (attributeSort: ISortItem, availableSort: IAvailableSortsGroup) => boolean,
 ) {
     const modifiedSorts = [...currentSort];
 
     const attributeSortIndex = currentSort.findIndex((sortItem) =>
-        attributeValidationFce(sortItem, availableSortGroup),
+        attributeValidationPredicate(sortItem, availableSortGroup),
     );
     if (attributeSortIndex !== -1) {
         const reusedItem = currentSort[attributeSortIndex];
@@ -255,7 +255,7 @@ function handleDifferentOrder(
         }
     }
     if (availableSortGroup.attributeSort.areaSortEnabled) {
-        const found = findReusableSort(currentSort, availableSortGroup, groupIndex, isValidateAreaSort);
+        const found = findReusableSort(currentSort, availableSortGroup, groupIndex, isValidAreaSort);
         if (found) {
             return found;
         }
@@ -275,7 +275,7 @@ function reuseSortItemType(currentSortItem: ISortItem, availableSortGroup: IAvai
             }
             const availableMetricSort = availableSortGroup.metricSorts && availableSortGroup.metricSorts[0];
             if (availableMetricSort) {
-                return newMeasureSortFromParts(availableMetricSort.locators, currentSortDirection);
+                return newMeasureSortFromLocators(availableMetricSort.locators, currentSortDirection);
             }
         }
         if (isMeasureSort(currentSortItem)) {
@@ -284,7 +284,7 @@ function reuseSortItemType(currentSortItem: ISortItem, availableSortGroup: IAvai
             }
             const availableMetricSort = availableSortGroup.metricSorts && availableSortGroup.metricSorts[0];
             if (availableMetricSort) {
-                return newMeasureSortFromParts(availableMetricSort.locators, currentSortDirection);
+                return newMeasureSortFromLocators(availableMetricSort.locators, currentSortDirection);
             }
             if (availableSortGroup.attributeSort.areaSortEnabled) {
                 return newAttributeAreaSort(availableSortGroup.itemId.localIdentifier, currentSortDirection);
