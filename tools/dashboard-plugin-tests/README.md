@@ -1,83 +1,87 @@
 # Dashboard plugins tests
 
-Repository for dashboard plugins API testing.
-It consists of 3 parts:
-
--   App with minimal setup for dashboard-loader in adaptive mode with full module federation setup.
--   Simple node.js server that serves dashboard plugins and their assets
--   Cypress tests covering different parts of the dashboard plugins API
--   Recordings - TBD
+Repository for e2e testing of the dashboard plugin APIs.
 
 ## Directory structure
 
--   `/plugins` - Dashboard plugins covering specific areas of dashboard plugin APIs and dependency versions
--   `/src/app` - Simple app to load local test plugins
--   `/src/server` - Server to serve the app and plugins locally
--   `/src/plugins.ts` - Configuration of linkage between dashboards and local plugins
--   `/src/cypress/intergration` - Tests
+-   `./plugins` - Dashboard plugins covering various parts of dashboard plugin APIs with specific dependency versions. Working with plugins is business as usual.
+-   `./plugins-loader` - Minimalist dashboard-loader in adaptive mode with full module federation setup. Dashboard, linked plugin(s) and their link(s) are configured from the test.
+-   `./nginx` - Nginx server configuration. It is serving the dashboard-loader application as well as the plugins.
+-   `./md` - Catalog export for metadata objects that can be used in tests.
+-   `./cypress` - Cypress tests.
+-   `./recordings` - Wiremock recordings, so tests don't have to run agains the real backend
+-   `./scripts` - Bash and node scripts for building and running the tests.
 
-## Local plugins
+## Getting started
 
-Because testing with full plugin deployment would be much more complex and slower,
-there is a server to host the plugins locally, and they are linked to the dashboards via backend decorator.
+### 1/ Setup enviroment variables
 
-#### Install local plugins
+Before running or writing tests, ensure that you set your username and password in `.env` file in the root folder. You can create it from the `.env.template` file.
 
-`npm run install-plugins`
+### 2/ Install and build plugins and plugins-loader
 
-#### Build local plugins
+`npm run build`
 
-`npm run build-plugins`
+### 3/ Run local nginx server
 
-## Test Modes
+`npm run run-plugins-local`
 
-There are 3 modes that specify context in which you want to run tests - **live**, **capturing** and **recorded**.
+### 4/ Run cypress tests
 
-Note: Before running the tests, ensure that you install and build local plugins.
-You can do it by running `npm run prepare-plugins` command.
+-   For running tests with full cypress experience: `npm run cypress`
+-   For running tests against wiremock recordings: `npm run run-isolated-local`
 
-### Live Mode
+### 5/ Test results
 
-In this mode, tests are running against live backend.
-This mode is useful mainly when you are writing or debugging tests.
-
-#### Run tests in live mode
-
-`npm run cypress-live`
-
-### Capturing Mode
-
-In this mode, tests are running against live backend and cypress is capturing all the required data to run tests in recorded mode.
-Use this mode after you write a new test, so it can run in recorded mode.
-
-#### Run tests in capturing mode
-
-`npm run cypress-capturing`
-
-### Recorded Mode
-
-In this mode, tests are running against recorded backend.
-This is the main and fastest mode - use it every time you don't need to use 2 previous modes.
-
-#### Run tests in recorded mode
-
-`npm run cypress-recorded`
-
-## Running tests in headless mode
-
-TBD
-
-## Adding a new test
-
-TBD
+-   If tests fail, there are 3 ways how to check what happened:
+    -   screenshots in `cypress/screenshots`
+    -   videos in `cypress/videos`
+    -   if you are running tests in record mode, then you can see all calls logged in `recording/mappings`
 
 ## Adding a new plugin for testing
 
-TBD
+### 1/ Initialize new plugin
 
-## Capturing and refreshing of the recordings
+In `./plugins` folder, use plugin toolkit cli to create a new plugin - `npx @gooddata/plugin-toolkit dashboard-plugin init my-new-test-plugin` or `npx @gooddata/plugin-toolkit@{REPLACE_WITH_SPECIFIC_SDK_VERSION} dashboard-plugin init my-new-test-plugin` to add a new plugin with particular sdk version.
 
-TBD
+### 1/ Prepare it for the tests
+
+Import and add `withDashboardPluginTestEventHandling(handlers)` to register function of the plugin to propagate events from the plugin to the tests.
+This is important, because events incoming from the plugin are used to detect that dashboard is fully loaded and rendered, and tests can start!
+
+## Adding a new test
+
+### 1/ Add new spec file
+
+In folder `./cypres/integration` you can either create new folder for the tests you're writing. You can then add new `*.spec.ts` file into either this new folder or to suitable existing one.
+
+### 2/ Setup dashboard, plugin(s) and plugin link(s) for the test
+
+```
+beforeEach(() => {
+    cy.login();
+
+    // Modify according to your needs.
+    // Don't forget to replace "my-new-test-plugin" with the target plugin name.
+    const TEST_PLUGIN = newTestPlugin("my-new-test-plugin");
+    withTestConfig({
+        dashboardId: Md.Dashboards.DashboardWithPlugin,
+        plugins: [TEST_PLUGIN],
+        links: [newTestPluginLink(TEST_PLUGIN, "plugin-parameters")],
+    });
+});
+```
+
+### 3/ Create recordings for the new test
+
+-   In the `.env` file, type the spec file name into `FILTER` variable. This will keep all the recordings untouched and creates the recording for the new spec only.
+-   Build plugins with `npm run build-plugins`.
+-   Start local nginx server with `npm run run-plugins-local`.
+-   Create new recordings with `npm run run-isolated-record`.
+
+## Refresh metadata for the tests
+
+Don't hardcode metadata object identifier(s) in the tests - if you needed to create new metadata object(s) for the test(s), run `npm run refresh-md` and access them from there.
 
 ## License
 

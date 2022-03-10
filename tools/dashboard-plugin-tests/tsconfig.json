@@ -20,5 +20,5 @@
         "baseUrl": ".."
     },
     "compileOnSave": false,
-    "exclude": ["**/node_modules", "dist", "esm", "**/__mocks__/**/*", "plugins", "cypress"]
+    "exclude": ["**/node_modules", "dist", "esm", "**/__mocks__/**/*", "plugins"]
 }

@@ -14,6 +14,8 @@ import entryPoint from "../dp_test_plugin_entry";
 
 import React from "react";
 
+import { withDashboardPluginTestEventHandling } from "../../../../cypress/support/events";
+
 function CustomWidget(_props: IDashboardWidgetProps): JSX.Element {
     return <div className="s-custom-widget">Hello from test widget</div>;
 }
@@ -61,10 +63,8 @@ export class Plugin extends DashboardPluginV1 {
                 ),
             );
         });
-        handlers.addEventHandler("GDC.DASH/EVT.INITIALIZED", (evt) => {
-            // eslint-disable-next-line no-console
-            console.log("### Dashboard initialized", evt);
-        });
+
+        withDashboardPluginTestEventHandling(handlers);
     }
 
     public onPluginUnload(_ctx: DashboardContext): Promise<void> | void {
