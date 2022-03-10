@@ -30,7 +30,6 @@ services:
     command: "--preserve-host-header --proxy-all=https://${HOST:-staging3.intgdc.com} --extensions org.gooddata.extensions.ResponseHeadersTransformer,org.gooddata.extensions.RequestHeadersTransformer"
 #    --extensions org.gooddata.extensions.ResponseHeadersTransformer,org.gooddata.extensions.RequestHeadersTransformer --verbose"
     volumes:
-      - ./recordings/:/home/wiremock:cached
       - ./recordings/wiremock_extension/jar/:/var/wiremock/extensions:ro
     environment:
       - PROXY_HOST=https://${HOST:-staging3.intgdc.com}
