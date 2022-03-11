@@ -6,6 +6,7 @@ Object {
   "availableSorts": Array [],
   "defaultSort": Array [],
   "disabled": true,
+  "disabledExplanation": "Sorting is not possible for this insight configuration.",
   "supported": true,
 }
 `;
@@ -22,7 +23,6 @@ Object {
       "itemId": Object {
         "localIdentifier": "a1",
       },
-      "metricSorts": Array [],
     },
   ],
   "defaultSort": Array [
@@ -44,6 +44,7 @@ Object {
   "availableSorts": Array [],
   "defaultSort": Array [],
   "disabled": true,
+  "disabledExplanation": "Sorting is not possible for this insight configuration.",
   "supported": true,
 }
 `;

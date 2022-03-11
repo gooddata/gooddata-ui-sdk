@@ -1,10 +1,12 @@
 // (C) 2019-2022 GoodData Corporation
 import noop from "lodash/noop";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
+
 import { PluggableColumnChart } from "../PluggableColumnChart";
+
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
 import { AXIS } from "../../../../constants/axis";
-import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
-import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 describe("PluggableColumnChart", () => {
     const defaultProps = {

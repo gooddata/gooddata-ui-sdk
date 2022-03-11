@@ -6,7 +6,7 @@ import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IChartConfig, TOP } from "@gooddata/sdk-ui-charts";
-import { IInsightDefinition, newMeasureSort, localIdRef } from "@gooddata/sdk-model";
+import { IInsightDefinition, newMeasureSort } from "@gooddata/sdk-model";
 
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 import PieChartConfigurationPanel from "../../configurationPanels/PieChartConfigurationPanel";
@@ -29,7 +29,7 @@ import {
     IVisualizationProperties,
     IBucketItem,
 } from "../../../interfaces/Visualization";
-import { newMeasureSortSuggestion, ISortConfig } from "../../../interfaces/SortConfig";
+import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig";
 
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 import {
@@ -42,7 +42,7 @@ import {
     getBucketItems,
 } from "../../../utils/bucketHelper";
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
-import { removeSort } from "../../../utils/sort";
+import { removeSort, getCustomSortDisabledExplanation } from "../../../utils/sort";
 import { setPieChartUiConfig } from "../../../utils/uiConfigHelpers/pieChartUiConfigHelper";
 
 /**
@@ -161,14 +161,12 @@ export class PluggablePieChart extends PluggableBaseChart {
             return {
                 defaultSort: [newMeasureSort(measures[0].localIdentifier, "desc")],
                 availableSorts: [
-                    {
-                        itemId: localIdRef(viewBy[0].localIdentifier),
-                        attributeSort: {
-                            normalSortEnabled: true,
-                            areaSortEnabled: false,
-                        },
-                        metricSorts: [newMeasureSortSuggestion(measures[0].localIdentifier)],
-                    },
+                    newAvailableSortsGroup(
+                        viewBy[0].localIdentifier,
+                        [measures[0].localIdentifier],
+                        true,
+                        false,
+                    ),
                 ],
             };
         }
@@ -179,12 +177,25 @@ export class PluggablePieChart extends PluggableBaseChart {
         };
     }
 
+    private isSortDisabled(referencePoint: IReferencePoint, availableSorts: ISortConfig["availableSorts"]) {
+        const { buckets } = referencePoint;
+        const measures = getMeasureItems(buckets);
+        const viewBy = getBucketItems(buckets, BucketNames.VIEW);
+        const disabled = viewBy.length < 1 || measures.length < 1 || availableSorts.length === 0;
+        const disabledExplanation = getCustomSortDisabledExplanation(measures, viewBy, this.intl);
+        return {
+            disabled,
+            disabledExplanation,
+        };
+    }
+
     public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
         const { buckets, properties } = referencePoint;
         const measures = getMeasureItems(buckets);
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
         const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(measures, viewBy);
-        const disabled = viewBy.length < 1 || measures.length < 1 || availableSorts.length === 0;
+
+        const { disabled, disabledExplanation } = this.isSortDisabled(referencePoint, availableSorts);
 
         return Promise.resolve({
             supported: true,
@@ -192,6 +203,7 @@ export class PluggablePieChart extends PluggableBaseChart {
             appliedSort: super.reuseCurrentSort(properties, availableSorts, defaultSort),
             defaultSort,
             availableSorts,
+            ...(disabledExplanation && { disabledExplanation }),
         });
     }
 

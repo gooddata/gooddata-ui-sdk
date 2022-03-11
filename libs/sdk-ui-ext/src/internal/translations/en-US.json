@@ -1566,5 +1566,35 @@
         "value": "Use two fingers to move the map",
         "comment": "This message will appear when moving map on GeoChart is disabled by one finger and available only with two.",
         "limit": 0
+    },
+    "sorting.disabled.explanation.attribute|insight": {
+        "value": "Sorting is not possible for this insight configuration.",
+        "comment": "Explains why sort button is disabled. Shown as tooltip",
+        "limit": 0
+    },
+    "sorting.disabled.explanation.attribute|report": {
+        "value": "Sorting is not possible for this report configuration.",
+        "comment": "Explains why sort button is disabled. Shown as tooltip",
+        "limit": 0
+    },
+    "sorting.disabled.explanation.measure._measure|insight": {
+        "value": "You must add at least one attribute to sort the insight. You can also adjust the position of items in the Measures section to change their position in the insight.",
+        "comment": "Explains why sort button is disabled. Shown as tooltip",
+        "limit": 0
+    },
+    "sorting.disabled.explanation.measure._measure|report": {
+        "value": "You must add at least one attribute to sort the report. You can also adjust the position of items in the Measures section to change their position in the report.",
+        "comment": "Explains why sort button is disabled. Shown as tooltip",
+        "limit": 0
+    },
+    "sorting.disabled.explanation.measure._metric|insight": {
+        "value": "You must add at least one attribute to sort the insight. You can also adjust the position of items in the Metrics section to change their position in the insight.",
+        "comment": "Explains why sort button is disabled. Shown as tooltip",
+        "limit": 0
+    },
+    "sorting.disabled.explanation.measure._metric|report": {
+        "value": "You must add at least one attribute to sort the report. You can also adjust the position of items in the Metrics section to change their position in the report.",
+        "comment": "Explains why sort button is disabled. Shown as tooltip",
+        "limit": 0
     }
 }

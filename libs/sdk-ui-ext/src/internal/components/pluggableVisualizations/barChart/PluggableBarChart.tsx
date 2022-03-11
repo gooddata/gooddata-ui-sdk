@@ -13,6 +13,7 @@ import { AXIS, AXIS_NAME } from "../../../constants/axis";
 import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig";
 import { getBucketItems } from "../../../utils/bucketHelper";
 import { canSortStackTotalValue } from "./sortHelpers";
+import { getCustomSortDisabledExplanation } from "../../../utils/sort";
 
 /**
  * PluggableBarChart
@@ -114,9 +115,10 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
                     ],
                     availableSorts: [
                         newAvailableSortsGroup(viewBy[0].localIdentifier),
-                        newAvailableSortsGroup(viewBy[1].localIdentifier, [
-                            ...measures.map((m) => m.localIdentifier),
-                        ]),
+                        newAvailableSortsGroup(
+                            viewBy[1].localIdentifier,
+                            measures.map((m) => m.localIdentifier),
+                        ),
                     ],
                 };
             }
@@ -132,7 +134,7 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
                     newAvailableSortsGroup(viewBy[0].localIdentifier),
                     newAvailableSortsGroup(
                         viewBy[1].localIdentifier,
-                        isEmpty(stackBy) ? [...measures.map((m) => m.localIdentifier)] : [],
+                        isEmpty(stackBy) ? measures.map((m) => m.localIdentifier) : [],
                         true,
                         isStacked || measures.length > 1,
                     ),
@@ -146,7 +148,7 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
                 availableSorts: [
                     newAvailableSortsGroup(
                         viewBy[0].localIdentifier,
-                        isEmpty(stackBy) ? [...measures.map((m) => m.localIdentifier)] : [],
+                        isEmpty(stackBy) ? measures.map((m) => m.localIdentifier) : [],
                     ),
                 ],
             };
@@ -158,7 +160,7 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
                 availableSorts: [
                     newAvailableSortsGroup(
                         viewBy[0].localIdentifier,
-                        [...measures.map((m) => m.localIdentifier)],
+                        measures.map((m) => m.localIdentifier),
                         true,
                         measures.length > 1,
                     ),
@@ -171,21 +173,34 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
             availableSorts: [],
         };
     }
-    public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
-        const { buckets, properties } = referencePoint;
+    private isSortDisabled(referencePoint: IReferencePoint, availableSorts: ISortConfig["availableSorts"]) {
+        const { buckets } = referencePoint;
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
         const measures = getBucketItems(buckets, BucketNames.MEASURES);
+        const disabled = viewBy.length < 1 || measures.length < 1 || availableSorts.length === 0;
+        const disabledExplanation = getCustomSortDisabledExplanation(measures, viewBy, this.intl);
+        return {
+            disabled,
+            disabledExplanation,
+        };
+    }
+    public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
+        const { buckets, properties } = referencePoint;
+
         const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(
             referencePoint,
             canSortStackTotalValue(buckets, properties),
         );
-        const disabled = viewBy.length < 1 || measures.length < 1 || availableSorts.length === 0;
+
+        const { disabled, disabledExplanation } = this.isSortDisabled(referencePoint, availableSorts);
+
         return Promise.resolve({
             supported: true,
             disabled,
             appliedSort: super.reuseCurrentSort(properties, availableSorts, defaultSort),
             defaultSort,
             availableSorts: availableSorts,
+            ...(disabledExplanation && { disabledExplanation }),
         });
     }
 }

@@ -5,7 +5,6 @@ import {
     IInsightDefinition,
     insightBuckets,
     newAttributeSort,
-    localIdRef,
 } from "@gooddata/sdk-model";
 import { BucketNames, IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
 import React from "react";
@@ -57,7 +56,7 @@ import {
     getReferencePointWithSupportedProperties,
     removeImmutableOptionalStackingProperties,
 } from "../../../utils/propertiesHelper";
-import { removeSort } from "../../../utils/sort";
+import { removeSort, getCustomSortDisabledExplanation } from "../../../utils/sort";
 import { setAreaChartUiConfig } from "../../../utils/uiConfigHelpers/areaChartUiConfigHelper";
 import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChartBasedConfigurationPanel";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
@@ -66,7 +65,7 @@ import {
     modifyBucketsAttributesForDrillDown,
     reverseAndTrimIntersection,
 } from "../drillDownUtil";
-import { ISortConfig, newMeasureSortSuggestion } from "../../../interfaces/SortConfig";
+import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig";
 
 /**
  * PluggableAreaChart
@@ -161,13 +160,14 @@ export class PluggableAreaChart extends PluggableBaseChart {
     public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
         const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(referencePoint);
         const { properties } = referencePoint;
-        const disabled = this.isSortDisabled(referencePoint, availableSorts);
+        const { disabled, disabledExplanation } = this.isSortDisabled(referencePoint, availableSorts);
         return Promise.resolve({
             supported: true,
             disabled,
             appliedSort: super.reuseCurrentSort(properties, availableSorts, defaultSort),
             defaultSort,
             availableSorts,
+            ...(disabledExplanation && { disabledExplanation }),
         });
     }
 
@@ -348,14 +348,10 @@ export class PluggableAreaChart extends PluggableBaseChart {
             return {
                 defaultSort,
                 availableSorts: [
-                    {
-                        itemId: localIdRef(viewBy[0].localIdentifier),
-                        attributeSort: {
-                            normalSortEnabled: true,
-                            areaSortEnabled: true,
-                        },
-                        metricSorts: measures.map((m) => newMeasureSortSuggestion(m.localIdentifier)),
-                    },
+                    newAvailableSortsGroup(
+                        viewBy[0].localIdentifier,
+                        measures.map((m) => m.localIdentifier),
+                    ),
                 ],
             };
         }
@@ -363,29 +359,19 @@ export class PluggableAreaChart extends PluggableBaseChart {
             if (viewBy.length >= 2) {
                 return {
                     defaultSort,
-                    availableSorts: [
-                        {
-                            itemId: localIdRef(viewBy[0].localIdentifier),
-                            attributeSort: {
-                                normalSortEnabled: true,
-                                areaSortEnabled: true,
-                            },
-                        },
-                    ],
+                    availableSorts: [newAvailableSortsGroup(viewBy[0].localIdentifier)],
                 };
             }
             if (viewBy.length === 1) {
                 return {
                     defaultSort,
                     availableSorts: [
-                        {
-                            itemId: localIdRef(viewBy[0].localIdentifier),
-                            attributeSort: {
-                                normalSortEnabled: true,
-                                areaSortEnabled: false,
-                            },
-                            metricSorts: measures.map((m) => newMeasureSortSuggestion(m.localIdentifier)),
-                        },
+                        newAvailableSortsGroup(
+                            viewBy[0].localIdentifier,
+                            measures.map((m) => m.localIdentifier),
+                            true,
+                            false,
+                        ),
                     ],
                 };
             }
@@ -394,16 +380,10 @@ export class PluggableAreaChart extends PluggableBaseChart {
             return {
                 defaultSort,
                 availableSorts: [
-                    {
-                        itemId: localIdRef(viewBy[0].localIdentifier),
-                        attributeSort: {
-                            normalSortEnabled: true,
-                            areaSortEnabled: true,
-                        },
-                        metricSorts: isEmpty(stackBy)
-                            ? measures.map((m) => newMeasureSortSuggestion(m.localIdentifier))
-                            : [],
-                    },
+                    newAvailableSortsGroup(
+                        viewBy[0].localIdentifier,
+                        isEmpty(stackBy) ? measures.map((m) => m.localIdentifier) : [],
+                    ),
                 ],
             };
         }
@@ -417,6 +397,10 @@ export class PluggableAreaChart extends PluggableBaseChart {
         const { buckets } = referencePoint;
         const measures = getBucketItems(buckets, BucketNames.MEASURES);
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
-        return viewBy.length < 1 || measures.length < 1 || availableSorts.length === 0;
+        const disabledExplanation = getCustomSortDisabledExplanation(measures, viewBy, this.intl);
+        return {
+            disabled: viewBy.length < 1 || measures.length < 1 || availableSorts.length === 0,
+            disabledExplanation,
+        };
     }
 }

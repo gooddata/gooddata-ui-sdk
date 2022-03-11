@@ -61,7 +61,6 @@ Object {
       "itemId": Object {
         "localIdentifier": "a1",
       },
-      "metricSorts": Array [],
     },
   ],
   "defaultSort": Array [
@@ -98,7 +97,6 @@ Object {
       "itemId": Object {
         "localIdentifier": "a2",
       },
-      "metricSorts": Array [],
     },
   ],
   "defaultSort": Array [

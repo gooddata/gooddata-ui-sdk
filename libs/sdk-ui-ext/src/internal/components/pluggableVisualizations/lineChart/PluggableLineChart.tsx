@@ -5,7 +5,7 @@ import { render } from "react-dom";
 import isEmpty from "lodash/isEmpty";
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
-import { IInsight, IInsightDefinition, newAttributeSort, localIdRef } from "@gooddata/sdk-model";
+import { IInsight, IInsightDefinition, newAttributeSort } from "@gooddata/sdk-model";
 
 import { AXIS, AXIS_NAME } from "../../../constants/axis";
 import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket";
@@ -38,7 +38,7 @@ import {
     getReferencePointWithSupportedProperties,
     setSecondaryMeasures,
 } from "../../../utils/propertiesHelper";
-import { removeSort } from "../../../utils/sort";
+import { removeSort, getCustomSortDisabledExplanation } from "../../../utils/sort";
 import { setLineChartUiConfig } from "../../../utils/uiConfigHelpers/lineChartUiConfigHelper";
 import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChartBasedConfigurationPanel";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
@@ -47,7 +47,7 @@ import {
     modifyBucketsAttributesForDrillDown,
     reverseAndTrimIntersection,
 } from "../drillDownUtil";
-import { ISortConfig, newMeasureSortSuggestion } from "../../../interfaces/SortConfig";
+import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig";
 
 /**
  * PluggableLineChart
@@ -140,7 +140,8 @@ export class PluggableLineChart extends PluggableBaseChart {
 
     public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
         const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(referencePoint);
-        const disabled = this.isSortDisabled(referencePoint, availableSorts);
+        const { disabled, disabledExplanation } = this.isSortDisabled(referencePoint, availableSorts);
+
         const { properties } = referencePoint;
         return Promise.resolve({
             supported: true,
@@ -148,6 +149,7 @@ export class PluggableLineChart extends PluggableBaseChart {
             appliedSort: super.reuseCurrentSort(properties, availableSorts, defaultSort),
             defaultSort,
             availableSorts,
+            ...(disabledExplanation && { disabledExplanation }),
         });
     }
 
@@ -299,28 +301,18 @@ export class PluggableLineChart extends PluggableBaseChart {
                 return {
                     defaultSort,
                     availableSorts: [
-                        {
-                            itemId: localIdRef(trendBy[0].localIdentifier),
-                            attributeSort: {
-                                normalSortEnabled: true,
-                                areaSortEnabled: measures.length > 1,
-                            },
-                            metricSorts: measures.map((m) => newMeasureSortSuggestion(m.localIdentifier)),
-                        },
+                        newAvailableSortsGroup(
+                            trendBy[0].localIdentifier,
+                            measures.map((m) => m.localIdentifier),
+                            true,
+                            measures.length > 1,
+                        ),
                     ],
                 };
             }
             return {
                 defaultSort,
-                availableSorts: [
-                    {
-                        itemId: localIdRef(trendBy[0].localIdentifier),
-                        attributeSort: {
-                            normalSortEnabled: true,
-                            areaSortEnabled: true,
-                        },
-                    },
-                ],
+                availableSorts: [newAvailableSortsGroup(trendBy[0].localIdentifier)],
             };
         }
         return {
@@ -333,6 +325,10 @@ export class PluggableLineChart extends PluggableBaseChart {
         const { buckets } = referencePoint;
         const measures = getBucketItems(buckets, BucketNames.MEASURES);
         const viewBy = getBucketItems(buckets, BucketNames.TREND);
-        return viewBy.length < 1 || measures.length < 1 || availableSorts.length === 0;
+        const disabledExplanation = getCustomSortDisabledExplanation(measures, viewBy, this.intl);
+        return {
+            disabled: viewBy.length < 1 || measures.length < 1 || availableSorts.length === 0,
+            disabledExplanation,
+        };
     }
 }

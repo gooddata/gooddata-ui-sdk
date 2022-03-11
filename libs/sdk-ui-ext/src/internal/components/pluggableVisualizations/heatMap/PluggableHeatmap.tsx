@@ -12,7 +12,7 @@ import {
     isDrillIntersectionAttributeItem,
     VisualizationTypes,
 } from "@gooddata/sdk-ui";
-import { IInsight, IInsightDefinition, newAttributeSort, localIdRef } from "@gooddata/sdk-model";
+import { IInsight, IInsightDefinition, newAttributeSort } from "@gooddata/sdk-model";
 
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil";
@@ -31,7 +31,7 @@ import {
     IDrillDownDefinition,
     IBucketItem,
 } from "../../../interfaces/Visualization";
-import { ISortConfig, newMeasureSortSuggestion } from "../../../interfaces/SortConfig";
+import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig";
 
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 import {
@@ -45,7 +45,7 @@ import {
     getBucketItems,
 } from "../../../utils/bucketHelper";
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
-import { removeSort } from "../../../utils/sort";
+import { removeSort, getCustomSortDisabledExplanation } from "../../../utils/sort";
 import { setHeatmapUiConfig } from "../../../utils/uiConfigHelpers/heatmapUiConfigHelper";
 
 import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper";
@@ -180,20 +180,8 @@ export class PluggableHeatmap extends PluggableBaseChart {
                     newAttributeSort(stackBy[0].localIdentifier, "desc"),
                 ],
                 availableSorts: [
-                    {
-                        itemId: localIdRef(viewBy[0].localIdentifier),
-                        attributeSort: {
-                            normalSortEnabled: true,
-                            areaSortEnabled: true,
-                        },
-                    },
-                    {
-                        itemId: localIdRef(stackBy[0].localIdentifier),
-                        attributeSort: {
-                            normalSortEnabled: true,
-                            areaSortEnabled: true,
-                        },
-                    },
+                    newAvailableSortsGroup(viewBy[0].localIdentifier),
+                    newAvailableSortsGroup(stackBy[0].localIdentifier),
                 ],
             };
         }
@@ -201,29 +189,19 @@ export class PluggableHeatmap extends PluggableBaseChart {
             return {
                 defaultSort: [newAttributeSort(viewBy[0].localIdentifier, "desc")],
                 availableSorts: [
-                    {
-                        itemId: localIdRef(viewBy[0].localIdentifier),
-                        attributeSort: {
-                            normalSortEnabled: true,
-                            areaSortEnabled: false,
-                        },
-                        metricSorts: [newMeasureSortSuggestion(measures[0].localIdentifier)],
-                    },
+                    newAvailableSortsGroup(
+                        viewBy[0].localIdentifier,
+                        [measures[0].localIdentifier],
+                        true,
+                        false,
+                    ),
                 ],
             };
         }
         if (!isEmpty(measures) && !isEmpty(stackBy)) {
             return {
                 defaultSort: [newAttributeSort(stackBy[0].localIdentifier, "desc")],
-                availableSorts: [
-                    {
-                        itemId: localIdRef(stackBy[0].localIdentifier),
-                        attributeSort: {
-                            normalSortEnabled: true,
-                            areaSortEnabled: true,
-                        },
-                    },
-                ],
+                availableSorts: [newAvailableSortsGroup(stackBy[0].localIdentifier)],
             };
         }
 
@@ -233,14 +211,32 @@ export class PluggableHeatmap extends PluggableBaseChart {
         };
     }
 
+    private isSortDisabled(referencePoint: IReferencePoint, availableSorts: ISortConfig["availableSorts"]) {
+        const { buckets } = referencePoint;
+        const measures = getMeasureItems(buckets);
+        const viewBy = getBucketItems(buckets, BucketNames.VIEW);
+        const stackBy = getBucketItems(buckets, BucketNames.STACK);
+        const disabled =
+            (viewBy.length < 1 && stackBy.length < 1) || measures.length < 1 || availableSorts.length === 0;
+        const disabledExplanation = getCustomSortDisabledExplanation(
+            measures,
+            [...viewBy, ...stackBy],
+            this.intl,
+        );
+        return {
+            disabled,
+            disabledExplanation,
+        };
+    }
+
     public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
         const { buckets, properties } = referencePoint;
         const measures = getMeasureItems(buckets);
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
         const stackBy = getBucketItems(buckets, BucketNames.STACK);
         const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(measures, viewBy, stackBy);
-        const disabled =
-            (viewBy.length < 1 && stackBy.length < 1) || measures.length < 1 || availableSorts.length === 0;
+
+        const { disabled, disabledExplanation } = this.isSortDisabled(referencePoint, availableSorts);
 
         return Promise.resolve({
             supported: true,
@@ -248,6 +244,7 @@ export class PluggableHeatmap extends PluggableBaseChart {
             appliedSort: super.reuseCurrentSort(properties, availableSorts, defaultSort),
             defaultSort,
             availableSorts,
+            ...(disabledExplanation && { disabledExplanation }),
         });
     }
 
