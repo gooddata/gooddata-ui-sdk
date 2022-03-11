@@ -12,6 +12,7 @@ import repeat from "lodash/repeat";
 import sortBy from "lodash/sortBy";
 import toPairs from "lodash/fp/toPairs";
 import { factoryNotationFor, IInsightDefinition } from "@gooddata/sdk-model";
+import { isAttributeColumnWidthItem } from "@gooddata/sdk-ui-pivot";
 
 import { IEmbeddingCodeConfig, IEmbeddingCodeContext } from "../../interfaces/VisualizationDescriptor";
 
@@ -23,7 +24,7 @@ interface IImportInfo {
     package: string;
 }
 
-const allSdkModelFactories: IImportInfo[] = [
+const allFactories: IImportInfo[] = [
     // ObjRef factories
     { name: "uriRef", package: "@gooddata/sdk-model", importType: "named" },
     { name: "idRef", package: "@gooddata/sdk-model", importType: "named" },
@@ -48,10 +49,25 @@ const allSdkModelFactories: IImportInfo[] = [
     { name: "newMeasureSort", package: "@gooddata/sdk-model", importType: "named" },
     // total factories
     { name: "newTotal", package: "@gooddata/sdk-model", importType: "named" },
+    // pivot table specific factories
+    { name: "newWidthForAttributeColumn", package: "@gooddata/sdk-ui-pivot", importType: "named" },
 ];
 
-function detectSdkModelImports(serializedProps: string): IImportInfo[] {
-    return allSdkModelFactories.filter(({ name }) => serializedProps.includes(name));
+function detectFactoryImports(serializedProps: string): IImportInfo[] {
+    return allFactories.filter(({ name }) => serializedProps.includes(name));
+}
+
+function extendedFactoryNotationFor(value: any): string {
+    return factoryNotationFor(value, (obj) => {
+        if (isAttributeColumnWidthItem(obj)) {
+            const { attributeIdentifier, width } = obj.attributeColumnWidthItem;
+            const { value: widthValue, allowGrowToFit } = width;
+            return allowGrowToFit
+                ? `newWidthForAttributeColumn(${attributeIdentifier}, ${widthValue}, true)`
+                : `newWidthForAttributeColumn(${attributeIdentifier}, ${widthValue})`;
+        }
+        return undefined;
+    });
 }
 
 const TAB_SIZE = 4;
@@ -73,7 +89,11 @@ const renderImports: (imports: IImportInfo[]) => string = flow(
         return compact([
             "import",
             defaultImport?.name,
-            namedImports.length && `{ ${sortBy(namedImports.map((i) => i.name)).join(", ")} }`,
+            namedImports.length &&
+                `{ ${sortBy(
+                    namedImports.map((i) => i.name),
+                    (i) => i.toLowerCase(), // sort by lower case, otherwise "Z" would be before "a"
+                ).join(", ")} }`,
             "from",
             `"${pkg}";`,
         ]).join(" ");
@@ -97,13 +117,13 @@ export function getReactEmbeddingCodeGenerator(
             .map(([key, value]) =>
                 isString(value)
                     ? `const ${key} = "${value}";`
-                    : `const ${key} = ${factoryNotationFor(value)};`,
+                    : `const ${key} = ${extendedFactoryNotationFor(value)};`,
             )
             .join("\n");
 
         const serializedProps = propPairs.map(([key]) => `${key}={${key}}`).join("\n");
 
-        const detectedFactories = detectSdkModelImports(propDeclarations);
+        const detectedFactories = detectFactoryImports(propDeclarations);
 
         const imports: IImportInfo[] = compact([
             { name: "React", package: "react", importType: "default" },
