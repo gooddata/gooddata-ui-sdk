@@ -12,7 +12,7 @@ import repeat from "lodash/repeat";
 import sortBy from "lodash/sortBy";
 import toPairs from "lodash/fp/toPairs";
 import { factoryNotationFor, IInsightDefinition } from "@gooddata/sdk-model";
-import { isAttributeColumnWidthItem } from "@gooddata/sdk-ui-pivot";
+import { IAttributeColumnWidthItem, isAttributeColumnWidthItem } from "@gooddata/sdk-ui-pivot";
 
 import { IEmbeddingCodeConfig, IEmbeddingCodeContext } from "../../interfaces/VisualizationDescriptor";
 
@@ -57,14 +57,18 @@ function detectFactoryImports(serializedProps: string): IImportInfo[] {
     return allFactories.filter(({ name }) => serializedProps.includes(name));
 }
 
+function factoryNotationForAttributeColumnWidthItem(obj: IAttributeColumnWidthItem) {
+    const { attributeIdentifier, width } = obj.attributeColumnWidthItem;
+    const { value: widthValue, allowGrowToFit } = width;
+    return allowGrowToFit
+        ? `newWidthForAttributeColumn(${attributeIdentifier}, ${widthValue}, true)`
+        : `newWidthForAttributeColumn(${attributeIdentifier}, ${widthValue})`;
+}
+
 function extendedFactoryNotationFor(value: any): string {
     return factoryNotationFor(value, (obj) => {
         if (isAttributeColumnWidthItem(obj)) {
-            const { attributeIdentifier, width } = obj.attributeColumnWidthItem;
-            const { value: widthValue, allowGrowToFit } = width;
-            return allowGrowToFit
-                ? `newWidthForAttributeColumn(${attributeIdentifier}, ${widthValue}, true)`
-                : `newWidthForAttributeColumn(${attributeIdentifier}, ${widthValue})`;
+            return factoryNotationForAttributeColumnWidthItem(obj);
         }
         return undefined;
     });
@@ -101,17 +105,18 @@ const renderImports: (imports: IImportInfo[]) => string = flow(
     join("\n"),
 );
 
+const REACT_IMPORT_INFO: IImportInfo = { name: "React", package: "react", importType: "default" };
+
 export function getReactEmbeddingCodeGenerator(
     componentImport: IImportInfo,
     insightToProps: (insight: IInsightDefinition, ctx?: IEmbeddingCodeContext) => Record<string, any>,
 ): (insight: IInsightDefinition, config?: IEmbeddingCodeConfig) => string {
     return (insight, config) => {
         const normalizedInsight = normalizeInsight(insight);
+
         const props = insightToProps(normalizedInsight, config?.context);
-        const propPairs = toPairs(props)
-            // we ignore functions as there is no bullet-proof way to serialize them
-            .filter(([_, value]) => !isFunction(value))
-            .filter(([_, value]) => !isEmpty(value));
+        // we ignore functions as there is no bullet-proof way to serialize them
+        const propPairs = toPairs(props).filter(([_, value]) => !isFunction(value) && !isEmpty(value));
 
         const propDeclarations = propPairs
             .map(([key, value]) =>
@@ -121,20 +126,15 @@ export function getReactEmbeddingCodeGenerator(
             )
             .join("\n");
 
-        const serializedProps = propPairs.map(([key]) => `${key}={${key}}`).join("\n");
+        const propUsages = propPairs.map(([key]) => `${key}={${key}}`).join("\n");
 
         const detectedFactories = detectFactoryImports(propDeclarations);
-
-        const imports: IImportInfo[] = compact([
-            { name: "React", package: "react", importType: "default" },
-            ...detectedFactories,
-            componentImport,
-        ]);
+        const imports = compact([REACT_IMPORT_INFO, ...detectedFactories, componentImport]);
 
         const height = config?.height ?? DEFAULT_HEIGHT;
         const stringifiedHeight = isString(height) ? `"${height}"` : height.toString();
 
-        const componentBody = `<${componentImport.name}\n${indent(serializedProps, 1)}\n/>`;
+        const componentBody = `<${componentImport.name}\n${indent(propUsages, 1)}\n/>`;
 
         return `${renderImports(imports)}
 
