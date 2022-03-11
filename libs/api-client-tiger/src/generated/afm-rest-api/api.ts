@@ -789,7 +789,7 @@ export interface ElementsRequest {
      */
     exactFilter?: Array<string>;
     /**
-     * Specifies percentage of source table data scanned during the computation.
+     * Specifies percentage of source table data scanned during the computation. This field is deprecated and is no longer used during the elements computation.
      * @type {number}
      * @memberof ElementsRequest
      */
@@ -2037,11 +2037,11 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
     return {
         /**
          * Returns paged list of elements (values) of given label satisfying given filtering criteria.
-         * @summary Listing of label values.
+         * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
          * @param {string} workspaceId Workspace identifier
          * @param {ElementsRequest} elementsRequest
-         * @param {number} [offset] Request page with this offset.
-         * @param {number} [limit] Return only this number of items.
+         * @param {number} [offset] Request page with this offset. Must be positive integer. The API is limited to the maximum of 10000 items. Therefore this parameter is limited to this number as well.
+         * @param {number} [limit] Return only this number of items. Must be positive integer. The API is limited to the maximum of 10000 items. Therefore this parameter is limited to this number as well.
          * @param {boolean} [skipCache] Ignore all caches during execution of current request.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2405,11 +2405,11 @@ export const ActionsApiFp = function (configuration?: Configuration) {
     return {
         /**
          * Returns paged list of elements (values) of given label satisfying given filtering criteria.
-         * @summary Listing of label values.
+         * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
          * @param {string} workspaceId Workspace identifier
          * @param {ElementsRequest} elementsRequest
-         * @param {number} [offset] Request page with this offset.
-         * @param {number} [limit] Return only this number of items.
+         * @param {number} [offset] Request page with this offset. Must be positive integer. The API is limited to the maximum of 10000 items. Therefore this parameter is limited to this number as well.
+         * @param {number} [limit] Return only this number of items. Must be positive integer. The API is limited to the maximum of 10000 items. Therefore this parameter is limited to this number as well.
          * @param {boolean} [skipCache] Ignore all caches during execution of current request.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2566,11 +2566,11 @@ export const ActionsApiFactory = function (
     return {
         /**
          * Returns paged list of elements (values) of given label satisfying given filtering criteria.
-         * @summary Listing of label values.
+         * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
          * @param {string} workspaceId Workspace identifier
          * @param {ElementsRequest} elementsRequest
-         * @param {number} [offset] Request page with this offset.
-         * @param {number} [limit] Return only this number of items.
+         * @param {number} [offset] Request page with this offset. Must be positive integer. The API is limited to the maximum of 10000 items. Therefore this parameter is limited to this number as well.
+         * @param {number} [limit] Return only this number of items. Must be positive integer. The API is limited to the maximum of 10000 items. Therefore this parameter is limited to this number as well.
          * @param {boolean} [skipCache] Ignore all caches during execution of current request.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2676,11 +2676,11 @@ export const ActionsApiFactory = function (
 export interface ActionsApiInterface {
     /**
      * Returns paged list of elements (values) of given label satisfying given filtering criteria.
-     * @summary Listing of label values.
+     * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
      * @param {string} workspaceId Workspace identifier
      * @param {ElementsRequest} elementsRequest
-     * @param {number} [offset] Request page with this offset.
-     * @param {number} [limit] Return only this number of items.
+     * @param {number} [offset] Request page with this offset. Must be positive integer. The API is limited to the maximum of 10000 items. Therefore this parameter is limited to this number as well.
+     * @param {number} [limit] Return only this number of items. Must be positive integer. The API is limited to the maximum of 10000 items. Therefore this parameter is limited to this number as well.
      * @param {boolean} [skipCache] Ignore all caches during execution of current request.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2785,11 +2785,11 @@ export interface ActionsApiInterface {
 export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     /**
      * Returns paged list of elements (values) of given label satisfying given filtering criteria.
-     * @summary Listing of label values.
+     * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
      * @param {string} workspaceId Workspace identifier
      * @param {ElementsRequest} elementsRequest
-     * @param {number} [offset] Request page with this offset.
-     * @param {number} [limit] Return only this number of items.
+     * @param {number} [offset] Request page with this offset. Must be positive integer. The API is limited to the maximum of 10000 items. Therefore this parameter is limited to this number as well.
+     * @param {number} [limit] Return only this number of items. Must be positive integer. The API is limited to the maximum of 10000 items. Therefore this parameter is limited to this number as well.
      * @param {boolean} [skipCache] Ignore all caches during execution of current request.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

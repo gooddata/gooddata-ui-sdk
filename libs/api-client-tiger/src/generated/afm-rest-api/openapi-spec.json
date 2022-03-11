@@ -187,7 +187,7 @@
         "/api/actions/workspaces/{workspaceId}/execution/collectLabelElements": {
             "post": {
                 "tags": ["actions"],
-                "summary": "Listing of label values.",
+                "summary": "Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.",
                 "description": "Returns paged list of elements (values) of given label satisfying given filtering criteria.",
                 "operationId": "computeLabelElementsPost",
                 "parameters": [
@@ -204,22 +204,26 @@
                     {
                         "name": "offset",
                         "in": "query",
-                        "description": "Request page with this offset.",
+                        "description": "Request page with this offset. Must be positive integer. The API is limited to the maximum of 10000 items. Therefore this parameter is limited to this number as well.",
                         "required": false,
                         "schema": {
                             "type": "integer",
                             "format": "int32",
+                            "minimum": 0,
+                            "maximum": 10000,
                             "default": 0
                         }
                     },
                     {
                         "name": "limit",
                         "in": "query",
-                        "description": "Return only this number of items.",
+                        "description": "Return only this number of items. Must be positive integer. The API is limited to the maximum of 10000 items. Therefore this parameter is limited to this number as well.",
                         "required": false,
                         "schema": {
                             "type": "integer",
                             "format": "int32",
+                            "minimum": 1,
+                            "maximum": 10000,
                             "default": 1000
                         }
                     },
@@ -1525,8 +1529,9 @@
                     },
                     "dataSamplingPercentage": {
                         "type": "number",
-                        "description": "Specifies percentage of source table data scanned during the computation.",
+                        "description": "Specifies percentage of source table data scanned during the computation. This field is deprecated and is no longer used during the elements computation.",
                         "format": "float",
+                        "deprecated": true,
                         "default": 100
                     }
                 }

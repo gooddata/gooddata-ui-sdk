@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { tigerExecutionClientFactory } from "./execution";
 import { tigerExecutionResultClientFactory } from "./executionResult";
 import {
@@ -21,10 +21,12 @@ import { setAxiosAuthorizationToken } from "./axios";
 import { AxiosInstance } from "axios";
 import { tigerLayoutClientFactory } from "./layout";
 import { tigerAfmExplainClientFactory } from "./explain";
+import { tigerEntitiesObjectsClientFactory } from "./entitiesObjects";
 
 export {
     tigerWorkspaceObjectsClientFactory,
     tigerExecutionClientFactory,
+    tigerEntitiesObjectsClientFactory,
     tigerExecutionResultClientFactory,
     tigerLabelElementsClientFactory,
     tigerValidObjectsClientFactory,
@@ -43,14 +45,23 @@ export {
 
 export interface ITigerClient {
     axios: AxiosInstance;
-    workspaceObjects: ReturnType<typeof tigerWorkspaceObjectsClientFactory>;
     execution: ReturnType<typeof tigerExecutionClientFactory>;
     executionResult: ReturnType<typeof tigerExecutionResultClientFactory>;
     labelElements: ReturnType<typeof tigerLabelElementsClientFactory>;
     validObjects: ReturnType<typeof tigerValidObjectsClientFactory>;
-    organizationObjects: ReturnType<typeof tigerOrganizationObjectsClientFactory>;
     explain: ReturnType<typeof tigerAfmExplainClientFactory>;
     declarativeLayout: ReturnType<typeof tigerLayoutClientFactory>;
+    entities: ReturnType<typeof tigerEntitiesObjectsClientFactory>;
+
+    /**
+     * @deprecated use entities {@link ITigerClient.entities} instead
+     */
+    workspaceObjects: ReturnType<typeof tigerWorkspaceObjectsClientFactory>;
+
+    /**
+     * @deprecated  use entities {@link  ITigerClient.entities} instead
+     */
+    organizationObjects: ReturnType<typeof tigerOrganizationObjectsClientFactory>;
 
     /**
      * Updates tiger client to send the provided API TOKEN in `Authorization` header of all
@@ -75,6 +86,7 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
     const organizationObjects = tigerOrganizationObjectsClientFactory(axios);
     const declarativeLayout = tigerLayoutClientFactory(axios);
     const explain = tigerAfmExplainClientFactory(axios);
+    const entities = tigerEntitiesObjectsClientFactory(axios);
 
     return {
         axios,
@@ -86,6 +98,7 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
         organizationObjects,
         declarativeLayout,
         explain,
+        entities,
         setApiToken: (token: string | undefined): void => {
             setAxiosAuthorizationToken(axios, token);
         },
