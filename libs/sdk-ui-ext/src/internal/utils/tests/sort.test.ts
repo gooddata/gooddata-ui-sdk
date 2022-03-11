@@ -259,6 +259,16 @@ describe("validateCurrentSort", () => {
         ).toEqual([newAttributeSort("a1", "asc"), newMeasureSort("m1", "desc")]);
     });
 
+    it("should reuse both attribute and numeric sort when attributes changed the order", () => {
+        expect(
+            validateCurrentSort(
+                [newAttributeSort("a1", "asc"), newMeasureSort("m1", "asc")],
+                [newAvailableSortsGroup("a2"), newAvailableSortsGroup("a1", ["m1"])],
+                [newAttributeAreaSort("a2", "desc"), newMeasureSort("m1", "desc")],
+            ),
+        ).toEqual([newAttributeAreaSort("a2", "asc"), newAttributeSort("a1", "asc")]);
+    });
+
     it("should reuse both numeric sorts when attributes changed the order", () => {
         expect(
             validateCurrentSort(
@@ -267,6 +277,16 @@ describe("validateCurrentSort", () => {
                 [newAttributeAreaSort("a2", "asc"), newMeasureSort("m1", "desc")],
             ),
         ).toEqual([newAttributeAreaSort("a2", "desc"), newAttributeAreaSort("a1", "desc")]);
+    });
+
+    it("should reuse both numeric sorts when attributes changed the order and there is single metric", () => {
+        expect(
+            validateCurrentSort(
+                [newAttributeAreaSort("a1", "asc"), newMeasureSort("m1", "desc")],
+                [newAvailableSortsGroup("a2"), newAvailableSortsGroup("a1", ["m1"], true, false)],
+                [newAttributeAreaSort("a2", "asc"), newMeasureSort("m1", "desc")],
+            ),
+        ).toEqual([newAttributeAreaSort("a2", "desc"), newMeasureSort("m1", "asc")]);
     });
 
     it("should keep second attribute sort when first attribute removed", () => {
@@ -279,14 +299,14 @@ describe("validateCurrentSort", () => {
         ).toEqual([newAttributeSort("a2", "desc")]);
     });
 
-    it("should keep type of numeric sort from first item when first attribute removed", () => {
+    it("should keep numeric sort from second item when first attribute removed", () => {
         expect(
             validateCurrentSort(
                 [newAttributeAreaSort("a1", "desc"), newMeasureSort("m1", "desc")],
                 [newAvailableSortsGroup("a2", ["m1", "m2"])],
                 [newAttributeSort("a2", "asc")],
             ),
-        ).toEqual([newAttributeAreaSort("a2", "desc")]);
+        ).toEqual([newMeasureSort("m1", "desc")]);
     });
 
     it("should keep whole sort when first attribute replaced", () => {
@@ -317,6 +337,26 @@ describe("validateCurrentSort", () => {
                 [newAttributeSort("a1", "asc"), newAttributeSort("a2", "asc")],
             ),
         ).toEqual([newAttributeAreaSort("a1", "desc"), newMeasureSort("m2", "desc")]);
+    });
+
+    it("should keep area sort on attribute A1 and use default for A2 when A2 added before A1", () => {
+        expect(
+            validateCurrentSort(
+                [newAttributeAreaSort("a1", "desc")],
+                [newAvailableSortsGroup("a2", []), newAvailableSortsGroup("a1", ["m1", "m2"])],
+                [newAttributeSort("a2", "asc"), newAttributeSort("a1", "asc")],
+            ),
+        ).toEqual([newAttributeSort("a2", "asc"), newAttributeAreaSort("a1", "desc")]);
+    });
+
+    it("should keep numeric sort on attribute A1 and use default for A2 when A2 added before A1", () => {
+        expect(
+            validateCurrentSort(
+                [newMeasureSort("m1", "desc")],
+                [newAvailableSortsGroup("a2", []), newAvailableSortsGroup("a1", ["m1", "m2"])],
+                [newAttributeSort("a2", "asc"), newAttributeSort("a1", "asc")],
+            ),
+        ).toEqual([newAttributeSort("a2", "asc"), newMeasureSort("m1", "desc")]);
     });
 
     it("should apply default sort to newly added second attribute", () => {

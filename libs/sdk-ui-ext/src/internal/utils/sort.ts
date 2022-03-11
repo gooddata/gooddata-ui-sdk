@@ -188,8 +188,7 @@ function isValidAreaSort(areaSort: ISortItem, availableSort: IAvailableSortsGrou
     return (
         isAttributeAreaSort(areaSort) &&
         availableSort &&
-        areaSort.attributeSortItem.attributeIdentifier === availableSort.itemId.localIdentifier &&
-        availableSort.attributeSort?.areaSortEnabled
+        areaSort.attributeSortItem.attributeIdentifier === availableSort.itemId.localIdentifier
     );
 }
 
@@ -224,16 +223,16 @@ function findReusableSort(
     currentSort: ISortItem[],
     availableSortGroup: IAvailableSortsGroup,
     groupIndex: number,
-    attributeValidationPredicate: (attributeSort: ISortItem, availableSort: IAvailableSortsGroup) => boolean,
+    validationPredicate: (sortItem: ISortItem, availableSort: IAvailableSortsGroup) => boolean,
 ) {
     const modifiedSorts = [...currentSort];
 
-    const attributeSortIndex = currentSort.findIndex((sortItem) =>
-        attributeValidationPredicate(sortItem, availableSortGroup),
+    const foundSortIndex = currentSort.findIndex((sortItem) =>
+        validationPredicate(sortItem, availableSortGroup),
     );
-    if (attributeSortIndex !== -1) {
-        const reusedItem = currentSort[attributeSortIndex];
-        modifiedSorts[attributeSortIndex] = modifiedSorts[groupIndex];
+    if (foundSortIndex !== -1) {
+        const reusedItem = currentSort[foundSortIndex];
+        modifiedSorts[foundSortIndex] = modifiedSorts[groupIndex];
         modifiedSorts[groupIndex] = reusedItem;
         return {
             modifiedSorts,
@@ -256,8 +255,28 @@ function handleDifferentOrder(
             return found;
         }
     }
-    if (availableSortGroup.attributeSort.areaSortEnabled) {
-        const found = findReusableSort(currentSort, availableSortGroup, groupIndex, isValidAreaSort);
+
+    const found = findReusableSort(currentSort, availableSortGroup, groupIndex, isValidAreaSort);
+    if (found) {
+        if (availableSortGroup.attributeSort.areaSortEnabled) {
+            return found;
+        } else {
+            const reusedAreaSort = reuseSortItemType(found.reusedItem, availableSortGroup);
+            if (reusedAreaSort) {
+                return {
+                    ...found,
+                    reusedItem: reusedAreaSort,
+                };
+            }
+        }
+    }
+
+    // this works only because two dimensional avalableSortGroups never allow metricSort on both levels
+    if (availableSortGroup.metricSorts && availableSortGroup.metricSorts.length) {
+        const predicate = (sortItem: ISortItem, availableSort: IAvailableSortsGroup) => {
+            return isMeasureSort(sortItem) && isValidMeasureSort(sortItem, availableSort);
+        };
+        const found = findReusableSort(currentSort, availableSortGroup, groupIndex, predicate);
         if (found) {
             return found;
         }
@@ -315,18 +334,23 @@ export function validateCurrentSort(
         return [];
     }
     let currentSortsToReuse = [...currentSort];
+    const completelyReused = availableSorts.map((availableSortGroup, index) => {
+        // reuse existing sort item with only changed order
+        // it may affect also order of items in current sort
+        const { reusedItem, modifiedSorts } = handleDifferentOrder(
+            currentSortsToReuse,
+            availableSortGroup,
+            index,
+        );
+        if (reusedItem) {
+            currentSortsToReuse = modifiedSorts;
+            return reusedItem;
+        }
+    });
     return availableSorts
         .map((availableSortGroup, index) => {
-            // reuse existing sort item with only changed order
-            // it may affect also order of items in current sort
-            const { reusedItem, modifiedSorts } = handleDifferentOrder(
-                currentSortsToReuse,
-                availableSortGroup,
-                index,
-            );
-            if (reusedItem) {
-                currentSortsToReuse = modifiedSorts;
-                return reusedItem;
+            if (completelyReused[index]) {
+                return completelyReused[index];
             }
             const currentSortItem = currentSortsToReuse[index];
             // reuse at least type of sort item
