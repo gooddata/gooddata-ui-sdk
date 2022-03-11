@@ -1,9 +1,15 @@
 // (C) 2022 GoodData Corporation
 import compact from "lodash/compact";
+import flow from "lodash/fp/flow";
+import groupBy from "lodash/fp/groupBy";
 import isEmpty from "lodash/isEmpty";
 import isFunction from "lodash/isFunction";
 import isString from "lodash/isString";
+import join from "lodash/fp/join";
+import map from "lodash/fp/map";
+import partition from "lodash/fp/partition";
 import repeat from "lodash/repeat";
+import sortBy from "lodash/sortBy";
 import toPairs from "lodash/fp/toPairs";
 import { factoryNotationFor, IInsightDefinition } from "@gooddata/sdk-model";
 
@@ -11,49 +17,41 @@ import { IEmbeddingCodeConfig, IEmbeddingCodeContext } from "../../interfaces/Vi
 
 import { normalizeInsight } from "./normalizeInsight";
 
-export interface IComponentInfo {
+interface IImportInfo {
     name: string;
     importType: "default" | "named";
     package: string;
 }
 
-function toComponentImport(componentInfo: IComponentInfo): string {
-    return componentInfo.importType === "default"
-        ? `import ${componentInfo.name} from "${componentInfo.package}";`
-        : `import { ${componentInfo.name} } from "${componentInfo.package}";`;
-}
-
-const allSdkModelFactories = [
+const allSdkModelFactories: IImportInfo[] = [
     // ObjRef factories
-    "uriRef",
-    "idRef",
-    "localIdRef",
+    { name: "uriRef", package: "@gooddata/sdk-model", importType: "named" },
+    { name: "idRef", package: "@gooddata/sdk-model", importType: "named" },
+    { name: "localIdRef", package: "@gooddata/sdk-model", importType: "named" },
     // attribute factories
-    "newAttribute",
+    { name: "newAttribute", package: "@gooddata/sdk-model", importType: "named" },
     // measure factories
-    "newMeasure",
-    "newArithmeticMeasure",
-    "newPopMeasure",
-    "newPreviousPeriodMeasure",
+    { name: "newMeasure", package: "@gooddata/sdk-model", importType: "named" },
+    { name: "newArithmeticMeasure", package: "@gooddata/sdk-model", importType: "named" },
+    { name: "newPopMeasure", package: "@gooddata/sdk-model", importType: "named" },
+    { name: "newPreviousPeriodMeasure", package: "@gooddata/sdk-model", importType: "named" },
     // filter factories
-    "newAbsoluteDateFilter",
-    "newRelativeDateFilter",
-    "newNegativeAttributeFilter",
-    "newPositiveAttributeFilter",
-    "newMeasureValueFilter",
-    "newRankingFilter",
+    { name: "newAbsoluteDateFilter", package: "@gooddata/sdk-model", importType: "named" },
+    { name: "newRelativeDateFilter", package: "@gooddata/sdk-model", importType: "named" },
+    { name: "newNegativeAttributeFilter", package: "@gooddata/sdk-model", importType: "named" },
+    { name: "newPositiveAttributeFilter", package: "@gooddata/sdk-model", importType: "named" },
+    { name: "newMeasureValueFilter", package: "@gooddata/sdk-model", importType: "named" },
+    { name: "newRankingFilter", package: "@gooddata/sdk-model", importType: "named" },
     // sort factories
-    "newAttributeSort",
-    "newAttributeAreaSort",
-    "newMeasureSort",
+    { name: "newAttributeSort", package: "@gooddata/sdk-model", importType: "named" },
+    { name: "newAttributeAreaSort", package: "@gooddata/sdk-model", importType: "named" },
+    { name: "newMeasureSort", package: "@gooddata/sdk-model", importType: "named" },
     // total factories
-    "newTotal",
+    { name: "newTotal", package: "@gooddata/sdk-model", importType: "named" },
 ];
 
-function detectSdkModelImports(serializedProps: string): string[] {
-    const detectedFactories = allSdkModelFactories.filter((factory) => serializedProps.includes(factory));
-    detectedFactories.sort();
-    return detectedFactories;
+function detectSdkModelImports(serializedProps: string): IImportInfo[] {
+    return allSdkModelFactories.filter(({ name }) => serializedProps.includes(name));
 }
 
 const TAB_SIZE = 4;
@@ -66,8 +64,25 @@ function indent(str: string, tabs: number): string {
         .join("\n");
 }
 
+const renderImports: (imports: IImportInfo[]) => string = flow(
+    groupBy((i: IImportInfo) => i.package),
+    toPairs,
+    map(([pkg, imports]: [string, IImportInfo[]]) => {
+        const [[defaultImport], namedImports] = partition((i) => i.importType === "default", imports);
+
+        return compact([
+            "import",
+            defaultImport?.name,
+            namedImports.length && `{ ${sortBy(namedImports.map((i) => i.name)).join(", ")} }`,
+            "from",
+            `"${pkg}";`,
+        ]).join(" ");
+    }),
+    join("\n"),
+);
+
 export function getReactEmbeddingCodeGenerator(
-    componentInfo: IComponentInfo,
+    componentImport: IImportInfo,
     insightToProps: (insight: IInsightDefinition, ctx?: IEmbeddingCodeContext) => Record<string, any>,
 ): (insight: IInsightDefinition, config?: IEmbeddingCodeConfig) => string {
     return (insight, config) => {
@@ -89,22 +104,19 @@ export function getReactEmbeddingCodeGenerator(
         const serializedProps = propPairs.map(([key]) => `${key}={${key}}`).join("\n");
 
         const detectedFactories = detectSdkModelImports(propDeclarations);
-        const factoriesImport = detectedFactories.length
-            ? `import { ${detectedFactories.join(", ")} } from "@gooddata/sdk-model";`
-            : "";
 
-        const imports = compact([
-            'import React from "react";',
-            factoriesImport,
-            toComponentImport(componentInfo),
+        const imports: IImportInfo[] = compact([
+            { name: "React", package: "react", importType: "default" },
+            ...detectedFactories,
+            componentImport,
         ]);
 
         const height = config?.height ?? DEFAULT_HEIGHT;
         const stringifiedHeight = isString(height) ? `"${height}"` : height.toString();
 
-        const componentBody = `<${componentInfo.name}\n${indent(serializedProps, 1)}\n/>`;
+        const componentBody = `<${componentImport.name}\n${indent(serializedProps, 1)}\n/>`;
 
-        return `${imports.join("\n")}
+        return `${renderImports(imports)}
 
 ${propDeclarations}
 const style = { height: ${stringifiedHeight} };
