@@ -76,20 +76,6 @@ const testModelNotation = (factoryNotation: string, expected: any) => {
 };
 
 describe("factoryNotationFor", () => {
-    describe("unknown objects", () => {
-        const testCases: Array<[any, any]> = [
-            [undefined, undefined],
-            [null, null],
-            [true, true],
-            ["foo", '"foo"'],
-            [42, 42],
-            [[], "[]"],
-            [{ foo: "bar" }, '{foo: "bar"}'],
-        ];
-        it.each(testCases)(`should not touch irrelevant input %p`, (value: any, expectedValue: any) => {
-            expect(factoryNotationFor(value)).toEqual(expectedValue);
-        });
-    });
     describe("attributes", () => {
         it("should handle attribute with identifier", () => {
             const input: IAttribute = {
@@ -539,6 +525,26 @@ describe("factoryNotationFor", () => {
             };
             const actual = factoryNotationFor(input);
             testModelNotation(actual, input);
+        });
+    });
+    describe("additional conversion", () => {
+        const additionalConversion = (obj: any) => {
+            if (typeof obj === "object" && "foo" in obj) {
+                return `newFoo(${obj.foo})`;
+            }
+            return undefined;
+        };
+
+        it("should handle custom conversion", () => {
+            const input = { foo: 42 };
+            const actual = factoryNotationFor(input, additionalConversion);
+            expect(actual).toEqual("newFoo(42)");
+        });
+
+        it("should handle nested custom conversion", () => {
+            const input = { wrapped: { baz: { foo: 42 }, bar: [{ foo: 123 }] } };
+            const actual = factoryNotationFor(input, additionalConversion);
+            expect(actual).toEqual("{wrapped: {baz: newFoo(42), bar: [newFoo(123)]}}");
         });
     });
 });

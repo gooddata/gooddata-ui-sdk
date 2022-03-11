@@ -1,8 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import compact from "lodash/compact";
 import flow from "lodash/flow";
-import isArray from "lodash/isArray";
-import isObject from "lodash/isObject";
 import isString from "lodash/isString";
 import stringifyObject from "stringify-object";
 import { isUriRef, ObjRefInScope, isIdentifierRef } from "../../objRef";
@@ -48,12 +46,13 @@ import {
 import { isAttribute, IAttribute } from "../attribute";
 import { isTotal, ITotal } from "../base/totals";
 
-const stringify = (input: any) =>
-    stringifyObject(input, {
-        singleQuotes: false,
-        inlineCharacterLimit: 50,
-        indent: "    ",
-    });
+const commonStringifySettings = {
+    singleQuotes: false,
+    inlineCharacterLimit: 50,
+    indent: "    ",
+};
+
+const stringify = (input: any) => stringifyObject(input, commonStringifySettings);
 
 const ARRAY_JOINER = ", ";
 
@@ -86,7 +85,7 @@ const addTitle = addStringBuilderSegment("title");
 const addFilters =
     ({ filters }: { filters?: IFilter[] }) =>
     (value: string) =>
-        filters ? `${value}.filters(${filters.map(factoryNotationFor).join(ARRAY_JOINER)})` : value;
+        filters ? `${value}.filters(${filters.map((f) => factoryNotationFor(f)).join(ARRAY_JOINER)})` : value;
 
 const addRatio =
     ({ computeRatio }: { computeRatio?: boolean }) =>
@@ -243,40 +242,58 @@ const convertTotal: Converter<ITotal> = ({ attributeIdentifier, measureIdentifie
     return `newTotal(${args.join(ARRAY_JOINER)})`;
 };
 
+const factoryNotationForCore = (
+    obj: any,
+    additionalConversion?: (data: any) => string | undefined,
+): string | undefined => {
+    if (isAttribute(obj)) {
+        return convertAttribute(obj);
+    } else if (isMeasure(obj)) {
+        return convertMeasure(obj);
+    } else if (isAttributeAreaSort(obj)) {
+        return convertAttributeAreaSortItem(obj);
+    } else if (isAttributeSort(obj)) {
+        return convertAttributeSortItem(obj);
+    } else if (isMeasureSort(obj)) {
+        return convertMeasureSortItem(obj);
+    } else if (isAbsoluteDateFilter(obj)) {
+        return convertAbsoluteDateFilter(obj);
+    } else if (isRelativeDateFilter(obj)) {
+        return convertRelativeDateFilter(obj);
+    } else if (isPositiveAttributeFilter(obj)) {
+        return convertPositiveAttributeFilter(obj);
+    } else if (isNegativeAttributeFilter(obj)) {
+        return convertNegativeAttributeFilter(obj);
+    } else if (isMeasureValueFilter(obj)) {
+        return convertMeasureValueFilter(obj);
+    } else if (isRankingFilter(obj)) {
+        return convertRankingFilter(obj);
+    } else if (isTotal(obj)) {
+        return convertTotal(obj);
+    }
+
+    return additionalConversion?.(obj);
+};
+
 /**
  * Returns a code for generating the provided input using convenience factory methods where possible.
  * @param data - data to return the generating code for
+ * @param additionalConversion - optionally specify other conversion that will be tried before falling back to standard stringify. return undefined when you want to fall back to standard stringify.
  * @public
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export const factoryNotationFor = (data: any): string => {
-    if (isArray(data)) {
-        return `[${data.map(factoryNotationFor).join(ARRAY_JOINER)}]`;
-    } else if (isAttribute(data)) {
-        return convertAttribute(data);
-    } else if (isMeasure(data)) {
-        return convertMeasure(data);
-    } else if (isAttributeAreaSort(data)) {
-        return convertAttributeAreaSortItem(data);
-    } else if (isAttributeSort(data)) {
-        return convertAttributeSortItem(data);
-    } else if (isMeasureSort(data)) {
-        return convertMeasureSortItem(data);
-    } else if (isAbsoluteDateFilter(data)) {
-        return convertAbsoluteDateFilter(data);
-    } else if (isRelativeDateFilter(data)) {
-        return convertRelativeDateFilter(data);
-    } else if (isPositiveAttributeFilter(data)) {
-        return convertPositiveAttributeFilter(data);
-    } else if (isNegativeAttributeFilter(data)) {
-        return convertNegativeAttributeFilter(data);
-    } else if (isMeasureValueFilter(data)) {
-        return convertMeasureValueFilter(data);
-    } else if (isRankingFilter(data)) {
-        return convertRankingFilter(data);
-    } else if (isTotal(data)) {
-        return convertTotal(data);
-    }
-
-    return isObject(data) || isString(data) ? stringify(data) : data;
+export const factoryNotationFor = (
+    data: any,
+    additionalConversion?: (data: any) => string | undefined,
+): string => {
+    return (
+        // try the custom conversion first, stringify-object does not call the transform on the whole input, only on sub-objects
+        factoryNotationForCore(data, additionalConversion) ??
+        stringifyObject(data, {
+            ...commonStringifySettings,
+            transform(obj: any, key, originalResult) {
+                return factoryNotationForCore(obj[key], additionalConversion) ?? originalResult;
+            },
+        })
+    );
 };
