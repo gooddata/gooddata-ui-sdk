@@ -115,9 +115,10 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
                     ],
                     availableSorts: [
                         newAvailableSortsGroup(viewBy[0].localIdentifier),
-                        newAvailableSortsGroup(viewBy[1].localIdentifier, [
-                            ...measures.map((m) => m.localIdentifier),
-                        ]),
+                        newAvailableSortsGroup(
+                            viewBy[1].localIdentifier,
+                            measures.map((m) => m.localIdentifier),
+                        ),
                     ],
                 };
             }
@@ -133,7 +134,7 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
                     newAvailableSortsGroup(viewBy[0].localIdentifier),
                     newAvailableSortsGroup(
                         viewBy[1].localIdentifier,
-                        isEmpty(stackBy) ? [...measures.map((m) => m.localIdentifier)] : [],
+                        isEmpty(stackBy) ? measures.map((m) => m.localIdentifier) : [],
                         true,
                         isStacked || measures.length > 1,
                     ),
@@ -147,7 +148,7 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
                 availableSorts: [
                     newAvailableSortsGroup(
                         viewBy[0].localIdentifier,
-                        isEmpty(stackBy) ? [...measures.map((m) => m.localIdentifier)] : [],
+                        isEmpty(stackBy) ? measures.map((m) => m.localIdentifier) : [],
                     ),
                 ],
             };
@@ -159,7 +160,7 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
                 availableSorts: [
                     newAvailableSortsGroup(
                         viewBy[0].localIdentifier,
-                        [...measures.map((m) => m.localIdentifier)],
+                        measures.map((m) => m.localIdentifier),
                         true,
                         measures.length > 1,
                     ),

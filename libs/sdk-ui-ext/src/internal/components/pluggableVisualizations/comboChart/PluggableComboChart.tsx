@@ -7,13 +7,7 @@ import without from "lodash/without";
 import isEmpty from "lodash/isEmpty";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { isAreaChart, isLineChart } from "@gooddata/sdk-ui-charts";
-import {
-    insightBuckets,
-    bucketsIsEmpty,
-    IInsightDefinition,
-    localIdRef,
-    newAttributeSort,
-} from "@gooddata/sdk-model";
+import { insightBuckets, bucketsIsEmpty, IInsightDefinition, newAttributeSort } from "@gooddata/sdk-model";
 
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 
@@ -32,7 +26,7 @@ import {
     IVisualizationProperties,
     IBucketOfFun,
 } from "../../../interfaces/Visualization";
-import { ISortConfig, newMeasureSortSuggestion } from "../../../interfaces/SortConfig";
+import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig";
 
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 import { removeSort, getCustomSortDisabledExplanation } from "../../../utils/sort";
@@ -297,14 +291,12 @@ export class PluggableComboChart extends PluggableBaseChart {
             return {
                 defaultSort,
                 availableSorts: [
-                    {
-                        itemId: localIdRef(viewBy[0].localIdentifier),
-                        attributeSort: {
-                            areaSortEnabled: canSortStackTotal || mergedMeasures.length > 1,
-                            normalSortEnabled: true,
-                        },
-                        metricSorts: mergedMeasures.map((m) => newMeasureSortSuggestion(m.localIdentifier)),
-                    },
+                    newAvailableSortsGroup(
+                        viewBy[0].localIdentifier,
+                        mergedMeasures.map((m) => m.localIdentifier),
+                        true,
+                        canSortStackTotal || mergedMeasures.length > 1,
+                    ),
                 ],
             };
         }

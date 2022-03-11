@@ -17,7 +17,7 @@ export type MeasureSortSuggestion = {
     type: "measureSort";
 } & IMeasureSortTarget;
 
-export function newMeasureSortSuggestion(
+function newMeasureSortSuggestion(
     identifier: Identifier,
     attributeLocators: IAttributeLocatorItem[] = [],
 ): MeasureSortSuggestion {

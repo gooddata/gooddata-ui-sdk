@@ -5,7 +5,7 @@ import { render } from "react-dom";
 import isEmpty from "lodash/isEmpty";
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
-import { IInsight, IInsightDefinition, newAttributeSort, localIdRef } from "@gooddata/sdk-model";
+import { IInsight, IInsightDefinition, newAttributeSort } from "@gooddata/sdk-model";
 
 import { AXIS, AXIS_NAME } from "../../../constants/axis";
 import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket";
@@ -47,7 +47,7 @@ import {
     modifyBucketsAttributesForDrillDown,
     reverseAndTrimIntersection,
 } from "../drillDownUtil";
-import { ISortConfig, newMeasureSortSuggestion } from "../../../interfaces/SortConfig";
+import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig";
 
 /**
  * PluggableLineChart
@@ -301,28 +301,18 @@ export class PluggableLineChart extends PluggableBaseChart {
                 return {
                     defaultSort,
                     availableSorts: [
-                        {
-                            itemId: localIdRef(trendBy[0].localIdentifier),
-                            attributeSort: {
-                                normalSortEnabled: true,
-                                areaSortEnabled: measures.length > 1,
-                            },
-                            metricSorts: measures.map((m) => newMeasureSortSuggestion(m.localIdentifier)),
-                        },
+                        newAvailableSortsGroup(
+                            trendBy[0].localIdentifier,
+                            measures.map((m) => m.localIdentifier),
+                            true,
+                            measures.length > 1,
+                        ),
                     ],
                 };
             }
             return {
                 defaultSort,
-                availableSorts: [
-                    {
-                        itemId: localIdRef(trendBy[0].localIdentifier),
-                        attributeSort: {
-                            normalSortEnabled: true,
-                            areaSortEnabled: true,
-                        },
-                    },
-                ],
+                availableSorts: [newAvailableSortsGroup(trendBy[0].localIdentifier)],
             };
         }
         return {

@@ -40,13 +40,12 @@ import {
     IInsight,
     IInsightDefinition,
     insightBucket,
-    localIdRef,
     newAttributeSort,
 } from "@gooddata/sdk-model";
 import { transformBuckets } from "./bucketHelper";
 import { modifyBucketsAttributesForDrillDown, addIntersectionFiltersToInsight } from "../drillDownUtil";
 import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper";
-import { ISortConfig, newMeasureSortSuggestion } from "../../../interfaces/SortConfig";
+import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig";
 
 /**
  * PluggableBulletChart
@@ -231,21 +230,13 @@ export class PluggableBulletChart extends PluggableBaseChart {
             return {
                 defaultSort,
                 availableSorts: [
-                    {
-                        itemId: localIdRef(viewBy[0].localIdentifier),
-                        attributeSort: {
-                            normalSortEnabled: true,
-                            areaSortEnabled: true,
-                        },
-                    },
-                    {
-                        itemId: localIdRef(viewBy[1].localIdentifier),
-                        attributeSort: {
-                            normalSortEnabled: true,
-                            areaSortEnabled: measures.length > 1,
-                        },
-                        metricSorts: measures.map((m) => newMeasureSortSuggestion(m.localIdentifier)),
-                    },
+                    newAvailableSortsGroup(viewBy[0].localIdentifier),
+                    newAvailableSortsGroup(
+                        viewBy[1].localIdentifier,
+                        measures.map((m) => m.localIdentifier),
+                        true,
+                        measures.length > 1,
+                    ),
                 ],
             };
         }
@@ -253,14 +244,12 @@ export class PluggableBulletChart extends PluggableBaseChart {
             return {
                 defaultSort,
                 availableSorts: [
-                    {
-                        itemId: localIdRef(viewBy[0].localIdentifier),
-                        attributeSort: {
-                            normalSortEnabled: true,
-                            areaSortEnabled: measures.length > 1,
-                        },
-                        metricSorts: measures.map((m) => newMeasureSortSuggestion(m.localIdentifier)),
-                    },
+                    newAvailableSortsGroup(
+                        viewBy[0].localIdentifier,
+                        measures.map((m) => m.localIdentifier),
+                        true,
+                        measures.length > 1,
+                    ),
                 ],
             };
         }

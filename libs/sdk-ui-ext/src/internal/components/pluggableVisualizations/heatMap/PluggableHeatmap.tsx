@@ -12,7 +12,7 @@ import {
     isDrillIntersectionAttributeItem,
     VisualizationTypes,
 } from "@gooddata/sdk-ui";
-import { IInsight, IInsightDefinition, newAttributeSort, localIdRef } from "@gooddata/sdk-model";
+import { IInsight, IInsightDefinition, newAttributeSort } from "@gooddata/sdk-model";
 
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil";
@@ -31,7 +31,7 @@ import {
     IDrillDownDefinition,
     IBucketItem,
 } from "../../../interfaces/Visualization";
-import { ISortConfig, newMeasureSortSuggestion } from "../../../interfaces/SortConfig";
+import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig";
 
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 import {
@@ -180,20 +180,8 @@ export class PluggableHeatmap extends PluggableBaseChart {
                     newAttributeSort(stackBy[0].localIdentifier, "desc"),
                 ],
                 availableSorts: [
-                    {
-                        itemId: localIdRef(viewBy[0].localIdentifier),
-                        attributeSort: {
-                            normalSortEnabled: true,
-                            areaSortEnabled: true,
-                        },
-                    },
-                    {
-                        itemId: localIdRef(stackBy[0].localIdentifier),
-                        attributeSort: {
-                            normalSortEnabled: true,
-                            areaSortEnabled: true,
-                        },
-                    },
+                    newAvailableSortsGroup(viewBy[0].localIdentifier),
+                    newAvailableSortsGroup(stackBy[0].localIdentifier),
                 ],
             };
         }
@@ -201,29 +189,19 @@ export class PluggableHeatmap extends PluggableBaseChart {
             return {
                 defaultSort: [newAttributeSort(viewBy[0].localIdentifier, "desc")],
                 availableSorts: [
-                    {
-                        itemId: localIdRef(viewBy[0].localIdentifier),
-                        attributeSort: {
-                            normalSortEnabled: true,
-                            areaSortEnabled: false,
-                        },
-                        metricSorts: [newMeasureSortSuggestion(measures[0].localIdentifier)],
-                    },
+                    newAvailableSortsGroup(
+                        viewBy[0].localIdentifier,
+                        [measures[0].localIdentifier],
+                        true,
+                        false,
+                    ),
                 ],
             };
         }
         if (!isEmpty(measures) && !isEmpty(stackBy)) {
             return {
                 defaultSort: [newAttributeSort(stackBy[0].localIdentifier, "desc")],
-                availableSorts: [
-                    {
-                        itemId: localIdRef(stackBy[0].localIdentifier),
-                        attributeSort: {
-                            normalSortEnabled: true,
-                            areaSortEnabled: true,
-                        },
-                    },
-                ],
+                availableSorts: [newAvailableSortsGroup(stackBy[0].localIdentifier)],
             };
         }
 

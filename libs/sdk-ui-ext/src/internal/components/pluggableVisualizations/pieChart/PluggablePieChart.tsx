@@ -6,7 +6,7 @@ import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IChartConfig, TOP } from "@gooddata/sdk-ui-charts";
-import { IInsightDefinition, newMeasureSort, localIdRef } from "@gooddata/sdk-model";
+import { IInsightDefinition, newMeasureSort } from "@gooddata/sdk-model";
 
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 import PieChartConfigurationPanel from "../../configurationPanels/PieChartConfigurationPanel";
@@ -29,7 +29,7 @@ import {
     IVisualizationProperties,
     IBucketItem,
 } from "../../../interfaces/Visualization";
-import { newMeasureSortSuggestion, ISortConfig } from "../../../interfaces/SortConfig";
+import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig";
 
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 import {
@@ -161,14 +161,12 @@ export class PluggablePieChart extends PluggableBaseChart {
             return {
                 defaultSort: [newMeasureSort(measures[0].localIdentifier, "desc")],
                 availableSorts: [
-                    {
-                        itemId: localIdRef(viewBy[0].localIdentifier),
-                        attributeSort: {
-                            normalSortEnabled: true,
-                            areaSortEnabled: false,
-                        },
-                        metricSorts: [newMeasureSortSuggestion(measures[0].localIdentifier)],
-                    },
+                    newAvailableSortsGroup(
+                        viewBy[0].localIdentifier,
+                        [measures[0].localIdentifier],
+                        true,
+                        false,
+                    ),
                 ],
             };
         }

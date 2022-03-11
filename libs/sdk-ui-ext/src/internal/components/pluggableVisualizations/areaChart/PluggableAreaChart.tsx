@@ -5,7 +5,6 @@ import {
     IInsightDefinition,
     insightBuckets,
     newAttributeSort,
-    localIdRef,
 } from "@gooddata/sdk-model";
 import { BucketNames, IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
 import React from "react";
@@ -66,7 +65,7 @@ import {
     modifyBucketsAttributesForDrillDown,
     reverseAndTrimIntersection,
 } from "../drillDownUtil";
-import { ISortConfig, newMeasureSortSuggestion } from "../../../interfaces/SortConfig";
+import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig";
 
 /**
  * PluggableAreaChart
@@ -349,14 +348,10 @@ export class PluggableAreaChart extends PluggableBaseChart {
             return {
                 defaultSort,
                 availableSorts: [
-                    {
-                        itemId: localIdRef(viewBy[0].localIdentifier),
-                        attributeSort: {
-                            normalSortEnabled: true,
-                            areaSortEnabled: true,
-                        },
-                        metricSorts: measures.map((m) => newMeasureSortSuggestion(m.localIdentifier)),
-                    },
+                    newAvailableSortsGroup(
+                        viewBy[0].localIdentifier,
+                        measures.map((m) => m.localIdentifier),
+                    ),
                 ],
             };
         }
@@ -364,29 +359,19 @@ export class PluggableAreaChart extends PluggableBaseChart {
             if (viewBy.length >= 2) {
                 return {
                     defaultSort,
-                    availableSorts: [
-                        {
-                            itemId: localIdRef(viewBy[0].localIdentifier),
-                            attributeSort: {
-                                normalSortEnabled: true,
-                                areaSortEnabled: true,
-                            },
-                        },
-                    ],
+                    availableSorts: [newAvailableSortsGroup(viewBy[0].localIdentifier)],
                 };
             }
             if (viewBy.length === 1) {
                 return {
                     defaultSort,
                     availableSorts: [
-                        {
-                            itemId: localIdRef(viewBy[0].localIdentifier),
-                            attributeSort: {
-                                normalSortEnabled: true,
-                                areaSortEnabled: false,
-                            },
-                            metricSorts: measures.map((m) => newMeasureSortSuggestion(m.localIdentifier)),
-                        },
+                        newAvailableSortsGroup(
+                            viewBy[0].localIdentifier,
+                            measures.map((m) => m.localIdentifier),
+                            true,
+                            false,
+                        ),
                     ],
                 };
             }
@@ -395,16 +380,10 @@ export class PluggableAreaChart extends PluggableBaseChart {
             return {
                 defaultSort,
                 availableSorts: [
-                    {
-                        itemId: localIdRef(viewBy[0].localIdentifier),
-                        attributeSort: {
-                            normalSortEnabled: true,
-                            areaSortEnabled: true,
-                        },
-                        metricSorts: isEmpty(stackBy)
-                            ? measures.map((m) => newMeasureSortSuggestion(m.localIdentifier))
-                            : [],
-                    },
+                    newAvailableSortsGroup(
+                        viewBy[0].localIdentifier,
+                        isEmpty(stackBy) ? measures.map((m) => m.localIdentifier) : [],
+                    ),
                 ],
             };
         }
