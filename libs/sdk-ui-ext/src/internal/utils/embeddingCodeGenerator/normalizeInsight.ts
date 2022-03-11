@@ -4,7 +4,6 @@ import fromPairs from "lodash/fp/fromPairs";
 import map from "lodash/fp/map";
 import toPairs from "lodash/fp/toPairs";
 import {
-    attributeAlias,
     attributeLocalId,
     bucketItems,
     bucketTotals,
@@ -16,12 +15,7 @@ import {
     insightSetProperties,
     insightSetSorts,
     isAttribute,
-    measureAlias,
-    measureFormat,
     measureLocalId,
-    measureTitle,
-    modifyAttribute,
-    modifyMeasure,
     newBucket,
     newDefForInsight,
     newTotal,
@@ -48,8 +42,7 @@ function normalizeProperties(
  * Creates an insight that has reasonable local ids instead of potentially long illegible ones in the original insight.
  *
  * @privateRemarks
- * Makes use of the {@link @gooddata/sdk-backed-base#Normalizer} to do most of the work, filling back things
- * that the Normalizer removes (like titles, aliases, etc.).
+ * Makes use of the {@link @gooddata/sdk-backed-base#Normalizer} to do most of the work.
  *
  * @param insight - the insight to "normalize"
  * @returns always a new instance
@@ -57,9 +50,9 @@ function normalizeProperties(
  */
 export function normalizeInsight(insight: IInsightDefinition): IInsightDefinition {
     const execution = newDefForInsight("foo", insight);
-    const { n2oMap, normalized } = Normalizer.normalize(execution);
+    const { n2oMap, normalized } = Normalizer.normalize(execution, { keepRemovableProperties: true });
 
-    const o2nMap = flow(
+    const o2nMap: LocalIdMap = flow(
         toPairs,
         map(([normalized, original]) => [original, normalized]),
         fromPairs,
@@ -70,23 +63,10 @@ export function normalizeInsight(insight: IInsightDefinition): IInsightDefinitio
         const processedItems = bucketItems(originalBucket).map((originalBucketItem) => {
             if (isAttribute(originalBucketItem)) {
                 const normalizedId = o2nMap[attributeLocalId(originalBucketItem)];
-                const normalizedBucketItem = normalized.attributes.find(
-                    (attr) => attributeLocalId(attr) === normalizedId,
-                );
-                return modifyAttribute(normalizedBucketItem, (a) =>
-                    a.alias(attributeAlias(originalBucketItem)),
-                );
+                return normalized.attributes.find((attr) => attributeLocalId(attr) === normalizedId);
             } else {
                 const normalizedId = o2nMap[measureLocalId(originalBucketItem)];
-                const normalizedBucketItem = normalized.measures.find(
-                    (measure) => measureLocalId(measure) === normalizedId,
-                );
-                return modifyMeasure(normalizedBucketItem, (m) =>
-                    m
-                        .alias(measureAlias(originalBucketItem))
-                        .format(measureFormat(originalBucketItem))
-                        .title(measureTitle(originalBucketItem)),
-                );
+                return normalized.measures.find((measure) => measureLocalId(measure) === normalizedId);
             }
         });
 
