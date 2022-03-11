@@ -15,9 +15,11 @@ import {
     VisualizationProperties,
 } from "@gooddata/sdk-model";
 import {
+    IAttributeColumnWidthItem,
     IColumnSizing,
     IPivotTableConfig,
     IPivotTableProps,
+    isAttributeColumnWidthItem,
     pivotTableMenuForCapabilities,
 } from "@gooddata/sdk-ui-pivot";
 import { BucketNames } from "@gooddata/sdk-ui";
@@ -76,13 +78,13 @@ export class PivotTableDescriptor extends BaseChartDescriptor implements IVisual
         return sanitizeTableProperties(insightSanitize(drillDownInsightWithFilters));
     }
 
-    public getEmbeddingCode = getReactEmbeddingCodeGenerator(
-        {
+    public getEmbeddingCode = getReactEmbeddingCodeGenerator({
+        component: {
             importType: "named",
             name: "PivotTable",
             package: "@gooddata/sdk-ui-pivot",
         },
-        (insight, ctx): IPivotTableProps => {
+        insightToProps(insight, ctx): IPivotTableProps {
             const measureBucket = insightBucket(insight, BucketNames.MEASURES);
             const rowsBucket = insightBucket(insight, BucketNames.ATTRIBUTE);
             const columnsBucket = insightBucket(insight, BucketNames.COLUMNS);
@@ -108,7 +110,21 @@ export class PivotTableDescriptor extends BaseChartDescriptor implements IVisual
                 config,
             };
         },
-    );
+        additionalFactories: [
+            {
+                importInfo: {
+                    name: "newWidthForAttributeColumn",
+                    package: "@gooddata/sdk-ui-pivot",
+                    importType: "named",
+                },
+                transformation: (obj) => {
+                    return isAttributeColumnWidthItem(obj)
+                        ? factoryNotationForAttributeColumnWidthItem(obj)
+                        : undefined;
+                },
+            },
+        ],
+    });
 }
 
 function getColumnSizingFromControls(
@@ -147,4 +163,12 @@ function getConfigFromProperties(
         ...separatorsProp,
         // the user can fill the rest on their own later
     };
+}
+
+function factoryNotationForAttributeColumnWidthItem(obj: IAttributeColumnWidthItem): string {
+    const { attributeIdentifier, width } = obj.attributeColumnWidthItem;
+    const { value: widthValue, allowGrowToFit } = width;
+    return allowGrowToFit
+        ? `newWidthForAttributeColumn(${attributeIdentifier}, ${widthValue}, true)`
+        : `newWidthForAttributeColumn(${attributeIdentifier}, ${widthValue})`;
 }

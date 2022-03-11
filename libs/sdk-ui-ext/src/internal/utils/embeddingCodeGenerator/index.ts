@@ -12,7 +12,6 @@ import repeat from "lodash/repeat";
 import sortBy from "lodash/sortBy";
 import toPairs from "lodash/fp/toPairs";
 import { factoryNotationFor, IInsightDefinition } from "@gooddata/sdk-model";
-import { IAttributeColumnWidthItem, isAttributeColumnWidthItem } from "@gooddata/sdk-ui-pivot";
 
 import { IEmbeddingCodeConfig, IEmbeddingCodeContext } from "../../interfaces/VisualizationDescriptor";
 
@@ -24,53 +23,53 @@ interface IImportInfo {
     package: string;
 }
 
-const allFactories: IImportInfo[] = [
+const defaultFactories: IImportInfo[] = [
     // ObjRef factories
-    { name: "uriRef", package: "@gooddata/sdk-model", importType: "named" },
-    { name: "idRef", package: "@gooddata/sdk-model", importType: "named" },
-    { name: "localIdRef", package: "@gooddata/sdk-model", importType: "named" },
+    "uriRef",
+    "idRef",
+    "localIdRef",
     // attribute factories
-    { name: "newAttribute", package: "@gooddata/sdk-model", importType: "named" },
+    "newAttribute",
     // measure factories
-    { name: "newMeasure", package: "@gooddata/sdk-model", importType: "named" },
-    { name: "newArithmeticMeasure", package: "@gooddata/sdk-model", importType: "named" },
-    { name: "newPopMeasure", package: "@gooddata/sdk-model", importType: "named" },
-    { name: "newPreviousPeriodMeasure", package: "@gooddata/sdk-model", importType: "named" },
+    "newMeasure",
+    "newArithmeticMeasure",
+    "newPopMeasure",
+    "newPreviousPeriodMeasure",
     // filter factories
-    { name: "newAbsoluteDateFilter", package: "@gooddata/sdk-model", importType: "named" },
-    { name: "newRelativeDateFilter", package: "@gooddata/sdk-model", importType: "named" },
-    { name: "newNegativeAttributeFilter", package: "@gooddata/sdk-model", importType: "named" },
-    { name: "newPositiveAttributeFilter", package: "@gooddata/sdk-model", importType: "named" },
-    { name: "newMeasureValueFilter", package: "@gooddata/sdk-model", importType: "named" },
-    { name: "newRankingFilter", package: "@gooddata/sdk-model", importType: "named" },
+    "newAbsoluteDateFilter",
+    "newRelativeDateFilter",
+    "newNegativeAttributeFilter",
+    "newPositiveAttributeFilter",
+    "newMeasureValueFilter",
+    "newRankingFilter",
     // sort factories
-    { name: "newAttributeSort", package: "@gooddata/sdk-model", importType: "named" },
-    { name: "newAttributeAreaSort", package: "@gooddata/sdk-model", importType: "named" },
-    { name: "newMeasureSort", package: "@gooddata/sdk-model", importType: "named" },
+    "newAttributeSort",
+    "newAttributeAreaSort",
+    "newMeasureSort",
     // total factories
-    { name: "newTotal", package: "@gooddata/sdk-model", importType: "named" },
-    // pivot table specific factories
-    { name: "newWidthForAttributeColumn", package: "@gooddata/sdk-ui-pivot", importType: "named" },
-];
+    "newTotal",
+].map((name): IImportInfo => ({ name, importType: "named", package: "@gooddata/sdk-model" }));
 
-function detectFactoryImports(serializedProps: string): IImportInfo[] {
-    return allFactories.filter(({ name }) => serializedProps.includes(name));
+function detectFactoryImports(
+    serializedProps: string,
+    additionalFactories: IAdditionalFactoryDefinition[],
+): IImportInfo[] {
+    return [...defaultFactories, ...additionalFactories.map((f) => f.importInfo)].filter(({ name }) =>
+        serializedProps.includes(name),
+    );
 }
 
-function factoryNotationForAttributeColumnWidthItem(obj: IAttributeColumnWidthItem) {
-    const { attributeIdentifier, width } = obj.attributeColumnWidthItem;
-    const { value: widthValue, allowGrowToFit } = width;
-    return allowGrowToFit
-        ? `newWidthForAttributeColumn(${attributeIdentifier}, ${widthValue}, true)`
-        : `newWidthForAttributeColumn(${attributeIdentifier}, ${widthValue})`;
-}
-
-function extendedFactoryNotationFor(value: any): string {
+function extendedFactoryNotationFor(value: any, additionalFactories: IAdditionalFactoryDefinition[]): string {
     return factoryNotationFor(value, (obj) => {
-        if (isAttributeColumnWidthItem(obj)) {
-            return factoryNotationForAttributeColumnWidthItem(obj);
+        let additionalMatch;
+        for (const f of additionalFactories) {
+            additionalMatch = f.transformation(obj);
+            if (additionalMatch) {
+                break;
+            }
         }
-        return undefined;
+
+        return additionalMatch;
     });
 }
 
@@ -107,10 +106,22 @@ const renderImports: (imports: IImportInfo[]) => string = flow(
 
 const REACT_IMPORT_INFO: IImportInfo = { name: "React", package: "react", importType: "default" };
 
-export function getReactEmbeddingCodeGenerator(
-    componentImport: IImportInfo,
-    insightToProps: (insight: IInsightDefinition, ctx?: IEmbeddingCodeContext) => Record<string, any>,
-): (insight: IInsightDefinition, config?: IEmbeddingCodeConfig) => string {
+interface IAdditionalFactoryDefinition {
+    importInfo: IImportInfo;
+    transformation: (obj: any) => string | undefined;
+}
+
+interface IEmbeddingCodeGeneratorInput {
+    component: IImportInfo;
+    insightToProps: (insight: IInsightDefinition, ctx?: IEmbeddingCodeContext) => Record<string, any>;
+    additionalFactories?: IAdditionalFactoryDefinition[];
+}
+
+export function getReactEmbeddingCodeGenerator({
+    component,
+    insightToProps,
+    additionalFactories,
+}: IEmbeddingCodeGeneratorInput): (insight: IInsightDefinition, config?: IEmbeddingCodeConfig) => string {
     return (insight, config) => {
         const normalizedInsight = normalizeInsight(insight);
 
@@ -122,19 +133,19 @@ export function getReactEmbeddingCodeGenerator(
             .map(([key, value]) =>
                 isString(value)
                     ? `const ${key} = "${value}";`
-                    : `const ${key} = ${extendedFactoryNotationFor(value)};`,
+                    : `const ${key} = ${extendedFactoryNotationFor(value, additionalFactories ?? [])};`,
             )
             .join("\n");
 
         const propUsages = propPairs.map(([key]) => `${key}={${key}}`).join("\n");
 
-        const detectedFactories = detectFactoryImports(propDeclarations);
-        const imports = compact([REACT_IMPORT_INFO, ...detectedFactories, componentImport]);
+        const detectedFactories = detectFactoryImports(propDeclarations, additionalFactories ?? []);
+        const imports = compact([REACT_IMPORT_INFO, ...detectedFactories, component]);
 
         const height = config?.height ?? DEFAULT_HEIGHT;
         const stringifiedHeight = isString(height) ? `"${height}"` : height.toString();
 
-        const componentBody = `<${componentImport.name}\n${indent(propUsages, 1)}\n/>`;
+        const componentBody = `<${component.name}\n${indent(propUsages, 1)}\n/>`;
 
         return `${renderImports(imports)}
 

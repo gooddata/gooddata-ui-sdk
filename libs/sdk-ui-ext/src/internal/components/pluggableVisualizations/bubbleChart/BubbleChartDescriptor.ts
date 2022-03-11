@@ -21,13 +21,13 @@ export class BubbleChartDescriptor extends BigChartDescriptor implements IVisual
         return (params) => new PluggableBubbleChart(params);
     }
 
-    public getEmbeddingCode = getReactEmbeddingCodeGenerator(
-        {
+    public getEmbeddingCode = getReactEmbeddingCodeGenerator({
+        component: {
             importType: "named",
             name: "BubbleChart",
             package: "@gooddata/sdk-ui-charts",
         },
-        (insight): IBubbleChartBucketProps => {
+        insightToProps(insight): IBubbleChartBucketProps {
             const measureBucket = insightBucket(insight, BucketNames.MEASURES);
             const secondaryMeasureBucket = insightBucket(insight, BucketNames.SECONDARY_MEASURES);
             const tertiaryMeasureBucket = insightBucket(insight, BucketNames.TERTIARY_MEASURES);
@@ -49,5 +49,5 @@ export class BubbleChartDescriptor extends BigChartDescriptor implements IVisual
                 sortBy,
             };
         },
-    );
+    });
 }

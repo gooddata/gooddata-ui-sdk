@@ -6,7 +6,9 @@ import { idRef, newAttribute } from \\"@gooddata/sdk-model\\";
 import { Foo } from \\"@gooddata/foo\\";
 
 const prop = \\"string\\";
-const another = [newAttribute(idRef(\\"label.account.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.account.id.name\\"))];
+const another = [
+    newAttribute(idRef(\\"label.account.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.account.id.name\\"))
+];
 const style = { height: 1000 };
 
 function MyComponent() {
@@ -28,7 +30,9 @@ import { idRef, newAttribute } from \\"@gooddata/sdk-model\\";
 import { Foo } from \\"@gooddata/foo\\";
 
 const prop = \\"string\\";
-const another = [newAttribute(idRef(\\"label.account.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.account.id.name\\"))];
+const another = [
+    newAttribute(idRef(\\"label.account.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.account.id.name\\"))
+];
 const style = { height: \\"20rem\\" };
 
 function MyComponent() {
@@ -50,7 +54,9 @@ import { idRef, newAttribute } from \\"@gooddata/sdk-model\\";
 import { Foo } from \\"@gooddata/foo\\";
 
 const prop = \\"string\\";
-const another = [newAttribute(idRef(\\"label.account.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.account.id.name\\"))];
+const another = [
+    newAttribute(idRef(\\"label.account.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.account.id.name\\"))
+];
 const style = { height: 400 };
 
 function MyComponent() {

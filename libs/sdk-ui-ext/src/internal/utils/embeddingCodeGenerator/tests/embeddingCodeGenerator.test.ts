@@ -14,14 +14,16 @@ describe("getReactEmbeddingCodeGenerator", () => {
     ];
 
     it.each(scenarios)("should generate embedding code %s", (_, height) => {
-        const generator = getReactEmbeddingCodeGenerator(
-            {
+        const generator = getReactEmbeddingCodeGenerator({
+            component: {
                 importType: "named",
                 name: "Foo",
                 package: "@gooddata/foo",
             },
-            () => ({ prop: "string", another: [ReferenceMd.Account.Name] }),
-        );
+            insightToProps() {
+                return { prop: "string", another: [ReferenceMd.Account.Name] };
+            },
+        });
         expect(generator(mockInsight, { height })).toMatchSnapshot();
     });
 });
