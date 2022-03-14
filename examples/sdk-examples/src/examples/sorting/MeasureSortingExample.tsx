@@ -16,7 +16,7 @@ export const MeasureSortingExample: React.FC = () => {
         <div style={style} className="s-measure-sorting">
             <ColumnChart
                 measures={[TotalSales]}
-                viewBy={Md.DateMonth.Short}
+                viewBy={Md.DateDatasets.Date.Month.Short}
                 sortBy={[newMeasureSort(TotalSales, "desc")]}
             />
         </div>

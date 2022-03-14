@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { useState } from "react";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
 import { modifyMeasure, newRelativeDateFilter } from "@gooddata/sdk-model";
@@ -108,7 +108,11 @@ export const MonthPickerExample: React.FC = () => {
                 {error ? (
                     <ErrorComponent message={error} />
                 ) : (
-                    <ColumnChart measures={measures} viewBy={Md.DateMonthYear.Short} filters={filters} />
+                    <ColumnChart
+                        measures={measures}
+                        viewBy={Md.DateDatasets.Date.MonthYear.Short}
+                        filters={filters}
+                    />
                 )}
             </div>
         </div>

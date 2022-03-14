@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 
 import React from "react";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
@@ -14,7 +14,10 @@ const style = { height: 300 };
 export const SamePeriodColumnChartExample: React.FC = () => {
     return (
         <div style={style} className="s-column-chart">
-            <ColumnChart measures={[Md.$TotalSales, totalSalesYearAgo]} viewBy={Md.DateQuarter} />
+            <ColumnChart
+                measures={[Md.$TotalSales, totalSalesYearAgo]}
+                viewBy={Md.DateDatasets.Date.Quarter.Default}
+            />
         </div>
     );
 };

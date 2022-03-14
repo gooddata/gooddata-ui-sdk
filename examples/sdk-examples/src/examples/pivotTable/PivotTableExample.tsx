@@ -38,7 +38,7 @@ export const PivotTableExample: React.FC<IPivotTableExampleProps> = ({
 
     const attributes = withAttributes ? [Md.LocationState, Md.LocationName.Default, Md.MenuCategory] : [];
 
-    const columns = withPivot ? [Md.DateQuarter, Md.DateMonth.Short] : [];
+    const columns = withPivot ? [Md.DateDatasets.Date.Quarter.Default, Md.DateDatasets.Date.Month.Short] : [];
 
     return (
         <div style={style} className={className}>

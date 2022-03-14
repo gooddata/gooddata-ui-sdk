@@ -158,7 +158,11 @@ export const DynamicMeasuresExample: React.FC = () => {
                         }
                     `}</style>
                     <div className="graph graph-line s-dynamic-measures-line-chart">
-                        <LineChart measures={measures} trendBy={Md.DateMonth.Short} config={config} />
+                        <LineChart
+                            measures={measures}
+                            trendBy={Md.DateDatasets.Date.Month.Short}
+                            config={config}
+                        />
                     </div>
                     <div className="graph graph-column s-dynamic-measures-column-chart">
                         <ColumnChart measures={measures} config={config} />

@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { useState } from "react";
 import {
     DateFilter,
@@ -144,7 +144,7 @@ export const DateFilterWithColumnChartExample: React.FC = () => {
             <div style={columnChartContainerStyle}>
                 <ColumnChart
                     measures={measures}
-                    viewBy={Md.DateMonth.Short}
+                    viewBy={Md.DateDatasets.Date.Month.Short}
                     filters={dateFilter ? [dateFilter] : []}
                 />
             </div>

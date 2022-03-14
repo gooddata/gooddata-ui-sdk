@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { useState } from "react";
 import { BarChart } from "@gooddata/sdk-ui-charts";
 import { modifyMeasure } from "@gooddata/sdk-model";
@@ -50,7 +50,7 @@ export const ResponsiveExample: React.FC = () => {
                                     height={usedHeight}
                                     measures={[TotalSales]}
                                     viewBy={Md.LocationResort}
-                                    stackBy={Md.DateMonth.Short}
+                                    stackBy={Md.DateDatasets.Date.Month.Short}
                                 />
                             </div>
                         );

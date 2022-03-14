@@ -18,7 +18,7 @@ const measures = [
     FranchiseFeesOngoingRoyalty,
 ];
 const attributes = [Md.LocationState, Md.LocationName.Default, Md.MenuCategory];
-const columns = [Md.DateQuarter, Md.DateMonth.Short];
+const columns = [Md.DateDatasets.Date.Quarter.Default, Md.DateDatasets.Date.Month.Short];
 const style = { height: 500 };
 const config = { groupRows: true };
 
