@@ -1299,14 +1299,9 @@
         "comment": "Text that will appear before the measures from which attribute will be sorted.",
         "limit": 0
     },
-    "sorting.sum.of.all.measure._measure": {
-        "value": "Sum of all measures (total)",
+    "sorting.sum.of.all.measure": {
+        "value": "Total",
         "comment": "Title of sort option when is sorted by sum of all measures.",
-        "limit": 0
-    },
-    "sorting.sum.of.all.measure._metric": {
-        "value": "Sum of all metrics (total)",
-        "comment": "Title of sort option when is sorted by sum of all metrics.",
         "limit": 0
     },
     "sorting.default.tooltip": {

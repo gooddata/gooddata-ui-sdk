@@ -131,11 +131,9 @@ describe("ChartSorting", () => {
         });
 
         it("should render dialog with correct values and measure dropdown disabled", () => {
-            expect(findSelector(component, "Sum of all metrics (total)")).toEqual(true);
+            expect(findSelector(component, "Total")).toEqual(true);
             expect(getTextValue(component, buildAttributeButtonSelector(0))).toEqual("Smallest to largest");
-            expect(component.find(".s-sum_of_all_metrics__total_").hostNodes().hasClass("disabled")).toEqual(
-                true,
-            );
+            expect(component.find(".s-total").hostNodes().hasClass("disabled")).toEqual(true);
         });
 
         it("should allow to set normal attribute sort item and hide measure dropdown", () => {
