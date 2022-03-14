@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import invariant from "ts-invariant";
 import isNil from "lodash/isNil";
 import {
@@ -160,7 +160,7 @@ export function newAllTimeFilter(dateDataSet: ObjRef | Identifier): IRelativeDat
 
 function convertMeasureOrRefToObjRefInScope(measureOrRef: IMeasure | ObjRefInScope | string): ObjRefInScope {
     return isMeasure(measureOrRef)
-        ? { localIdentifier: measureLocalId(measureOrRef) }
+        ? localIdRef(measureLocalId(measureOrRef))
         : typeof measureOrRef === "string"
         ? localIdRef(measureOrRef)
         : measureOrRef;
@@ -170,7 +170,7 @@ function convertAttributeOrRefToObjRefInScope(
     attributeOrRef: IAttribute | ObjRefInScope | string,
 ): ObjRefInScope {
     return isAttribute(attributeOrRef)
-        ? { localIdentifier: attributeLocalId(attributeOrRef) }
+        ? localIdRef(attributeLocalId(attributeOrRef))
         : typeof attributeOrRef === "string"
         ? localIdRef(attributeOrRef)
         : attributeOrRef;
