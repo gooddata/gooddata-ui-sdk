@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2022 GoodData Corporation
 
 /* eslint-disable */
 /**
