@@ -6,13 +6,11 @@ import {
     bucketMeasures,
     IInsight,
     IInsightDefinition,
-    insightBucket,
     insightFilters,
     insightProperties,
     insightSanitize,
     insightSorts,
     insightTotals,
-    VisualizationProperties,
 } from "@gooddata/sdk-model";
 import {
     IAttributeColumnWidthItem,
@@ -41,6 +39,11 @@ import {
     sanitizeTableProperties,
 } from "../drillDownUtil";
 import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator";
+import {
+    bucketConversion,
+    getInsightToPropsConverter,
+    insightConversion,
+} from "../../../utils/embeddingCodeGenerator/insightToPropsConverter";
 
 export class PivotTableDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
@@ -84,32 +87,15 @@ export class PivotTableDescriptor extends BaseChartDescriptor implements IVisual
             name: "PivotTable",
             package: "@gooddata/sdk-ui-pivot",
         },
-        insightToProps(insight, ctx): IPivotTableProps {
-            const measureBucket = insightBucket(insight, BucketNames.MEASURES);
-            const rowsBucket = insightBucket(insight, BucketNames.ATTRIBUTE);
-            const columnsBucket = insightBucket(insight, BucketNames.COLUMNS);
-
-            const measures = measureBucket && bucketMeasures(measureBucket);
-            const rows = rowsBucket && bucketAttributes(rowsBucket);
-            const columns = columnsBucket && bucketAttributes(columnsBucket);
-
-            const filters = insightFilters(insight);
-            const sortBy = insightSorts(insight);
-            const totals = insightTotals(insight);
-
-            const properties = insightProperties(insight);
-            const config = getConfigFromProperties(properties, ctx);
-
-            return {
-                measures,
-                rows,
-                columns,
-                filters,
-                sortBy,
-                totals,
-                config,
-            };
-        },
+        insightToProps: getInsightToPropsConverter<IPivotTableProps>({
+            measures: bucketConversion("measures", BucketNames.MEASURES, bucketMeasures),
+            rows: bucketConversion("rows", BucketNames.ATTRIBUTE, bucketAttributes),
+            columns: bucketConversion("columns", BucketNames.COLUMNS, bucketAttributes),
+            filters: insightConversion("filters", insightFilters),
+            sortBy: insightConversion("sortBy", insightSorts),
+            totals: insightConversion("totals", insightTotals),
+            config: insightConversion("config", getConfigFromInsight),
+        }),
         additionalFactories: [
             {
                 importInfo: {
@@ -144,10 +130,11 @@ function getColumnSizingFromControls(
     };
 }
 
-function getConfigFromProperties(
-    properties: VisualizationProperties | undefined,
+function getConfigFromInsight(
+    insight: IInsightDefinition,
     ctx: IEmbeddingCodeContext | undefined,
 ): IPivotTableConfig {
+    const properties = insightProperties(insight);
     const controls = properties?.controls;
     const columnSizing = controls && getColumnSizingFromControls(controls, ctx);
 

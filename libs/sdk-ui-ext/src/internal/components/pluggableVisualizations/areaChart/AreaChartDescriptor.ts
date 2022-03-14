@@ -11,7 +11,6 @@ import {
     bucketAttributes,
     bucketMeasures,
     IInsight,
-    insightBucket,
     insightFilters,
     insightSorts,
 } from "@gooddata/sdk-model";
@@ -23,6 +22,11 @@ import {
 import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization";
 import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator";
 import { IAreaChartBucketProps } from "@gooddata/sdk-ui-charts";
+import {
+    bucketConversion,
+    getInsightToPropsConverter,
+    insightConversion,
+} from "../../../utils/embeddingCodeGenerator/insightToPropsConverter";
 
 export class AreaChartDescriptor extends BigChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
@@ -44,25 +48,13 @@ export class AreaChartDescriptor extends BigChartDescriptor implements IVisualiz
             name: "AreaChart",
             package: "@gooddata/sdk-ui-charts",
         },
-        insightToProps(insight): IAreaChartBucketProps {
-            const measuresBucket = insightBucket(insight, BucketNames.MEASURES);
-            const viewBucket = insightBucket(insight, BucketNames.VIEW);
-            const stackBucket = insightBucket(insight, BucketNames.STACK);
-
-            const measures = measuresBucket && bucketMeasures(measuresBucket);
-            const viewBy = viewBucket && bucketAttributes(viewBucket);
-            const stackBy = stackBucket && bucketAttribute(stackBucket);
-            const filters = insightFilters(insight);
-            const sortBy = insightSorts(insight);
-
-            return {
-                measures,
-                viewBy,
-                stackBy,
-                filters,
-                sortBy,
-            };
-        },
+        insightToProps: getInsightToPropsConverter<IAreaChartBucketProps>({
+            measures: bucketConversion("measures", BucketNames.MEASURES, bucketMeasures),
+            viewBy: bucketConversion("viewBy", BucketNames.VIEW, bucketAttributes),
+            stackBy: bucketConversion("stackBy", BucketNames.STACK, bucketAttribute),
+            filters: insightConversion("filters", insightFilters),
+            sortBy: insightConversion("sortBy", insightSorts),
+        }),
     });
 
     private addFilters(source: IInsight, drillConfig: IDrillDownDefinition, event: IDrillEvent) {

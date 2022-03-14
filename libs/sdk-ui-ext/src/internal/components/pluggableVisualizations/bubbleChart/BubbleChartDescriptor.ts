@@ -1,11 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import {
-    bucketAttribute,
-    bucketMeasure,
-    insightBucket,
-    insightFilters,
-    insightSorts,
-} from "@gooddata/sdk-model";
+import { bucketAttribute, bucketMeasure, insightFilters, insightSorts } from "@gooddata/sdk-model";
 import {
     IVisualizationDescriptor,
     PluggableVisualizationFactory,
@@ -15,7 +9,11 @@ import { BigChartDescriptor } from "../BigChartDescriptor";
 import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator";
 import { IBubbleChartBucketProps } from "@gooddata/sdk-ui-charts";
 import { BucketNames } from "@gooddata/sdk-ui";
-
+import {
+    bucketConversion,
+    getInsightToPropsConverter,
+    insightConversion,
+} from "../../../utils/embeddingCodeGenerator/insightToPropsConverter";
 export class BubbleChartDescriptor extends BigChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
         return (params) => new PluggableBubbleChart(params);
@@ -27,27 +25,13 @@ export class BubbleChartDescriptor extends BigChartDescriptor implements IVisual
             name: "BubbleChart",
             package: "@gooddata/sdk-ui-charts",
         },
-        insightToProps(insight): IBubbleChartBucketProps {
-            const measureBucket = insightBucket(insight, BucketNames.MEASURES);
-            const secondaryMeasureBucket = insightBucket(insight, BucketNames.SECONDARY_MEASURES);
-            const tertiaryMeasureBucket = insightBucket(insight, BucketNames.TERTIARY_MEASURES);
-            const viewBucket = insightBucket(insight, BucketNames.VIEW);
-
-            const xAxisMeasure = measureBucket && bucketMeasure(measureBucket);
-            const yAxisMeasure = secondaryMeasureBucket && bucketMeasure(secondaryMeasureBucket);
-            const size = tertiaryMeasureBucket && bucketMeasure(tertiaryMeasureBucket);
-            const viewBy = viewBucket && bucketAttribute(viewBucket);
-            const filters = insightFilters(insight);
-            const sortBy = insightSorts(insight);
-
-            return {
-                xAxisMeasure,
-                yAxisMeasure,
-                size,
-                viewBy,
-                filters,
-                sortBy,
-            };
-        },
+        insightToProps: getInsightToPropsConverter<IBubbleChartBucketProps>({
+            xAxisMeasure: bucketConversion("xAxisMeasure", BucketNames.MEASURES, bucketMeasure),
+            yAxisMeasure: bucketConversion("yAxisMeasure", BucketNames.SECONDARY_MEASURES, bucketMeasure),
+            size: bucketConversion("size", BucketNames.TERTIARY_MEASURES, bucketMeasure),
+            viewBy: bucketConversion("viewBy", BucketNames.VIEW, bucketAttribute),
+            filters: insightConversion("filters", insightFilters),
+            sortBy: insightConversion("sortBy", insightSorts),
+        }),
     });
 }
