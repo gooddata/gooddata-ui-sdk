@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ScatterPlotDescriptor should generate embedding code without context 1`] = `
+"import React from \\"react\\";
+import { idRef, localIdRef, newAttribute, newMeasure, newMeasureValueFilter } from \\"@gooddata/sdk-model\\";
+import { ScatterPlot } from \\"@gooddata/sdk-ui-charts\\";
+
+const xAxisMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.alias(\\"Custom Amount alias\\").localId(\\"m_aangOxLSeztu\\"));
+const yAxisMeasure = newMeasure(idRef(\\"fact.stagehistory.velocity\\", \\"fact\\"), m => m.alias(\\"Custom Velocity alias\\").localId(\\"m_fact.stagehistory.velocity_sum\\").aggregation(\\"sum\\"));
+const attribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.alias(\\"Custom Region alias\\").localId(\\"a_label.owner.region\\"));
+const filters = [
+    newMeasureValueFilter(localIdRef(\\"m_aangOxLSeztu\\"), \\"GREATER_THAN_OR_EQUAL_TO\\", 42)
+];
+const style = { height: 400 };
+
+function MyComponent() {
+    return (
+        <div style={style}>
+            <ScatterPlot
+                xAxisMeasure={xAxisMeasure}
+                yAxisMeasure={yAxisMeasure}
+                attribute={attribute}
+                filters={filters}
+            />
+        </div>
+    );
+}
+"
+`;

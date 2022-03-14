@@ -1,14 +1,24 @@
-// (C) 2021 GoodData Corporation
-import { PluggableVisualizationFactory } from "../../../interfaces/VisualizationDescriptor";
+// (C) 2021-2022 GoodData Corporation
+import {
+    IVisualizationDescriptor,
+    PluggableVisualizationFactory,
+} from "../../../interfaces/VisualizationDescriptor";
 import { PluggableHeatmap } from "./PluggableHeatmap";
 import { BigChartDescriptor } from "../BigChartDescriptor";
-import { IInsight } from "@gooddata/sdk-model";
-import { IDrillEvent, isDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
+import { bucketAttribute, bucketMeasure, IInsight, insightFilters, insightSorts } from "@gooddata/sdk-model";
+import { BucketNames, IDrillEvent, isDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
 import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization";
 import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper";
 import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil";
+import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator";
+import { IHeatmapBucketProps } from "@gooddata/sdk-ui-charts";
+import {
+    bucketConversion,
+    getInsightToPropsConverter,
+    insightConversion,
+} from "../../../utils/embeddingCodeGenerator/insightToPropsConverter";
 
-export class HeatmapDescriptor extends BigChartDescriptor {
+export class HeatmapDescriptor extends BigChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
         return (params) => new PluggableHeatmap(params);
     }
@@ -21,6 +31,21 @@ export class HeatmapDescriptor extends BigChartDescriptor {
         );
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
+
+    public getEmbeddingCode = getReactEmbeddingCodeGenerator({
+        component: {
+            importType: "named",
+            name: "Heatmap",
+            package: "@gooddata/sdk-ui-charts",
+        },
+        insightToProps: getInsightToPropsConverter<IHeatmapBucketProps>({
+            measure: bucketConversion("measure", BucketNames.MEASURES, bucketMeasure),
+            rows: bucketConversion("rows", BucketNames.VIEW, bucketAttribute),
+            columns: bucketConversion("columns", BucketNames.STACK, bucketAttribute),
+            filters: insightConversion("filters", insightFilters),
+            sortBy: insightConversion("sortBy", insightSorts),
+        }),
+    });
 
     private addFilters(source: IInsight, drillConfig: IDrillDownDefinition, event: IDrillEvent) {
         const clicked = drillDownFromAttributeLocalId(drillConfig);

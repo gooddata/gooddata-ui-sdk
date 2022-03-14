@@ -1,8 +1,14 @@
-// (C) 2021 GoodData Corporation
-
-import { IInsightDefinition } from "@gooddata/sdk-model";
+// (C) 2021-2022 GoodData Corporation
+import {
+    IInsightDefinition,
+    insightFilters,
+    insightSorts,
+    bucketAttribute,
+    bucketMeasure,
+} from "@gooddata/sdk-model";
 
 import {
+    IVisualizationDescriptor,
     IVisualizationSizeInfo,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor";
@@ -12,7 +18,16 @@ import { DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT, MIDDLE_VISUALIZATION_HEIGHT } from
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
 import { ISettings } from "@gooddata/sdk-backend-spi";
 
-export class GeoPushpinChartDescriptor extends BaseChartDescriptor {
+import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator";
+import {
+    bucketConversion,
+    getInsightToPropsConverter,
+    insightConversion,
+} from "../../../utils/embeddingCodeGenerator/insightToPropsConverter";
+import { BucketNames } from "@gooddata/sdk-ui";
+import { IGeoPushpinChartProps } from "@gooddata/sdk-ui-geo";
+
+export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
         return (params) => new PluggableGeoPushpinChart(params);
     }
@@ -35,6 +50,22 @@ export class GeoPushpinChartDescriptor extends BaseChartDescriptor {
             },
         };
     }
+
+    public getEmbeddingCode = getReactEmbeddingCodeGenerator({
+        component: {
+            importType: "named",
+            name: "GeoPushpinChart",
+            package: "@gooddata/sdk-ui-geo",
+        },
+        insightToProps: getInsightToPropsConverter<IGeoPushpinChartProps>({
+            location: bucketConversion("location", BucketNames.LOCATION, bucketAttribute),
+            size: bucketConversion("size", BucketNames.SIZE, bucketMeasure),
+            color: bucketConversion("color", BucketNames.COLOR, bucketMeasure),
+            segmentBy: bucketConversion("segmentBy", BucketNames.SEGMENT, bucketAttribute),
+            filters: insightConversion("filters", insightFilters),
+            sortBy: insightConversion("sortBy", insightSorts),
+        }),
+    });
 
     protected getMinHeight(enableCustomHeight: boolean): number {
         if (!enableCustomHeight) {

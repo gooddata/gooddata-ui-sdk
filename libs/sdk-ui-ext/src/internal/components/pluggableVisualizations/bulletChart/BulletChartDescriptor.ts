@@ -1,15 +1,25 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
+import { bucketAttributes, bucketMeasure, IInsight, insightFilters, insightSorts } from "@gooddata/sdk-model";
+import { BucketNames, getIntersectionPartAfter, IDrillEvent } from "@gooddata/sdk-ui";
+import { IBulletChartBucketProps } from "@gooddata/sdk-ui-charts";
 
-import { PluggableVisualizationFactory } from "../../../interfaces/VisualizationDescriptor";
+import {
+    IVisualizationDescriptor,
+    PluggableVisualizationFactory,
+} from "../../../interfaces/VisualizationDescriptor";
 import { PluggableBulletChart } from "./PluggableBulletChart";
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
-import { IInsight } from "@gooddata/sdk-model";
 import { modifyBucketsAttributesForDrillDown, addIntersectionFiltersToInsight } from "../drillDownUtil";
 import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization";
 import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper";
-import { getIntersectionPartAfter, IDrillEvent } from "@gooddata/sdk-ui";
+import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator";
+import {
+    bucketConversion,
+    getInsightToPropsConverter,
+    insightConversion,
+} from "../../../utils/embeddingCodeGenerator/insightToPropsConverter";
 
-export class BulletChartDescriptor extends BaseChartDescriptor {
+export class BulletChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
         return (params) => new PluggableBulletChart(params);
     }
@@ -22,6 +32,26 @@ export class BulletChartDescriptor extends BaseChartDescriptor {
         );
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
+
+    public getEmbeddingCode = getReactEmbeddingCodeGenerator({
+        component: {
+            importType: "named",
+            name: "BulletChart",
+            package: "@gooddata/sdk-ui-charts",
+        },
+        insightToProps: getInsightToPropsConverter<IBulletChartBucketProps>({
+            primaryMeasure: bucketConversion("primaryMeasure", BucketNames.MEASURES, bucketMeasure),
+            targetMeasure: bucketConversion("targetMeasure", BucketNames.SECONDARY_MEASURES, bucketMeasure),
+            comparativeMeasure: bucketConversion(
+                "comparativeMeasure",
+                BucketNames.TERTIARY_MEASURES,
+                bucketMeasure,
+            ),
+            viewBy: bucketConversion("viewBy", BucketNames.VIEW, bucketAttributes),
+            filters: insightConversion("filters", insightFilters),
+            sortBy: insightConversion("sortBy", insightSorts),
+        }),
+    });
 
     private addFiltersForBullet(insight: IInsight, drillConfig: IDrillDownDefinition, event: IDrillEvent) {
         const clicked = drillDownFromAttributeLocalId(drillConfig);

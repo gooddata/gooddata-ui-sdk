@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`XirrDescriptor should generate embedding code without context 1`] = `
+"import React from \\"react\\";
+import { idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { Xirr } from \\"@gooddata/sdk-ui-charts\\";
+
+const measure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.alias(\\"Custom Amount alias\\").localId(\\"m_aangOxLSeztu\\"));
+const attribute = newAttribute(idRef(\\"activity.abm81lMifn6q\\", \\"displayForm\\"), a => a.alias(\\"Custom Month alias\\").localId(\\"a_activity.abm81lMifn6q\\"));
+const style = { height: 400 };
+
+function MyComponent() {
+    return (
+        <div style={style}>
+            <Xirr
+                measure={measure}
+                attribute={attribute}
+            />
+        </div>
+    );
+}
+"
+`;

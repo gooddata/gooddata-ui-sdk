@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DonutChartDescriptor should generate embedding code without context 1`] = `
+"import React from \\"react\\";
+import { idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { DonutChart } from \\"@gooddata/sdk-ui-charts\\";
+
+const measures = [
+    newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.alias(\\"Custom Amount alias\\").localId(\\"m_aangOxLSeztu\\"))
+];
+const viewBy = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.alias(\\"Custom Region alias\\").localId(\\"a_label.owner.region\\"));
+const style = { height: 400 };
+
+function MyComponent() {
+    return (
+        <div style={style}>
+            <DonutChart
+                measures={measures}
+                viewBy={viewBy}
+            />
+        </div>
+    );
+}
+"
+`;
