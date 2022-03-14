@@ -4,7 +4,9 @@ import {
     insightFilters,
     insightSorts,
     bucketAttribute,
-    bucketMeasure,
+    bucketItems,
+    IBucket,
+    IAttributeOrMeasure,
 } from "@gooddata/sdk-model";
 
 import {
@@ -59,8 +61,8 @@ export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IV
         },
         insightToProps: getInsightToPropsConverter<IGeoPushpinChartProps>({
             location: bucketConversion("location", BucketNames.LOCATION, bucketAttribute),
-            size: bucketConversion("size", BucketNames.SIZE, bucketMeasure),
-            color: bucketConversion("color", BucketNames.COLOR, bucketMeasure),
+            size: bucketConversion("size", BucketNames.SIZE, firstBucketItem),
+            color: bucketConversion("color", BucketNames.COLOR, firstBucketItem),
             segmentBy: bucketConversion("segmentBy", BucketNames.SEGMENT, bucketAttribute),
             filters: insightConversion("filters", insightFilters),
             sortBy: insightConversion("sortBy", insightSorts),
@@ -73,4 +75,8 @@ export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IV
         }
         return MIDDLE_VISUALIZATION_HEIGHT;
     }
+}
+
+function firstBucketItem(bucket: IBucket): IAttributeOrMeasure | undefined {
+    return bucketItems(bucket)?.[0];
 }
