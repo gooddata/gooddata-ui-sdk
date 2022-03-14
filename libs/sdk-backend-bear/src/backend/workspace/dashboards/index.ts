@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     IWorkspaceDashboardsService,
     IDashboard,
@@ -35,6 +35,7 @@ import {
     IDashboardPluginDefinition,
     IDashboardPluginLink,
     IDashboardReferences,
+    IGetScheduledMailOptions,
 } from "@gooddata/sdk-backend-spi";
 import {
     areObjRefsEqual,
@@ -51,6 +52,7 @@ import {
     GdcFilterContext,
     GdcMetadata,
     GdcMetadataObject,
+    GdcScheduledMail,
     GdcVisualizationClass,
     GdcVisualizationObject,
 } from "@gooddata/api-model-bear";
@@ -305,14 +307,27 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         return toSdkModel.convertScheduledMail(createdBearScheduledMail) as IScheduledMail;
     };
 
+    public getScheduledMailsForDashboard = async (
+        dashboardRef: ObjRef,
+        options: IGetScheduledMailOptions = {},
+    ): Promise<IScheduledMail[]> => {
+        const { createdByCurrentUser } = options;
+        const scheduledMailObjectLinks = createdByCurrentUser
+            ? await this.getScheduledMailObjectLinksForDashboardAndCurrentUser(dashboardRef)
+            : await this.getScheduledMailObjectLinksForDashboard(dashboardRef);
+
+        const wrappedScheduledMails = await this.authCall(async (sdk) => {
+            return sdk.md.getObjects<GdcScheduledMail.IWrappedScheduledMail>(
+                this.workspace,
+                scheduledMailObjectLinks.map(({ link }) => link),
+            );
+        });
+
+        return wrappedScheduledMails.map(toSdkModel.convertScheduledMail) as IScheduledMail[];
+    };
+
     public getScheduledMailsCountForDashboard = async (dashboardRef: ObjRef): Promise<number> => {
-        const dashboardUri = await objRefToUri(dashboardRef, this.workspace, this.authCall);
-        const objectLinks = await this.authCall((sdk) =>
-            sdk.md.getObjectUsedBy(this.workspace, dashboardUri, {
-                nearest: true,
-                types: ["scheduledMail"],
-            }),
-        );
+        const objectLinks = await this.getScheduledMailObjectLinksForDashboard(dashboardRef);
 
         return objectLinks.length;
     };
@@ -738,6 +753,35 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         return this.authCall((sdk) =>
             sdk.md.getObjects<GdcFilterContext.IWrappedFilterContext>(this.workspace, filterContextUris),
         );
+    };
+
+    // Scheduled mail
+
+    private getScheduledMailObjectLinksForDashboard = async (
+        dashboardRef: ObjRef,
+    ): Promise<GdcMetadata.IObjectLink[]> => {
+        const dashboardUri = await objRefToUri(dashboardRef, this.workspace, this.authCall);
+        return this.authCall((sdk) =>
+            sdk.md.getObjectUsedBy(this.workspace, dashboardUri, {
+                nearest: true,
+                types: ["scheduledMail"],
+            }),
+        );
+    };
+
+    private getScheduledMailObjectLinksForDashboardAndCurrentUser = async (
+        dashboardRef: ObjRef,
+    ): Promise<GdcMetadata.IObjectLink[]> => {
+        return this.authCall(async (_sdk, context) => {
+            const user = await userUriFromAuthenticatedPrincipalWithAnonymous(context.getPrincipal);
+            if (!user) {
+                return [];
+            }
+
+            const objectLinks = await this.getScheduledMailObjectLinksForDashboard(dashboardRef);
+
+            return objectLinks.filter(({ author }) => author === user);
+        });
     };
 
     // Metadata

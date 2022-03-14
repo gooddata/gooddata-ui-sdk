@@ -172,6 +172,7 @@ export { IWorkspaceFactsService } from "./workspace/facts";
 export {
     IWorkspaceDashboardsService,
     IGetDashboardOptions,
+    IGetScheduledMailOptions,
     SupportedDashboardReferenceTypes,
 } from "./workspace/dashboards";
 export { IDashboardObjectIdentity } from "./workspace/dashboards/common";

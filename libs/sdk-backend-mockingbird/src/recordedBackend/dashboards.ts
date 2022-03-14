@@ -10,6 +10,7 @@ import {
     IDashboardWithReferences,
     IFilterContextDefinition,
     IGetDashboardOptions,
+    IGetScheduledMailOptions,
     IListedDashboard,
     IScheduledMail,
     IScheduledMailDefinition,
@@ -286,6 +287,13 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
     }
 
     public getResolvedFiltersForWidget(_widget: IWidget, _filters: IFilter[]): Promise<IFilter[]> {
+        throw new NotSupported("recorded backend does not support this call");
+    }
+
+    public getScheduledMailsForDashboard(
+        _ref: ObjRef,
+        _options?: IGetScheduledMailOptions,
+    ): Promise<IScheduledMail[]> {
         throw new NotSupported("recorded backend does not support this call");
     }
 

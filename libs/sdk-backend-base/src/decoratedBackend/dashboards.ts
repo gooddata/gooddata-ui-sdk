@@ -2,6 +2,7 @@
 import {
     IWorkspaceDashboardsService,
     IGetDashboardOptions,
+    IGetScheduledMailOptions,
     IListedDashboard,
     IDashboard,
     SupportedDashboardReferenceTypes,
@@ -78,6 +79,13 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
         exportFilterContext?: IFilterContextDefinition,
     ): Promise<IScheduledMail> {
         return this.decorated.createScheduledMail(scheduledMail, exportFilterContext);
+    }
+
+    getScheduledMailsForDashboard(
+        ref: ObjRef,
+        options?: IGetScheduledMailOptions,
+    ): Promise<IScheduledMail[]> {
+        return this.decorated.getScheduledMailsForDashboard(ref, options);
     }
 
     getScheduledMailsCountForDashboard(ref: ObjRef): Promise<number> {

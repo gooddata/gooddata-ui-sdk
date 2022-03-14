@@ -50,6 +50,7 @@ import { IFactMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IFilter } from '@gooddata/sdk-model';
 import { IFilterContextDefinition } from '@gooddata/sdk-backend-spi';
 import { IGetDashboardOptions } from '@gooddata/sdk-backend-spi';
+import { IGetScheduledMailOptions } from '@gooddata/sdk-backend-spi';
 import { IGroupableCatalogItemBase } from '@gooddata/sdk-backend-spi';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
@@ -512,6 +513,8 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     getResolvedFiltersForWidget(widget: IWidget, filters: IFilter[]): Promise<IFilter[]>;
     // (undocumented)
     getScheduledMailsCountForDashboard(ref: ObjRef): Promise<number>;
+    // (undocumented)
+    getScheduledMailsForDashboard(ref: ObjRef, options?: IGetScheduledMailOptions): Promise<IScheduledMail[]>;
     // (undocumented)
     getWidgetAlertsCountForWidgets(refs: ObjRef[]): Promise<IWidgetAlertCount[]>;
     // (undocumented)
