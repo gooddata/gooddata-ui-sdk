@@ -1,0 +1,36 @@
+version: "3.7"
+services:
+  isolated-tests:
+    image: harbor.intgdc.com/tools/gdc-frontend-cypress-included:9db8137
+    entrypoint: node ./scripts/run-isolated-compose.js --$MODE --filter=$FILTER
+    volumes:
+      - ../../:/dashboard-plugin-tests:rw
+    working_dir: /dashboard-plugin-tests/tools/dashboard-plugin-tests
+    user: "$USER_UID:$USER_GID"
+    depends_on:
+      - dashboard-plugin-tests
+      - backend-mock
+    environment:
+      - CYPRESS_HOST=http://dashboard-plugin-tests:9500
+      - NPM_TOKEN
+      - MODE
+      - FILTER
+      - NO_COLOR
+      - BUILD_URL
+
+  dashboard-plugin-tests:
+    image: $IMAGE_ID
+    volumes:
+      - ./nginx/proxy-isolated-tests.conf:/etc/nginx/extra-conf.d/proxy-isolated-tests.conf
+    depends_on:
+      - backend-mock
+
+  backend-mock:
+    image: wiremock/wiremock:2.32.0
+    command: "--preserve-host-header --proxy-all=https://${HOST:-staging3.intgdc.com} --extensions org.gooddata.extensions.ResponseHeadersTransformer,org.gooddata.extensions.RequestHeadersTransformer"
+#    --extensions org.gooddata.extensions.ResponseHeadersTransformer,org.gooddata.extensions.RequestHeadersTransformer --verbose"
+    volumes:
+      - ./recordings/:/home/wiremock:cached
+      - ./recordings/wiremock_extension/jar/:/var/wiremock/extensions:ro
+    environment:
+      - PROXY_HOST=https://${HOST:-staging3.intgdc.com}

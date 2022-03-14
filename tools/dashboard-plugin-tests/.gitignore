@@ -1,1 +1,3 @@
-generated
+/cypress/results
+/cypress/videos
+/cypress/screenshots

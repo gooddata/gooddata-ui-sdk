@@ -1,17 +1,22 @@
 #!/usr/bin/env bash
 
-# TODO: RAIL-3888 support concurrency
-
+echo Removing plugins build folder...
 rm -rf "./dist/plugins"
 
 FILES="./plugins/*"
 for f in $FILES
 do
   plugin="$(basename -- $f)"
+  echo Building plugin \"$plugin\"...
   cd $f
-  echo "Building plugin \"$plugin\"..."
   npm run build-plugin
-  cd -
-  mkdir -p ./dist/plugins/$plugin
-  mv $f/dist/dashboardPlugin/* ./dist/plugins/$plugin
+
+  if [ $? -eq 0 ]; then
+    cd -
+    mkdir -p ./dist/plugins/$plugin
+    echo Moving plugin \"$plugin\" to the target destination...
+    mv $f/dist/dashboardPlugin/* ./dist/plugins/$plugin
+  else
+      echo Plugin "$plugin" build failed!
+  fi
 done
