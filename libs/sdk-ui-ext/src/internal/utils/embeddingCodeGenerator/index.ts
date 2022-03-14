@@ -13,15 +13,10 @@ import sortBy from "lodash/sortBy";
 import toPairs from "lodash/fp/toPairs";
 import { factoryNotationFor, IInsightDefinition } from "@gooddata/sdk-model";
 
-import { IEmbeddingCodeConfig, IEmbeddingCodeContext } from "../../interfaces/VisualizationDescriptor";
+import { IEmbeddingCodeConfig } from "../../interfaces/VisualizationDescriptor";
 
 import { normalizeInsight } from "./normalizeInsight";
-
-interface IImportInfo {
-    name: string;
-    importType: "default" | "named";
-    package: string;
-}
+import { IAdditionalFactoryDefinition, IEmbeddingCodeGeneratorInput, IImportInfo } from "./types";
 
 const defaultFactories: IImportInfo[] = [
     // ObjRef factories
@@ -106,22 +101,14 @@ const renderImports: (imports: IImportInfo[]) => string = flow(
 
 const REACT_IMPORT_INFO: IImportInfo = { name: "React", package: "react", importType: "default" };
 
-interface IAdditionalFactoryDefinition {
-    importInfo: IImportInfo;
-    transformation: (obj: any) => string | undefined;
-}
-
-interface IEmbeddingCodeGeneratorInput {
-    component: IImportInfo;
-    insightToProps: (insight: IInsightDefinition, ctx?: IEmbeddingCodeContext) => Record<string, any>;
-    additionalFactories?: IAdditionalFactoryDefinition[];
-}
-
-export function getReactEmbeddingCodeGenerator({
+export function getReactEmbeddingCodeGenerator<TProps extends object>({
     component,
     insightToProps,
     additionalFactories,
-}: IEmbeddingCodeGeneratorInput): (insight: IInsightDefinition, config?: IEmbeddingCodeConfig) => string {
+}: IEmbeddingCodeGeneratorInput<TProps>): (
+    insight: IInsightDefinition,
+    config?: IEmbeddingCodeConfig,
+) => string {
     return (insight, config) => {
         const normalizedInsight = normalizeInsight(insight);
 
