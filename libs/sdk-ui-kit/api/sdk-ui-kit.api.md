@@ -907,6 +907,9 @@ export const Icon: {
     Dashboard: FC<IIconProps>;
     Many: FC<IIconProps>;
     Widget: FC<IIconProps>;
+    Chart: FC<IIconProps>;
+    SettingsGear: FC<IIconProps>;
+    AttachmentClip: FC<IIconProps>;
 };
 
 // @internal (undocumented)

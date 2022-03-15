@@ -1484,6 +1484,7 @@ export interface ISettings {
     enableEmbedButtonInKD?: boolean;
     enableHidingOfDataPoints?: boolean;
     enableHidingOfWidgetTitle?: boolean;
+    enableInsightExportScheduling?: boolean;
     enableInsightToReport?: boolean;
     enableKDWidgetCustomHeight?: boolean;
     enableKDZooming?: boolean;
@@ -2001,7 +2002,7 @@ export interface IWidgetAttachment {
     // (undocumented)
     exportOptions?: IExportOptions;
     filterContext?: ObjRef;
-    formats: ["csv" | "xlsx"];
+    formats: ("csv" | "xlsx")[];
     widget: ObjRef;
     widgetDashboard: ObjRef;
 }

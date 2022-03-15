@@ -225,6 +225,11 @@
         "comment": "",
         "limit": 0
     },
+    "dialogs.schedule.email.filters": {
+        "value": "Dashboard contains filter changes that will be saved in the schedule.",
+        "comment": "",
+        "limit": 0
+    },
     "dialogs.schedule.email.attachment.filter": {
         "value": "(with currently set filters)",
         "comment": "Keep the parentheses. Attachment with filters included.",
@@ -235,9 +240,44 @@
         "comment": "Attachment of the scheduled email.",
         "limit": 0
     },
+    "dialogs.schedule.email.attachments.label": {
+        "value": "Attachments:",
+        "comment": "Attachments of the scheduled email.",
+        "limit": 0
+    },
+    "dialogs.schedule.email.attachment.select": {
+        "value": "Select attachments",
+        "comment": "Label of a button that opens attachment selection",
+        "limit": 0
+    },
+    "dialogs.schedule.email.attachment.format": {
+        "value": "Format options",
+        "comment": "Label of a button that opens format configuration",
+        "limit": 0
+    },
+    "dialogs.schedule.email.attachment.select.dashboard.header": {
+        "value": "Dashboard (PDF)",
+        "comment": "Heading of checkbox that selects dashboard to be exported in PDF file format",
+        "limit": 0
+    },
+    "dialogs.schedule.email.attachment.select.widgets.header|report": {
+        "value": "Reports (CSV, XLSX)",
+        "comment": "Heading of section of checkboxes for selecting reports to be exported as CSV of XLSX file",
+        "limit": 0
+    },
+    "dialogs.schedule.email.attachment.select.widgets.header|insight": {
+        "value": "Insights (CSV, XLSX)",
+        "comment": "Heading of section of checkboxes for selecting insights to be exported as CSV of XLSX file",
+        "limit": 0
+    },
     "dialogs.schedule.email.headline": {
         "value": "Schedule email delivery",
         "comment": "Translate as imperative. Schedule emailing whole KPI dashboard.",
+        "limit": 0
+    },
+    "dialogs.schedule.email.heading": {
+        "value": "Schedule export",
+        "comment": "Translate as imperative. Schedule exporting whole dashboard and insights",
         "limit": 0
     },
     "dialogs.schedule.email.message.label": {
@@ -323,6 +363,31 @@
     "dialogs.schedule.email.submit": {
         "value": "Schedule",
         "comment": "Translate as imperative. Submit the schedule config form.",
+        "limit": 0
+    },
+    "dialogs.schedule.email.format.options": {
+        "value": "Format options",
+        "comment": "Header of a formatting dialog. Not an imperative!",
+        "limit": 0
+    },
+    "dialogs.schedule.email.insight.format|insight": {
+        "value": "Insight format:",
+        "comment": "Label of a dropdown for selecting export format",
+        "limit": 0
+    },
+    "dialogs.schedule.email.insight.format|report": {
+        "value": "Report format:",
+        "comment": "Label of a dropdown for selecting export format",
+        "limit": 0
+    },
+    "dialogs.schedule.email.attribute.merged": {
+        "value": "Keep attribute cells merged",
+        "comment": "Label of a checkbox field",
+        "limit": 0
+    },
+    "dialogs.schedule.email.show.filters": {
+        "value": "Show what filters are applied",
+        "comment": "Label of a checkbox field",
         "limit": 0
     },
     "dialogs.schedule.management.title": {

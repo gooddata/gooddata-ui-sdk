@@ -1,6 +1,12 @@
 // (C) 2019-2022 GoodData Corporation
 import { useCallback } from "react";
-import { IScheduledMailDefinition, IScheduledMail, FilterContextItem } from "@gooddata/sdk-backend-spi";
+import {
+    IScheduledMailDefinition,
+    IScheduledMail,
+    FilterContextItem,
+    isInsightWidget,
+    IInsightWidget,
+} from "@gooddata/sdk-backend-spi";
 import { GoodDataSdkError, ILocale } from "@gooddata/sdk-ui";
 import { UriRef, IUser } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
@@ -17,7 +23,11 @@ import {
     selectEnableKPIDashboardScheduleRecipients,
     selectCanListUsersInWorkspace,
     selectEnableKPIDashboardSchedule,
+    selectEnableInsightExportScheduling,
     selectOriginalFilterContextFilters,
+    selectWidgets,
+    isCustomWidget,
+    selectCanExportReport,
 } from "../../../model";
 
 import { useCreateScheduledEmail } from "./useCreateScheduledEmail";
@@ -40,9 +50,24 @@ interface UseScheduledEmailResult {
     dashboardTitle: string;
 
     /**
+     * Analytical insights widgets on the dashboard
+     */
+    dashboardInsightWidgets: IInsightWidget[];
+
+    /**
+     * Filters on the dashboard have not been changed so the dashboard filters should be used for the schedule
+     */
+    hasDefaultFilters: boolean;
+
+    /**
      * Has user permissions to list users in the workspace?
      */
     canListUsersInWorkspace?: boolean;
+
+    /**
+     * Has user permissions to list users in the canExportReport?
+     */
+    canExportReport?: boolean;
 
     /**
      * Is user able to create scheduled emails?
@@ -53,6 +78,11 @@ interface UseScheduledEmailResult {
      * Is user able to send scheduled email to other recipients?
      */
     enableKPIDashboardScheduleRecipients?: boolean;
+
+    /**
+     * Is the new UI and workflow for scheduled emailing with widgets is enabled?
+     */
+    enableWidgetExportScheduling?: boolean;
 
     /**
      * Date format user for the date select and default scheduled email subject.
@@ -114,6 +144,10 @@ export const useScheduledEmail = (props: UseScheduledEmailProps): UseScheduledEm
     invariant(dashboardUriRef, "attempting to schedule email for unsaved dashboard");
 
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
+    const dashboardWidgets = useDashboardSelector(selectWidgets);
+    const dashboardInsightWidgets: IInsightWidget[] = dashboardWidgets
+        .filter(isInsightWidget)
+        .filter((widget) => !isCustomWidget(widget));
     const currentUser = useDashboardSelector(selectCurrentUser);
     const locale = useDashboardSelector(selectLocale);
     const filters = useDashboardSelector(selectFilterContextFilters);
@@ -123,7 +157,9 @@ export const useScheduledEmail = (props: UseScheduledEmailProps): UseScheduledEm
         selectEnableKPIDashboardScheduleRecipients,
     );
     const canListUsersInWorkspace = useDashboardSelector(selectCanListUsersInWorkspace);
+    const canExportReport = useDashboardSelector(selectCanExportReport);
     const enableKPIDashboardSchedule = useDashboardSelector(selectEnableKPIDashboardSchedule);
+    const enableWidgetExportScheduling = useDashboardSelector(selectEnableInsightExportScheduling);
 
     const scheduledEmailCreator = useCreateScheduledEmail({
         onSuccess: onSubmitSuccess,
@@ -131,15 +167,16 @@ export const useScheduledEmail = (props: UseScheduledEmailProps): UseScheduledEm
         onBeforeRun: onSubmit,
     });
 
+    const hasDefaultFilters = isEqual(originalFilters, filters);
     const handleCreateScheduledEmail = useCallback(
         (scheduledEmail: IScheduledMailDefinition, customFilters?: FilterContextItem[]) => {
             // If dashboard filters are not changed, do not save them to scheduled email filter context.
             // Like this, future filter changes stored in the original dashboard filter context
             // are correctly propagated to the scheduled emails with the original filter context.
-            const filtersToStore = isEqual(originalFilters, filters) ? undefined : filters;
+            const filtersToStore = hasDefaultFilters ? undefined : filters;
             scheduledEmailCreator.create(scheduledEmail, customFilters ?? filtersToStore);
         },
-        [filters, originalFilters],
+        [filters, hasDefaultFilters],
     );
 
     const scheduledEmailCreationStatus = scheduledEmailCreator.creationStatus;
@@ -147,9 +184,13 @@ export const useScheduledEmail = (props: UseScheduledEmailProps): UseScheduledEm
     return {
         dashboardRef: dashboardUriRef,
         dashboardTitle,
+        dashboardInsightWidgets,
+        hasDefaultFilters,
         canListUsersInWorkspace,
+        canExportReport,
         enableKPIDashboardSchedule,
         enableKPIDashboardScheduleRecipients,
+        enableWidgetExportScheduling,
         dateFormat,
         currentUser,
         locale,

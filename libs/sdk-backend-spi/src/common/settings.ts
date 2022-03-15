@@ -105,6 +105,11 @@ export interface ISettings {
     enableKPIDashboardScheduleRecipients?: boolean;
 
     /**
+     * Indicates whether the new UI for scheduled widget exports is enabled.
+     */
+    enableInsightExportScheduling?: boolean;
+
+    /**
      * Indicates whether the user can zoom on the insights in KPI dashboards that have this feature enabled.
      */
     enableKDZooming?: boolean;

@@ -16,12 +16,16 @@ export const DefaultScheduledEmailDialog = (props: IScheduledEmailDialogProps): 
         currentUser,
         dashboardRef,
         dashboardTitle,
+        dashboardInsightWidgets,
+        hasDefaultFilters,
         handleCreateScheduledEmail,
         locale,
         canListUsersInWorkspace,
+        canExportReport,
         dateFormat,
         enableKPIDashboardSchedule,
         enableKPIDashboardScheduleRecipients,
+        enableWidgetExportScheduling,
     } = useScheduledEmail({ onSubmit, onSubmitSuccess: onSuccess, onSubmitError: onError });
 
     // trigger the invariant only if the user tries to open the dialog
@@ -40,11 +44,15 @@ export const DefaultScheduledEmailDialog = (props: IScheduledEmailDialogProps): 
         <ScheduledMailDialogRenderer
             locale={locale}
             canListUsersInProject={canListUsersInWorkspace}
+            canExportReport={canExportReport}
             enableKPIDashboardScheduleRecipients={enableKPIDashboardScheduleRecipients}
+            enableWidgetExportScheduling={enableWidgetExportScheduling}
             dateFormat={dateFormat}
             currentUser={currentUser}
             dashboard={dashboardRef}
             dashboardTitle={dashboardTitle}
+            dashboardInsightWidgets={dashboardInsightWidgets}
+            hasDefaultFilters={hasDefaultFilters}
             onSubmit={handleCreateScheduledEmail}
             onCancel={onCancel}
             onError={onError}

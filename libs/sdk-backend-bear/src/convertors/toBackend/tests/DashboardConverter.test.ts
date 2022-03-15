@@ -1,6 +1,12 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
-import { convertDashboard, convertDrill, convertFilterContext, convertWidget } from "../DashboardConverter";
+import {
+    convertDashboard,
+    convertDrill,
+    convertFilterContext,
+    convertScheduledMail,
+    convertWidget,
+} from "../DashboardConverter";
 import {
     emptyDashboard,
     dashboardWithFilterContext,
@@ -94,6 +100,116 @@ describe("dashboard converter", () => {
         it("should convert drill to dashboard with drill from attribute", () => {
             const convertedDrill = convertDrill(drillToDashboardWithDrillFromAttribute);
             expect(convertedDrill).toMatchSnapshot();
+        });
+    });
+
+    describe("convert scheduled mail", () => {
+        it("converts scheduled mail object with attachments", () => {
+            const convertedScheduledMail = convertScheduledMail({
+                bcc: ["bcc_recipient1@gd.com", "bcc_recipient1@gd.com"],
+                body: "Scheduled mail body",
+                description: "Scheduled mail description",
+                lastSuccessful: "YYYY-MM-DD HH:mm:ss",
+                subject: "Scheduled mail subject",
+                title: "Scheduled mail title",
+                to: ["to_recipient1@gd.com", "to_recipient1@gd.com"],
+                attachments: [
+                    {
+                        dashboard: {
+                            uri: "dashboard/uri",
+                        },
+                        filterContext: {
+                            uri: "dashboard/uri",
+                        },
+                        format: "pdf",
+                    },
+                    {
+                        exportOptions: {
+                            includeFilters: false,
+                            mergeHeaders: true,
+                        },
+                        filterContext: {
+                            uri: "context/uri",
+                        },
+                        formats: ["csv", "xlsx"],
+                        widget: {
+                            uri: "widget/uri",
+                        },
+                        widgetDashboard: {
+                            uri: "dashboard/uri",
+                        },
+                    },
+                    {
+                        formats: ["csv"],
+                        widget: {
+                            uri: "widget/uri",
+                        },
+                        widgetDashboard: {
+                            uri: "dashboard/uri",
+                        },
+                    },
+                ],
+                unlisted: false,
+                unsubscribed: ["unsubscribed@gd.com"],
+                when: {
+                    endDate: "2023-01-01",
+                    recurrence: "recurency string",
+                    startDate: "2022-01-01",
+                    timeZone: "CET",
+                },
+            });
+
+            expect(convertedScheduledMail).toEqual({
+                scheduledMail: {
+                    content: {
+                        attachments: [
+                            {
+                                kpiDashboardAttachment: {
+                                    filterContext: "dashboard/uri",
+                                    format: "pdf",
+                                    uri: "dashboard/uri",
+                                },
+                            },
+                            {
+                                visualizationWidgetAttachment: {
+                                    dashboardUri: "dashboard/uri",
+                                    exportOptions: {
+                                        includeFilterContext: "no",
+                                        mergeHeaders: "yes",
+                                    },
+                                    filterContext: "context/uri",
+                                    formats: ["csv", "xlsx"],
+                                    uri: "widget/uri",
+                                },
+                            },
+                            {
+                                visualizationWidgetAttachment: {
+                                    dashboardUri: "dashboard/uri",
+                                    formats: ["csv"],
+                                    uri: "widget/uri",
+                                },
+                            },
+                        ],
+                        bcc: ["bcc_recipient1@gd.com", "bcc_recipient1@gd.com"],
+                        body: "Scheduled mail body",
+                        lastSuccessfull: "YYYY-MM-DD HH:mm:ss",
+                        subject: "Scheduled mail subject",
+                        to: ["to_recipient1@gd.com", "to_recipient1@gd.com"],
+                        unsubscribed: ["unsubscribed@gd.com"],
+                        when: {
+                            endDate: "2023-01-01",
+                            recurrency: "recurency string",
+                            startDate: "2022-01-01",
+                            timeZone: "CET",
+                        },
+                    },
+                    meta: {
+                        summary: "Scheduled mail description",
+                        title: "Scheduled mail title",
+                        unlisted: 0,
+                    },
+                },
+            });
         });
     });
 });

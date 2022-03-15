@@ -4352,7 +4352,7 @@ export const selectEnableCompanyLogoInEmbeddedUI: OutputSelector<DashboardState,
 export const selectEnableFilterValuesResolutionInDrillEvents: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @public
-export const selectEnableInsightExportScheduling: OutputSelector<DashboardState, string | number | boolean | object, (res: ResolvedDashboardConfig) => string | number | boolean | object>;
+export const selectEnableInsightExportScheduling: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @public
 export const selectEnableKPIDashboardDrillToDashboard: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
@@ -4529,7 +4529,10 @@ export const selectWidgetByRef: (ref: ObjRef | undefined) => OutputSelector<Dash
 export const selectWidgetDrills: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IDrillToLegacyDashboard[] | InsightDrillDefinition[], (res: IKpiWidget | IInsightWidget | undefined) => IDrillToLegacyDashboard[] | InsightDrillDefinition[]>;
 
 // @internal
-export const selectWidgetsMap: OutputSelector<DashboardState, ObjRefMap<ExtendedDashboardWidget>, (res: IDashboardLayout<ExtendedDashboardWidget>) => ObjRefMap<ExtendedDashboardWidget>>;
+export const selectWidgets: OutputSelector<DashboardState, ExtendedDashboardWidget[], (res: IDashboardLayout<ExtendedDashboardWidget>) => ExtendedDashboardWidget[]>;
+
+// @internal
+export const selectWidgetsMap: OutputSelector<DashboardState, ObjRefMap<ExtendedDashboardWidget>, (res: ExtendedDashboardWidget[]) => ObjRefMap<ExtendedDashboardWidget>>;
 
 // @alpha (undocumented)
 export interface SetAttributeFilterParent extends IDashboardCommand {

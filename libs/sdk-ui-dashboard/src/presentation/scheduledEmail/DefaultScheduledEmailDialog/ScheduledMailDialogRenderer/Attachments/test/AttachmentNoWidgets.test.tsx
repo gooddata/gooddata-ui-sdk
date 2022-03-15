@@ -1,13 +1,13 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { mount, ReactWrapper } from "enzyme";
 
-import { Attachment, IAttachmentProps } from "../Attachment";
-import { IntlWrapper } from "../../../../localization/IntlWrapper";
+import { AttachmentNoWidgets, IAttachmentNoWidgetsOwnProps } from "../AttachmentNoWidgets";
+import { IntlWrapper } from "../../../../../localization/IntlWrapper";
 
-describe("Attachment", () => {
+describe("AttachmentNoWidgets", () => {
     const FILE_NAME = "ABC.pdf";
-    function renderComponent(customProps: Partial<IAttachmentProps> = {}): ReactWrapper {
+    function renderComponent(customProps: Partial<IAttachmentNoWidgetsOwnProps> = {}): ReactWrapper {
         const defaultProps = {
             includeFilterContext: false,
             isMobile: false,
@@ -18,7 +18,7 @@ describe("Attachment", () => {
 
         return mount(
             <IntlWrapper>
-                <Attachment {...defaultProps} />
+                <AttachmentNoWidgets {...defaultProps} />
             </IntlWrapper>,
         );
     }

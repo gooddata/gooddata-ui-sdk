@@ -90,6 +90,7 @@ export {
     selectStash,
     selectWidgetByRef,
     selectAnalyticalWidgetByRef,
+    selectWidgets,
     selectWidgetsMap,
     selectAllInsightWidgets,
     selectAllCustomWidgets,

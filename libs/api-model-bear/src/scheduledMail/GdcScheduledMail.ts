@@ -89,7 +89,7 @@ export namespace GdcScheduledMail {
         visualizationWidgetAttachment: {
             uri: Uri;
             dashboardUri: Uri;
-            formats: ["csv" | "xlsx"];
+            formats: ("csv" | "xlsx")[];
             filterContext?: Uri;
             exportOptions?: {
                 mergeHeaders?: "yes" | "no";
