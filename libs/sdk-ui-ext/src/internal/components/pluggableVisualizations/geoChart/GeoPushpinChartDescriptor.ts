@@ -23,11 +23,24 @@ import { ISettings } from "@gooddata/sdk-backend-spi";
 import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator";
 import {
     bucketConversion,
+    getConfigFromPropsConverter,
     getInsightToPropsConverter,
     insightConversion,
 } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { IGeoPushpinChartProps } from "@gooddata/sdk-ui-geo";
+import { IGeoConfig, IGeoPushpinChartProps } from "@gooddata/sdk-ui-geo";
+
+const supportedGeoConfigProperties = new Set<keyof IGeoConfig>([
+    "center",
+    "cooperativeGestures",
+    "legend",
+    "limit",
+    "selectedSegmentItems",
+    "separators",
+    "viewport",
+    "points",
+    "showLabels",
+]);
 
 export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
@@ -66,6 +79,7 @@ export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IV
             segmentBy: bucketConversion("segmentBy", BucketNames.SEGMENT, bucketAttribute),
             filters: insightConversion("filters", insightFilters),
             sortBy: insightConversion("sortBy", insightSorts),
+            config: insightConversion("config", getConfigFromPropsConverter(supportedGeoConfigProperties)),
         }),
     });
 

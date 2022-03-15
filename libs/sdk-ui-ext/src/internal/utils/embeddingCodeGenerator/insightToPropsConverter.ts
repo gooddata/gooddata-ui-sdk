@@ -86,6 +86,21 @@ export function getInsightToPropsConverter<TProps extends object>(
     };
 }
 
+export function getConfigFromPropsConverter<TConfig extends object>(
+    supportedProperties: Set<keyof TConfig>,
+): (insight: IInsightDefinition) => TConfig {
+    return (insight): TConfig => {
+        const properties = insightProperties(insight);
+        const controls = properties?.controls;
+
+        return flow(
+            toPairs,
+            filter(([key, value]) => supportedProperties.has(key as any) && !isNil(value)),
+            fromPairs,
+        )(controls) as TConfig;
+    };
+}
+
 const supportedChartConfigProperties = new Set<keyof IChartConfig>([
     "dataLabels",
     "dataPoints",
@@ -110,16 +125,4 @@ const supportedChartConfigProperties = new Set<keyof IChartConfig>([
     "yaxis",
 ]);
 
-export function chartConfigFromInsight(insight: IInsightDefinition): IChartConfig {
-    const properties = insightProperties(insight);
-    const controls = properties?.controls;
-    if (!controls) {
-        return {};
-    }
-
-    return flow(
-        toPairs,
-        filter(([key, value]) => supportedChartConfigProperties.has(key as any) && !isNil(value)),
-        fromPairs,
-    )(controls);
-}
+export const chartConfigFromInsight = getConfigFromPropsConverter(supportedChartConfigProperties);
