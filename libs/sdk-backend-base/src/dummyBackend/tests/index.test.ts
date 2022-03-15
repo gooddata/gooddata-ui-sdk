@@ -86,8 +86,8 @@ describe("dummyBackend", () => {
 
             it("should return delete state", async () => {
                 const service = dummyBackend().workspace(WORKSPACE_ID).measures();
-
-                expect(async () => await service.deleteMeasure(idRef("", "measure"))).not.toThrow();
+                // this is implicitly a not.toThrow assertion, no need for explicit expect calls
+                await service.deleteMeasure(idRef("", "measure"));
             });
 
             it("should return expression tokens", async () => {

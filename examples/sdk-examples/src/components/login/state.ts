@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { useState, useEffect } from "react";
 import sdk from "@gooddata/api-client-bear";
 
@@ -62,7 +62,7 @@ export const useDemoProjectAuth = (): {
     useEffect(() => {
         const getProjects = async () => {
             const userId = profileUri ? uriToId(profileUri) : undefined;
-            return userId ? await sdk.project.getProjects(userId) : undefined;
+            return userId ? sdk.project.getProjects(userId) : undefined;
         };
 
         if (profileUri) {

@@ -591,7 +591,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
             this.authCall,
         );
 
-        return await this.authCall(async (sdk) => {
+        return this.authCall(async (sdk) => {
             let result:
                 | GdcFilterContext.IWrappedFilterContext
                 | GdcFilterContext.IWrappedTempFilterContext
@@ -825,7 +825,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
 
         const dependenciesUris = dependenciesObjectLinks.map((objectLink) => objectLink.link);
 
-        return await this.authCall((sdk) =>
+        return this.authCall((sdk) =>
             sdk.md.getObjects<toSdkModel.BearDashboardDependency>(this.workspace, dependenciesUris),
         );
     };

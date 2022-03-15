@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import path from "path";
 import findUp from "find-up";
 import process from "process";
@@ -14,7 +14,7 @@ import keyBy from "lodash/keyBy";
 let _SourceDescriptor: SourceDescriptor | undefined;
 
 async function findRushJsonFile(): Promise<string | undefined> {
-    return await findUp("rush.json", { cwd: process.cwd(), type: "file" });
+    return findUp("rush.json", { cwd: process.cwd(), type: "file" });
 }
 
 export type RushPackagePredicate = (rushPackage: RushPackageDescriptor) => boolean;

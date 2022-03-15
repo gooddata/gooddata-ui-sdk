@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import isPlainObject from "lodash/isPlainObject";
 import chunk from "lodash/chunk";
 import flatten from "lodash/flatten";
@@ -105,7 +105,7 @@ export class MetadataModule {
     >(projectId: string, identifiers: string[]): Promise<T[]> {
         const uriIdentifierPairs = await this.getUrisFromIdentifiers(projectId, identifiers);
         const uris = uriIdentifierPairs.map((pair) => pair.uri);
-        return await this.getObjects(projectId, uris);
+        return this.getObjects(projectId, uris);
     }
 
     /**

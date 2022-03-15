@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
@@ -68,8 +68,8 @@ export class BearWorkspaceAttributes implements IWorkspaceAttributesService {
         return returnAttributeUris.map(uriRef);
     }
 
-    public async getCommonAttributesBatch(attributesRefsBatch: ObjRef[][]): Promise<ObjRef[][]> {
-        return await Promise.all(
+    public getCommonAttributesBatch(attributesRefsBatch: ObjRef[][]): Promise<ObjRef[][]> {
+        return Promise.all(
             attributesRefsBatch.map(async (attributeRefs) => {
                 return this.getCommonAttributes(attributeRefs);
             }),
