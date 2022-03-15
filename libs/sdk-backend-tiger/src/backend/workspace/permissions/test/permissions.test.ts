@@ -44,6 +44,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
             canManageMetric: false,
             canManageProject: false,
             canManageReport: false,
+            canManageScheduledMail: false,
             canRefreshData: false,
             canUploadNonProductionCSV: false,
         });
@@ -71,6 +72,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
             canManageMetric: true,
             canManageProject: false,
             canManageReport: true,
+            canManageScheduledMail: false,
             canRefreshData: true,
             canUploadNonProductionCSV: false,
         });
@@ -98,6 +100,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
             canManageMetric: true,
             canManageProject: true,
             canManageReport: true,
+            canManageScheduledMail: false,
             canRefreshData: true,
             canUploadNonProductionCSV: false,
         });

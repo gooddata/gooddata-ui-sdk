@@ -15,7 +15,10 @@ import {
     CustomTitleComponent,
     CustomTopBarComponent,
 } from "../topBar/types";
-import { CustomScheduledEmailDialogComponent } from "../scheduledEmail/types";
+import {
+    CustomScheduledEmailDialogComponent,
+    CustomScheduledEmailManagementDialogComponent,
+} from "../scheduledEmail/types";
 import { CustomDashboardDateFilterComponent, CustomFilterBarComponent } from "../filterBar/types";
 import { CustomSaveAsDialogComponent } from "../saveAs/types";
 import { CustomShareDialogComponent } from "../shareDialog/types";
@@ -45,6 +48,7 @@ interface IDashboardComponentsContext {
     TitleComponent: CustomTitleComponent;
     TopBarComponent: CustomTopBarComponent;
     ScheduledEmailDialogComponent: CustomScheduledEmailDialogComponent;
+    ScheduledEmailManagementDialogComponent: CustomScheduledEmailManagementDialogComponent;
     ShareDialogComponent: CustomShareDialogComponent;
     SaveAsDialogComponent: CustomSaveAsDialogComponent;
     DashboardAttributeFilterComponentProvider: AttributeFilterComponentProvider;
@@ -75,6 +79,9 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     TitleComponent: ThrowMissingComponentError("TitleComponent"),
     TopBarComponent: ThrowMissingComponentError("TopBarComponent"),
     ScheduledEmailDialogComponent: ThrowMissingComponentError("ScheduledEmailDialogComponent"),
+    ScheduledEmailManagementDialogComponent: ThrowMissingComponentError(
+        "ScheduledEmailManagementDialogComponent",
+    ),
     ShareDialogComponent: ThrowMissingComponentError("ShareDialogComponent"),
     SaveAsDialogComponent: ThrowMissingComponentError("SaveAsDialogComponent"),
     DashboardAttributeFilterComponentProvider: ThrowMissingComponentError(

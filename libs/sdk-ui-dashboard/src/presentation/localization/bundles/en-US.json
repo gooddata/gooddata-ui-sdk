@@ -325,6 +325,61 @@
         "comment": "Translate as imperative. Submit the schedule config form.",
         "limit": 0
     },
+    "dialogs.schedule.management.title": {
+        "value": "Scheduled exports",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.schedule.management.noSchedules": {
+        "value": "This dashboard contains no scheduled exports yet.{br}Add one now.",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.schedule.management.addSchedule": {
+        "value": "Add schedule",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.schedule.management.recipients": {
+        "value": "{n, plural, one {# recipient} other {# recipients}}",
+        "comment": "Translate only uppercase in '{n, plural, one {# RECIPIENT} other {# RECIPIENTS}}'.",
+        "limit": 0
+    },
+    "dialogs.schedule.management.recipients.onlyYou": {
+        "value": "Only you",
+        "comment": "There is no other recipient than you.",
+        "limit": 0
+    },
+    "dialogs.schedule.management.attachments.dashboard": {
+        "value": "Dashboard",
+        "comment": "Type of attachment.",
+        "limit": 0
+    },
+    "dialogs.schedule.management.attachments.widgets|insight": {
+        "value": "{n, plural, one {# insight} other {# insights}}",
+        "comment": "Translate only uppercase in '{n, plural, one {# INSIGHT} other {# INSIGHTS}}'.",
+        "limit": 0
+    },
+    "dialogs.schedule.management.attachments.widgets|report": {
+        "value": "{n, plural, one {# report} other {# reports}}",
+        "comment": "Translate only uppercase in '{n, plural, one {# REPORT} other {# REPORTS}}'.",
+        "limit": 0
+    },
+    "dialogs.schedule.management.attachments.mixed|insight": {
+        "value": "Dashboard and {n, plural, one {# insight} other {# insights}}",
+        "comment": "In '{n, plural, one {# INSIGHT} other {# INSIGHTS}}', translate only uppercase words.",
+        "limit": 0
+    },
+    "dialogs.schedule.management.attachments.mixed|report": {
+        "value": "Dashboard and {n, plural, one {# report} other {# reports}}",
+        "comment": "In '{n, plural, one {# REPORT} other {# REPORTS}}', translate only uppercase words.",
+        "limit": 0
+    },
+    "dialogs.schedule.management.load.error": {
+        "value": "Failed to load. Try again later.",
+        "comment": "",
+        "limit": 0
+    },
     "options.menu.schedule.email.recipient.invalid": {
         "value": "This is not a valid email address.",
         "comment": "Translate as imperative. Error message for recipient email address",
@@ -338,6 +393,11 @@
     "options.menu.schedule.email.recipient.warning.belong.workspace": {
         "value": "This email address does not belong to the workspace. Recipient may receive sensitive data.",
         "comment": "Translate as imperative. Warning email on recipient field in schedule email dialog",
+        "limit": 0
+    },
+    "close": {
+        "value": "Close",
+        "comment": "Label of a button for closing a dialog window",
         "limit": 0
     },
     "cancel": {

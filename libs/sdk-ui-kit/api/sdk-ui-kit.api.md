@@ -904,6 +904,9 @@ export const Icon: {
     Metric: FC<IIconProps>;
     QuestionMark: FC<IIconProps>;
     Minimize: FC<IIconProps>;
+    Dashboard: FC<IIconProps>;
+    Many: FC<IIconProps>;
+    Widget: FC<IIconProps>;
 };
 
 // @internal (undocumented)

@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import { DashboardState } from "../types";
 import invariant from "ts-invariant";
@@ -256,4 +256,13 @@ export const selectEnableKPIDashboardImplicitDrillDown = createSelector(selectCo
  */
 export const selectHideKpiDrillInEmbedded = createSelector(selectConfig, (state) => {
     return state.settings?.hideKpiDrillInEmbedded ?? false;
+});
+
+/**
+ * Returns whether insight export scheduling is enabled.
+ *
+ * @public
+ */
+export const selectEnableInsightExportScheduling = createSelector(selectConfig, (state) => {
+    return state.settings?.enableInsightExportScheduling ?? false;
 });

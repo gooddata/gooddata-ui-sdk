@@ -64,7 +64,7 @@ import {
     useDashboardSelector,
     useDispatchDashboardCommand,
 } from "../../model";
-import { DefaultScheduledEmailDialog } from "../scheduledEmail";
+import { DefaultScheduledEmailDialog, DefaultScheduledEmailManagementDialog } from "../scheduledEmail";
 import { DefaultButtonBar, DefaultMenuButton, DefaultTitle, DefaultTopBar } from "../topBar";
 
 import { defaultDashboardThemeModifier } from "./defaultDashboardThemeModifier";
@@ -286,6 +286,10 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
                                     TitleComponent={props.TitleComponent ?? DefaultTitle}
                                     ScheduledEmailDialogComponent={
                                         props.ScheduledEmailDialogComponent ?? DefaultScheduledEmailDialog
+                                    }
+                                    ScheduledEmailManagementDialogComponent={
+                                        props.ScheduledEmailManagementDialogComponent ??
+                                        DefaultScheduledEmailManagementDialog
                                     }
                                     ShareDialogComponent={props.ShareDialogComponent ?? DefaultShareDialog}
                                     SaveAsDialogComponent={props.SaveAsDialogComponent ?? DefaultSaveAsDialog}

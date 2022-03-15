@@ -611,6 +611,9 @@ export type CustomSaveAsDialogComponent = ComponentType<ISaveAsDialogProps>;
 export type CustomScheduledEmailDialogComponent = ComponentType<IScheduledEmailDialogProps>;
 
 // @alpha (undocumented)
+export type CustomScheduledEmailManagementDialogComponent = ComponentType<IScheduledEmailManagementDialogProps>;
+
+// @alpha (undocumented)
 export type CustomShareButtonComponent = ComponentType<IShareButtonProps>;
 
 // @alpha (undocumented)
@@ -1952,6 +1955,9 @@ export const DefaultSaveAsDialog: (props: ISaveAsDialogProps) => JSX.Element | n
 export const DefaultScheduledEmailDialog: (props: IScheduledEmailDialogProps) => JSX.Element | null;
 
 // @alpha (undocumented)
+export const DefaultScheduledEmailManagementDialog: React_2.FC<IScheduledEmailManagementDialogProps>;
+
+// @alpha (undocumented)
 export const DefaultShareButton: React_2.FC<WithIntlProps<IShareButtonProps & WrappedComponentProps<"intl">>> & {
     WrappedComponent: React_2.ComponentType<IShareButtonProps & WrappedComponentProps<"intl">>;
 };
@@ -2460,6 +2466,8 @@ export interface IDashboardCustomComponentProps {
     SaveAsDialogComponent?: CustomSaveAsDialogComponent;
     // @alpha
     ScheduledEmailDialogComponent?: CustomScheduledEmailDialogComponent;
+    // @alpha
+    ScheduledEmailManagementDialogComponent?: CustomScheduledEmailManagementDialogComponent;
     // @alpha
     ShareDialogComponent?: CustomShareDialogComponent;
     // @alpha
@@ -3060,6 +3068,14 @@ export interface IScheduledEmailDialogProps {
     onError?: (error: GoodDataSdkError) => void;
     onSubmit?: (scheduledEmailDefinition: IScheduledMailDefinition) => void;
     onSuccess?: (scheduledMail: IScheduledMail) => void;
+}
+
+// @alpha (undocumented)
+export interface IScheduledEmailManagementDialogProps {
+    isVisible?: boolean;
+    onAdd?: () => void;
+    onCancel?: () => void;
+    onError?: (error: GoodDataSdkError) => void;
 }
 
 // @public
@@ -4107,6 +4123,9 @@ export interface SavingState {
 // @internal (undocumented)
 export const ScheduledEmailDialog: (props: IScheduledEmailDialogProps) => JSX.Element;
 
+// @internal (undocumented)
+export const ScheduledEmailManagementDialog: (props: IScheduledEmailManagementDialogProps) => JSX.Element;
+
 // @alpha
 export const selectAccessibleDashboards: (state: DashboardState) => IListedDashboard[];
 
@@ -4190,6 +4209,9 @@ export const selectCanManageDomain: OutputSelector<DashboardState, boolean, (res
 
 // @public
 export const selectCanManageMetric: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+
+// @public
+export const selectCanManageScheduledMail: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @public
 export const selectCanManageWorkspace: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
@@ -4330,6 +4352,9 @@ export const selectEnableCompanyLogoInEmbeddedUI: OutputSelector<DashboardState,
 export const selectEnableFilterValuesResolutionInDrillEvents: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @public
+export const selectEnableInsightExportScheduling: OutputSelector<DashboardState, string | number | boolean | object, (res: ResolvedDashboardConfig) => string | number | boolean | object>;
+
+// @public
 export const selectEnableKPIDashboardDrillToDashboard: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @public
@@ -4442,6 +4467,9 @@ export const selectIsSaveAsDialogOpen: OutputSelector<DashboardState, boolean, (
 
 // @alpha (undocumented)
 export const selectIsScheduleEmailDialogOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
+
+// @alpha (undocumented)
+export const selectIsScheduleEmailManagementDialogOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
 
 // @alpha (undocumented)
 export const selectIsShareDialogOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
@@ -4588,6 +4616,8 @@ export interface TriggerEventPayload {
 export const uiActions: CaseReducerActions<    {
 openScheduleEmailDialog: CaseReducer<UiState, AnyAction>;
 closeScheduleEmailDialog: CaseReducer<UiState, AnyAction>;
+openScheduleEmailManagementDialog: CaseReducer<UiState, AnyAction>;
+closeScheduleEmailManagementDialog: CaseReducer<UiState, AnyAction>;
 openSaveAsDialog: CaseReducer<UiState, AnyAction>;
 closeSaveAsDialog: CaseReducer<UiState, AnyAction>;
 setFilterBarHeight: CaseReducer<UiState, {
@@ -4637,6 +4667,10 @@ export interface UiState {
     };
     // (undocumented)
     scheduleEmailDialog: {
+        open: boolean;
+    };
+    // (undocumented)
+    scheduleEmailManagementDialog: {
         open: boolean;
     };
     // (undocumented)

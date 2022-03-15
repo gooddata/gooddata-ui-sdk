@@ -19,6 +19,7 @@ export {
     selectIsReadOnly,
     selectMapboxToken,
     selectDateFormat,
+    selectEnableInsightExportScheduling,
     selectEnableKPIDashboardSchedule,
     selectEnableKPIDashboardScheduleRecipients,
     selectEnableCompanyLogoInEmbeddedUI,
@@ -54,6 +55,7 @@ export {
     selectCanManageDomain,
     selectCanInviteUserToWorkspace,
     selectCanRefreshData,
+    selectCanManageScheduledMail,
 } from "./permissions/permissionsSelectors";
 export { FilterContextState } from "./filterContext/filterContextState";
 export {
@@ -168,6 +170,7 @@ export { IExecutionResultEnvelope } from "./executionResults/types";
 export { UiState } from "./ui/uiState";
 export {
     selectIsScheduleEmailDialogOpen,
+    selectIsScheduleEmailManagementDialogOpen,
     selectIsSaveAsDialogOpen,
     selectIsShareDialogOpen,
     selectFilterBarExpanded,

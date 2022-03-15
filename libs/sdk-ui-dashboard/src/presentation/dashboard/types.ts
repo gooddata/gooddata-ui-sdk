@@ -14,7 +14,10 @@ import {
 } from "../../model";
 import { CustomDashboardDateFilterComponent, CustomFilterBarComponent } from "../filterBar";
 import { CustomDashboardLayoutComponent } from "../layout";
-import { CustomScheduledEmailDialogComponent } from "../scheduledEmail";
+import {
+    CustomScheduledEmailDialogComponent,
+    CustomScheduledEmailManagementDialogComponent,
+} from "../scheduledEmail";
 import {
     CustomButtonBarComponent,
     CustomMenuButtonComponent,
@@ -152,6 +155,13 @@ export interface IDashboardCustomComponentProps {
      * @alpha
      */
     ScheduledEmailDialogComponent?: CustomScheduledEmailDialogComponent;
+
+    /**
+     * Optionally specify component to use for rendering the scheduled email management dialog.
+     *
+     * @alpha
+     */
+    ScheduledEmailManagementDialogComponent?: CustomScheduledEmailManagementDialogComponent;
 
     /**
      * Optionally specify component to use for rendering the share dialog.

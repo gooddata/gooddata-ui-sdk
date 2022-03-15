@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { PureComponent } from "react";
 import cx from "classnames";
 
@@ -58,6 +58,17 @@ export interface IShortenedTextState {
     title: string;
     customTitle: boolean;
 }
+
+/**
+ * To make this component work, parent container needs this:
+ *      max-width: Xpx;
+ *      white-space: nowrap;
+ *
+ * and the component itself needs:
+ *      display: inline-block;
+ *      width: 100%;
+ *      white-space: nowrap;
+ */
 
 /**
  * @internal

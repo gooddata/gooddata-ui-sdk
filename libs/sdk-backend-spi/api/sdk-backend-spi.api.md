@@ -2379,6 +2379,10 @@ export type WorkspacePermission =
 /**
 * Whether the current user has permissions to add, remove, and list ACLs (Access Control Lists) on an object.
 */
-| "canManageACL";
+| "canManageACL"
+/**
+* Whether the current user has permissions to manage scheduled email objects.
+*/
+| "canManageScheduledMail";
 
 ```

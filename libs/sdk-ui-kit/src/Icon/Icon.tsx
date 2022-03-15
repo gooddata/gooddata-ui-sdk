@@ -32,6 +32,9 @@ import { Label } from "./icons/Label";
 import { Metric } from "./icons/Metric";
 import { QuestionMark } from "./icons/QuestionMark";
 import { Minimize } from "./icons/Minimize";
+import { Dashboard } from "./icons/Dashboard";
+import { Many } from "./icons/Many";
+import { Widget } from "./icons/Widget";
 
 /**
  * @internal
@@ -70,6 +73,9 @@ export const Icon = {
     Metric,
     QuestionMark,
     Minimize,
+    Dashboard,
+    Many,
+    Widget,
 };
 
 export { IRowsIconProps };
