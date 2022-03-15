@@ -130,6 +130,18 @@ function getDefaultHeatmapSort(insight: IInsightDefinition): ISortItem[] {
     return getDefaultHeatmapSortFromBuckets(insightBucket(insight, BucketNames.VIEW));
 }
 
+function getDefaultPieDonutSort(insight: IInsightDefinition): ISortItem[] {
+    const measures = insightMeasures(insight);
+    const viewBucket = insightBucket(insight, BucketNames.VIEW);
+    const viewBy = viewBucket ? bucketAttributes(viewBucket) : [];
+
+    if (!isEmpty(measures) && !isEmpty(viewBy)) {
+        return [newMeasureSort(measures[0], SORT_DIR_DESC)];
+    }
+
+    return [];
+}
+
 /**
  * Defaults created by this helper need to be the same
  * as defaults created by method getDefaultAndAvailableSort in each PV's class
@@ -153,6 +165,9 @@ export function createSorts(
             return getDefaultTreemapSort(insight);
         case VisualizationTypes.HEATMAP:
             return getDefaultHeatmapSort(insight);
+        case VisualizationTypes.PIE:
+        case VisualizationTypes.DONUT:
+            return getDefaultPieDonutSort(insight);
     }
     return [];
 }
