@@ -11,9 +11,10 @@ import {
 } from "../drillDownUtil";
 import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization";
 import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator";
-import { ITreemapBucketProps } from "@gooddata/sdk-ui-charts";
+import { ITreemapProps } from "@gooddata/sdk-ui-charts";
 import {
     bucketConversion,
+    chartConfigFromInsight,
     getInsightToPropsConverter,
     insightConversion,
 } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter";
@@ -34,11 +35,12 @@ export class TreemapDescriptor extends BigChartDescriptor {
             name: "Treemap",
             package: "@gooddata/sdk-ui-charts",
         },
-        insightToProps: getInsightToPropsConverter<ITreemapBucketProps>({
+        insightToProps: getInsightToPropsConverter<ITreemapProps>({
             measures: bucketConversion("measures", BucketNames.MEASURES, bucketMeasures),
             viewBy: bucketConversion("viewBy", BucketNames.VIEW, bucketAttribute),
             segmentBy: bucketConversion("segmentBy", BucketNames.SEGMENT, bucketAttribute),
             filters: insightConversion("filters", insightFilters),
+            config: insightConversion("config", chartConfigFromInsight),
         }),
     });
 

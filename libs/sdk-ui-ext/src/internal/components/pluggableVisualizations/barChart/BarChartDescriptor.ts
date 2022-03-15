@@ -26,9 +26,10 @@ import { arrayUtils } from "@gooddata/util";
 import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper";
 import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization";
 import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator";
-import { IBarChartBucketProps } from "@gooddata/sdk-ui-charts";
+import { IBarChartProps } from "@gooddata/sdk-ui-charts";
 import {
     bucketConversion,
+    chartConfigFromInsight,
     getInsightToPropsConverter,
     insightConversion,
 } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter";
@@ -53,12 +54,13 @@ export class BarChartDescriptor extends BaseChartDescriptor implements IVisualiz
             name: "BarChart",
             package: "@gooddata/sdk-ui-charts",
         },
-        insightToProps: getInsightToPropsConverter<IBarChartBucketProps>({
+        insightToProps: getInsightToPropsConverter<IBarChartProps>({
             measures: bucketConversion("measures", BucketNames.MEASURES, bucketMeasures),
             viewBy: bucketConversion("viewBy", BucketNames.VIEW, bucketAttributes),
             stackBy: bucketConversion("stackBy", BucketNames.STACK, bucketAttribute),
             filters: insightConversion("filters", insightFilters),
             sortBy: insightConversion("sortBy", insightSorts),
+            config: insightConversion("config", chartConfigFromInsight),
         }),
     });
 

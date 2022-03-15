@@ -15,9 +15,10 @@ import {
     reverseAndTrimIntersection,
 } from "../drillDownUtil";
 import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator";
-import { ILineChartBucketProps } from "@gooddata/sdk-ui-charts";
+import { ILineChartProps } from "@gooddata/sdk-ui-charts";
 import {
     bucketConversion,
+    chartConfigFromInsight,
     getInsightToPropsConverter,
     insightConversion,
 } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter";
@@ -38,12 +39,13 @@ export class LineChartDescriptor extends BaseChartDescriptor implements IVisuali
             name: "LineChart",
             package: "@gooddata/sdk-ui-charts",
         },
-        insightToProps: getInsightToPropsConverter<ILineChartBucketProps>({
+        insightToProps: getInsightToPropsConverter<ILineChartProps>({
             measures: bucketConversion("measures", BucketNames.MEASURES, bucketMeasures),
             trendBy: bucketConversion("trendBy", BucketNames.TREND, bucketAttribute),
             segmentBy: bucketConversion("segmentBy", BucketNames.SEGMENT, bucketAttribute),
             filters: insightConversion("filters", insightFilters),
             sortBy: insightConversion("sortBy", insightSorts),
+            config: insightConversion("config", chartConfigFromInsight),
         }),
     });
 

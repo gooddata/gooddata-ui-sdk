@@ -9,10 +9,11 @@ import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
 import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator";
 import {
     bucketConversion,
+    chartConfigFromInsight,
     getInsightToPropsConverter,
     insightConversion,
 } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter";
-import { IFunnelChartBucketProps } from "@gooddata/sdk-ui-charts";
+import { IFunnelChartProps } from "@gooddata/sdk-ui-charts";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { bucketMeasures, insightFilters, insightSorts, bucketAttribute } from "@gooddata/sdk-model";
 
@@ -27,11 +28,12 @@ export class FunnelChartDescriptor extends BaseChartDescriptor implements IVisua
             name: "FunnelChart",
             package: "@gooddata/sdk-ui-charts",
         },
-        insightToProps: getInsightToPropsConverter<IFunnelChartBucketProps>({
+        insightToProps: getInsightToPropsConverter<IFunnelChartProps>({
             measures: bucketConversion("measures", BucketNames.MEASURES, bucketMeasures),
             viewBy: bucketConversion("viewBy", BucketNames.VIEW, bucketAttribute),
             filters: insightConversion("filters", insightFilters),
             sortBy: insightConversion("sortBy", insightSorts),
+            config: insightConversion("config", chartConfigFromInsight),
         }),
     });
 }

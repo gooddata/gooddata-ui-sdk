@@ -7,10 +7,11 @@ import {
 import { PluggableBubbleChart } from "./PluggableBubbleChart";
 import { BigChartDescriptor } from "../BigChartDescriptor";
 import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator";
-import { IBubbleChartBucketProps } from "@gooddata/sdk-ui-charts";
+import { IBubbleChartProps } from "@gooddata/sdk-ui-charts";
 import { BucketNames } from "@gooddata/sdk-ui";
 import {
     bucketConversion,
+    chartConfigFromInsight,
     getInsightToPropsConverter,
     insightConversion,
 } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter";
@@ -25,13 +26,14 @@ export class BubbleChartDescriptor extends BigChartDescriptor implements IVisual
             name: "BubbleChart",
             package: "@gooddata/sdk-ui-charts",
         },
-        insightToProps: getInsightToPropsConverter<IBubbleChartBucketProps>({
+        insightToProps: getInsightToPropsConverter<IBubbleChartProps>({
             xAxisMeasure: bucketConversion("xAxisMeasure", BucketNames.MEASURES, bucketMeasure),
             yAxisMeasure: bucketConversion("yAxisMeasure", BucketNames.SECONDARY_MEASURES, bucketMeasure),
             size: bucketConversion("size", BucketNames.TERTIARY_MEASURES, bucketMeasure),
             viewBy: bucketConversion("viewBy", BucketNames.VIEW, bucketAttribute),
             filters: insightConversion("filters", insightFilters),
             sortBy: insightConversion("sortBy", insightSorts),
+            config: insightConversion("config", chartConfigFromInsight),
         }),
     });
 }

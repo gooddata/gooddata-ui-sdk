@@ -11,9 +11,10 @@ import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Vis
 import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper";
 import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil";
 import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator";
-import { IHeatmapBucketProps } from "@gooddata/sdk-ui-charts";
+import { IHeatmapProps } from "@gooddata/sdk-ui-charts";
 import {
     bucketConversion,
+    chartConfigFromInsight,
     getInsightToPropsConverter,
     insightConversion,
 } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter";
@@ -38,12 +39,13 @@ export class HeatmapDescriptor extends BigChartDescriptor implements IVisualizat
             name: "Heatmap",
             package: "@gooddata/sdk-ui-charts",
         },
-        insightToProps: getInsightToPropsConverter<IHeatmapBucketProps>({
+        insightToProps: getInsightToPropsConverter<IHeatmapProps>({
             measure: bucketConversion("measure", BucketNames.MEASURES, bucketMeasure),
             rows: bucketConversion("rows", BucketNames.VIEW, bucketAttribute),
             columns: bucketConversion("columns", BucketNames.STACK, bucketAttribute),
             filters: insightConversion("filters", insightFilters),
             sortBy: insightConversion("sortBy", insightSorts),
+            config: insightConversion("config", chartConfigFromInsight),
         }),
     });
 

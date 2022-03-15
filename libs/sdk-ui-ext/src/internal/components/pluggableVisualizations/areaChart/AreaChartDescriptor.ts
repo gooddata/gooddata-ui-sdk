@@ -21,9 +21,10 @@ import {
 } from "../drillDownUtil";
 import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization";
 import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator";
-import { IAreaChartBucketProps } from "@gooddata/sdk-ui-charts";
+import { IAreaChartProps } from "@gooddata/sdk-ui-charts";
 import {
     bucketConversion,
+    chartConfigFromInsight,
     getInsightToPropsConverter,
     insightConversion,
 } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter";
@@ -48,12 +49,13 @@ export class AreaChartDescriptor extends BigChartDescriptor implements IVisualiz
             name: "AreaChart",
             package: "@gooddata/sdk-ui-charts",
         },
-        insightToProps: getInsightToPropsConverter<IAreaChartBucketProps>({
+        insightToProps: getInsightToPropsConverter<IAreaChartProps>({
             measures: bucketConversion("measures", BucketNames.MEASURES, bucketMeasures),
             viewBy: bucketConversion("viewBy", BucketNames.VIEW, bucketAttributes),
             stackBy: bucketConversion("stackBy", BucketNames.STACK, bucketAttribute),
             filters: insightConversion("filters", insightFilters),
             sortBy: insightConversion("sortBy", insightSorts),
+            config: insightConversion("config", chartConfigFromInsight),
         }),
     });
 

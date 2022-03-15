@@ -15,7 +15,7 @@ import {
     getInsightToPropsConverter,
     insightConversion,
 } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter";
-import { IHeadlineBucketProps } from "@gooddata/sdk-ui-charts";
+import { IHeadlineProps } from "@gooddata/sdk-ui-charts";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { insightFilters } from "@gooddata/sdk-model";
 
@@ -77,7 +77,7 @@ export class HeadlineDescriptor implements IVisualizationDescriptor {
             name: "Headline",
             package: "@gooddata/sdk-ui-charts",
         },
-        insightToProps: getInsightToPropsConverter<IHeadlineBucketProps>({
+        insightToProps: getInsightToPropsConverter<IHeadlineProps>({
             primaryMeasure: bucketConversion("primaryMeasure", BucketNames.MEASURES, bucketMeasure),
             secondaryMeasure: bucketConversion(
                 "secondaryMeasure",

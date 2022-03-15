@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import { bucketAttributes, bucketMeasure, IInsight, insightFilters, insightSorts } from "@gooddata/sdk-model";
 import { BucketNames, getIntersectionPartAfter, IDrillEvent } from "@gooddata/sdk-ui";
-import { IBulletChartBucketProps } from "@gooddata/sdk-ui-charts";
+import { IBulletChartProps } from "@gooddata/sdk-ui-charts";
 
 import {
     IVisualizationDescriptor,
@@ -15,6 +15,7 @@ import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownH
 import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator";
 import {
     bucketConversion,
+    chartConfigFromInsight,
     getInsightToPropsConverter,
     insightConversion,
 } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter";
@@ -39,7 +40,7 @@ export class BulletChartDescriptor extends BaseChartDescriptor implements IVisua
             name: "BulletChart",
             package: "@gooddata/sdk-ui-charts",
         },
-        insightToProps: getInsightToPropsConverter<IBulletChartBucketProps>({
+        insightToProps: getInsightToPropsConverter<IBulletChartProps>({
             primaryMeasure: bucketConversion("primaryMeasure", BucketNames.MEASURES, bucketMeasure),
             targetMeasure: bucketConversion("targetMeasure", BucketNames.SECONDARY_MEASURES, bucketMeasure),
             comparativeMeasure: bucketConversion(
@@ -50,6 +51,7 @@ export class BulletChartDescriptor extends BaseChartDescriptor implements IVisua
             viewBy: bucketConversion("viewBy", BucketNames.VIEW, bucketAttributes),
             filters: insightConversion("filters", insightFilters),
             sortBy: insightConversion("sortBy", insightSorts),
+            config: insightConversion("config", chartConfigFromInsight),
         }),
     });
 

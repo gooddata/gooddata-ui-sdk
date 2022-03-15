@@ -9,10 +9,11 @@ import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
 import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator";
 import {
     bucketConversion,
+    chartConfigFromInsight,
     getInsightToPropsConverter,
     insightConversion,
 } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter";
-import { IDonutChartBucketProps } from "@gooddata/sdk-ui-charts";
+import { IDonutChartProps } from "@gooddata/sdk-ui-charts";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { bucketMeasures, insightFilters, insightSorts, bucketAttribute } from "@gooddata/sdk-model";
 
@@ -27,11 +28,12 @@ export class DonutChartDescriptor extends BaseChartDescriptor implements IVisual
             name: "DonutChart",
             package: "@gooddata/sdk-ui-charts",
         },
-        insightToProps: getInsightToPropsConverter<IDonutChartBucketProps>({
+        insightToProps: getInsightToPropsConverter<IDonutChartProps>({
             measures: bucketConversion("measures", BucketNames.MEASURES, bucketMeasures),
             viewBy: bucketConversion("viewBy", BucketNames.VIEW, bucketAttribute),
             filters: insightConversion("filters", insightFilters),
             sortBy: insightConversion("sortBy", insightSorts),
+            config: insightConversion("config", chartConfigFromInsight),
         }),
     });
 }

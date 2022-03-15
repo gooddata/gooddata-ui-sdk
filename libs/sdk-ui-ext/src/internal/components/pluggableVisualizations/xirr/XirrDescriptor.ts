@@ -18,7 +18,7 @@ import {
     getInsightToPropsConverter,
     insightConversion,
 } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter";
-import { IXirrBucketProps } from "@gooddata/sdk-ui-charts";
+import { IXirrProps } from "@gooddata/sdk-ui-charts";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { insightFilters } from "@gooddata/sdk-model";
 
@@ -77,7 +77,7 @@ export class XirrDescriptor implements IVisualizationDescriptor {
             name: "Xirr",
             package: "@gooddata/sdk-ui-charts",
         },
-        insightToProps: getInsightToPropsConverter<IXirrBucketProps>({
+        insightToProps: getInsightToPropsConverter<IXirrProps>({
             measure: bucketConversion("measure", BucketNames.MEASURES, bucketMeasure),
             attribute: bucketConversion("attribute", BucketNames.ATTRIBUTE, bucketAttribute),
             filters: insightConversion("filters", insightFilters),

@@ -3,9 +3,10 @@ import { PluggableVisualizationFactory } from "../../../interfaces/Visualization
 import { PluggableScatterPlot } from "./PluggableScatterPlot";
 import { BigChartDescriptor } from "../BigChartDescriptor";
 import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator";
-import { IScatterPlotBucketProps } from "@gooddata/sdk-ui-charts";
+import { IScatterPlotProps } from "@gooddata/sdk-ui-charts";
 import {
     bucketConversion,
+    chartConfigFromInsight,
     getInsightToPropsConverter,
     insightConversion,
 } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter";
@@ -23,12 +24,13 @@ export class ScatterPlotDescriptor extends BigChartDescriptor {
             name: "ScatterPlot",
             package: "@gooddata/sdk-ui-charts",
         },
-        insightToProps: getInsightToPropsConverter<IScatterPlotBucketProps>({
+        insightToProps: getInsightToPropsConverter<IScatterPlotProps>({
             xAxisMeasure: bucketConversion("xAxisMeasure", BucketNames.MEASURES, bucketMeasure),
             yAxisMeasure: bucketConversion("yAxisMeasure", BucketNames.SECONDARY_MEASURES, bucketMeasure),
             attribute: bucketConversion("attribute", BucketNames.ATTRIBUTE, bucketAttribute),
             filters: insightConversion("filters", insightFilters),
             sortBy: insightConversion("sortBy", insightSorts),
+            config: insightConversion("config", chartConfigFromInsight),
         }),
     });
 }

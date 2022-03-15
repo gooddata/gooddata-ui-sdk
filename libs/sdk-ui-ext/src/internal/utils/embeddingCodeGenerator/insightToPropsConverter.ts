@@ -1,5 +1,10 @@
 // (C) 2022 GoodData Corporation
-import { IBucket, IInsightDefinition, insightBucket } from "@gooddata/sdk-model";
+import { IBucket, IInsightDefinition, insightBucket, insightProperties } from "@gooddata/sdk-model";
+import { IChartConfig } from "@gooddata/sdk-ui-charts";
+import filter from "lodash/fp/filter";
+import flow from "lodash/fp/flow";
+import fromPairs from "lodash/fromPairs";
+import isNil from "lodash/isNil";
 import toPairs from "lodash/toPairs";
 import { IEmbeddingCodeContext } from "../../interfaces/VisualizationDescriptor";
 import { InsightToPropsConverter } from "./types";
@@ -79,4 +84,42 @@ export function getInsightToPropsConverter<TProps extends object>(
             return acc;
         }, {}) as TProps;
     };
+}
+
+const supportedChartConfigProperties = new Set<keyof IChartConfig>([
+    "dataLabels",
+    "dataPoints",
+    "dualAxis",
+    "enableJoinedAttributeAxisName",
+    "grid",
+    "legend",
+    "legendLayout",
+    "limits",
+    "primaryChartType",
+    "secondaryChartType",
+    "secondary_xaxis",
+    "secondary_yaxis",
+    "separators",
+    "stackMeasures",
+    "stackMeasuresToPercent",
+    "xFormat",
+    "xLabel",
+    "xaxis",
+    "yFormat",
+    "yLabel",
+    "yaxis",
+]);
+
+export function chartConfigFromInsight(insight: IInsightDefinition): IChartConfig {
+    const properties = insightProperties(insight);
+    const controls = properties?.controls;
+    if (!controls) {
+        return {};
+    }
+
+    return flow(
+        toPairs,
+        filter(([key, value]) => supportedChartConfigProperties.has(key as any) && !isNil(value)),
+        fromPairs,
+    )(controls);
 }

@@ -8,10 +8,11 @@ import { BigChartDescriptor } from "../BigChartDescriptor";
 import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator";
 import {
     bucketConversion,
+    chartConfigFromInsight,
     getInsightToPropsConverter,
     insightConversion,
 } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter";
-import { IComboChartBucketProps } from "@gooddata/sdk-ui-charts";
+import { IComboChartProps } from "@gooddata/sdk-ui-charts";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { bucketMeasures, bucketAttributes, insightFilters, insightSorts } from "@gooddata/sdk-model";
 
@@ -26,7 +27,7 @@ export class ComboChartDescriptor extends BigChartDescriptor implements IVisuali
             name: "ComboChart",
             package: "@gooddata/sdk-ui-charts",
         },
-        insightToProps: getInsightToPropsConverter<IComboChartBucketProps>({
+        insightToProps: getInsightToPropsConverter<IComboChartProps>({
             primaryMeasures: bucketConversion("primaryMeasures", BucketNames.MEASURES, bucketMeasures),
             secondaryMeasures: bucketConversion(
                 "secondaryMeasures",
@@ -36,6 +37,7 @@ export class ComboChartDescriptor extends BigChartDescriptor implements IVisuali
             viewBy: bucketConversion("viewBy", BucketNames.VIEW, bucketAttributes),
             filters: insightConversion("filters", insightFilters),
             sortBy: insightConversion("sortBy", insightSorts),
+            config: insightConversion("config", chartConfigFromInsight),
         }),
     });
 }

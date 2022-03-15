@@ -28,10 +28,11 @@ import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Vis
 import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator";
 import {
     bucketConversion,
+    chartConfigFromInsight,
     getInsightToPropsConverter,
     insightConversion,
 } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter";
-import { IColumnChartBucketProps } from "@gooddata/sdk-ui-charts";
+import { IColumnChartProps } from "@gooddata/sdk-ui-charts";
 
 export class ColumnChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
@@ -53,12 +54,13 @@ export class ColumnChartDescriptor extends BaseChartDescriptor implements IVisua
             name: "ColumnChart",
             package: "@gooddata/sdk-ui-charts",
         },
-        insightToProps: getInsightToPropsConverter<IColumnChartBucketProps>({
+        insightToProps: getInsightToPropsConverter<IColumnChartProps>({
             measures: bucketConversion("measures", BucketNames.MEASURES, bucketMeasures),
             viewBy: bucketConversion("viewBy", BucketNames.VIEW, bucketAttributes),
             stackBy: bucketConversion("stackBy", BucketNames.STACK, bucketAttribute),
             filters: insightConversion("filters", insightFilters),
             sortBy: insightConversion("sortBy", insightSorts),
+            config: insightConversion("config", chartConfigFromInsight),
         }),
     });
 
