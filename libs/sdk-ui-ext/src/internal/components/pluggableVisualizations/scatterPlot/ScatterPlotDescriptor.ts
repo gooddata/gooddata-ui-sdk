@@ -1,17 +1,18 @@
 // (C) 2021-2022 GoodData Corporation
+import { IScatterPlotProps } from "@gooddata/sdk-ui-charts";
+import { BucketNames } from "@gooddata/sdk-ui";
+import { bucketAttribute, bucketMeasure, insightFilters, insightSorts } from "@gooddata/sdk-model";
+
 import { PluggableVisualizationFactory } from "../../../interfaces/VisualizationDescriptor";
 import { PluggableScatterPlot } from "./PluggableScatterPlot";
 import { BigChartDescriptor } from "../BigChartDescriptor";
-import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator";
-import { IScatterPlotProps } from "@gooddata/sdk-ui-charts";
 import {
     bucketConversion,
     chartConfigFromInsight,
     getInsightToPropsConverter,
+    getReactEmbeddingCodeGenerator,
     insightConversion,
-} from "../../../utils/embeddingCodeGenerator/insightToPropsConverter";
-import { BucketNames } from "@gooddata/sdk-ui";
-import { bucketAttribute, bucketMeasure, insightFilters, insightSorts } from "@gooddata/sdk-model";
+} from "../../../utils/embeddingCodeGenerator";
 
 export class ScatterPlotDescriptor extends BigChartDescriptor {
     public getFactory(): PluggableVisualizationFactory {

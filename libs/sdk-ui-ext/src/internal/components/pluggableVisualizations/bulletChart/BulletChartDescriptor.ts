@@ -12,13 +12,13 @@ import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
 import { modifyBucketsAttributesForDrillDown, addIntersectionFiltersToInsight } from "../drillDownUtil";
 import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization";
 import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper";
-import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator";
 import {
     bucketConversion,
     chartConfigFromInsight,
     getInsightToPropsConverter,
+    getReactEmbeddingCodeGenerator,
     insightConversion,
-} from "../../../utils/embeddingCodeGenerator/insightToPropsConverter";
+} from "../../../utils/embeddingCodeGenerator";
 
 export class BulletChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

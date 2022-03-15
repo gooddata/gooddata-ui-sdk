@@ -8,6 +8,9 @@ import {
     IBucket,
     IAttributeOrMeasure,
 } from "@gooddata/sdk-model";
+import { ISettings } from "@gooddata/sdk-backend-spi";
+import { BucketNames } from "@gooddata/sdk-ui";
+import { IGeoConfig, IGeoPushpinChartProps } from "@gooddata/sdk-ui-geo";
 
 import {
     IVisualizationDescriptor,
@@ -18,17 +21,13 @@ import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor";
 import { PluggableGeoPushpinChart } from "./PluggableGeoPushpinChart";
 import { DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT, MIDDLE_VISUALIZATION_HEIGHT } from "../constants";
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
-import { ISettings } from "@gooddata/sdk-backend-spi";
-
-import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator";
 import {
     bucketConversion,
     getConfigFromPropsConverter,
     getInsightToPropsConverter,
+    getReactEmbeddingCodeGenerator,
     insightConversion,
-} from "../../../utils/embeddingCodeGenerator/insightToPropsConverter";
-import { BucketNames } from "@gooddata/sdk-ui";
-import { IGeoConfig, IGeoPushpinChartProps } from "@gooddata/sdk-ui-geo";
+} from "../../../utils/embeddingCodeGenerator";
 
 const supportedGeoConfigProperties = new Set<keyof IGeoConfig>([
     "center",

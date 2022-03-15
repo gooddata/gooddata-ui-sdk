@@ -1,11 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
 import {
-    IVisualizationDescriptor,
-    PluggableVisualizationFactory,
-} from "../../../interfaces/VisualizationDescriptor";
-import { PluggableBarChart } from "./PluggableBarChart";
-import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
-import {
     bucketAttribute,
     bucketAttributes,
     bucketIsEmpty,
@@ -15,7 +9,6 @@ import {
     insightFilters,
     insightSorts,
 } from "@gooddata/sdk-model";
-import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil";
 import {
     BucketNames,
     getIntersectionPartAfter,
@@ -23,16 +16,24 @@ import {
     IDrillEventIntersectionElement,
 } from "@gooddata/sdk-ui";
 import { arrayUtils } from "@gooddata/util";
+import { IBarChartProps } from "@gooddata/sdk-ui-charts";
+
+import {
+    IVisualizationDescriptor,
+    PluggableVisualizationFactory,
+} from "../../../interfaces/VisualizationDescriptor";
+import { PluggableBarChart } from "./PluggableBarChart";
+import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
+import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil";
 import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper";
 import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization";
-import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator";
-import { IBarChartProps } from "@gooddata/sdk-ui-charts";
 import {
     bucketConversion,
     chartConfigFromInsight,
     getInsightToPropsConverter,
+    getReactEmbeddingCodeGenerator,
     insightConversion,
-} from "../../../utils/embeddingCodeGenerator/insightToPropsConverter";
+} from "../../../utils/embeddingCodeGenerator";
 
 export class BarChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

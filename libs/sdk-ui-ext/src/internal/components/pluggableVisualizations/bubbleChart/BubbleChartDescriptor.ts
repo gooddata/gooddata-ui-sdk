@@ -1,20 +1,22 @@
 // (C) 2021-2022 GoodData Corporation
 import { bucketAttribute, bucketMeasure, insightFilters, insightSorts } from "@gooddata/sdk-model";
+import { IBubbleChartProps } from "@gooddata/sdk-ui-charts";
+import { BucketNames } from "@gooddata/sdk-ui";
+
 import {
     IVisualizationDescriptor,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor";
 import { PluggableBubbleChart } from "./PluggableBubbleChart";
 import { BigChartDescriptor } from "../BigChartDescriptor";
-import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator";
-import { IBubbleChartProps } from "@gooddata/sdk-ui-charts";
-import { BucketNames } from "@gooddata/sdk-ui";
 import {
     bucketConversion,
     chartConfigFromInsight,
     getInsightToPropsConverter,
+    getReactEmbeddingCodeGenerator,
     insightConversion,
-} from "../../../utils/embeddingCodeGenerator/insightToPropsConverter";
+} from "../../../utils/embeddingCodeGenerator";
+
 export class BubbleChartDescriptor extends BigChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
         return (params) => new PluggableBubbleChart(params);

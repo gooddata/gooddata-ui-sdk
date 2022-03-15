@@ -1,23 +1,24 @@
 // (C) 2021-2022 GoodData Corporation
+import { bucketAttribute, bucketMeasures, IInsight, insightFilters } from "@gooddata/sdk-model";
+import { BucketNames, IDrillEvent } from "@gooddata/sdk-ui";
+import { ITreemapProps } from "@gooddata/sdk-ui-charts";
+
 import { PluggableVisualizationFactory } from "../../../interfaces/VisualizationDescriptor";
 import { PluggableTreemap } from "./PluggableTreemap";
 import { BigChartDescriptor } from "../BigChartDescriptor";
-import { bucketAttribute, bucketMeasures, IInsight, insightFilters } from "@gooddata/sdk-model";
-import { BucketNames, IDrillEvent } from "@gooddata/sdk-ui";
 import {
     addIntersectionFiltersToInsight,
     modifyBucketsAttributesForDrillDown,
     reverseAndTrimIntersection,
 } from "../drillDownUtil";
 import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization";
-import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator";
-import { ITreemapProps } from "@gooddata/sdk-ui-charts";
 import {
     bucketConversion,
     chartConfigFromInsight,
     getInsightToPropsConverter,
+    getReactEmbeddingCodeGenerator,
     insightConversion,
-} from "../../../utils/embeddingCodeGenerator/insightToPropsConverter";
+} from "../../../utils/embeddingCodeGenerator";
 
 export class TreemapDescriptor extends BigChartDescriptor {
     public getFactory(): PluggableVisualizationFactory {

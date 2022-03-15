@@ -1,4 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
+import { bucketAttribute, bucketMeasures, IInsight, insightFilters, insightSorts } from "@gooddata/sdk-model";
+import { BucketNames, IDrillEvent } from "@gooddata/sdk-ui";
+import { ILineChartProps } from "@gooddata/sdk-ui-charts";
 
 import {
     IVisualizationDescriptor,
@@ -6,22 +9,19 @@ import {
 } from "../../../interfaces/VisualizationDescriptor";
 import { PluggableLineChart } from "./PluggableLineChart";
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
-import { bucketAttribute, bucketMeasures, IInsight, insightFilters, insightSorts } from "@gooddata/sdk-model";
-import { BucketNames, IDrillEvent } from "@gooddata/sdk-ui";
 import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization";
 import {
     addIntersectionFiltersToInsight,
     modifyBucketsAttributesForDrillDown,
     reverseAndTrimIntersection,
 } from "../drillDownUtil";
-import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator";
-import { ILineChartProps } from "@gooddata/sdk-ui-charts";
 import {
     bucketConversion,
     chartConfigFromInsight,
     getInsightToPropsConverter,
+    getReactEmbeddingCodeGenerator,
     insightConversion,
-} from "../../../utils/embeddingCodeGenerator/insightToPropsConverter";
+} from "../../../utils/embeddingCodeGenerator";
 
 export class LineChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

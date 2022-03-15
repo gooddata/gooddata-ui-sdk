@@ -1,23 +1,24 @@
 // (C) 2021-2022 GoodData Corporation
+import { bucketAttribute, bucketMeasure, IInsight, insightFilters, insightSorts } from "@gooddata/sdk-model";
+import { BucketNames, IDrillEvent, isDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
+import { IHeatmapProps } from "@gooddata/sdk-ui-charts";
+
 import {
     IVisualizationDescriptor,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor";
 import { PluggableHeatmap } from "./PluggableHeatmap";
 import { BigChartDescriptor } from "../BigChartDescriptor";
-import { bucketAttribute, bucketMeasure, IInsight, insightFilters, insightSorts } from "@gooddata/sdk-model";
-import { BucketNames, IDrillEvent, isDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
 import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization";
 import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper";
 import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil";
-import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator";
-import { IHeatmapProps } from "@gooddata/sdk-ui-charts";
 import {
     bucketConversion,
     chartConfigFromInsight,
     getInsightToPropsConverter,
+    getReactEmbeddingCodeGenerator,
     insightConversion,
-} from "../../../utils/embeddingCodeGenerator/insightToPropsConverter";
+} from "../../../utils/embeddingCodeGenerator";
 
 export class HeatmapDescriptor extends BigChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

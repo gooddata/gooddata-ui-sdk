@@ -1,4 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
+import { IFunnelChartProps } from "@gooddata/sdk-ui-charts";
+import { BucketNames } from "@gooddata/sdk-ui";
+import { bucketMeasures, insightFilters, insightSorts, bucketAttribute } from "@gooddata/sdk-model";
 
 import {
     IVisualizationDescriptor,
@@ -6,16 +9,13 @@ import {
 } from "../../../interfaces/VisualizationDescriptor";
 import { PluggableFunnelChart } from "./PluggableFunnelChart";
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
-import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator";
 import {
     bucketConversion,
     chartConfigFromInsight,
     getInsightToPropsConverter,
+    getReactEmbeddingCodeGenerator,
     insightConversion,
-} from "../../../utils/embeddingCodeGenerator/insightToPropsConverter";
-import { IFunnelChartProps } from "@gooddata/sdk-ui-charts";
-import { BucketNames } from "@gooddata/sdk-ui";
-import { bucketMeasures, insightFilters, insightSorts, bucketAttribute } from "@gooddata/sdk-model";
+} from "../../../utils/embeddingCodeGenerator";
 
 export class FunnelChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
