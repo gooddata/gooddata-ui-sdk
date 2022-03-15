@@ -13,7 +13,7 @@ export const PivotTableSortingAggregationExample: React.FC = () => {
             <PivotTable
                 measures={[FranchiseFees]}
                 rows={[Md.LocationState]}
-                columns={[Md.DateQuarter]}
+                columns={[Md.DateDatasets.Date.Quarter.Default]}
                 pageSize={20}
                 sortBy={[newAttributeAreaSort(Md.LocationState, "desc")]}
             />

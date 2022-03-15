@@ -27,7 +27,7 @@ const style = { height: 300 };
 export const StackedAreaChartExample: React.FC = () => {
     return (
         <div style={style} className="s-stacked-area-chart">
-            <AreaChart measures={measures} viewBy={Md.DateMonth.Short} config={chartConfig} />
+            <AreaChart measures={measures} viewBy={Md.DateDatasets.Date.Month.Short} config={chartConfig} />
         </div>
     );
 };

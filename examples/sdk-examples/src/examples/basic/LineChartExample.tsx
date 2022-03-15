@@ -28,7 +28,7 @@ const style = { height: 300 };
 export const LineChartExample: React.FC = () => {
     return (
         <div style={style} className="s-line-chart">
-            <LineChart measures={measures} trendBy={Md.DateMonth.Short} config={chartConfig} />
+            <LineChart measures={measures} trendBy={Md.DateDatasets.Date.Month.Short} config={chartConfig} />
         </div>
     );
 };

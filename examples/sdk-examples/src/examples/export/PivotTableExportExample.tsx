@@ -21,7 +21,7 @@ const measures = [
 
 const attributes = [Md.LocationState, Md.LocationName.Default, Md.MenuCategory];
 
-const columns = [Md.DateQuarter, Md.DateMonth.Short];
+const columns = [Md.DateDatasets.Date.Quarter.Default, Md.DateDatasets.Date.Month.Short];
 
 const sortBy = [newAttributeSort(Md.MenuCategory, "asc")];
 

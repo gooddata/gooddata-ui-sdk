@@ -24,7 +24,7 @@ const totals = [
     newTotal("sum", FranchiseFeesOngoingRoyalty, Md.MenuCategory),
     newTotal("max", FranchiseFees, Md.MenuCategory),
 ];
-const columns = [Md.DateQuarter, Md.DateMonth.Short];
+const columns = [Md.DateDatasets.Date.Quarter.Default, Md.DateDatasets.Date.Month.Short];
 const config: IPivotTableConfig = {
     menu: {
         aggregations: true,
