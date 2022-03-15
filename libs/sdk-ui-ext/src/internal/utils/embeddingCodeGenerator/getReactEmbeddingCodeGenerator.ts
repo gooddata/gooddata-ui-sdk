@@ -137,7 +137,7 @@ export function getReactEmbeddingCodeGenerator<TProps extends object>({
         return `${renderImports(imports)}
 
 ${propDeclarations}
-const style = { height: ${stringifiedHeight} };
+const style = {height: ${stringifiedHeight}};
 
 function MyComponent() {
     return (

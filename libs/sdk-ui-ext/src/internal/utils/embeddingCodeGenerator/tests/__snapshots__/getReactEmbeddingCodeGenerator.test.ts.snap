@@ -9,7 +9,7 @@ const prop = \\"string\\";
 const another = [
     newAttribute(idRef(\\"label.account.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.account.id.name\\"))
 ];
-const style = { height: 1000 };
+const style = {height: 1000};
 
 function MyComponent() {
     return (
@@ -33,7 +33,7 @@ const prop = \\"string\\";
 const another = [
     newAttribute(idRef(\\"label.account.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.account.id.name\\"))
 ];
-const style = { height: \\"20rem\\" };
+const style = {height: \\"20rem\\"};
 
 function MyComponent() {
     return (
@@ -57,7 +57,7 @@ const prop = \\"string\\";
 const another = [
     newAttribute(idRef(\\"label.account.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.account.id.name\\"))
 ];
-const style = { height: 400 };
+const style = {height: 400};
 
 function MyComponent() {
     return (
