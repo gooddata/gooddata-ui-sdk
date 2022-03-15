@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import compact from "lodash/compact";
 import {
@@ -30,6 +30,7 @@ import { DashboardDrillDefinition } from "../../../types";
 import { selectWidgetDrills } from "../layout/layoutSelectors";
 import { selectDrillTargetsByWidgetRef } from "../drillTargets/drillTargetsSelectors";
 import {
+    selectAllCatalogDisplayFormsMap,
     selectAttributesWithDisplayFormLink,
     selectAttributesWithDrillDown,
 } from "../catalog/catalogSelectors";
@@ -45,7 +46,6 @@ import {
     selectIsEmbedded,
 } from "../config/configSelectors";
 import flatMap from "lodash/flatMap";
-import { selectAllCatalogDisplayFormsMap } from "../catalog/catalogSelectors";
 import { selectAccessibleDashboardsMap } from "../accessibleDashboards/accessibleDashboardsSelectors";
 import { selectInsightsMap } from "../insights/insightsSelectors";
 

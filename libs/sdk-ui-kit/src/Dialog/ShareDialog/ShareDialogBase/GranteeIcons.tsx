@@ -1,8 +1,7 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import { BubbleHoverTrigger } from "../../../Bubble";
-import { Bubble } from "../../../Bubble";
+import { Bubble, BubbleHoverTrigger } from "../../../Bubble";
 import { useComponentLabelsContext } from "./ComponentLabelsContext";
 import { DialogModeType } from "./types";
 

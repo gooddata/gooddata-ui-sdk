@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import {
     FilterContextItem,
@@ -6,8 +6,8 @@ import {
     IDashboardDateFilter,
     IWidgetAlertDefinition,
     IAttributeDisplayFormMetadataObject,
+    IWidgetDefinition,
 } from "@gooddata/sdk-backend-spi";
-import { IWidgetDefinition } from "@gooddata/sdk-backend-spi";
 import { idRef, newNegativeAttributeFilter, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 import { IBrokenAlertFilterBasicInfo } from "../../types/alertTypes";
 import { getBrokenAlertFiltersBasicInfo } from "../alertsUtils";

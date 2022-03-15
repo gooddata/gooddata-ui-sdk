@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import {
     isDashboardLayout,
     IDashboard,
@@ -48,6 +48,7 @@ import {
     isDrillFromAttribute,
     isDrillFromMeasure,
     IDashboardPlugin,
+    IDashboardPluginDefinition,
     IDashboardPluginLink,
 } from "@gooddata/sdk-backend-spi";
 import {
@@ -74,7 +75,6 @@ import { convertUrisToReferences } from "../fromBackend/ReferenceConverter";
 import isEmpty from "lodash/isEmpty";
 import omitBy from "lodash/omitBy";
 import { serializeProperties } from "../fromBackend/PropertiesConverter";
-import { IDashboardPluginDefinition } from "@gooddata/sdk-backend-spi";
 
 const refToUri = (ref: ObjRef) => {
     invariant(isUriRef(ref));

@@ -1,18 +1,17 @@
-// (C) 2019-2021 GoodData Corporation
-import { IWorkspaceUserGroupsQuery, IWorkspaceUserGroupsQueryOptions } from "@gooddata/sdk-backend-spi";
-import { RecordedBackendConfig } from "./types";
-import { InMemoryPaging } from "@gooddata/sdk-backend-base";
-import {
-    IWorkspaceUser,
-    IWorkspaceUsersQuery,
-    IWorkspaceUsersQueryOptions,
-    IWorkspaceUsersQueryResult,
-} from "@gooddata/sdk-backend-spi";
+// (C) 2019-2022 GoodData Corporation
 import {
     AccessGranteeDetail,
     IAccessGrantee,
     IWorkspaceAccessControlService,
+    IWorkspaceUser,
+    IWorkspaceUserGroupsQuery,
+    IWorkspaceUserGroupsQueryOptions,
+    IWorkspaceUsersQuery,
+    IWorkspaceUsersQueryOptions,
+    IWorkspaceUsersQueryResult,
 } from "@gooddata/sdk-backend-spi";
+import { RecordedBackendConfig } from "./types";
+import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 import { ObjRef } from "@gooddata/sdk-model";
 import noop from "lodash/noop";
 

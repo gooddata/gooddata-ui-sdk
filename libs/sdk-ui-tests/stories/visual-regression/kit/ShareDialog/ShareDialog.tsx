@@ -2,8 +2,7 @@
 import React, { useCallback, useState } from "react";
 import { storiesOf } from "../../../_infra/storyRepository";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
-import { ComponentLabelsProvider, getGranteeItemTestId, ShareDialogBase } from "@gooddata/sdk-ui-kit";
-import { Button } from "@gooddata/sdk-ui-kit";
+import { Button, ComponentLabelsProvider, getGranteeItemTestId, ShareDialogBase } from "@gooddata/sdk-ui-kit";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";

@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 
 import React, { useMemo } from "react";
 import stringify from "json-stable-stringify";
@@ -19,9 +19,13 @@ import { isDrillToUrl } from "../types";
 import { DrillSelectListBody } from "./DrillSelectListBody";
 import { getDrillDownAttributeTitle, getTotalDrillToUrlCount } from "../utils/drillDownUtils";
 import { DrillSelectContext, DrillType, DrillSelectItem } from "./types";
-import { useDashboardSelector, selectInsightsMap, selectAccessibleDashboards } from "../../../model";
+import {
+    selectAccessibleDashboards,
+    selectDashboardTitle,
+    selectInsightsMap,
+    useDashboardSelector,
+} from "../../../model";
 import { dashboardMatch } from "../utils/dashboardPredicate";
-import { selectDashboardTitle } from "../../../model";
 import { DRILL_SELECT_DROPDOWN_Z_INDEX } from "../../constants";
 import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/drillingUtils";
 import { ObjRefMap } from "../../../_staging/metadata/objRefMap";
