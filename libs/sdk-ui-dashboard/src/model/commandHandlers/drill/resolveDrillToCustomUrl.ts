@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import { call, select, all, CallEffect, SagaReturnType } from "redux-saga/effects";
 import {
     IDrillEvent,
@@ -106,12 +106,12 @@ export function* loadAttributeElementsForDrillIntersection(
 const encodeParameterIfSet = (parameter: string | undefined): string | undefined =>
     parameter === undefined ? parameter : encodeURIComponent(parameter);
 
-export async function getAttributeDisplayForms(
+export function getAttributeDisplayForms(
     projectId: string,
     objRefs: ObjRef[],
     ctx: DashboardContext,
 ): Promise<IAttributeDisplayFormMetadataObject[]> {
-    return await ctx.backend.workspace(projectId).attributes().getAttributeDisplayForms(objRefs);
+    return ctx.backend.workspace(projectId).attributes().getAttributeDisplayForms(objRefs);
 }
 
 export function* getAttributeIdentifiersReplacements(

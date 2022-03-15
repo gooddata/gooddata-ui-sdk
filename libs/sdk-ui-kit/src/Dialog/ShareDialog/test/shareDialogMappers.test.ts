@@ -1,6 +1,5 @@
-// (C) 2021 GoodData Corporation
-import { ShareStatus } from "@gooddata/sdk-backend-spi";
-import { IListedDashboard, IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
+// (C) 2021-2022 GoodData Corporation
+import { IListedDashboard, IDashboardWithReferences, ShareStatus } from "@gooddata/sdk-backend-spi";
 import { IUser, uriRef } from "@gooddata/sdk-model";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 

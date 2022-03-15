@@ -2,6 +2,8 @@
 
 import {
     IAttributeDisplayFormMetadataObject,
+    IDashboardDateFilter,
+    IDashboardAttributeFilter,
     isDashboardAttributeFilterReference,
     isDashboardDateFilter,
     isDashboardDateFilterReference,
@@ -12,8 +14,6 @@ import last from "lodash/last";
 import partition from "lodash/partition";
 import { areObjRefsEqual, filterObjRef, IFilter, isAttributeFilter, ObjRef } from "@gooddata/sdk-model";
 import { IBrokenAlertFilterBasicInfo } from "../types/alertTypes";
-import { IDashboardDateFilter } from "@gooddata/sdk-backend-spi";
-import { IDashboardAttributeFilter } from "@gooddata/sdk-backend-spi";
 import { ObjRefMap } from "../../_staging/metadata/objRefMap";
 import invariant from "ts-invariant";
 

@@ -17,7 +17,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
             return handler({ axios: { get: getCall } });
         });
         getCall.mockImplementation(() => {
-            return new Promise((resolve) => resolve({ data: { data: { meta: { permissions } } } }));
+            return Promise.resolve({ data: { data: { meta: { permissions } } } });
         });
         return [new TigerWorkspacePermissionsFactory(authCall, workspaceId), getCall];
     }

@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import {
     SimpleDashboardFilterContext,
@@ -27,7 +27,7 @@ async function testDashboardModifications(tester: DashboardTester): Promise<any>
 
     await tester.dispatchAndWaitFor(renameDashboard(TestTitle), "GDC.DASH/EVT.RENAMED");
 
-    return await tester.dispatchAndWaitFor(
+    return tester.dispatchAndWaitFor(
         addAttributeFilter(attributeDisplayFormRef(ReferenceMd.Region), 0),
         "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADDED",
     );

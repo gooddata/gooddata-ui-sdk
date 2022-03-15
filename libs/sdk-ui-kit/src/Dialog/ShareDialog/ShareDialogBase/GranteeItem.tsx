@@ -1,6 +1,6 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 import cx from "classnames";
 import {
     DialogModeType,
@@ -20,7 +20,6 @@ import {
     GranteeUserInactiveIcon,
 } from "./GranteeIcons";
 import { Button } from "../../../Button";
-import { IntlShape } from "react-intl";
 
 interface IGranteeUserItemProps {
     grantee: IGranteeUser;
