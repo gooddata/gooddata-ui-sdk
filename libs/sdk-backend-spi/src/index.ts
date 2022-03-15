@@ -291,6 +291,7 @@ export {
     IInsightWidget,
     IInsightWidgetBase,
     IInsightWidgetDefinition,
+    IInsightWidgetConfiguration,
 } from "./workspace/dashboards/analyticalWidgets";
 export {
     IWidget,

@@ -432,7 +432,7 @@ export const convertWidget = (
         };
     }
 
-    const { insight, properties: widgetProperties = {} } = widget;
+    const { insight, properties: widgetProperties = {}, configuration } = widget;
 
     const { properties, references } = convertUrisToReferences({
         properties: widgetProperties,
@@ -454,6 +454,7 @@ export const convertWidget = (
                     properties: serializeProperties(nonEmptyProperties),
                 }),
                 ...(!isEmpty(references) && { references }),
+                ...(configuration ? { configuration } : {}),
             },
             meta,
         },
