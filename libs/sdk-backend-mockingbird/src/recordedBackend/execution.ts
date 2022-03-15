@@ -502,3 +502,15 @@ export function recordedInsight(recording: InsightRecording, refType: RecordedRe
         },
     };
 }
+
+/**
+ * Given recording index with insight metadata, this function will return IInsight objects for every recording there.
+ *
+ * @param recordings - recording index (as created by mock-handling tooling)
+ * @param refType - ref type to have in the insight, default is uri
+ * @internal
+ */
+export function recordedInsights(recordings: RecordingIndex, refType: RecordedRefType = "uri"): IInsight[] {
+    const insightRecordings = values(recordings.metadata?.insights);
+    return insightRecordings.map((recording) => recordedInsight(recording, refType));
+}
