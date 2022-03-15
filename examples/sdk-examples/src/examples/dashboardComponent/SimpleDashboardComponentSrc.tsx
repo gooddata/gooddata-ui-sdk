@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { Dashboard, DashboardConfig } from "@gooddata/sdk-ui-dashboard";
 import { idRef } from "@gooddata/sdk-model";

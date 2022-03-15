@@ -173,9 +173,22 @@ describe("createSorts", () => {
             });
         });
 
-        describe("pie", () => {
-            it("should return empty array", () => {
-                expect(createSorts("pie", insightWithSingleMeasureAndViewByAndStack)).toEqual([]);
+        describe("pie/donut", () => {
+            it("should sort by measure", () => {
+                expect(createSorts("pie", insightWithSingleMeasureAndViewByAndStack)).toEqual([
+                    {
+                        measureSortItem: {
+                            direction: "desc",
+                            locators: [
+                                {
+                                    measureLocatorItem: {
+                                        measureIdentifier: "m1",
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                ]);
             });
         });
 
