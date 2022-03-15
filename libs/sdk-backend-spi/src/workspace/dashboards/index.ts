@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { IFilter, ObjRef } from "@gooddata/sdk-model";
 import {
     IDashboard,
@@ -35,6 +35,20 @@ export interface IGetDashboardOptions {
      * Defaults to false.
      */
     includeAvailableViaLink?: boolean;
+}
+
+/**
+ * Configuration options for getting scheduled mails.
+ *
+ * @alpha
+ */
+export interface IGetScheduledMailOptions {
+    /**
+     * Optionally list only subset of scheduled mails authored by current user.
+     *
+     * Defaults to false.
+     */
+    createdByCurrentUser?: boolean;
 }
 
 /**
@@ -147,6 +161,15 @@ export interface IWorkspaceDashboardsService {
         scheduledMail: IScheduledMailDefinition,
         exportFilterContext?: IFilterContextDefinition,
     ): Promise<IScheduledMail>;
+
+    /**
+     * Get scheduled emails for particular dashboard
+     *
+     * @param ref - dashboard reference
+     * @param options - optionally specify additional options
+     * @returns promise with scheduled emails connected to the dashboard
+     */
+    getScheduledMailsForDashboard(ref: ObjRef, options?: IGetScheduledMailOptions): Promise<IScheduledMail[]>;
 
     /**
      * Get the number of scheduled emails for particular dashboard

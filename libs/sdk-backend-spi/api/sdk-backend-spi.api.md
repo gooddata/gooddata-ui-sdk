@@ -909,6 +909,11 @@ export interface IGetInsightOptions {
     loadUserData?: boolean;
 }
 
+// @alpha
+export interface IGetScheduledMailOptions {
+    createdByCurrentUser?: boolean;
+}
+
 // @public
 export interface IGetVisualizationClassesOptions {
     includeDeprecated?: boolean;
@@ -1960,6 +1965,7 @@ export interface IWorkspaceDashboardsService {
     getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardWithReferences>;
     getResolvedFiltersForWidget(widget: IWidget, filters: IFilter[]): Promise<IFilter[]>;
     getScheduledMailsCountForDashboard(ref: ObjRef): Promise<number>;
+    getScheduledMailsForDashboard(ref: ObjRef, options?: IGetScheduledMailOptions): Promise<IScheduledMail[]>;
     getWidgetAlertsCountForWidgets(refs: ObjRef[]): Promise<IWidgetAlertCount[]>;
     getWidgetReferencedObjects(widget: IWidget, types?: SupportedWidgetReferenceTypes[]): Promise<IWidgetReferences>;
     updateDashboard(dashboard: IDashboard, updatedDashboard: IDashboardDefinition): Promise<IDashboard>;
