@@ -33,7 +33,7 @@ Object {
     Object {
       "attributeSortItem": Object {
         "attributeIdentifier": "a2",
-        "direction": "desc",
+        "direction": "asc",
       },
     },
   ],
@@ -60,7 +60,7 @@ Object {
     Object {
       "attributeSortItem": Object {
         "attributeIdentifier": "a3",
-        "direction": "desc",
+        "direction": "asc",
       },
     },
   ],
