@@ -62,13 +62,7 @@ beforeEach(() => {
     cy.login();
 
     // Modify according to your needs.
-    // Don't forget to replace "my-new-test-plugin" with the target plugin name.
-    const TEST_PLUGIN = newTestPlugin("my-new-test-plugin");
-    withTestConfig({
-        dashboardId: Md.Dashboards.DashboardWithPlugin,
-        plugins: [TEST_PLUGIN],
-        links: [newTestPluginLink(TEST_PLUGIN, "plugin-parameters")],
-    });
+    withTestConfig(PLUGIN_8_8_0_CONFIG);
 });
 ```
 
