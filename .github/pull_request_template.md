@@ -8,12 +8,13 @@ Description of changes.
 
 Supported PR commands:
 
-| Command                  | Description            |
-| ------------------------ | ---------------------- |
-| `ok to test`             | Re-run standard checks |
-| `extended test`          | BackstopJS tests       |
-| `extended check sonar`   | SonarQube tests        |
-| `extended check cypress` | Cypress E2E tests      |
+| Command                  | Description             |
+| ------------------------ | ----------------------- |
+| `ok to test`             | Re-run standard checks  |
+| `extended test`          | BackstopJS tests        |
+| `extended check sonar`   | SonarQube tests         |
+| `extended check cypress` | Cypress E2E tests       |
+| `extended check plugins` | Dashboard plugins tests |
 
 ---
 
