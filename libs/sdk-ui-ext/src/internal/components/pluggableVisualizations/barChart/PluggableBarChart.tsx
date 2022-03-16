@@ -100,6 +100,13 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
         defaultSort: ISortConfig["defaultSort"];
         availableSorts: ISortConfig["availableSorts"];
     } {
+        if (this.isSortDisabled(referencePoint).disabled) {
+            return {
+                defaultSort: [],
+                availableSorts: [],
+            };
+        }
+
         const { buckets } = referencePoint;
         const measures = getBucketItems(buckets, BucketNames.MEASURES);
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
@@ -173,11 +180,11 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
             availableSorts: [],
         };
     }
-    private isSortDisabled(referencePoint: IReferencePoint, availableSorts: ISortConfig["availableSorts"]) {
+    private isSortDisabled(referencePoint: IReferencePoint) {
         const { buckets } = referencePoint;
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
         const measures = getBucketItems(buckets, BucketNames.MEASURES);
-        const disabled = viewBy.length < 1 || measures.length < 1 || availableSorts.length === 0;
+        const disabled = viewBy.length < 1 || measures.length < 1;
         const disabledExplanation = getCustomSortDisabledExplanation(measures, viewBy, this.intl);
         return {
             disabled,
@@ -192,7 +199,7 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
             canSortStackTotalValue(buckets, properties),
         );
 
-        const { disabled, disabledExplanation } = this.isSortDisabled(referencePoint, availableSorts);
+        const { disabled, disabledExplanation } = this.isSortDisabled(referencePoint);
 
         return Promise.resolve({
             supported: true,

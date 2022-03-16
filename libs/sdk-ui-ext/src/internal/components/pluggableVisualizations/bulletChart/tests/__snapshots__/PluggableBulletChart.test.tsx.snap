@@ -14,25 +14,8 @@ Object {
 exports[`PluggableBulletChart Sort config should return expected sort config for 0 M + 1 VB 1`] = `
 Object {
   "appliedSort": Array [],
-  "availableSorts": Array [
-    Object {
-      "attributeSort": Object {
-        "areaSortEnabled": false,
-        "normalSortEnabled": true,
-      },
-      "itemId": Object {
-        "localIdentifier": "a1",
-      },
-    },
-  ],
-  "defaultSort": Array [
-    Object {
-      "attributeSortItem": Object {
-        "attributeIdentifier": "a1",
-        "direction": "asc",
-      },
-    },
-  ],
+  "availableSorts": Array [],
+  "defaultSort": Array [],
   "disabled": true,
   "supported": true,
 }

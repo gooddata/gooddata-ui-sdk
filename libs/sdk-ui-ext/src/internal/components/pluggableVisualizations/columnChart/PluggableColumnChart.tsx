@@ -5,7 +5,7 @@ import { newAttributeSort } from "@gooddata/sdk-model";
 import { PluggableColumnBarCharts } from "../PluggableColumnBarCharts";
 import { AXIS, AXIS_NAME } from "../../../constants/axis";
 import { COLUMN_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
-import { IVisConstruct, IReferencePoint, IBucketItem } from "../../../interfaces/Visualization";
+import { IVisConstruct, IReferencePoint } from "../../../interfaces/Visualization";
 import { getBucketItems } from "../../../utils/bucketHelper";
 import { canSortStackTotalValue } from "../barChart/sortHelpers";
 import { ISortConfig, newAvailableSortsGroup } from "../../../interfaces/SortConfig";
@@ -61,14 +61,22 @@ export class PluggableColumnChart extends PluggableColumnBarCharts {
     }
 
     protected getDefaultAndAvailableSort(
-        measures: IBucketItem[],
-        viewBy: IBucketItem[],
-        stackBy: IBucketItem[],
+        referencePoint: IReferencePoint,
         canSortStackTotalValue: boolean,
     ): {
         defaultSort: ISortConfig["defaultSort"];
         availableSorts: ISortConfig["availableSorts"];
     } {
+        if (this.isSortDisabled(referencePoint).disabled) {
+            return {
+                defaultSort: [],
+                availableSorts: [],
+            };
+        }
+        const { buckets } = referencePoint;
+        const viewBy = getBucketItems(buckets, BucketNames.VIEW);
+        const stackBy = getBucketItems(buckets, BucketNames.STACK);
+        const measures = getBucketItems(buckets, BucketNames.MEASURES);
         const defaultSort = viewBy.map((vb) => newAttributeSort(vb.localIdentifier, "asc"));
         const isStacked = !isEmpty(stackBy) || canSortStackTotalValue;
 
@@ -132,11 +140,11 @@ export class PluggableColumnChart extends PluggableColumnBarCharts {
         };
     }
 
-    private isSortDisabled(referencePoint: IReferencePoint, availableSorts: ISortConfig["availableSorts"]) {
+    private isSortDisabled(referencePoint: IReferencePoint) {
         const { buckets } = referencePoint;
         const measures = getBucketItems(buckets, BucketNames.MEASURES);
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
-        const disabled = viewBy.length < 1 || measures.length < 1 || availableSorts.length === 0;
+        const disabled = viewBy.length < 1 || measures.length < 1;
         const disabledExplanation = getCustomSortDisabledExplanation(measures, viewBy, this.intl);
         return {
             disabled,
@@ -146,17 +154,12 @@ export class PluggableColumnChart extends PluggableColumnBarCharts {
 
     public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
         const { buckets, properties } = referencePoint;
-        const viewBy = getBucketItems(buckets, BucketNames.VIEW);
-        const stackBy = getBucketItems(buckets, BucketNames.STACK);
-        const measures = getBucketItems(buckets, BucketNames.MEASURES);
         const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(
-            measures,
-            viewBy,
-            stackBy,
+            referencePoint,
             canSortStackTotalValue(buckets, properties),
         );
 
-        const { disabled, disabledExplanation } = this.isSortDisabled(referencePoint, availableSorts);
+        const { disabled, disabledExplanation } = this.isSortDisabled(referencePoint);
 
         return Promise.resolve({
             supported: true,
