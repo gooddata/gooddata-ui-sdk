@@ -327,6 +327,7 @@ export {
     VisualizationProperties,
     IColorMappingItem,
     isInsight,
+    isColorMappingItem,
     insightRef,
     insightId,
     insightItems,

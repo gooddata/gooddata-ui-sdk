@@ -909,6 +909,9 @@ export function isBucket(obj: unknown): obj is IBucket;
 export function isColorFromPalette(obj: unknown): obj is IColorFromPalette;
 
 // @public
+export function isColorMappingItem(obj: unknown): obj is IColorMappingItem;
+
+// @public
 export function isComparisonCondition(obj: unknown): obj is IComparisonCondition;
 
 // @public

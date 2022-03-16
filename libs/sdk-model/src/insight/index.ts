@@ -226,6 +226,15 @@ export interface IColorMappingItem {
     color: IColor;
 }
 
+/**
+ * Type guard checking whether the provided object is an {@link IColorMappingItem}.
+ *
+ * @public
+ */
+export function isColorMappingItem(obj: unknown): obj is IColorMappingItem {
+    return !isEmpty(obj) && !!(obj as IColorMappingItem).color && !!(obj as IColorMappingItem).id;
+}
+
 //
 // Type guards
 //
