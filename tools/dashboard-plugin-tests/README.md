@@ -1,4 +1,4 @@
-# Dashboard plugins tests
+# TRY Dashboard plugins tests
 
 Repository for e2e testing of the dashboard plugin APIs.
 
