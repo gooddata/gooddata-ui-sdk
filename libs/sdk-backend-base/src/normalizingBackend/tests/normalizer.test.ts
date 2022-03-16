@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 
 import {
     defaultDimensionsGenerator,
@@ -125,6 +125,13 @@ describe("Normalizer", () => {
     it.each(Scenarios)("should normalize %s", (_desc, definition) => {
         const withDims = defWithDimensions(definition, defaultDimensionsGenerator);
         const result = Normalizer.normalize(withDims);
+
+        expect(result.normalized).toMatchSnapshot();
+    });
+
+    it.each(Scenarios)("should normalize %s with keeping removable properties", (_desc, definition) => {
+        const withDims = defWithDimensions(definition, defaultDimensionsGenerator);
+        const result = Normalizer.normalize(withDims, { keepRemovableProperties: true });
 
         expect(result.normalized).toMatchSnapshot();
     });

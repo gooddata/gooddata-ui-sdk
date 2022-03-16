@@ -192,6 +192,9 @@ export function recordedDataViews(recordings: RecordingIndex): NamedDataView[];
 // @internal
 export function recordedInsight(recording: InsightRecording, refType?: RecordedRefType): IInsight;
 
+// @internal
+export function recordedInsights(recordings: RecordingIndex, refType?: RecordedRefType): IInsight[];
+
 // @internal (undocumented)
 export type RecordedRefType = "id" | "uri";
 

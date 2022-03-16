@@ -7,8 +7,6 @@ import { Table } from "../../tools/table";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const constants = require("../../constants");
 
-constants.WORKSPACE_ID;
-
 const TABLE_SELECTOR_STR_COMPLEX = ".s-pivot-table-sizing-complex";
 const CHANGE_WIDTH_BUTTON_ATTRIBUTE_STR = ".s-change-width-button-attribute";
 const CHANGE_WIDTH_BUTTON_MEASURE_STR = ".s-change-width-button-measure";

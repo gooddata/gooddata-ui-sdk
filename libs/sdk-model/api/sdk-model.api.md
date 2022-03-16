@@ -276,7 +276,7 @@ export function disableComputeRatio<T extends IAttributeOrMeasure>(item: T): T;
 export function emptyDef(workspace: string): IExecutionDefinition;
 
 // @public
-export const factoryNotationFor: (data: any) => string;
+export const factoryNotationFor: (data: any, additionalConversion?: ((data: any) => string | undefined) | undefined) => string;
 
 // @public
 export function filterAttributeElements(filter: IPositiveAttributeFilter | INegativeAttributeFilter): IAttributeElements;

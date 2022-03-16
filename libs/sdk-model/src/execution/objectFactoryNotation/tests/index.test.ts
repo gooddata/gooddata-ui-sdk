@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { factoryNotationFor } from "../index";
 import { IAttribute } from "../../attribute";
 import { newAttribute } from "../../attribute/factory";
@@ -32,6 +32,8 @@ import {
     newPopMeasure,
     newPreviousPeriodMeasure,
 } from "../../measure/factory";
+import { idRef, localIdRef, uriRef } from "../../../objRef/factory";
+import { ITotal, newTotal } from "../../base/totals";
 
 // object with all the factory functions to be DI'd into the testing function
 const factories = {
@@ -52,6 +54,12 @@ const factories = {
     newAttributeSort,
     newAttributeAreaSort,
     newMeasureSort,
+
+    newTotal,
+
+    idRef,
+    localIdRef,
+    uriRef,
 };
 
 /**
@@ -68,20 +76,6 @@ const testModelNotation = (factoryNotation: string, expected: any) => {
 };
 
 describe("factoryNotationFor", () => {
-    describe("unknown objects", () => {
-        const testCases: Array<[any, any]> = [
-            [undefined, undefined],
-            [null, null],
-            [true, true],
-            ["foo", '"foo"'],
-            [42, 42],
-            [[], "[]"],
-            [{ foo: "bar" }, '{foo: "bar"}'],
-        ];
-        it.each(testCases)(`should not touch irrelevant input %p`, (value: any, expectedValue: any) => {
-            expect(factoryNotationFor(value)).toEqual(expectedValue);
-        });
-    });
     describe("attributes", () => {
         it("should handle attribute with identifier", () => {
             const input: IAttribute = {
@@ -509,6 +503,48 @@ describe("factoryNotationFor", () => {
                 const actual = factoryNotationFor(input);
                 testModelNotation(actual, input);
             });
+        });
+    });
+    describe("totals", () => {
+        it("should handle total without alias", () => {
+            const input: ITotal = {
+                attributeIdentifier: "attr",
+                measureIdentifier: "measure",
+                type: "sum",
+            };
+            const actual = factoryNotationFor(input);
+            testModelNotation(actual, input);
+        });
+
+        it("should handle total with alias", () => {
+            const input: ITotal = {
+                attributeIdentifier: "attr",
+                measureIdentifier: "measure",
+                type: "sum",
+                alias: "some alias",
+            };
+            const actual = factoryNotationFor(input);
+            testModelNotation(actual, input);
+        });
+    });
+    describe("additional conversion", () => {
+        const additionalConversion = (obj: any) => {
+            if (typeof obj === "object" && "foo" in obj) {
+                return `newFoo(${obj.foo})`;
+            }
+            return undefined;
+        };
+
+        it("should handle custom conversion", () => {
+            const input = { foo: 42 };
+            const actual = factoryNotationFor(input, additionalConversion);
+            expect(actual).toEqual("newFoo(42)");
+        });
+
+        it("should handle nested custom conversion", () => {
+            const input = { wrapped: { baz: { foo: 42 }, bar: [{ foo: 123 }] } };
+            const actual = factoryNotationFor(input, additionalConversion);
+            expect(actual).toEqual("{wrapped: {baz: newFoo(42), bar: [newFoo(123)]}}");
         });
     });
 });

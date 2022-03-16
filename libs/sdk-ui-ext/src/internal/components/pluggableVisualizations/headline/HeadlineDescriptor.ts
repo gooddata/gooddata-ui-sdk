@@ -1,6 +1,10 @@
-// (C) 2021 GoodData Corporation
-import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
+// (C) 2021-2022 GoodData Corporation
+import { bucketMeasure, IInsight, IInsightDefinition } from "@gooddata/sdk-model";
 import { ISettings } from "@gooddata/sdk-backend-spi";
+import { IHeadlineProps } from "@gooddata/sdk-ui-charts";
+import { BucketNames } from "@gooddata/sdk-ui";
+import { insightFilters } from "@gooddata/sdk-model";
+
 import {
     IVisualizationSizeInfo,
     IVisualizationDescriptor,
@@ -9,6 +13,12 @@ import {
 import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor";
 import { PluggableHeadline } from "./PluggableHeadline";
 import { DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT, MAX_VISUALIZATION_HEIGHT } from "../constants";
+import {
+    bucketConversion,
+    getInsightToPropsConverter,
+    getReactEmbeddingCodeGenerator,
+    insightConversion,
+} from "../../../utils/embeddingCodeGenerator";
 
 const hasSecondaryMeasure = (insight: IInsightDefinition) =>
     insight.insight.buckets.filter((bucket) => bucket.items.length > 0).length > 1;
@@ -61,4 +71,21 @@ export class HeadlineDescriptor implements IVisualizationDescriptor {
     public applyDrillDown(insight: IInsight): IInsight {
         return insight;
     }
+
+    public getEmbeddingCode = getReactEmbeddingCodeGenerator({
+        component: {
+            importType: "named",
+            name: "Headline",
+            package: "@gooddata/sdk-ui-charts",
+        },
+        insightToProps: getInsightToPropsConverter<IHeadlineProps>({
+            primaryMeasure: bucketConversion("primaryMeasure", BucketNames.MEASURES, bucketMeasure),
+            secondaryMeasure: bucketConversion(
+                "secondaryMeasure",
+                BucketNames.SECONDARY_MEASURES,
+                bucketMeasure,
+            ),
+            filters: insightConversion("filters", insightFilters),
+        }),
+    });
 }

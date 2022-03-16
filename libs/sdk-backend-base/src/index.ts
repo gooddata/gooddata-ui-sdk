@@ -56,7 +56,13 @@ export {
     CommonSettingsWrapper,
 } from "./workspaceSettingsBackend";
 export { withNormalization, NormalizationConfig, NormalizationWhenExecuteByRef } from "./normalizingBackend";
-export { Normalizer, Denormalizer, NormalizationState, LocalIdMap } from "./normalizingBackend/normalizer";
+export {
+    Normalizer,
+    Denormalizer,
+    NormalizationState,
+    LocalIdMap,
+    INormalizerOptions,
+} from "./normalizingBackend/normalizer";
 
 export {
     AuthenticatedAsyncCall,

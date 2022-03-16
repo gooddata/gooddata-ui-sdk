@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getReactEmbeddingCodeGenerator should generate embedding code with height as number 1`] = `
+"import React from \\"react\\";
+import { idRef, newAttribute } from \\"@gooddata/sdk-model\\";
+import { Foo } from \\"@gooddata/foo\\";
+
+const prop = \\"string\\";
+const another = [
+    newAttribute(idRef(\\"label.account.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.account.id.name\\"))
+];
+const style = {height: 1000};
+
+function MyComponent() {
+    return (
+        <div style={style}>
+            <Foo
+                prop={prop}
+                another={another}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getReactEmbeddingCodeGenerator should generate embedding code with height as string 1`] = `
+"import React from \\"react\\";
+import { idRef, newAttribute } from \\"@gooddata/sdk-model\\";
+import { Foo } from \\"@gooddata/foo\\";
+
+const prop = \\"string\\";
+const another = [
+    newAttribute(idRef(\\"label.account.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.account.id.name\\"))
+];
+const style = {height: \\"20rem\\"};
+
+function MyComponent() {
+    return (
+        <div style={style}>
+            <Foo
+                prop={prop}
+                another={another}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getReactEmbeddingCodeGenerator should generate embedding code without height 1`] = `
+"import React from \\"react\\";
+import { idRef, newAttribute } from \\"@gooddata/sdk-model\\";
+import { Foo } from \\"@gooddata/foo\\";
+
+const prop = \\"string\\";
+const another = [
+    newAttribute(idRef(\\"label.account.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.account.id.name\\"))
+];
+const style = {height: 400};
+
+function MyComponent() {
+    return (
+        <div style={style}>
+            <Foo
+                prop={prop}
+                another={another}
+            />
+        </div>
+    );
+}
+"
+`;

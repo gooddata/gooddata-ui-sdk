@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import {
     attributeAlias,
     attributeLocalId,
@@ -189,6 +189,16 @@ export class Denormalizer {
 }
 
 /**
+ * @internal
+ */
+export interface INormalizerOptions {
+    /**
+     * If true, things like aliases, titles, etc. are kept in the objects. Defaults to false.
+     */
+    keepRemovableProperties?: boolean;
+}
+
+/**
  * The normalization of execution definition means stripping away all the detail that is unnecessary for the
  * backend:
  *
@@ -208,8 +218,8 @@ export class Denormalizer {
  * @internal
  */
 export class Normalizer {
-    public static normalize(def: IExecutionDefinition): NormalizationState {
-        const n = new Normalizer(def);
+    public static normalize(def: IExecutionDefinition, options?: INormalizerOptions): NormalizationState {
+        const n = new Normalizer(def, options);
 
         return n.normalize();
     }
@@ -230,7 +240,10 @@ export class Normalizer {
 
     private readonly alreadyNormalized: IMeasure[] = [];
 
-    private constructor(public readonly original: IExecutionDefinition) {
+    private constructor(
+        public readonly original: IExecutionDefinition,
+        protected readonly options: INormalizerOptions = {},
+    ) {
         const copy = cloneDeep(this.original);
 
         // throw away noop filters
@@ -291,10 +304,14 @@ export class Normalizer {
 
     private normalizeAttributes = () => {
         this.normalized.attributes.forEach((attr) => {
-            delete attr.attribute.alias;
+            if (!this.options.keepRemovableProperties) {
+                delete attr.attribute.alias;
+            }
 
             const originalLocalId = attributeLocalId(attr);
-            const normalizedLocalId = attributeLocalId(modifyAttribute(attr, (m) => m.defaultLocalId()));
+            const normalizedLocalId = attributeLocalId(
+                modifyAttribute(attr, (m) => m.noAlias().defaultLocalId()),
+            );
 
             attr.attribute.localIdentifier = this.createUniqueMapping(originalLocalId, normalizedLocalId);
         });
@@ -369,11 +386,15 @@ export class Normalizer {
             this.normalizeSimple(definition);
         }
 
-        delete measure.measure.alias;
-        delete measure.measure.title;
-        delete measure.measure.format;
+        if (!this.options.keepRemovableProperties) {
+            delete measure.measure.alias;
+            delete measure.measure.title;
+            delete measure.measure.format;
+        }
 
-        const newLocalId = measureLocalId(modifyMeasure(measure, (m) => m.defaultLocalId()));
+        const newLocalId = measureLocalId(
+            modifyMeasure(measure, (m) => m.noAlias().noTitle().defaultFormat().defaultLocalId()),
+        );
         const newUniqueLocalId = this.createUniqueMapping(localId, newLocalId);
 
         measure.measure.localIdentifier = newUniqueLocalId;

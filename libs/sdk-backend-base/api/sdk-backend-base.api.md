@@ -691,6 +691,11 @@ export class InMemoryPaging<T> implements IPagedResource<T> {
     readonly totalCount: number;
 }
 
+// @internal (undocumented)
+export interface INormalizerOptions {
+    keepRemovableProperties?: boolean;
+}
+
 // @alpha (undocumented)
 export class InsightWidgetBuilder extends WidgetBaseBuilder<IInsightWidget> implements IInsightWidgetBuilder {
     constructor(item: IInsightWidget, validator?: ((item: Partial<IInsightWidget>) => void) | undefined);
@@ -874,9 +879,11 @@ export type NormalizationWhenExecuteByRef = "prohibit" | "fallback";
 // @internal
 export class Normalizer {
     // (undocumented)
-    static normalize(def: IExecutionDefinition): NormalizationState;
+    static normalize(def: IExecutionDefinition, options?: INormalizerOptions): NormalizationState;
     // (undocumented)
     readonly normalized: IExecutionDefinition;
+    // (undocumented)
+    protected readonly options: INormalizerOptions;
     // (undocumented)
     readonly original: IExecutionDefinition;
 }

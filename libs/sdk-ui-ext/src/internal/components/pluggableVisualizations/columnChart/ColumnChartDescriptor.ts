@@ -1,10 +1,14 @@
-// (C) 2021 GoodData Corporation
-
-import { PluggableVisualizationFactory } from "../../../interfaces/VisualizationDescriptor";
-import { PluggableColumnChart } from "./PluggableColumnChart";
-import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
-import { bucketIsEmpty, IInsight, insightBucket } from "@gooddata/sdk-model";
-import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil";
+// (C) 2021-2022 GoodData Corporation
+import {
+    bucketAttribute,
+    bucketAttributes,
+    bucketIsEmpty,
+    bucketMeasures,
+    IInsight,
+    insightBucket,
+    insightFilters,
+    insightSorts,
+} from "@gooddata/sdk-model";
 import {
     BucketNames,
     getIntersectionPartAfter,
@@ -12,9 +16,26 @@ import {
     IDrillEventIntersectionElement,
 } from "@gooddata/sdk-ui";
 import { arrayUtils } from "@gooddata/util";
+import { IColumnChartProps } from "@gooddata/sdk-ui-charts";
+
+import {
+    IVisualizationDescriptor,
+    PluggableVisualizationFactory,
+} from "../../../interfaces/VisualizationDescriptor";
+import { PluggableColumnChart } from "./PluggableColumnChart";
+import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
+import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil";
 import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper";
 import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization";
-export class ColumnChartDescriptor extends BaseChartDescriptor {
+import {
+    bucketConversion,
+    chartConfigFromInsight,
+    getInsightToPropsConverter,
+    getReactEmbeddingCodeGenerator,
+    insightConversion,
+} from "../../../utils/embeddingCodeGenerator";
+
+export class ColumnChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
         return (params) => new PluggableColumnChart(params);
     }
@@ -27,6 +48,22 @@ export class ColumnChartDescriptor extends BaseChartDescriptor {
         );
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
+
+    public getEmbeddingCode = getReactEmbeddingCodeGenerator({
+        component: {
+            importType: "named",
+            name: "ColumnChart",
+            package: "@gooddata/sdk-ui-charts",
+        },
+        insightToProps: getInsightToPropsConverter<IColumnChartProps>({
+            measures: bucketConversion("measures", BucketNames.MEASURES, bucketMeasures),
+            viewBy: bucketConversion("viewBy", BucketNames.VIEW, bucketAttributes),
+            stackBy: bucketConversion("stackBy", BucketNames.STACK, bucketAttribute),
+            filters: insightConversion("filters", insightFilters),
+            sortBy: insightConversion("sortBy", insightSorts),
+            config: insightConversion("config", chartConfigFromInsight),
+        }),
+    });
 
     private adjustIntersectionForColumnBar(
         insight: IInsight,

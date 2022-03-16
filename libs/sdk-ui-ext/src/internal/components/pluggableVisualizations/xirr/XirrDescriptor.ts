@@ -1,6 +1,10 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
-import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
+import { bucketAttribute, bucketMeasure, IInsight, IInsightDefinition } from "@gooddata/sdk-model";
+import { ISettings } from "@gooddata/sdk-backend-spi";
+import { IXirrProps } from "@gooddata/sdk-ui-charts";
+import { BucketNames } from "@gooddata/sdk-ui";
+import { insightFilters } from "@gooddata/sdk-model";
 
 import {
     IVisualizationSizeInfo,
@@ -8,10 +12,14 @@ import {
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor";
 import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor";
-
 import { PluggableXirr } from "./PluggableXirr";
 import { DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT, MAX_VISUALIZATION_HEIGHT } from "../constants";
-import { ISettings } from "@gooddata/sdk-backend-spi";
+import {
+    bucketConversion,
+    getInsightToPropsConverter,
+    getReactEmbeddingCodeGenerator,
+    insightConversion,
+} from "../../../utils/embeddingCodeGenerator";
 
 export class XirrDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
@@ -61,4 +69,17 @@ export class XirrDescriptor implements IVisualizationDescriptor {
     public applyDrillDown(insight: IInsight): IInsight {
         return insight;
     }
+
+    public getEmbeddingCode = getReactEmbeddingCodeGenerator({
+        component: {
+            importType: "named",
+            name: "Xirr",
+            package: "@gooddata/sdk-ui-charts",
+        },
+        insightToProps: getInsightToPropsConverter<IXirrProps>({
+            measure: bucketConversion("measure", BucketNames.MEASURES, bucketMeasure),
+            attribute: bucketConversion("attribute", BucketNames.ATTRIBUTE, bucketAttribute),
+            filters: insightConversion("filters", insightFilters),
+        }),
+    });
 }

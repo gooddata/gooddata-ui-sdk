@@ -1,8 +1,10 @@
-// (C) 2020-2021 GoodData Corporation
-import { newInsightDefinition } from "@gooddata/sdk-model";
+// (C) 2020-2022 GoodData Corporation
+import { IInsight, insightTitle, newInsightDefinition } from "@gooddata/sdk-model";
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 import { BarChartDescriptor } from "../pluggableVisualizations/barChart/BarChartDescriptor";
-import { CatalogViaTypeToClassMap } from "../VisualizationCatalog";
+import { CatalogViaTypeToClassMap, FullVisualizationCatalog } from "../VisualizationCatalog";
+import { recordedInsights } from "@gooddata/sdk-backend-mockingbird";
+import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
 describe("CatalogViaTypeToClassMap", () => {
     const TestCatalog = new CatalogViaTypeToClassMap({ someType: BarChartDescriptor });
@@ -50,5 +52,17 @@ describe("CatalogViaTypeToClassMap", () => {
         expect(() => TestCatalog.forInsight(newInsightDefinition("local:nonsense"))).toThrowError(
             UnexpectedSdkError,
         );
+    });
+});
+
+describe("getEmbeddingCode functionality", () => {
+    const scenarios: [string, IInsight][] = recordedInsights(ReferenceRecordings.Recordings).map((i) => [
+        insightTitle(i),
+        i,
+    ]);
+
+    it.each(scenarios)("should generate code for %s", (_, insight) => {
+        const descriptor = FullVisualizationCatalog.forInsight(insight);
+        expect(descriptor.getEmbeddingCode?.(insight)).toMatchSnapshot();
     });
 });

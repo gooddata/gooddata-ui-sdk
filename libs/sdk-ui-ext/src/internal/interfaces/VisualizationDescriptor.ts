@@ -1,5 +1,5 @@
-// (C) 2021 GoodData Corporation
-import { ISettings } from "@gooddata/sdk-backend-spi";
+// (C) 2021-2022 GoodData Corporation
+import { IAnalyticalBackend, ISettings, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
 import { IFluidLayoutDescriptor } from "./LayoutDescriptor";
 import { IDrillDownContext, IVisConstruct, IVisualization } from "./Visualization";
@@ -31,6 +31,43 @@ export interface ISizeInfo {
 export interface IVisualizationSizeInfo {
     width: ISizeInfo;
     height: ISizeInfo;
+}
+
+/**
+ * Context of the embedding code generation.
+ *
+ * @alpha
+ */
+export interface IEmbeddingCodeContext {
+    /**
+     * The backend that will be used to determine the capabilities of it.
+     * Should be the same type and version as the one that will be used in the target application.
+     * If not provided, any backend-dependent properties MUST be ignored in the code generator.
+     */
+    backend?: IAnalyticalBackend;
+    /**
+     * Settings of the current user.
+     * If not provided, any user specific-settings MUST be ignored in the code generator.
+     */
+    settings?: IUserWorkspaceSettings;
+}
+
+/**
+ * Configuration of the embedding code generation.
+ *
+ * @alpha
+ */
+export interface IEmbeddingCodeConfig {
+    /**
+     * Desired height of the resulting component.
+     * If not specified, a sane default will be used.
+     */
+    height?: number | string;
+    /**
+     * Context of the embedding code generation.
+     * If provided, the code generator can use it to fine tune the resulting code.
+     */
+    context?: IEmbeddingCodeContext;
 }
 
 /**
@@ -73,4 +110,13 @@ export interface IVisualizationDescriptor {
      * @returns {@link @gooddata/sdk-model#IInsight} with modified buckets and filters according to the provided drill down context.
      */
     applyDrillDown(insight: IInsight, drillDownContext: IDrillDownContext): IInsight;
+
+    /**
+     * When called, returns a source code that can be used to embed the visualization in a custom application.
+     *
+     * @param insight - the insight to generate the embedding code for
+     * @param config - configuration of the resulting code
+     * @returns the source code as a string
+     */
+    getEmbeddingCode?(insight: IInsightDefinition, config?: IEmbeddingCodeConfig): string;
 }
