@@ -177,7 +177,12 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
             .forInsight(insight)
             .withDimensions(...this.getDimensions(insight))
             .withSorting(
-                ...createSorts(this.type, insight, canSortStackTotalValue(insight, supportedControls)),
+                ...createSorts(
+                    this.type,
+                    insight,
+                    canSortStackTotalValue(insight, supportedControls),
+                    this.featureFlags.enableChartsSorting,
+                ),
             )
             .withDateFormat(dateFormat)
             .withExecConfig(executionConfig);

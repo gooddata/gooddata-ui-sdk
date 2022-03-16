@@ -174,8 +174,12 @@ describe("createSorts", () => {
         });
 
         describe("pie/donut", () => {
-            it("should sort by measure", () => {
-                expect(createSorts("pie", insightWithSingleMeasureAndViewByAndStack)).toEqual([
+            it("should return empty array", () => {
+                expect(createSorts("pie", insightWithSingleMeasureAndViewByAndStack)).toEqual([]);
+            });
+
+            it("should sort by measure when enableChartsSorting is set to true", () => {
+                expect(createSorts("pie", insightWithSingleMeasureAndViewByAndStack, false, true)).toEqual([
                     {
                         measureSortItem: {
                             direction: "desc",
