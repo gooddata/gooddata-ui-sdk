@@ -6,7 +6,6 @@ _RUSHX="${DIR}/docker_rushx.sh"
 
 $_RUSH install
 $_RUSH build -t dashboard-plugin-tests
-$_RUSHX tools/dashboard-plugin-tests build
 
 docker build --file ./tools/dashboard-plugin-tests/Dockerfile -t gooddata-dashboard-plugin-tests . || exit 1
 
