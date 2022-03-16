@@ -152,6 +152,7 @@ export function createSorts(
     type: string,
     insight: IInsightDefinition,
     canSortStackTotalValue: boolean = false,
+    enableChartsSorting?: boolean,
 ): ISortItem[] {
     if (insight.insight.sorts && insight.insight.sorts.length > 0) {
         return insight.insight.sorts;
@@ -168,7 +169,9 @@ export function createSorts(
             return getDefaultHeatmapSort(insight);
         case VisualizationTypes.PIE:
         case VisualizationTypes.DONUT:
-            return getDefaultPieDonutSort(insight);
+            if (enableChartsSorting) {
+                return getDefaultPieDonutSort(insight);
+            }
     }
     return [];
 }
