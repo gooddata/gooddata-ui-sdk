@@ -39,5 +39,5 @@ export function withTestConfig(config: IDashboardPluginTestConfig) {
     }
 
     visit(config);
-    cy.window().then(waitForFullRender);
+    cy.window().then({ timeout: VISIT_TIMEOUT }, waitForFullRender);
 }

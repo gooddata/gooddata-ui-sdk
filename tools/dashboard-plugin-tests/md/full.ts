@@ -1,5 +1,5 @@
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2022-03-09T17:08:48.903Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2022-03-15T21:29:13.700Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -3241,6 +3241,14 @@ export const Insights = {
      * Insight Title: Implicit drill to attribute url
      * Insight ID: aabkE4IhTBg5
      */ ImplicitDrillToAttributeUrl: "aabkE4IhTBg5",
+    /**
+     * Insight Title: Amount by Product
+     * Insight ID: aaulL9admpeK
+     */ AmountByProduct: "aaulL9admpeK",
+    /**
+     * Insight Title: Insight With Tag
+     * Insight ID: aailL3iDmmML
+     */ InsightWithTag: "aailL3iDmmML",
 };
 export const Dashboards = {
     /**
@@ -3257,7 +3265,7 @@ export const Dashboards = {
      * Dashboard ID: aaw44pxZplIi
      */ DashboardFiltering: "aaw44pxZplIi",
     /**
-     * Dashboard Title: Dashboard with plugin
+     * Dashboard Title: Dashboard With Plugin
      * Dashboard ID: aabJ0xkBmyQf
      */ DashboardWithPlugin: "aabJ0xkBmyQf",
 };

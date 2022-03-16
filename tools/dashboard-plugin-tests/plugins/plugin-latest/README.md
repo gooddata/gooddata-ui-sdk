@@ -36,6 +36,14 @@ _Note: GoodData currently does not provide hosting for your plugin artifacts._
 
 Building a new plugin is easy. Before you start, ensure that your `.env` and `.env.secrets` files are set up correctly.
 
+0.  (Optional) Export catalog: `npm run refresh-md`
+
+    To make referencing various metadata objects easier in your plugin, you can use the [Export catalog](https://sdk.gooddata.com/gooddata-ui/docs/export_catalog.html) feature to get a easy-to-use list of the various MD objects in your workspace (insights, dashboards, attributes, etc.).
+    For convenience, this was integrated to your plugin, just run `npm run refresh-md`.
+    This will connect to the workspace specified in the `.env` file using the credentials from `.env.secrets`
+    and populate the file `src/md/full.ts` with information about the metadata objects available in the specified workspace.
+    See the [Export catalog](https://sdk.gooddata.com/gooddata-ui/docs/export_catalog.html) documentation page for more information.
+
 1.  Start the development server: `npm start`
 
     To verify everything works correctly, navigate to `https://127.0.0.1:3001`. You should see your existing
@@ -43,10 +51,10 @@ Building a new plugin is easy. Before you start, ensure that your `.env` and `.e
 
     Note: you can use `PORT` env variable to specify different port number.
 
-2.  Develop your plugin code in `src/dp_test_plugin`
+2.  Develop your plugin code in `src/dp_plugin_latest`
 
-    The `src/dp_test_plugin/Plugin.tsx` is the main plugin file where you have to register all
-    your custom content. However, you can create as many new files as you want under the `src/dp_test_plugin`
+    The `src/dp_plugin_latest/Plugin.tsx` is the main plugin file where you have to register all
+    your custom content. However, you can create as many new files as you want under the `src/dp_plugin_latest`
     directory. Just make sure to never place your custom code outside of this directory.
 
     Note: we recommend to write your plugin in TypeScript and to use a modern IDE. This way you can conveniently
@@ -79,7 +87,7 @@ Building a new plugin is easy. Before you start, ensure that your `.env` and `.e
     the tool among the devDependencies together with convenience script to add plugin to either workspace specified
     in your `.env` file (default) or another workspace that you specify on the command line.
 
-    Run the `npm run add-plugin -- "https://your.hosting/pluginDirOfYourChoice/dp_test_plugin.js"` to
+    Run the `npm run add-plugin -- "https://your.hosting/pluginDirOfYourChoice/dp_plugin_latest.js"` to
     create a new dashboard plugin object in the workspace specified in the `.env` file. The created dashboard object
     point to the URL of the built plugin.
 
@@ -94,7 +102,7 @@ Building a new plugin is easy. Before you start, ensure that your `.env` and `.e
     Now that you have created a plugin object in your workspace, you can link it with one or more dashboards. The
     `link-plugin` script in package.json is a shortcut to link plugin with dashboard specified in your `.env` file.
 
-    If your plugin supports parameterization (see [src/dp_test_plugin](./src/dp_test_plugin/Plugin.tsx)) and
+    If your plugin supports parameterization (see [src/dp_plugin_latest](./src/dp_plugin_latest/Plugin.tsx)) and
     you want to specify parameters for the link between dashboard the plugin, you can run `npm run link-plugin -- <plugin-object-id> --with-parameters`
     and the tool will open an editor for you to enter the parameters.
 
@@ -128,9 +136,9 @@ All this data will be available in the publicly hosted plugin artifacts and can 
 Do not rename or otherwise refactor any of the directories that were created during this project initialization.
 The structure and naming are essential for the build and the runtime loading of your plugin to work properly.
 
-This project is setup so that all your custom code must be self-contained in the [src/dp_test_plugin](./src/dp_test_plugin) directory.
+This project is setup so that all your custom code must be self-contained in the [src/dp_plugin_latest](./src/dp_plugin_latest) directory.
 
-The [src/dp_test_plugin_engine](./src/dp_test_plugin_engine) and [src/dp_test_plugin_entry](./src/dp_test_plugin_entry) directories contain essential plugin boilerplate.
+The [src/dp_plugin_latest_engine](./src/dp_plugin_latest_engine) and [src/dp_plugin_latest_entry](./src/dp_plugin_latest_entry) directories contain essential plugin boilerplate.
 You should not modify these directories or their contents unless you are 100% sure what you are doing.
 
 The [src/harness] directory contains code for plugin development harness; it is used only during plugin development and the
@@ -140,7 +148,7 @@ that is contained in the [src/harness/backend.ts](src/harness/backend.ts) - this
 
 ### How can I setup compatibility of the plugin?
 
-You can modify minEngineVersion and maxEngineVersion properties in `src/dp_test_plugin\_entry/index`.
+You can modify minEngineVersion and maxEngineVersion properties in `src/dp_plugin_latest\_entry/index`.
 By default, we guarantee that plugin will be compatible only with the exact version of the dashboard engine used during its build (`"bundled"` option). But if you are sure, that plugin is compatible also with the other engine versions, you can set concrete range of the versions (e.g. `"minEngineVersion": "8.8.0", "maxEngineVersion": "8.9.0"`). Note that combining multiple plugins created before version `8.8.0` may not work.
 
 ### How do plugin dependencies work?

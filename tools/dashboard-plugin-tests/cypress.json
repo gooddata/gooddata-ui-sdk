@@ -4,7 +4,7 @@
     "pluginsFile": "cypress/plugins/index.ts",
     "viewportWidth": 1400,
     "viewportHeight": 800,
-    "defaultCommandTimeout": 30000,
+    "defaultCommandTimeout": 0,
     "reporter": "junit",
     "reporterOptions": {
         "mochaFile": "./cypress/results/result.[hash].xml"
