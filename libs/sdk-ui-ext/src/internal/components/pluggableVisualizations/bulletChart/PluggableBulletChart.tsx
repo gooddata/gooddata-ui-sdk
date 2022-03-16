@@ -205,13 +205,13 @@ export class PluggableBulletChart extends PluggableBaseChart {
         return true;
     }
 
-    private isSortDisabled(referencePoint: IReferencePoint, availableSorts: ISortConfig["availableSorts"]) {
+    private isSortDisabled(referencePoint: IReferencePoint) {
         const { buckets } = referencePoint;
         const primaryMeasures = getBucketItems(buckets, BucketNames.MEASURES);
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
         const disabledExplanation = getCustomSortDisabledExplanation(primaryMeasures, viewBy, this.intl);
         return {
-            disabled: viewBy.length < 1 || primaryMeasures.length < 1 || availableSorts.length === 0,
+            disabled: viewBy.length < 1 || primaryMeasures.length < 1,
             disabledExplanation,
         };
     }
@@ -220,6 +220,12 @@ export class PluggableBulletChart extends PluggableBaseChart {
         defaultSort: ISortConfig["defaultSort"];
         availableSorts: ISortConfig["availableSorts"];
     } {
+        if (this.isSortDisabled(referencePoint).disabled) {
+            return {
+                defaultSort: [],
+                availableSorts: [],
+            };
+        }
         const { buckets } = referencePoint;
         const measures = getAllItemsByType(buckets, [METRIC]);
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
@@ -261,7 +267,7 @@ export class PluggableBulletChart extends PluggableBaseChart {
 
     public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
         const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(referencePoint);
-        const { disabled, disabledExplanation } = this.isSortDisabled(referencePoint, availableSorts);
+        const { disabled, disabledExplanation } = this.isSortDisabled(referencePoint);
         const { properties } = referencePoint;
         return Promise.resolve({
             supported: true,
