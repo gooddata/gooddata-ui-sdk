@@ -110,6 +110,7 @@
     "dashboard.xirr.error.invalid_buckets.text._metric": "Zorg dat u minimaal één meetgegeven en één datumattribuut hebt geselecteerd",
     "dashboard.error.empty.heading": "Dit dashboard is leeg",
     "dashboard.error.empty.text": "Alle inzichten zijn verwijderd.",
+    "dashboardView.error.empty.text": "Alle inzichten zijn verwijderd of het dashboard is leeg opgeslagen.",
     "dashboard.embedded.error.empty.heading": "Geen widgets op het dashboard",
     "dashboard.embedded.error.empty.text": "Zorg ervoor dat het dashboard dat u implementeert klopt.",
     "properties.unsupported": "Deze weergave ondersteunt geen configuratie",
@@ -281,5 +282,10 @@
     "sorting.tooltip.sum._measure": "Het inzicht wordt gesplitst door twee attributen. Het eerste attribuut wordt altijd gesorteerd volgens de som van alle maatwaarden.",
     "sorting.tooltip.sum._metric": "Het inzicht wordt gesplitst door twee attributen. Het eerste attribuut wordt altijd gesorteerd volgens de som van alle meetgegevenswaarden.",
     "sorting.tooltip.measure._measure": "U kunt alleen sorteren op maten die al worden gebruikt in het inzicht.",
-    "sorting.tooltip.measure._metric": "U kunt alleen sorteren op meetgegevens die al worden gebruikt in het inzicht."
+    "sorting.tooltip.measure._metric": "U kunt alleen sorteren op meetgegevens die al worden gebruikt in het inzicht.",
+    "geochart.scroll.zoom.blocker": "Gebruik {button} + scroll om in te zoomen op de kaart",
+    "geochart.touch.pan.blocker": "Gebruik twee vingers om de kaart te verplaatsen",
+    "sorting.disabled.explanation.attribute": "Sorteren is niet mogelijk voor deze rapportconfiguratie.",
+    "sorting.disabled.explanation.measure._measure": "U moet minimaal één attribuut toevoegen om het rapport te sorteren. U kunt ook de positie van items aanpassen in het gedeelte Maten om de positie ervan in het rapport te wijzigen.",
+    "sorting.disabled.explanation.measure._metric": "U moet minimaal één attribuut toevoegen om het rapport te sorteren. U kunt ook de positie van items in het gedeelte Meetgegevens aanpassen om de positie ervan in het rapport te wijzigen."
 }

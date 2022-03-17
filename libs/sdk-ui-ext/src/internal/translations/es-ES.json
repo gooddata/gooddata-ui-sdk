@@ -110,6 +110,7 @@
     "dashboard.xirr.error.invalid_buckets.text._metric": "Asegúrese de haber seleccionado una métrica y un atributo de fecha",
     "dashboard.error.empty.heading": "Este panel está vacío",
     "dashboard.error.empty.text": "Se eliminaron todas las perspectivas.",
+    "dashboardView.error.empty.text": "Se eliminaron todas las perspectivas o el panel se guardó vacío.",
     "dashboard.embedded.error.empty.heading": "No hay widgets en el panel",
     "dashboard.embedded.error.empty.text": "Asegúrese de que el panel que está incrustando es correcto.",
     "properties.unsupported": "Esta visualización no admite la configuración",
@@ -281,5 +282,10 @@
     "sorting.tooltip.sum._measure": "La perspectiva está segmentada por dos atributos. El primer atributo siempre se ordena por la suma de todos los valores de medida.",
     "sorting.tooltip.sum._metric": "La perspectiva está segmentada por dos atributos. El primer atributo siempre se ordena por la suma de todos los valores de métrica.",
     "sorting.tooltip.measure._measure": "Solo puede ordenar por medidas ya usadas en la perspectiva.",
-    "sorting.tooltip.measure._metric": "Solo puede ordenar por métricas ya usadas en la perspectiva."
+    "sorting.tooltip.measure._metric": "Solo puede ordenar por métricas ya usadas en la perspectiva.",
+    "geochart.scroll.zoom.blocker": "Use {button} + desplácese para ampliar el mapa",
+    "geochart.touch.pan.blocker": "Use dos dedos para mover el mapa",
+    "sorting.disabled.explanation.attribute": "La clasificación no es posible para la configuración de este informe.",
+    "sorting.disabled.explanation.measure._measure": "Debe añadir al menos un atributo para clasificar el informe. También puede ajustar la posición de los elementos en la sección Medidas para cambiar su posición en el informe.",
+    "sorting.disabled.explanation.measure._metric": "Debe añadir al menos un atributo para clasificar el informe. También puede ajustar la posición de los elementos en la sección Métricas para cambiar su posición en el informe."
 }

@@ -110,6 +110,7 @@
     "dashboard.xirr.error.invalid_buckets.text._metric": "Não se esqueça de selecionar uma métrica e um atributo de data.",
     "dashboard.error.empty.heading": "Dashboard vazio",
     "dashboard.error.empty.text": "Todos os insights foram removidos.",
+    "dashboardView.error.empty.text": "Todos os insights foram removidos ou o dashboard foi salvo estando vazio.",
     "dashboard.embedded.error.empty.heading": "Nenhum widget no dashboard",
     "dashboard.embedded.error.empty.text": "Verifique se o dashboard que você está incorporando está correto.",
     "properties.unsupported": "A visualização é incompatível com a configuração",
@@ -281,5 +282,10 @@
     "sorting.tooltip.sum._measure": "O insight foi dividido por dois atributos. O primeiro atributo é classificado sempre pelos valores da soma de todas as medidas.",
     "sorting.tooltip.sum._metric": "O insight foi dividido por dois atributos. O primeiro atributo é classificado sempre pelos valores da soma de todas as métricas.",
     "sorting.tooltip.measure._measure": "Você pode classificar apenas pelas medidas já usadas no insight.",
-    "sorting.tooltip.measure._metric": "Você pode classificar apenas pelas métricas já usadas no insight."
+    "sorting.tooltip.measure._metric": "Você pode classificar apenas pelas métricas já usadas no insight.",
+    "geochart.scroll.zoom.blocker": "Use {button} + rolagem para aplicar zoom no mapa",
+    "geochart.touch.pan.blocker": "Use dois dedos para mover o mapa",
+    "sorting.disabled.explanation.attribute": "Não é possível classificar nessa configuração de relatório.",
+    "sorting.disabled.explanation.measure._measure": "Você precisa adicionar pelo menos um atributo para classificar o relatório. Você também pode ajustar a posição de itens na seção Medidas para mudar sua posição no relatório.",
+    "sorting.disabled.explanation.measure._metric": "Você precisa adicionar pelo menos um atributo para classificar o relatório. Você também pode ajustar a posição de itens na seção Métricas para mudar sua posição no relatório."
 }

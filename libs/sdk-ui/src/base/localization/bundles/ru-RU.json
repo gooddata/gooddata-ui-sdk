@@ -241,8 +241,12 @@
     "sorting.dropdown.header": "Сортировка анализа",
     "sorting.type.alphabetical.asc": "От А до Я",
     "sorting.type.alphabetical.desc": "От Я до А",
+    "sorting.type.date.asc": "От старого к новому",
+    "sorting.type.date.desc": "От нового к старому",
+    "sorting.type.default": "По умолчанию",
     "sorting.type.numerical.asc": "От меньшего к большему",
     "sorting.type.numerical.desc": "От большего к меньшему",
-    "sorting.sum.of.all.measure._measure": "Сумма всех показателей (всего)",
-    "sorting.sum.of.all.measure._metric": "Сумма всех метрик (всего)"
+    "sorting.by": "по",
+    "sorting.sum.of.all.measure": "всего",
+    "sorting.default.tooltip": "Использовать порядок, определенный в атрибуте."
 }

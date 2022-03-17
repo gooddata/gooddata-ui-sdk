@@ -241,8 +241,12 @@
     "sorting.dropdown.header": "Inzicht sorteren",
     "sorting.type.alphabetical.asc": "A tot Z",
     "sorting.type.alphabetical.desc": "Z tot A",
+    "sorting.type.date.asc": "Van oud naar nieuw",
+    "sorting.type.date.desc": "Van nieuw naar oud",
+    "sorting.type.default": "Standaard",
     "sorting.type.numerical.asc": "Kleinst naar grootst",
     "sorting.type.numerical.desc": "Grootst naar kleinst",
-    "sorting.sum.of.all.measure._measure": "Som van alle maten (totaal)",
-    "sorting.sum.of.all.measure._metric": "Som van alle meetgegevens (totaal)"
+    "sorting.by": "met",
+    "sorting.sum.of.all.measure": "Totaal",
+    "sorting.default.tooltip": "Gebruik de volgorde zoals gedefinieerd in het attribuut."
 }

@@ -86,7 +86,7 @@
     "dashboard.bucket.metric_view_by_warning._metric": "メトリックを更に追加する場合は、'<span class=\"stack-by\">'表示'</span>'から{icons}を削除します。",
     "dashboard.bucket.category_view_by_warning._measure": "表示を追加する場合、インサイトで使用できるメジャーは 1 種類のみです。",
     "dashboard.bucket.category_view_by_warning._metric": "表示を追加する場合、インサイトで使用できるメトリックは 1 種類のみです。",
-    "dashboard.bucket.view_stack_by_warning": "アトリビュートを追加するには、<span class=\"stack-by\">'スタック'</span>から{icons}を削除します。",
+    "dashboard.bucket.view_stack_by_warning": "アトリビュートを追加するには、'<span class=\"stack-by\">'スタック'</span>'から{icons}を削除します。",
     "dashboard.bucket.category_stack_by_warning._measure": "スタックするには、解析に1つだけのメジャーを含むことができます",
     "dashboard.bucket.category_stack_by_warning._metric": "スタックするには、解析に1つだけのメトリックを含むことができます",
     "dashboard.bucket.stack_view_by_warning": "スタックする場合、インサイトで使用できる表示内のアトリビュートは 1 種類のみです",
@@ -110,6 +110,7 @@
     "dashboard.xirr.error.invalid_buckets.text._metric": "一つのメトリックと一つの日付アトリビュートを選択してください。",
     "dashboard.error.empty.heading": "このダッシュボードは空欄です",
     "dashboard.error.empty.text": "すべてのインサイトは削除されました。",
+    "dashboardView.error.empty.text": "すべてのインサイトが削除されたか、ダッシュボードが空欄で保存されました。",
     "dashboard.embedded.error.empty.heading": "ダッシュボードにウィジェットがありません",
     "dashboard.embedded.error.empty.text": "埋め込んでいるダッシュボードが正しいか確認します。",
     "properties.unsupported": "このインサイトでは 設定はありません",
@@ -281,5 +282,10 @@
     "sorting.tooltip.sum._measure": "インサイトは 2 つの属性でスライスされます。最初の属性は、常にすべての測定値の合計で並べ替えられます。",
     "sorting.tooltip.sum._metric": "インサイトは 2 つの属性でスライスされます。最初の属性は、常にすべてのメトリックの合計で並べ替えられます。",
     "sorting.tooltip.measure._measure": "インサイトですでに使用されている測定値でのみ並べ替えができます。",
-    "sorting.tooltip.measure._metric": "インサイトですでに使用されているメトリックでのみ並べ替えができます。"
+    "sorting.tooltip.measure._metric": "インサイトですでに使用されているメトリックでのみ並べ替えができます。",
+    "geochart.scroll.zoom.blocker": "地図をズームするには、{button} スクロールを使用します",
+    "geochart.touch.pan.blocker": "地図を移動するには、 2 本の指を使用します",
+    "sorting.disabled.explanation.attribute": "このレポート設定では並べ替えはできません。",
+    "sorting.disabled.explanation.measure._measure": "レポートを並べ替えるには、少なくとも 1 つの属性を追加する必要があります。測定値セクションの項目の位置を調整して、レポート内での位置を変更することもできます。",
+    "sorting.disabled.explanation.measure._metric": "レポートを並べ替えるには、少なくとも 1 つの属性を追加する必要があります。メトリックセクションの項目の位置を調整して、レポート内での位置を変更することもできます。"
 }

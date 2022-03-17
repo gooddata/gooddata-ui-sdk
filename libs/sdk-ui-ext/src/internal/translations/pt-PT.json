@@ -110,6 +110,7 @@
     "dashboard.xirr.error.invalid_buckets.text._metric": "Certifique-se de que selecionou uma métrica e um atributo de data",
     "dashboard.error.empty.heading": "Este dashboard está vazio",
     "dashboard.error.empty.text": "Todos os insights foram removidos.",
+    "dashboardView.error.empty.text": "Todos os insights foram removidos ou o dashboard foi guardado vazio.",
     "dashboard.embedded.error.empty.heading": "Não há widgets no dashboard",
     "dashboard.embedded.error.empty.text": "Certifique-se de que o dashboard que está a incorporar está correto.",
     "properties.unsupported": "Esta visualização não suporta configuração",
@@ -281,5 +282,10 @@
     "sorting.tooltip.sum._measure": "O insight é dividido por dois atributos. O primeiro atributo é sempre ordenado pela soma de todos os valores das medidas.",
     "sorting.tooltip.sum._metric": "O insight é dividido por dois atributos. O primeiro atributo é sempre ordenado pela soma de todos os valores das métricas.",
     "sorting.tooltip.measure._measure": "Só é possível ordenar por medidas já utilizadas no insight.",
-    "sorting.tooltip.measure._metric": "Só é possível ordenar por métricas já utilizadas no insight."
+    "sorting.tooltip.measure._metric": "Só é possível ordenar por métricas já utilizadas no insight.",
+    "geochart.scroll.zoom.blocker": "Utilizar {button} + deslocação para ampliar o mapa",
+    "geochart.touch.pan.blocker": "Utilizar dois dedos para mover o mapa",
+    "sorting.disabled.explanation.attribute": "Não é possível ordenar esta configuração de relatório.",
+    "sorting.disabled.explanation.measure._measure": "Tem de adicionar pelo menos um atributo para ordenar o relatório. Também pode ajustar a posição dos itens da secção Medidas para alterar a respetiva posição no relatório.",
+    "sorting.disabled.explanation.measure._metric": "Tem de adicionar pelo menos um atributo para ordenar o relatório. Também pode ajustar a posição dos itens da secção Métricas para alterar a respetiva posição no relatório."
 }

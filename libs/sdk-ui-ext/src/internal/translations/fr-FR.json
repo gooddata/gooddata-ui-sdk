@@ -110,6 +110,7 @@
     "dashboard.xirr.error.invalid_buckets.text._metric": "Vérifiez que vous avez sélectionné une métrique et un attribut de date",
     "dashboard.error.empty.heading": "Ce tableau de bord est vide",
     "dashboard.error.empty.text": "Toutes les perceptions ont été retirées.",
+    "dashboardView.error.empty.text": "Toutes les perceptions ont été retirées ou le tableau de bord a été enregistré vide.",
     "dashboard.embedded.error.empty.heading": "Aucun widget sur le tableau de bord",
     "dashboard.embedded.error.empty.text": "Vérifiez que vous incorporez le bon tableau de bord.",
     "properties.unsupported": "Cette visualisation ne prend pas en charge la configuration",
@@ -281,5 +282,10 @@
     "sorting.tooltip.sum._measure": "La perception est découpée par deux attributs. Le premier attribut est toujours trié par la somme de toutes les valeurs de mesure.",
     "sorting.tooltip.sum._metric": "La perception est découpée par deux attributs. Le premier attribut est toujours trié par la somme de toutes les valeurs de métrique.",
     "sorting.tooltip.measure._measure": "Vous pouvez effectuer un tri uniquement avec les mesures déjà utilisées dans la perception.",
-    "sorting.tooltip.measure._metric": "Vous pouvez effectuer un tri uniquement avec les métriques déjà utilisées dans la perception."
+    "sorting.tooltip.measure._metric": "Vous pouvez effectuer un tri uniquement avec les métriques déjà utilisées dans la perception.",
+    "geochart.scroll.zoom.blocker": "Utilisez {button} + défilement pour zoomer sur la carte",
+    "geochart.touch.pan.blocker": "Utilisez deux doigts pour déplacer la carte",
+    "sorting.disabled.explanation.attribute": "Le tri n'est pas disponible dans cette configuration de rapport.",
+    "sorting.disabled.explanation.measure._measure": "Vous devez ajouter au moins un attribut pour trier le rapport. Vous pouvez aussi ajuster la position des éléments dans la section Mesures pour modifier leur position dans le rapport.",
+    "sorting.disabled.explanation.measure._metric": "Vous devez ajouter au moins un attribut pour trier le rapport. Vous pouvez aussi ajuster la position des éléments dans la section Métriques pour modifier leur position dans le rapport."
 }
