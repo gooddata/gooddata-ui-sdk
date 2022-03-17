@@ -110,7 +110,6 @@
     "dashboard.xirr.error.invalid_buckets.text._metric": "Asegúrese de haber seleccionado una métrica y un atributo de fecha",
     "dashboard.error.empty.heading": "Este panel está vacío",
     "dashboard.error.empty.text": "Se eliminaron todas las perspectivas.",
-    "dashboardView.error.empty.text": "Se eliminaron todas las perspectivas o el panel se guardó vacío.",
     "dashboard.embedded.error.empty.heading": "No hay widgets en el panel",
     "dashboard.embedded.error.empty.text": "Asegúrese de que el panel que está incrustando es correcto.",
     "properties.unsupported": "Esta visualización no admite la configuración",

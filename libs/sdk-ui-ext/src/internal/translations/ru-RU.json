@@ -110,7 +110,6 @@
     "dashboard.xirr.error.invalid_buckets.text._metric": "Убедитесь, что вы выбрали одну метрику и один атрибут даты",
     "dashboard.error.empty.heading": "Эта информационная панель пуста",
     "dashboard.error.empty.text": "Все анализы были удалены.",
-    "dashboardView.error.empty.text": "Все анализы были удалены или информационная панель была сохранена пустой.",
     "dashboard.embedded.error.empty.heading": "На информационной панели нет виджетов",
     "dashboard.embedded.error.empty.text": "Убедитесь в корректности встраиваемой информационной панели.",
     "properties.unsupported": "Эта визуализация не поддерживает конфигурацию",
