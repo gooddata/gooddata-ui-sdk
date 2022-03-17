@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "General Dashboard events (like DashboardSaved) were made part of the public API.",
+            "comment": "The general dashboard events (such as DashboardSaved) were included in the public API.",
             "type": "none"
         }
     ],

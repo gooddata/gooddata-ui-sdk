@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "The useDispatchDashboardCommnad hook was added to make dispatching Dashboard commands easier.",
+            "comment": "The useDispatchDashboardCommand hook was added to make dispatching of the Dashboard commands easier.",
             "type": "none"
         }
     ],
