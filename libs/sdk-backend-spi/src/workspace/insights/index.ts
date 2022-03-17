@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import {
     IVisualizationClass,
@@ -136,6 +136,9 @@ export type SupportedInsightReferenceTypes = Exclude<InsightReferenceTypes, "dis
  */
 export interface IInsightReferences {
     /**
+     * Requested catalog items.
+     *
+     * @remarks
      * If requested, measures, attributes, display forms, facts and dateDataSets referenced by the insight will be
      * returned here. If none of them were requested, the catalogItems will be undefined. If some were
      * requested but insight is not referencing those types, then the array will be empty.
@@ -217,6 +220,7 @@ export interface IGetInsightOptions {
      * Optionally specify if information about the users that created/modified the insight should be loaded.
      * Defaults to false.
      *
+     * @remarks
      * If user is inactive or logged in user has not rights to access this information than users that created/modified is undefined.
      */
     loadUserData?: boolean;

@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 import { IPreparedExecution } from "../workspace/execution";
@@ -16,7 +16,10 @@ import { IOrganization, IOrganizations } from "../organization";
  */
 export interface IAnalyticalBackendConfig {
     /**
-     * Server hostname (including protocol and port). If not specified and running in browser, then the
+     * Server hostname (including protocol and port).
+     *
+     * @remarks
+     * If not specified and running in browser, then the
      * backend will communicate with origin.
      */
     readonly hostname?: string;
@@ -43,6 +46,7 @@ export type AnalyticalBackendFactory = (
  * This is the root of the Analytical Backend SPI. It allows configuration related to communication with the backend
  * and access to analytical workspaces.
  *
+ * @remarks
  * The analytical backend instance MUST be immutable. Changes to configuration of the backend MUST create a new
  * instance to work with.
  *
@@ -60,7 +64,10 @@ export interface IAnalyticalBackend {
     readonly capabilities: IBackendCapabilities;
 
     /**
-     * Creates new instance of backend on the provided hostname. It is valid NOT TO specify any hostname, in
+     * Creates new instance of backend on the provided hostname.
+     *
+     * @remarks
+     * It is valid NOT TO specify any hostname, in
      * which case the analytical backend assumes it should communicate with the current origin.
      *
      * @param hostname - host[:port]
@@ -87,7 +94,10 @@ export interface IAnalyticalBackend {
     withAuthentication(provider: IAuthenticationProvider): IAnalyticalBackend;
 
     /**
-     * Tests authentication against this backend. This requires network communication and is thus
+     * Tests authentication against this backend.
+     *
+     * @remarks
+     * This requires network communication and is thus
      * asynchronous. If the current backend (or session it lives in) is not authenticated, then
      * this method MUST NOT call the authentication provider.
      *
@@ -98,6 +108,7 @@ export interface IAnalyticalBackend {
     /**
      * Triggers authentication process against the backend.
      *
+     * @remarks
      * If the 'force' parameter is specified, then the method MUST always lead to a call to the authentication
      * provider.
      *
@@ -169,6 +180,7 @@ export interface IAuthenticationProvider {
      * Optionally perform custom initialization of the client that the Analytical Backend uses to communicate
      * with the server.
      *
+     * @remarks
      * If implemented, this function WILL BE called by the backend every time a new instance of API client
      * is created.
      *
@@ -215,7 +227,10 @@ export interface IAuthenticationProvider {
  */
 export interface IAuthenticatedPrincipal {
     /**
-     * Unique identifier of the authenticated user. The identifier semantics MAY differ between backend
+     * Unique identifier of the authenticated user.
+     *
+     * @remarks
+     * The identifier semantics MAY differ between backend
      * implementations. The client code SHOULD NOT make assumptions on the content (such as userId being
      * valid email and so on).
      */
@@ -241,7 +256,10 @@ export interface IAuthenticationContext {
     backend: IAnalyticalBackend;
 
     /**
-     * API client used to communicate with the backend - this can be used to perform any backend-specific,
+     * API client used to communicate with the backend.
+     *
+     * @remarks
+     * This can be used to perform any backend-specific,
      * non-standard authentication.
      */
     client: any;

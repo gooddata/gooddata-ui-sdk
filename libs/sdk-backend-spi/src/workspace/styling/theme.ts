@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 
 /**
  * Custom font URI which is used to override the default font
@@ -144,6 +144,28 @@ export interface IThemeWidgetTitle {
 }
 
 /**
+ * Kpi value specific properties.
+ *
+ * @beta
+ */
+export interface IThemeKpiValue {
+    /**
+     * Value align
+     */
+    textAlign?: string;
+
+    /**
+     * Color of the value considered to be positive
+     */
+    positiveColor?: ThemeColor;
+
+    /**
+     * Color of the value considered to be negative
+     */
+    negativeColor?: ThemeColor;
+}
+
+/**
  * Kpi values customization
  *
  * @beta
@@ -152,22 +174,7 @@ export interface IThemeKpi {
     /**
      * Kpi value specific properties
      */
-    value?: {
-        /**
-         * Value align
-         */
-        textAlign?: string;
-
-        /**
-         * Color of the value considered to be positive
-         */
-        positiveColor?: ThemeColor;
-
-        /**
-         * Color of the value considered to be negative
-         */
-        negativeColor?: ThemeColor;
-    };
+    value?: IThemeKpiValue;
 
     /**
      * Color of the primary measure value (main)
@@ -300,6 +307,451 @@ export interface IThemeTable {
 }
 
 /**
+ * Button customizable UI properties
+ *
+ * @beta
+ */
+export interface IButtonCustomizableUIProperties {
+    /**
+     * Radius of the button border in px
+     */
+    borderRadius?: string;
+
+    /**
+     * Flag determining whether the button has a shadow or not
+     */
+    dropShadow?: boolean;
+
+    /**
+     * Flag determining whether the button has its text capitalized or not
+     */
+    textCapitalization?: boolean;
+}
+
+/**
+ * Tooltip customizable UI properties
+ *
+ * @beta
+ */
+export interface ITooltipCustomizableUIProperties {
+    /**
+     * Background color of the tooltip
+     */
+    backgroundColor?: ThemeColor;
+
+    /**
+     * Foreground color of the tooltip
+     */
+    color?: ThemeColor;
+}
+
+/**
+ * Properties of the title of the modal.
+ *
+ * @beta
+ */
+export interface IModalTitleCustomizableProperties {
+    /**
+     * Foreground color of the tooltip
+     */
+    color?: ThemeColor;
+
+    /**
+     * Color of the line separator between the title and the content
+     */
+    lineColor?: ThemeColor;
+}
+
+/**
+ * Modal customizable properties.
+ *
+ * @beta
+ */
+export interface IModalCustomizableProperties {
+    /**
+     * Title of the modal
+     */
+    title?: IModalTitleCustomizableProperties;
+
+    /**
+     * Background color of the modal surroundings
+     */
+    outsideBackgroundColor?: ThemeColor;
+
+    /**
+     * Flag determining whether the button has a shadow or not
+     */
+    dropShadow?: boolean;
+
+    /**
+     * Width of the border
+     */
+    borderWidth?: string;
+
+    /**
+     * Color of the border
+     */
+    borderColor?: ThemeColor;
+
+    /**
+     * Radius of the border in px
+     */
+    borderRadius?: string;
+}
+
+/**
+ * Dashboard title specific properties.
+ *
+ * @beta
+ */
+export interface IDashboardTitleCustomizableProperties {
+    /**
+     * Foreground color of the title
+     */
+    color?: ThemeColor;
+
+    /**
+     * Background color of the title
+     */
+    backgroundColor?: ThemeColor;
+
+    /**
+     * Border color of the title
+     */
+    borderColor?: ThemeColor;
+}
+
+/**
+ * Dashboard section title properties.
+ *
+ * @beta
+ */
+export interface IDashboardSectionTitleCustomizableProperties {
+    /**
+     * Foreground color of the section
+     */
+    color?: ThemeColor;
+
+    /**
+     * Color of the line separator between the sections
+     */
+    lineColor?: ThemeColor;
+}
+
+/**
+ * Dashboard section description properties.
+ *
+ * @beta
+ */
+export interface IDashboardSectionDescriptionCustomizableProperties {
+    /**
+     * Foreground color of the section
+     */
+    color?: ThemeColor;
+}
+
+/**
+ * Dashboard section customizable properties.
+ *
+ * @beta
+ */
+export interface IDashboardSectionCustomizableProperties {
+    /**
+     * Section title properties
+     */
+
+    title?: IDashboardSectionTitleCustomizableProperties;
+    /**
+     * Section description properties
+     */
+
+    description?: IDashboardSectionDescriptionCustomizableProperties;
+}
+
+/**
+ * Filter bar button specific properties
+ *
+ * @beta
+ */
+export interface IDashboardFilterBarFilterButtonProperties {
+    /**
+     * Background color of the filter bar button
+     */
+    backgroundColor?: ThemeColor;
+}
+
+/**
+ * Dashboard filterBar customizable properties.
+ *
+ * @beta
+ */
+export interface IDashboardFilterBarCustomizableProperties {
+    /**
+     * Background color of the filter bar
+     */
+    backgroundColor?: ThemeColor;
+
+    /**
+     * Border color of the filter bar
+     */
+    borderColor?: ThemeColor;
+
+    /**
+     * Filter bar button specific properties
+     */
+    filterButton?: IDashboardFilterBarFilterButtonProperties;
+}
+
+/**
+ * Dashboard content widget customizable properties.
+ *
+ * @beta
+ */
+export interface IDashboardContentWidgetCustomizableProperties {
+    /**
+     * Widget title color and alignment
+     */
+
+    title?: IThemeWidgetTitle;
+
+    /**
+     * Widget background color
+     */
+    backgroundColor?: ThemeColor;
+
+    /**
+     * Widget border color
+     */
+    borderColor?: ThemeColor;
+
+    /**
+     * Widget border width
+     */
+    borderWidth?: string;
+
+    /**
+     * Widget border radius in px
+     */
+    borderRadius?: string;
+
+    /**
+     * Flag determining whether the widget has a shadow or not
+     */
+    dropShadow?: boolean;
+}
+
+/**
+ * Dashboard content KPI customizable properties.
+ *
+ * @beta
+ */
+export interface IDashboardContentKpiCustomizableProperties {
+    /**
+     * Kpi widget title color and alignment
+     */
+
+    title?: IThemeWidgetTitle;
+
+    /**
+     * Kpi widget background color
+     */
+    backgroundColor?: ThemeColor;
+
+    /**
+     * Kpi widget border color
+     */
+    borderColor?: ThemeColor;
+
+    /**
+     * Kpi widget border width
+     */
+    borderWidth?: string;
+
+    /**
+     * Kpi widget border radius in px
+     */
+    borderRadius?: string;
+
+    /**
+     * Flag determining whether the kpi widget has a shadow or not
+     */
+    dropShadow?: boolean;
+
+    /**
+     * Dashboards specific Kpi/Headline customizable UI properties
+     */
+    kpi?: IThemeKpi;
+}
+
+/**
+ * Dashboard content customizable properties.
+ *
+ * @beta
+ */
+export interface IDashboardContentCustomizableProperties {
+    /**
+     * Background color of the dashboard content
+     */
+    backgroundColor?: ThemeColor;
+
+    /**
+     * Widget specific properties
+     */
+
+    widget?: IDashboardContentWidgetCustomizableProperties;
+
+    /**
+     * Kpi widget specific properties
+     */
+
+    kpiWidget?: IDashboardContentKpiCustomizableProperties;
+}
+
+/**
+ * Navigation header specific properties.
+ *
+ * @beta
+ */
+export interface INavigationTitleCustomizableProperties {
+    /**
+     * Header foreground color
+     */
+    color?: ThemeColor;
+}
+
+/**
+ * Navigation items (dashboards) specific properties.
+ *
+ * @beta
+ */
+export interface INavigationItemCustomizableProperties {
+    /**
+     * Item foreground color
+     */
+    color?: ThemeColor;
+
+    /**
+     * Item foreground color on hover
+     */
+    hoverColor?: ThemeColor;
+
+    /**
+     * Selected item foreground color
+     */
+    selectedColor?: ThemeColor;
+
+    /**
+     * Selected item background color
+     */
+    selectedBackgroundColor?: ThemeColor;
+}
+
+/**
+ * Navigation customizable properties.
+ *
+ * @beta
+ */
+export interface INavigationCustomizableProperties {
+    /**
+     * Navigation background color
+     */
+    backgroundColor?: ThemeColor;
+
+    /**
+     * Navigation border color
+     */
+    borderColor?: ThemeColor;
+
+    /**
+     * Navigation header specific properties
+     */
+    title?: INavigationTitleCustomizableProperties;
+
+    /**
+     * Navigation items (dashboards) specific properties
+     */
+    item?: INavigationItemCustomizableProperties;
+}
+
+/**
+ * Edit panel specific properties.
+ *
+ * @beta
+ */
+export interface IEditPanelCustomizableProperties {
+    /**
+     * Edit panel background color
+     */
+    backgroundColor?: ThemeColor;
+}
+
+/**
+ * KPI dashboards specific properties
+ *
+ * @beta
+ */
+export interface IDashboardCustomizableProperties {
+    /**
+     * Title specific properties
+     */
+
+    title?: IDashboardTitleCustomizableProperties;
+
+    /**
+     * Section specific properties
+     */
+
+    section?: IDashboardSectionCustomizableProperties;
+
+    /**
+     * Filter bar specific properties
+     */
+
+    filterBar?: IDashboardFilterBarCustomizableProperties;
+
+    /**
+     * Dashboard content specific properties
+     */
+
+    content?: IDashboardContentCustomizableProperties;
+
+    /**
+     * Navigation specific properties (left panel)
+     */
+    navigation?: INavigationCustomizableProperties;
+
+    /**
+     * Edit panel specific properties
+     */
+    editPanel?: IEditPanelCustomizableProperties;
+}
+
+/**
+ * Analytical designer title specific properties.
+ *
+ * @beta
+ */
+export interface IAnalyticalDesignerTitleCustomizableProperties {
+    /**
+     * Foreground color of the title
+     */
+    color?: ThemeColor;
+}
+
+/**
+ * Analytical designer specific properties.
+ *
+ * @beta
+ */
+export interface IAnalyticalDesignerCustomizableProperties {
+    /**
+     * Title specific properties
+     */
+
+    title?: IAnalyticalDesignerTitleCustomizableProperties;
+}
+
+/**
  * Theme used to customize selected parts of the UI
  *
  * Only the primary color main value is mandatory
@@ -326,82 +778,17 @@ export interface ITheme {
     /**
      * Button customizable UI properties
      */
-    button?: {
-        /**
-         * Radius of the button border in px
-         */
-        borderRadius?: string;
-
-        /**
-         * Flag determining whether the button has a shadow or not
-         */
-        dropShadow?: boolean;
-
-        /**
-         * Flag determining whether the button has its text capitalized or not
-         */
-        textCapitalization?: boolean;
-    };
+    button?: IButtonCustomizableUIProperties;
 
     /**
      * Tooltip customizable UI properties
      */
-    tooltip?: {
-        /**
-         * Background color of the tooltip
-         */
-        backgroundColor?: ThemeColor;
-
-        /**
-         * Foreground color of the tooltip
-         */
-        color?: ThemeColor;
-    };
+    tooltip?: ITooltipCustomizableUIProperties;
 
     /**
      * Modal customizable UI properties
      */
-    modal?: {
-        /**
-         * Title of the modal
-         */
-        title?: {
-            /**
-             * Foreground color of the tooltip
-             */
-            color?: ThemeColor;
-
-            /**
-             * Color of the line separator between the title and the content
-             */
-            lineColor?: ThemeColor;
-        };
-
-        /**
-         * Background color of the modal surroundings
-         */
-        outsideBackgroundColor?: ThemeColor;
-
-        /**
-         * Flag determining whether the button has a shadow or not
-         */
-        dropShadow?: boolean;
-
-        /**
-         * Width of the border
-         */
-        borderWidth?: string;
-
-        /**
-         * Color of the border
-         */
-        borderColor?: ThemeColor;
-
-        /**
-         * Radius of the border in px
-         */
-        borderRadius?: string;
-    };
+    modal?: IModalCustomizableProperties;
 
     /**
      * Global Kpi/Headline customizable UI properties
@@ -421,251 +808,10 @@ export interface ITheme {
     /**
      * KPI dashboards specific properties
      */
-    dashboards?: {
-        /**
-         * Title specific properties
-         */
-
-        title?: {
-            /**
-             * Foreground color of the title
-             */
-            color?: ThemeColor;
-
-            /**
-             * Background color of the title
-             */
-            backgroundColor?: ThemeColor;
-
-            /**
-             * Border color of the title
-             */
-            borderColor?: ThemeColor;
-        };
-
-        /**
-         * Section specific properties
-         */
-
-        section?: {
-            /**
-             * Section title properties
-             */
-
-            title?: {
-                /**
-                 * Foreground color of the section
-                 */
-                color?: ThemeColor;
-
-                /**
-                 * Color of the line separator between the sections
-                 */
-                lineColor?: ThemeColor;
-            };
-            /**
-             * Section title properties
-             */
-
-            description?: {
-                /**
-                 * Foreground color of the section
-                 */
-                color?: ThemeColor;
-            };
-        };
-
-        /**
-         * Filter bar specific properties
-         */
-
-        filterBar?: {
-            /**
-             * Background color of the filter bar
-             */
-            backgroundColor?: ThemeColor;
-
-            /**
-             * Border color of the filter bar
-             */
-            borderColor?: ThemeColor;
-
-            /**
-             * Filter bar button specific properties
-             */
-
-            filterButton?: {
-                /**
-                 * Background color of the filter bar button
-                 */
-                backgroundColor?: ThemeColor;
-            };
-        };
-
-        /**
-         * Dashboard content specific properties
-         */
-
-        content?: {
-            /**
-             * Background color of the dashboard content
-             */
-            backgroundColor?: ThemeColor;
-
-            /**
-             * Widget specific properties
-             */
-
-            widget?: {
-                /**
-                 * Widget title color and alignment
-                 */
-
-                title?: IThemeWidgetTitle;
-
-                /**
-                 * Widget background color
-                 */
-                backgroundColor?: ThemeColor;
-
-                /**
-                 * Widget border color
-                 */
-                borderColor?: ThemeColor;
-
-                /**
-                 * Widget border width
-                 */
-                borderWidth?: string;
-
-                /**
-                 * Widget border radius in px
-                 */
-                borderRadius?: string;
-
-                /**
-                 * Flag determining whether the widget has a shadow or not
-                 */
-                dropShadow?: boolean;
-            };
-
-            /**
-             * Kpi widget specific properties
-             */
-
-            kpiWidget?: {
-                /**
-                 * Kpi widget title color and alignment
-                 */
-
-                title?: IThemeWidgetTitle;
-
-                /**
-                 * Kpi widget background color
-                 */
-                backgroundColor?: ThemeColor;
-
-                /**
-                 * Kpi widget border color
-                 */
-                borderColor?: ThemeColor;
-
-                /**
-                 * Kpi widget border width
-                 */
-                borderWidth?: string;
-
-                /**
-                 * Kpi widget border radius in px
-                 */
-                borderRadius?: string;
-
-                /**
-                 * Flag determining whether the kpi widget has a shadow or not
-                 */
-                dropShadow?: boolean;
-
-                /**
-                 * Dashboards specific Kpi/Headline customizable UI properties
-                 */
-                kpi?: IThemeKpi;
-            };
-        };
-
-        /**
-         * Navigation specific properties (left panel)
-         */
-        navigation?: {
-            /**
-             * Navigation background color
-             */
-            backgroundColor?: ThemeColor;
-
-            /**
-             * Navigation border color
-             */
-            borderColor?: ThemeColor;
-
-            /**
-             * Navigation header specific properties
-             */
-            title?: {
-                /**
-                 * Header foreground color
-                 */
-                color?: ThemeColor;
-            };
-
-            /**
-             * Navigation items (dashboards) specific properties
-             */
-            item?: {
-                /**
-                 * Item foreground color
-                 */
-                color?: ThemeColor;
-
-                /**
-                 * Item foreground color on hover
-                 */
-                hoverColor?: ThemeColor;
-
-                /**
-                 * Selected item foreground color
-                 */
-                selectedColor?: ThemeColor;
-
-                /**
-                 * Selected item background color
-                 */
-                selectedBackgroundColor?: ThemeColor;
-            };
-        };
-
-        /**
-         * Edit panel specific properties
-         */
-        editPanel?: {
-            /**
-             * Edit panel background color
-             */
-            backgroundColor?: ThemeColor;
-        };
-    };
+    dashboards?: IDashboardCustomizableProperties;
 
     /**
      * Analytical designer specific properties
      */
-    analyticalDesigner?: {
-        /**
-         * Title specific properties
-         */
-
-        title?: {
-            /**
-             * Foreground color of the title
-             */
-            color?: ThemeColor;
-        };
-    };
+    analyticalDesigner?: IAnalyticalDesignerCustomizableProperties;
 }

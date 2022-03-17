@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 /**
  * Represents the current status of CSV source.
  *
@@ -35,18 +35,25 @@ export interface IDatasetLoadInfo {
 export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
 
 /**
+ * Data column object interface.
+ *
+ * @public
+ */
+export interface IColumn {
+    name: string;
+    type: DataColumnType;
+    skip?: boolean;
+    format?: string;
+}
+
+/**
  * Dataset column with name, type and boolean flag whether the column
  * needs to be skipped while data loading or not.
  *
  * @public
  */
 export interface IDataColumn {
-    column: {
-        name: string;
-        type: DataColumnType;
-        skip?: boolean;
-        format?: string;
-    };
+    column: IColumn;
 }
 
 /**
@@ -59,6 +66,21 @@ export interface IDataColumn {
 export interface IDataHeader {
     headerRowIndex?: number;
     columns: IDataColumn[];
+}
+/**
+ * Dataset object interface.
+ *
+ * @public
+ */
+export interface IDatasetOject {
+    name: string;
+    dataHeader: IDataHeader;
+    datasetId: string;
+    loadedRowCount: number;
+    datasetLoadStatus: DatasetLoadStatus;
+    firstSuccessfulUpdate?: IDatasetLoadInfo;
+    lastSuccessfulUpdate?: IDatasetLoadInfo;
+    lastUpdate?: IDatasetLoadInfo;
 }
 
 /**

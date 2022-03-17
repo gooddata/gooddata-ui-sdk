@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     IAttributeOrMeasure,
     IBucket,
@@ -27,6 +27,7 @@ export interface IExecutionFactory {
     /**
      * Prepares a new execution for the provided execution definition.
      *
+     * @remarks
      * The contract is that the definition is taken and used in the prepared execution AS IS. Compared
      * to the other convenience methods, this method MUST NOT create prepared executions with automatically
      * generated dimensions.
@@ -40,6 +41,7 @@ export interface IExecutionFactory {
      * Prepares a new execution for a list of attributes and measures, optionally filtered using the
      * provided filters.
      *
+     * @remarks
      * The contract is that prepared executions created by this method MUST be executable and MUST come with
      * pre-filled dimensions created using the {@link @gooddata/sdk-model#defaultDimensionsGenerator}.
      *
@@ -49,7 +51,10 @@ export interface IExecutionFactory {
     forItems(items: IAttributeOrMeasure[], filters?: INullableFilter[]): IPreparedExecution;
 
     /**
-     * Prepares a new execution for a list of buckets. Attributes and measures WILL be transferred to the
+     * Prepares a new execution for a list of buckets.
+     *
+     * @remarks
+     * Attributes and measures WILL be transferred to the
      * execution in natural order:
      *
      * - Order of items within a bucket is retained in the execution
@@ -67,7 +72,10 @@ export interface IExecutionFactory {
     forBuckets(buckets: IBucket[], filters?: INullableFilter[]): IPreparedExecution;
 
     /**
-     * Prepares a new execution for the provided insight. Buckets with attributes and measures WILL be used
+     * Prepares a new execution for the provided insight.
+     *
+     * @remarks
+     * Buckets with attributes and measures WILL be used
      * to obtain attributes and measures - the behavior WILL be same as in forBuckets() function. Filters, sort by
      * and totals in the insight WILL be included in the prepared execution.
      *
@@ -85,6 +93,7 @@ export interface IExecutionFactory {
     /**
      * Prepares new, by-reference execution for an existing insight.
      *
+     * @remarks
      * Execution prepared using this method MAY be realized using different backend API than the executions where
      * attributes and measures are provided 'freeform'. In return, this different backend API may provide additional
      * authorization guarantees - for instance the backend MAY only allow end user to execute these stored insights
@@ -136,6 +145,7 @@ export interface IPreparedExecution {
     /**
      * Configures dimensions of the resulting data. Any dimension settings accumulated so far WILL be wiped out.
      *
+     * @remarks
      * The realizations of analytical backend MAY impose constraints on the minimum and maximum number of dimensions.
      * This call WILL fail if the input dimensions do not match constraints imposed by the backend.
      *
@@ -164,8 +174,10 @@ export interface IPreparedExecution {
     explain(config: ExplainConfig): Promise<void>;
 
     /**
-     * Tests whether this execution and the other execution are the same. This effectively means that
-     * their definitions are deeply equal.
+     * Tests whether this execution and the other execution are the same.
+     *
+     * @remarks
+     * This effectively means that their definitions are deeply equal.
      *
      * If you are only concerned with the equality from the result calculation point of view,
      * consider comparing fingerprints instead.
@@ -175,7 +187,10 @@ export interface IPreparedExecution {
     equals(other: IPreparedExecution): boolean;
 
     /**
-     * Fingerprint of this prepared execution - this is effectively the fingerprint of the execution
+     * Fingerprint of this prepared execution.
+     *
+     * @remarks
+     * This is effectively the fingerprint of the execution
      * definition underlying this instance of Prepared Execution.
      */
     fingerprint(): string;
@@ -212,7 +227,10 @@ export interface IExecutionResult {
     readAll(): Promise<IDataView>;
 
     /**
-     * Asynchronously reads a window of data for this result. The window is specified using
+     * Asynchronously reads a window of data for this result.
+     *
+     * @remarks
+     * The window is specified using
      * offset array and size array. The offsets specify coordinates where the view starts and
      * are zero-based. The sizes specify size of the window in each of the results dimension.
      *
@@ -227,6 +245,7 @@ export interface IExecutionResult {
      * Transforms this execution result - changing the result sorting, dimensionality and available
      * totals is possible through transformation.
      *
+     * @remarks
      * It is strongly encouraged to use this function every time when data SHOULD remain the same and just
      * its sorting or dimensionality or totals MUST change. That is because since this intent of the caller
      * is known, the function can apply additional optimizations and obtain the updated result faster
@@ -264,7 +283,10 @@ export interface IExecutionResult {
     equals(other: IExecutionResult): boolean;
 
     /**
-     * Unique fingerprint of the execution result. The fingerprint is influenced by both data included in
+     * Unique fingerprint of the execution result.
+     *
+     * @remarks
+     * The fingerprint is influenced by both data included in
      * the result and its dimensionality, sorting and totals.
      *
      * Thus, two results with the same data and same execution definition will have the same fingerprint.
@@ -299,7 +321,10 @@ export interface IDataView {
     readonly totalCount: number[];
 
     /**
-     * Headers are metadata for the data in this view. There are headers for each dimension and in
+     * Headers are metadata for the data in this view.
+     *
+     * @remarks
+     * There are headers for each dimension and in
      * each dimension headers are further sliced by the attribute or measure or total to which the data
      * belongs.
      *
@@ -318,7 +343,10 @@ export interface IDataView {
     readonly data: DataValue[][] | DataValue[];
 
     /**
-     * Grand totals included in this data view. Grand totals are included for each dimension; within each
+     * Grand totals included in this data view.
+     *
+     * @remarks
+     * Grand totals are included for each dimension; within each
      * dimension there is one entry per requested total and for each requested total there are list of values.
      *
      * Thus:
@@ -341,7 +369,10 @@ export interface IDataView {
     readonly result: IExecutionResult;
 
     /**
-     * Result warnings. Backend MAY return warnings to indicate that the result is different compared to what the caller can expect.
+     * Result warnings.
+     *
+     * @remarks
+     * Backend MAY return warnings to indicate that the result is different compared to what the caller can expect.
      * For example, the caller executes a definition with particular filter,
      * but the backend determines that the filter has no effect on the computation.
      * Backend runs the execution and communicates by warning that the filter was useless.
@@ -357,7 +388,10 @@ export interface IDataView {
     equals(other: IDataView): boolean;
 
     /**
-     * Unique fingerprint of this data view - the fingerprint is influenced by the execution result and the
+     * Unique fingerprint of this data view.
+     *
+     * @remarks
+     * The fingerprint is influenced by the execution result and the
      * offset and limit of the data view.
      *
      * Thus, two data views on the same result, with same offset and limit will have the same fingerprint.

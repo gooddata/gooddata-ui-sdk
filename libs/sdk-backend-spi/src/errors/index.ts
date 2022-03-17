@@ -130,6 +130,7 @@ export class NotImplemented extends AnalyticalBackendError {
  * Implementation of different backends MAY indicate through this structure where to redirect the browser
  * in order to start authentication flow.
  *
+ * @remarks
  * The `returnRedirectParam` is the name of the query parameter that the application should set when redirecting.
  * The value of the query parameter is the return URL where the browser should return after successful authentication.
  *

@@ -1,10 +1,13 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import { ObjRef } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 
 /**
- * Single calculated data value. The data value may be `null` - the semantics here are same as with
+ * Single calculated data value.
+ *
+ * @remarks
+ * The data value may be `null` - the semantics here are same as with
  * SQL nulls. The calculated numeric value WILL be returned in string representation - this is to
  * prevent float number precision errors.
  *
@@ -13,15 +16,71 @@ import isEmpty from "lodash/isEmpty";
 export type DataValue = null | string | number;
 
 /**
+ * Descriptor of the measure and its contents.
+ *
+ * @public
+ */
+export interface IMeasureDescriptorObject {
+    items: IMeasureDescriptor[];
+    totalItems?: ITotalDescriptor[];
+}
+
+/**
  * Describes measure group and its contents.
  * @public
  */
 export interface IMeasureGroupDescriptor {
     // TODO: rename this to measureGroupDescriptor ... the goal is to get rid of the overused 'header' nomenclature
-    measureGroupHeader: {
-        items: IMeasureDescriptor[];
-        totalItems?: ITotalDescriptor[];
-    };
+    measureGroupHeader: IMeasureDescriptorObject;
+}
+
+/**
+ * Measure descriptor object.
+ *
+ * @public
+ */
+export interface IMeasureHeaderItem {
+    localIdentifier: string;
+
+    /**
+     * Measure name.
+     *
+     * @remarks
+     * Backend must fill the name according to the following rules:
+     *
+     * -  If measure definition contained 'title', then name MUST equal to 'title',
+     * -  Else if measure definition contained 'alias', then name MUST equal to 'alias',
+     * -  Else if the backend has a name of the measure in its records, then it MUST include that name
+     * -  Otherwise the name must default to value of localIdentifier
+     */
+    name: string;
+
+    /**
+     * Measure format.
+     *
+     * @remarks
+     * Backend must fill the name according to the following rules:
+     *
+     * -  If measure definition contained 'format', then the format from the definition MUST be used
+     * -  Else if backend has a format for the measure in its records, then it MUST include that format
+     * -  Otherwise the format must be defaulted
+     */
+    format: string;
+
+    /**
+     * For persistent metrics or facts, this returns URI of the object. Is empty for ad-hoc measures.
+     */
+    uri?: string;
+
+    /**
+     * For persistent metrics or facts, this returns identifier of the object. Is empty for ad-hoc measures.
+     */
+    identifier?: string;
+
+    /**
+     * Opaque reference of the metric or fact object.
+     */
+    ref?: ObjRef;
 }
 
 /**
@@ -31,43 +90,16 @@ export interface IMeasureGroupDescriptor {
  */
 export interface IMeasureDescriptor {
     // TODO: rename this to measureDescriptor ... the goal is to get rid of the overused 'header' nomenclature
-    measureHeaderItem: {
-        localIdentifier: string;
+    measureHeaderItem: IMeasureHeaderItem;
+}
 
-        /**
-         * Measure name. Backend must fill the name according to the following rules:
-         *
-         * -  If measure definition contained 'title', then name MUST equal to 'title',
-         * -  Else if measure definition contained 'alias', then name MUST equal to 'alias',
-         * -  Else if the backend has a name of the measure in its records, then it MUST include that name
-         * -  Otherwise the name must default to value of localIdentifier
-         */
-        name: string;
-
-        /**
-         * Measure format. Backend must fill the name according to the following rules:
-         *
-         * -  If measure definition contained 'format', then the format from the definition MUST be used
-         * -  Else if backend has a format for the measure in its records, then it MUST include that format
-         * -  Otherwise the format must be defaulted
-         */
-        format: string;
-
-        /**
-         * For persistent metrics or facts, this returns URI of the object. Is empty for ad-hoc measures.
-         */
-        uri?: string;
-
-        /**
-         * For persistent metrics or facts, this returns identifier of the object. Is empty for ad-hoc measures.
-         */
-        identifier?: string;
-
-        /**
-         * Opaque reference of the metric or fact object.
-         */
-        ref?: ObjRef;
-    };
+/**
+ * Describes total included in a dimension.
+ *
+ * @public
+ */
+export interface ITotalDescriptorItem {
+    name: string;
 }
 
 /**
@@ -77,13 +109,93 @@ export interface IMeasureDescriptor {
  */
 export interface ITotalDescriptor {
     // TODO: rename this to totalDescriptor ... the goal is to get rid of the overused 'header' nomenclature
-    totalHeaderItem: {
-        name: string;
-    };
+    totalHeaderItem: ITotalDescriptorItem;
 }
 
 /**
- * Describes attribute slicing of a dimension. The primary descriptor is the attribute display form which was
+ * Describes attributes to which the display form belongs.
+ *
+ * @public
+ */
+export interface IAttributeHeaderForm {
+    /**
+     * Opaque reference of the attribute object.
+     */
+    ref: ObjRef;
+
+    /**
+     * URI of the attribute object.
+     */
+    uri: string;
+
+    /**
+     * Attribute identifier.
+     */
+    identifier: string;
+
+    /**
+     * Human readable name of the attribute.
+     *
+     * @remarks
+     * Note: attribute name is typically more descriptive than the display form. Therefore, visualizations
+     * often use the attribute name for axes and other descriptive elements of the chart such as tooltips.
+     *
+     * For example attribute called 'Location' may have multiple display forms each with different name and possibly
+     * also different data type such as 'ShortName', 'LongName', 'Coordinates', 'Link' etc. Using the display
+     * form name would often lead to visualizations which are harder to comprehend.
+     */
+    name: string;
+}
+
+/**
+ * Attribute descriptior header.
+ *
+ * @public
+ */
+export interface IAttributeHeader {
+    /**
+     * URI of the display form object
+     */
+    uri: string;
+
+    /**
+     * Display form identifier
+     */
+    identifier: string;
+
+    /**
+     * Local identifier of the display form - this references back to the IAttribute which was on the input
+     * to the execution.
+     */
+    localIdentifier: string;
+
+    /**
+     * Opaque reference of the display form object.
+     */
+    ref: ObjRef;
+
+    /**
+     * Human readable name of the attribute.
+     */
+    name: string;
+    totalItems?: ITotalDescriptor[];
+
+    /**
+     * Display form type
+     */
+    type?: string;
+
+    /**
+     * Describes attributes to which the display form belongs.
+     */
+    formOf: IAttributeHeaderForm;
+}
+
+/**
+ * Describes attribute slicing of a dimension.
+ *
+ * @remarks
+ * The primary descriptor is the attribute display form which was
  * used to slice the dimension. Description of the attribute to which the display form belongs is provided in the
  * `formOf` property.
  *
@@ -91,71 +203,10 @@ export interface ITotalDescriptor {
  */
 export interface IAttributeDescriptor {
     // TODO: rename this to attributeDescriptor ... the goal is to get rid of the overused 'header' nomenclature
-    attributeHeader: {
-        /**
-         * URI of the display form object
-         */
-        uri: string;
-
-        /**
-         * Display form identifier
-         */
-        identifier: string;
-
-        /**
-         * Local identifier of the display form - this references back to the IAttribute which was on the input
-         * to the execution.
-         */
-        localIdentifier: string;
-
-        /**
-         * Opaque reference of the display form object.
-         */
-        ref: ObjRef;
-
-        /**
-         * Human readable name of the attribute.
-         */
-        name: string;
-        totalItems?: ITotalDescriptor[];
-
-        /**
-         * Display form type
-         */
-        type?: string;
-
-        /**
-         * Describes attributes to which the display form belongs.
-         */
-        formOf: {
-            /**
-             * Opaque reference of the attribute object.
-             */
-            ref: ObjRef;
-
-            /**
-             * URI of the attribute object.
-             */
-            uri: string;
-
-            /**
-             * Attribute identifier.
-             */
-            identifier: string;
-
-            /**
-             * Human readable name of the attribute.
-             *
-             * Note: attribute name is typically more descriptive than the display form. Therefore, visualizations
-             * often use the attribute name for axes and other descriptive elements of the chart such as tooltips.
-             *
-             * For example attribute called 'Location' may have multiple display forms each with different name and possibly
-             * also different data type such as 'ShortName', 'LongName', 'Coordinates', 'Link' etc. Using the display
-             * form name would often lead to visualizations which are harder to comprehend.
-             */
-            name: string;
-        };
-    };
+    /**
+     * Attribute descriptior header.
+     */
+    attributeHeader: IAttributeHeader;
 }
 
 /**
@@ -200,34 +251,70 @@ export interface IDimensionDescriptor {
 }
 
 /**
+ * Attribute header item specifies name and URI of the attribute element to which the calculated measure
+ * values in the particular data view slice belong.
+ *
+ * @public
+ */
+export interface IResultAttributeHeaderItem {
+    /**
+     * Human readable name of the attribute element
+     */
+    name: string;
+
+    /**
+     * URI of the attribute element.
+     *
+     * @remarks
+     * This is essentially a primary key of the attribute element. It can
+     * be used in places where attribute elements have to be exactly specified - such as positive or
+     * negative attribute filters.
+     *
+     * It is up to the backend implementation whether the URI is transferable across workspaces or not in the
+     * data distribution scenarios. In other words, if a data for one attribute (say Product) is distributed
+     * into multiple workspaces, it is up to the backend whether the URIs of the elements will be same across
+     * all workspaces or not.
+     *
+     * Recommendation for the consumers: URI is safe to use if you obtain in programatically from this header
+     * and then use it in the same workspace for instance for filtering. It is not safe to hardcode URIs
+     * and use them in a solution which should operate on top of different workspaces.
+     */
+    uri: string;
+}
+
+/**
  * Attribute header specifies name and URI of the attribute element to which the calculated measure
  * values in the particular data view slice belong.
  *
  * @public
  */
 export interface IResultAttributeHeader {
-    attributeHeaderItem: {
-        /**
-         * Human readable name of the attribute element
-         */
-        name: string;
+    attributeHeaderItem: IResultAttributeHeaderItem;
+}
 
-        /**
-         * URI of the attribute element. This is essentially a primary key of the attribute element. It can
-         * be used in places where attribute elements have to be exactly specified - such as positive or
-         * negative attribute filters.
-         *
-         * It is up to the backend implementation whether the URI is transferable across workspaces or not in the
-         * data distribution scenarios. In other words, if a data for one attribute (say Product) is distributed
-         * into multiple workspaces, it is up to the backend whether the URIs of the elements will be same across
-         * all workspaces or not.
-         *
-         * Recommendation for the consumers: URI is safe to use if you obtain in programatically from this header
-         * and then use it in the same workspace for instance for filtering. It is not safe to hardcode URIs
-         * and use them in a solution which should operate on top of different workspaces.
-         */
-        uri: string;
-    };
+/**
+ * Measure header specifes name of the measure to which the calculated values in the particular data view slice belong.
+ *
+ * Measure header also specifies 'order' - this is essentially an index into measure group descriptor's item array; it
+ * can be used to obtain further information about the measure.
+ *
+ * @public
+ */
+export interface IResultMeasureHeaderItem {
+    /**
+     * Measure name - equals to the measure name contained in the respective measure descriptor, included here
+     * for convenience and easy access.
+     *
+     * Note: check out the contract for measure name as described in {@link IMeasureDescriptor} - it is
+     * somewhat more convoluted than one would expect.
+     */
+    name: string;
+
+    /**
+     * Index of this measure's descriptor within the measure group description. The measure group descriptor
+     * is included in the execution result.
+     */
+    order: number;
 }
 
 /**
@@ -239,22 +326,17 @@ export interface IResultAttributeHeader {
  * @public
  */
 export interface IResultMeasureHeader {
-    measureHeaderItem: {
-        /**
-         * Measure name - equals to the measure name contained in the respective measure descriptor, included here
-         * for convenience and easy access.
-         *
-         * Note: check out the contract for measure name as described in {@link IMeasureDescriptor} - it is
-         * somewhat more convoluted than one would expect.
-         */
-        name: string;
+    measureHeaderItem: IResultMeasureHeaderItem;
+}
 
-        /**
-         * Index of this measure's descriptor within the measure group description. The measure group descriptor
-         * is included in the execution result.
-         */
-        order: number;
-    };
+/**
+ * Total header specifies name and type of total to which the calculated values in particular data view slice belong.
+ *
+ * @public
+ */
+export interface IResultTotalHeaderItem {
+    name: string;
+    type: string;
 }
 
 /**
@@ -263,10 +345,7 @@ export interface IResultMeasureHeader {
  * @public
  */
 export interface IResultTotalHeader {
-    totalHeaderItem: {
-        name: string;
-        type: string;
-    };
+    totalHeaderItem: IResultTotalHeaderItem;
 }
 
 /**
@@ -292,7 +371,10 @@ export interface IResultWarning {
     warningCode: string;
 
     /**
-     * Human readable representation of the execution warning, with C-like printf parameter placehodlers.
+     * Human readable representation of the execution warning.
+     *
+     * @remarks
+     * With C-like printf parameter placeholders.
      * The values for the placeholders are in the parameters array in the order in which they should replace the placeholders.
      *
      * Example: "metric filter on dimension [%s] not applied"

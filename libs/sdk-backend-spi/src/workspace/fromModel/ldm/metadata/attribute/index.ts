@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { IMetadataObject, isMetadataObject } from "../types";
 import { IAttributeDisplayFormMetadataObject } from "../attributeDisplayForm";
 import { ObjRef } from "@gooddata/sdk-model";
@@ -13,6 +13,7 @@ export interface IAttributeMetadataObject extends IMetadataObject {
     /**
      * A reference to the attribute displayForm that represents implicit drill down step
      *
+     * @remarks
      * Drilling of this type will be available in any report/dashboard where this attribute will be present.
      * This will be performed on attribute headers and attribute element headers. These will be defined in LDM.
      */
@@ -21,6 +22,7 @@ export interface IAttributeMetadataObject extends IMetadataObject {
     /**
      * A reference to the attribute displayForm that represents implicit drill to url from attribute value
      *
+     * @remarks
      * Drilling of this type will be available in any report/dashboard where this attribute will be present.
      * This will be performed on attribute headers and attribute element headers. These will be defined in LDM.
      */
