@@ -2095,12 +2095,28 @@ export namespace GdcScheduledMail {
     // (undocumented)
     export function isKpiDashboardAttachment(obj: unknown): obj is IKpiDashboardAttachment;
     // (undocumented)
+    export function isVisualizationWidgetAttachment(obj: unknown): obj is IVisualizationWidgetAttachment;
+    // (undocumented)
+    export interface IVisualizationWidgetAttachment {
+        // (undocumented)
+        visualizationWidgetAttachment: {
+            uri: Uri;
+            dashboardUri: Uri;
+            formats: ["csv" | "xlsx"];
+            filterContext?: Uri;
+            exportOptions?: {
+                mergeHeaders?: "yes" | "no";
+                includeFilterContext?: "yes" | "no";
+            };
+        };
+    }
+    // (undocumented)
     export interface IWrappedScheduledMail {
         // (undocumented)
         scheduledMail: IScheduledMail;
     }
     // (undocumented)
-    export type ScheduledMailAttachment = IReportAttachment | IDashboardAttachment | IKpiDashboardAttachment;
+    export type ScheduledMailAttachment = IReportAttachment | IDashboardAttachment | IKpiDashboardAttachment | IVisualizationWidgetAttachment;
 }
 
 // @public (undocumented)

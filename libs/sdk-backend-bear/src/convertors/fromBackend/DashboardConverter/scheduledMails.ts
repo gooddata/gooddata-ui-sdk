@@ -11,21 +11,38 @@ import { uriRef } from "@gooddata/sdk-model";
 export const convertScheduledMailAttachment = (
     scheduledMailAttachment: GdcScheduledMail.ScheduledMailAttachment,
 ): ScheduledMailAttachment => {
-    if (!GdcScheduledMail.isKpiDashboardAttachment(scheduledMailAttachment)) {
+    if (GdcScheduledMail.isKpiDashboardAttachment(scheduledMailAttachment)) {
+        const {
+            kpiDashboardAttachment: { format, uri, filterContext },
+        } = scheduledMailAttachment;
+
+        return {
+            dashboard: uriRef(uri),
+            format,
+            filterContext: filterContext ? uriRef(filterContext) : undefined,
+        };
+    } else if (GdcScheduledMail.isVisualizationWidgetAttachment(scheduledMailAttachment)) {
+        const {
+            visualizationWidgetAttachment: { uri, dashboardUri, formats, filterContext, exportOptions },
+        } = scheduledMailAttachment;
+        const convertedExportOptions = exportOptions
+            ? {
+                  includeFilters: exportOptions.includeFilterContext === "yes",
+                  mergeHeaders: exportOptions.mergeHeaders === "yes",
+              }
+            : {};
+        return {
+            widgetDashboard: uriRef(dashboardUri),
+            widget: uriRef(uri),
+            formats,
+            filterContext: filterContext ? uriRef(filterContext) : undefined,
+            exportOptions: convertedExportOptions,
+        };
+    } else {
         throw new NotSupported(
-            "Cannot convert attachment - only dashboard attachments are currently supported.",
+            "Cannot convert attachment - only dashboard and widget attachments are currently supported.",
         );
     }
-
-    const {
-        kpiDashboardAttachment: { format, uri, filterContext },
-    } = scheduledMailAttachment;
-
-    return {
-        dashboard: uriRef(uri),
-        format,
-        filterContext: filterContext ? uriRef(filterContext) : undefined,
-    };
 };
 
 export const convertScheduledMail = (

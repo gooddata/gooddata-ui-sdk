@@ -50,6 +50,8 @@ import {
     IDashboardPlugin,
     IDashboardPluginDefinition,
     IDashboardPluginLink,
+    isDashboardAttachment,
+    isWidgetAttachment,
 } from "@gooddata/sdk-backend-spi";
 import {
     GdcDashboardLayout,
@@ -618,15 +620,35 @@ export const convertWidgetAlert = (
 export const convertScheduledMailAttachment = (
     scheduledMailAttachment: ScheduledMailAttachment,
 ): GdcScheduledMail.ScheduledMailAttachment => {
-    const { dashboard, format, filterContext } = scheduledMailAttachment;
+    if (isDashboardAttachment(scheduledMailAttachment)) {
+        const { dashboard, format, filterContext } = scheduledMailAttachment;
 
-    return {
-        kpiDashboardAttachment: {
-            uri: refToUri(dashboard),
-            format,
-            filterContext: filterContext && refToUri(filterContext),
-        },
-    };
+        return {
+            kpiDashboardAttachment: {
+                uri: refToUri(dashboard),
+                format,
+                filterContext: filterContext && refToUri(filterContext),
+            },
+        };
+    } else if (isWidgetAttachment(scheduledMailAttachment)) {
+        const { widgetDashboard, widget, filterContext, formats, exportOptions } = scheduledMailAttachment;
+
+        return {
+            visualizationWidgetAttachment: {
+                uri: refToUri(widget),
+                dashboardUri: refToUri(widgetDashboard),
+                formats,
+                filterContext: filterContext && refToUri(filterContext),
+                exportOptions: exportOptions && {
+                    includeFilterContext: exportOptions.includeFilters ? "yes" : "no",
+                    mergeHeaders: exportOptions.mergeHeaders ? "yes" : "no",
+                },
+            },
+        };
+    }
+    throw new UnexpectedError(
+        "Cannot convert scheduled email attachment - only dashboard and widget attachments are supported!",
+    );
 };
 
 export const convertScheduledMail = (

@@ -34,7 +34,11 @@ export namespace GdcScheduledMail {
         scheduledMail: IScheduledMail;
     }
 
-    export type ScheduledMailAttachment = IReportAttachment | IDashboardAttachment | IKpiDashboardAttachment;
+    export type ScheduledMailAttachment =
+        | IReportAttachment
+        | IDashboardAttachment
+        | IKpiDashboardAttachment
+        | IVisualizationWidgetAttachment;
 
     export type ExportFormat = "xls" | "pdf" | "html" | "csv" | "xlsx";
 
@@ -79,5 +83,22 @@ export namespace GdcScheduledMail {
 
     export function isKpiDashboardAttachment(obj: unknown): obj is IKpiDashboardAttachment {
         return !isEmpty(obj) && !!(obj as IKpiDashboardAttachment).kpiDashboardAttachment;
+    }
+
+    export interface IVisualizationWidgetAttachment {
+        visualizationWidgetAttachment: {
+            uri: Uri;
+            dashboardUri: Uri;
+            formats: ["csv" | "xlsx"];
+            filterContext?: Uri;
+            exportOptions?: {
+                mergeHeaders?: "yes" | "no";
+                includeFilterContext?: "yes" | "no";
+            };
+        };
+    }
+
+    export function isVisualizationWidgetAttachment(obj: unknown): obj is IVisualizationWidgetAttachment {
+        return !isEmpty(obj) && !!(obj as IVisualizationWidgetAttachment).visualizationWidgetAttachment;
     }
 }
