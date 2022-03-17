@@ -11,6 +11,7 @@ import { PluggableBubbleChart } from "./PluggableBubbleChart";
 import { BigChartDescriptor } from "../BigChartDescriptor";
 import {
     bucketConversion,
+    chartAdditionalFactories,
     chartConfigFromInsight,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
@@ -37,5 +38,6 @@ export class BubbleChartDescriptor extends BigChartDescriptor implements IVisual
             sortBy: insightConversion("sortBy", insightSorts),
             config: insightConversion("config", chartConfigFromInsight),
         }),
+        additionalFactories: chartAdditionalFactories,
     });
 }

@@ -11,6 +11,7 @@ import { PluggablePieChart } from "./PluggablePieChart";
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
 import {
     bucketConversion,
+    chartAdditionalFactories,
     chartConfigFromInsight,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
@@ -35,5 +36,6 @@ export class PieChartDescriptor extends BaseChartDescriptor implements IVisualiz
             sortBy: insightConversion("sortBy", insightSorts),
             config: insightConversion("config", chartConfigFromInsight),
         }),
+        additionalFactories: chartAdditionalFactories,
     });
 }

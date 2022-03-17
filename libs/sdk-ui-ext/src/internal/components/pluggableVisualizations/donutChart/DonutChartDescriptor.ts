@@ -11,6 +11,7 @@ import { PluggableDonutChart } from "./PluggableDonutChart";
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
 import {
     bucketConversion,
+    chartAdditionalFactories,
     chartConfigFromInsight,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
@@ -35,5 +36,6 @@ export class DonutChartDescriptor extends BaseChartDescriptor implements IVisual
             sortBy: insightConversion("sortBy", insightSorts),
             config: insightConversion("config", chartConfigFromInsight),
         }),
+        additionalFactories: chartAdditionalFactories,
     });
 }

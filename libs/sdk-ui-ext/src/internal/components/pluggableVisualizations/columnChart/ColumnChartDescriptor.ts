@@ -29,6 +29,7 @@ import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownH
 import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization";
 import {
     bucketConversion,
+    chartAdditionalFactories,
     chartConfigFromInsight,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
@@ -63,6 +64,7 @@ export class ColumnChartDescriptor extends BaseChartDescriptor implements IVisua
             sortBy: insightConversion("sortBy", insightSorts),
             config: insightConversion("config", chartConfigFromInsight),
         }),
+        additionalFactories: chartAdditionalFactories,
     });
 
     private adjustIntersectionForColumnBar(

@@ -7,7 +7,9 @@ import fromPairs from "lodash/fromPairs";
 import isNil from "lodash/isNil";
 import toPairs from "lodash/toPairs";
 import { IEmbeddingCodeContext } from "../../interfaces/VisualizationDescriptor";
+import { getChartSupportedControls } from "../propertiesHelper";
 import { InsightToPropsConverter } from "./types";
+import { removeUseless } from "./removeUseless";
 
 interface IBucketConversion<TProps extends object, TPropKey extends keyof TProps> {
     type: "bucket";
@@ -102,6 +104,7 @@ export function getConfigFromPropsConverter<TConfig extends object>(
 }
 
 const supportedChartConfigProperties = new Set<keyof IChartConfig>([
+    "colorMapping",
     "dataLabels",
     "dataPoints",
     "dualAxis",
@@ -125,4 +128,25 @@ const supportedChartConfigProperties = new Set<keyof IChartConfig>([
     "yaxis",
 ]);
 
-export const chartConfigFromInsight = getConfigFromPropsConverter(supportedChartConfigProperties);
+export function chartConfigFromInsight(
+    insight: IInsightDefinition,
+    ctx?: IEmbeddingCodeContext,
+): IChartConfig {
+    const properties = insightProperties(insight);
+    const controls = properties?.controls;
+
+    return flow(
+        toPairs,
+        filter(([key]) => supportedChartConfigProperties.has(key as any)),
+        fromPairs,
+        (c) =>
+            getChartSupportedControls(
+                c,
+                insight,
+                {}, // TODO: provide some options?
+                "", // TODO: allow DASHBOARDS_ENVIRONMENT here?
+                ctx?.settings,
+            ),
+        removeUseless,
+    )(controls);
+}

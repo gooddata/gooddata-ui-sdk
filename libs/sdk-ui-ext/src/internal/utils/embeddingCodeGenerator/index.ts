@@ -7,3 +7,4 @@ export {
     getConfigFromPropsConverter,
     getInsightToPropsConverter,
 } from "./insightToPropsConverter";
+export { chartAdditionalFactories } from "./chartAdditionalFactories";

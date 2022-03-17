@@ -17,6 +17,7 @@ import {
 } from "../drillDownUtil";
 import {
     bucketConversion,
+    chartAdditionalFactories,
     chartConfigFromInsight,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
@@ -47,6 +48,7 @@ export class LineChartDescriptor extends BaseChartDescriptor implements IVisuali
             sortBy: insightConversion("sortBy", insightSorts),
             config: insightConversion("config", chartConfigFromInsight),
         }),
+        additionalFactories: chartAdditionalFactories,
     });
 
     private addFilters(source: IInsight, drillConfig: IDrillDownDefinition, event: IDrillEvent) {

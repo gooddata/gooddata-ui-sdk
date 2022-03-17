@@ -14,6 +14,7 @@ import {
 import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization";
 import {
     bucketConversion,
+    chartAdditionalFactories,
     chartConfigFromInsight,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
@@ -43,6 +44,7 @@ export class TreemapDescriptor extends BigChartDescriptor {
             filters: insightConversion("filters", insightFilters),
             config: insightConversion("config", chartConfigFromInsight),
         }),
+        additionalFactories: chartAdditionalFactories,
     });
 
     private addFilters(source: IInsight, drillConfig: IDrillDownDefinition, event: IDrillEvent) {

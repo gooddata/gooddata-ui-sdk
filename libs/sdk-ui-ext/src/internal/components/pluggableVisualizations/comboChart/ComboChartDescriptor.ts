@@ -15,6 +15,7 @@ import {
     chartConfigFromInsight,
     getInsightToPropsConverter,
     insightConversion,
+    chartAdditionalFactories,
 } from "../../../utils/embeddingCodeGenerator";
 
 export class ComboChartDescriptor extends BigChartDescriptor implements IVisualizationDescriptor {
@@ -40,5 +41,6 @@ export class ComboChartDescriptor extends BigChartDescriptor implements IVisuali
             sortBy: insightConversion("sortBy", insightSorts),
             config: insightConversion("config", chartConfigFromInsight),
         }),
+        additionalFactories: chartAdditionalFactories,
     });
 }

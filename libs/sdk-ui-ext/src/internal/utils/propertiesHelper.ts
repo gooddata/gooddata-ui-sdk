@@ -276,13 +276,13 @@ export function getChartSupportedControls(
     insight: IInsightDefinition,
     options: IVisProps,
     environment: string,
-    settings: ISettings,
+    settings: ISettings | undefined,
 ): IVisualizationProperties | undefined {
     return flow(
         (c) => cloneDeep<IVisualizationProperties>(c ?? {}),
-        (c) => getLegendConfiguration(c, insight, options, environment, settings.enableKDWidgetCustomHeight),
-        (c) => getHighchartsAxisNameConfiguration(c, settings.enableAxisNameConfiguration),
-        (c) => getDataPointsConfiguration(c, settings.enableHidingOfDataPoints),
+        (c) => getLegendConfiguration(c, insight, options, environment, settings?.enableKDWidgetCustomHeight),
+        (c) => getHighchartsAxisNameConfiguration(c, settings?.enableAxisNameConfiguration),
+        (c) => getDataPointsConfiguration(c, settings?.enableHidingOfDataPoints),
     )(controlProperties);
 }
 

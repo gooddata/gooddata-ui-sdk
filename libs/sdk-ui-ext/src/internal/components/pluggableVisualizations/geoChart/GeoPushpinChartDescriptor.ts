@@ -23,6 +23,7 @@ import { DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT, MIDDLE_VISUALIZATION_HEIGHT } from
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
 import {
     bucketConversion,
+    chartAdditionalFactories,
     getConfigFromPropsConverter,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
@@ -31,6 +32,7 @@ import {
 
 const supportedGeoConfigProperties = new Set<keyof IGeoConfig>([
     "center",
+    "colorMapping",
     "cooperativeGestures",
     "legend",
     "limit",
@@ -80,6 +82,7 @@ export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IV
             sortBy: insightConversion("sortBy", insightSorts),
             config: insightConversion("config", getConfigFromPropsConverter(supportedGeoConfigProperties)),
         }),
+        additionalFactories: chartAdditionalFactories,
     });
 
     protected getMinHeight(enableCustomHeight: boolean): number {

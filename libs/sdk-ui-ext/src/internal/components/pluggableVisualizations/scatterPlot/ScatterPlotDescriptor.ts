@@ -8,6 +8,7 @@ import { PluggableScatterPlot } from "./PluggableScatterPlot";
 import { BigChartDescriptor } from "../BigChartDescriptor";
 import {
     bucketConversion,
+    chartAdditionalFactories,
     chartConfigFromInsight,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
@@ -33,5 +34,6 @@ export class ScatterPlotDescriptor extends BigChartDescriptor {
             sortBy: insightConversion("sortBy", insightSorts),
             config: insightConversion("config", chartConfigFromInsight),
         }),
+        additionalFactories: chartAdditionalFactories,
     });
 }
