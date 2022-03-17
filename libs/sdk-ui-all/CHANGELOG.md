@@ -1,6 +1,16 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 27 Jan 2022 08:25:24 GMT and should not be manually modified.
+This log was last generated on Thu, 17 Mar 2022 12:48:39 GMT and should not be manually modified.
+
+## 8.9.0
+Thu, 17 Mar 2022 12:48:39 GMT
+
+### Updates
+
+- The dashboard commands and events related to filter modification were included in the public API.
+- The general dashboard events (such as DashboardSaved) were included in the public API.
+- The useDispatchDashboardCommand hook was added to make dispatching of the Dashboard commands easier.
+- The DashboardStoreAccessor, SingleDashboardStoreAccessor and DashboardStoreAccessorRepository classes were added to enable handling of the state of the Dashboard component outside the component itself.
 
 ## 8.8.0
 Thu, 27 Jan 2022 08:25:24 GMT
