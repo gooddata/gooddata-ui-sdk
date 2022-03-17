@@ -1,8 +1,9 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 /**
  * All possible date dataset attribute granularities.
  *
+ * @remarks
  * NOTE: Implementations of analytical backend MAY support only a subset of these granularities.
  *
  * See {@link DateGranularity} for a more convenient way to access commonly used granularities.

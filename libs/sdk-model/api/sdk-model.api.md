@@ -329,11 +329,14 @@ export interface IArithmeticMeasureDefinition {
 // @public
 export interface IAttribute {
     // (undocumented)
-    attribute: {
-        localIdentifier: Identifier;
-        displayForm: ObjRef;
-        alias?: string;
-    };
+    attribute: IAttributeBody;
+}
+
+// @public
+export interface IAttributeBody {
+    alias?: string;
+    displayForm: ObjRef;
+    localIdentifier: Identifier;
 }
 
 // @public
@@ -357,10 +360,13 @@ export type IAttributeFilter = IPositiveAttributeFilter | INegativeAttributeFilt
 // @public
 export interface IAttributeLocatorItem {
     // (undocumented)
-    attributeLocatorItem: {
-        attributeIdentifier: Identifier;
-        element: string;
-    };
+    attributeLocatorItem: IAttributeLocatorItemBody;
+}
+
+// @public
+export interface IAttributeLocatorItemBody {
+    attributeIdentifier: Identifier;
+    element: string;
 }
 
 // @public
@@ -443,11 +449,17 @@ export type IComparator<T> = (a: T, b: T) => number;
 // @public (undocumented)
 export interface IComparisonCondition {
     // (undocumented)
-    comparison: {
-        operator: ComparisonConditionOperator;
-        value: number;
-        treatNullValuesAs?: number;
-    };
+    comparison: IComparisonConditionBody;
+}
+
+// @public (undocumented)
+export interface IComparisonConditionBody {
+    // (undocumented)
+    operator: ComparisonConditionOperator;
+    // (undocumented)
+    treatNullValuesAs?: number;
+    // (undocumented)
+    value: number;
 }
 
 // @public
@@ -531,24 +543,35 @@ export type ILocatorItem = IAttributeLocatorItem | IMeasureLocatorItem;
 // @public
 export interface IMeasure<T extends IMeasureDefinitionType = IMeasureDefinitionType> extends IMeasureTitle {
     // (undocumented)
-    measure: {
-        localIdentifier: Identifier;
-        definition: T;
-        alias?: string;
-        title?: string;
-        format?: string;
-    };
+    measure: IMeasureBody<T>;
+}
+
+// @public
+export interface IMeasureBody<T extends IMeasureDefinitionType = IMeasureDefinitionType> {
+    // (undocumented)
+    alias?: string;
+    // (undocumented)
+    definition: T;
+    // (undocumented)
+    format?: string;
+    // (undocumented)
+    localIdentifier: Identifier;
+    // (undocumented)
+    title?: string;
 }
 
 // @public
 export interface IMeasureDefinition {
     // (undocumented)
-    measureDefinition: {
-        item: ObjRef;
-        aggregation?: MeasureAggregation;
-        filters?: IMeasureFilter[];
-        computeRatio?: boolean;
-    };
+    measureDefinition: IMeasureDefinitionBody;
+}
+
+// @public
+export interface IMeasureDefinitionBody {
+    aggregation?: MeasureAggregation;
+    computeRatio?: boolean;
+    filters?: IMeasureFilter[];
+    item: ObjRef;
 }
 
 // @public
@@ -560,9 +583,12 @@ export type IMeasureFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositi
 // @public
 export interface IMeasureLocatorItem {
     // (undocumented)
-    measureLocatorItem: {
-        measureIdentifier: Identifier;
-    };
+    measureLocatorItem: IMeasureLocatorItemBody;
+}
+
+// @public
+export interface IMeasureLocatorItemBody {
+    measureIdentifier: Identifier;
 }
 
 // @public
@@ -579,29 +605,43 @@ export interface IMeasureSortTarget {
 // @public
 export interface IMeasureTitle {
     // (undocumented)
-    measure: {
-        localIdentifier: string;
-        title?: string;
-        alias?: string;
-    };
+    measure: IMeasureTitleBody;
+}
+
+// @public
+export interface IMeasureTitleBody {
+    // (undocumented)
+    alias?: string;
+    // (undocumented)
+    localIdentifier: string;
+    // (undocumented)
+    title?: string;
 }
 
 // @public (undocumented)
 export interface IMeasureValueFilter {
     // (undocumented)
-    measureValueFilter: {
-        measure: ObjRefInScope;
-        condition?: MeasureValueFilterCondition;
-    };
+    measureValueFilter: IMeasureValueFilterBody;
+}
+
+// @public
+export interface IMeasureValueFilterBody {
+    // (undocumented)
+    condition?: MeasureValueFilterCondition;
+    // (undocumented)
+    measure: ObjRefInScope;
 }
 
 // @public
 export interface INegativeAttributeFilter {
     // (undocumented)
-    negativeAttributeFilter: {
-        displayForm: ObjRef;
-        notIn: IAttributeElements;
-    };
+    negativeAttributeFilter: INegativeAttributeFilterBody;
+}
+
+// @public
+export interface INegativeAttributeFilterBody {
+    displayForm: ObjRef;
+    notIn: IAttributeElements;
 }
 
 // @public
@@ -748,19 +788,27 @@ export type INullableFilter = IFilter | undefined | null;
 // @public
 export interface IPoPMeasureDefinition {
     // (undocumented)
-    popMeasureDefinition: {
-        measureIdentifier: Identifier;
-        popAttribute: ObjRef;
-    };
+    popMeasureDefinition: IPoPMeasureDefinitionBody;
+}
+
+// @public
+export interface IPoPMeasureDefinitionBody {
+    // (undocumented)
+    measureIdentifier: Identifier;
+    // (undocumented)
+    popAttribute: ObjRef;
 }
 
 // @public
 export interface IPositiveAttributeFilter {
     // (undocumented)
-    positiveAttributeFilter: {
-        displayForm: ObjRef;
-        in: IAttributeElements;
-    };
+    positiveAttributeFilter: IPositiveAttributeFilterBody;
+}
+
+// @public
+export interface IPositiveAttributeFilterBody {
+    displayForm: ObjRef;
+    in: IAttributeElements;
 }
 
 // @public
@@ -786,32 +834,51 @@ export interface IPreviousPeriodDateDataSetSimple {
 // @public
 export interface IPreviousPeriodMeasureDefinition {
     // (undocumented)
-    previousPeriodMeasure: {
-        measureIdentifier: Identifier;
-        dateDataSets: IPreviousPeriodDateDataSet[];
-    };
+    previousPeriodMeasure: IPreviousPeriodMeasureDefinitionBody;
+}
+
+// @public
+export interface IPreviousPeriodMeasureDefinitionBody {
+    // (undocumented)
+    dateDataSets: IPreviousPeriodDateDataSet[];
+    // (undocumented)
+    measureIdentifier: Identifier;
 }
 
 // @public (undocumented)
 export interface IRangeCondition {
     // (undocumented)
-    range: {
-        operator: RangeConditionOperator;
-        from: number;
-        to: number;
-        treatNullValuesAs?: number;
-    };
+    range: IRangeConditionBody;
+}
+
+// @public
+export interface IRangeConditionBody {
+    // (undocumented)
+    from: number;
+    // (undocumented)
+    operator: RangeConditionOperator;
+    // (undocumented)
+    to: number;
+    // (undocumented)
+    treatNullValuesAs?: number;
 }
 
 // @public (undocumented)
 export interface IRankingFilter {
     // (undocumented)
-    rankingFilter: {
-        measure: ObjRefInScope;
-        attributes?: ObjRefInScope[];
-        operator: RankingFilterOperator;
-        value: number;
-    };
+    rankingFilter: IRankingFilterBody;
+}
+
+// @public
+export interface IRankingFilterBody {
+    // (undocumented)
+    attributes?: ObjRefInScope[];
+    // (undocumented)
+    measure: ObjRefInScope;
+    // (undocumented)
+    operator: RankingFilterOperator;
+    // (undocumented)
+    value: number;
 }
 
 // @public
@@ -1035,16 +1102,19 @@ export interface IUser {
 // @public
 export interface IVisualizationClass {
     // (undocumented)
-    visualizationClass: {
-        identifier: string;
-        uri: string;
-        title: string;
-        url: string;
-        icon: string;
-        iconSelected: string;
-        checksum: string;
-        orderIndex?: number;
-    };
+    visualizationClass: IVisualizationClassBody;
+}
+
+// @public
+export interface IVisualizationClassBody {
+    checksum: string;
+    icon: string;
+    iconSelected: string;
+    identifier: string;
+    orderIndex?: number;
+    title: string;
+    uri: string;
+    url: string;
 }
 
 // @public

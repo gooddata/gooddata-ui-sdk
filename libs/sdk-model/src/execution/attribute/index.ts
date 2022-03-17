@@ -1,11 +1,57 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { Identifier, isUriRef, ObjRef, isIdentifierRef } from "../../objRef";
 import isEmpty from "lodash/isEmpty";
 import invariant from "ts-invariant";
 
 /**
- * Attribute is our nomenclature for 'dimension' as typically used in multi-dimensional BI modeling. The attribute
- * specifies on what dimension to slice/dice the measures.
+ * Attribute is our nomenclature for 'dimension' as typically used in multi-dimensional BI modeling.
+ *
+ * @remarks
+ * The attribute specifies on what dimension to slice/dice the measures.
+ *
+ * In GoodData, each attribute can have multiple different display forms. Display forms essentially provide different
+ * representations for elements in the dimension.
+ *
+ * @public
+ */
+export interface IAttributeBody {
+    /**
+     * User-assigned id of the attribute. The value is used to cross-reference model elements that are part
+     * of an execution.
+     *
+     * The constraint is that the local identifiers of all measures and attributes in an execution definition MUST
+     * be unique.
+     */
+    localIdentifier: Identifier;
+
+    /**
+     * Reference to display form to use for element representations.
+     *
+     * The display form can be referenced by either URL of the display form resource on backend OR by
+     * unique, backend-recognized, identifier of the display form.
+     *
+     * Note: specifying display forms by URI is discouraged and WILL be deprecated in the future. The
+     * specification of URL has several drawbacks:
+     *
+     * -  Display form URLs are tied to particular analytical workspace; this makes any application that uses
+     *    URL-specified display forms workspace-specific.
+     * -  Display form URLs are not supported by all GoodData backends == this makes any application that uses
+     *    URL-specified display form backend-specific
+     */
+    displayForm: ObjRef;
+
+    /**
+     * This is user-assigned alias of the attribute; it is opaque for the backend. When backend returns
+     * metadata about execution results, it WILL include this user-assigned alias in the metadata.
+     */
+    alias?: string;
+}
+
+/**
+ * Attribute is our nomenclature for 'dimension' as typically used in multi-dimensional BI modeling.
+ *
+ * @remarks
+ * The attribute specifies on what dimension to slice/dice the measures.
  *
  * In GoodData, each attribute can have multiple different display forms. Display forms essentially provide different
  * representations for elements in the dimension.
@@ -13,38 +59,7 @@ import invariant from "ts-invariant";
  * @public
  */
 export interface IAttribute {
-    attribute: {
-        /**
-         * User-assigned id of the attribute. The value is used to cross-reference model elements that are part
-         * of an execution.
-         *
-         * The constraint is that the local identifiers of all measures and attributes in an execution definition MUST
-         * be unique.
-         */
-        localIdentifier: Identifier;
-
-        /**
-         * Reference to display form to use for element representations.
-         *
-         * The display form can be referenced by either URL of the display form resource on backend OR by
-         * unique, backend-recognized, identifier of the display form.
-         *
-         * Note: specifying display forms by URI is discouraged and WILL be deprecated in the future. The
-         * specification of URL has several drawbacks:
-         *
-         * -  Display form URLs are tied to particular analytical workspace; this makes any application that uses
-         *    URL-specified display forms workspace-specific.
-         * -  Display form URLs are not supported by all GoodData backends == this makes any application that uses
-         *    URL-specified display form backend-specific
-         */
-        displayForm: ObjRef;
-
-        /**
-         * This is user-assigned alias of the attribute; it is opaque for the backend. When backend returns
-         * metadata about execution results, it WILL include this user-assigned alias in the metadata.
-         */
-        alias?: string;
-    };
+    attribute: IAttributeBody;
 }
 
 /**
@@ -83,8 +98,10 @@ export const idMatchAttribute: (id: string) => AttributePredicate = (id) => (att
 //
 
 /**
- * Gets local identifier of an attribute. For convenience and fluency, this function accepts both attribute object and
- * identifier.
+ * Gets local identifier of an attribute.
+ *
+ * @remarks
+ * For convenience and fluency, this function accepts both attribute object and identifier.
  *
  * @param attributeOrId - attribute to work with or the identifier
  * @returns value of local identifier
@@ -153,6 +170,7 @@ export function attributeDisplayFormRef(attribute: IAttribute): ObjRef {
 /**
  * Given list of attributes, returns first-found attribute matching the provided predicate.
  *
+ * @remarks
  * If no predicate is provided, then the function defaults to anyAttribute predicate - meaning first found attribute
  * will be returned.
  *

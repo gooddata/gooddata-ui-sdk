@@ -14,8 +14,11 @@ import { Identifier } from "../../objRef/index";
 export type TotalType = "sum" | "avg" | "max" | "min" | "med" | "nat";
 
 /**
- * Describes type and granularity for calculation of Totals. Total is calculated for particular measure
- * and on some granularity - specified by an attribute by which the measure is sliced by.
+ * Describes type and granularity for calculation of Totals.
+ *
+ * @remarks
+ * Total is calculated for particular measure and on some granularity - specified by an attribute
+ * by which the measure is sliced by.
  *
  * @public
  */

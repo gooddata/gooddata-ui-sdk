@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import invariant from "ts-invariant";
 import { ObjRef, ObjRefInScope } from "../../objRef";
@@ -7,6 +7,7 @@ import { DateAttributeGranularity, AllTimeGranularity } from "../../base/dateGra
 /**
  * Attribute elements specified by their URI.
  *
+ * @remarks
  * NOTE: attribute element URIs MAY NOT be transferable across workspaces. On some backends (such as bear)
  * same element WILL have different URI in each workspace. In general we recommend using URIs only if your code retrieves
  * them at runtime from backend using elements query or from the data view's headers. Hardcoding URIs is never a good idea, if
@@ -38,8 +39,30 @@ export interface IAttributeElementsByValue {
 export type IAttributeElements = IAttributeElementsByRef | IAttributeElementsByValue;
 
 /**
- * Positive attribute filter essentially adds an `IN <set>` condition to the execution on the backend. When
- * the condition is applied on attribute display form which is included in execution, it essentially limits the
+ * Object defining the {@link IPositiveAttributeFilter} object body.
+ *
+ * @public
+ */
+export interface IPositiveAttributeFilterBody {
+    /**
+     * Display form whose attribute elements are included in the 'in' list.
+     */
+    displayForm: ObjRef;
+
+    /**
+     * Attribute elements to filter in. The attribute elements can be specified either using
+     * their human readable value or by using their URI = the primary key. Using either representation has
+     * the same effect. While using human readable representation may be more readable in the client code,
+     * the using URI will likely have better performance on the backend.
+     */
+    in: IAttributeElements;
+}
+
+/**
+ * Positive attribute filter essentially adds an `IN <set>` condition to the execution on the backend.
+ *
+ * @remarks
+ * When the condition is applied on attribute display form which is included in execution, it essentially limits the
  * attribute elements that will be returned in the results: only those elements that are in the provided list
  * will be returned.
  *
@@ -51,25 +74,34 @@ export type IAttributeElements = IAttributeElementsByRef | IAttributeElementsByV
  * @public
  */
 export interface IPositiveAttributeFilter {
-    positiveAttributeFilter: {
-        /**
-         * Display form whose attribute elements are included in the 'in' list.
-         */
-        displayForm: ObjRef;
-
-        /**
-         * Attribute elements to filter in. The attribute elements can be specified either using
-         * their human readable value or by using their URI = the primary key. Using either representation has
-         * the same effect. While using human readable representation may be more readable in the client code,
-         * the using URI will likely have better performance on the backend.
-         */
-        in: IAttributeElements;
-    };
+    positiveAttributeFilter: IPositiveAttributeFilterBody;
 }
 
 /**
- * Negative attribute filter essentially adds an `NOT IN <set>` condition to the execution on the backend. When
- * the condition is applied on attribute display form which is included in execution, it essentially limits the
+ * Object defining the {@link INegativeAttributeFilter} object body.
+ *
+ * @public
+ */
+export interface INegativeAttributeFilterBody {
+    /**
+     * Display form whose attribute elements are included in the 'notIn' list.
+     */
+    displayForm: ObjRef;
+
+    /**
+     * Attribute elements to filter out. The attribute elements can be specified either using
+     * their human readable value or by using they URI = the primary key. Using either representation has
+     * the same effect. While using human readable representation may be more readable in the client code,
+     * the using URI will likely have better performance on the backend.
+     */
+    notIn: IAttributeElements;
+}
+
+/**
+ * Negative attribute filter essentially adds an `NOT IN <set>` condition to the execution on the backend.
+ *
+ * @remarks
+ * When the condition is applied on attribute display form which is included in execution, it essentially limits the
  * attribute elements that will be returned in the results: only those elements that ARE NOT in the provided list
  * will be returned.
  *
@@ -82,20 +114,7 @@ export interface IPositiveAttributeFilter {
  * @public
  */
 export interface INegativeAttributeFilter {
-    negativeAttributeFilter: {
-        /**
-         * Display form whose attribute elements are included in the 'notIn' list.
-         */
-        displayForm: ObjRef;
-
-        /**
-         * Attribute elements to filter out. The attribute elements can be specified either using
-         * their human readable value or by using they URI = the primary key. Using either representation has
-         * the same effect. While using human readable representation may be more readable in the client code,
-         * the using URI will likely have better performance on the backend.
-         */
-        notIn: IAttributeElements;
-    };
+    negativeAttributeFilter: INegativeAttributeFilterBody;
 }
 
 /**
@@ -123,7 +142,10 @@ export interface IAbsoluteDateFilter {
 }
 
 /**
- * Filters results to a relative date range. The relative filtering is always done on some granularity - this specifies
+ * Filters results to a relative date range.
+ *
+ * @remarks
+ * The relative filtering is always done on some granularity - this specifies
  * the units in the 'from' and 'to' fields.
  *
  * See {@link DateAttributeGranularity}, {@link AllTimeGranularity} and {@link DateGranularity} for further detail.
@@ -176,12 +198,17 @@ export type ComparisonConditionOperator =
 /**
  * @public
  */
+export interface IComparisonConditionBody {
+    operator: ComparisonConditionOperator;
+    value: number;
+    treatNullValuesAs?: number;
+}
+
+/**
+ * @public
+ */
 export interface IComparisonCondition {
-    comparison: {
-        operator: ComparisonConditionOperator;
-        value: number;
-        treatNullValuesAs?: number;
-    };
+    comparison: IComparisonConditionBody;
 }
 
 /**
@@ -190,15 +217,22 @@ export interface IComparisonCondition {
 export type RangeConditionOperator = "BETWEEN" | "NOT_BETWEEN";
 
 /**
+ * Object defining the {@link IRangeCondition} object body.
+ *
+ * @public
+ */
+export interface IRangeConditionBody {
+    operator: RangeConditionOperator;
+    from: number;
+    to: number;
+    treatNullValuesAs?: number;
+}
+
+/**
  * @public
  */
 export interface IRangeCondition {
-    range: {
-        operator: RangeConditionOperator;
-        from: number;
-        to: number;
-        treatNullValuesAs?: number;
-    };
+    range: IRangeConditionBody;
 }
 
 /**
@@ -207,13 +241,20 @@ export interface IRangeCondition {
 export type MeasureValueFilterCondition = IComparisonCondition | IRangeCondition;
 
 /**
+ * Object defining the {@link IMeasureValueFilter} object body.
+ *
+ * @public
+ */
+export interface IMeasureValueFilterBody {
+    measure: ObjRefInScope;
+    condition?: MeasureValueFilterCondition;
+}
+
+/**
  * @public
  */
 export interface IMeasureValueFilter {
-    measureValueFilter: {
-        measure: ObjRefInScope;
-        condition?: MeasureValueFilterCondition;
-    };
+    measureValueFilter: IMeasureValueFilterBody;
 }
 
 /**
@@ -222,15 +263,22 @@ export interface IMeasureValueFilter {
 export type RankingFilterOperator = "TOP" | "BOTTOM";
 
 /**
+ * Object defining the {@link IRankingFilter} object body.
+ *
+ * @public
+ */
+export interface IRankingFilterBody {
+    measure: ObjRefInScope;
+    attributes?: ObjRefInScope[];
+    operator: RankingFilterOperator;
+    value: number;
+}
+
+/**
  * @public
  */
 export interface IRankingFilter {
-    rankingFilter: {
-        measure: ObjRefInScope;
-        attributes?: ObjRefInScope[];
-        operator: RankingFilterOperator;
-        value: number;
-    };
+    rankingFilter: IRankingFilterBody;
 }
 
 /**
@@ -512,8 +560,10 @@ export function filterAttributeElements(filter: IFilter): IAttributeElements | u
 }
 
 /**
- * Gets reference to object being used for filtering. For attribute filters, this will be reference to the display
- * form. For date filters this will be reference to the data set.
+ * Gets reference to object being used for filtering.
+ *
+ * @remarks
+ * For attribute filters, this will be reference to the display form. For date filters this will be reference to the data set.
  *
  * @param filter - filter to work with
  * @returns reference to object used for filtering (display form for attr filters, data set for date filters)
@@ -523,8 +573,11 @@ export function filterObjRef(
     filter: IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter,
 ): ObjRef;
 /**
- * Gets reference to object being used for filtering. For attribute filters, this will be reference to the display
- * form. For date filters this will be reference to the data set. For measure value filter, this will be undefined.
+ * Gets reference to object being used for filtering.
+ *
+ * @remarks
+ * For attribute filters, this will be reference to the display form.
+ * For date filters this will be reference to the data set. For measure value filter, this will be undefined.
  *
  * @param filter - filter to work with
  * @returns reference to object used for filtering (display form for attr filters, data set for date filters), undefined

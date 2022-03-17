@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import invariant from "ts-invariant";
 import { Identifier } from "../../objRef/index";
@@ -8,7 +8,10 @@ import findIndex from "lodash/findIndex";
 import { attributeLocalId, IAttribute, isAttribute } from "../attribute";
 
 /**
- * Dimensions specify how to organize the results of an execution in a data view. Imagine an attribute in columns vs. rows.
+ * Dimensions specify how to organize the results of an execution in a data view.
+ *
+ * @remarks
+ * Imagine an attribute in columns vs. rows.
  * Each dimension requires the itemIdentifiers property, which is an array of items. These items could be attributes' localIdentifiers
  * or a special 'measureGroup' identifier.
  *
@@ -89,8 +92,11 @@ export function dimensionSetTotals(dim: IDimension, totals: ITotal[] = []): IDim
 }
 
 /**
- * Defines union of items that can be placed into a dimension. Identifier can be attribute localId or the
- * special {@link MeasureGroupIdentifier}. Attribute `localId` can be also specified by value of IAttribute.
+ * Defines union of items that can be placed into a dimension.
+ *
+ * @remarks
+ * Identifier can be attribute localId or the special {@link MeasureGroupIdentifier}. Attribute `localId` can be
+ * also specified by value of IAttribute.
  *
  * @public
  */
@@ -100,6 +106,7 @@ export type DimensionItem = Identifier | IAttribute | ITotal;
  * Creates new two dimensional specification where each dimension will have the provided set of
  * identifiers.
  *
+ * @remarks
  * The 'measureGroup' identifier MAY be specified in only one of the dimensions.
  *
  * @param dim1Input - items to put into the first dimension, this can be item identifiers or totals

@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import isEmpty from "lodash/isEmpty";
 import identity from "lodash/identity";
@@ -49,6 +49,7 @@ export type MeasureEnvelope = Omit<IMeasure["measure"], "definition">;
  * Abstract base class for measure builders. Measure builders allow for incremental, fluent construction
  * (and optionally modification) of measures.
  *
+ * @remarks
  * You should not be instantiating the builders directly. Instead, rely on the different functions to
  * create different types of measures.
  *
@@ -69,6 +70,7 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
      * Sets local identifier (localId) for the measure. LocalId can be used to reference the measure
      * within the execution definition.
      *
+     * @remarks
      * Normally, builder will generate localId based on contents of the measure definition - taking all
      * properties into account: in typical scenarios you don't have to call this function at all. The only exception
      * where you have to provide custom local id is if your execution must contain the exact same measure twice.
@@ -101,9 +103,12 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
     };
 
     /**
-     * Sets alias - alternative title - for the measure. This value will then be used in various
-     * chart-specific descriptive elements. For convenience if no alias is specified, the measure
-     * will fall back to using either title (if specified) or server-defined title as the ultimate fallback
+     * Sets alias - alternative title - for the measure.
+     *
+     * @remarks
+     * This value will then be used in various chart-specific descriptive elements.
+     * For convenience if no alias is specified, the measure will fall back to using either title (if specified)
+     * or server-defined title as the ultimate fallback
      *
      * @param alias - alias to use instead of measure title; undefined to use the title instead
      */
@@ -116,8 +121,10 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
     };
 
     /**
-     * Resets alias - alternative title - set for the measure. The measure title will be used if specified, otherwise
-     * the server-defined title will be used instead.
+     * Resets alias - alternative title - set for the measure.
+     *
+     * @remarks
+     * The measure title will be used if specified, otherwise the server-defined title will be used instead.
      */
     public noAlias = (): this => {
         delete this.measure.alias;
@@ -125,9 +132,11 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
     };
 
     /**
-     * Sets alternative title for the measure. This value will then be used in various chart-specific
-     * descriptive elements. For convenience if no title is specified, the measure will fall back to server-defined
-     * value.
+     * Sets alternative title for the measure.
+     *
+     * @remarks
+     * This value will then be used in various chart-specific descriptive elements.
+     * For convenience if no title is specified, the measure will fall back to server-defined value.
      *
      * @param title - alternative title to use instead of server-defined value; undefined to use server-defined value
      */
@@ -152,8 +161,10 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
     };
 
     /**
-     * Sets measure format to use when rendering values calculated from this measure. The format string
-     * is described in more detail here {@link https://help.gooddata.com/doc/en/reporting-and-dashboards/reports/working-with-reports/formatting-numbers-in-reports}.
+     * Sets measure format to use when rendering values calculated from this measure.
+     *
+     * @remarks
+     * The format string is described in more detail here {@link https://help.gooddata.com/doc/en/reporting-and-dashboards/reports/working-with-reports/formatting-numbers-in-reports}.
      *
      * For convenience, if you do not specify any format, then a default server-defined value will be used instead.
      *
@@ -290,8 +301,11 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
     }
 
     /**
-     * Sets aggregation to use for measures created from facts. By default the aggregation is SUM. For convenience
-     * the aggregation can be specified also for measures created from metrics - and in that case it will be ignored.
+     * Sets aggregation to use for measures created from facts.
+     *
+     * @remarks
+     * By default the aggregation is SUM. For convenience the aggregation can be specified also for measures
+     * created from metrics - and in that case it will be ignored.
      *
      * For convenience, the aggregation may be undefined and it means the value should be reset to the default.
      *
@@ -320,6 +334,7 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
      * Indicates that the measure values should be calculated as percent contributions to the total unsliced
      * value.
      *
+     * @remarks
      * This method works as 'turn-on-toggle' by default, however you can specify the actual boolean parameter and
      * turn the ratio computation off using this method.
      *
@@ -345,8 +360,10 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
     };
 
     /**
-     * Sets filters to apply when calculating the values of this measure. These filters apply only to this particular
-     * measure calculation and do not impact the rest of the execution.
+     * Sets filters to apply when calculating the values of this measure.
+     *
+     * @remarks
+     * These filters apply only to this particular measure calculation and do not impact the rest of the execution.
      *
      * @param filters - filters to apply to this measure
      */
@@ -366,8 +383,10 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
     };
 
     /**
-     * Sets reference to measure item that will be used for calculation. This can be either reference to
-     * a MAQL metric or a fact to calculate from.
+     * Sets reference to measure item that will be used for calculation.
+     *
+     * @remarks
+     * This can be either reference to a MAQL metric or a fact to calculate from.
      *
      * @param ref - new reference to use
      */
@@ -663,8 +682,10 @@ export function newMeasure(
 }
 
 /**
- * Creates a new measure by applying modifications on top of an existing measure. This generic function can
- * accept measure of any type and thus in returns allows modifications on the properties that are common
+ * Creates a new measure by applying modifications on top of an existing measure.
+ *
+ * @remarks
+ * This generic function can accept measure of any type and thus in returns allows modifications on the properties that are common
  * in any type of measure.
  *
  * This operation is immutable and will not alter the input measure.
@@ -706,6 +727,7 @@ function createBuilder(measure: IMeasure): MeasureBuilderBase<IMeasureDefinition
 /**
  * Creates a new simple measure by applying modifications on top of an existing measure.
  *
+ * @remarks
  * This operation is immutable and will not alter the input measure.
  *
  * The returned measure will have the same localIdentifier as the original measure. If you would like to assign
@@ -731,6 +753,7 @@ export function modifySimpleMeasure(
 /**
  * Creates a new PoP measure by applying modifications on top of an existing measure.
  *
+ * @remarks
  * This operation is immutable and will not alter the input measure.
  *
  * The returned measure will have the same localIdentifier as the original measure. If you would like to assign
@@ -756,6 +779,7 @@ export function modifyPopMeasure(
 /**
  * Creates a new Previous Period measure by applying modifications on top of an existing measure.
  *
+ * @remarks
  * This operation is immutable and will not alter the input measure.
  *
  * The returned measure will have the same localIdentifier as the original measure. If you would like to assign

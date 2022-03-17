@@ -6,8 +6,10 @@ import { IMeasureFilter } from "../filter";
 
 /**
  * Available measure definitions; this is union of simple measure, arithmetic measure, PoP measure and
- * previous period measure. See the respective definitions for more information on what can be achieved
- * using them.
+ * previous period measure.
+ *
+ * @remarks
+ * See the respective definitions for more information on what can be achieved using them.
  *
  * @public
  */
@@ -18,28 +20,50 @@ export type IMeasureDefinitionType =
     | IPreviousPeriodMeasureDefinition;
 
 /**
- * All types of measures have a set of common properties; those are defined here. The measure-type-specific
- * information is stored in the measure definition.
+ * Object defining the {@link IMeasure} object structure.
+ *
+ * @public
+ */
+export interface IMeasureBody<T extends IMeasureDefinitionType = IMeasureDefinitionType> {
+    localIdentifier: Identifier;
+    definition: T;
+    alias?: string;
+    title?: string;
+    format?: string;
+}
+
+/**
+ * All types of measures have a set of common properties; those are defined here.
+ *
+ * @remarks
+ * The measure-type-specific information is stored in the measure definition.
  *
  * @public
  */
 export interface IMeasure<T extends IMeasureDefinitionType = IMeasureDefinitionType> extends IMeasureTitle {
-    measure: {
-        localIdentifier: Identifier;
-        definition: T;
-        alias?: string;
-        title?: string;
-        format?: string;
-    };
+    measure: IMeasureBody<T>;
 }
 
 /**
- * Specification of measure either by value or by local id reference. It is a common convenience that functions
- * which require measure reference accept both value and reference.
+ * Specification of measure either by value or by local id reference.
+ *
+ * @remarks
+ * It is a common convenience that functions which require measure reference accept both value and reference.
  *
  * @public
  */
 export type MeasureOrLocalId = IMeasure | Identifier;
+
+/**
+ * Object defining the {@link IMeasureTitle} object body.
+ *
+ * @public
+ */
+export interface IMeasureTitleBody {
+    localIdentifier: string;
+    title?: string;
+    alias?: string;
+}
 
 /**
  * Subset of IMeasure interface which defines properties that MAY be used to provide human readable
@@ -48,16 +72,13 @@ export type MeasureOrLocalId = IMeasure | Identifier;
  * @public
  */
 export interface IMeasureTitle {
-    measure: {
-        localIdentifier: string;
-        title?: string;
-        alias?: string;
-    };
+    measure: IMeasureTitleBody;
 }
 
 /**
  * Simple measures created from facts can use these types of aggregations.
  *
+ * @remarks
  * Note the special approximate_count aggregation. It translates to corresponding SQL function on backend if the
  * underlying data source supports it. Otherwise the backend should fall back to classic exact count. Some backends
  * are oblivious to this functionality completely - for them it's ok to perform the fallback already in SDK backend.
@@ -75,34 +96,43 @@ export type MeasureAggregation =
     | "runsum";
 
 /**
- * Simple measures are defined from existing MAQL measures or logical data model facts. Measures created
- * from facts MAY specify aggregation function to apply during execution.
+ * Object defining the {@link IMeasureDefinition} object structure.
+ *
+ * @public
+ */
+export interface IMeasureDefinitionBody {
+    /**
+     * Reference to MAQL metric or LDM fact object.
+     */
+    item: ObjRef;
+
+    /**
+     * Aggregation to apply when calculating from LDM facts. If aggregation is provided for MAQL measures,
+     * it will be ignored.
+     */
+    aggregation?: MeasureAggregation;
+
+    /**
+     * Filters to apply in scope of this measure's calculation.
+     */
+    filters?: IMeasureFilter[];
+
+    /**
+     * Indicates whether the measure should be calculated as % of total instead of actual values.
+     */
+    computeRatio?: boolean;
+}
+
+/**
+ * Simple measures are defined from existing MAQL measures or logical data model facts.
+ *
+ * @remarks
+ * Measures created from facts MAY specify aggregation function to apply during execution.
  *
  * @public
  */
 export interface IMeasureDefinition {
-    measureDefinition: {
-        /**
-         * Reference to MAQL metric or LDM fact object.
-         */
-        item: ObjRef;
-
-        /**
-         * Aggregation to apply when calculating from LDM facts. If aggregation is provided for MAQL measures,
-         * it will be ignored.
-         */
-        aggregation?: MeasureAggregation;
-
-        /**
-         * Filters to apply in scope of this measure's calculation.
-         */
-        filters?: IMeasureFilter[];
-
-        /**
-         * Indicates whether the measure should be calculated as % of total instead of actual values.
-         */
-        computeRatio?: boolean;
-    };
+    measureDefinition: IMeasureDefinitionBody;
 }
 
 /**
@@ -126,23 +156,46 @@ export interface IArithmeticMeasureDefinition {
 }
 
 /**
- * Defines Period-Over-Period measure (or Time-over-Time). This is a derived measure that calculates value
- * of a measure referenced by measureIdentifier in previous period. The period to calculate value for will be
- * determined from the specified date data set's attribute - popAttribute.
+ * Object defining the {@link IPoPMeasureDefinition} object body.
  *
+ * @public
+ */
+export interface IPoPMeasureDefinitionBody {
+    measureIdentifier: Identifier;
+    popAttribute: ObjRef;
+}
+
+/**
+ * Defines Period-Over-Period measure (or Time-over-Time).
+ *
+ * @remarks
+ * This is a derived measure that calculates value of a measure referenced by measureIdentifier in previous period.
+ * The period to calculate value for will be determined from the specified date data set's attribute - popAttribute.
+ *
+ * @privateRemarks
  * TODO: enhance, add examples
  * @public
  */
 export interface IPoPMeasureDefinition {
-    popMeasureDefinition: {
-        measureIdentifier: Identifier;
-        popAttribute: ObjRef;
-    };
+    popMeasureDefinition: IPoPMeasureDefinitionBody;
+}
+
+/**
+ * Object defining the {@link IPreviousPeriodMeasureDefinition} object body.
+ *
+ * @public
+ */
+export interface IPreviousPeriodMeasureDefinitionBody {
+    measureIdentifier: Identifier;
+    dateDataSets: IPreviousPeriodDateDataSet[];
 }
 
 /**
  * This is a derived measure that calculates value of a measure referenced by measureIdentifier for previous
- * period. Period is determined from filter setting of the specified date data sets. The time period for
+ * period.
+ *
+ * @remarks
+ * Period is determined from filter setting of the specified date data sets. The time period for
  * this derived measure will be shifted forward or backward according to the specified periodAgo number
  *
  * TODO: enhance, add examples
@@ -150,14 +203,14 @@ export interface IPoPMeasureDefinition {
  * @public
  */
 export interface IPreviousPeriodMeasureDefinition {
-    previousPeriodMeasure: {
-        measureIdentifier: Identifier;
-        dateDataSets: IPreviousPeriodDateDataSet[];
-    };
+    previousPeriodMeasure: IPreviousPeriodMeasureDefinitionBody;
 }
 
 /**
- * This is used to specify previous period. Previous period is current time period shifted forward or backward
+ * This is used to specify previous period.
+ *
+ * @remarks
+ * Previous period is current time period shifted forward or backward
  * one or more times. The current time period is calculated from filter setting for the provided date data set.
  *
  * @public
@@ -222,6 +275,8 @@ export function isSimpleMeasure(obj: unknown): obj is IMeasure<IMeasureDefinitio
 
 /**
  * Type guard for checking whether object is an adhoc measure.
+ *
+ * @remarks
  * An adhoc measure is a measure having an aggregation, one or some filters or a computeRatio of true
  *
  * @public
@@ -320,7 +375,10 @@ export function measureLocalId(measureOrLocalId: MeasureOrLocalId): string {
 }
 
 /**
- * Gets URI of persistent measure; undefined is returned if the measure definition is not for a persistent
+ * Gets URI of persistent measure.
+ *
+ * @remarks
+ * Undefined is returned if the measure definition is not for a persistent
  * measure (arithmetic or derived). Undefined is returned if the measure is not specified by URI.
  *
  * @param measure - measure to get URI for
@@ -340,7 +398,10 @@ export function measureUri(measure: IMeasure): string | undefined {
 }
 
 /**
- * Gets identifier of persistent measure; undefined is returned if the measure definition is not for a persistent
+ * Gets identifier of persistent measure.
+ *
+ * @remarks
+ * Undefined is returned if the measure definition is not for a persistent
  * measure (arithmetic or derived). Undefined is returned if the measure is not specified by identifier.
  *
  * @param measure - measure to get URI for
@@ -411,6 +472,8 @@ export function measureMasterIdentifier(
 ): string;
 /**
  * Gets identifier of master measure for the provided derived measure (PoP measure or Previous Period measure).
+ *
+ * @remarks
  * If the measure is not derived or is derived and does not specify master measure id, then undefined is returned.
  *
  * @param measure - derived measure
@@ -469,8 +532,10 @@ export function measureArithmeticOperator(
     measure: IMeasure<IArithmeticMeasureDefinition>,
 ): ArithmeticMeasureOperator;
 /**
- * Gets arithmetic operator from the provided measure. If the measure is not an arithmetic measure, then
- * undefined is returned.
+ * Gets arithmetic operator from the provided measure.
+ *
+ * @remarks
+ * If the measure is not an arithmetic measure, then undefined is returned.
  *
  * @param measure - measure to get arithmetic operator from
  * @returns arithmetic operator of the measure, or undefined if measure is not arithmetic
@@ -540,7 +605,10 @@ export function isMeasureFormatInPercent(measureOrFormat: IMeasure | string): bo
 }
 
 /**
- * Gets measure aggregation from a measure. Measure aggregation is applicable and optional only for
+ * Gets measure aggregation from a measure.
+ *
+ * @remarks
+ * Measure aggregation is applicable and optional only for
  * simple measures. Passing any other measure to this function guarantees that undefined will be returned
  *
  * @param measure - measure to get the aggregation of
@@ -583,8 +651,10 @@ export function measureFilters(measure: IMeasure): IMeasureFilter[] | undefined 
  */
 export function measurePopAttribute(measure: IMeasure<IPoPMeasureDefinition>): ObjRef;
 /**
- * Gets attribute used for period-over-period measure calculation. If the input measure is not a period over
- * period measure, then undefined will be returned.
+ * Gets attribute used for period-over-period measure calculation.
+ *
+ * @remarks
+ * If the input measure is not a period over period measure, then undefined will be returned.
  *
  * @param measure - measure to get the popAttribute of
  * @returns measure popAttribute, undefined if input is not a PoP measure
@@ -612,8 +682,10 @@ export function measurePreviousPeriodDateDataSets(
     measure: IMeasure<IPreviousPeriodMeasureDefinition>,
 ): IPreviousPeriodDateDataSet[];
 /**
- * Gets date data sets used in previous-period measure. If the input is not a previous period measure, then undefined
- * will be returned.
+ * Gets date data sets used in previous-period measure.
+ *
+ * @remarks
+ * If the input is not a previous period measure, then undefined will be returned.
  *
  * @param measure - measure to get the previous period date data sets of
  * @returns measure previous period date data sets if specified, undefined otherwise

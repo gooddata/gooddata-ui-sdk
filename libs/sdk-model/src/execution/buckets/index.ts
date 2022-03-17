@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import {
     anyAttribute,
@@ -35,9 +35,11 @@ import stringify from "json-stable-stringify";
 export type IAttributeOrMeasure = IMeasure | IAttribute;
 
 /**
- * Bucket is a logical, user-defined grouping of attributes, measures and totals. Buckets can be used to create
- * a new execution and to derive the result dimensionality. In the context of an existing execution, they serve
- * as metadata about the execution.
+ * Bucket is a logical, user-defined grouping of attributes, measures and totals.
+ *
+ * @remarks
+ * Buckets can be used to create a new execution and to derive the result dimensionality.
+ * In the context of an existing execution, they serve as metadata about the execution.
  *
  * @public
  */
@@ -233,6 +235,7 @@ export function bucketIsEmpty(bucket: IBucket): boolean {
 /**
  * Gets the index of the first attribute matching the provided predicate from the bucket.
  *
+ * @remarks
  * If no predicate is provided, then the function defaults to anyAttribute predicate - meaning first found attribute
  * will be returned.
  *
@@ -261,6 +264,7 @@ export function bucketAttributeIndex(
 /**
  * Gets first attribute matching the provided predicate from the bucket.
  *
+ * @remarks
  * If no predicate is provided, then the function defaults to anyAttribute predicate - meaning first found attribute
  * will be returned.
  *
@@ -283,6 +287,7 @@ export function bucketAttribute(
 /**
  * Gets all attributes matching the provided predicate from the bucket.
  *
+ * @remarks
  * If no predicate is provided, then the function defaults to anyAttribute predicate - meaning all attributes
  * from the bucket will be returned.
  *
@@ -308,6 +313,7 @@ export function bucketAttributes(
 /**
  * Gets the index of the first measure matching the provided predicate from the bucket.
  *
+ * @remarks
  * If no predicate is provided, then the function defaults to anyMeasure predicate - meaning first found measure
  * will be returned.
  *
@@ -333,6 +339,7 @@ export function bucketMeasureIndex(bucket: IBucket, idOrFun: string | MeasurePre
 /**
  * Gets first measure matching the provided predicate from the bucket.
  *
+ * @remarks
  * If no predicate is provided, then the function defaults to anyMeasure predicate - meaning first found measure
  * will be returned.
  *
@@ -355,6 +362,7 @@ export function bucketMeasure(
 /**
  * Gets all measures matching the provided predicate from the bucket.
  *
+ * @remarks
  * If no predicate is provided, then the function defaults to anyMeasure predicate - meaning all measures from
  * the bucket will be returned.
  *
@@ -405,8 +413,10 @@ export function bucketTotals(bucket: IBucket): ITotal[] {
 }
 
 /**
- * Gets a new bucket that 'inherits' all data from the provided bucket but has different totals. New
- * totals will be used in the new bucket as-is, no merging with existing totals.
+ * Gets a new bucket that 'inherits' all data from the provided bucket but has different totals.
+ *
+ * @remarks
+ * New totals will be used in the new bucket as-is, no merging with existing totals.
  *
  * @param bucket - bucket to work with
  * @param totals - new totals to apply
@@ -445,8 +455,10 @@ export enum ComputeRatioRule {
 }
 
 /**
- * Applies compute ratio rule to all measures in a list - this MAY be done to sanitize measure definitions
- * so that the computed results make sense when visualized in a chart.
+ * Applies compute ratio rule to all measures in a list.
+ *
+ * @remarks
+ * This MAY be done to sanitize measure definitions so that the computed results make sense when visualized in a chart.
  *
  * The function will return a new list with updated measures according to the specified rule; see {@link ComputeRatioRule}.
  *
@@ -513,6 +525,8 @@ export type BucketItemReducer = (
 
 /**
  * Creates a new bucket by modifying items of the provided input bucket.
+ *
+ * @remarks
  * Each item from the input bucket will be dispatched to the modification function
  * and the result of the modification will be included in the new bucket.
  *
@@ -538,6 +552,8 @@ export function bucketModifyItems(
 
 /**
  * Creates a new bucket by modifying items of the provided input bucket.
+ *
+ * @remarks
  * Array of item from the input bucket will be dispatched to the reducer function
  * and the result of the modification will be included in the new bucket.
  *

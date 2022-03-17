@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import isEmpty from "lodash/isEmpty";
 import invariant from "ts-invariant";
@@ -21,6 +21,7 @@ export type Uri = string;
 /**
  * Model object reference using object's URI.
  *
+ * @remarks
  * NOTE: using URI references is discouraged. URIs are workspace-specific and thus any application
  * which references model objects using their URI will not work on multiple workspaces.
  *
@@ -82,8 +83,10 @@ export type IdentifierRef = {
 };
 
 /**
- * Model object reference using object's local identifier. This type of referencing can be used for objects
- * that are defined together within the same scope - such as within same execution.
+ * Model object reference using object's local identifier.
+ *
+ * @remarks
+ * This type of referencing can be used for objects that are defined together within the same scope - such as within same execution.
  *
  * @public
  */
@@ -94,6 +97,7 @@ export type LocalIdRef = {
 /**
  * Model object reference.
  *
+ * @remarks
  * Note: you should avoid manually creating and maintaining object references. The recommended practice is to
  * treat your logical data model as code; you can achieve this by using the catalog-exporter tool which can
  * create code representation of the various LDM entities. You can then use this code in conjuction with the
@@ -170,8 +174,10 @@ export function objRefToString(objRef: ObjRef | ObjRefInScope): string {
 }
 
 /**
- * Serializes an instance of ObjRef to a string representation. This is suitable when ObjRef needs to be used
- * as a key in dictionaries/objects.
+ * Serializes an instance of ObjRef to a string representation.
+ *
+ * @remarks
+ * This is suitable when ObjRef needs to be used as a key in dictionaries/objects.
  *
  * Note: there is no loss of information and the serialized value is guaranteed to be stable, meaning same ObjRef
  * will always serialize the same.
@@ -185,8 +191,10 @@ export function serializeObjRef(objRef: ObjRef | ObjRefInScope): string {
 }
 
 /**
- * Deserializes an ObjRef from its pure string representation. The function will throw an error if the input
- * is not a valid, serialized ObjRef.
+ * Deserializes an ObjRef from its pure string representation.
+ *
+ * @remarks
+ * The function will throw an error if the input is not a valid, serialized ObjRef.
  *
  * @param val - string representation of ObjRef
  * @remarks see {@link serializeObjRef}
