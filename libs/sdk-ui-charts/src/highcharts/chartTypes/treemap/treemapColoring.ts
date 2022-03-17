@@ -1,9 +1,9 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import { MeasureColorStrategy } from "../_chartColoring/measure";
 import { IColorPalette } from "@gooddata/sdk-model";
 import { IColorMapping } from "../../../interfaces";
 import { IColorAssignment, DataViewFacade } from "@gooddata/sdk-ui";
-import { getAtributeColorAssignment, ICreateColorAssignmentReturnValue } from "@gooddata/sdk-ui-vis-commons";
+import { getAttributeColorAssignment, ICreateColorAssignmentReturnValue } from "@gooddata/sdk-ui-vis-commons";
 
 export class TreemapColorStrategy extends MeasureColorStrategy {
     protected createColorAssignment(
@@ -17,7 +17,7 @@ export class TreemapColorStrategy extends MeasureColorStrategy {
     ): ICreateColorAssignmentReturnValue {
         let colorAssignment: IColorAssignment[];
         if (viewByAttribute) {
-            colorAssignment = getAtributeColorAssignment(viewByAttribute, colorPalette, colorMapping, dv);
+            colorAssignment = getAttributeColorAssignment(viewByAttribute, colorPalette, colorMapping, dv);
         } else {
             const result = super.createColorAssignment(
                 colorPalette,

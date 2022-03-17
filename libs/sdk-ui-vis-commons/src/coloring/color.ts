@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { IColor, IColorPalette, IColorPaletteItem, IRgbColorValue } from "@gooddata/sdk-model";
 import { isAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import {
@@ -6,7 +6,6 @@ import {
     DefaultColorPalette,
     getMappingHeaderLocalIdentifier,
     IHeaderPredicate,
-    IHeaderPredicateContext,
     IMappingHeader,
 } from "@gooddata/sdk-ui";
 import { IColorMapping } from "./types";
@@ -192,10 +191,10 @@ export function parseRGBString(color: string): IRgbColorValue | null {
  * -  otherwise (attr or measure descriptor) expecting local identifier match
  *
  * @param testValue - right hand side to test against
- * @internal
+ * @public
  */
 export function getColorMappingPredicate(testValue: string): IHeaderPredicate {
-    return (header: IMappingHeader, _context: IHeaderPredicateContext): boolean => {
+    return (header) => {
         if (isResultAttributeHeader(header)) {
             return testValue ? testValue === header.attributeHeaderItem.uri : false;
         }
