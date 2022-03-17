@@ -39,7 +39,7 @@ export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
  *
  * @public
  */
-export interface IColumn {
+export interface IDataColumnBody {
     name: string;
     type: DataColumnType;
     skip?: boolean;
@@ -53,7 +53,7 @@ export interface IColumn {
  * @public
  */
 export interface IDataColumn {
-    column: IColumn;
+    column: IDataColumnBody;
 }
 
 /**
@@ -72,7 +72,7 @@ export interface IDataHeader {
  *
  * @public
  */
-export interface IDatasetOject {
+export interface IDatasetBody {
     name: string;
     dataHeader: IDataHeader;
     datasetId: string;
@@ -90,14 +90,5 @@ export interface IDatasetOject {
  * @public
  */
 export interface IDataset {
-    dataset: {
-        name: string;
-        dataHeader: IDataHeader;
-        datasetId: string;
-        loadedRowCount: number;
-        datasetLoadStatus: DatasetLoadStatus;
-        firstSuccessfulUpdate?: IDatasetLoadInfo;
-        lastSuccessfulUpdate?: IDatasetLoadInfo;
-        lastUpdate?: IDatasetLoadInfo;
-    };
+    dataset: IDatasetBody;
 }

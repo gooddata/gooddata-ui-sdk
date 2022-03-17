@@ -312,7 +312,7 @@ export interface IThemeTable {
  *
  * @beta
  */
-export interface IButtonCustomizableUIProperties {
+export interface IThemeButton {
     /**
      * Radius of the button border in px
      */
@@ -334,7 +334,7 @@ export interface IButtonCustomizableUIProperties {
  *
  * @beta
  */
-export interface ITooltipCustomizableUIProperties {
+export interface IThemeTooltip {
     /**
      * Background color of the tooltip
      */
@@ -351,7 +351,7 @@ export interface ITooltipCustomizableUIProperties {
  *
  * @beta
  */
-export interface IModalTitleCustomizableProperties {
+export interface IThemeModalTitle {
     /**
      * Foreground color of the tooltip
      */
@@ -368,11 +368,11 @@ export interface IModalTitleCustomizableProperties {
  *
  * @beta
  */
-export interface IModalCustomizableProperties {
+export interface IThemeModal {
     /**
      * Title of the modal
      */
-    title?: IModalTitleCustomizableProperties;
+    title?: IThemeModalTitle;
 
     /**
      * Background color of the modal surroundings
@@ -405,7 +405,7 @@ export interface IModalCustomizableProperties {
  *
  * @beta
  */
-export interface IDashboardTitleCustomizableProperties {
+export interface IThemeDashboardTitle {
     /**
      * Foreground color of the title
      */
@@ -427,7 +427,7 @@ export interface IDashboardTitleCustomizableProperties {
  *
  * @beta
  */
-export interface IDashboardSectionTitleCustomizableProperties {
+export interface IThemeDashboardSectionTitle {
     /**
      * Foreground color of the section
      */
@@ -444,7 +444,7 @@ export interface IDashboardSectionTitleCustomizableProperties {
  *
  * @beta
  */
-export interface IDashboardSectionDescriptionCustomizableProperties {
+export interface IThemeDashboardSectionDescription {
     /**
      * Foreground color of the section
      */
@@ -456,17 +456,17 @@ export interface IDashboardSectionDescriptionCustomizableProperties {
  *
  * @beta
  */
-export interface IDashboardSectionCustomizableProperties {
+export interface IThemeDashboardSection {
     /**
      * Section title properties
      */
 
-    title?: IDashboardSectionTitleCustomizableProperties;
+    title?: IThemeDashboardSectionTitle;
     /**
      * Section description properties
      */
 
-    description?: IDashboardSectionDescriptionCustomizableProperties;
+    description?: IThemeDashboardSectionDescription;
 }
 
 /**
@@ -474,7 +474,7 @@ export interface IDashboardSectionCustomizableProperties {
  *
  * @beta
  */
-export interface IDashboardFilterBarFilterButtonProperties {
+export interface IThemeDashboardFilterBarButton {
     /**
      * Background color of the filter bar button
      */
@@ -486,7 +486,7 @@ export interface IDashboardFilterBarFilterButtonProperties {
  *
  * @beta
  */
-export interface IDashboardFilterBarCustomizableProperties {
+export interface IThemeDashboardFilterBar {
     /**
      * Background color of the filter bar
      */
@@ -500,7 +500,7 @@ export interface IDashboardFilterBarCustomizableProperties {
     /**
      * Filter bar button specific properties
      */
-    filterButton?: IDashboardFilterBarFilterButtonProperties;
+    filterButton?: IThemeDashboardFilterBarButton;
 }
 
 /**
@@ -508,7 +508,7 @@ export interface IDashboardFilterBarCustomizableProperties {
  *
  * @beta
  */
-export interface IDashboardContentWidgetCustomizableProperties {
+export interface IThemeDashboardContentWidget {
     /**
      * Widget title color and alignment
      */
@@ -546,7 +546,7 @@ export interface IDashboardContentWidgetCustomizableProperties {
  *
  * @beta
  */
-export interface IDashboardContentKpiCustomizableProperties {
+export interface IThemeDashboardContentKpi {
     /**
      * Kpi widget title color and alignment
      */
@@ -589,7 +589,7 @@ export interface IDashboardContentKpiCustomizableProperties {
  *
  * @beta
  */
-export interface IDashboardContentCustomizableProperties {
+export interface IThemeDashboardContent {
     /**
      * Background color of the dashboard content
      */
@@ -599,21 +599,21 @@ export interface IDashboardContentCustomizableProperties {
      * Widget specific properties
      */
 
-    widget?: IDashboardContentWidgetCustomizableProperties;
+    widget?: IThemeDashboardContentWidget;
 
     /**
      * Kpi widget specific properties
      */
 
-    kpiWidget?: IDashboardContentKpiCustomizableProperties;
+    kpiWidget?: IThemeDashboardContentKpi;
 }
 
 /**
- * Navigation header specific properties.
+ * Dashboard navigation title specific properties.
  *
  * @beta
  */
-export interface INavigationTitleCustomizableProperties {
+export interface IThemeDashboardNavigationTitle {
     /**
      * Header foreground color
      */
@@ -625,7 +625,7 @@ export interface INavigationTitleCustomizableProperties {
  *
  * @beta
  */
-export interface INavigationItemCustomizableProperties {
+export interface IThemeDashboardNavigationItem {
     /**
      * Item foreground color
      */
@@ -652,7 +652,7 @@ export interface INavigationItemCustomizableProperties {
  *
  * @beta
  */
-export interface INavigationCustomizableProperties {
+export interface IThemeDashboardNavigation {
     /**
      * Navigation background color
      */
@@ -666,12 +666,12 @@ export interface INavigationCustomizableProperties {
     /**
      * Navigation header specific properties
      */
-    title?: INavigationTitleCustomizableProperties;
+    title?: IThemeDashboardNavigationTitle;
 
     /**
      * Navigation items (dashboards) specific properties
      */
-    item?: INavigationItemCustomizableProperties;
+    item?: IThemeDashboardNavigationItem;
 }
 
 /**
@@ -679,7 +679,7 @@ export interface INavigationCustomizableProperties {
  *
  * @beta
  */
-export interface IEditPanelCustomizableProperties {
+export interface IThemeDashboardEditPanel {
     /**
      * Edit panel background color
      */
@@ -691,40 +691,40 @@ export interface IEditPanelCustomizableProperties {
  *
  * @beta
  */
-export interface IDashboardCustomizableProperties {
+export interface IThemeDashboard {
     /**
      * Title specific properties
      */
 
-    title?: IDashboardTitleCustomizableProperties;
+    title?: IThemeDashboardTitle;
 
     /**
      * Section specific properties
      */
 
-    section?: IDashboardSectionCustomizableProperties;
+    section?: IThemeDashboardSection;
 
     /**
      * Filter bar specific properties
      */
 
-    filterBar?: IDashboardFilterBarCustomizableProperties;
+    filterBar?: IThemeDashboardFilterBar;
 
     /**
      * Dashboard content specific properties
      */
 
-    content?: IDashboardContentCustomizableProperties;
+    content?: IThemeDashboardContent;
 
     /**
      * Navigation specific properties (left panel)
      */
-    navigation?: INavigationCustomizableProperties;
+    navigation?: IThemeDashboardNavigation;
 
     /**
      * Edit panel specific properties
      */
-    editPanel?: IEditPanelCustomizableProperties;
+    editPanel?: IThemeDashboardEditPanel;
 }
 
 /**
@@ -732,7 +732,7 @@ export interface IDashboardCustomizableProperties {
  *
  * @beta
  */
-export interface IAnalyticalDesignerTitleCustomizableProperties {
+export interface IThemeAnalyticalDesignerTitle {
     /**
      * Foreground color of the title
      */
@@ -744,12 +744,12 @@ export interface IAnalyticalDesignerTitleCustomizableProperties {
  *
  * @beta
  */
-export interface IAnalyticalDesignerCustomizableProperties {
+export interface IThemeAnalyticalDesigner {
     /**
      * Title specific properties
      */
 
-    title?: IAnalyticalDesignerTitleCustomizableProperties;
+    title?: IThemeAnalyticalDesignerTitle;
 }
 
 /**
@@ -779,17 +779,17 @@ export interface ITheme {
     /**
      * Button customizable UI properties
      */
-    button?: IButtonCustomizableUIProperties;
+    button?: IThemeButton;
 
     /**
      * Tooltip customizable UI properties
      */
-    tooltip?: ITooltipCustomizableUIProperties;
+    tooltip?: IThemeTooltip;
 
     /**
      * Modal customizable UI properties
      */
-    modal?: IModalCustomizableProperties;
+    modal?: IThemeModal;
 
     /**
      * Global Kpi/Headline customizable UI properties
@@ -809,10 +809,10 @@ export interface ITheme {
     /**
      * KPI dashboards specific properties
      */
-    dashboards?: IDashboardCustomizableProperties;
+    dashboards?: IThemeDashboard;
 
     /**
      * Analytical designer specific properties
      */
-    analyticalDesigner?: IAnalyticalDesignerCustomizableProperties;
+    analyticalDesigner?: IThemeAnalyticalDesigner;
 }

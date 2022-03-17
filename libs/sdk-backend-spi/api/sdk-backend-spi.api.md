@@ -208,16 +208,6 @@ export interface IAnalyticalBackendConfig {
     readonly hostname?: string;
 }
 
-// @beta
-export interface IAnalyticalDesignerCustomizableProperties {
-    title?: IAnalyticalDesignerTitleCustomizableProperties;
-}
-
-// @beta
-export interface IAnalyticalDesignerTitleCustomizableProperties {
-    color?: ThemeColor;
-}
-
 // @alpha
 export interface IAnalyticalWidget extends IBaseWidget, IWidgetDescription, IFilterableWidget, IDrillableWidget {
     // (undocumented)
@@ -367,13 +357,6 @@ export interface IBracketExpressionToken {
     value: string;
 }
 
-// @beta
-export interface IButtonCustomizableUIProperties {
-    borderRadius?: string;
-    dropShadow?: boolean;
-    textCapitalization?: boolean;
-}
-
 // @public
 export interface ICatalogAttribute extends IGroupableCatalogItemBase {
     attribute: IAttributeMetadataObject;
@@ -420,18 +403,6 @@ export interface ICatalogItemBase {
 export interface ICatalogMeasure extends IGroupableCatalogItemBase {
     measure: IMeasureMetadataObject;
     type: "measure";
-}
-
-// @public
-export interface IColumn {
-    // (undocumented)
-    format?: string;
-    // (undocumented)
-    name: string;
-    // (undocumented)
-    skip?: boolean;
-    // (undocumented)
-    type: DataColumnType;
 }
 
 // @public
@@ -490,44 +461,6 @@ export interface IDashboardBase {
     readonly title: string;
 }
 
-// @beta
-export interface IDashboardContentCustomizableProperties {
-    backgroundColor?: ThemeColor;
-    kpiWidget?: IDashboardContentKpiCustomizableProperties;
-    widget?: IDashboardContentWidgetCustomizableProperties;
-}
-
-// @beta
-export interface IDashboardContentKpiCustomizableProperties {
-    backgroundColor?: ThemeColor;
-    borderColor?: ThemeColor;
-    borderRadius?: string;
-    borderWidth?: string;
-    dropShadow?: boolean;
-    kpi?: IThemeKpi;
-    title?: IThemeWidgetTitle;
-}
-
-// @beta
-export interface IDashboardContentWidgetCustomizableProperties {
-    backgroundColor?: ThemeColor;
-    borderColor?: ThemeColor;
-    borderRadius?: string;
-    borderWidth?: string;
-    dropShadow?: boolean;
-    title?: IThemeWidgetTitle;
-}
-
-// @beta
-export interface IDashboardCustomizableProperties {
-    content?: IDashboardContentCustomizableProperties;
-    editPanel?: IEditPanelCustomizableProperties;
-    filterBar?: IDashboardFilterBarCustomizableProperties;
-    navigation?: INavigationCustomizableProperties;
-    section?: IDashboardSectionCustomizableProperties;
-    title?: IDashboardTitleCustomizableProperties;
-}
-
 // @alpha
 export interface IDashboardDateFilter {
     // (undocumented)
@@ -570,18 +503,6 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashb
     readonly plugins?: IDashboardPluginLink[];
     // (undocumented)
     readonly type: "IDashboard";
-}
-
-// @beta
-export interface IDashboardFilterBarCustomizableProperties {
-    backgroundColor?: ThemeColor;
-    borderColor?: ThemeColor;
-    filterButton?: IDashboardFilterBarFilterButtonProperties;
-}
-
-// @beta
-export interface IDashboardFilterBarFilterButtonProperties {
-    backgroundColor?: ThemeColor;
 }
 
 // @alpha
@@ -675,30 +596,6 @@ export interface IDashboardReferences {
     plugins: IDashboardPlugin[];
 }
 
-// @beta
-export interface IDashboardSectionCustomizableProperties {
-    description?: IDashboardSectionDescriptionCustomizableProperties;
-    title?: IDashboardSectionTitleCustomizableProperties;
-}
-
-// @beta
-export interface IDashboardSectionDescriptionCustomizableProperties {
-    color?: ThemeColor;
-}
-
-// @beta
-export interface IDashboardSectionTitleCustomizableProperties {
-    color?: ThemeColor;
-    lineColor?: ThemeColor;
-}
-
-// @beta
-export interface IDashboardTitleCustomizableProperties {
-    backgroundColor?: ThemeColor;
-    borderColor?: ThemeColor;
-    color?: ThemeColor;
-}
-
 // @alpha
 export type IDashboardWidget = IWidget | IWidgetDefinition | IDashboardLayout<IDashboardWidget>;
 
@@ -713,7 +610,19 @@ export interface IDashboardWithReferences {
 // @public
 export interface IDataColumn {
     // (undocumented)
-    column: IColumn;
+    column: IDataColumnBody;
+}
+
+// @public
+export interface IDataColumnBody {
+    // (undocumented)
+    format?: string;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    skip?: boolean;
+    // (undocumented)
+    type: DataColumnType;
 }
 
 // @public
@@ -727,16 +636,27 @@ export interface IDataHeader {
 // @public
 export interface IDataset {
     // (undocumented)
-    dataset: {
-        name: string;
-        dataHeader: IDataHeader;
-        datasetId: string;
-        loadedRowCount: number;
-        datasetLoadStatus: DatasetLoadStatus;
-        firstSuccessfulUpdate?: IDatasetLoadInfo;
-        lastSuccessfulUpdate?: IDatasetLoadInfo;
-        lastUpdate?: IDatasetLoadInfo;
-    };
+    dataset: IDatasetBody;
+}
+
+// @public
+export interface IDatasetBody {
+    // (undocumented)
+    dataHeader: IDataHeader;
+    // (undocumented)
+    datasetId: string;
+    // (undocumented)
+    datasetLoadStatus: DatasetLoadStatus;
+    // (undocumented)
+    firstSuccessfulUpdate?: IDatasetLoadInfo;
+    // (undocumented)
+    lastSuccessfulUpdate?: IDatasetLoadInfo;
+    // (undocumented)
+    lastUpdate?: IDatasetLoadInfo;
+    // (undocumented)
+    loadedRowCount: number;
+    // (undocumented)
+    name: string;
 }
 
 // @public
@@ -893,11 +813,6 @@ export interface IDrillToLegacyDashboard extends IDrill {
     target: ObjRef;
     transition: "in-place";
     type: "drillToLegacyDashboard";
-}
-
-// @beta
-export interface IEditPanelCustomizableProperties {
-    backgroundColor?: ThemeColor;
 }
 
 // @public
@@ -1240,43 +1155,6 @@ export interface IMetadataObjectIdentity {
     id: string;
     ref: ObjRef;
     uri: string;
-}
-
-// @beta
-export interface IModalCustomizableProperties {
-    borderColor?: ThemeColor;
-    borderRadius?: string;
-    borderWidth?: string;
-    dropShadow?: boolean;
-    outsideBackgroundColor?: ThemeColor;
-    title?: IModalTitleCustomizableProperties;
-}
-
-// @beta
-export interface IModalTitleCustomizableProperties {
-    color?: ThemeColor;
-    lineColor?: ThemeColor;
-}
-
-// @beta
-export interface INavigationCustomizableProperties {
-    backgroundColor?: ThemeColor;
-    borderColor?: ThemeColor;
-    item?: INavigationItemCustomizableProperties;
-    title?: INavigationTitleCustomizableProperties;
-}
-
-// @beta
-export interface INavigationItemCustomizableProperties {
-    color?: ThemeColor;
-    hoverColor?: ThemeColor;
-    selectedBackgroundColor?: ThemeColor;
-    selectedColor?: ThemeColor;
-}
-
-// @beta
-export interface INavigationTitleCustomizableProperties {
-    color?: ThemeColor;
 }
 
 // @alpha
@@ -1737,16 +1615,33 @@ export interface ITextExpressionToken {
 
 // @beta
 export interface ITheme {
-    analyticalDesigner?: IAnalyticalDesignerCustomizableProperties;
-    button?: IButtonCustomizableUIProperties;
+    analyticalDesigner?: IThemeAnalyticalDesigner;
+    button?: IThemeButton;
     chart?: IThemeChart;
-    dashboards?: IDashboardCustomizableProperties;
+    dashboards?: IThemeDashboard;
     kpi?: IThemeKpi;
-    modal?: IModalCustomizableProperties;
+    modal?: IThemeModal;
     palette?: IThemePalette;
     table?: IThemeTable;
-    tooltip?: ITooltipCustomizableUIProperties;
+    tooltip?: IThemeTooltip;
     typography?: IThemeTypography;
+}
+
+// @beta
+export interface IThemeAnalyticalDesigner {
+    title?: IThemeAnalyticalDesignerTitle;
+}
+
+// @beta
+export interface IThemeAnalyticalDesignerTitle {
+    color?: ThemeColor;
+}
+
+// @beta
+export interface IThemeButton {
+    borderRadius?: string;
+    dropShadow?: boolean;
+    textCapitalization?: boolean;
 }
 
 // @beta
@@ -1796,6 +1691,106 @@ export interface IThemeComplementaryPalette {
 }
 
 // @beta
+export interface IThemeDashboard {
+    content?: IThemeDashboardContent;
+    editPanel?: IThemeDashboardEditPanel;
+    filterBar?: IThemeDashboardFilterBar;
+    navigation?: IThemeDashboardNavigation;
+    section?: IThemeDashboardSection;
+    title?: IThemeDashboardTitle;
+}
+
+// @beta
+export interface IThemeDashboardContent {
+    backgroundColor?: ThemeColor;
+    kpiWidget?: IThemeDashboardContentKpi;
+    widget?: IThemeDashboardContentWidget;
+}
+
+// @beta
+export interface IThemeDashboardContentKpi {
+    backgroundColor?: ThemeColor;
+    borderColor?: ThemeColor;
+    borderRadius?: string;
+    borderWidth?: string;
+    dropShadow?: boolean;
+    kpi?: IThemeKpi;
+    title?: IThemeWidgetTitle;
+}
+
+// @beta
+export interface IThemeDashboardContentWidget {
+    backgroundColor?: ThemeColor;
+    borderColor?: ThemeColor;
+    borderRadius?: string;
+    borderWidth?: string;
+    dropShadow?: boolean;
+    title?: IThemeWidgetTitle;
+}
+
+// @beta
+export interface IThemeDashboardEditPanel {
+    backgroundColor?: ThemeColor;
+}
+
+// @beta
+export interface IThemeDashboardFilterBar {
+    backgroundColor?: ThemeColor;
+    borderColor?: ThemeColor;
+    filterButton?: IThemeDashboardFilterBarButton;
+}
+
+// @beta
+export interface IThemeDashboardFilterBarButton {
+    backgroundColor?: ThemeColor;
+}
+
+// @beta
+export interface IThemeDashboardNavigation {
+    backgroundColor?: ThemeColor;
+    borderColor?: ThemeColor;
+    item?: IThemeDashboardNavigationItem;
+    title?: IThemeDashboardNavigationTitle;
+}
+
+// @beta
+export interface IThemeDashboardNavigationItem {
+    color?: ThemeColor;
+    hoverColor?: ThemeColor;
+    selectedBackgroundColor?: ThemeColor;
+    selectedColor?: ThemeColor;
+}
+
+// @beta
+export interface IThemeDashboardNavigationTitle {
+    color?: ThemeColor;
+}
+
+// @beta
+export interface IThemeDashboardSection {
+    description?: IThemeDashboardSectionDescription;
+    title?: IThemeDashboardSectionTitle;
+}
+
+// @beta
+export interface IThemeDashboardSectionDescription {
+    color?: ThemeColor;
+}
+
+// @beta
+export interface IThemeDashboardSectionTitle {
+    color?: ThemeColor;
+    lineColor?: ThemeColor;
+}
+
+// @beta
+export interface IThemeDashboardTitle {
+    backgroundColor?: ThemeColor;
+    borderColor?: ThemeColor;
+    color?: ThemeColor;
+}
+
+// @beta
 export interface IThemeKpi {
     primaryMeasureColor?: ThemeColor;
     secondaryInfoColor?: ThemeColor;
@@ -1807,6 +1802,22 @@ export interface IThemeKpiValue {
     negativeColor?: ThemeColor;
     positiveColor?: ThemeColor;
     textAlign?: string;
+}
+
+// @beta
+export interface IThemeModal {
+    borderColor?: ThemeColor;
+    borderRadius?: string;
+    borderWidth?: string;
+    dropShadow?: boolean;
+    outsideBackgroundColor?: ThemeColor;
+    title?: IThemeModalTitle;
+}
+
+// @beta
+export interface IThemeModalTitle {
+    color?: ThemeColor;
+    lineColor?: ThemeColor;
 }
 
 // @beta
@@ -1835,6 +1846,12 @@ export interface IThemeTable {
 }
 
 // @beta
+export interface IThemeTooltip {
+    backgroundColor?: ThemeColor;
+    color?: ThemeColor;
+}
+
+// @beta
 export interface IThemeTypography {
     font?: ThemeFontUri;
     fontBold?: ThemeFontUri;
@@ -1844,12 +1861,6 @@ export interface IThemeTypography {
 export interface IThemeWidgetTitle {
     color?: ThemeColor;
     textAlign?: string;
-}
-
-// @beta
-export interface ITooltipCustomizableUIProperties {
-    backgroundColor?: ThemeColor;
-    color?: ThemeColor;
 }
 
 // @public

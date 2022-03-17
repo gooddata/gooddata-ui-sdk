@@ -116,9 +116,8 @@ export interface IBackendCapabilities {
      * Indicates whether backend's identifiers are scoped to a type.
      *
      * @remarks
-     * e.g. they are unique only on type level. When
-     * working with backend that has type scoped identifiers it is essential to provide both `identifier` and `type` when
-     * using `IdentifierRef`.
+     * They are unique only on type level. When working with backend that has type scoped identifiers it is essential to provide
+     * both `identifier` and `type` when using `IdentifierRef`.
      *
      * If not specified then assume identifiers do not require `type` information in order to exactly identify an object.
      */
