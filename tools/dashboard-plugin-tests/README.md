@@ -44,9 +44,10 @@ Before running or writing tests, ensure that you set your username and password 
 
 In `./plugins` folder, use plugin toolkit cli to create a new plugin - `npx @gooddata/plugin-toolkit dashboard-plugin init my-new-test-plugin` or `npx @gooddata/plugin-toolkit@{REPLACE_WITH_SPECIFIC_SDK_VERSION} dashboard-plugin init my-new-test-plugin` to add a new plugin with particular sdk version.
 
-### 1/ Prepare it for the tests
+### 2/ Prepare it for the tests
 
-Import and add `withDashboardPluginTestEventHandling(handlers)` to register function of the plugin to propagate events from the plugin to the tests.
+Working with plugins is business as usual. Just call relevant plugin API(s) you want to test. See current tests and plugins for inspiration.
+Also import and add `withDashboardPluginTestEventHandling(handlers)` to register function of the plugin to propagate events from the plugin to the tests.
 This is important, because events incoming from the plugin are used to detect that dashboard is fully loaded and rendered, and tests can start!
 
 ## Adding a new test

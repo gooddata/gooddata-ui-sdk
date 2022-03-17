@@ -43,7 +43,9 @@ function createSuitesMessage(testResults) {
 
         const shortFileName = file.split("/").slice(-1)[0];
 
-        const videoFile = BUILD_URL ? `${BUILD_URL}artifact/libs/sdk-ui-tests-e2e/cypress/videos/` : `#`;
+        const videoFile = BUILD_URL
+            ? `${BUILD_URL}artifact/tools/dashboard-plugin-tests/cypress/videos/`
+            : `#`;
 
         const formattedFile = isFailing ? `[🎥 ${shortFileName}](${videoFile})` : shortFileName;
 
@@ -63,7 +65,7 @@ async function main() {
 
     const result =
         "" +
-        "# ✨ Cypress test results ✨\n\n" +
+        "# ✨ Dashboard plugin test results ✨\n\n" +
         createOverviewMessage(testResults) +
         "\n\n" +
         createSuitesMessage(testResults) +
