@@ -1,12 +1,10 @@
 // (C) 2019-2022 GoodData Corporation
 import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
 import {
-    bucketsIsEmpty,
     IColorMappingItem,
     IDimension,
     IInsight,
     IInsightDefinition,
-    insightBuckets,
     insightHasMeasures,
     insightMeasures,
     ISortItem,
@@ -60,12 +58,11 @@ import { getValidProperties } from "../../../utils/colors";
 import { generateDimensions } from "../../../utils/dimensions";
 import { unmountComponentsAtNodes } from "../../../utils/domHelper";
 import {
-    getHighchartsAxisNameConfiguration,
     getReferencePointWithSupportedProperties,
     getSupportedPropertiesControls,
-    getDataPointsConfiguration,
     hasColorMapping,
     isEmptyObject,
+    getChartSupportedControls,
 } from "../../../utils/propertiesHelper";
 import { createSorts, removeSort, validateCurrentSort } from "../../../utils/sort";
 import { getTranslation } from "../../../utils/translations";
@@ -410,7 +407,6 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     }
 
     private getSupportedControls(insight: IInsightDefinition, options: IVisProps) {
-        let supportedControls = cloneDeep(this.visualizationProperties?.controls ?? {});
         const defaultControls = getSupportedPropertiesControls(
             this.defaultControlsProperties,
             this.supportedPropertiesList,
@@ -419,26 +415,12 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
             this.customControlsProperties,
             this.supportedPropertiesList,
         );
-
-        const legendPosition = this.getLegendPosition(supportedControls, insight, options);
-
-        // Set legend position by bucket items and environment
-        set(supportedControls, "legend.position", legendPosition);
-        if (this.environment === DASHBOARDS_ENVIRONMENT) {
-            const legendResponsiveness = this.featureFlags["enableKDWidgetCustomHeight"]
-                ? "autoPositionWithPopup"
-                : true;
-            set(supportedControls, "legend.responsive", legendResponsiveness);
-        }
-
-        supportedControls = getHighchartsAxisNameConfiguration(
-            supportedControls,
-            this.featureFlags.enableAxisNameConfiguration,
-        );
-
-        supportedControls = getDataPointsConfiguration(
-            supportedControls,
-            this.featureFlags.enableHidingOfDataPoints,
+        const supportedControls = getChartSupportedControls(
+            this.visualizationProperties?.controls,
+            insight,
+            options,
+            this.environment,
+            this.featureFlags,
         );
 
         return {
@@ -446,23 +428,6 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
             ...supportedControls,
             ...customControls,
         };
-    }
-
-    private getLegendPosition(
-        controlProperties: IVisualizationProperties,
-        insight: IInsightDefinition,
-        options: IVisProps,
-    ) {
-        const legendPosition = controlProperties?.legend?.position ?? "auto";
-
-        if (this.environment === DASHBOARDS_ENVIRONMENT) {
-            const width = options.dimensions?.width;
-            return width !== undefined && width <= getMaxWidthForCollapsedLegend(legendPosition)
-                ? "top"
-                : legendPosition;
-        }
-
-        return legendPosition === "auto" && isStacked(insight) ? "right" : legendPosition;
     }
 
     protected isMultipleDatesEnabled(): boolean {
@@ -481,10 +446,6 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     }
 }
 
-function isStacked(insight: IInsightDefinition): boolean {
-    return !bucketsIsEmpty(insightBuckets(insight, BucketNames.STACK, BucketNames.SEGMENT));
-}
-
 function areAllMeasuresOnSingleAxis(insight: IInsightDefinition, secondaryYAxis: IAxisConfig): boolean {
     const measureCount = insightMeasures(insight).length;
     const numberOfMeasureOnSecondaryAxis = secondaryYAxis.measures?.length ?? 0;
@@ -500,11 +461,4 @@ function canSortStackTotalValue(
     const allMeasuresOnSingleAxis = areAllMeasuresOnSingleAxis(insight, secondaryAxis);
 
     return stackMeasures && allMeasuresOnSingleAxis;
-}
-
-const MAX_WIDTH_FOR_COLLAPSED_LEGEND = 440;
-const MAX_WIDTH_FOR_COLLAPSED_AUTO_LEGEND = 610;
-
-function getMaxWidthForCollapsedLegend(legendPosition: string): number {
-    return legendPosition === "auto" ? MAX_WIDTH_FOR_COLLAPSED_AUTO_LEGEND : MAX_WIDTH_FOR_COLLAPSED_LEGEND;
 }
