@@ -2,6 +2,27 @@
   "name": "@gooddata/sdk-ui-all",
   "entries": [
     {
+      "version": "8.9.0",
+      "tag": "@gooddata/sdk-ui-all_v8.9.0",
+      "date": "Thu, 17 Mar 2022 12:48:39 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "The dashboard commands and events related to filter modification were included in the public API."
+          },
+          {
+            "comment": "The general dashboard events (such as DashboardSaved) were included in the public API."
+          },
+          {
+            "comment": "The useDispatchDashboardCommand hook was added to make dispatching of the Dashboard commands easier."
+          },
+          {
+            "comment": "The DashboardStoreAccessor, SingleDashboardStoreAccessor and DashboardStoreAccessorRepository classes were added to enable handling of the state of the Dashboard component outside the component itself."
+          }
+        ]
+      }
+    },
+    {
       "version": "8.8.0",
       "tag": "@gooddata/sdk-ui-all_v8.8.0",
       "date": "Thu, 27 Jan 2022 08:25:24 GMT",
