@@ -110,7 +110,6 @@
     "dashboard.xirr.error.invalid_buckets.text._metric": "请务必选择一个指标和一个日期属性",
     "dashboard.error.empty.heading": "此控制面板为空",
     "dashboard.error.empty.text": "已删除所有洞察。",
-    "dashboardView.error.empty.text": "已删除所有洞察，或控制面板保存为空。",
     "dashboard.embedded.error.empty.heading": "此控制面板中无任何构件",
     "dashboard.embedded.error.empty.text": "请确保要嵌入的控制面板是正确的。",
     "properties.unsupported": "此可视化不支持配置",

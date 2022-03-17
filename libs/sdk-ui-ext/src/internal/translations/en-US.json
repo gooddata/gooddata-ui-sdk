@@ -650,17 +650,6 @@
         "limit": 0,
         "translate": false
     },
-    "dashboardView.error.empty.text|insight": {
-        "value": "All insights were removed or the dashboard was saved empty.",
-        "comment": "The user has a dashboard that contains no widgets.",
-        "limit": 0
-    },
-    "dashboardView.error.empty.text|report": {
-        "value": "All reports were removed or the dashboard was saved empty.",
-        "comment": "The user has a dashboard that contains no widgets.",
-        "limit": 0,
-        "translate": false
-    },
     "dashboard.embedded.error.empty.heading": {
         "value": "No widgets in the dashboard",
         "comment": "The user embedded a dashboard that contains no widgets.",

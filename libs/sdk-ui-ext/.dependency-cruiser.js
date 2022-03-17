@@ -15,11 +15,6 @@ const options = {
             "src/dataLoaders",
             "src/internal",
         ]),
-        depCruiser.moduleWithDependencies("dashboardView", "src/dashboardView", [
-            "src/dataLoaders",
-            "src/internal",
-            "src/insightView/*", // we need to use some parts of insight view
-        ]),
     ],
     options: depCruiser.DefaultOptions,
 };

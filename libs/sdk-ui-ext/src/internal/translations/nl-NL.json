@@ -110,7 +110,6 @@
     "dashboard.xirr.error.invalid_buckets.text._metric": "Zorg dat u minimaal één meetgegeven en één datumattribuut hebt geselecteerd",
     "dashboard.error.empty.heading": "Dit dashboard is leeg",
     "dashboard.error.empty.text": "Alle inzichten zijn verwijderd.",
-    "dashboardView.error.empty.text": "Alle inzichten zijn verwijderd of het dashboard is leeg opgeslagen.",
     "dashboard.embedded.error.empty.heading": "Geen widgets op het dashboard",
     "dashboard.embedded.error.empty.text": "Zorg ervoor dat het dashboard dat u implementeert klopt.",
     "properties.unsupported": "Deze weergave ondersteunt geen configuratie",
