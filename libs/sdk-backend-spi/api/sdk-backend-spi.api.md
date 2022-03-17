@@ -858,6 +858,14 @@ export interface IExportConfig {
     title?: string;
 }
 
+// @alpha
+export interface IExportOptions {
+    // (undocumented)
+    includeFilters?: boolean;
+    // (undocumented)
+    mergeHeaders?: boolean;
+}
+
 // @public
 export interface IExportResult {
     // (undocumented)
@@ -1300,6 +1308,9 @@ export interface IScheduledMailDefinition extends IScheduledMailBase, Partial<ID
 export function isDashboard(obj: unknown): obj is IDashboard;
 
 // @alpha
+export function isDashboardAttachment(obj: unknown): obj is IDashboardAttachment;
+
+// @alpha
 export function isDashboardAttributeFilter(obj: unknown): obj is IDashboardAttributeFilter;
 
 // @alpha
@@ -1530,6 +1541,9 @@ export function isWidgetAlert(obj: unknown): obj is IWidgetAlert;
 
 // @alpha
 export function isWidgetAlertDefinition(obj: unknown): obj is IWidgetAlertDefinition;
+
+// @alpha
+export function isWidgetAttachment(obj: unknown): obj is IWidgetAttachment;
 
 // @alpha
 export function isWidgetDefinition(obj: unknown): obj is IWidgetDefinition;
@@ -1835,6 +1849,16 @@ export interface IWidgetAlertCount {
 // @alpha
 export interface IWidgetAlertDefinition extends IWidgetAlertBase, Partial<IDashboardObjectIdentity> {
     readonly filterContext?: IFilterContext | IFilterContextDefinition;
+}
+
+// @alpha
+export interface IWidgetAttachment {
+    // (undocumented)
+    exportOptions?: IExportOptions;
+    filterContext?: ObjRef;
+    formats: ["csv" | "xlsx"];
+    widget: ObjRef;
+    widgetDashboard: ObjRef;
 }
 
 // @alpha
@@ -2207,7 +2231,7 @@ export type RelativeType = "relative";
 export function resultHeaderName(header: IResultHeader): string;
 
 // @alpha
-export type ScheduledMailAttachment = IDashboardAttachment;
+export type ScheduledMailAttachment = IDashboardAttachment | IWidgetAttachment;
 
 // @alpha
 export type ScreenSize = "xl" | "lg" | "md" | "sm" | "xs";

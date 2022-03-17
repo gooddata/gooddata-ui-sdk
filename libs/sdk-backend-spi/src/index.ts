@@ -332,6 +332,10 @@ export {
 } from "./workspace/dashboards/alert";
 export {
     IDashboardAttachment,
+    isDashboardAttachment,
+    IWidgetAttachment,
+    isWidgetAttachment,
+    IExportOptions,
     IScheduledMail,
     IScheduledMailDefinition,
     ScheduledMailAttachment,

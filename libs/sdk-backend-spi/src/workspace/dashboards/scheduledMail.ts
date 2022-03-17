@@ -1,4 +1,5 @@
 // (C) 2020 GoodData Corporation
+import isEmpty from "lodash/isEmpty";
 import { ObjRef } from "@gooddata/sdk-model";
 import { IDashboardObjectIdentity } from "./common";
 
@@ -95,7 +96,7 @@ export interface IScheduledMailDefinition extends IScheduledMailBase, Partial<ID
  * Supported email attachments
  * @alpha
  */
-export type ScheduledMailAttachment = IDashboardAttachment;
+export type ScheduledMailAttachment = IDashboardAttachment | IWidgetAttachment;
 
 /**
  * Email attachment - dashboard exported as pdf
@@ -117,6 +118,67 @@ export interface IDashboardAttachment {
      * Export filter context
      */
     filterContext?: ObjRef;
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IDashboardAttachment}.
+ *
+ * @alpha
+ */
+
+export function isDashboardAttachment(obj: unknown): obj is IDashboardAttachment {
+    return !isEmpty(obj) && (obj as IDashboardAttachment).dashboard !== undefined;
+}
+
+/**
+ * Email attachment - widget exported as csv or/and xlsx
+ * Optionally, you can setup specific filter context to use for the widget export
+ * @alpha
+ */
+export interface IWidgetAttachment {
+    /**
+     * The dashboard on which is the widget to be exported
+     */
+    widgetDashboard: ObjRef;
+
+    /**
+     * Widget object ref
+     */
+    widget: ObjRef;
+
+    /**
+     * File format
+     */
+    formats: ["csv" | "xlsx"];
+
+    /**
+     * Export filter context
+     */
+    filterContext?: ObjRef;
+
+    /**
+     *
+     */
+    exportOptions?: IExportOptions;
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IWidgetAttachment}.
+ *
+ * @alpha
+ */
+
+export function isWidgetAttachment(obj: unknown): obj is IWidgetAttachment {
+    return !isEmpty(obj) && (obj as IWidgetAttachment).widget !== undefined;
+}
+
+/**
+ * Configuration of the exported file
+ * @alpha
+ */
+export interface IExportOptions {
+    includeFilters?: boolean;
+    mergeHeaders?: boolean;
 }
 
 /**
