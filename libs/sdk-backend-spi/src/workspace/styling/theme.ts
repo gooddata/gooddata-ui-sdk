@@ -64,6 +64,7 @@ export interface IThemeColorFamily {
  * Used to color various elements across many components by replacing
  * the default complementary palette of gray color shades
  *
+ * @remarks
  * Contains up to 10 shades, typically the first one being the lightest
  * and the last being the darkest, or vice-versa for the dark-based designs
  *

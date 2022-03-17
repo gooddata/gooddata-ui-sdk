@@ -220,6 +220,7 @@ export type IDimensionItemDescriptor = IMeasureGroupDescriptor | IAttributeDescr
  * Dimension descriptor is the output counter-part of the dimension specification that was included in the
  * execution definition.
  *
+ * @remarks
  * It describes in further detail the LDM objects which were used to obtain data and metadata for the dimension
  * in the cross-tabulated result.
  *
@@ -295,6 +296,7 @@ export interface IResultAttributeHeader {
 /**
  * Measure header specifes name of the measure to which the calculated values in the particular data view slice belong.
  *
+ * @remarks
  * Measure header also specifies 'order' - this is essentially an index into measure group descriptor's item array; it
  * can be used to obtain further information about the measure.
  *
@@ -320,6 +322,7 @@ export interface IResultMeasureHeaderItem {
 /**
  * Measure header specifes name of the measure to which the calculated values in the particular data view slice belong.
  *
+ * @remarks
  * Measure header also specifies 'order' - this is essentially an index into measure group descriptor's item array; it
  * can be used to obtain further information about the measure.
  *
@@ -349,8 +352,10 @@ export interface IResultTotalHeader {
 }
 
 /**
- * Result headers provide metadata about data included in the data view. They are integral part of the data view
- * and are organized in per-dimension and per-dimension-item arrays.
+ * Result headers provide metadata about data included in the data view.
+ *
+ * @remarks
+ * They are integral part of the data view and are organized in per-dimension and per-dimension-item arrays.
  *
  * @remarks see {@link IDataView} for further detail on the organization.
  *

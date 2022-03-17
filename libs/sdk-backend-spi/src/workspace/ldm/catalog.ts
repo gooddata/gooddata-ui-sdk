@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { IAttributeOrMeasure, IInsightDefinition, ObjRef } from "@gooddata/sdk-model";
 import {
     CatalogItem,
@@ -102,6 +102,8 @@ export interface IWorkspaceCatalogFactory
 
 /**
  * Service to obtain only valid items for a particular execution or insight.
+ *
+ * @remarks
  * This is useful for interactive insight/execution creation.
  * (catalog will offer you only valid items that you can add to your insight/execution)
  *

@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { SortDirection, ObjRef, IAttributeFilter, IMeasure, IRelativeDateFilter } from "@gooddata/sdk-model";
 import { IPagedResource } from "../../../common/paging";
 import { IAttributeElement } from "../../fromModel/ldm/attributeElement";
@@ -64,6 +64,8 @@ export type FilterWithResolvableElements = IAttributeFilter | IRelativeDateFilte
 
 /**
  * The attribute itself contains no view data, it's just a sequence of id's.
+ *
+ * @remarks
  * To get data that is useful to users, we need to represent these id's with specific values.
  * For this purpose, we pair the attribute with it's display form (specific representation of attribute values).
  * An attribute can have multiple display forms.

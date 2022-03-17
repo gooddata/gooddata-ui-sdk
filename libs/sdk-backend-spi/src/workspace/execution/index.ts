@@ -120,6 +120,7 @@ export type ExplainConfig = { explainType?: "LDM" | "PDM" | "MAQL" };
  * Prepared execution already knows what data to calculate and allows to specify how the data should be
  * sorted and shaped into dimensions.
  *
+ * @remarks
  * To this end, it provides several functions to customize sort items and dimensions. The prepared execution
  * is immutable and so all the customization functions WILL result in a new instance of prepared execution.
  *
@@ -203,8 +204,10 @@ export interface IPreparedExecution {
 }
 
 /**
- * Represents results of execution done with particular definition. Within the result is the description of the
- * shape of the data and methods to to obtain views on the data.
+ * Represents results of execution done with particular definition.
+ *
+ * @remarks
+ * Within the result is the description of the shape of the data and methods to to obtain views on the data.
  *
  * @public
  */

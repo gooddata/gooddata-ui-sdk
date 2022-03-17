@@ -29,6 +29,7 @@ export interface IAnalyticalBackendConfig {
  * Factory function to create new instances of Analytical Backend realization using optionally both platform agnostic
  * and platform specific configuration.
  *
+ * @remarks
  * This factory function implementation MUST be exposed as the default export of packages which contain
  * realizations of the Analytical Backend SPI.
  *

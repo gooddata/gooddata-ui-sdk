@@ -129,8 +129,11 @@ export type InsightReferenceTypes = Exclude<ObjectType, "insight" | "tag">;
 export type SupportedInsightReferenceTypes = Exclude<InsightReferenceTypes, "displayForm" | "variable">;
 
 /**
- * Contains information about objects that may be referenced by an insight. The contents of this object
- * depend on the insight and the types requested at the time of call to the {@link IWorkspaceInsightsService.getInsightReferencedObjects} function.
+ * Contains information about objects that may be referenced by an insight.
+ *
+ * @remarks
+ * The contents of this object depend on the insight and the types requested
+ * at the time of call to the {@link IWorkspaceInsightsService.getInsightReferencedObjects} function.
  *
  * @public
  */
@@ -152,8 +155,11 @@ export interface IInsightReferences {
 }
 
 /**
- * Contains information about objects that may be referencing an insight. The contents of this object
- * depend on reference of the insight requested at the time of call to the {@link IWorkspaceInsightsService.getInsightReferencingObjects} function.
+ * Contains information about objects that may be referencing an insight.
+ *
+ * @remarks
+ * The contents of this object depend on reference of the insight requested at the time
+ * of call to the {@link IWorkspaceInsightsService.getInsightReferencingObjects} function.
  *
  * @public
  */
