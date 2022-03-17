@@ -17,10 +17,12 @@ import {
     ColorUtils,
     IAxisConfig,
     IChartConfig,
+    IColorMapping,
     updateConfigWithSettings,
 } from "@gooddata/sdk-ui-charts";
 import React from "react";
 import { render } from "react-dom";
+import compact from "lodash/compact";
 
 import { BUCKETS } from "../../../constants/bucket";
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
@@ -378,21 +380,19 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         const { config = {}, customVisualizationConfig = {} } = options;
         const colorMapping: IColorMappingItem[] = supportedControls?.colorMapping;
 
-        const validColorMapping =
-            colorMapping &&
-            colorMapping
-                .filter((mapping) => mapping != null)
-                .map((mapItem) => ({
-                    predicate: ColorUtils.getColorMappingPredicate(mapItem.id),
-                    color: mapItem.color,
-                }));
+        const validColorMapping = compact(colorMapping).map(
+            (mapItem): IColorMapping => ({
+                predicate: ColorUtils.getColorMappingPredicate(mapItem.id),
+                color: mapItem.color,
+            }),
+        );
 
         return {
             separators: config.separators,
             colorPalette: config.colorPalette,
             forceDisableDrillOnAxes: config.forceDisableDrillOnAxes,
             ...supportedControls,
-            colorMapping: validColorMapping && validColorMapping.length > 0 ? validColorMapping : null,
+            colorMapping: validColorMapping?.length > 0 ? validColorMapping : null,
             ...customVisualizationConfig,
         };
     }
@@ -476,7 +476,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         availableSorts: IAvailableSortsGroup[],
         defaultSort: ISortItem[],
     ) {
-        const previousSort = properties && properties.sortItems;
+        const previousSort = properties?.sortItems;
         return validateCurrentSort(previousAvailableSorts, previousSort, availableSorts, defaultSort);
     }
 }
