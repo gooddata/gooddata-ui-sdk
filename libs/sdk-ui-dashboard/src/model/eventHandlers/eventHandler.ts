@@ -27,15 +27,20 @@ export type DashboardEventHandlerFn<TEvents extends DashboardEvents | ICustomDas
 export type DashboardEventEvalFn = (event: DashboardEvents | ICustomDashboardEvent) => boolean;
 
 /**
- * Event handlers can be registered for a dashboard. All events that occur during dashboard processing will be
- * evaluated against all registered handlers and if evaluation succeeds they will be dispatched to the handler
- * function.
+ * Event handlers can be registered for a dashboard.
+ *
+ * @remarks
+ * All events that occur during dashboard processing will be evaluated against all registered handlers and if
+ * evaluation succeeds they will be dispatched to the handler function.
  *
  * @public
  */
 export interface DashboardEventHandler<TEvents extends DashboardEvents | ICustomDashboardEvent = any> {
     /**
-     * Specify event evaluation function. This will be used by dashboard's event emitter to determine
+     * Specify event evaluation function.
+     *
+     * @remarks
+     * This will be used by dashboard's event emitter to determine
      * whether event of particular type should be dispatched to this handler.
      *
      * @param event - dashboard or custom event
@@ -43,7 +48,10 @@ export interface DashboardEventHandler<TEvents extends DashboardEvents | ICustom
     eval: DashboardEventEvalFn;
 
     /**
-     * The actual event handling function. This will be called if the eval function returns true.
+     * The actual event handling function.
+     *
+     * @remarks
+     * This will be called if the eval function returns true.
      *
      * @param event - event to handle
      * @param dashboardDispatch - the dispatch object of the dashboard store use dot dispatch commands or queries

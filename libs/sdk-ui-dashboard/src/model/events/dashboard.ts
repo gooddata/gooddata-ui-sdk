@@ -30,22 +30,31 @@ export interface DashboardInitializedPayload {
     readonly insights: ReadonlyArray<IInsight>;
 
     /**
-     * Configuration in effect for the dashboard. If the config was provided via props, then
+     * Configuration in effect for the dashboard.
+     *
+     * @remarks
+     * If the config was provided via props, then
      * that same config is sent here. If there was no config in props, then the dashboard component load resolved
      * all the config and includes it here.
      */
     readonly config: DashboardConfig;
 
     /**
-     * Permissions in effect for the dashboard. If the permissions were provided via props, then those
+     * Permissions in effect for the dashboard.
+     *
+     * @remarks
+     * If the permissions were provided via props, then those
      * same permissions are included here. Otherwise the dashboard will load the permissions and include it here.
      */
     readonly permissions: IWorkspacePermissions;
 }
 
 /**
- * This event is emitted when a dashboard is successfully initialized. The event contains contextual information
- * such as the resolved DashboardConfig and the permissions in effect for the current user and current workspace.
+ * This event is emitted when a dashboard is successfully initialized.
+ *
+ * @remarks
+ * The event contains contextual information such as the resolved DashboardConfig and the permissions in effect
+ * for the current user and current workspace.
  *
  * If the initialization loaded an existing, persisted dashboard then the dashboard object will be included in
  * the event.
@@ -216,8 +225,10 @@ export interface DashboardCopySavedPayload {
 }
 
 /**
- * This event is emitted at the end of successful 'dashboard save as' command processing. At this point, a new
- * dashboard exists on the backend.
+ * This event is emitted at the end of successful 'dashboard save as' command processing.
+ *
+ * @remarks
+ * At this point, a new dashboard exists on the backend.
  *
  * @public
  */
@@ -427,6 +438,7 @@ export interface DateFilterValidationFailedPayload {
  * This event may occur while the dashboard is handling the Load Dashboard command and is loading and validating
  * dashboard configuration from the backend.
  *
+ * @remarks
  * Part of that process is obtaining workspace's Date Filter configuration. If the date filter config stored in
  * workspace has issues, then this event will occur.
  *

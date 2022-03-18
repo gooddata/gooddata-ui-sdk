@@ -273,6 +273,7 @@ export { AddDrillTargets, AddDrillTargetsPayload, addDrillTargets } from "./dril
 /**
  * Union type that contains all available built-in dashboard commands.
  *
+ * @remarks
  * Note: while this type is marked as public most of the commands are currently an alpha-level API that
  * we reserve to change in the following releases. If you use those commands now, upgrading to the next
  * version of `@gooddata/sdk-ui-dashboard` will likely result in breakage.

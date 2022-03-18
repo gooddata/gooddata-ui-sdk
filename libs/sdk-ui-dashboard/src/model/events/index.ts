@@ -365,6 +365,7 @@ export {
 /**
  * Union type that contains all available built-in dashboard events.
  *
+ * @remarks
  * Note: while this type is marked as public most of the events are currently an alpha-level API that
  * we reserve to change in the following releases. If you use those events now, upgrading to the next
  * version of `@gooddata/sdk-ui-dashboard` will likely result in breakage.

@@ -41,6 +41,7 @@ import {
  * These props allow you to specify custom components or custom component providers that the Dashboard
  * component will use for rendering different parts of the dashboard.
  *
+ * @remarks
  * IMPORTANT: while this interface is marked as public, you also need to heed the maturity annotations
  * on each property. A lot of these properties are at this moment alpha level.
  *
@@ -49,8 +50,11 @@ import {
 export interface IDashboardCustomComponentProps {
     /**
      * Component to render if embedding fails.
+     *
+     * @remarks
      * This component is also used in all the individual widgets when they have some error occur.
      *
+     * @privateRemarks
      * TODO do we need separate component for the dashboard as a whole and individual widgets?
      *
      * @alpha
@@ -59,9 +63,13 @@ export interface IDashboardCustomComponentProps {
 
     /**
      * Component to render while the dashboard or a widget is loading.
+     *
+     * @remarks
      * This component is also used in all the individual widgets while they are loading.
      *
+     * @privateRemarks
      * TODO do we need separate component for the dashboard as a whole and individual widgets?
+     *
      * @alpha
      */
     LoadingComponent?: ComponentType<ILoadingProps>;
@@ -74,8 +82,9 @@ export interface IDashboardCustomComponentProps {
     LayoutComponent?: CustomDashboardLayoutComponent;
 
     /**
-     * Optionally specify function to obtain custom component to use for rendering a widget.
+     * Specify function to obtain custom component to use for rendering a widget.
      *
+     * @remarks
      * -  If not provided, the default implementation {@link DefaultDashboardWidget} will be used.
      * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardWidget}.
      *    This is useful if you want to customize just one particular widget and keep default rendering for the
@@ -100,8 +109,9 @@ export interface IDashboardCustomComponentProps {
     WidgetComponentProvider?: OptionalWidgetComponentProvider;
 
     /**
-     * Optionally specify function to obtain custom component to use for rendering an insight.
+     * Specify function to obtain custom component to use for rendering an insight.
      *
+     * @remarks
      * -  If not provided, the default implementation {@link DefaultDashboardInsight} will be used.
      * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardInsight} will be used.
      *    This is useful if you want to customize just one particular insight and keep default rendering for
@@ -112,8 +122,9 @@ export interface IDashboardCustomComponentProps {
     InsightComponentProvider?: OptionalInsightComponentProvider;
 
     /**
-     * Optionally specify function to obtain custom component to use for rendering an insight menu button.
+     * Specify function to obtain custom component to use for rendering an insight menu button.
      *
+     * @remarks
      * -  If not provided, the default implementation {@link DefaultDashboardInsightMenuButton} will be used
      *    if insightMenuItemsProvider property is specified, otherwise {@link LegacyDashboardInsightMenuButton} will be used.
      * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardInsightMenuButton} will be used.
@@ -125,8 +136,9 @@ export interface IDashboardCustomComponentProps {
     InsightMenuButtonComponentProvider?: OptionalInsightMenuButtonComponentProvider;
 
     /**
-     * Optionally specify function to obtain custom component to use for rendering an insight menu.
+     * Specify function to obtain custom component to use for rendering an insight menu.
      *
+     * @remarks
      * -  If not provided, the default implementation {@link DefaultDashboardInsightMenu} will be used
      *    if insightMenuItemsProvider property is specified, otherwise {@link LegacyDashboardInsightMenu} will be used.
      * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardInsightMenu} will be used.
@@ -138,8 +150,9 @@ export interface IDashboardCustomComponentProps {
     InsightMenuComponentProvider?: OptionalInsightMenuComponentProvider;
 
     /**
-     * Optionally specify function to obtain custom component to use for rendering a KPI.
+     * Specify function to obtain custom component to use for rendering a KPI.
      *
+     * @remarks
      * -  If not provided, the default implementation {@link DefaultDashboardKpi} will be used.
      * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardKpi}.
      *    This is useful if you want to customize just one particular KPI and keep default rendering for
@@ -150,50 +163,51 @@ export interface IDashboardCustomComponentProps {
     KpiComponentProvider?: OptionalKpiComponentProvider;
 
     /**
-     * Optionally specify component to use for rendering the scheduled email dialog.
+     * Specify component to use for rendering the scheduled email dialog.
      *
      * @alpha
      */
     ScheduledEmailDialogComponent?: CustomScheduledEmailDialogComponent;
 
     /**
-     * Optionally specify component to use for rendering the scheduled email management dialog.
+     * Specify component to use for rendering the scheduled email management dialog.
      *
      * @alpha
      */
     ScheduledEmailManagementDialogComponent?: CustomScheduledEmailManagementDialogComponent;
 
     /**
-     * Optionally specify component to use for rendering the share dialog.
+     * Specify component to use for rendering the share dialog.
      *
      * @alpha
      */
     ShareDialogComponent?: CustomShareDialogComponent;
 
     /**
-     * Optionally specify component to use for rendering the save as dialog.
+     * Specify component to use for rendering the save as dialog.
      *
      * @alpha
      */
     SaveAsDialogComponent?: CustomSaveAsDialogComponent;
 
     /**
-     * Optionally specify component to use for rendering the button bar.
+     * Specify component to use for rendering the button bar.
      *
      * @alpha
      */
     ButtonBarComponent?: CustomButtonBarComponent;
 
     /**
-     * Optionally specify component to use for rendering the menu button.
+     * Specify component to use for rendering the menu button.
      *
      * @alpha
      */
     MenuButtonComponent?: CustomMenuButtonComponent;
 
     /**
-     * Optionally specify component to use for rendering the top bar.
+     * Specify component to use for rendering the top bar.
      *
+     * @remarks
      * Note that if you override this component, the ButtonBarComponent, MenuButtonComponent and TitleComponent
      * props might get ignored depending on your implementation.
      *
@@ -216,6 +230,9 @@ export interface IDashboardCustomComponentProps {
      * Optionally specify custom component to use for rendering all attribute filters or a factory function to customize the component
      * per different attribute filter.
      *
+     * @remarks
+     * If you want to hide some or all filters, you can use the {@link HiddenDashboardAttributeFilter} implementation.
+     *
      * -  If not provided, the default implementation {@link DefaultDashboardAttributeFilter} will be used.
      * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardAttributeFilter}.
      *    This is useful if you want to customize just one particular filter and keep all other filters the same.
@@ -225,9 +242,6 @@ export interface IDashboardCustomComponentProps {
      * ```
      * ComponentFactory: () => MyCustomComponent
      * ```
-     *
-     * @remarks
-     * If you want to hide some or all filters, you can use the {@link HiddenDashboardAttributeFilter} implementation.
      *
      * @alpha
      */
@@ -254,6 +268,9 @@ export interface IDashboardCustomComponentProps {
 }
 
 /**
+ * Properties for {@link Dashboard} customization.
+ *
+ * @remarks
  * IMPORTANT: while this interface is marked as public, you also need to heed the maturity annotations
  * on each property. A lot of these properties are at this moment alpha level.
  *
@@ -261,14 +278,14 @@ export interface IDashboardCustomComponentProps {
  */
 export interface IDashboardCustomizationProps extends IDashboardCustomComponentProps {
     /**
-     * Optionally provide custom configuration for the Menu button.
+     * Provide custom configuration for the Menu button.
      *
      * @alpha
      */
     menuButtonConfig?: IMenuButtonConfiguration;
 
     /**
-     * Optionally provide custom provider to change items rendered in insight menus.
+     * Provide custom provider to change items rendered in insight menus.
      *
      * @remarks
      * If the function returns an empty array, the menu will not be rendered at all.
@@ -278,7 +295,10 @@ export interface IDashboardCustomizationProps extends IDashboardCustomComponentP
     insightMenuItemsProvider?: InsightMenuItemsProvider;
 
     /**
-     * Optionally specify customization functions. The dashboard component will call out to these functions
+     * Specify customization functions.
+     *
+     * @remarks
+     * The dashboard component will call out to these functions
      * at different points during its lifetime. See documentation of the different functions to learn more.
      *
      * @public
@@ -293,6 +313,7 @@ export interface IDashboardThemingProps {
     /**
      * Theme to use.
      *
+     * @remarks
      * Note: the theme can come either from this property or from ThemeContext or from the dashboard.
      * If you do not specify theme here, it will be taken from an existing ThemeContext or if there is no ThemeContext,
      * it will be loaded for the dashboard.
@@ -301,7 +322,10 @@ export interface IDashboardThemingProps {
 
     /**
      * When true, disables the loading of the workspace theme and creation of a ThemeProvider (if there is none
-     * already present in the parent scope). Currently – for technical reasons – the ThemeProvider changes the theme
+     * already present in the parent scope).
+     *
+     * @remarks
+     * Currently – for technical reasons – the ThemeProvider changes the theme
      * globally (i.e. the theme is NOT constrained inside of a ThemeProvider).
      *
      * Turn this property to true if you need to avoid the global aspect of the themes, or you do not want to use themes at all.
@@ -312,6 +336,8 @@ export interface IDashboardThemingProps {
 
     /**
      * If provided it is called with loaded theme to allow its modification according to the app needs.
+     *
+     * @remarks
      * This is only applied to themes loaded from the backend, it is NOT applied to themes provided using
      * the "theme" prop.
      */
@@ -319,6 +345,9 @@ export interface IDashboardThemingProps {
 }
 
 /**
+ * {@link Dashboard} eventing configuration
+ *
+ * @remarks
  * Dashboard Component eventing is divided into two major groups:
  *
  * 1.  Domain events describing what is happening on the dashboard or with the dashboard
@@ -336,17 +365,19 @@ export interface IDashboardThemingProps {
  */
 export interface IDashboardEventing {
     /**
-     * Optionally specify event handlers to register at the dashboard creation time.
+     * Specify event handlers to register at the dashboard creation time.
      *
+     * @remarks
      * Note: all events that will be emitted during the initial load processing will have the `initialLoad`
      * correlationId.
      */
     eventHandlers?: DashboardEventHandler[];
 
     /**
-     * Optionally specify callback that will be called when the dashboard eventing subsystem initializes and
+     * Specify callback that will be called when the dashboard eventing subsystem initializes and
      * it is possible to register new or unregister existing event handlers.
      *
+     * @remarks
      * Note: these callbacks allow modification of event handlers on an existing, initialized dashboard. See
      * {@link IDashboardEventing.eventHandlers} prop if you want to register handlers _before_ the dashboard
      * initialization starts.
@@ -357,8 +388,9 @@ export interface IDashboardEventing {
     ) => void;
 
     /**
-     * Optionally specify callback that will be called each time the state changes.
+     * Specify callback that will be called each time the state changes.
      *
+     * @remarks
      * Note: there is no need to use this in your own React components that you plug into the dashboard. Your
      * React component code can use {@link @gooddata/sdk-ui-dashboard#useDashboardSelector} and
      * {@link @gooddata/sdk-ui-dashboard#useDashboardDispatch} hooks instead.
@@ -373,6 +405,7 @@ export interface IDashboardBaseProps {
     /**
      * Analytical backend from which the dashboard obtains data to render.
      *
+     * @remarks
      * If you do not specify instance of analytical backend using this prop, then you MUST have
      * BackendProvider up in the component tree.
      */
@@ -381,6 +414,7 @@ export interface IDashboardBaseProps {
     /**
      * Identifier of analytical workspace, from which the dashboard obtains data to render.
      *
+     * @remarks
      * If you do not specify workspace identifier, then you MUST have WorkspaceProvider up in the
      * component tree.
      */
@@ -388,7 +422,10 @@ export interface IDashboardBaseProps {
 
     /**
      * Specify dashboard to render; you can specify the dashboard either by reference (ObjRef) or
-     * by value (of type IDashboard). As a convenience, you may also specify a dashboard object
+     * by value (of type IDashboard).
+     *
+     * @remarks
+     * As a convenience, you may also specify a dashboard object
      * identifier - this is same as using `idRef(objectIdentifier)`.
      *
      * If you do not specify dashboard to render, a new default empty dashboard will be rendered.
@@ -396,9 +433,10 @@ export interface IDashboardBaseProps {
     dashboard?: string | ObjRef | IDashboard;
 
     /**
-     * Optionally specify reference to a filter context that should be used instead of the default,
+     * Specify reference to a filter context that should be used instead of the default,
      * built-in filter context.
      *
+     * @remarks
      * Note: this property only makes sense if you also specify `dashboard` by reference. If you specify
      * dashboard by value, then the component assumes that the value also contains the desired filter context
      * and will use it as is.
@@ -408,14 +446,16 @@ export interface IDashboardBaseProps {
     /**
      * Configuration that can be used to modify dashboard features, capabilities and behavior.
      *
+     * @remarks
      * If not specified, then the dashboard will retrieve and use the essential configuration from the backend.
      */
     config?: DashboardConfig;
 
     /**
-     * Optionally specify permissions to use when determining availability of the different features of
+     * Specify permissions to use when determining availability of the different features of
      * the dashboard component.
      *
+     * @remarks
      * If you do not specify permissions, the dashboard component will load permissions for the currently
      * logged-in user.
      */
@@ -423,6 +463,9 @@ export interface IDashboardBaseProps {
 }
 
 /**
+ * Cumulative properties for {@link Dashboard} customization.
+ *
+ * @remarks
  * IMPORTANT: while this interface is marked as public, you also need to heed the maturity annotations
  * on each property. A lot of these properties are at this moment alpha level.
  *

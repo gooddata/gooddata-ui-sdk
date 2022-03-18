@@ -14,6 +14,7 @@ const DASHBOARD = serializeObjRef(idRef("SingleDashboardStoreAccessor_mock_dashb
  * This singleton class uses {@link DashboardStoreAccessorRepository} to create a store accessor for
  * a single dashboard.
  *
+ * @remarks
  * The usage of this singleton is the same as for {@link DashboardStoreAccessorRepository} except functions
  * don't accept any parameters.
  *

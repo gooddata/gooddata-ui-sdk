@@ -30,6 +30,7 @@ export interface DateFilterSelection {
     /**
      * Indicates whether the filter should select absolute or relative values.
      *
+     * @remarks
      * -  Absolute values: `from` and `to` props should be exact dates on the defined granularity
      * -  Relative values: `from` and `to` are offsets on the defined granularity
      */
@@ -38,6 +39,7 @@ export interface DateFilterSelection {
     /**
      * Date filter granularity. For absolute dates this indicates what is the expected input format.
      *
+     * @remarks
      * -  Date = MM/DD/YYYY
      * -  Month = MM/YYYY
      * -  Year = YYYY
@@ -47,22 +49,26 @@ export interface DateFilterSelection {
     readonly granularity: DateFilterGranularity;
 
     /**
-     * The start date. If absolute date filter, then `from` is the formatted start date. If relative
-     * date filter, then `from` is offset from today.
+     * The start date. If absolute date filter, then `from` is the formatted start date.
+     *
+     * @remarks
+     * If relative date filter, then `from` is offset from today.
      *
      * If not specified, then the start date is unbounded.
      *
-     * @remarks see `granularity` prop for more on date format.
+     * See `granularity` prop for more on date format.
      */
     readonly from?: DateString | number;
 
     /**
-     * The end date. If absolute date filter, then `to` is formatted end date. If relative date filter,
-     * then `to` is offset from today.
+     * The end date. If absolute date filter, then `to` is formatted end date.
+     *
+     * @remarks
+     * If relative date filter, then `to` is offset from today.
      *
      * If not specified, then the end date is current date.
      *
-     * @remarks see `granularity` prop for more on date format
+     * See `granularity` prop for more on date format
      */
     readonly to?: DateString | number;
 
@@ -87,8 +93,11 @@ export interface ChangeDateFilterSelection extends IDashboardCommand {
 }
 
 /**
- * Creates the ChangeDateFilterSelection command. Dispatching this command will result in change of dashboard's
- * date filter, or error in case of invalid update (e.g. hidden date filter option by dateFilterConfig).
+ * Creates the ChangeDateFilterSelection command.
+ *
+ * @remarks
+ * Dispatching this command will result in change of dashboard's date filter, or error in case of invalid
+ * update (e.g. hidden date filter option by dateFilterConfig).
  *
  * @param type - date filter type; absolute filters use exact start and end dates, while relative filters use offsets from today
  * @param granularity - granularity on which the filter works; days, weeks, months, quarters or years.
@@ -123,15 +132,19 @@ export function changeDateFilterSelection(
 }
 
 /**
- * Creates the ChangeDateFilterSelection command. Dispatching this command will result in change of dashboard's
- * date filter, or error in case of invalid update (e.g. hidden date filter option by dateFilterConfig).
+ * Creates the ChangeDateFilterSelection command.
+ *
+ * @remarks
+ * Dispatching this command will result in change of dashboard's date filter, or error in case of invalid
+ * update (e.g. hidden date filter option by dateFilterConfig).
  *
  * All parameters for {@link ChangeDateFilterSelection} command is derived from the provided date filter.
+ *
+ * See {@link ChangeDateFilterSelection} for a more complete description of the different parameters
  *
  * @param filter - date filter to apply
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
- * @remarks see {@link ChangeDateFilterSelection} for a more complete description of the different parameters
  *
  * @public
  */
@@ -402,8 +415,11 @@ export interface ChangeAttributeFilterSelection extends IDashboardCommand {
 }
 
 /**
- * Creates the ChangeAttributeFilterSelection command. Dispatching this command will result in application
- * of element selection for the dashboard attribute filter with the provided id, or error in case of invalid update (e.g. non-existing filterLocalId).
+ * Creates the ChangeAttributeFilterSelection command.
+ *
+ * @remarks
+ * Dispatching this command will result in application of element selection for the dashboard attribute filter
+ * with the provided id, or error in case of invalid update (e.g. non-existing filterLocalId).
  *
  * The attribute elements can be provided either using their URI (primary key) or value. Together with the
  * elements you must indicate the selection type - either 'IN' or 'NOT_IN'.
@@ -447,8 +463,11 @@ export function changeAttributeFilterSelection(
 }
 
 /**
- * Creates the ChangeAttributeFilterSelection command. Dispatching this command will result in application
- * of element selection for the dashboard attribute filter with the provided id, or error in case of invalid update (e.g. non-existing `filterLocalId`).
+ * Creates the ChangeAttributeFilterSelection command.
+ *
+ * @remarks
+ * Dispatching this command will result in application of element selection for the dashboard attribute filter
+ * with the provided id, or error in case of invalid update (e.g. non-existing `filterLocalId`).
  *
  * The {@link ChangeAttributeFilterSelectionPayload}'s `selectionType` and `elements` are derived from the
  * provided attribute filter.
@@ -480,6 +499,7 @@ export function applyAttributeFilter(
  * A convenience function that will create ChangeAttributeFilterSelection command that will select all
  * elements of the dashboard attribute filter with the provided local id.
  *
+ * @remarks
  * This is same as creating the ChangeAttributeFilterSelection command with empty elements and NOT_IN selection type.
  *
  * @param filterLocalId - dashboard attribute filter's local id
@@ -594,6 +614,8 @@ export interface ChangeFilterContextSelection extends IDashboardCommand {
 
 /**
  * Creates the {@link ChangeFilterContextSelection} command.
+ *
+ * @remarks
  * Dispatching this command will result into setting provided dashboard filters to the current dashboard filter context.
  *
  * Only filters that are stored in the filter context can be applied (filters that are visible in the filter bar).

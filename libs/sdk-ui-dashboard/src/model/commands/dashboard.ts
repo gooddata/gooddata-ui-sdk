@@ -32,9 +32,11 @@ export interface InitializeDashboard extends IDashboardCommand {
 }
 
 /**
- * Creates the InitializeDashboard command. Dispatching this command will result in the load of all
- * the essential data from the backend and initializing the state of Dashboard to a point where the
- * dashboard can be rendered.
+ * Creates the InitializeDashboard command.
+ *
+ * @remarks
+ * Dispatching this command will result in the load of all the essential data from the backend and initializing
+ * the state of Dashboard to a point where the dashboard can be rendered.
  *
  * Note that the command takes the dashboard to initialize from context - from the properties of the Dashboard
  * component in which it runs:
@@ -138,7 +140,10 @@ export interface SaveDashboardAs extends IDashboardCommand {
 }
 
 /**
- * Creates the SaveDashboardAs command. Dispatching this command will result in creation of a copy of the
+ * Creates the SaveDashboardAs command.
+ *
+ * @remarks
+ * Dispatching this command will result in creation of a copy of the
  * current dashboard. The copy will reflect the current state of the dashboard including any modifications done
  * on top of the original dashboard.
  *

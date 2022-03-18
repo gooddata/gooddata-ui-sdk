@@ -23,6 +23,7 @@ export interface IUseInsightWidgetDataView {
     /**
      * Insight widget to get data view for.
      *
+     * @remarks
      * Note: When the insight widget is not provided, hook is locked in a "pending" state.
      */
     insightWidget?: IInsightWidget;

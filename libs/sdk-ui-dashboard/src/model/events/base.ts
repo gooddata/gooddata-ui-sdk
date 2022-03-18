@@ -5,6 +5,7 @@ import { DashboardContext } from "../types/commonTypes";
 /**
  * A union of all available built-in dashboard event type names.
  *
+ * @remarks
  * Note: while this type is marked as public most of the event types are currently an alpha-level API that
  * we reserve to change in the following releases.
  *
@@ -165,7 +166,7 @@ export interface ICustomDashboardEvent<TPayload = any> {
     readonly ctx: DashboardContext;
 
     /**
-     * Optionally specify any additional data the custom event needs.
+     * Specify any additional data the custom event needs.
      */
     readonly payload?: TPayload;
 

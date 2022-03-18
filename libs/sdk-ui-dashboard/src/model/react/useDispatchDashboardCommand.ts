@@ -7,6 +7,7 @@ import { useDashboardDispatch } from "./DashboardStoreProvider";
 /**
  * Hook that takes command creator and returns function that will result into dispatching this command.
  *
+ * @remarks
  * The created function takes original command creators parameters as per example below.
  *
  * @example

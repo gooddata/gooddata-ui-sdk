@@ -131,6 +131,8 @@ export interface IDrillToUrlPlaceholder {
 export interface ISharingProperties {
     /**
      * Dashboard share status
+     *
+     * @remarks
      * private - dashboard accessible only by its creator
      * shared - dashboard shared with closed set of users/groups
      * public - accessible by everyone in the workspace
@@ -138,6 +140,8 @@ export interface ISharingProperties {
     shareStatus: ShareStatus;
     /**
      * For backends NOT forcing strict access this prop reflects its current setting of strict access
+     *
+     * @remarks
      * If set to true then object is not accessible via its URI/ref for people without access rights.
      * Otherwise object is accessible by its URI/ref, eg. when drilling to it.
      */
