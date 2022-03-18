@@ -284,7 +284,10 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         currentReferencePoint: IReferencePoint,
         nextReferencePoint: IReferencePoint,
     ) {
-        return !isEqual(omit(currentReferencePoint, "properties"), omit(nextReferencePoint, "properties"));
+        return !isEqual(
+            omit(currentReferencePoint, ["properties", "availableSorts"]),
+            omit(nextReferencePoint, ["properties", "availableSorts"]),
+        );
     }
 
     private static propertiesControlsHasChanged(
