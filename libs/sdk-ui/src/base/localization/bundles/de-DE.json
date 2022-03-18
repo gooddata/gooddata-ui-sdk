@@ -247,7 +247,6 @@
     "sorting.type.numerical.asc": "Aufsteigende Größe",
     "sorting.type.numerical.desc": "Absteigende Größe",
     "sorting.by": "nach",
-    "sorting.sum.of.all.measure._measure": "Summe aller Messwerte",
-    "sorting.sum.of.all.measure._metric": "Summe aller Metriken",
+    "sorting.sum.of.all.measure": "Summen",
     "sorting.default.tooltip": "Verwenden Sie die Sortierung, die im Attribut definiert ist."
 }
