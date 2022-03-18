@@ -15,9 +15,9 @@ import {
     IDashboardPluginLink,
     IDashboardWidget,
     IFilterContext,
+    IInsightWidget,
     LayoutPath,
     walkLayout,
-    IInsightWidget,
 } from "@gooddata/sdk-backend-spi";
 
 import { IdentifierRef, idRef, ObjectType } from "@gooddata/sdk-model";
