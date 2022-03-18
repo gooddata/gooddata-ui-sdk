@@ -434,45 +434,69 @@ describe("factoryNotationFor", () => {
             testModelNotation(actual, input);
         });
 
-        it("should handle measure value filter with comparison", () => {
-            const input: IMeasureValueFilter = {
-                measureValueFilter: {
-                    measure: {
-                        localIdentifier: "foo",
-                    },
-                    condition: {
-                        comparison: {
-                            operator: "EQUAL_TO",
-                            value: 11,
+        describe("measure value filter", () => {
+            it("should handle measure value filter with comparison", () => {
+                const input: IMeasureValueFilter = {
+                    measureValueFilter: {
+                        measure: {
+                            localIdentifier: "foo",
+                        },
+                        condition: {
+                            comparison: {
+                                operator: "EQUAL_TO",
+                                value: 11,
+                            },
                         },
                     },
-                },
-            };
+                };
 
-            const actual = factoryNotationFor(input);
+                const actual = factoryNotationFor(input);
 
-            testModelNotation(actual, input);
-        });
+                testModelNotation(actual, input);
+            });
 
-        it("should handle measure value filter with range", () => {
-            const input: IMeasureValueFilter = {
-                measureValueFilter: {
-                    measure: {
-                        localIdentifier: "foo",
-                    },
-                    condition: {
-                        range: {
-                            operator: "BETWEEN",
-                            from: 0,
-                            to: 100,
+            it("should handle measure value filter with comparison and treat null values as", () => {
+                const input: IMeasureValueFilter = {
+                    measureValueFilter: {
+                        measure: {
+                            localIdentifier: "foo",
+                        },
+                        condition: {
+                            comparison: {
+                                operator: "EQUAL_TO",
+                                value: 11,
+                                treatNullValuesAs: 42,
+                            },
                         },
                     },
-                },
-            };
+                };
 
-            const actual = factoryNotationFor(input);
+                const actual = factoryNotationFor(input);
 
-            testModelNotation(actual, input);
+                testModelNotation(actual, input);
+            });
+
+            it("should handle measure value filter with range and treat null values as", () => {
+                const input: IMeasureValueFilter = {
+                    measureValueFilter: {
+                        measure: {
+                            localIdentifier: "foo",
+                        },
+                        condition: {
+                            range: {
+                                operator: "BETWEEN",
+                                from: 0,
+                                to: 100,
+                                treatNullValuesAs: 42,
+                            },
+                        },
+                    },
+                };
+
+                const actual = factoryNotationFor(input);
+
+                testModelNotation(actual, input);
+            });
         });
 
         describe("ranking filter", () => {
