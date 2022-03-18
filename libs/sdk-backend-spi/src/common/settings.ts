@@ -202,6 +202,11 @@ export interface ISettings {
     enableChartsSorting?: boolean;
 
     /**
+     * Enable hiding of widget title
+     */
+    enableHidingOfWidgetTitle?: boolean;
+
+    /**
      * Enable axis name for the column, bar and bullet charts with view by two attributes.
      */
     enableAxisNameViewByTwoAttributes?: boolean;
