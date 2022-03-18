@@ -228,3 +228,81 @@ $vertical-space: 10px;
         }
     }
 }
+
+.gd-scheduled-email-management-dialog {
+    @media #{$medium-up} {
+        width: 460px;
+    }
+
+    max-height: 600px;
+
+    .gd-scheduled-emails-content {
+        min-height: 50px;
+        max-height: 455px;
+        overflow-x: auto;
+        padding-right: 20px;
+        margin: 20px -20px 0 0;
+    }
+
+    .gd-scheduled-emails-message {
+        text-align: center;
+        color: $gd-color-state-blank;
+    }
+
+    .gd-scheduled-emails-loading-spinner {
+        display: block;
+        margin: auto;
+    }
+
+    .gd-scheduled-email {
+        display: inline-flex;
+        margin-bottom: 10px;
+    }
+
+    .gd-scheduled-email:last-child {
+        margin-bottom: 0;
+    }
+
+    .gd-scheduled-email-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 30px;
+        height: 30px;
+        margin: auto 10px auto 0;
+        background-color: $gd-border-color;
+        border-radius: 100px;
+    }
+
+    .gd-scheduled-email-title {
+        max-width: 380px;
+        white-space: nowrap;
+    }
+
+    .gd-scheduled-email-title-shortened {
+        display: inline-block;
+        width: 100%;
+        white-space: nowrap;
+    }
+
+    .gd-scheduled-email-subtitle {
+        color: $gd-color-state-blank;
+    }
+
+    .gd-content-divider {
+        border-top: 1px solid $gd-border-color;
+        height: 0;
+        margin: 10px 0 20px 0;
+    }
+
+    .gd-buttons {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .gd-add-button {
+        .gd-button-icon {
+            color: $button-action-color;
+        }
+    }
+}

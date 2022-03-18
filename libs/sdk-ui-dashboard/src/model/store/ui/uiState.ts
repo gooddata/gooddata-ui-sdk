@@ -7,6 +7,9 @@ import { IMenuButtonItemsVisibility } from "../../../types";
  * @alpha
  */
 export interface UiState {
+    scheduleEmailManagementDialog: {
+        open: boolean;
+    };
     scheduleEmailDialog: {
         open: boolean;
     };
@@ -30,6 +33,9 @@ export interface UiState {
 }
 
 export const uiInitialState: UiState = {
+    scheduleEmailManagementDialog: {
+        open: false,
+    },
     scheduleEmailDialog: {
         open: false,
     },

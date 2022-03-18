@@ -14,6 +14,14 @@ const closeScheduleEmailDialog: UiReducer = (state) => {
     state.scheduleEmailDialog.open = false;
 };
 
+const openScheduleEmailManagementDialog: UiReducer = (state) => {
+    state.scheduleEmailManagementDialog.open = true;
+};
+
+const closeScheduleEmailManagementDialog: UiReducer = (state) => {
+    state.scheduleEmailManagementDialog.open = false;
+};
+
 const openSaveAsDialog: UiReducer = (state) => {
     state.saveAsDialog.open = true;
 };
@@ -60,6 +68,8 @@ const setMenuButtonItemsVisibility: UiReducer<PayloadAction<IMenuButtonItemsVisi
 export const uiReducers = {
     openScheduleEmailDialog,
     closeScheduleEmailDialog,
+    openScheduleEmailManagementDialog,
+    closeScheduleEmailManagementDialog,
     openSaveAsDialog,
     closeSaveAsDialog,
     setFilterBarHeight,

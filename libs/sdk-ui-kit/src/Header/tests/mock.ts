@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { ISettings, IWorkspacePermissions, PlatformEdition } from "@gooddata/sdk-backend-spi";
 
 export const getHelpMenuFeatureFlagsMock = (
@@ -48,6 +48,7 @@ export const getWorkspacePermissionsMock = (
         canManageMetric,
         canManageProject: true,
         canManageReport: true,
+        canManageScheduledMail: true,
         canUploadNonProductionCSV: true,
         canInviteUserToProject: true,
         canRefreshData: true,

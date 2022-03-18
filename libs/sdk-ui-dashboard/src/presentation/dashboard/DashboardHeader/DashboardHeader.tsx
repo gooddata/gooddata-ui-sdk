@@ -21,6 +21,7 @@ import {
     selectDashboardRef,
     selectDashboardShareInfo,
     selectDashboardTitle,
+    selectEnableInsightExportScheduling,
     selectEnableKPIDashboardExportPDF,
     selectEnableKPIDashboardSchedule,
     selectFilterContextFilters,
@@ -28,6 +29,7 @@ import {
     selectIsReadOnly,
     selectIsSaveAsDialogOpen,
     selectIsScheduleEmailDialogOpen,
+    selectIsScheduleEmailManagementDialogOpen,
     selectMenuButtonItemsVisibility,
     selectPersistedDashboard,
     uiActions,
@@ -40,7 +42,7 @@ import { ExportDialogProvider } from "../../dialogs";
 
 import { downloadFile } from "../../../_staging/fileUtils/downloadFile";
 import { DefaultButtonBar, DefaultMenuButton, DefaultTopBar, IMenuButtonItem, TopBar } from "../../topBar";
-import { ScheduledEmailDialog } from "../../scheduledEmail";
+import { ScheduledEmailDialog, ScheduledEmailManagementDialog } from "../../scheduledEmail";
 import { SaveAsDialog } from "../../saveAs";
 import { DefaultFilterBar, FilterBar } from "../../filterBar";
 import { ShareDialogDashboardHeader } from "./ShareDialogDashboardHeader";
@@ -117,8 +119,15 @@ export const DashboardHeader = (): JSX.Element => {
 
     const dispatch = useDashboardDispatch();
     const isScheduleEmailingDialogOpen = useDashboardSelector(selectIsScheduleEmailDialogOpen);
+    const isScheduleEmailingManagementDialogOpen = useDashboardSelector(
+        selectIsScheduleEmailManagementDialogOpen,
+    );
     const openScheduleEmailingDialog = () => dispatch(uiActions.openScheduleEmailDialog());
     const closeScheduleEmailingDialog = () => dispatch(uiActions.closeScheduleEmailDialog());
+    const openScheduleEmailingManagementDialog = () =>
+        dispatch(uiActions.openScheduleEmailManagementDialog());
+    const closeScheduleEmailingManagementDialog = () =>
+        dispatch(uiActions.closeScheduleEmailManagementDialog());
     const isSaveAsDialogOpen = useDashboardSelector(selectIsSaveAsDialogOpen);
     const openSaveAsDialog = () => dispatch(uiActions.openSaveAsDialog());
     const closeSaveAsDialog = () => dispatch(uiActions.closeSaveAsDialog());
@@ -156,20 +165,6 @@ export const DashboardHeader = (): JSX.Element => {
         },
     });
 
-    /*
-     * exports and scheduling are not available when rendering a dashboard that is not persisted.
-     * this can happen when a new dashboard is created and is being edited.
-     *
-     * the setup of menu items available in the menu needs to reflect this.
-     */
-    const defaultOnScheduleEmailing = useCallback(() => {
-        if (!dashboardRef) {
-            return;
-        }
-
-        openScheduleEmailingDialog();
-    }, [dashboardRef]);
-
     const defaultOnSaveAs = useCallback(() => {
         if (!dashboardRef) {
             return;
@@ -194,8 +189,26 @@ export const DashboardHeader = (): JSX.Element => {
 
     const canCreateScheduledMail = useDashboardSelector(selectCanCreateScheduledMail);
     const isScheduledEmailingEnabled = !!useDashboardSelector(selectEnableKPIDashboardSchedule);
-
+    const isInsightExportSchedulingEnabled = useDashboardSelector(selectEnableInsightExportScheduling);
     const menuButtonItemsVisibility = useDashboardSelector(selectMenuButtonItemsVisibility);
+
+    /*
+     * exports and scheduling are not available when rendering a dashboard that is not persisted.
+     * this can happen when a new dashboard is created and is being edited.
+     *
+     * the setup of menu items available in the menu needs to reflect this.
+     */
+    const defaultOnScheduleEmailing = useCallback(() => {
+        if (!dashboardRef) {
+            return;
+        }
+
+        if (isInsightExportSchedulingEnabled) {
+            openScheduleEmailingManagementDialog();
+        } else {
+            openScheduleEmailingDialog();
+        }
+    }, [dashboardRef, isInsightExportSchedulingEnabled]);
 
     const defaultMenuItems = useMemo<IMenuButtonItem[]>(() => {
         if (!dashboardRef) {
@@ -271,6 +284,20 @@ export const DashboardHeader = (): JSX.Element => {
         closeScheduleEmailingDialog();
     }, []);
 
+    const onScheduleEmailingManagementAdd = useCallback(() => {
+        closeScheduleEmailingManagementDialog();
+        openScheduleEmailingDialog();
+    }, []);
+
+    const onScheduleEmailingManagementCancel = useCallback(() => {
+        closeScheduleEmailingManagementDialog();
+    }, []);
+
+    const onScheduleEmailingManagementError = useCallback(() => {
+        closeScheduleEmailingManagementDialog();
+        addError({ id: "dialogs.schedule.management.load.error" });
+    }, []);
+
     const onSaveAsError = useCallback(() => {
         closeSaveAsDialog();
         addError({ id: "messages.dashboardSaveFailed" });
@@ -289,6 +316,14 @@ export const DashboardHeader = (): JSX.Element => {
         <>
             <ToastMessages />
             <ExportDialogProvider />
+            {isScheduleEmailingManagementDialogOpen && (
+                <ScheduledEmailManagementDialog
+                    isVisible={isScheduleEmailingManagementDialogOpen}
+                    onAdd={onScheduleEmailingManagementAdd}
+                    onCancel={onScheduleEmailingManagementCancel}
+                    onError={onScheduleEmailingManagementError}
+                />
+            )}
             {isScheduleEmailingDialogOpen && (
                 <ScheduledEmailDialog
                     isVisible={isScheduleEmailingDialogOpen}

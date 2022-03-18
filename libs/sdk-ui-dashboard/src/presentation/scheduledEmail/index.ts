@@ -1,4 +1,11 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 export { DefaultScheduledEmailDialog } from "./DefaultScheduledEmailDialog";
+export { DefaultScheduledEmailManagementDialog } from "./DefaultScheduledEmailManagementDialog";
 export { ScheduledEmailDialog } from "./ScheduledEmailDialog";
-export { CustomScheduledEmailDialogComponent, IScheduledEmailDialogProps } from "./types";
+export { ScheduledEmailManagementDialog } from "./ScheduledEmailManagementDialog";
+export {
+    CustomScheduledEmailDialogComponent,
+    CustomScheduledEmailManagementDialogComponent,
+    IScheduledEmailDialogProps,
+    IScheduledEmailManagementDialogProps,
+} from "./types";

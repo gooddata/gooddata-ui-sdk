@@ -212,6 +212,7 @@ Object {
   "canManageMetric": true,
   "canManageProject": true,
   "canManageReport": true,
+  "canManageScheduledMail": true,
   "canRefreshData": true,
   "canUploadNonProductionCSV": true,
 }

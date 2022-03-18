@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { ComponentType } from "react";
 import { IScheduledMail, IScheduledMailDefinition } from "@gooddata/sdk-backend-spi";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
@@ -37,6 +37,31 @@ export interface IScheduledEmailDialogProps {
     onSuccess?: (scheduledMail: IScheduledMail) => void;
 }
 
+/**
+ * @alpha
+ */
+export interface IScheduledEmailManagementDialogProps {
+    /**
+     * Is scheduled email management dialog visible?
+     */
+    isVisible?: boolean;
+
+    /**
+     * Callback to be called, when user adds new scheduled email item.
+     */
+    onAdd?: () => void;
+
+    /**
+     * Callback to be called, when user closes the scheduled email management dialog.
+     */
+    onCancel?: () => void;
+
+    /**
+     * Callback to be called, when emails fail to load.
+     */
+    onError?: (error: GoodDataSdkError) => void;
+}
+
 ///
 /// Custom component types
 ///
@@ -45,3 +70,9 @@ export interface IScheduledEmailDialogProps {
  * @alpha
  */
 export type CustomScheduledEmailDialogComponent = ComponentType<IScheduledEmailDialogProps>;
+
+/**
+ * @alpha
+ */
+export type CustomScheduledEmailManagementDialogComponent =
+    ComponentType<IScheduledEmailManagementDialogProps>;

@@ -180,3 +180,12 @@ export const selectCanInviteUserToWorkspace = createSelector(selectPermissions, 
 export const selectCanRefreshData = createSelector(selectPermissions, (state) => {
     return state?.canRefreshData ?? false;
 });
+
+/**
+ * Returns whether the current user has permissions to manage scheduled email objects.
+ *
+ * @public
+ */
+export const selectCanManageScheduledMail = createSelector(selectPermissions, (state) => {
+    return state?.canManageScheduledMail ?? false;
+});

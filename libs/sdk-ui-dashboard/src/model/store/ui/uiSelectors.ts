@@ -22,6 +22,14 @@ export const selectIsScheduleEmailDialogOpen = createSelector(
 /**
  * @alpha
  */
+export const selectIsScheduleEmailManagementDialogOpen = createSelector(
+    selectSelf,
+    (state) => state.scheduleEmailManagementDialog.open,
+);
+
+/**
+ * @alpha
+ */
 export const selectIsSaveAsDialogOpen = createSelector(selectSelf, (state) => state.saveAsDialog.open);
 
 /**
