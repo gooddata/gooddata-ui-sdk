@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
 import {
     isWidget,
@@ -31,7 +31,6 @@ import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutItemKeyGetter,
     IDashboardLayoutItemsFacade,
-    IDashboardLayoutSectionHeaderRenderer,
     IDashboardLayoutWidgetRenderer,
     validateDashboardLayoutWidgetSize,
 } from "./DefaultDashboardLayoutRenderer";
@@ -138,14 +137,6 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
         [onError, onDrill, onFiltersChange],
     );
 
-    const sectionHeaderRenderer = useMemo<
-        IDashboardLayoutSectionHeaderRenderer<ExtendedDashboardWidget> | undefined
-    >(() => {
-        // When section headers are enabled, use default DashboardLayout sectionHeaderRenderer.
-        // When turned off, render nothing.
-        return settings.enableSectionHeaders ? undefined : () => <React.Fragment />;
-    }, [settings.enableSectionHeaders]);
-
     return isLayoutEmpty ? (
         <EmptyDashboardError ErrorComponent={ErrorComponent} />
     ) : (
@@ -154,7 +145,6 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
             layout={transformedLayout}
             itemKeyGetter={itemKeyGetter}
             widgetRenderer={widgetRenderer}
-            sectionHeaderRenderer={sectionHeaderRenderer}
             enableCustomHeight={settings.enableKDWidgetCustomHeight}
         />
     );
