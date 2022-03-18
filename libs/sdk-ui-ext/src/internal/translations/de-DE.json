@@ -110,6 +110,7 @@
     "dashboard.xirr.error.invalid_buckets.text._metric": "Stellen Sie sicher, dass Sie eine Metrik und ein Datumsattribut ausgewählt haben.",
     "dashboard.error.empty.heading": "Dieses Dashboard ist leer",
     "dashboard.error.empty.text": "Alle Betrachtungen wurden entfernt.",
+    "dashboardView.error.empty.text": "Alle Betrachtungen wurden entfernt oder das Dashboard wurde ohne Daten gespeichert.",
     "dashboard.embedded.error.empty.heading": "Das Dashboard enthält keine Widgets",
     "dashboard.embedded.error.empty.text": "Stellen Sie sicher, dass Sie das richtige Dashboard einbetten.",
     "properties.unsupported": "Diese Visualisierung unterstützt keine Konfiguration",
@@ -281,5 +282,10 @@
     "sorting.tooltip.sum._measure": "Die Betrachtung wird durch zwei Attribute geteilt. Das erste Attribut wird immer nach der Summe aller Messwerte sortiert.",
     "sorting.tooltip.sum._metric": "Die Betrachtung wird durch zwei Attribute geteilt. Das erste Attribut wird immer nach der Summe aller Metriken sortiert.",
     "sorting.tooltip.measure._measure": "Sie können nur nach Messwerten sortieren, die bereits für die Betrachtung verwendet wurden.",
-    "sorting.tooltip.measure._metric": "Sie können nur nach Metriken sortieren, die bereits für die Betrachtung verwendet wurden."
+    "sorting.tooltip.measure._metric": "Sie können nur nach Metriken sortieren, die bereits für die Betrachtung verwendet wurden.",
+    "geochart.scroll.zoom.blocker": "Zoomen Sie die Karte mit {button} + Scrollen",
+    "geochart.touch.pan.blocker": "Verschieben Sie die Karte mit zwei Fingern",
+    "sorting.disabled.explanation.attribute": "Der Bericht kann aufgrund seiner Berichtskonfiguration nicht sortiert werden.",
+    "sorting.disabled.explanation.measure._measure": "Sie müssen mindestens ein Attribut hinzufügen, um den Bericht zu sortieren. Sie können auch die Position von Elementen im Abschnitt „Messungen“ anpassen, um deren Position im Bericht zu ändern.",
+    "sorting.disabled.explanation.measure._metric": "Sie müssen mindestens ein Attribut hinzufügen, um den Bericht zu sortieren. Sie können auch die Position von Elementen im Abschnitt „Metriken“ anpassen, um deren Position im Bericht zu ändern."
 }

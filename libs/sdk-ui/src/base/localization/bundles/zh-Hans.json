@@ -241,8 +241,12 @@
     "sorting.dropdown.header": "排序洞察",
     "sorting.type.alphabetical.asc": "A 到 Z。",
     "sorting.type.alphabetical.desc": "Z到A",
+    "sorting.type.date.asc": "最早到最新",
+    "sorting.type.date.desc": "最新到最早",
+    "sorting.type.default": "默认",
     "sorting.type.numerical.asc": "从最小到最大",
     "sorting.type.numerical.desc": "从最大到最小",
-    "sorting.sum.of.all.measure._measure": "所有度量的总和（总计）",
-    "sorting.sum.of.all.measure._metric": "所有指标的总和（总计）"
+    "sorting.by": "通过",
+    "sorting.sum.of.all.measure": "总计",
+    "sorting.default.tooltip": "使用属性中定义的顺序。"
 }

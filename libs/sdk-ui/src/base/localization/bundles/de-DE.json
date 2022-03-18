@@ -241,8 +241,13 @@
     "sorting.dropdown.header": "Betrachtung sortieren",
     "sorting.type.alphabetical.asc": "A bis Z",
     "sorting.type.alphabetical.desc": "Z bis A",
+    "sorting.type.date.asc": "Älteste zuerst",
+    "sorting.type.date.desc": "Neueste zuerst",
+    "sorting.type.default": "Standard",
     "sorting.type.numerical.asc": "Aufsteigende Größe",
     "sorting.type.numerical.desc": "Absteigende Größe",
+    "sorting.by": "nach",
     "sorting.sum.of.all.measure._measure": "Summe aller Messwerte",
-    "sorting.sum.of.all.measure._metric": "Summe aller Metriken"
+    "sorting.sum.of.all.measure._metric": "Summe aller Metriken",
+    "sorting.default.tooltip": "Verwenden Sie die Sortierung, die im Attribut definiert ist."
 }

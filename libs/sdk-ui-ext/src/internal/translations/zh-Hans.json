@@ -110,6 +110,7 @@
     "dashboard.xirr.error.invalid_buckets.text._metric": "请务必选择一个指标和一个日期属性",
     "dashboard.error.empty.heading": "此控制面板为空",
     "dashboard.error.empty.text": "已删除所有洞察。",
+    "dashboardView.error.empty.text": "已删除所有洞察，或控制面板保存为空。",
     "dashboard.embedded.error.empty.heading": "此控制面板中无任何构件",
     "dashboard.embedded.error.empty.text": "请确保要嵌入的控制面板是正确的。",
     "properties.unsupported": "此可视化不支持配置",
@@ -281,5 +282,10 @@
     "sorting.tooltip.sum._measure": "洞察被两个属性分割。第一个属性始终按所有度量值总和排序。",
     "sorting.tooltip.sum._metric": "洞察被两个属性分割。第一个属性始终按所有指标值总和排序。",
     "sorting.tooltip.measure._measure": "您只能按洞察中使用的度量进行排序。",
-    "sorting.tooltip.measure._metric": "您只能按洞察中使用的指标进行排序。"
+    "sorting.tooltip.measure._metric": "您只能按洞察中使用的指标进行排序。",
+    "geochart.scroll.zoom.blocker": "使用 {button} + 滚动，来缩放地图",
+    "geochart.touch.pan.blocker": "用两根手指移动地图",
+    "sorting.disabled.explanation.attribute": "此报表配置无法排序。",
+    "sorting.disabled.explanation.measure._measure": "您必须添加至少一个属性才能对报表进行排序。您还可以调整“度量”部分中各项的位置，以更改其在报表的位置。",
+    "sorting.disabled.explanation.measure._metric": "您必须添加至少一个属性才能对报表进行排序。您还可以调整“指标”部分中各项的位置，以更改其在报表中的位置。"
 }

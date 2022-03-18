@@ -241,8 +241,12 @@
     "sorting.dropdown.header": "Ordenar perspectiva",
     "sorting.type.alphabetical.asc": "De la A a la Z",
     "sorting.type.alphabetical.desc": "De la Z a la A",
+    "sorting.type.date.asc": "De más antiguo a más reciente",
+    "sorting.type.date.desc": "De más reciente a más antiguo",
+    "sorting.type.default": "Predeterminado",
     "sorting.type.numerical.asc": "De menor a mayor",
     "sorting.type.numerical.desc": "De mayor a menor",
-    "sorting.sum.of.all.measure._measure": "Suma de todas las medidas (total)",
-    "sorting.sum.of.all.measure._metric": "Suma de todas las métricas (total)"
+    "sorting.by": "por",
+    "sorting.sum.of.all.measure": "Total",
+    "sorting.default.tooltip": "Use el orden definido en el atributo."
 }
