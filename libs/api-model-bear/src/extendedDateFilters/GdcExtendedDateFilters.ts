@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { GdcMetadata } from "../meta/GdcMetadata";
 import isEmpty from "lodash/isEmpty";
 
@@ -15,6 +15,8 @@ export namespace GdcExtendedDateFilters {
     export type RelativeGranularityOffset = number;
 
     export type DateFilterGranularity =
+        | "GDC.time.minute"
+        | "GDC.time.hour"
         | "GDC.time.date"
         | "GDC.time.week_us"
         | "GDC.time.month"

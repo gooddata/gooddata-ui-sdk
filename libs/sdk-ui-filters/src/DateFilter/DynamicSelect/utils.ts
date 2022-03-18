@@ -7,6 +7,8 @@ import { getSelectableItems } from "../Select/utils";
 import { DynamicSelectItem, DynamicSelectOption } from "./types";
 import { DateFilterGranularity } from "@gooddata/sdk-model";
 
+export const MINUTE: DateFilterGranularity = "GDC.time.minute";
+export const HOUR: DateFilterGranularity = "GDC.time.hour";
 export const DAY: DateFilterGranularity = "GDC.time.date";
 export const WEEK_US: DateFilterGranularity = "GDC.time.week_us";
 export const MONTH: DateFilterGranularity = "GDC.time.month";
@@ -49,6 +51,8 @@ const tooBigInputInfo: ITooBigInputInfo = {
 };
 
 const granularityOffsetLimits: { [key in DateFilterGranularity]: number } = {
+    [MINUTE]: 120,
+    [HOUR]: 48,
     [DAY]: 365,
     [WEEK_US]: 104,
     [MONTH]: 60,

@@ -40,6 +40,8 @@ storiesOf(`${FilterStories}/DateFilter`)
                         selectedFilterOption={defaultDateFilterOptions.allTime}
                         filterOptions={filterOptions}
                         availableGranularities={[
+                            "GDC.time.minute",
+                            "GDC.time.hour",
                             "GDC.time.date",
                             "GDC.time.month",
                             "GDC.time.quarter",
@@ -175,6 +177,8 @@ storiesOf(`${FilterStories}/DateFilter`)
                         selectedFilterOption={defaultDateFilterOptions.allTime}
                         filterOptions={filterOptions}
                         availableGranularities={[
+                            "GDC.time.minute",
+                            "GDC.time.hour",
                             "GDC.time.date",
                             "GDC.time.month",
                             "GDC.time.quarter",

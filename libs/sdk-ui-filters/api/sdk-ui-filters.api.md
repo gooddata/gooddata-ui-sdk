@@ -74,6 +74,8 @@ export const DateFilterHelpers: {
         "GDC.time.quarter": GranularityIntlKey;
         "GDC.time.month": GranularityIntlKey;
         "GDC.time.date": GranularityIntlKey;
+        "GDC.time.hour": GranularityIntlKey;
+        "GDC.time.minute": GranularityIntlKey;
     };
     applyExcludeCurrentPeriod: (dateFilterOption: DateFilterOption, excludeCurrentPeriod: boolean) => DateFilterOption;
     defaultDateFilterOptions: IDateFilterOptionsByType;
@@ -105,7 +107,7 @@ export interface EmptyListItem {
 export function filterVisibleDateFilterOptions(dateFilterOptions: IDateFilterOptionsByType): IDateFilterOptionsByType;
 
 // @beta (undocumented)
-export type GranularityIntlKey = "day" | "week" | "month" | "quarter" | "year";
+export type GranularityIntlKey = "day" | "minute" | "hour" | "week" | "month" | "quarter" | "year";
 
 // @public (undocumented)
 export interface IAttributeDropdownBodyExtendedProps extends IAttributeDropdownBodyProps {

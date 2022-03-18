@@ -169,6 +169,8 @@ const availableGranularities: DateFilterGranularity[] = [
     "GDC.time.year",
     "GDC.time.quarter",
     "GDC.time.date",
+    "GDC.time.hour",
+    "GDC.time.minute",
 ];
 
 const defaultProps: IDateFilterProps = {

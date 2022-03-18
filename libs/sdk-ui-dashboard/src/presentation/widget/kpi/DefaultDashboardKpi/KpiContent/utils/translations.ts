@@ -13,6 +13,8 @@ import {
 const granularityIntlCodes: {
     [key in DateFilterGranularity]: string;
 } = {
+    "GDC.time.minute": "minute",
+    "GDC.time.hour": "hour",
     "GDC.time.date": "day",
     "GDC.time.week_us": "week",
     "GDC.time.month": "month",

@@ -10,11 +10,13 @@ import { DateFilterRelativeOptionGroup, DateFilterOption } from "../interfaces";
 import { DateFilterGranularity, IRelativeDateFilterPreset } from "@gooddata/sdk-model";
 
 const granularityOrder: DateFilterGranularity[] = [
-    "GDC.time.date",
-    "GDC.time.week_us",
-    "GDC.time.month",
-    "GDC.time.quarter",
     "GDC.time.year",
+    "GDC.time.quarter",
+    "GDC.time.month",
+    "GDC.time.week_us",
+    "GDC.time.date",
+    "GDC.time.hour",
+    "GDC.time.minute",
 ];
 
 export const RelativePresetFilterItems: React.FC<{
