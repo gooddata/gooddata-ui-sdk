@@ -21,7 +21,7 @@ import {
     getMeasureItems,
     getAllMeasuresShowOnSecondaryAxis,
 } from "./bucketHelper";
-import { DASHBOARDS_ENVIRONMENT, PROPERTY_CONTROLS } from "../constants/properties";
+import { PROPERTY_CONTROLS } from "../constants/properties";
 import { UICONFIG_AXIS } from "../constants/uiConfig";
 import { AxisType, IAxisNameProperties } from "../interfaces/AxisType";
 import { OPTIONAL_STACKING_PROPERTIES } from "../constants/supportedProperties";
@@ -255,18 +255,23 @@ export function getColumnWidthsFromProperties(
 export function getLegendConfiguration(
     controlProperties: IVisualizationProperties,
     insight: IInsightDefinition,
+): IVisualizationProperties {
+    const legendPosition = getLegendPosition(controlProperties, insight);
+    set(controlProperties, "legend.position", legendPosition);
+
+    return controlProperties;
+}
+
+export function getLegendConfigurationDashboardsEnv(
+    controlProperties: IVisualizationProperties,
     options: IVisProps,
-    environment: string,
     enableKDWidgetCustomHeight: boolean | undefined,
 ): IVisualizationProperties {
-    const legendPosition = getLegendPosition(controlProperties, insight, options, environment);
-
-    // Set legend position by bucket items and environment
+    const legendPosition = getLegendPositionDashboardsEnv(controlProperties, options);
     set(controlProperties, "legend.position", legendPosition);
-    if (environment === DASHBOARDS_ENVIRONMENT) {
-        const legendResponsiveness = enableKDWidgetCustomHeight ? "autoPositionWithPopup" : true;
-        set(controlProperties, "legend.responsive", legendResponsiveness);
-    }
+
+    const legendResponsiveness = enableKDWidgetCustomHeight ? "autoPositionWithPopup" : true;
+    set(controlProperties, "legend.responsive", legendResponsiveness);
 
     return controlProperties;
 }
@@ -274,34 +279,40 @@ export function getLegendConfiguration(
 export function getChartSupportedControls(
     controlProperties: IVisualizationProperties | undefined,
     insight: IInsightDefinition,
-    options: IVisProps,
-    environment: string,
     settings: ISettings | undefined,
 ): IVisualizationProperties | undefined {
     return flow(
         (c) => cloneDeep<IVisualizationProperties>(c ?? {}),
-        (c) => getLegendConfiguration(c, insight, options, environment, settings?.enableKDWidgetCustomHeight),
+        (c) => getLegendConfiguration(c, insight),
         (c) => getHighchartsAxisNameConfiguration(c, settings?.enableAxisNameConfiguration),
         (c) => getDataPointsConfiguration(c, settings?.enableHidingOfDataPoints),
     )(controlProperties);
 }
 
-function getLegendPosition(
-    controlProperties: IVisualizationProperties,
-    insight: IInsightDefinition,
+export function getChartSupportedControlsDashboardsEnv(
+    controlProperties: IVisualizationProperties | undefined,
     options: IVisProps,
-    environment: string,
-) {
+    settings: ISettings | undefined,
+): IVisualizationProperties | undefined {
+    return flow(
+        (c) => cloneDeep<IVisualizationProperties>(c ?? {}),
+        (c) => getLegendConfigurationDashboardsEnv(c, options, settings?.enableKDWidgetCustomHeight),
+        (c) => getHighchartsAxisNameConfiguration(c, settings?.enableAxisNameConfiguration),
+        (c) => getDataPointsConfiguration(c, settings?.enableHidingOfDataPoints),
+    )(controlProperties);
+}
+
+function getLegendPosition(controlProperties: IVisualizationProperties, insight: IInsightDefinition) {
     const legendPosition = controlProperties?.legend?.position ?? "auto";
-
-    if (environment === DASHBOARDS_ENVIRONMENT) {
-        const width = options.dimensions?.width;
-        return width !== undefined && width <= getMaxWidthForCollapsedLegend(legendPosition)
-            ? "top"
-            : legendPosition;
-    }
-
     return legendPosition === "auto" && isStacked(insight) ? "right" : legendPosition;
+}
+
+function getLegendPositionDashboardsEnv(controlProperties: IVisualizationProperties, options: IVisProps) {
+    const legendPosition = controlProperties?.legend?.position ?? "auto";
+    const width = options.dimensions?.width;
+    return width !== undefined && width <= getMaxWidthForCollapsedLegend(legendPosition)
+        ? "top"
+        : legendPosition;
 }
 
 function isStacked(insight: IInsightDefinition): boolean {

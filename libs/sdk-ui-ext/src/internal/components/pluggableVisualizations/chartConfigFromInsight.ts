@@ -52,14 +52,7 @@ export function chartConfigFromInsight(
         toPairs,
         filter(([key]) => supportedChartConfigProperties.has(key as any)),
         fromPairs,
-        (c) =>
-            getChartSupportedControls(
-                c,
-                insight,
-                {}, // TODO simplify or remove
-                "", // TODO: allow DASHBOARDS_ENVIRONMENT here?
-                ctx?.settings,
-            ),
+        (c) => getChartSupportedControls(c, insight, ctx?.settings),
         removeUseless,
     )(withValuesFromContext);
 }

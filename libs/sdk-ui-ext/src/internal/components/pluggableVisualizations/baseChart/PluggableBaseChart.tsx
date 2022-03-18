@@ -63,6 +63,7 @@ import {
     hasColorMapping,
     isEmptyObject,
     getChartSupportedControls,
+    getChartSupportedControlsDashboardsEnv,
 } from "../../../utils/propertiesHelper";
 import { createSorts, removeSort, validateCurrentSort } from "../../../utils/sort";
 import { getTranslation } from "../../../utils/translations";
@@ -415,13 +416,18 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
             this.customControlsProperties,
             this.supportedPropertiesList,
         );
-        const supportedControls = getChartSupportedControls(
-            this.visualizationProperties?.controls,
-            insight,
-            options,
-            this.environment,
-            this.featureFlags,
-        );
+        const supportedControls =
+            this.environment === DASHBOARDS_ENVIRONMENT
+                ? getChartSupportedControlsDashboardsEnv(
+                      this.visualizationProperties?.controls,
+                      options,
+                      this.featureFlags,
+                  )
+                : getChartSupportedControls(
+                      this.visualizationProperties?.controls,
+                      insight,
+                      this.featureFlags,
+                  );
 
         return {
             ...defaultControls,
