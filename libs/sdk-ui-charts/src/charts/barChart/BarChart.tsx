@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import {
     applyRatioRule,
@@ -72,6 +72,7 @@ export interface IBarChartBucketProps {
     /**
      * Specify one or more measures to display on the bar chart.
      *
+     * @remarks
      * Note: it is possible to also include an attribute object among measures. In that case cardinality of the
      * attribute elements will be charted.
      */
@@ -80,6 +81,7 @@ export interface IBarChartBucketProps {
     /**
      * Optionally specify one or two attributes to slice the measures along the Y axis.
      *
+     * @remarks
      * If you specify two attributes, the values of these attributes will appear on the Y axis as grouped. For each
      * value of the first attribute there will be all applicable values of the second attribute. For each value of the
      * second attribute there will be a bar indicating the respective slice's value.
@@ -115,12 +117,16 @@ export interface IBarChartProps extends IBarChartBucketProps, IBucketChartProps 
 const WrappedBarChart = withChart(barChartDefinition)(CoreBarChart);
 
 /**
+ * Bar chart shows data in horizontal bars.
+ *
+ * @remarks
  * [BarChart](http://sdk.gooddata.com/gooddata-ui/docs/bar_chart_component.html)
  *
- * Bar chart shows data in horizontal bars. Bar charts can display one or multiple metrics side by side divided by
+ * Bar charts can display one or multiple metrics side by side divided by
  * attribute values or a single measure stacked by attribute values.
  *
- * @remarks See {@link IBarChartProps} to learn how to configure the AreaChart
+ * See {@link IBarChartProps} to learn how to configure the BarChart.
+ *
  * @public
  */
 export const BarChart = (props: IBarChartProps) => {

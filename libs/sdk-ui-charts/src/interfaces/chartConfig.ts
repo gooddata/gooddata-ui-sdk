@@ -5,8 +5,10 @@ import { VisType } from "@gooddata/sdk-ui";
 import { IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
 /**
- * Chart config is used to customize visual aspects of the different charts. At the moment, a single structure
- * is used for all the charts - however not all options are applicable to all charts.
+ * Chart config is used to customize visual aspects of the different charts.
+ *
+ * @remarks
+ * At the moment, a single structure is used for all the charts - however not all options are applicable to all charts.
  *
  * As is, using the not-applicable option for a chart will be ignored. Going forward, we will add warnings to
  * notify developers that the option has no effect.
@@ -30,13 +32,17 @@ export interface IChartConfig {
     /**
      * Specify color palette to use when coloring the chart.
      *
+     * @remarks
      * Note: The color palette is the primary way to specify the colors. If you specify both `colorPalette` and `colors`,
      * then colorPalette will be used.
      */
     colorPalette?: IColorPalette;
 
     /**
-     * Specify custom coloring. This is done using (predicate, color) pairs. The different entities to chart (e.g.
+     * Specify custom coloring.
+     *
+     * @remarks
+     * This is done using (predicate, color) pairs. The different entities to chart (e.g.
      * data point, or a measure slice for particular attribute value) will be evaluated against the predicates. The color
      * will be associated in first-found approach.
      */
@@ -70,6 +76,7 @@ export interface IChartConfig {
     /**
      * Customize format string to use for numeric tics on the Y axis.
      *
+     * @remarks
      * The format string conventions are exact same as when formatting measure values.
      */
     yFormat?: string;
@@ -100,18 +107,25 @@ export interface IChartConfig {
     secondary_yaxis?: IAxisConfig;
 
     /**
-     * Customize visibility of the data labels. Data Labels typically appear within chart (e.g. next to a bar, inside a pie slice)
-     * and
+     * Customize visibility of the data labels.
+     *
+     * @remarks
+     * Data Labels typically appear within chart (e.g. next to a bar, inside a pie slice)
      */
     dataLabels?: IDataLabelsConfig;
 
     /**
-     * Customize visibility of the data points. Data points mark non-extrapolated data in "continuous" charts like line chart, area chart and combo chart made up of these two.
-     * and
+     * Customize visibility of the data points.
+     *
+     * @remarks
+     * Data points mark non-extrapolated data in "continuous" charts like line chart, area chart and combo chart made up of these two.
      */
     dataPoints?: IDataPointsConfig;
 
     /**
+     * This turns on dual axis support for ComboChart visualization.
+     *
+     * @remarks
      * Applicable for ComboChart only. When combo chart specifies both primary and secondary measures, it is by default
      * treated as dual-axis chart. Both primary and secondary axis will be visible.
      *
@@ -120,18 +134,25 @@ export interface IChartConfig {
     dualAxis?: boolean;
 
     /**
+     * Sets the chart type for primary measures.
+     *
+     * @remarks
      * Applicable for ComboChart only. Specify type of chart to use for primary measures.
      */
     primaryChartType?: "line" | "column" | "area";
 
     /**
-     * Applicable for ComboChart only. Specify type of chart to use for primary measures.
+     * Sets the chart type for secondary measures.
+     *
+     * @remarks
+     * Applicable for ComboChart only. Specify type of chart to use for secondary measures.
      */
     secondaryChartType?: "line" | "column" | "area";
 
     /**
      * Applicable for Area, Bar, Column and Combo charts which have more than one measure.
      *
+     * @remarks
      * For Area chart, this is on by default. If disables, the areas will overall.
      * For Bar and Column charts, this is off by default and each measure has its own bar or column.
      * For Combo, only measures assigned to the left (primary) axis will be stacked.
@@ -139,9 +160,10 @@ export interface IChartConfig {
     stackMeasures?: boolean;
 
     /**
-     * Applicable for Area, Bar, Column and Combo charts which have more than one measure.
-     *
      * This turns on measure stacking and client-side calculation of percentage contribution.
+     *
+     * @remarks
+     * Applicable for Area, Bar, Column and Combo charts which have more than one measure.
      *
      * This option has preference over the `stackMeasures` option.
      */
@@ -150,6 +172,7 @@ export interface IChartConfig {
     /**
      * Disables drilling by clicking on axis labels.
      *
+     * @remarks
      * When drilling is configured for a chart, users can click either the charted entities (data points, bars, columns etc)
      * or labels on the axes. This setting an be used to disable clicks on the drillable labels on axes.
      */
@@ -158,6 +181,7 @@ export interface IChartConfig {
     /**
      * Disable underlining of drillable items.
      *
+     * @remarks
      * Any label or text that is drillable and can be clicked is by default underlined. Set this option to true to
      * disable underlining.
      */
@@ -166,6 +190,7 @@ export interface IChartConfig {
     /**
      * Allow zooming and panning in a chart.
      *
+     * @remarks
      * When this option is enabled, we will prepare some configs for the 'chart' option to allow the chart can be zooming/panning.
      */
     zoomInsight?: boolean;
@@ -173,6 +198,7 @@ export interface IChartConfig {
     /**
      * Enables more compact rendering of visualization in small containers.
      *
+     * @remarks
      * Note: this property might not be supported in all the visualizations.
      *
      */
@@ -186,6 +212,7 @@ export interface IChartConfig {
     /**
      * Enables custom sorting of visualizations.
      *
+     * @remarks
      * Note: this property might not be supported in all the visualizations.
      *
      */
@@ -241,9 +268,11 @@ export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
 /**
  * Data label visibility options.
  *
+ * @remarks
  * - false: no labels
  * - true: labels shown, values can overlap when rendered
  * - "auto": labels shown, values will not overlap when rendered
+ *
  * @public
  */
 export type IDataLabelsVisible = boolean | string;
@@ -251,9 +280,11 @@ export type IDataLabelsVisible = boolean | string;
 /**
  * Data points visibility options.
  *
+ * @remarks
  * - false: no points
  * - true: datapoints shown, datapoints can overlap when rendered
  * - "auto": datapoints shown, datapoints will not overlap when rendered
+ *
  * @public
  */
 export type IDataPointsVisible = boolean | "auto";
@@ -311,6 +342,8 @@ export interface IChartLimits {
 }
 
 /**
+ * Position of the axis label relative to the axis.
+ *
  * @public
  */
 export type AxisNamePosition = "high" | "low" | "middle";

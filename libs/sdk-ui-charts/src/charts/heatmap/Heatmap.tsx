@@ -101,10 +101,13 @@ export interface IHeatmapProps extends IBucketChartProps, IHeatmapBucketProps {}
 const WrappedHeatmap = withChart(heatmapDefinition)(CoreHeatmap);
 
 /**
- * [Heatmap](https://sdk.gooddata.com/gooddata-ui/docs/heatmap_component.html)
- *
  * Heatmap represents data as a matrix where individual values are represented as colors.
  * Heatmaps can help you discover trends and understand complex datasets.
+ *
+ * @remarks
+ * [Heatmap](https://sdk.gooddata.com/gooddata-ui/docs/heatmap_component.html)
+ *
+ * See {@link IHeatmapProps} to learn how to configure the Heatmap.
  *
  * @public
  */

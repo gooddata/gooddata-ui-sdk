@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { IAttribute, IAttributeOrMeasure, INullableFilter, newBucket } from "@gooddata/sdk-model";
 import {
@@ -52,6 +52,7 @@ export interface IFunnelChartBucketProps {
     /**
      * Specify one or more measures to chart into a funnel.
      *
+     * @remarks
      * If you specify single measure, then you can also specify the viewBy attribute. Values of that attribute
      * will be used for slicing and will be charted as a funnel.
      *
@@ -91,11 +92,14 @@ const WrappedFunnelChart = withChart(funnelChartDefinition)(CoreFunnelChart);
 /**
  * A funnel chart displays values as progressively decreasing proportions.
  *
+ * @remarks
  * You can define funnel chart using either multiple measures or single measure and a viewBy attribute whose
  * values will be used to slice the single measure.
  *
  * In either case, the measure values will be charted into a funnel. With the largest values being on the broadest
  * part of the funnel, and the smallest values towards the narrow part of the funnel.
+ *
+ * See {@link IFunnelChartProps} to learn how to configure the FunnelChart.
  *
  * @public
  */

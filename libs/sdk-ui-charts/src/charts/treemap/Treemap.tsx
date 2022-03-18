@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import {
     bucketAttribute,
@@ -69,9 +69,11 @@ export interface ITreemapBucketProps {
     measures: AttributesMeasuresOrPlaceholders;
 
     /**
-     * Optionally specify an attribute whose values will be used to slice the measure. Treemap will chart one
-     * rectangle for each attribute value, these rectangles represent unique entities in the hierarchy,
-     * each will be colored uniquely.
+     * Optionally specify an attribute whose values will be used to slice the measure.
+     *
+     * @remarks
+     * Treemap will chart one rectangle for each attribute value, these rectangles represent unique
+     * entities in the hierarchy, each will be colored uniquely.
      *
      * Note: treemap only supports viewBy only when `measures` contains a single measure.
      */
@@ -103,10 +105,14 @@ export interface ITreemapProps extends IBucketChartProps, ITreemapBucketProps {}
 const WrappedTreemap = withChart(treemapDefinition)(CoreTreemap);
 
 /**
+ * Treemap chart presents your data hierarchically as nested rectangles.
+ *
+ * @remarks
  * [Treemap](https://sdk.gooddata.com/gooddata-ui/docs/treemap_component.html)
  *
- * Treemap chart presents your data hierarchically as nested rectangles.
  * Treemaps are useful for comparing proportions within the hierarchy.
+ *
+ * See {@link ITreemapProps} to learn how to configure the Treemap.
  *
  * @public
  */

@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import {
     IAttribute,
@@ -66,6 +66,7 @@ export interface ILineChartBucketProps {
     /**
      * Specify one or more measures whose values will be displayed on the line chart.
      *
+     * @remarks
      * If you specify two or more measures, values of each measure will have their own line.
      */
     measures: AttributesMeasuresOrPlaceholders;
@@ -76,8 +77,10 @@ export interface ILineChartBucketProps {
     trendBy?: AttributeOrPlaceholder;
 
     /**
-     * Optionally specify single attribute whose values will be used to segment the measure values. The line
-     * chart will display one line per measure values pertaining to the segmentBy attribute values.
+     * Optionally specify single attribute whose values will be used to segment the measure values.
+     *
+     * @remarks
+     * The line chart will display one line per measure values pertaining to the segmentBy attribute values.
      */
     segmentBy?: AttributeOrPlaceholder;
 
@@ -105,10 +108,15 @@ export interface ILineChartProps extends IBucketChartProps, ILineChartBucketProp
 const WrappedLineChart = withChart(lineChartDefinition)(CoreLineChart);
 
 /**
+ * Line chart shows data as line-connected dots.
+ *
+ * @remarks
  * [LineChart](http://sdk.gooddata.com/gooddata-ui/docs/line_chart_component.html)
  *
- * Line chart shows data as line-connected dots. Line charts can display either multiple measures as individual lines
+ * Line charts can display either multiple measures as individual lines
  * or a single measure split by one attribute into multiple lines with points intersecting attribute values.
+ *
+ * See {@link ILineChartProps} to learn how to configure the LineChart.
  *
  * @public
  */

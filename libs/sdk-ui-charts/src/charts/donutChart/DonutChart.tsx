@@ -58,6 +58,7 @@ export interface IDonutChartBucketProps {
     /**
      * Specify one or more measures to segment the donut chart.
      *
+     * @remarks
      * If you specify a single measure, then you may further specify the viewBy attribute - there will be
      * donut slice per attribute value.
      *
@@ -96,14 +97,18 @@ export interface IDonutChartProps extends IBucketChartProps, IDonutChartBucketPr
 const WrappedDonutChart = withChart(donutChartDefinition)(CoreDonutChart);
 
 /**
+ * Donut chart shows data as proportional segments of a disc and has a hollowed out center.
+ *
+ * @remarks
  * [DonutChart](http://sdk.gooddata.com/gooddata-ui/docs/donut_chart_component.html)
  *
- * Donut chart shows data as proportional segments of a disc and has a hollowed out center.
  * Donut charts can be segmented by either multiple measures or an attribute, and allow viewers to visualize
  * component parts of a whole.
  *
  * Note: the donut chart slices are by default sorted from largest to smallest. There is also a limit on the
  * number of slices that will be charted.
+ *
+ * See {@link IDonutChartProps} to learn how to configure the DonutChart.
  *
  * @public
  */

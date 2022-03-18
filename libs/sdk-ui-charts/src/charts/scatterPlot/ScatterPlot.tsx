@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { IAttribute, IMeasure, INullableFilter, ISortItem, newBucket } from "@gooddata/sdk-model";
 import {
@@ -90,13 +90,16 @@ export interface IScatterPlotProps extends IBucketChartProps, IScatterPlotBucket
 const WrappedScatterPlot = withChart(scatterPlotDefinition)(CoreScatterPlot);
 
 /**
- * [ScatterPlot](http://sdk.gooddata.com/gooddata-ui/docs/scatter_plot_component.html)
- *
  * Scatter plot shows data as points using Cartesian coordinates.
+ *
+ * @remarks
+ * [ScatterPlot](http://sdk.gooddata.com/gooddata-ui/docs/scatter_plot_component.html)
  *
  * Scatter plots typically have a minimum of two measures, one for the X-axis and the other for the Y-axis, and one
  * attribute, which determines the meaning of each data point. Scatter plots are useful for analyzing trends between
  * two measures or for tracking the magnitude of two measures from the same chart.
+ *
+ * See {@link IScatterPlotProps} to learn how to configure the ScatterPlot.
  *
  * @public
  */
