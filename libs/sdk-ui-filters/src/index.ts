@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 /**
  * This package provides several React components related to filters.
  *
@@ -41,6 +41,8 @@ export {
     DateFilterRelativeOptionGroup,
     IDateFilterOptionsByType,
     IExtendedDateFilterErrors,
+    IDateFilterAbsoluteFormErrors,
+    IDateFilterRelativeFormErrors,
     RelativeDateFilterOption,
     isAbsoluteDateFilterOption,
     isRelativeDateFilterOption,

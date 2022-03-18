@@ -277,6 +277,14 @@ export interface IDateAndMessageTranslator extends IDateTranslator, IMessageTran
 }
 
 // @public
+export interface IDateFilterAbsoluteFormErrors {
+    // (undocumented)
+    from?: string;
+    // (undocumented)
+    to?: string;
+}
+
+// @public
 export interface IDateFilterCallbackProps {
     // (undocumented)
     onApply: (dateFilterOption: DateFilterOption, excludeCurrentPeriod: boolean) => void;
@@ -320,6 +328,14 @@ export interface IDateFilterProps extends IDateFilterOwnProps, IDateFilterCallba
 }
 
 // @public
+export interface IDateFilterRelativeFormErrors {
+    // (undocumented)
+    from?: string;
+    // (undocumented)
+    to?: string;
+}
+
+// @public
 export interface IDateFilterState extends IDateFilterStatePropsIntersection {
     // (undocumented)
     initExcludeCurrentPeriod: boolean;
@@ -345,14 +361,8 @@ export interface IDateTranslator {
 
 // @public
 export interface IExtendedDateFilterErrors {
-    absoluteForm?: {
-        from?: string;
-        to?: string;
-    };
-    relativeForm?: {
-        from?: string;
-        to?: string;
-    };
+    absoluteForm?: IDateFilterAbsoluteFormErrors;
+    relativeForm?: IDateFilterRelativeFormErrors;
 }
 
 // @beta (undocumented)

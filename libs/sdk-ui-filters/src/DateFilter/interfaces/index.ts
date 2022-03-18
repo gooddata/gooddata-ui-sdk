@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import {
     IAbsoluteDateFilterForm,
     IAbsoluteDateFilterPreset,
@@ -126,6 +126,26 @@ export interface IDateFilterOptionsByType {
 }
 
 /**
+ * Absolute form date filter errors.
+ *
+ * @public
+ */
+export interface IDateFilterAbsoluteFormErrors {
+    from?: string;
+    to?: string;
+}
+
+/**
+ * Relative form date filter errors.
+ *
+ * @public
+ */
+export interface IDateFilterRelativeFormErrors {
+    from?: string;
+    to?: string;
+}
+
+/**
  * Extended date filter errors
  * @public
  */
@@ -133,15 +153,9 @@ export interface IExtendedDateFilterErrors {
     /**
      * Global absolute date filter errors
      */
-    absoluteForm?: {
-        from?: string;
-        to?: string;
-    };
+    absoluteForm?: IDateFilterAbsoluteFormErrors;
     /**
      * Global relative date filter errors
      */
-    relativeForm?: {
-        from?: string;
-        to?: string;
-    };
+    relativeForm?: IDateFilterRelativeFormErrors;
 }

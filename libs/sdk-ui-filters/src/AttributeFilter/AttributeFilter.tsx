@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { useEffect } from "react";
 import { injectIntl } from "react-intl";
 import MediaQuery from "react-responsive";
@@ -42,15 +42,17 @@ import stringify from "json-stable-stringify";
  */
 export interface IAttributeFilterProps {
     /**
-     * Optionally specify an instance of analytical backend instance to work with.
+     * Specify an instance of analytical backend instance to work with.
      *
+     * @remarks
      * Note: if you do not have a BackendProvider above in the component tree, then you MUST specify the backend.
      */
     backend?: IAnalyticalBackend;
 
     /**
-     * Optionally specify workspace to work with.
+     * Specify workspace to work with.
      *
+     * @remarks
      * Note: if you do not have a WorkspaceProvider above in the component tree, then you MUST specify the workspace.
      */
     workspace?: string;
@@ -58,6 +60,7 @@ export interface IAttributeFilterProps {
     /**
      * Specify identifier of attribute, for which you want to construct the filter.
      *
+     * @remarks
      * Note: this is optional and deprecated. If you do not specify this, then you MUST specify the filter prop.
      *
      * @deprecated - use the filter prop instead
@@ -65,14 +68,17 @@ export interface IAttributeFilterProps {
     identifier?: string;
 
     /**
-     * Specify an attribute filter that will be customized using this filter. The component will use content of the
-     * filter and select the items that are already specified on the filter.
+     * Specify an attribute filter that will be customized using this filter.
+     *
+     * @remarks
+     * The component will use content of the filter and select the items that are already specified on the filter.
      */
     filter?: IAttributeFilter;
 
     /**
      * Specify a parent attribute filter that will be used to reduce options for available components options.
      *
+     * @remarks
      * Parent filters elements must contain their URIs due to current backend limitations.
      */
     parentFilters?: AttributeFiltersOrPlaceholders;
@@ -80,6 +86,7 @@ export interface IAttributeFilterProps {
     /**
      * Specify {@link @gooddata/sdk-ui#IPlaceholder} to use to get and set the value of the attribute filter.
      *
+     * @remarks
      * Note: It's not possible to combine this property with "filter" property. Either - provide a value, or a placeholder.
      * There is no need to specify 'onApply' callback if 'connectToPlaceholder' property is used as the value of the filter
      * is set via this placeholder.
@@ -89,53 +96,61 @@ export interface IAttributeFilterProps {
     /**
      * Specify the over attribute - an attribute the filter and its parent filter are connected through.
      *
+     * @remarks
      * You can either provide an {@link @gooddata/sdk-model#ObjRef} which will be used for all the parent filters,
      * or you can provide a function that will be called for each parent filter to determine the respective over attribute.
      */
     parentFilterOverAttribute?: ObjRef | ((parentFilter: IAttributeFilter, index: number) => ObjRef);
 
     /**
-     * Specify function which will be called when user clicks 'Apply' button. The function will receive the current
-     * specification of the filter, as it was updated by the user.
+     * Specify function which will be called when user clicks 'Apply' button.
+     *
+     * @remarks
+     * The function will receive the current specification of the filter, as it was updated by the user.
      *
      * @param filter - new value of the filter.
      */
     onApply?: (filter: IAttributeFilter) => void;
 
     /**
-     * Optionally specify title for the attribute filter. By default, the attribute name will be used.
+     * Specify title for the attribute filter.
+     *
+     * @remarks
+     * By default, the attribute name will be used.
      */
     title?: string;
 
     /**
-     * Optionally customize whether selected items should be summarized in the title of the filter - so that
-     * they are visible even if the filter is closed.
+     * Customize whether selected items should be summarized in the subtitle of the filter.
+     *
+     * @remarks
+     * Subtitle shows the list of selected elements divided by commas.
      */
     titleWithSelection?: boolean;
 
     /**
-     * Optionally customize, whether the filter should take the entire screen on mobile devices.
+     * Customize, whether the filter should take the entire screen on mobile devices.
      */
     fullscreenOnMobile?: boolean;
 
     /**
-     * Optionally customize locale to use for the different strings that appear on the filter component.
+     * Customize locale to use for the different strings that appear on the filter component.
      */
     locale?: string;
 
     /**
-     * Optionally customize attribute filter with a callback function to trigger when an error occurs while
+     * Customize attribute filter with a callback function to trigger when an error occurs while
      * loading attribute elements.
      */
     onError?: OnError;
 
     /**
-     * Optionally customize attribute filter with a component to be rendered if attribute elements are loading
+     * Customize attribute filter with a component to be rendered if attribute elements are loading
      */
     FilterLoading?: React.ComponentType;
 
     /**
-     * Optionally customize attribute filter with a component to be rendered if attribute elements loading fails
+     * Customize attribute filter with a component to be rendered if attribute elements loading fails
      */
     FilterError?: React.ComponentType<{ error?: any }>;
 }
