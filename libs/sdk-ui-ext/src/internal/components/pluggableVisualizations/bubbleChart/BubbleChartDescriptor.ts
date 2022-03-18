@@ -12,11 +12,11 @@ import { BigChartDescriptor } from "../BigChartDescriptor";
 import {
     bucketConversion,
     chartAdditionalFactories,
-    chartConfigFromInsight,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
     insightConversion,
 } from "../../../utils/embeddingCodeGenerator";
+import { chartConfigFromInsight } from "../chartConfigFromInsight";
 
 export class BubbleChartDescriptor extends BigChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

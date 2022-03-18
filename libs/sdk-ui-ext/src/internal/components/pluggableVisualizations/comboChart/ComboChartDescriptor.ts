@@ -12,11 +12,11 @@ import { BigChartDescriptor } from "../BigChartDescriptor";
 import {
     getReactEmbeddingCodeGenerator,
     bucketConversion,
-    chartConfigFromInsight,
     getInsightToPropsConverter,
     insightConversion,
     chartAdditionalFactories,
 } from "../../../utils/embeddingCodeGenerator";
+import { chartConfigFromInsight } from "../chartConfigFromInsight";
 
 export class ComboChartDescriptor extends BigChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

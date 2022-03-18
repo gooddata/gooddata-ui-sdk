@@ -30,11 +30,11 @@ import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Vis
 import {
     bucketConversion,
     chartAdditionalFactories,
-    chartConfigFromInsight,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
     insightConversion,
 } from "../../../utils/embeddingCodeGenerator";
+import { chartConfigFromInsight } from "../chartConfigFromInsight";
 
 export class ColumnChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

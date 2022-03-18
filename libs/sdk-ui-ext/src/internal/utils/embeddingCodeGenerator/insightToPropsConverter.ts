@@ -1,15 +1,10 @@
 // (C) 2022 GoodData Corporation
-import { IBucket, IInsightDefinition, insightBucket, insightProperties } from "@gooddata/sdk-model";
-import { IChartConfig } from "@gooddata/sdk-ui-charts";
-import filter from "lodash/fp/filter";
-import flow from "lodash/fp/flow";
-import fromPairs from "lodash/fromPairs";
-import isNil from "lodash/isNil";
+import { IBucket, IInsightDefinition, insightBucket } from "@gooddata/sdk-model";
 import toPairs from "lodash/toPairs";
+
 import { IEmbeddingCodeContext } from "../../interfaces/VisualizationDescriptor";
-import { getChartSupportedControls } from "../propertiesHelper";
+
 import { InsightToPropsConverter } from "./types";
-import { removeUseless } from "./removeUseless";
 
 interface IBucketConversion<TProps extends object, TPropKey extends keyof TProps> {
     type: "bucket";
@@ -86,67 +81,4 @@ export function getInsightToPropsConverter<TProps extends object>(
             return acc;
         }, {}) as TProps;
     };
-}
-
-export function getConfigFromPropsConverter<TConfig extends object>(
-    supportedProperties: Set<keyof TConfig>,
-): (insight: IInsightDefinition) => TConfig {
-    return (insight): TConfig => {
-        const properties = insightProperties(insight);
-        const controls = properties?.controls;
-
-        return flow(
-            toPairs,
-            filter(([key, value]) => supportedProperties.has(key as any) && !isNil(value)),
-            fromPairs,
-        )(controls) as TConfig;
-    };
-}
-
-const supportedChartConfigProperties = new Set<keyof IChartConfig>([
-    "colorMapping",
-    "dataLabels",
-    "dataPoints",
-    "dualAxis",
-    "enableJoinedAttributeAxisName",
-    "grid",
-    "legend",
-    "legendLayout",
-    "limits",
-    "primaryChartType",
-    "secondaryChartType",
-    "secondary_xaxis",
-    "secondary_yaxis",
-    "separators",
-    "stackMeasures",
-    "stackMeasuresToPercent",
-    "xFormat",
-    "xLabel",
-    "xaxis",
-    "yFormat",
-    "yLabel",
-    "yaxis",
-]);
-
-export function chartConfigFromInsight(
-    insight: IInsightDefinition,
-    ctx?: IEmbeddingCodeContext,
-): IChartConfig {
-    const properties = insightProperties(insight);
-    const controls = properties?.controls;
-
-    return flow(
-        toPairs,
-        filter(([key]) => supportedChartConfigProperties.has(key as any)),
-        fromPairs,
-        (c) =>
-            getChartSupportedControls(
-                c,
-                insight,
-                {}, // TODO: provide some options?
-                "", // TODO: allow DASHBOARDS_ENVIRONMENT here?
-                ctx?.settings,
-            ),
-        removeUseless,
-    )(controls);
 }

@@ -18,11 +18,11 @@ import {
 import {
     bucketConversion,
     chartAdditionalFactories,
-    chartConfigFromInsight,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
     insightConversion,
 } from "../../../utils/embeddingCodeGenerator";
+import { chartConfigFromInsight } from "../chartConfigFromInsight";
 
 export class LineChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

@@ -15,11 +15,11 @@ import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownH
 import {
     bucketConversion,
     chartAdditionalFactories,
-    chartConfigFromInsight,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
     insightConversion,
 } from "../../../utils/embeddingCodeGenerator";
+import { chartConfigFromInsight } from "../chartConfigFromInsight";
 
 export class BulletChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
