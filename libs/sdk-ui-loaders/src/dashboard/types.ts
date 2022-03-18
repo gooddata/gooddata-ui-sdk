@@ -31,8 +31,11 @@ export interface IEmbeddedPlugin {
  */
 export interface IDashboardBasePropsForLoader extends Omit<IDashboardBaseProps, "dashboard"> {
     /**
-     * Specify reference to an existing dashboard that should be loaded. You may specify an `idRef` or `uriRef`; as
-     * a convenience you may also specify dashboard object identifier (string) - that's same as using `idRef(objectIdentifier)`.
+     * Specify reference to an existing dashboard that should be loaded.
+     *
+     * @remarks
+     * You may specify an `idRef` or `uriRef`; as a convenience you may also specify dashboard object
+     * identifier (string) - that's same as using `idRef(objectIdentifier)`.
      */
     dashboard: string | ObjRef;
 }
@@ -46,6 +49,7 @@ export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
     /**
      * Loading mode to use.
      *
+     * @remarks
      * `staticOnly` mode
      *
      * The loader expects that it is running inside an application that depends on the `@gooddata/sdk-ui-dashboard`
@@ -72,8 +76,11 @@ export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
     loadingMode?: "adaptive" | "staticOnly";
 
     /**
-     * Optionally specify client workspace identifiers to use in order to identify exact workspace to load
-     * the dashboard from. Client workspace identifiers are not applicable to all backends - only the 'bear'
+     * Specify client workspace identifiers to use in order to identify exact workspace to load
+     * the dashboard from.
+     *
+     * @remarks
+     * Client workspace identifiers are not applicable to all backends - only the 'bear'
      * backend supports them. They are tightly related to the Lifecycle Management feature of the 'bear'
      * backend.
      *
@@ -84,13 +91,17 @@ export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
     clientWorkspace?: IClientWorkspaceIdentifiers;
 
     /**
-     * Optionally specify extra plugins to use during the bootstrap of the dashboard. Code for these extra
-     * plugins must be available at compile time.
+     * Specify extra plugins to use during the bootstrap of the dashboard.
+     *
+     * @remarks
+     * Code for these extra plugins must be available at compile time.
      */
     extraPlugins?: IEmbeddedPlugin | IEmbeddedPlugin[];
 
     /**
      * Specify configuration related adaptive loading.
+     *
+     * @remarks
      * If loadingMode is not set to "staticOnly", this is mandatory.
      */
     adaptiveLoadOptions?: AdaptiveLoadOptions;
@@ -98,6 +109,7 @@ export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
     /**
      * Specify when will be in progress features allowed
      *
+     * @remarks
      * `staticOnly` in progress features allowed only when there is no external plugin loaded
      * `alwaysAllow` in progress features always allowed
      * `alwaysPrevent` in progress features always prevented
@@ -108,8 +120,10 @@ export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
 }
 
 /**
- * Adaptive loading requires additional options passed by the client. The crucial options are the
- * module federation integration functions.
+ * Adaptive loading requires additional options passed by the client.
+ *
+ * @remarks
+ * The crucial options are the module federation integration functions.
  *
  * The adaptive loader relies on Webpack's Module Federation to get the job done and expects that it
  * is running in context where Webpack Module Federation is correctly setup; the load requires few functions

@@ -154,8 +154,10 @@ export interface IGeoLegendConfig {
     position?: PositionType;
 
     /**
-     * Turns on responsive behavior. Legend items will be rendered horizontally on
-     * screens smaller than 767px.
+     * Turns on responsive behavior.
+     *
+     * @remarks
+     * Legend items will be rendered horizontally on screens smaller than 767px.
      * For the popup legend must be a flag set to `autoPositionWithPopup`
      */
     responsive?: boolean | "autoPositionWithPopup";
@@ -200,6 +202,7 @@ export interface IGeoPushpinChartProps extends IVisualizationProps, IVisualizati
     /**
      * Analytical backend, from which the chart will obtain data to visualize
      *
+     * @remarks
      * If you do not specify instance of analytical backend using this prop, then you MUST have
      * BackendProvider up in the component tree.
      */
@@ -208,6 +211,7 @@ export interface IGeoPushpinChartProps extends IVisualizationProps, IVisualizati
     /**
      * Identifier of analytical workspace, from which the chart will obtain data to visualize.
      *
+     * @remarks
      * If you do not specify workspace identifier, then you MUST have WorkspaceProvider up in the
      * component tree.
      */
@@ -222,7 +226,7 @@ export interface IGeoPushpinChartProps extends IVisualizationProps, IVisualizati
     sortBy?: SortsOrPlaceholders;
 
     /**
-     * Optional resolution context for composed placeholders.
+     * Resolution context for composed placeholders.
      */
     placeholdersResolutionContext?: any;
 
@@ -234,12 +238,12 @@ export interface IGeoPushpinChartProps extends IVisualizationProps, IVisualizati
     execConfig?: IExecutionConfig;
 
     /**
-     * Optionally specify function to call back when center position of the map changes.
+     * Specify function to call back when center position of the map changes.
      */
     onCenterPositionChanged?: CenterPositionChangedCallback;
 
     /**
-     * Optionally specify function to call back when map zoom changes.
+     * Specify function to call back when map zoom changes.
      */
     onZoomChanged?: ZoomChangedCallback;
 }
@@ -248,9 +252,24 @@ export interface IGeoPushpinChartProps extends IVisualizationProps, IVisualizati
  * @public
  */
 export interface IGeoDrillEvent extends IDrillEventContext {
-    color?: number; // geo chart: color value of the drilled pin
-    location?: IGeoLngLat; // geo chart: location of the drilled pin
-    locationName?: string; // geo chart: location name of the drilled pin
-    segmentBy?: string; // geo chart: segmentBy of the drilled pin
-    size?: number; // geo chart: size value of the drilled pin
+    /**
+     * Color value of the drilled pin
+     */
+    color?: number;
+    /**
+     * Location of the drilled pin
+     */
+    location?: IGeoLngLat;
+    /**
+     * Location name of the drilled pin
+     */
+    locationName?: string;
+    /**
+     * SegmentBy of the drilled pin
+     */
+    segmentBy?: string;
+    /**
+     * Size value of the drilled pin
+     */
+    size?: number;
 }

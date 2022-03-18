@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React from "react";
 import {
     ErrorComponent as DefaultErrorComponent,
@@ -25,8 +25,10 @@ export interface IDashboardStubProps extends IDashboardLoadOptions {
 }
 
 /**
- * DashboardStub encapsulates load, bootstrap and teardown of a dashboard enhanced by plugins. This component
- * is a thin wrapper on top of the {@link useDashboardLoader} hook which does the heavy lifting - you can
+ * DashboardStub encapsulates load, bootstrap and teardown of a dashboard enhanced by plugins.
+ *
+ * @remarks
+ * This component is a thin wrapper on top of the {@link useDashboardLoader} hook which does the heavy lifting - you can
  * use the hook in your own component if this simple stub does not suffice.
  *
  * @public
