@@ -6,8 +6,6 @@ import { PluggableVisualizationFactory } from "../../../interfaces/Visualization
 import { PluggableScatterPlot } from "./PluggableScatterPlot";
 import { BigChartDescriptor } from "../BigChartDescriptor";
 import {
-    chartAdditionalFactories,
-    chartConfigInsightConversion,
     filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
@@ -15,6 +13,7 @@ import {
     singleMeasureBucketConversion,
     sortsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator";
+import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils";
 
 export class ScatterPlotDescriptor extends BigChartDescriptor {
     public getFactory(): PluggableVisualizationFactory {

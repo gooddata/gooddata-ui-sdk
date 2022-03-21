@@ -13,7 +13,6 @@ import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Vis
 import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper";
 import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil";
 import {
-    chartConfigInsightConversion,
     filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
@@ -21,6 +20,7 @@ import {
     singleAttributeOrMeasureBucketConversion,
     sortsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator";
+import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils";
 
 export class HeatmapDescriptor extends BigChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
@@ -50,6 +50,7 @@ export class HeatmapDescriptor extends BigChartDescriptor implements IVisualizat
             sortBy: sortsInsightConversion("sortBy"),
             config: chartConfigInsightConversion("config"),
         }),
+        additionalFactories: chartAdditionalFactories,
     });
 
     private addFilters(source: IInsight, drillConfig: IDrillDownDefinition, event: IDrillEvent) {

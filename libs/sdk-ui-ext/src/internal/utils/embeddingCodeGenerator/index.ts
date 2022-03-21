@@ -13,9 +13,7 @@ export {
     singleMeasureBucketConversion,
     sortsInsightConversion,
     totalsInsightConversion,
+    IBucketConversion,
+    IInsightConversion,
 } from "./insightToPropsConverter";
-export {
-    chartAdditionalFactories,
-    chartConfigInsightConversion,
-    chartConfigPropMeta,
-} from "./chartAdditionalFactories";
+export * from "./types";

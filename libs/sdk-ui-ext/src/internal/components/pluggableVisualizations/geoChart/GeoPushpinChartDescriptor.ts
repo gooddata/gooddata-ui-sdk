@@ -14,7 +14,6 @@ import { PluggableGeoPushpinChart } from "./PluggableGeoPushpinChart";
 import { DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT, MIDDLE_VISUALIZATION_HEIGHT } from "../constants";
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
 import {
-    chartAdditionalFactories,
     filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
@@ -24,6 +23,7 @@ import {
     sortsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator";
 import { geoConfigFromInsight } from "./geoConfigFromInsight";
+import { chartAdditionalFactories } from "../chartCodeGenUtils";
 
 export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

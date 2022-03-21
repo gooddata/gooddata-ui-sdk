@@ -9,8 +9,6 @@ import {
 import { PluggableDonutChart } from "./PluggableDonutChart";
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
 import {
-    chartAdditionalFactories,
-    chartConfigInsightConversion,
     filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
@@ -18,6 +16,7 @@ import {
     singleAttributeBucketConversion,
     sortsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator";
+import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils";
 
 export class DonutChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

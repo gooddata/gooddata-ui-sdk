@@ -1,11 +1,23 @@
 // (C) 2022 GoodData Corporation
-import { IInsightDefinition, insightProperties } from "@gooddata/sdk-model";
+import {
+    factoryNotationFor,
+    isColorMappingItem,
+    IInsightDefinition,
+    insightProperties,
+} from "@gooddata/sdk-model";
 import { IChartConfig } from "@gooddata/sdk-ui-charts";
 import filter from "lodash/fp/filter";
 import flow from "lodash/fp/flow";
 import fromPairs from "lodash/fromPairs";
 import toPairs from "lodash/toPairs";
+
 import { IEmbeddingCodeContext } from "../../interfaces/VisualizationDescriptor";
+import {
+    IAdditionalFactoryDefinition,
+    IInsightConversion,
+    insightConversion,
+    PropMeta,
+} from "../../utils/embeddingCodeGenerator";
 import { getChartSupportedControls } from "../../utils/propertiesHelper";
 import { removeUseless } from "../../utils/removeUseless";
 
@@ -55,4 +67,36 @@ export function chartConfigFromInsight(
         (c) => getChartSupportedControls(c, insight, ctx?.settings),
         removeUseless,
     )(withValuesFromContext);
+}
+
+export const chartAdditionalFactories: IAdditionalFactoryDefinition[] = [
+    {
+        importInfo: {
+            importType: "named",
+            name: "getColorMappingPredicate",
+            package: "@gooddata/sdk-ui-vis-commons",
+        },
+        transformation: (obj) => {
+            return isColorMappingItem(obj)
+                ? `{predicate: getColorMappingPredicate("${obj.id}"), color: ${factoryNotationFor(
+                      obj.color,
+                  )}}`
+                : undefined;
+        },
+    },
+];
+
+const chartConfigPropMeta: PropMeta = {
+    propImport: {
+        importType: "named",
+        name: "IChartConfig",
+        package: "@gooddata/sdk-ui-charts",
+    },
+    propType: "scalar",
+};
+
+export function chartConfigInsightConversion<TProps extends object, TPropKey extends keyof TProps>(
+    propName: TPropKey,
+): IInsightConversion<TProps, TPropKey, IChartConfig> {
+    return insightConversion(propName, chartConfigPropMeta, chartConfigFromInsight);
 }

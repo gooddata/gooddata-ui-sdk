@@ -16,8 +16,6 @@ import {
 } from "../drillDownUtil";
 import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization";
 import {
-    chartAdditionalFactories,
-    chartConfigInsightConversion,
     filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
@@ -26,6 +24,7 @@ import {
     singleAttributeBucketConversion,
     sortsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator";
+import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils";
 
 export class AreaChartDescriptor extends BigChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

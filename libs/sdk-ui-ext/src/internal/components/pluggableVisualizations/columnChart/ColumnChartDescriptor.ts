@@ -19,8 +19,6 @@ import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } 
 import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper";
 import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization";
 import {
-    chartAdditionalFactories,
-    chartConfigInsightConversion,
     filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
@@ -29,6 +27,7 @@ import {
     singleAttributeBucketConversion,
     sortsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator";
+import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils";
 
 export class ColumnChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

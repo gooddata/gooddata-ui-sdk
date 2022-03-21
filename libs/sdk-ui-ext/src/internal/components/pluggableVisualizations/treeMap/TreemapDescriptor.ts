@@ -13,14 +13,13 @@ import {
 } from "../drillDownUtil";
 import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization";
 import {
-    chartAdditionalFactories,
-    chartConfigInsightConversion,
     filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
     multipleAttributesOrMeasuresBucketConversion,
     singleAttributeBucketConversion,
 } from "../../../utils/embeddingCodeGenerator";
+import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils";
 
 export class TreemapDescriptor extends BigChartDescriptor {
     public getFactory(): PluggableVisualizationFactory {

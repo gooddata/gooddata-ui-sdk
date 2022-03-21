@@ -26462,6 +26462,7 @@ exports[`getEmbeddingCode functionality should generate code for Heatmap - assig
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeSort, newMeasure } from \\"@gooddata/sdk-model\\";
 import { Heatmap, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
+import { getColorMappingPredicate } from \\"@gooddata/sdk-ui-vis-commons\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const rows: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
@@ -26471,10 +26472,7 @@ const sortBy: ISortItem[] = [
 ];
 const config: IChartConfig = {
     colorMapping: [
-        {
-            color: {type: \\"rgb\\", value: {b: 0, g: 0, r: 0}},
-            id: \\"m_aangOxLSeztu\\"
-        }
+        {predicate: getColorMappingPredicate(\\"m_aangOxLSeztu\\"), color: {type: \\"rgb\\", value: {b: 0, g: 0, r: 0}}}
     ],
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"right\\"},
