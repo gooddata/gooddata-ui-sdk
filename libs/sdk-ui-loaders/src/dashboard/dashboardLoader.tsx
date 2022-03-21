@@ -79,7 +79,8 @@ export type DashboardLoaderConfig = {
     pluginLoader: DashboardPluginsLoader;
 
     /**
-     * Optionally specify a function that will be called before engineLoader and pluginLoader.
+     * Specify a function that will be called before engineLoader and pluginLoader.
+     *
      * @remarks
      * This function is useful if there are some steps needed for both engine and plugin loading.
      */

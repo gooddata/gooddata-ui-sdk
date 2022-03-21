@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { IAnalyticalBackend, IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import React, { useEffect, useState } from "react";
 import { useBackend } from "../../react/BackendContext";
@@ -35,6 +35,7 @@ export interface ITranslationsCustomizationProviderProps {
     /**
      * Analytical backend, from which the ThemeProvider will obtain selected theme object
      *
+     * @remarks
      * If you do not specify instance of analytical backend using this prop, then you MUST have
      * BackendProvider up in the component tree.
      */
@@ -43,6 +44,7 @@ export interface ITranslationsCustomizationProviderProps {
     /**
      * Identifier of analytical workspace, from which the ThemeProvider will obtain the selected theme identifier
      *
+     * @remarks
      * If you do not specify workspace identifier, then you MUST have WorkspaceProvider up in the
      * component tree.
      */
@@ -53,6 +55,8 @@ const defaultTranslationsParam: ITranslationsCustomizationProviderProps["transla
 
 /**
  * This provider is here because of the need for customization of translations.
+ *
+ * @remarks
  * If you need to change translations based on some setting flag,
  * use this provider at the top of you your react tree.
  *

@@ -190,7 +190,10 @@ export class ScenarioBuilder<T extends VisProps> {
     }
 
     /**
-     * Optionally customize workspace against which this scenario can run. See {@link WorkspaceType}.
+     * Customize workspace against which this scenario can run.
+     *
+     * @remarks
+     * See {@link WorkspaceType}.
      *
      * If not specified, defaults to reference-workspace.
      *
@@ -203,7 +206,10 @@ export class ScenarioBuilder<T extends VisProps> {
     }
 
     /**
-     * Optionally customize data capture parameters for this scenario. Note that the essential data capture parameters
+     * Customize data capture parameters for this scenario.
+     *
+     * @remarks
+     * Note that the essential data capture parameters
      * are automatically sniffed by the infrastructure. This customization can be used _on top_ of the captures
      * identified automatically.
      *

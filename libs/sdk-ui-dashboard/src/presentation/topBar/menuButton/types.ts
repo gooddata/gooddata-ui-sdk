@@ -61,14 +61,17 @@ export type CustomMenuButtonComponent = ComponentType<IMenuButtonProps>;
  */
 export interface IMenuButtonConfiguration {
     /**
-     * Optionally specify custom items that will be in the menu. Using this setting fully overrides the
-     * menu items. The default items will not be shown.
+     * Specify custom items that will be in the menu.
+     *
+     * @remarks
+     * Using this setting fully overrides the menu items. The default items will not be shown.
      */
     menuItems?: ReadonlyArray<IMenuButtonItem>;
 
     /**
-     * Optionally specify additional menu items to add on top of the default items.
+     * Specify additional menu items to add on top of the default items.
      *
+     * @remarks
      * If specified, this should be a list of tuples: index to add item at, the menu item to add. If you want
      * to add item at the end of the list, use index `-1`.
      */

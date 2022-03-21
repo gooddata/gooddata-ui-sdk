@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { withExecution } from "./withExecution";
 import { DataViewWindow, IWithLoadingEvents, WithLoadingResult } from "./withExecutionLoading";
@@ -17,6 +17,7 @@ export interface IExecuteInsightProps extends IWithLoadingEvents<IExecuteInsight
     /**
      * Backend to execute against.
      *
+     * @remarks
      * Note: the backend must come either from this property or from BackendContext. If you do not specify
      * backend here, then the executor MUST be rendered within an existing BackendContext.
      */
@@ -25,6 +26,7 @@ export interface IExecuteInsightProps extends IWithLoadingEvents<IExecuteInsight
     /**
      * Workspace in whose context to perform the execution.
      *
+     * @remarks
      * Note: the workspace must come either from this property or from WorkspaceContext. If you do not specify
      * workspace here, then the executor MUST be rendered within an existing WorkspaceContext.
      */
@@ -36,28 +38,30 @@ export interface IExecuteInsightProps extends IWithLoadingEvents<IExecuteInsight
     insight: ObjRef;
 
     /**
-     * Optionally modify sorts on prepared insight execution, before it's executed.
+     * Modify sorts on prepared insight execution, before it's executed.
      */
     sorts?: ISortItem[] | ((def: IExecutionDefinition, props: IExecuteInsightProps) => ISortItem[]);
 
     /**
-     * Optionally modify dimensions on prepared insight execution, before it's executed.
+     * Modify dimensions on prepared insight execution, before it's executed.
      */
     dimensions?: IDimension[] | ((def: IExecutionDefinition, props: IExecuteInsightProps) => IDimension[]);
 
     /**
-     * Optionally modify date formatting on prepared insight execution, before it's executed.
+     * Modify date formatting on prepared insight execution, before it's executed.
      */
     dateFormat?: string | ((def: IExecutionDefinition, props: IExecuteInsightProps) => string);
 
     /**
-     * Optional filters to apply on server side.
+     * Filters to apply on server side.
      */
     filters?: INullableFilter[];
 
     /**
-     * Optional name to use for files exported from this component. If you do not specify this, then
-     * the componentName will be used instead.
+     * Name to use for files exported from this component.
+     *
+     * @remarks
+     * If you do not specify this, then the componentName will be used instead.
      *
      * Note: it is also possible to pass custom name to the export function that will be sent via the
      * onExportReady callback. That approach is preferred if you need to assign the names in an ad-hoc
@@ -66,9 +70,11 @@ export interface IExecuteInsightProps extends IWithLoadingEvents<IExecuteInsight
     exportTitle?: string;
 
     /**
-     * Optional informative name of the component. This value is sent as telemetry information together
-     * with the actual execution request. We recommend to set this because it can be useful for diagnostic
-     * purposes.
+     * Informative name of the component.
+     *
+     * @remarks
+     * This value is sent as telemetry information together with the actual execution request. We recommend to set this
+     * because it can be useful for diagnostic purposes.
      *
      * Defaults 'Execute'.
      */
@@ -76,7 +82,10 @@ export interface IExecuteInsightProps extends IWithLoadingEvents<IExecuteInsight
 
     /**
      * Specifies whether `Execute` should trigger execution and loading right after it is
-     * mounted. If not specified defaults to `true`.
+     * mounted.
+     *
+     * @remarks
+     * If not specified defaults to `true`.
      *
      * If set to `false`, then the {@link WithLoadingResult#reload} function needs to be called
      * to trigger the execution and loading.
@@ -87,29 +96,34 @@ export interface IExecuteInsightProps extends IWithLoadingEvents<IExecuteInsight
      * Specifies whether `Execute` should load all data from backend or just a particular window - specified by
      * offset and size of the window.
      *
+     * @remarks
      * If not specified, all data will be loaded.
      */
     window?: DataViewWindow;
 
     /**
-     * Child component to which rendering is delegated. This is a function that will be called
-     * every time state of execution and data loading changes.
+     * Child component to which rendering is delegated.
+     *
+     * @remarks
+     * This is a function that will be called every time state of execution and data loading changes.
      *
      * @param executionResult - execution result, indicating state and/or results
      */
     children: (executionResult: WithLoadingResult) => React.ReactElement | null;
 
     /**
-     * Optionally provide component for rendering of the loading state.
+     * Provide component for rendering of the loading state.
      *
+     * @remarks
      * Note: When you provide both LoadingComponent and ErrorComponent, the children function with the execution result
      * will be called only with a successful result.
      */
     LoadingComponent?: IExecuteLoadingComponent;
 
     /**
-     * Optionally provide component for rendering of the error state.
+     * Provide component for rendering of the error state.
      *
+     * @remarks
      * Note: When you provide both LoadingComponent and ErrorComponent, the children function with the execution result
      * will be called only with a successful result.
      */

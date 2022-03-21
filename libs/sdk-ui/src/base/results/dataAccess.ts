@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     DataValue,
     IAttributeDescriptor,
@@ -28,6 +28,7 @@ export type DataPointCoordinates = number[];
  * Data Point represents a value computed for particular data series, possibly sliced for additional
  * set of attribute elements OR possibly being a total.
  *
+ * @remarks
  * Technically, DataPoint is the raw data value stored in the data view decorated with all the metadata
  * there exists about that value.
  *
@@ -154,6 +155,7 @@ export type DataSeriesDescriptor = DataSeriesHeaders &
  * Data series is a sequence of data points that are all computed from a single measure, optionally scoped for
  * particular attribute elements.
  *
+ * @remarks
  * In other words, data series allows iterating over two dimensional data view _along_ the dimension which contains
  * the measures (via inclusion of MeasureGroupIdentifier).
  *
@@ -188,7 +190,10 @@ export interface IDataSeries extends DataSeriesDescriptorMethods, Iterable<DataP
 }
 
 /**
- * An iterable collection of data series. The collection additionally includes basic information about the
+ * An iterable collection of data series.
+ *
+ * @remarks
+ * The collection additionally includes basic information about the
  * origin of the data series that can be iterated - their number, measures they were calculated from and
  * optionally the scoping attributes.
  *
@@ -203,6 +208,7 @@ export interface IDataSeriesCollection extends Iterable<IDataSeries> {
     /**
      * Descriptors of measures that are used in the data series.
      *
+     * @remarks
      * Note that the number of measures MAY differ from number of data series - that is because the data series may be
      * created for multiple scopes of each measure (e.g. measure X calculated for attribute element A, then same
      * measure calculated for attribute element B etc)
@@ -212,6 +218,7 @@ export interface IDataSeriesCollection extends Iterable<IDataSeries> {
     /**
      * Definitions of measures which were sent to execution and resulted in the data series.
      *
+     * @remarks
      * Order of appearance matches the order of appearance in the `fromMeasures` array.
      */
     readonly fromMeasuresDef: IMeasure[];
@@ -225,6 +232,7 @@ export interface IDataSeriesCollection extends Iterable<IDataSeries> {
      * Definitions of attributes which were sent to execution and resulted in the data series with scoped
      * measure values.
      *
+     * @remarks
      * Order of apperance matches the order of appreance in the `scopingAttributes` array.
      */
     readonly scopingAttributesDef?: IAttribute[];
@@ -238,8 +246,10 @@ export interface IDataSeriesCollection extends Iterable<IDataSeries> {
     allForMeasure(localIdOrMeasure: string | IMeasure): Iterable<IDataSeries>;
 
     /**
-     * Returns first-found data series for the provided measure. This is a 'get-or-die' method and will throw
-     * in case data series from the provided measure is not located.
+     * Returns first-found data series for the provided measure.
+     *
+     * @remarks
+     * This is a 'get-or-die' method and will throw in case data series from the provided measure is not located.
      *
      * @param localIdOrMeasure - local id of measure or measure object to get local id from
      * @returns data series
@@ -250,6 +260,7 @@ export interface IDataSeriesCollection extends Iterable<IDataSeries> {
     /**
      * Returns all data series in an array.
      *
+     * @remarks
      * Note: if you are looking for a subset of measures, always prefer using the first-class methods
      * {@link IDataSeriesCollection#allForMeasure} and {@link IDataSeriesCollection#firstForMeasure} in favor of getting the array and filtering yourself.
      *
@@ -263,8 +274,11 @@ export interface IDataSeriesCollection extends Iterable<IDataSeries> {
 //
 
 /**
- * Data slice name is specified using the result headers. The headers describe attribute elements (title+ID)
- * for the slice. The slice MAY be for a total calculation, in which case the last header will be for the
+ * Data slice name is specified using the result headers.
+ *
+ * @remarks
+ * The headers describe attribute elements (title+ID) for the slice. The slice MAY be for a total calculation,
+ * in which case the last header will be for the
  * total.
  *
  * @public
@@ -325,6 +339,7 @@ export type DataSliceDescriptor = DataSliceHeaders &
  * Data slice is a sequence of data points that are all computed for a particular attribute elements and/or totals but
  * different data series.
  *
+ * @remarks
  * In other words, data slice allows iterating over two dimension data view _across_ the dimension which contains
  * the measures.
  *
@@ -359,7 +374,10 @@ export interface IDataSlice extends DataSliceDescriptorMethods, Iterable<DataPoi
 }
 
 /**
- * An iterable collection of data slices. The collection additionally includes basic information about the
+ * An iterable collection of data slices.
+ *
+ * @remarks
+ * The collection additionally includes basic information about the
  * origin of the data slices that can be iterated - their number and attributes or totals that were used
  * for slicing.
  *
@@ -388,8 +406,11 @@ export interface IDataSliceCollection extends Iterable<IDataSlice> {
 }
 
 /**
- * Defines methods to access data in the data view. These methods and types are recommended
- * in favor of directly accessing the underlying data, headers and descriptors.
+ * Defines methods to access data in the data view.
+ *
+ * @remarks
+ * These methods and types are recommended in favor of directly accessing the underlying data,
+ * headers and descriptors.
  *
  * @public
  */

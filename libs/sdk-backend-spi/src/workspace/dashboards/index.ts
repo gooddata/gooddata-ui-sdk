@@ -21,7 +21,7 @@ import { IWidget, IWidgetReferences, SupportedWidgetReferenceTypes } from "./wid
  */
 export interface IGetDashboardOptions {
     /**
-     * Optionally specify if information about the users that created/modified the dashboard should be loaded.
+     * Specify if information about the users that created/modified the dashboard should be loaded.
      * Defaults to false.
      *
      * If user is inactive or logged in user has not rights to access this information than users that created/modified is undefined.
@@ -29,7 +29,7 @@ export interface IGetDashboardOptions {
     loadUserData?: boolean;
 
     /**
-     * Optionally specify if also dashboards available only via link should be loaded.
+     * Specify if also dashboards available only via link should be loaded.
      * Such dashboards may not be supported by every backend.
      *
      * Defaults to false.
@@ -44,8 +44,9 @@ export interface IGetDashboardOptions {
  */
 export interface IGetScheduledMailOptions {
     /**
-     * Optionally list only subset of scheduled mails authored by current user.
+     * List only subset of scheduled mails authored by current user.
      *
+     * @remarks
      * Defaults to false.
      */
     createdByCurrentUser?: boolean;

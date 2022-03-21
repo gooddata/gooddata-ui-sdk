@@ -120,7 +120,7 @@ export interface IAttributeFilterButtonOwnProps {
     identifier?: string;
 
     /**
-     * Optionally specify title for the attribute filter.
+     * Specify title for the attribute filter.
      *
      * @remarks
      * By default, the attribute name will be used.

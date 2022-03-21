@@ -79,7 +79,7 @@ export interface IBarChartBucketProps {
     measures: AttributesMeasuresOrPlaceholders;
 
     /**
-     * Optionally specify one or two attributes to slice the measures along the Y axis.
+     * Specify one or two attributes to slice the measures along the Y axis.
      *
      * @remarks
      * If you specify two attributes, the values of these attributes will appear on the Y axis as grouped. For each
@@ -89,22 +89,22 @@ export interface IBarChartBucketProps {
     viewBy?: AttributeOrPlaceholder | AttributesOrPlaceholders;
 
     /**
-     * Optionally specify attribute to stack the bars by.
+     * Specify attribute to stack the bars by.
      */
     stackBy?: AttributeOrPlaceholder;
 
     /**
-     * Optionally specify filters to apply on the data to chart.
+     * Specify filters to apply on the data to chart.
      */
     filters?: NullableFiltersOrPlaceholders;
 
     /**
-     * Optionally specify how to sort the data to chart.
+     * Specify how to sort the data to chart.
      */
     sortBy?: SortsOrPlaceholders;
 
     /**
-     * Optional resolution context for composed placeholders.
+     * Resolution context for composed placeholders.
      */
     placeholdersResolutionContext?: any;
 }

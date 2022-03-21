@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 
 /**
@@ -51,8 +51,10 @@ export interface IErrorProps {
 }
 
 /**
- * {@link http://sdk.gooddata.com/gooddata-ui/docs/error_component.html | ErrorComponent}
- * is a component that renders a default error message.
+ * Component that renders a default error message.
+ *
+ * @remarks
+ * See {@link http://sdk.gooddata.com/gooddata-ui/docs/error_component.html | ErrorComponent}
  *
  * @public
  */

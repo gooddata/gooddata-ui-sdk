@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React, { useEffect, useState, useRef } from "react";
 import { getLuminance } from "polished";
 import identity from "lodash/identity";
@@ -19,15 +19,19 @@ export type ThemeModifier = (theme: ITheme) => ITheme;
  */
 export interface IThemeProviderProps {
     /**
-     * Theme that will be used if defined. If not defined here, the theme will be obtained from the backend.
+     * Theme that will be used if defined.
+     *
+     * @remarks
+     * If not defined here, the theme will be obtained from the backend.
      *
      * Note: either the theme or both backend and workspace MUST be provided (either directly or via their contexts).
      */
     theme?: ITheme;
 
     /**
-     * Analytical backend, from which the ThemeProvider will obtain selected theme object
+     * Analytical backend, from which the ThemeProvider will obtain selected theme object.
      *
+     * @remarks
      * If you do not specify instance of analytical backend using this prop, then you MUST have
      * BackendProvider up in the component tree.
      */
@@ -36,6 +40,7 @@ export interface IThemeProviderProps {
     /**
      * Identifier of analytical workspace, from which the ThemeProvider will obtain the selected theme identifier
      *
+     * @remarks
      * If you do not specify workspace identifier, then you MUST have WorkspaceProvider up in the
      * component tree.
      */
@@ -47,8 +52,10 @@ export interface IThemeProviderProps {
     modifier?: ThemeModifier;
 
     /**
-     * Flag determining whether the complementary palette is enabled or not. If set to false, complementary
-     * palette is discarded.
+     * Flag determining whether the complementary palette is enabled or not.
+     *
+     * @remarks
+     * If set to false, complementary palette is discarded.
      * Useful for applications not yet fully supporting dark-based themes achievable with the complementary palette.
      */
     enableComplementaryPalette?: boolean;
@@ -70,8 +77,9 @@ export const isDarkTheme = (theme: ITheme): boolean => {
 
 /**
  * Fetches the theme object from the backend upon mounting and passes both theme object and isThemeLoading flag
- * to the context via ThemeContextProvider
+ * to the context via ThemeContextProvider.
  *
+ * @remarks
  * Converts properties from theme object into CSS variables and injects them into <body> via setCssProperties
  *
  * Both backend and workspace can be passed as an arguments, otherwise the component tries to get these from the context

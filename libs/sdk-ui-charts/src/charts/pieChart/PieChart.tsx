@@ -63,23 +63,23 @@ export interface IPieChartBucketProps {
     measures: AttributesMeasuresOrPlaceholders;
 
     /**
-     * Optionally specify viewBy attribute that will be used to create the pie slices. There will be a slice
+     * Specify viewBy attribute that will be used to create the pie slices. There will be a slice
      * for each value of the attribute.
      */
     viewBy?: AttributeOrPlaceholder;
 
     /**
-     * Optionally specify filters to apply on the data to chart.
+     * Specify filters to apply on the data to chart.
      */
     filters?: NullableFiltersOrPlaceholders;
 
     /**
-     * Optionally specify how to sort the data to chart.
+     * Specify how to sort the data to chart.
      */
     sortBy?: SortsOrPlaceholders;
 
     /**
-     * Optional resolution context for composed placeholders.
+     * Resolution context for composed placeholders.
      */
     placeholdersResolutionContext?: any;
 }

@@ -184,33 +184,35 @@ export type InsightOrdering = "id" | "title" | "updated";
  */
 export interface IInsightsQueryOptions {
     /**
-     * Optionally specify (zero-based) starting offset for the results. Default: 0
+     * Specify (zero-based) starting offset for the results. Default: 0
      */
     offset?: number;
 
     /**
-     * Optionally specify number of items per page. Default: 50
+     * Specify number of items per page. Default: 50
      */
     limit?: number;
 
     /**
-     * Optionally specify ordering of the insights. Default: natural ordering provided by the
+     * Specify ordering of the insights. Default: natural ordering provided by the
      * analytical backend. Note: this may differ between backend implementations.
      */
     orderBy?: InsightOrdering;
 
     /**
-     * Optionally filter insights by their author. The value of this property is URI of the author.
+     * Filter insights by their author. The value of this property is URI of the author.
      */
     author?: string;
 
     /**
-     * Optionally filter insights by their title
+     * Filter insights by their title
      */
     title?: string;
 
     /**
-     * Optionally specify if information about the users that created/modified the insights should be loaded for each insight.
+     * Specify if information about the users that created/modified the insights should be loaded for each insight.
+     *
+     * @remarks
      * Defaults to false.
      */
     loadUserData?: boolean;
@@ -223,10 +225,11 @@ export interface IInsightsQueryOptions {
  */
 export interface IGetInsightOptions {
     /**
-     * Optionally specify if information about the users that created/modified the insight should be loaded.
-     * Defaults to false.
+     * Specify if information about the users that created/modified the insight should be loaded.
      *
      * @remarks
+     * Defaults to false.
+     *
      * If user is inactive or logged in user has not rights to access this information than users that created/modified is undefined.
      */
     loadUserData?: boolean;

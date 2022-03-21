@@ -144,6 +144,7 @@ export type AuthenticationFlow = {
 /**
  * More detailed reason of the NotAuthenticated error.
  *
+ * @remarks
  * - invalid_credentials - the provided credentials were invalid
  * - credentials_expired - the credentials' validity expired
  *

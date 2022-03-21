@@ -44,12 +44,12 @@ export interface IXirrBucketProps {
      */
     attribute?: AttributeOrPlaceholder;
     /**
-     * Optionally specify filters to apply on the data to compute with.
+     * Specify filters to apply on the data to compute with.
      */
     filters?: NullableFiltersOrPlaceholders;
 
     /**
-     * Optional resolution context for composed placeholders.
+     * Resolution context for composed placeholders.
      */
     placeholdersResolutionContext?: any;
 }

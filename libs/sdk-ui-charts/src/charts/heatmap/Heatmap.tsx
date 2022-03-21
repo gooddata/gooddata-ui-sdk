@@ -68,27 +68,27 @@ export interface IHeatmapBucketProps {
     measure: AttributeMeasureOrPlaceholder;
 
     /**
-     * Optionally specify attribute, whose values will be used to create rows in the heatmap.
+     * Specify attribute, whose values will be used to create rows in the heatmap.
      */
     rows?: AttributeOrPlaceholder;
 
     /**
-     * Optionally specify attribute, whose values will be used to create columns in the heatmap.
+     * Specify attribute, whose values will be used to create columns in the heatmap.
      */
     columns?: AttributeOrPlaceholder;
 
     /**
-     * Optionally specify filters to apply on the data to chart.
+     * Specify filters to apply on the data to chart.
      */
     filters?: NullableFiltersOrPlaceholders;
 
     /**
-     * Optionally specify how to sort the data to chart.
+     * Specify how to sort the data to chart.
      */
     sortBy?: SortsOrPlaceholders;
 
     /**
-     * Optional resolution context for composed placeholders.
+     * Resolution context for composed placeholders.
      */
     placeholdersResolutionContext?: any;
 }

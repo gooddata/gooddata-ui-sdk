@@ -102,7 +102,7 @@ export interface IDashboardLoader {
     withFilterContext(filterContextRef: ObjRef): IDashboardLoader;
 
     /**
-     * Optionally specify an instance of {@link @gooddata/sdk-ui-dashboard#IDashboardBaseProps} to use for the dashboard component.
+     * Specify an instance of {@link @gooddata/sdk-ui-dashboard#IDashboardBaseProps} to use for the dashboard component.
      *
      * @remarks
      * Note: the base props may also contain backend and workspace parameters. The loader can work with them.

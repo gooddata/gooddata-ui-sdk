@@ -755,6 +755,7 @@ export interface IThemeAnalyticalDesigner {
 /**
  * Theme used to customize selected parts of the UI
  *
+ * @remarks
  * Only the primary color main value is mandatory
  *
  * Optional properties are replaced with the default values

@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import { ExplicitDrill, OnFiredDrillEvent } from "./DrillEvents";
 import React from "react";
@@ -8,8 +8,10 @@ import { IPushData, OnError, OnExportReady, OnLoadingChanged } from "./Events";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 
 /**
- * Super-interface for all visualization props; charts, tables or anything else - all should have these
- * basic props.
+ * Super-interface for all visualization props.
+ *
+ * @remarks
+ * Charts, tables or anything else - all should have these basic props.
  *
  * @public
  */
@@ -17,6 +19,7 @@ export interface IVisualizationProps {
     /**
      * Set Locale for visualization localization.
      *
+     * @remarks
      * Note: This locale will be used for everything EXCEPT the data being visualized.
      */
     locale?: string;
@@ -24,6 +27,7 @@ export interface IVisualizationProps {
     /**
      * Set title to use for exported files.
      *
+     * @remarks
      * Note: you can also specify export file name as parameters to the export function which you
      * receive in the onExportReady. If you do not specify title here and neither as input to export function,
      * the the name will default to name of the visualization component.
@@ -48,8 +52,10 @@ export interface IVisualizationProps {
 }
 
 /**
- * Super-interface for all visualization callbacks; all visualizations SHOULD have at least these callbacks
- * defined.
+ * Super-interface for all visualization callbacks.
+ *
+ * @remarks
+ * All visualizations SHOULD have at least these callbacks defined.
  *
  * @public
  */
@@ -88,6 +94,7 @@ export interface IVisualizationCallbacks {
 /**
  * Common props for visualization of data computed by the analytical backend.
  *
+ * @remarks
  * Data visualization contains prepared execution which will return data that needs to be visualized.
  *
  * @public

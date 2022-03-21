@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import compose from "lodash/flowRight";
 import { ITheme } from "@gooddata/sdk-backend-spi";
@@ -43,8 +43,9 @@ export const ThemeContextProvider: React.FC<IThemeContextProviderProps> = ({
 };
 
 /**
- * Hook for reaching the theme from context
+ * Hook for reaching the theme from context.
  *
+ * @remarks
  * You can optionally set a theme override that will be returned if defined.
  * This makes the usage more ergonomic (see the following example).
  *

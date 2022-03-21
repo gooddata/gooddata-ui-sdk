@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { DataValue } from "@gooddata/sdk-backend-spi";
 import { ISeparators, numberFormat, colors2Object, INumberObject } from "@gooddata/numberjs";
 import isEmpty from "lodash/isEmpty";
@@ -19,7 +19,10 @@ export type HeaderTranslator = (value: string) => string;
 
 /**
  * Creates value formatter that uses `@gooddata/numberjs` to format raw measure values according
- * to the format string. By default, the format will strip away all the coloring information and
+ * to the format string.
+ *
+ * @remarks
+ * By default, the format will strip away all the coloring information and
  * just return the value as string.
  *
  * @param separators - number separators to use. if not specified then `numberjs` defaults will be used

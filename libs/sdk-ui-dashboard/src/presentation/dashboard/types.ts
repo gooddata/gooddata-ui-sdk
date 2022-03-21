@@ -75,7 +75,7 @@ export interface IDashboardCustomComponentProps {
     LoadingComponent?: ComponentType<ILoadingProps>;
 
     /**
-     * Optionally specify component to use for rendering the layout.
+     * Specify component to use for rendering the layout.
      *
      * @alpha
      */
@@ -216,7 +216,7 @@ export interface IDashboardCustomComponentProps {
     TopBarComponent?: CustomTopBarComponent;
 
     /**
-     * Optionally specify component to use for rendering the title.
+     * Specify component to use for rendering the title.
      *
      * @remarks
      * Defaults to {@link DefaultTitle}. For an editable title, you can use {@link EditableTitle} instead.
@@ -227,7 +227,7 @@ export interface IDashboardCustomComponentProps {
     TitleComponent?: CustomTitleComponent;
 
     /**
-     * Optionally specify custom component to use for rendering all attribute filters or a factory function to customize the component
+     * Specify custom component to use for rendering all attribute filters or a factory function to customize the component
      * per different attribute filter.
      *
      * @remarks
@@ -248,14 +248,14 @@ export interface IDashboardCustomComponentProps {
     DashboardAttributeFilterComponentProvider?: OptionalAttributeFilterComponentProvider;
 
     /**
-     * Optionally specify component to use for rendering the date filters.
+     * Specify component to use for rendering the date filters.
      *
      * @alpha
      */
     DashboardDateFilterComponent?: CustomDashboardDateFilterComponent;
 
     /**
-     * Optionally specify component to use for rendering the filter bar.
+     * Specify component to use for rendering the filter bar.
      *
      * @remarks
      *

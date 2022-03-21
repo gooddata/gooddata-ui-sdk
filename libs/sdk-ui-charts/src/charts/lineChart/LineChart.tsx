@@ -72,12 +72,12 @@ export interface ILineChartBucketProps {
     measures: AttributesMeasuresOrPlaceholders;
 
     /**
-     * Optionally specify single attribute whose values will be used to slice the lines along the X axis.
+     * Specify single attribute whose values will be used to slice the lines along the X axis.
      */
     trendBy?: AttributeOrPlaceholder;
 
     /**
-     * Optionally specify single attribute whose values will be used to segment the measure values.
+     * Specify single attribute whose values will be used to segment the measure values.
      *
      * @remarks
      * The line chart will display one line per measure values pertaining to the segmentBy attribute values.
@@ -85,17 +85,17 @@ export interface ILineChartBucketProps {
     segmentBy?: AttributeOrPlaceholder;
 
     /**
-     * Optionally specify filters to apply on the data to chart.
+     * Specify filters to apply on the data to chart.
      */
     filters?: NullableFiltersOrPlaceholders;
 
     /**
-     * Optionally specify how to sort the data to chart.
+     * Specify how to sort the data to chart.
      */
     sortBy?: SortsOrPlaceholders;
 
     /**
-     * Optional resolution context for composed placeholders.
+     * Resolution context for composed placeholders.
      */
     placeholdersResolutionContext?: any;
 }

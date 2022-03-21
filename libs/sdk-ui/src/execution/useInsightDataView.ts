@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IDimension, IExecutionDefinition, INullableFilter, ISortItem, ObjRef } from "@gooddata/sdk-model";
 import {
@@ -21,32 +21,35 @@ export interface IUseInsightDataViewConfig {
     /**
      * Reference to the insight for which you want to get the data view.
      *
+     * @remarks
      * Note: When the reference or identifier is not provided, hook is locked in a "pending" state.
      */
     insight?: ObjRef;
 
     /**
-     * Optionally modify sorts on prepared insight execution, before it's executed.
+     * Modify sorts on prepared insight execution, before it's executed.
      */
     sorts?: ISortItem[] | ((def: IExecutionDefinition) => ISortItem[]);
 
     /**
-     * Optionally modify dimensions on prepared insight execution, before it's executed.
+     * Modify dimensions on prepared insight execution, before it's executed.
      */
     dimensions?: IDimension[] | ((def: IExecutionDefinition) => IDimension[]);
 
     /**
-     * Optionally modify date formatting on prepared insight execution, before it's executed.
+     * Modify date formatting on prepared insight execution, before it's executed.
      */
     dateFormat?: string | ((def: IExecutionDefinition) => string);
 
     /**
-     * Optionally specify filters to merge with filters already defined in the insight.
+     * Specify filters to merge with filters already defined in the insight.
      */
     filters?: INullableFilter[];
 
     /**
-     * Optionally, you can define only a specific "window" of data to load.
+     * You can define only a specific "window" of data to load.
+     *
+     * @remarks
      * This is useful if you want to page data.
      */
     window?: DataViewWindow;
@@ -54,6 +57,7 @@ export interface IUseInsightDataViewConfig {
     /**
      * Backend to work with.
      *
+     * @remarks
      * Note: the backend must come either from this property or from BackendContext. If you do not specify
      * backend here, then the executor MUST be rendered within an existing BackendContext.
      */
@@ -62,6 +66,7 @@ export interface IUseInsightDataViewConfig {
     /**
      * Workspace where execution should be executed.
      *
+     * @remarks
      * Note: the workspace must come either from this property or from WorkspaceContext. If you do not specify
      * workspace here, then the executor MUST be rendered within an existing WorkspaceContext.
      */

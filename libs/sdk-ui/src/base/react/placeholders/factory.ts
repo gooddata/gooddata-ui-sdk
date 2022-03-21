@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { v4 as uuidv4 } from "uuid";
 import identity from "lodash/identity";
 import {
@@ -17,13 +17,15 @@ import { useComposedPlaceholder, usePlaceholder } from "./hooks";
 export interface IPlaceholderOptions<T> {
     /**
      * By default, each placeholder has a unique generated id.
-     * You can optionally provide id of the placeholder which can be useful for debugging.
+     *
+     * @remarks
+     * You can provide id of the placeholder which can be useful for debugging.
      * Please note that the id should be unique for all your placeholders.
      */
     id?: string;
 
     /**
-     * Optionally provide function to validate the placeholder value.
+     * Provide function to validate the placeholder value.
      */
     validate?: (value?: T) => void;
 }

@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { useCallback, useMemo, useRef } from "react";
 import stableStringify from "json-stable-stringify";
 import { ValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
@@ -22,6 +22,8 @@ import {
 
 /**
  * React hook to obtain/set placeholder value.
+ *
+ * @remarks
  * See {@link IPlaceholder}.
  *
  * Note: When placeholder is not provided, setting its value will result in the error.
@@ -68,6 +70,8 @@ export function usePlaceholder<T extends IPlaceholder<any>>(
 
 /**
  * React hook to obtain/set multiple placeholder values at once.
+ *
+ * @remarks
  * This is useful to perform placeholders atomic change.
  * See {@link IPlaceholder}.
  * @public
@@ -128,6 +132,8 @@ export function useComposedPlaceholder<
 
 /**
  * React hook that resolves any value(s) that can possibly contain also placeholder(s) to actual value(s).
+ *
+ * @remarks
  * Optionally provide custom context for the composed placeholders resolution.
  *
  * @public
@@ -143,6 +149,8 @@ export function useResolveValueWithPlaceholders<T, C>(
 
 /**
  * React hook that resolves multiple value(s) that can possibly contain also placeholder(s) to actual value(s).
+ *
+ * @remarks
  * Optionally provide custom context for the composed placeholders resolution.
  *
  * @public

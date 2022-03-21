@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import {
     IAttributeDescriptor,
     IMeasureDescriptor,
@@ -10,7 +10,9 @@ import {
 } from "@gooddata/sdk-backend-spi";
 
 /**
+ * @privateRemarks
  * TODO: SDK8: remove this, replace with something more meaningful
+ *
  * @public
  */
 export type IMappingHeader =

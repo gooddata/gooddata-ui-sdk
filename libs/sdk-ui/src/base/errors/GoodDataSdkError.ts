@@ -41,7 +41,7 @@ export abstract class GoodDataSdkError extends Error {
         message?: string,
         public readonly cause?: any,
     ) {
-        /*
+        /**
          * This is here to keep exception handling in client code initially backward compatible. Previosly
          * GoodDataSdkError had the error code inside the message itself. Keeping it that way.
          *
@@ -67,7 +67,10 @@ export abstract class GoodDataSdkError extends Error {
     }
 
     /**
-     * Error code for this exception. This can be used to identify exact type of exception.
+     * Error code for this exception.
+     *
+     * @remarks
+     * This can be used to identify exact type of exception.
      */
     public getErrorCode(): string {
         return this.seType;

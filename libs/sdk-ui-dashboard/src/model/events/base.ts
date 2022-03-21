@@ -123,7 +123,7 @@ export interface IDashboardEvent<TPayload = any> {
     readonly ctx: DashboardContext;
 
     /**
-     * Optionally specify any additional data the custom event needs.
+     * Specify any additional data the custom event needs.
      */
     readonly payload?: TPayload;
 

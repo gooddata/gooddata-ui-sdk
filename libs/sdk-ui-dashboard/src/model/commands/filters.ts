@@ -209,25 +209,28 @@ export interface AddAttributeFilterPayload {
     readonly index: number;
 
     /**
-     * Optionally specify parent filters whose selected values will be used to narrow
+     * Specify parent filters whose selected values will be used to narrow
      * down the selection in this newly added filter.
      *
+     * @privateRemarks
      * XXX: not needed in the initial version; would be good for API completeness
      */
     readonly parentFilters?: ReadonlyArray<IDashboardAttributeFilterParent>;
 
     /**
-     * Optionally specify the initial selection of attribute elements. If not provided all
+     * Specify the initial selection of attribute elements. If not provided all
      * elements will be selected by default.
      *
+     * @privateRemarks
      * XXX: not needed in the initial version; would be good for API completeness
      */
     readonly initialSelection?: IAttributeElements;
 
     /**
-     * Optionally specify if the initial selection of attribute elements is a negative one:
+     * Specify if the initial selection of attribute elements is a negative one:
      * if true, the elements selected should NOT be included in teh results.
      *
+     * @privateRemarks
      * XXX: not needed in the initial version; would be good for API completeness
      */
     readonly initialIsNegativeSelection?: boolean;

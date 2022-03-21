@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import {
     IAttributeDescriptor,
     IDataView,
@@ -22,6 +22,8 @@ import { IHeaderPredicate, isHeaderPredicate } from "../headerMatching/HeaderPre
 
 /**
  * Drillable item reference or predicate that enables insight / kpi drilling if it matches some attribute or measure of the insight / kpi.
+ *
+ * @remarks
  * You can use {@link @gooddata/sdk-ui#HeaderPredicates} factory functions to create predicates,
  * or specify reference to the identifier / uri of the target attribute / measure using {@link @gooddata/sdk-ui#IDrillableItem} definition.
  *

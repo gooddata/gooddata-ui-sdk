@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { IMappingHeader } from "./MappingHeader";
 import { DataViewFacade } from "../results/facade";
 
@@ -12,8 +12,12 @@ export interface IHeaderPredicateContext {
 }
 
 /**
- * A function called for {@link IMappingHeader} instances. When the function returns true, it means the IMappingHeader is matched.
+ * A function called for {@link IMappingHeader} instances.
+ *
+ * @remarks
+ * When the function returns true, it means the IMappingHeader is matched.
  * See {@link https://sdk.gooddata.com/gooddata-ui/docs/ht_create_predicates.html | documentation} for more information.
+ *
  * @public
  */
 export type IHeaderPredicate = (header: IMappingHeader, context: IHeaderPredicateContext) => boolean;

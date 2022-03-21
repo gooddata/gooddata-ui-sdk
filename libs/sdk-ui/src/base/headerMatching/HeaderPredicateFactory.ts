@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { IHeaderPredicate, IHeaderPredicateContext } from "./HeaderPredicate";
 import {
     getMappingHeaderIdentifier,
@@ -303,6 +303,7 @@ export function objRefMatch(objRef: ObjRef): IHeaderPredicate {
  * Creates a new predicate that returns true for any header that belongs to either attribute or measure matching
  * the provided object.
  *
+ * @remarks
  * If the object is empty or is not attribute, simple measure or object reference, the function returns predicate
  * that is always falsy.
  *

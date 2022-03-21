@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { useBackendStrict } from "../BackendContext";
@@ -36,8 +36,9 @@ ClientWorkspaceContext.displayName = "ClientWorkspace";
  */
 export interface IClientWorkspaceProviderCoreProps {
     /**
-     * Optionally specify an instance of the analytical backend instance to work with.
+     * Specify an instance of the analytical backend instance to work with.
      *
+     * @remarks
      * Note: if you do not have a BackendProvider above in the component tree, then you MUST specify the backend.
      */
     backend?: IAnalyticalBackend;
@@ -55,6 +56,7 @@ export interface IClientWorkspaceProviderWithWorkspaceProps extends IClientWorks
     /**
      * Specify the workspace to use to obtain the LCM context.
      *
+     * @remarks
      * Note: another option is to specify dataProduct and client props, and then workspace will be resolved from them.
      */
     workspace: string;
@@ -68,6 +70,7 @@ export interface IClientWorkspaceProviderWithClientAndDataProductProps
     /**
      * Specify the data product identifier to use to obtain the LCM context.
      *
+     * @remarks
      * Note: another option is to specify workspace prop, and then data product identifier will be resolved from it.
      */
     dataProduct: string;

@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { DependencyList, useEffect, useState } from "react";
 import { makeCancelable } from "./CancelablePromise";
 import noop from "lodash/noop";
@@ -99,6 +99,8 @@ export type UseCancelablePromiseOptions<TResult, TError> = UseCancelablePromiseC
 
 /**
  * This hook provides easy way to work with Promise.
+ *
+ * @remarks
  * You can:
  * - watch it's status (pending/loading/success/error)
  * - get it's result/error when the Promise is resolved/rejected,

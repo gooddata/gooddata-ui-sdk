@@ -59,12 +59,12 @@ export interface IAttributeElementsProps {
     options?: IElementsQueryOptions;
 
     /**
-     * Optionally specify error callback.
+     * Specify error callback.
      */
     onError?: OnError;
 
     /**
-     * Optionally specify filters that restrict the elements.
+     * Specify filters that restrict the elements.
      */
     filters?: IElementsQueryAttributeFilter[];
 

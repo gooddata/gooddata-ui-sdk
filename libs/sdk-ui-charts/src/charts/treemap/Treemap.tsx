@@ -69,7 +69,7 @@ export interface ITreemapBucketProps {
     measures: AttributesMeasuresOrPlaceholders;
 
     /**
-     * Optionally specify an attribute whose values will be used to slice the measure.
+     * Specify an attribute whose values will be used to slice the measure.
      *
      * @remarks
      * Treemap will chart one rectangle for each attribute value, these rectangles represent unique
@@ -80,19 +80,21 @@ export interface ITreemapBucketProps {
     viewBy?: AttributeOrPlaceholder;
 
     /**
-     * Optionally specify an attribute, whose values will be used to segment the rectangles created for
-     * the measures or the combination of measure and viewBy attribute values. Segmenting essentially adds
-     * another level into the hierarchy.
+     * Specify an attribute, whose values will be used to segment the rectangles created for
+     * the measures or the combination of measure and viewBy attribute values.
+     *
+     * @remarks
+     * Segmenting essentially adds another level into the hierarchy.
      */
     segmentBy?: AttributeOrPlaceholder;
 
     /**
-     * Optionally specify filters to apply on the data to chart.
+     * Specify filters to apply on the data to chart.
      */
     filters?: NullableFiltersOrPlaceholders;
 
     /**
-     * Optional resolution context for composed placeholders.
+     * Resolution context for composed placeholders.
      */
     placeholdersResolutionContext?: any;
 }

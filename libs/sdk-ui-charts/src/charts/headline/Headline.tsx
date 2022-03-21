@@ -36,18 +36,18 @@ export interface IHeadlineBucketProps {
     primaryMeasure: MeasureOrPlaceholder;
 
     /**
-     * Optionally specify secondary measure whose value will be shown for comparison with the primary measure.
+     * Specify secondary measure whose value will be shown for comparison with the primary measure.
      * The change in percent between the two values will also be calculated and displayed.
      */
     secondaryMeasure?: MeasureOrPlaceholder;
 
     /**
-     * Optionally specify filters to apply on the data to chart.
+     * Specify filters to apply on the data to chart.
      */
     filters?: NullableFiltersOrPlaceholders;
 
     /**
-     * Optional resolution context for composed placeholders.
+     * Resolution context for composed placeholders.
      */
     placeholdersResolutionContext?: any;
 }

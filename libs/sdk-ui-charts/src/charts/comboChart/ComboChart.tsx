@@ -93,18 +93,17 @@ function getConfiguration(props: IComboChartProps): IChartConfig {
  */
 export interface IComboChartBucketProps {
     /**
-     * Optionally specify primary measures to render using the primary chart type.
+     * Specify primary measures to render using the primary chart type.
      */
     primaryMeasures?: MeasuresOrPlaceholders;
 
     /**
-     * Optionally specify secondary measures to render using the secondary chart type.
+     * Specify secondary measures to render using the secondary chart type.
      */
     secondaryMeasures?: MeasuresOrPlaceholders;
 
     /**
-     * Optionally specify one or two attributes to use for slicing the measure values along the
-     * X axis.
+     * Specify one or two attributes to use for slicing the measure values along the X axis.
      *
      * @remarks
      * If you specify two attributes, the values of these attributes will appear on the X axis as grouped. For each
@@ -114,17 +113,17 @@ export interface IComboChartBucketProps {
     viewBy?: AttributeOrPlaceholder | AttributesOrPlaceholders;
 
     /**
-     * Optionally specify filters to apply on the data to chart.
+     * Specify filters to apply on the data to chart.
      */
     filters?: NullableFiltersOrPlaceholders;
 
     /**
-     * Optionally specify how to sort the data to chart.
+     * Specify how to sort the data to chart.
      */
     sortBy?: SortsOrPlaceholders;
 
     /**
-     * Optional resolution context for composed placeholders.
+     * Resolution context for composed placeholders.
      */
     placeholdersResolutionContext?: any;
 }

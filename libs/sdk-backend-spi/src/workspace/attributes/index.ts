@@ -9,6 +9,8 @@ import {
 
 /**
  * Service for querying additional attributes and attribute display forms data, and their elements.
+ *
+ * @remarks
  * If you want to query attributes themselves, use catalog {@link IWorkspaceCatalogFactory}
  *
  * @public

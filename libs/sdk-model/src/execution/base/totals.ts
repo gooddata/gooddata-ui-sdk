@@ -39,7 +39,7 @@ export interface ITotal {
     attributeIdentifier: Identifier;
 
     /**
-     * Optionally specifies custom name for the calculated total. This will be included in result metadata.
+     * Specifies custom name for the calculated total. This will be included in result metadata.
      */
     alias?: string;
 }

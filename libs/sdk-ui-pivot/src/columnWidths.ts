@@ -176,7 +176,7 @@ export interface IAttributeColumnLocatorBody {
     attributeIdentifier: Identifier;
 
     /**
-     * Optionally attribute element URI / primary key.
+     * Attribute element URI / primary key.
      */
     element?: string;
 }

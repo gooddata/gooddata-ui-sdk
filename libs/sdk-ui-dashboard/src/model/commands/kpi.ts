@@ -76,9 +76,10 @@ export interface ChangeKpiWidgetMeasurePayload {
     readonly measureRef: ObjRef;
 
     /**
-     * Optionally specify the new header that should be used for the KPI widget with the
+     * Specify the new header that should be used for the KPI widget with the
      * changed measure.
      *
+     * @remarks
      * You may specify the widget header as 'from-measure'. In that case the title will be automatically
      * set to the title of measure specified in the `measureRef` property.
      */

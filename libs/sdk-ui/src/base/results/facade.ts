@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { defFingerprint, IExecutionDefinition } from "@gooddata/sdk-model";
 import { IDataView, IExecutionResult, IResultWarning } from "@gooddata/sdk-backend-spi";
 import { DataAccessConfig } from "./dataAccessConfig";
@@ -9,7 +9,10 @@ import { IDataAccessMethods } from "./dataAccess";
 import { newDataAccessMethods } from "./internal/dataAccessMethods";
 
 /**
- * This wrapper for {@link @gooddata/sdk-backend-spi#IDataView} provides various convenience methods to work with data and metadata stored inside
+ * Wrapper for {@link @gooddata/sdk-backend-spi#IDataView}.
+ *
+ * @remarks
+ * This provides various convenience methods to work with data and metadata stored inside
  * the provided instance of {@link @gooddata/sdk-backend-spi#IDataView}.
  *
  * The facade keeps an ephemeral state - such as calculated indexes on top of the headers in the {@link @gooddata/sdk-backend-spi#IDataView} -
@@ -59,7 +62,10 @@ export class DataViewFacade {
     }
 
     /**
-     * Creates a DataViewFacade with provided execution result. Only use this when execution result is unable to load data and some
+     * Creates a DataViewFacade with provided execution result.
+     *
+     * @remarks
+     * Only use this when execution result is unable to load data and some
      * form of DataViewFacade is still needed. Beware that the calculated data view is empty after the creation. Only execution
      * definition and result is defined.
      *

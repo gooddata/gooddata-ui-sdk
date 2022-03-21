@@ -53,37 +53,37 @@ const bubbleChartDefinition: IChartDefinition<IBubbleChartBucketProps, IBubbleCh
  */
 export interface IBubbleChartBucketProps {
     /**
-     * Optionally specify measure which will be used to position bubbles on the X axis.
+     * Specify measure which will be used to position bubbles on the X axis.
      */
     xAxisMeasure?: MeasureOrPlaceholder;
 
     /**
-     * Optionally specify measure which will be used to position bubbles on the Y axis
+     * Specify measure which will be used to position bubbles on the Y axis
      */
     yAxisMeasure?: MeasureOrPlaceholder;
 
     /**
-     * Optionally specify measure which will be used to determine the size of each bubble.
+     * Specify measure which will be used to determine the size of each bubble.
      */
     size?: MeasureOrPlaceholder;
 
     /**
-     * Optionally specify attribute whose values will be used to create the bubbles.
+     * Specify attribute whose values will be used to create the bubbles.
      */
     viewBy?: AttributeOrPlaceholder;
 
     /**
-     * Optionally specify filters to apply on the data to chart.
+     * Specify filters to apply on the data to chart.
      */
     filters?: NullableFiltersOrPlaceholders;
 
     /**
-     * Optionally specify how to sort the data to chart.
+     * Specify how to sort the data to chart.
      */
     sortBy?: SortsOrPlaceholders;
 
     /**
-     * Optional resolution context for composed placeholders.
+     * Resolution context for composed placeholders.
      */
     placeholdersResolutionContext?: any;
 }

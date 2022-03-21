@@ -152,7 +152,7 @@ export interface IAreaChartBucketProps {
     measures: AttributesMeasuresOrPlaceholders;
 
     /**
-     * Optionally specify attributes to slice and optionally stack the area chart.
+     * Specify attributes to slice and stack the area chart.
      *
      * @remarks
      * -  If you specify single attribute, then elements of this attribute will be used to slice the measures along the
@@ -170,7 +170,7 @@ export interface IAreaChartBucketProps {
     viewBy?: AttributeOrPlaceholder | AttributesOrPlaceholders;
 
     /**
-     * Optionally specify attribute to stack by. This is only applicable if you specify at most single viewBy
+     * Specify attribute to stack by. This is only applicable if you specify at most single viewBy
      * attribute.
      *
      * @remarks
@@ -180,17 +180,17 @@ export interface IAreaChartBucketProps {
     stackBy?: AttributeOrPlaceholder;
 
     /**
-     * Optionally specify filters to apply on the data to chart.
+     * Specify filters to apply on the data to chart.
      */
     filters?: NullableFiltersOrPlaceholders;
 
     /**
-     * Optionally specify how to sort the data to chart.
+     * Specify how to sort the data to chart.
      */
     sortBy?: SortsOrPlaceholders;
 
     /**
-     * Optional resolution context for composed placeholders.
+     * Resolution context for composed placeholders.
      */
     placeholdersResolutionContext?: any;
 }

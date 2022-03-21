@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { GdcExecuteAFM } from "../executeAfm/GdcExecuteAFM";
 
 /**
@@ -11,17 +11,17 @@ export namespace GdcExport {
      */
     export interface IBaseExportConfig {
         /**
-         * Optionally specify title of the exported file.
+         * Specify title of the exported file.
          */
         title?: string;
 
         /**
-         * Optionally specify format of the exported file (default CSV).
+         * Specify format of the exported file (default CSV).
          */
         format?: "xlsx" | "csv" | "raw";
 
         /**
-         * When exporting to XLSX, optionally specify whether to merge table headers or not.
+         * When exporting to XLSX, specify whether to merge table headers or not.
          */
         mergeHeaders?: boolean;
     }
@@ -31,7 +31,7 @@ export namespace GdcExport {
      */
     export interface IExportConfig extends IBaseExportConfig {
         /**
-         * Optionally indicate whether filters from the AFM should be included as meta-information in the
+         * Indicate whether filters from the AFM should be included as meta-information in the
          * exported XSLX.
          */
         showFilters?: boolean;

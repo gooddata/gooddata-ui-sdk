@@ -9,8 +9,10 @@ import { IBackendCapabilities } from "./capabilities";
 import { IOrganization, IOrganizations } from "../organization";
 
 /**
- * Specifies platform agnostic configuration of an analytical backend. Only config items that make sense for
- * any and all analytical backend implementations are specified here.
+ * Specifies platform agnostic configuration of an analytical backend.
+ *
+ * @remarks
+ * Only config items that make sense for any and all analytical backend implementations are specified here.
  *
  * @public
  */
@@ -44,10 +46,11 @@ export type AnalyticalBackendFactory = (
 ) => IAnalyticalBackend;
 
 /**
- * This is the root of the Analytical Backend SPI. It allows configuration related to communication with the backend
- * and access to analytical workspaces.
+ * The root of the Analytical Backend SPI.
  *
  * @remarks
+ * It allows configuration related to communication with the backend and access to analytical workspaces.
+ *
  * The analytical backend instance MUST be immutable. Changes to configuration of the backend MUST create a new
  * instance to work with.
  *
@@ -178,7 +181,7 @@ export type NotAuthenticatedHandler = (context: IAuthenticationContext, error: N
  */
 export interface IAuthenticationProvider {
     /**
-     * Optionally perform custom initialization of the client that the Analytical Backend uses to communicate
+     * Perform custom initialization of the client that the Analytical Backend uses to communicate
      * with the server.
      *
      * @remarks
@@ -193,7 +196,7 @@ export interface IAuthenticationProvider {
     initializeClient?(client: any): void;
 
     /**
-     * Optionally specify function to be called when the Analytical Backend raises a {@link NotAuthenticated} error.
+     * Specify function to be called when the Analytical Backend raises a {@link NotAuthenticated} error.
      *
      * @param context - context in which the authentication is done
      * @param error - an instance of {@link NotAuthenticated} error
@@ -244,9 +247,12 @@ export interface IAuthenticatedPrincipal {
 }
 
 /**
- * Describes context in which the authentication is done. To cater for custom authentication schemes.
- * the API client of the underlying backend IS exposed anonymously to the provider - the provider SHOULD use
- * the provided API client to exercise any backend-specific authentication mechanisms.
+ * Describes context in which the authentication is done.
+ *
+ * @remarks
+ * To cater for custom authentication schemes. the API client of the underlying backend IS exposed anonymously
+ * to the provider - the provider SHOULD use the provided API client to exercise any backend-specific authentication
+ * mechanisms.
  *
  * @public
  */
@@ -273,6 +279,7 @@ export interface IAuthenticationContext {
 /**
  * Prepares execution of the provided definition against a backend.
  *
+ * @remarks
  * This is a convenience function which uses the backend methods to create and prepare an execution.
  *
  * @param definition - execution definition to prepare execution for

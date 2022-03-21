@@ -97,18 +97,18 @@ export interface IBulletChartBucketProps {
     primaryMeasure: AttributeMeasureOrPlaceholder;
 
     /**
-     * Optionally specify measure which contains the target/goal value. The value will be charted as the thick
+     * Specify measure which contains the target/goal value. The value will be charted as the thick
      * line to reach.
      */
     targetMeasure?: AttributeMeasureOrPlaceholder;
 
     /**
-     * Optionally specify measure to use for comparison. This will be charted as the secondary bar.
+     * Specify measure to use for comparison. This will be charted as the secondary bar.
      */
     comparativeMeasure?: AttributeMeasureOrPlaceholder;
 
     /**
-     * Optionally specify one or two attributes to use for slicing the measures.
+     * Specify one or two attributes to use for slicing the measures.
      *
      * @remarks
      * If you specify two attributes, the values of these attributes will appear on the Y axis as grouped. For each
@@ -118,17 +118,17 @@ export interface IBulletChartBucketProps {
     viewBy?: AttributeOrPlaceholder | AttributesOrPlaceholders;
 
     /**
-     * Optionally specify filters to apply on the data to chart.
+     * Specify filters to apply on the data to chart.
      */
     filters?: NullableFiltersOrPlaceholders;
 
     /**
-     * Optionally specify how to sort the data to chart.
+     * Specify how to sort the data to chart.
      */
     sortBy?: SortsOrPlaceholders;
 
     /**
-     * Optional resolution context for composed placeholders.
+     * Resolution context for composed placeholders.
      */
     placeholdersResolutionContext?: any;
 }

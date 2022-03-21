@@ -52,32 +52,32 @@ const scatterPlotDefinition: IChartDefinition<IScatterPlotBucketProps, IScatterP
  */
 export interface IScatterPlotBucketProps {
     /**
-     * Optionally specify measure which will be used to position data points on the X axis.
+     * Specify measure which will be used to position data points on the X axis.
      */
     xAxisMeasure?: MeasureOrPlaceholder;
 
     /**
-     * Optionally specify measure which will be used to position data points on the Y axis.
+     * Specify measure which will be used to position data points on the Y axis.
      */
     yAxisMeasure?: MeasureOrPlaceholder;
 
     /**
-     * Optionally specify attribute whose values will be used to create data points.
+     * Specify attribute whose values will be used to create data points.
      */
     attribute?: AttributeOrPlaceholder;
 
     /**
-     * Optionally specify filters to apply on the data to chart.
+     * Specify filters to apply on the data to chart.
      */
     filters?: NullableFiltersOrPlaceholders;
 
     /**
-     * Optionally specify how to sort the data to chart.
+     * Specify how to sort the data to chart.
      */
     sortBy?: SortsOrPlaceholders;
 
     /**
-     * Optional resolution context for composed placeholders.
+     * Resolution context for composed placeholders.
      */
     placeholdersResolutionContext?: any;
 }

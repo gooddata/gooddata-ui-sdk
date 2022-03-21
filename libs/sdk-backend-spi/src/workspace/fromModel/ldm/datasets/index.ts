@@ -57,9 +57,11 @@ export interface IDataColumn {
 }
 
 /**
- * Structural information about CSV header and columns. Indicates whether the CSV file
- * contains header or not and on which row. Also contains the list of CSV columns with
- * their names and types.
+ * Structural information about CSV header and columns.
+ *
+ * @remarks
+ * Indicates whether the CSV file contains header or not and on which row.
+ * Also contains the list of CSV columns with their names and types.
  *
  * @public
  */
@@ -84,8 +86,11 @@ export interface IDatasetBody {
 }
 
 /**
- * Dataset describes a particular structure of dataset (CSV file). There may be many Loads
- * related to a single dataset - meaning multiple files with the same structure and different data.
+ * Dataset describes a particular structure of dataset (CSV file).
+ *
+ * @remarks
+ * There may be many Loads related to a single dataset - meaning multiple files with the same
+ * structure and different data.
  *
  * @public
  */

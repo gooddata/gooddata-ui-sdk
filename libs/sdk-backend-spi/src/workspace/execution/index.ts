@@ -18,6 +18,7 @@ import { DataValue, IDimensionDescriptor, IResultHeader, IResultWarning } from "
  * Execution factory provides several methods to create a prepared execution from different types
  * of inputs.
  *
+ * @remarks
  * Note: the execution factory WILL perform extensive input validation to ensure that the created
  * instance of prepared execution is semantically correct.
  *
