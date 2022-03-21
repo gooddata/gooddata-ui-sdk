@@ -107,11 +107,6 @@ export interface ISettings {
     enableKDZooming?: boolean;
 
     /**
-     * Indicates, whether dashboard "section headers" are enabled
-     */
-    enableSectionHeaders?: boolean;
-
-    /**
      * Indicates whether the user can change widget height in KPI dashboards.
      */
     enableKDWidgetCustomHeight?: boolean;

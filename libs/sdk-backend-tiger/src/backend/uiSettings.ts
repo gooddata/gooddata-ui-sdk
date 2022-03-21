@@ -32,7 +32,6 @@ export const DefaultUiSettings: ISettings = {
     enableDomainHomepage: true,
     enableKPIDashboardDependentFilters: false,
     enableKDWidgetCustomHeight: true,
-    enableSectionHeaders: true,
     enableKPIDashboardSaveAsNew: true,
     enableEmbedButtonInKD: true,
     enableHidingOfWidgetTitle: false,
