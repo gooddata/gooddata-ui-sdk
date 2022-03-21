@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 
 import {
     CatalogExportConfig,
@@ -22,10 +22,7 @@ import dotenv from "dotenv";
  */
 async function probeAccess(client: ITigerClient): Promise<boolean> {
     try {
-        await client.organizationObjects.getAllEntitiesWorkspaces(
-            { page: 0, size: 1 },
-            { headers: jsonApiHeaders },
-        );
+        await client.entities.getAllEntitiesWorkspaces({ page: 0, size: 1 }, { headers: jsonApiHeaders });
 
         return true;
     } catch (err) {
@@ -119,7 +116,7 @@ async function getTigerClient(hostname: string): Promise<ITigerClient> {
 }
 
 async function loadWorkspaces(client: ITigerClient): Promise<JsonApiWorkspaceOutList> {
-    const response = await client.organizationObjects.getAllEntitiesWorkspaces(
+    const response = await client.entities.getAllEntitiesWorkspaces(
         {
             page: 0,
             size: 500,
