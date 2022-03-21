@@ -11,11 +11,12 @@ import { PluggableBubbleChart } from "./PluggableBubbleChart";
 import { BigChartDescriptor } from "../BigChartDescriptor";
 import {
     bucketConversion,
-    chartConfigFromInsight,
+    chartAdditionalFactories,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
     insightConversion,
 } from "../../../utils/embeddingCodeGenerator";
+import { chartConfigFromInsight } from "../chartConfigFromInsight";
 
 export class BubbleChartDescriptor extends BigChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
@@ -37,5 +38,6 @@ export class BubbleChartDescriptor extends BigChartDescriptor implements IVisual
             sortBy: insightConversion("sortBy", insightSorts),
             config: insightConversion("config", chartConfigFromInsight),
         }),
+        additionalFactories: chartAdditionalFactories,
     });
 }

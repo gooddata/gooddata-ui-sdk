@@ -29,11 +29,12 @@ import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownH
 import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization";
 import {
     bucketConversion,
-    chartConfigFromInsight,
+    chartAdditionalFactories,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
     insightConversion,
 } from "../../../utils/embeddingCodeGenerator";
+import { chartConfigFromInsight } from "../chartConfigFromInsight";
 
 export class BarChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
@@ -63,6 +64,7 @@ export class BarChartDescriptor extends BaseChartDescriptor implements IVisualiz
             sortBy: insightConversion("sortBy", insightSorts),
             config: insightConversion("config", chartConfigFromInsight),
         }),
+        additionalFactories: chartAdditionalFactories,
     });
 
     private adjustIntersectionForColumnBar(

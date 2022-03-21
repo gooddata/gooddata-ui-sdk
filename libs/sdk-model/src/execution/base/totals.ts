@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import isEmpty from "lodash/isEmpty";
 import { IMeasure, measureLocalId } from "../measure";
@@ -51,7 +51,12 @@ export interface ITotal {
  * @public
  */
 export function isTotal(obj: unknown): obj is ITotal {
-    return !isEmpty(obj) && (obj as ITotal).type !== undefined;
+    return (
+        !isEmpty(obj) &&
+        (obj as ITotal).type !== undefined &&
+        (obj as ITotal).measureIdentifier !== undefined &&
+        (obj as ITotal).attributeIdentifier !== undefined
+    );
 }
 
 //

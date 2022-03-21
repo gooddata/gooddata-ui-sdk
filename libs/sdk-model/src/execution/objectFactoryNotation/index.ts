@@ -1,6 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 import compact from "lodash/compact";
 import flow from "lodash/flow";
+import isNil from "lodash/isNil";
 import isString from "lodash/isString";
 import stringifyObject from "stringify-object";
 import { isUriRef, ObjRefInScope, isIdentifierRef } from "../../objRef";
@@ -214,9 +215,22 @@ const convertMeasureValueFilter: Converter<IMeasureValueFilter> = ({
     const ref = stringifyObjRef(measure);
 
     if (isComparisonCondition(condition)) {
-        return `newMeasureValueFilter(${ref}, "${condition.comparison.operator}", ${condition.comparison.value})`;
+        const args = compact([
+            ref,
+            `"${condition.comparison.operator}"`,
+            `${condition.comparison.value}`,
+            !isNil(condition.comparison.treatNullValuesAs) && `${condition.comparison.treatNullValuesAs}`,
+        ]);
+        return `newMeasureValueFilter(${args.join(ARRAY_JOINER)})`;
     } else if (isRangeCondition(condition)) {
-        return `newMeasureValueFilter(${ref}, "${condition.range.operator}", ${condition.range.from}, ${condition.range.to})`;
+        const args = compact([
+            ref,
+            `"${condition.range.operator}"`,
+            `${condition.range.from}`,
+            `${condition.range.to}`,
+            !isNil(condition.range.treatNullValuesAs) && `${condition.range.treatNullValuesAs}`,
+        ]);
+        return `newMeasureValueFilter(${args.join(ARRAY_JOINER)})`;
     }
 
     return `{ measureValueFilter: { measure: ${ref} }`;

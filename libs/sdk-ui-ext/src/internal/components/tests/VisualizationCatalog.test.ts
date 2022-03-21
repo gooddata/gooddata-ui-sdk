@@ -63,6 +63,19 @@ describe("getEmbeddingCode functionality", () => {
 
     it.each(scenarios)("should generate code for %s", (_, insight) => {
         const descriptor = FullVisualizationCatalog.forInsight(insight);
-        expect(descriptor.getEmbeddingCode?.(insight)).toMatchSnapshot();
+        expect(
+            descriptor.getEmbeddingCode?.(insight, {
+                context: {
+                    settings: {
+                        enableAxisNameConfiguration: true,
+                        enableHidingOfDataPoints: true,
+                        locale: "en-US",
+                        separators: { decimal: ".", thousand: "," },
+                        userId: "user",
+                        workspace: "workspace",
+                    },
+                },
+            }),
+        ).toMatchSnapshot();
     });
 });

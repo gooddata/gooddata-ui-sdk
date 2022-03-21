@@ -97,7 +97,7 @@ export class FluidLegend extends React_2.PureComponent<IFluidLegendProps> {
 export function formatLegendLabel(value: number, format: string | undefined, diff: number, numericSymbols: string[]): string;
 
 // @internal (undocumented)
-export function getAtributeColorAssignment(attribute: any, colorPalette: IColorPalette, colorMapping: IColorMapping[], dv: DataViewFacade): IColorAssignment[];
+export function getAttributeColorAssignment(attribute: any, colorPalette: IColorPalette, colorMapping: IColorMapping[], dv: DataViewFacade): IColorAssignment[];
 
 // @internal (undocumented)
 export function getColorByGuid(colorPalette: IColorPalette, guid: string, index: number): IRgbColorValue;
@@ -105,7 +105,7 @@ export function getColorByGuid(colorPalette: IColorPalette, guid: string, index:
 // @internal (undocumented)
 export function getColorFromMapping(mappingHeader: IMappingHeader, colorMapping: IColorMapping[], dv: DataViewFacade): IColor | undefined;
 
-// @internal
+// @public
 export function getColorMappingPredicate(testValue: string): IHeaderPredicate;
 
 // @internal (undocumented)
@@ -519,6 +519,5 @@ export class StaticLegend extends React_2.PureComponent<IStaticLegendProps> {
 
 // @internal (undocumented)
 export const SupportedLegendPositions: PositionType[];
-
 
 ```

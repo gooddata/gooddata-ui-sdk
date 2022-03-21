@@ -1,5 +1,5 @@
-// (C) 2007-2021 GoodData Corporation
-import { IHeaderPredicate, DefaultColorPalette, DataViewFacade } from "@gooddata/sdk-ui";
+// (C) 2007-2022 GoodData Corporation
+import { DefaultColorPalette, DataViewFacade } from "@gooddata/sdk-ui";
 import {
     getColorMappingPredicate,
     getColorPaletteFromColors,
@@ -126,25 +126,25 @@ describe("getColorMappingPredicate", () => {
 
     describe("no references provided", () => {
         it("should match predicate when measure local identifier matches", () => {
-            const predicate: IHeaderPredicate = getColorMappingPredicate("uriBasedMeasureLocalIdentifier");
+            const predicate = getColorMappingPredicate("uriBasedMeasureLocalIdentifier");
 
             expect(predicate(uriBasedMeasure, context)).toEqual(true);
         });
 
         it("should not match predicate when measure local identifier does not match", () => {
-            const predicate: IHeaderPredicate = getColorMappingPredicate("someOtherMeasure.localIdentifier");
+            const predicate = getColorMappingPredicate("someOtherMeasure.localIdentifier");
 
             expect(predicate(uriBasedMeasure, context)).toEqual(false);
         });
 
         it("should not match predicate when referenced uri matches", () => {
-            const predicate: IHeaderPredicate = getColorMappingPredicate("/attributeItemUri");
+            const predicate = getColorMappingPredicate("/attributeItemUri");
 
             expect(predicate(attributeDescriptor, {} as any)).toEqual(false);
         });
 
         it("should match predicate when referenced uri matches", () => {
-            const predicate: IHeaderPredicate = getColorMappingPredicate("/attributeItemUri");
+            const predicate = getColorMappingPredicate("/attributeItemUri");
 
             expect(predicate(attributeHeaderItem, {} as any)).toEqual(true);
         });

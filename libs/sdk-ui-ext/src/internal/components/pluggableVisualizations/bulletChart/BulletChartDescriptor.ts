@@ -14,11 +14,12 @@ import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Vis
 import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper";
 import {
     bucketConversion,
-    chartConfigFromInsight,
+    chartAdditionalFactories,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
     insightConversion,
 } from "../../../utils/embeddingCodeGenerator";
+import { chartConfigFromInsight } from "../chartConfigFromInsight";
 
 export class BulletChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
@@ -53,6 +54,7 @@ export class BulletChartDescriptor extends BaseChartDescriptor implements IVisua
             sortBy: insightConversion("sortBy", insightSorts),
             config: insightConversion("config", chartConfigFromInsight),
         }),
+        additionalFactories: chartAdditionalFactories,
     });
 
     private addFiltersForBullet(insight: IInsight, drillConfig: IDrillDownDefinition, event: IDrillEvent) {

@@ -14,11 +14,12 @@ import {
 import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization";
 import {
     bucketConversion,
-    chartConfigFromInsight,
+    chartAdditionalFactories,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
     insightConversion,
 } from "../../../utils/embeddingCodeGenerator";
+import { chartConfigFromInsight } from "../chartConfigFromInsight";
 
 export class TreemapDescriptor extends BigChartDescriptor {
     public getFactory(): PluggableVisualizationFactory {
@@ -43,6 +44,7 @@ export class TreemapDescriptor extends BigChartDescriptor {
             filters: insightConversion("filters", insightFilters),
             config: insightConversion("config", chartConfigFromInsight),
         }),
+        additionalFactories: chartAdditionalFactories,
     });
 
     private addFilters(source: IInsight, drillConfig: IDrillDownDefinition, event: IDrillEvent) {

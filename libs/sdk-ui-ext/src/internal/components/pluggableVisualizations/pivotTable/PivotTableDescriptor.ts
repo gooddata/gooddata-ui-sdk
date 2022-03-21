@@ -1,30 +1,23 @@
 // (C) 2021-2022 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
-import isNil from "lodash/isNil";
 import {
     bucketAttributes,
     bucketMeasures,
     IInsight,
     IInsightDefinition,
     insightFilters,
-    insightProperties,
     insightSanitize,
     insightSorts,
     insightTotals,
 } from "@gooddata/sdk-model";
 import {
     IAttributeColumnWidthItem,
-    IColumnSizing,
-    IPivotTableConfig,
     IPivotTableProps,
     isAttributeColumnWidthItem,
-    pivotTableMenuForCapabilities,
 } from "@gooddata/sdk-ui-pivot";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { ISettings } from "@gooddata/sdk-backend-spi";
 
 import {
-    IEmbeddingCodeContext,
     IVisualizationDescriptor,
     IVisualizationSizeInfo,
     PluggableVisualizationFactory,
@@ -44,6 +37,7 @@ import {
     getReactEmbeddingCodeGenerator,
     insightConversion,
 } from "../../../utils/embeddingCodeGenerator";
+import { pivotTableConfigFromInsight } from "./pivotTableConfigFromInsight";
 
 export class PivotTableDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
@@ -94,7 +88,7 @@ export class PivotTableDescriptor extends BaseChartDescriptor implements IVisual
             filters: insightConversion("filters", insightFilters),
             sortBy: insightConversion("sortBy", insightSorts),
             totals: insightConversion("totals", insightTotals),
-            config: insightConversion("config", getConfigFromInsight),
+            config: insightConversion("config", pivotTableConfigFromInsight),
         }),
         additionalFactories: [
             {
@@ -111,45 +105,6 @@ export class PivotTableDescriptor extends BaseChartDescriptor implements IVisual
             },
         ],
     });
-}
-
-function getColumnSizingFromControls(
-    controls: Record<string, any>,
-    ctx: IEmbeddingCodeContext | undefined,
-): IColumnSizing | undefined {
-    const { columnWidths } = controls;
-    const columnWidthsProp = !isEmpty(columnWidths) ? { columnWidths } : {};
-
-    const growToFitConfig = ctx?.settings?.enableTableColumnsGrowToFit;
-    const growToFitProp = !isNil(growToFitConfig) ? { growToFit: growToFitConfig } : {};
-
-    return {
-        ...columnWidthsProp,
-        ...growToFitProp,
-        // the user can fill the rest on their own later
-    };
-}
-
-function getConfigFromInsight(
-    insight: IInsightDefinition,
-    ctx: IEmbeddingCodeContext | undefined,
-): IPivotTableConfig {
-    const properties = insightProperties(insight);
-    const controls = properties?.controls;
-    const columnSizing = controls && getColumnSizingFromControls(controls, ctx);
-
-    const menuConfig = ctx?.backend && pivotTableMenuForCapabilities(ctx.backend.capabilities);
-    const menuProp = !isEmpty(menuConfig) ? { menu: menuConfig } : {};
-
-    const separatorsConfig = ctx?.settings?.separators;
-    const separatorsProp = !isEmpty(separatorsConfig) ? { separators: separatorsConfig } : {};
-
-    return {
-        columnSizing,
-        ...menuProp,
-        ...separatorsProp,
-        // the user can fill the rest on their own later
-    };
 }
 
 function factoryNotationForAttributeColumnWidthItem(obj: IAttributeColumnWidthItem): string {

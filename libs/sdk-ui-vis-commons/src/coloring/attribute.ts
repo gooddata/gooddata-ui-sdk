@@ -1,7 +1,7 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import { IColorPalette } from "@gooddata/sdk-model";
 import { DataViewFacade } from "@gooddata/sdk-ui";
-import { ColorStrategy, ICreateColorAssignmentReturnValue, getAtributeColorAssignment } from "./base";
+import { ColorStrategy, ICreateColorAssignmentReturnValue, getAttributeColorAssignment } from "./base";
 import { IColorMapping } from "./types";
 
 /**
@@ -18,7 +18,7 @@ export class AttributeColorStrategy extends ColorStrategy {
         dv: DataViewFacade,
     ): ICreateColorAssignmentReturnValue {
         const attribute = stackByAttribute ? stackByAttribute : viewByAttribute;
-        const colorAssignment = getAtributeColorAssignment(attribute, colorPalette, colorMapping, dv);
+        const colorAssignment = getAttributeColorAssignment(attribute, colorPalette, colorMapping, dv);
         return {
             fullColorAssignment: colorAssignment,
         };

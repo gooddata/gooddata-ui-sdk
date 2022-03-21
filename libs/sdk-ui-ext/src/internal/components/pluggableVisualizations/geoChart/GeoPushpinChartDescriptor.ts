@@ -10,7 +10,7 @@ import {
 } from "@gooddata/sdk-model";
 import { ISettings } from "@gooddata/sdk-backend-spi";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { IGeoConfig, IGeoPushpinChartProps } from "@gooddata/sdk-ui-geo";
+import { IGeoPushpinChartProps } from "@gooddata/sdk-ui-geo";
 
 import {
     IVisualizationDescriptor,
@@ -23,23 +23,12 @@ import { DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT, MIDDLE_VISUALIZATION_HEIGHT } from
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
 import {
     bucketConversion,
-    getConfigFromPropsConverter,
+    chartAdditionalFactories,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
     insightConversion,
 } from "../../../utils/embeddingCodeGenerator";
-
-const supportedGeoConfigProperties = new Set<keyof IGeoConfig>([
-    "center",
-    "cooperativeGestures",
-    "legend",
-    "limit",
-    "selectedSegmentItems",
-    "separators",
-    "viewport",
-    "points",
-    "showLabels",
-]);
+import { geoConfigFromInsight } from "./geoConfigFromInsight";
 
 export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
@@ -78,8 +67,9 @@ export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IV
             segmentBy: bucketConversion("segmentBy", BucketNames.SEGMENT, bucketAttribute),
             filters: insightConversion("filters", insightFilters),
             sortBy: insightConversion("sortBy", insightSorts),
-            config: insightConversion("config", getConfigFromPropsConverter(supportedGeoConfigProperties)),
+            config: insightConversion("config", geoConfigFromInsight),
         }),
+        additionalFactories: chartAdditionalFactories,
     });
 
     protected getMinHeight(enableCustomHeight: boolean): number {

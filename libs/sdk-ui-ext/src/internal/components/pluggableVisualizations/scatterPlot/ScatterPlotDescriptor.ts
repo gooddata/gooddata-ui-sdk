@@ -8,11 +8,12 @@ import { PluggableScatterPlot } from "./PluggableScatterPlot";
 import { BigChartDescriptor } from "../BigChartDescriptor";
 import {
     bucketConversion,
-    chartConfigFromInsight,
+    chartAdditionalFactories,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
     insightConversion,
 } from "../../../utils/embeddingCodeGenerator";
+import { chartConfigFromInsight } from "../chartConfigFromInsight";
 
 export class ScatterPlotDescriptor extends BigChartDescriptor {
     public getFactory(): PluggableVisualizationFactory {
@@ -33,5 +34,6 @@ export class ScatterPlotDescriptor extends BigChartDescriptor {
             sortBy: insightConversion("sortBy", insightSorts),
             config: insightConversion("config", chartConfigFromInsight),
         }),
+        additionalFactories: chartAdditionalFactories,
     });
 }

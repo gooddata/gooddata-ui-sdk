@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 /**
  * This package provides functions commonly used when building visualizations.
@@ -13,7 +13,7 @@
 export { AttributeColorStrategy } from "./coloring/attribute";
 export {
     ColorStrategy,
-    getAtributeColorAssignment,
+    getAttributeColorAssignment,
     IColorStrategy,
     ICreateColorAssignmentReturnValue,
     isValidMappedColor,
