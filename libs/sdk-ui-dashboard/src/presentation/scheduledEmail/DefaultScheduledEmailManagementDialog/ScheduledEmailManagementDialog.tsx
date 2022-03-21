@@ -15,7 +15,7 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
 
     const { result } = useScheduledEmailManagement({ onError });
     const isLoading = !result;
-    const scheduledEmails = result?.scheduledEmails ?? [];
+    const scheduledEmails = result?.scheduledEmails.reverse() ?? [];
     const currentUserEmail = result?.currentUserEmail;
     const intl = useIntl();
 
