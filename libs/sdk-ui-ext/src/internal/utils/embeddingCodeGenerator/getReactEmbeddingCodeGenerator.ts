@@ -180,7 +180,7 @@ export function getReactEmbeddingCodeGenerator<TProps extends object>({
 ${propDeclarations.join("\n")}
 const style = {height: ${stringifiedHeight}};
 
-function MyComponent() {
+export function MyComponent() {
     return (
         <div style={style}>
 ${indent(componentBody, 3)}

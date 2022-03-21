@@ -75,6 +75,7 @@ describe("getEmbeddingCode functionality", () => {
                         workspace: "workspace",
                     },
                 },
+                language: "ts",
             }),
         ).toMatchSnapshot();
     });
