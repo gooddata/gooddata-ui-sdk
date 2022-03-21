@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import { attributeLocalId, IAttribute, Identifier, IMeasure, measureLocalId } from "@gooddata/sdk-model";
 
@@ -63,42 +63,70 @@ export interface IAutoColumnWidth {
 export type ColumnWidth = IAbsoluteColumnWidth | IAutoColumnWidth;
 
 /**
+ * Object defining the {@link IAttributeColumnWidthItem} object body.
+ *
+ * @public
+ */
+export interface IAttributeColumnWidthItemBody {
+    width: IAbsoluteColumnWidth;
+    attributeIdentifier: Identifier;
+}
+
+/**
  * @public
  */
 export interface IAttributeColumnWidthItem {
-    attributeColumnWidthItem: {
-        width: IAbsoluteColumnWidth;
-        attributeIdentifier: Identifier;
-    };
+    attributeColumnWidthItem: IAttributeColumnWidthItemBody;
+}
+
+/**
+ * Object defining the {@link IMeasureColumnWidthItem} object body.
+ *
+ * @public
+ */
+export interface IMeasureColumnWidthItemBody {
+    width: ColumnWidth;
+    locators: ColumnLocator[];
 }
 
 /**
  * @public
  */
 export interface IMeasureColumnWidthItem {
-    measureColumnWidthItem: {
-        width: ColumnWidth;
-        locators: ColumnLocator[];
-    };
+    measureColumnWidthItem: IMeasureColumnWidthItemBody;
+}
+
+/**
+ * Object defining {@link IAllMeasureColumnWidthItem} object body.
+ *
+ * @public
+ */
+export interface IAllMeasureColumnWidthItemBody {
+    width: IAbsoluteColumnWidth;
 }
 
 /**
  * @public
  */
 export interface IAllMeasureColumnWidthItem {
-    measureColumnWidthItem: {
-        width: IAbsoluteColumnWidth;
-    };
+    measureColumnWidthItem: IAllMeasureColumnWidthItemBody;
+}
+
+/**
+ * Object defining the {@link IWeakMeasureColumnWidthItem} object body.
+ *
+ * @public
+ */
+export interface IWeakMeasureColumnWidthItemBody {
+    width: IAbsoluteColumnWidth;
+    locator: IMeasureColumnLocator;
 }
 
 /**
  * @public
  */
 export interface IWeakMeasureColumnWidthItem {
-    measureColumnWidthItem: {
-        width: IAbsoluteColumnWidth;
-        locator: IMeasureColumnLocator;
-    };
+    measureColumnWidthItem: IWeakMeasureColumnWidthItemBody;
 }
 
 /**
@@ -116,17 +144,41 @@ export type ColumnWidthItem =
 export type ColumnLocator = IAttributeColumnLocator | IMeasureColumnLocator;
 
 /**
+ * Object defining the {@link IMeasureColumnLocator} object body.
+ *
+ * @public
+ */
+export interface IMeasureColumnLocatorBody {
+    /**
+     * Local identifier of the measure.
+     */
+    measureIdentifier: Identifier;
+}
+
+/**
  * Locates table column by column measure's localId.
  *
  * @public
  */
 export interface IMeasureColumnLocator {
-    measureLocatorItem: {
-        /**
-         * Local identifier of the measure.
-         */
-        measureIdentifier: Identifier;
-    };
+    measureLocatorItem: IMeasureColumnLocatorBody;
+}
+
+/**
+ * Object defining the {@link IAttributeColumnLocator} object body.
+ *
+ * @public
+ */
+export interface IAttributeColumnLocatorBody {
+    /**
+     * Local identifier of the attribute
+     */
+    attributeIdentifier: Identifier;
+
+    /**
+     * Optionally attribute element URI / primary key.
+     */
+    element?: string;
 }
 
 /**
@@ -135,17 +187,7 @@ export interface IMeasureColumnLocator {
  * @public
  */
 export interface IAttributeColumnLocator {
-    attributeLocatorItem: {
-        /**
-         * Local identifier of the attribute
-         */
-        attributeIdentifier: Identifier;
-
-        /**
-         * Optionally attribute element URI / primary key.
-         */
-        element?: string;
-    };
+    attributeLocatorItem: IAttributeColumnLocatorBody;
 }
 
 /**
@@ -240,9 +282,9 @@ export function newMeasureColumnLocator(measureOrId: IMeasure | string): IMeasur
 /**
  * Creates width item that will set width of a column which contains values of a row attribute.
  *
- * @param attributeOrId - attribute specified by value or by localId reference
- * @param width - width in pixels
- * @param allowGrowToFit - indicates whether the column is allowed to grow if the table's growToFit is enabled
+ * @param attributeOrId - Attribute specified by value or by localId reference
+ * @param width - Width in pixels
+ * @param allowGrowToFit - Optionally indicates whether the column is allowed to grow if the table's growToFit is enabled
  * @public
  */
 export function newWidthForAttributeColumn(
@@ -266,8 +308,8 @@ export function newWidthForAttributeColumn(
 /**
  * Creates width item that will set width for all measure columns in the table.
  *
- * @param width - width in pixels
- * @param allowGrowToFit - indicates whether the column is allowed to grow if the table's growToFit is enabled
+ * @param width - Width in pixels
+ * @param allowGrowToFit - Optionally indicates whether the column is allowed to grow if the table's growToFit is enabled
  * @public
  */
 export function newWidthForAllMeasureColumns(
@@ -289,9 +331,9 @@ export function newWidthForAllMeasureColumns(
 /**
  * Creates width item that will set width for all columns containing values of the provided measure.
  *
- * @param measureOrId - measure specified either by value or by localId reference
- * @param width - width in pixels
- * @param allowGrowToFit - indicates whether the column is allowed to grow if the table's growToFit is enabled
+ * @param measureOrId - Measure specified either by value or by localId reference
+ * @param width - Width in pixels
+ * @param allowGrowToFit - Optionally indicates whether the column is allowed to grow if the table's growToFit is enabled
  * @public
  */
 export function newWidthForAllColumnsForMeasure(
@@ -316,12 +358,13 @@ export function newWidthForAllColumnsForMeasure(
 /**
  * Creates width item that will set width for all columns containing values of the provided measure.
  *
+ * @remarks
  * See also {@link newAttributeColumnLocator} to learn more about the attribute column locators.
  *
- * @param measureOrId - measure specified either by value or by localId reference
- * @param locators - attribute locators to narrow down selection
- * @param width - width in pixels
- * @param allowGrowToFit - indicates whether the column is allowed to grow if the table's growToFit is enabled
+ * @param measureOrId - Measure specified either by value or by localId reference
+ * @param locators - Attribute locators to narrow down selection
+ * @param width - Width in pixels
+ * @param allowGrowToFit - Optionally indicates whether the column is allowed to grow if the table's growToFit is enabled
  * @public
  */
 export function newWidthForSelectedColumns(
@@ -346,7 +389,10 @@ export function newWidthForSelectedColumns(
 }
 
 /**
- * Creates a new attribute column locator - this is used to narrow down location of measure columns in pivot table, where
+ * Creates a new attribute column locator
+ *
+ * @remarks
+ * This is used to narrow down location of measure columns in pivot table, where
  * measures are further scoped by different attribute elements - imagine pivot table with defined for measure 'Amount' and column
  * attribute 'Product'. The table will have multiple columns for the 'Amount' measure - each for different element of the
  * 'Product' attribute. In this context, identifying particular measure columns needs to be more specific.
@@ -354,8 +400,8 @@ export function newWidthForSelectedColumns(
  * The attribute column locator can match either single element of particular attribute, or all elements of particular
  * attribute.
  *
- * @param attributeOrId - column attribute specified by either value or by localId reference
- * @param element - optionally specify attribute element URI or primary key; if not specified, the locator will match
+ * @param attributeOrId - Column attribute specified by either value or by localId reference
+ * @param element - Optionally specify attribute element URI or primary key; if not specified, the locator will match
  *  all elements of the attribute
  * @public
  */

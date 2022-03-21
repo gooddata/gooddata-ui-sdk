@@ -55,27 +55,39 @@ export interface IAbsoluteColumnWidth {
 // @public (undocumented)
 export interface IAllMeasureColumnWidthItem {
     // (undocumented)
-    measureColumnWidthItem: {
-        width: IAbsoluteColumnWidth;
-    };
+    measureColumnWidthItem: IAllMeasureColumnWidthItemBody;
+}
+
+// @public
+export interface IAllMeasureColumnWidthItemBody {
+    // (undocumented)
+    width: IAbsoluteColumnWidth;
 }
 
 // @public
 export interface IAttributeColumnLocator {
     // (undocumented)
-    attributeLocatorItem: {
-        attributeIdentifier: Identifier;
-        element?: string;
-    };
+    attributeLocatorItem: IAttributeColumnLocatorBody;
+}
+
+// @public
+export interface IAttributeColumnLocatorBody {
+    attributeIdentifier: Identifier;
+    element?: string;
 }
 
 // @public (undocumented)
 export interface IAttributeColumnWidthItem {
     // (undocumented)
-    attributeColumnWidthItem: {
-        width: IAbsoluteColumnWidth;
-        attributeIdentifier: Identifier;
-    };
+    attributeColumnWidthItem: IAttributeColumnWidthItemBody;
+}
+
+// @public
+export interface IAttributeColumnWidthItemBody {
+    // (undocumented)
+    attributeIdentifier: Identifier;
+    // (undocumented)
+    width: IAbsoluteColumnWidth;
 }
 
 // @public (undocumented)
@@ -102,18 +114,26 @@ export interface ICorePivotTableProps extends IPivotTableBaseProps, WrappedCompo
 // @public
 export interface IMeasureColumnLocator {
     // (undocumented)
-    measureLocatorItem: {
-        measureIdentifier: Identifier;
-    };
+    measureLocatorItem: IMeasureColumnLocatorBody;
+}
+
+// @public
+export interface IMeasureColumnLocatorBody {
+    measureIdentifier: Identifier;
 }
 
 // @public (undocumented)
 export interface IMeasureColumnWidthItem {
     // (undocumented)
-    measureColumnWidthItem: {
-        width: ColumnWidth;
-        locators: ColumnLocator[];
-    };
+    measureColumnWidthItem: IMeasureColumnWidthItemBody;
+}
+
+// @public
+export interface IMeasureColumnWidthItemBody {
+    // (undocumented)
+    locators: ColumnLocator[];
+    // (undocumented)
+    width: ColumnWidth;
 }
 
 // @public (undocumented)
@@ -181,10 +201,15 @@ export function isWeakMeasureColumnWidthItem(obj: unknown): obj is IWeakMeasureC
 // @public (undocumented)
 export interface IWeakMeasureColumnWidthItem {
     // (undocumented)
-    measureColumnWidthItem: {
-        width: IAbsoluteColumnWidth;
-        locator: IMeasureColumnLocator;
-    };
+    measureColumnWidthItem: IWeakMeasureColumnWidthItemBody;
+}
+
+// @public
+export interface IWeakMeasureColumnWidthItemBody {
+    // (undocumented)
+    locator: IMeasureColumnLocator;
+    // (undocumented)
+    width: IAbsoluteColumnWidth;
 }
 
 // @public

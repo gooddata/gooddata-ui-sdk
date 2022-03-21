@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 /**
  * This package provides the PivotTable component that you can use to visualize your data in a table-based manner.
  *
@@ -24,21 +24,27 @@ export {
 
 export {
     IWeakMeasureColumnWidthItem,
+    IWeakMeasureColumnWidthItemBody,
     isWeakMeasureColumnWidthItem,
     ColumnWidthItem,
     ColumnWidth,
     IAttributeColumnWidthItem,
+    IAttributeColumnWidthItemBody,
     IMeasureColumnWidthItem,
+    IMeasureColumnWidthItemBody,
     isAttributeColumnWidthItem,
     isMeasureColumnWidthItem,
     IAbsoluteColumnWidth,
     IAllMeasureColumnWidthItem,
+    IAllMeasureColumnWidthItemBody,
     isAbsoluteColumnWidth,
     isAllMeasureColumnWidthItem,
     IAutoColumnWidth,
     ColumnLocator,
     IAttributeColumnLocator,
+    IAttributeColumnLocatorBody,
     IMeasureColumnLocator,
+    IMeasureColumnLocatorBody,
     isMeasureColumnLocator,
     isAttributeColumnLocator,
     newAttributeColumnLocator,
