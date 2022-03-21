@@ -133,10 +133,10 @@ const getSelectedItemId = (currentItem: ISortItem, bucketItems: IBucketItemDescr
         if (isAttributeAreaSort(currentItem)) {
             return getNumericSortTargetType(currentItem);
         }
-        if (bucketItem.type === "chronologicalDate") {
+        if (bucketItem && bucketItem.type === "chronologicalDate") {
             return getDateSortTargetType(currentItem);
         }
-        if (bucketItem.type === "genericDate") {
+        if (bucketItem && bucketItem.type === "genericDate") {
             return SORT_TARGET_TYPE.DEFAULT;
         }
         return getAlphabeticalSortTargetType(currentItem);
@@ -144,8 +144,10 @@ const getSelectedItemId = (currentItem: ISortItem, bucketItems: IBucketItemDescr
     return getNumericSortTargetType(currentItem);
 };
 
-const getButtonValue = (sortTypeItems: ISortTypeItem[], type: SORT_TARGET_TYPE) =>
-    sortTypeItems.find((sortTypeItems: ISortTypeItem) => sortTypeItems.id === type).title;
+const getButtonValue = (sortTypeItems: ISortTypeItem[], type: SORT_TARGET_TYPE) => {
+    const foundItem = sortTypeItems.find((sortTypeItems: ISortTypeItem) => sortTypeItems.id === type);
+    return foundItem ? foundItem.title : "";
+};
 
 const buildSortItem = (
     { type, localIdentifier, sortDirection }: ISortTypeItem,
@@ -171,7 +173,6 @@ export const AttributeDropdown: React.FC<AttributeDropdownProps> = ({
     enableRenamingMeasureToMetric,
 }) => {
     const [width, setWidth] = useState<number>(0);
-    const [currentItem, setCurrentItem] = useState<ISortItem>(currentSortItem);
     const buttonRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -183,22 +184,20 @@ export const AttributeDropdown: React.FC<AttributeDropdownProps> = ({
     const attributeSelectHandler = useCallback(
         (selectedSortType: ISortTypeItem) => {
             const newCurrentItem = buildSortItem(selectedSortType, availableSorts);
-            setCurrentItem(newCurrentItem);
             onSelect(newCurrentItem);
         },
-        [currentItem, onSelect, availableSorts],
+        [currentSortItem, onSelect, availableSorts],
     );
 
     const measureSelectHandler = useCallback(
         (newCurrentItem: ISortItem) => {
-            setCurrentItem(newCurrentItem);
             onSelect(newCurrentItem);
         },
-        [currentItem, onSelect],
+        [currentSortItem, onSelect],
     );
 
     const sortTypeItems = getSortTypeItems(availableSorts, bucketItems, intl);
-    const selectedSortType = getSelectedItemId(currentItem, bucketItems);
+    const selectedSortType = getSelectedItemId(currentSortItem, bucketItems);
     const buttonValue = getButtonValue(sortTypeItems, selectedSortType);
     const renderMeasureDropdown =
         selectedSortType === SORT_TARGET_TYPE.NUMERICAL_ASC ||
@@ -254,7 +253,7 @@ export const AttributeDropdown: React.FC<AttributeDropdownProps> = ({
                 only shown when top attribute is filter by "Largest to smallest" */}
             {renderMeasureDropdown && (
                 <MeasureDropdown
-                    currentItem={currentItem}
+                    currentItem={currentSortItem}
                     intl={intl}
                     availableSorts={availableSorts}
                     bucketItems={bucketItems}
