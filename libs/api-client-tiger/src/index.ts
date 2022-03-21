@@ -172,10 +172,6 @@ export {
     OrganizationGetEntitiesOptions,
 } from "./organizationUtilities";
 
-export { OrganizationModelControllerApiInterface } from "./organizationObjects";
-
-export { WorkspaceObjectControllerApiInterface } from "./workspaceObjects";
-
 const defaultTigerClient: ITigerClient = tigerClientFactory(defaultAxios);
 
 export default defaultTigerClient;

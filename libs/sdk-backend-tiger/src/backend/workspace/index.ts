@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import {
     IAnalyticalWorkspace,
@@ -49,7 +49,7 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
             return workspaceConverter(
                 (
                     await this.authCall(async (client) => {
-                        return client.organizationObjects.getEntityWorkspaces({
+                        return client.entities.getEntityWorkspaces({
                             id: this.workspace,
                             include: ["workspaces"],
                         });

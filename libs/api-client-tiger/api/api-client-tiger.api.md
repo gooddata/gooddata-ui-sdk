@@ -5108,13 +5108,9 @@ export interface ITigerClient {
     explain: ReturnType<typeof tigerAfmExplainClientFactory>;
     // (undocumented)
     labelElements: ReturnType<typeof tigerLabelElementsClientFactory>;
-    // @deprecated (undocumented)
-    organizationObjects: ReturnType<typeof tigerOrganizationObjectsClientFactory>;
     setApiToken: (token: string | undefined) => void;
     // (undocumented)
     validObjects: ReturnType<typeof tigerValidObjectsClientFactory>;
-    // @deprecated (undocumented)
-    workspaceObjects: ReturnType<typeof tigerWorkspaceObjectsClientFactory>;
 }
 
 // @public (undocumented)
@@ -7744,9 +7740,6 @@ export type OrganizationGetEntitiesOptions = {
 // @internal
 export type OrganizationGetEntitiesResult = JsonApiUserOutList | JsonApiUserGroupOutList | JsonApiWorkspaceOutList;
 
-// @public (undocumented)
-export type OrganizationModelControllerApiInterface = Pick<EntitiesApiInterface, "createEntityDataSources" | "createEntityUserGroups" | "createEntityUsers" | "createEntityWorkspaces" | "deleteEntityDataSources" | "deleteEntityUserGroups" | "deleteEntityUsers" | "deleteEntityWorkspaces" | "getAllEntitiesDataSources" | "getAllEntitiesUserGroups" | "getAllEntitiesUsers" | "getAllEntitiesWorkspaces" | "getEntityDataSources" | "getEntityUserGroups" | "getEntityUsers" | "getEntityWorkspaces" | "updateEntityDataSources" | "updateEntityUserGroups" | "updateEntityUsers" | "updateEntityWorkspaces">;
-
 // @internal
 export class OrganizationUtilities {
     static getAllPagesOf: <T extends OrganizationGetEntitiesResult, P>(client: ITigerClient, entitiesGet: OrganizationGetEntitiesFn<T, P>, params: P, options?: OrganizationGetEntitiesOptions) => Promise<T[]>;
@@ -8098,13 +8091,7 @@ export const tigerLabelElementsClientFactory: (axios: AxiosInstance) => Pick<Afm
 export const tigerLayoutClientFactory: (axios: AxiosInstance) => LayoutApiInterface;
 
 // @public (undocumented)
-export const tigerOrganizationObjectsClientFactory: (axios: AxiosInstance) => OrganizationModelControllerApiInterface;
-
-// @public (undocumented)
 export const tigerValidObjectsClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "computeValidObjects">;
-
-// @public (undocumented)
-export const tigerWorkspaceObjectsClientFactory: (axios: AxiosInstance) => WorkspaceObjectControllerApiInterface;
 
 // @public
 export enum TotalFunction {
@@ -8233,8 +8220,5 @@ export enum WorkspaceIdentifierTypeEnum {
     // (undocumented)
     Workspace = "workspace"
 }
-
-// @public (undocumented)
-export type WorkspaceObjectControllerApiInterface = Pick<EntitiesApiInterface, "createEntityAnalyticalDashboards" | "createEntityDashboardPlugins" | "createEntityFilterContexts" | "createEntityMetrics" | "createEntityVisualizationObjects" | "createEntityWorkspaceDataFilters" | "deleteEntityAnalyticalDashboards" | "deleteEntityDashboardPlugins" | "deleteEntityFilterContexts" | "deleteEntityMetrics" | "deleteEntityVisualizationObjects" | "deleteEntityWorkspaceDataFilters" | "getAllEntitiesAnalyticalDashboards" | "getAllEntitiesAttributes" | "getAllEntitiesDashboardPlugins" | "getAllEntitiesDatasets" | "getAllEntitiesFacts" | "getAllEntitiesFilterContexts" | "getAllEntitiesLabels" | "getAllEntitiesMetrics" | "getAllEntitiesVisualizationObjects" | "getAllEntitiesWorkspaceDataFilterSettings" | "getAllEntitiesWorkspaceDataFilters" | "getEntityAnalyticalDashboards" | "getEntityAttributes" | "getEntityDashboardPlugins" | "getEntityDatasets" | "getEntityFacts" | "getEntityFilterContexts" | "getEntityLabels" | "getEntityMetrics" | "getEntityVisualizationObjects" | "getEntityWorkspaceDataFilterSettings" | "getEntityWorkspaceDataFilters" | "updateEntityAnalyticalDashboards" | "updateEntityDashboardPlugins" | "updateEntityFilterContexts" | "updateEntityMetrics" | "updateEntityVisualizationObjects" | "updateEntityWorkspaceDataFilters">;
 
 ```

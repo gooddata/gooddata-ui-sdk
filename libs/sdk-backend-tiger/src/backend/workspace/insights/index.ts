@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     IInsightsQueryOptions,
     IInsightsQueryResult,
@@ -87,7 +87,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
         const allInsights = await this.authCall((client) => {
             return MetadataUtilities.getAllPagesOf(
                 client,
-                client.workspaceObjects.getAllEntitiesVisualizationObjects,
+                client.entities.getAllEntitiesVisualizationObjects,
                 { workspaceId: this.workspace },
                 optionsToUse,
             )
@@ -132,7 +132,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
         }
         const id = await objRefToIdentifier(ref, this.authCall);
         const response = await this.authCall((client) =>
-            client.workspaceObjects.getEntityVisualizationObjects(
+            client.entities.getEntityVisualizationObjects(
                 {
                     objectId: id,
                     workspaceId: this.workspace,
@@ -164,7 +164,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
 
     public createInsight = async (insight: IInsightDefinition): Promise<IInsight> => {
         const createResponse = await this.authCall((client) => {
-            return client.workspaceObjects.createEntityVisualizationObjects(
+            return client.entities.createEntityVisualizationObjects(
                 {
                     workspaceId: this.workspace,
                     jsonApiVisualizationObjectInDocument: {
@@ -196,7 +196,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
 
     public updateInsight = async (insight: IInsight): Promise<IInsight> => {
         await this.authCall((client) => {
-            return client.workspaceObjects.updateEntityVisualizationObjects(
+            return client.entities.updateEntityVisualizationObjects(
                 {
                     objectId: insightId(insight),
                     workspaceId: this.workspace,
@@ -225,7 +225,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
         const id = await objRefToIdentifier(ref, this.authCall);
 
         await this.authCall((client) =>
-            client.workspaceObjects.deleteEntityVisualizationObjects({
+            client.entities.deleteEntityVisualizationObjects({
                 objectId: id,
                 workspaceId: this.workspace,
             }),
@@ -248,7 +248,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
         const dashboards = await this.authCall((client) =>
             MetadataUtilities.getAllPagesOf(
                 client,
-                client.workspaceObjects.getAllEntitiesAnalyticalDashboards,
+                client.entities.getAllEntitiesAnalyticalDashboards,
                 {
                     workspaceId: this.workspace,
                     include: ["visualizationObjects"], // we must include the visualizationObjects so that we can do predicates on them

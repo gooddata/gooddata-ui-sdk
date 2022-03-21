@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     IWorkspacesQueryFactory,
     IWorkspacesQuery,
@@ -91,11 +91,10 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
         search?: string,
     ): Promise<IWorkspacesQueryResult> {
         const allWorkspaces = await this.authCall((client) => {
-            return OrganizationUtilities.getAllPagesOf(
-                client,
-                client.organizationObjects.getAllEntitiesWorkspaces,
-                { sort: ["name"], include: ["workspaces"] },
-            )
+            return OrganizationUtilities.getAllPagesOf(client, client.entities.getAllEntitiesWorkspaces, {
+                sort: ["name"],
+                include: ["workspaces"],
+            })
                 .then(OrganizationUtilities.mergeEntitiesResults)
                 .then(this.resultToWorkspaceDescriptors)
                 .then(this.searchWorkspaceDescriptors(search))

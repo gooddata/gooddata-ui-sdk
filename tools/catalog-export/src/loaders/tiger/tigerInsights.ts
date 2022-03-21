@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 
 import { ObjectMeta } from "../../base/types";
 import { ITigerClient, MetadataUtilities, ValidateRelationsHeader } from "@gooddata/api-client-tiger";
@@ -13,7 +13,7 @@ import { ITigerClient, MetadataUtilities, ValidateRelationsHeader } from "@goodd
 export async function loadInsights(client: ITigerClient, workspaceId: string): Promise<ObjectMeta[]> {
     const result = await MetadataUtilities.getAllPagesOf(
         client,
-        client.workspaceObjects.getAllEntitiesVisualizationObjects,
+        client.entities.getAllEntitiesVisualizationObjects,
         { workspaceId },
         { headers: ValidateRelationsHeader },
     )

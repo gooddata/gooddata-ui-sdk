@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import {
     ITigerClient,
@@ -133,7 +133,7 @@ export async function loadAttributesAndDateDatasets(
 
     const attributes = await MetadataUtilities.getAllPagesOf(
         client,
-        client.workspaceObjects.getAllEntitiesAttributes,
+        client.entities.getAllEntitiesAttributes,
         params,
         { query: { include: includeObjects.join(",") } },
     ).then(MetadataUtilities.mergeEntitiesResults);

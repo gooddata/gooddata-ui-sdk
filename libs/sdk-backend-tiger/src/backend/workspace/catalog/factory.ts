@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     CatalogItem,
     CatalogItemType,
@@ -130,12 +130,9 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         const params = addRsqlFilterToParams({ workspaceId: this.workspace }, rsqlTagFilter);
 
         const measures = await this.authCall((client) => {
-            return MetadataUtilities.getAllPagesOf(
-                client,
-                client.workspaceObjects.getAllEntitiesMetrics,
-                params,
-                { headers: ValidateRelationsHeader },
-            )
+            return MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesMetrics, params, {
+                headers: ValidateRelationsHeader,
+            })
                 .then(MetadataUtilities.mergeEntitiesResults)
                 .then(MetadataUtilities.filterValidEntities);
         });
@@ -148,11 +145,9 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         const params = addRsqlFilterToParams({ workspaceId: this.workspace }, rsqlTagFilter);
 
         const facts = await this.authCall((client) => {
-            return MetadataUtilities.getAllPagesOf(
-                client,
-                client.workspaceObjects.getAllEntitiesFacts,
-                params,
-            ).then(MetadataUtilities.mergeEntitiesResults);
+            return MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesFacts, params).then(
+                MetadataUtilities.mergeEntitiesResults,
+            );
         });
 
         return facts.data.map(convertFact);

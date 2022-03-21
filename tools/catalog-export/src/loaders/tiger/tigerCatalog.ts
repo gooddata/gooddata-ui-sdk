@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { Attribute, Catalog, Fact, Metric } from "../../base/types";
 import {
     JsonApiAttributeOutList,
@@ -60,7 +60,7 @@ export async function loadCatalog(client: ITigerClient, workspaceId: string): Pr
     const [metricsResult, factsResult, attributesResult] = await Promise.all([
         MetadataUtilities.getAllPagesOf(
             client,
-            client.workspaceObjects.getAllEntitiesMetrics,
+            client.entities.getAllEntitiesMetrics,
             {
                 workspaceId,
             },
@@ -68,10 +68,10 @@ export async function loadCatalog(client: ITigerClient, workspaceId: string): Pr
         )
             .then(MetadataUtilities.mergeEntitiesResults)
             .then(MetadataUtilities.filterValidEntities),
-        MetadataUtilities.getAllPagesOf(client, client.workspaceObjects.getAllEntitiesFacts, {
+        MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesFacts, {
             workspaceId,
         }).then(MetadataUtilities.mergeEntitiesResults),
-        MetadataUtilities.getAllPagesOf(client, client.workspaceObjects.getAllEntitiesAttributes, {
+        MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesAttributes, {
             workspaceId,
             include: ["labels"],
         }).then(MetadataUtilities.mergeEntitiesResults),

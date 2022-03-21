@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
@@ -83,7 +83,7 @@ function loadAttributeDisplayForm(
 ): Promise<IAttributeDisplayFormMetadataObject> {
     invariant(isIdentifierRef(ref), "tiger backend only supports referencing by identifier");
 
-    return client.workspaceObjects
+    return client.entities
         .getEntityLabels(
             {
                 workspaceId,
@@ -106,7 +106,7 @@ function loadAttribute(
 ): Promise<IAttributeMetadataObject> {
     invariant(isIdentifierRef(ref), "tiger backend only supports referencing by identifier");
 
-    return client.workspaceObjects
+    return client.entities
         .getEntityAttributes(
             {
                 workspaceId,
@@ -125,7 +125,7 @@ function loadAttribute(
 function loadAttributes(client: ITigerClient, workspaceId: string): Promise<IAttributeMetadataObject[]> {
     return MetadataUtilities.getAllPagesOf(
         client,
-        client.workspaceObjects.getAllEntitiesAttributes,
+        client.entities.getAllEntitiesAttributes,
         { workspaceId },
         { query: { include: "labels" } },
     )
@@ -140,7 +140,7 @@ function loadAttributeDataset(
 ): Promise<IDataSetMetadataObject> {
     invariant(isIdentifierRef(ref), "tiger backend only supports referencing by identifier");
 
-    return client.workspaceObjects
+    return client.entities
         .getEntityAttributes(
             {
                 workspaceId: workspace,

@@ -16,7 +16,7 @@ export async function loadAnalyticalDashboards(
 ): Promise<ObjectMeta[]> {
     const result = await MetadataUtilities.getAllPagesOf(
         client,
-        client.workspaceObjects.getAllEntitiesAnalyticalDashboards,
+        client.entities.getAllEntitiesAnalyticalDashboards,
         { workspaceId },
         // TODO we need to show dashboards with invalid references now, later this should be rework or removed completely (related to NAS-140)
         // { headers: ValidateRelationsHeader },
