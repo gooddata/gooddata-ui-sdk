@@ -68,7 +68,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const result = await this.authCall((client) => {
             return MetadataUtilities.getAllPagesOf(
                 client,
-                client.workspaceObjects.getAllEntitiesAnalyticalDashboards,
+                client.entities.getAllEntitiesAnalyticalDashboards,
                 { workspaceId: this.workspace },
                 // TODO we need to show dashboards with invalid references now, later this should be rework or removed completely (related to NAS-140)
                 // { headers: ValidateRelationsHeader },
@@ -98,7 +98,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
         const id = await objRefToIdentifier(ref, this.authCall);
         const result = await this.authCall((client) => {
-            return client.workspaceObjects.getEntityAnalyticalDashboards(
+            return client.entities.getEntityAnalyticalDashboards(
                 {
                     workspaceId: this.workspace,
                     objectId: id,
@@ -189,7 +189,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const id = await objRefToIdentifier(ref, this.authCall);
 
         return this.authCall((client) => {
-            return client.workspaceObjects.getEntityAnalyticalDashboards(
+            return client.entities.getEntityAnalyticalDashboards(
                 {
                     workspaceId: this.workspace,
                     objectId: id,
@@ -214,7 +214,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
         const dashboardContent = convertAnalyticalDashboard(dashboard, filterContext?.ref);
         const result = await this.authCall((client) => {
-            return client.workspaceObjects.createEntityAnalyticalDashboards(
+            return client.entities.createEntityAnalyticalDashboards(
                 {
                     workspaceId: this.workspace,
                     jsonApiAnalyticalDashboardInDocument: {
@@ -261,7 +261,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const objectId = await objRefToIdentifier(originalDashboard.ref, this.authCall);
         const dashboardContent = convertAnalyticalDashboard(updatedDashboard, filterContext?.ref);
         const result = await this.authCall((client) => {
-            return client.workspaceObjects.updateEntityAnalyticalDashboards(
+            return client.entities.updateEntityAnalyticalDashboards(
                 {
                     workspaceId: this.workspace,
                     objectId,
@@ -290,7 +290,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const id = await objRefToIdentifier(ref, this.authCall);
 
         await this.authCall((client) =>
-            client.workspaceObjects.deleteEntityAnalyticalDashboards(
+            client.entities.deleteEntityAnalyticalDashboards(
                 {
                     objectId: id,
                     workspaceId: this.workspace,
@@ -363,7 +363,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const pluginContent = convertDashboardPluginToBackend(plugin);
 
         const result = await this.authCall((client) => {
-            return client.workspaceObjects.createEntityDashboardPlugins(
+            return client.entities.createEntityDashboardPlugins(
                 {
                     workspaceId: this.workspace,
                     jsonApiDashboardPluginInDocument: {
@@ -391,7 +391,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const id = await objRefToIdentifier(ref, this.authCall);
 
         await this.authCall((client) =>
-            client.workspaceObjects.deleteEntityDashboardPlugins(
+            client.entities.deleteEntityDashboardPlugins(
                 {
                     objectId: id,
                     workspaceId: this.workspace,
@@ -406,7 +406,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     public getDashboardPlugin = async (ref: ObjRef): Promise<IDashboardPlugin> => {
         const objectId = await objRefToIdentifier(ref, this.authCall);
         const result = await this.authCall((client) => {
-            return client.workspaceObjects.getEntityDashboardPlugins(
+            return client.entities.getEntityDashboardPlugins(
                 {
                     workspaceId: this.workspace,
                     objectId,
@@ -424,7 +424,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const result = await this.authCall((client) => {
             return MetadataUtilities.getAllPagesOf(
                 client,
-                client.workspaceObjects.getAllEntitiesDashboardPlugins,
+                client.entities.getAllEntitiesDashboardPlugins,
                 { workspaceId: this.workspace },
                 { headers: ValidateRelationsHeader },
             )
@@ -445,7 +445,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const tigerFilterContext = convertFilterContextToBackend(filterContext);
 
         const result = await this.authCall((client) => {
-            return client.workspaceObjects.createEntityFilterContexts(
+            return client.entities.createEntityFilterContexts(
                 {
                     workspaceId: this.workspace,
                     jsonApiFilterContextInDocument: {
@@ -495,7 +495,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const objectId = await objRefToIdentifier(filterContext.ref, this.authCall);
 
         const result = await this.authCall((client) => {
-            return client.workspaceObjects.updateEntityFilterContexts(
+            return client.entities.updateEntityFilterContexts(
                 {
                     workspaceId: this.workspace,
                     objectId,
@@ -523,7 +523,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     private getFilterContext = async (filterContextRef: ObjRef) => {
         const filterContextId = await objRefToIdentifier(filterContextRef, this.authCall);
         const result = await this.authCall((client) => {
-            return client.workspaceObjects.getEntityFilterContexts(
+            return client.entities.getEntityFilterContexts(
                 {
                     workspaceId: this.workspace,
                     objectId: filterContextId,

@@ -34,7 +34,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
         }
 
         const metricMetadata = await this.authCall((client) =>
-            client.workspaceObjects.getEntityMetrics(
+            client.entities.getEntityMetrics(
                 {
                     objectId: ref.identifier,
                     workspaceId: this.workspace,
@@ -104,7 +104,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
     async createMeasure(measure: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject> {
         const metricAttributes = convertMetricToBackend(measure);
         const result = await this.authCall((client) => {
-            return client.workspaceObjects.createEntityMetrics(
+            return client.entities.createEntityMetrics(
                 {
                     workspaceId: this.workspace,
                     jsonApiMetricInDocument: {
@@ -128,7 +128,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
         const objectId = await objRefToIdentifier(measure.ref, this.authCall);
         const metricAttributes = convertMetricToBackend(measure);
         const result = await this.authCall((client) => {
-            return client.workspaceObjects.updateEntityMetrics(
+            return client.entities.updateEntityMetrics(
                 {
                     objectId,
                     workspaceId: this.workspace,
@@ -153,7 +153,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
         const objectId = await objRefToIdentifier(measureRef, this.authCall);
 
         await this.authCall((client) => {
-            return client.workspaceObjects.deleteEntityMetrics({
+            return client.entities.deleteEntityMetrics({
                 objectId,
                 workspaceId: this.workspace,
             });
@@ -169,7 +169,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
         const insights = this.authCall((client) =>
             MetadataUtilities.getAllPagesOf(
                 client,
-                client.workspaceObjects.getAllEntitiesVisualizationObjects,
+                client.entities.getAllEntitiesVisualizationObjects,
                 {
                     workspaceId: this.workspace,
                 },
@@ -182,7 +182,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
         const measures = this.authCall((client) =>
             MetadataUtilities.getAllPagesOf(
                 client,
-                client.workspaceObjects.getAllEntitiesMetrics,
+                client.entities.getAllEntitiesMetrics,
                 {
                     workspaceId: this.workspace,
                     include: ["metrics"],
