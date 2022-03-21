@@ -24,7 +24,7 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
     const { AttachmentIcon, attachmentLabel } = getAttachmentType(intl, attachments);
 
     return (
-        <div className="gd-scheduled-email">
+        <div className="gd-scheduled-email s-scheduled-email">
             <div className="gd-scheduled-email-icon">
                 <AttachmentIcon color={theme?.palette?.complementary?.c5} />
             </div>

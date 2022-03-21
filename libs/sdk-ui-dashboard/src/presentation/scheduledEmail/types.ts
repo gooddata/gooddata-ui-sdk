@@ -54,7 +54,7 @@ export interface IScheduledEmailManagementDialogProps {
     /**
      * Callback to be called, when user closes the scheduled email management dialog.
      */
-    onCancel?: () => void;
+    onClose?: () => void;
 
     /**
      * Callback to be called, when emails fail to load.

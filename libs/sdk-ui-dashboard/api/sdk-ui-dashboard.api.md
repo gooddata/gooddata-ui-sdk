@@ -3074,7 +3074,7 @@ export interface IScheduledEmailDialogProps {
 export interface IScheduledEmailManagementDialogProps {
     isVisible?: boolean;
     onAdd?: () => void;
-    onCancel?: () => void;
+    onClose?: () => void;
     onError?: (error: GoodDataSdkError) => void;
 }
 
