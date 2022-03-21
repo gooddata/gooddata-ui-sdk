@@ -51,6 +51,9 @@ function firstBucketItem(bucket: IBucket): IAttributeOrMeasure | undefined {
     return bucketItems(bucket)?.[0];
 }
 
+/**
+ * Utility function for creating bucket conversion for a single {@link @gooddata/sdk-model#IAttribute} item.
+ */
 export function singleAttributeBucketConversion<TProps extends object, TPropKey extends keyof TProps>(
     propName: TPropKey,
     bucketName: string,
@@ -58,6 +61,9 @@ export function singleAttributeBucketConversion<TProps extends object, TPropKey 
     return bucketConversion(propName, sdkModelPropMetas.Attribute.Single, bucketName, bucketAttribute);
 }
 
+/**
+ * Utility function for creating bucket conversion for multiple {@link @gooddata/sdk-model#IAttribute} items.
+ */
 export function multipleAttributesBucketConversion<TProps extends object, TPropKey extends keyof TProps>(
     propName: TPropKey,
     bucketName: string,
@@ -65,6 +71,9 @@ export function multipleAttributesBucketConversion<TProps extends object, TPropK
     return bucketConversion(propName, sdkModelPropMetas.Attribute.Multiple, bucketName, bucketAttributes);
 }
 
+/**
+ * Utility function for creating bucket conversion for a single {@link @gooddata/sdk-model#IMeasure} item.
+ */
 export function singleMeasureBucketConversion<TProps extends object, TPropKey extends keyof TProps>(
     propName: TPropKey,
     bucketName: string,
@@ -72,6 +81,9 @@ export function singleMeasureBucketConversion<TProps extends object, TPropKey ex
     return bucketConversion(propName, sdkModelPropMetas.Measure.Single, bucketName, bucketMeasure);
 }
 
+/**
+ * Utility function for creating bucket conversion for multiple {@link @gooddata/sdk-model#IMeasure} items.
+ */
 export function multipleMeasuresBucketConversion<TProps extends object, TPropKey extends keyof TProps>(
     propName: TPropKey,
     bucketName: string,
@@ -79,6 +91,9 @@ export function multipleMeasuresBucketConversion<TProps extends object, TPropKey
     return bucketConversion(propName, sdkModelPropMetas.Measure.Multiple, bucketName, bucketMeasures);
 }
 
+/**
+ * Utility function for creating bucket conversion for a single {@link @gooddata/sdk-model#IAttributeOrMeasure} item.
+ */
 export function singleAttributeOrMeasureBucketConversion<
     TProps extends object,
     TPropKey extends keyof TProps,
@@ -91,6 +106,9 @@ export function singleAttributeOrMeasureBucketConversion<
     );
 }
 
+/**
+ * Utility function for creating bucket conversion for multiple {@link @gooddata/sdk-model#IAttributeOrMeasure} items.
+ */
 export function multipleAttributesOrMeasuresBucketConversion<
     TProps extends object,
     TPropKey extends keyof TProps,
@@ -98,18 +116,27 @@ export function multipleAttributesOrMeasuresBucketConversion<
     return bucketConversion(propName, sdkModelPropMetas.AttributeOrMeasure.Multiple, bucketName, bucketItems);
 }
 
+/**
+ * Utility function for creating insight conversion for multiple {@link @gooddata/sdk-model#IFilter} items.
+ */
 export function filtersInsightConversion<TProps extends object, TPropKey extends keyof TProps>(
     propName: TPropKey,
 ): IInsightConversion<TProps, TPropKey, IFilter[]> {
     return insightConversion(propName, sdkModelPropMetas.Filter.Multiple, insightFilters);
 }
 
+/**
+ * Utility function for creating insight conversion for multiple {@link @gooddata/sdk-model#ISortItem} items.
+ */
 export function sortsInsightConversion<TProps extends object, TPropKey extends keyof TProps>(
     propName: TPropKey,
 ): IInsightConversion<TProps, TPropKey, ISortItem[]> {
     return insightConversion(propName, sdkModelPropMetas.SortItem.Multiple, insightSorts);
 }
 
+/**
+ * Utility function for creating insight conversion for multiple {@link @gooddata/sdk-model#ITotal} items.
+ */
 export function totalsInsightConversion<TProps extends object, TPropKey extends keyof TProps>(
     propName: TPropKey,
 ): IInsightConversion<TProps, TPropKey, ITotal[]> {

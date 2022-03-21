@@ -6,6 +6,9 @@ import { IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescript
 
 import { InsightToPropsConverter, PropMeta, PropsWithMeta } from "../types";
 
+/**
+ * Conversion based on a particular bucket.
+ */
 export interface IBucketConversion<
     TProps extends object,
     TPropKey extends keyof TProps,
@@ -37,6 +40,9 @@ export function bucketConversion<
     };
 }
 
+/**
+ * Conversion based on the whole {@link @gooddata/sdk-model#IInsightDefinition}
+ */
 export interface IInsightConversion<
     TProps extends object,
     TPropKey extends keyof TProps,
@@ -81,6 +87,16 @@ export type ConversionSpec<TProps extends object> = {
     [K in keyof TProps]: Conversion<TProps, K, TProps[K]>;
 };
 
+/**
+ * Creates an InsightToProps converter.
+ *
+ * @remarks
+ * This makes the conversion as declarative as possible avoiding any explicit logic in the call sites,
+ * rather using specialized object to describe parts of the conversion.
+ *
+ * @param conversionSpec - Specification of the insight to props conversion
+ * @returns function that can be used to convert a given insight to props for some visualization type
+ */
 export function getInsightToPropsConverter<TProps extends object>(
     conversionSpec: ConversionSpec<TProps>,
 ): InsightToPropsConverter<TProps> {

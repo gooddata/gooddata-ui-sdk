@@ -19,12 +19,13 @@ import { IEmbeddingCodeConfig } from "../../interfaces/VisualizationDescriptor";
 import { normalizeInsight } from "./normalizeInsight";
 import {
     IAdditionalFactoryDefinition,
-    IEmbeddingCodeGeneratorInput,
+    IEmbeddingCodeGeneratorSpecification,
     IImportInfo,
     PropsWithMeta,
     PropWithMeta,
 } from "./types";
 
+// these are in line with what `factoryNotationFor` supports
 const defaultFactories: IImportInfo[] = [
     // ObjRef factories
     "uriRef",
@@ -122,10 +123,11 @@ function walkProps<TProps>(
     const importsUsed: IImportInfo[] = [];
 
     // we ignore functions as there is no bullet-proof way to serialize them
-    const propPairs: [string, PropWithMeta<any>][] = toPairs<PropWithMeta<any>>(props).filter(
-        ([_, { value }]: [string, PropWithMeta<any>]) => !isFunction(value) && !isEmpty(value),
+    const propPairs = toPairs<PropWithMeta<any>>(props).filter(
+        ([_, { value }]) => !isFunction(value) && !isEmpty(value),
     );
 
+    // get variable declaration for each prop to render outside of the component
     const propDeclarations = propPairs.map(([key, { value, meta }]) => {
         if (isString(value)) {
             return `const ${key} = "${value}";`;
@@ -143,7 +145,11 @@ function walkProps<TProps>(
             return `const ${key} = ${rhsValue};`;
         }
     });
+
+    // get the prop={prop} pairs to fill the component with
     const propUsages = propPairs.map(([key]) => `${key}={${key}}`);
+
+    // add all the factories used in the propDeclarations so that we can add their imports later
     const detectedFactories = detectFactoryImports(propDeclarations, additionalFactories ?? []);
     importsUsed.push(...detectedFactories);
 
@@ -154,14 +160,21 @@ function walkProps<TProps>(
     };
 }
 
-export function getReactEmbeddingCodeGenerator<TProps extends object>({
-    component,
-    insightToProps,
-    additionalFactories,
-}: IEmbeddingCodeGeneratorInput<TProps>): (
-    insight: IInsightDefinition,
-    config?: IEmbeddingCodeConfig,
-) => string {
+/**
+ * Creates a React embedding code generator.
+ *
+ * @remarks
+ * This abstracts away much of the particular-pluggable-visualization-type-agnostic logic,
+ * taking the visualization-type-specific information in the `specification` parameter.
+ *
+ * @param specification - specification of the code generator
+ * @returns function that can be used to obtain React embedding code
+ */
+export function getReactEmbeddingCodeGenerator<TProps extends object>(
+    specification: IEmbeddingCodeGeneratorSpecification<TProps>,
+): (insight: IInsightDefinition, config?: IEmbeddingCodeConfig) => string {
+    const { component, insightToProps, additionalFactories } = specification;
+
     return (insight, config) => {
         const normalizedInsight = normalizeInsight(insight);
 
