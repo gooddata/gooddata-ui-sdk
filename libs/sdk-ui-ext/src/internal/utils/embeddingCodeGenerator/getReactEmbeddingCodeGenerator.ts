@@ -136,8 +136,8 @@ function walkProps<TProps>(
         const needsType = language === "ts";
         if (needsType) {
             const typeDeclaration =
-                meta.propType === "array" ? `${meta.propImport.name}[]` : meta.propImport.name;
-            importsUsed.push(meta.propImport);
+                meta.cardinality === "array" ? `${meta.typeImport.name}[]` : meta.typeImport.name;
+            importsUsed.push(meta.typeImport);
             return `const ${key}: ${typeDeclaration} = ${rhsValue};`;
         } else {
             return `const ${key} = ${rhsValue};`;

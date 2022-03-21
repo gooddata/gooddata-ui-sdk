@@ -14,8 +14,8 @@ export interface IAdditionalFactoryDefinition {
 }
 
 export type PropMeta = {
-    propImport: IImportInfo;
-    propType: "scalar" | "array";
+    typeImport: IImportInfo;
+    cardinality: "scalar" | "array";
 };
 
 export type PropWithMeta<TProp> = {

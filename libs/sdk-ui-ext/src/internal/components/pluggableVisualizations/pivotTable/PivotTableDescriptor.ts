@@ -86,12 +86,12 @@ export class PivotTableDescriptor extends BaseChartDescriptor implements IVisual
             config: insightConversion(
                 "config",
                 {
-                    propImport: {
+                    typeImport: {
                         importType: "named",
                         name: "IPivotTableConfig",
                         package: "@gooddata/sdk-ui-pivot",
                     },
-                    propType: "scalar",
+                    cardinality: "scalar",
                 },
                 pivotTableConfigFromInsight,
             ),

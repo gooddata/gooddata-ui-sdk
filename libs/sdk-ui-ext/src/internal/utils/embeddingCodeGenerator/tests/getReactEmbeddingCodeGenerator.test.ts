@@ -25,15 +25,15 @@ describe("getReactEmbeddingCodeGenerator", () => {
                     prop: {
                         value: "string",
                         meta: {
-                            propImport: { name: "Type", package: "some-package", importType: "default" },
-                            propType: "scalar",
+                            typeImport: { name: "Type", package: "some-package", importType: "default" },
+                            cardinality: "scalar",
                         },
                     },
                     another: {
                         value: [ReferenceMd.Account.Name],
                         meta: {
-                            propImport: { name: "Type2", package: "some-package2", importType: "named" },
-                            propType: "array",
+                            typeImport: { name: "Type2", package: "some-package2", importType: "named" },
+                            cardinality: "array",
                         },
                     },
                 };

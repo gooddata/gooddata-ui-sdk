@@ -20,10 +20,14 @@ import {
 import { PropMeta } from "../types";
 import { bucketConversion, IBucketConversion, IInsightConversion, insightConversion } from "./convertor";
 
-function namedSdkModelPropMetaFor(name: string, propType: PropMeta["propType"]): PropMeta {
+function namedSdkModelPropMetaFor(name: string, propType: PropMeta["cardinality"]): PropMeta {
     return {
-        propType,
-        propImport: { name, importType: "named", package: "@gooddata/sdk-model" },
+        cardinality: propType,
+        typeImport: {
+            name,
+            importType: "named",
+            package: "@gooddata/sdk-model",
+        },
     };
 }
 

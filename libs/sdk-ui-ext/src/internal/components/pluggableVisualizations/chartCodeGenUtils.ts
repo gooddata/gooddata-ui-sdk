@@ -87,12 +87,12 @@ export const chartAdditionalFactories: IAdditionalFactoryDefinition[] = [
 ];
 
 const chartConfigPropMeta: PropMeta = {
-    propImport: {
+    typeImport: {
         importType: "named",
         name: "IChartConfig",
         package: "@gooddata/sdk-ui-charts",
     },
-    propType: "scalar",
+    cardinality: "scalar",
 };
 
 export function chartConfigInsightConversion<TProps extends object, TPropKey extends keyof TProps>(

@@ -65,8 +65,12 @@ export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IV
             config: insightConversion(
                 "config",
                 {
-                    propImport: { importType: "named", name: "IGeoConfig", package: "@gooddata/sdk-ui-geo" },
-                    propType: "scalar",
+                    typeImport: {
+                        importType: "named",
+                        name: "IGeoConfig",
+                        package: "@gooddata/sdk-ui-geo",
+                    },
+                    cardinality: "scalar",
                 },
                 geoConfigFromInsight,
             ),
