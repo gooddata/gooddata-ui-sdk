@@ -230,7 +230,7 @@ export class PluggableHeatmap extends PluggableBaseChart {
     }
 
     public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
-        const { buckets, properties } = referencePoint;
+        const { buckets, properties, availableSorts: previousAvailableSorts } = referencePoint;
         const measures = getMeasureItems(buckets);
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
         const stackBy = getBucketItems(buckets, BucketNames.STACK);
@@ -241,7 +241,12 @@ export class PluggableHeatmap extends PluggableBaseChart {
         return Promise.resolve({
             supported: true,
             disabled,
-            appliedSort: super.reuseCurrentSort(properties, availableSorts, defaultSort),
+            appliedSort: super.reuseCurrentSort(
+                previousAvailableSorts,
+                properties,
+                availableSorts,
+                defaultSort,
+            ),
             defaultSort,
             availableSorts,
             ...(disabledExplanation && { disabledExplanation }),

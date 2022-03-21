@@ -94,7 +94,6 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected axis: string;
     protected secondaryAxis: AxisType;
     protected environment: string;
-    protected previousAvailableSorts: IAvailableSortsGroup[];
     protected readonly renderFun: (component: any, target: Element) => void;
 
     constructor(props: IVisConstruct) {
@@ -472,19 +471,13 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     }
 
     protected reuseCurrentSort(
+        previousAvailableSorts: IAvailableSortsGroup[],
         properties: IVisualizationProperties,
         availableSorts: IAvailableSortsGroup[],
         defaultSort: ISortItem[],
     ) {
-        const currentSort = properties && properties.sortItems;
-        const reusedSort = validateCurrentSort(
-            this.previousAvailableSorts,
-            currentSort,
-            availableSorts,
-            defaultSort,
-        );
-        this.previousAvailableSorts = availableSorts;
-        return reusedSort;
+        const previousSort = properties && properties.sortItems;
+        return validateCurrentSort(previousAvailableSorts, previousSort, availableSorts, defaultSort);
     }
 }
 

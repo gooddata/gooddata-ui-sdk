@@ -142,11 +142,16 @@ export class PluggableLineChart extends PluggableBaseChart {
         const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(referencePoint);
         const { disabled, disabledExplanation } = this.isSortDisabled(referencePoint, availableSorts);
 
-        const { properties } = referencePoint;
+        const { properties, availableSorts: previousAvailableSorts } = referencePoint;
         return Promise.resolve({
             supported: true,
             disabled,
-            appliedSort: super.reuseCurrentSort(properties, availableSorts, defaultSort),
+            appliedSort: super.reuseCurrentSort(
+                previousAvailableSorts,
+                properties,
+                availableSorts,
+                defaultSort,
+            ),
             defaultSort,
             availableSorts,
             ...(disabledExplanation && { disabledExplanation }),

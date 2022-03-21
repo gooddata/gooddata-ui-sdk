@@ -32,7 +32,7 @@ import {
     SdkErrorType,
     VisualizationEnvironment,
 } from "@gooddata/sdk-ui";
-import { ISortConfig } from "./SortConfig";
+import { IAvailableSortsGroup, ISortConfig } from "./SortConfig";
 
 export type RenderFunction = (component: any, target: Element) => void;
 
@@ -320,6 +320,7 @@ export interface IReferencePoint {
     buckets: IBucketOfFun[];
     filters: IFilters;
     properties?: IVisualizationProperties; // properties are under plugvis creator's control
+    availableSorts?: IAvailableSortsGroup[];
 }
 
 export interface IReferences {
