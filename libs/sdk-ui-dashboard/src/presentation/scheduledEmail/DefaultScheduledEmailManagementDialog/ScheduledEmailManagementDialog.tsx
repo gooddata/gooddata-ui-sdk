@@ -11,7 +11,7 @@ import { useScheduledEmailManagement } from "./useScheduledEmailManagement";
  * @alpha
  */
 export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementDialogProps> = (props) => {
-    const { onAdd, onCancel, onError } = props;
+    const { onAdd, onClose, onError } = props;
 
     const { result } = useScheduledEmailManagement({ onError });
     const isLoading = !result;
@@ -22,8 +22,8 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
     return (
         <Dialog
             displayCloseButton={true}
-            onCancel={onCancel}
-            className="gd-scheduled-email-management-dialog"
+            onCancel={onClose}
+            className="gd-scheduled-email-management-dialog s-scheduled-email-management-dialog"
         >
             <div>
                 <Typography tagName="h3">
@@ -46,8 +46,8 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
                     value={intl.formatMessage({ id: "dialogs.schedule.management.addSchedule" })}
                 />
                 <Button
-                    onClick={onCancel}
-                    className="gd-button-secondary s-cancel-button"
+                    onClick={onClose}
+                    className="gd-button-secondary s-close-button"
                     value={intl.formatMessage({ id: "close" })}
                 />
             </div>

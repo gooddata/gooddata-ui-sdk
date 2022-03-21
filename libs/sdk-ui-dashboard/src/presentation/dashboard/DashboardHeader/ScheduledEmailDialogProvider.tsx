@@ -80,7 +80,7 @@ export const ScheduledEmailDialogProvider = () => {
         openScheduleEmailingDialog();
     }, []);
 
-    const onScheduleEmailingManagementCancel = useCallback(() => {
+    const onScheduleEmailingManagementClose = useCallback(() => {
         closeScheduleEmailingManagementDialog();
     }, []);
 
@@ -95,7 +95,7 @@ export const ScheduledEmailDialogProvider = () => {
                 <ScheduledEmailManagementDialog
                     isVisible={isScheduleEmailingManagementDialogOpen}
                     onAdd={onScheduleEmailingManagementAdd}
-                    onCancel={onScheduleEmailingManagementCancel}
+                    onClose={onScheduleEmailingManagementClose}
                     onError={onScheduleEmailingManagementError}
                 />
             )}
