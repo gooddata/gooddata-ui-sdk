@@ -1,13 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import {
-    IInsightDefinition,
-    insightFilters,
-    insightSorts,
-    bucketAttribute,
-    bucketItems,
-    IBucket,
-    IAttributeOrMeasure,
-} from "@gooddata/sdk-model";
+import { IInsightDefinition } from "@gooddata/sdk-model";
 import { ISettings } from "@gooddata/sdk-backend-spi";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { IGeoPushpinChartProps } from "@gooddata/sdk-ui-geo";
@@ -22,11 +14,14 @@ import { PluggableGeoPushpinChart } from "./PluggableGeoPushpinChart";
 import { DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT, MIDDLE_VISUALIZATION_HEIGHT } from "../constants";
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
 import {
-    bucketConversion,
     chartAdditionalFactories,
+    filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
     insightConversion,
+    singleAttributeBucketConversion,
+    singleAttributeOrMeasureBucketConversion,
+    sortsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator";
 import { geoConfigFromInsight } from "./geoConfigFromInsight";
 
@@ -61,12 +56,12 @@ export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IV
             package: "@gooddata/sdk-ui-geo",
         },
         insightToProps: getInsightToPropsConverter<IGeoPushpinChartProps>({
-            location: bucketConversion("location", "IAttribute", BucketNames.LOCATION, bucketAttribute),
-            size: bucketConversion("size", "IAttributeOrMeasure", BucketNames.SIZE, firstBucketItem),
-            color: bucketConversion("color", "IAttributeOrMeasure", BucketNames.COLOR, firstBucketItem),
-            segmentBy: bucketConversion("segmentBy", "IAttribute", BucketNames.SEGMENT, bucketAttribute),
-            filters: insightConversion("filters", "IFilter[]", insightFilters),
-            sortBy: insightConversion("sortBy", "ISortItem[]", insightSorts),
+            location: singleAttributeBucketConversion("location", BucketNames.LOCATION),
+            size: singleAttributeOrMeasureBucketConversion("size", BucketNames.SIZE),
+            color: singleAttributeOrMeasureBucketConversion("color", BucketNames.COLOR),
+            segmentBy: singleAttributeBucketConversion("segmentBy", BucketNames.SEGMENT),
+            filters: filtersInsightConversion("filters"),
+            sortBy: sortsInsightConversion("sortBy"),
             config: insightConversion(
                 "config",
                 {
@@ -85,8 +80,4 @@ export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IV
         }
         return MIDDLE_VISUALIZATION_HEIGHT;
     }
-}
-
-function firstBucketItem(bucket: IBucket): IAttributeOrMeasure | undefined {
-    return bucketItems(bucket)?.[0];
 }

@@ -1,14 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import {
-    bucketAttributes,
-    bucketMeasures,
-    IInsight,
-    IInsightDefinition,
-    insightFilters,
-    insightSanitize,
-    insightSorts,
-    insightTotals,
-} from "@gooddata/sdk-model";
+import { IInsight, IInsightDefinition, insightSanitize } from "@gooddata/sdk-model";
 import {
     IAttributeColumnWidthItem,
     IPivotTableProps,
@@ -32,10 +23,14 @@ import {
     sanitizeTableProperties,
 } from "../drillDownUtil";
 import {
-    bucketConversion,
+    filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
     insightConversion,
+    multipleAttributesBucketConversion,
+    multipleAttributesOrMeasuresBucketConversion,
+    sortsInsightConversion,
+    totalsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator";
 import { pivotTableConfigFromInsight } from "./pivotTableConfigFromInsight";
 
@@ -82,12 +77,12 @@ export class PivotTableDescriptor extends BaseChartDescriptor implements IVisual
             package: "@gooddata/sdk-ui-pivot",
         },
         insightToProps: getInsightToPropsConverter<IPivotTableProps>({
-            measures: bucketConversion("measures", "IMeasure[]", BucketNames.MEASURES, bucketMeasures),
-            rows: bucketConversion("rows", "IAttribute[]", BucketNames.ATTRIBUTE, bucketAttributes),
-            columns: bucketConversion("columns", "IAttribute[]", BucketNames.COLUMNS, bucketAttributes),
-            filters: insightConversion("filters", "IFilter[]", insightFilters),
-            sortBy: insightConversion("sortBy", "ISortItem[]", insightSorts),
-            totals: insightConversion("totals", "ITotal[]", insightTotals),
+            measures: multipleAttributesOrMeasuresBucketConversion("measures", BucketNames.MEASURES),
+            rows: multipleAttributesBucketConversion("rows", BucketNames.ATTRIBUTE),
+            columns: multipleAttributesBucketConversion("columns", BucketNames.COLUMNS),
+            filters: filtersInsightConversion("filters"),
+            sortBy: sortsInsightConversion("sortBy"),
+            totals: totalsInsightConversion("totals"),
             config: insightConversion(
                 "config",
                 {

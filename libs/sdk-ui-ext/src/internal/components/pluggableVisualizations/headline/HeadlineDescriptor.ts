@@ -1,9 +1,8 @@
 // (C) 2021-2022 GoodData Corporation
-import { bucketMeasure, IInsight, IInsightDefinition } from "@gooddata/sdk-model";
+import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
 import { ISettings } from "@gooddata/sdk-backend-spi";
 import { IHeadlineProps } from "@gooddata/sdk-ui-charts";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { insightFilters } from "@gooddata/sdk-model";
 
 import {
     IVisualizationSizeInfo,
@@ -14,10 +13,10 @@ import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor";
 import { PluggableHeadline } from "./PluggableHeadline";
 import { DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT, MAX_VISUALIZATION_HEIGHT } from "../constants";
 import {
-    bucketConversion,
+    filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
-    insightConversion,
+    singleMeasureBucketConversion,
 } from "../../../utils/embeddingCodeGenerator";
 
 const hasSecondaryMeasure = (insight: IInsightDefinition) =>
@@ -79,19 +78,12 @@ export class HeadlineDescriptor implements IVisualizationDescriptor {
             package: "@gooddata/sdk-ui-charts",
         },
         insightToProps: getInsightToPropsConverter<IHeadlineProps>({
-            primaryMeasure: bucketConversion(
-                "primaryMeasure",
-                "IMeasure",
-                BucketNames.MEASURES,
-                bucketMeasure,
-            ),
-            secondaryMeasure: bucketConversion(
+            primaryMeasure: singleMeasureBucketConversion("primaryMeasure", BucketNames.MEASURES),
+            secondaryMeasure: singleMeasureBucketConversion(
                 "secondaryMeasure",
-                "IMeasure",
                 BucketNames.SECONDARY_MEASURES,
-                bucketMeasure,
             ),
-            filters: insightConversion("filters", "IFilter[]", insightFilters),
+            filters: filtersInsightConversion("filters"),
         }),
     });
 }

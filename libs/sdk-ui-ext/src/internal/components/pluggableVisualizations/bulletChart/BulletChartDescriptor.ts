@@ -1,5 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import { bucketAttributes, bucketMeasure, IInsight, insightFilters, insightSorts } from "@gooddata/sdk-model";
+import { IInsight } from "@gooddata/sdk-model";
 import { BucketNames, getIntersectionPartAfter, IDrillEvent } from "@gooddata/sdk-ui";
 import { IBulletChartProps } from "@gooddata/sdk-ui-charts";
 
@@ -13,14 +13,15 @@ import { modifyBucketsAttributesForDrillDown, addIntersectionFiltersToInsight } 
 import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization";
 import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper";
 import {
-    bucketConversion,
     chartAdditionalFactories,
-    chartConfigPropMeta,
+    chartConfigInsightConversion,
+    filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
-    insightConversion,
+    multipleAttributesBucketConversion,
+    singleAttributeOrMeasureBucketConversion,
+    sortsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator";
-import { chartConfigFromInsight } from "../chartConfigFromInsight";
 
 export class BulletChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
@@ -43,28 +44,19 @@ export class BulletChartDescriptor extends BaseChartDescriptor implements IVisua
             package: "@gooddata/sdk-ui-charts",
         },
         insightToProps: getInsightToPropsConverter<IBulletChartProps>({
-            primaryMeasure: bucketConversion(
-                "primaryMeasure",
-                "IMeasure",
-                BucketNames.MEASURES,
-                bucketMeasure,
-            ),
-            targetMeasure: bucketConversion(
+            primaryMeasure: singleAttributeOrMeasureBucketConversion("primaryMeasure", BucketNames.MEASURES),
+            targetMeasure: singleAttributeOrMeasureBucketConversion(
                 "targetMeasure",
-                "IMeasure",
                 BucketNames.SECONDARY_MEASURES,
-                bucketMeasure,
             ),
-            comparativeMeasure: bucketConversion(
+            comparativeMeasure: singleAttributeOrMeasureBucketConversion(
                 "comparativeMeasure",
-                "IMeasure",
                 BucketNames.TERTIARY_MEASURES,
-                bucketMeasure,
             ),
-            viewBy: bucketConversion("viewBy", "IAttribute[]", BucketNames.VIEW, bucketAttributes),
-            filters: insightConversion("filters", "IFilter[]", insightFilters),
-            sortBy: insightConversion("sortBy", "ISortItem[]", insightSorts),
-            config: insightConversion("config", chartConfigPropMeta, chartConfigFromInsight),
+            viewBy: multipleAttributesBucketConversion("viewBy", BucketNames.VIEW),
+            filters: filtersInsightConversion("filters"),
+            sortBy: sortsInsightConversion("sortBy"),
+            config: chartConfigInsightConversion("config"),
         }),
         additionalFactories: chartAdditionalFactories,
     });

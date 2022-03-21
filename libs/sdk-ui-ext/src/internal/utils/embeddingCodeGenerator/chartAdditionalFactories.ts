@@ -1,6 +1,11 @@
 // (C) 2022 GoodData Corporation
 import { factoryNotationFor, isColorMappingItem } from "@gooddata/sdk-model";
+import { IChartConfig } from "@gooddata/sdk-ui-charts";
+import { chartConfigFromInsight } from "../../components/pluggableVisualizations/chartConfigFromInsight";
+import { IInsightConversion, insightConversion } from "./insightToPropsConverter";
 import { IAdditionalFactoryDefinition, PropMeta } from "./types";
+
+// TODO move this file closer to PlugVis?
 
 export const chartAdditionalFactories: IAdditionalFactoryDefinition[] = [
     {
@@ -27,3 +32,9 @@ export const chartConfigPropMeta: PropMeta = {
     },
     propType: "scalar",
 };
+
+export function chartConfigInsightConversion<TProps extends object, TPropKey extends keyof TProps>(
+    propName: TPropKey,
+): IInsightConversion<TProps, TPropKey, IChartConfig> {
+    return insightConversion(propName, chartConfigPropMeta, chartConfigFromInsight);
+}

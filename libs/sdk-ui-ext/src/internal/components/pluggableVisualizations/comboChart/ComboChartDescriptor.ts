@@ -1,7 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 import { IComboChartProps } from "@gooddata/sdk-ui-charts";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { bucketMeasures, bucketAttributes, insightFilters, insightSorts } from "@gooddata/sdk-model";
 
 import {
     IVisualizationDescriptor,
@@ -11,13 +10,14 @@ import { PluggableComboChart } from "./PluggableComboChart";
 import { BigChartDescriptor } from "../BigChartDescriptor";
 import {
     getReactEmbeddingCodeGenerator,
-    bucketConversion,
     getInsightToPropsConverter,
-    insightConversion,
     chartAdditionalFactories,
-    chartConfigPropMeta,
+    filtersInsightConversion,
+    sortsInsightConversion,
+    chartConfigInsightConversion,
+    multipleMeasuresBucketConversion,
+    multipleAttributesBucketConversion,
 } from "../../../utils/embeddingCodeGenerator";
-import { chartConfigFromInsight } from "../chartConfigFromInsight";
 
 export class ComboChartDescriptor extends BigChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
@@ -31,22 +31,15 @@ export class ComboChartDescriptor extends BigChartDescriptor implements IVisuali
             package: "@gooddata/sdk-ui-charts",
         },
         insightToProps: getInsightToPropsConverter<IComboChartProps>({
-            primaryMeasures: bucketConversion(
-                "primaryMeasures",
-                "IMeasure[]",
-                BucketNames.MEASURES,
-                bucketMeasures,
-            ),
-            secondaryMeasures: bucketConversion(
+            primaryMeasures: multipleMeasuresBucketConversion("primaryMeasures", BucketNames.MEASURES),
+            secondaryMeasures: multipleMeasuresBucketConversion(
                 "secondaryMeasures",
-                "IMeasure[]",
                 BucketNames.SECONDARY_MEASURES,
-                bucketMeasures,
             ),
-            viewBy: bucketConversion("viewBy", "IAttribute[]", BucketNames.VIEW, bucketAttributes),
-            filters: insightConversion("filters", "IFilter[]", insightFilters),
-            sortBy: insightConversion("sortBy", "ISortItem[]", insightSorts),
-            config: insightConversion("config", chartConfigPropMeta, chartConfigFromInsight),
+            viewBy: multipleAttributesBucketConversion("viewBy", BucketNames.VIEW),
+            filters: filtersInsightConversion("filters"),
+            sortBy: sortsInsightConversion("sortBy"),
+            config: chartConfigInsightConversion("config"),
         }),
         additionalFactories: chartAdditionalFactories,
     });

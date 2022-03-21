@@ -1,5 +1,23 @@
 // (C) 2022 GoodData Corporation
-import { IBucket, IInsightDefinition, insightBucket } from "@gooddata/sdk-model";
+import {
+    bucketAttribute,
+    bucketAttributes,
+    bucketItems,
+    bucketMeasure,
+    bucketMeasures,
+    IAttribute,
+    IAttributeOrMeasure,
+    IBucket,
+    IFilter,
+    IInsightDefinition,
+    IMeasure,
+    insightBucket,
+    insightFilters,
+    insightSorts,
+    insightTotals,
+    ISortItem,
+    ITotal,
+} from "@gooddata/sdk-model";
 import isString from "lodash/isString";
 import toPairs from "lodash/toPairs";
 import invariant from "ts-invariant";
@@ -10,20 +28,28 @@ import { IImportInfo, InsightToPropsConverter, PropMeta, PropsWithMeta } from ".
 
 type PropTypeShorthand = WellKnownType | PropMeta;
 
-interface IBucketConversion<TProps extends object, TPropKey extends keyof TProps> {
+export interface IBucketConversion<
+    TProps extends object,
+    TPropKey extends keyof TProps,
+    TReturnType = TProps[TPropKey],
+> {
     type: "bucket";
     propName: TPropKey;
     propType: PropTypeShorthand;
     bucketName: string;
-    bucketItemAccessor: (bucket: IBucket) => TProps[TPropKey];
+    bucketItemAccessor: (bucket: IBucket) => TReturnType;
 }
 
-export function bucketConversion<TProps extends object, TPropKey extends keyof TProps>(
+export function bucketConversion<
+    TProps extends object,
+    TPropKey extends keyof TProps,
+    TReturnType = TProps[TPropKey],
+>(
     propName: TPropKey,
     propType: PropTypeShorthand,
     bucketName: string,
-    bucketItemAccessor: (bucket: IBucket) => TProps[TPropKey],
-): IBucketConversion<TProps, TPropKey> {
+    bucketItemAccessor: (bucket: IBucket) => TReturnType,
+): IBucketConversion<TProps, TPropKey, TReturnType> {
     return {
         type: "bucket",
         propName,
@@ -33,24 +59,72 @@ export function bucketConversion<TProps extends object, TPropKey extends keyof T
     };
 }
 
-interface IInsightConversion<TProps extends object, TPropKey extends keyof TProps> {
+export function singleAttributeBucketConversion<TProps extends object, TPropKey extends keyof TProps>(
+    propName: TPropKey,
+    bucketName: string,
+): IBucketConversion<TProps, TPropKey, IAttribute> {
+    return bucketConversion(propName, "IAttribute", bucketName, bucketAttribute);
+}
+
+export function multipleAttributesBucketConversion<TProps extends object, TPropKey extends keyof TProps>(
+    propName: TPropKey,
+    bucketName: string,
+): IBucketConversion<TProps, TPropKey, IAttribute[]> {
+    return bucketConversion(propName, "IAttribute[]", bucketName, bucketAttributes);
+}
+
+export function singleMeasureBucketConversion<TProps extends object, TPropKey extends keyof TProps>(
+    propName: TPropKey,
+    bucketName: string,
+): IBucketConversion<TProps, TPropKey, IMeasure> {
+    return bucketConversion(propName, "IMeasure", bucketName, bucketMeasure);
+}
+
+export function multipleMeasuresBucketConversion<TProps extends object, TPropKey extends keyof TProps>(
+    propName: TPropKey,
+    bucketName: string,
+): IBucketConversion<TProps, TPropKey, IMeasure[]> {
+    return bucketConversion(propName, "IMeasure[]", bucketName, bucketMeasures);
+}
+
+function firstBucketItem(bucket: IBucket): IAttributeOrMeasure | undefined {
+    return bucketItems(bucket)?.[0];
+}
+
+export function singleAttributeOrMeasureBucketConversion<
+    TProps extends object,
+    TPropKey extends keyof TProps,
+>(propName: TPropKey, bucketName: string): IBucketConversion<TProps, TPropKey, IAttributeOrMeasure> {
+    return bucketConversion(propName, "IAttributeOrMeasure", bucketName, firstBucketItem);
+}
+
+export function multipleAttributesOrMeasuresBucketConversion<
+    TProps extends object,
+    TPropKey extends keyof TProps,
+>(propName: TPropKey, bucketName: string): IBucketConversion<TProps, TPropKey, IAttributeOrMeasure[]> {
+    return bucketConversion(propName, "IAttributeOrMeasure[]", bucketName, bucketItems);
+}
+
+export interface IInsightConversion<
+    TProps extends object,
+    TPropKey extends keyof TProps,
+    TReturnType = TProps[TPropKey],
+> {
     type: "insight";
     propName: TPropKey;
     propType: PropTypeShorthand;
-    insightItemAccessor: (
-        insight: IInsightDefinition,
-        ctx: IEmbeddingCodeContext | undefined,
-    ) => TProps[TPropKey];
+    insightItemAccessor: (insight: IInsightDefinition, ctx: IEmbeddingCodeContext | undefined) => TReturnType;
 }
 
-export function insightConversion<TProps extends object, TPropKey extends keyof TProps>(
+export function insightConversion<
+    TProps extends object,
+    TPropKey extends keyof TProps,
+    TReturnType = TProps[TPropKey],
+>(
     propName: TPropKey,
     propType: PropTypeShorthand,
-    insightItemAccessor: (
-        insight: IInsightDefinition,
-        ctx: IEmbeddingCodeContext | undefined,
-    ) => TProps[TPropKey],
-): IInsightConversion<TProps, TPropKey> {
+    insightItemAccessor: (insight: IInsightDefinition, ctx: IEmbeddingCodeContext | undefined) => TReturnType,
+): IInsightConversion<TProps, TPropKey, TReturnType> {
     return {
         type: "insight",
         propName,
@@ -59,9 +133,27 @@ export function insightConversion<TProps extends object, TPropKey extends keyof 
     };
 }
 
-type Conversion<TProps extends object, TPropKey extends keyof TProps> =
-    | IBucketConversion<TProps, TPropKey>
-    | IInsightConversion<TProps, TPropKey>;
+export function filtersInsightConversion<TProps extends object, TPropKey extends keyof TProps>(
+    propName: TPropKey,
+): IInsightConversion<TProps, TPropKey, IFilter[]> {
+    return insightConversion(propName, "IFilter[]", insightFilters);
+}
+
+export function sortsInsightConversion<TProps extends object, TPropKey extends keyof TProps>(
+    propName: TPropKey,
+): IInsightConversion<TProps, TPropKey, ISortItem[]> {
+    return insightConversion(propName, "ISortItem[]", insightSorts);
+}
+
+export function totalsInsightConversion<TProps extends object, TPropKey extends keyof TProps>(
+    propName: TPropKey,
+): IInsightConversion<TProps, TPropKey, ITotal[]> {
+    return insightConversion(propName, "ITotal[]", insightTotals);
+}
+
+export type Conversion<TProps extends object, TPropKey extends keyof TProps, TReturnType> =
+    | IBucketConversion<TProps, TPropKey, TReturnType>
+    | IInsightConversion<TProps, TPropKey, TReturnType>;
 
 function isBucketConversion(obj: unknown): obj is IBucketConversion<any, any> {
     return !!obj && (obj as IBucketConversion<any, any>).type === "bucket";
@@ -72,7 +164,7 @@ function isInsightConversion(obj: unknown): obj is IInsightConversion<any, any> 
 }
 
 type ConversionSpec<TProps extends object> = {
-    [K in keyof TProps]: Conversion<TProps, K>;
+    [K in keyof TProps]: Conversion<TProps, K, TProps[K]>;
 };
 
 type WellKnownType =

@@ -1,5 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import { bucketAttribute, bucketMeasure, IInsight, insightFilters, insightSorts } from "@gooddata/sdk-model";
+import { IInsight } from "@gooddata/sdk-model";
 import { BucketNames, IDrillEvent, isDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
 import { IHeatmapProps } from "@gooddata/sdk-ui-charts";
 
@@ -13,13 +13,14 @@ import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Vis
 import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper";
 import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil";
 import {
-    bucketConversion,
-    chartConfigPropMeta,
+    chartConfigInsightConversion,
+    filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
-    insightConversion,
+    singleAttributeBucketConversion,
+    singleAttributeOrMeasureBucketConversion,
+    sortsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator";
-import { chartConfigFromInsight } from "../chartConfigFromInsight";
 
 export class HeatmapDescriptor extends BigChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
@@ -42,12 +43,12 @@ export class HeatmapDescriptor extends BigChartDescriptor implements IVisualizat
             package: "@gooddata/sdk-ui-charts",
         },
         insightToProps: getInsightToPropsConverter<IHeatmapProps>({
-            measure: bucketConversion("measure", "IMeasure", BucketNames.MEASURES, bucketMeasure),
-            rows: bucketConversion("rows", "IAttribute", BucketNames.VIEW, bucketAttribute),
-            columns: bucketConversion("columns", "IAttribute", BucketNames.STACK, bucketAttribute),
-            filters: insightConversion("filters", "IFilter[]", insightFilters),
-            sortBy: insightConversion("sortBy", "ISortItem[]", insightSorts),
-            config: insightConversion("config", chartConfigPropMeta, chartConfigFromInsight),
+            measure: singleAttributeOrMeasureBucketConversion("measure", BucketNames.MEASURES),
+            rows: singleAttributeBucketConversion("rows", BucketNames.VIEW),
+            columns: singleAttributeBucketConversion("columns", BucketNames.STACK),
+            filters: filtersInsightConversion("filters"),
+            sortBy: sortsInsightConversion("sortBy"),
+            config: chartConfigInsightConversion("config"),
         }),
     });
 
