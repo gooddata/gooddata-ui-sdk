@@ -8,29 +8,27 @@ import {
     LabelElementsRequestArgs,
     tigerLabelElementsClientFactory,
 } from "./labelElements";
+
+import { tigerValidObjectsClientFactory } from "./validObjects";
+import { setAxiosAuthorizationToken } from "./axios";
+import { AxiosInstance } from "axios";
+import { tigerLayoutClientFactory } from "./layout";
+import { tigerAfmExplainClientFactory } from "./explain";
+
 import {
     MetadataConfiguration,
     MetadataConfigurationParameters,
     MetadataBaseApi,
     MetadataRequestArgs,
-    tigerWorkspaceObjectsClientFactory,
-} from "./workspaceObjects";
-import { tigerValidObjectsClientFactory } from "./validObjects";
-import { tigerOrganizationObjectsClientFactory } from "./organizationObjects";
-import { setAxiosAuthorizationToken } from "./axios";
-import { AxiosInstance } from "axios";
-import { tigerLayoutClientFactory } from "./layout";
-import { tigerAfmExplainClientFactory } from "./explain";
-import { tigerEntitiesObjectsClientFactory } from "./entitiesObjects";
+    tigerEntitiesObjectsClientFactory,
+} from "./entitiesObjects";
 
 export {
-    tigerWorkspaceObjectsClientFactory,
     tigerExecutionClientFactory,
     tigerEntitiesObjectsClientFactory,
     tigerExecutionResultClientFactory,
     tigerLabelElementsClientFactory,
     tigerValidObjectsClientFactory,
-    tigerOrganizationObjectsClientFactory,
     tigerLayoutClientFactory,
     tigerAfmExplainClientFactory,
     MetadataConfiguration,
@@ -54,16 +52,6 @@ export interface ITigerClient {
     entities: ReturnType<typeof tigerEntitiesObjectsClientFactory>;
 
     /**
-     * @deprecated use entities {@link ITigerClient.entities} instead
-     */
-    workspaceObjects: ReturnType<typeof tigerWorkspaceObjectsClientFactory>;
-
-    /**
-     * @deprecated  use entities {@link  ITigerClient.entities} instead
-     */
-    organizationObjects: ReturnType<typeof tigerOrganizationObjectsClientFactory>;
-
-    /**
      * Updates tiger client to send the provided API TOKEN in `Authorization` header of all
      * requests.
      *
@@ -81,9 +69,7 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
     const execution = tigerExecutionClientFactory(axios);
     const executionResult = tigerExecutionResultClientFactory(axios);
     const labelElements = tigerLabelElementsClientFactory(axios);
-    const workspaceObjects = tigerWorkspaceObjectsClientFactory(axios);
     const validObjects = tigerValidObjectsClientFactory(axios);
-    const organizationObjects = tigerOrganizationObjectsClientFactory(axios);
     const declarativeLayout = tigerLayoutClientFactory(axios);
     const explain = tigerAfmExplainClientFactory(axios);
     const entities = tigerEntitiesObjectsClientFactory(axios);
@@ -93,9 +79,7 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
         execution,
         executionResult,
         labelElements,
-        workspaceObjects,
         validObjects,
-        organizationObjects,
         declarativeLayout,
         explain,
         entities,

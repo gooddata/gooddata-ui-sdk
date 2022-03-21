@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import { AxiosPromise } from "axios";
 import flatMap from "lodash/flatMap";
@@ -115,7 +115,7 @@ export class MetadataUtilities {
         params: P,
         options: MetadataGetEntitiesOptions = {},
     ): Promise<T[]> => {
-        const boundGet = entitiesGet.bind(client.workspaceObjects);
+        const boundGet = entitiesGet.bind(client.entities);
         const results: T[] = [];
         const pageSize = options.query?.size ?? DefaultPageSize;
         let reachedEnd = false;
