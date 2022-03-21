@@ -13,7 +13,6 @@ export {
     singleMeasureBucketConversion,
     sortsInsightConversion,
     totalsInsightConversion,
-    IBucketConversion,
-    IInsightConversion,
+    IInsightToPropConversion,
 } from "./insightToPropsConverter";
 export * from "./types";

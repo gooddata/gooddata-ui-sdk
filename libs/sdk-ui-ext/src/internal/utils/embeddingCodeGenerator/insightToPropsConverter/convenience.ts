@@ -18,7 +18,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { PropMeta } from "../types";
-import { bucketConversion, IBucketConversion, IInsightConversion, insightConversion } from "./convertor";
+import { bucketConversion, IInsightToPropConversion, insightConversion } from "./convertor";
 
 function namedSdkModelPropMetaFor(name: string, propType: PropMeta["cardinality"]): PropMeta {
     return {
@@ -57,7 +57,7 @@ function firstBucketItem(bucket: IBucket): IAttributeOrMeasure | undefined {
 export function singleAttributeBucketConversion<TProps extends object, TPropKey extends keyof TProps>(
     propName: TPropKey,
     bucketName: string,
-): IBucketConversion<TProps, TPropKey, IAttribute> {
+): IInsightToPropConversion<TProps, TPropKey, IAttribute> {
     return bucketConversion(propName, sdkModelPropMetas.Attribute.Single, bucketName, bucketAttribute);
 }
 
@@ -67,7 +67,7 @@ export function singleAttributeBucketConversion<TProps extends object, TPropKey 
 export function multipleAttributesBucketConversion<TProps extends object, TPropKey extends keyof TProps>(
     propName: TPropKey,
     bucketName: string,
-): IBucketConversion<TProps, TPropKey, IAttribute[]> {
+): IInsightToPropConversion<TProps, TPropKey, IAttribute[]> {
     return bucketConversion(propName, sdkModelPropMetas.Attribute.Multiple, bucketName, bucketAttributes);
 }
 
@@ -77,7 +77,7 @@ export function multipleAttributesBucketConversion<TProps extends object, TPropK
 export function singleMeasureBucketConversion<TProps extends object, TPropKey extends keyof TProps>(
     propName: TPropKey,
     bucketName: string,
-): IBucketConversion<TProps, TPropKey, IMeasure> {
+): IInsightToPropConversion<TProps, TPropKey, IMeasure> {
     return bucketConversion(propName, sdkModelPropMetas.Measure.Single, bucketName, bucketMeasure);
 }
 
@@ -87,7 +87,7 @@ export function singleMeasureBucketConversion<TProps extends object, TPropKey ex
 export function multipleMeasuresBucketConversion<TProps extends object, TPropKey extends keyof TProps>(
     propName: TPropKey,
     bucketName: string,
-): IBucketConversion<TProps, TPropKey, IMeasure[]> {
+): IInsightToPropConversion<TProps, TPropKey, IMeasure[]> {
     return bucketConversion(propName, sdkModelPropMetas.Measure.Multiple, bucketName, bucketMeasures);
 }
 
@@ -97,7 +97,7 @@ export function multipleMeasuresBucketConversion<TProps extends object, TPropKey
 export function singleAttributeOrMeasureBucketConversion<
     TProps extends object,
     TPropKey extends keyof TProps,
->(propName: TPropKey, bucketName: string): IBucketConversion<TProps, TPropKey, IAttributeOrMeasure> {
+>(propName: TPropKey, bucketName: string): IInsightToPropConversion<TProps, TPropKey, IAttributeOrMeasure> {
     return bucketConversion(
         propName,
         sdkModelPropMetas.AttributeOrMeasure.Single,
@@ -112,7 +112,7 @@ export function singleAttributeOrMeasureBucketConversion<
 export function multipleAttributesOrMeasuresBucketConversion<
     TProps extends object,
     TPropKey extends keyof TProps,
->(propName: TPropKey, bucketName: string): IBucketConversion<TProps, TPropKey, IAttributeOrMeasure[]> {
+>(propName: TPropKey, bucketName: string): IInsightToPropConversion<TProps, TPropKey, IAttributeOrMeasure[]> {
     return bucketConversion(propName, sdkModelPropMetas.AttributeOrMeasure.Multiple, bucketName, bucketItems);
 }
 
@@ -121,7 +121,7 @@ export function multipleAttributesOrMeasuresBucketConversion<
  */
 export function filtersInsightConversion<TProps extends object, TPropKey extends keyof TProps>(
     propName: TPropKey,
-): IInsightConversion<TProps, TPropKey, IFilter[]> {
+): IInsightToPropConversion<TProps, TPropKey, IFilter[]> {
     return insightConversion(propName, sdkModelPropMetas.Filter.Multiple, insightFilters);
 }
 
@@ -130,7 +130,7 @@ export function filtersInsightConversion<TProps extends object, TPropKey extends
  */
 export function sortsInsightConversion<TProps extends object, TPropKey extends keyof TProps>(
     propName: TPropKey,
-): IInsightConversion<TProps, TPropKey, ISortItem[]> {
+): IInsightToPropConversion<TProps, TPropKey, ISortItem[]> {
     return insightConversion(propName, sdkModelPropMetas.SortItem.Multiple, insightSorts);
 }
 
@@ -139,6 +139,6 @@ export function sortsInsightConversion<TProps extends object, TPropKey extends k
  */
 export function totalsInsightConversion<TProps extends object, TPropKey extends keyof TProps>(
     propName: TPropKey,
-): IInsightConversion<TProps, TPropKey, ITotal[]> {
+): IInsightToPropConversion<TProps, TPropKey, ITotal[]> {
     return insightConversion(propName, sdkModelPropMetas.Total.Multiple, insightTotals);
 }

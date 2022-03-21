@@ -14,7 +14,7 @@ import toPairs from "lodash/toPairs";
 import { IEmbeddingCodeContext } from "../../interfaces/VisualizationDescriptor";
 import {
     IAdditionalFactoryDefinition,
-    IInsightConversion,
+    IInsightToPropConversion,
     insightConversion,
     PropMeta,
 } from "../../utils/embeddingCodeGenerator";
@@ -97,6 +97,6 @@ const chartConfigPropMeta: PropMeta = {
 
 export function chartConfigInsightConversion<TProps extends object, TPropKey extends keyof TProps>(
     propName: TPropKey,
-): IInsightConversion<TProps, TPropKey, IChartConfig> {
+): IInsightToPropConversion<TProps, TPropKey, IChartConfig> {
     return insightConversion(propName, chartConfigPropMeta, chartConfigFromInsight);
 }

@@ -1,10 +1,9 @@
 // (C) 2022 GoodData Corporation
 export {
     bucketConversion,
-    IBucketConversion,
     getInsightToPropsConverter,
     insightConversion,
-    IInsightConversion,
+    IInsightToPropConversion,
     ConversionSpec,
 } from "./convertor";
 export * from "./convenience";
