@@ -9,6 +9,7 @@ import { BigChartDescriptor } from "../BigChartDescriptor";
 import {
     bucketConversion,
     chartAdditionalFactories,
+    chartConfigPropMeta,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
     insightConversion,
@@ -27,12 +28,17 @@ export class ScatterPlotDescriptor extends BigChartDescriptor {
             package: "@gooddata/sdk-ui-charts",
         },
         insightToProps: getInsightToPropsConverter<IScatterPlotProps>({
-            xAxisMeasure: bucketConversion("xAxisMeasure", BucketNames.MEASURES, bucketMeasure),
-            yAxisMeasure: bucketConversion("yAxisMeasure", BucketNames.SECONDARY_MEASURES, bucketMeasure),
-            attribute: bucketConversion("attribute", BucketNames.ATTRIBUTE, bucketAttribute),
-            filters: insightConversion("filters", insightFilters),
-            sortBy: insightConversion("sortBy", insightSorts),
-            config: insightConversion("config", chartConfigFromInsight),
+            xAxisMeasure: bucketConversion("xAxisMeasure", "IMeasure", BucketNames.MEASURES, bucketMeasure),
+            yAxisMeasure: bucketConversion(
+                "yAxisMeasure",
+                "IMeasure",
+                BucketNames.SECONDARY_MEASURES,
+                bucketMeasure,
+            ),
+            attribute: bucketConversion("attribute", "IAttribute", BucketNames.ATTRIBUTE, bucketAttribute),
+            filters: insightConversion("filters", "IFilter[]", insightFilters),
+            sortBy: insightConversion("sortBy", "ISortItem[]", insightSorts),
+            config: insightConversion("config", chartConfigPropMeta, chartConfigFromInsight),
         }),
         additionalFactories: chartAdditionalFactories,
     });

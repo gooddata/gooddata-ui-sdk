@@ -14,6 +14,7 @@ import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownH
 import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil";
 import {
     bucketConversion,
+    chartConfigPropMeta,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
     insightConversion,
@@ -41,12 +42,12 @@ export class HeatmapDescriptor extends BigChartDescriptor implements IVisualizat
             package: "@gooddata/sdk-ui-charts",
         },
         insightToProps: getInsightToPropsConverter<IHeatmapProps>({
-            measure: bucketConversion("measure", BucketNames.MEASURES, bucketMeasure),
-            rows: bucketConversion("rows", BucketNames.VIEW, bucketAttribute),
-            columns: bucketConversion("columns", BucketNames.STACK, bucketAttribute),
-            filters: insightConversion("filters", insightFilters),
-            sortBy: insightConversion("sortBy", insightSorts),
-            config: insightConversion("config", chartConfigFromInsight),
+            measure: bucketConversion("measure", "IMeasure", BucketNames.MEASURES, bucketMeasure),
+            rows: bucketConversion("rows", "IAttribute", BucketNames.VIEW, bucketAttribute),
+            columns: bucketConversion("columns", "IAttribute", BucketNames.STACK, bucketAttribute),
+            filters: insightConversion("filters", "IFilter[]", insightFilters),
+            sortBy: insightConversion("sortBy", "ISortItem[]", insightSorts),
+            config: insightConversion("config", chartConfigPropMeta, chartConfigFromInsight),
         }),
     });
 

@@ -61,13 +61,20 @@ export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IV
             package: "@gooddata/sdk-ui-geo",
         },
         insightToProps: getInsightToPropsConverter<IGeoPushpinChartProps>({
-            location: bucketConversion("location", BucketNames.LOCATION, bucketAttribute),
-            size: bucketConversion("size", BucketNames.SIZE, firstBucketItem),
-            color: bucketConversion("color", BucketNames.COLOR, firstBucketItem),
-            segmentBy: bucketConversion("segmentBy", BucketNames.SEGMENT, bucketAttribute),
-            filters: insightConversion("filters", insightFilters),
-            sortBy: insightConversion("sortBy", insightSorts),
-            config: insightConversion("config", geoConfigFromInsight),
+            location: bucketConversion("location", "IAttribute", BucketNames.LOCATION, bucketAttribute),
+            size: bucketConversion("size", "IAttributeOrMeasure", BucketNames.SIZE, firstBucketItem),
+            color: bucketConversion("color", "IAttributeOrMeasure", BucketNames.COLOR, firstBucketItem),
+            segmentBy: bucketConversion("segmentBy", "IAttribute", BucketNames.SEGMENT, bucketAttribute),
+            filters: insightConversion("filters", "IFilter[]", insightFilters),
+            sortBy: insightConversion("sortBy", "ISortItem[]", insightSorts),
+            config: insightConversion(
+                "config",
+                {
+                    propImport: { importType: "named", name: "IGeoConfig", package: "@gooddata/sdk-ui-geo" },
+                    propType: "scalar",
+                },
+                geoConfigFromInsight,
+            ),
         }),
         additionalFactories: chartAdditionalFactories,
     });

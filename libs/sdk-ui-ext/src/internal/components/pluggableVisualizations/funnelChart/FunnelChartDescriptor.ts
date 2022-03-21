@@ -12,6 +12,7 @@ import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
 import {
     bucketConversion,
     chartAdditionalFactories,
+    chartConfigPropMeta,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
     insightConversion,
@@ -30,11 +31,11 @@ export class FunnelChartDescriptor extends BaseChartDescriptor implements IVisua
             package: "@gooddata/sdk-ui-charts",
         },
         insightToProps: getInsightToPropsConverter<IFunnelChartProps>({
-            measures: bucketConversion("measures", BucketNames.MEASURES, bucketMeasures),
-            viewBy: bucketConversion("viewBy", BucketNames.VIEW, bucketAttribute),
-            filters: insightConversion("filters", insightFilters),
-            sortBy: insightConversion("sortBy", insightSorts),
-            config: insightConversion("config", chartConfigFromInsight),
+            measures: bucketConversion("measures", "IMeasure[]", BucketNames.MEASURES, bucketMeasures),
+            viewBy: bucketConversion("viewBy", "IAttribute", BucketNames.VIEW, bucketAttribute),
+            filters: insightConversion("filters", "IFilter[]", insightFilters),
+            sortBy: insightConversion("sortBy", "ISortItem[]", insightSorts),
+            config: insightConversion("config", chartConfigPropMeta, chartConfigFromInsight),
         }),
         additionalFactories: chartAdditionalFactories,
     });

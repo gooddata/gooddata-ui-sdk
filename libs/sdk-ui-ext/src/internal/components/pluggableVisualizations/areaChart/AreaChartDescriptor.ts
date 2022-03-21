@@ -25,6 +25,7 @@ import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Vis
 import {
     bucketConversion,
     chartAdditionalFactories,
+    chartConfigPropMeta,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
     insightConversion,
@@ -52,12 +53,12 @@ export class AreaChartDescriptor extends BigChartDescriptor implements IVisualiz
             package: "@gooddata/sdk-ui-charts",
         },
         insightToProps: getInsightToPropsConverter<IAreaChartProps>({
-            measures: bucketConversion("measures", BucketNames.MEASURES, bucketMeasures),
-            viewBy: bucketConversion("viewBy", BucketNames.VIEW, bucketAttributes),
-            stackBy: bucketConversion("stackBy", BucketNames.STACK, bucketAttribute),
-            filters: insightConversion("filters", insightFilters),
-            sortBy: insightConversion("sortBy", insightSorts),
-            config: insightConversion("config", chartConfigFromInsight),
+            measures: bucketConversion("measures", "IMeasure[]", BucketNames.MEASURES, bucketMeasures),
+            viewBy: bucketConversion("viewBy", "IAttribute[]", BucketNames.VIEW, bucketAttributes),
+            stackBy: bucketConversion("stackBy", "IAttribute", BucketNames.STACK, bucketAttribute),
+            filters: insightConversion("filters", "IFilter[]", insightFilters),
+            sortBy: insightConversion("sortBy", "ISortItem[]", insightSorts),
+            config: insightConversion("config", chartConfigPropMeta, chartConfigFromInsight),
         }),
         additionalFactories: chartAdditionalFactories,
     });

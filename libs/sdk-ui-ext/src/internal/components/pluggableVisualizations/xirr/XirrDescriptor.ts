@@ -77,9 +77,9 @@ export class XirrDescriptor implements IVisualizationDescriptor {
             package: "@gooddata/sdk-ui-charts",
         },
         insightToProps: getInsightToPropsConverter<IXirrProps>({
-            measure: bucketConversion("measure", BucketNames.MEASURES, bucketMeasure),
-            attribute: bucketConversion("attribute", BucketNames.ATTRIBUTE, bucketAttribute),
-            filters: insightConversion("filters", insightFilters),
+            measure: bucketConversion("measure", "IMeasure", BucketNames.MEASURES, bucketMeasure),
+            attribute: bucketConversion("attribute", "IAttribute", BucketNames.ATTRIBUTE, bucketAttribute),
+            filters: insightConversion("filters", "IFilter[]", insightFilters),
         }),
     });
 }

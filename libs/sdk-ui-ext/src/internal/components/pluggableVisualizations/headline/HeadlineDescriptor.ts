@@ -79,13 +79,19 @@ export class HeadlineDescriptor implements IVisualizationDescriptor {
             package: "@gooddata/sdk-ui-charts",
         },
         insightToProps: getInsightToPropsConverter<IHeadlineProps>({
-            primaryMeasure: bucketConversion("primaryMeasure", BucketNames.MEASURES, bucketMeasure),
+            primaryMeasure: bucketConversion(
+                "primaryMeasure",
+                "IMeasure",
+                BucketNames.MEASURES,
+                bucketMeasure,
+            ),
             secondaryMeasure: bucketConversion(
                 "secondaryMeasure",
+                "IMeasure",
                 BucketNames.SECONDARY_MEASURES,
                 bucketMeasure,
             ),
-            filters: insightConversion("filters", insightFilters),
+            filters: insightConversion("filters", "IFilter[]", insightFilters),
         }),
     });
 }

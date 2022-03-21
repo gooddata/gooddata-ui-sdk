@@ -15,6 +15,7 @@ import {
     getInsightToPropsConverter,
     insightConversion,
     chartAdditionalFactories,
+    chartConfigPropMeta,
 } from "../../../utils/embeddingCodeGenerator";
 import { chartConfigFromInsight } from "../chartConfigFromInsight";
 
@@ -30,16 +31,22 @@ export class ComboChartDescriptor extends BigChartDescriptor implements IVisuali
             package: "@gooddata/sdk-ui-charts",
         },
         insightToProps: getInsightToPropsConverter<IComboChartProps>({
-            primaryMeasures: bucketConversion("primaryMeasures", BucketNames.MEASURES, bucketMeasures),
+            primaryMeasures: bucketConversion(
+                "primaryMeasures",
+                "IMeasure[]",
+                BucketNames.MEASURES,
+                bucketMeasures,
+            ),
             secondaryMeasures: bucketConversion(
                 "secondaryMeasures",
+                "IMeasure[]",
                 BucketNames.SECONDARY_MEASURES,
                 bucketMeasures,
             ),
-            viewBy: bucketConversion("viewBy", BucketNames.VIEW, bucketAttributes),
-            filters: insightConversion("filters", insightFilters),
-            sortBy: insightConversion("sortBy", insightSorts),
-            config: insightConversion("config", chartConfigFromInsight),
+            viewBy: bucketConversion("viewBy", "IAttribute[]", BucketNames.VIEW, bucketAttributes),
+            filters: insightConversion("filters", "IFilter[]", insightFilters),
+            sortBy: insightConversion("sortBy", "ISortItem[]", insightSorts),
+            config: insightConversion("config", chartConfigPropMeta, chartConfigFromInsight),
         }),
         additionalFactories: chartAdditionalFactories,
     });

@@ -13,10 +13,22 @@ export interface IAdditionalFactoryDefinition {
     transformation: (obj: any) => string | undefined;
 }
 
+export type PropMeta = {
+    propImport: IImportInfo;
+    propType: "scalar" | "array";
+};
+
+export type PropWithMeta<TProp> = {
+    value: TProp;
+    meta: PropMeta;
+};
+
+export type PropsWithMeta<TProps> = { [K in keyof TProps]: PropWithMeta<TProps[K]> };
+
 export type InsightToPropsConverter<TProps> = (
     insight: IInsightDefinition,
     ctx?: IEmbeddingCodeContext,
-) => TProps;
+) => PropsWithMeta<TProps>;
 
 export interface IEmbeddingCodeGeneratorInput<TProps> {
     component: IImportInfo;

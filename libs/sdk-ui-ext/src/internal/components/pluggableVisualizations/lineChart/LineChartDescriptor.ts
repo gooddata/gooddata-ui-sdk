@@ -18,6 +18,7 @@ import {
 import {
     bucketConversion,
     chartAdditionalFactories,
+    chartConfigPropMeta,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
     insightConversion,
@@ -41,12 +42,12 @@ export class LineChartDescriptor extends BaseChartDescriptor implements IVisuali
             package: "@gooddata/sdk-ui-charts",
         },
         insightToProps: getInsightToPropsConverter<ILineChartProps>({
-            measures: bucketConversion("measures", BucketNames.MEASURES, bucketMeasures),
-            trendBy: bucketConversion("trendBy", BucketNames.TREND, bucketAttribute),
-            segmentBy: bucketConversion("segmentBy", BucketNames.SEGMENT, bucketAttribute),
-            filters: insightConversion("filters", insightFilters),
-            sortBy: insightConversion("sortBy", insightSorts),
-            config: insightConversion("config", chartConfigFromInsight),
+            measures: bucketConversion("measures", "IMeasure[]", BucketNames.MEASURES, bucketMeasures),
+            trendBy: bucketConversion("trendBy", "IAttribute", BucketNames.TREND, bucketAttribute),
+            segmentBy: bucketConversion("segmentBy", "IAttribute", BucketNames.SEGMENT, bucketAttribute),
+            filters: insightConversion("filters", "IFilter[]", insightFilters),
+            sortBy: insightConversion("sortBy", "ISortItem[]", insightSorts),
+            config: insightConversion("config", chartConfigPropMeta, chartConfigFromInsight),
         }),
         additionalFactories: chartAdditionalFactories,
     });

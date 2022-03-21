@@ -82,13 +82,24 @@ export class PivotTableDescriptor extends BaseChartDescriptor implements IVisual
             package: "@gooddata/sdk-ui-pivot",
         },
         insightToProps: getInsightToPropsConverter<IPivotTableProps>({
-            measures: bucketConversion("measures", BucketNames.MEASURES, bucketMeasures),
-            rows: bucketConversion("rows", BucketNames.ATTRIBUTE, bucketAttributes),
-            columns: bucketConversion("columns", BucketNames.COLUMNS, bucketAttributes),
-            filters: insightConversion("filters", insightFilters),
-            sortBy: insightConversion("sortBy", insightSorts),
-            totals: insightConversion("totals", insightTotals),
-            config: insightConversion("config", pivotTableConfigFromInsight),
+            measures: bucketConversion("measures", "IMeasure[]", BucketNames.MEASURES, bucketMeasures),
+            rows: bucketConversion("rows", "IAttribute[]", BucketNames.ATTRIBUTE, bucketAttributes),
+            columns: bucketConversion("columns", "IAttribute[]", BucketNames.COLUMNS, bucketAttributes),
+            filters: insightConversion("filters", "IFilter[]", insightFilters),
+            sortBy: insightConversion("sortBy", "ISortItem[]", insightSorts),
+            totals: insightConversion("totals", "ITotal[]", insightTotals),
+            config: insightConversion(
+                "config",
+                {
+                    propImport: {
+                        importType: "named",
+                        name: "IPivotTableConfig",
+                        package: "@gooddata/sdk-ui-pivot",
+                    },
+                    propType: "scalar",
+                },
+                pivotTableConfigFromInsight,
+            ),
         }),
         additionalFactories: [
             {

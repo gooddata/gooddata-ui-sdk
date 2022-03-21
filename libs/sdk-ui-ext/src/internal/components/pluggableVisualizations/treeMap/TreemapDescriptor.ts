@@ -15,6 +15,7 @@ import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Vis
 import {
     bucketConversion,
     chartAdditionalFactories,
+    chartConfigPropMeta,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
     insightConversion,
@@ -38,11 +39,11 @@ export class TreemapDescriptor extends BigChartDescriptor {
             package: "@gooddata/sdk-ui-charts",
         },
         insightToProps: getInsightToPropsConverter<ITreemapProps>({
-            measures: bucketConversion("measures", BucketNames.MEASURES, bucketMeasures),
-            viewBy: bucketConversion("viewBy", BucketNames.VIEW, bucketAttribute),
-            segmentBy: bucketConversion("segmentBy", BucketNames.SEGMENT, bucketAttribute),
-            filters: insightConversion("filters", insightFilters),
-            config: insightConversion("config", chartConfigFromInsight),
+            measures: bucketConversion("measures", "IMeasure[]", BucketNames.MEASURES, bucketMeasures),
+            viewBy: bucketConversion("viewBy", "IAttribute", BucketNames.VIEW, bucketAttribute),
+            segmentBy: bucketConversion("segmentBy", "IAttribute", BucketNames.SEGMENT, bucketAttribute),
+            filters: insightConversion("filters", "IFilter[]", insightFilters),
+            config: insightConversion("config", chartConfigPropMeta, chartConfigFromInsight),
         }),
         additionalFactories: chartAdditionalFactories,
     });

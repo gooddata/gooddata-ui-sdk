@@ -12,6 +12,7 @@ import { BigChartDescriptor } from "../BigChartDescriptor";
 import {
     bucketConversion,
     chartAdditionalFactories,
+    chartConfigPropMeta,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
     insightConversion,
@@ -30,13 +31,18 @@ export class BubbleChartDescriptor extends BigChartDescriptor implements IVisual
             package: "@gooddata/sdk-ui-charts",
         },
         insightToProps: getInsightToPropsConverter<IBubbleChartProps>({
-            xAxisMeasure: bucketConversion("xAxisMeasure", BucketNames.MEASURES, bucketMeasure),
-            yAxisMeasure: bucketConversion("yAxisMeasure", BucketNames.SECONDARY_MEASURES, bucketMeasure),
-            size: bucketConversion("size", BucketNames.TERTIARY_MEASURES, bucketMeasure),
-            viewBy: bucketConversion("viewBy", BucketNames.VIEW, bucketAttribute),
-            filters: insightConversion("filters", insightFilters),
-            sortBy: insightConversion("sortBy", insightSorts),
-            config: insightConversion("config", chartConfigFromInsight),
+            xAxisMeasure: bucketConversion("xAxisMeasure", "IMeasure", BucketNames.MEASURES, bucketMeasure),
+            yAxisMeasure: bucketConversion(
+                "yAxisMeasure",
+                "IMeasure",
+                BucketNames.SECONDARY_MEASURES,
+                bucketMeasure,
+            ),
+            size: bucketConversion("size", "IMeasure", BucketNames.TERTIARY_MEASURES, bucketMeasure),
+            viewBy: bucketConversion("viewBy", "IAttribute", BucketNames.VIEW, bucketAttribute),
+            filters: insightConversion("filters", "IFilter[]", insightFilters),
+            sortBy: insightConversion("sortBy", "ISortItem[]", insightSorts),
+            config: insightConversion("config", chartConfigPropMeta, chartConfigFromInsight),
         }),
         additionalFactories: chartAdditionalFactories,
     });

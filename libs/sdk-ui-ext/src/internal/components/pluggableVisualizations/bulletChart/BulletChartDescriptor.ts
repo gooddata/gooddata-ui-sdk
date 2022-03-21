@@ -15,6 +15,7 @@ import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownH
 import {
     bucketConversion,
     chartAdditionalFactories,
+    chartConfigPropMeta,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
     insightConversion,
@@ -42,17 +43,28 @@ export class BulletChartDescriptor extends BaseChartDescriptor implements IVisua
             package: "@gooddata/sdk-ui-charts",
         },
         insightToProps: getInsightToPropsConverter<IBulletChartProps>({
-            primaryMeasure: bucketConversion("primaryMeasure", BucketNames.MEASURES, bucketMeasure),
-            targetMeasure: bucketConversion("targetMeasure", BucketNames.SECONDARY_MEASURES, bucketMeasure),
+            primaryMeasure: bucketConversion(
+                "primaryMeasure",
+                "IMeasure",
+                BucketNames.MEASURES,
+                bucketMeasure,
+            ),
+            targetMeasure: bucketConversion(
+                "targetMeasure",
+                "IMeasure",
+                BucketNames.SECONDARY_MEASURES,
+                bucketMeasure,
+            ),
             comparativeMeasure: bucketConversion(
                 "comparativeMeasure",
+                "IMeasure",
                 BucketNames.TERTIARY_MEASURES,
                 bucketMeasure,
             ),
-            viewBy: bucketConversion("viewBy", BucketNames.VIEW, bucketAttributes),
-            filters: insightConversion("filters", insightFilters),
-            sortBy: insightConversion("sortBy", insightSorts),
-            config: insightConversion("config", chartConfigFromInsight),
+            viewBy: bucketConversion("viewBy", "IAttribute[]", BucketNames.VIEW, bucketAttributes),
+            filters: insightConversion("filters", "IFilter[]", insightFilters),
+            sortBy: insightConversion("sortBy", "ISortItem[]", insightSorts),
+            config: insightConversion("config", chartConfigPropMeta, chartConfigFromInsight),
         }),
         additionalFactories: chartAdditionalFactories,
     });

@@ -75,6 +75,11 @@ export interface IEmbeddingCodeConfig {
      * If provided, the code generator can use it to fine tune the resulting code.
      */
     context?: IEmbeddingCodeContext;
+    /**
+     * The language of the resulting code.
+     * Defaults to "ts"
+     */
+    language?: "ts" | "js";
 }
 
 /**
