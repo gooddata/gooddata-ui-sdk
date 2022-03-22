@@ -111,12 +111,11 @@ const WrappedLineChart = withChart(lineChartDefinition)(CoreLineChart);
  * Line chart shows data as line-connected dots.
  *
  * @remarks
- * [LineChart](http://sdk.gooddata.com/gooddata-ui/docs/line_chart_component.html)
- *
  * Line charts can display either multiple measures as individual lines
  * or a single measure split by one attribute into multiple lines with points intersecting attribute values.
  *
- * See {@link ILineChartProps} to learn how to configure the LineChart.
+ * See {@link ILineChartProps} to learn how to configure the LineChart and the
+ * {@link http://sdk.gooddata.com/gooddata-ui/docs/line_chart_component.html | line chart documentation} for more information.
  *
  * @public
  */

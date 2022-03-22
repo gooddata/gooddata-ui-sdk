@@ -63,12 +63,11 @@ const WrappedHeadline = withContexts(RenderHeadline);
  * Headline shows a single number or compares two numbers. You can display both measures and attributes.
  *
  * @remarks
- * [Headline](https://sdk.gooddata.com/gooddata-ui/docs/headline_component.html)
- *
  * Headlines have two sections: Measure (primary) and Measure (secondary).
  * You can add one item to each section. If you add two items, the headline also displays the change in percent.
  *
- * See {@link IHeadlineProps} to learn how to configure the Headline.
+ * See {@link IHeadlineProps} to learn how to configure the Headline and the
+ * {@link https://sdk.gooddata.com/gooddata-ui/docs/headline_component.html | headline documentation} for more information.
  *
  * @public
  */

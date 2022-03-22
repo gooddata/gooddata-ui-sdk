@@ -105,9 +105,8 @@ const WrappedHeatmap = withChart(heatmapDefinition)(CoreHeatmap);
  * Heatmaps can help you discover trends and understand complex datasets.
  *
  * @remarks
- * [Heatmap](https://sdk.gooddata.com/gooddata-ui/docs/heatmap_component.html)
- *
- * See {@link IHeatmapProps} to learn how to configure the Heatmap.
+ * See {@link IHeatmapProps} to learn how to configure the Heatmap and the
+ * {@link https://sdk.gooddata.com/gooddata-ui/docs/heatmap_component.html | heatmap documentation} for more information.
  *
  * @public
  */

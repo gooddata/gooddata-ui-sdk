@@ -100,15 +100,14 @@ const WrappedDonutChart = withChart(donutChartDefinition)(CoreDonutChart);
  * Donut chart shows data as proportional segments of a disc and has a hollowed out center.
  *
  * @remarks
- * [DonutChart](http://sdk.gooddata.com/gooddata-ui/docs/donut_chart_component.html)
- *
  * Donut charts can be segmented by either multiple measures or an attribute, and allow viewers to visualize
  * component parts of a whole.
  *
  * Note: the donut chart slices are by default sorted from largest to smallest. There is also a limit on the
  * number of slices that will be charted.
  *
- * See {@link IDonutChartProps} to learn how to configure the DonutChart.
+ * See {@link IDonutChartProps} to learn how to configure the DonutChart and
+ * {@link http://sdk.gooddata.com/gooddata-ui/docs/donut_chart_component.html | donut chart documentation} for more information.
  *
  * @public
  */

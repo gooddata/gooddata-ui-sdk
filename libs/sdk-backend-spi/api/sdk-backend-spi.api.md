@@ -239,7 +239,20 @@ export interface IAnalyticalWorkspace {
 
 // @public
 export interface IAttributeDescriptor {
-    attributeHeader: IAttributeHeader;
+    attributeHeader: IAttributeDescriptorBody;
+}
+
+// @public
+export interface IAttributeDescriptorBody {
+    formOf: IAttributeHeaderFormOf;
+    identifier: string;
+    localIdentifier: string;
+    name: string;
+    ref: ObjRef;
+    // (undocumented)
+    totalItems?: ITotalDescriptor[];
+    type?: string;
+    uri: string;
 }
 
 // @public
@@ -265,20 +278,7 @@ export interface IAttributeElementExpressionToken {
 }
 
 // @public
-export interface IAttributeHeader {
-    formOf: IAttributeHeaderForm;
-    identifier: string;
-    localIdentifier: string;
-    name: string;
-    ref: ObjRef;
-    // (undocumented)
-    totalItems?: ITotalDescriptor[];
-    type?: string;
-    uri: string;
-}
-
-// @public
-export interface IAttributeHeaderForm {
+export interface IAttributeHeaderFormOf {
     identifier: string;
     name: string;
     ref: ObjRef;
@@ -1078,7 +1078,18 @@ export interface IListedDashboard extends Readonly<Required<IAuditableDates>>, R
 // @public
 export interface IMeasureDescriptor {
     // (undocumented)
-    measureHeaderItem: IMeasureHeaderItem;
+    measureHeaderItem: IMeasureDescriptorItem;
+}
+
+// @public
+export interface IMeasureDescriptorItem {
+    format: string;
+    identifier?: string;
+    // (undocumented)
+    localIdentifier: string;
+    name: string;
+    ref?: ObjRef;
+    uri?: string;
 }
 
 // @public
@@ -1096,17 +1107,6 @@ export type IMeasureExpressionToken = IObjectExpressionToken | IAttributeElement
 export interface IMeasureGroupDescriptor {
     // (undocumented)
     measureGroupHeader: IMeasureDescriptorObject;
-}
-
-// @public
-export interface IMeasureHeaderItem {
-    format: string;
-    identifier?: string;
-    // (undocumented)
-    localIdentifier: string;
-    name: string;
-    ref?: ObjRef;
-    uri?: string;
 }
 
 // @public

@@ -95,11 +95,10 @@ const WrappedPieChart = withChart(pieChartDefinition)(CorePieChart);
  * Pie chart shows data as proportional segments of a disc.
  *
  * @remarks
- * [PieChart](http://sdk.gooddata.com/gooddata-ui/docs/pie_chart_component.html)
- *
  * Pie charts can be segmented by either multiple measures or an attribute.
  *
- * See {@link IPieChartProps} to learn how to configure the PieChart.
+ * See {@link IPieChartProps} to learn how to configure the PieChart and the
+ * {@link http://sdk.gooddata.com/gooddata-ui/docs/pie_chart_component.html | pie chart documentation} for more information.
  *
  * @public
  */

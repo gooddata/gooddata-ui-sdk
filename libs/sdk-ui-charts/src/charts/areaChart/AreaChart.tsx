@@ -206,8 +206,6 @@ const WrappedAreaChart = withChart(areaChartDefinition)(CoreAreaChart);
  * Area chart shows data as an area under a line intersecting dots.
  *
  * @remarks
- * [AreaChart](http://sdk.gooddata.com/gooddata-ui/docs/area_chart_component.html)
- *
  * It can display either:
  *
  * - multiple measures sliced by a single attribute, as different areas
@@ -215,7 +213,9 @@ const WrappedAreaChart = withChart(areaChartDefinition)(CoreAreaChart);
  *
  * Areas for multiple measures stack by default. Alternatively, the areas can overlap if `{ stackMeasures: false }`.
  *
- * See {@link IAreaChartProps} to learn how it is possible to configure the AreaChart
+ * See {@link IAreaChartProps} to learn how it is possible to configure the AreaChart and the
+ * {@link http://sdk.gooddata.com/gooddata-ui/docs/area_chart_component.html | area chart documentation} for more information.
+ *
  * @public
  */
 export const AreaChart = (props: IAreaChartProps) => {

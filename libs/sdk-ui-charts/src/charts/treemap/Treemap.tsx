@@ -110,11 +110,10 @@ const WrappedTreemap = withChart(treemapDefinition)(CoreTreemap);
  * Treemap chart presents your data hierarchically as nested rectangles.
  *
  * @remarks
- * [Treemap](https://sdk.gooddata.com/gooddata-ui/docs/treemap_component.html)
- *
  * Treemaps are useful for comparing proportions within the hierarchy.
  *
- * See {@link ITreemapProps} to learn how to configure the Treemap.
+ * See {@link ITreemapProps} to learn how to configure the Treemap and the
+ * {@link https://sdk.gooddata.com/gooddata-ui/docs/treemap_component.html | treemap documentation} for more information.
  *
  * @public
  */

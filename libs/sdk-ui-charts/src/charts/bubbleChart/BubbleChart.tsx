@@ -99,13 +99,12 @@ const WrappedBubbleChart = withChart(bubbleChartDefinition)(CoreBubbleChart);
  * Bubble chart shows data as bubbles using Cartesian coordinates.
  *
  * @remarks
- * [BubbleChart](https://sdk.gooddata.com/gooddata-ui/docs/bubble_chart_component.html)
- *
  * Bubble charts typically have three measures, one
  * for the X-axis, one for the Y-axis, and one that determines the size of each bubble. The data is sliced by an
  * attribute, with each bubble (an attribute item) noted with a different color.
  *
- * See {@link IBubbleChartProps} to learn how to configure the BubbleChart.
+ * See {@link IBubbleChartProps} to learn how to configure the BubbleChart and the
+ * {@link https://sdk.gooddata.com/gooddata-ui/docs/bubble_chart_component.html | bubble chart documentation} for more information.
  *
  * @public
  */

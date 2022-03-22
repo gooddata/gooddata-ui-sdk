@@ -104,7 +104,7 @@ export interface IWithLoadingEvents<TProps> {
 }
 
 /**
- * Configuration for the withLoading HOC.
+ * Configuration for the {@link withExecutionLoading} HOC.
  *
  * @remarks
  * All configuration parameters can be either actual parameter values or functions to obtain them

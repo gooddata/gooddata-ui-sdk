@@ -145,11 +145,10 @@ const WrappedBulletChart = withChart(bulletChartDefinition)(CoreBulletChart);
  * towards a goal (target measure).
  *
  * @remarks
- * [BulletChart](http://sdk.gooddata.com/gooddata-ui/docs/bullet_chart_component.html)
- *
  * Optionally, the primary measure can also be compared to another measure (comparative measure).
  *
- * See {@link IBulletChartProps} to learn how to configure the BulletChart.
+ * See {@link IBulletChartProps} to learn how to configure the BulletChart and the
+ * {@link http://sdk.gooddata.com/gooddata-ui/docs/bullet_chart_component.html | bullet chart documentation} for more information.
  *
  * @public
  */

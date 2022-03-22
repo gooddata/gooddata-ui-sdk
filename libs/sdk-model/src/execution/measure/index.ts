@@ -198,6 +198,7 @@ export interface IPreviousPeriodMeasureDefinitionBody {
  * Period is determined from filter setting of the specified date data sets. The time period for
  * this derived measure will be shifted forward or backward according to the specified periodAgo number
  *
+ * @privateRemarks
  * TODO: enhance, add examples
  *
  * @public

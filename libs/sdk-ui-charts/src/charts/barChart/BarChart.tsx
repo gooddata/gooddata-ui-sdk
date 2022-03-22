@@ -120,12 +120,11 @@ const WrappedBarChart = withChart(barChartDefinition)(CoreBarChart);
  * Bar chart shows data in horizontal bars.
  *
  * @remarks
- * [BarChart](http://sdk.gooddata.com/gooddata-ui/docs/bar_chart_component.html)
- *
  * Bar charts can display one or multiple metrics side by side divided by
  * attribute values or a single measure stacked by attribute values.
  *
- * See {@link IBarChartProps} to learn how to configure the BarChart.
+ * See {@link IBarChartProps} to learn how to configure the BarChart and the
+ *  {@link http://sdk.gooddata.com/gooddata-ui/docs/bar_chart_component.html | bar chart documentation} for more information.
  *
  * @public
  */

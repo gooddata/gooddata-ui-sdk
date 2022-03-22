@@ -139,8 +139,6 @@ const WrappedComboChart = withChart(comboChartDefinition)(CoreComboChart);
  * Combo chart combines two types of visualizations, for example, a column chart and a line chart.
  *
  * @remarks
- * [ComboChart](https://sdk.gooddata.com/gooddata-ui/docs/combo_chart_component.html)
- *
  * A combo chart can
  * have one or two axes. If a combo chart has two axes, it is often referred to as a dual axis chart.
  *
@@ -149,7 +147,8 @@ const WrappedComboChart = withChart(comboChartDefinition)(CoreComboChart);
  *
  * The chart types used to display primary and secondary measures can be customized in {@link IChartConfig}.
  *
- * See {@link IComboChartProps} to learn how to configure the ComboChart.
+ * See {@link IComboChartProps} to learn how to configure the ComboChart and the
+ * {@link https://sdk.gooddata.com/gooddata-ui/docs/combo_chart_component.html | combo chart documentation} for more information.
  *
  * @public
  */

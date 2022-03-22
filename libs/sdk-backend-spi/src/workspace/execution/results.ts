@@ -39,7 +39,7 @@ export interface IMeasureGroupDescriptor {
  *
  * @public
  */
-export interface IMeasureHeaderItem {
+export interface IMeasureDescriptorItem {
     localIdentifier: string;
 
     /**
@@ -90,7 +90,7 @@ export interface IMeasureHeaderItem {
  */
 export interface IMeasureDescriptor {
     // TODO: rename this to measureDescriptor ... the goal is to get rid of the overused 'header' nomenclature
-    measureHeaderItem: IMeasureHeaderItem;
+    measureHeaderItem: IMeasureDescriptorItem;
 }
 
 /**
@@ -117,7 +117,7 @@ export interface ITotalDescriptor {
  *
  * @public
  */
-export interface IAttributeHeaderForm {
+export interface IAttributeHeaderFormOf {
     /**
      * Opaque reference of the attribute object.
      */
@@ -152,7 +152,7 @@ export interface IAttributeHeaderForm {
  *
  * @public
  */
-export interface IAttributeHeader {
+export interface IAttributeDescriptorBody {
     /**
      * URI of the display form object
      */
@@ -188,7 +188,7 @@ export interface IAttributeHeader {
     /**
      * Describes attributes to which the display form belongs.
      */
-    formOf: IAttributeHeaderForm;
+    formOf: IAttributeHeaderFormOf;
 }
 
 /**
@@ -204,9 +204,9 @@ export interface IAttributeHeader {
 export interface IAttributeDescriptor {
     // TODO: rename this to attributeDescriptor ... the goal is to get rid of the overused 'header' nomenclature
     /**
-     * Attribute descriptior header.
+     * Attribute descriptor header.
      */
-    attributeHeader: IAttributeHeader;
+    attributeHeader: IAttributeDescriptorBody;
 }
 
 /**
