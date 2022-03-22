@@ -843,11 +843,20 @@ export interface IElementsQueryFactory {
 // @public
 export interface IElementsQueryOptions {
     complement?: boolean;
+    elements?: IElementsQueryOptionsElements;
     filter?: string;
     includeTotalCountWithoutFilters?: boolean;
     order?: SortDirection;
+    // @deprecated (undocumented)
     prompt?: string;
+    // @deprecated
     uris?: string[];
+}
+
+// @public
+export interface IElementsQueryOptionsElements {
+    type: "primary" | "as_requested";
+    values: string[];
 }
 
 // @public

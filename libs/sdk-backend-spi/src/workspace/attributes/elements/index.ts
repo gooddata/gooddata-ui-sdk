@@ -4,6 +4,25 @@ import { IPagedResource } from "../../../common/paging";
 import { IAttributeElement } from "../../fromModel/ldm/attributeElement";
 
 /**
+ * Specification of particular elements to load in {@link IElementsQueryOptions}.
+ *
+ * @public
+ */
+export interface IElementsQueryOptionsElements {
+    /**
+     * Type of the elements
+     * - primary - URIs on backends with the supportsElementUris capability, primary display form values on others
+     * - as_requested - URIs on backends with the supportsElementUris capability, requested display form values on others
+     */
+    type: "primary" | "as_requested";
+
+    /**
+     * The values to request.
+     */
+    values: string[];
+}
+
+/**
  * Configuration options for querying attribute elements
  *
  * @public
@@ -20,13 +39,16 @@ export interface IElementsQueryOptions {
     filter?: string;
 
     /**
+     * @privateRemarks
      * TODO what is this doing?
+     * @deprecated do not use.
      */
     prompt?: string;
 
     /**
-     *  With this option you can specify concrete attribute elements uris to load.
-     *  This is commonly used to preload selected elements in the attribute filter
+     * With this option you can specify concrete attribute elements uris to load.
+     * This is commonly used to preload selected elements in the attribute filter.
+     * @deprecated use {@link IElementsQueryOptions.elements} instead
      */
     uris?: string[];
 
@@ -39,6 +61,12 @@ export interface IElementsQueryOptions {
      * Include the total count of all elements in the response (without filters applied)
      */
     includeTotalCountWithoutFilters?: boolean;
+
+    /**
+     * Specify particular elements to load.
+     * This is commonly used to preload selected elements in the attribute filter.
+     */
+    elements?: IElementsQueryOptionsElements;
 }
 
 /**
