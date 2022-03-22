@@ -1,8 +1,15 @@
 // (C) 2022 GoodData Corporation
 import { useMemo } from "react";
 import { useCancelablePromise } from "@gooddata/sdk-ui";
+import compact from "lodash/compact";
 import isEmpty from "lodash/isEmpty";
-import { IAnalyticalBackend, IAttributeElement, IElementsQueryResult } from "@gooddata/sdk-backend-spi";
+import {
+    IAnalyticalBackend,
+    IAttributeElement,
+    IElementsQueryOptions,
+    IElementsQueryResult,
+    isElementsQueryOptionsElementsByValue,
+} from "@gooddata/sdk-backend-spi";
 import stringify from "json-stable-stringify";
 import { getObjRef } from "../../utils/AttributeFilterUtils";
 import { AttributeFilterButtonContextProps } from "./types";
@@ -26,20 +33,29 @@ const prepareElementsTitleQuery = (
     const supportsElementUris = backend.capabilities.supportsElementUris;
     const isElementsByRef = isAttributeElementsByRef(filterAttributeElements(currentFilter));
 
-    const options = {
-        uris: appliedElements
-            .map((element) => {
-                return supportsElementUris && isElementsByRef ? element.uri : element.title;
-            })
-            .filter(Boolean),
+    const options: IElementsQueryOptions = {
+        elements: supportsElementUris
+            ? {
+                  uris: compact(
+                      appliedElements.map((element) => (isElementsByRef ? element.uri : element.title)),
+                  ),
+              }
+            : {
+                  referenceType: "primary",
+                  values: compact(appliedElements.map((element) => element.title)),
+              },
     };
+
+    const optionsElementsIsEmpty = isElementsQueryOptionsElementsByValue(options.elements)
+        ? options.elements.values.length > 0
+        : options.elements.uris.length > 0;
 
     return backend
         .workspace(workspace)
         .attributes()
         .elements()
         .forDisplayForm(getObjRef(currentFilter, identifier))
-        .withOptions(options.uris.length > 0 ? options : {});
+        .withOptions(!optionsElementsIsEmpty ? options : {});
 };
 
 /**
