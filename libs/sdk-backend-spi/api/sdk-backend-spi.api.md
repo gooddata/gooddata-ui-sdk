@@ -843,7 +843,7 @@ export interface IElementsQueryFactory {
 // @public
 export interface IElementsQueryOptions {
     complement?: boolean;
-    elements?: IElementsQueryOptionsElements;
+    elements?: IElementsQueryOptionsElementsByValue | IElementsQueryOptionsElementsByUri;
     filter?: string;
     includeTotalCountWithoutFilters?: boolean;
     order?: SortDirection;
@@ -854,8 +854,13 @@ export interface IElementsQueryOptions {
 }
 
 // @public
-export interface IElementsQueryOptionsElements {
-    type: "primary" | "as_requested";
+export interface IElementsQueryOptionsElementsByUri {
+    uris: string[];
+}
+
+// @public
+export interface IElementsQueryOptionsElementsByValue {
+    referenceType: "primary" | "requested";
     values: string[];
 }
 
@@ -1439,6 +1444,9 @@ export interface ISecuritySettingsService {
     isUrlValid(url: string, context: ValidationContext): Promise<boolean>;
     readonly scope: string;
 }
+
+// @public
+export function isElementsQueryOptionsElementsByValue(obj: unknown): obj is IElementsQueryOptionsElementsByValue;
 
 // @public
 export interface ISeparators {

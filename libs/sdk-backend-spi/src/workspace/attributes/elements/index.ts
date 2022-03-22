@@ -4,22 +4,52 @@ import { IPagedResource } from "../../../common/paging";
 import { IAttributeElement } from "../../fromModel/ldm/attributeElement";
 
 /**
- * Specification of particular elements to load in {@link IElementsQueryOptions}.
+ * Specification of particular elements to load in {@link IElementsQueryOptions} using their values.
  *
  * @public
  */
-export interface IElementsQueryOptionsElements {
+export interface IElementsQueryOptionsElementsByValue {
     /**
-     * Type of the elements
-     * - primary - URIs on backends with the supportsElementUris capability, primary display form values on others
-     * - as_requested - URIs on backends with the supportsElementUris capability, requested display form values on others
+     * Type of the element references
+     * - primary - primary display form values
+     * - requested - requested display form values
      */
-    type: "primary" | "as_requested";
+    referenceType: "primary" | "requested";
 
     /**
      * The values to request.
      */
     values: string[];
+}
+
+/**
+ * Type guard checking whether the object is an instance of {@link IElementsQueryOptionsElementsByValue}.
+ *
+ * @public
+ */
+export function isElementsQueryOptionsElementsByValue(
+    obj: unknown,
+): obj is IElementsQueryOptionsElementsByValue {
+    return (
+        !!obj &&
+        !!(obj as IElementsQueryOptionsElementsByValue).values &&
+        !!(obj as IElementsQueryOptionsElementsByValue).referenceType
+    );
+}
+
+/**
+ * Specification of particular elements to load in {@link IElementsQueryOptions} using their URIs.
+ *
+ * @remarks
+ * This is not supported on backends without the supportsElementUris capability.
+ *
+ * @public
+ */
+export interface IElementsQueryOptionsElementsByUri {
+    /**
+     * The element URIs to request.
+     */
+    uris: string[];
 }
 
 /**
@@ -66,7 +96,7 @@ export interface IElementsQueryOptions {
      * Specify particular elements to load.
      * This is commonly used to preload selected elements in the attribute filter.
      */
-    elements?: IElementsQueryOptionsElements;
+    elements?: IElementsQueryOptionsElementsByValue | IElementsQueryOptionsElementsByUri;
 }
 
 /**

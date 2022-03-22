@@ -109,7 +109,9 @@ export {
     IElementsQuery,
     IElementsQueryOptions,
     IElementsQueryAttributeFilter,
-    IElementsQueryOptionsElements,
+    IElementsQueryOptionsElementsByUri,
+    IElementsQueryOptionsElementsByValue,
+    isElementsQueryOptionsElementsByValue,
     IFilterElementsQuery,
     FilterWithResolvableElements,
 } from "./workspace/attributes/elements";
