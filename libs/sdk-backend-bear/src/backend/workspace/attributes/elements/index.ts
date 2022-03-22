@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     IElementsQueryFactory,
     IElementsQuery,
@@ -8,6 +8,7 @@ import {
     IElementsQueryAttributeFilter,
     IFilterElementsQuery,
     FilterWithResolvableElements,
+    isElementsQueryOptionsElementsByValue,
 } from "@gooddata/sdk-backend-spi";
 import {
     filterObjRef,
@@ -26,7 +27,7 @@ import invariant from "ts-invariant";
 
 import { BearAuthenticatedCallGuard } from "../../../../types/auth";
 import { objRefToUri, getObjectIdFromUri } from "../../../../utils/api";
-import { GdcExecuteAFM } from "@gooddata/api-model-bear";
+import { GdcExecuteAFM, GdcMetadata } from "@gooddata/api-model-bear";
 import { LimitingAfmFactory } from "./limitingAfmFactory";
 import { InMemoryPaging, ServerPaging } from "@gooddata/sdk-backend-base";
 
@@ -110,7 +111,7 @@ class BearWorkspaceElementsQuery implements IElementsQuery {
             this.dateFilters,
         );
 
-        return this.queryWorker(this.options);
+        return this.queryWorker(this.options ?? {});
     }
 
     private async getObjectId(): Promise<string> {
@@ -122,13 +123,29 @@ class BearWorkspaceElementsQuery implements IElementsQuery {
         return this.objectId;
     }
 
-    private async queryWorker(options: IElementsQueryOptions | undefined): Promise<IElementsQueryResult> {
+    private async queryWorker(options: IElementsQueryOptions): Promise<IElementsQueryResult> {
         const objectId = await this.getObjectId();
+
+        const { elements, uris, ...restOptions } = options;
+
+        if (elements && uris) {
+            // eslint-disable-next-line no-console
+            console.warn(
+                "Both 'elements' and 'uris' used in IElementsQueryOptions, 'uris' property will be ignored.",
+            );
+        }
+
+        if (isElementsQueryOptionsElementsByValue(elements)) {
+            invariant(false, "Specifying elements by value is not supported.");
+        }
+
+        const urisToUse = elements?.uris ?? uris;
 
         return ServerPaging.for(
             async ({ limit, offset }) => {
-                const params = {
-                    ...options,
+                const params: GdcMetadata.IValidElementsParams = {
+                    ...restOptions,
+                    ...{ uris: urisToUse },
                     limit,
                     offset,
                     afm: this.limitingAfm,

@@ -13,6 +13,7 @@ import {
     IElementsQueryOptions,
     IElementsQueryResult,
     IFilterElementsQuery,
+    isElementsQueryOptionsElementsByValue,
     NotSupported,
     UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
@@ -86,6 +87,44 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
         return this.queryWorker(this.options);
     }
 
+    private getExactFilterSpec(options: IElementsQueryOptions): Partial<ElementsRequest> {
+        const { elements, uris } = options;
+        if (elements) {
+            if (uris) {
+                // eslint-disable-next-line no-console
+                console.warn(
+                    "Both 'elements' and 'uris' used in IElementsQueryOptions, 'uris' property will be ignored.",
+                );
+            }
+
+            invariant(
+                isElementsQueryOptionsElementsByValue(elements),
+                "Specifying elements by URIs is not supported. Use specification by value instead.",
+            );
+
+            return {
+                exactFilter: elements.values,
+                filterBy: {
+                    labelType:
+                        elements.referenceType === "requested"
+                            ? ElementsRequestFilterByLabelTypeEnum.REQUESTED
+                            : ElementsRequestFilterByLabelTypeEnum.PRIMARY,
+                },
+            };
+        } else if (uris) {
+            return {
+                exactFilter: uris,
+                // filtering by uris on tiger forces filtering by primary label value
+                // this is way how we load non-primary label by primary label values list in uris option (related to NAS-137)
+                filterBy: {
+                    labelType: ElementsRequestFilterByLabelTypeEnum.PRIMARY,
+                },
+            };
+        }
+
+        return {};
+    }
+
     private async queryWorker(options: IElementsQueryOptions | undefined): Promise<IElementsQueryResult> {
         const { ref } = this;
         if (!isIdentifierRef(ref)) {
@@ -99,14 +138,7 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
                         label: ref.identifier,
                         ...(options?.complement && { complementFilter: options.complement }),
                         ...(options?.filter && { patternFilter: options.filter }),
-                        ...(options?.uris && {
-                            exactFilter: options.uris,
-                            // filtering by uris on tiger forces filtering by primary label value
-                            // this is way how we load non-primary label by primary label values list in uris option (related to NAS-137)
-                            filterBy: {
-                                labelType: ElementsRequestFilterByLabelTypeEnum.PRIMARY,
-                            },
-                        }),
+                        ...this.getExactFilterSpec(options ?? {}),
                         ...(options?.order && {
                             sortOrder:
                                 options.order === "asc"
