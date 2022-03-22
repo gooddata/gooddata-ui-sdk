@@ -2,7 +2,10 @@
 
 /**
  * Settings are obtained from backend and are effectively a collection of feature flags or settings with
- * concrete string or numeric value. Settings are stored and configured on the server and typically allow
+ * concrete string or numeric value.
+ *
+ * @remarks
+ * Settings are stored and configured on the server and typically allow
  * for a more fine-grained tuning of otherwise unified behavior.
  *
  * @public

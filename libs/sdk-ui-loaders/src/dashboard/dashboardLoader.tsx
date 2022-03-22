@@ -79,7 +79,8 @@ export type DashboardLoaderConfig = {
     pluginLoader: DashboardPluginsLoader;
 
     /**
-     * Optionally specify a function that will be called before engineLoader and pluginLoader.
+     * Specify a function that will be called before engineLoader and pluginLoader.
+     *
      * @remarks
      * This function is useful if there are some steps needed for both engine and plugin loading.
      */
@@ -102,8 +103,10 @@ const AdaptiveLoadStrategies = (
 };
 
 /**
- * Default implementation of the {@link IDashboardLoader} interface. This class implements all the
- * necessary functionality related to either static or dynamic dashboard loading.
+ * Default implementation of the {@link IDashboardLoader} interface.
+ *
+ * @remarks
+ * This class implements all the necessary functionality related to either static or dynamic dashboard loading.
  *
  * Note: you typically do not have to use this class directly and instead use the `useDashboardLoader`
  * hook or the `DashboardStub` component.
@@ -121,9 +124,12 @@ export class DashboardLoader implements IDashboardLoader {
     }
 
     /**
-     * Create loader that will never do any dynamic loading and linking. The loader will expect that
-     * the dashboard engine is statically linked in the context. Any plugins that require dynamic loading
-     * from remote locations will be ignored. Only locally embedded plugins will be used.
+     * Create loader that will never do any dynamic loading and linking.
+     *
+     * @remarks
+     * The loader will expect that the dashboard engine is statically linked in the context.
+     * Any plugins that require dynamic loading from remote locations will be ignored.
+     * Only locally embedded plugins will be used.
      */
     public static staticOnly(): DashboardLoader {
         return new DashboardLoader(StaticLoadStrategies);
@@ -131,7 +137,10 @@ export class DashboardLoader implements IDashboardLoader {
 
     /**
      * Create loader that may dynamically load dashboard engine and plugins in case a Dashboard to load
-     * is using them. Otherwise it will fall back to the dashboard engine statically linked to the context
+     * is using them.
+     *
+     * @remarks
+     * Otherwise it will fall back to the dashboard engine statically linked to the context
      * and will only use locally embedded plugins.
      *
      * @param options - options for the adaptive load

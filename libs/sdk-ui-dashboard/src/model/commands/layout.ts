@@ -12,25 +12,27 @@ export interface AddLayoutSectionPayload {
     /**
      * Index where to place the new section
      *
+     * @remarks
      * Index is zero-based and for convenience index -1 means place new section at the end. 0 means place new
      * section at the beginning. Both 0 and -1 and can be used when inserting the first section into and empty layout.
      */
     readonly index: RelativeIndex;
 
     /**
-     * Optionally specify the section header.
+     * Specify the section header.
      */
     readonly initialHeader?: IDashboardLayoutSectionHeader;
 
     /**
-     * Optionally specify one or more items to include in the newly created section.
+     * Specify one or more items to include in the newly created section.
      */
     readonly initialItems?: ReadonlyArray<DashboardItemDefinition>;
 
     /**
-     * Optionally specify whether dashboard should auto-resolve date dataset to use for date filtering of KPI
+     * Specify whether dashboard should auto-resolve date dataset to use for date filtering of KPI
      * and insight widgets.
      *
+     * @remarks
      * This is by default disabled. Meaning date filtering will be enabled only for those KPI or Insight widgets
      * that already specify dateDataset. Those that have dateDataset `undefined` will not be filtered by dashboard's
      * date filter.
@@ -50,7 +52,10 @@ export interface AddLayoutSection extends IDashboardCommand {
 }
 
 /**
- * Creates the AddLayoutSection command. Dispatching this command will result in the addition of a new layout section.
+ * Creates the AddLayoutSection command.
+ *
+ * @remarks
+ * Dispatching this command will result in the addition of a new layout section.
  * The new section will be placed at the desired index and will be empty by default.
  *
  * You may optionally specify the initial values of the section header and the items that will be in the new section.
@@ -160,7 +165,10 @@ export interface RemoveLayoutSectionPayload {
     readonly index: RelativeIndex;
 
     /**
-     * Optionally specify stash identifier. If provided, the items from the removed section will not be
+     * Specify stash identifier.
+     *
+     * @remarks
+     * If provided, the items from the removed section will not be
      * permanently removed but will be stored in the stash under this identifier. You can then
      * use the stash identifier to 'resurrect' the items in different section.
      *
@@ -216,6 +224,7 @@ export interface ChangeLayoutSectionHeaderPayload {
     /**
      * Index of section whose header to set.
      *
+     * @remarks
      * Index is zero based. Exact index must be provided.
      */
     readonly index: number;
@@ -226,8 +235,9 @@ export interface ChangeLayoutSectionHeaderPayload {
     readonly header: IDashboardLayoutSectionHeader;
 
     /**
-     * Optionally indicate that the old header and the new header should be merged.
+     * Indicate that the old header and the new header should be merged.
      *
+     * @remarks
      * The default behavior is to overwrite the old header with the new header provided in this command.
      */
     readonly merge?: boolean;
@@ -282,6 +292,7 @@ export interface AddSectionItemsPayload {
     /**
      * Section to which the item should be added.
      *
+     * @remarks
      * Index is zero-based.
      */
     readonly sectionIndex: number;
@@ -289,6 +300,7 @@ export interface AddSectionItemsPayload {
     /**
      * Index within section items where the item should be inserted.
      *
+     * @remarks
      * Index is zero-based. For convenience, you may specify -1 to append the new item.
      */
     readonly itemIndex: RelativeIndex;
@@ -297,15 +309,17 @@ export interface AddSectionItemsPayload {
      * Items to add. This item may be a placeholder for KPI or insight, an actual dashboard widget or a previously
      * stashed dashboard item.
      *
+     * @remarks
      * Note: if you use the stashed items identifier, the items will be moved from the stash - you cannot use
      * the stash identifier again.
      */
     readonly items: ReadonlyArray<DashboardItemDefinition>;
 
     /**
-     * Optionally specify whether dashboard should auto-resolve date dataset to use for date filtering of KPI
+     * Specify whether dashboard should auto-resolve date dataset to use for date filtering of KPI
      * and insight widgets.
      *
+     * @remarks
      * This is by default disabled. Meaning date filtering will be enabled only for those KPI or Insight widgets
      * that already specify dateDataset. Those that have dateDataset `undefined` will not be filtered by dashboard's
      * date filter.
@@ -385,16 +399,18 @@ export interface ReplaceSectionItemPayload {
     readonly item: DashboardItemDefinition;
 
     /**
-     * Optionally specify identifier for stash where the old item should be stored.
+     * Specify identifier for stash where the old item should be stored.
      *
+     * @remarks
      * If no stashIdentifier provided, then the old item will be thrown away.
      */
     readonly stashIdentifier?: StashedDashboardItemsId;
 
     /**
-     * Optionally specify whether dashboard should auto-resolve date dataset to use for date filtering of the KPI
+     * Specify whether dashboard should auto-resolve date dataset to use for date filtering of the KPI
      * or insight widget that will be used to replace item on a dashboard.
      *
+     * @remarks
      * This is by default disabled. Meaning date filtering will be enabled only if the KPI or Insight widget
      * already specifies dateDataset. If the dateDataset is `undefined` the widget will not be filtered
      * by dashboard's date filter.
@@ -541,6 +557,7 @@ export interface RemoveSectionItemPayload {
     /**
      * Index of the section where the item to move is located.
      *
+     * @remarks
      * Index is zero-based.
      */
     readonly sectionIndex: number;
@@ -548,12 +565,16 @@ export interface RemoveSectionItemPayload {
     /**
      * Index of section item that should be moved.
      *
+     * @remarks
      * Index is zero-based. For convenience you may use index of -1 to remove last item from section.
      */
     readonly itemIndex: RelativeIndex;
 
     /**
-     * Optionally specify stash identifier. If provided, the item will not be permanently removed but will be
+     * Specify stash identifier.
+     *
+     * @remarks
+     * If provided, the item will not be permanently removed but will be
      * stored in the stash under this identifier. You can then use the stash identifier to 'resurrect' the item
      * in different section.
      *
@@ -562,9 +583,10 @@ export interface RemoveSectionItemPayload {
     readonly stashIdentifier?: StashedDashboardItemsId;
 
     /**
-     * Optionally specify whether to eagerly remove the entire section if the item being removed was the only
+     * Specify whether to eagerly remove the entire section if the item being removed was the only
      * item in the section.
      *
+     * @remarks
      * Default is false. Meaning an empty section will be left.
      */
     readonly eager?: boolean;
@@ -681,8 +703,9 @@ export type UndoPointSelector = (undoableCommands: ReadonlyArray<DashboardLayout
  */
 export interface UndoLayoutChangesPayload {
     /**
-     * Optionally specify a function that will be used to select a command up to which the undo should be done.
+     * Specify a function that will be used to select a command up to which the undo should be done.
      *
+     * @remarks
      * If not provided then the default selector will be used and will undo the very last command.
      *
      * The undo point selector is essential if you are implementing complex user-facing features that are achieved

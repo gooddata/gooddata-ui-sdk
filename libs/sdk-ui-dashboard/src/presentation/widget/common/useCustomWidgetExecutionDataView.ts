@@ -25,6 +25,7 @@ export interface IUseCustomWidgetExecutionDataViewConfig {
     /**
      * Definition of the execution to execute (without filters). The filters will be filled automatically.
      *
+     * @remarks
      * Note: When the execution is not provided, hook is locked in a "pending" state.
      */
     execution?: Exclude<IExecutionConfiguration, "filters">;

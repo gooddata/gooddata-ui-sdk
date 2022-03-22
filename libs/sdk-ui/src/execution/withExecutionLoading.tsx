@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import noop from "lodash/noop";
 import hoistNonReactStatics from "hoist-non-react-statics";
@@ -104,8 +104,11 @@ export interface IWithLoadingEvents<TProps> {
 }
 
 /**
- * Configuration for the withLoading HOC. All configuration parameters can be either actual parameter values
- * or functions to obtain them from the wrapped component props.
+ * Configuration for the {@link withExecutionLoading} HOC.
+ *
+ * @remarks
+ * All configuration parameters can be either actual parameter values or functions to obtain them
+ * from the wrapped component props.
  *
  * If functions are specified, the HOC will call them with the wrapped component props as parameter and then use
  * the resulting values as if they were passed directly.
@@ -132,18 +135,20 @@ export interface IWithExecutionLoading<TProps> {
     promiseFactory: (props: TProps, window?: DataViewWindow) => Promise<DataViewFacade>;
 
     /**
-     * Optionally specify data view window to retrieve from backend. If specified as function, the function
-     * can return undefined in case all data must be retrieved.
+     * Specify data view window to retrieve from backend.
+     *
+     * @remarks
+     * If specified as function, the function can return undefined in case all data must be retrieved.
      */
     window?: DataViewWindow | ((props: TProps) => DataViewWindow | undefined);
 
     /**
-     * Optionally specify event callbacks which the HOC will trigger in different situations.
+     * Specify event callbacks which the HOC will trigger in different situations.
      */
     events?: IWithLoadingEvents<TProps> | ((props: TProps) => IWithLoadingEvents<TProps>);
 
     /**
-     * Optionally customize, whether execution & data loading should start as soon as component is mounted.
+     * Customize, whether execution & data loading should start as soon as component is mounted.
      *
      * Default is true. When not loading on mount, the wrapped component can trigger the load by calling the
      * reload() function which the HOC injects into its props.
@@ -151,7 +156,7 @@ export interface IWithExecutionLoading<TProps> {
     loadOnMount?: boolean | ((props: TProps) => boolean);
 
     /**
-     * Optionally specify function that will be called during component prop updates and will be used to
+     * Specify function that will be called during component prop updates and will be used to
      * determine whether execution should be re-run and data reloaded.
      *
      * @param prevProps - previous props

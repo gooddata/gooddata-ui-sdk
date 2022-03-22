@@ -9,8 +9,11 @@ const selectSelf = createSelector(
 );
 
 /**
- * This selector returns user's permissions in the workspace where the dashboard is stored. It is expected that the
- * selector is called only after the permission state is correctly initialized. Invocations before initialization lead to invariant errors.
+ * This selector returns user's permissions in the workspace where the dashboard is stored.
+ *
+ * @remarks
+ * It is expected that the selector is called only after the permission state is correctly initialized.
+ * Invocations before initialization lead to invariant errors.
  *
  * See {@link @gooddata/sdk-backend-spi#WorkspacePermission} for all available permissions.
  *
@@ -18,7 +21,7 @@ const selectSelf = createSelector(
  *
  * In case you need multiple permissions available in your application, use common selector.
  *
- * @example
+ * @example - on how to select all permissions.
  * ```
  *      const permissions = useDashboardSelector(selectPermissions);
  *
@@ -29,7 +32,7 @@ const selectSelf = createSelector(
  *
  * If there is only limited number of permissions, use specific selector instead (available selectors are all below).
  *
- * @example
+ * @example - on how to select specific permission.
  * ```
  *      const canCreateAnalyticalDashboard = useDashboardSelector(selectCanCreateAnalyticalDashboard);
  *

@@ -10,7 +10,10 @@ import { DashboardContext } from "../model";
  */
 export interface DashboardPluginDescriptor {
     /**
-     * Author of the plugin. This should ideally contain name and contact (email) for the author.
+     * Author of the plugin.
+     *
+     * @remarks
+     * This should ideally contain name and contact (email) for the author.
      */
     readonly author: string;
 
@@ -20,14 +23,19 @@ export interface DashboardPluginDescriptor {
     readonly displayName: string;
 
     /**
-     * Version of the plugin. At this point, the version is included for diagnostic purposes. It may
+     * Version of the plugin.
+     *
+     * @remarks
+     * At this point, the version is included for diagnostic purposes. It may
      * be whatever string the author sees fit. We recommend, however, to use semantic versioning.
      */
     readonly version: string;
 
     /**
-     * Optionally specify human-readable short description of the plugin. This is typically a one- or two-line description
-     * of the plugin, what it brings, what it does.
+     * Specify human-readable short description of the plugin.
+     *
+     * @remarks
+     * This is typically a one- or two-line description of the plugin, what it brings, what it does.
      */
     readonly shortDescription?: string;
 
@@ -37,8 +45,9 @@ export interface DashboardPluginDescriptor {
     readonly longDescription?: string;
 
     /**
-     * Developer-assigned name of the plugin that will be used
+     * Developer-assigned name of the plugin that will be used.
      *
+     * @remarks
      * If not specified the debug name falls back to display name.
      */
     readonly debugName?: string;
@@ -46,6 +55,7 @@ export interface DashboardPluginDescriptor {
     /**
      * Minimum version of dashboard engine that this plugin supports.
      *
+     * @remarks
      * Value can be "bundled" - then the minimum required version of the engine equals to the bundled one.
      * Another option is to specify exact minimum version of the SDK - e.g. "8.7.0".
      */
@@ -54,6 +64,7 @@ export interface DashboardPluginDescriptor {
     /**
      * Greatest version of the dashboard engine that this plugin supports.
      *
+     * @remarks
      * Value can be "bundled" - then the maximum possible version of the engine equals to the bundled one.
      * Another option is to specify exact maximum version of the SDK - e.g. "8.8.0".
      */
@@ -61,11 +72,14 @@ export interface DashboardPluginDescriptor {
 }
 
 /**
- * This is the raw, low-level interface that the dashboard plugins need to implement. Through this interface
- * the plugin communicates its metadata and provides functions that will be used by dashboard loader to
- * obtain plugins customizations and contributions to apply on top of the Dashboard Component.
+ * Raw, low-level interface that the dashboard plugins need to implement.
  *
- * @remarks see {@link DashboardPluginV1}
+ * @remarks
+ * Through this interface the plugin communicates its metadata and provides functions that will be
+ * used by dashboard loader to obtain plugins customizations and contributions to apply on top of
+ * the {@link Dashboard} Component.
+ *
+ * See {@link DashboardPluginV1}
  *
  * @public
  */
@@ -76,8 +90,10 @@ export interface IDashboardPluginContract_V1 extends DashboardPluginDescriptor {
     readonly _pluginVersion: "1.0";
 
     /**
-     * This function will be called right after the plugin's asset are loaded. The plugin may do some early
-     * initialization and parameter parsing at this point.
+     * This function will be called right after the plugin's asset are loaded. 
+     * 
+     * @remarks
+     * The plugin may do some early initialization and parameter parsing at this point.
      *
      * Note that the parameterization that can be specified for the dashboard-plugin link can be edited
      * freely by the dashboard creator - and may thus be incorrect.
@@ -92,8 +108,10 @@ export interface IDashboardPluginContract_V1 extends DashboardPluginDescriptor {
     onPluginLoaded?(ctx: DashboardContext, parameters?: string): Promise<void> | void;
 
     /**
-     * This function will be called before the dashboard initialization and rendering starts. At this point,
-     * the plugin can use:
+     * This function will be called before the dashboard initialization and rendering starts.
+     *
+     * @remarks
+     * At this point, the plugin can use:
      *
      * -  the `customize` API to add its contribution to the dashboard; modify how rendering is done, add custom
      *    content and so on
@@ -119,7 +137,10 @@ export interface IDashboardPluginContract_V1 extends DashboardPluginDescriptor {
 
     /**
      * This function will be called when user navigates away from the dashboard that uses an instance of
-     * this plugin. At this point, the plugin SHOULD perform any essential cleanup.
+     * this plugin.
+     *
+     * @remarks
+     * At this point, the plugin SHOULD perform any essential cleanup.
      *
      * @param ctx - dashboard context into which this plugin was loaded
      */
@@ -127,8 +148,10 @@ export interface IDashboardPluginContract_V1 extends DashboardPluginDescriptor {
 }
 
 /**
- * Abstract base class for the Dashboard Plugin. Each plugin should extend this class and implement at least
- * the {@link DashboardPluginV1.register} method.
+ * Abstract base class for the Dashboard Plugin.
+ *
+ * @remarks
+ * Each plugin should extend this class and implement at least the {@link DashboardPluginV1.register} method.
  *
  * @public
  */

@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { DependencyList } from "react";
 import { IExportConfig, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
@@ -23,6 +23,8 @@ export type UseDataExportCallbacks = UseCancelablePromiseCallbacks<string, GoodD
 
 /**
  * This hook provides easy way to export data in your preferred format (csv/xlsx/raw) for the provided {@link @gooddata/sdk-backend-spi#IPreparedExecution}.
+ *
+ * @remarks
  * As a result, you will receive a string with uri, so you can easily create a download link.
  * Be aware that execution is re-executed only on dependency list change, not on execution/exportConfig/callbacks change.
  *

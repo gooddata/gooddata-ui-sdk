@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
     useBackend,
@@ -23,34 +23,36 @@ export interface IUseExecutionConfig {
     seriesBy: AttributesMeasuresOrPlaceholders;
 
     /**
-     * Optionally slice all data series by elements of these attributes.
+     * Slice all data series by elements of these attributes.
      */
     slicesBy?: AttributesOrPlaceholders;
 
     /**
-     * Optionally include these totals among the data slices.
+     * Include these totals among the data slices.
      */
     totals?: TotalsOrPlaceholders;
 
     /**
-     * Optional filters to apply on server side.
+     * Filters to apply on server side.
      */
     filters?: NullableFiltersOrPlaceholders;
 
     /**
-     * Optional sorting to apply on server side.
+     * Sorting to apply on server side.
      */
     sortBy?: SortsOrPlaceholders;
 
     /**
-     * Optional resolution context for composed placeholders.
+     * Resolution context for composed placeholders.
      */
     placeholdersResolutionContext?: any;
 
     /**
-     * Optional informative name of the component. This value is sent as telemetry information together
-     * with the actual execution request. We recommend to set this because it can be useful for diagnostic
-     * purposes.
+     * Informative name of the component.
+     *
+     * @remarks
+     * This value is sent as telemetry information together with the actual execution request.
+     * We recommend to set this because it can be useful for diagnostic purposes.
      *
      * Defaults 'Execute'.
      */
@@ -59,6 +61,7 @@ export interface IUseExecutionConfig {
     /**
      * Backend to work with.
      *
+     * @remarks
      * Note: the backend must come either from this property or from BackendContext. If you do not specify
      * backend here, then the executor MUST be rendered within an existing BackendContext.
      */
@@ -67,6 +70,7 @@ export interface IUseExecutionConfig {
     /**
      * Workspace where execution should be executed.
      *
+     * @remarks
      * Note: the workspace must come either from this property or from WorkspaceContext. If you do not specify
      * workspace here, then the executor MUST be rendered within an existing WorkspaceContext.
      */
@@ -75,6 +79,8 @@ export interface IUseExecutionConfig {
 
 /**
  * This hook provides a simplified interface for creating executions.
+ *
+ * @remarks
  * It builds the execution on top of the backend passed to the BackendProvider, and workspace passed to the WorkspaceProvider.
  *
  * @beta

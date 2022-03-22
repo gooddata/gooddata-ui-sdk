@@ -239,22 +239,20 @@ export interface IAnalyticalWorkspace {
 
 // @public
 export interface IAttributeDescriptor {
+    attributeHeader: IAttributeDescriptorBody;
+}
+
+// @public
+export interface IAttributeDescriptorBody {
+    formOf: IAttributeHeaderFormOf;
+    identifier: string;
+    localIdentifier: string;
+    name: string;
+    ref: ObjRef;
     // (undocumented)
-    attributeHeader: {
-        uri: string;
-        identifier: string;
-        localIdentifier: string;
-        ref: ObjRef;
-        name: string;
-        totalItems?: ITotalDescriptor[];
-        type?: string;
-        formOf: {
-            ref: ObjRef;
-            uri: string;
-            identifier: string;
-            name: string;
-        };
-    };
+    totalItems?: ITotalDescriptor[];
+    type?: string;
+    uri: string;
 }
 
 // @public
@@ -277,6 +275,14 @@ export interface IAttributeElementExpressionToken {
     deleted?: boolean;
     type: "attributeElement";
     value: string | undefined;
+}
+
+// @public
+export interface IAttributeHeaderFormOf {
+    identifier: string;
+    name: string;
+    ref: ObjRef;
+    uri: string;
 }
 
 // @public
@@ -604,12 +610,19 @@ export interface IDashboardWithReferences {
 // @public
 export interface IDataColumn {
     // (undocumented)
-    column: {
-        name: string;
-        type: DataColumnType;
-        skip?: boolean;
-        format?: string;
-    };
+    column: IDataColumnBody;
+}
+
+// @public
+export interface IDataColumnBody {
+    // (undocumented)
+    format?: string;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    skip?: boolean;
+    // (undocumented)
+    type: DataColumnType;
 }
 
 // @public
@@ -623,16 +636,27 @@ export interface IDataHeader {
 // @public
 export interface IDataset {
     // (undocumented)
-    dataset: {
-        name: string;
-        dataHeader: IDataHeader;
-        datasetId: string;
-        loadedRowCount: number;
-        datasetLoadStatus: DatasetLoadStatus;
-        firstSuccessfulUpdate?: IDatasetLoadInfo;
-        lastSuccessfulUpdate?: IDatasetLoadInfo;
-        lastUpdate?: IDatasetLoadInfo;
-    };
+    dataset: IDatasetBody;
+}
+
+// @public
+export interface IDatasetBody {
+    // (undocumented)
+    dataHeader: IDataHeader;
+    // (undocumented)
+    datasetId: string;
+    // (undocumented)
+    datasetLoadStatus: DatasetLoadStatus;
+    // (undocumented)
+    firstSuccessfulUpdate?: IDatasetLoadInfo;
+    // (undocumented)
+    lastSuccessfulUpdate?: IDatasetLoadInfo;
+    // (undocumented)
+    lastUpdate?: IDatasetLoadInfo;
+    // (undocumented)
+    loadedRowCount: number;
+    // (undocumented)
+    name: string;
 }
 
 // @public
@@ -1054,14 +1078,26 @@ export interface IListedDashboard extends Readonly<Required<IAuditableDates>>, R
 // @public
 export interface IMeasureDescriptor {
     // (undocumented)
-    measureHeaderItem: {
-        localIdentifier: string;
-        name: string;
-        format: string;
-        uri?: string;
-        identifier?: string;
-        ref?: ObjRef;
-    };
+    measureHeaderItem: IMeasureDescriptorItem;
+}
+
+// @public
+export interface IMeasureDescriptorItem {
+    format: string;
+    identifier?: string;
+    // (undocumented)
+    localIdentifier: string;
+    name: string;
+    ref?: ObjRef;
+    uri?: string;
+}
+
+// @public
+export interface IMeasureDescriptorObject {
+    // (undocumented)
+    items: IMeasureDescriptor[];
+    // (undocumented)
+    totalItems?: ITotalDescriptor[];
 }
 
 // @public
@@ -1070,10 +1106,7 @@ export type IMeasureExpressionToken = IObjectExpressionToken | IAttributeElement
 // @public
 export interface IMeasureGroupDescriptor {
     // (undocumented)
-    measureGroupHeader: {
-        items: IMeasureDescriptor[];
-        totalItems?: ITotalDescriptor[];
-    };
+    measureGroupHeader: IMeasureDescriptorObject;
 }
 
 // @public
@@ -1213,10 +1246,13 @@ export interface IRelativeDateFilterPresetOfGranularity<Key extends DateFilterGr
 // @public
 export interface IResultAttributeHeader {
     // (undocumented)
-    attributeHeaderItem: {
-        name: string;
-        uri: string;
-    };
+    attributeHeaderItem: IResultAttributeHeaderItem;
+}
+
+// @public
+export interface IResultAttributeHeaderItem {
+    name: string;
+    uri: string;
 }
 
 // @public
@@ -1225,19 +1261,27 @@ export type IResultHeader = IResultAttributeHeader | IResultMeasureHeader | IRes
 // @public
 export interface IResultMeasureHeader {
     // (undocumented)
-    measureHeaderItem: {
-        name: string;
-        order: number;
-    };
+    measureHeaderItem: IResultMeasureHeaderItem;
+}
+
+// @public
+export interface IResultMeasureHeaderItem {
+    name: string;
+    order: number;
 }
 
 // @public
 export interface IResultTotalHeader {
     // (undocumented)
-    totalHeaderItem: {
-        name: string;
-        type: string;
-    };
+    totalHeaderItem: IResultTotalHeaderItem;
+}
+
+// @public
+export interface IResultTotalHeaderItem {
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    type: string;
 }
 
 // @public
@@ -1571,95 +1615,33 @@ export interface ITextExpressionToken {
 
 // @beta
 export interface ITheme {
-    analyticalDesigner?: {
-        title?: {
-            color?: ThemeColor;
-        };
-    };
-    button?: {
-        borderRadius?: string;
-        dropShadow?: boolean;
-        textCapitalization?: boolean;
-    };
+    analyticalDesigner?: IThemeAnalyticalDesigner;
+    button?: IThemeButton;
     chart?: IThemeChart;
-    dashboards?: {
-        title?: {
-            color?: ThemeColor;
-            backgroundColor?: ThemeColor;
-            borderColor?: ThemeColor;
-        };
-        section?: {
-            title?: {
-                color?: ThemeColor;
-                lineColor?: ThemeColor;
-            };
-            description?: {
-                color?: ThemeColor;
-            };
-        };
-        filterBar?: {
-            backgroundColor?: ThemeColor;
-            borderColor?: ThemeColor;
-            filterButton?: {
-                backgroundColor?: ThemeColor;
-            };
-        };
-        content?: {
-            backgroundColor?: ThemeColor;
-            widget?: {
-                title?: IThemeWidgetTitle;
-                backgroundColor?: ThemeColor;
-                borderColor?: ThemeColor;
-                borderWidth?: string;
-                borderRadius?: string;
-                dropShadow?: boolean;
-            };
-            kpiWidget?: {
-                title?: IThemeWidgetTitle;
-                backgroundColor?: ThemeColor;
-                borderColor?: ThemeColor;
-                borderWidth?: string;
-                borderRadius?: string;
-                dropShadow?: boolean;
-                kpi?: IThemeKpi;
-            };
-        };
-        navigation?: {
-            backgroundColor?: ThemeColor;
-            borderColor?: ThemeColor;
-            title?: {
-                color?: ThemeColor;
-            };
-            item?: {
-                color?: ThemeColor;
-                hoverColor?: ThemeColor;
-                selectedColor?: ThemeColor;
-                selectedBackgroundColor?: ThemeColor;
-            };
-        };
-        editPanel?: {
-            backgroundColor?: ThemeColor;
-        };
-    };
+    dashboards?: IThemeDashboard;
     kpi?: IThemeKpi;
-    modal?: {
-        title?: {
-            color?: ThemeColor;
-            lineColor?: ThemeColor;
-        };
-        outsideBackgroundColor?: ThemeColor;
-        dropShadow?: boolean;
-        borderWidth?: string;
-        borderColor?: ThemeColor;
-        borderRadius?: string;
-    };
+    modal?: IThemeModal;
     palette?: IThemePalette;
     table?: IThemeTable;
-    tooltip?: {
-        backgroundColor?: ThemeColor;
-        color?: ThemeColor;
-    };
+    tooltip?: IThemeTooltip;
     typography?: IThemeTypography;
+}
+
+// @beta
+export interface IThemeAnalyticalDesigner {
+    title?: IThemeAnalyticalDesignerTitle;
+}
+
+// @beta
+export interface IThemeAnalyticalDesignerTitle {
+    color?: ThemeColor;
+}
+
+// @beta
+export interface IThemeButton {
+    borderRadius?: string;
+    dropShadow?: boolean;
+    textCapitalization?: boolean;
 }
 
 // @beta
@@ -1709,14 +1691,133 @@ export interface IThemeComplementaryPalette {
 }
 
 // @beta
+export interface IThemeDashboard {
+    content?: IThemeDashboardContent;
+    editPanel?: IThemeDashboardEditPanel;
+    filterBar?: IThemeDashboardFilterBar;
+    navigation?: IThemeDashboardNavigation;
+    section?: IThemeDashboardSection;
+    title?: IThemeDashboardTitle;
+}
+
+// @beta
+export interface IThemeDashboardContent {
+    backgroundColor?: ThemeColor;
+    kpiWidget?: IThemeDashboardContentKpi;
+    widget?: IThemeDashboardContentWidget;
+}
+
+// @beta
+export interface IThemeDashboardContentKpi {
+    backgroundColor?: ThemeColor;
+    borderColor?: ThemeColor;
+    borderRadius?: string;
+    borderWidth?: string;
+    dropShadow?: boolean;
+    kpi?: IThemeKpi;
+    title?: IThemeWidgetTitle;
+}
+
+// @beta
+export interface IThemeDashboardContentWidget {
+    backgroundColor?: ThemeColor;
+    borderColor?: ThemeColor;
+    borderRadius?: string;
+    borderWidth?: string;
+    dropShadow?: boolean;
+    title?: IThemeWidgetTitle;
+}
+
+// @beta
+export interface IThemeDashboardEditPanel {
+    backgroundColor?: ThemeColor;
+}
+
+// @beta
+export interface IThemeDashboardFilterBar {
+    backgroundColor?: ThemeColor;
+    borderColor?: ThemeColor;
+    filterButton?: IThemeDashboardFilterBarButton;
+}
+
+// @beta
+export interface IThemeDashboardFilterBarButton {
+    backgroundColor?: ThemeColor;
+}
+
+// @beta
+export interface IThemeDashboardNavigation {
+    backgroundColor?: ThemeColor;
+    borderColor?: ThemeColor;
+    item?: IThemeDashboardNavigationItem;
+    title?: IThemeDashboardNavigationTitle;
+}
+
+// @beta
+export interface IThemeDashboardNavigationItem {
+    color?: ThemeColor;
+    hoverColor?: ThemeColor;
+    selectedBackgroundColor?: ThemeColor;
+    selectedColor?: ThemeColor;
+}
+
+// @beta
+export interface IThemeDashboardNavigationTitle {
+    color?: ThemeColor;
+}
+
+// @beta
+export interface IThemeDashboardSection {
+    description?: IThemeDashboardSectionDescription;
+    title?: IThemeDashboardSectionTitle;
+}
+
+// @beta
+export interface IThemeDashboardSectionDescription {
+    color?: ThemeColor;
+}
+
+// @beta
+export interface IThemeDashboardSectionTitle {
+    color?: ThemeColor;
+    lineColor?: ThemeColor;
+}
+
+// @beta
+export interface IThemeDashboardTitle {
+    backgroundColor?: ThemeColor;
+    borderColor?: ThemeColor;
+    color?: ThemeColor;
+}
+
+// @beta
 export interface IThemeKpi {
     primaryMeasureColor?: ThemeColor;
     secondaryInfoColor?: ThemeColor;
-    value?: {
-        textAlign?: string;
-        positiveColor?: ThemeColor;
-        negativeColor?: ThemeColor;
-    };
+    value?: IThemeKpiValue;
+}
+
+// @beta
+export interface IThemeKpiValue {
+    negativeColor?: ThemeColor;
+    positiveColor?: ThemeColor;
+    textAlign?: string;
+}
+
+// @beta
+export interface IThemeModal {
+    borderColor?: ThemeColor;
+    borderRadius?: string;
+    borderWidth?: string;
+    dropShadow?: boolean;
+    outsideBackgroundColor?: ThemeColor;
+    title?: IThemeModalTitle;
+}
+
+// @beta
+export interface IThemeModalTitle {
+    color?: ThemeColor;
+    lineColor?: ThemeColor;
 }
 
 // @beta
@@ -1745,6 +1846,12 @@ export interface IThemeTable {
 }
 
 // @beta
+export interface IThemeTooltip {
+    backgroundColor?: ThemeColor;
+    color?: ThemeColor;
+}
+
+// @beta
 export interface IThemeTypography {
     font?: ThemeFontUri;
     fontBold?: ThemeFontUri;
@@ -1759,9 +1866,13 @@ export interface IThemeWidgetTitle {
 // @public
 export interface ITotalDescriptor {
     // (undocumented)
-    totalHeaderItem: {
-        name: string;
-    };
+    totalHeaderItem: ITotalDescriptorItem;
+}
+
+// @public
+export interface ITotalDescriptorItem {
+    // (undocumented)
+    name: string;
 }
 
 // @alpha @deprecated

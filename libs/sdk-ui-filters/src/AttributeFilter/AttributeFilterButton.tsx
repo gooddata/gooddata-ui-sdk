@@ -56,22 +56,26 @@ import AttributeFilterButtonDropdown from "./AttributeFilterButton/components/At
  */
 export interface IAttributeFilterButtonOwnProps {
     /**
-     * Optionally specify an instance of analytical backend instance to work with.
+     * Specify an instance of analytical backend instance to work with.
      *
+     * @remarks
      * Note: if you do not have a BackendProvider above in the component tree, then you MUST specify the backend.
      */
     backend?: IAnalyticalBackend;
 
     /**
-     * Optionally specify workspace to work with.
+     * Specify workspace to work with.
      *
+     * @remarks
      * Note: if you do not have a WorkspaceProvider above in the component tree, then you MUST specify the workspace.
      */
     workspace?: string;
 
     /**
-     * Specify an attribute filter that will be customized using this filter. The component will use content of the
-     * filter and select the items that are already specified on the filter.
+     * Specify an attribute filter that will be customized using this filter.
+     *
+     * @remarks
+     * The component will use content of the filter and select the items that are already specified on the filter.
      *
      * Note: It's not possible to combine this property with "connectToPlaceholder" property. Either - provide a value, or a placeholder.
      * The 'onApply' callback must be specified in order to handle filter changes.
@@ -81,6 +85,7 @@ export interface IAttributeFilterButtonOwnProps {
     /**
      * Specifies a parent attribute filter that will be used to reduce options for for current attribute filter.
      *
+     * @remarks
      * Parent filters elements must contain their URIs due to current backend limitations.
      */
     parentFilters?: AttributeFiltersOrPlaceholders;
@@ -88,6 +93,7 @@ export interface IAttributeFilterButtonOwnProps {
     /**
      * Specify {@link @gooddata/sdk-ui#IPlaceholder} to use to get and set the value of the attribute filter.
      *
+     * @remarks
      * Note: It's not possible to combine this property with "filter" property. Either - provide a value, or a placeholder.
      * There is no need to specify 'onApply' callback if 'connectToPlaceholder' property is used as the value of the filter
      * is set via this placeholder.
@@ -97,6 +103,7 @@ export interface IAttributeFilterButtonOwnProps {
     /**
      * Specify the over attribute - an attribute the filter and its parent filter are connected through.
      *
+     * @remarks
      * You can either provide an {@link @gooddata/sdk-model#ObjRef} which will be used for all the parent filters,
      * or you can provide a function that will be called for each parent filter to determine the respective over attribute.
      */
@@ -105,6 +112,7 @@ export interface IAttributeFilterButtonOwnProps {
     /**
      * Specify identifier of attribute, for which you want to construct the filter.
      *
+     * @remarks
      * Note: this is optional and deprecated. If you do not specify this, then you MUST specify the 'filter' prop or 'connectToPlaceholder' prop.
      *
      * @deprecated - use the filter prop instead
@@ -112,7 +120,10 @@ export interface IAttributeFilterButtonOwnProps {
     identifier?: string;
 
     /**
-     * Optionally specify title for the attribute filter. By default, the attribute name will be used.
+     * Specify title for the attribute filter.
+     *
+     * @remarks
+     * By default, the attribute name will be used.
      */
     title?: string;
 
@@ -121,26 +132,28 @@ export interface IAttributeFilterButtonOwnProps {
      */
     locale?: string;
     /**
-     * Specify function which will be called when user clicks 'Apply' button. The function will receive the current
-     * specification of the filter, as it was updated by the user.
+     * Specify function which will be called when user clicks 'Apply' button.
+     *
+     * @remarks
+     * The function will receive the current specification of the filter, as it was updated by the user.
      *
      * @param filter - new value of the filter.
      */
     onApply?: (filter: IAttributeFilter, isInverted: boolean) => void;
 
     /**
-     * Optionally customize attribute filter with a callback function to trigger when an error occurs while
+     * Customize attribute filter with a callback function to trigger when an error occurs while
      * loading attribute elements.
      */
     onError?: (error: any) => void;
 
     /**
-     * Optionally customize attribute filter with a component to be rendered if attribute elements loading fails
+     * Customize attribute filter with a component to be rendered if attribute elements loading fails
      */
     FilterError?: React.ComponentType<{ error?: any }>;
 
     /**
-     * Optionally customize attribute filter body with a component to be rendered instead of default filter body.
+     * Customize attribute filter body with a component to be rendered instead of default filter body.
      */
     renderBody?: (props: IAttributeDropdownBodyExtendedProps) => React.ReactNode;
 }

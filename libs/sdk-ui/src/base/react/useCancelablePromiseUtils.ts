@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import identity from "lodash/identity";
 import { UseCancelablePromiseState, UseCancelablePromiseStatus } from "./useCancelablePromise";
 import { UnexpectedSdkError } from "../errors/GoodDataSdkError";
@@ -6,6 +6,7 @@ import { UnexpectedSdkError } from "../errors/GoodDataSdkError";
 /**
  * Resolve status of multiple {@link useCancelablePromise} hooks.
  *
+ * @remarks
  * This is useful for useCancelablePromise composition - when you want to wrap multiple useCancelablePromise hooks in another hook,
  * and keep the return value shape of the hook same as for useCancelablePromise.
  *
@@ -42,6 +43,7 @@ export function resolveUseCancelablePromisesStatus(
 /**
  * Resolve error of multiple {@link useCancelablePromise} hooks - gets first error in the sequence of cancelable promise states.
  *
+ * @remarks
  * This is useful for useCancelablePromise composition - when you want to wrap multiple useCancelablePromise hooks in another hook,
  * and keep the return value shape of the hook same as for useCancelablePromise.
  *

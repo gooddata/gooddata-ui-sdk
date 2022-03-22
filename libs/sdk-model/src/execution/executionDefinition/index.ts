@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import isString from "lodash/isString";
 import SparkMD5 from "spark-md5";
@@ -45,6 +45,7 @@ export interface IExecutionConfig {
  * Execution definition contains 100% complete description of what will the execution compute and how will
  * the resulting data look like.
  *
+ * @remarks
  * While the execution definition is part of the public API, it is a low-level structure and as such SHOULD NOT
  * be used in the typical application code. The UI.SDK offers several convenience layers to construct the execution
  * definition. The typical flows start in the Analytical Workspace.
@@ -229,7 +230,10 @@ export function defSetDimensions(
 }
 
 /**
- * Calculates fingerprint for the execution definition. Fingerprinting is used as an _approximate_,
+ * Calculates fingerprint for the execution definition.
+ *
+ * @remarks
+ * Fingerprinting is used as an _approximate_,
  * quick, first-level assessment whether two execution definitions are or are not effectively same = they
  * lead to the same computation on the backend.
  *

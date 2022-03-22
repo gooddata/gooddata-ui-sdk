@@ -58,6 +58,7 @@ export interface IDonutChartBucketProps {
     /**
      * Specify one or more measures to segment the donut chart.
      *
+     * @remarks
      * If you specify a single measure, then you may further specify the viewBy attribute - there will be
      * donut slice per attribute value.
      *
@@ -67,23 +68,23 @@ export interface IDonutChartBucketProps {
     measures: AttributeMeasureOrPlaceholder | AttributesMeasuresOrPlaceholders;
 
     /**
-     * Optionally specify viewBy attribute that will be used to create the donut slices. There will be a slice
+     * Specify viewBy attribute that will be used to create the donut slices. There will be a slice
      * for each value of the attribute.
      */
     viewBy?: AttributeOrPlaceholder;
 
     /**
-     * Optionally specify filters to apply on the data to chart.
+     * Specify filters to apply on the data to chart.
      */
     filters?: NullableFiltersOrPlaceholders;
 
     /**
-     * Optionally specify how to sort the data to chart.
+     * Specify how to sort the data to chart.
      */
     sortBy?: SortsOrPlaceholders;
 
     /**
-     * Optional resolution context for composed placeholders.
+     * Resolution context for composed placeholders.
      */
     placeholdersResolutionContext?: any;
 }
@@ -96,14 +97,17 @@ export interface IDonutChartProps extends IBucketChartProps, IDonutChartBucketPr
 const WrappedDonutChart = withChart(donutChartDefinition)(CoreDonutChart);
 
 /**
- * [DonutChart](http://sdk.gooddata.com/gooddata-ui/docs/donut_chart_component.html)
- *
  * Donut chart shows data as proportional segments of a disc and has a hollowed out center.
+ *
+ * @remarks
  * Donut charts can be segmented by either multiple measures or an attribute, and allow viewers to visualize
  * component parts of a whole.
  *
  * Note: the donut chart slices are by default sorted from largest to smallest. There is also a limit on the
  * number of slices that will be charted.
+ *
+ * See {@link IDonutChartProps} to learn how to configure the DonutChart and
+ * {@link http://sdk.gooddata.com/gooddata-ui/docs/donut_chart_component.html | donut chart documentation} for more information.
  *
  * @public
  */

@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 /**
  * The type of context in which is tested URL valid.
@@ -30,6 +30,7 @@ export interface ISecuritySettingsService {
     /**
      * Validate plugin URL against list of allowed hosting locations.
      *
+     * @remarks
      * Dashboard plugins MUST be loaded only from allowed locations. If the plugin is hosted elsewhere, it
      * MUST NOT be loaded.
      *

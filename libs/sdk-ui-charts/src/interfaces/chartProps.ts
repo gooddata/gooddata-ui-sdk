@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IVisualizationCallbacks, IVisualizationProps } from "@gooddata/sdk-ui";
 import { IExecutionConfig } from "@gooddata/sdk-model";
@@ -48,6 +48,8 @@ export interface ILegendData {
 }
 
 /**
+ * Callback to be called once the legend is rendered.
+ *
  * @public
  */
 export type OnLegendReady = (data: ILegendData) => void;

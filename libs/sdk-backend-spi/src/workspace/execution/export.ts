@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 /**
  * Configuration for exports of results into XLSX or CSV.
@@ -24,7 +24,10 @@ export interface IExportConfig {
 
     /**
      * Applicable for XLSX format; specifies filters to include as comments / metadata in
-     * the Excel sheet. Filters provided here are purely to paint a better context for the
+     * the Excel sheet.
+     *
+     * @remarks
+     * Filters provided here are purely to paint a better context for the
      * person looking at the XLSX file. They serve no other purpose and are merely serialized
      * into the XLSX in a human readable form.
      */

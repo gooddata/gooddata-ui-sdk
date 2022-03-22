@@ -35,7 +35,7 @@ import { VisType } from '@gooddata/sdk-ui';
 // @public
 export const AreaChart: (props: IAreaChartProps) => JSX.Element;
 
-// @public (undocumented)
+// @public
 export type AxisNamePosition = "high" | "low" | "middle";
 
 // @public
@@ -492,7 +492,7 @@ export const LineChart: (props: ILineChartProps) => JSX.Element;
 // @internal (undocumented)
 export const MIDDLE = "middle";
 
-// @public (undocumented)
+// @public
 export type OnLegendReady = (data: ILegendData) => void;
 
 // @public

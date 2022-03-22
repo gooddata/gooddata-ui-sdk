@@ -142,7 +142,7 @@ export interface IDashboardPluginLink {
     readonly plugin: ObjRef;
 
     /**
-     * Optionally contains parameters that should be passed to the plugin at load time. The format
+     * Contains parameters that should be passed to the plugin at load time. The format
      * and content of the parameters are fully dependent on the implementation of the plugin. If the
      * plugin parameterization is possible, then the plugin documentation should contain the detail.
      */
@@ -151,9 +151,12 @@ export interface IDashboardPluginLink {
 
 /**
  * Object share status
+ *
+ * @remarks
  * private - object accessible only by its creator
  * shared - object shared with closed set of users/groups
  * public - accessible by everyone in project
+ *
  * @public
  */
 export type ShareStatus = "private" | "shared" | "public";

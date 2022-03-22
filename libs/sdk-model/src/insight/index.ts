@@ -43,6 +43,7 @@ import { IAuditable } from "../base/metadata";
  * Represents an Insight defined in GoodData platform. Insight is typically created using Analytical Designer
  * and can be embedded using UI SDK.
  *
+ * @remarks
  * Insight contains all metadata needed to construct its visualization and perform execution to obtain data
  * for that visualization.
  *
@@ -147,66 +148,78 @@ export type IInsightDefinition = {
 };
 
 /**
+ * Object defining the {@link IVisualizationClass} object body.
+ *
+ * @public
+ */
+export interface IVisualizationClassBody {
+    /**
+     * Unique identifier of the visualization.
+     */
+    identifier: string;
+
+    /**
+     * Link to visualization class object.
+     */
+    uri: string;
+
+    /**
+     * Human readable name of the visualization (Bar Chart, Pivot Table)
+     */
+    title: string;
+
+    /**
+     * Link to where visualization's assets reside.
+     *
+     * This MAY contain URLs such as 'local:bar', 'local:table' - such URLs indicate that the visualization
+     * is bundled with the GoodData.UI SDK.
+     */
+    url: string;
+
+    /**
+     * Visualization icon to display in Analytical Designer.
+     */
+    icon: string;
+
+    /**
+     * Visualization icon to display when user selects the visualization in Analytical Designer.
+     */
+    iconSelected: string;
+
+    /**
+     * Checksum for subresource integrity checking.
+     *
+     * {@link https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity}
+     */
+    checksum: string;
+
+    /**
+     * Override ordering in the visualization catalog.
+     */
+    orderIndex?: number;
+}
+
+/**
  * Visualization class is essentially a descriptor for particular type of visualization - say bar chart
- * or table. Each available visualization type is described by a class stored in the metadata. The available
+ * or table.
+ *
+ * @remarks
+ * Each available visualization type is described by a class stored in the metadata. The available
  * classes influence what visualizations can users select in Analytical Designer.
  *
  * @public
  */
 export interface IVisualizationClass {
-    visualizationClass: {
-        /**
-         * Unique identifier of the visualization.
-         */
-        identifier: string;
-
-        /**
-         * Link to visualization class object.
-         */
-        uri: string;
-
-        /**
-         * Human readable name of the visualization (Bar Chart, Pivot Table)
-         */
-        title: string;
-
-        /**
-         * Link to where visualization's assets reside.
-         *
-         * This MAY contain URLs such as 'local:bar', 'local:table' - such URLs indicate that the visualization
-         * is bundled with the GoodData.UI SDK.
-         */
-        url: string;
-
-        /**
-         * Visualization icon to display in Analytical Designer.
-         */
-        icon: string;
-
-        /**
-         * Visualization icon to display when user selects the visualization in Analytical Designer.
-         */
-        iconSelected: string;
-
-        /**
-         * Checksum for subresource integrity checking.
-         *
-         * {@link https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity}
-         */
-        checksum: string;
-
-        /**
-         * Override ordering in the visualization catalog.
-         */
-        orderIndex?: number;
-    };
+    visualizationClass: IVisualizationClassBody;
 }
 
 /**
  * Visualization-specific properties.
  *
+ * @remarks
  * These are modelled in generic fashion as they vary visualization by visualization.
  *
+ * @privateRemarks
  * TODO: add links to properties supported by our visualizations.
  *
  * @public
@@ -255,6 +268,7 @@ export function isInsight(obj: unknown): obj is IInsight {
 /**
  * Finds bucket matching the provided predicate in an insight.
  *
+ * @remarks
  * This function also provides convenience to find bucket by its local identifier - if you pass predicate as
  * string the function will automatically create idMatchBucket predicate.
  *
@@ -394,6 +408,7 @@ export function insightFilters(insight: IInsightDefinition): IFilter[] {
 /**
  * Gets sorting defined in the insight.
  *
+ * @remarks
  * Note: this function ensures that only sorts working on top of attributes and measures defined in the
  * insight will be returned. Any invalid entries will be stripped.
  *
@@ -606,8 +621,10 @@ export function insightIsLocked(insight: IInsight): boolean {
 }
 
 /**
- * Gets a new insight that 'inherits' all data from the provided insight but has different properties. New
- * properties will be used in the new insight as-is, no merging with existing properties.
+ * Gets a new insight that 'inherits' all data from the provided insight but has different properties.
+ *
+ * @remarks
+ * New properties will be used in the new insight as-is, no merging with existing properties.
  *
  * @param insight - insight to work with
  * @param properties - new properties to have on the new insight
@@ -629,8 +646,10 @@ export function insightSetProperties<T extends IInsightDefinition>(
 }
 
 /**
- * Gets a new insight that 'inherits' all data from the provided insight but has different sorts. New
- * sorts will be used in the new insight as-is, no merging with existing sorts.
+ * Gets a new insight that 'inherits' all data from the provided insight but has different sorts.
+ *
+ * @remarks
+ * New sorts will be used in the new insight as-is, no merging with existing sorts.
  *
  * @param insight - insight to work with
  * @param sorts - new sorts to apply
@@ -649,8 +668,10 @@ export function insightSetSorts<T extends IInsightDefinition>(insight: T, sorts:
 }
 
 /**
- * Gets a new insight that 'inherits' all data from the provided insight but has different filters. New
- * filters will be used in the new insight as-is, no merging with existing filters.
+ * Gets a new insight that 'inherits' all data from the provided insight but has different filters.
+ *
+ * @remarks
+ * New filters will be used in the new insight as-is, no merging with existing filters.
  *
  * @param insight - insight to work with
  * @param filters - new filters to apply
@@ -669,8 +690,10 @@ export function insightSetFilters<T extends IInsightDefinition>(insight: T, filt
 }
 
 /**
- * Gets a new insight that 'inherits' all data from the provided insight but has different buckets. New
- * buckets will be used in the new insight as-is, no merging with existing buckets.
+ * Gets a new insight that 'inherits' all data from the provided insight but has different buckets.
+ *
+ * @remarks
+ * New buckets will be used in the new insight as-is, no merging with existing buckets.
  *
  * @param insight - insight to work with
  * @param buckets - new buckets to apply
@@ -694,6 +717,7 @@ export function insightSetBuckets<T extends IInsightDefinition>(
 /**
  * Creates a new insight with modified bucket items (retrieved by applying the modifications function to each bucketItem in the insight).
  *
+ * @remarks
  * Note: the bucket item modification function SHOULD NOT modify bucket item's localId.
  * The localId MAY be used to reference the item from other places in the insight (for example from sorts).
  * Changing the item localId has potential to break the insight: as-is this function does not concern itself with changing the references.
@@ -720,6 +744,7 @@ export function insightModifyItems<T extends IInsightDefinition>(
 /**
  * Creates a new insight with reduced bucket items (retrieved by applying the modifications function).
  *
+ * @remarks
  * Note: the bucket item modification function SHOULD NOT modify bucket item's localId.
  * The localId MAY be used to reference the item from other places in the insight (for example from sorts).
  * Changing the item localId has potential to break the insight: as-is this function does not concern itself with changing the references.
@@ -768,7 +793,10 @@ export type InsightDisplayFormUsage = {
 };
 
 /**
- * Gets references to all display forms used by the insight. The display forms may be used for slicing or dicing the
+ * Gets references to all display forms used by the insight.
+ *
+ * @remarks
+ * The display forms may be used for slicing or dicing the
  * data, for filtering the entire insight or for filtering just some measures.
  *
  * @param insight - insight to get the display form usage from

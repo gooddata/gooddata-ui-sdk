@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { IAttribute, IMeasure, INullableFilter, ISortItem, newBucket } from "@gooddata/sdk-model";
 import { IBucketChartProps } from "../../interfaces";
@@ -53,37 +53,37 @@ const bubbleChartDefinition: IChartDefinition<IBubbleChartBucketProps, IBubbleCh
  */
 export interface IBubbleChartBucketProps {
     /**
-     * Optionally specify measure which will be used to position bubbles on the X axis.
+     * Specify measure which will be used to position bubbles on the X axis.
      */
     xAxisMeasure?: MeasureOrPlaceholder;
 
     /**
-     * Optionally specify measure which will be used to position bubbles on the Y axis
+     * Specify measure which will be used to position bubbles on the Y axis
      */
     yAxisMeasure?: MeasureOrPlaceholder;
 
     /**
-     * Optionally specify measure which will be used to determine the size of each bubble.
+     * Specify measure which will be used to determine the size of each bubble.
      */
     size?: MeasureOrPlaceholder;
 
     /**
-     * Optionally specify attribute whose values will be used to create the bubbles.
+     * Specify attribute whose values will be used to create the bubbles.
      */
     viewBy?: AttributeOrPlaceholder;
 
     /**
-     * Optionally specify filters to apply on the data to chart.
+     * Specify filters to apply on the data to chart.
      */
     filters?: NullableFiltersOrPlaceholders;
 
     /**
-     * Optionally specify how to sort the data to chart.
+     * Specify how to sort the data to chart.
      */
     sortBy?: SortsOrPlaceholders;
 
     /**
-     * Optional resolution context for composed placeholders.
+     * Resolution context for composed placeholders.
      */
     placeholdersResolutionContext?: any;
 }
@@ -96,11 +96,15 @@ export interface IBubbleChartProps extends IBucketChartProps, IBubbleChartBucket
 const WrappedBubbleChart = withChart(bubbleChartDefinition)(CoreBubbleChart);
 
 /**
- * [BubbleChart](https://sdk.gooddata.com/gooddata-ui/docs/bubble_chart_component.html)
+ * Bubble chart shows data as bubbles using Cartesian coordinates.
  *
- * Bubble chart shows data as bubbles using Cartesian coordinates. Bubble charts typically have three measures, one
+ * @remarks
+ * Bubble charts typically have three measures, one
  * for the X-axis, one for the Y-axis, and one that determines the size of each bubble. The data is sliced by an
  * attribute, with each bubble (an attribute item) noted with a different color.
+ *
+ * See {@link IBubbleChartProps} to learn how to configure the BubbleChart and the
+ * {@link https://sdk.gooddata.com/gooddata-ui/docs/bubble_chart_component.html | bubble chart documentation} for more information.
  *
  * @public
  */

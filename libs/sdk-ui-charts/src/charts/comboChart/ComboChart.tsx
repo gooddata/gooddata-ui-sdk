@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import {
     applyRatioRule,
@@ -93,19 +93,19 @@ function getConfiguration(props: IComboChartProps): IChartConfig {
  */
 export interface IComboChartBucketProps {
     /**
-     * Optionally specify primary measures to render using the primary chart type.
+     * Specify primary measures to render using the primary chart type.
      */
     primaryMeasures?: MeasuresOrPlaceholders;
 
     /**
-     * Optionally specify secondary measures to render using the secondary chart type.
+     * Specify secondary measures to render using the secondary chart type.
      */
     secondaryMeasures?: MeasuresOrPlaceholders;
 
     /**
-     * Optionally specify one or two attributes to use for slicing the measure values along the
-     * X axis.
+     * Specify one or two attributes to use for slicing the measure values along the X axis.
      *
+     * @remarks
      * If you specify two attributes, the values of these attributes will appear on the X axis as grouped. For each
      * value of the first attribute there will be all applicable values of the second attribute. For each value of the
      * second attribute there will be a point/column/area indicating the respective slice's value.
@@ -113,17 +113,17 @@ export interface IComboChartBucketProps {
     viewBy?: AttributeOrPlaceholder | AttributesOrPlaceholders;
 
     /**
-     * Optionally specify filters to apply on the data to chart.
+     * Specify filters to apply on the data to chart.
      */
     filters?: NullableFiltersOrPlaceholders;
 
     /**
-     * Optionally specify how to sort the data to chart.
+     * Specify how to sort the data to chart.
      */
     sortBy?: SortsOrPlaceholders;
 
     /**
-     * Optional resolution context for composed placeholders.
+     * Resolution context for composed placeholders.
      */
     placeholdersResolutionContext?: any;
 }
@@ -136,15 +136,19 @@ export interface IComboChartProps extends IBucketChartProps, IComboChartBucketPr
 const WrappedComboChart = withChart(comboChartDefinition)(CoreComboChart);
 
 /**
- * [ComboChart](https://sdk.gooddata.com/gooddata-ui/docs/combo_chart_component.html)
+ * Combo chart combines two types of visualizations, for example, a column chart and a line chart.
  *
- * Combo chart combines two types of visualizations, for example, a column chart and a line chart. A combo chart can
+ * @remarks
+ * A combo chart can
  * have one or two axes. If a combo chart has two axes, it is often referred to as a dual axis chart.
  *
  * By default, a combo chart is displayed as a combination of a column chart and a line chart, with the secondary axis
  * enabled (you can [disable it](https://sdk.gooddata.com/gooddata-ui/docs/combo_chart_component.html#disable-the-secondary-axis)).
  *
  * The chart types used to display primary and secondary measures can be customized in {@link IChartConfig}.
+ *
+ * See {@link IComboChartProps} to learn how to configure the ComboChart and the
+ * {@link https://sdk.gooddata.com/gooddata-ui/docs/combo_chart_component.html | combo chart documentation} for more information.
  *
  * @public
  */

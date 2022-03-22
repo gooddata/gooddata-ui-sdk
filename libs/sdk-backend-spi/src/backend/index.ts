@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 import { IPreparedExecution } from "../workspace/execution";
@@ -9,14 +9,19 @@ import { IBackendCapabilities } from "./capabilities";
 import { IOrganization, IOrganizations } from "../organization";
 
 /**
- * Specifies platform agnostic configuration of an analytical backend. Only config items that make sense for
- * any and all analytical backend implementations are specified here.
+ * Specifies platform agnostic configuration of an analytical backend.
+ *
+ * @remarks
+ * Only config items that make sense for any and all analytical backend implementations are specified here.
  *
  * @public
  */
 export interface IAnalyticalBackendConfig {
     /**
-     * Server hostname (including protocol and port). If not specified and running in browser, then the
+     * Server hostname (including protocol and port).
+     *
+     * @remarks
+     * If not specified and running in browser, then the
      * backend will communicate with origin.
      */
     readonly hostname?: string;
@@ -26,6 +31,7 @@ export interface IAnalyticalBackendConfig {
  * Factory function to create new instances of Analytical Backend realization using optionally both platform agnostic
  * and platform specific configuration.
  *
+ * @remarks
  * This factory function implementation MUST be exposed as the default export of packages which contain
  * realizations of the Analytical Backend SPI.
  *
@@ -40,8 +46,10 @@ export type AnalyticalBackendFactory = (
 ) => IAnalyticalBackend;
 
 /**
- * This is the root of the Analytical Backend SPI. It allows configuration related to communication with the backend
- * and access to analytical workspaces.
+ * The root of the Analytical Backend SPI.
+ *
+ * @remarks
+ * It allows configuration related to communication with the backend and access to analytical workspaces.
  *
  * The analytical backend instance MUST be immutable. Changes to configuration of the backend MUST create a new
  * instance to work with.
@@ -60,7 +68,10 @@ export interface IAnalyticalBackend {
     readonly capabilities: IBackendCapabilities;
 
     /**
-     * Creates new instance of backend on the provided hostname. It is valid NOT TO specify any hostname, in
+     * Creates new instance of backend on the provided hostname.
+     *
+     * @remarks
+     * It is valid NOT TO specify any hostname, in
      * which case the analytical backend assumes it should communicate with the current origin.
      *
      * @param hostname - host[:port]
@@ -87,7 +98,10 @@ export interface IAnalyticalBackend {
     withAuthentication(provider: IAuthenticationProvider): IAnalyticalBackend;
 
     /**
-     * Tests authentication against this backend. This requires network communication and is thus
+     * Tests authentication against this backend.
+     *
+     * @remarks
+     * This requires network communication and is thus
      * asynchronous. If the current backend (or session it lives in) is not authenticated, then
      * this method MUST NOT call the authentication provider.
      *
@@ -98,6 +112,7 @@ export interface IAnalyticalBackend {
     /**
      * Triggers authentication process against the backend.
      *
+     * @remarks
      * If the 'force' parameter is specified, then the method MUST always lead to a call to the authentication
      * provider.
      *
@@ -166,9 +181,10 @@ export type NotAuthenticatedHandler = (context: IAuthenticationContext, error: N
  */
 export interface IAuthenticationProvider {
     /**
-     * Optionally perform custom initialization of the client that the Analytical Backend uses to communicate
+     * Perform custom initialization of the client that the Analytical Backend uses to communicate
      * with the server.
      *
+     * @remarks
      * If implemented, this function WILL BE called by the backend every time a new instance of API client
      * is created.
      *
@@ -180,7 +196,7 @@ export interface IAuthenticationProvider {
     initializeClient?(client: any): void;
 
     /**
-     * Optionally specify function to be called when the Analytical Backend raises a {@link NotAuthenticated} error.
+     * Specify function to be called when the Analytical Backend raises a {@link NotAuthenticated} error.
      *
      * @param context - context in which the authentication is done
      * @param error - an instance of {@link NotAuthenticated} error
@@ -215,7 +231,10 @@ export interface IAuthenticationProvider {
  */
 export interface IAuthenticatedPrincipal {
     /**
-     * Unique identifier of the authenticated user. The identifier semantics MAY differ between backend
+     * Unique identifier of the authenticated user.
+     *
+     * @remarks
+     * The identifier semantics MAY differ between backend
      * implementations. The client code SHOULD NOT make assumptions on the content (such as userId being
      * valid email and so on).
      */
@@ -228,9 +247,12 @@ export interface IAuthenticatedPrincipal {
 }
 
 /**
- * Describes context in which the authentication is done. To cater for custom authentication schemes.
- * the API client of the underlying backend IS exposed anonymously to the provider - the provider SHOULD use
- * the provided API client to exercise any backend-specific authentication mechanisms.
+ * Describes context in which the authentication is done.
+ *
+ * @remarks
+ * To cater for custom authentication schemes. the API client of the underlying backend IS exposed anonymously
+ * to the provider - the provider SHOULD use the provided API client to exercise any backend-specific authentication
+ * mechanisms.
  *
  * @public
  */
@@ -241,7 +263,10 @@ export interface IAuthenticationContext {
     backend: IAnalyticalBackend;
 
     /**
-     * API client used to communicate with the backend - this can be used to perform any backend-specific,
+     * API client used to communicate with the backend.
+     *
+     * @remarks
+     * This can be used to perform any backend-specific,
      * non-standard authentication.
      */
     client: any;
@@ -254,6 +279,7 @@ export interface IAuthenticationContext {
 /**
  * Prepares execution of the provided definition against a backend.
  *
+ * @remarks
  * This is a convenience function which uses the backend methods to create and prepare an execution.
  *
  * @param definition - execution definition to prepare execution for

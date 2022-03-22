@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { CSSProperties } from "react";
 
 /**
@@ -19,8 +19,10 @@ export interface ILoadingProps {
 const baseAnimationDuration = 1.4;
 
 /**
- * {@link http://sdk.gooddata.com/gooddata-ui/docs/loading_component.html | LoadingComponent }
- * is a component that renders a default loading indicator.
+ * Component that renders a default loading indicator.
+ *
+ * @remarks
+ * See {@link http://sdk.gooddata.com/gooddata-ui/docs/loading_component.html | LoadingComponent }
  *
  * @public
  */

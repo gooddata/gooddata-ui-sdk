@@ -362,9 +362,10 @@ export interface ChangeInsightWidgetInsightPayload {
     readonly insightRef: ObjRef;
 
     /**
-     * Optionally specify new visualization properties to use for the insight. If none specified,
+     * Specify new visualization properties to use for the insight. If none specified,
      * the properties already included in the widget will be used.
      *
+     * @remarks
      * Note: if you don't want to use any custom visualization properties for the new insight, then
      * pass empty object.
      */

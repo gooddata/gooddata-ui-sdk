@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import {
     IVisualizationClass,
@@ -129,13 +129,19 @@ export type InsightReferenceTypes = Exclude<ObjectType, "insight" | "tag">;
 export type SupportedInsightReferenceTypes = Exclude<InsightReferenceTypes, "displayForm" | "variable">;
 
 /**
- * Contains information about objects that may be referenced by an insight. The contents of this object
- * depend on the insight and the types requested at the time of call to the {@link IWorkspaceInsightsService.getInsightReferencedObjects} function.
+ * Contains information about objects that may be referenced by an insight.
+ *
+ * @remarks
+ * The contents of this object depend on the insight and the types requested
+ * at the time of call to the {@link IWorkspaceInsightsService.getInsightReferencedObjects} function.
  *
  * @public
  */
 export interface IInsightReferences {
     /**
+     * Requested catalog items.
+     *
+     * @remarks
      * If requested, measures, attributes, display forms, facts and dateDataSets referenced by the insight will be
      * returned here. If none of them were requested, the catalogItems will be undefined. If some were
      * requested but insight is not referencing those types, then the array will be empty.
@@ -149,8 +155,11 @@ export interface IInsightReferences {
 }
 
 /**
- * Contains information about objects that may be referencing an insight. The contents of this object
- * depend on reference of the insight requested at the time of call to the {@link IWorkspaceInsightsService.getInsightReferencingObjects} function.
+ * Contains information about objects that may be referencing an insight.
+ *
+ * @remarks
+ * The contents of this object depend on reference of the insight requested at the time
+ * of call to the {@link IWorkspaceInsightsService.getInsightReferencingObjects} function.
  *
  * @public
  */
@@ -175,33 +184,35 @@ export type InsightOrdering = "id" | "title" | "updated";
  */
 export interface IInsightsQueryOptions {
     /**
-     * Optionally specify (zero-based) starting offset for the results. Default: 0
+     * Specify (zero-based) starting offset for the results. Default: 0
      */
     offset?: number;
 
     /**
-     * Optionally specify number of items per page. Default: 50
+     * Specify number of items per page. Default: 50
      */
     limit?: number;
 
     /**
-     * Optionally specify ordering of the insights. Default: natural ordering provided by the
+     * Specify ordering of the insights. Default: natural ordering provided by the
      * analytical backend. Note: this may differ between backend implementations.
      */
     orderBy?: InsightOrdering;
 
     /**
-     * Optionally filter insights by their author. The value of this property is URI of the author.
+     * Filter insights by their author. The value of this property is URI of the author.
      */
     author?: string;
 
     /**
-     * Optionally filter insights by their title
+     * Filter insights by their title
      */
     title?: string;
 
     /**
-     * Optionally specify if information about the users that created/modified the insights should be loaded for each insight.
+     * Specify if information about the users that created/modified the insights should be loaded for each insight.
+     *
+     * @remarks
      * Defaults to false.
      */
     loadUserData?: boolean;
@@ -214,7 +225,9 @@ export interface IInsightsQueryOptions {
  */
 export interface IGetInsightOptions {
     /**
-     * Optionally specify if information about the users that created/modified the insight should be loaded.
+     * Specify if information about the users that created/modified the insight should be loaded.
+     *
+     * @remarks
      * Defaults to false.
      *
      * If user is inactive or logged in user has not rights to access this information than users that created/modified is undefined.

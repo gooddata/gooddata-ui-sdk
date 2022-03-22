@@ -52,6 +52,7 @@ export function emptyDef(workspace: string): IExecutionDefinition {
  * Prepares a new execution definition for a list of attributes and measures, optionally filtered using the
  * provided filters.
  *
+ * @remarks
  * This function MUST be used to implement IExecutionFactory.forItems();
  *
  * @param workspace - workspace to execute against, must not be empty
@@ -79,8 +80,10 @@ export function newDefForItems(
 }
 
 /**
- * Prepares a new execution definition for a list of buckets. Attributes and measures WILL be transferred to the
- * execution in natural order:
+ * Prepares a new execution definition for a list of buckets.
+ *
+ * @remarks
+ * Attributes and measures WILL be transferred to the execution in natural order:
  *
  * - Order of items within a bucket is retained in the execution
  * - Items from first bucket appear before items from second bucket
@@ -116,7 +119,10 @@ export function newDefForBuckets(
 }
 
 /**
- * Prepares a new execution definition for the provided insight. Buckets with attributes and measures WILL be used
+ * Prepares a new execution definition for the provided insight.
+ *
+ * @remarks
+ * Buckets with attributes and measures WILL be used
  * to obtain attributes and measures - the behavior WILL be same as in forBuckets() function. Filters, sort by
  * and totals in the insight WILL be included in the prepared execution.
  *
@@ -157,6 +163,7 @@ export function newDefForInsight(
 /**
  * Changes sorting in the definition. Any sorting settings accumulated so far WILL be wiped out.
  *
+ * @remarks
  * This function MUST be used to implement IPreparedExecution.withSorting();
  *
  * @param definition - definition to alter with sorting
@@ -170,6 +177,8 @@ export function defWithSorting(definition: IExecutionDefinition, sorts: ISortIte
 
 /**
  * Changes additional execution configuration in the definition.
+ *
+ * @remarks
  * Any additional execution configuration settings accumulated so far WILL be wiped out.
  *
  * This function MUST be used to implement IPreparedExecution.withExecConfig();
@@ -204,6 +213,8 @@ export function defWithPostProcessing(
 
 /**
  * Changes the dateFormat of a postProcessing, other properties of postProcessing (if any) remain unchanged.
+ *
+ * @remarks
  * This function will call defWithPostProcessing to update definition with the new postProcessing.
  *
  * This function MUST be used to implement IPreparedExecution.withDateFormat();
@@ -226,7 +237,10 @@ export function defWithDateFormat(
 }
 
 /**
- * Configures dimensions in the exec definition. Any dimension settings accumulated so far WILL be wiped out.
+ * Configures dimensions in the exec definition.
+ *
+ * @remarks
+ * Any dimension settings accumulated so far WILL be wiped out.
  * If dims is array if dimensions, they will be used as is. If it is an array whose first element is dimension
  * generation function, then the function will be called to obtain dimensions.
  *
@@ -292,6 +306,7 @@ function defaultDimensionsWithoutBuckets(definition: IExecutionDefinition): IDim
 /**
  * Default dimension generator for execution definition behaves as follows:
  *
+ * @remarks
  * - If the definition was created WITHOUT 'buckets', then:
  *   - If there are no measures specified, then single dimension will be returned and will contain all attributes
  *   - If there are measures, then two dimensions will be returned; measureGroup will be in the first dimension

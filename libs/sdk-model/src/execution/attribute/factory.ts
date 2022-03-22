@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import identity from "lodash/identity";
 import cloneDeep from "lodash/cloneDeep";
 import isEmpty from "lodash/isEmpty";
@@ -43,9 +43,11 @@ export class AttributeBuilder {
     }
 
     /**
-     * Sets alias - alternative title - for the attribute. This value will then be used in various
-     * chart-specific descriptive elements. For convenience if no alias is specified, the attribute
-     * will fall back to server-defined value.
+     * Sets alias - alternative title - for the attribute.
+     *
+     * @remarks
+     * This value will then be used in various chart-specific descriptive elements. For convenience if no alias is specified,
+     * the attribute will fall back to server-defined value.
      *
      * @param alias - alias to use instead of attribute title; undefined to use server-defined value
      */
@@ -60,8 +62,10 @@ export class AttributeBuilder {
     };
 
     /**
-     * Resets alias - alternative title - set for the attribute. The server-defined title of the attribute
-     * will be used instead.
+     * Resets alias - alternative title - set for the attribute.
+     *
+     * @remarks
+     * The server-defined title of the attribute will be used instead.
      */
     public noAlias = (): this => {
         delete this.attribute.alias;
@@ -178,6 +182,7 @@ export function newAttribute(
 /**
  * Allows modification of an existing attribute instance.
  *
+ * @remarks
  * The returned attribute will have the same localId as the original attribute. If you would like to assign
  * new/different local identifier to the attribute, you can do that using the modifications where you can provide
  * either new custom localId or indicate that the attribute should fall back to the auto-generated localId.

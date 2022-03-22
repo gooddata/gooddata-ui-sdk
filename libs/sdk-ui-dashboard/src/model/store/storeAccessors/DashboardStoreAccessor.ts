@@ -6,6 +6,7 @@ import { invariant } from "ts-invariant";
 /**
  * This class serves the selector and the dispatcher properties of the dashboard component state.
  *
+ * @remarks
  * The {@link Dashboard} component has an optional property {@link IDashboardProps#onStateChange} through which
  * you can handle set the values for {@link DashboardDispatch} and {@link DashboardSelectorEvaluator}.
  *

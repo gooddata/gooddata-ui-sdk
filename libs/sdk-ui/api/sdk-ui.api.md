@@ -1067,7 +1067,7 @@ export interface ILoadingState {
 // @public
 export type ILocale = "en-US" | "de-DE" | "es-ES" | "fr-FR" | "ja-JP" | "nl-NL" | "pt-BR" | "pt-PT" | "zh-Hans" | "ru-RU";
 
-// @public
+// @public (undocumented)
 export type IMappingHeader = IAttributeDescriptor | IResultAttributeHeader | IMeasureDescriptor | ITotalDescriptor;
 
 // @internal

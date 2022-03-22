@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { DependencyList } from "react";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { DataViewWindow } from "./withExecutionLoading";
@@ -25,6 +25,8 @@ export type UseDataViewCallbacks = UseCancelablePromiseCallbacks<DataViewFacade,
 
 /**
  * This hook provides easy way to get data for the provided {@link @gooddata/sdk-backend-spi#IPreparedExecution}.
+ *
+ * @remarks
  * You can use it to create custom visualizations on top of GoodData platform.
  * Be aware that execution is re-executed only on dependency list change, not on execution/window/callbacks change.
  *

@@ -28,8 +28,11 @@ import { IDashboardLayout, IDashboardLayoutItem, IDashboardLayoutSection } from 
 export interface IDashboardInsightCustomizer {
     /**
      * A convenience method that will register a specific React component to use for rendering
-     * any insight that is tagged with the provided `tag`. If plugins register multiple providers
-     * for the same tag, then the provider will be picked using 'last-win' strategy.
+     * any insight that is tagged with the provided `tag`.
+     *
+     * @remarks
+     * If plugins register multiple providers for the same tag, then the provider will be picked
+     * using 'last-win' strategy.
      *
      * @param tag - tag to look for on the insight, this function will do nothing if this argument is an empty string
      * @param component - component to use if the tag is found
@@ -38,9 +41,11 @@ export interface IDashboardInsightCustomizer {
     withTag(tag: string, component: CustomDashboardInsightComponent): IDashboardInsightCustomizer;
 
     /**
-     * Register a provider for React components to render insights. A provider takes the insight and
-     * widget that it is part of as input and is expected to return a React component that should be
-     * used to render that insight.
+     * Register a provider for React components to render insights.
+     *
+     * @remarks
+     * A provider takes the insight and widget that it is part of as input and is expected to return
+     * a React component that should be used to render that insight.
      *
      * If the provider returns `undefined` then:
      *
@@ -50,7 +55,7 @@ export interface IDashboardInsightCustomizer {
      *
      * You may register multiple providers. They will be evaluated in the order you register them.
      *
-     * @remarks see the {@link IDashboardInsightCustomizer.withTag} convenience method to register components for insights
+     * See the {@link IDashboardInsightCustomizer.withTag} convenience method to register components for insights
      *  with particular tags.
      * @param provider - provider to register
      * @returns self, for call chaining sakes
@@ -58,7 +63,10 @@ export interface IDashboardInsightCustomizer {
     withCustomProvider(provider: OptionalInsightComponentProvider): IDashboardInsightCustomizer;
 
     /**
-     * Register a factory for insight decorator providers. Decorators are a way to add customizations or embellishments on top
+     * Register a factory for insight decorator providers.
+     *
+     * @remarks
+     * Decorators are a way to add customizations or embellishments on top
      * of an existing component. Decorators are more complex to write because they need to work with the component
      * they should decorate and add 'something' on top of that component.
      *
@@ -109,7 +117,10 @@ export interface IDashboardInsightCustomizer {
  */
 export interface IDashboardKpiCustomizer {
     /**
-     * Register a provider for React components to render insights. A provider takes the insight and
+     * Register a provider for React components to render insights.
+     *
+     * @remarks
+     * A provider takes the insight and
      * widget that it is part of as input and is expected to return a React component that should be
      * used to render that insight.
      *
@@ -127,7 +138,10 @@ export interface IDashboardKpiCustomizer {
     withCustomProvider(provider: OptionalKpiComponentProvider): IDashboardKpiCustomizer;
 
     /**
-     * Register a factory for insight decorator providers. Decorators are a way to add customizations or embellishments on top
+     * Register a factory for insight decorator providers.
+     *
+     * @remarks
+     * Decorators are a way to add customizations or embellishments on top
      * of an existing component. Decorators are more complex to write because they need to work with the component
      * they should decorate and add 'something' on top of that component.
      *
@@ -178,7 +192,10 @@ export interface IDashboardKpiCustomizer {
  */
 export interface IDashboardWidgetCustomizer {
     /**
-     * Adds a new custom widget type. Custom widget's can be used to render arbitrary content.
+     * Adds a new custom widget type.
+     *
+     * @remarks
+     * Custom widget's can be used to render arbitrary content.
      *
      * The custom widget must be wrapped inside an element which sets the height and width CSS sizing
      * properties in order to align the behavior with the provided widget types.
@@ -200,9 +217,11 @@ export interface IDashboardWidgetCustomizer {
  */
 export interface IFluidLayoutCustomizer {
     /**
-     * Adds a new section with one or more custom widgets onto the fluid layout. The section to add must not
-     * be empty - it must contain at least one item. Attempts to add empty sections will be ignored and
-     * warnings will be reported.
+     * Adds a new section with one or more custom widgets onto the fluid layout.
+     *
+     * @remarks
+     * The section to add must not be empty - it must contain at least one item. Attempts to add empty sections
+     * will be ignored and warnings will be reported.
      *
      * @param sectionIdx - index to add the new section at
      * @param section - section to add; note: customizer will make a deep copy of the item before adding it
@@ -211,7 +230,10 @@ export interface IFluidLayoutCustomizer {
     addSection(sectionIdx: number, section: IDashboardLayoutSection<ICustomWidget>): IFluidLayoutCustomizer;
 
     /**
-     * Adds a new item containing a custom widget onto the dashboard. New item will be added to
+     * Adds a new item containing a custom widget onto the dashboard.
+     *
+     * @remarks
+     * New item will be added to
      * an existing section at index `sectionIdx` and within that section will be placed at `itemIdx`. The item
      * to add must contain a custom widget data. Attempts to add item that does not contain any widget data
      * will be ignored and warnings will be reported. Keep in mind that this can lead to further errors or
@@ -267,7 +289,10 @@ export interface IDashboardLayoutCustomizer {
 }
 
 /**
- * Mode of rendering of the FilterBar:
+ * Mode of rendering of the FilterBar.
+ *
+ * @remarks
+ * Its value can be:
  * - default - the filter bar will be rendered as if no rendering mode was set at all.
  * - hidden - the filter bar is hidden. Note that the filters set on the dashboard are still active, just not visible.
  *
@@ -342,8 +367,10 @@ export type DashboardStateChangeCallback = (state: DashboardState, dispatch: Das
  */
 export interface IDashboardEventHandling {
     /**
-     * Adds a handler for particular event type. Every time event of that type occurs, the provided callback
-     * function will be triggered.
+     * Adds a handler for particular event type.
+     *
+     * @remarks
+     * Every time event of that type occurs, the provided callback function will be triggered.
      *
      * @param eventType - type of the event to handle; this can be either built-event event type (see {@link DashboardEventType}), a custom
      *  event type or `'*'` to register handler for all events
@@ -386,8 +413,11 @@ export interface IDashboardEventHandling {
     addCustomEventHandler(handler: DashboardEventHandler): IDashboardEventHandling;
 
     /**
-     * Removes custom event handler. In order for successful removal the entire handler object must be
-     * exactly the same as the one that was used when you added the handler.
+     * Removes custom event handler.
+     *
+     * @remarks
+     * In order for successful removal the entire handler object must be exactly the same as the one
+     * that was used when you added the handler.
      *
      * @param handler - event handler to remove
      * @returns self, for call chaining sakes

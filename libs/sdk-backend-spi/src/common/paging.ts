@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 /**
  * Interface to interact with paged asynchronous resources
@@ -28,6 +28,8 @@ export interface IPagedResource<TItem> {
 
     /**
      * Request all the pages merged in a single array.
+     *
+     * @remarks
      * This MUST respect all the original query settings except for the paging settings (e.g. offset, limit).
      *
      * @returns promise of an array for all the pages' contents in one array
@@ -36,6 +38,8 @@ export interface IPagedResource<TItem> {
 
     /**
      * Request all the pages merged in a single array and sort them using the given comparator.
+     *
+     * @remarks
      * This MUST respect all the original query settings except for the paging settings (e.g. offset, limit).
      *
      * @param compareFn - the compare function to use - the semantics are the same os for the Array.sort parameter

@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { withExecution } from "./withExecution";
 import { DataViewWindow, IWithLoadingEvents, WithLoadingResult } from "./withExecutionLoading";
@@ -25,6 +25,7 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
     /**
      * Backend to execute against.
      *
+     * @remarks
      * Note: the backend must come either from this property or from BackendContext. If you do not specify
      * backend here, then the executor MUST be rendered within an existing BackendContext.
      */
@@ -33,6 +34,7 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
     /**
      * Workspace in whose context to perform the execution.
      *
+     * @remarks
      * Note: the workspace must come either from this property or from WorkspaceContext. If you do not specify
      * workspace here, then the executor MUST be rendered within an existing WorkspaceContext.
      */
@@ -45,33 +47,35 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
     seriesBy: AttributesMeasuresOrPlaceholders;
 
     /**
-     * Optionally slice all data series by elements of these attributes.
+     * Slice all data series by elements of these attributes.
      */
     slicesBy?: AttributesOrPlaceholders;
 
     /**
-     * Optionally include these totals among the data slices.
+     * Include these totals among the data slices.
      */
     totals?: TotalsOrPlaceholders;
 
     /**
-     * Optional filters to apply on server side.
+     * Filters to apply on server side.
      */
     filters?: NullableFiltersOrPlaceholders;
 
     /**
-     * Optional sorting to apply on server side.
+     * Sorting to apply on server side.
      */
     sortBy?: SortsOrPlaceholders;
 
     /**
-     * Optional resolution context for composed placeholders.
+     * Resolution context for composed placeholders.
      */
     placeholdersResolutionContext?: any;
 
     /**
-     * Optional name to use for files exported from this component. If you do not specify this, then
-     * the componentName will be used instead.
+     * Name to use for files exported from this component.
+     *
+     * @remarks
+     * If you do not specify this, then the componentName will be used instead.
      *
      * Note: it is also possible to pass custom name to the export function that will be sent via the
      * onExportReady callback. That approach is preferred if you need to assign the names in an ad-hoc
@@ -80,9 +84,11 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
     exportTitle?: string;
 
     /**
-     * Optional informative name of the component. This value is sent as telemetry information together
-     * with the actual execution request. We recommend to set this because it can be useful for diagnostic
-     * purposes.
+     * Informative name of the component.
+     *
+     * @remarks
+     * This value is sent as telemetry information together with the actual execution request.
+     * We recommend to set this because it can be useful for diagnostic purposes.
      *
      * Defaults 'Execute'.
      */
@@ -90,7 +96,10 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
 
     /**
      * Specifies whether {@link Execute} should trigger execution and loading right after it is
-     * mounted. If not specified defaults to `true`.
+     * mounted.
+     *
+     * @remarks
+     * If not specified defaults to `true`.
      *
      * If set to `false`, then the {@link WithLoadingResult#reload} function needs to be called
      * to trigger the execution and loading.
@@ -101,29 +110,34 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
      * Specifies whether {@link Execute} should load all data from backend or just a particular window - specified by
      * offset and size of the window.
      *
+     * @remarks
      * If not specified, all data will be loaded.
      */
     window?: DataViewWindow;
 
     /**
-     * Child component to which rendering is delegated. This is a function that will be called
-     * every time state of execution and data loading changes.
+     * Child component to which rendering is delegated.
+     *
+     * @remarks
+     * This is a function that will be called every time state of execution and data loading changes.
      *
      * @param executionResult - execution result, indicating state and/or results
      */
     children: (executionResult: WithLoadingResult) => React.ReactElement | null;
 
     /**
-     * Optionally provide component for rendering of the loading state.
+     * Provide component for rendering of the loading state.
      *
+     * @remarks
      * Note: When you provide both LoadingComponent and ErrorComponent, the children function with the execution result
      * will be called only with a successful result.
      */
     LoadingComponent?: IExecuteLoadingComponent;
 
     /**
-     * Optionally provide component for rendering of the error state.
+     * Provide component for rendering of the error state.
      *
+     * @remarks
      * Note: When you provide both LoadingComponent and ErrorComponent, the children function with the execution result
      * will be called only with a successful result.
      */
@@ -221,8 +235,10 @@ const WrappedExecute = withContexts(
 );
 
 /**
- * The executor provides a more curated experience to obtain and work with data from backends. It is aligned
- * with the `DataAccess` infrastructure which exposes the underlying data as data series that can be
+ * The executor provides a more curated experience to obtain and work with data from backends.
+ *
+ * @remarks
+ * It is aligned with the `DataAccess` infrastructure which exposes the underlying data as data series that can be
  * optionally sliced by additional attributes.
  *
  * Once the executor finishes, the {@link DataViewFacade.data} method will expose the data as series and
@@ -230,7 +246,7 @@ const WrappedExecute = withContexts(
  * Note that if the resulting data is empty this will NOT throw a NoDataError. It is the responsibility
  * of the child component to handle that if they need to.
  *
- * @remarks see {@link IDataAccessMethods} for additional documentation
+ * See {@link IDataAccessMethods} for additional documentation
  * @public
  */
 export const Execute = (props: IExecuteProps) => {

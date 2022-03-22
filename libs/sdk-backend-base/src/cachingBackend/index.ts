@@ -623,7 +623,7 @@ export type CachingConfiguration = {
     maxCatalogOptions: number | undefined;
 
     /**
-     * Optionally specify function to call once the caching is set up. If present, the function will be called
+     * Specify function to call once the caching is set up. If present, the function will be called
      * with an instance of {@link CacheControl} which you can use to interact with the caches.
      *
      * @param cacheControl - cache control instance

@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import {
     AnalyticalBackendErrorTypes,
     isAnalyticalBackendError,
@@ -82,9 +82,11 @@ export function newErrorMapping(intl: IntlShape): IErrorDescriptors {
 }
 
 /**
- * Converts any error into an instance of {@link GoodDataSdkError}. The conversion logic right now
- * focuses mostly on errors that are contractually specified in Analytical Backend SPI. All other unexpected
- * errors are wrapped into an exception with the generic 'UNKNOWN_ERROR' code.
+ * Converts any error into an instance of {@link GoodDataSdkError}.
+ *
+ * @remarks
+ * The conversion logic right now focuses mostly on errors that are contractually specified in Analytical Backend SPI.
+ * All other unexpected errors are wrapped into an exception with the generic 'UNKNOWN_ERROR' code.
  *
  * Instances of GoodDataSdkError are returned as-is and are not subject to any processing.
  *

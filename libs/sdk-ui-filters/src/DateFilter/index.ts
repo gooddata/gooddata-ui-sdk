@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { granularityIntlCodes } from "./constants/i18n";
 import { defaultDateFilterOptions } from "./constants/config";
 import { validateFilterOption } from "./validation/OptionValidation";
@@ -62,6 +62,8 @@ export {
     DateFilterRelativeOptionGroup,
     IDateFilterOptionsByType,
     IExtendedDateFilterErrors,
+    IDateFilterAbsoluteFormErrors,
+    IDateFilterRelativeFormErrors,
     RelativeDateFilterOption,
     isAbsoluteDateFilterOption,
     isRelativeDateFilterOption,

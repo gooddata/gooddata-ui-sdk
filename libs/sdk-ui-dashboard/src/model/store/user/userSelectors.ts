@@ -9,8 +9,11 @@ const selectSelf = createSelector(
 );
 
 /**
- * This selector returns current logged in user. It is expected that the
- * selector is called only after the permission state is correctly initialized. Invocations before initialization lead to invariant errors.
+ * This selector returns current logged in user.
+ *
+ * @remarks
+ * It is expected that the selector is called only after the permission state is correctly initialized.
+ * Invocations before initialization lead to invariant errors.
  *
  * @example - on how to use `selectCurrentUser` selector within a Dashboard Plugin.
  * ```
@@ -54,8 +57,11 @@ export const selectCurrentUser = createSelector(selectSelf, (state) => {
 });
 
 /**
- * This selector returns current logged in user ref. It is expected that the
- * selector is called only after the permission state is correctly initialized. Invocations before initialization lead to invariant errors.
+ * This selector returns current logged in user ref.
+ *
+ * @remarks
+ * It is expected that the selector is called only after the permission state is correctly initialized.
+ * Invocations before initialization lead to invariant errors.
  *
  * @returns - an {@link @gooddata/sdk-model#ObjRef} of the logged in user.
  * @public

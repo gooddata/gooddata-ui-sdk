@@ -9,7 +9,10 @@ const selectSelf = createSelector(
 );
 
 /**
- * Returns dashboard's config. It is expected that the selector is called only after the config state
+ * Returns dashboard's config.
+ *
+ * @remarks
+ * It is expected that the selector is called only after the config state
  * is correctly initialized. Invocations before initialization lead to invariant errors.
  *
  * @public
@@ -23,6 +26,7 @@ export const selectConfig = createSelector(selectSelf, (configState) => {
 /**
  * Returns workspace-level configuration for the of the date filter options and presets.
  *
+ * @remarks
  * Note: this configuration SHOULD be further augmented by the dashboard-level overrides to obtain
  * the effective date filter configuration.
  *
@@ -69,9 +73,11 @@ export const selectColorPalette = createSelector(selectConfig, (state) => {
 });
 
 /**
- * Returns the object availability configuration for this dashboard. Only objects that match the availability
- * criteria can appear in selections where user has pick an object to use for some purpose (for instance metric for
- * KPI or date dataset to filter by).
+ * Returns the object availability configuration for this dashboard.
+ *
+ * @remarks
+ * Only objects that match the availability criteria can appear in selections where user has pick
+ * an object to use for some purpose (for instance metric for KPI or date dataset to filter by).
  *
  * @public
  */
@@ -90,6 +96,8 @@ export const selectMapboxToken = createSelector(selectConfig, (state) => {
 
 /**
  * Returns whether the Dashboard is executed in read-only mode.
+ *
+ * @remarks
  * Read-only mode disables any interactions that can alter the backend data.
  *
  * @public
@@ -100,6 +108,8 @@ export const selectIsReadOnly = createSelector(selectConfig, (state) => {
 
 /**
  * Returns whether the Dashboard is executed in embedded context.
+ *
+ * @remarks
  * In embedded mode, some interactions may be disabled.
  *
  * @public

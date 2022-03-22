@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { wrapDisplayName } from "./wrapDisplayName";
 import invariant from "ts-invariant";
@@ -28,6 +28,8 @@ export const WorkspaceProvider: React.FC<IWorkspaceProviderProps> = ({ children,
 
 /**
  * Hook to get workspace instance provided to {@link WorkspaceProvider}.
+ *
+ * @remarks
  * You can optionally set a workspace override that will be returned if defined.
  * This makes the usage more ergonomic (see the following example).
  *
@@ -52,6 +54,8 @@ export const useWorkspace = (workspace?: string): string | undefined => {
 
 /**
  * Hook to get workspace instance provided to {@link WorkspaceProvider}.
+ *
+ * @remarks
  * You can optionally set a workspace override that will be returned if defined.
  * This makes the usage more ergonomic (see the following example).
  *

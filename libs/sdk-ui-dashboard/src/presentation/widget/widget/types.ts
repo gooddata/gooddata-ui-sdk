@@ -10,6 +10,7 @@ import { ExtendedDashboardWidget } from "../../../model";
 /**
  * Dashboard widget props.
  *
+ * @remarks
  * IMPORTANT: this interface is marked as public but not all properties in it are suitable for public consumption
  * yet. Please heed the per-property API maturity annotations; the alpha level APIs may change in a breaking way
  * in the next release.
@@ -20,6 +21,7 @@ export interface IDashboardWidgetProps {
     /**
      * Backend to work with.
      *
+     * @remarks
      * Note: the backend must come either from this property or from BackendContext. If you do not specify
      * backend here, then the component MUST be rendered within an existing BackendContext.
      *
@@ -30,6 +32,7 @@ export interface IDashboardWidgetProps {
     /**
      * Workspace where the widget exists.
      *
+     * @remarks
      * Note: the workspace must come either from this property or from WorkspaceContext. If you do not specify
      * workspace here, then the component MUST be rendered within an existing WorkspaceContext.
      *
@@ -45,6 +48,7 @@ export interface IDashboardWidgetProps {
     /**
      * Specify date data set to use when passing dashboard date filter to rendered visualization.
      *
+     * @remarks
      * If not provided, the date filter will not be applied
      *
      * @public
@@ -52,8 +56,10 @@ export interface IDashboardWidgetProps {
     dateDataset?: ObjRef;
 
     /**
-     * Specify what attribute filters to ignore for this widget. Those filters will not be passed to the
-     * rendered visualization.
+     * Specify what attribute filters to ignore for this widget.
+     *
+     * @remarks
+     * Those filters will not be passed to the rendered visualization.
      *
      * @public
      */

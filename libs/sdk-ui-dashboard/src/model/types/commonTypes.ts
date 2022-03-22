@@ -14,8 +14,10 @@ import { IDashboardFilter, IMenuButtonItemsVisibility } from "../../types";
 import { ExtendedDashboardWidget } from "./layoutTypes";
 
 /**
- * Dashboard component may offer users to pick objects to use on the dashboard - for instance selecting a metric
- * to use on KPI, selecting an attribute or a date dataset to filter by.
+ * Dashboard component may offer users to pick objects to use on the dashboard.
+ *
+ * @remarks
+ * User can, for instance, select a metric to use on KPI, select an attribute or a date dataset to filter by.
  *
  * The object availability configuration can be used to filter objects that the user can pick.
  *
@@ -25,13 +27,18 @@ import { ExtendedDashboardWidget } from "./layoutTypes";
  */
 export interface ObjectAvailabilityConfig {
     /**
-     * Specify tags to exclude objects by. If any of these tags appears on an object, then it will be not
-     * available for use.
+     * Specify tags to exclude objects by.
+     *
+     * @remarks
+     * If any of these tags appears on an object, then it will be not available for use.
      */
     excludeObjectsWithTags?: string[];
 
     /**
-     * Specify tags to include objects by. This option does not make sense on its own - as all objects are
+     * Specify tags to include objects by.
+     *
+     * @remarks
+     * This option does not make sense on its own - as all objects are
      * included by default. However it can be used in conjunction with {@link ObjectAvailabilityConfig.excludeObjectsWithTags} - a wide
      * range of objects may be excluded at first and then a subset will be cherry-picked using this prop.
      */
@@ -60,6 +67,9 @@ export interface DashboardConfig {
     settings?: ISettings;
 
     /**
+     * Date filter configuration.
+     *
+     * @remarks
      * Date filter configuration is used to influence what filtering presets (options) should be
      * available on the date filter component.
      */
@@ -71,7 +81,7 @@ export interface DashboardConfig {
     colorPalette?: IColorPalette;
 
     /**
-     * Optionally specify exclusion and inclusion criteria for objects that should be available during the
+     * Specifies exclusion and inclusion criteria for objects that should be available during the
      * different object selections (e.g. selecting metric for KPI, attributes to filter by, date data sets to use for filtering).
      */
     objectAvailability?: ObjectAvailabilityConfig;
@@ -84,6 +94,9 @@ export interface DashboardConfig {
     mapboxToken?: string;
 
     /**
+     * Sets dashboard to the read-only mode.
+     *
+     * @remarks
      * If set to true, the dashboard will be embedded in a read-only mode disabling any user interaction
      * that would alter any backend state (disabling creating/changing alerts, creating scheduled emails, etc.).
      *
@@ -92,6 +105,9 @@ export interface DashboardConfig {
     isReadOnly?: boolean;
 
     /**
+     * Sets dashboard to the embedded mode.
+     *
+     * @remarks
      * When dashboard is embedded via iframe, this property must be set to true.
      * In embedded mode, some interactions may be disabled.
      *
@@ -102,12 +118,16 @@ export interface DashboardConfig {
     /**
      * When dashboard is executed in export mode, this property must be set to true.
      *
+     * @remarks
      * Defaults to false.
      */
     isExport?: boolean;
 
     /**
-     * Disables default dashboard drills - drills configured and stored on the widgets, or implicit drills (eg. drill down).
+     * Disables default dashboard drills.
+     *
+     * @remarks
+     * Drills configured and stored on the widgets, or implicit drills (eg. drill down).
      * This property has no effect for drills enabled by drillableItems set by {@link ChangeDrillableItems} command.
      *
      * Defaults to false.
@@ -117,18 +137,20 @@ export interface DashboardConfig {
     /**
      * If set to true, filter values will resolve in drill events.
      *
+     * @remarks
      * Defaults to false.
      */
     enableFilterValuesResolutionInDrillEvents?: boolean;
 
     /**
-     * Optionally configure which of the default menu button buttons are visible.
+     * Configure which of the default menu button buttons are visible.
      */
     menuButtonItemsVisibility?: IMenuButtonItemsVisibility;
 
     /**
      * When turned on the features still under development will be turned on based on corresponding settings
      *
+     * @remarks
      * Defaults to false.
      */
     allowUnfinishedFeatures?: boolean;
@@ -138,6 +160,7 @@ export interface DashboardConfig {
  * Dashboard configuration resolved using the config passed in via props and any essential data retrieved from
  * backend.
  *
+ * @remarks
  * Note: the resolved config may still contain some undefined properties:
  *
  * -  `mapboxToken` - has to be provided by the context
@@ -186,7 +209,10 @@ export interface DashboardContext {
     workspace: string;
 
     /**
-     * Reference to dashboard that should be loaded into the store. If the dashboardRef is not specified, then this indicates
+     * Reference to dashboard that should be loaded into the store.
+     *
+     * @remarks
+     * If the dashboardRef is not specified, then this indicates
      * the dashboard should be initialized with empty state (new dashboard).
      */
     dashboardRef?: ObjRef;
@@ -197,12 +223,17 @@ export interface DashboardContext {
     filterContextRef?: ObjRef;
 
     /**
-     * Client identifier - it's required, if the backend implementation supports it and workspace is provisioned via LCM.
+     * Client identifier.
+     *
+     * @remarks
+     * It's required, if the backend implementation supports it and workspace is provisioned via LCM.
      */
     clientId?: string;
 
     /**
-     * Data product identifier - it's required, if the backend implementation supports it and workspace is provisioned via LCM.
+     * Data product identifier.
+     * @remarks
+     * It's required, if the backend implementation supports it and workspace is provisioned via LCM.
      */
     dataProductId?: string;
 }
@@ -230,11 +261,12 @@ export type DashboardTransformFn = (
  */
 export interface DashboardModelCustomizationFns {
     /**
-     * Optionally provide a function that will be used during dashboard initialization of an existing dashboard.
+     * Provide a function that will be used during dashboard initialization of an existing dashboard.
+     *
+     * @remarks
      * This function will be called after the dashboard is loaded from backend and before it is dispatched for
      * cleanup, sanitization and storage in the Dashboard component state.
      *
-     * @remarks
      * -  If the function is not defined, results in an error or returns `undefined`, then the original
      *    dashboard will be used as-is.
      */

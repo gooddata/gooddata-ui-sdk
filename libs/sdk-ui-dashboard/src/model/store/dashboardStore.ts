@@ -98,19 +98,20 @@ export type DashboardStore = EnhancedStore<DashboardState>;
 
 export interface DashboardStoreEventing {
     /**
-     * Optionally specify event handlers to register during the initialization.
+     * Specify event handlers to register during the initialization.
      */
     initialEventHandlers?: DashboardEventHandler[];
 
     /**
-     * Optionally specify callback that will be called each time the state changes.
+     * Specify callback that will be called each time the state changes.
      */
     onStateChange?: (state: DashboardState, dispatch: DashboardDispatch) => void;
 
     /**
-     * Optionally specify callback that will be called when the dashboard eventing subsystem initializes and
+     * Specify callback that will be called when the dashboard eventing subsystem initializes and
      * it is possible to register new or unregister existing event handlers.
      *
+     * @remarks
      * Note: these callbacks allow modification of event handlers on an existing, initialized dashboard. See
      * {@link IDashboardEventing.eventHandlers} prop if you want to register handlers _before_ the dashboard
      * initialization starts.
@@ -123,8 +124,10 @@ export interface DashboardStoreEventing {
 
 export interface DashboardStoreConfig {
     /**
-     * Specifies context that will be hammered into the saga middleware. All sagas can then access the values
-     * from the context.
+     * Specifies context that will be hammered into the saga middleware.
+     *
+     * @remarks
+     * All sagas can then access the values from the context.
      *
      * Remember: `DashboardContext` is part of the public API. Do not store internals in here. If need
      * to have internals in the context, then use the privateContext.
@@ -135,9 +138,11 @@ export interface DashboardStoreConfig {
     dashboardContext: DashboardContext;
 
     /**
-     * Optionally specify private context that will be hammered into the saga middleware. Private context
-     * may contain internal global configuration / customization that needs to be available in the different
-     * parts of the model.
+     * Specify private context that will be hammered into the saga middleware.
+     *
+     * @remarks
+     * Private context may contain internal global configuration / customization that needs to be available
+     * in the different parts of the model.
      *
      * The private context is not passed around by the infrastructure. To obtain it, use the `getPrivateContext`
      * generator.
@@ -145,7 +150,7 @@ export interface DashboardStoreConfig {
     privateContext?: PrivateDashboardContext;
 
     /**
-     * Optionally specify redux middleware to register into the store.
+     * Specify redux middleware to register into the store.
      */
     additionalMiddleware?: Middleware<any>;
 
@@ -155,13 +160,17 @@ export interface DashboardStoreConfig {
     eventing?: DashboardStoreEventing;
 
     /**
-     * Optionally specify query service implementations. These will be used to override the default implementations
-     * and add new services.
+     * Specify query service implementations.
+     *
+     * @remarks
+     * These will be used to override the default implementations and add new services.
      */
     queryServices?: IDashboardQueryService<any, any>[];
 
     /**
-     * Optionally specify background workers implementations.
+     * Specify background workers implementations.
+     *
+     * @remarks
      * Workers are redux-saga iterators that run on the background, they can listen to dashboard events and fire dashboard commands.
      * All the provided workers will run in parallel on the background.
      * Background workers are processed last in the chain of all command and event processing.

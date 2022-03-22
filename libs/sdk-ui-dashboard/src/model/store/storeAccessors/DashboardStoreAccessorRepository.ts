@@ -8,6 +8,7 @@ import { idRef, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 /**
  * This singleton class serves the selector and the dispatcher properties for given dashboard.
  *
+ * @remarks
  * The {@link Dashboard} component has an optional property {@link IDashboardProps#onStateChange} through which
  * you can handle setting of the values for {@link DashboardDispatch} and {@link DashboardSelectorEvaluator}.
  *

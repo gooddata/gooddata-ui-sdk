@@ -2,6 +2,7 @@
 /**
  * All available command types.
  *
+ * @remarks
  * Note: while this type is marked as public most of the command types are currently an alpha-level API that
  * we reserve to change in the following releases.
  *
@@ -78,6 +79,7 @@ export interface CommandProcessingMeta {
 /**
  * Base type for all commands.
  *
+ * @remarks
  * Commands are dispatched using dispatcher obtained by useDashboardDispatcher(). All the dispatchers are 'contextual' -
  * they target backend, workspace and dashboard in depending on the Dashboard component tree from which the dispatch
  * is done.
@@ -91,8 +93,10 @@ export interface IDashboardCommand {
     readonly type: DashboardCommandType;
 
     /**
-     * Correlation ID can be provided when creating a command. All events emitted during the command processing
-     * will contain the same correlation ID.
+     * Correlation ID can be provided when creating a command.
+     *
+     * @remarks
+     * All events emitted during the command processing will contain the same correlation ID.
      *
      * If the correlation ID is not specified, a random string will be assigned.
      */
@@ -101,6 +105,7 @@ export interface IDashboardCommand {
     /**
      * Metadata related to processing of the command by the dashboard component.
      *
+     * @remarks
      * Note: this metadata is added by the dashboard component. It will be added dynamically to command
      * right after its dispatch.
      */

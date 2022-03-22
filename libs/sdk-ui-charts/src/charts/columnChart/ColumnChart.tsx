@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import {
     IAttributeOrMeasure,
@@ -72,14 +72,16 @@ export interface IColumnChartBucketProps {
     /**
      * Specify one or more measures to display on the column chart.
      *
+     * @remarks
      * Note: it is possible to also include an attribute object among measures. In that case cardinality of the
      * attribute elements will be charted.
      */
     measures: AttributesMeasuresOrPlaceholders;
 
     /**
-     * Optionally specify one or two attributes to slice the measures along the X axis.
+     * Specify one or two attributes to slice the measures along the X axis.
      *
+     * @remarks
      * If you specify two attributes, the values of these attributes will appear on the X axis as grouped. For each
      * value of the first attribute there will be all applicable values of the second attribute. For each value of the
      * second attribute there will be a column indicating the respective slice's value.
@@ -87,22 +89,22 @@ export interface IColumnChartBucketProps {
     viewBy?: AttributeOrPlaceholder | AttributesOrPlaceholders;
 
     /**
-     * Optionally specify attribute to stack the bars by.
+     * Specify attribute to stack the bars by.
      */
     stackBy?: AttributeOrPlaceholder;
 
     /**
-     * Optionally specify filters to apply on the data to chart.
+     * Specify filters to apply on the data to chart.
      */
     filters?: FiltersOrPlaceholders;
 
     /**
-     * Optionally specify how to sort the data to chart.
+     * Specify how to sort the data to chart.
      */
     sortBy?: SortsOrPlaceholders;
 
     /**
-     * Optional resolution context for composed placeholders.
+     * Resolution context for composed placeholders.
      */
     placeholdersResolutionContext?: any;
 }
@@ -115,10 +117,14 @@ export interface IColumnChartProps extends IBucketChartProps, IColumnChartBucket
 const WrappedColumnChart = withChart(columnChartDefinition)(CoreColumnChart);
 
 /**
- * [ColumnChart](http://sdk.gooddata.com/gooddata-ui/docs/column_chart_component.html)
+ * Column chart shows data in vertical columns.
  *
- * Column chart shows data in vertical columns. Column charts can display one or multiple measures side by side,
+ * @remarks
+ * Column charts can display one or multiple measures side by side,
  * divided by either attribute values or by a single measure stacked by attribute values.
+ *
+ * See {@link IColumnChartProps} to learn how to configure the ColumnChart and the
+ * {@link http://sdk.gooddata.com/gooddata-ui/docs/column_chart_component.html | column chart documentation} for more information.
  *
  * @public
  */

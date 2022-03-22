@@ -42,27 +42,30 @@ export type CreateExecutionOptions = {
     seriesBy: IAttributeOrMeasure[];
 
     /**
-     * Optionally slice all data series by elements of these attributes.
+     * Slice all data series by elements of these attributes.
      */
     slicesBy?: IAttribute[];
 
     /**
-     * Optionally include these totals among the data slices.
+     * Include these totals among the data slices.
      */
     totals?: ITotal[];
 
     /**
-     * Optional filters to apply on server side.
+     * Filters to apply on server side.
      */
     filters?: INullableFilter[];
 
     /**
-     * Optional sorting to apply on server side.
+     * Sorting to apply on server side.
      */
     sortBy?: ISortItem[];
 
     /**
-     * Optional informative name of the component. This value is sent as telemetry information together
+     * Informative name of the component.
+     *
+     * @remarks
+     * This value is sent as telemetry information together
      * with the actual execution request. We recommend to set this because it can be useful for diagnostic
      * purposes.
      *

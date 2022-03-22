@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
 import { IElementsQueryFactory } from "./elements";
 import {
@@ -9,14 +9,18 @@ import {
 
 /**
  * Service for querying additional attributes and attribute display forms data, and their elements.
+ *
+ * @remarks
  * If you want to query attributes themselves, use catalog {@link IWorkspaceCatalogFactory}
  *
  * @public
  */
 export interface IWorkspaceAttributesService {
     /**
-     * Returns service that can be used to query attribute elements for attributes defined in this workspace. For
-     * instance if workspace has data set Employee with attribute Name, then this service can be used to retrieve
+     * Returns service that can be used to query attribute elements for attributes defined in this workspace.
+     *
+     * @remarks
+     * For instance if workspace has data set Employee with attribute Name, then this service can be used to retrieve
      * names of all employees.
      */
     elements(): IElementsQueryFactory;
@@ -31,6 +35,7 @@ export interface IWorkspaceAttributesService {
     /**
      * Gets the list of metadata of attribute display form with the provided list of uris or identifiers. (list of object refs).
      *
+     * @remarks
      * If a display form referenced by any of the refs does not exist, then the call must not fail and instead return only
      * those display forms that exist.
      *
@@ -50,6 +55,7 @@ export interface IWorkspaceAttributesService {
     /**
      * Gets the list of metadata of attribute with the provided list of uris. (list of object refs)
      *
+     * @remarks
      * If a display form referenced by any of the refs does not exist, then the call must not fail and instead return only
      * those display forms that exist.
      *

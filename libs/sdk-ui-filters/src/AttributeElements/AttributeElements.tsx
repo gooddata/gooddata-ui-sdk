@@ -19,15 +19,17 @@ import { IAttributeElementsChildren } from "./types";
  */
 export interface IAttributeElementsProps {
     /**
-     * Optionally specify an instance of analytical backend instance to work with.
+     * Specify an instance of analytical backend instance to work with.
      *
+     * @remarks
      * Note: if you do not have a BackendProvider above in the component tree, then you MUST specify the backend.
      */
     backend?: IAnalyticalBackend;
 
     /**
-     * Optionally specify workspace to work with.
+     * Specify workspace to work with.
      *
+     * @remarks
      * Note: if you do not have a WorkspaceProvider above in the component tree, then you MUST specify the workspace.
      */
     workspace?: string;
@@ -38,29 +40,31 @@ export interface IAttributeElementsProps {
     displayForm: ObjRef;
 
     /**
-     * Optionally customize maximum number of elements to load in a single page. New elements will be loaded
-     * as your code calls loadMore function passed down to your child function.
+     * Customize maximum number of elements to load in a single page.
+     *
+     * @remarks
+     * New elements will be loaded as your code calls loadMore function passed down to your child function.
      */
     limit?: number;
 
     /**
-     * Optionally customize offset to start loading elements from.
+     * Customize offset to start loading elements from.
      */
     offset?: number;
 
     /**
-     * Optionally specify options that will be passed to the element query, which is responsible for loading the data (
+     * Specify options that will be passed to the element query, which is responsible for loading the data (
      * this can be used to add server-side filtering)
      */
     options?: IElementsQueryOptions;
 
     /**
-     * Optionally specify error callback.
+     * Specify error callback.
      */
     onError?: OnError;
 
     /**
-     * Optionally specify filters that restrict the elements.
+     * Specify filters that restrict the elements.
      */
     filters?: IElementsQueryAttributeFilter[];
 

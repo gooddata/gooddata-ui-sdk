@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import { idRef, uriRef } from "@gooddata/sdk-model";
 import {
@@ -83,6 +83,7 @@ export const selectPersistedDashboardFilterContextAsFilterContextDefinition = cr
 /**
  * Selects ref of the persisted dashboard object that backs and is rendered-by the dashboard component.
  *
+ * @remarks
  * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
  * been persisted (typically newly created dashboard being edited).
  *
@@ -95,6 +96,7 @@ export const selectDashboardRef = createSelector(selectPersistedDashboard, (stat
 /**
  * Selects identifier of the persisted dashboard object that backs and is rendered-by the dashboard component.
  *
+ * @remarks
  * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
  * been persisted (typically newly created dashboard being edited).
  *
@@ -107,6 +109,7 @@ export const selectDashboardId = createSelector(selectPersistedDashboard, (state
 /**
  * Selects URI of the persisted dashboard object that backs and is rendered-by the dashboard component.
  *
+ * @remarks
  * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
  * been persisted (typically newly created dashboard being edited).
  *
@@ -119,6 +122,7 @@ export const selectDashboardUri = createSelector(selectPersistedDashboard, (stat
 /**
  * Selects idRef of the persisted dashboard object that backs and is rendered-by the dashboard component.
  *
+ * @remarks
  * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
  * been persisted (typically newly created dashboard being edited).
  *
@@ -131,6 +135,7 @@ export const selectDashboardIdRef = createSelector(selectDashboardId, (id) => {
 /**
  * Selects uriRef of the persisted dashboard object that backs and is rendered-by the dashboard component.
  *
+ * @remarks
  * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
  * been persisted (typically newly created dashboard being edited).
  *

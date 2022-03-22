@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import {
     disableComputeRatio,
@@ -97,19 +97,20 @@ export interface IBulletChartBucketProps {
     primaryMeasure: AttributeMeasureOrPlaceholder;
 
     /**
-     * Optionally specify measure which contains the target/goal value. The value will be charted as the thick
+     * Specify measure which contains the target/goal value. The value will be charted as the thick
      * line to reach.
      */
     targetMeasure?: AttributeMeasureOrPlaceholder;
 
     /**
-     * Optionally specify measure to use for comparison. This will be charted as the secondary bar.
+     * Specify measure to use for comparison. This will be charted as the secondary bar.
      */
     comparativeMeasure?: AttributeMeasureOrPlaceholder;
 
     /**
-     * Optionally specify one or two attributes to use for slicing the measures.
+     * Specify one or two attributes to use for slicing the measures.
      *
+     * @remarks
      * If you specify two attributes, the values of these attributes will appear on the Y axis as grouped. For each
      * value of the first attribute there will be all applicable values of the second attribute. For each value of the
      * second attribute, there will be a bullet.
@@ -117,17 +118,17 @@ export interface IBulletChartBucketProps {
     viewBy?: AttributeOrPlaceholder | AttributesOrPlaceholders;
 
     /**
-     * Optionally specify filters to apply on the data to chart.
+     * Specify filters to apply on the data to chart.
      */
     filters?: NullableFiltersOrPlaceholders;
 
     /**
-     * Optionally specify how to sort the data to chart.
+     * Specify how to sort the data to chart.
      */
     sortBy?: SortsOrPlaceholders;
 
     /**
-     * Optional resolution context for composed placeholders.
+     * Resolution context for composed placeholders.
      */
     placeholdersResolutionContext?: any;
 }
@@ -140,10 +141,14 @@ export interface IBulletChartProps extends IBulletChartBucketProps, IBucketChart
 const WrappedBulletChart = withChart(bulletChartDefinition)(CoreBulletChart);
 
 /**
- * [BulletChart](http://sdk.gooddata.com/gooddata-ui/docs/bullet_chart_component.html)
- *
  * Bullet chart is a variation of a bar chart that displays performance of a measure (primary measure) and its progress
- * towards a goal (target measure). Optionally, the primary measure can also be compared to another measure (comparative measure).
+ * towards a goal (target measure).
+ *
+ * @remarks
+ * Optionally, the primary measure can also be compared to another measure (comparative measure).
+ *
+ * See {@link IBulletChartProps} to learn how to configure the BulletChart and the
+ * {@link http://sdk.gooddata.com/gooddata-ui/docs/bullet_chart_component.html | bullet chart documentation} for more information.
  *
  * @public
  */

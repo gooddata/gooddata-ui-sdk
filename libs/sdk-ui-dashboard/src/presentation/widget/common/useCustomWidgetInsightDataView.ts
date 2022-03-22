@@ -27,8 +27,10 @@ export interface IUseCustomWidgetInsightDataViewConfig {
      */
     widget: ICustomWidget;
     /**
-     * Insight to execute or a reference to it. The filters will be automatically merged with the filters on the dashboard.
+     * Insight to execute or a reference to it.
      *
+     * @remarks
+     * The filters will be automatically merged with the filters on the dashboard.
      * Note: When the insight is not provided, hook is locked in a "pending" state.
      */
     insight?: IInsightDefinition | ObjRef;

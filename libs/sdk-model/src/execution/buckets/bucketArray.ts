@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     anyBucket,
     AttributeInBucket,
@@ -28,6 +28,7 @@ import findIndex from "lodash/findIndex";
 /**
  * Gets all attributes matching the provided predicate from a list of buckets.
  *
+ * @remarks
  * If no predicate is provided, then the function defaults to {@link anyAttribute} predicate - meaning all
  * attributes will be returned.
  *
@@ -52,6 +53,7 @@ export function bucketsAttributes(
 /**
  * Gets all measures matching the provided predicate from a list of buckets.
  *
+ * @remarks
  * If no predicate is provided, then the function defaults to {@link anyMeasure} predicate - meaning all
  * measures will be returned.
  *
@@ -73,6 +75,7 @@ export function bucketsMeasures(buckets: IBucket[], predicate: MeasurePredicate 
 /**
  * Finds bucket matching the provided predicate in a list of buckets.
  *
+ * @remarks
  * If no predicate is provided, then the function defaults to {@link anyBucket} predicate - meaning first
  * bucket in the list will be returned.
  *
@@ -95,8 +98,11 @@ export function bucketsFind(
 }
 
 /**
- * Finds attribute matching the provided predicate in a list of buckets. If found, the function returns an object
- * that contains bucket where the matched attribute is stored, index within that bucket and the attribute itself.
+ * Finds attribute matching the provided predicate in a list of buckets.
+ *
+ * @remarks
+ * If found, the function returns an object that contains bucket where the matched attribute is stored, index within
+ * that bucket and the attribute itself.
  *
  * This function also provides convenience to find attribute by local identifier - if you pass predicate as
  * string the function will automatically create idMatchAttribute predicate.
@@ -136,8 +142,11 @@ export function bucketsFindAttribute(
 }
 
 /**
- * Finds measure matching the provided predicate in a list of buckets. If found, the function returns an object
- * that contains bucket where the matched measure is stored, index within that bucket and the measure itself.
+ * Finds measure matching the provided predicate in a list of buckets.
+ *
+ * @remarks
+ * If found, the function returns an object that contains bucket where the matched measure is stored, index
+ * within that bucket and the measure itself.
  *
  * This function also provides convenience to find measure by local identifier - if you pass predicate as
  * string the function will automatically create idMatchMeasure predicate.

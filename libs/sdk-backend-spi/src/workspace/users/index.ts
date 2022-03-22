@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
 import { IPagedResource } from "../../common/paging";
 
@@ -66,12 +66,14 @@ export interface IWorkspaceUsersQueryOptions {
     search?: string;
 
     /**
-     * Optionally specify (zero-based) starting offset for the paged results.
+     * Specify (zero-based) starting offset for the paged results.
      */
     offset?: number;
 
     /**
-     * Optionally specify number of items per page.
+     * Specify number of items per page.
+     *
+     * @remarks
      * Default value is 1000
      */
     limit?: number;

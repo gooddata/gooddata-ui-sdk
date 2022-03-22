@@ -53,6 +53,7 @@ export interface IPieChartBucketProps {
     /**
      * Specify one or more measures to segment the pie chart.
      *
+     * @remarks
      * If you specify a single measure, then you may further specify the viewBy attribute - there will be a
      * pie slice per attribute value.
      *
@@ -62,23 +63,23 @@ export interface IPieChartBucketProps {
     measures: AttributesMeasuresOrPlaceholders;
 
     /**
-     * Optionally specify viewBy attribute that will be used to create the pie slices. There will be a slice
+     * Specify viewBy attribute that will be used to create the pie slices. There will be a slice
      * for each value of the attribute.
      */
     viewBy?: AttributeOrPlaceholder;
 
     /**
-     * Optionally specify filters to apply on the data to chart.
+     * Specify filters to apply on the data to chart.
      */
     filters?: NullableFiltersOrPlaceholders;
 
     /**
-     * Optionally specify how to sort the data to chart.
+     * Specify how to sort the data to chart.
      */
     sortBy?: SortsOrPlaceholders;
 
     /**
-     * Optional resolution context for composed placeholders.
+     * Resolution context for composed placeholders.
      */
     placeholdersResolutionContext?: any;
 }
@@ -91,9 +92,13 @@ export interface IPieChartProps extends IBucketChartProps, IPieChartBucketProps 
 const WrappedPieChart = withChart(pieChartDefinition)(CorePieChart);
 
 /**
- * [PieChart](http://sdk.gooddata.com/gooddata-ui/docs/pie_chart_component.html)
+ * Pie chart shows data as proportional segments of a disc.
  *
- * Pie chart shows data as proportional segments of a disc. Pie charts can be segmented by either multiple measures or an attribute.
+ * @remarks
+ * Pie charts can be segmented by either multiple measures or an attribute.
+ *
+ * See {@link IPieChartProps} to learn how to configure the PieChart and the
+ * {@link http://sdk.gooddata.com/gooddata-ui/docs/pie_chart_component.html | pie chart documentation} for more information.
  *
  * @public
  */

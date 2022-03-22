@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import { ValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
 import { IMeasure, IMeasureDefinitionType } from "@gooddata/sdk-model";
@@ -21,9 +21,11 @@ export function isAnyPlaceholder<T>(obj: unknown): obj is AnyPlaceholder<T> {
 
 /**
  * Placeholder represents a reference to a specific part of the execution - attribute(s), measure(s), filter(s), sort(s) or total(s),
- * that may change the value at runtime. Then you can provide it to visualizations
- * instead of the attributes/measures/filters/sorts/totals themselves - placeholders will be replaced
- * with the actual values on the background.
+ * that may change the value at runtime.
+ *
+ * @remarks
+ * You can provide it to visualizations instead of the attributes/measures/filters/sorts/totals themselves,
+ * placeholders will be replaced with the actual values on the background.
  *
  * This allows you:
  * - share a reference to the same execution elements across multiple components.
@@ -33,9 +35,13 @@ export function isAnyPlaceholder<T>(obj: unknown): obj is AnyPlaceholder<T> {
  *
  * Placeholder values are living in React context and you can obtain/set their values by the following hooks:
  * - {@link usePlaceholder}
+ *
  * - {@link usePlaceholders}
+ *
  * - {@link useComposedPlaceholder}
+ *
  * - {@link useResolveValueWithPlaceholders}
+ *
  * - {@link useResolveValuesWithPlaceholders}
  *
  * Note:
@@ -63,6 +69,8 @@ export function isPlaceholder<T>(obj: unknown): obj is IPlaceholder<T> {
 
 /**
  * Represents placeholder composed from other placeholders.
+ *
+ * @remarks
  * You can perform computation on top of resolved placeholder values.
  * Composed placeholders accepts also other composed placeholders as an input.
  *
@@ -113,8 +121,10 @@ export type IUseComposedPlaceholderHook<T extends IComposedPlaceholder<any, any,
 /**
  * Get composed placeholder resolution context type.
  *
- * Examples:
- * - IComposedPlaceholder\<any, any, IResolutionContext\> is resolved as IResolutionContext
+ * @example
+ * ```
+ * IComposedPlaceholder\<any, any, IResolutionContext\> is resolved as IResolutionContext
+ * ```
  *
  * @public
  */
@@ -125,9 +135,11 @@ export type ComposedPlaceholderResolutionContext<T> = T extends IComposedPlaceho
 /**
  * Convert union type to intersection type.
  *
- * Examples:
- * - number | string | boolean is resolved as number & string & boolean
- * - Type1 | Type2 | Type3 is resolved as Type1 & Type2 & Type3
+ * @example
+ * ```
+ * number | string | boolean is resolved as number & string & boolean
+ * Type1 | Type2 | Type3 is resolved as Type1 & Type2 & Type3
+ * ```
  *
  * @public
  */
@@ -137,27 +149,34 @@ export type UnionToIntersection<T> = (T extends any ? (x: T) => any : never) ext
 
 /**
  * Flatten array type.
+ *
+ * @remarks
  * If the type is not an array, return the same type.
  * Works only for 1 level, nested array types are not recursively flattened.
  *
- * Examples:
- * - number[] is resolved as number
- * - string[][] is resolved as string[]
- * - string is resolved as string
- *
+ * @example
+ * ```
+ * number[] is resolved as number
+ * string[][] is resolved as string[]
+ * string is resolved as string
+ * ```
  * @public
  */
 export type Flatten<T> = T extends Array<infer A> ? A : T;
 
 /**
  * Get placeholder value type.
+ *
+ * @remarks
  * If the type is not a placeholder, return the same type.
  *
- * Examples:
- * - IPlaceholder\<IAttribute\> is resolved as IAttribute
- * - IPlaceholder\<IAttribute[]\> is resolved as IAttribute[]
- * - IComposedPlaceholder\<IMeasure\> is resolved as IMeasure
- * - null is resolved as null
+ * @example
+ * ```
+ * IPlaceholder\<IAttribute\> is resolved as IAttribute
+ * IPlaceholder\<IAttribute[]\> is resolved as IAttribute[]
+ * IComposedPlaceholder\<IMeasure\> is resolved as IMeasure
+ * null is resolved as null
+ * ```
  *
  * @public
  */
@@ -170,9 +189,10 @@ export type PlaceholderValue<T> = T extends IPlaceholder<infer A>
 /**
  * Convert tuple of placeholders to tuple of their respective value types.
  *
- * Examples:
- * - [IPlaceholder\<IAttribute\>, IPlaceholder\<IAttribute[]\>] is resolved as [IAttribute, IAttribute[]]
+ * @example
+ * [IPlaceholder\<IAttribute\>, IPlaceholder\<IAttribute[]\>] is resolved as [IAttribute, IAttribute[]]
  *
+ * @remarks
  * Check mapped tuple types for more details:
  * https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-1.html#mapped-types-on-tuples-and-arrays
  *
@@ -184,15 +204,19 @@ export type PlaceholdersValues<Tuple extends [...any[]]> = {
 
 /**
  * Convert any value that may contain placeholders to its resolved value type.
+ *
+ * @remarks
  * Nested array placeholders resolved value types are flattened.
  * If the type is not a placeholder, return the same type.
  *
- * Examples:
- * - IPlaceholder\<IAttribute\> is resolved as IAttribute
- * - IPlaceholder\<IAttribute\>[] is resolved as IAttribute[]
- * - IPlaceholder\<IAttribute[]\> is resolved as IAttribute[]
- * - [IPlaceholder\<IAttribute[]\>, IPlaceholder\<IMeasure[]\>] is resolved as (IAttribute | IMeasure)[]
- * - null is resolved as null
+ * @example
+ * ```
+ * IPlaceholder\<IAttribute\> is resolved as IAttribute
+ * IPlaceholder\<IAttribute\>[] is resolved as IAttribute[]
+ * IPlaceholder\<IAttribute[]\> is resolved as IAttribute[]
+ * [IPlaceholder\<IAttribute[]\>, IPlaceholder\<IMeasure[]\>] is resolved as (IAttribute | IMeasure)[]
+ * null is resolved as null
+ * ```
  *
  * @public
  */
@@ -207,10 +231,13 @@ export type PlaceholderResolvedValue<T> = T extends Array<infer A>
 /**
  * Convert tuple of values that may contain placeholders to tuple of their respective resolved value types.
  *
- * Examples:
- * - [IPlaceholder\<IAttribute\>, IPlaceholder\<IAttribute[]\>] is resolved as [IAttribute, IAttribute[]]
- * - [IPlaceholder\<IMeasure\>, IMeasure] is resolved as [IMeasure, IMeasure]
+ * @example
+ * ```
+ * [IPlaceholder\<IAttribute\>, IPlaceholder\<IAttribute[]\>] is resolved as [IAttribute, IAttribute[]]
+ * [IPlaceholder\<IMeasure\>, IMeasure] is resolved as [IMeasure, IMeasure]
+ * ```
  *
+ * @remarks
  * Check mapped tuple types for more details:
  * https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-1.html#mapped-types-on-tuples-and-arrays
  *
@@ -223,9 +250,10 @@ export type PlaceholdersResolvedValues<Tuple extends any[]> = {
 /**
  * Wrap each member of union type in the array.
  *
- * Examples:
- * - IAttribute | IMeasure | IFilter is resolved as IAttribute[] | IMeasure[] | IFilter[]
- *
+ * @example
+ * ```
+ * IAttribute | IMeasure | IFilter is resolved as IAttribute[] | IMeasure[] | IFilter[]
+ * ```
  * @public
  */
 export type ArrayOf<T> = T extends any ? T[] : never;
@@ -233,8 +261,10 @@ export type ArrayOf<T> = T extends any ? T[] : never;
 /**
  * Generate all possible combinations of arrays signatures for the union type.
  *
- * Examples:
- * - IAttribute | IMeasure is resolved as IAttribute[] | IMeasure[] | (IAttribute | IMeasure)[]
+ * @example
+ * ```
+ * IAttribute | IMeasure is resolved as IAttribute[] | IMeasure[] | (IAttribute | IMeasure)[]
+ * ```
  *
  * @public
  */
@@ -243,8 +273,10 @@ export type AnyArrayOf<T> = T[] | ArrayOf<T>;
 /**
  * Wrap each member of the union type in AnyPlaceholder.
  *
- * Examples:
- * - IAttribute | IMeasure is resolved as AnyPlaceholder\<IAttribute\> | AnyPlaceholder\<IMeasure\>
+ * @example
+ * ```
+ * IAttribute | IMeasure is resolved as AnyPlaceholder\<IAttribute\> | AnyPlaceholder\<IMeasure\>
+ * ```
  *
  * @public
  */
@@ -253,10 +285,12 @@ export type PlaceholderOf<T> = T extends any ? AnyPlaceholder<T> : never;
 /**
  * Generate all possible combinations of placeholder signatures for the union type.
  *
- * Examples:
- * - IAttribute | IMeasure is resolved as
- *   AnyPlaceholder\<IAttribute\> | AnyPlaceholder\<IMeasure\> | AnyPlaceholder\<IAttribute | IMeasure\>
- *
+ * @example
+ * ```
+ * IAttribute | IMeasure
+ * is resolved as
+ * AnyPlaceholder\<IAttribute\> | AnyPlaceholder\<IMeasure\> | AnyPlaceholder\<IAttribute | IMeasure\>
+ * ```
  * @public
  */
 export type AnyPlaceholderOf<T> = AnyPlaceholder<T> | PlaceholderOf<T>;
@@ -278,7 +312,7 @@ export type ValuesOrPlaceholders<T> = AnyArrayOf<ValueOrMultiValuePlaceholder<T>
 /**
  * Generate union of measures from union of measure definitions.
  *
- * Examples:
+ * @example
  * - IMeasureDefinition | IArithmeticMeasureDefinition is resolved as
  *   IMeasure\<IMeasureDefinition\> | IMeasure\<IArithmeticMeasureDefinition\>
  *

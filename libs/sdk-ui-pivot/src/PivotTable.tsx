@@ -152,8 +152,10 @@ export const PivotTable = (props: IPivotTableProps) => {
 };
 
 /**
- * Given analytical backend capabilities and the desired aggregations menu config, this function will correct the menu
- * configuration so that it fits the capabilities.
+ * Given analytical backend capabilities and the desired aggregations menu config.
+ *
+ * @remarks
+ * This function will correct the menu configuration so that it fits the capabilities.
  *
  * The function will explicitly set the options regardless of what is the (current) default value of the option if
  * it is not present in the menu. The backend capabilities are a hard stop for features.
@@ -161,8 +163,8 @@ export const PivotTable = (props: IPivotTableProps) => {
  * Note: the {@link PivotTable} will use this function out of the box to ensure the effective menu configuration
  * matches the backend capabilities. You don't need to use when creating a PivotTable.
  *
- * @param capabilities - backend capabilities
- * @param desiredMenu - aggregation menu configuration desired by the client
+ * @param capabilities - Backend capabilities
+ * @param desiredMenu - Aggregation menu configuration desired by the client
  * @public
  */
 export function pivotTableMenuForCapabilities(

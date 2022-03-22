@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 /**
  * Represents the current status of CSV source.
  *
@@ -35,24 +35,33 @@ export interface IDatasetLoadInfo {
 export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
 
 /**
+ * Data column object interface.
+ *
+ * @public
+ */
+export interface IDataColumnBody {
+    name: string;
+    type: DataColumnType;
+    skip?: boolean;
+    format?: string;
+}
+
+/**
  * Dataset column with name, type and boolean flag whether the column
  * needs to be skipped while data loading or not.
  *
  * @public
  */
 export interface IDataColumn {
-    column: {
-        name: string;
-        type: DataColumnType;
-        skip?: boolean;
-        format?: string;
-    };
+    column: IDataColumnBody;
 }
 
 /**
- * Structural information about CSV header and columns. Indicates whether the CSV file
- * contains header or not and on which row. Also contains the list of CSV columns with
- * their names and types.
+ * Structural information about CSV header and columns.
+ *
+ * @remarks
+ * Indicates whether the CSV file contains header or not and on which row.
+ * Also contains the list of CSV columns with their names and types.
  *
  * @public
  */
@@ -60,22 +69,31 @@ export interface IDataHeader {
     headerRowIndex?: number;
     columns: IDataColumn[];
 }
+/**
+ * Dataset object interface.
+ *
+ * @public
+ */
+export interface IDatasetBody {
+    name: string;
+    dataHeader: IDataHeader;
+    datasetId: string;
+    loadedRowCount: number;
+    datasetLoadStatus: DatasetLoadStatus;
+    firstSuccessfulUpdate?: IDatasetLoadInfo;
+    lastSuccessfulUpdate?: IDatasetLoadInfo;
+    lastUpdate?: IDatasetLoadInfo;
+}
 
 /**
- * Dataset describes a particular structure of dataset (CSV file). There may be many Loads
- * related to a single dataset - meaning multiple files with the same structure and different data.
+ * Dataset describes a particular structure of dataset (CSV file).
+ *
+ * @remarks
+ * There may be many Loads related to a single dataset - meaning multiple files with the same
+ * structure and different data.
  *
  * @public
  */
 export interface IDataset {
-    dataset: {
-        name: string;
-        dataHeader: IDataHeader;
-        datasetId: string;
-        loadedRowCount: number;
-        datasetLoadStatus: DatasetLoadStatus;
-        firstSuccessfulUpdate?: IDatasetLoadInfo;
-        lastSuccessfulUpdate?: IDatasetLoadInfo;
-        lastUpdate?: IDatasetLoadInfo;
-    };
+    dataset: IDatasetBody;
 }

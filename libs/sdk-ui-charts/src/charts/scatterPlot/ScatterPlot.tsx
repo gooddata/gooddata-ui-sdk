@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { IAttribute, IMeasure, INullableFilter, ISortItem, newBucket } from "@gooddata/sdk-model";
 import {
@@ -52,32 +52,32 @@ const scatterPlotDefinition: IChartDefinition<IScatterPlotBucketProps, IScatterP
  */
 export interface IScatterPlotBucketProps {
     /**
-     * Optionally specify measure which will be used to position data points on the X axis.
+     * Specify measure which will be used to position data points on the X axis.
      */
     xAxisMeasure?: MeasureOrPlaceholder;
 
     /**
-     * Optionally specify measure which will be used to position data points on the Y axis.
+     * Specify measure which will be used to position data points on the Y axis.
      */
     yAxisMeasure?: MeasureOrPlaceholder;
 
     /**
-     * Optionally specify attribute whose values will be used to create data points.
+     * Specify attribute whose values will be used to create data points.
      */
     attribute?: AttributeOrPlaceholder;
 
     /**
-     * Optionally specify filters to apply on the data to chart.
+     * Specify filters to apply on the data to chart.
      */
     filters?: NullableFiltersOrPlaceholders;
 
     /**
-     * Optionally specify how to sort the data to chart.
+     * Specify how to sort the data to chart.
      */
     sortBy?: SortsOrPlaceholders;
 
     /**
-     * Optional resolution context for composed placeholders.
+     * Resolution context for composed placeholders.
      */
     placeholdersResolutionContext?: any;
 }
@@ -90,13 +90,15 @@ export interface IScatterPlotProps extends IBucketChartProps, IScatterPlotBucket
 const WrappedScatterPlot = withChart(scatterPlotDefinition)(CoreScatterPlot);
 
 /**
- * [ScatterPlot](http://sdk.gooddata.com/gooddata-ui/docs/scatter_plot_component.html)
- *
  * Scatter plot shows data as points using Cartesian coordinates.
  *
+ * @remarks
  * Scatter plots typically have a minimum of two measures, one for the X-axis and the other for the Y-axis, and one
  * attribute, which determines the meaning of each data point. Scatter plots are useful for analyzing trends between
  * two measures or for tracking the magnitude of two measures from the same chart.
+ *
+ * See {@link IScatterPlotProps} to learn how to configure the ScatterPlot and the
+ * {@link http://sdk.gooddata.com/gooddata-ui/docs/scatter_plot_component.html | scatter plot documentation} for more information.
  *
  * @public
  */

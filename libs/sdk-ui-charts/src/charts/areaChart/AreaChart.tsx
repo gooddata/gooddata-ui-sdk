@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import {
     applyRatioRule,
@@ -145,14 +145,16 @@ export interface IAreaChartBucketProps {
     /**
      * Specify one or more measures to display on area chart.
      *
+     * @remarks
      * Note: it is possible to also include an attribute object among measures. In that case cardinality of the
      * attribute elements will be charted.
      */
     measures: AttributesMeasuresOrPlaceholders;
 
     /**
-     * Optionally specify attributes to slice and optionally stack the area chart.
+     * Specify attributes to slice and stack the area chart.
      *
+     * @remarks
      * -  If you specify single attribute, then elements of this attribute will be used to slice the measures along the
      *    X axis.
      *
@@ -168,26 +170,27 @@ export interface IAreaChartBucketProps {
     viewBy?: AttributeOrPlaceholder | AttributesOrPlaceholders;
 
     /**
-     * Optionally specify attribute to stack by. This is only applicable if you specify at most single viewBy
+     * Specify attribute to stack by. This is only applicable if you specify at most single viewBy
      * attribute.
      *
+     * @remarks
      * Note: stacking area chart using attribute elements means only a single measure can be charted. The component
      * will take the first measure.
      */
     stackBy?: AttributeOrPlaceholder;
 
     /**
-     * Optionally specify filters to apply on the data to chart.
+     * Specify filters to apply on the data to chart.
      */
     filters?: NullableFiltersOrPlaceholders;
 
     /**
-     * Optionally specify how to sort the data to chart.
+     * Specify how to sort the data to chart.
      */
     sortBy?: SortsOrPlaceholders;
 
     /**
-     * Optional resolution context for composed placeholders.
+     * Resolution context for composed placeholders.
      */
     placeholdersResolutionContext?: any;
 }
@@ -200,16 +203,19 @@ export interface IAreaChartProps extends IBucketChartProps, IAreaChartBucketProp
 const WrappedAreaChart = withChart(areaChartDefinition)(CoreAreaChart);
 
 /**
- * [AreaChart](http://sdk.gooddata.com/gooddata-ui/docs/area_chart_component.html)
+ * Area chart shows data as an area under a line intersecting dots.
  *
- * Area chart shows data as an area under a line intersecting dots. It can display either:
+ * @remarks
+ * It can display either:
  *
  * - multiple measures sliced by a single attribute, as different areas
  * - or a single measure split by one attribute into multiple areas with points intersecting attribute values
  *
  * Areas for multiple measures stack by default. Alternatively, the areas can overlap if `{ stackMeasures: false }`.
  *
- * @remarks See {@link IAreaChartProps} to learn how it is possible to configure the AreaChart
+ * See {@link IAreaChartProps} to learn how it is possible to configure the AreaChart and the
+ * {@link http://sdk.gooddata.com/gooddata-ui/docs/area_chart_component.html | area chart documentation} for more information.
+ *
  * @public
  */
 export const AreaChart = (props: IAreaChartProps) => {

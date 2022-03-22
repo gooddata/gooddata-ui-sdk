@@ -22,6 +22,7 @@ import { DateAttributeGranularity } from "../../base/dateGranularities";
 /**
  * Creates a new positive attribute filter.
  *
+ * @remarks
  * NOTE: when specifying attribute element using URIs (primary keys), please keep in mind that they MAY NOT be transferable
  * across workspaces. On some backends (such as bear) same element WILL have different URI in each workspace.
  * In general we recommend using URIs only if your code retrieves them at runtime from backend using elements query
@@ -56,6 +57,7 @@ export function newPositiveAttributeFilter(
 /**
  * Creates a new negative attribute filter.
  *
+ * @remarks
  * NOTE: when specifying attribute element using URIs (primary keys), please keep in mind that they MAY NOT be transferable
  * across workspaces. On some backends (such as bear) same element WILL have different URI in each workspace.
  * In general we recommend using URIs only if your code retrieves them at runtime from backend using elements query

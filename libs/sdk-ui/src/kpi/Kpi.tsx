@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IMeasure, INullableFilter } from "@gooddata/sdk-model";
@@ -125,15 +125,17 @@ const RenderKpi: React.FC<IKpiProps> = (props) => {
  */
 export interface IKpiProps extends IWithLoadingEvents<IRawExecuteProps> {
     /**
-     * Optionally specify an instance of analytical backend instance to work with.
+     * Specify an instance of analytical backend instance to work with.
      *
+     * @remarks
      * Note: if you do not have a BackendProvider above in the component tree, then you MUST specify the backend.
      */
     backend?: IAnalyticalBackend;
 
     /**
-     * Optionally specify workspace to work with.
+     * Specify workspace to work with.
      *
+     * @remarks
      * Note: if you do not have a WorkspaceProvider above in the component tree, then you MUST specify the workspace.
      */
     workspace?: string;
@@ -144,35 +146,37 @@ export interface IKpiProps extends IWithLoadingEvents<IRawExecuteProps> {
     measure: IMeasure;
 
     /**
-     * Optionally specify filters to apply during calculation
+     * Specify filters to apply during calculation
      */
     filters?: INullableFilter[];
 
     /**
-     * Optionally specify number separators to use when rendering (segment delimiters, decimal point character)
+     * Specify number separators to use when rendering (segment delimiters, decimal point character)
      */
     separators?: ISeparators;
 
     /**
-     * Optionally specify locale to use for strings that the Kpi component may render (for instance when encountering
+     * Specify locale to use for strings that the Kpi component may render (for instance when encountering
      * errors).
      */
     locale?: string;
 
     /**
-     * Optionally specify react component to render while the data is loading.
+     * Specify react component to render while the data is loading.
      */
     LoadingComponent?: React.ComponentType<ILoadingProps>;
 
     /**
-     * Optionally specify react component to render if execution fails.
+     * Specify react component to render if execution fails.
      */
     ErrorComponent?: React.ComponentType<IErrorProps>;
 }
 
 /**
- * Kpi is a simple component which calculates and renders a single formatted measure value. The the value
- * is rendered inside a <span> element.
+ * Kpi is a simple component which calculates and renders a single formatted measure value.
+ *
+ * @remarks
+ * The the value is rendered inside a <span> element.
  *
  * Kpi component is useful for instance for embedding data values into text paragraphs.
  *

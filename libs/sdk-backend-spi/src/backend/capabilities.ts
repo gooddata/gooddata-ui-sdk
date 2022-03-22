@@ -113,9 +113,11 @@ export interface IBackendCapabilities {
     supportsExplain?: boolean;
 
     /**
-     * Indicates whether backend's identifiers are scoped to a type - e.g. they are unique only on type level. When
-     * working with backend that has type scoped identifiers it is essential to provide both `identifier` and `type` when
-     * using `IdentifierRef`.
+     * Indicates whether backend's identifiers are scoped to a type.
+     *
+     * @remarks
+     * They are unique only on type level. When working with backend that has type scoped identifiers it is essential to provide
+     * both `identifier` and `type` when using `IdentifierRef`.
      *
      * If not specified then assume identifiers do not require `type` information in order to exactly identify an object.
      */
@@ -128,6 +130,8 @@ export interface IBackendCapabilities {
 
     /**
      * Indicates whether backend supports only strict access control.
+     *
+     * @remarks
      * It means that no one without proper permissions is able to get restricted MD object even knowing its URI.
      */
     usesStrictAccessControl?: boolean;

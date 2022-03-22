@@ -6,8 +6,10 @@ import isEmpty from "lodash/isEmpty";
 import invariant from "ts-invariant";
 
 /**
- * Sort items can be used to specify how the result of an execution should be sorted. Sorting can be done by
- * attribute value and/or by value of a measure.
+ * Sort items can be used to specify how the result of an execution should be sorted.
+ *
+ * @remarks
+ * Sorting can be done by attribute value and/or by value of a measure.
  *
  * @public
  */
@@ -68,9 +70,11 @@ export interface IAttributeSortType {
 }
 
 /**
- * Sort item which specifies that the result should be sorted by value of a measure. Since the result can have
- * the value of the measure sliced by one or more attributes, the measure sort item must explicitly specify
- * the 'slice' by which to sort. This slice is specified by locators.
+ * Sort item which specifies that the result should be sorted by value of a measure.
+ *
+ * @remarks
+ * Since the result can have the value of the measure sliced by one or more attributes, the measure
+ * sort item must explicitly specify the 'slice' by which to sort. This slice is specified by locators.
  *
  * @public
  */
@@ -102,17 +106,36 @@ export type ILocatorItem = IAttributeLocatorItem | IMeasureLocatorItem;
  *
  * @public
  */
+export interface IAttributeLocatorItemBody {
+    /**
+     * Local identifier of the attribute.
+     */
+    attributeIdentifier: Identifier;
+    /**
+     * Value of the attribute element; TODO: make sure bear is ready for this
+     */
+    element: string;
+}
+
+/**
+ * Locator that specifies a concrete attribute element for which the measure values are sliced.
+ *
+ * @public
+ */
 export interface IAttributeLocatorItem {
-    attributeLocatorItem: {
-        /**
-         * Local identifier of the attribute.
-         */
-        attributeIdentifier: Identifier;
-        /**
-         * Value of the attribute element; TODO: make sure bear is ready for this
-         */
-        element: string;
-    };
+    attributeLocatorItem: IAttributeLocatorItemBody;
+}
+
+/**
+ * Object defining the {@link IMeasureLocatorItem} object structure.
+ *
+ * @public
+ */
+export interface IMeasureLocatorItemBody {
+    /**
+     * Local identifier of the measure.
+     */
+    measureIdentifier: Identifier;
 }
 
 /**
@@ -121,12 +144,7 @@ export interface IAttributeLocatorItem {
  * @public
  */
 export interface IMeasureLocatorItem {
-    measureLocatorItem: {
-        /**
-         * Local identifier of the measure.
-         */
-        measureIdentifier: Identifier;
-    };
+    measureLocatorItem: IMeasureLocatorItemBody;
 }
 
 //
@@ -220,6 +238,7 @@ export type SortEntityIds = {
 /**
  * Given sort item, returns ids of entities (objects) that are referenced by the sort item.
  *
+ * @remarks
  * The ids are returned in an categorized way.
  *
  * @public
@@ -302,8 +321,10 @@ export function measureLocatorIdentifier(locator: IMeasureLocatorItem): Identifi
 }
 
 /**
- * Creates a new attribute sort - sorting the result by values of the provided attribute's elements. The attribute
- * can be either specified by value or by reference using its local identifier.
+ * Creates a new attribute sort - sorting the result by values of the provided attribute's elements.
+ *
+ * @remarks
+ * The attribute can be either specified by value or by reference using its local identifier.
  *
  * @param attributeOrId - attribute to sort by
  * @param sortDirection - asc or desc, defaults to "asc"
@@ -354,8 +375,10 @@ export function newAttributeAreaSort(
 }
 
 /**
- * Creates a new measure sort - sorting the result by values of the provided measure. The measure
- * can be either specified by value or by reference using its local identifier.
+ * Creates a new measure sort - sorting the result by values of the provided measure.
+ *
+ * @remarks
+ * The measure can be either specified by value or by reference using its local identifier.
  *
  * @param measureOrId - measure to sort by
  * @param sortDirection - asc or desc, defaults to "asc"
@@ -388,7 +411,10 @@ export function newMeasureSort(
 }
 
 /**
- * Creates a new measure sort - sorting the result by values of the provided measure. New measure sort is created from provided parts. Helpful eg. for just switching the direction of existing sort
+ * Creates a new measure sort - sorting the result by values of the provided measure.
+ *
+ * @remarks
+ * New measure sort is created from provided parts. Helpful eg. for just switching the direction of existing sort
  *
  * @param locators - complete locators
  * @param sortDirection - asc or desc, defaults to "asc"

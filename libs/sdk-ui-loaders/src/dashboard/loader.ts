@@ -72,6 +72,7 @@ export interface IDashboardLoader {
     /**
      * Alternatively specify workspace indirectly, using data product, segment and client identifier.
      *
+     * @remarks
      * Note: this indirect method of identification is not supported by all backends. At this moment, only
      * the 'bear' backend allows this - and it does so only when it's Life Cycle Management features are
      * employed in the solution.
@@ -88,8 +89,9 @@ export interface IDashboardLoader {
     forDashboard(dashboardRef: ObjRef): IDashboardLoader;
 
     /**
-     * Optionally override filter context to use for the loaded dashboard.
+     * Override filter context to use for the loaded dashboard.
      *
+     * @remarks
      * Note: Each dashboard has its own, default filter context - that filter context will be used automatically
      * unless you override it using this call. You typically don't need to do this: filter context overrides
      * are needed most commonly during export and scheduled exports - where application has to create point-in-time
@@ -100,8 +102,9 @@ export interface IDashboardLoader {
     withFilterContext(filterContextRef: ObjRef): IDashboardLoader;
 
     /**
-     * Optionally specify an instance of {@link @gooddata/sdk-ui-dashboard#IDashboardBaseProps} to use for the dashboard component.
+     * Specify an instance of {@link @gooddata/sdk-ui-dashboard#IDashboardBaseProps} to use for the dashboard component.
      *
+     * @remarks
      * Note: the base props may also contain backend and workspace parameters. The loader can work with them.
      * If specified, they are equivalent to calling {@link IDashboardLoader.onBackend} and/or {@link IDashboardLoader.fromWorkspace}
      *
@@ -110,9 +113,10 @@ export interface IDashboardLoader {
     withBaseProps(props: IDashboardBaseProps): IDashboardLoader;
 
     /**
-     * Optionally specify embedded plugins to use on top of any plugins that the dashboard is already
+     * Specify embedded plugins to use on top of any plugins that the dashboard is already
      * configured to use.
      *
+     * @remarks
      * The embedded plugins are implemented, built and linked into the application that loads the dashboard.
      * There is no specific runtime loading and linkage required for these plugins.
      *
@@ -130,8 +134,10 @@ export interface IDashboardLoader {
     withEmbeddedPlugins(...plugins: IEmbeddedPlugin[]): IDashboardLoader;
 
     /**
-     * Load the dashboard, dashboard engine and plugins that should be on the dashboard. Then performs
-     * the initialization of the plugins and their registration.
+     * Load the dashboard, dashboard engine and plugins that should be on the dashboard.
+     *
+     * @remarks
+     * Then performs the initialization of the plugins and their registration.
      *
      * Finally, returns result containing the DashboardComponent to render, it's props and details
      * about the plugins that will be in effect once the DashboardComponent gets mounted.

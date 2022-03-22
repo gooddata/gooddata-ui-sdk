@@ -57,7 +57,7 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
     dateFilterConfig?: IDateFilterConfig;
 
     /**
-     * Optionally specify descriptor for workspace
+     * Specify descriptor for workspace
      */
     workspaceDescriptor?: Partial<Pick<IWorkspaceDescriptor, "title" | "description" | "isDemo">>;
 
@@ -105,7 +105,7 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
     getCommonAttributesResponses?: Record<string, ObjRef[]>;
 
     /**
-     * Optionally specify functions to apply on different types of catalog items when determining item availability.
+     * Specify functions to apply on different types of catalog items when determining item availability.
      */
     catalogAvailability?: {
         availableAttributes?: (attributes: ICatalogAttribute[]) => ICatalogAttribute[];
@@ -115,7 +115,7 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
     };
 
     /**
-     * Optionally specify currently authenticated user or workspace users or groups or access to the objects
+     * Specify currently authenticated user or workspace users or groups or access to the objects
      */
     userManagement?: IUserManagement;
 };
@@ -125,26 +125,26 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
  */
 export type IUserManagement = {
     /**
-     * Optionally Specify currently authenticated user
+     * Specify currently authenticated user
      * Response of IUserService
      */
     user?: IUser;
 
     /**
-     * Optionally Specify respond of Service to manage access to the objects.
+     * Specify respond of Service to manage access to the objects.
      * IWorkspaceAccessControlService
      *
      */
     accessControl?: IAccessControl;
 
     /**
-     *  Optionally Specify respond of Service to query user groups for current workspace
+     *  Specify respond of Service to query user groups for current workspace
      *  IWorkspaceUserGroupsQuery
      */
     userGroup?: IUserGroup;
 
     /**
-     * Optionally Specify users for current workspace
+     * Specify users for current workspace
      * IWorkspaceUsersQuery
      */
     users?: IUsers;

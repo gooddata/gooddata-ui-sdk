@@ -13,19 +13,21 @@ export interface ICsvExportConfig {
 export interface IXlsxExportConfig {
     format: "xlsx";
     /**
-     * Optionally specify title of the workbook.
+     * Specify title of the workbook.
      */
     title?: string;
 
     /**
-     * Optionally indicate whether headers and cells in the sheet
+     * Indicate whether headers and cells in the sheet
      * should be merged.
      */
     mergeHeaders?: boolean;
 
     /**
-     * Optionally specify filters to include as comments / metadata in
-     * the Excel sheet. Filters provided here are purely to paint a better context for the
+     * Specify filters to include as comments / metadata in the Excel sheet.
+     *
+     * @remarks
+     * Filters provided here are purely to paint a better context for the
      * person looking at the XLSX file. They serve no other purpose and are merely serialized
      * into the XLSX in a human readable form.
      */

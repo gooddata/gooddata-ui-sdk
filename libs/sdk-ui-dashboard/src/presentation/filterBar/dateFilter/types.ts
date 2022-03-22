@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { ComponentType } from "react";
 import { DateFilterGranularity, IDashboardDateFilter } from "@gooddata/sdk-backend-spi";
 import { IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
@@ -20,7 +20,7 @@ export interface IDashboardDateFilterConfig {
     dateFilterOptions: IDateFilterOptionsByType;
 
     /**
-     * Optionally specify custom filter name. Defaults to "Date range" (or its localized equivalent).
+     * Specify custom filter name. Defaults to "Date range" (or its localized equivalent).
      */
     customFilterName?: string;
 }
@@ -49,7 +49,7 @@ export interface IDashboardDateFilterProps {
     config: IDashboardDateFilterConfig;
 
     /**
-     * Optionally specify whether the filter should be readonly.
+     * Specify whether the filter should be readonly.
      */
     readonly?: boolean;
 }

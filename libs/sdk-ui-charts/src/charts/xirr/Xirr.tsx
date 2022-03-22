@@ -34,6 +34,8 @@ import omit from "lodash/omit";
 export interface IXirrBucketProps {
     /**
      * The measure to calculate the Internal Rate of Return for.
+     *
+     * @remarks
      * For the result to make sense, the measure should start with a negative value at some point in time (the investment) followed by other values (the returns).
      */
     measure: MeasureOrPlaceholder;
@@ -42,12 +44,12 @@ export interface IXirrBucketProps {
      */
     attribute?: AttributeOrPlaceholder;
     /**
-     * Optionally specify filters to apply on the data to compute with.
+     * Specify filters to apply on the data to compute with.
      */
     filters?: NullableFiltersOrPlaceholders;
 
     /**
-     * Optional resolution context for composed placeholders.
+     * Resolution context for composed placeholders.
      */
     placeholdersResolutionContext?: any;
 }
@@ -60,12 +62,18 @@ export interface IXirrProps extends IBucketChartProps, IXirrBucketProps {}
 const WrappedXirr = withContexts(RenderXirr);
 
 /**
- * Xirr computes the [Internal Rate of Return](https://en.wikipedia.org/wiki/Internal_rate_of_return) from the given measure and date dimension.
- * The "X" in the name means that the returns do not have to happen periodically (as in the standard IRR), but they can [happen at any day](https://en.wikipedia.org/wiki/Internal_rate_of_return#Exact_dates_of_cash_flows).
+ * Xirr computes the {@link https://en.wikipedia.org/wiki/Internal_rate_of_return | Internal Rate of Return} from the given measure and date dimension.
+ *
+ *
+ * @remarks
+ * The "X" in the name means that the returns do not have to happen periodically (as in the standard IRR), but they
+ * can {@link https://en.wikipedia.org/wiki/Internal_rate_of_return#Exact_dates_of_cash_flows | happen at any day}.
  * You must specify both the measure and date dimension.
  *
- * @remarks For date parsing, we currently use the browser's Date constructor. There might be some differences
+ * For date parsing, we currently use the browser's Date constructor. There might be some differences
  * between how browsers implement this, so for best results use the Day granularity if possible.
+ *
+ * See {@link IXirrProps} to learn how to configure the Xirr.
  *
  * @beta
  */

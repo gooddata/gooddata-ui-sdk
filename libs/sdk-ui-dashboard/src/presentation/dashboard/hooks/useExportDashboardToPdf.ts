@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import { AnalyticalBackendError, FilterContextItem, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
 import {
@@ -17,7 +17,7 @@ interface IUseExportDashboardToPdfConfig
     dashboard?: ObjRef;
 
     /**
-     * Optionally, specify filters to be applied to all the widgets in the dashboard.
+     * Specify filters to be applied to all the widgets in the dashboard.
      * This will override any filters set on the dashboard itself.
      */
     filters?: FilterContextItem[];

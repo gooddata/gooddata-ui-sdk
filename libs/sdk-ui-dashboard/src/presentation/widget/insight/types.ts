@@ -26,6 +26,7 @@ import {
 /**
  * Insight widget props.
  *
+ * @remarks
  * IMPORTANT: this interface is marked as public but not all properties in it are suitable for public consumption
  * yet. Please heed the per-property API maturity annotations; the alpha level APIs may change in a breaking way
  * in the next release.
@@ -36,6 +37,7 @@ export interface IDashboardInsightProps {
     /**
      * Backend to work with.
      *
+     * @remarks
      * Note: the backend must come either from this property or from BackendContext. If you do not specify
      * backend here, then the component MUST be rendered within an existing BackendContext.
      *
@@ -46,6 +48,7 @@ export interface IDashboardInsightProps {
     /**
      * Workspace where the Insight widget exists.
      *
+     * @remarks
      * Note: the workspace must come either from this property or from WorkspaceContext. If you do not specify
      * workspace here, then the component MUST be rendered within an existing WorkspaceContext.
      *
@@ -63,6 +66,7 @@ export interface IDashboardInsightProps {
     /**
      * An insight to render.
      *
+     * @remarks
      * Note: the insight object provided here represents the insight as it is stored on the backend. It does
      * not reflect dashboard filters that should be applied when computing data for this insight.
      *

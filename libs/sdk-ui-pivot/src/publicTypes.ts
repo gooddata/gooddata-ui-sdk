@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
 import { IAnalyticalBackend, IPreparedExecution, ITheme } from "@gooddata/sdk-backend-spi";
 import { TotalType, IExecutionConfig } from "@gooddata/sdk-model";
@@ -21,6 +21,7 @@ export interface IMenu {
     /**
      * If true, grand totals can be added to the table using table menu.
      *
+     * @remarks
      * Default: false
      */
     aggregations?: boolean;
@@ -28,13 +29,15 @@ export interface IMenu {
     /**
      * If true, subtotals can be added to the table using table menu.
      *
+     * @remarks
      * Default: false
      */
     aggregationsSubMenu?: boolean;
 
     /**
-     * Optionally specifies which aggregation functions can be selected from the menu.
+     * Specifies which aggregation functions can be selected from the menu.
      *
+     * @remarks
      * Note: this option only impacts available menu items. It will not be used to filter totals that
      * you specify on the pivot table props.
      *
@@ -53,22 +56,25 @@ export type DefaultColumnWidth = "unset" | "autoresizeAll" | "viewport";
  */
 export interface IColumnSizing {
     /**
-     * Optionally indicate that the table should grow to fit into the allocated space.
+     * Indicate that the table should grow to fit into the allocated space.
      *
+     * @remarks
      * Default: false
      */
     growToFit?: boolean;
 
     /**
-     * Optionally specify whether columns should be resized to fill the entire viewport.
+     * Specify whether columns should be resized to fill the entire viewport.
      *
+     * @remarks
      * Default: unset
      */
     defaultWidth?: DefaultColumnWidth;
 
     /**
-     * Optionally specify custom column widths to apply.
+     * Specify custom column widths to apply.
      *
+     * @remarks
      * Default: none
      */
     columnWidths?: ColumnWidthItem[];
@@ -79,33 +85,36 @@ export interface IColumnSizing {
  */
 export interface IPivotTableConfig {
     /**
-     * Optionally customize column sizing strategy.
+     * Customize column sizing strategy.
      *
+     * @remarks
      * Default: none
      */
     columnSizing?: IColumnSizing;
 
     /**
-     * Optionally specify whether the table should group rows. If this is turned on and the table is sorted
-     * by the first row attribute, then the grouping will take effect.
+     * Specify whether the table should group rows.
+     *
+     * @remarks
+     * If this is turned on and the table is sorted by the first row attribute, then the grouping will take effect.
      *
      * Default: true
      */
     groupRows?: boolean;
 
     /**
-     * Optionally customize number segment separators (thousands, decimals)
+     * Customize number segment separators (thousands, decimals)
      */
     separators?: ISeparators;
 
     /**
-     * Optionally customize whether the column-level burger menu should be visible and if so,
+     * customize whether the column-level burger menu should be visible and if so,
      * what aggregations should be allowed.
      */
     menu?: IMenu;
 
     /**
-     * Optionally customize maximum height of the table.
+     * Customize maximum height of the table.
      */
     maxHeight?: number;
 }
@@ -115,15 +124,17 @@ export interface IPivotTableConfig {
  */
 export interface IPivotTableProps extends IPivotTableBaseProps, IPivotTableBucketProps {
     /**
-     * Optionally specify an instance of analytical backend instance to work with.
+     * Specify an instance of analytical backend instance to work with.
      *
+     * @remarks
      * Note: if you do not have a BackendProvider above in the component tree, then you MUST specify the backend.
      */
     backend?: IAnalyticalBackend;
 
     /**
-     * Optionally specify workspace to work with.
+     * Specify workspace to work with.
      *
+     * @remarks
      * Note: if you do not have a WorkspaceProvider above in the component tree, then you MUST specify the workspace.
      */
     workspace?: string;
@@ -134,13 +145,15 @@ export interface IPivotTableProps extends IPivotTableBaseProps, IPivotTableBucke
  */
 export interface IPivotTableBucketProps {
     /**
-     * Optionally specify measures to create table columns from.
+     * Specify measures to create table columns from.
      */
     measures?: AttributesMeasuresOrPlaceholders;
 
     /**
-     * Optionally specify one or more attributes to create table columns from. There will be a column for each
-     * combination of the specified attribute's values.
+     * Specify one or more attributes to create table columns from.
+     *
+     * @remarks
+     * There will be a column for each combination of the specified attribute's values.
      *
      * Note: you can specify column attributes in conjunction with one or more measures. In that case the table
      * will contain column for each combination of attribute values & measures.
@@ -148,13 +161,14 @@ export interface IPivotTableBucketProps {
     columns?: AttributesOrPlaceholders;
 
     /**
-     * Optionally specify attributes, whose elements will be used to populate table rows.
+     * Specify attributes, whose elements will be used to populate table rows.
      */
     rows?: AttributesOrPlaceholders;
 
     /**
-     * Optionally specify what totals should be calculated and included in the table.
+     * Specify what totals should be calculated and included in the table.
      *
+     * @remarks
      * Note: table can only render column subtotal and/or grand-totals. It is not possible to calculate row totals.
      * Also note: the table will only include subtotals when in grouping mode and the grouping is effective = table
      * is sorted by the first row attribute.
@@ -162,12 +176,12 @@ export interface IPivotTableBucketProps {
     totals?: TotalsOrPlaceholders;
 
     /**
-     * Optionally specify filters to apply on the data to chart.
+     * Specify filters to apply on the data to chart.
      */
     filters?: NullableFiltersOrPlaceholders;
 
     /**
-     * Optionally specify how to sort the data to chart.
+     * Specify how to sort the data to chart.
      */
     sortBy?: SortsOrPlaceholders;
 
@@ -195,24 +209,28 @@ export type ColumnResizedCallback = (columnWidths: ColumnWidthItem[]) => void;
  */
 export interface IPivotTableBaseProps extends IVisualizationProps, IVisualizationCallbacks {
     /**
-     * Optionally customize size of page when fetching data from backend.
+     * Customize size of page when fetching data from backend.
      *
+     * @remarks
      * Default is 100.
      */
     pageSize?: number;
 
     /**
-     * Optionally customize how pivot table capabilities and behavior.
+     * Customize how pivot table capabilities and behavior.
      */
     config?: IPivotTableConfig;
 
     /**
-     * Execution configuration, will provide the execution with necessary config before initiating execution.
+     * Execution configuration.
+     *
+     * @remarks
+     * This property will provide the execution with necessary config before initiating execution.
      */
     execConfig?: IExecutionConfig;
 
     /**
-     * Optionally specify function to call when user manually resizes a table column.
+     * Specify function to call when user manually resizes a table column.
      *
      * @param columnWidths - new widths for columns
      */

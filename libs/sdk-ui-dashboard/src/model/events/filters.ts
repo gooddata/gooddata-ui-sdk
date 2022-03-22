@@ -405,10 +405,9 @@ export interface DashboardFilterContextChangedPayload {
  * This event is emitted after _any_ change to dashboard filters (be it date or attribute filter).
  * The event describes the new state of the entire filter context.
  *
+ * @remarks
  * This event is emitted as convenience - more granular events describe all the possible
  * changes to the dashboard filters and can be used to event source the state of filter context.
- *
- * @remarks
  *
  * See also {@link filterContextToDashboardFiltersByWidget} and {@link filterContextToDashboardFiltersByDateDataSet} convertors
  * – those allow you to convert the `filterContext` in the event payload to array of {@link @gooddata/sdk-model#IFilter} instances you can use

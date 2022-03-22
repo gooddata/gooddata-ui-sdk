@@ -68,27 +68,27 @@ export interface IHeatmapBucketProps {
     measure: AttributeMeasureOrPlaceholder;
 
     /**
-     * Optionally specify attribute, whose values will be used to create rows in the heatmap.
+     * Specify attribute, whose values will be used to create rows in the heatmap.
      */
     rows?: AttributeOrPlaceholder;
 
     /**
-     * Optionally specify attribute, whose values will be used to create columns in the heatmap.
+     * Specify attribute, whose values will be used to create columns in the heatmap.
      */
     columns?: AttributeOrPlaceholder;
 
     /**
-     * Optionally specify filters to apply on the data to chart.
+     * Specify filters to apply on the data to chart.
      */
     filters?: NullableFiltersOrPlaceholders;
 
     /**
-     * Optionally specify how to sort the data to chart.
+     * Specify how to sort the data to chart.
      */
     sortBy?: SortsOrPlaceholders;
 
     /**
-     * Optional resolution context for composed placeholders.
+     * Resolution context for composed placeholders.
      */
     placeholdersResolutionContext?: any;
 }
@@ -101,10 +101,12 @@ export interface IHeatmapProps extends IBucketChartProps, IHeatmapBucketProps {}
 const WrappedHeatmap = withChart(heatmapDefinition)(CoreHeatmap);
 
 /**
- * [Heatmap](https://sdk.gooddata.com/gooddata-ui/docs/heatmap_component.html)
- *
  * Heatmap represents data as a matrix where individual values are represented as colors.
  * Heatmaps can help you discover trends and understand complex datasets.
+ *
+ * @remarks
+ * See {@link IHeatmapProps} to learn how to configure the Heatmap and the
+ * {@link https://sdk.gooddata.com/gooddata-ui/docs/heatmap_component.html | heatmap documentation} for more information.
  *
  * @public
  */

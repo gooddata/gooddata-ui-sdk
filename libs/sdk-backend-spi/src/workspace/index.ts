@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { IPagedResource } from "../common/paging";
 import { IExecutionFactory } from "./execution";
 import { IWorkspaceInsightsService } from "./insights";
@@ -17,8 +17,11 @@ import { IWorkspaceAccessControlService } from "./accessControl";
 import { IWorkspaceUserGroupsQuery } from "./userGroups";
 
 /**
- * Represents an analytical workspace hosted on a backend. It is an entry point to various services that can be
- * used to inspect and modify the workspace and run executions to obtain analytics for the workspace.
+ * Represents an analytical workspace hosted on a backend.
+ *
+ * @remarks
+ * It is an entry point to various services that can be used to inspect and modify the workspace
+ * and run executions to obtain analytics for the workspace.
  *
  * @public
  */
