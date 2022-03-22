@@ -1,5 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import { bucketAttribute, bucketMeasures, IInsight, insightFilters } from "@gooddata/sdk-model";
+import { IInsight } from "@gooddata/sdk-model";
 import { BucketNames, IDrillEvent } from "@gooddata/sdk-ui";
 import { ITreemapProps } from "@gooddata/sdk-ui-charts";
 
@@ -13,13 +13,13 @@ import {
 } from "../drillDownUtil";
 import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization";
 import {
-    bucketConversion,
-    chartAdditionalFactories,
+    filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
-    insightConversion,
+    multipleAttributesOrMeasuresBucketConversion,
+    singleAttributeBucketConversion,
 } from "../../../utils/embeddingCodeGenerator";
-import { chartConfigFromInsight } from "../chartConfigFromInsight";
+import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils";
 
 export class TreemapDescriptor extends BigChartDescriptor {
     public getFactory(): PluggableVisualizationFactory {
@@ -38,11 +38,11 @@ export class TreemapDescriptor extends BigChartDescriptor {
             package: "@gooddata/sdk-ui-charts",
         },
         insightToProps: getInsightToPropsConverter<ITreemapProps>({
-            measures: bucketConversion("measures", BucketNames.MEASURES, bucketMeasures),
-            viewBy: bucketConversion("viewBy", BucketNames.VIEW, bucketAttribute),
-            segmentBy: bucketConversion("segmentBy", BucketNames.SEGMENT, bucketAttribute),
-            filters: insightConversion("filters", insightFilters),
-            config: insightConversion("config", chartConfigFromInsight),
+            measures: multipleAttributesOrMeasuresBucketConversion("measures", BucketNames.MEASURES),
+            viewBy: singleAttributeBucketConversion("viewBy", BucketNames.VIEW),
+            segmentBy: singleAttributeBucketConversion("segmentBy", BucketNames.SEGMENT),
+            filters: filtersInsightConversion("filters"),
+            config: chartConfigInsightConversion("config"),
         }),
         additionalFactories: chartAdditionalFactories,
     });

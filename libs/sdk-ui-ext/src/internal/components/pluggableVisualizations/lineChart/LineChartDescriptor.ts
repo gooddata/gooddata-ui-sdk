@@ -1,5 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import { bucketAttribute, bucketMeasures, IInsight, insightFilters, insightSorts } from "@gooddata/sdk-model";
+import { IInsight } from "@gooddata/sdk-model";
 import { BucketNames, IDrillEvent } from "@gooddata/sdk-ui";
 import { ILineChartProps } from "@gooddata/sdk-ui-charts";
 
@@ -16,13 +16,14 @@ import {
     reverseAndTrimIntersection,
 } from "../drillDownUtil";
 import {
-    bucketConversion,
-    chartAdditionalFactories,
+    filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
-    insightConversion,
+    multipleAttributesOrMeasuresBucketConversion,
+    singleAttributeBucketConversion,
+    sortsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator";
-import { chartConfigFromInsight } from "../chartConfigFromInsight";
+import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils";
 
 export class LineChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
@@ -41,12 +42,12 @@ export class LineChartDescriptor extends BaseChartDescriptor implements IVisuali
             package: "@gooddata/sdk-ui-charts",
         },
         insightToProps: getInsightToPropsConverter<ILineChartProps>({
-            measures: bucketConversion("measures", BucketNames.MEASURES, bucketMeasures),
-            trendBy: bucketConversion("trendBy", BucketNames.TREND, bucketAttribute),
-            segmentBy: bucketConversion("segmentBy", BucketNames.SEGMENT, bucketAttribute),
-            filters: insightConversion("filters", insightFilters),
-            sortBy: insightConversion("sortBy", insightSorts),
-            config: insightConversion("config", chartConfigFromInsight),
+            measures: multipleAttributesOrMeasuresBucketConversion("measures", BucketNames.MEASURES),
+            trendBy: singleAttributeBucketConversion("trendBy", BucketNames.TREND),
+            segmentBy: singleAttributeBucketConversion("segmentBy", BucketNames.SEGMENT),
+            filters: filtersInsightConversion("filters"),
+            sortBy: sortsInsightConversion("sortBy"),
+            config: chartConfigInsightConversion("config"),
         }),
         additionalFactories: chartAdditionalFactories,
     });

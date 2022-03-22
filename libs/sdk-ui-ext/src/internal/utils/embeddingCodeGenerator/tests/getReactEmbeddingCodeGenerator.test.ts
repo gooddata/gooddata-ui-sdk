@@ -21,7 +21,22 @@ describe("getReactEmbeddingCodeGenerator", () => {
                 package: "@gooddata/foo",
             },
             insightToProps() {
-                return { prop: "string", another: [ReferenceMd.Account.Name] };
+                return {
+                    prop: {
+                        value: "string",
+                        meta: {
+                            typeImport: { name: "Type", package: "some-package", importType: "default" },
+                            cardinality: "scalar",
+                        },
+                    },
+                    another: {
+                        value: [ReferenceMd.Account.Name],
+                        meta: {
+                            typeImport: { name: "Type2", package: "some-package2", importType: "named" },
+                            cardinality: "array",
+                        },
+                    },
+                };
             },
         });
         expect(generator(mockInsight, { height })).toMatchSnapshot();

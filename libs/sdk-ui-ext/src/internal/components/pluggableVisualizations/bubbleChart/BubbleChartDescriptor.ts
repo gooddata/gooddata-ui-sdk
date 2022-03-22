@@ -1,5 +1,4 @@
 // (C) 2021-2022 GoodData Corporation
-import { bucketAttribute, bucketMeasure, insightFilters, insightSorts } from "@gooddata/sdk-model";
 import { IBubbleChartProps } from "@gooddata/sdk-ui-charts";
 import { BucketNames } from "@gooddata/sdk-ui";
 
@@ -10,13 +9,14 @@ import {
 import { PluggableBubbleChart } from "./PluggableBubbleChart";
 import { BigChartDescriptor } from "../BigChartDescriptor";
 import {
-    bucketConversion,
-    chartAdditionalFactories,
+    filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
-    insightConversion,
+    singleAttributeBucketConversion,
+    singleMeasureBucketConversion,
+    sortsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator";
-import { chartConfigFromInsight } from "../chartConfigFromInsight";
+import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils";
 
 export class BubbleChartDescriptor extends BigChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
@@ -30,13 +30,13 @@ export class BubbleChartDescriptor extends BigChartDescriptor implements IVisual
             package: "@gooddata/sdk-ui-charts",
         },
         insightToProps: getInsightToPropsConverter<IBubbleChartProps>({
-            xAxisMeasure: bucketConversion("xAxisMeasure", BucketNames.MEASURES, bucketMeasure),
-            yAxisMeasure: bucketConversion("yAxisMeasure", BucketNames.SECONDARY_MEASURES, bucketMeasure),
-            size: bucketConversion("size", BucketNames.TERTIARY_MEASURES, bucketMeasure),
-            viewBy: bucketConversion("viewBy", BucketNames.VIEW, bucketAttribute),
-            filters: insightConversion("filters", insightFilters),
-            sortBy: insightConversion("sortBy", insightSorts),
-            config: insightConversion("config", chartConfigFromInsight),
+            xAxisMeasure: singleMeasureBucketConversion("xAxisMeasure", BucketNames.MEASURES),
+            yAxisMeasure: singleMeasureBucketConversion("yAxisMeasure", BucketNames.SECONDARY_MEASURES),
+            size: singleMeasureBucketConversion("size", BucketNames.TERTIARY_MEASURES),
+            viewBy: singleAttributeBucketConversion("viewBy", BucketNames.VIEW),
+            filters: filtersInsightConversion("filters"),
+            sortBy: sortsInsightConversion("sortBy"),
+            config: chartConfigInsightConversion("config"),
         }),
         additionalFactories: chartAdditionalFactories,
     });

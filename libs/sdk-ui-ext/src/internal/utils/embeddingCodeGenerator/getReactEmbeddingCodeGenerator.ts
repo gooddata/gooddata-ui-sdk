@@ -11,13 +11,21 @@ import partition from "lodash/fp/partition";
 import repeat from "lodash/repeat";
 import sortBy from "lodash/sortBy";
 import toPairs from "lodash/fp/toPairs";
+import uniqBy from "lodash/uniqBy";
 import { factoryNotationFor, IInsightDefinition } from "@gooddata/sdk-model";
 
 import { IEmbeddingCodeConfig } from "../../interfaces/VisualizationDescriptor";
 
 import { normalizeInsight } from "./normalizeInsight";
-import { IAdditionalFactoryDefinition, IEmbeddingCodeGeneratorInput, IImportInfo } from "./types";
+import {
+    IAdditionalFactoryDefinition,
+    IEmbeddingCodeGeneratorSpecification,
+    IImportInfo,
+    PropsWithMeta,
+    PropWithMeta,
+} from "./types";
 
+// these are in line with what `factoryNotationFor` supports
 const defaultFactories: IImportInfo[] = [
     // ObjRef factories
     "uriRef",
@@ -46,9 +54,10 @@ const defaultFactories: IImportInfo[] = [
 ].map((name): IImportInfo => ({ name, importType: "named", package: "@gooddata/sdk-model" }));
 
 function detectFactoryImports(
-    serializedProps: string,
+    propDeclarations: string[],
     additionalFactories: IAdditionalFactoryDefinition[],
 ): IImportInfo[] {
+    const serializedProps = propDeclarations.join("\n");
     return [...defaultFactories, ...additionalFactories.map((f) => f.importInfo)].filter(({ name }) =>
         serializedProps.includes(name),
     );
@@ -101,45 +110,90 @@ const renderImports: (imports: IImportInfo[]) => string = flow(
 
 const REACT_IMPORT_INFO: IImportInfo = { name: "React", package: "react", importType: "default" };
 
-export function getReactEmbeddingCodeGenerator<TProps extends object>({
-    component,
-    insightToProps,
-    additionalFactories,
-}: IEmbeddingCodeGeneratorInput<TProps>): (
-    insight: IInsightDefinition,
+function walkProps<TProps>(
+    props: PropsWithMeta<TProps>,
+    additionalFactories?: IAdditionalFactoryDefinition[],
     config?: IEmbeddingCodeConfig,
-) => string {
+): {
+    importsUsed: IImportInfo[];
+    propDeclarations: string[];
+    propUsages: string[];
+} {
+    const language = config?.language ?? "ts";
+    const importsUsed: IImportInfo[] = [];
+
+    // we ignore functions as there is no bullet-proof way to serialize them
+    const propPairs = toPairs<PropWithMeta<any>>(props).filter(
+        ([_, { value }]) => !isFunction(value) && !isEmpty(value),
+    );
+
+    // get variable declaration for each prop to render outside of the component
+    const propDeclarations = propPairs.map(([key, { value, meta }]) => {
+        if (isString(value)) {
+            return `const ${key} = "${value}";`;
+        }
+
+        const rhsValue = extendedFactoryNotationFor(value, additionalFactories ?? []);
+
+        const needsType = language === "ts";
+        if (needsType) {
+            const typeDeclaration =
+                meta.cardinality === "array" ? `${meta.typeImport.name}[]` : meta.typeImport.name;
+            importsUsed.push(meta.typeImport);
+            return `const ${key}: ${typeDeclaration} = ${rhsValue};`;
+        } else {
+            return `const ${key} = ${rhsValue};`;
+        }
+    });
+
+    // get the prop={prop} pairs to fill the component with
+    const propUsages = propPairs.map(([key]) => `${key}={${key}}`);
+
+    // add all the factories used in the propDeclarations so that we can add their imports later
+    const detectedFactories = detectFactoryImports(propDeclarations, additionalFactories ?? []);
+    importsUsed.push(...detectedFactories);
+
+    return {
+        importsUsed: uniqBy(importsUsed, (i) => `${i.package}#${i.name}`),
+        propDeclarations,
+        propUsages,
+    };
+}
+
+/**
+ * Creates a React embedding code generator.
+ *
+ * @remarks
+ * This abstracts away much of the particular-pluggable-visualization-type-agnostic logic,
+ * taking the visualization-type-specific information in the `specification` parameter.
+ *
+ * @param specification - specification of the code generator
+ * @returns function that can be used to obtain React embedding code
+ */
+export function getReactEmbeddingCodeGenerator<TProps extends object>(
+    specification: IEmbeddingCodeGeneratorSpecification<TProps>,
+): (insight: IInsightDefinition, config?: IEmbeddingCodeConfig) => string {
+    const { component, insightToProps, additionalFactories } = specification;
+
     return (insight, config) => {
         const normalizedInsight = normalizeInsight(insight);
 
         const props = insightToProps(normalizedInsight, config?.context);
-        // we ignore functions as there is no bullet-proof way to serialize them
-        const propPairs = toPairs(props).filter(([_, value]) => !isFunction(value) && !isEmpty(value));
+        const { importsUsed, propDeclarations, propUsages } = walkProps(props, additionalFactories, config);
 
-        const propDeclarations = propPairs
-            .map(([key, value]) =>
-                isString(value)
-                    ? `const ${key} = "${value}";`
-                    : `const ${key} = ${extendedFactoryNotationFor(value, additionalFactories ?? [])};`,
-            )
-            .join("\n");
-
-        const propUsages = propPairs.map(([key]) => `${key}={${key}}`).join("\n");
-
-        const detectedFactories = detectFactoryImports(propDeclarations, additionalFactories ?? []);
-        const imports = compact([REACT_IMPORT_INFO, ...detectedFactories, component]);
+        const imports = compact([REACT_IMPORT_INFO, ...importsUsed, component]);
 
         const height = config?.height ?? DEFAULT_HEIGHT;
         const stringifiedHeight = isString(height) ? `"${height}"` : height.toString();
 
-        const componentBody = `<${component.name}\n${indent(propUsages, 1)}\n/>`;
+        const componentBody = `<${component.name}\n${indent(propUsages.join("\n"), 1)}\n/>`;
 
         return `${renderImports(imports)}
 
-${propDeclarations}
+${propDeclarations.join("\n")}
 const style = {height: ${stringifiedHeight}};
 
-function MyComponent() {
+export function MyComponent() {
     return (
         <div style={style}>
 ${indent(componentBody, 3)}

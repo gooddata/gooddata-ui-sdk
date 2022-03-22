@@ -1,14 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import {
-    bucketAttribute,
-    bucketAttributes,
-    bucketIsEmpty,
-    bucketMeasures,
-    IInsight,
-    insightBucket,
-    insightFilters,
-    insightSorts,
-} from "@gooddata/sdk-model";
+import { bucketIsEmpty, IInsight, insightBucket } from "@gooddata/sdk-model";
 import {
     BucketNames,
     getIntersectionPartAfter,
@@ -28,13 +19,15 @@ import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } 
 import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper";
 import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization";
 import {
-    bucketConversion,
-    chartAdditionalFactories,
+    filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
-    insightConversion,
+    multipleAttributesBucketConversion,
+    multipleAttributesOrMeasuresBucketConversion,
+    singleAttributeBucketConversion,
+    sortsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator";
-import { chartConfigFromInsight } from "../chartConfigFromInsight";
+import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils";
 
 export class BarChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
@@ -57,12 +50,12 @@ export class BarChartDescriptor extends BaseChartDescriptor implements IVisualiz
             package: "@gooddata/sdk-ui-charts",
         },
         insightToProps: getInsightToPropsConverter<IBarChartProps>({
-            measures: bucketConversion("measures", BucketNames.MEASURES, bucketMeasures),
-            viewBy: bucketConversion("viewBy", BucketNames.VIEW, bucketAttributes),
-            stackBy: bucketConversion("stackBy", BucketNames.STACK, bucketAttribute),
-            filters: insightConversion("filters", insightFilters),
-            sortBy: insightConversion("sortBy", insightSorts),
-            config: insightConversion("config", chartConfigFromInsight),
+            measures: multipleAttributesOrMeasuresBucketConversion("measures", BucketNames.MEASURES),
+            viewBy: multipleAttributesBucketConversion("viewBy", BucketNames.VIEW),
+            stackBy: singleAttributeBucketConversion("stackBy", BucketNames.STACK),
+            filters: filtersInsightConversion("filters"),
+            sortBy: sortsInsightConversion("sortBy"),
+            config: chartConfigInsightConversion("config"),
         }),
         additionalFactories: chartAdditionalFactories,
     });

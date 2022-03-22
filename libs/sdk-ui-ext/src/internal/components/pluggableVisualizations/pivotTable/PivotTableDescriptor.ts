@@ -1,14 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import {
-    bucketAttributes,
-    bucketMeasures,
-    IInsight,
-    IInsightDefinition,
-    insightFilters,
-    insightSanitize,
-    insightSorts,
-    insightTotals,
-} from "@gooddata/sdk-model";
+import { IInsight, IInsightDefinition, insightSanitize } from "@gooddata/sdk-model";
 import {
     IAttributeColumnWidthItem,
     IPivotTableProps,
@@ -32,10 +23,14 @@ import {
     sanitizeTableProperties,
 } from "../drillDownUtil";
 import {
-    bucketConversion,
+    filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
     insightConversion,
+    multipleAttributesBucketConversion,
+    multipleAttributesOrMeasuresBucketConversion,
+    sortsInsightConversion,
+    totalsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator";
 import { pivotTableConfigFromInsight } from "./pivotTableConfigFromInsight";
 
@@ -82,13 +77,24 @@ export class PivotTableDescriptor extends BaseChartDescriptor implements IVisual
             package: "@gooddata/sdk-ui-pivot",
         },
         insightToProps: getInsightToPropsConverter<IPivotTableProps>({
-            measures: bucketConversion("measures", BucketNames.MEASURES, bucketMeasures),
-            rows: bucketConversion("rows", BucketNames.ATTRIBUTE, bucketAttributes),
-            columns: bucketConversion("columns", BucketNames.COLUMNS, bucketAttributes),
-            filters: insightConversion("filters", insightFilters),
-            sortBy: insightConversion("sortBy", insightSorts),
-            totals: insightConversion("totals", insightTotals),
-            config: insightConversion("config", pivotTableConfigFromInsight),
+            measures: multipleAttributesOrMeasuresBucketConversion("measures", BucketNames.MEASURES),
+            rows: multipleAttributesBucketConversion("rows", BucketNames.ATTRIBUTE),
+            columns: multipleAttributesBucketConversion("columns", BucketNames.COLUMNS),
+            filters: filtersInsightConversion("filters"),
+            sortBy: sortsInsightConversion("sortBy"),
+            totals: totalsInsightConversion("totals"),
+            config: insightConversion(
+                "config",
+                {
+                    typeImport: {
+                        importType: "named",
+                        name: "IPivotTableConfig",
+                        package: "@gooddata/sdk-ui-pivot",
+                    },
+                    cardinality: "scalar",
+                },
+                pivotTableConfigFromInsight,
+            ),
         }),
         additionalFactories: [
             {

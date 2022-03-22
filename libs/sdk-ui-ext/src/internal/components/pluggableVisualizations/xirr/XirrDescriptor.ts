@@ -1,10 +1,8 @@
 // (C) 2021-2022 GoodData Corporation
-
-import { bucketAttribute, bucketMeasure, IInsight, IInsightDefinition } from "@gooddata/sdk-model";
+import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
 import { ISettings } from "@gooddata/sdk-backend-spi";
 import { IXirrProps } from "@gooddata/sdk-ui-charts";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { insightFilters } from "@gooddata/sdk-model";
 
 import {
     IVisualizationSizeInfo,
@@ -15,10 +13,11 @@ import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor";
 import { PluggableXirr } from "./PluggableXirr";
 import { DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT, MAX_VISUALIZATION_HEIGHT } from "../constants";
 import {
-    bucketConversion,
+    filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
-    insightConversion,
+    singleAttributeBucketConversion,
+    singleMeasureBucketConversion,
 } from "../../../utils/embeddingCodeGenerator";
 
 export class XirrDescriptor implements IVisualizationDescriptor {
@@ -77,9 +76,9 @@ export class XirrDescriptor implements IVisualizationDescriptor {
             package: "@gooddata/sdk-ui-charts",
         },
         insightToProps: getInsightToPropsConverter<IXirrProps>({
-            measure: bucketConversion("measure", BucketNames.MEASURES, bucketMeasure),
-            attribute: bucketConversion("attribute", BucketNames.ATTRIBUTE, bucketAttribute),
-            filters: insightConversion("filters", insightFilters),
+            measure: singleMeasureBucketConversion("measure", BucketNames.MEASURES),
+            attribute: singleAttributeBucketConversion("attribute", BucketNames.ATTRIBUTE),
+            filters: filtersInsightConversion("filters"),
         }),
     });
 }

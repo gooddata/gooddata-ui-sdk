@@ -1,7 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 import { IFunnelChartProps } from "@gooddata/sdk-ui-charts";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { bucketMeasures, insightFilters, insightSorts, bucketAttribute } from "@gooddata/sdk-model";
 
 import {
     IVisualizationDescriptor,
@@ -10,13 +9,14 @@ import {
 import { PluggableFunnelChart } from "./PluggableFunnelChart";
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
 import {
-    bucketConversion,
-    chartAdditionalFactories,
+    filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
-    insightConversion,
+    multipleAttributesOrMeasuresBucketConversion,
+    singleAttributeBucketConversion,
+    sortsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator";
-import { chartConfigFromInsight } from "../chartConfigFromInsight";
+import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils";
 
 export class FunnelChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
@@ -30,11 +30,11 @@ export class FunnelChartDescriptor extends BaseChartDescriptor implements IVisua
             package: "@gooddata/sdk-ui-charts",
         },
         insightToProps: getInsightToPropsConverter<IFunnelChartProps>({
-            measures: bucketConversion("measures", BucketNames.MEASURES, bucketMeasures),
-            viewBy: bucketConversion("viewBy", BucketNames.VIEW, bucketAttribute),
-            filters: insightConversion("filters", insightFilters),
-            sortBy: insightConversion("sortBy", insightSorts),
-            config: insightConversion("config", chartConfigFromInsight),
+            measures: multipleAttributesOrMeasuresBucketConversion("measures", BucketNames.MEASURES),
+            viewBy: singleAttributeBucketConversion("viewBy", BucketNames.VIEW),
+            filters: filtersInsightConversion("filters"),
+            sortBy: sortsInsightConversion("sortBy"),
+            config: chartConfigInsightConversion("config"),
         }),
         additionalFactories: chartAdditionalFactories,
     });

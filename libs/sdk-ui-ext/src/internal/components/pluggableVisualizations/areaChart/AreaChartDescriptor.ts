@@ -1,12 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import {
-    bucketAttribute,
-    bucketAttributes,
-    bucketMeasures,
-    IInsight,
-    insightFilters,
-    insightSorts,
-} from "@gooddata/sdk-model";
+import { IInsight } from "@gooddata/sdk-model";
 import { BucketNames, IDrillEvent } from "@gooddata/sdk-ui";
 import { IAreaChartProps } from "@gooddata/sdk-ui-charts";
 
@@ -23,13 +16,15 @@ import {
 } from "../drillDownUtil";
 import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization";
 import {
-    bucketConversion,
-    chartAdditionalFactories,
+    filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
-    insightConversion,
+    multipleAttributesBucketConversion,
+    multipleAttributesOrMeasuresBucketConversion,
+    singleAttributeBucketConversion,
+    sortsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator";
-import { chartConfigFromInsight } from "../chartConfigFromInsight";
+import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils";
 
 export class AreaChartDescriptor extends BigChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
@@ -52,12 +47,12 @@ export class AreaChartDescriptor extends BigChartDescriptor implements IVisualiz
             package: "@gooddata/sdk-ui-charts",
         },
         insightToProps: getInsightToPropsConverter<IAreaChartProps>({
-            measures: bucketConversion("measures", BucketNames.MEASURES, bucketMeasures),
-            viewBy: bucketConversion("viewBy", BucketNames.VIEW, bucketAttributes),
-            stackBy: bucketConversion("stackBy", BucketNames.STACK, bucketAttribute),
-            filters: insightConversion("filters", insightFilters),
-            sortBy: insightConversion("sortBy", insightSorts),
-            config: insightConversion("config", chartConfigFromInsight),
+            measures: multipleAttributesOrMeasuresBucketConversion("measures", BucketNames.MEASURES),
+            viewBy: multipleAttributesBucketConversion("viewBy", BucketNames.VIEW),
+            stackBy: singleAttributeBucketConversion("stackBy", BucketNames.STACK),
+            filters: filtersInsightConversion("filters"),
+            sortBy: sortsInsightConversion("sortBy"),
+            config: chartConfigInsightConversion("config"),
         }),
         additionalFactories: chartAdditionalFactories,
     });
