@@ -316,7 +316,6 @@ $vertical-space: 10px;
         min-height: 50px;
         max-height: 455px;
         overflow-x: auto;
-        padding-right: 20px;
         margin: 20px -20px 0 0;
     }
 
@@ -332,7 +331,22 @@ $vertical-space: 10px;
 
     .gd-scheduled-email {
         display: inline-flex;
+        flex-direction: row-reverse;
+        height: 50px;
         margin-bottom: 10px;
+        cursor: default;
+
+        &:hover {
+            background: $is-focused-background;
+
+            .gd-scheduled-email-icon {
+                background: transparent;
+            }
+
+            .gd-scheduled-email-delete-icon {
+                display: block;
+            }
+        }
     }
 
     .gd-scheduled-email:last-child {
@@ -350,19 +364,65 @@ $vertical-space: 10px;
         border-radius: 100px;
     }
 
+    .gd-scheduled-email-content {
+        display: flex;
+    }
+
+    .gd-scheduled-email-text-content {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        width: 344px;
+    }
+
     .gd-scheduled-email-title {
-        max-width: 380px;
         white-space: nowrap;
     }
 
-    .gd-scheduled-email-title-shortened {
+    .gd-scheduled-email-subtitle {
+        white-space: nowrap;
+        color: $gd-color-state-blank;
+    }
+
+    .gd-scheduled-email-shortened-text {
         display: inline-block;
         width: 100%;
         white-space: nowrap;
     }
 
-    .gd-scheduled-email-subtitle {
-        color: $gd-color-state-blank;
+    .gd-scheduled-email-delete {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 36px;
+        height: 100%;
+        cursor: pointer;
+    }
+
+    .gd-scheduled-email-delete:hover {
+        background-color: var(--gd-palette-error-lightest, #fdf2f1);
+
+        ~ .gd-scheduled-email-content {
+            background-color: var(--gd-palette-error-lightest, #fdf2f1);
+        }
+
+        .gd-scheduled-email-delete-icon::after {
+            color: var(--gd-palette-error-base, #e54d40);
+        }
+    }
+
+    .gd-scheduled-email-delete-icon {
+        display: none;
+        margin: auto;
+
+        &::after {
+            content: "\e61a";
+            position: relative;
+            font-family: $gd-font-indigo;
+            color: $gd-color-disabled;
+            font-size: 16px;
+            font-weight: 400;
+        }
     }
 
     .gd-content-divider {
@@ -380,6 +440,30 @@ $vertical-space: 10px;
         .gd-button-icon {
             color: $button-action-color;
         }
+    }
+}
+
+.gd-scheduled-email-delete-dialog {
+    @media #{$medium-up} {
+        width: 440px;
+    }
+
+    .gd-dialog-content {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        height: 40px;
+    }
+
+    .gd-scheduled-email-delete-dialog-text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+.gd-scheduled-email-delete-dialog-overlay {
+    .modalityPlugin-mask {
+        z-index: 5001;
     }
 }
 

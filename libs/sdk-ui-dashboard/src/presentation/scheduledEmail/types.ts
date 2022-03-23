@@ -57,9 +57,19 @@ export interface IScheduledEmailManagementDialogProps {
     onClose?: () => void;
 
     /**
+     * Callback to be called, when scheduled email is deleted.
+     */
+    onDeleteSuccess?: () => void;
+
+    /**
      * Callback to be called, when emails fail to load.
      */
-    onError?: (error: GoodDataSdkError) => void;
+    onLoadError?: (error: GoodDataSdkError) => void;
+
+    /**
+     * Callback to be called, when schedule fails to delete.
+     */
+    onDeleteError?: (error: GoodDataSdkError) => void;
 }
 
 ///

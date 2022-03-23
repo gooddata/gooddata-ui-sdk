@@ -80,6 +80,11 @@
         "comment": "Start to export data to file",
         "limit": 0
     },
+    "dialogs.schedule.email.delete.success": {
+        "value": "Success! Your scheduled email was deleted.",
+        "comment": "",
+        "limit": 0
+    },
     "dialogs.schedule.email.submit.success": {
         "value": "Success! Your dashboard is scheduled for emailing.",
         "comment": "",
@@ -395,6 +400,21 @@
         "comment": "",
         "limit": 0
     },
+    "dialogs.schedule.management.delete": {
+        "value": "Delete the schedule.",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.schedule.management.delete.dialog": {
+        "value": "Delete schedule?",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.schedule.management.delete.dialog.confirm": {
+        "value": "<b>The schedule</b> will be permanently deleted.",
+        "comment": "Do not translate html tags <b>, </b>",
+        "limit": 0
+    },
     "dialogs.schedule.management.noSchedules": {
         "value": "This dashboard contains no scheduled exports yet.{br}Add one now.",
         "comment": "",
@@ -445,6 +465,11 @@
         "comment": "",
         "limit": 0
     },
+    "dialogs.schedule.management.delete.error": {
+        "value": "Failed to delete schedule. Try again later.",
+        "comment": "",
+        "limit": 0
+    },
     "options.menu.schedule.email.recipient.invalid": {
         "value": "This is not a valid email address.",
         "comment": "Translate as imperative. Error message for recipient email address",
@@ -458,6 +483,11 @@
     "options.menu.schedule.email.recipient.warning.belong.workspace": {
         "value": "This email address does not belong to the workspace. Recipient may receive sensitive data.",
         "comment": "Translate as imperative. Warning email on recipient field in schedule email dialog",
+        "limit": 0
+    },
+    "delete": {
+        "value": "Delete",
+        "comment": "",
         "limit": 0
     },
     "close": {
