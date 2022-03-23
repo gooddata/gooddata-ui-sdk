@@ -316,6 +316,10 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
         throw new NotSupported("recorded backend does not support this call");
     }
 
+    public deleteScheduledMail(_ref: ObjRef): Promise<void> {
+        return Promise.resolve();
+    }
+
     public createWidgetAlert(_alert: IWidgetAlertDefinition): Promise<IWidgetAlert> {
         throw new NotSupported("recorded backend does not support this call");
     }

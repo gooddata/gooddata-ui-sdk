@@ -307,6 +307,10 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         return toSdkModel.convertScheduledMail(createdBearScheduledMail) as IScheduledMail;
     };
 
+    public deleteScheduledMail = async (scheduledMailRef: ObjRef): Promise<void> => {
+        await this.deleteBearMetadataObject(scheduledMailRef);
+    };
+
     public getScheduledMailsForDashboard = async (
         dashboardRef: ObjRef,
         options: IGetScheduledMailOptions = {},
