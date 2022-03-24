@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     AuthenticationFlow,
     IAnalyticalBackend,
@@ -84,8 +84,10 @@ export abstract class TigerAuthProviderBase implements IAuthenticationProvider {
 }
 
 /**
- * This implementation of authentication provider uses an API Token as bearer of authentication. You can provide token
- * at construction time and it will be passed on all calls to Tiger APIs
+ * This implementation of authentication provider uses an API Token as bearer of authentication.
+ *
+ * @remarks
+ * You can provide token at construction time and it will be passed on all calls to Tiger APIs
  *
  * This is a go-to authentication provider for command-line applications. While nothing stops you from using
  * this provider in UI applications, keep in mind that this is discouraged due to security holes it leads to; having
@@ -111,7 +113,10 @@ export class TigerTokenAuthProvider extends TigerAuthProviderBase {
 
 /**
  * This implementation of authentication provider defers the responsibility for performing authentication
- * to the context in which it exists. In other words it expects that the application will take care of driving
+ * to the context in which it exists.
+ *
+ * @remarks
+ * In other words it expects that the application will take care of driving
  * the authentication and creating a correct session in which the Tiger backend can make authenticated calls.
  *
  * This is a go-to authentication provider for UI applications. The entire flow is as follows:
@@ -160,10 +165,12 @@ export class ContextDeferredAuthProvider extends TigerAuthProviderBase {
  * Given tiger backend, authentication flow details and current location, this function creates URL where the
  * browser should redirect to start authentication flow with correct return address.
  *
+ * @remarks
  * The current location is essential to determine whether the return redirect should contain absolute or
  * related return path:
  *
  * -  When running on same origin, then use relative path
+ *
  * -  When running on different origin, then use absolute path
  *
  * @param backend - an instance of analytical backend
@@ -196,9 +203,11 @@ export function createTigerAuthenticationUrl(
  * Given tiger backend and current location, this function creates URL where the
  * browser should redirect to start deauthentication (logout) flow.
  *
+ * @remarks
  * The current location is essential to determine the URL should point:
  *
  * -  When running on same origin, then use relative path
+ *
  * -  When running on different origin, then use absolute path to the proper origin
  *
  * @param backend - an instance of analytical backend
@@ -221,11 +230,13 @@ export function createTigerDeauthenticationUrl(backend: IAnalyticalBackend, loca
  * Given authentication context and the authentication error, this implementation of `NotAuthenticatedHandler`
  * will redirect current window to location where Tiger authentication flow will start.
  *
+ * @remarks
  * The location will be setup with correct return address so that when the flow finishes successfully, the
  * browser window will be redirected from whence it came.
  *
- * @remarks See also {@link createTigerAuthenticationUrl}; this function is used to construct the URL. You may use
+ * See also {@link createTigerAuthenticationUrl}; this function is used to construct the URL. You may use
  *  it when build your own handler.
+ *
  * @param context - authentication context
  * @param error - not authenticated error, must contain the `authenticationFlow` information otherwise the
  *  handler just logs an error and does nothing
