@@ -8,7 +8,6 @@ import {
     IAttributeElement,
     IElementsQueryOptions,
     IElementsQueryResult,
-    isElementsQueryOptionsElementsByValue,
 } from "@gooddata/sdk-backend-spi";
 import stringify from "json-stable-stringify";
 import { getObjRef } from "../../utils/AttributeFilterUtils";
@@ -33,29 +32,27 @@ const prepareElementsTitleQuery = (
     const supportsElementUris = backend.capabilities.supportsElementUris;
     const isElementsByRef = isAttributeElementsByRef(filterAttributeElements(currentFilter));
 
+    const elementIdentifiers = compact(
+        appliedElements.map((element) => (isElementsByRef ? element.uri : element.title)),
+    );
+
     const options: IElementsQueryOptions = {
         elements: supportsElementUris
             ? {
-                  uris: compact(
-                      appliedElements.map((element) => (isElementsByRef ? element.uri : element.title)),
-                  ),
+                  uris: elementIdentifiers,
               }
             : {
                   referenceType: "primary",
-                  values: compact(appliedElements.map((element) => element.title)),
+                  values: elementIdentifiers,
               },
     };
-
-    const optionsElementsIsEmpty = isElementsQueryOptionsElementsByValue(options.elements)
-        ? options.elements.values.length > 0
-        : options.elements.uris.length > 0;
 
     return backend
         .workspace(workspace)
         .attributes()
         .elements()
         .forDisplayForm(getObjRef(currentFilter, identifier))
-        .withOptions(!optionsElementsIsEmpty ? options : {});
+        .withOptions(elementIdentifiers.length > 0 ? options : {});
 };
 
 /**
