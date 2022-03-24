@@ -125,6 +125,13 @@ type LegacyFunctionsSubscription = {
 };
 
 /**
+ * Provides a way to specify legacy settings when creating a new instance.
+ */
+type LegacySetup = {
+    ajaxSettings?: any;
+};
+
+/**
  * Provides a way to use custom factory for creating SDK instances.
  */
 type FactoryFunction = {
@@ -157,9 +164,12 @@ export class BearBackend implements IAnalyticalBackend {
     private readonly authProvider: IAuthProviderCallGuard;
     private readonly sdk: SDK;
 
+    // used to reconstruct and reapply the config when copying backend in withTelemetry and others
+    private lastAjaxSetupSettings: any;
+
     constructor(
         config?: IAnalyticalBackendConfig,
-        implConfig?: BearBackendConfig & LegacyFunctionsSubscription & FactoryFunction,
+        implConfig?: BearBackendConfig & LegacyFunctionsSubscription & FactoryFunction & LegacySetup,
         telemetry?: TelemetryData,
         authProvider?: IAuthProviderCallGuard,
     ) {
@@ -168,6 +178,12 @@ export class BearBackend implements IAnalyticalBackend {
         this.telemetry = telemetrySanitize(telemetry);
         this.authProvider = authProvider || new NoopAuthProvider();
         this.sdk = newSdkInstance(this.config, this.implConfig, this.telemetry);
+
+        // do the ajax setup without the need to call the ajaxSetup legacy function
+        // this is useful when deriving new instance using withTelemetry and similar functions
+        if (this.implConfig.ajaxSettings) {
+            this.sdk.xhr.ajaxSetup(this.implConfig.ajaxSettings);
+        }
 
         this.authProvider.initializeClient?.(this.sdk);
 
@@ -185,6 +201,8 @@ export class BearBackend implements IAnalyticalBackend {
                 },
 
                 ajaxSetup: (settings) => {
+                    // store the last used settings so that we can use them if copying this backend in withTelemetry for example
+                    this.lastAjaxSetupSettings = settings;
                     this.sdk.xhr.ajaxSetup(settings);
                 },
 
@@ -270,7 +288,7 @@ export class BearBackend implements IAnalyticalBackend {
     public withTelemetry(componentName: string, props: object): IAnalyticalBackend {
         return new BearBackend(
             this.config,
-            this.implConfig,
+            { ...this.implConfig, ajaxSettings: this.lastAjaxSetupSettings },
             { componentName, props: Object.keys(props) },
             this.authProvider,
         );
