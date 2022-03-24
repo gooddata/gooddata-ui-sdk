@@ -11,7 +11,6 @@ const libsToBeRemoved = [
     "api-client-tiger",
     "api-model-bear",
     "sdk-backend-base",
-    "sdk-backend-bear",
     "sdk-backend-mockingbird",
     "sdk-embedding",
     "sdk-ui-all",
