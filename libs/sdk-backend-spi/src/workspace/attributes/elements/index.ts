@@ -10,9 +10,11 @@ import { IAttributeElement } from "../../fromModel/ldm/attributeElement";
  */
 export interface IElementsQueryOptionsElementsByValue {
     /**
-     * Type of the element references
-     * - primary - primary display form values
-     * - requested - requested display form values
+     * Type of the element references.
+     *
+     * @remarks
+     * The supported values are "primary" for values of the primary display form related to the requested display form,
+     * and "requested" for the values of the display form actually requested.
      */
     referenceType: "primary" | "requested";
 
@@ -77,7 +79,10 @@ export interface IElementsQueryOptions {
 
     /**
      * With this option you can specify concrete attribute elements uris to load.
+     *
+     * @remarks
      * This is commonly used to preload selected elements in the attribute filter.
+     *
      * @deprecated use {@link IElementsQueryOptions.elements} instead
      */
     uris?: string[];
@@ -94,6 +99,8 @@ export interface IElementsQueryOptions {
 
     /**
      * Specify particular elements to load.
+     *
+     * @remarks
      * This is commonly used to preload selected elements in the attribute filter.
      */
     elements?: IElementsQueryOptionsElementsByValue | IElementsQueryOptionsElementsByUri;
