@@ -13,7 +13,6 @@ const libsToBeRemoved = [
     "sdk-backend-base",
     "sdk-backend-bear",
     "sdk-backend-mockingbird",
-    "sdk-backend-tiger",
     "sdk-embedding",
     "sdk-ui-all",
     "sdk-ui-ext",

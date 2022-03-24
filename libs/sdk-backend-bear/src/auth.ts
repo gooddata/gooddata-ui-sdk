@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import { SDK } from "@gooddata/api-client-bear";
 import invariant from "ts-invariant";
 import {
@@ -73,7 +73,10 @@ export class FixedLoginAndPasswordAuthProvider
 
 /**
  * This implementation of authentication provider defers the responsibility for performing authentication
- * to the context in which it exists. In other words it expects that the application will take care of driving
+ * to the context in which it exists.
+ *
+ * @remarks
+ * In other words it expects that the application will take care of driving
  * the authentication and creating a correct session in which the Bear backend can make authenticated calls.
  *
  * You may use the provider's ability to use passed `NotAuthenticatedHandler` function. This will be called
