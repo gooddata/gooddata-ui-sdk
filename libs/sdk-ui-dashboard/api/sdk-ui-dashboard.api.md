@@ -4165,7 +4165,7 @@ export const selectAnalyticalWidgetByRef: (ref: ObjRef | undefined) => OutputSel
 // @public
 export const selectAttributeFilterDisplayForms: OutputSelector<DashboardState, IAttributeDisplayFormMetadataObject[], (res: FilterContextState) => IAttributeDisplayFormMetadataObject[]>;
 
-// @public
+// @internal
 export const selectAttributeFilterDisplayFormsMap: OutputSelector<DashboardState, ObjRefMap<IAttributeDisplayFormMetadataObject>, (res: FilterContextState) => ObjRefMap<IAttributeDisplayFormMetadataObject>>;
 
 // @alpha (undocumented)
@@ -4405,7 +4405,7 @@ export const selectFilterContextDefinition: OutputSelector<DashboardState, IFilt
 // @public
 export const selectFilterContextFilters: OutputSelector<DashboardState, FilterContextItem[], (res: IFilterContextDefinition) => FilterContextItem[]>;
 
-// @public
+// @internal
 export const selectFilterContextIdentity: OutputSelector<DashboardState, IDashboardObjectIdentity | undefined, (res: FilterContextState) => IDashboardObjectIdentity | undefined>;
 
 // @public
