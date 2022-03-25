@@ -42,8 +42,7 @@ const prepareElementsTitleQuery = (
                   uris: elementIdentifiers,
               }
             : {
-                  referenceType: "primary",
-                  values: elementIdentifiers,
+                  primaryValues: elementIdentifiers,
               },
     };
 

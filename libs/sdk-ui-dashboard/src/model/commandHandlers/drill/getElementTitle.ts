@@ -15,8 +15,7 @@ export async function getElementTitle(
                   uris: [attrElementUriOrPrimaryLabel],
               }
             : {
-                  referenceType: "primary",
-                  values: [attrElementUriOrPrimaryLabel],
+                  primaryValues: [attrElementUriOrPrimaryLabel],
               },
     };
 

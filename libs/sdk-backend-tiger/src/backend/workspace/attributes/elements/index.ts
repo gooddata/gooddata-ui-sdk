@@ -14,6 +14,7 @@ import {
     IElementsQueryResult,
     IFilterElementsQuery,
     isElementsQueryOptionsElementsByValue,
+    isValueBasedElementsQueryOptionsElements,
     NotSupported,
     UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
@@ -98,19 +99,23 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
             }
 
             invariant(
-                isElementsQueryOptionsElementsByValue(elements),
+                isValueBasedElementsQueryOptionsElements(elements),
                 "Specifying elements by URIs is not supported. Use specification by value instead.",
             );
 
-            return {
-                exactFilter: elements.values,
-                filterBy: {
-                    labelType:
-                        elements.referenceType === "requested"
-                            ? ElementsRequestFilterByLabelTypeEnum.REQUESTED
-                            : ElementsRequestFilterByLabelTypeEnum.PRIMARY,
-                },
-            };
+            return isElementsQueryOptionsElementsByValue(elements)
+                ? {
+                      exactFilter: elements.values,
+                      filterBy: {
+                          labelType: ElementsRequestFilterByLabelTypeEnum.REQUESTED,
+                      },
+                  }
+                : {
+                      exactFilter: elements.primaryValues,
+                      filterBy: {
+                          labelType: ElementsRequestFilterByLabelTypeEnum.PRIMARY,
+                      },
+                  };
         } else if (uris) {
             return {
                 exactFilter: uris,

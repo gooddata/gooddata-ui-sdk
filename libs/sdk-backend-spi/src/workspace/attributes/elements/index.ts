@@ -10,15 +10,6 @@ import { IAttributeElement } from "../../fromModel/ldm/attributeElement";
  */
 export interface IElementsQueryOptionsElementsByValue {
     /**
-     * Type of the element references.
-     *
-     * @remarks
-     * The supported values are "primary" for values of the primary display form related to the requested display form,
-     * and "requested" for the values of the display form actually requested.
-     */
-    referenceType: "primary" | "requested";
-
-    /**
      * The values to request.
      */
     values: string[];
@@ -32,10 +23,44 @@ export interface IElementsQueryOptionsElementsByValue {
 export function isElementsQueryOptionsElementsByValue(
     obj: unknown,
 ): obj is IElementsQueryOptionsElementsByValue {
+    return !!obj && !!(obj as IElementsQueryOptionsElementsByValue).values;
+}
+
+/**
+ * Specification of particular elements to load in {@link IElementsQueryOptions} using the values of the primary
+ * display form related to the attribute the requested display form is from.
+ *
+ * @public
+ */
+export interface IElementsQueryOptionsElementsByPrimaryDisplayFormValue {
+    /**
+     * The values to request.
+     */
+    primaryValues: string[];
+}
+
+/**
+ * Type guard checking whether the object is an instance of {@link IElementsQueryOptionsElementsByPrimaryDisplayFormValue}.
+ *
+ * @public
+ */
+export function isElementsQueryOptionsElementsByPrimaryDisplayFormValue(
+    obj: unknown,
+): obj is IElementsQueryOptionsElementsByPrimaryDisplayFormValue {
+    return !!obj && !!(obj as IElementsQueryOptionsElementsByPrimaryDisplayFormValue).primaryValues;
+}
+
+/**
+ * Type guard checking whether the object is an instance of {@link IElementsQueryOptionsElementsByValue} or {@link IElementsQueryOptionsElementsByPrimaryDisplayFormValue}.
+ *
+ * @public
+ */
+export function isValueBasedElementsQueryOptionsElements(
+    obj: unknown,
+): obj is IElementsQueryOptionsElementsByValue | IElementsQueryOptionsElementsByPrimaryDisplayFormValue {
     return (
-        !!obj &&
-        !!(obj as IElementsQueryOptionsElementsByValue).values &&
-        !!(obj as IElementsQueryOptionsElementsByValue).referenceType
+        isElementsQueryOptionsElementsByValue(obj) ||
+        isElementsQueryOptionsElementsByPrimaryDisplayFormValue(obj)
     );
 }
 
@@ -103,7 +128,10 @@ export interface IElementsQueryOptions {
      * @remarks
      * This is commonly used to preload selected elements in the attribute filter.
      */
-    elements?: IElementsQueryOptionsElementsByValue | IElementsQueryOptionsElementsByUri;
+    elements?:
+        | IElementsQueryOptionsElementsByValue
+        | IElementsQueryOptionsElementsByPrimaryDisplayFormValue
+        | IElementsQueryOptionsElementsByUri;
 }
 
 /**

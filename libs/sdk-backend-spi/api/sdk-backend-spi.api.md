@@ -843,7 +843,7 @@ export interface IElementsQueryFactory {
 // @public
 export interface IElementsQueryOptions {
     complement?: boolean;
-    elements?: IElementsQueryOptionsElementsByValue | IElementsQueryOptionsElementsByUri;
+    elements?: IElementsQueryOptionsElementsByValue | IElementsQueryOptionsElementsByPrimaryDisplayFormValue | IElementsQueryOptionsElementsByUri;
     filter?: string;
     includeTotalCountWithoutFilters?: boolean;
     order?: SortDirection;
@@ -854,13 +854,17 @@ export interface IElementsQueryOptions {
 }
 
 // @public
+export interface IElementsQueryOptionsElementsByPrimaryDisplayFormValue {
+    primaryValues: string[];
+}
+
+// @public
 export interface IElementsQueryOptionsElementsByUri {
     uris: string[];
 }
 
 // @public
 export interface IElementsQueryOptionsElementsByValue {
-    referenceType: "primary" | "requested";
     values: string[];
 }
 
@@ -1446,6 +1450,9 @@ export interface ISecuritySettingsService {
 }
 
 // @public
+export function isElementsQueryOptionsElementsByPrimaryDisplayFormValue(obj: unknown): obj is IElementsQueryOptionsElementsByPrimaryDisplayFormValue;
+
+// @public
 export function isElementsQueryOptionsElementsByValue(obj: unknown): obj is IElementsQueryOptionsElementsByValue;
 
 // @public
@@ -1597,6 +1604,9 @@ export const isUserGroupAccess: (obj: unknown) => obj is IUserGroupAccess;
 
 // @public
 export const isUserGroupAccessGrantee: (obj: unknown) => obj is IUserGroupAccessGrantee;
+
+// @public
+export function isValueBasedElementsQueryOptionsElements(obj: unknown): obj is IElementsQueryOptionsElementsByValue | IElementsQueryOptionsElementsByPrimaryDisplayFormValue;
 
 // @public
 export function isVariableMetadataObject(obj: unknown): obj is IVariableMetadataObject;

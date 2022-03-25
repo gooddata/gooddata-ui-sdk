@@ -8,7 +8,7 @@ import {
     IElementsQueryAttributeFilter,
     IFilterElementsQuery,
     FilterWithResolvableElements,
-    isElementsQueryOptionsElementsByValue,
+    isValueBasedElementsQueryOptionsElements,
 } from "@gooddata/sdk-backend-spi";
 import {
     filterObjRef,
@@ -135,9 +135,10 @@ class BearWorkspaceElementsQuery implements IElementsQuery {
             );
         }
 
-        if (isElementsQueryOptionsElementsByValue(elements)) {
-            invariant(false, "Specifying elements by value is not supported.");
-        }
+        invariant(
+            !isValueBasedElementsQueryOptionsElements(elements),
+            "Specifying elements by value is not supported.",
+        );
 
         const urisToUse = elements?.uris ?? uris;
 

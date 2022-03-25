@@ -109,8 +109,7 @@ export function useBrokenAlertFiltersMeta({
                                     uris: attributeFilter.attributeElements.uris,
                                 }
                               : {
-                                    referenceType: "primary",
-                                    values: attributeFilter.attributeElements.uris,
+                                    primaryValues: attributeFilter.attributeElements.uris,
                                 },
                           includeTotalCountWithoutFilters: true,
                       };
