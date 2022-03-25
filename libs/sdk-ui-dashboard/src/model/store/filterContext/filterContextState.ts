@@ -21,11 +21,14 @@ export interface FilterContextState {
     originalFilterContextDefinition?: IFilterContextDefinition;
 
     /**
-     * Filter context identity is available for persisted filter contexts. This property may be undefined in
-     * two circumstances:
+     * Filter context identity is available for persisted filter contexts.
+     *
+     * @remarks
+     * This property may be undefined in two circumstances:
      *
      * -  a new, yet unsaved dashboard; the filter context is saved together with the dashboard and after the
      *    save the identity will be known and added
+     *
      * -  export of an existing, saved dashboard; during the export the dashboard receives a temporary
      *    filter context that represents values of filters at the time the export was initiated - which may
      *    be different from what is saved in the filter context itself. that temporary context is not

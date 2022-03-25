@@ -4162,10 +4162,10 @@ export const selectAllKpiWidgets: OutputSelector<DashboardState, IKpiWidget[], (
 // @alpha
 export const selectAnalyticalWidgetByRef: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IKpiWidget | IInsightWidget | undefined, (res: ObjRefMap<ExtendedDashboardWidget>) => IKpiWidget | IInsightWidget | undefined>;
 
-// @alpha
+// @public
 export const selectAttributeFilterDisplayForms: OutputSelector<DashboardState, IAttributeDisplayFormMetadataObject[], (res: FilterContextState) => IAttributeDisplayFormMetadataObject[]>;
 
-// @alpha
+// @internal
 export const selectAttributeFilterDisplayFormsMap: OutputSelector<DashboardState, ObjRefMap<IAttributeDisplayFormMetadataObject>, (res: FilterContextState) => ObjRefMap<IAttributeDisplayFormMetadataObject>>;
 
 // @alpha (undocumented)
@@ -4390,22 +4390,22 @@ export const selectFilterBarExpanded: OutputSelector<DashboardState, boolean, (r
 // @internal (undocumented)
 export const selectFilterBarHeight: OutputSelector<DashboardState, number, (res: UiState) => number>;
 
-// @alpha
+// @public
 export const selectFilterContextAttributeFilterByDisplayForm: (displayForm: ObjRef) => OutputSelector<DashboardState, IDashboardAttributeFilter | undefined, (res1: ObjRefMap<IAttributeDisplayFormMetadataObject>, res2: IDashboardAttributeFilter[]) => IDashboardAttributeFilter | undefined>;
 
-// @alpha
+// @public
 export const selectFilterContextAttributeFilters: OutputSelector<DashboardState, IDashboardAttributeFilter[], (res: FilterContextItem[]) => IDashboardAttributeFilter[]>;
 
-// @alpha
+// @public
 export const selectFilterContextDateFilter: OutputSelector<DashboardState, IDashboardDateFilter | undefined, (res: FilterContextItem[]) => IDashboardDateFilter | undefined>;
 
-// @alpha
+// @public
 export const selectFilterContextDefinition: OutputSelector<DashboardState, IFilterContextDefinition, (res: FilterContextState) => IFilterContextDefinition>;
 
-// @alpha
+// @public
 export const selectFilterContextFilters: OutputSelector<DashboardState, FilterContextItem[], (res: IFilterContextDefinition) => FilterContextItem[]>;
 
-// @alpha
+// @internal
 export const selectFilterContextIdentity: OutputSelector<DashboardState, IDashboardObjectIdentity | undefined, (res: FilterContextState) => IDashboardObjectIdentity | undefined>;
 
 // @public
@@ -4495,10 +4495,10 @@ export const selectMenuButtonItemsVisibility: OutputSelector<DashboardState, IMe
 // @public
 export const selectObjectAvailabilityConfig: OutputSelector<DashboardState, ObjectAvailabilityConfig, (res: ResolvedDashboardConfig) => ObjectAvailabilityConfig>;
 
-// @alpha
+// @public
 export const selectOriginalFilterContextDefinition: OutputSelector<DashboardState, IFilterContextDefinition | undefined, (res: FilterContextState) => IFilterContextDefinition | undefined>;
 
-// @alpha
+// @public
 export const selectOriginalFilterContextFilters: OutputSelector<DashboardState, FilterContextItem[], (res: IFilterContextDefinition | undefined) => FilterContextItem[]>;
 
 // @public
