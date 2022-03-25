@@ -40,7 +40,7 @@ export const selectOriginalFilterContextDefinition = createSelector(selectSelf, 
 });
 
 /**
- * This selector returns original (stored) dashboard's filter context definition.
+ * This selector returns original (stored) dashboard's filters.
  *
  * @remarks
  * It is expected that the selector is called only after the filter context state is correctly initialized.
@@ -56,7 +56,7 @@ export const selectOriginalFilterContextFilters = createSelector(
 );
 
 /**
- * This selector returns original (stored) dashboard's filter context filters.
+ * This selector returns current dashboard's filter context definition.
  *
  * @remarks
  * It is expected that the selector is called only after the filter context state is correctly initialized.
@@ -93,7 +93,7 @@ export const selectFilterContextDefinition = createSelector(selectSelf, (filterC
  *
  * @returns a {@link @gooddata/sdk-backend-spi#IDashboardObjectIdentity} or undefined, if the filter context identity is not set.
  *
- * @public
+ * @internal
  */
 export const selectFilterContextIdentity = createSelector(selectSelf, (filterContextState) => {
     // this is intentional; want to fail fast when trying to access an optional identity of filter context \
@@ -133,7 +133,7 @@ export const selectAttributeFilterDisplayForms = createSelector(selectSelf, (fil
  *
  * @returns a {@link ObjRefMap} of {@link @gooddata/sdk-backend-spi#IAttributeDisplayFormMetadataObject}
  *
- * @public
+ * @internal
  */
 export const selectAttributeFilterDisplayFormsMap = createSelector(selectSelf, (filterContextState) => {
     invariant(
