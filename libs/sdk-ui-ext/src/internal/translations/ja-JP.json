@@ -86,7 +86,7 @@
     "dashboard.bucket.metric_view_by_warning._metric": "メトリックを更に追加する場合は、'<span class=\"stack-by\">'表示'</span>'から{icons}を削除します。",
     "dashboard.bucket.category_view_by_warning._measure": "表示を追加する場合、インサイトで使用できるメジャーは 1 種類のみです。",
     "dashboard.bucket.category_view_by_warning._metric": "表示を追加する場合、インサイトで使用できるメトリックは 1 種類のみです。",
-    "dashboard.bucket.view_stack_by_warning": "アトリビュートを追加するには、'<span class=\"stack-by\">'スタック'</span>'から{icons}を削除します。",
+    "dashboard.bucket.view_stack_by_warning": "アトリビュートを追加するには、'<span class=\"stack-by\">'積み上げ'</span>'から{icons}を削除します。",
     "dashboard.bucket.category_stack_by_warning._measure": "スタックするには、解析に1つだけのメジャーを含むことができます",
     "dashboard.bucket.category_stack_by_warning._metric": "スタックするには、解析に1つだけのメトリックを含むことができます",
     "dashboard.bucket.stack_view_by_warning": "スタックする場合、インサイトで使用できる表示内のアトリビュートは 1 種類のみです",
