@@ -4,6 +4,82 @@ import { IPagedResource } from "../../../common/paging";
 import { IAttributeElement } from "../../fromModel/ldm/attributeElement";
 
 /**
+ * Specification of particular elements to load in {@link IElementsQueryOptions} using their values.
+ *
+ * @public
+ */
+export interface IElementsQueryOptionsElementsByValue {
+    /**
+     * The values to request.
+     */
+    values: string[];
+}
+
+/**
+ * Type guard checking whether the object is an instance of {@link IElementsQueryOptionsElementsByValue}.
+ *
+ * @public
+ */
+export function isElementsQueryOptionsElementsByValue(
+    obj: unknown,
+): obj is IElementsQueryOptionsElementsByValue {
+    return !!obj && !!(obj as IElementsQueryOptionsElementsByValue).values;
+}
+
+/**
+ * Specification of particular elements to load in {@link IElementsQueryOptions} using the values of the primary
+ * display form related to the attribute the requested display form is from.
+ *
+ * @public
+ */
+export interface IElementsQueryOptionsElementsByPrimaryDisplayFormValue {
+    /**
+     * The values to request.
+     */
+    primaryValues: string[];
+}
+
+/**
+ * Type guard checking whether the object is an instance of {@link IElementsQueryOptionsElementsByPrimaryDisplayFormValue}.
+ *
+ * @public
+ */
+export function isElementsQueryOptionsElementsByPrimaryDisplayFormValue(
+    obj: unknown,
+): obj is IElementsQueryOptionsElementsByPrimaryDisplayFormValue {
+    return !!obj && !!(obj as IElementsQueryOptionsElementsByPrimaryDisplayFormValue).primaryValues;
+}
+
+/**
+ * Type guard checking whether the object is an instance of {@link IElementsQueryOptionsElementsByValue} or {@link IElementsQueryOptionsElementsByPrimaryDisplayFormValue}.
+ *
+ * @public
+ */
+export function isValueBasedElementsQueryOptionsElements(
+    obj: unknown,
+): obj is IElementsQueryOptionsElementsByValue | IElementsQueryOptionsElementsByPrimaryDisplayFormValue {
+    return (
+        isElementsQueryOptionsElementsByValue(obj) ||
+        isElementsQueryOptionsElementsByPrimaryDisplayFormValue(obj)
+    );
+}
+
+/**
+ * Specification of particular elements to load in {@link IElementsQueryOptions} using their URIs.
+ *
+ * @remarks
+ * This is not supported on backends without the supportsElementUris capability.
+ *
+ * @public
+ */
+export interface IElementsQueryOptionsElementsByUri {
+    /**
+     * The element URIs to request.
+     */
+    uris: string[];
+}
+
+/**
  * Configuration options for querying attribute elements
  *
  * @public
@@ -20,13 +96,19 @@ export interface IElementsQueryOptions {
     filter?: string;
 
     /**
+     * @privateRemarks
      * TODO what is this doing?
+     * @deprecated do not use.
      */
     prompt?: string;
 
     /**
-     *  With this option you can specify concrete attribute elements uris to load.
-     *  This is commonly used to preload selected elements in the attribute filter
+     * With this option you can specify concrete attribute elements uris to load.
+     *
+     * @remarks
+     * This is commonly used to preload selected elements in the attribute filter.
+     *
+     * @deprecated use {@link IElementsQueryOptions.elements} instead
      */
     uris?: string[];
 
@@ -39,6 +121,17 @@ export interface IElementsQueryOptions {
      * Include the total count of all elements in the response (without filters applied)
      */
     includeTotalCountWithoutFilters?: boolean;
+
+    /**
+     * Specify particular elements to load.
+     *
+     * @remarks
+     * This is commonly used to preload selected elements in the attribute filter.
+     */
+    elements?:
+        | IElementsQueryOptionsElementsByValue
+        | IElementsQueryOptionsElementsByPrimaryDisplayFormValue
+        | IElementsQueryOptionsElementsByUri;
 }
 
 /**

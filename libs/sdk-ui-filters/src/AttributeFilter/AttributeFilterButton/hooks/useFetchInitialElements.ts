@@ -1,8 +1,14 @@
 // (C) 2022 GoodData Corporation
 import { useMemo } from "react";
 import { useCancelablePromise } from "@gooddata/sdk-ui";
+import compact from "lodash/compact";
 import isEmpty from "lodash/isEmpty";
-import { IAnalyticalBackend, IAttributeElement, IElementsQueryResult } from "@gooddata/sdk-backend-spi";
+import {
+    IAnalyticalBackend,
+    IAttributeElement,
+    IElementsQueryOptions,
+    IElementsQueryResult,
+} from "@gooddata/sdk-backend-spi";
 import stringify from "json-stable-stringify";
 import { getObjRef } from "../../utils/AttributeFilterUtils";
 import { AttributeFilterButtonContextProps } from "./types";
@@ -26,12 +32,18 @@ const prepareElementsTitleQuery = (
     const supportsElementUris = backend.capabilities.supportsElementUris;
     const isElementsByRef = isAttributeElementsByRef(filterAttributeElements(currentFilter));
 
-    const options = {
-        uris: appliedElements
-            .map((element) => {
-                return supportsElementUris && isElementsByRef ? element.uri : element.title;
-            })
-            .filter(Boolean),
+    const elementIdentifiers = compact(
+        appliedElements.map((element) => (isElementsByRef ? element.uri : element.title)),
+    );
+
+    const options: IElementsQueryOptions = {
+        elements: supportsElementUris
+            ? {
+                  uris: elementIdentifiers,
+              }
+            : {
+                  primaryValues: elementIdentifiers,
+              },
     };
 
     return backend
@@ -39,7 +51,7 @@ const prepareElementsTitleQuery = (
         .attributes()
         .elements()
         .forDisplayForm(getObjRef(currentFilter, identifier))
-        .withOptions(options.uris.length > 0 ? options : {});
+        .withOptions(elementIdentifiers.length > 0 ? options : {});
 };
 
 /**

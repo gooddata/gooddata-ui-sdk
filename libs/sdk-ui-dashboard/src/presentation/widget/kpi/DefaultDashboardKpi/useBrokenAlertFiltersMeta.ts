@@ -1,10 +1,11 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import {
     AnalyticalBackendError,
     IAnalyticalBackend,
     IDataSetMetadataObject,
     NotSupported,
     ICatalogDateDataset,
+    IElementsQueryOptions,
 } from "@gooddata/sdk-backend-spi";
 import {
     useBackendStrict,
@@ -100,17 +101,25 @@ export function useBrokenAlertFiltersMeta({
 
                       const attributesService = effectiveBackend.workspace(effectiveWorkspace).attributes();
 
+                      const elementsQueryOptions: IElementsQueryOptions = {
+                          elements: attributeFilter.negativeSelection
+                              ? undefined // for negative filters we need to load the items NOT selected, however there is no way of doing that, so we load everything
+                              : effectiveBackend.capabilities.supportsElementUris
+                              ? {
+                                    uris: attributeFilter.attributeElements.uris,
+                                }
+                              : {
+                                    primaryValues: attributeFilter.attributeElements.uris,
+                                },
+                          includeTotalCountWithoutFilters: true,
+                      };
+
                       const [elements, displayFormData] = await Promise.all([
                           attributesService
                               .elements()
                               .forDisplayForm(displayForm)
                               .withLimit(DEFAULT_ATTRIBUTE_ELEMENT_COUNT)
-                              .withOptions({
-                                  uris: attributeFilter.negativeSelection
-                                      ? undefined // for negative filters we need to load the items NOT selected, however there is no way of doing that, so we load everything
-                                      : attributeFilter.attributeElements.uris,
-                                  includeTotalCountWithoutFilters: true,
-                              })
+                              .withOptions(elementsQueryOptions)
                               .query(),
                           attributesService.getAttributeDisplayForm(displayForm),
                       ]);
