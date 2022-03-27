@@ -19,7 +19,7 @@ import isEmpty from "lodash/isEmpty";
 import { createExecution } from "./createExecution";
 
 /**
- * @beta
+ * @public
  */
 export interface IExecutionConfiguration {
     /**
@@ -73,7 +73,7 @@ function isExecutionConfiguration(obj: unknown): obj is IExecutionConfiguration 
 }
 
 /**
- * @beta
+ * @public
  */
 export interface IUseExecutionDataViewConfig {
     /**
@@ -111,7 +111,7 @@ export interface IUseExecutionDataViewConfig {
 /**
  * React hook to get data for a specific execution.
  *
- * @beta
+ * @public
  */
 export function useExecutionDataView(
     config: IUseExecutionDataViewConfig,

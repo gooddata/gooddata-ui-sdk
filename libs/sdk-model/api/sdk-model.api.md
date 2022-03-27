@@ -659,10 +659,10 @@ export function insightCreated(insight: IInsight): string | undefined;
 // @public
 export function insightCreatedBy(insight: IInsight): IUser | undefined;
 
-// @alpha (undocumented)
+// @beta (undocumented)
 export const insightCreatedByComparator: (direction: ComparatorDirection) => IComparator<IInsight>;
 
-// @alpha (undocumented)
+// @beta (undocumented)
 export const insightCreatedComparator: (direction: ComparatorDirection) => IComparator<IInsight>;
 
 // @internal
@@ -758,7 +758,7 @@ export function insightTags(insight: IInsightDefinition): string[];
 // @public
 export function insightTitle(insight: IInsightDefinition): string;
 
-// @alpha (undocumented)
+// @beta (undocumented)
 export const insightTitleComparator: (direction: ComparatorDirection) => IComparator<IInsightDefinition>;
 
 // @public
@@ -770,10 +770,10 @@ export function insightUpdated(insight: IInsight): string | undefined;
 // @public
 export function insightUpdatedBy(insight: IInsight): IUser | undefined;
 
-// @alpha (undocumented)
+// @beta (undocumented)
 export const insightUpdatedByComparator: (direction: ComparatorDirection) => IComparator<IInsight>;
 
-// @alpha (undocumented)
+// @beta (undocumented)
 export const insightUpdatedComparator: (direction: ComparatorDirection) => IComparator<IInsight>;
 
 // @public

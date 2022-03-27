@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { ObjRef, isObjRef } from "@gooddata/sdk-model";
 import { IFilterContext, IFilterContextDefinition, isFilterContextDefinition } from "./filterContext";
 import { IDashboardObjectIdentity } from "./common";
@@ -6,7 +6,7 @@ import isEmpty from "lodash/isEmpty";
 
 /**
  * Common widget alert properties
- * @alpha
+ * @public
  */
 export interface IWidgetAlertBase {
     /**
@@ -49,7 +49,7 @@ export interface IWidgetAlertBase {
 /**
  * With widget alert, user can be notified to his email according to provided rules
  * (e.g. when some measure exceeds/drops below the set value)
- * @alpha
+ * @public
  */
 export interface IWidgetAlertDefinition extends IWidgetAlertBase, Partial<IDashboardObjectIdentity> {
     /**
@@ -60,7 +60,7 @@ export interface IWidgetAlertDefinition extends IWidgetAlertBase, Partial<IDashb
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IWidgetAlertDefinition}.
- * @alpha
+ * @public
  */
 export function isWidgetAlertDefinition(obj: unknown): obj is IWidgetAlertDefinition {
     return (
@@ -72,7 +72,7 @@ export function isWidgetAlertDefinition(obj: unknown): obj is IWidgetAlertDefini
 
 /**
  * See {@link IWidgetAlertDefinition}
- * @alpha
+ * @public
  */
 export interface IWidgetAlert extends IWidgetAlertBase, IDashboardObjectIdentity {
     /**
@@ -83,7 +83,7 @@ export interface IWidgetAlert extends IWidgetAlertBase, IDashboardObjectIdentity
 
 /**
  * Pair of the widget and it's alert count
- * @alpha
+ * @public
  */
 export interface IWidgetAlertCount {
     /**
@@ -99,7 +99,7 @@ export interface IWidgetAlertCount {
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IWidgetAlert}.
- * @alpha
+ * @public
  */
 export function isWidgetAlert(obj: unknown): obj is IWidgetAlert {
     return hasWidgetAlertBaseProps(obj) && !isWidgetAlertDefinition(obj);

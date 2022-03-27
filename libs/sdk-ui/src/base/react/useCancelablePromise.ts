@@ -7,13 +7,13 @@ import { safeSerialize } from "./safeSerialize";
 
 /**
  * Indicates the current state of the promise inside {@link useCancelablePromise} hook
- * @beta
+ * @public
  */
 export type UseCancelablePromiseStatus = "success" | "error" | "loading" | "pending";
 
 /**
  * Indicates pending state for {@link useCancelablePromise} hook
- * @beta
+ * @public
  */
 export type UseCancelablePromisePendingState = {
     result: undefined;
@@ -23,7 +23,7 @@ export type UseCancelablePromisePendingState = {
 
 /**
  * Indicates loading state for {@link useCancelablePromise} hook
- * @beta
+ * @public
  */
 export type UseCancelablePromiseLoadingState = {
     result: undefined;
@@ -33,7 +33,7 @@ export type UseCancelablePromiseLoadingState = {
 
 /**
  * Indicates error state for {@link useCancelablePromise} hook
- * @beta
+ * @public
  */
 export type UseCancelablePromiseErrorState<TError> = {
     result: undefined;
@@ -43,7 +43,7 @@ export type UseCancelablePromiseErrorState<TError> = {
 
 /**
  * Indicates success state for {@link useCancelablePromise} hook
- * @beta
+ * @public
  */
 export type UseCancelablePromiseSuccessState<TResult> = {
     result: TResult;
@@ -53,7 +53,7 @@ export type UseCancelablePromiseSuccessState<TResult> = {
 
 /**
  * Indicates the current state of {@link useCancelablePromise} hook
- * @beta
+ * @public
  */
 export type UseCancelablePromiseState<TResult, TError> =
     | UseCancelablePromisePendingState
@@ -63,7 +63,7 @@ export type UseCancelablePromiseState<TResult, TError> =
 
 /**
  * Callbacks for {@link useCancelablePromise} hook
- * @beta
+ * @public
  */
 export type UseCancelablePromiseCallbacks<TResult, TError> = {
     /**
@@ -91,14 +91,14 @@ export type UseCancelablePromiseCallbacks<TResult, TError> = {
 /**
  * Options for the {@link useCancelablePromise} hook.
  *
- * @beta
+ * @public
  */
 export type UseCancelablePromiseOptions<TResult, TError> = UseCancelablePromiseCallbacks<TResult, TError> & {
     promise: (() => Promise<TResult>) | undefined | null;
 };
 
 /**
- * This hook provides easy way to work with Promise.
+ * This hook provides easy way to work with Promises in React components.
  *
  * @remarks
  * You can:
@@ -107,7 +107,11 @@ export type UseCancelablePromiseOptions<TResult, TError> = UseCancelablePromiseC
  * - attach convenient callbacks to it
  * - be sure, that when the dependency list changes, result will be still relevant (if previous Promise is still running, it's "canceled").
  *
- * @beta
+ * Note that it's not recommended to use this hook for storing data on the backend
+ * as it does not cancel requests wrapped in these promises
+ * and you have no guarantee about the resolution order of the fired requests.
+ *
+ * @public
  */
 export function useCancelablePromise<TResult, TError = any>(
     options: UseCancelablePromiseOptions<TResult, TError>,

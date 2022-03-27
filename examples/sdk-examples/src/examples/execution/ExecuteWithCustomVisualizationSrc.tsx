@@ -1,6 +1,6 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { Execute, LoadingComponent, ErrorComponent } from "@gooddata/sdk-ui";
+import { Execute, LoadingComponent, ErrorComponent, IExecuteErrorComponentProps } from "@gooddata/sdk-ui";
 import { ResponsiveContainer, BarChart, CartesianGrid, XAxis, YAxis, Legend, Bar } from "recharts";
 import { modifyAttribute, modifyMeasure } from "@gooddata/sdk-model";
 
@@ -20,14 +20,14 @@ const slicesBy = [monthDate];
 
 const colors = ["rgb(20,178,226)", "rgb(0,193,141)", "rgb(229,77,66)"];
 
-const CustomErrorComponent = ({ error }: { error: any }) => (
+const CustomErrorComponent = ({ error }: IExecuteErrorComponentProps) => (
     <ErrorComponent
         message="There was an error getting your execution"
         description={JSON.stringify(error, null, 2)}
     />
 );
 
-export const ExecuteWithCustomVisualizationExample: React.FC = () => {
+const ExecuteWithCustomVisualizationExample: React.FC = () => {
     return (
         <Execute
             seriesBy={seriesBy}

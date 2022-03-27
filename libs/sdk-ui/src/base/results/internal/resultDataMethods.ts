@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { DataValue, IDataView } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
 import isArray from "lodash/isArray";
@@ -6,7 +6,7 @@ import isArray from "lodash/isArray";
 /**
  * Methods to access data and totals in a result.
  *
- * @alpha
+ * @public
  */
 export interface IResultDataMethods {
     /**

@@ -1,9 +1,9 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
 
 /**
  * Object unique identity
- * @alpha
+ * @public
  */
 export interface IDashboardObjectIdentity {
     /**

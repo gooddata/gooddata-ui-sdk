@@ -2,15 +2,14 @@
 import React, { useState } from "react";
 import { LoadingComponent, ErrorComponent, useExecutionDataView } from "@gooddata/sdk-ui";
 import { newMeasure } from "@gooddata/sdk-model";
-
-const totalSalesIdentifier = "aa7ulGyKhIE5";
+import * as Md from "../../md/full";
 
 interface IUseDataViewExample {
     executionNumber: number;
     willFail: boolean;
 }
 
-export const UseDataViewExample: React.FC = () => {
+const UseExecutionDataViewExample: React.FC = () => {
     const [{ willFail }, setState] = useState<IUseDataViewExample>({
         executionNumber: 0,
         willFail: false,
@@ -26,7 +25,7 @@ export const UseDataViewExample: React.FC = () => {
         });
     };
 
-    const measure = newMeasure(willFail ? "thisDoesNotExits" : totalSalesIdentifier);
+    const measure = willFail ? newMeasure("thisDoesNotExits") : Md.$TotalSales;
     const seriesBy = [measure];
     const { result, error, status } = useExecutionDataView({ execution: { seriesBy } });
 
@@ -87,3 +86,5 @@ export const UseDataViewExample: React.FC = () => {
         </div>
     );
 };
+
+export default UseExecutionDataViewExample;

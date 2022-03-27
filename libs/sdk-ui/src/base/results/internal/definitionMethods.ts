@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     bucketIsEmpty,
     IAttribute,
@@ -14,7 +14,7 @@ import findIndex from "lodash/findIndex";
 /**
  * Methods to work with execution definition.
  *
- * @alpha
+ * @public
  */
 export interface IExecutionDefinitionMethods {
     /**

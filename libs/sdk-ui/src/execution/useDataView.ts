@@ -13,12 +13,14 @@ import {
 
 /**
  * Indicates current state of useDataView hook
+ * @deprecated use {@link useExecutionDataView} instead
  * @beta
  */
 export type UseDataViewState = UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
 
 /**
  * Callbacks for useDataView hook
+ * @deprecated use {@link useExecutionDataView} instead
  * @beta
  */
 export type UseDataViewCallbacks = UseCancelablePromiseCallbacks<DataViewFacade, GoodDataSdkError>;
@@ -30,6 +32,7 @@ export type UseDataViewCallbacks = UseCancelablePromiseCallbacks<DataViewFacade,
  * You can use it to create custom visualizations on top of GoodData platform.
  * Be aware that execution is re-executed only on dependency list change, not on execution/window/callbacks change.
  *
+ * @deprecated use {@link useExecutionDataView} instead
  * @beta
  */
 export function useDataView(

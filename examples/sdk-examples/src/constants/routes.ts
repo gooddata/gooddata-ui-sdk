@@ -5,7 +5,7 @@ import { InsightView } from "../examples/insightView";
 import { Sorting } from "../examples/sorting";
 import { TimeOverTimeComparison } from "../examples/timeOverTimeComparison";
 import { ArithmeticMeasures } from "../examples/arithmeticMeasures";
-import { Execute } from "../examples/execution";
+
 import { PivotTableDrilling, DrillWithExternalData, GeoPushpinDrilling } from "../examples/drill";
 import { DateFilter } from "../examples/dateFilter";
 
@@ -36,6 +36,12 @@ import { ChartResponsiveness } from "../examples/chartResponsiveness";
 import { Login } from "../components/login";
 import { WithSubRoutes } from "../components/WithSubRoutes";
 import { AboutThisWorkspace } from "../components/AboutThisWorkspace";
+
+import ExecuteComponent from "../examples/execution/Execute";
+import RawExecuteComponent from "../examples/execution/RawExecute";
+import ExecuteInsightComponent from "../examples/execution/ExecuteInsight";
+import UseExecutionDataView from "../examples/execution/UseExecutionDataView";
+import UseInsightDataView from "../examples/execution/UseInsightDataView";
 
 import SingleValuePlaceholders from "../examples/placeholders/SingleValuePlaceholder";
 import MultiValuePlaceholders from "../examples/placeholders/MultiValuePlaceholder";
@@ -104,6 +110,34 @@ export const dashboardComponentUseCasesRoutes = [
     },
 ];
 
+export const executeUseCasesRoutes = [
+    {
+        path: "/execute/execute-component",
+        title: "Execute",
+        Component: ExecuteComponent,
+    },
+    {
+        path: "/execute/raw-execute-component",
+        title: "RawExecute",
+        Component: RawExecuteComponent,
+    },
+    {
+        path: "/execute/execute-insight-component",
+        title: "ExecuteInsight",
+        Component: ExecuteInsightComponent,
+    },
+    {
+        path: "/execute/use-execution-data-view-hook",
+        title: "useExecutionDataView",
+        Component: UseExecutionDataView,
+    },
+    {
+        path: "/execute/use-insight-data-view-hook",
+        title: "useInsightDataView",
+        Component: UseInsightDataView,
+    },
+];
+
 export const drillingUseCasesRoutes = [
     {
         path: "/drilling/drill-with-external-data",
@@ -156,6 +190,10 @@ const InsightViewUseCasesRoutes = (props: any): JSX.Element =>
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const DashboardComponentUseCasesRoutes = (props: any): JSX.Element =>
     WithSubRoutes({ ...props, subRoutes: dashboardComponentUseCasesRoutes });
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const ExecuteUseCasesRoutes = (props: any): JSX.Element =>
+    WithSubRoutes({ ...props, subRoutes: executeUseCasesRoutes });
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const AdvancedUseCasesRoutes = (props: any): JSX.Element =>
@@ -235,7 +273,13 @@ export const sideNavigationRoutes: RouteDefinition[] = [
         Component: DateFilter,
     },
     { path: "/arithmetic-measures", title: "Arithmetic Measures", Component: ArithmeticMeasures },
-    { path: "/execute", title: "Execute Components", Component: Execute },
+    {
+        path: "/execute",
+        pathMatch: "full",
+        redirectTo: executeUseCasesRoutes[0].path,
+        title: "Execute Components",
+        Component: ExecuteUseCasesRoutes,
+    },
     {
         path: "/advanced",
         pathMatch: "full",
@@ -281,6 +325,7 @@ export const routes = [
     ...sideNavigationRoutes,
     ...insightViewUseCasesRoutes,
     ...dashboardComponentUseCasesRoutes,
+    ...executeUseCasesRoutes,
     ...advancedUseCasesRoutes,
     ...drillingUseCasesRoutes,
     ...measureValueFilterUseCasesRoutes,

@@ -15,7 +15,7 @@ import { DataViewWindow } from "./withExecutionLoading";
 import { useInsight } from "./useInsight";
 
 /**
- * @beta
+ * @public
  */
 export interface IUseInsightDataViewConfig {
     /**
@@ -55,6 +55,24 @@ export interface IUseInsightDataViewConfig {
     window?: DataViewWindow;
 
     /**
+     * Indicates that the execution to obtain the data for the insight should be an 'execution by reference'.
+     *
+     * Execution by reference means that the useInsightDataView will ask analytical backend to compute results for an insight
+     * which is stored on the backend by specifying link to the insight, additional filters and description how
+     * to organize the data.
+     *
+     * Otherwise, a freeform execution is done, in which the InsightView will send to backend the full execution
+     * definition of what to compute.
+     *
+     * This distinction is in place because some backends MAY want to prohibit users from doing freeform executions
+     * and only allow computing data for set of insights created by admins.
+     *
+     * Note: the need for execute by reference is rare. You will typically be notified by the solution admin to use
+     * this mode.
+     */
+    executeByReference?: boolean;
+
+    /**
      * Backend to work with.
      *
      * @remarks
@@ -76,22 +94,34 @@ export interface IUseInsightDataViewConfig {
 /**
  * React hook to get data for a specific insight.
  *
- * @beta
+ * @public
  */
 export function useInsightDataView(
     config: IUseInsightDataViewConfig,
     deps?: React.DependencyList,
 ): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError> {
-    const { insight: insightRef, sorts, dateFormat, dimensions, filters, window } = config;
+    const {
+        insight: insightRef,
+        sorts,
+        dateFormat,
+        dimensions,
+        filters,
+        window,
+        executeByReference,
+    } = config;
     const backend = useBackendStrict(config.backend, "useInsightDataView");
     const workspace = useWorkspaceStrict(config.workspace, "useInsightDataView");
     const effectiveDeps = deps ?? [];
 
     const insightPromise = useInsight({ insight: insightRef, backend, workspace }, effectiveDeps);
 
-    let insightExecution =
-        insightPromise.result &&
-        backend.workspace(workspace).execution().forInsightByRef(insightPromise.result, filters);
+    const executionFactory = backend.workspace(workspace).execution();
+
+    const executeFn = (
+        executeByReference ? executionFactory.forInsightByRef : executionFactory.forInsight
+    ).bind(executionFactory);
+
+    let insightExecution = insightPromise.result && executeFn(insightPromise.result, filters);
 
     if (insightExecution) {
         if (sorts) {

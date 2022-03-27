@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import flatMap from "lodash/flatMap";
 import {
     IAttributeDescriptor,
@@ -32,7 +32,7 @@ import findIndex from "lodash/findIndex";
 /**
  * Methods to access result metadata - dimension descriptors and result headers.
  *
- * @alpha
+ * @public
  */
 export interface IResultMetaMethods {
     /**
