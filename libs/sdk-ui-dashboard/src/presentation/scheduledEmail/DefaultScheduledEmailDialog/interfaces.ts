@@ -109,3 +109,18 @@ export interface IDropdownItem {
     id: string;
     title: string;
 }
+
+/**
+ * @internal
+ */
+export interface IWidgetsSelection {
+    [ref: string]: boolean;
+}
+
+export type WidgetExportFileFormat = "csv" | "xlsx";
+
+export interface IWidgetExportConfiguration {
+    format: WidgetExportFileFormat;
+    mergeHeaders: boolean;
+    includeFilters: boolean;
+}

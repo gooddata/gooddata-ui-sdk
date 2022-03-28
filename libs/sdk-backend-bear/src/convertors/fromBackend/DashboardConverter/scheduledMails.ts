@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { GdcScheduledMail } from "@gooddata/api-model-bear";
 import {
     IScheduledMail,
@@ -27,8 +27,10 @@ export const convertScheduledMailAttachment = (
         } = scheduledMailAttachment;
         const convertedExportOptions = exportOptions
             ? {
-                  includeFilters: exportOptions.includeFilterContext === "yes",
-                  mergeHeaders: exportOptions.mergeHeaders === "yes",
+                  exportOptions: {
+                      includeFilters: exportOptions.includeFilterContext === "yes",
+                      mergeHeaders: exportOptions.mergeHeaders === "yes",
+                  },
               }
             : {};
         return {
@@ -36,7 +38,7 @@ export const convertScheduledMailAttachment = (
             widget: uriRef(uri),
             formats,
             filterContext: filterContext ? uriRef(filterContext) : undefined,
-            exportOptions: convertedExportOptions,
+            ...convertedExportOptions,
         };
     } else {
         throw new NotSupported(

@@ -149,7 +149,7 @@ export interface IWidgetAttachment {
     /**
      * File format
      */
-    formats: ["csv" | "xlsx"];
+    formats: ("csv" | "xlsx")[];
 
     /**
      * Export filter context

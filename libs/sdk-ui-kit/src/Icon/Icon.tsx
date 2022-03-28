@@ -35,6 +35,9 @@ import { Minimize } from "./icons/Minimize";
 import { Dashboard } from "./icons/Dashboard";
 import { Many } from "./icons/Many";
 import { Widget } from "./icons/Widget";
+import { Chart } from "./icons/Chart";
+import { SettingsGear } from "./icons/SettingsGear";
+import { AttachmentClip } from "./icons/AttachmentClip";
 
 /**
  * @internal
@@ -76,6 +79,9 @@ export const Icon = {
     Dashboard,
     Many,
     Widget,
+    Chart,
+    SettingsGear,
+    AttachmentClip,
 };
 
 export { IRowsIconProps };

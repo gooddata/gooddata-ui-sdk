@@ -28,6 +28,11 @@ $vertical-space: 10px;
         margin: 12px 0 14px;
         border-top: 1px solid $gd-border-color;
     }
+
+    .gd-schedule-email-dialog-filters-message {
+        margin-top: -5px;
+        margin-bottom: 20px;
+    }
 }
 
 .gd-input-component {
@@ -94,7 +99,7 @@ $vertical-space: 10px;
         align-items: flex-start;
     }
 
-    > span {
+    .gd-attachment-name {
         flex: 1;
         padding-left: 7px;
 
@@ -110,6 +115,77 @@ $vertical-space: 10px;
         flex: 0;
         padding: 0;
         margin-top: 3px;
+    }
+}
+
+.gd-schedule-email-attachments {
+    @media #{$medium-up} {
+        align-items: flex-start;
+    }
+
+    .gd-attachment-config-button {
+        display: inline-block;
+        margin: 10px 20px 0 0;
+    }
+
+    .gd-dashboard-attachment-list {
+        flex: 1;
+        overflow: hidden;
+
+        @media #{$small-only} {
+            max-width: none;
+        }
+
+        &-content {
+            display: flex;
+            flex-wrap: wrap;
+            overflow: hidden;
+            margin: -5px;
+        }
+    }
+
+    .gd-dashboard-attachment {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow: hidden;
+        margin: 5px;
+
+        &-format {
+            padding-left: 7px;
+            padding-right: 7px;
+            display: flex;
+            align-items: center;
+            height: 24px;
+            color: var(--gd-palette-complementary-7, #687581);
+            background: var(--gd-palette-complementary-2, #ebeff4);
+            border-radius: 3px 0 0 3px;
+            text-transform: uppercase;
+        }
+
+        &-name {
+            display: flex;
+            align-items: center;
+            flex-wrap: nowrap;
+            overflow: hidden;
+            height: 24px;
+            color: var(--gd-palette-complementary-8, #464e56);
+            background: var(--gd-palette-complementary-1, #f5f8fa);
+            border-radius: 0 3px 3px 0;
+            padding-left: 7px;
+            padding-right: 7px;
+
+            .shortened-name {
+                text-overflow: ellipsis;
+                display: inline-block;
+                overflow: hidden;
+                white-space: nowrap;
+                vertical-align: middle;
+            }
+
+            & > span:nth-child(2) {
+                margin-left: 7px;
+            }
+        }
     }
 }
 
@@ -303,6 +379,202 @@ $vertical-space: 10px;
     .gd-add-button {
         .gd-button-icon {
             color: $button-action-color;
+        }
+    }
+}
+
+.gd-schedule-email-dialog-attachments {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 10px;
+
+    & > div:not(:last-child) {
+        margin-right: 20px;
+    }
+}
+
+.gd-schedule-dropdown {
+    &-button {
+        display: flex;
+        align-items: center;
+        height: 30px;
+        margin: 0;
+        padding: 0;
+        border: none;
+        outline: inherit;
+        font: inherit;
+        color: var(--gd-palette-complementary-7, #687581);
+        background: none;
+        text-decoration: underline;
+        font-size: 14px;
+        cursor: pointer;
+
+        &-icon {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            margin-right: 6px;
+            flex-shrink: 0;
+        }
+    }
+
+    &-body {
+        display: flex;
+        flex-direction: column;
+        height: inherit;
+        font-size: 12px;
+
+        @media #{$small-only} {
+            width: 100vw;
+            max-height: calc(100vh - 30px);
+        }
+    }
+
+    &-header {
+        display: flex;
+        flex: 0 0 auto;
+        align-items: center;
+        padding-left: 10px;
+        padding-right: 10px;
+        overflow: hidden;
+        height: 35px;
+        white-space: nowrap;
+        color: var(--gd-palette-complementary-7, #94a1ad);
+        background: var(--gd-palette-complementary-2, #ebeff4);
+        text-overflow: ellipsis;
+        text-transform: uppercase;
+        font-size: 11px;
+        font-weight: bold;
+    }
+
+    &-content {
+        flex: 0 0 auto;
+        overflow-y: auto;
+        max-height: 200px;
+
+        @media #{$small-only} {
+            overflow: auto;
+            height: calc(100vh - 113px);
+            max-height: calc(100vh - 113px);
+        }
+    }
+
+    &-footer {
+        flex: 0 0 auto;
+        height: 47px;
+        padding: 10px;
+        border-top: 1px solid var(--gd-palette-complementary-1, #dde4eb);
+        text-align: right;
+    }
+}
+
+.gd-format-options-dropdown {
+    padding: 10px;
+    min-width: 253px;
+
+    &-selector {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        height: 28px;
+
+        & > div {
+            margin-left: 15px;
+        }
+    }
+}
+
+.gd-format-options-dropdown-xlsx {
+    display: flex;
+    flex-direction: column;
+    border-left: 1px dashed var(--gd-palette-complementary-5, #979797);
+    padding-left: 10px;
+    margin-top: 5px;
+    font-size: 14px;
+    color: var(--gd-palette-complementary-8, #464e56);
+
+    & > div:not(:first-child) {
+        margin-top: 10px;
+    }
+
+    & > div {
+        display: flex;
+        align-items: center;
+        height: 28px;
+
+        & > label {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding-right: 0;
+
+            & > span {
+                margin-left: 4px;
+                white-space: nowrap;
+            }
+        }
+    }
+}
+
+.gd-attachments-selection-dropdown {
+    width: 253px;
+    padding: 10px;
+
+    h3 {
+        flex-grow: 2;
+        position: relative;
+        overflow: hidden;
+        height: 23px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        font-size: 11px;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: var(--gd-palette-complementary-7, #94a1ad);
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            display: inline-block;
+            width: 100%;
+            height: 0;
+            margin-left: 10px;
+            border-top: 1px solid var(--gd-palette-complementary-7, #94a1ad);
+        }
+    }
+
+    & > div:not(:last-child) {
+        margin-bottom: 10px;
+    }
+
+    & > div {
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        height: 28px;
+
+        & > label {
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            width: 100%;
+            padding-right: 0;
+
+            & > svg {
+                margin-left: 4px;
+                margin-right: 10px;
+                flex-shrink: 0;
+            }
+
+            & > span {
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
         }
     }
 }

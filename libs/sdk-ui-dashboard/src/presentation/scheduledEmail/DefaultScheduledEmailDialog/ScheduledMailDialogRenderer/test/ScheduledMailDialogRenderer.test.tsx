@@ -1,14 +1,13 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { mount, ReactWrapper } from "enzyme";
 import noop from "lodash/noop";
 import { uriRef } from "@gooddata/sdk-model";
-import { IScheduledMail } from "@gooddata/sdk-backend-spi";
 
 import { RecipientsSelect } from "../RecipientsSelect/RecipientsSelect";
 import {
     ScheduledMailDialogRenderer,
-    IScheduledMailDialogRendererProps,
+    IScheduledMailDialogRendererOwnProps,
 } from "../ScheduledMailDialogRenderer";
 import { DateTime } from "../DateTime";
 import { getUserTimezone, ITimezone } from "../../utils/timezone";
@@ -24,16 +23,16 @@ jest.mock("../../useWorkspaceUsers", () => ({
 }));
 
 describe("ScheduledMailDialogRenderer", () => {
-    const SUBJECT_REGEX = /^ - (0[1-9]|[1][012])-(0[1-9]|[12][0-9]|3[01])-(19|20)\d\d$/;
-    const DATE_FORMAT_REGEX = /^(19|20)\d\d-(0[1-9]|[1][012])-(0[1-9]|[12][0-9]|3[01])$/;
     const dashboard = uriRef("/dashboard");
 
-    function renderComponent(customProps: Partial<IScheduledMailDialogRendererProps> = {}) {
-        const defaultProps = {
+    function renderComponent(customProps: Partial<IScheduledMailDialogRendererOwnProps> = {}) {
+        const defaultProps: IScheduledMailDialogRendererOwnProps = {
             onCancel: noop,
             onSubmit: noop,
             dashboard,
-            dashboardTitle: "",
+            dashboardTitle: "Dashboard title",
+            dashboardInsightWidgets: [],
+            hasDefaultFilters: true,
             currentUser: {
                 login: "user@gooddata.com",
                 ref: uriRef("/gdc/user"),
@@ -43,7 +42,7 @@ describe("ScheduledMailDialogRenderer", () => {
             },
             dateFormat: "MM/dd/yyyy",
             enableKPIDashboardScheduleRecipients: true,
-            canListUsersInWorkspace: true,
+            canListUsersInProject: true,
             locale: "en-US",
             workspace: "project",
             ...customProps,
@@ -75,11 +74,6 @@ describe("ScheduledMailDialogRenderer", () => {
         input.simulate("change");
     }
 
-    it("should render component", () => {
-        const component = renderComponent();
-        expect(component).toExist();
-    });
-
     it("should render timezone", () => {
         const component = renderComponent();
         const dateTimeComponent = component.find(DateTime);
@@ -100,72 +94,64 @@ describe("ScheduledMailDialogRenderer", () => {
         expect(onCancel).toHaveBeenCalledTimes(1);
     });
 
-    it("should trigger onSubmit on click Export", () => {
+    it("should generate scheduled mail with default values", () => {
         const onSubmit = jest.fn();
+        jest.useFakeTimers().setSystemTime(new Date("2022-01-02 12:13").getTime());
+
         const wrapper = renderComponent({ onSubmit });
 
         clickButtonSchedule(wrapper);
 
-        expect(onSubmit).toHaveBeenCalledTimes(1);
-    });
-
-    it("should format date to platform format before saving", () => {
-        const onSubmit = jest.fn();
-        const wrapper = renderComponent({ onSubmit });
-
-        clickButtonSchedule(wrapper);
-        const actualScheduleEmailObject: IScheduledMail = onSubmit.mock.calls[0][0];
-        const startDate: string = actualScheduleEmailObject.when.startDate;
-        expect(DATE_FORMAT_REGEX.test(startDate)).toBe(true);
-    });
-
-    it("should saving schedule email with kpiDashboardAttachment", () => {
-        const onSubmit = jest.fn();
-        const wrapper = renderComponent({ onSubmit });
-
-        clickButtonSchedule(wrapper);
-
-        const actualScheduleEmailObject: IScheduledMail = onSubmit.mock.calls[0][0];
-        const attachments = actualScheduleEmailObject.attachments;
-        expect(attachments).toEqual([
-            {
-                format: "pdf",
-                dashboard,
+        expect(onSubmit.mock.calls[0][0]).toMatchObject({
+            bcc: [],
+            body: "Hello,\n\nYour scheduled email is ready. You can download the dashboard in attachments.",
+            description: "Daily at 12:30 PM",
+            subject: "Dashboard title - 01-02-2022",
+            title: "Dashboard title - 01-02-2022",
+            to: ["user@gooddata.com"],
+            unlisted: true,
+            when: {
+                recurrence: "0:0:0:1*12:30:0",
+                startDate: "2022-01-02",
             },
-        ]);
+            attachments: [
+                {
+                    format: "pdf",
+                    dashboard,
+                },
+            ],
+        });
+
+        jest.resetAllMocks();
     });
 
-    it("should saving schedule email with summary message", () => {
+    it("should generate scheduled mail with changed values", () => {
         const onSubmit = jest.fn();
         const wrapper = renderComponent({ onSubmit });
+
         selectTime(wrapper, "02", "00", "am");
-
-        clickButtonSchedule(wrapper);
-        const actualScheduleEmailObject: IScheduledMail = onSubmit.mock.calls[0][0];
-        const summary = actualScheduleEmailObject.description;
-        expect(summary).toBe("Daily at 2:00 AM");
-    });
-
-    it("should save schedule email with new subject", () => {
-        const onSubmit = jest.fn();
-        const wrapper = renderComponent({ onSubmit });
-
         userEntersSubject(wrapper, "new subject");
         clickButtonSchedule(wrapper);
-        const actualScheduleEmailObject: IScheduledMail = onSubmit.mock.calls[0][0];
-        const actualSubject = actualScheduleEmailObject.subject;
-        expect(actualSubject).toBe("new subject");
-    });
 
-    it("should save schedule email with default subject", () => {
-        const onSubmit = jest.fn();
-        const wrapper = renderComponent({ onSubmit });
-
-        userEntersSubject(wrapper, "");
-        clickButtonSchedule(wrapper);
-        const actualScheduleEmailObject: IScheduledMail = onSubmit.mock.calls[0][0];
-        const actualSubject = actualScheduleEmailObject.subject;
-        expect(SUBJECT_REGEX.test(actualSubject)).toBe(true);
+        expect(onSubmit.mock.calls[0][0]).toMatchObject({
+            bcc: [],
+            body: "Hello,\n\nYour scheduled email is ready. You can download the dashboard in attachments.",
+            description: "Daily at 2:00 AM",
+            subject: "new subject",
+            title: "new subject",
+            to: ["user@gooddata.com"],
+            unlisted: true,
+            when: {
+                recurrence: "0:0:0:1*2:0:0",
+                startDate: "2022-01-02",
+            },
+            attachments: [
+                {
+                    format: "pdf",
+                    dashboard,
+                },
+            ],
+        });
     });
 
     it("should render recipient component in schedule email dialog", () => {

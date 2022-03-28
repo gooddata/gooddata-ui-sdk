@@ -96,12 +96,12 @@ export const selectBasicLayout = createSelector(selectLayout, (layout) => {
 });
 
 /**
- * Selects dashboard widgets in an obj ref to widget map. This map will include both analytical and custom
+ * Selects dashboard widgets in an obj ref an array. This map will include both analytical and custom
  * widgets that are placed on the dashboard.
  *
  * @internal
  */
-export const selectWidgetsMap = createSelector(selectLayout, (layout) => {
+export const selectWidgets = createSelector(selectLayout, (layout) => {
     const items: ExtendedDashboardWidget[] = [];
 
     for (const section of layout.sections) {
@@ -114,7 +114,17 @@ export const selectWidgetsMap = createSelector(selectLayout, (layout) => {
         }
     }
 
-    return newMapForObjectWithIdentity(items);
+    return items;
+});
+
+/**
+ * Selects dashboard widgets in an obj ref to widget map. This map will include both analytical and custom
+ * widgets that are placed on the dashboard.
+ *
+ * @internal
+ */
+export const selectWidgetsMap = createSelector(selectWidgets, (widgets) => {
+    return newMapForObjectWithIdentity(widgets);
 });
 
 /**
