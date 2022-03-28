@@ -1,12 +1,12 @@
 // (C) 2007-2021 GoodData Corporation
 import React from "react";
-import { ErrorComponent, Execute, LoadingComponent } from "@gooddata/sdk-ui";
+import { ErrorComponent, Execute, LoadingComponent, IExecuteErrorComponentProps } from "@gooddata/sdk-ui";
 import * as Md from "../../md/full";
 import { newAttributeSort, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 
 const style = { border: "1px black solid" };
 
-const CustomErrorComponent = ({ error }: { error: any }) => (
+const CustomErrorComponent = ({ error }: IExecuteErrorComponentProps) => (
     <div>
         <ErrorComponent
             message="There was an error getting your execution"
@@ -24,7 +24,7 @@ const CustomLoadingComponent = () => (
     </div>
 );
 
-export const ExecuteWithSlicesExample: React.FC = () => {
+const ExecuteWithSlicesExample: React.FC = () => {
     return (
         <div>
             <Execute
@@ -69,3 +69,5 @@ export const ExecuteWithSlicesExample: React.FC = () => {
         </div>
     );
 };
+
+export default ExecuteWithSlicesExample;

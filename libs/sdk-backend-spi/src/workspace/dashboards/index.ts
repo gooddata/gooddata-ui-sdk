@@ -60,7 +60,7 @@ export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin";
 /**
  * Service to list, create and update analytical dashboards
  *
- * @alpha
+ * @public
  */
 export interface IWorkspaceDashboardsService {
     readonly workspace: string;

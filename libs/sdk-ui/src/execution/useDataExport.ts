@@ -11,13 +11,13 @@ import {
 
 /**
  * Indicates current state of useDataExport hook
- * @beta
+ * @public
  */
 export type UseDataExportState = UseCancelablePromiseState<string, GoodDataSdkError>;
 
 /**
  * Callbacks for useDataExport hook
- * @beta
+ * @public
  */
 export type UseDataExportCallbacks = UseCancelablePromiseCallbacks<string, GoodDataSdkError>;
 
@@ -28,7 +28,7 @@ export type UseDataExportCallbacks = UseCancelablePromiseCallbacks<string, GoodD
  * As a result, you will receive a string with uri, so you can easily create a download link.
  * Be aware that execution is re-executed only on dependency list change, not on execution/exportConfig/callbacks change.
  *
- * @beta
+ * @public
  */
 export function useDataExport(
     {

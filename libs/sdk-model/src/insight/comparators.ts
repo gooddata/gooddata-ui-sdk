@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import {
     IInsight,
@@ -11,30 +11,30 @@ import {
 import { stringComparatorFactory } from "../base/comparators";
 
 /**
- * @alpha
+ * @beta
  */
 export const insightTitleComparator = stringComparatorFactory(insightTitle);
 
 /**
- * @alpha
+ * @beta
  */
 export const insightCreatedByComparator = stringComparatorFactory<IInsight>(
     (i) => insightCreatedBy(i)?.fullName,
 );
 
 /**
- * @alpha
+ * @beta
  */
 export const insightUpdatedByComparator = stringComparatorFactory<IInsight>(
     (i) => insightUpdatedBy(i)?.fullName,
 );
 
 /**
- * @alpha
+ * @beta
  */
 export const insightCreatedComparator = stringComparatorFactory(insightCreated);
 
 /**
- * @alpha
+ * @beta
  */
 export const insightUpdatedComparator = stringComparatorFactory(insightUpdated);

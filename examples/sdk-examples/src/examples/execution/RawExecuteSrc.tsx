@@ -1,6 +1,7 @@
 // (C) 2007-2021 GoodData Corporation
 import React from "react";
-import { RawExecute, LoadingComponent, ErrorComponent } from "@gooddata/sdk-ui";
+import { RawExecute, LoadingComponent, ErrorComponent, IExecuteErrorComponentProps } from "@gooddata/sdk-ui";
+import { IResultHeader, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import toPairs from "lodash/toPairs";
 import groupBy from "lodash/groupBy";
 
@@ -8,20 +9,21 @@ import { workspace } from "../../constants/fixtures";
 import * as Md from "../../md/full";
 import { useBackend } from "../../context/auth";
 
-const getAttributeHeaderItemName = (x: any) => x.attributeHeaderItem.name;
+const getAttributeHeaderItemName = (x: IResultHeader) =>
+    (x as IResultAttributeHeader).attributeHeaderItem.name;
 const withIndex = (fn: any) => {
     let index = 0;
     return (...args: any) => fn(index++, ...args);
 };
 
-const CustomErrorComponent = ({ error }: { error: any }) => (
+const CustomErrorComponent = ({ error }: IExecuteErrorComponentProps) => (
     <ErrorComponent
         message="There was an error getting your execution"
         description={JSON.stringify(error, null, "  ")}
     />
 );
 
-export const ExecuteAttributeValuesExample: React.FC = () => {
+const RawExecuteExample: React.FC = () => {
     const backend = useBackend();
     const execution = backend
         .workspace(workspace)
@@ -66,3 +68,5 @@ export const ExecuteAttributeValuesExample: React.FC = () => {
         </div>
     );
 };
+
+export default RawExecuteExample;

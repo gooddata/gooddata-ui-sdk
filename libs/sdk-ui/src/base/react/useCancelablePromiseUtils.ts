@@ -24,7 +24,7 @@ import { UnexpectedSdkError } from "../errors/GoodDataSdkError";
  * @param states - cancelable promise states (useCancelablePromise return values)
  * @param options - optionally specify options for resolving the status
  * @returns resolved status
- * @beta
+ * @public
  */
 export function resolveUseCancelablePromisesStatus(
     cancelablePromisesStates: UseCancelablePromiseState<unknown, unknown>[],
@@ -49,7 +49,7 @@ export function resolveUseCancelablePromisesStatus(
  *
  * @param states - cancelable promise states (useCancelablePromise return values)
  * @returns first error
- * @beta
+ * @public
  */
 export function resolveUseCancelablePromisesError<TError>(
     states: UseCancelablePromiseState<unknown, TError>[],

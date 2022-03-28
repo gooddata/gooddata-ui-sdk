@@ -32,19 +32,19 @@ import { ObjRefInScope } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
 import { VisualizationProperties } from '@gooddata/sdk-model';
 
-// @alpha
+// @public
 export type AbsoluteFormType = "absoluteForm";
 
-// @alpha
+// @public
 export type AbsolutePresetType = "absolutePreset";
 
-// @alpha
+// @public
 export type AbsoluteType = "absolute";
 
 // @alpha
 export type AccessGranteeDetail = IUserAccess | IUserGroupAccess;
 
-// @alpha
+// @public
 export type AllTimeType = "allTime";
 
 // @public
@@ -98,10 +98,10 @@ export const catalogItemMetadataObject: (catalogItem: CatalogItem) => MetadataOb
 // @public
 export type CatalogItemType = "attribute" | "measure" | "fact" | "dateDataset";
 
-// @alpha
+// @public
 export type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
 
-// @alpha
+// @public
 export function dashboardFilterReferenceObjRef(ref: IDashboardFilterReference): ObjRef;
 
 // @public
@@ -121,25 +121,25 @@ export type DataValue = null | string | number;
 // @alpha
 export type DateFilterGranularity = "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year";
 
-// @alpha
+// @public
 export type DateFilterType = RelativeType | AbsoluteType;
 
 // @alpha
 export type DateString = string;
 
-// @alpha
+// @public
 export type DrillDefinition = InsightDrillDefinition | KpiDrillDefinition;
 
-// @alpha
+// @public
 export type DrillOrigin = IDrillFromMeasure | IDrillFromAttribute;
 
-// @alpha
+// @public
 export type DrillOriginType = "drillFromMeasure" | "drillFromAttribute";
 
-// @alpha
+// @public
 export type DrillTransition = "pop-up" | "in-place" | "new-window";
 
-// @alpha
+// @public
 export type DrillType = "drillToInsight" | "drillToDashboard" | "drillToLegacyDashboard" | "drillToCustomUrl" | "drillToAttributeUrl";
 
 // @public
@@ -150,7 +150,7 @@ export type ExplainConfig = {
     explainType?: "LDM" | "PDM" | "MAQL";
 };
 
-// @alpha
+// @public
 export type FilterContextItem = IDashboardAttributeFilter | IDashboardDateFilter;
 
 // @public
@@ -159,12 +159,12 @@ export type FilterWithResolvableElements = IAttributeFilter | IRelativeDateFilte
 // @public
 export type GroupableCatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact;
 
-// @alpha
+// @public
 export interface IAbsoluteDateFilterForm extends IDateFilterOption {
     type: AbsoluteFormType;
 }
 
-// @alpha
+// @public
 export interface IAbsoluteDateFilterPreset extends IDateFilterOption {
     from: DateString;
     to: DateString;
@@ -181,7 +181,7 @@ export interface IAccessControlAware {
 // @public
 export type IAccessGrantee = IUserGroupAccessGrantee | IUserAccessGrantee;
 
-// @alpha
+// @public
 export interface IAllTimeDateFilterOption extends IDateFilterOption {
     type: AllTimeType;
 }
@@ -428,7 +428,7 @@ export interface IDashboardAttachment {
     format: "pdf";
 }
 
-// @alpha
+// @public
 export interface IDashboardAttributeFilter {
     // (undocumented)
     attributeFilter: {
@@ -440,7 +440,7 @@ export interface IDashboardAttributeFilter {
     };
 }
 
-// @alpha
+// @public
 export interface IDashboardAttributeFilterParent {
     filterLocalIdentifier: string;
     over: {
@@ -448,7 +448,7 @@ export interface IDashboardAttributeFilterParent {
     };
 }
 
-// @alpha
+// @public
 export interface IDashboardAttributeFilterReference {
     displayForm: ObjRef;
     type: "attributeFilterReference";
@@ -461,7 +461,7 @@ export interface IDashboardBase {
     readonly title: string;
 }
 
-// @alpha
+// @public
 export interface IDashboardDateFilter {
     // (undocumented)
     dateFilter: {
@@ -474,13 +474,13 @@ export interface IDashboardDateFilter {
     };
 }
 
-// @alpha
+// @public
 export interface IDashboardDateFilterAddedPresets {
     absolutePresets?: IAbsoluteDateFilterPreset[];
     relativePresets?: IRelativeDateFilterPreset[];
 }
 
-// @alpha
+// @public
 export interface IDashboardDateFilterConfig {
     addPresets?: IDashboardDateFilterAddedPresets;
     filterName: string;
@@ -489,7 +489,7 @@ export interface IDashboardDateFilterConfig {
     mode: DashboardDateFilterConfigMode;
 }
 
-// @alpha
+// @public
 export interface IDashboardDateFilterReference {
     dataSet: ObjRef;
     type: "dateFilterReference";
@@ -505,44 +505,44 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashb
     readonly type: "IDashboard";
 }
 
-// @alpha
+// @public
 export type IDashboardFilterReference = IDashboardDateFilterReference | IDashboardAttributeFilterReference;
 
-// @alpha
+// @public
 export interface IDashboardLayout<TWidget = IDashboardWidget> {
     sections: IDashboardLayoutSection<TWidget>[];
     size?: IDashboardLayoutSize;
     type: "IDashboardLayout";
 }
 
-// @alpha
+// @public
 export interface IDashboardLayoutItem<TWidget = IDashboardWidget> {
     size: IDashboardLayoutSizeByScreenSize;
     type: "IDashboardLayoutItem";
     widget?: TWidget;
 }
 
-// @alpha
+// @public
 export interface IDashboardLayoutSection<TWidget = IDashboardWidget> {
     header?: IDashboardLayoutSectionHeader;
     items: IDashboardLayoutItem<TWidget>[];
     type: "IDashboardLayoutSection";
 }
 
-// @alpha
+// @public
 export interface IDashboardLayoutSectionHeader {
     description?: string;
     title?: string;
 }
 
-// @alpha
+// @public
 export interface IDashboardLayoutSize {
     gridHeight?: number;
     gridWidth: number;
     heightAsRatio?: number;
 }
 
-// @alpha
+// @public
 export interface IDashboardLayoutSizeByScreenSize {
     lg?: IDashboardLayoutSize;
     md?: IDashboardLayoutSize;
@@ -557,7 +557,7 @@ export interface IDashboardMetadataObject extends IMetadataObject {
     type: "analyticalDashboard";
 }
 
-// @alpha
+// @public
 export interface IDashboardObjectIdentity {
     readonly identifier: string;
     readonly ref: ObjRef;
@@ -590,16 +590,16 @@ export interface IDashboardPluginLink {
     readonly type: "IDashboardPluginLink";
 }
 
-// @alpha
+// @public
 export interface IDashboardReferences {
     insights: IInsight[];
     plugins: IDashboardPlugin[];
 }
 
-// @alpha
+// @public
 export type IDashboardWidget = IWidget | IWidgetDefinition | IDashboardLayout<IDashboardWidget>;
 
-// @alpha
+// @public
 export interface IDashboardWithReferences {
     // (undocumented)
     dashboard: IDashboard;
@@ -698,7 +698,7 @@ export interface IDataView {
     readonly warnings?: IResultWarning[];
 }
 
-// @alpha
+// @public
 export interface IDateFilterConfig {
     absoluteForm?: IAbsoluteDateFilterForm;
     absolutePresets?: IAbsoluteDateFilterPreset[];
@@ -709,7 +709,7 @@ export interface IDateFilterConfig {
     selectedOption: Identifier;
 }
 
-// @alpha
+// @public
 export interface IDateFilterConfigsQuery {
     query(): Promise<IDateFilterConfigsQueryResult>;
     withLimit(limit: number): IDateFilterConfigsQuery;
@@ -719,7 +719,7 @@ export interface IDateFilterConfigsQuery {
 // @public
 export type IDateFilterConfigsQueryResult = IPagedResource<IDateFilterConfig>;
 
-// @alpha
+// @public
 export interface IDateFilterOption {
     localIdentifier: Identifier;
     name?: string;
@@ -736,7 +736,7 @@ export interface IDimensionDescriptor {
 // @public
 export type IDimensionItemDescriptor = IMeasureGroupDescriptor | IAttributeDescriptor;
 
-// @alpha
+// @public
 export interface IDrill {
     origin: DrillOrigin;
     transition: DrillTransition;
@@ -748,66 +748,66 @@ export interface IDrillableWidget {
     readonly drills: DrillDefinition[];
 }
 
-// @alpha
+// @public
 export interface IDrillFromAttribute extends IDrillOrigin {
     attribute: ObjRefInScope;
     type: "drillFromAttribute";
 }
 
-// @alpha
+// @public
 export interface IDrillFromMeasure extends IDrillOrigin {
     measure: ObjRefInScope;
     type: "drillFromMeasure";
 }
 
-// @alpha
+// @public
 export interface IDrillOrigin {
     type: DrillOriginType;
 }
 
-// @alpha
+// @public
 export type IDrillTarget = ObjRef | IDrillToCustomUrlTarget | IDrillToAttributeUrlTarget;
 
-// @alpha
+// @public
 export interface IDrillToAttributeUrl extends IDrill {
     target: IDrillToAttributeUrlTarget;
     transition: "new-window";
     type: "drillToAttributeUrl";
 }
 
-// @alpha
+// @public
 export interface IDrillToAttributeUrlTarget {
     displayForm: ObjRef;
     hyperlinkDisplayForm: ObjRef;
 }
 
-// @alpha
+// @public
 export interface IDrillToCustomUrl extends IDrill {
     target: IDrillToCustomUrlTarget;
     transition: "new-window";
     type: "drillToCustomUrl";
 }
 
-// @alpha
+// @public
 export interface IDrillToCustomUrlTarget {
     url: string;
 }
 
-// @alpha
+// @public
 export interface IDrillToDashboard extends IDrill {
     target?: ObjRef;
     transition: "in-place";
     type: "drillToDashboard";
 }
 
-// @alpha
+// @public
 export interface IDrillToInsight extends IDrill {
     target: ObjRef;
     transition: "pop-up";
     type: "drillToInsight";
 }
 
-// @alpha
+// @public
 export interface IDrillToLegacyDashboard extends IDrill {
     tab: string;
     target: ObjRef;
@@ -926,18 +926,18 @@ export interface IFilterableWidget {
     readonly ignoreDashboardFilters: IDashboardFilterReference[];
 }
 
-// @alpha
+// @public
 export interface IFilterContext extends IFilterContextBase, IDashboardObjectIdentity {
 }
 
-// @alpha
+// @public
 export interface IFilterContextBase {
     readonly description: string;
     readonly filters: FilterContextItem[];
     readonly title: string;
 }
 
-// @alpha
+// @public
 export interface IFilterContextDefinition extends IFilterContextBase, Partial<IDashboardObjectIdentity> {
 }
 
@@ -1082,7 +1082,7 @@ export interface ILegacyKpiWithPreviousPeriodComparison extends ILegacyKpiBase {
     comparisonType: "previousPeriod";
 }
 
-// @alpha
+// @public
 export interface IListedDashboard extends Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers>, IAccessControlAware {
     readonly availability: ListedDashboardAvailability;
     readonly description: string;
@@ -1175,7 +1175,7 @@ export interface IMetadataObjectIdentity {
     uri: string;
 }
 
-// @alpha
+// @public
 export type InsightDrillDefinition = IDrillToInsight | IDrillToDashboard | IDrillToCustomUrl | IDrillToAttributeUrl;
 
 // @public
@@ -1242,13 +1242,13 @@ export interface IPreparedExecution {
     withSorting(...items: ISortItem[]): IPreparedExecution;
 }
 
-// @alpha
+// @public
 export interface IRelativeDateFilterForm extends IDateFilterOption {
     availableGranularities: DateFilterGranularity[];
     type: RelativeFormType;
 }
 
-// @alpha
+// @public
 export interface IRelativeDateFilterPreset extends IDateFilterOption {
     from: RelativeGranularityOffset;
     granularity: DateFilterGranularity;
@@ -1256,7 +1256,7 @@ export interface IRelativeDateFilterPreset extends IDateFilterOption {
     type: RelativePresetType;
 }
 
-// @alpha
+// @public
 export interface IRelativeDateFilterPresetOfGranularity<Key extends DateFilterGranularity> extends IRelativeDateFilterPreset {
     granularity: Key;
 }
@@ -1309,16 +1309,16 @@ export interface IResultWarning {
     warningCode: string;
 }
 
-// @alpha
+// @public
 export const isAbsoluteDateFilterForm: (obj: unknown) => obj is IAbsoluteDateFilterForm;
 
-// @alpha
+// @public
 export const isAbsoluteDateFilterPreset: (obj: unknown) => obj is IAbsoluteDateFilterPreset;
 
-// @alpha
+// @public
 export function isAllTimeDashboardDateFilter(obj: unknown): boolean;
 
-// @alpha
+// @public
 export const isAllTimeDateFilterOption: (obj: unknown) => obj is IAllTimeDateFilterOption;
 
 // @public
@@ -1373,43 +1373,43 @@ export interface IScheduledMailBase {
 export interface IScheduledMailDefinition extends IScheduledMailBase, Partial<IDashboardObjectIdentity> {
 }
 
-// @alpha
+// @public
 export function isDashboard(obj: unknown): obj is IDashboard;
 
 // @alpha
 export function isDashboardAttachment(obj: unknown): obj is IDashboardAttachment;
 
-// @alpha
+// @public
 export function isDashboardAttributeFilter(obj: unknown): obj is IDashboardAttributeFilter;
 
-// @alpha
+// @public
 export function isDashboardAttributeFilterReference(obj: unknown): obj is IDashboardAttributeFilterReference;
 
-// @alpha
+// @public
 export function isDashboardDateFilter(obj: unknown): obj is IDashboardDateFilter;
 
-// @alpha
+// @public
 export function isDashboardDateFilterReference(obj: unknown): obj is IDashboardDateFilterReference;
 
-// @alpha
+// @public
 export function isDashboardDefinition(obj: unknown): obj is IDashboardDefinition;
 
-// @alpha
+// @public
 export function isDashboardLayout<TWidget = IDashboardWidget>(obj: unknown): obj is IDashboardLayout<TWidget>;
 
 // @alpha
 export const isDashboardLayoutEmpty: (layout: IDashboardLayout<any>) => boolean;
 
-// @alpha
+// @public
 export function isDashboardLayoutItem<TWidget>(obj: unknown): obj is IDashboardLayoutItem<TWidget>;
 
-// @alpha
+// @public
 export function isDashboardLayoutSection<TWidget>(obj: unknown): obj is IDashboardLayoutSection<TWidget>;
 
 // @public
 export function isDashboardMetadataObject(obj: unknown): obj is IDashboardMetadataObject;
 
-// @alpha
+// @public
 export const isDashboardWidget: (obj: unknown) => obj is IDashboardWidget;
 
 // @public
@@ -1418,28 +1418,28 @@ export function isDataSetMetadataObject(obj: unknown): obj is IDataSetMetadataOb
 // @public
 export function isDataTooLargeError(obj: unknown): obj is DataTooLargeError;
 
-// @alpha
+// @public
 export const isDateFilterGranularity: (obj: unknown) => obj is DateFilterGranularity;
 
-// @alpha
+// @public
 export function isDrillFromAttribute(obj: DrillOrigin): obj is IDrillFromAttribute;
 
-// @alpha
+// @public
 export function isDrillFromMeasure(obj: DrillOrigin): obj is IDrillFromMeasure;
 
-// @alpha
+// @public
 export function isDrillToAttributeUrl(obj: unknown): obj is IDrillToAttributeUrl;
 
-// @alpha
+// @public
 export function isDrillToCustomUrl(obj: unknown): obj is IDrillToCustomUrl;
 
-// @alpha
+// @public
 export function isDrillToDashboard(obj: unknown): obj is IDrillToDashboard;
 
-// @alpha
+// @public
 export function isDrillToInsight(obj: unknown): obj is IDrillToInsight;
 
-// @alpha
+// @public
 export function isDrillToLegacyDashboard(obj: unknown): obj is IDrillToLegacyDashboard;
 
 // @public
@@ -1509,22 +1509,22 @@ export interface ISettings {
 // @public
 export function isFactMetadataObject(obj: unknown): obj is IFactMetadataObject;
 
-// @alpha
+// @public
 export function isFilterContext(obj: unknown): obj is IFilterContext;
 
-// @alpha
+// @public
 export function isFilterContextDefinition(obj: unknown): obj is IFilterContextDefinition;
 
-// @alpha
+// @public
 export function isInsightWidget(obj: unknown): obj is IInsightWidget;
 
-// @alpha
+// @public
 export function isInsightWidgetDefinition(obj: unknown): obj is IInsightWidgetDefinition;
 
-// @alpha
+// @public
 export function isKpiWidget(obj: unknown): obj is IKpiWidget;
 
-// @alpha
+// @public
 export function isKpiWidgetDefinition(obj: unknown): obj is IKpiWidgetDefinition;
 
 // @alpha
@@ -1566,10 +1566,10 @@ export function isNotSupported(obj: unknown): obj is NotSupported;
 // @public
 export function isProtectedDataError(obj: unknown): obj is ProtectedDataError;
 
-// @alpha
+// @public
 export const isRelativeDateFilterForm: (obj: unknown) => obj is IRelativeDateFilterForm;
 
-// @alpha
+// @public
 export const isRelativeDateFilterPreset: (obj: unknown) => obj is IRelativeDateFilterPreset;
 
 // @public
@@ -1581,7 +1581,7 @@ export function isResultMeasureHeader(obj: unknown): obj is IResultMeasureHeader
 // @public
 export function isResultTotalHeader(obj: unknown): obj is IResultTotalHeader;
 
-// @alpha
+// @public
 export function isTempFilterContext(obj: unknown): obj is ITempFilterContext;
 
 // @public
@@ -1611,22 +1611,22 @@ export function isValueBasedElementsQueryOptionsElements(obj: unknown): obj is I
 // @public
 export function isVariableMetadataObject(obj: unknown): obj is IVariableMetadataObject;
 
-// @alpha
+// @public
 export function isWidget(obj: unknown): obj is IWidget;
 
-// @alpha
+// @public
 export function isWidgetAlert(obj: unknown): obj is IWidgetAlert;
 
-// @alpha
+// @public
 export function isWidgetAlertDefinition(obj: unknown): obj is IWidgetAlertDefinition;
 
 // @alpha
 export function isWidgetAttachment(obj: unknown): obj is IWidgetAttachment;
 
-// @alpha
+// @public
 export function isWidgetDefinition(obj: unknown): obj is IWidgetDefinition;
 
-// @alpha
+// @public
 export interface ITempFilterContext {
     readonly created: string;
     readonly filters: FilterContextItem[];
@@ -1969,12 +1969,12 @@ export interface IVariableMetadataObject extends IMetadataObject {
 // @alpha (undocumented)
 export type IWidget = IKpiWidget | IInsightWidget;
 
-// @alpha
+// @public
 export interface IWidgetAlert extends IWidgetAlertBase, IDashboardObjectIdentity {
     readonly filterContext?: IFilterContext;
 }
 
-// @alpha
+// @public
 export interface IWidgetAlertBase {
     readonly dashboard: ObjRef;
     readonly description: string;
@@ -1985,13 +1985,13 @@ export interface IWidgetAlertBase {
     readonly widget: ObjRef;
 }
 
-// @alpha
+// @public
 export interface IWidgetAlertCount {
     readonly alertCount: number;
     readonly ref: ObjRef;
 }
 
-// @alpha
+// @public
 export interface IWidgetAlertDefinition extends IWidgetAlertBase, Partial<IDashboardObjectIdentity> {
     readonly filterContext?: IFilterContext | IFilterContextDefinition;
 }
@@ -2113,7 +2113,7 @@ export interface IWorkspaceCatalogWithAvailableItemsFactoryOptions extends IWork
     items?: IAttributeOrMeasure[];
 }
 
-// @alpha
+// @public
 export interface IWorkspaceDashboardsService {
     createDashboard(dashboard: IDashboardDefinition): Promise<IDashboard>;
     createDashboardPlugin(plugin: IDashboardPluginDefinition): Promise<IDashboardPlugin>;
@@ -2286,7 +2286,7 @@ export interface IWorkspaceUsersQueryOptions {
 // @public
 export type IWorkspaceUsersQueryResult = IPagedResource<IWorkspaceUser>;
 
-// @alpha
+// @public
 export type KpiDrillDefinition = IDrillToLegacyDashboard;
 
 // @alpha
@@ -2307,13 +2307,13 @@ export type MetadataObject = IAttributeMetadataObject | IAttributeDisplayFormMet
 // @public
 export const metadataObjectId: (metadataObject: MetadataObject) => string;
 
-// @alpha
+// @public
 export function newAbsoluteDashboardDateFilter(from: DateString, to: DateString): IDashboardDateFilter;
 
-// @alpha
+// @public
 export function newAllTimeDashboardDateFilter(): IDashboardDateFilter;
 
-// @alpha
+// @public
 export function newRelativeDashboardDateFilter(granularity: DateFilterGranularity, from: number, to: number): IDashboardDateFilter;
 
 // @public
@@ -2346,7 +2346,7 @@ export class NotSupported extends AnalyticalBackendError {
     constructor(message: string);
 }
 
-// @alpha
+// @public
 export type OptionType = AllTimeType | AbsoluteFormType | RelativeFormType | AbsolutePresetType | RelativePresetType;
 
 // @public
@@ -2360,16 +2360,16 @@ export class ProtectedDataError extends AnalyticalBackendError {
     constructor(message: string, cause?: Error);
 }
 
-// @alpha
+// @public
 export type RelativeFormType = "relativeForm";
 
-// @alpha
+// @public
 export type RelativeGranularityOffset = number;
 
-// @alpha
+// @public
 export type RelativePresetType = "relativePreset";
 
-// @alpha
+// @public
 export type RelativeType = "relative";
 
 // @public
@@ -2378,10 +2378,10 @@ export function resultHeaderName(header: IResultHeader): string;
 // @alpha
 export type ScheduledMailAttachment = IDashboardAttachment | IWidgetAttachment;
 
-// @alpha
+// @public
 export type ScreenSize = "xl" | "lg" | "md" | "sm" | "xs";
 
-// @public
+// @alpha
 export type ShareStatus = "private" | "shared" | "public";
 
 // @alpha (undocumented)
@@ -2426,22 +2426,22 @@ export function walkLayout<TWidget extends IDashboardWidget>(layout: IDashboardL
     widgetCallback?: (widget: TWidget, widgetPath: LayoutPath) => void;
 }, path?: LayoutPath): void;
 
-// @alpha
+// @public
 export function widgetId(widget: IWidget): string;
 
-// @alpha
+// @public
 export function widgetRef(widget: IWidget): ObjRef;
 
-// @alpha
+// @public
 export function widgetTitle(widget: IWidget): string;
 
 // @alpha @deprecated (undocumented)
 export type WidgetType = AnalyticalWidgetType;
 
-// @alpha
+// @public
 export function widgetType(widget: IWidget): AnalyticalWidgetType;
 
-// @alpha
+// @public
 export function widgetUri(widget: IWidget): string;
 
 // @public

@@ -11,7 +11,7 @@ import invariant from "ts-invariant";
 
 /**
  * Props of the {@link ExecuteInsight} component.
- * @beta
+ * @public
  */
 export interface IExecuteInsightProps extends IWithLoadingEvents<IExecuteInsightProps> {
     /**
@@ -102,6 +102,24 @@ export interface IExecuteInsightProps extends IWithLoadingEvents<IExecuteInsight
     window?: DataViewWindow;
 
     /**
+     * Indicates that the execution to obtain the data for the insight should be an 'execution by reference'.
+     *
+     * Execution by reference means that the ExecuteInsight will ask analytical backend to compute results for an insight
+     * which is stored on the backend by specifying link to the insight, additional filters and description how
+     * to organize the data.
+     *
+     * Otherwise, a freeform execution is done, in which the InsightView will send to backend the full execution
+     * definition of what to compute.
+     *
+     * This distinction is in place because some backends MAY want to prohibit users from doing freeform executions
+     * and only allow computing data for set of insights created by admins.
+     *
+     * Note: the need for execute by reference is rare. You will typically be notified by the solution admin to use
+     * this mode.
+     */
+    executeByReference?: boolean;
+
+    /**
      * Child component to which rendering is delegated.
      *
      * @remarks
@@ -166,13 +184,22 @@ function exportTitle(props: IExecuteInsightProps): string {
 /**
  * Gets data for a specific stored insight.
  *
- * @beta
+ * @public
  */
 export const ExecuteInsight = withContexts(
     withExecution<IExecuteInsightProps>({
         exportTitle,
         execution: async (props) => {
-            const { insight: insightRef, filters, sorts, dimensions, dateFormat, backend, workspace } = props;
+            const {
+                insight: insightRef,
+                filters,
+                sorts,
+                dimensions,
+                dateFormat,
+                backend,
+                workspace,
+                executeByReference,
+            } = props;
             invariant(
                 backend,
                 "The backend in ExecuteInsight must be defined. Either pass it as a prop or make sure there is a BackendProvider up the component tree.",
@@ -183,7 +210,14 @@ export const ExecuteInsight = withContexts(
             );
 
             const insight = await backend.workspace(workspace).insights().getInsight(insightRef);
-            let insightExecution = backend.workspace(workspace).execution().forInsightByRef(insight, filters);
+
+            const executionFactory = backend.workspace(workspace).execution();
+
+            const executeFn = (
+                executeByReference ? executionFactory.forInsightByRef : executionFactory.forInsight
+            ).bind(executionFactory);
+
+            let insightExecution = executeFn(insight, filters);
 
             if (sorts) {
                 const resolvedSorts =

@@ -13,6 +13,7 @@ import {
 import { createExecution } from "./createExecution";
 
 /**
+ * @deprecated use {@link useExecutionDataView} instead
  * @beta
  */
 export interface IUseExecutionConfig {
@@ -83,6 +84,7 @@ export interface IUseExecutionConfig {
  * @remarks
  * It builds the execution on top of the backend passed to the BackendProvider, and workspace passed to the WorkspaceProvider.
  *
+ * @deprecated use {@link useExecutionDataView} instead
  * @beta
  */
 export function useExecution(config: IUseExecutionConfig): IPreparedExecution {

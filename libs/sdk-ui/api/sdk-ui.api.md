@@ -389,7 +389,7 @@ export class ErrorComponent extends React_2.Component<IErrorProps> {
 // @public
 export const Execute: (props: IExecuteProps) => JSX.Element;
 
-// @beta
+// @public
 export const ExecuteInsight: React_2.ComponentType<IExecuteInsightProps>;
 
 // @public
@@ -891,7 +891,7 @@ export interface IExecuteErrorComponentProps {
     error: GoodDataSdkError;
 }
 
-// @beta
+// @public
 export interface IExecuteInsightProps extends IWithLoadingEvents<IExecuteInsightProps> {
     backend?: IAnalyticalBackend;
     children: (executionResult: WithLoadingResult) => React_2.ReactElement | null;
@@ -899,6 +899,7 @@ export interface IExecuteInsightProps extends IWithLoadingEvents<IExecuteInsight
     dateFormat?: string | ((def: IExecutionDefinition, props: IExecuteInsightProps) => string);
     dimensions?: IDimension[] | ((def: IExecutionDefinition, props: IExecuteInsightProps) => IDimension[]);
     ErrorComponent?: IExecuteErrorComponent;
+    executeByReference?: boolean;
     exportTitle?: string;
     filters?: INullableFilter[];
     insight: ObjRef;
@@ -931,7 +932,7 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
     workspace?: string;
 }
 
-// @beta (undocumented)
+// @public (undocumented)
 export interface IExecutionConfiguration {
     componentName?: string;
     filters?: NullableFiltersOrPlaceholders;
@@ -942,7 +943,7 @@ export interface IExecutionConfiguration {
     totals?: TotalsOrPlaceholders;
 }
 
-// @alpha
+// @public
 export interface IExecutionDefinitionMethods {
     // (undocumented)
     attributes(): IAttribute[];
@@ -1143,7 +1144,7 @@ export interface IRawExecuteProps extends IWithLoadingEvents<IRawExecuteProps> {
     window?: DataViewWindow;
 }
 
-// @alpha
+// @public
 export interface IResultDataMethods {
     // (undocumented)
     data(): DataValue[][] | DataValue[];
@@ -1160,7 +1161,7 @@ export interface IResultDataMethods {
     twoDimData(): DataValue[][];
 }
 
-// @alpha
+// @public
 export interface IResultMetaMethods {
     // (undocumented)
     allHeaders(): IResultHeader[][][];
@@ -1304,7 +1305,7 @@ export type ITranslationsProviderProps = ITranslationsProviderOwnProps & Wrapped
 // @public
 export type IUseComposedPlaceholderHook<T extends IComposedPlaceholder<any, any, any>> = (resolutionContext: ComposedPlaceholderResolutionContext<T>) => PlaceholderResolvedValue<T>;
 
-// @beta (undocumented)
+// @beta @deprecated (undocumented)
 export interface IUseExecutionConfig {
     backend?: IAnalyticalBackend;
     componentName?: string;
@@ -1317,7 +1318,7 @@ export interface IUseExecutionConfig {
     workspace?: string;
 }
 
-// @beta (undocumented)
+// @public (undocumented)
 export interface IUseExecutionDataViewConfig {
     backend?: IAnalyticalBackend;
     execution?: IPreparedExecution | IExecutionConfiguration;
@@ -1325,11 +1326,12 @@ export interface IUseExecutionDataViewConfig {
     workspace?: string;
 }
 
-// @beta (undocumented)
+// @public (undocumented)
 export interface IUseInsightDataViewConfig {
     backend?: IAnalyticalBackend;
     dateFormat?: string | ((def: IExecutionDefinition) => string);
     dimensions?: IDimension[] | ((def: IExecutionDefinition) => IDimension[]);
+    executeByReference?: boolean;
     filters?: INullableFilter[];
     insight?: ObjRef;
     sorts?: ISortItem[] | ((def: IExecutionDefinition) => ISortItem[]);
@@ -1552,10 +1554,10 @@ export const ResolvedClientWorkspaceProvider: React_2.FC<IClientWorkspaceIdentif
 // @alpha
 export function resolveLCMWorkspaceIdentifiers(backend: any, clientWorkspace: IClientWorkspaceIdentifiers): Promise<IClientWorkspaceIdentifiers>;
 
-// @beta
+// @public
 export function resolveUseCancelablePromisesError<TError>(states: UseCancelablePromiseState<unknown, TError>[]): TError | undefined;
 
-// @beta
+// @public
 export function resolveUseCancelablePromisesStatus(cancelablePromisesStates: UseCancelablePromiseState<unknown, unknown>[], options?: {
     strategy?: "serial" | "parallel";
 }): UseCancelablePromiseStatus;
@@ -1614,10 +1616,10 @@ export const useBackend: (backend?: IAnalyticalBackend | undefined) => IAnalytic
 // @public
 export const useBackendStrict: (backend?: IAnalyticalBackend | undefined, context?: string) => IAnalyticalBackend;
 
-// @beta
+// @public
 export function useCancelablePromise<TResult, TError = any>(options: UseCancelablePromiseOptions<TResult, TError>, deps?: DependencyList): UseCancelablePromiseState<TResult, TError>;
 
-// @beta
+// @public
 export type UseCancelablePromiseCallbacks<TResult, TError> = {
     onLoading?: () => void;
     onPending?: () => void;
@@ -1626,39 +1628,39 @@ export type UseCancelablePromiseCallbacks<TResult, TError> = {
     onError?: (err: TError) => void;
 };
 
-// @beta
+// @public
 export type UseCancelablePromiseErrorState<TError> = {
     result: undefined;
     error: TError;
     status: "error";
 };
 
-// @beta
+// @public
 export type UseCancelablePromiseLoadingState = {
     result: undefined;
     error: undefined;
     status: "loading";
 };
 
-// @beta
+// @public
 export type UseCancelablePromiseOptions<TResult, TError> = UseCancelablePromiseCallbacks<TResult, TError> & {
     promise: (() => Promise<TResult>) | undefined | null;
 };
 
-// @beta
+// @public
 export type UseCancelablePromisePendingState = {
     result: undefined;
     error: undefined;
     status: "pending";
 };
 
-// @beta
+// @public
 export type UseCancelablePromiseState<TResult, TError> = UseCancelablePromisePendingState | UseCancelablePromiseLoadingState | UseCancelablePromiseErrorState<TError> | UseCancelablePromiseSuccessState<TResult>;
 
-// @beta
+// @public
 export type UseCancelablePromiseStatus = "success" | "error" | "loading" | "pending";
 
-// @beta
+// @public
 export type UseCancelablePromiseSuccessState<TResult> = {
     result: TResult;
     error: undefined;
@@ -1677,37 +1679,37 @@ export const useClientWorkspaceStatus: () => UseCancelablePromiseStatus;
 // @public
 export function useComposedPlaceholder<TContext, TPlaceholder extends IComposedPlaceholder<any, any, TContext>>(placeholder: TPlaceholder, resolutionContext?: TContext): PlaceholderResolvedValue<TPlaceholder>;
 
-// @beta
+// @public
 export function useDataExport({ execution, exportConfig, onCancel, onError, onLoading, onPending, onSuccess, }: {
     execution: IPreparedExecution | undefined | null;
     exportConfig?: IExportConfig;
 } & UseDataExportCallbacks, deps?: DependencyList): UseDataExportState;
 
-// @beta
+// @public
 export type UseDataExportCallbacks = UseCancelablePromiseCallbacks<string, GoodDataSdkError>;
 
-// @beta
+// @public
 export type UseDataExportState = UseCancelablePromiseState<string, GoodDataSdkError>;
 
-// @beta
+// @beta @deprecated
 export function useDataView({ execution, window, onCancel, onError, onLoading, onPending, onSuccess, }: {
     execution: IPreparedExecution | undefined | null;
     window?: DataViewWindow;
 } & UseDataViewCallbacks, deps?: DependencyList): UseDataViewState;
 
-// @beta
+// @beta @deprecated
 export type UseDataViewCallbacks = UseCancelablePromiseCallbacks<DataViewFacade, GoodDataSdkError>;
 
-// @beta
+// @beta @deprecated
 export type UseDataViewState = UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
 
-// @beta
+// @beta @deprecated
 export function useExecution(config: IUseExecutionConfig): IPreparedExecution;
 
-// @beta
+// @public
 export function useExecutionDataView(config: IUseExecutionDataViewConfig, deps?: React.DependencyList): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
 
-// @beta
+// @public
 export function useInsightDataView(config: IUseInsightDataViewConfig, deps?: React.DependencyList): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
 
 // @public

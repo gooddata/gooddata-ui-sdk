@@ -12,13 +12,13 @@ import isEmpty from "lodash/isEmpty";
 
 /**
  * Date filter configuration mode
- * @alpha
+ * @public
  */
 export type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
 
 /**
  * Date filter presets to add to the date filter for the current dashboard
- * @alpha
+ * @public
  */
 export interface IDashboardDateFilterAddedPresets {
     /**
@@ -33,7 +33,7 @@ export interface IDashboardDateFilterAddedPresets {
 
 /**
  * Extended date filter config
- * @alpha
+ * @public
  */
 export interface IDashboardDateFilterConfig {
     /**
@@ -157,7 +157,7 @@ export interface IDashboardPluginLink {
  * shared - object shared with closed set of users/groups
  * public - accessible by everyone in project
  *
- * @public
+ * @alpha
  */
 export type ShareStatus = "private" | "shared" | "public";
 
@@ -259,7 +259,7 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget>
  * Tests whether the provided object is an instance of {@link IDashboard}.
  *
  * @param obj - object to test
- * @alpha
+ * @public
  */
 export function isDashboard(obj: unknown): obj is IDashboard {
     const asDash: IDashboard | undefined = obj as IDashboard;
@@ -271,7 +271,7 @@ export function isDashboard(obj: unknown): obj is IDashboard {
  * Tests whether the provided object is an instance of {@link IDashboardDefinition}.
  *
  * @param obj - object to test
- * @alpha
+ * @public
  */
 export function isDashboardDefinition(obj: unknown): obj is IDashboardDefinition {
     const asDash: IDashboard | undefined = obj as IDashboard;
@@ -291,7 +291,7 @@ export type ListedDashboardAvailability = "full" | "viaLink";
  * Listed dashboard - to display the dashboard in the list
  * Only a subset of dashboard data is available,
  * for the full definition see {@link IDashboard}
- * @alpha
+ * @public
  */
 export interface IListedDashboard
     extends Readonly<Required<IAuditableDates>>,
@@ -342,7 +342,7 @@ export interface IListedDashboard
 /**
  * Dashboard referenced objects
  *
- * @alpha
+ * @public
  */
 export interface IDashboardReferences {
     /**
@@ -358,7 +358,7 @@ export interface IDashboardReferences {
 
 /**
  * Dashboard with referenced objects
- *  * @alpha
+ * @public
  */
 export interface IDashboardWithReferences {
     dashboard: IDashboard;

@@ -1,16 +1,15 @@
 // (C) 2007-2021 GoodData Corporation
 import React, { useState } from "react";
-import { Execute, LoadingComponent, ErrorComponent } from "@gooddata/sdk-ui";
+import { Execute, LoadingComponent, ErrorComponent, IExecuteErrorComponentProps } from "@gooddata/sdk-ui";
 import { newMeasure } from "@gooddata/sdk-model";
-
-const totalSalesIdentifier = "aa7ulGyKhIE5";
+import * as Md from "../../md/full";
 
 interface IExecuteExampleState {
     executionNumber: number;
     willFail: boolean;
 }
 
-const CustomErrorComponent = ({ error }: { error: any }) => (
+const CustomErrorComponent = ({ error }: IExecuteErrorComponentProps) => (
     <div>
         <div className="gd-message error">
             <div className="gd-message-text">Oops, simulated error! Retry?</div>
@@ -31,7 +30,7 @@ const CustomLoadingComponent = () => (
     </div>
 );
 
-export const ExecuteExample: React.FC = () => {
+const ExecuteExample: React.FC = () => {
     const [{ willFail }, setState] = useState<IExecuteExampleState>({
         executionNumber: 0,
         willFail: false,
@@ -47,28 +46,24 @@ export const ExecuteExample: React.FC = () => {
         });
     };
 
-    const retryButton = (
-        <p>
-            <button onClick={retry} className="gd-button gd-button-action s-retry-button">
-                Retry
-            </button>
-            &ensp;(fails every second attempt)
-        </p>
-    );
-
-    const measure = newMeasure(willFail ? "thisDoesNotExits" : totalSalesIdentifier);
-    const measureArray = [measure];
+    const measure = willFail ? newMeasure("thisDoesNotExits") : Md.$TotalSales;
 
     return (
         <div>
-            {retryButton}
+            <p>
+                <button onClick={retry} className="gd-button gd-button-action s-retry-button">
+                    Retry
+                </button>
+                &ensp;(fails every second attempt)
+            </p>
             <Execute
-                seriesBy={measureArray}
+                seriesBy={[measure]}
                 ErrorComponent={CustomErrorComponent}
                 LoadingComponent={CustomLoadingComponent}
             >
                 {({ result }) => {
                     const measureSeries = result!.data().series().firstForMeasure(measure);
+                    const measureResult = measureSeries?.dataPoints()[0].formattedValue();
 
                     return (
                         <div>
@@ -85,9 +80,7 @@ export const ExecuteExample: React.FC = () => {
                                     }
                                 `}
                             </style>
-                            <p className="kpi s-execute-kpi">
-                                {measureSeries?.dataPoints()[0].formattedValue()}
-                            </p>
+                            <p className="kpi s-execute-kpi">{measureResult}</p>
                         </div>
                     );
                 }}
@@ -95,3 +88,5 @@ export const ExecuteExample: React.FC = () => {
         </div>
     );
 };
+
+export default ExecuteExample;
