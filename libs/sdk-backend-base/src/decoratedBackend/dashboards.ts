@@ -81,6 +81,10 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
         return this.decorated.createScheduledMail(scheduledMail, exportFilterContext);
     }
 
+    deleteScheduledMail(ref: ObjRef): Promise<void> {
+        return this.decorated.deleteScheduledMail(ref);
+    }
+
     getScheduledMailsForDashboard(
         ref: ObjRef,
         options?: IGetScheduledMailOptions,

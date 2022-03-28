@@ -79,7 +79,7 @@ export type UseCancelablePromiseCallbacks<TResult, TError> = {
      */
     onCancel?: () => void;
     /**
-     * onPending is fired whenever the promise is fulfilled
+     * onSuccess is fired whenever the promise is fulfilled
      */
     onSuccess?: (result: TResult) => void;
     /**

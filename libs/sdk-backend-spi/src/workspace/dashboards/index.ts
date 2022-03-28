@@ -164,6 +164,14 @@ export interface IWorkspaceDashboardsService {
     ): Promise<IScheduledMail>;
 
     /**
+     * Delete scheduled mail
+     *
+     * @param ref - scheduled email reference
+     * @returns promise
+     */
+    deleteScheduledMail(ref: ObjRef): Promise<void>;
+
+    /**
      * Get scheduled emails for particular dashboard
      *
      * @param ref - dashboard reference

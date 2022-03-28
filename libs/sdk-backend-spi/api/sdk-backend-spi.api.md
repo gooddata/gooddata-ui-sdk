@@ -2122,6 +2122,7 @@ export interface IWorkspaceDashboardsService {
     createWidgetAlert(alert: IWidgetAlertDefinition): Promise<IWidgetAlert>;
     deleteDashboard(ref: ObjRef): Promise<void>;
     deleteDashboardPlugin(ref: ObjRef): Promise<void>;
+    deleteScheduledMail(ref: ObjRef): Promise<void>;
     deleteWidgetAlert(ref: ObjRef): Promise<void>;
     deleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
     exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<string>;

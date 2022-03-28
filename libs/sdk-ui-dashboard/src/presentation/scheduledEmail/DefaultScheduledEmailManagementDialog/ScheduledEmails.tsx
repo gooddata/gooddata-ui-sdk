@@ -7,13 +7,14 @@ import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
 import { ScheduledEmail } from "./ScheduledEmail";
 
 interface IScheduledEmailsProps {
+    onDelete: (scheduledEmail: IScheduledMail) => void;
     isLoading: boolean;
     scheduledEmails: IScheduledMail[];
     currentUserEmail?: string;
 }
 
 export const ScheduledEmails: React.FC<IScheduledEmailsProps> = (props) => {
-    const { isLoading, scheduledEmails, currentUserEmail } = props;
+    const { isLoading, scheduledEmails, currentUserEmail, onDelete } = props;
 
     if (isLoading) {
         return <LoadingSpinner className="gd-scheduled-emails-loading-spinner large" />;
@@ -34,6 +35,7 @@ export const ScheduledEmails: React.FC<IScheduledEmailsProps> = (props) => {
                     key={scheduledEmail.identifier}
                     scheduledEmail={scheduledEmail}
                     currentUserEmail={currentUserEmail}
+                    onDelete={onDelete}
                 />
             ))}
         </>

@@ -488,6 +488,8 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     // (undocumented)
     deleteDashboardPlugin(ref: ObjRef): Promise<void>;
     // (undocumented)
+    deleteScheduledMail(ref: ObjRef): Promise<void>;
+    // (undocumented)
     deleteWidgetAlert(ref: ObjRef): Promise<void>;
     // (undocumented)
     deleteWidgetAlerts(refs: ObjRef[]): Promise<void>;

@@ -21,9 +21,9 @@ export const useScheduledEmailDialogProvider = () => {
     const openScheduleEmailingDialog = () => dispatch(uiActions.openScheduleEmailDialog());
     const closeScheduleEmailingDialog = () => dispatch(uiActions.closeScheduleEmailDialog());
     const openScheduleEmailingManagementDialog = () =>
-        dispatch(uiActions.openScheduleEmailManagementDialog());
+        isInsightExportSchedulingEnabled && dispatch(uiActions.openScheduleEmailManagementDialog());
     const closeScheduleEmailingManagementDialog = () =>
-        dispatch(uiActions.closeScheduleEmailManagementDialog());
+        isInsightExportSchedulingEnabled && dispatch(uiActions.closeScheduleEmailManagementDialog());
 
     /*
      * exports and scheduling are not available when rendering a dashboard that is not persisted.
@@ -53,8 +53,12 @@ export const useScheduledEmailDialogProvider = () => {
 };
 
 export const ScheduledEmailDialogProvider = () => {
-    const { openScheduleEmailingDialog, closeScheduleEmailingDialog, closeScheduleEmailingManagementDialog } =
-        useScheduledEmailDialogProvider();
+    const {
+        openScheduleEmailingDialog,
+        closeScheduleEmailingDialog,
+        openScheduleEmailingManagementDialog,
+        closeScheduleEmailingManagementDialog,
+    } = useScheduledEmailDialogProvider();
     const { addSuccess, addError } = useToastMessage();
     const isScheduleEmailingDialogOpen = useDashboardSelector(selectIsScheduleEmailDialogOpen);
     const isScheduleEmailingManagementDialogOpen = useDashboardSelector(
@@ -73,6 +77,11 @@ export const ScheduledEmailDialogProvider = () => {
 
     const onScheduleEmailingCancel = useCallback(() => {
         closeScheduleEmailingDialog();
+        openScheduleEmailingManagementDialog();
+    }, []);
+
+    const onScheduleEmailingManagementDelete = useCallback(() => {
+        addSuccess({ id: "dialogs.schedule.email.delete.success" });
     }, []);
 
     const onScheduleEmailingManagementAdd = useCallback(() => {
@@ -84,9 +93,14 @@ export const ScheduledEmailDialogProvider = () => {
         closeScheduleEmailingManagementDialog();
     }, []);
 
-    const onScheduleEmailingManagementError = useCallback(() => {
+    const onScheduleEmailingManagementLoadingError = useCallback(() => {
         closeScheduleEmailingManagementDialog();
         addError({ id: "dialogs.schedule.management.load.error" });
+    }, []);
+
+    const onScheduleEmailingManagementDeleteError = useCallback(() => {
+        closeScheduleEmailingManagementDialog();
+        addError({ id: "dialogs.schedule.management.delete.error" });
     }, []);
 
     return (
@@ -96,7 +110,9 @@ export const ScheduledEmailDialogProvider = () => {
                     isVisible={isScheduleEmailingManagementDialogOpen}
                     onAdd={onScheduleEmailingManagementAdd}
                     onClose={onScheduleEmailingManagementClose}
-                    onError={onScheduleEmailingManagementError}
+                    onDeleteSuccess={onScheduleEmailingManagementDelete}
+                    onLoadError={onScheduleEmailingManagementLoadingError}
+                    onDeleteError={onScheduleEmailingManagementDeleteError}
                 />
             )}
             {isScheduleEmailingDialogOpen && (
