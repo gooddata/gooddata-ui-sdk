@@ -15,8 +15,9 @@ import {
     jsonApiHeaders,
     JsonApiMetricInTypeEnum,
     MetadataUtilities,
+    ITigerClient,
 } from "@gooddata/api-client-tiger";
-import { ObjRef, idRef, isIdentifierRef } from "@gooddata/sdk-model";
+import { ObjRef, idRef, isIdentifierRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { convertMetricFromBackend } from "../../../convertors/fromBackend/MetricConverter";
 import { convertMetricToBackend } from "../../../convertors/toBackend/MetricConverter";
 import { TigerAuthenticatedCallGuard } from "../../../types";
@@ -201,4 +202,20 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
             };
         });
     };
+
+    public getMeasures = async (measureRefs: ObjRef[]): Promise<IMeasureMetadataObject[]> => {
+        return this.authCall(async (client) => {
+            const allMetrics = await loadMetrics(client, this.workspace);
+
+            return allMetrics.filter((metric) =>
+                measureRefs.find((metricRef) => areObjRefsEqual(metricRef, metric.ref)),
+            );
+        });
+    };
+}
+
+function loadMetrics(client: ITigerClient, workspaceId: string): Promise<IMeasureMetadataObject[]> {
+    return MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesMetrics, { workspaceId })
+        .then(MetadataUtilities.mergeEntitiesResults)
+        .then((measures) => measures.data.map(convertMetricFromBackend));
 }

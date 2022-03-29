@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
 import { IMeasureExpressionToken } from "../fromModel/ldm/measure";
 import {
@@ -52,4 +52,9 @@ export interface IWorkspaceMeasuresService {
      * @returns promise of references
      */
     getMeasureReferencingObjects(measureRef: ObjRef): Promise<IMeasureReferencing>;
+
+    /**
+     *
+     */
+    getMeasures(measureRefs: ObjRef[]): Promise<IMeasureMetadataObject[]>;
 }

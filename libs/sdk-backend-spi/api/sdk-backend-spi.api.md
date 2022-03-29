@@ -2189,6 +2189,8 @@ export interface IWorkspaceMeasuresService {
     deleteMeasure(measureRef: ObjRef): Promise<void>;
     getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
     getMeasureReferencingObjects(measureRef: ObjRef): Promise<IMeasureReferencing>;
+    // (undocumented)
+    getMeasures(measureRefs: ObjRef[]): Promise<IMeasureMetadataObject[]>;
     updateMeasure(measure: IMeasureMetadataObject): Promise<IMeasureMetadataObject>;
 }
 
