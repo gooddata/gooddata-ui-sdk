@@ -7,7 +7,7 @@ import {
     DateFilterGranularity,
     IAbsoluteDateFilterPreset,
     IRelativeDateFilterPreset,
-} from "../dateFilterConfigs/types";
+} from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 
 /**

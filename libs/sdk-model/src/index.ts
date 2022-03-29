@@ -383,6 +383,32 @@ export {
 export { IUser, userFullName } from "./user";
 
 export {
+    AbsoluteFormType,
+    AbsolutePresetType,
+    AllTimeType,
+    DateFilterGranularity,
+    DateString,
+    IAbsoluteDateFilterForm,
+    IAbsoluteDateFilterPreset,
+    IAllTimeDateFilterOption,
+    IDateFilterConfig,
+    IDateFilterOption,
+    IRelativeDateFilterForm,
+    IRelativeDateFilterPreset,
+    IRelativeDateFilterPresetOfGranularity,
+    OptionType,
+    RelativeFormType,
+    RelativeGranularityOffset,
+    RelativePresetType,
+    isAbsoluteDateFilterForm,
+    isAbsoluteDateFilterPreset,
+    isAllTimeDateFilterOption,
+    isDateFilterGranularity,
+    isRelativeDateFilterForm,
+    isRelativeDateFilterPreset,
+} from "./dateFilterConfig";
+
+export {
     insightCreatedComparator,
     insightCreatedByComparator,
     insightTitleComparator,

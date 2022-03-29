@@ -5,7 +5,10 @@
 ```ts
 
 import { DateAttributeGranularity } from '@gooddata/sdk-model';
+import { DateFilterGranularity as DateFilterGranularity_2 } from '@gooddata/sdk-model';
+import { DateString as DateString_2 } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
+import { IAbsoluteDateFilterPreset as IAbsoluteDateFilterPreset_2 } from '@gooddata/sdk-model';
 import { IAttributeElements } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
@@ -13,6 +16,7 @@ import { IAuditableDates } from '@gooddata/sdk-model';
 import { IAuditableUsers } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
+import { IDateFilterConfig as IDateFilterConfig_2 } from '@gooddata/sdk-model';
 import { Identifier } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
 import { IExecutionConfig } from '@gooddata/sdk-model';
@@ -23,20 +27,22 @@ import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
+import { IRelativeDateFilterPreset as IRelativeDateFilterPreset_2 } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { IUser as IUser_2 } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
+import * as m from '@gooddata/sdk-model';
 import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { ObjRefInScope } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
 import { VisualizationProperties } from '@gooddata/sdk-model';
 
-// @public
-export type AbsoluteFormType = "absoluteForm";
+// @alpha @deprecated
+export type AbsoluteFormType = m.AbsoluteFormType;
 
-// @public
-export type AbsolutePresetType = "absolutePreset";
+// @alpha @deprecated
+export type AbsolutePresetType = m.AbsolutePresetType;
 
 // @public
 export type AbsoluteType = "absolute";
@@ -44,8 +50,8 @@ export type AbsoluteType = "absolute";
 // @alpha
 export type AccessGranteeDetail = IUserAccess | IUserGroupAccess;
 
-// @public
-export type AllTimeType = "allTime";
+// @alpha @deprecated
+export type AllTimeType = m.AllTimeType;
 
 // @public
 export abstract class AnalyticalBackendError extends Error {
@@ -118,14 +124,14 @@ export class DataTooLargeError extends AnalyticalBackendError {
 // @public
 export type DataValue = null | string | number;
 
-// @alpha
-export type DateFilterGranularity = "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year";
+// @alpha @deprecated
+export type DateFilterGranularity = m.DateFilterGranularity;
 
 // @public
 export type DateFilterType = RelativeType | AbsoluteType;
 
-// @alpha
-export type DateString = string;
+// @alpha @deprecated
+export type DateString = m.DateString;
 
 // @public
 export type DrillDefinition = InsightDrillDefinition | KpiDrillDefinition;
@@ -159,16 +165,12 @@ export type FilterWithResolvableElements = IAttributeFilter | IRelativeDateFilte
 // @public
 export type GroupableCatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact;
 
-// @public
-export interface IAbsoluteDateFilterForm extends IDateFilterOption {
-    type: AbsoluteFormType;
+// @alpha @deprecated
+export interface IAbsoluteDateFilterForm extends m.IAbsoluteDateFilterForm {
 }
 
-// @public
-export interface IAbsoluteDateFilterPreset extends IDateFilterOption {
-    from: DateString;
-    to: DateString;
-    type: AbsolutePresetType;
+// @alpha @deprecated
+export interface IAbsoluteDateFilterPreset extends m.IAbsoluteDateFilterPreset {
 }
 
 // @alpha
@@ -181,9 +183,8 @@ export interface IAccessControlAware {
 // @public
 export type IAccessGrantee = IUserGroupAccessGrantee | IUserAccessGrantee;
 
-// @public
-export interface IAllTimeDateFilterOption extends IDateFilterOption {
-    type: AllTimeType;
+// @alpha @deprecated
+export interface IAllTimeDateFilterOption extends m.IAllTimeDateFilterOption {
 }
 
 // @public
@@ -466,9 +467,9 @@ export interface IDashboardDateFilter {
     // (undocumented)
     dateFilter: {
         type: DateFilterType;
-        granularity: DateFilterGranularity;
-        from?: DateString | number;
-        to?: DateString | number;
+        granularity: DateFilterGranularity_2;
+        from?: DateString_2 | number;
+        to?: DateString_2 | number;
         dataSet?: ObjRef;
         attribute?: ObjRef;
     };
@@ -476,15 +477,15 @@ export interface IDashboardDateFilter {
 
 // @public
 export interface IDashboardDateFilterAddedPresets {
-    absolutePresets?: IAbsoluteDateFilterPreset[];
-    relativePresets?: IRelativeDateFilterPreset[];
+    absolutePresets?: IAbsoluteDateFilterPreset_2[];
+    relativePresets?: IRelativeDateFilterPreset_2[];
 }
 
 // @public
 export interface IDashboardDateFilterConfig {
     addPresets?: IDashboardDateFilterAddedPresets;
     filterName: string;
-    hideGranularities?: DateFilterGranularity[];
+    hideGranularities?: DateFilterGranularity_2[];
     hideOptions?: Identifier[];
     mode: DashboardDateFilterConfigMode;
 }
@@ -698,15 +699,8 @@ export interface IDataView {
     readonly warnings?: IResultWarning[];
 }
 
-// @public
-export interface IDateFilterConfig {
-    absoluteForm?: IAbsoluteDateFilterForm;
-    absolutePresets?: IAbsoluteDateFilterPreset[];
-    allTime?: IAllTimeDateFilterOption;
-    ref: ObjRef;
-    relativeForm?: IRelativeDateFilterForm;
-    relativePresets?: IRelativeDateFilterPreset[];
-    selectedOption: Identifier;
+// @alpha @deprecated
+export interface IDateFilterConfig extends m.IDateFilterConfig {
 }
 
 // @public
@@ -717,14 +711,10 @@ export interface IDateFilterConfigsQuery {
 }
 
 // @public
-export type IDateFilterConfigsQueryResult = IPagedResource<IDateFilterConfig>;
+export type IDateFilterConfigsQueryResult = IPagedResource<IDateFilterConfig_2>;
 
-// @public
-export interface IDateFilterOption {
-    localIdentifier: Identifier;
-    name?: string;
-    type: OptionType;
-    visible: boolean;
+// @alpha @deprecated
+export interface IDateFilterOption extends m.IDateFilterOption {
 }
 
 // @public
@@ -1243,23 +1233,16 @@ export interface IPreparedExecution {
     withSorting(...items: ISortItem[]): IPreparedExecution;
 }
 
-// @public
-export interface IRelativeDateFilterForm extends IDateFilterOption {
-    availableGranularities: DateFilterGranularity[];
-    type: RelativeFormType;
+// @alpha @deprecated
+export interface IRelativeDateFilterForm extends m.IRelativeDateFilterForm {
 }
 
-// @public
-export interface IRelativeDateFilterPreset extends IDateFilterOption {
-    from: RelativeGranularityOffset;
-    granularity: DateFilterGranularity;
-    to: RelativeGranularityOffset;
-    type: RelativePresetType;
+// @alpha @deprecated
+export interface IRelativeDateFilterPreset extends m.IRelativeDateFilterPreset {
 }
 
-// @public
-export interface IRelativeDateFilterPresetOfGranularity<Key extends DateFilterGranularity> extends IRelativeDateFilterPreset {
-    granularity: Key;
+// @alpha @deprecated
+export interface IRelativeDateFilterPresetOfGranularity<Key extends DateFilterGranularity> extends m.IRelativeDateFilterPresetOfGranularity<Key> {
 }
 
 // @public
@@ -1310,17 +1293,17 @@ export interface IResultWarning {
     warningCode: string;
 }
 
-// @public
-export const isAbsoluteDateFilterForm: (obj: unknown) => obj is IAbsoluteDateFilterForm;
+// @alpha @deprecated
+export const isAbsoluteDateFilterForm: (obj: unknown) => obj is m.IAbsoluteDateFilterForm;
 
-// @public
-export const isAbsoluteDateFilterPreset: (obj: unknown) => obj is IAbsoluteDateFilterPreset;
+// @alpha @deprecated
+export const isAbsoluteDateFilterPreset: (obj: unknown) => obj is m.IAbsoluteDateFilterPreset;
 
 // @public
 export function isAllTimeDashboardDateFilter(obj: unknown): boolean;
 
-// @public
-export const isAllTimeDateFilterOption: (obj: unknown) => obj is IAllTimeDateFilterOption;
+// @alpha @deprecated
+export const isAllTimeDateFilterOption: (obj: unknown) => obj is m.IAllTimeDateFilterOption;
 
 // @public
 export function isAnalyticalBackendError(obj: unknown): obj is AnalyticalBackendError;
@@ -1419,8 +1402,8 @@ export function isDataSetMetadataObject(obj: unknown): obj is IDataSetMetadataOb
 // @public
 export function isDataTooLargeError(obj: unknown): obj is DataTooLargeError;
 
-// @public
-export const isDateFilterGranularity: (obj: unknown) => obj is DateFilterGranularity;
+// @alpha @deprecated
+export const isDateFilterGranularity: (obj: unknown) => obj is m.DateFilterGranularity;
 
 // @public
 export function isDrillFromAttribute(obj: DrillOrigin): obj is IDrillFromAttribute;
@@ -1568,11 +1551,11 @@ export function isNotSupported(obj: unknown): obj is NotSupported;
 // @public
 export function isProtectedDataError(obj: unknown): obj is ProtectedDataError;
 
-// @public
-export const isRelativeDateFilterForm: (obj: unknown) => obj is IRelativeDateFilterForm;
+// @alpha @deprecated
+export const isRelativeDateFilterForm: (obj: unknown) => obj is m.IRelativeDateFilterForm;
 
-// @public
-export const isRelativeDateFilterPreset: (obj: unknown) => obj is IRelativeDateFilterPreset;
+// @alpha @deprecated
+export const isRelativeDateFilterPreset: (obj: unknown) => obj is m.IRelativeDateFilterPreset;
 
 // @public
 export function isResultAttributeHeader(obj: unknown): obj is IResultAttributeHeader;
@@ -2314,13 +2297,13 @@ export type MetadataObject = IAttributeMetadataObject | IAttributeDisplayFormMet
 export const metadataObjectId: (metadataObject: MetadataObject) => string;
 
 // @public
-export function newAbsoluteDashboardDateFilter(from: DateString, to: DateString): IDashboardDateFilter;
+export function newAbsoluteDashboardDateFilter(from: DateString_2, to: DateString_2): IDashboardDateFilter;
 
 // @public
 export function newAllTimeDashboardDateFilter(): IDashboardDateFilter;
 
 // @public
-export function newRelativeDashboardDateFilter(granularity: DateFilterGranularity, from: number, to: number): IDashboardDateFilter;
+export function newRelativeDashboardDateFilter(granularity: DateFilterGranularity_2, from: number, to: number): IDashboardDateFilter;
 
 // @public
 export class NoDataError extends AnalyticalBackendError {
@@ -2352,8 +2335,8 @@ export class NotSupported extends AnalyticalBackendError {
     constructor(message: string);
 }
 
-// @public
-export type OptionType = AllTimeType | AbsoluteFormType | RelativeFormType | AbsolutePresetType | RelativePresetType;
+// @alpha @deprecated
+export type OptionType = m.OptionType;
 
 // @public
 export type PlatformEdition = "free" | "growth" | "enterprise";
@@ -2366,14 +2349,14 @@ export class ProtectedDataError extends AnalyticalBackendError {
     constructor(message: string, cause?: Error);
 }
 
-// @public
-export type RelativeFormType = "relativeForm";
+// @alpha @deprecated
+export type RelativeFormType = m.RelativeFormType;
 
-// @public
-export type RelativeGranularityOffset = number;
+// @alpha @deprecated
+export type RelativeGranularityOffset = m.RelativeGranularityOffset;
 
-// @public
-export type RelativePresetType = "relativePreset";
+// @alpha @deprecated
+export type RelativePresetType = m.RelativePresetType;
 
 // @public
 export type RelativeType = "relative";

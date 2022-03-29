@@ -7,8 +7,17 @@
 // @public
 export function absoluteDateFilterValues(filter: IAbsoluteDateFilter): IAbsoluteDateFilterValues;
 
+// @alpha
+export type AbsoluteFormType = "absoluteForm";
+
+// @alpha
+export type AbsolutePresetType = "absolutePreset";
+
 // @public
 export type AllTimeGranularity = "ALL_TIME_GRANULARITY";
+
+// @alpha
+export type AllTimeType = "allTime";
 
 // @public
 export const anyAttribute: AttributePredicate;
@@ -207,10 +216,16 @@ export enum ComputeRatioRule {
 // @public
 export type DateAttributeGranularity = "GDC.time.year" | "GDC.time.week_us" | "GDC.time.week_in_year" | "GDC.time.week_in_quarter" | "GDC.time.week" | "GDC.time.euweek_in_year" | "GDC.time.euweek_in_quarter" | "GDC.time.quarter" | "GDC.time.quarter_in_year" | "GDC.time.month" | "GDC.time.month_in_quarter" | "GDC.time.month_in_year" | "GDC.time.day_in_year" | "GDC.time.day_in_quarter" | "GDC.time.day_in_month" | "GDC.time.day_in_week" | "GDC.time.day_in_euweek" | "GDC.time.date" | "GDC.time.hour" | "GDC.time.hour_in_day" | "GDC.time.minute" | "GDC.time.minute_in_hour";
 
+// @alpha
+export type DateFilterGranularity = "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year";
+
 // @public
 export const DateGranularity: {
     [short: string]: DateAttributeGranularity;
 };
+
+// @alpha
+export type DateString = string;
 
 // @public
 export function defaultDimensionsGenerator(definition: IExecutionDefinition): IDimension[];
@@ -309,12 +324,29 @@ export interface IAbsoluteDateFilter {
     };
 }
 
+// @alpha
+export interface IAbsoluteDateFilterForm extends IDateFilterOption {
+    type: AbsoluteFormType;
+}
+
+// @alpha
+export interface IAbsoluteDateFilterPreset extends IDateFilterOption {
+    from: DateString;
+    to: DateString;
+    type: AbsolutePresetType;
+}
+
 // @public
 export interface IAbsoluteDateFilterValues {
     // (undocumented)
     from: string;
     // (undocumented)
     to: string;
+}
+
+// @alpha
+export interface IAllTimeDateFilterOption extends IDateFilterOption {
+    type: AllTimeType;
 }
 
 // @public
@@ -464,6 +496,25 @@ export interface IComparisonConditionBody {
 
 // @public
 export type IDateFilter = IRelativeDateFilter | IAbsoluteDateFilter;
+
+// @alpha
+export interface IDateFilterConfig {
+    absoluteForm?: IAbsoluteDateFilterForm;
+    absolutePresets?: IAbsoluteDateFilterPreset[];
+    allTime?: IAllTimeDateFilterOption;
+    ref: ObjRef;
+    relativeForm?: IRelativeDateFilterForm;
+    relativePresets?: IRelativeDateFilterPreset[];
+    selectedOption: Identifier;
+}
+
+// @alpha
+export interface IDateFilterOption {
+    localIdentifier: Identifier;
+    name?: string;
+    type: OptionType;
+    visible: boolean;
+}
 
 // @public
 export type Identifier = string;
@@ -898,6 +949,25 @@ export type IRelativeDateFilter = {
     };
 };
 
+// @alpha
+export interface IRelativeDateFilterForm extends IDateFilterOption {
+    availableGranularities: DateFilterGranularity[];
+    type: RelativeFormType;
+}
+
+// @alpha
+export interface IRelativeDateFilterPreset extends IDateFilterOption {
+    from: RelativeGranularityOffset;
+    granularity: DateFilterGranularity;
+    to: RelativeGranularityOffset;
+    type: RelativePresetType;
+}
+
+// @alpha
+export interface IRelativeDateFilterPresetOfGranularity<Key extends DateFilterGranularity> extends IRelativeDateFilterPreset {
+    granularity: Key;
+}
+
 // @public
 export interface IRelativeDateFilterValues {
     // (undocumented)
@@ -929,6 +999,12 @@ export interface IRgbColorValue {
 // @public
 export function isAbsoluteDateFilter(obj: unknown): obj is IAbsoluteDateFilter;
 
+// @alpha
+export const isAbsoluteDateFilterForm: (obj: unknown) => obj is IAbsoluteDateFilterForm;
+
+// @alpha
+export const isAbsoluteDateFilterPreset: (obj: unknown) => obj is IAbsoluteDateFilterPreset;
+
 // @public
 export function isAdhocMeasure(obj: unknown): obj is IMeasure<IMeasureDefinition>;
 
@@ -938,6 +1014,9 @@ export function isAllTimeDateFilter(obj: unknown): obj is IRelativeDateFilter & 
         granularity: "ALL_TIME_GRANULARITY";
     };
 };
+
+// @alpha
+export const isAllTimeDateFilterOption: (obj: unknown) => obj is IAllTimeDateFilterOption;
 
 // @public
 export function isArithmeticMeasure(obj: unknown): obj is IMeasure<IArithmeticMeasureDefinition>;
@@ -986,6 +1065,9 @@ export function isComparisonConditionOperator(obj: unknown): obj is ComparisonCo
 
 // @public
 export function isDateFilter(obj: unknown): obj is IDateFilter;
+
+// @alpha
+export const isDateFilterGranularity: (obj: unknown) => obj is DateFilterGranularity;
 
 // @public
 export function isDimension(obj: unknown): obj is IDimension;
@@ -1060,6 +1142,12 @@ export function isRankingFilter(obj: unknown): obj is IRankingFilter;
 
 // @public
 export function isRelativeDateFilter(obj: unknown): obj is IRelativeDateFilter;
+
+// @alpha
+export const isRelativeDateFilterForm: (obj: unknown) => obj is IRelativeDateFilterForm;
+
+// @alpha
+export const isRelativeDateFilterPreset: (obj: unknown) => obj is IRelativeDateFilterPreset;
 
 // @public
 export function isRgbColor(obj: unknown): obj is IRgbColor;
@@ -1381,6 +1469,9 @@ export type ObjRefInScope = ObjRef | LocalIdRef;
 // @internal
 export function objRefToString(objRef: ObjRef | ObjRefInScope): string;
 
+// @alpha
+export type OptionType = AllTimeType | AbsoluteFormType | RelativeFormType | AbsolutePresetType | RelativePresetType;
+
 // @public
 export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition> {
     // @internal
@@ -1425,6 +1516,15 @@ export type RankingFilterOperator = "TOP" | "BOTTOM";
 
 // @public
 export function relativeDateFilterValues(filter: IRelativeDateFilter): IRelativeDateFilterValues;
+
+// @alpha
+export type RelativeFormType = "relativeForm";
+
+// @alpha
+export type RelativeGranularityOffset = number;
+
+// @alpha
+export type RelativePresetType = "relativePreset";
 
 // @public (undocumented)
 export type RgbType = "rgb";

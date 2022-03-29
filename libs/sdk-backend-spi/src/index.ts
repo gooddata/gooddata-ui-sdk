@@ -384,31 +384,6 @@ export {
     IWorkspaceUsersQueryResult,
 } from "./workspace/users";
 export { IDateFilterConfigsQuery, IDateFilterConfigsQueryResult } from "./workspace/dateFilterConfigs";
-export {
-    IDateFilterConfig,
-    AbsoluteFormType,
-    AbsolutePresetType,
-    AllTimeType,
-    DateFilterGranularity,
-    DateString,
-    IAbsoluteDateFilterForm,
-    IAbsoluteDateFilterPreset,
-    IAllTimeDateFilterOption,
-    IDateFilterOption,
-    IRelativeDateFilterForm,
-    IRelativeDateFilterPreset,
-    IRelativeDateFilterPresetOfGranularity,
-    OptionType,
-    RelativeFormType,
-    RelativeGranularityOffset,
-    RelativePresetType,
-    isAbsoluteDateFilterForm,
-    isAbsoluteDateFilterPreset,
-    isAllTimeDateFilterOption,
-    isRelativeDateFilterForm,
-    isRelativeDateFilterPreset,
-    isDateFilterGranularity,
-} from "./workspace/dateFilterConfigs/types";
 
 export {
     CatalogItemType,
@@ -503,3 +478,30 @@ export {
     isUserGroupAccessGrantee,
     isUserAccessGrantee,
 } from "./workspace/accessControl";
+
+// Moved to @gooddata/sdk-model
+export {
+    IDateFilterConfig,
+    AbsoluteFormType,
+    AbsolutePresetType,
+    AllTimeType,
+    DateFilterGranularity,
+    DateString,
+    IAbsoluteDateFilterForm,
+    IAbsoluteDateFilterPreset,
+    IAllTimeDateFilterOption,
+    IDateFilterOption,
+    IRelativeDateFilterForm,
+    IRelativeDateFilterPreset,
+    IRelativeDateFilterPresetOfGranularity,
+    OptionType,
+    RelativeFormType,
+    RelativeGranularityOffset,
+    RelativePresetType,
+    isAbsoluteDateFilterForm,
+    isAbsoluteDateFilterPreset,
+    isAllTimeDateFilterOption,
+    isRelativeDateFilterForm,
+    isRelativeDateFilterPreset,
+    isDateFilterGranularity,
+} from "./deprecated/dateFilterConfigs";

@@ -1,13 +1,13 @@
 // (C) 2019-2020 GoodData Corporation
 
-import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards";
+import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
 import {
     isAllTimeDateFilterOption,
     isAbsoluteDateFilterForm,
     isAbsoluteDateFilterPreset,
     isRelativeDateFilterForm,
     isRelativeDateFilterPreset,
-} from "../types";
+} from "../index";
 import {
     allTimeDateFilter,
     absoluteDateFilterForm,

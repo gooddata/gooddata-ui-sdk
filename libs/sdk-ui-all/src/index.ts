@@ -25,12 +25,74 @@ export * from "@gooddata/sdk-ui-pivot";
 export * from "@gooddata/sdk-ui-filters";
 export * from "@gooddata/sdk-ui-ext";
 
-// override IUser, userFullName that are both in model and SPI so that the model version is used
-import { IUser, userFullName } from "@gooddata/sdk-model";
-// eslint-disable-next-line import/export
-export { IUser, userFullName };
+import {
+    // override getColorMappingPredicate, it is exported by both charts and geo, so use the chart version
+    getColorMappingPredicate,
+} from "@gooddata/sdk-ui-charts";
 
-// override getColorMappingPredicate, it is exported by both charts and geo, so use the chart version
-import { getColorMappingPredicate } from "@gooddata/sdk-ui-charts";
-// eslint-disable-next-line import/export
-export { getColorMappingPredicate };
+import {
+    // User
+    IUser,
+    userFullName,
+    // Date filter configs
+    DateString,
+    AllTimeType,
+    AbsoluteFormType,
+    RelativeFormType,
+    AbsolutePresetType,
+    RelativePresetType,
+    OptionType,
+    RelativeGranularityOffset,
+    DateFilterGranularity,
+    IDateFilterOption,
+    IAbsoluteDateFilterPreset,
+    IRelativeDateFilterPreset,
+    IRelativeDateFilterPresetOfGranularity,
+    IAbsoluteDateFilterForm,
+    IRelativeDateFilterForm,
+    IAllTimeDateFilterOption,
+    IDateFilterConfig,
+    isDateFilterGranularity,
+    isAllTimeDateFilterOption,
+    isAbsoluteDateFilterForm,
+    isAbsoluteDateFilterPreset,
+    isRelativeDateFilterForm,
+    isRelativeDateFilterPreset,
+} from "@gooddata/sdk-model";
+export {
+    getColorMappingPredicate,
+    // User
+    IUser,
+    // eslint-disable-next-line import/export
+    userFullName,
+    // Date filter configs
+    DateString,
+    AllTimeType,
+    AbsoluteFormType,
+    RelativeFormType,
+    AbsolutePresetType,
+    RelativePresetType,
+    OptionType,
+    RelativeGranularityOffset,
+    DateFilterGranularity,
+    IDateFilterOption,
+    IAbsoluteDateFilterPreset,
+    IRelativeDateFilterPreset,
+    IRelativeDateFilterPresetOfGranularity,
+    IAbsoluteDateFilterForm,
+    IRelativeDateFilterForm,
+    IAllTimeDateFilterOption,
+    IDateFilterConfig,
+    // eslint-disable-next-line import/export
+    isDateFilterGranularity,
+    // eslint-disable-next-line import/export
+    isAllTimeDateFilterOption,
+    // eslint-disable-next-line import/export
+    isAbsoluteDateFilterForm,
+    // eslint-disable-next-line import/export
+    isAbsoluteDateFilterPreset,
+    // eslint-disable-next-line import/export
+    isRelativeDateFilterForm,
+    // eslint-disable-next-line import/export
+    isRelativeDateFilterPreset,
+};

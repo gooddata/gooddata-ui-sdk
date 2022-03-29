@@ -10,4 +10,13 @@ export const InvalidInputTestCases: Array<[boolean, string, any]> = [
     [false, "empty object", {}],
     [false, "array", []],
     [false, "string", "bleh"],
+    [false, "number", 42],
+    [false, "boolean", true],
+    [
+        false,
+        "function",
+        (): void => {
+            // empty, we care only about the fact that this object is a function
+        },
+    ],
 ];

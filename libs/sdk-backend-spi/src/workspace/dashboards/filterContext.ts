@@ -1,9 +1,8 @@
 // (C) 2019-2022 GoodData Corporation
-import { ObjRef, isObjRef, IAttributeElements } from "@gooddata/sdk-model";
+import { ObjRef, isObjRef, IAttributeElements, DateFilterGranularity, DateString } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 import isNil from "lodash/isNil";
 import { IDashboardObjectIdentity } from "./common";
-import { DateFilterGranularity, DateString } from "../dateFilterConfigs/types";
 
 /**
  * Date filter type - relative

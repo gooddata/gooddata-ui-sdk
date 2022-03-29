@@ -15,6 +15,7 @@ import { ComponentType } from 'react';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-backend-spi';
 import { DataViewFacade } from '@gooddata/sdk-ui';
 import { DateFilterGranularity } from '@gooddata/sdk-backend-spi';
+import { DateFilterGranularity as DateFilterGranularity_2 } from '@gooddata/sdk-model';
 import { DateFilterType } from '@gooddata/sdk-backend-spi';
 import { DateString } from '@gooddata/sdk-backend-spi';
 import { Dictionary } from '@reduxjs/toolkit';
@@ -4330,7 +4331,7 @@ export const selectDrillTargets: OutputSelector<DashboardState, ObjRefMap<IDrill
 export const selectDrillTargetsByWidgetRef: ((ref: ObjRef) => OutputSelector<DashboardState, IDrillTargets | undefined, (res: ObjRefMap<IDrillTargets>) => IDrillTargets | undefined>) & MemoizedFunction;
 
 // @alpha
-export const selectEffectiveDateFilterAvailableGranularities: OutputSelector<DashboardState, DateFilterGranularity[], (res: IDateFilterConfig) => DateFilterGranularity[]>;
+export const selectEffectiveDateFilterAvailableGranularities: OutputSelector<DashboardState, DateFilterGranularity_2[], (res: IDateFilterConfig) => DateFilterGranularity_2[]>;
 
 // @alpha
 export const selectEffectiveDateFilterConfig: OutputSelector<DashboardState, IDateFilterConfig, (res: DateFilterConfigState) => IDateFilterConfig>;

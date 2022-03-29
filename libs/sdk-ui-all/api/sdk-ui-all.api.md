@@ -4,13 +4,82 @@
 
 ```ts
 
+import { AbsoluteFormType } from '@gooddata/sdk-model';
+import { AbsolutePresetType } from '@gooddata/sdk-model';
+import { AllTimeType } from '@gooddata/sdk-model';
+import { DateFilterGranularity } from '@gooddata/sdk-model';
+import { DateString } from '@gooddata/sdk-model';
 import { getColorMappingPredicate } from '@gooddata/sdk-ui-charts';
+import { IAbsoluteDateFilterForm } from '@gooddata/sdk-model';
+import { IAbsoluteDateFilterPreset } from '@gooddata/sdk-model';
+import { IAllTimeDateFilterOption } from '@gooddata/sdk-model';
+import { IDateFilterConfig } from '@gooddata/sdk-model';
+import { IDateFilterOption } from '@gooddata/sdk-model';
+import { IRelativeDateFilterForm } from '@gooddata/sdk-model';
+import { IRelativeDateFilterPreset } from '@gooddata/sdk-model';
+import { IRelativeDateFilterPresetOfGranularity } from '@gooddata/sdk-model';
+import { isAbsoluteDateFilterForm } from '@gooddata/sdk-model';
+import { isAbsoluteDateFilterPreset } from '@gooddata/sdk-model';
+import { isAllTimeDateFilterOption } from '@gooddata/sdk-model';
+import { isDateFilterGranularity } from '@gooddata/sdk-model';
+import { isRelativeDateFilterForm } from '@gooddata/sdk-model';
+import { isRelativeDateFilterPreset } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
+import { OptionType } from '@gooddata/sdk-model';
+import { RelativeFormType } from '@gooddata/sdk-model';
+import { RelativeGranularityOffset } from '@gooddata/sdk-model';
+import { RelativePresetType } from '@gooddata/sdk-model';
 import { userFullName } from '@gooddata/sdk-model';
+
+export { AbsoluteFormType }
+
+export { AbsolutePresetType }
+
+export { AllTimeType }
+
+export { DateFilterGranularity }
+
+export { DateString }
 
 export { getColorMappingPredicate }
 
+export { IAbsoluteDateFilterForm }
+
+export { IAbsoluteDateFilterPreset }
+
+export { IAllTimeDateFilterOption }
+
+export { IDateFilterConfig }
+
+export { IDateFilterOption }
+
+export { IRelativeDateFilterForm }
+
+export { IRelativeDateFilterPreset }
+
+export { IRelativeDateFilterPresetOfGranularity }
+
+export { isAbsoluteDateFilterForm }
+
+export { isAbsoluteDateFilterPreset }
+
+export { isAllTimeDateFilterOption }
+
+export { isDateFilterGranularity }
+
+export { isRelativeDateFilterForm }
+
+export { isRelativeDateFilterPreset }
+
 export { IUser }
+
+export { OptionType }
+
+export { RelativeFormType }
+
+export { RelativeGranularityOffset }
+
+export { RelativePresetType }
 
 export { userFullName }
 
