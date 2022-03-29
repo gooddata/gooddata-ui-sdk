@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020 GoodData Corporation
 import React, { createRef } from "react";
 import cx from "classnames";
 import { Portal } from "react-portal";
@@ -18,16 +18,16 @@ import { IOverlayProps, IOverlayState } from "./typings";
 import { Alignment, OverlayPositionType, SameAsTargetPosition } from "../typings/overlay";
 
 const events = [
-    { name: "click", handler: "closeOnOutsideClick", target: document, capture: true },
+    { name: "click", handler: "closeOnOutsideClick", target: document },
     {
         name: "mousedown",
         handler: "onDocumentMouseDown",
         target: document,
         requiredProp: "closeOnOutsideClick",
     },
-    { name: "goodstrap.scrolled", handler: "closeOnParentScroll", capture: true },
-    { name: "goodstrap.drag", handler: "closeOnMouseDrag", capture: true },
-    { name: "keydown", handler: "closeOnEscape", capture: true },
+    { name: "goodstrap.scrolled", handler: "closeOnParentScroll" },
+    { name: "goodstrap.drag", handler: "closeOnMouseDrag" },
+    { name: "keydown", handler: "closeOnEscape" },
 ];
 
 const eventProps = events.map((event) => event.handler);
@@ -370,9 +370,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
             if (props[event.handler] || props[event.requiredProp]) {
                 const handler = this[event.handler];
                 if (handler) {
-                    (event.target || window)[`${method}EventListener`](event.name, handler, {
-                        capture: event.capture || false,
-                    });
+                    (event.target || window)[`${method}EventListener`](event.name, handler);
                 }
             }
         });
