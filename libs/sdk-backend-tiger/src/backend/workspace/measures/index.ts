@@ -26,6 +26,11 @@ import { tokenizeExpression, IExpressionToken } from "./measureExpressionTokens"
 import { v4 as uuidv4 } from "uuid";
 import { visualizationObjectsItemToInsight } from "../../../convertors/fromBackend/InsightConverter";
 
+/**
+ * Max filter length is calculated from the maximal length of the URL (2048 characters) and
+ * its query parameters (1024 characters). As we can expect there are others query params,
+ * filter parameter length specified as below.
+ */
 const MAX_FILTER_LENGTH = 800;
 export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
