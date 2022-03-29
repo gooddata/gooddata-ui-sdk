@@ -54,7 +54,7 @@ export interface IWorkspaceMeasuresService {
     getMeasureReferencingObjects(measureRef: ObjRef): Promise<IMeasureReferencing>;
 
     /**
-     * Get all metadata object for given measure references.
+     * Get all metadata objects for given measure references.
      *
      * @param measureRefs - references of the measures to get.
      * @returns promise of {@link IMeasureMetadataObject} array.
