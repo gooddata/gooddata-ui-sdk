@@ -205,7 +205,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
 
     public getMeasures = async (measureRefs: ObjRef[]): Promise<IMeasureMetadataObject[]> => {
         return this.authCall(async (client) => {
-            const allMetrics = await loadMetrics(client, this.workspace);
+            const allMetrics = await loadMetrics(client, this.authCall, measureRefs, this.workspace);
 
             return allMetrics.filter((metric) =>
                 measureRefs.find((metricRef) => areObjRefsEqual(metricRef, metric.ref)),
@@ -214,8 +214,23 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
     };
 }
 
-function loadMetrics(client: ITigerClient, workspaceId: string): Promise<IMeasureMetadataObject[]> {
-    return MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesMetrics, { workspaceId })
+function loadMetrics(
+    client: ITigerClient,
+    authCall: TigerAuthenticatedCallGuard,
+    measureRefs: ObjRef[],
+    workspaceId: string,
+): Promise<IMeasureMetadataObject[]> {
+    const filter = measureRefs
+        .map(async (ref) => {
+            const id = await objRefToIdentifier(ref, authCall);
+            return `metrics.id==${id}`;
+        })
+        .join(",");
+
+    return MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesMetrics, {
+        workspaceId,
+        filter,
+    })
         .then(MetadataUtilities.mergeEntitiesResults)
         .then((measures) => measures.data.map(convertMetricFromBackend));
 }
