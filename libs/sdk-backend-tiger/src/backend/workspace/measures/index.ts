@@ -26,6 +26,7 @@ import { tokenizeExpression, IExpressionToken } from "./measureExpressionTokens"
 import { v4 as uuidv4 } from "uuid";
 import { visualizationObjectsItemToInsight } from "../../../convertors/fromBackend/InsightConverter";
 
+const MAX_FILTER_LENGTH = 800;
 export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
 
@@ -229,7 +230,7 @@ function loadMetrics(
 
     return MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesMetrics, {
         workspaceId,
-        filter,
+        filter: filter.length < MAX_FILTER_LENGTH ? filter : undefined,
     })
         .then(MetadataUtilities.mergeEntitiesResults)
         .then((measures) => measures.data.map(convertMetricFromBackend));

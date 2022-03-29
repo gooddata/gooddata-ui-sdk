@@ -56,6 +56,13 @@ export interface IWorkspaceMeasuresService {
     /**
      * Get all metadata objects for given measure references.
      *
+     * @remarks
+     * If the array of the given references is too large, the function must load all the measures
+     * available for the current workspace as there is only limited length of the query parameter.
+     *
+     * Consider if you need to fetch all required measures at once or if you could fetch them
+     * separately for better performance results.
+     *
      * @param measureRefs - references of the measures to get.
      * @returns promise of {@link IMeasureMetadataObject} array.
      */
