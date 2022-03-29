@@ -1,5 +1,6 @@
 // (C) 2022 GoodData Corporation
 import * as React from "react";
+import cx from "classnames";
 import { Dropdown, Button } from "@gooddata/sdk-ui-kit";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { ITheme } from "@gooddata/sdk-backend-spi";
@@ -14,17 +15,29 @@ export interface IScheduleDropdownOwnProps {
     onApply?: () => void;
     onCancel?: () => void;
     contentComponent?: React.ReactNode;
+    buttonClassName?: string;
+    bodyClassName?: string;
 }
 
 type IScheduleDropdownProps = IScheduleDropdownOwnProps & WrappedComponentProps;
 
 export const ScheduleDropdownComponent: React.FC<IScheduleDropdownProps> = (props) => {
-    const { title, applyDisabled, intl, onApply, onCancel, iconComponent, contentComponent } = props;
+    const {
+        title,
+        applyDisabled,
+        intl,
+        onApply,
+        onCancel,
+        iconComponent,
+        contentComponent,
+        buttonClassName,
+        bodyClassName,
+    } = props;
 
     const renderBody = (closeDropdown: () => void) => {
         return (
             <div className="gd-dropdown overlay">
-                <div className="gd-schedule-dropdown-body">
+                <div className={cx("gd-schedule-dropdown-body", bodyClassName)}>
                     {renderBodyHeader()}
                     {renderBodyContentWrapper()}
                     {renderBodyFooter(closeDropdown)}
@@ -82,7 +95,7 @@ export const ScheduleDropdownComponent: React.FC<IScheduleDropdownProps> = (prop
             ]}
             renderButton={({ toggleDropdown }) => (
                 <a
-                    className="gd-schedule-dropdown-button"
+                    className={cx("gd-schedule-dropdown-button", buttonClassName)}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={toggleDropdown}

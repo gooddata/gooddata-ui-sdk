@@ -22,7 +22,7 @@ export const ScheduledEmails: React.FC<IScheduledEmailsProps> = (props) => {
 
     if (scheduledEmails.length === 0) {
         return (
-            <div className="gd-scheduled-emails-message">
+            <div className="gd-scheduled-emails-message s-no-schedules-message">
                 <FormattedMessage id="dialogs.schedule.management.noSchedules" values={{ br: <br /> }} />
             </div>
         );

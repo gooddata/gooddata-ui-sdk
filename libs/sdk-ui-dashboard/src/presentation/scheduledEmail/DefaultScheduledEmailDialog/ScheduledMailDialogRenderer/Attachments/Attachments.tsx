@@ -24,7 +24,7 @@ export interface IAttachmentsOwnProps {
 }
 
 const AttachmentItem: React.FC<{ format: string }> = ({ format, children }) => (
-    <div className="gd-dashboard-attachment">
+    <div className="gd-dashboard-attachment s-gd-dashboard-attachment">
         <span className="gd-dashboard-attachment-format">{format}</span>
         <span className="gd-dashboard-attachment-name">{children}</span>
     </div>
@@ -57,7 +57,7 @@ const AttachmentsComponent = (props: IAttachmentsProps) => {
             <div className="gd-dashboard-attachment-list">
                 <div className="gd-dashboard-attachment-list-content">
                     {dashboardSelected && (
-                        <AttachmentItem format="PDF">
+                        <AttachmentItem format="pdf">
                             <span className="shortened-name">{dashboardTitle}</span>
                         </AttachmentItem>
                     )}

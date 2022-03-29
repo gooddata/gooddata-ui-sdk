@@ -61,11 +61,12 @@ const FormatOptionsDropdownComponent: React.FC<IFormatOptionsDropdownProps> = (p
                 <div>
                     <Dropdown
                         overlayPositionType="sameAsTarget"
-                        className="s-format-options-dropdown-ignore"
+                        className="s-format-options-dropdown"
                         alignPoints={DEFAULT_DROPDOWN_ALIGN_POINTS}
                         overlayZIndex={DEFAULT_DROPDOWN_ZINDEX}
                         renderButton={({ isOpen, toggleDropdown }) => (
                             <DropdownButton
+                                className="s-format-options-format-dropdown-button"
                                 value={format.toUpperCase()}
                                 isOpen={isOpen}
                                 onClick={toggleDropdown}
@@ -78,7 +79,7 @@ const FormatOptionsDropdownComponent: React.FC<IFormatOptionsDropdownProps> = (p
                                 renderItem={({ item }) => {
                                     return (
                                         <SingleSelectListItem
-                                            className="s-format-options-dropdown-content-ignore"
+                                            className="s-format-options-dropdown-content"
                                             title={item.toUpperCase()}
                                             onClick={() => {
                                                 setFormat(item);
@@ -102,7 +103,7 @@ const FormatOptionsDropdownComponent: React.FC<IFormatOptionsDropdownProps> = (p
                     <label className="input-checkbox-label">
                         <input
                             type="checkbox"
-                            className="input-checkbox"
+                            className="input-checkbox s-attachments-merge-headers"
                             checked={mergeHeaders}
                             onChange={(event) => setMergeHeaders(event.target.checked)}
                         />
@@ -112,7 +113,7 @@ const FormatOptionsDropdownComponent: React.FC<IFormatOptionsDropdownProps> = (p
                     </label>
                 </div>
                 <div>
-                    <label className="input-checkbox-label">
+                    <label className="input-checkbox-label s-attachments-include-filters">
                         <input
                             type="checkbox"
                             className="input-checkbox"
@@ -134,6 +135,8 @@ const FormatOptionsDropdownComponent: React.FC<IFormatOptionsDropdownProps> = (p
             applyDisabled={!canApply}
             onApply={handleOnApply}
             onCancel={handleOnCancel}
+            buttonClassName="s-schedule-format-options-button"
+            bodyClassName="s-schedule-format-options-body"
             iconComponent={
                 <Icon.SettingsGear
                     color={theme?.palette?.complementary?.c6}
