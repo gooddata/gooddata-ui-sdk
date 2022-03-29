@@ -64,6 +64,8 @@ const AttachmentsSelectionDropdownComponent: React.FC<IAttachmentsSelectionDropd
             applyDisabled={!canApply}
             onApply={handleOnApply}
             onCancel={handleOnCancel}
+            buttonClassName="s-schedule-select-attachments-button"
+            bodyClassName="s-schedule-select-attachments-body"
             iconComponent={
                 <Icon.AttachmentClip
                     color={theme?.palette?.complementary?.c6}
@@ -77,7 +79,7 @@ const AttachmentsSelectionDropdownComponent: React.FC<IAttachmentsSelectionDropd
                         <FormattedMessage id="dialogs.schedule.email.attachment.select.dashboard.header" />
                     </Typography>
                     <div>
-                        <label className="input-checkbox-label">
+                        <label className="input-checkbox-label s-schedule-dashboard-attachment-label">
                             <input
                                 type="checkbox"
                                 className="input-checkbox"
@@ -99,7 +101,7 @@ const AttachmentsSelectionDropdownComponent: React.FC<IAttachmentsSelectionDropd
                     </Typography>
                     {insightWidgets.map((widget) => (
                         <div key={objRefToString(widget)}>
-                            <label className="input-checkbox-label">
+                            <label className="input-checkbox-label s-schedule-widget-attachment-label">
                                 <input
                                     type="checkbox"
                                     className="input-checkbox"

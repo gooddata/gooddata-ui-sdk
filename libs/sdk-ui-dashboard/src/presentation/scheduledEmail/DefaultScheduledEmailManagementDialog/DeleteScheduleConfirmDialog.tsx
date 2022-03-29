@@ -43,16 +43,18 @@ export const DeleteScheduleConfirmDialog: React.FC<IDeleteScheduleConfirmDialogP
             className="gd-scheduled-email-delete-dialog s-scheduled-email-delete-dialog"
             containerClassName="gd-scheduled-email-delete-dialog-overlay"
         >
-            <FormattedMessage
-                id="dialogs.schedule.management.delete.dialog.confirm"
-                values={{
-                    b: (chunks: string) => (
-                        <span className="gd-scheduled-email-delete-dialog-text s-scheduled-email-delete-dialog-text">
-                            {chunks} <strong>{subject}</strong>
-                        </span>
-                    ),
-                }}
-            />
+            <span className="s-scheduled-email-delete-dialog-content">
+                <FormattedMessage
+                    id="dialogs.schedule.management.delete.dialog.confirm"
+                    values={{
+                        b: (chunks: string) => (
+                            <span className="gd-scheduled-email-delete-dialog-text">
+                                {chunks} <strong>{subject}</strong>
+                            </span>
+                        ),
+                    }}
+                />
+            </span>
         </ConfirmDialog>
     );
 };
