@@ -206,6 +206,17 @@ describe("fetch", () => {
                 });
         });
 
+        it("should fail if token renewal fails with error", () => {
+            fetchMock.get("/some/url", 401);
+            fetchMock.get("/gdc/account/token", 503);
+
+            return createXhr()
+                .ajax("/some/url")
+                .then(null, (err) => {
+                    expect(err.response.status).toBe(503);
+                });
+        });
+
         it("should correctly handle multiple requests with token request in progress", () => {
             const firstFailedMatcher = () => {
                 if (fetchMock.calls("/some/url/1").length === 1) {
