@@ -123,6 +123,12 @@ $vertical-space: 10px;
         align-items: flex-start;
     }
 
+    > .gd-label {
+        height: 30px;
+        line-height: 30px;
+        margin-bottom: 5px;
+    }
+
     .gd-attachment-config-button {
         display: inline-block;
         margin: 10px 20px 0 0;
@@ -131,6 +137,7 @@ $vertical-space: 10px;
     .gd-dashboard-attachment-list {
         flex: 1;
         overflow: hidden;
+        margin: -5px 0;
 
         @media #{$small-only} {
             max-width: none;
@@ -140,7 +147,7 @@ $vertical-space: 10px;
             display: flex;
             flex-wrap: wrap;
             overflow: hidden;
-            margin: -5px;
+            margin: 0 -5px;
         }
     }
 
@@ -156,8 +163,8 @@ $vertical-space: 10px;
             display: flex;
             align-items: center;
             height: 24px;
-            color: var(--gd-palette-complementary-7, #687581);
-            background: var(--gd-palette-complementary-2, #ebeff4);
+            color: $gd-color-link;
+            background: $is-focused-background;
             border-radius: 3px 0 0 3px;
             text-transform: uppercase;
         }
@@ -168,8 +175,8 @@ $vertical-space: 10px;
             flex-wrap: nowrap;
             overflow: hidden;
             height: 24px;
-            color: var(--gd-palette-complementary-8, #464e56);
-            background: var(--gd-palette-complementary-1, #f5f8fa);
+            color: $gd-color-text;
+            background: $button-normal-hover-bg;
             border-radius: 0 3px 3px 0;
             padding-left: 7px;
             padding-right: 7px;
@@ -306,17 +313,30 @@ $vertical-space: 10px;
 }
 
 .gd-scheduled-email-management-dialog {
-    @media #{$medium-up} {
-        width: 460px;
-    }
-
+    display: flex;
+    flex-direction: column;
+    width: 460px;
     max-height: 600px;
 
+    @media #{$small-only} {
+        width: calc(100vw - 20px);
+        height: 100vh;
+        max-height: none;
+    }
+
     .gd-scheduled-emails-content {
+        flex: 1;
+        overflow-x: hidden;
+        width: calc(100% + 20px);
+        margin: 20px -20px 0 0;
+        padding: 0 20px 20px 0;
         min-height: 50px;
         max-height: 455px;
-        overflow-x: auto;
-        margin: 20px -20px 0 0;
+        overflow-y: auto;
+
+        @media #{$small-only} {
+            max-height: none;
+        }
     }
 
     .gd-scheduled-emails-message {
@@ -324,14 +344,15 @@ $vertical-space: 10px;
         color: $gd-color-state-blank;
     }
 
-    .gd-scheduled-emails-loading-spinner {
-        display: block;
+    .gd-loading-equalizer {
         margin: auto;
     }
 
     .gd-scheduled-email {
         display: inline-flex;
         flex-direction: row-reverse;
+        overflow: hidden;
+        width: 100%;
         height: 50px;
         margin-bottom: 10px;
         cursor: default;
@@ -362,17 +383,24 @@ $vertical-space: 10px;
         margin: auto 10px auto 0;
         background-color: $gd-border-color;
         border-radius: 100px;
+        flex-shrink: 0;
     }
 
     .gd-scheduled-email-content {
         display: flex;
+        flex: 1;
+        overflow: hidden;
     }
 
     .gd-scheduled-email-text-content {
         display: flex;
-        justify-content: center;
+        flex: 1;
         flex-direction: column;
-        width: 344px;
+        justify-content: center;
+        overflow: hidden;
+        height: 40px;
+        margin: auto;
+        white-space: nowrap;
     }
 
     .gd-scheduled-email-title {
@@ -385,9 +413,8 @@ $vertical-space: 10px;
     }
 
     .gd-scheduled-email-shortened-text {
-        display: inline-block;
-        width: 100%;
-        white-space: nowrap;
+        display: block;
+        overflow: hidden;
     }
 
     .gd-scheduled-email-delete {
@@ -397,23 +424,28 @@ $vertical-space: 10px;
         width: 36px;
         height: 100%;
         cursor: pointer;
+        flex-shrink: 0;
     }
 
     .gd-scheduled-email-delete:hover {
-        background-color: var(--gd-palette-error-lightest, #fdf2f1);
+        background-color: var(--gd-palette-error-lightest, #fff2f1);
 
         ~ .gd-scheduled-email-content {
-            background-color: var(--gd-palette-error-lightest, #fdf2f1);
+            background-color: var(--gd-palette-error-lightest, #fff2f1);
         }
 
         .gd-scheduled-email-delete-icon::after {
-            color: var(--gd-palette-error-base, #e54d40);
+            color: $gd-palette-error-base;
         }
     }
 
     .gd-scheduled-email-delete-icon {
         display: none;
         margin: auto;
+
+        @media #{$small-only} {
+            display: block;
+        }
 
         &::after {
             content: "\e61a";
@@ -428,12 +460,18 @@ $vertical-space: 10px;
     .gd-content-divider {
         border-top: 1px solid $gd-border-color;
         height: 0;
-        margin: 10px 0 20px 0;
+        margin: 0 0 20px 0;
     }
 
     .gd-buttons {
         display: flex;
         justify-content: space-between;
+        flex-wrap: wrap;
+        margin: -5px;
+
+        button {
+            margin: 5px;
+        }
     }
 
     .gd-add-button {
@@ -444,20 +482,38 @@ $vertical-space: 10px;
 }
 
 .gd-scheduled-email-delete-dialog {
-    @media #{$medium-up} {
-        width: 440px;
+    width: 440px;
+
+    @media #{$small-only} {
+        width: calc(100vw - 20px);
     }
 
     .gd-dialog-content {
         overflow: hidden;
-        text-overflow: ellipsis;
         height: 40px;
+        text-overflow: ellipsis;
+        line-height: 20px;
+
+        @media #{$small-only} {
+            height: auto;
+        }
     }
 
     .gd-scheduled-email-delete-dialog-text {
         overflow: hidden;
-        text-overflow: ellipsis;
+        line-height: 20px;
         white-space: nowrap;
+        text-overflow: ellipsis;
+
+        @media #{$small-only} {
+            > strong {
+                display: block;
+                overflow: hidden;
+                line-height: 20px;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+        }
     }
 }
 
@@ -465,16 +521,22 @@ $vertical-space: 10px;
     .modalityPlugin-mask {
         z-index: 5001;
     }
+
+    @media #{$small-only} {
+        .modalityPlugin-mask {
+            z-index: 5002;
+        }
+    }
 }
 
 .gd-schedule-email-dialog-attachments {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    margin-top: 10px;
+    margin: 0 -10px;
 
-    & > div:not(:last-child) {
-        margin-right: 20px;
+    & > div {
+        margin: 5px 10px;
     }
 }
 
@@ -488,7 +550,7 @@ $vertical-space: 10px;
         border: none;
         outline: inherit;
         font: inherit;
-        color: var(--gd-palette-complementary-7, #687581);
+        color: $gd-color-link;
         background: none;
         text-decoration: underline;
         font-size: 14px;
@@ -526,8 +588,8 @@ $vertical-space: 10px;
         overflow: hidden;
         height: 35px;
         white-space: nowrap;
-        color: var(--gd-palette-complementary-7, #94a1ad);
-        background: var(--gd-palette-complementary-2, #ebeff4);
+        color: $gd-color-state-blank;
+        background: $is-focused-background;
         text-overflow: ellipsis;
         text-transform: uppercase;
         font-size: 11px;
@@ -550,7 +612,7 @@ $vertical-space: 10px;
         flex: 0 0 auto;
         height: 47px;
         padding: 10px;
-        border-top: 1px solid var(--gd-palette-complementary-1, #dde4eb);
+        border-top: 1px solid $gd-border-color;
         text-align: right;
     }
 }
@@ -558,6 +620,11 @@ $vertical-space: 10px;
 .gd-format-options-dropdown {
     padding: 10px;
     min-width: 253px;
+
+    @media #{$small-only} {
+        width: 100%;
+        min-width: none;
+    }
 
     &-selector {
         display: flex;
@@ -574,11 +641,11 @@ $vertical-space: 10px;
 .gd-format-options-dropdown-xlsx {
     display: flex;
     flex-direction: column;
-    border-left: 1px dashed var(--gd-palette-complementary-5, #979797);
+    border-left: 1px dashed $gd-color-link;
     padding-left: 10px;
     margin-top: 5px;
     font-size: 14px;
-    color: var(--gd-palette-complementary-8, #464e56);
+    color: $gd-color-text;
 
     & > div:not(:first-child) {
         margin-top: 10px;
@@ -607,6 +674,10 @@ $vertical-space: 10px;
     width: 253px;
     padding: 10px;
 
+    @media #{$small-only} {
+        width: 100%;
+    }
+
     h3 {
         flex-grow: 2;
         position: relative;
@@ -617,7 +688,7 @@ $vertical-space: 10px;
         font-size: 11px;
         font-weight: bold;
         text-transform: uppercase;
-        color: var(--gd-palette-complementary-7, #94a1ad);
+        color: $gd-color-state-blank;
 
         &::after {
             content: "";
@@ -627,7 +698,7 @@ $vertical-space: 10px;
             width: 100%;
             height: 0;
             margin-left: 10px;
-            border-top: 1px solid var(--gd-palette-complementary-7, #94a1ad);
+            border-top: 1px solid $gd-color-state-blank;
         }
     }
 

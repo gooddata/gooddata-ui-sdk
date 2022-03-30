@@ -5,19 +5,31 @@ import { FormattedMessage } from "react-intl";
 import { IScheduledMail } from "@gooddata/sdk-backend-spi";
 import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
 import { ScheduledEmail } from "./ScheduledEmail";
+import { ITheme } from "@gooddata/sdk-backend-spi";
+import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
 interface IScheduledEmailsProps {
     onDelete: (scheduledEmail: IScheduledMail) => void;
     isLoading: boolean;
     scheduledEmails: IScheduledMail[];
     currentUserEmail?: string;
+    theme?: ITheme;
 }
 
-export const ScheduledEmails: React.FC<IScheduledEmailsProps> = (props) => {
-    const { isLoading, scheduledEmails, currentUserEmail, onDelete } = props;
+const ScheduledEmailsComponent: React.FC<IScheduledEmailsProps> = (props) => {
+    const { isLoading, scheduledEmails, currentUserEmail, onDelete, theme } = props;
 
     if (isLoading) {
-        return <LoadingSpinner className="gd-scheduled-emails-loading-spinner large" />;
+        return (
+            <div className="gd-loading-equalizer-wrap">
+                <div className="gd-loading-equalizer gd-loading-equalizer-fade">
+                    <LoadingSpinner
+                        className="large gd-loading-equalizer-spinner"
+                        color={theme?.palette?.complementary?.c9}
+                    />
+                </div>
+            </div>
+        );
     }
 
     if (scheduledEmails.length === 0) {
@@ -41,3 +53,5 @@ export const ScheduledEmails: React.FC<IScheduledEmailsProps> = (props) => {
         </>
     );
 };
+
+export const ScheduledEmails = withTheme(ScheduledEmailsComponent);
