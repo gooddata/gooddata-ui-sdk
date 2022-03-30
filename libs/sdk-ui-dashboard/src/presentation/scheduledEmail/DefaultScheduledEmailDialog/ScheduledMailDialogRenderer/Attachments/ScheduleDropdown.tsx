@@ -89,10 +89,7 @@ export const ScheduleDropdownComponent: React.FC<IScheduleDropdownProps> = (prop
             overlayPositionType="sameAsTarget"
             alignPoints={DEFAULT_DROPDOWN_ALIGN_POINTS}
             overlayZIndex={DEFAULT_DROPDOWN_ZINDEX}
-            ignoreClicksOnByClass={[
-                ".s-format-options-dropdown-ignore",
-                ".s-format-options-dropdown-content-ignore",
-            ]}
+            ignoreClicksOnByClass={[".gd-format-options-dropdown-format-selection"]}
             renderButton={({ toggleDropdown }) => (
                 <a
                     className={cx("gd-schedule-dropdown-button", buttonClassName)}

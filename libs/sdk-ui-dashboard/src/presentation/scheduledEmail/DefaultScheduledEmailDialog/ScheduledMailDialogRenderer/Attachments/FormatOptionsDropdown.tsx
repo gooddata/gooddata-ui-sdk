@@ -61,7 +61,6 @@ const FormatOptionsDropdownComponent: React.FC<IFormatOptionsDropdownProps> = (p
                 <div>
                     <Dropdown
                         overlayPositionType="sameAsTarget"
-                        className="s-format-options-dropdown"
                         alignPoints={DEFAULT_DROPDOWN_ALIGN_POINTS}
                         overlayZIndex={DEFAULT_DROPDOWN_ZINDEX}
                         renderButton={({ isOpen, toggleDropdown }) => (
@@ -79,7 +78,7 @@ const FormatOptionsDropdownComponent: React.FC<IFormatOptionsDropdownProps> = (p
                                 renderItem={({ item }) => {
                                     return (
                                         <SingleSelectListItem
-                                            className="s-format-options-dropdown-content"
+                                            className="gd-format-options-dropdown-format-selection"
                                             title={item.toUpperCase()}
                                             onClick={() => {
                                                 setFormat(item);
