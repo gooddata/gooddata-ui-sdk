@@ -489,3 +489,38 @@ export {
     isDrillToInsight,
     isDrillToLegacyDashboard,
 } from "./dashboard/drill";
+
+export {
+    BuiltInWidgetTypes,
+    IBaseWidget,
+    IDrillableWidget,
+    IFilterableWidget,
+    IWidgetDescription,
+} from "./dashboard/baseWidget";
+
+export {
+    ILegacyKpi,
+    ILegacyKpiBase,
+    ILegacyKpiComparisonDirection,
+    ILegacyKpiComparisonTypeComparison,
+    ILegacyKpiWithPopComparison,
+    ILegacyKpiWithPreviousPeriodComparison,
+    ILegacyKpiWithComparison,
+    ILegacyKpiWithoutComparison,
+    isLegacyKpiWithComparison,
+    isLegacyKpiWithoutComparison,
+    isLegacyKpi,
+} from "./dashboard/kpi";
+
+export {
+    AnalyticalWidgetType,
+    WidgetType,
+    IAnalyticalWidget,
+    IKpiWidget,
+    IKpiWidgetBase,
+    IKpiWidgetDefinition,
+    IInsightWidget,
+    IInsightWidgetBase,
+    IInsightWidgetDefinition,
+    IInsightWidgetConfiguration,
+} from "./dashboard/analyticalWidgets";

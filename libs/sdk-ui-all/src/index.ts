@@ -57,10 +57,8 @@ import {
     isAbsoluteDateFilterPreset,
     isRelativeDateFilterForm,
     isRelativeDateFilterPreset,
-
     // Dashboard
     IDashboardObjectIdentity,
-
     // Dashboard Filter Context
     AbsoluteType,
     DateFilterType,
@@ -88,14 +86,12 @@ import {
     newAbsoluteDashboardDateFilter,
     newAllTimeDashboardDateFilter,
     newRelativeDashboardDateFilter,
-
     // Dashboard Alerts
     IWidgetAlert,
     IWidgetAlertBase,
     IWidgetAlertDefinition,
     isWidgetAlert,
     isWidgetAlertDefinition,
-
     // Dashboard Drills
     DrillDefinition,
     DrillOrigin,
@@ -123,6 +119,35 @@ import {
     isDrillToDashboard,
     isDrillToInsight,
     isDrillToLegacyDashboard,
+    // Dashboard Widgets
+    BuiltInWidgetTypes,
+    IBaseWidget,
+    IDrillableWidget,
+    IFilterableWidget,
+    IWidgetDescription,
+    //
+    ILegacyKpi,
+    ILegacyKpiBase,
+    ILegacyKpiComparisonDirection,
+    ILegacyKpiComparisonTypeComparison,
+    ILegacyKpiWithPopComparison,
+    ILegacyKpiWithPreviousPeriodComparison,
+    ILegacyKpiWithComparison,
+    ILegacyKpiWithoutComparison,
+    isLegacyKpiWithComparison,
+    isLegacyKpiWithoutComparison,
+    isLegacyKpi,
+    //
+    AnalyticalWidgetType,
+    WidgetType,
+    IAnalyticalWidget,
+    IKpiWidget,
+    IKpiWidgetBase,
+    IKpiWidgetDefinition,
+    IInsightWidget,
+    IInsightWidgetBase,
+    IInsightWidgetDefinition,
+    IInsightWidgetConfiguration,
 } from "@gooddata/sdk-model";
 export {
     getColorMappingPredicate,
@@ -215,4 +240,33 @@ export {
     isDrillToDashboard,
     isDrillToInsight,
     isDrillToLegacyDashboard,
+    // Dashboard Widgets
+    BuiltInWidgetTypes,
+    IBaseWidget,
+    IDrillableWidget,
+    IFilterableWidget,
+    IWidgetDescription,
+    //
+    ILegacyKpi,
+    ILegacyKpiBase,
+    ILegacyKpiComparisonDirection,
+    ILegacyKpiComparisonTypeComparison,
+    ILegacyKpiWithPopComparison,
+    ILegacyKpiWithPreviousPeriodComparison,
+    ILegacyKpiWithComparison,
+    ILegacyKpiWithoutComparison,
+    isLegacyKpiWithComparison,
+    isLegacyKpiWithoutComparison,
+    isLegacyKpi,
+    //
+    AnalyticalWidgetType,
+    WidgetType,
+    IAnalyticalWidget,
+    IKpiWidget,
+    IKpiWidgetBase,
+    IKpiWidgetDefinition,
+    IInsightWidget,
+    IInsightWidgetBase,
+    IInsightWidgetDefinition,
+    IInsightWidgetConfiguration,
 };

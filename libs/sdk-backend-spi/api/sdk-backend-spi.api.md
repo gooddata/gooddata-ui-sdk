@@ -4,10 +4,10 @@
 
 ```ts
 
+import { AnalyticalWidgetType as AnalyticalWidgetType_2 } from '@gooddata/sdk-model';
 import { DateAttributeGranularity } from '@gooddata/sdk-model';
 import { DateFilterGranularity as DateFilterGranularity_2 } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
-import { DrillDefinition as DrillDefinition_2 } from '@gooddata/sdk-model';
 import { FilterContextItem as FilterContextItem_2 } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilterPreset as IAbsoluteDateFilterPreset_2 } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
@@ -16,7 +16,6 @@ import { IAuditableDates } from '@gooddata/sdk-model';
 import { IAuditableUsers } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
-import { IDashboardFilterReference as IDashboardFilterReference_2 } from '@gooddata/sdk-model';
 import { IDashboardObjectIdentity as IDashboardObjectIdentity_2 } from '@gooddata/sdk-model';
 import { IDateFilterConfig as IDateFilterConfig_2 } from '@gooddata/sdk-model';
 import { Identifier } from '@gooddata/sdk-model';
@@ -28,8 +27,11 @@ import { IFilterContext as IFilterContext_2 } from '@gooddata/sdk-model';
 import { IFilterContextDefinition as IFilterContextDefinition_2 } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
+import { IInsightWidget as IInsightWidget_2 } from '@gooddata/sdk-model';
+import { IInsightWidgetDefinition as IInsightWidgetDefinition_2 } from '@gooddata/sdk-model';
+import { IKpiWidget as IKpiWidget_2 } from '@gooddata/sdk-model';
+import { IKpiWidgetDefinition as IKpiWidgetDefinition_2 } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
-import { InsightDrillDefinition as InsightDrillDefinition_2 } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { IRelativeDateFilterPreset as IRelativeDateFilterPreset_2 } from '@gooddata/sdk-model';
@@ -39,12 +41,10 @@ import { IUser as IUser_2 } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
 import { IWidgetAlert as IWidgetAlert_2 } from '@gooddata/sdk-model';
 import { IWidgetAlertDefinition as IWidgetAlertDefinition_2 } from '@gooddata/sdk-model';
-import { KpiDrillDefinition as KpiDrillDefinition_2 } from '@gooddata/sdk-model';
 import * as m from '@gooddata/sdk-model';
 import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
-import { VisualizationProperties } from '@gooddata/sdk-model';
 
 // @alpha @deprecated
 export type AbsoluteFormType = m.AbsoluteFormType;
@@ -85,8 +85,8 @@ export const AnalyticalBackendErrorTypes: {
 // @public
 export type AnalyticalBackendFactory = (config?: IAnalyticalBackendConfig, implConfig?: any) => IAnalyticalBackend;
 
-// @alpha
-export type AnalyticalWidgetType = "kpi" | "insight";
+// @alpha @deprecated
+export type AnalyticalWidgetType = m.AnalyticalWidgetType;
 
 // @public
 export function attributeDescriptorLocalId(descriptor: IAttributeDescriptor): string;
@@ -100,7 +100,7 @@ export type AuthenticationFlow = {
     returnRedirectParam: string;
 };
 
-// @alpha
+// @alpha @deprecated
 export const BuiltInWidgetTypes: string[];
 
 // @public
@@ -217,10 +217,8 @@ export interface IAnalyticalBackendConfig {
     readonly hostname?: string;
 }
 
-// @alpha
-export interface IAnalyticalWidget extends IBaseWidget, IWidgetDescription, IFilterableWidget, IDrillableWidget {
-    // (undocumented)
-    readonly type: AnalyticalWidgetType;
+// @alpha @deprecated
+export interface IAnalyticalWidget extends m.IAnalyticalWidget {
 }
 
 // @public
@@ -355,9 +353,8 @@ export interface IBackendCapabilities {
     usesStrictAccessControl?: boolean;
 }
 
-// @alpha
-export interface IBaseWidget {
-    readonly type: string;
+// @alpha @deprecated
+export interface IBaseWidget extends m.IBaseWidget {
 }
 
 // @public
@@ -710,9 +707,8 @@ export type IDimensionItemDescriptor = IMeasureGroupDescriptor | IAttributeDescr
 export interface IDrill extends m.IDrill {
 }
 
-// @alpha
-export interface IDrillableWidget {
-    readonly drills: DrillDefinition_2[];
+// @alpha @deprecated
+export interface IDrillableWidget extends m.IDrillableWidget {
 }
 
 // @alpha @deprecated
@@ -863,10 +859,8 @@ export interface IFactMetadataObject extends IMetadataObject {
     type: "fact";
 }
 
-// @alpha
-export interface IFilterableWidget {
-    readonly dateDataSet?: ObjRef;
-    readonly ignoreDashboardFilters: IDashboardFilterReference_2[];
+// @alpha @deprecated
+export interface IFilterableWidget extends m.IFilterableWidget {
 }
 
 // @public @deprecated
@@ -939,88 +933,60 @@ export interface IInsightsQueryOptions {
 // @public
 export type IInsightsQueryResult = IPagedResource<IInsight>;
 
-// @alpha (undocumented)
-export interface IInsightWidget extends IInsightWidgetBase, IDashboardObjectIdentity_2 {
+// @alpha @deprecated (undocumented)
+export interface IInsightWidget extends m.IInsightWidget {
 }
 
-// @alpha (undocumented)
-export interface IInsightWidgetBase extends IAnalyticalWidget {
-    readonly configuration?: IInsightWidgetConfiguration;
-    readonly drills: InsightDrillDefinition_2[];
-    readonly insight: ObjRef;
-    readonly properties?: VisualizationProperties;
-    // (undocumented)
-    readonly type: "insight";
+// @alpha @deprecated (undocumented)
+export interface IInsightWidgetBase extends m.IInsightWidgetBase {
 }
 
-// @alpha (undocumented)
-export interface IInsightWidgetConfiguration {
-    // (undocumented)
-    hideTitle?: boolean;
+// @alpha @deprecated (undocumented)
+export interface IInsightWidgetConfiguration extends m.IInsightWidgetConfiguration {
 }
 
-// @alpha (undocumented)
-export interface IInsightWidgetDefinition extends IInsightWidgetBase, Partial<IDashboardObjectIdentity_2> {
+// @alpha @deprecated (undocumented)
+export interface IInsightWidgetDefinition extends m.IInsightWidgetDefinition {
 }
 
-// @alpha (undocumented)
-export interface IKpiWidget extends IKpiWidgetBase, IDashboardObjectIdentity_2 {
+// @alpha @deprecated (undocumented)
+export interface IKpiWidget extends m.IKpiWidget {
 }
 
-// @alpha (undocumented)
-export interface IKpiWidgetBase extends IAnalyticalWidget {
-    readonly drills: KpiDrillDefinition_2[];
-    readonly kpi: ILegacyKpi;
-    // (undocumented)
-    readonly type: "kpi";
+// @alpha @deprecated (undocumented)
+export interface IKpiWidgetBase extends m.IKpiWidgetBase {
 }
 
-// @alpha (undocumented)
-export interface IKpiWidgetDefinition extends IKpiWidgetBase, Partial<IDashboardObjectIdentity_2> {
+// @alpha @deprecated (undocumented)
+export interface IKpiWidgetDefinition extends m.IKpiWidgetDefinition {
 }
 
-// @alpha
-export type ILegacyKpi = ILegacyKpiWithComparison | ILegacyKpiWithoutComparison;
+// @alpha @deprecated
+export type ILegacyKpi = m.ILegacyKpi;
 
-// @alpha
-export interface ILegacyKpiBase {
-    // (undocumented)
-    comparisonDirection?: ILegacyKpiComparisonDirection;
-    // (undocumented)
-    comparisonType: ILegacyKpiComparisonTypeComparison;
-    // (undocumented)
-    metric: ObjRef;
+// @alpha @deprecated
+export interface ILegacyKpiBase extends m.ILegacyKpiBase {
 }
 
-// @alpha
-export type ILegacyKpiComparisonDirection = "growIsGood" | "growIsBad";
+// @alpha @deprecated
+export type ILegacyKpiComparisonDirection = m.ILegacyKpiComparisonDirection;
 
-// @alpha
-export type ILegacyKpiComparisonTypeComparison = ILegacyKpiWithPreviousPeriodComparison["comparisonType"] | ILegacyKpiWithPopComparison["comparisonType"] | ILegacyKpiWithoutComparison["comparisonType"];
+// @alpha @deprecated
+export type ILegacyKpiComparisonTypeComparison = m.ILegacyKpiComparisonTypeComparison;
 
-// @alpha
-export type ILegacyKpiWithComparison = ILegacyKpiWithPreviousPeriodComparison | ILegacyKpiWithPopComparison;
+// @alpha @deprecated
+export type ILegacyKpiWithComparison = m.ILegacyKpiWithComparison;
 
-// @alpha
-export interface ILegacyKpiWithoutComparison extends ILegacyKpiBase {
-    // (undocumented)
-    comparisonType: "none";
+// @alpha @deprecated
+export interface ILegacyKpiWithoutComparison extends m.ILegacyKpiWithoutComparison {
 }
 
-// @alpha
-export interface ILegacyKpiWithPopComparison extends ILegacyKpiBase {
-    // (undocumented)
-    comparisonDirection: ILegacyKpiComparisonDirection;
-    // (undocumented)
-    comparisonType: "lastYear";
+// @alpha @deprecated
+export interface ILegacyKpiWithPopComparison extends m.ILegacyKpiWithPopComparison {
 }
 
-// @alpha
-export interface ILegacyKpiWithPreviousPeriodComparison extends ILegacyKpiBase {
-    // (undocumented)
-    comparisonDirection: ILegacyKpiComparisonDirection;
-    // (undocumented)
-    comparisonType: "previousPeriod";
+// @alpha @deprecated
+export interface ILegacyKpiWithPreviousPeriodComparison extends m.ILegacyKpiWithPreviousPeriodComparison {
 }
 
 // @public
@@ -1451,25 +1417,25 @@ export const isFilterContext: typeof m.isFilterContext;
 export const isFilterContextDefinition: typeof m.isFilterContextDefinition;
 
 // @public
-export function isInsightWidget(obj: unknown): obj is IInsightWidget;
+export function isInsightWidget(obj: unknown): obj is IInsightWidget_2;
 
 // @public
-export function isInsightWidgetDefinition(obj: unknown): obj is IInsightWidgetDefinition;
+export function isInsightWidgetDefinition(obj: unknown): obj is IInsightWidgetDefinition_2;
 
 // @public
-export function isKpiWidget(obj: unknown): obj is IKpiWidget;
+export function isKpiWidget(obj: unknown): obj is IKpiWidget_2;
 
 // @public
-export function isKpiWidgetDefinition(obj: unknown): obj is IKpiWidgetDefinition;
+export function isKpiWidgetDefinition(obj: unknown): obj is IKpiWidgetDefinition_2;
 
-// @alpha
-export function isLegacyKpi(obj: unknown): obj is ILegacyKpi;
+// @alpha @deprecated
+export const isLegacyKpi: typeof m.isLegacyKpi;
 
-// @alpha
-export function isLegacyKpiWithComparison(obj: unknown): obj is ILegacyKpiWithComparison;
+// @alpha @deprecated
+export const isLegacyKpiWithComparison: typeof m.isLegacyKpiWithComparison;
 
-// @alpha
-export function isLegacyKpiWithoutComparison(obj: unknown): obj is ILegacyKpiWithoutComparison;
+// @alpha @deprecated
+export const isLegacyKpiWithoutComparison: typeof m.isLegacyKpiWithoutComparison;
 
 // @public
 export function isMeasureDescriptor(obj: unknown): obj is IMeasureDescriptor;
@@ -1898,7 +1864,7 @@ export interface IVariableMetadataObject extends IMetadataObject {
 }
 
 // @alpha (undocumented)
-export type IWidget = IKpiWidget | IInsightWidget;
+export type IWidget = IKpiWidget_2 | IInsightWidget_2;
 
 // @alpha @deprecated
 export interface IWidgetAlert extends m.IWidgetAlert {
@@ -1929,12 +1895,10 @@ export interface IWidgetAttachment {
 }
 
 // @alpha
-export type IWidgetDefinition = IKpiWidgetDefinition | IInsightWidgetDefinition;
+export type IWidgetDefinition = IKpiWidgetDefinition_2 | IInsightWidgetDefinition_2;
 
-// @alpha
-export interface IWidgetDescription {
-    readonly description: string;
-    readonly title: string;
+// @alpha @deprecated
+export interface IWidgetDescription extends m.IWidgetDescription {
 }
 
 // @alpha
@@ -2362,10 +2326,10 @@ export function widgetRef(widget: IWidget): ObjRef;
 export function widgetTitle(widget: IWidget): string;
 
 // @alpha @deprecated (undocumented)
-export type WidgetType = AnalyticalWidgetType;
+export type WidgetType = m.WidgetType;
 
 // @public
-export function widgetType(widget: IWidget): AnalyticalWidgetType;
+export function widgetType(widget: IWidget): AnalyticalWidgetType_2;
 
 // @public
 export function widgetUri(widget: IWidget): string;

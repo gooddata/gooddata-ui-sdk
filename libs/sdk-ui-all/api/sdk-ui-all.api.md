@@ -8,6 +8,8 @@ import { AbsoluteFormType } from '@gooddata/sdk-model';
 import { AbsolutePresetType } from '@gooddata/sdk-model';
 import { AbsoluteType } from '@gooddata/sdk-model';
 import { AllTimeType } from '@gooddata/sdk-model';
+import { AnalyticalWidgetType } from '@gooddata/sdk-model';
+import { BuiltInWidgetTypes } from '@gooddata/sdk-model';
 import { dashboardFilterReferenceObjRef } from '@gooddata/sdk-model';
 import { DateFilterGranularity } from '@gooddata/sdk-model';
 import { DateFilterType } from '@gooddata/sdk-model';
@@ -23,6 +25,8 @@ import { getColorMappingPredicate } from '@gooddata/sdk-ui-charts';
 import { IAbsoluteDateFilterForm } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilterPreset } from '@gooddata/sdk-model';
 import { IAllTimeDateFilterOption } from '@gooddata/sdk-model';
+import { IAnalyticalWidget } from '@gooddata/sdk-model';
+import { IBaseWidget } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilter } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilterParent } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilterReference } from '@gooddata/sdk-model';
@@ -33,6 +37,7 @@ import { IDashboardObjectIdentity } from '@gooddata/sdk-model';
 import { IDateFilterConfig } from '@gooddata/sdk-model';
 import { IDateFilterOption } from '@gooddata/sdk-model';
 import { IDrill } from '@gooddata/sdk-model';
+import { IDrillableWidget } from '@gooddata/sdk-model';
 import { IDrillFromAttribute } from '@gooddata/sdk-model';
 import { IDrillFromMeasure } from '@gooddata/sdk-model';
 import { IDrillOrigin } from '@gooddata/sdk-model';
@@ -44,9 +49,25 @@ import { IDrillToCustomUrlTarget } from '@gooddata/sdk-model';
 import { IDrillToDashboard } from '@gooddata/sdk-model';
 import { IDrillToInsight } from '@gooddata/sdk-model';
 import { IDrillToLegacyDashboard } from '@gooddata/sdk-model';
+import { IFilterableWidget } from '@gooddata/sdk-model';
 import { IFilterContext } from '@gooddata/sdk-model';
 import { IFilterContextBase } from '@gooddata/sdk-model';
 import { IFilterContextDefinition } from '@gooddata/sdk-model';
+import { IInsightWidget } from '@gooddata/sdk-model';
+import { IInsightWidgetBase } from '@gooddata/sdk-model';
+import { IInsightWidgetConfiguration } from '@gooddata/sdk-model';
+import { IInsightWidgetDefinition } from '@gooddata/sdk-model';
+import { IKpiWidget } from '@gooddata/sdk-model';
+import { IKpiWidgetBase } from '@gooddata/sdk-model';
+import { IKpiWidgetDefinition } from '@gooddata/sdk-model';
+import { ILegacyKpi } from '@gooddata/sdk-model';
+import { ILegacyKpiBase } from '@gooddata/sdk-model';
+import { ILegacyKpiComparisonDirection } from '@gooddata/sdk-model';
+import { ILegacyKpiComparisonTypeComparison } from '@gooddata/sdk-model';
+import { ILegacyKpiWithComparison } from '@gooddata/sdk-model';
+import { ILegacyKpiWithoutComparison } from '@gooddata/sdk-model';
+import { ILegacyKpiWithPopComparison } from '@gooddata/sdk-model';
+import { ILegacyKpiWithPreviousPeriodComparison } from '@gooddata/sdk-model';
 import { InsightDrillDefinition } from '@gooddata/sdk-model';
 import { IRelativeDateFilterForm } from '@gooddata/sdk-model';
 import { IRelativeDateFilterPreset } from '@gooddata/sdk-model';
@@ -69,6 +90,9 @@ import { isDrillToInsight } from '@gooddata/sdk-model';
 import { isDrillToLegacyDashboard } from '@gooddata/sdk-model';
 import { isFilterContext } from '@gooddata/sdk-model';
 import { isFilterContextDefinition } from '@gooddata/sdk-model';
+import { isLegacyKpi } from '@gooddata/sdk-model';
+import { isLegacyKpiWithComparison } from '@gooddata/sdk-model';
+import { isLegacyKpiWithoutComparison } from '@gooddata/sdk-model';
 import { isRelativeDateFilterForm } from '@gooddata/sdk-model';
 import { isRelativeDateFilterPreset } from '@gooddata/sdk-model';
 import { isTempFilterContext } from '@gooddata/sdk-model';
@@ -79,6 +103,7 @@ import { IUser } from '@gooddata/sdk-model';
 import { IWidgetAlert } from '@gooddata/sdk-model';
 import { IWidgetAlertBase } from '@gooddata/sdk-model';
 import { IWidgetAlertDefinition } from '@gooddata/sdk-model';
+import { IWidgetDescription } from '@gooddata/sdk-model';
 import { KpiDrillDefinition } from '@gooddata/sdk-model';
 import { newAbsoluteDashboardDateFilter } from '@gooddata/sdk-model';
 import { newAllTimeDashboardDateFilter } from '@gooddata/sdk-model';
@@ -89,6 +114,7 @@ import { RelativeGranularityOffset } from '@gooddata/sdk-model';
 import { RelativePresetType } from '@gooddata/sdk-model';
 import { RelativeType } from '@gooddata/sdk-model';
 import { userFullName } from '@gooddata/sdk-model';
+import { WidgetType } from '@gooddata/sdk-model';
 
 export { AbsoluteFormType }
 
@@ -97,6 +123,10 @@ export { AbsolutePresetType }
 export { AbsoluteType }
 
 export { AllTimeType }
+
+export { AnalyticalWidgetType }
+
+export { BuiltInWidgetTypes }
 
 export { dashboardFilterReferenceObjRef }
 
@@ -128,6 +158,10 @@ export { IAbsoluteDateFilterPreset }
 
 export { IAllTimeDateFilterOption }
 
+export { IAnalyticalWidget }
+
+export { IBaseWidget }
+
 export { IDashboardAttributeFilter }
 
 export { IDashboardAttributeFilterParent }
@@ -147,6 +181,8 @@ export { IDateFilterConfig }
 export { IDateFilterOption }
 
 export { IDrill }
+
+export { IDrillableWidget }
 
 export { IDrillFromAttribute }
 
@@ -170,11 +206,43 @@ export { IDrillToInsight }
 
 export { IDrillToLegacyDashboard }
 
+export { IFilterableWidget }
+
 export { IFilterContext }
 
 export { IFilterContextBase }
 
 export { IFilterContextDefinition }
+
+export { IInsightWidget }
+
+export { IInsightWidgetBase }
+
+export { IInsightWidgetConfiguration }
+
+export { IInsightWidgetDefinition }
+
+export { IKpiWidget }
+
+export { IKpiWidgetBase }
+
+export { IKpiWidgetDefinition }
+
+export { ILegacyKpi }
+
+export { ILegacyKpiBase }
+
+export { ILegacyKpiComparisonDirection }
+
+export { ILegacyKpiComparisonTypeComparison }
+
+export { ILegacyKpiWithComparison }
+
+export { ILegacyKpiWithoutComparison }
+
+export { ILegacyKpiWithPopComparison }
+
+export { ILegacyKpiWithPreviousPeriodComparison }
 
 export { InsightDrillDefinition }
 
@@ -220,6 +288,12 @@ export { isFilterContext }
 
 export { isFilterContextDefinition }
 
+export { isLegacyKpi }
+
+export { isLegacyKpiWithComparison }
+
+export { isLegacyKpiWithoutComparison }
+
 export { isRelativeDateFilterForm }
 
 export { isRelativeDateFilterPreset }
@@ -240,6 +314,8 @@ export { IWidgetAlertBase }
 
 export { IWidgetAlertDefinition }
 
+export { IWidgetDescription }
+
 export { KpiDrillDefinition }
 
 export { newAbsoluteDashboardDateFilter }
@@ -259,6 +335,8 @@ export { RelativePresetType }
 export { RelativeType }
 
 export { userFullName }
+
+export { WidgetType }
 
 
 export * from "@gooddata/sdk-backend-spi";

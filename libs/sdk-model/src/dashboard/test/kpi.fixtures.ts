@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 
+import { uriRef } from "../../objRef/factory";
 import { ILegacyKpiWithComparison, ILegacyKpiWithoutComparison } from "../kpi";
-import { uriRef } from "@gooddata/sdk-model";
 
 export const legacyKpiWithoutComparison: ILegacyKpiWithoutComparison = {
     comparisonType: "none",

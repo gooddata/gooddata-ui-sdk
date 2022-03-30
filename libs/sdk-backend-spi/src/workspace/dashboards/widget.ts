@@ -1,16 +1,18 @@
 // (C) 2020-2022 GoodData Corporation
-import { isObjRef, ObjectType, ObjRef } from "@gooddata/sdk-model";
-import isEmpty from "lodash/isEmpty";
-import invariant from "ts-invariant";
-import { CatalogItem } from "../fromModel/ldm/catalog";
 import {
+    isObjRef,
+    ObjectType,
+    ObjRef,
     AnalyticalWidgetType,
     IAnalyticalWidget,
     IInsightWidget,
     IInsightWidgetDefinition,
     IKpiWidget,
     IKpiWidgetDefinition,
-} from "./analyticalWidgets";
+} from "@gooddata/sdk-model";
+import isEmpty from "lodash/isEmpty";
+import invariant from "ts-invariant";
+import { CatalogItem } from "../fromModel/ldm/catalog";
 
 /**
  * See {@link IWidget}]

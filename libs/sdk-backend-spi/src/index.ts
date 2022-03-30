@@ -254,25 +254,6 @@ export {
     walkLayout,
 } from "./workspace/dashboards/utils";
 export {
-    IWidgetDescription,
-    IDrillableWidget,
-    BuiltInWidgetTypes,
-    IFilterableWidget,
-    IBaseWidget,
-} from "./workspace/dashboards/baseWidget";
-export {
-    AnalyticalWidgetType,
-    WidgetType,
-    IAnalyticalWidget,
-    IKpiWidget,
-    IKpiWidgetBase,
-    IKpiWidgetDefinition,
-    IInsightWidget,
-    IInsightWidgetBase,
-    IInsightWidgetDefinition,
-    IInsightWidgetConfiguration,
-} from "./workspace/dashboards/analyticalWidgets";
-export {
     IWidget,
     IWidgetDefinition,
     isWidget,
@@ -289,19 +270,6 @@ export {
     isInsightWidgetDefinition,
     isInsightWidget,
 } from "./workspace/dashboards/widget";
-export {
-    ILegacyKpi,
-    ILegacyKpiBase,
-    ILegacyKpiComparisonDirection,
-    ILegacyKpiComparisonTypeComparison,
-    ILegacyKpiWithPopComparison,
-    ILegacyKpiWithPreviousPeriodComparison,
-    ILegacyKpiWithComparison,
-    ILegacyKpiWithoutComparison,
-    isLegacyKpiWithComparison,
-    isLegacyKpiWithoutComparison,
-    isLegacyKpi,
-} from "./workspace/dashboards/kpi";
 export {
     IDashboardAttachment,
     isDashboardAttachment,
@@ -505,3 +473,37 @@ export {
     isDrillFromAttribute,
     isDrillFromMeasure,
 } from "./deprecated/dashboard/drills";
+export {
+    IWidgetDescription,
+    IDrillableWidget,
+    BuiltInWidgetTypes,
+    IFilterableWidget,
+    IBaseWidget,
+} from "./deprecated/dashboard/baseWidget";
+
+export {
+    ILegacyKpi,
+    ILegacyKpiBase,
+    ILegacyKpiComparisonDirection,
+    ILegacyKpiComparisonTypeComparison,
+    ILegacyKpiWithPopComparison,
+    ILegacyKpiWithPreviousPeriodComparison,
+    ILegacyKpiWithComparison,
+    ILegacyKpiWithoutComparison,
+    isLegacyKpiWithComparison,
+    isLegacyKpiWithoutComparison,
+    isLegacyKpi,
+} from "./deprecated/dashboard/kpi";
+
+export {
+    AnalyticalWidgetType,
+    WidgetType,
+    IAnalyticalWidget,
+    IKpiWidget,
+    IKpiWidgetBase,
+    IKpiWidgetDefinition,
+    IInsightWidget,
+    IInsightWidgetBase,
+    IInsightWidgetDefinition,
+    IInsightWidgetConfiguration,
+} from "./deprecated/dashboard/analyticalWidgets";

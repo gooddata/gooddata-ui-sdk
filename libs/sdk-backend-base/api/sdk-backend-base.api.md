@@ -58,7 +58,7 @@ import { IInsightWidget } from '@gooddata/sdk-backend-spi';
 import { IInsightWidgetDefinition } from '@gooddata/sdk-backend-spi';
 import { IKpiWidget } from '@gooddata/sdk-backend-spi';
 import { IKpiWidgetDefinition } from '@gooddata/sdk-backend-spi';
-import { ILegacyKpi } from '@gooddata/sdk-backend-spi';
+import { ILegacyKpi } from '@gooddata/sdk-model';
 import { ILegacyKpiComparisonDirection } from '@gooddata/sdk-backend-spi';
 import { ILegacyKpiComparisonTypeComparison } from '@gooddata/sdk-backend-spi';
 import { IListedDashboard } from '@gooddata/sdk-backend-spi';

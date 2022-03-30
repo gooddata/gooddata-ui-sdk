@@ -81,8 +81,10 @@ import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IInsightWidget } from '@gooddata/sdk-backend-spi';
+import { IInsightWidget as IInsightWidget_2 } from '@gooddata/sdk-model';
 import { IInsightWidgetDefinition } from '@gooddata/sdk-backend-spi';
 import { IKpiWidget } from '@gooddata/sdk-backend-spi';
+import { IKpiWidget as IKpiWidget_2 } from '@gooddata/sdk-model';
 import { IKpiWidgetDefinition } from '@gooddata/sdk-backend-spi';
 import { ILegacyKpi } from '@gooddata/sdk-backend-spi';
 import { ILegacyKpiComparisonDirection } from '@gooddata/sdk-backend-spi';
@@ -4160,13 +4162,13 @@ export const selectAllCatalogDisplayFormsMap: OutputSelector<DashboardState, Obj
 export const selectAllCustomWidgets: OutputSelector<DashboardState, ICustomWidget[], (res: ExtendedDashboardWidget[]) => ICustomWidget[]>;
 
 // @alpha
-export const selectAllInsightWidgets: OutputSelector<DashboardState, IInsightWidget[], (res: ExtendedDashboardWidget[]) => IInsightWidget[]>;
+export const selectAllInsightWidgets: OutputSelector<DashboardState, IInsightWidget_2[], (res: ExtendedDashboardWidget[]) => IInsightWidget_2[]>;
 
 // @alpha
-export const selectAllKpiWidgets: OutputSelector<DashboardState, IKpiWidget[], (res: ExtendedDashboardWidget[]) => IKpiWidget[]>;
+export const selectAllKpiWidgets: OutputSelector<DashboardState, IKpiWidget_2[], (res: ExtendedDashboardWidget[]) => IKpiWidget_2[]>;
 
 // @alpha
-export const selectAnalyticalWidgetByRef: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IKpiWidget | IInsightWidget | undefined, (res: ObjRefMap<ExtendedDashboardWidget>) => IKpiWidget | IInsightWidget | undefined>;
+export const selectAnalyticalWidgetByRef: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IKpiWidget_2 | IInsightWidget_2 | undefined, (res: ObjRefMap<ExtendedDashboardWidget>) => IKpiWidget_2 | IInsightWidget_2 | undefined>;
 
 // @public
 export const selectAttributeFilterDisplayForms: OutputSelector<DashboardState, IAttributeDisplayFormMetadataObject[], (res: FilterContextState) => IAttributeDisplayFormMetadataObject[]>;
@@ -4451,7 +4453,7 @@ export const selectIsExecutionResultExportableToCsvByRef: (ref: ObjRef) => Outpu
 export const selectIsExecutionResultExportableToXlsxByRef: (ref: ObjRef) => OutputSelector<DashboardState, boolean, (res1: boolean, res2: boolean, res3: ISettings) => boolean>;
 
 // @alpha (undocumented)
-export const selectIsExecutionResultReadyForExportByRef: (ref: ObjRef) => OutputSelector<DashboardState, boolean, (res1: IExecutionResultEnvelope | undefined, res2: IKpiWidget | IInsightWidget | undefined) => boolean>;
+export const selectIsExecutionResultReadyForExportByRef: (ref: ObjRef) => OutputSelector<DashboardState, boolean, (res1: IExecutionResultEnvelope | undefined, res2: IKpiWidget_2 | IInsightWidget_2 | undefined) => boolean>;
 
 // @internal
 export const selectIsExport: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
@@ -4529,10 +4531,10 @@ export const selectStash: OutputSelector<DashboardState, Record<string, Extended
 export const selectValidConfiguredDrillsByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IImplicitDrillWithPredicates[], res2: ObjRefMap<IAttributeDisplayFormMetadataObject>, res3: ObjRefMap<IListedDashboard>, res4: ObjRefMap<IInsight>) => IImplicitDrillWithPredicates[]>;
 
 // @alpha
-export const selectWidgetByRef: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IKpiWidget | IInsightWidget | ICustomWidget | undefined, (res: ObjRefMap<ExtendedDashboardWidget>) => IKpiWidget | IInsightWidget | ICustomWidget | undefined>;
+export const selectWidgetByRef: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IKpiWidget_2 | IInsightWidget_2 | ICustomWidget | undefined, (res: ObjRefMap<ExtendedDashboardWidget>) => IKpiWidget_2 | IInsightWidget_2 | ICustomWidget | undefined>;
 
 // @alpha
-export const selectWidgetDrills: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IDrillToLegacyDashboard_2[] | InsightDrillDefinition_2[], (res: IKpiWidget | IInsightWidget | undefined) => IDrillToLegacyDashboard_2[] | InsightDrillDefinition_2[]>;
+export const selectWidgetDrills: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IDrillToLegacyDashboard_2[] | InsightDrillDefinition_2[], (res: IKpiWidget_2 | IInsightWidget_2 | undefined) => IDrillToLegacyDashboard_2[] | InsightDrillDefinition_2[]>;
 
 // @internal
 export const selectWidgets: OutputSelector<DashboardState, ExtendedDashboardWidget[], (res: IDashboardLayout<ExtendedDashboardWidget>) => ExtendedDashboardWidget[]>;

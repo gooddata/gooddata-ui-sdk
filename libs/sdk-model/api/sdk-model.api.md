@@ -22,6 +22,9 @@ export type AllTimeGranularity = "ALL_TIME_GRANULARITY";
 // @alpha
 export type AllTimeType = "allTime";
 
+// @alpha
+export type AnalyticalWidgetType = "kpi" | "insight";
+
 // @public
 export const anyAttribute: AttributePredicate;
 
@@ -196,6 +199,9 @@ export function bucketsTotals(buckets: IBucket[]): ITotal[];
 
 // @public
 export function bucketTotals(bucket: IBucket): ITotal[];
+
+// @alpha
+export const BuiltInWidgetTypes: string[];
 
 // @public
 export function colorPaletteItemToRgb(item: IColorPaletteItem): string;
@@ -376,6 +382,12 @@ export interface IAllTimeDateFilterOption extends IDateFilterOption {
     type: AllTimeType;
 }
 
+// @alpha
+export interface IAnalyticalWidget extends IBaseWidget, IWidgetDescription, IFilterableWidget, IDrillableWidget {
+    // (undocumented)
+    readonly type: AnalyticalWidgetType;
+}
+
 // @public
 export interface IArithmeticMeasureDefinition {
     // (undocumented)
@@ -460,6 +472,11 @@ export interface IAuditableDates {
 export interface IAuditableUsers {
     createdBy?: IUser;
     updatedBy?: IUser;
+}
+
+// @alpha
+export interface IBaseWidget {
+    readonly type: string;
 }
 
 // @public
@@ -633,6 +650,11 @@ export interface IDrill {
 }
 
 // @alpha
+export interface IDrillableWidget {
+    readonly drills: DrillDefinition[];
+}
+
+// @alpha
 export interface IDrillFromAttribute extends IDrillOrigin {
     attribute: ObjRefInScope;
     type: "drillFromAttribute";
@@ -721,6 +743,12 @@ export interface IExecutionDefinition {
 export type IFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter | IMeasureValueFilter | IRankingFilter;
 
 // @alpha
+export interface IFilterableWidget {
+    readonly dateDataSet?: ObjRef;
+    readonly ignoreDashboardFilters: IDashboardFilterReference[];
+}
+
+// @alpha
 export interface IFilterContext extends IFilterContextBase, IDashboardObjectIdentity {
 }
 
@@ -758,6 +786,90 @@ export type IInsightDefinition = {
         properties: VisualizationProperties;
     };
 };
+
+// @alpha (undocumented)
+export interface IInsightWidget extends IInsightWidgetBase, IDashboardObjectIdentity {
+}
+
+// @alpha (undocumented)
+export interface IInsightWidgetBase extends IAnalyticalWidget {
+    readonly configuration?: IInsightWidgetConfiguration;
+    readonly drills: InsightDrillDefinition[];
+    readonly insight: ObjRef;
+    readonly properties?: VisualizationProperties;
+    // (undocumented)
+    readonly type: "insight";
+}
+
+// @alpha (undocumented)
+export interface IInsightWidgetConfiguration {
+    // (undocumented)
+    hideTitle?: boolean;
+}
+
+// @alpha (undocumented)
+export interface IInsightWidgetDefinition extends IInsightWidgetBase, Partial<IDashboardObjectIdentity> {
+}
+
+// @alpha (undocumented)
+export interface IKpiWidget extends IKpiWidgetBase, IDashboardObjectIdentity {
+}
+
+// @alpha (undocumented)
+export interface IKpiWidgetBase extends IAnalyticalWidget {
+    readonly drills: KpiDrillDefinition[];
+    readonly kpi: ILegacyKpi;
+    // (undocumented)
+    readonly type: "kpi";
+}
+
+// @alpha (undocumented)
+export interface IKpiWidgetDefinition extends IKpiWidgetBase, Partial<IDashboardObjectIdentity> {
+}
+
+// @alpha
+export type ILegacyKpi = ILegacyKpiWithComparison | ILegacyKpiWithoutComparison;
+
+// @alpha
+export interface ILegacyKpiBase {
+    // (undocumented)
+    comparisonDirection?: ILegacyKpiComparisonDirection;
+    // (undocumented)
+    comparisonType: ILegacyKpiComparisonTypeComparison;
+    // (undocumented)
+    metric: ObjRef;
+}
+
+// @alpha
+export type ILegacyKpiComparisonDirection = "growIsGood" | "growIsBad";
+
+// @alpha
+export type ILegacyKpiComparisonTypeComparison = ILegacyKpiWithPreviousPeriodComparison["comparisonType"] | ILegacyKpiWithPopComparison["comparisonType"] | ILegacyKpiWithoutComparison["comparisonType"];
+
+// @alpha
+export type ILegacyKpiWithComparison = ILegacyKpiWithPreviousPeriodComparison | ILegacyKpiWithPopComparison;
+
+// @alpha
+export interface ILegacyKpiWithoutComparison extends ILegacyKpiBase {
+    // (undocumented)
+    comparisonType: "none";
+}
+
+// @alpha
+export interface ILegacyKpiWithPopComparison extends ILegacyKpiBase {
+    // (undocumented)
+    comparisonDirection: ILegacyKpiComparisonDirection;
+    // (undocumented)
+    comparisonType: "lastYear";
+}
+
+// @alpha
+export interface ILegacyKpiWithPreviousPeriodComparison extends ILegacyKpiBase {
+    // (undocumented)
+    comparisonDirection: ILegacyKpiComparisonDirection;
+    // (undocumented)
+    comparisonType: "previousPeriod";
+}
 
 // @public
 export type ILocatorItem = IAttributeLocatorItem | IMeasureLocatorItem;
@@ -1297,6 +1409,15 @@ export function isIdentifierRef(obj: unknown): obj is IdentifierRef;
 // @public
 export function isInsight(obj: unknown): obj is IInsight;
 
+// @alpha
+export function isLegacyKpi(obj: unknown): obj is ILegacyKpi;
+
+// @alpha
+export function isLegacyKpiWithComparison(obj: unknown): obj is ILegacyKpiWithComparison;
+
+// @alpha
+export function isLegacyKpiWithoutComparison(obj: unknown): obj is ILegacyKpiWithoutComparison;
+
 // @public
 export function isLocalIdRef(obj: unknown): obj is LocalIdRef;
 
@@ -1457,6 +1578,12 @@ export interface IWidgetAlertBase {
 // @alpha
 export interface IWidgetAlertDefinition extends IWidgetAlertBase, Partial<IDashboardObjectIdentity> {
     readonly filterContext?: IFilterContext | IFilterContextDefinition;
+}
+
+// @alpha
+export interface IWidgetDescription {
+    readonly description: string;
+    readonly title: string;
 }
 
 // @alpha
@@ -1853,5 +1980,8 @@ export function visClassUrl(vc: IVisualizationClass): string;
 export type VisualizationProperties = {
     [key: string]: any;
 };
+
+// @alpha @deprecated (undocumented)
+export type WidgetType = AnalyticalWidgetType;
 
 ```
