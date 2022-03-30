@@ -34,7 +34,7 @@ import { IInsightWidget } from '@gooddata/sdk-backend-spi';
 import { IInsightWidgetDefinition } from '@gooddata/sdk-backend-spi';
 import { IKpiWidget } from '@gooddata/sdk-backend-spi';
 import { IKpiWidgetDefinition } from '@gooddata/sdk-backend-spi';
-import { InsightDrillDefinition } from '@gooddata/sdk-backend-spi';
+import { InsightDrillDefinition } from '@gooddata/sdk-model';
 import { IScheduledMail } from '@gooddata/sdk-backend-spi';
 import { IScheduledMailDefinition } from '@gooddata/sdk-backend-spi';
 import { IUser } from '@gooddata/sdk-model';

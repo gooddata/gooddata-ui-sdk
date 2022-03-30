@@ -296,6 +296,21 @@ export function dimensionTotals(dim: IDimension): ITotal[];
 // @public
 export function disableComputeRatio<T extends IAttributeOrMeasure>(item: T): T;
 
+// @alpha
+export type DrillDefinition = InsightDrillDefinition | KpiDrillDefinition;
+
+// @alpha
+export type DrillOrigin = IDrillFromMeasure | IDrillFromAttribute;
+
+// @alpha
+export type DrillOriginType = "drillFromMeasure" | "drillFromAttribute";
+
+// @alpha
+export type DrillTransition = "pop-up" | "in-place" | "new-window";
+
+// @alpha
+export type DrillType = "drillToInsight" | "drillToDashboard" | "drillToLegacyDashboard" | "drillToCustomUrl" | "drillToAttributeUrl";
+
 // @public
 export function emptyDef(workspace: string): IExecutionDefinition;
 
@@ -610,6 +625,80 @@ export const idMatchMeasure: (id: string) => MeasurePredicate;
 // @public
 export function idRef(identifier: Identifier, type?: ObjectType): IdentifierRef;
 
+// @alpha
+export interface IDrill {
+    origin: DrillOrigin;
+    transition: DrillTransition;
+    type: DrillType;
+}
+
+// @alpha
+export interface IDrillFromAttribute extends IDrillOrigin {
+    attribute: ObjRefInScope;
+    type: "drillFromAttribute";
+}
+
+// @alpha
+export interface IDrillFromMeasure extends IDrillOrigin {
+    measure: ObjRefInScope;
+    type: "drillFromMeasure";
+}
+
+// @alpha
+export interface IDrillOrigin {
+    type: DrillOriginType;
+}
+
+// @alpha
+export type IDrillTarget = ObjRef | IDrillToCustomUrlTarget | IDrillToAttributeUrlTarget;
+
+// @alpha
+export interface IDrillToAttributeUrl extends IDrill {
+    target: IDrillToAttributeUrlTarget;
+    transition: "new-window";
+    type: "drillToAttributeUrl";
+}
+
+// @alpha
+export interface IDrillToAttributeUrlTarget {
+    displayForm: ObjRef;
+    hyperlinkDisplayForm: ObjRef;
+}
+
+// @alpha
+export interface IDrillToCustomUrl extends IDrill {
+    target: IDrillToCustomUrlTarget;
+    transition: "new-window";
+    type: "drillToCustomUrl";
+}
+
+// @alpha
+export interface IDrillToCustomUrlTarget {
+    url: string;
+}
+
+// @alpha
+export interface IDrillToDashboard extends IDrill {
+    target?: ObjRef;
+    transition: "in-place";
+    type: "drillToDashboard";
+}
+
+// @alpha
+export interface IDrillToInsight extends IDrill {
+    target: ObjRef;
+    transition: "pop-up";
+    type: "drillToInsight";
+}
+
+// @alpha
+export interface IDrillToLegacyDashboard extends IDrill {
+    tab: string;
+    target: ObjRef;
+    transition: "in-place";
+    type: "drillToLegacyDashboard";
+}
+
 // @public
 export interface IExecutionConfig {
     dataSamplingPercentage?: number;
@@ -824,6 +913,9 @@ export type InsightDisplayFormUsage = {
 
 // @public
 export function insightDisplayFormUsage<T extends IInsightDefinition>(insight: T): InsightDisplayFormUsage;
+
+// @alpha
+export type InsightDrillDefinition = IDrillToInsight | IDrillToDashboard | IDrillToCustomUrl | IDrillToAttributeUrl;
 
 // @public
 export function insightFilters(insight: IInsightDefinition): IFilter[];
@@ -1169,6 +1261,27 @@ export const isDateFilterGranularity: (obj: unknown) => obj is DateFilterGranula
 // @public
 export function isDimension(obj: unknown): obj is IDimension;
 
+// @alpha
+export function isDrillFromAttribute(obj: DrillOrigin): obj is IDrillFromAttribute;
+
+// @alpha
+export function isDrillFromMeasure(obj: DrillOrigin): obj is IDrillFromMeasure;
+
+// @alpha
+export function isDrillToAttributeUrl(obj: unknown): obj is IDrillToAttributeUrl;
+
+// @alpha
+export function isDrillToCustomUrl(obj: unknown): obj is IDrillToCustomUrl;
+
+// @alpha
+export function isDrillToDashboard(obj: unknown): obj is IDrillToDashboard;
+
+// @alpha
+export function isDrillToInsight(obj: unknown): obj is IDrillToInsight;
+
+// @alpha
+export function isDrillToLegacyDashboard(obj: unknown): obj is IDrillToLegacyDashboard;
+
 // @public
 export function isFilter(obj: unknown): obj is IFilter;
 
@@ -1345,6 +1458,9 @@ export interface IWidgetAlertBase {
 export interface IWidgetAlertDefinition extends IWidgetAlertBase, Partial<IDashboardObjectIdentity> {
     readonly filterContext?: IFilterContext | IFilterContextDefinition;
 }
+
+// @alpha
+export type KpiDrillDefinition = IDrillToLegacyDashboard;
 
 // @public
 export type LocalIdRef = {

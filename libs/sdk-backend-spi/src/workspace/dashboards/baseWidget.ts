@@ -1,7 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { ObjRef, IDashboardFilterReference } from "@gooddata/sdk-model";
-import { DrillDefinition } from "./drills";
+import { ObjRef, IDashboardFilterReference, DrillDefinition } from "@gooddata/sdk-model";
 
 /**
  * Defines properties that are used for filterable widgets. Filterable widgets allow users to specify:

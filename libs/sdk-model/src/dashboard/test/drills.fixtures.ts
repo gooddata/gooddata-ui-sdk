@@ -1,13 +1,12 @@
 // (C) 2019-2021 GoodData Corporation
-
-import { localIdRef } from "@gooddata/sdk-model";
+import { localIdRef } from "../../objRef/factory";
 import {
     IDrillToLegacyDashboard,
     IDrillToDashboard,
     IDrillToInsight,
     IDrillFromMeasure,
     IDrillFromAttribute,
-} from "../drills";
+} from "../drill";
 
 export const drillToLegacyDashboard: IDrillToLegacyDashboard = {
     type: "drillToLegacyDashboard",

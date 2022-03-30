@@ -68,6 +68,7 @@ import { IDrillToCustomUrl } from '@gooddata/sdk-backend-spi';
 import { IDrillToDashboard } from '@gooddata/sdk-backend-spi';
 import { IDrillToInsight } from '@gooddata/sdk-backend-spi';
 import { IDrillToLegacyDashboard } from '@gooddata/sdk-backend-spi';
+import { IDrillToLegacyDashboard as IDrillToLegacyDashboard_2 } from '@gooddata/sdk-model';
 import { IErrorProps } from '@gooddata/sdk-ui';
 import { IExecutionConfiguration } from '@gooddata/sdk-ui';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
@@ -93,6 +94,7 @@ import { IMeasureMetadataObject } from '@gooddata/sdk-backend-spi';
 import { INegativeAttributeFilter } from '@gooddata/sdk-model';
 import { InsightDisplayFormUsage } from '@gooddata/sdk-model';
 import { InsightDrillDefinition } from '@gooddata/sdk-backend-spi';
+import { InsightDrillDefinition as InsightDrillDefinition_2 } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
 import { IPositiveAttributeFilter } from '@gooddata/sdk-model';
 import { IPushData } from '@gooddata/sdk-ui';
@@ -4251,7 +4253,7 @@ export const selectConfig: OutputSelector<DashboardState, ResolvedDashboardConfi
 export const selectConfiguredAndImplicitDrillsByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IImplicitDrillWithPredicates[], res2: IImplicitDrillWithPredicates[], res3: IImplicitDrillWithPredicates[]) => IImplicitDrillWithPredicates[]>;
 
 // @internal (undocumented)
-export const selectConfiguredDrillsByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IDrillToLegacyDashboard[] | InsightDrillDefinition[], res2: boolean, res3: boolean, res4: boolean, res5: boolean, res6: boolean, res7: boolean, res8: boolean) => IImplicitDrillWithPredicates[]>;
+export const selectConfiguredDrillsByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IDrillToLegacyDashboard_2[] | InsightDrillDefinition_2[], res2: boolean, res3: boolean, res4: boolean, res5: boolean, res6: boolean, res7: boolean, res8: boolean) => IImplicitDrillWithPredicates[]>;
 
 // @public
 export const selectCurrentUser: OutputSelector<DashboardState, IUser, (res: UserState) => IUser>;
@@ -4530,7 +4532,7 @@ export const selectValidConfiguredDrillsByWidgetRef: (ref: ObjRef) => OutputSele
 export const selectWidgetByRef: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IKpiWidget | IInsightWidget | ICustomWidget | undefined, (res: ObjRefMap<ExtendedDashboardWidget>) => IKpiWidget | IInsightWidget | ICustomWidget | undefined>;
 
 // @alpha
-export const selectWidgetDrills: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IDrillToLegacyDashboard[] | InsightDrillDefinition[], (res: IKpiWidget | IInsightWidget | undefined) => IDrillToLegacyDashboard[] | InsightDrillDefinition[]>;
+export const selectWidgetDrills: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IDrillToLegacyDashboard_2[] | InsightDrillDefinition_2[], (res: IKpiWidget | IInsightWidget | undefined) => IDrillToLegacyDashboard_2[] | InsightDrillDefinition_2[]>;
 
 // @internal
 export const selectWidgets: OutputSelector<DashboardState, ExtendedDashboardWidget[], (res: IDashboardLayout<ExtendedDashboardWidget>) => ExtendedDashboardWidget[]>;

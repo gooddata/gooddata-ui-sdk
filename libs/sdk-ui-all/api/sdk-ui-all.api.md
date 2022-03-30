@@ -12,6 +12,12 @@ import { dashboardFilterReferenceObjRef } from '@gooddata/sdk-model';
 import { DateFilterGranularity } from '@gooddata/sdk-model';
 import { DateFilterType } from '@gooddata/sdk-model';
 import { DateString } from '@gooddata/sdk-model';
+import { getColorMappingPredicate } from '@gooddata/sdk-ui-charts';
+import { DrillDefinition } from '@gooddata/sdk-model';
+import { DrillOrigin } from '@gooddata/sdk-model';
+import { DrillOriginType } from '@gooddata/sdk-model';
+import { DrillTransition } from '@gooddata/sdk-model';
+import { DrillType } from '@gooddata/sdk-model';
 import { FilterContextItem } from '@gooddata/sdk-model';
 import { getColorMappingPredicate } from '@gooddata/sdk-ui-charts';
 import { IAbsoluteDateFilterForm } from '@gooddata/sdk-model';
@@ -26,9 +32,22 @@ import { IDashboardFilterReference } from '@gooddata/sdk-model';
 import { IDashboardObjectIdentity } from '@gooddata/sdk-model';
 import { IDateFilterConfig } from '@gooddata/sdk-model';
 import { IDateFilterOption } from '@gooddata/sdk-model';
+import { IDrill } from '@gooddata/sdk-model';
+import { IDrillFromAttribute } from '@gooddata/sdk-model';
+import { IDrillFromMeasure } from '@gooddata/sdk-model';
+import { IDrillOrigin } from '@gooddata/sdk-model';
+import { IDrillTarget } from '@gooddata/sdk-model';
+import { IDrillToAttributeUrl } from '@gooddata/sdk-model';
+import { IDrillToAttributeUrlTarget } from '@gooddata/sdk-model';
+import { IDrillToCustomUrl } from '@gooddata/sdk-model';
+import { IDrillToCustomUrlTarget } from '@gooddata/sdk-model';
+import { IDrillToDashboard } from '@gooddata/sdk-model';
+import { IDrillToInsight } from '@gooddata/sdk-model';
+import { IDrillToLegacyDashboard } from '@gooddata/sdk-model';
 import { IFilterContext } from '@gooddata/sdk-model';
 import { IFilterContextBase } from '@gooddata/sdk-model';
 import { IFilterContextDefinition } from '@gooddata/sdk-model';
+import { InsightDrillDefinition } from '@gooddata/sdk-model';
 import { IRelativeDateFilterForm } from '@gooddata/sdk-model';
 import { IRelativeDateFilterPreset } from '@gooddata/sdk-model';
 import { IRelativeDateFilterPresetOfGranularity } from '@gooddata/sdk-model';
@@ -41,6 +60,13 @@ import { isDashboardAttributeFilterReference } from '@gooddata/sdk-model';
 import { isDashboardDateFilter } from '@gooddata/sdk-model';
 import { isDashboardDateFilterReference } from '@gooddata/sdk-model';
 import { isDateFilterGranularity } from '@gooddata/sdk-model';
+import { isDrillFromAttribute } from '@gooddata/sdk-model';
+import { isDrillFromMeasure } from '@gooddata/sdk-model';
+import { isDrillToAttributeUrl } from '@gooddata/sdk-model';
+import { isDrillToCustomUrl } from '@gooddata/sdk-model';
+import { isDrillToDashboard } from '@gooddata/sdk-model';
+import { isDrillToInsight } from '@gooddata/sdk-model';
+import { isDrillToLegacyDashboard } from '@gooddata/sdk-model';
 import { isFilterContext } from '@gooddata/sdk-model';
 import { isFilterContextDefinition } from '@gooddata/sdk-model';
 import { isRelativeDateFilterForm } from '@gooddata/sdk-model';
@@ -53,6 +79,7 @@ import { IUser } from '@gooddata/sdk-model';
 import { IWidgetAlert } from '@gooddata/sdk-model';
 import { IWidgetAlertBase } from '@gooddata/sdk-model';
 import { IWidgetAlertDefinition } from '@gooddata/sdk-model';
+import { KpiDrillDefinition } from '@gooddata/sdk-model';
 import { newAbsoluteDashboardDateFilter } from '@gooddata/sdk-model';
 import { newAllTimeDashboardDateFilter } from '@gooddata/sdk-model';
 import { newRelativeDashboardDateFilter } from '@gooddata/sdk-model';
@@ -78,6 +105,18 @@ export { DateFilterGranularity }
 export { DateFilterType }
 
 export { DateString }
+
+export { getColorMappingPredicate }
+
+export { DrillDefinition }
+
+export { DrillOrigin }
+
+export { DrillOriginType }
+
+export { DrillTransition }
+
+export { DrillType }
 
 export { FilterContextItem }
 
@@ -107,11 +146,37 @@ export { IDateFilterConfig }
 
 export { IDateFilterOption }
 
+export { IDrill }
+
+export { IDrillFromAttribute }
+
+export { IDrillFromMeasure }
+
+export { IDrillOrigin }
+
+export { IDrillTarget }
+
+export { IDrillToAttributeUrl }
+
+export { IDrillToAttributeUrlTarget }
+
+export { IDrillToCustomUrl }
+
+export { IDrillToCustomUrlTarget }
+
+export { IDrillToDashboard }
+
+export { IDrillToInsight }
+
+export { IDrillToLegacyDashboard }
+
 export { IFilterContext }
 
 export { IFilterContextBase }
 
 export { IFilterContextDefinition }
+
+export { InsightDrillDefinition }
 
 export { IRelativeDateFilterForm }
 
@@ -137,6 +202,20 @@ export { isDashboardDateFilterReference }
 
 export { isDateFilterGranularity }
 
+export { isDrillFromAttribute }
+
+export { isDrillFromMeasure }
+
+export { isDrillToAttributeUrl }
+
+export { isDrillToCustomUrl }
+
+export { isDrillToDashboard }
+
+export { isDrillToInsight }
+
+export { isDrillToLegacyDashboard }
+
 export { isFilterContext }
 
 export { isFilterContextDefinition }
@@ -160,6 +239,8 @@ export { IWidgetAlert }
 export { IWidgetAlertBase }
 
 export { IWidgetAlertDefinition }
+
+export { KpiDrillDefinition }
 
 export { newAbsoluteDashboardDateFilter }
 

@@ -7,6 +7,7 @@
 import { DateAttributeGranularity } from '@gooddata/sdk-model';
 import { DateFilterGranularity as DateFilterGranularity_2 } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
+import { DrillDefinition as DrillDefinition_2 } from '@gooddata/sdk-model';
 import { FilterContextItem as FilterContextItem_2 } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilterPreset as IAbsoluteDateFilterPreset_2 } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
@@ -28,6 +29,7 @@ import { IFilterContextDefinition as IFilterContextDefinition_2 } from '@gooddat
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
+import { InsightDrillDefinition as InsightDrillDefinition_2 } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { IRelativeDateFilterPreset as IRelativeDateFilterPreset_2 } from '@gooddata/sdk-model';
@@ -37,10 +39,10 @@ import { IUser as IUser_2 } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
 import { IWidgetAlert as IWidgetAlert_2 } from '@gooddata/sdk-model';
 import { IWidgetAlertDefinition as IWidgetAlertDefinition_2 } from '@gooddata/sdk-model';
+import { KpiDrillDefinition as KpiDrillDefinition_2 } from '@gooddata/sdk-model';
 import * as m from '@gooddata/sdk-model';
 import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
-import { ObjRefInScope } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
 import { VisualizationProperties } from '@gooddata/sdk-model';
 
@@ -139,20 +141,20 @@ export type DateFilterType = m.DateFilterType;
 // @alpha @deprecated
 export type DateString = m.DateString;
 
-// @public
-export type DrillDefinition = InsightDrillDefinition | KpiDrillDefinition;
+// @alpha @deprecated
+export type DrillDefinition = m.DrillDefinition;
 
-// @public
-export type DrillOrigin = IDrillFromMeasure | IDrillFromAttribute;
+// @alpha @deprecated
+export type DrillOrigin = m.DrillOrigin;
 
-// @public
-export type DrillOriginType = "drillFromMeasure" | "drillFromAttribute";
+// @alpha @deprecated
+export type DrillOriginType = m.DrillOriginType;
 
-// @public
-export type DrillTransition = "pop-up" | "in-place" | "new-window";
+// @alpha @deprecated
+export type DrillTransition = m.DrillTransition;
 
-// @public
-export type DrillType = "drillToInsight" | "drillToDashboard" | "drillToLegacyDashboard" | "drillToCustomUrl" | "drillToAttributeUrl";
+// @alpha @deprecated
+export type DrillType = m.DrillType;
 
 // @public
 export type ErrorConverter = (e: Error) => AnalyticalBackendError;
@@ -704,83 +706,56 @@ export interface IDimensionDescriptor {
 // @public
 export type IDimensionItemDescriptor = IMeasureGroupDescriptor | IAttributeDescriptor;
 
-// @public
-export interface IDrill {
-    origin: DrillOrigin;
-    transition: DrillTransition;
-    type: DrillType;
+// @alpha @deprecated
+export interface IDrill extends m.IDrill {
 }
 
 // @alpha
 export interface IDrillableWidget {
-    readonly drills: DrillDefinition[];
+    readonly drills: DrillDefinition_2[];
 }
 
-// @public
-export interface IDrillFromAttribute extends IDrillOrigin {
-    attribute: ObjRefInScope;
-    type: "drillFromAttribute";
+// @alpha @deprecated
+export interface IDrillFromAttribute extends m.IDrillFromAttribute {
 }
 
-// @public
-export interface IDrillFromMeasure extends IDrillOrigin {
-    measure: ObjRefInScope;
-    type: "drillFromMeasure";
+// @alpha @deprecated
+export interface IDrillFromMeasure extends m.IDrillFromMeasure {
 }
 
-// @public
-export interface IDrillOrigin {
-    type: DrillOriginType;
+// @alpha @deprecated
+export interface IDrillOrigin extends m.IDrillOrigin {
 }
 
-// @public
-export type IDrillTarget = ObjRef | IDrillToCustomUrlTarget | IDrillToAttributeUrlTarget;
+// @alpha @deprecated
+export type IDrillTarget = m.IDrillTarget;
 
-// @public
-export interface IDrillToAttributeUrl extends IDrill {
-    target: IDrillToAttributeUrlTarget;
-    transition: "new-window";
-    type: "drillToAttributeUrl";
+// @alpha @deprecated
+export interface IDrillToAttributeUrl extends m.IDrillToAttributeUrl {
 }
 
-// @public
-export interface IDrillToAttributeUrlTarget {
-    displayForm: ObjRef;
-    hyperlinkDisplayForm: ObjRef;
+// @alpha @deprecated
+export interface IDrillToAttributeUrlTarget extends m.IDrillToAttributeUrlTarget {
 }
 
-// @public
-export interface IDrillToCustomUrl extends IDrill {
-    target: IDrillToCustomUrlTarget;
-    transition: "new-window";
-    type: "drillToCustomUrl";
+// @alpha @deprecated
+export interface IDrillToCustomUrl extends m.IDrillToCustomUrl {
 }
 
-// @public
-export interface IDrillToCustomUrlTarget {
-    url: string;
+// @alpha @deprecated
+export interface IDrillToCustomUrlTarget extends m.IDrillToCustomUrlTarget {
 }
 
-// @public
-export interface IDrillToDashboard extends IDrill {
-    target?: ObjRef;
-    transition: "in-place";
-    type: "drillToDashboard";
+// @alpha @deprecated
+export interface IDrillToDashboard extends m.IDrillToDashboard {
 }
 
-// @public
-export interface IDrillToInsight extends IDrill {
-    target: ObjRef;
-    transition: "pop-up";
-    type: "drillToInsight";
+// @alpha @deprecated
+export interface IDrillToInsight extends m.IDrillToInsight {
 }
 
-// @public
-export interface IDrillToLegacyDashboard extends IDrill {
-    tab: string;
-    target: ObjRef;
-    transition: "in-place";
-    type: "drillToLegacyDashboard";
+// @alpha @deprecated
+export interface IDrillToLegacyDashboard extends m.IDrillToLegacyDashboard {
 }
 
 // @public
@@ -971,7 +946,7 @@ export interface IInsightWidget extends IInsightWidgetBase, IDashboardObjectIden
 // @alpha (undocumented)
 export interface IInsightWidgetBase extends IAnalyticalWidget {
     readonly configuration?: IInsightWidgetConfiguration;
-    readonly drills: InsightDrillDefinition[];
+    readonly drills: InsightDrillDefinition_2[];
     readonly insight: ObjRef;
     readonly properties?: VisualizationProperties;
     // (undocumented)
@@ -994,7 +969,7 @@ export interface IKpiWidget extends IKpiWidgetBase, IDashboardObjectIdentity_2 {
 
 // @alpha (undocumented)
 export interface IKpiWidgetBase extends IAnalyticalWidget {
-    readonly drills: KpiDrillDefinition[];
+    readonly drills: KpiDrillDefinition_2[];
     readonly kpi: ILegacyKpi;
     // (undocumented)
     readonly type: "kpi";
@@ -1141,8 +1116,8 @@ export interface IMetadataObjectIdentity {
     uri: string;
 }
 
-// @public
-export type InsightDrillDefinition = IDrillToInsight | IDrillToDashboard | IDrillToCustomUrl | IDrillToAttributeUrl;
+// @alpha @deprecated
+export type InsightDrillDefinition = m.InsightDrillDefinition;
 
 // @public
 export type InsightOrdering = "id" | "title" | "updated";
@@ -1380,26 +1355,26 @@ export function isDataTooLargeError(obj: unknown): obj is DataTooLargeError;
 // @alpha @deprecated
 export const isDateFilterGranularity: (obj: unknown) => obj is m.DateFilterGranularity;
 
-// @public
-export function isDrillFromAttribute(obj: DrillOrigin): obj is IDrillFromAttribute;
+// @alpha @deprecated
+export const isDrillFromAttribute: typeof m.isDrillFromAttribute;
 
-// @public
-export function isDrillFromMeasure(obj: DrillOrigin): obj is IDrillFromMeasure;
+// @alpha @deprecated
+export const isDrillFromMeasure: typeof m.isDrillFromMeasure;
 
-// @public
-export function isDrillToAttributeUrl(obj: unknown): obj is IDrillToAttributeUrl;
+// @alpha @deprecated
+export const isDrillToAttributeUrl: typeof m.isDrillToAttributeUrl;
 
-// @public
-export function isDrillToCustomUrl(obj: unknown): obj is IDrillToCustomUrl;
+// @alpha @deprecated
+export const isDrillToCustomUrl: typeof m.isDrillToCustomUrl;
 
-// @public
-export function isDrillToDashboard(obj: unknown): obj is IDrillToDashboard;
+// @alpha @deprecated
+export const isDrillToDashboard: typeof m.isDrillToDashboard;
 
-// @public
-export function isDrillToInsight(obj: unknown): obj is IDrillToInsight;
+// @alpha @deprecated
+export const isDrillToInsight: typeof m.isDrillToInsight;
 
-// @public
-export function isDrillToLegacyDashboard(obj: unknown): obj is IDrillToLegacyDashboard;
+// @alpha @deprecated
+export const isDrillToLegacyDashboard: typeof m.isDrillToLegacyDashboard;
 
 // @public
 export interface ISecuritySettingsService {
@@ -2237,8 +2212,8 @@ export interface IWorkspaceUsersQueryOptions {
 // @public
 export type IWorkspaceUsersQueryResult = IPagedResource<IWorkspaceUser>;
 
-// @public
-export type KpiDrillDefinition = IDrillToLegacyDashboard;
+// @alpha @deprecated
+export type KpiDrillDefinition = m.KpiDrillDefinition;
 
 // @alpha
 export type LayoutPath = Array<string | number>;
