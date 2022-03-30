@@ -1,7 +1,12 @@
 // (C) 2019-2022 GoodData Corporation
-import { ObjRef, isObjRef } from "@gooddata/sdk-model";
-import { IFilterContext, IFilterContextDefinition, isFilterContextDefinition } from "./filterContext";
-import { IDashboardObjectIdentity } from "./common";
+import {
+    ObjRef,
+    isObjRef,
+    IFilterContext,
+    IFilterContextDefinition,
+    isFilterContextDefinition,
+    IDashboardObjectIdentity,
+} from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 
 /**

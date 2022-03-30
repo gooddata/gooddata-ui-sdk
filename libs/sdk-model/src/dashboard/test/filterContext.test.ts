@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 
-import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards";
+import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
 import {
     filterContext,
     filterContextDefinition,
@@ -21,7 +21,7 @@ import {
     isFilterContextDefinition,
     isTempFilterContext,
 } from "../filterContext";
-import { ObjRef } from "@gooddata/sdk-model";
+import { ObjRef } from "../../objRef";
 
 describe("filter context type guards", () => {
     describe("isDashboardAttributeFilter", () => {

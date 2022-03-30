@@ -13,6 +13,9 @@ export type AbsoluteFormType = "absoluteForm";
 // @alpha
 export type AbsolutePresetType = "absolutePreset";
 
+// @alpha
+export type AbsoluteType = "absolute";
+
 // @public
 export type AllTimeGranularity = "ALL_TIME_GRANULARITY";
 
@@ -213,11 +216,17 @@ export enum ComputeRatioRule {
     SINGLE_MEASURE_ONLY = 1
 }
 
+// @alpha
+export function dashboardFilterReferenceObjRef(ref: IDashboardFilterReference): ObjRef;
+
 // @public
 export type DateAttributeGranularity = "GDC.time.year" | "GDC.time.week_us" | "GDC.time.week_in_year" | "GDC.time.week_in_quarter" | "GDC.time.week" | "GDC.time.euweek_in_year" | "GDC.time.euweek_in_quarter" | "GDC.time.quarter" | "GDC.time.quarter_in_year" | "GDC.time.month" | "GDC.time.month_in_quarter" | "GDC.time.month_in_year" | "GDC.time.day_in_year" | "GDC.time.day_in_quarter" | "GDC.time.day_in_month" | "GDC.time.day_in_week" | "GDC.time.day_in_euweek" | "GDC.time.date" | "GDC.time.hour" | "GDC.time.hour_in_day" | "GDC.time.minute" | "GDC.time.minute_in_hour";
 
 // @alpha
 export type DateFilterGranularity = "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year";
+
+// @alpha
+export type DateFilterType = RelativeType | AbsoluteType;
 
 // @public
 export const DateGranularity: {
@@ -298,6 +307,9 @@ export function filterAttributeElements(filter: IPositiveAttributeFilter | INega
 
 // @public
 export function filterAttributeElements(filter: IFilter): IAttributeElements | undefined;
+
+// @alpha
+export type FilterContextItem = IDashboardAttributeFilter | IDashboardDateFilter;
 
 // @public
 export function filterIsEmpty(filter: IAttributeFilter): boolean;
@@ -494,6 +506,61 @@ export interface IComparisonConditionBody {
     value: number;
 }
 
+// @alpha
+export interface IDashboardAttributeFilter {
+    // (undocumented)
+    attributeFilter: {
+        displayForm: ObjRef;
+        negativeSelection: boolean;
+        attributeElements: IAttributeElements;
+        localIdentifier?: string;
+        filterElementsBy?: IDashboardAttributeFilterParent[];
+    };
+}
+
+// @alpha
+export interface IDashboardAttributeFilterParent {
+    filterLocalIdentifier: string;
+    over: {
+        attributes: ObjRef[];
+    };
+}
+
+// @alpha
+export interface IDashboardAttributeFilterReference {
+    displayForm: ObjRef;
+    type: "attributeFilterReference";
+}
+
+// @alpha
+export interface IDashboardDateFilter {
+    // (undocumented)
+    dateFilter: {
+        type: DateFilterType;
+        granularity: DateFilterGranularity;
+        from?: DateString | number;
+        to?: DateString | number;
+        dataSet?: ObjRef;
+        attribute?: ObjRef;
+    };
+}
+
+// @alpha
+export interface IDashboardDateFilterReference {
+    dataSet: ObjRef;
+    type: "dateFilterReference";
+}
+
+// @alpha
+export type IDashboardFilterReference = IDashboardDateFilterReference | IDashboardAttributeFilterReference;
+
+// @public
+export interface IDashboardObjectIdentity {
+    readonly identifier: string;
+    readonly ref: ObjRef;
+    readonly uri: string;
+}
+
 // @public
 export type IDateFilter = IRelativeDateFilter | IAbsoluteDateFilter;
 
@@ -563,6 +630,21 @@ export interface IExecutionDefinition {
 
 // @public
 export type IFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter | IMeasureValueFilter | IRankingFilter;
+
+// @alpha
+export interface IFilterContext extends IFilterContextBase, IDashboardObjectIdentity {
+}
+
+// @alpha
+export interface IFilterContextBase {
+    readonly description: string;
+    readonly filters: FilterContextItem[];
+    readonly title: string;
+}
+
+// @alpha
+export interface IFilterContextDefinition extends IFilterContextBase, Partial<IDashboardObjectIdentity> {
+}
 
 // @public
 export type IInsight = IInsightDefinition & {
@@ -1008,6 +1090,9 @@ export const isAbsoluteDateFilterPreset: (obj: unknown) => obj is IAbsoluteDateF
 // @public
 export function isAdhocMeasure(obj: unknown): obj is IMeasure<IMeasureDefinition>;
 
+// @alpha
+export function isAllTimeDashboardDateFilter(obj: unknown): boolean;
+
 // @public
 export function isAllTimeDateFilter(obj: unknown): obj is IRelativeDateFilter & {
     relativeDateFilter: {
@@ -1063,6 +1148,18 @@ export function isComparisonCondition(obj: unknown): obj is IComparisonCondition
 // @public
 export function isComparisonConditionOperator(obj: unknown): obj is ComparisonConditionOperator;
 
+// @alpha
+export function isDashboardAttributeFilter(obj: unknown): obj is IDashboardAttributeFilter;
+
+// @alpha
+export function isDashboardAttributeFilterReference(obj: unknown): obj is IDashboardAttributeFilterReference;
+
+// @alpha
+export function isDashboardDateFilter(obj: unknown): obj is IDashboardDateFilter;
+
+// @alpha
+export function isDashboardDateFilterReference(obj: unknown): obj is IDashboardDateFilterReference;
+
 // @public
 export function isDateFilter(obj: unknown): obj is IDateFilter;
 
@@ -1074,6 +1171,12 @@ export function isDimension(obj: unknown): obj is IDimension;
 
 // @public
 export function isFilter(obj: unknown): obj is IFilter;
+
+// @alpha
+export function isFilterContext(obj: unknown): obj is IFilterContext;
+
+// @alpha
+export function isFilterContextDefinition(obj: unknown): obj is IFilterContextDefinition;
 
 // @public
 export function isIdentifierRef(obj: unknown): obj is IdentifierRef;
@@ -1155,6 +1258,9 @@ export function isRgbColor(obj: unknown): obj is IRgbColor;
 // @public
 export function isSimpleMeasure(obj: unknown): obj is IMeasure<IMeasureDefinition>;
 
+// @alpha
+export function isTempFilterContext(obj: unknown): obj is ITempFilterContext;
+
 // @public
 export function isTotal(obj: unknown): obj is ITotal;
 
@@ -1167,6 +1273,14 @@ export type ItemInDimension = {
     dimIdx: number;
     itemIdx: number;
 };
+
+// @alpha
+export interface ITempFilterContext {
+    readonly created: string;
+    readonly filters: FilterContextItem[];
+    readonly ref: ObjRef;
+    readonly uri: string;
+}
 
 // @public
 export interface ITotal {
@@ -1372,8 +1486,14 @@ export function modifyPreviousPeriodMeasure(measure: IMeasure<IPreviousPeriodMea
 // @public
 export function modifySimpleMeasure(measure: IMeasure<IMeasureDefinition>, modifications?: MeasureModifications<MeasureBuilder>): IMeasure<IMeasureDefinition>;
 
+// @alpha
+export function newAbsoluteDashboardDateFilter(from: DateString, to: DateString): IDashboardDateFilter;
+
 // @public
 export function newAbsoluteDateFilter(dateDataSet: ObjRef | Identifier, from: string, to: string): IAbsoluteDateFilter;
+
+// @alpha
+export function newAllTimeDashboardDateFilter(): IDashboardDateFilter;
 
 // @public
 export function newAllTimeFilter(dateDataSet: ObjRef | Identifier): IRelativeDateFilter;
@@ -1443,6 +1563,9 @@ export function newRankingFilter(measureOrRef: IMeasure | ObjRefInScope | string
 
 // @public
 export function newRankingFilter(measureOrRef: IMeasure | ObjRefInScope | string, operator: RankingFilterOperator, value: number): IRankingFilter;
+
+// @alpha
+export function newRelativeDashboardDateFilter(granularity: DateFilterGranularity, from: number, to: number): IDashboardDateFilter;
 
 // @public
 export function newRelativeDateFilter(dateDataSet: ObjRef | Identifier, granularity: DateAttributeGranularity, from: number, to: number): IRelativeDateFilter;
@@ -1525,6 +1648,9 @@ export type RelativeGranularityOffset = number;
 
 // @alpha
 export type RelativePresetType = "relativePreset";
+
+// @alpha
+export type RelativeType = "relative";
 
 // @public (undocumented)
 export type RgbType = "rgb";

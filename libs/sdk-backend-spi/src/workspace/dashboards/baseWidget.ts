@@ -1,7 +1,6 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
-import { IDashboardFilterReference } from "./filterContext";
-import { ObjRef } from "@gooddata/sdk-model";
+import { ObjRef, IDashboardFilterReference } from "@gooddata/sdk-model";
 import { DrillDefinition } from "./drills";
 
 /**

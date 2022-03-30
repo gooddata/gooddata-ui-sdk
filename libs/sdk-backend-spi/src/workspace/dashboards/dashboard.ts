@@ -1,8 +1,16 @@
 // (C) 2019-2022 GoodData Corporation
-import { IAuditableDates, IAuditableUsers, Identifier, IInsight, ObjRef } from "@gooddata/sdk-model";
+import {
+    IAuditableDates,
+    IAuditableUsers,
+    Identifier,
+    IInsight,
+    ObjRef,
+    IFilterContext,
+    IFilterContextDefinition,
+    ITempFilterContext,
+    IDashboardObjectIdentity,
+} from "@gooddata/sdk-model";
 import { IDashboardLayout, IDashboardWidget } from "./layout";
-import { IFilterContext, IFilterContextDefinition, ITempFilterContext } from "./filterContext";
-import { IDashboardObjectIdentity } from "./common";
 import {
     DateFilterGranularity,
     IAbsoluteDateFilterPreset,

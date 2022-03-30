@@ -1,4 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
+import { uriRef } from "../../objRef/factory";
 import {
     IDashboardAttributeFilter,
     IDashboardAttributeFilterReference,
@@ -8,7 +9,6 @@ import {
     IFilterContextDefinition,
     ITempFilterContext,
 } from "../filterContext";
-import { uriRef } from "@gooddata/sdk-model";
 
 export const dashboardAttributeFilter: IDashboardAttributeFilter = {
     attributeFilter: {

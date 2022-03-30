@@ -1,30 +1,32 @@
 // (C) 2019-2022 GoodData Corporation
-import { ObjRef, isObjRef, IAttributeElements, DateFilterGranularity, DateString } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 import isNil from "lodash/isNil";
+import { DateFilterGranularity, DateString } from "../dateFilterConfig";
+import { IAttributeElements } from "../execution/filter";
+import { isObjRef, ObjRef } from "../objRef";
 import { IDashboardObjectIdentity } from "./common";
 
 /**
  * Date filter type - relative
- * @public
+ * @alpha
  */
 export type RelativeType = "relative";
 
 /**
  * Date filter type - absolute
- * @public
+ * @alpha
  */
 export type AbsoluteType = "absolute";
 
 /**
  * Date filter type - relative or absolute
- * @public
+ * @alpha
  */
 export type DateFilterType = RelativeType | AbsoluteType;
 
 /**
  * Parent filter of an attribute filter of the filter context
- * @public
+ * @alpha
  */
 export interface IDashboardAttributeFilterParent {
     /**
@@ -41,7 +43,7 @@ export interface IDashboardAttributeFilterParent {
 
 /**
  * Attribute filter of the filter context
- * @public
+ * @alpha
  */
 export interface IDashboardAttributeFilter {
     attributeFilter: {
@@ -74,7 +76,7 @@ export interface IDashboardAttributeFilter {
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IDashboardAttributeFilter}.
- * @public
+ * @alpha
  */
 export function isDashboardAttributeFilter(obj: unknown): obj is IDashboardAttributeFilter {
     return !isEmpty(obj) && !!(obj as IDashboardAttributeFilter).attributeFilter;
@@ -82,7 +84,7 @@ export function isDashboardAttributeFilter(obj: unknown): obj is IDashboardAttri
 
 /**
  * Date filter of the filter context
- * @public
+ * @alpha
  */
 export interface IDashboardDateFilter {
     dateFilter: {
@@ -120,7 +122,7 @@ export interface IDashboardDateFilter {
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IDashboardDateFilter}.
- * @public
+ * @alpha
  */
 export function isDashboardDateFilter(obj: unknown): obj is IDashboardDateFilter {
     return !isEmpty(obj) && !!(obj as IDashboardDateFilter).dateFilter;
@@ -132,7 +134,7 @@ export function isDashboardDateFilter(obj: unknown): obj is IDashboardDateFilter
  * @param granularity - granularity of the filters (month, year, etc.)
  * @param from - start of the interval – negative numbers mean the past, zero means today, positive numbers mean the future
  * @param to - end of the interval – negative numbers mean the past, zero means today, positive numbers mean the future
- * @public
+ * @alpha
  */
 export function newRelativeDashboardDateFilter(
     granularity: DateFilterGranularity,
@@ -154,7 +156,7 @@ export function newRelativeDashboardDateFilter(
  *
  * @param from - start of the interval in ISO-8601 calendar date format
  * @param to - end of the interval in ISO-8601 calendar date format
- * @public
+ * @alpha
  */
 export function newAbsoluteDashboardDateFilter(from: DateString, to: DateString): IDashboardDateFilter {
     return {
@@ -170,7 +172,7 @@ export function newAbsoluteDashboardDateFilter(from: DateString, to: DateString)
 /**
  * Creates a new all time date filter. This filter is used to indicate that there should be no filtering on the dates.
  *
- * @public
+ * @alpha
  */
 export function newAllTimeDashboardDateFilter(): IDashboardDateFilter {
     return {
@@ -183,7 +185,7 @@ export function newAllTimeDashboardDateFilter(): IDashboardDateFilter {
 
 /**
  * Type-guard testing whether the provided object is an All time dashboard date filter.
- * @public
+ * @alpha
  */
 export function isAllTimeDashboardDateFilter(obj: unknown): boolean {
     return isDashboardDateFilter(obj) && isNil(obj.dateFilter.from) && isNil(obj.dateFilter.to);
@@ -191,14 +193,14 @@ export function isAllTimeDashboardDateFilter(obj: unknown): boolean {
 
 /**
  * Supported filter context items
- * @public
+ * @alpha
  */
 export type FilterContextItem = IDashboardAttributeFilter | IDashboardDateFilter;
 
 /**
  * Common filter context properties
  *
- * @public
+ * @alpha
  */
 export interface IFilterContextBase {
     /**
@@ -220,13 +222,13 @@ export interface IFilterContextBase {
 /**
  * Filter context definition represents modifier or created filter context
  *
- * @public
+ * @alpha
  */
 export interface IFilterContextDefinition extends IFilterContextBase, Partial<IDashboardObjectIdentity> {}
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IFilterContextDefinition}.
- * @public
+ * @alpha
  */
 export function isFilterContextDefinition(obj: unknown): obj is IFilterContextDefinition {
     // Currently, we have no better way to distinguish between IFilterContext and ITempFilterContext
@@ -237,13 +239,13 @@ export function isFilterContextDefinition(obj: unknown): obj is IFilterContextDe
  * Filter context consists of configured attribute and date filters
  * (which could be applied to the dashboard, widget alert, or scheduled email)
  *
- * @public
+ * @alpha
  */
 export interface IFilterContext extends IFilterContextBase, IDashboardObjectIdentity {}
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IFilterContext}.
- * @public
+ * @alpha
  */
 export function isFilterContext(obj: unknown): obj is IFilterContext {
     // Currently, we have no better way to distinguish between IFilterContext and ITempFilterContext
@@ -253,7 +255,7 @@ export function isFilterContext(obj: unknown): obj is IFilterContext {
 /**
  * Temporary filter context serves to override original dashboard filter context during the dashboard export
  *
- * @public
+ * @alpha
  */
 export interface ITempFilterContext {
     /**
@@ -280,7 +282,7 @@ export interface ITempFilterContext {
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link ITempFilterContext}.
- * @public
+ * @alpha
  */
 export function isTempFilterContext(obj: unknown): obj is ITempFilterContext {
     // Currently, we have no better way to distinguish between IFilterContext and ITempFilterContext
@@ -297,7 +299,7 @@ export function isTempFilterContext(obj: unknown): obj is ITempFilterContext {
  * This is commonly used to define filters to ignore
  * for the particular dashboard widget
  *
- * @public
+ * @alpha
  */
 export interface IDashboardDateFilterReference {
     /**
@@ -313,7 +315,7 @@ export interface IDashboardDateFilterReference {
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IDashboardDateFilterReference}.
- * @public
+ * @alpha
  */
 export function isDashboardDateFilterReference(obj: unknown): obj is IDashboardDateFilterReference {
     return !isEmpty(obj) && (obj as IDashboardDateFilterReference).type === "dateFilterReference";
@@ -324,7 +326,7 @@ export function isDashboardDateFilterReference(obj: unknown): obj is IDashboardD
  * This is commonly used to define filters to ignore
  * for the particular dashboard widget
  *
- * @public
+ * @alpha
  */
 export interface IDashboardAttributeFilterReference {
     /**
@@ -340,7 +342,7 @@ export interface IDashboardAttributeFilterReference {
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IDashboardAttributeFilterReference}.
- * @public
+ * @alpha
  */
 export function isDashboardAttributeFilterReference(obj: unknown): obj is IDashboardAttributeFilterReference {
     return !isEmpty(obj) && (obj as IDashboardAttributeFilterReference).type === "attributeFilterReference";
@@ -351,7 +353,7 @@ export function isDashboardAttributeFilterReference(obj: unknown): obj is IDashb
  * This is commonly used to define filters to ignore
  * for the particular dashboard widget
  *
- * @public
+ * @alpha
  */
 export type IDashboardFilterReference = IDashboardDateFilterReference | IDashboardAttributeFilterReference;
 
@@ -359,7 +361,7 @@ export type IDashboardFilterReference = IDashboardDateFilterReference | IDashboa
  * Gets reference to object being used for filtering. For attribute filters, this will be reference to the display
  * form. For date filters this will be reference to the data set.
  *
- * @public
+ * @alpha
  */
 export function dashboardFilterReferenceObjRef(ref: IDashboardFilterReference): ObjRef {
     return isDashboardAttributeFilterReference(ref) ? ref.displayForm : ref.dataSet;

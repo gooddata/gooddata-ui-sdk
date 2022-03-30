@@ -6,40 +6,75 @@
 
 import { AbsoluteFormType } from '@gooddata/sdk-model';
 import { AbsolutePresetType } from '@gooddata/sdk-model';
+import { AbsoluteType } from '@gooddata/sdk-model';
 import { AllTimeType } from '@gooddata/sdk-model';
+import { dashboardFilterReferenceObjRef } from '@gooddata/sdk-model';
 import { DateFilterGranularity } from '@gooddata/sdk-model';
+import { DateFilterType } from '@gooddata/sdk-model';
 import { DateString } from '@gooddata/sdk-model';
+import { FilterContextItem } from '@gooddata/sdk-model';
 import { getColorMappingPredicate } from '@gooddata/sdk-ui-charts';
 import { IAbsoluteDateFilterForm } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilterPreset } from '@gooddata/sdk-model';
 import { IAllTimeDateFilterOption } from '@gooddata/sdk-model';
+import { IDashboardAttributeFilter } from '@gooddata/sdk-model';
+import { IDashboardAttributeFilterParent } from '@gooddata/sdk-model';
+import { IDashboardAttributeFilterReference } from '@gooddata/sdk-model';
+import { IDashboardDateFilter } from '@gooddata/sdk-model';
+import { IDashboardDateFilterReference } from '@gooddata/sdk-model';
+import { IDashboardFilterReference } from '@gooddata/sdk-model';
+import { IDashboardObjectIdentity } from '@gooddata/sdk-model';
 import { IDateFilterConfig } from '@gooddata/sdk-model';
 import { IDateFilterOption } from '@gooddata/sdk-model';
+import { IFilterContext } from '@gooddata/sdk-model';
+import { IFilterContextBase } from '@gooddata/sdk-model';
+import { IFilterContextDefinition } from '@gooddata/sdk-model';
 import { IRelativeDateFilterForm } from '@gooddata/sdk-model';
 import { IRelativeDateFilterPreset } from '@gooddata/sdk-model';
 import { IRelativeDateFilterPresetOfGranularity } from '@gooddata/sdk-model';
 import { isAbsoluteDateFilterForm } from '@gooddata/sdk-model';
 import { isAbsoluteDateFilterPreset } from '@gooddata/sdk-model';
+import { isAllTimeDashboardDateFilter } from '@gooddata/sdk-model';
 import { isAllTimeDateFilterOption } from '@gooddata/sdk-model';
+import { isDashboardAttributeFilter } from '@gooddata/sdk-model';
+import { isDashboardAttributeFilterReference } from '@gooddata/sdk-model';
+import { isDashboardDateFilter } from '@gooddata/sdk-model';
+import { isDashboardDateFilterReference } from '@gooddata/sdk-model';
 import { isDateFilterGranularity } from '@gooddata/sdk-model';
+import { isFilterContext } from '@gooddata/sdk-model';
+import { isFilterContextDefinition } from '@gooddata/sdk-model';
 import { isRelativeDateFilterForm } from '@gooddata/sdk-model';
 import { isRelativeDateFilterPreset } from '@gooddata/sdk-model';
+import { isTempFilterContext } from '@gooddata/sdk-model';
+import { ITempFilterContext } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
+import { newAbsoluteDashboardDateFilter } from '@gooddata/sdk-model';
+import { newAllTimeDashboardDateFilter } from '@gooddata/sdk-model';
+import { newRelativeDashboardDateFilter } from '@gooddata/sdk-model';
 import { OptionType } from '@gooddata/sdk-model';
 import { RelativeFormType } from '@gooddata/sdk-model';
 import { RelativeGranularityOffset } from '@gooddata/sdk-model';
 import { RelativePresetType } from '@gooddata/sdk-model';
+import { RelativeType } from '@gooddata/sdk-model';
 import { userFullName } from '@gooddata/sdk-model';
 
 export { AbsoluteFormType }
 
 export { AbsolutePresetType }
 
+export { AbsoluteType }
+
 export { AllTimeType }
+
+export { dashboardFilterReferenceObjRef }
 
 export { DateFilterGranularity }
 
+export { DateFilterType }
+
 export { DateString }
+
+export { FilterContextItem }
 
 export { getColorMappingPredicate }
 
@@ -49,9 +84,29 @@ export { IAbsoluteDateFilterPreset }
 
 export { IAllTimeDateFilterOption }
 
+export { IDashboardAttributeFilter }
+
+export { IDashboardAttributeFilterParent }
+
+export { IDashboardAttributeFilterReference }
+
+export { IDashboardDateFilter }
+
+export { IDashboardDateFilterReference }
+
+export { IDashboardFilterReference }
+
+export { IDashboardObjectIdentity }
+
 export { IDateFilterConfig }
 
 export { IDateFilterOption }
+
+export { IFilterContext }
+
+export { IFilterContextBase }
+
+export { IFilterContextDefinition }
 
 export { IRelativeDateFilterForm }
 
@@ -63,15 +118,39 @@ export { isAbsoluteDateFilterForm }
 
 export { isAbsoluteDateFilterPreset }
 
+export { isAllTimeDashboardDateFilter }
+
 export { isAllTimeDateFilterOption }
 
+export { isDashboardAttributeFilter }
+
+export { isDashboardAttributeFilterReference }
+
+export { isDashboardDateFilter }
+
+export { isDashboardDateFilterReference }
+
 export { isDateFilterGranularity }
+
+export { isFilterContext }
+
+export { isFilterContextDefinition }
 
 export { isRelativeDateFilterForm }
 
 export { isRelativeDateFilterPreset }
 
+export { isTempFilterContext }
+
+export { ITempFilterContext }
+
 export { IUser }
+
+export { newAbsoluteDashboardDateFilter }
+
+export { newAllTimeDashboardDateFilter }
+
+export { newRelativeDashboardDateFilter }
 
 export { OptionType }
 
@@ -80,6 +159,8 @@ export { RelativeFormType }
 export { RelativeGranularityOffset }
 
 export { RelativePresetType }
+
+export { RelativeType }
 
 export { userFullName }
 

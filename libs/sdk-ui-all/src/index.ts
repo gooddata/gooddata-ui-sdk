@@ -1,4 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
+/* eslint-disable import/export */
 /**
  * This is an all-in-one package that has all GoodData.UI packages as dependencies and re-exports their public API.
  *
@@ -12,9 +13,7 @@
 // NOTE: import/export disabled for some packages as we have to fiddle with stuff that we copied from one
 // package to another.
 
-// eslint-disable-next-line import/export
 export * from "@gooddata/sdk-model";
-// eslint-disable-next-line import/export
 export * from "@gooddata/sdk-backend-spi";
 export * from "@gooddata/sdk-ui";
 // eslint-disable-next-line import/export
@@ -58,12 +57,42 @@ import {
     isAbsoluteDateFilterPreset,
     isRelativeDateFilterForm,
     isRelativeDateFilterPreset,
+
+    // Dashboard
+    IDashboardObjectIdentity,
+
+    // Dashboard Filter Context
+    AbsoluteType,
+    DateFilterType,
+    FilterContextItem,
+    IDashboardAttributeFilter,
+    IDashboardAttributeFilterParent,
+    IDashboardAttributeFilterReference,
+    IDashboardDateFilter,
+    IDashboardDateFilterReference,
+    IDashboardFilterReference,
+    IFilterContext,
+    IFilterContextBase,
+    IFilterContextDefinition,
+    ITempFilterContext,
+    RelativeType,
+    dashboardFilterReferenceObjRef,
+    isAllTimeDashboardDateFilter,
+    isDashboardAttributeFilter,
+    isDashboardAttributeFilterReference,
+    isDashboardDateFilter,
+    isDashboardDateFilterReference,
+    isFilterContext,
+    isFilterContextDefinition,
+    isTempFilterContext,
+    newAbsoluteDashboardDateFilter,
+    newAllTimeDashboardDateFilter,
+    newRelativeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 export {
     getColorMappingPredicate,
     // User
     IUser,
-    // eslint-disable-next-line import/export
     userFullName,
     // Date filter configs
     DateString,
@@ -83,16 +112,40 @@ export {
     IRelativeDateFilterForm,
     IAllTimeDateFilterOption,
     IDateFilterConfig,
-    // eslint-disable-next-line import/export
+    // eslint-disable-next-line
     isDateFilterGranularity,
-    // eslint-disable-next-line import/export
     isAllTimeDateFilterOption,
-    // eslint-disable-next-line import/export
     isAbsoluteDateFilterForm,
-    // eslint-disable-next-line import/export
     isAbsoluteDateFilterPreset,
-    // eslint-disable-next-line import/export
     isRelativeDateFilterForm,
-    // eslint-disable-next-line import/export
     isRelativeDateFilterPreset,
+    // Dashboard
+    IDashboardObjectIdentity,
+    // Dashboard Filter Context
+    AbsoluteType,
+    DateFilterType,
+    FilterContextItem,
+    IDashboardAttributeFilter,
+    IDashboardAttributeFilterParent,
+    IDashboardAttributeFilterReference,
+    IDashboardDateFilter,
+    IDashboardDateFilterReference,
+    IDashboardFilterReference,
+    IFilterContext,
+    IFilterContextBase,
+    IFilterContextDefinition,
+    ITempFilterContext,
+    RelativeType,
+    dashboardFilterReferenceObjRef,
+    isAllTimeDashboardDateFilter,
+    isDashboardAttributeFilter,
+    isDashboardAttributeFilterReference,
+    isDashboardDateFilter,
+    isDashboardDateFilterReference,
+    isFilterContext,
+    isFilterContextDefinition,
+    isTempFilterContext,
+    newAbsoluteDashboardDateFilter,
+    newAllTimeDashboardDateFilter,
+    newRelativeDashboardDateFilter,
 };

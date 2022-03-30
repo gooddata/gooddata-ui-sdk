@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import { IFilter, ObjRef } from "@gooddata/sdk-model";
+import { IFilter, ObjRef, FilterContextItem, IFilterContextDefinition } from "@gooddata/sdk-model";
 import {
     IDashboard,
     IDashboardDefinition,
@@ -11,7 +11,6 @@ import {
 } from "./dashboard";
 import { IWidgetAlert, IWidgetAlertCount, IWidgetAlertDefinition } from "./alert";
 import { IScheduledMail, IScheduledMailDefinition } from "./scheduledMail";
-import { FilterContextItem, IFilterContextDefinition } from "./filterContext";
 import { IWidget, IWidgetReferences, SupportedWidgetReferenceTypes } from "./widget";
 
 /**

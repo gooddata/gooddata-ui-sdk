@@ -25,6 +25,7 @@ import { EntityId } from '@reduxjs/toolkit';
 import { EntityState } from '@reduxjs/toolkit';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
 import { FilterContextItem } from '@gooddata/sdk-backend-spi';
+import { FilterContextItem as FilterContextItem_2 } from '@gooddata/sdk-model';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAccessControlAware } from '@gooddata/sdk-backend-spi';
@@ -4397,16 +4398,16 @@ export const selectFilterBarHeight: OutputSelector<DashboardState, number, (res:
 export const selectFilterContextAttributeFilterByDisplayForm: (displayForm: ObjRef) => OutputSelector<DashboardState, IDashboardAttributeFilter | undefined, (res1: ObjRefMap<IAttributeDisplayFormMetadataObject>, res2: IDashboardAttributeFilter[]) => IDashboardAttributeFilter | undefined>;
 
 // @public
-export const selectFilterContextAttributeFilters: OutputSelector<DashboardState, IDashboardAttributeFilter[], (res: FilterContextItem[]) => IDashboardAttributeFilter[]>;
+export const selectFilterContextAttributeFilters: OutputSelector<DashboardState, IDashboardAttributeFilter[], (res: FilterContextItem_2[]) => IDashboardAttributeFilter[]>;
 
 // @public
-export const selectFilterContextDateFilter: OutputSelector<DashboardState, IDashboardDateFilter | undefined, (res: FilterContextItem[]) => IDashboardDateFilter | undefined>;
+export const selectFilterContextDateFilter: OutputSelector<DashboardState, IDashboardDateFilter | undefined, (res: FilterContextItem_2[]) => IDashboardDateFilter | undefined>;
 
 // @public
 export const selectFilterContextDefinition: OutputSelector<DashboardState, IFilterContextDefinition, (res: FilterContextState) => IFilterContextDefinition>;
 
 // @public
-export const selectFilterContextFilters: OutputSelector<DashboardState, FilterContextItem[], (res: IFilterContextDefinition) => FilterContextItem[]>;
+export const selectFilterContextFilters: OutputSelector<DashboardState, FilterContextItem_2[], (res: IFilterContextDefinition) => FilterContextItem_2[]>;
 
 // @internal
 export const selectFilterContextIdentity: OutputSelector<DashboardState, IDashboardObjectIdentity | undefined, (res: FilterContextState) => IDashboardObjectIdentity | undefined>;
@@ -4502,7 +4503,7 @@ export const selectObjectAvailabilityConfig: OutputSelector<DashboardState, Obje
 export const selectOriginalFilterContextDefinition: OutputSelector<DashboardState, IFilterContextDefinition | undefined, (res: FilterContextState) => IFilterContextDefinition | undefined>;
 
 // @public
-export const selectOriginalFilterContextFilters: OutputSelector<DashboardState, FilterContextItem[], (res: IFilterContextDefinition | undefined) => FilterContextItem[]>;
+export const selectOriginalFilterContextFilters: OutputSelector<DashboardState, FilterContextItem_2[], (res: IFilterContextDefinition | undefined) => FilterContextItem_2[]>;
 
 // @public
 export const selectPermissions: OutputSelector<DashboardState, IWorkspacePermissions, (res: PermissionsState) => IWorkspacePermissions>;

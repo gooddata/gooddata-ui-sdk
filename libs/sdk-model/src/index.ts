@@ -383,6 +383,20 @@ export {
 export { IUser, userFullName } from "./user";
 
 export {
+    insightCreatedComparator,
+    insightCreatedByComparator,
+    insightTitleComparator,
+    insightUpdatedComparator,
+    insightUpdatedByComparator,
+} from "./insight/comparators";
+
+export { newInsightDefinition, InsightDefinitionBuilder, InsightModifications } from "./insight/factory";
+
+export { insightSanitize } from "./insight/sanitization";
+
+export { factoryNotationFor } from "./execution/objectFactoryNotation";
+
+export {
     AbsoluteFormType,
     AbsolutePresetType,
     AllTimeType,
@@ -408,16 +422,33 @@ export {
     isRelativeDateFilterPreset,
 } from "./dateFilterConfig";
 
+export { IDashboardObjectIdentity } from "./dashboard/common";
+
 export {
-    insightCreatedComparator,
-    insightCreatedByComparator,
-    insightTitleComparator,
-    insightUpdatedComparator,
-    insightUpdatedByComparator,
-} from "./insight/comparators";
-
-export { newInsightDefinition, InsightDefinitionBuilder, InsightModifications } from "./insight/factory";
-
-export { insightSanitize } from "./insight/sanitization";
-
-export { factoryNotationFor } from "./execution/objectFactoryNotation";
+    AbsoluteType,
+    DateFilterType,
+    FilterContextItem,
+    IDashboardAttributeFilter,
+    IDashboardAttributeFilterParent,
+    IDashboardAttributeFilterReference,
+    IDashboardDateFilter,
+    IDashboardDateFilterReference,
+    IDashboardFilterReference,
+    IFilterContext,
+    IFilterContextBase,
+    IFilterContextDefinition,
+    ITempFilterContext,
+    RelativeType,
+    dashboardFilterReferenceObjRef,
+    isAllTimeDashboardDateFilter,
+    isDashboardAttributeFilter,
+    isDashboardAttributeFilterReference,
+    isDashboardDateFilter,
+    isDashboardDateFilterReference,
+    isFilterContext,
+    isFilterContextDefinition,
+    isTempFilterContext,
+    newAbsoluteDashboardDateFilter,
+    newAllTimeDashboardDateFilter,
+    newRelativeDashboardDateFilter,
+} from "./dashboard/filterContext";
