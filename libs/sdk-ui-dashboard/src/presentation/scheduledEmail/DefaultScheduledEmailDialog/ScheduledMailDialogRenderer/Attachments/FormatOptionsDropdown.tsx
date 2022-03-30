@@ -79,7 +79,7 @@ const FormatOptionsDropdownComponent: React.FC<IFormatOptionsDropdownProps> = (p
                                 renderItem={({ item }) => {
                                     return (
                                         <SingleSelectListItem
-                                            className="s-format-options-dropdown-content"
+                                            className="s-format-options-dropdown-content schedule-dropdown-ignore-click"
                                             title={item.toUpperCase()}
                                             onClick={() => {
                                                 setFormat(item);
