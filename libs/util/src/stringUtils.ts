@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 
 /**
  * @internal
@@ -71,7 +71,7 @@ export function simplifyText(value: string | number | null): string {
 
 /**
  * Parse string in a form of [foo, bar] to an array of objects.
- * Assume alphanumeric strings in the array; if some is not alphanumeric , return null
+ * Assume alphanumeric strings in the array and spaces; if some is not alphanumeric , return null
  * @param str - input string with the array definition
  * @returns parsed array of strings
  *
@@ -84,7 +84,7 @@ export function parseStringToArray(str: string): string[] | null {
             return [];
         }
 
-        if (str.match(/^\[[a-zA-Z0-9]+(,[a-zA-Z0-9]+)*]$/)) {
+        if (str.match(/^\[[a-zA-Z0-9 ]+(,(?=[^ ])[a-zA-Z0-9 ]+)*]$/)) {
             // [foo], [foo,bar]
             return str.slice(1, -1).split(",");
         }
