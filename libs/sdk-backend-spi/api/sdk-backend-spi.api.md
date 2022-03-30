@@ -2167,6 +2167,7 @@ export interface IWorkspaceDescriptor {
 // @public
 export interface IWorkspaceFactsService {
     getFactDatasetMeta(ref: ObjRef): Promise<IMetadataObject>;
+    getFacts(factRefs: ObjRef[]): Promise<ICatalogFact[]>;
 }
 
 // @public
