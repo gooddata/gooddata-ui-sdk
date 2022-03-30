@@ -548,4 +548,8 @@ class DummyWorkspaceMeasuresService implements IWorkspaceMeasuresService {
     updateMeasure(measure: IMeasureMetadataObject): Promise<IMeasureMetadataObject> {
         return Promise.resolve({ ...measure });
     }
+
+    getMeasures(_measureRefs: ObjRef[]): Promise<IMeasureMetadataObject[]> {
+        return Promise.resolve([]);
+    }
 }

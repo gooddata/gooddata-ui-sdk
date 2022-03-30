@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
 import { IMeasureExpressionToken } from "../fromModel/ldm/measure";
 import {
@@ -52,4 +52,19 @@ export interface IWorkspaceMeasuresService {
      * @returns promise of references
      */
     getMeasureReferencingObjects(measureRef: ObjRef): Promise<IMeasureReferencing>;
+
+    /**
+     * Get all metadata objects for given measure references.
+     *
+     * @remarks
+     * If the array of the given references is too large, the function must load all the measures
+     * available for the current workspace as there is only limited length of the query parameter.
+     *
+     * Consider if you need to fetch all required measures at once or if you could fetch them
+     * separately for better performance results.
+     *
+     * @param measureRefs - references of the measures to get.
+     * @returns promise of {@link IMeasureMetadataObject} array.
+     */
+    getMeasures(measureRefs: ObjRef[]): Promise<IMeasureMetadataObject[]>;
 }

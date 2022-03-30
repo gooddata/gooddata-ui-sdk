@@ -15,8 +15,9 @@ import {
     jsonApiHeaders,
     JsonApiMetricInTypeEnum,
     MetadataUtilities,
+    ITigerClient,
 } from "@gooddata/api-client-tiger";
-import { ObjRef, idRef, isIdentifierRef } from "@gooddata/sdk-model";
+import { ObjRef, idRef, isIdentifierRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { convertMetricFromBackend } from "../../../convertors/fromBackend/MetricConverter";
 import { convertMetricToBackend } from "../../../convertors/toBackend/MetricConverter";
 import { TigerAuthenticatedCallGuard } from "../../../types";
@@ -25,6 +26,12 @@ import { tokenizeExpression, IExpressionToken } from "./measureExpressionTokens"
 import { v4 as uuidv4 } from "uuid";
 import { visualizationObjectsItemToInsight } from "../../../convertors/fromBackend/InsightConverter";
 
+/**
+ * Max filter length is calculated from the maximal length of the URL (2048 characters) and
+ * its query parameters (1024 characters). As we can expect there are others query params,
+ * filter parameter length specified as below.
+ */
+const MAX_FILTER_LENGTH = 800;
 export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
 
@@ -201,4 +208,35 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
             };
         });
     };
+
+    public getMeasures = async (measureRefs: ObjRef[]): Promise<IMeasureMetadataObject[]> => {
+        return this.authCall(async (client) => {
+            const allMetrics = await loadMetrics(client, this.authCall, measureRefs, this.workspace);
+
+            return allMetrics.filter((metric) =>
+                measureRefs.find((metricRef) => areObjRefsEqual(metricRef, metric.ref)),
+            );
+        });
+    };
+}
+
+function loadMetrics(
+    client: ITigerClient,
+    authCall: TigerAuthenticatedCallGuard,
+    measureRefs: ObjRef[],
+    workspaceId: string,
+): Promise<IMeasureMetadataObject[]> {
+    const filter = measureRefs
+        .map(async (ref) => {
+            const id = await objRefToIdentifier(ref, authCall);
+            return `metrics.id==${id}`;
+        })
+        .join(",");
+
+    return MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesMetrics, {
+        workspaceId,
+        filter: filter.length < MAX_FILTER_LENGTH ? filter : undefined,
+    })
+        .then(MetadataUtilities.mergeEntitiesResults)
+        .then((measures) => measures.data.map(convertMetricFromBackend));
 }

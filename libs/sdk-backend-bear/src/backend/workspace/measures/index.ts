@@ -7,7 +7,7 @@ import {
     IMeasureReferencing,
     IWorkspaceMeasuresService,
 } from "@gooddata/sdk-backend-spi";
-import { ObjRef } from "@gooddata/sdk-model";
+import { ObjRef, uriRef } from "@gooddata/sdk-model";
 import flow from "lodash/flow";
 import map from "lodash/fp/map";
 import replace from "lodash/fp/replace";
@@ -23,9 +23,10 @@ import {
 } from "../../../convertors/fromBackend/MetricConverter";
 import { convertMetricToBackend } from "../../../convertors/toBackend/MetricConverter";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
-import { objRefToUri } from "../../../utils/api";
+import { objRefsToUris, objRefToUri } from "../../../utils/api";
 import { getTokenValuesOfType, tokenizeExpression, IExpressionToken } from "./measureExpressionTokens";
 import { convertListedVisualization } from "../../../convertors/fromBackend/VisualizationConverter";
+import { newMeasureMetadataObject } from "@gooddata/sdk-backend-base";
 
 export class BearWorkspaceMeasures implements IWorkspaceMeasuresService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -165,6 +166,36 @@ export class BearWorkspaceMeasures implements IWorkspaceMeasuresService {
             insights: data
                 .filter((item) => item.category === "visualizationObject")
                 .map(convertListedVisualization),
+        });
+    }
+
+    async getMeasures(measureRefs: ObjRef[]): Promise<IMeasureMetadataObject[]> {
+        const measureUris = await objRefsToUris(measureRefs, this.workspace, this.authCall, false);
+        const wrappedMetrics = await this.authCall((client) => {
+            return client.md.getObjects<GdcMetadata.IWrappedMetric>(this.workspace, measureUris);
+        });
+
+        return wrappedMetrics.map((wrappedMetric: GdcMetadata.IWrappedMetric): IMeasureMetadataObject => {
+            const {
+                meta: { title, summary, identifier, uri, deprecated, isProduction, locked, unlisted },
+                content: { expression, format },
+            } = wrappedMetric.metric;
+
+            const ref = uriRef(uri!);
+
+            return newMeasureMetadataObject(ref, (measure) =>
+                measure
+                    .title(title)
+                    .uri(uri!)
+                    .production(Boolean(isProduction))
+                    .expression(expression)
+                    .description(summary!)
+                    .id(identifier!)
+                    .format(format!)
+                    .deprecated(Boolean(deprecated))
+                    .isLocked(Boolean(locked))
+                    .unlisted(Boolean(unlisted)),
+            );
         });
     }
 }
