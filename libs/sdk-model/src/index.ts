@@ -452,3 +452,11 @@ export {
     newAllTimeDashboardDateFilter,
     newRelativeDashboardDateFilter,
 } from "./dashboard/filterContext";
+
+export {
+    IWidgetAlert,
+    IWidgetAlertBase,
+    IWidgetAlertDefinition,
+    isWidgetAlert,
+    isWidgetAlertDefinition,
+} from "./dashboard/alert";

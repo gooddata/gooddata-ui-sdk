@@ -35,6 +35,8 @@ import { ISortItem } from '@gooddata/sdk-model';
 import { ITempFilterContext as ITempFilterContext_2 } from '@gooddata/sdk-model';
 import { IUser as IUser_2 } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
+import { IWidgetAlert as IWidgetAlert_2 } from '@gooddata/sdk-model';
+import { IWidgetAlertDefinition as IWidgetAlertDefinition_2 } from '@gooddata/sdk-model';
 import * as m from '@gooddata/sdk-model';
 import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
@@ -1572,11 +1574,11 @@ export function isVariableMetadataObject(obj: unknown): obj is IVariableMetadata
 // @public
 export function isWidget(obj: unknown): obj is IWidget;
 
-// @public
-export function isWidgetAlert(obj: unknown): obj is IWidgetAlert;
+// @alpha @deprecated
+export const isWidgetAlert: typeof m.isWidgetAlert;
 
-// @public
-export function isWidgetAlertDefinition(obj: unknown): obj is IWidgetAlertDefinition;
+// @alpha @deprecated
+export const isWidgetAlertDefinition: typeof m.isWidgetAlertDefinition;
 
 // @alpha
 export function isWidgetAttachment(obj: unknown): obj is IWidgetAttachment;
@@ -1923,31 +1925,22 @@ export interface IVariableMetadataObject extends IMetadataObject {
 // @alpha (undocumented)
 export type IWidget = IKpiWidget | IInsightWidget;
 
-// @public
-export interface IWidgetAlert extends IWidgetAlertBase, IDashboardObjectIdentity_2 {
-    readonly filterContext?: IFilterContext_2;
+// @alpha @deprecated
+export interface IWidgetAlert extends m.IWidgetAlert {
 }
 
-// @public
-export interface IWidgetAlertBase {
-    readonly dashboard: ObjRef;
-    readonly description: string;
-    readonly isTriggered: boolean;
-    readonly threshold: number;
-    readonly title: string;
-    readonly whenTriggered: "underThreshold" | "aboveThreshold";
-    readonly widget: ObjRef;
+// @alpha @deprecated
+export interface IWidgetAlertBase extends m.IWidgetAlertBase {
 }
 
-// @public
+// @alpha
 export interface IWidgetAlertCount {
     readonly alertCount: number;
     readonly ref: ObjRef;
 }
 
-// @public
-export interface IWidgetAlertDefinition extends IWidgetAlertBase, Partial<IDashboardObjectIdentity_2> {
-    readonly filterContext?: IFilterContext_2 | IFilterContextDefinition_2;
+// @alpha @deprecated
+export interface IWidgetAlertDefinition extends m.IWidgetAlertDefinition {
 }
 
 // @alpha
@@ -2073,20 +2066,20 @@ export interface IWorkspaceDashboardsService {
     createDashboard(dashboard: IDashboardDefinition): Promise<IDashboard>;
     createDashboardPlugin(plugin: IDashboardPluginDefinition): Promise<IDashboardPlugin>;
     createScheduledMail(scheduledMail: IScheduledMailDefinition, exportFilterContext?: IFilterContextDefinition_2): Promise<IScheduledMail>;
-    createWidgetAlert(alert: IWidgetAlertDefinition): Promise<IWidgetAlert>;
+    createWidgetAlert(alert: IWidgetAlertDefinition_2): Promise<IWidgetAlert_2>;
     deleteDashboard(ref: ObjRef): Promise<void>;
     deleteDashboardPlugin(ref: ObjRef): Promise<void>;
     deleteScheduledMail(ref: ObjRef): Promise<void>;
     deleteWidgetAlert(ref: ObjRef): Promise<void>;
     deleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
     exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem_2[]): Promise<string>;
-    getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;
+    getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert_2[]>;
     getDashboard(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboard>;
     getDashboardPlugin(ref: ObjRef): Promise<IDashboardPlugin>;
     getDashboardPlugins(): Promise<IDashboardPlugin[]>;
     getDashboardReferencedObjects(dashboard: IDashboard, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardReferences>;
     getDashboards(options?: IGetDashboardOptions): Promise<IListedDashboard[]>;
-    getDashboardWidgetAlertsForCurrentUser(ref: ObjRef): Promise<IWidgetAlert[]>;
+    getDashboardWidgetAlertsForCurrentUser(ref: ObjRef): Promise<IWidgetAlert_2[]>;
     getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardWithReferences>;
     getResolvedFiltersForWidget(widget: IWidget, filters: IFilter[]): Promise<IFilter[]>;
     getScheduledMailsCountForDashboard(ref: ObjRef): Promise<number>;
@@ -2094,7 +2087,7 @@ export interface IWorkspaceDashboardsService {
     getWidgetAlertsCountForWidgets(refs: ObjRef[]): Promise<IWidgetAlertCount[]>;
     getWidgetReferencedObjects(widget: IWidget, types?: SupportedWidgetReferenceTypes[]): Promise<IWidgetReferences>;
     updateDashboard(dashboard: IDashboard, updatedDashboard: IDashboardDefinition): Promise<IDashboard>;
-    updateWidgetAlert(alert: IWidgetAlert | IWidgetAlertDefinition): Promise<IWidgetAlert>;
+    updateWidgetAlert(alert: IWidgetAlert_2 | IWidgetAlertDefinition_2): Promise<IWidgetAlert_2>;
     // (undocumented)
     readonly workspace: string;
 }

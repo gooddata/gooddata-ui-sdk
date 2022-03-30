@@ -88,6 +88,13 @@ import {
     newAbsoluteDashboardDateFilter,
     newAllTimeDashboardDateFilter,
     newRelativeDashboardDateFilter,
+
+    // Dashboard Alerts
+    IWidgetAlert,
+    IWidgetAlertBase,
+    IWidgetAlertDefinition,
+    isWidgetAlert,
+    isWidgetAlertDefinition,
 } from "@gooddata/sdk-model";
 export {
     getColorMappingPredicate,
@@ -112,7 +119,6 @@ export {
     IRelativeDateFilterForm,
     IAllTimeDateFilterOption,
     IDateFilterConfig,
-    // eslint-disable-next-line
     isDateFilterGranularity,
     isAllTimeDateFilterOption,
     isAbsoluteDateFilterForm,
@@ -148,4 +154,10 @@ export {
     newAbsoluteDashboardDateFilter,
     newAllTimeDashboardDateFilter,
     newRelativeDashboardDateFilter,
+    //Dashboard Alerts
+    IWidgetAlert,
+    IWidgetAlertBase,
+    IWidgetAlertDefinition,
+    isWidgetAlert,
+    isWidgetAlertDefinition,
 };

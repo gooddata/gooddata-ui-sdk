@@ -1267,6 +1267,12 @@ export function isTotal(obj: unknown): obj is ITotal;
 // @public
 export function isUriRef(obj: unknown): obj is UriRef;
 
+// @alpha
+export function isWidgetAlert(obj: unknown): obj is IWidgetAlert;
+
+// @alpha
+export function isWidgetAlertDefinition(obj: unknown): obj is IWidgetAlertDefinition;
+
 // @public
 export type ItemInDimension = {
     dim: IDimension;
@@ -1317,6 +1323,27 @@ export interface IVisualizationClassBody {
     title: string;
     uri: string;
     url: string;
+}
+
+// @alpha
+export interface IWidgetAlert extends IWidgetAlertBase, IDashboardObjectIdentity {
+    readonly filterContext?: IFilterContext;
+}
+
+// @alpha
+export interface IWidgetAlertBase {
+    readonly dashboard: ObjRef;
+    readonly description: string;
+    readonly isTriggered: boolean;
+    readonly threshold: number;
+    readonly title: string;
+    readonly whenTriggered: "underThreshold" | "aboveThreshold";
+    readonly widget: ObjRef;
+}
+
+// @alpha
+export interface IWidgetAlertDefinition extends IWidgetAlertBase, Partial<IDashboardObjectIdentity> {
+    readonly filterContext?: IFilterContext | IFilterContextDefinition;
 }
 
 // @public

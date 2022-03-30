@@ -46,8 +46,13 @@ import { isFilterContextDefinition } from '@gooddata/sdk-model';
 import { isRelativeDateFilterForm } from '@gooddata/sdk-model';
 import { isRelativeDateFilterPreset } from '@gooddata/sdk-model';
 import { isTempFilterContext } from '@gooddata/sdk-model';
+import { isWidgetAlert } from '@gooddata/sdk-model';
+import { isWidgetAlertDefinition } from '@gooddata/sdk-model';
 import { ITempFilterContext } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
+import { IWidgetAlert } from '@gooddata/sdk-model';
+import { IWidgetAlertBase } from '@gooddata/sdk-model';
+import { IWidgetAlertDefinition } from '@gooddata/sdk-model';
 import { newAbsoluteDashboardDateFilter } from '@gooddata/sdk-model';
 import { newAllTimeDashboardDateFilter } from '@gooddata/sdk-model';
 import { newRelativeDashboardDateFilter } from '@gooddata/sdk-model';
@@ -142,9 +147,19 @@ export { isRelativeDateFilterPreset }
 
 export { isTempFilterContext }
 
+export { isWidgetAlert }
+
+export { isWidgetAlertDefinition }
+
 export { ITempFilterContext }
 
 export { IUser }
+
+export { IWidgetAlert }
+
+export { IWidgetAlertBase }
+
+export { IWidgetAlertDefinition }
 
 export { newAbsoluteDashboardDateFilter }
 

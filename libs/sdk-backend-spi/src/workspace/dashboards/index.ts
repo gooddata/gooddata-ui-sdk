@@ -1,5 +1,12 @@
 // (C) 2019-2022 GoodData Corporation
-import { IFilter, ObjRef, FilterContextItem, IFilterContextDefinition } from "@gooddata/sdk-model";
+import {
+    IFilter,
+    ObjRef,
+    FilterContextItem,
+    IFilterContextDefinition,
+    IWidgetAlert,
+    IWidgetAlertDefinition,
+} from "@gooddata/sdk-model";
 import {
     IDashboard,
     IDashboardDefinition,
@@ -9,9 +16,24 @@ import {
     IDashboardWithReferences,
     IListedDashboard,
 } from "./dashboard";
-import { IWidgetAlert, IWidgetAlertCount, IWidgetAlertDefinition } from "./alert";
 import { IScheduledMail, IScheduledMailDefinition } from "./scheduledMail";
 import { IWidget, IWidgetReferences, SupportedWidgetReferenceTypes } from "./widget";
+
+/**
+ * Pair of the widget and it's alert count
+ * @alpha
+ */
+export interface IWidgetAlertCount {
+    /**
+     * Widget reference
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Number of alerts for the referenced widget
+     */
+    readonly alertCount: number;
+}
 
 /**
  * Configuration options for getting dashboards.

@@ -208,6 +208,7 @@ export {
     IWorkspaceDashboardsService,
     IGetDashboardOptions,
     IGetScheduledMailOptions,
+    IWidgetAlertCount,
     SupportedDashboardReferenceTypes,
 } from "./workspace/dashboards";
 export {
@@ -329,14 +330,6 @@ export {
     isLegacyKpiWithoutComparison,
     isLegacyKpi,
 } from "./workspace/dashboards/kpi";
-export {
-    IWidgetAlertBase,
-    IWidgetAlert,
-    IWidgetAlertDefinition,
-    IWidgetAlertCount,
-    isWidgetAlert,
-    isWidgetAlertDefinition,
-} from "./workspace/dashboards/alert";
 export {
     IDashboardAttachment,
     isDashboardAttachment,
@@ -505,3 +498,10 @@ export {
     newAllTimeDashboardDateFilter,
     newRelativeDashboardDateFilter,
 } from "./deprecated/dashboard/filterContext";
+export {
+    IWidgetAlertBase,
+    IWidgetAlert,
+    IWidgetAlertDefinition,
+    isWidgetAlert,
+    isWidgetAlertDefinition,
+} from "./deprecated/dashboard/alert";

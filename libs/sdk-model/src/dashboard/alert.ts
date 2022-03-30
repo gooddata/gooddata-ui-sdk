@@ -1,17 +1,12 @@
 // (C) 2019-2022 GoodData Corporation
-import {
-    ObjRef,
-    isObjRef,
-    IFilterContext,
-    IFilterContextDefinition,
-    isFilterContextDefinition,
-    IDashboardObjectIdentity,
-} from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
+import { ObjRef, isObjRef } from "../objRef";
+import { IDashboardObjectIdentity } from "./common";
+import { IFilterContext, IFilterContextDefinition, isFilterContextDefinition } from "./filterContext";
 
 /**
  * Common widget alert properties
- * @public
+ * @alpha
  */
 export interface IWidgetAlertBase {
     /**
@@ -54,7 +49,7 @@ export interface IWidgetAlertBase {
 /**
  * With widget alert, user can be notified to his email according to provided rules
  * (e.g. when some measure exceeds/drops below the set value)
- * @public
+ * @alpha
  */
 export interface IWidgetAlertDefinition extends IWidgetAlertBase, Partial<IDashboardObjectIdentity> {
     /**
@@ -65,7 +60,7 @@ export interface IWidgetAlertDefinition extends IWidgetAlertBase, Partial<IDashb
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IWidgetAlertDefinition}.
- * @public
+ * @alpha
  */
 export function isWidgetAlertDefinition(obj: unknown): obj is IWidgetAlertDefinition {
     return (
@@ -77,7 +72,7 @@ export function isWidgetAlertDefinition(obj: unknown): obj is IWidgetAlertDefini
 
 /**
  * See {@link IWidgetAlertDefinition}
- * @public
+ * @alpha
  */
 export interface IWidgetAlert extends IWidgetAlertBase, IDashboardObjectIdentity {
     /**
@@ -87,24 +82,8 @@ export interface IWidgetAlert extends IWidgetAlertBase, IDashboardObjectIdentity
 }
 
 /**
- * Pair of the widget and it's alert count
- * @public
- */
-export interface IWidgetAlertCount {
-    /**
-     * Widget reference
-     */
-    readonly ref: ObjRef;
-
-    /**
-     * Number of alerts for the referenced widget
-     */
-    readonly alertCount: number;
-}
-
-/**
  * Type-guard testing whether the provided object is an instance of {@link IWidgetAlert}.
- * @public
+ * @alpha
  */
 export function isWidgetAlert(obj: unknown): obj is IWidgetAlert {
     return hasWidgetAlertBaseProps(obj) && !isWidgetAlertDefinition(obj);

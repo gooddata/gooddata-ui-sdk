@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { uriRef } from "@gooddata/sdk-model";
+import { uriRef } from "../../objRef/factory";
 import { IWidgetAlert, IWidgetAlertDefinition } from "../alert";
 import { filterContextDefinition } from "./filterContext.fixtures";
 
