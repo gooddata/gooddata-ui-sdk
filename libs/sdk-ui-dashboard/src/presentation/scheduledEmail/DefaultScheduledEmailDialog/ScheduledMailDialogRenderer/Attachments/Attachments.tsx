@@ -48,7 +48,6 @@ const AttachmentsComponent = (props: IAttachmentsProps) => {
     const selectedWidgetsTitles = insightWidgets
         .filter((widget) => widgetsSelected[objRefToString(widget)])
         .map((widget) => widget.title);
-
     return (
         <div className="gd-input-component gd-schedule-email-attachments s-schedule-email-attachments">
             <label className="gd-label">
@@ -63,7 +62,9 @@ const AttachmentsComponent = (props: IAttachmentsProps) => {
                     )}
                     {selectedWidgetsTitles.length !== 0 && (
                         <AttachmentItem format={configuration.format}>
-                            <span className="shortened-name">{selectedWidgetsTitles.join(", ")}</span>
+                            <span className="shortened-name" title={selectedWidgetsTitles.join(",\n")}>
+                                {selectedWidgetsTitles.join(", ")}
+                            </span>
                             {selectedWidgetsTitles.length > 1 && (
                                 <span>{`(${selectedWidgetsTitles.length})`}</span>
                             )}
