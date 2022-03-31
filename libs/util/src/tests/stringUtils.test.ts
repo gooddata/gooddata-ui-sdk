@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { randomString, shortenText, simplifyText, parseStringToArray, hashCodeString } from "../stringUtils";
 
 describe("randomString", () => {
@@ -45,7 +45,9 @@ describe("parseStringToArray", () => {
         ["[asdf]", ["asdf"]],
         ["[asdf,qwer]", ["asdf", "qwer"]],
         ["[asdf,2]", ["asdf", "2"]],
+        ["[asdf movie,qwer]", ["asdf movie", "qwer"]],
         // invalid
+        ["[asdf tbg, qas tpas]", null],
         ["[asdf", null],
         ["asdf]", null],
         ["[asdf, qwer]", null],

@@ -1,8 +1,13 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { isUriRef, ObjRef } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 import { MetadataGetEntitiesParams } from "@gooddata/api-client-tiger";
 import invariant from "ts-invariant";
+
+// Since tags can have spaces, need to parse this specific values to work with RSQL filtering. See https://github.com/jirutka/rsql-parser#grammar-and-semantic.
+function parseTagsToRSQLFormat(tagsIdentifiers: string[]): string[] {
+    return tagsIdentifiers.map((tag) => (tag.indexOf(" ") >= 0 ? `'${tag}'` : tag));
+}
 
 export function tagsToRsqlFilter({
     includeTags,
@@ -15,12 +20,14 @@ export function tagsToRsqlFilter({
 
     if (!isEmpty(includeTags)) {
         const includeTagsIdentifiers = tagsToIdentifiers(includeTags);
-        rsqlFilterParts.push(`tags=in=(${includeTagsIdentifiers.join(",")})`);
+        const includeParsedTagsIdentifiers = parseTagsToRSQLFormat(includeTagsIdentifiers);
+        rsqlFilterParts.push(`tags=in=(${includeParsedTagsIdentifiers.join(",")})`);
     }
 
     if (!isEmpty(excludeTags)) {
         const excludeTagsIdentifiers = tagsToIdentifiers(excludeTags);
-        rsqlFilterParts.push(`tags=out=(${excludeTagsIdentifiers.join(",")})`);
+        const excludeParsedTagsIdentifiers = parseTagsToRSQLFormat(excludeTagsIdentifiers);
+        rsqlFilterParts.push(`tags=out=("${excludeParsedTagsIdentifiers.join(",")}")`);
     }
 
     return rsqlFilterParts.join(";");
