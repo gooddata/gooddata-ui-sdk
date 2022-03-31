@@ -110,7 +110,6 @@
     "dashboard.xirr.error.invalid_buckets.text._metric": "Stellen Sie sicher, dass Sie eine Metrik und ein Datumsattribut ausgewählt haben.",
     "dashboard.error.empty.heading": "Dieses Dashboard ist leer",
     "dashboard.error.empty.text": "Alle Betrachtungen wurden entfernt.",
-    "dashboardView.error.empty.text": "Alle Betrachtungen wurden entfernt oder das Dashboard wurde ohne Daten gespeichert.",
     "dashboard.embedded.error.empty.heading": "Das Dashboard enthält keine Widgets",
     "dashboard.embedded.error.empty.text": "Stellen Sie sicher, dass Sie das richtige Dashboard einbetten.",
     "properties.unsupported": "Diese Visualisierung unterstützt keine Konfiguration",

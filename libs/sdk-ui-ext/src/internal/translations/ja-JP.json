@@ -110,7 +110,6 @@
     "dashboard.xirr.error.invalid_buckets.text._metric": "一つのメトリックと一つの日付アトリビュートを選択してください。",
     "dashboard.error.empty.heading": "このダッシュボードは空欄です",
     "dashboard.error.empty.text": "すべてのインサイトは削除されました。",
-    "dashboardView.error.empty.text": "すべてのインサイトが削除されたか、ダッシュボードが空欄で保存されました。",
     "dashboard.embedded.error.empty.heading": "ダッシュボードにウィジェットがありません",
     "dashboard.embedded.error.empty.text": "埋め込んでいるダッシュボードが正しいか確認します。",
     "properties.unsupported": "このインサイトでは 設定はありません",

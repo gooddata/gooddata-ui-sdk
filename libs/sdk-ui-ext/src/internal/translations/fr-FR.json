@@ -110,7 +110,6 @@
     "dashboard.xirr.error.invalid_buckets.text._metric": "Vérifiez que vous avez sélectionné une métrique et un attribut de date",
     "dashboard.error.empty.heading": "Ce tableau de bord est vide",
     "dashboard.error.empty.text": "Toutes les perceptions ont été retirées.",
-    "dashboardView.error.empty.text": "Toutes les perceptions ont été retirées ou le tableau de bord a été enregistré vide.",
     "dashboard.embedded.error.empty.heading": "Aucun widget sur le tableau de bord",
     "dashboard.embedded.error.empty.text": "Vérifiez que vous incorporez le bon tableau de bord.",
     "properties.unsupported": "Cette visualisation ne prend pas en charge la configuration",
