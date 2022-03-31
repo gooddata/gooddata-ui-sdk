@@ -60,14 +60,6 @@ export interface IScheduleEmailRepeat {
 /**
  * @internal
  */
-export interface IScheduleEmailRepeatOptions {
-    repeatData: IScheduleEmailRepeat;
-    startDate: Date;
-}
-
-/**
- * @internal
- */
 export interface IScheduleEmailExternalRecipient {
     /**
      * Target email, if recipient is an external user

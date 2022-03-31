@@ -68,6 +68,11 @@ describe("ScheduledMailDialogRenderer", () => {
         wrapper.find(`.s-${hour}_${minute}_${subfix}`).simulate("click");
     }
 
+    function selectRepeatPeriod(wrapper: ReactWrapper, period: string) {
+        wrapper.find(".s-gd-schedule-email-dialog-repeat-type button").simulate("click");
+        wrapper.find(`.s-${period}`).simulate("click");
+    }
+
     function userEntersSubject(wrapper: ReactWrapper, subject: string) {
         const input: ReactWrapper = wrapper.find(".s-gd-schedule-email-dialog-subject input");
         input.getDOMNode().setAttribute("value", subject);
@@ -122,27 +127,29 @@ describe("ScheduledMailDialogRenderer", () => {
             ],
         });
 
-        jest.resetAllMocks();
+        jest.useRealTimers();
     });
 
     it("should generate scheduled mail with changed values", () => {
+        jest.useFakeTimers().setSystemTime(new Date("2022-01-02 12:13").getTime());
         const onSubmit = jest.fn();
         const wrapper = renderComponent({ onSubmit });
 
         selectTime(wrapper, "02", "00", "am");
+        selectRepeatPeriod(wrapper, "weekly_on_sunday");
         userEntersSubject(wrapper, "new subject");
         clickButtonSchedule(wrapper);
 
         expect(onSubmit.mock.calls[0][0]).toMatchObject({
             bcc: [],
             body: "Hello,\n\nYour scheduled email is ready. You can download the dashboard in attachments.",
-            description: "Daily at 2:00 AM",
+            description: "Weekly on Sunday at 2:00 AM",
             subject: "new subject",
             title: "new subject",
             to: ["user@gooddata.com"],
             unlisted: true,
             when: {
-                recurrence: "0:0:0:1*2:0:0",
+                recurrence: "0:0:1*7:2:0:0",
                 startDate: "2022-01-02",
             },
             attachments: [
@@ -152,6 +159,7 @@ describe("ScheduledMailDialogRenderer", () => {
                 },
             ],
         });
+        jest.useRealTimers();
     });
 
     it("should render recipient component in schedule email dialog", () => {
