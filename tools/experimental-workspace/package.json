@@ -49,7 +49,7 @@
         "@gooddata/catalog-export": "^8.10.0-alpha.43",
         "@gooddata/eslint-config": "^2.1.0",
         "@gooddata/mock-handling": "^8.10.0-alpha.43",
-        "@microsoft/api-extractor": "^7.18.4",
+        "@microsoft/api-extractor": "^7.20.0",
         "@types/jest": "^27.0.1",
         "@types/lodash": "^4.14.158",
         "@types/node": "^16.11.11",
