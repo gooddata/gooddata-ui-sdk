@@ -18,8 +18,8 @@
     "preferredVersions": {
         "@types/node": "^16.11.11",
 
-        "@microsoft/api-extractor": "^7.18.4",
-        "@microsoft/api-documenter": "^7.12.13",
+        "@microsoft/api-extractor": "^7.20.0",
+        "@microsoft/api-documenter": "^7.17.0",
         "@gooddata/frontend-npm-scripts": "1.2.0",
 
         "prettier": "~2.5.0",
