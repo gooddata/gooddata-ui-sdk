@@ -587,3 +587,19 @@ export {
 } from "./ldm/datasets";
 
 export { IAttributeElement } from "./ldm/attributeElement";
+
+export {
+    IWidget,
+    IWidgetDefinition,
+    isWidget,
+    isWidgetDefinition,
+    widgetUri,
+    widgetId,
+    widgetRef,
+    widgetTitle,
+    widgetType,
+    isKpiWidgetDefinition,
+    isKpiWidget,
+    isInsightWidgetDefinition,
+    isInsightWidget,
+} from "./dashboard/widget";

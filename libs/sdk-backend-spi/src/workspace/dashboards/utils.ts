@@ -1,4 +1,5 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
+import { IWidget, IWidgetDefinition, isWidget, isWidgetDefinition } from "@gooddata/sdk-model";
 import noop from "lodash/noop";
 import {
     IDashboardLayout,
@@ -7,7 +8,6 @@ import {
     isDashboardLayout,
     IDashboardWidget,
 } from "./layout";
-import { IWidget, IWidgetDefinition, isWidget, isWidgetDefinition } from "./widget";
 
 /**
  * Has dashboard layout only empty sections and widgets?

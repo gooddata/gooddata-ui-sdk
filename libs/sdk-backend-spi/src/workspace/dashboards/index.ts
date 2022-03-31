@@ -6,6 +6,9 @@ import {
     IFilterContextDefinition,
     IWidgetAlert,
     IWidgetAlertDefinition,
+    IWidget,
+    ObjectType,
+    CatalogItem,
 } from "@gooddata/sdk-model";
 import {
     IDashboard,
@@ -17,7 +20,30 @@ import {
     IListedDashboard,
 } from "./dashboard";
 import { IScheduledMail, IScheduledMailDefinition } from "./scheduledMail";
-import { IWidget, IWidgetReferences, SupportedWidgetReferenceTypes } from "./widget";
+
+/**
+ * List of currently supported types of references that can be retrieved using getWidgetReferencedObjects()
+ * @public
+ */
+export type SupportedWidgetReferenceTypes = Exclude<
+    ObjectType,
+    "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable"
+>;
+
+//
+/**
+ * Contains information about objects that may be referenced by a widget. The contents of this object
+ * depend on the widget and the types requested at the time of call to getWidgetReferencedObjects.
+ *
+ * @public
+ */
+export interface IWidgetReferences {
+    /**
+     * If requested, measures referenced by the widget will be returned here.
+     * If none of them were requested, the catalogItems will be undefined.
+     */
+    catalogItems?: CatalogItem[];
+}
 
 /**
  * Pair of the widget and it's alert count

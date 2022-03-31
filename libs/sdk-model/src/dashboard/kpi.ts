@@ -1,16 +1,16 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import { ObjRef } from "../objRef";
 
 /**
  * Legacy kpi type - will be removed in the future
- * @alpha
+ * @public
  */
 export type ILegacyKpi = ILegacyKpiWithComparison | ILegacyKpiWithoutComparison;
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link ILegacyKpi}.
- * @alpha
+ * @public
  */
 export function isLegacyKpi(obj: unknown): obj is ILegacyKpi {
     return isLegacyKpiWithComparison(obj) || isLegacyKpiWithoutComparison(obj);
@@ -18,7 +18,7 @@ export function isLegacyKpi(obj: unknown): obj is ILegacyKpi {
 
 /**
  * Common kpi properties
- * @alpha
+ * @public
  */
 export interface ILegacyKpiBase {
     comparisonType: ILegacyKpiComparisonTypeComparison;
@@ -28,13 +28,13 @@ export interface ILegacyKpiBase {
 
 /**
  * Kpi with comparison
- * @alpha
+ * @public
  */
 export type ILegacyKpiWithComparison = ILegacyKpiWithPreviousPeriodComparison | ILegacyKpiWithPopComparison;
 
 /**
  * Kpi with previous period comparison
- * @alpha
+ * @public
  */
 export interface ILegacyKpiWithPreviousPeriodComparison extends ILegacyKpiBase {
     comparisonType: "previousPeriod";
@@ -43,7 +43,7 @@ export interface ILegacyKpiWithPreviousPeriodComparison extends ILegacyKpiBase {
 
 /**
  * Kpi with period over period comparison
- * @alpha
+ * @public
  */
 export interface ILegacyKpiWithPopComparison extends ILegacyKpiBase {
     comparisonType: "lastYear";
@@ -52,7 +52,7 @@ export interface ILegacyKpiWithPopComparison extends ILegacyKpiBase {
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link ILegacyKpiWithComparison}.
- * @alpha
+ * @public
  */
 export function isLegacyKpiWithComparison(obj: unknown): obj is ILegacyKpiWithComparison {
     return (
@@ -64,7 +64,7 @@ export function isLegacyKpiWithComparison(obj: unknown): obj is ILegacyKpiWithCo
 
 /**
  * Kpi without comparison
- * @alpha
+ * @public
  */
 export interface ILegacyKpiWithoutComparison extends ILegacyKpiBase {
     comparisonType: "none";
@@ -72,7 +72,7 @@ export interface ILegacyKpiWithoutComparison extends ILegacyKpiBase {
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link ILegacyKpiWithoutComparison}.
- * @alpha
+ * @public
  */
 export function isLegacyKpiWithoutComparison(obj: unknown): obj is ILegacyKpiWithoutComparison {
     return !isEmpty(obj) && (obj as ILegacyKpiWithoutComparison).comparisonType === "none";
@@ -80,7 +80,7 @@ export function isLegacyKpiWithoutComparison(obj: unknown): obj is ILegacyKpiWit
 
 /**
  * Kpi comparison type
- * @alpha
+ * @public
  */
 export type ILegacyKpiComparisonTypeComparison =
     | ILegacyKpiWithPreviousPeriodComparison["comparisonType"]
@@ -89,6 +89,6 @@ export type ILegacyKpiComparisonTypeComparison =
 
 /**
  * Kpi comparison direction
- * @alpha
+ * @public
  */
 export type ILegacyKpiComparisonDirection = "growIsGood" | "growIsBad";

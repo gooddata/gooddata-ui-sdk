@@ -1,52 +1,26 @@
 // (C) 2020-2022 GoodData Corporation
-import {
-    isObjRef,
-    ObjectType,
-    ObjRef,
-    AnalyticalWidgetType,
-    IAnalyticalWidget,
-    IInsightWidget,
-    IInsightWidgetDefinition,
-    IKpiWidget,
-    IKpiWidgetDefinition,
-    CatalogItem,
-} from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 import invariant from "ts-invariant";
+import { isObjRef, ObjRef } from "../objRef";
+import {
+    IKpiWidgetDefinition,
+    IInsightWidgetDefinition,
+    IKpiWidget,
+    IInsightWidget,
+    IAnalyticalWidget,
+    AnalyticalWidgetType,
+} from "./analyticalWidgets";
 
 /**
  * See {@link IWidget}]
- * @alpha
+ * @public
  */
 export type IWidgetDefinition = IKpiWidgetDefinition | IInsightWidgetDefinition;
 
 /**
- * @alpha
+ * @public
  */
 export type IWidget = IKpiWidget | IInsightWidget;
-
-/**
- * List of currently supported types of references that can be retrieved using getWidgetReferencedObjects()
- * @alpha
- */
-export type SupportedWidgetReferenceTypes = Exclude<
-    ObjectType,
-    "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable"
->;
-
-/**
- * Contains information about objects that may be referenced by a widget. The contents of this object
- * depend on the widget and the types requested at the time of call to getWidgetReferencedObjects.
- *
- * @alpha
- */
-export interface IWidgetReferences {
-    /**
-     * If requested, measures referenced by the widget will be returned here.
-     * If none of them were requested, the catalogItems will be undefined.
-     */
-    catalogItems?: CatalogItem[];
-}
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IWidgetDefinition}.

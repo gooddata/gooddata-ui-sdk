@@ -5,43 +5,43 @@ import { Identifier, ObjRef } from "../objRef";
 /**
  * Date string - ISO-8601 calendar date string, eg.: '2018-12-30'
  * TODO: https://jira.intgdc.com/browse/RAIL-2415
- * @alpha
+ * @public
  */
 export type DateString = string;
 
 /**
  * Type that identifies the the all time date filter
- * @alpha
+ * @public
  */
 export type AllTimeType = "allTime";
 
 /**
  * Type that identifies the absolute date filter form
- * @alpha
+ * @public
  */
 export type AbsoluteFormType = "absoluteForm";
 
 /**
  * Type that identifies the relative date filter form
- * @alpha
+ * @public
  */
 export type RelativeFormType = "relativeForm";
 
 /**
  * Type that identifies the absolute date filter preset
- * @alpha
+ * @public
  */
 export type AbsolutePresetType = "absolutePreset";
 
 /**
  * Type that identifies the relative date filter preset
- * @alpha
+ * @public
  */
 export type RelativePresetType = "relativePreset";
 
 /**
  * Type that identifies the date filter option
- * @alpha
+ * @public
  */
 export type OptionType =
     | AllTimeType
@@ -53,13 +53,13 @@ export type OptionType =
 /**
  * Relative granularity offset
  * (e.g. "GDC.time.year" granularity with offset -2 means "the previous 2 years")
- * @alpha
+ * @public
  */
 export type RelativeGranularityOffset = number;
 
 /**
  * Supported date filter granularity for the relative date filter
- * @alpha
+ * @public
  */
 export type DateFilterGranularity =
     | "GDC.time.date"
@@ -78,14 +78,14 @@ const dateFilterGranularity: DateFilterGranularity[] = [
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link DateFilterGranularity}.
- * @alpha
+ * @public
  */
 export const isDateFilterGranularity = (obj: unknown): obj is DateFilterGranularity =>
     !isEmpty(obj) && dateFilterGranularity.some((granularity) => granularity === obj);
 
 /**
  * Common props for date filter options
- * @alpha
+ * @public
  */
 export interface IDateFilterOption {
     /**
@@ -108,7 +108,7 @@ export interface IDateFilterOption {
 
 /**
  * Custom absolute date filter preset
- * @alpha
+ * @public
  */
 export interface IAbsoluteDateFilterPreset extends IDateFilterOption {
     /**
@@ -127,7 +127,7 @@ export interface IAbsoluteDateFilterPreset extends IDateFilterOption {
 
 /**
  * Custom relative date filter preset
- * @alpha
+ * @public
  */
 export interface IRelativeDateFilterPreset extends IDateFilterOption {
     /**
@@ -150,7 +150,7 @@ export interface IRelativeDateFilterPreset extends IDateFilterOption {
 
 /**
  * Generic type to express relative date filter preset of a particular granularity
- * @alpha
+ * @public
  */
 export interface IRelativeDateFilterPresetOfGranularity<Key extends DateFilterGranularity>
     extends IRelativeDateFilterPreset {
@@ -162,7 +162,7 @@ export interface IRelativeDateFilterPresetOfGranularity<Key extends DateFilterGr
 
 /**
  * Customized options for the global absolute date filter
- * @alpha
+ * @public
  */
 export interface IAbsoluteDateFilterForm extends IDateFilterOption {
     /**
@@ -173,7 +173,7 @@ export interface IAbsoluteDateFilterForm extends IDateFilterOption {
 
 /**
  * Customized options for the global relative date filter
- * @alpha
+ * @public
  */
 export interface IRelativeDateFilterForm extends IDateFilterOption {
     /**
@@ -188,7 +188,7 @@ export interface IRelativeDateFilterForm extends IDateFilterOption {
 
 /**
  * Customized options for the global all time date filter
- * @alpha
+ * @public
  */
 export interface IAllTimeDateFilterOption extends IDateFilterOption {
     /**
@@ -199,35 +199,35 @@ export interface IAllTimeDateFilterOption extends IDateFilterOption {
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IAllTimeDateFilterOption}.
- * @alpha
+ * @public
  */
 export const isAllTimeDateFilterOption = (obj: unknown): obj is IAllTimeDateFilterOption =>
     !isEmpty(obj) && (obj as IAllTimeDateFilterOption).type === "allTime";
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IAbsoluteDateFilterForm}.
- * @alpha
+ * @public
  */
 export const isAbsoluteDateFilterForm = (obj: unknown): obj is IAbsoluteDateFilterForm =>
     !isEmpty(obj) && (obj as IAbsoluteDateFilterForm).type === "absoluteForm";
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IAbsoluteDateFilterPreset}.
- * @alpha
+ * @public
  */
 export const isAbsoluteDateFilterPreset = (obj: unknown): obj is IAbsoluteDateFilterPreset =>
     !isEmpty(obj) && (obj as IAbsoluteDateFilterPreset).type === "absolutePreset";
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IRelativeDateFilterForm}.
- * @alpha
+ * @public
  */
 export const isRelativeDateFilterForm = (obj: unknown): obj is IRelativeDateFilterForm =>
     !isEmpty(obj) && (obj as IRelativeDateFilterForm).type === "relativeForm";
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IRelativeDateFilterPreset}.
- * @alpha
+ * @public
  */
 export const isRelativeDateFilterPreset = (obj: unknown): obj is IRelativeDateFilterPreset =>
     !isEmpty(obj) && (obj as IRelativeDateFilterPreset).type === "relativePreset";
@@ -235,7 +235,7 @@ export const isRelativeDateFilterPreset = (obj: unknown): obj is IRelativeDateFi
 /**
  * Date filter configs allow to define your own date filter options, that appear in the date filter.
  *
- * @alpha
+ * @public
  */
 export interface IDateFilterConfig {
     /**

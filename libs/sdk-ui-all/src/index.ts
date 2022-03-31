@@ -202,6 +202,20 @@ import {
     IDatasetBody,
     // Attribute Elements
     IAttributeElement,
+    // Widgets
+    IWidget,
+    IWidgetDefinition,
+    isWidget,
+    isWidgetDefinition,
+    widgetUri,
+    widgetId,
+    widgetRef,
+    widgetTitle,
+    widgetType,
+    isKpiWidgetDefinition,
+    isKpiWidget,
+    isInsightWidgetDefinition,
+    isInsightWidget,
 } from "@gooddata/sdk-model";
 export {
     getColorMappingPredicate,
@@ -377,4 +391,18 @@ export {
     IDatasetBody,
     // Attribute Elements
     IAttributeElement,
+    // Widgets
+    IWidget,
+    IWidgetDefinition,
+    isWidget,
+    isWidgetDefinition,
+    widgetUri,
+    widgetId,
+    widgetRef,
+    widgetTitle,
+    widgetType,
+    isKpiWidgetDefinition,
+    isKpiWidget,
+    isInsightWidgetDefinition,
+    isInsightWidget,
 };

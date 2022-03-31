@@ -197,6 +197,8 @@ export {
     IGetScheduledMailOptions,
     IWidgetAlertCount,
     SupportedDashboardReferenceTypes,
+    IWidgetReferences,
+    SupportedWidgetReferenceTypes,
 } from "./workspace/dashboards";
 export {
     IDashboard,
@@ -240,23 +242,6 @@ export {
     layoutWidgetsWithPaths,
     walkLayout,
 } from "./workspace/dashboards/utils";
-export {
-    IWidget,
-    IWidgetDefinition,
-    isWidget,
-    isWidgetDefinition,
-    IWidgetReferences,
-    SupportedWidgetReferenceTypes,
-    widgetUri,
-    widgetId,
-    widgetRef,
-    widgetTitle,
-    widgetType,
-    isKpiWidgetDefinition,
-    isKpiWidget,
-    isInsightWidgetDefinition,
-    isInsightWidget,
-} from "./workspace/dashboards/widget";
 export {
     IDashboardAttachment,
     isDashboardAttachment,
@@ -506,3 +491,19 @@ export {
 } from "./deprecated/ldm/datasets";
 
 export { IAttributeElement } from "./deprecated/ldm/attributeElement";
+
+export {
+    IWidget,
+    IWidgetDefinition,
+    isWidget,
+    isWidgetDefinition,
+    widgetUri,
+    widgetId,
+    widgetRef,
+    widgetTitle,
+    widgetType,
+    isKpiWidgetDefinition,
+    isKpiWidget,
+    isInsightWidgetDefinition,
+    isInsightWidget,
+} from "./deprecated/dashboard/widget";

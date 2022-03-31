@@ -4,7 +4,7 @@ import { ObjRef, ObjRefInScope } from "../objRef";
 
 /**
  * Insight widget drill definition
- * @alpha
+ * @public
  */
 export type InsightDrillDefinition =
     | IDrillToInsight
@@ -14,37 +14,37 @@ export type InsightDrillDefinition =
 
 /**
  * Kpi widget drill definition
- * @alpha
+ * @public
  */
 export type KpiDrillDefinition = IDrillToLegacyDashboard;
 
 /**
  * Widget drill definition
- * @alpha
+ * @public
  */
 export type DrillDefinition = InsightDrillDefinition | KpiDrillDefinition;
 
 /**
  * Drill origin type
- * @alpha
+ * @public
  */
 export type DrillOriginType = "drillFromMeasure" | "drillFromAttribute";
 
 /**
  * Drill origin
- * @alpha
+ * @public
  */
 export type DrillOrigin = IDrillFromMeasure | IDrillFromAttribute;
 
 /**
  * Drill transition
- * @alpha
+ * @public
  */
 export type DrillTransition = "pop-up" | "in-place" | "new-window";
 
 /**
  * Drill type
- * @alpha
+ * @public
  */
 export type DrillType =
     | "drillToInsight"
@@ -55,7 +55,7 @@ export type DrillType =
 
 /**
  * Drill origin base type
- * @alpha
+ * @public
  */
 export interface IDrillOrigin {
     /**
@@ -66,7 +66,7 @@ export interface IDrillOrigin {
 
 /**
  * Drill to custom url target
- * @alpha
+ * @public
  */
 export interface IDrillToCustomUrlTarget {
     /**
@@ -77,7 +77,7 @@ export interface IDrillToCustomUrlTarget {
 
 /**
  * Drill to attribute url target
- * @alpha
+ * @public
  */
 export interface IDrillToAttributeUrlTarget {
     /**
@@ -93,13 +93,13 @@ export interface IDrillToAttributeUrlTarget {
 
 /**
  * Drill target
- * @alpha
+ * @public
  */
 export type IDrillTarget = ObjRef | IDrillToCustomUrlTarget | IDrillToAttributeUrlTarget;
 
 /**
  * Drill from measure
- * @alpha
+ * @public
  */
 export interface IDrillFromMeasure extends IDrillOrigin {
     /**
@@ -115,7 +115,7 @@ export interface IDrillFromMeasure extends IDrillOrigin {
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IDrillFromMeasure}.
- * @alpha
+ * @public
  */
 export function isDrillFromMeasure(obj: DrillOrigin): obj is IDrillFromMeasure {
     return !isEmpty(obj) && (obj as IDrillFromMeasure).type === "drillFromMeasure";
@@ -123,7 +123,7 @@ export function isDrillFromMeasure(obj: DrillOrigin): obj is IDrillFromMeasure {
 
 /**
  * Drill from attribute
- * @alpha
+ * @public
  */
 export interface IDrillFromAttribute extends IDrillOrigin {
     /**
@@ -139,7 +139,7 @@ export interface IDrillFromAttribute extends IDrillOrigin {
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IDrillFromAttribute}.
- * @alpha
+ * @public
  */
 export function isDrillFromAttribute(obj: DrillOrigin): obj is IDrillFromAttribute {
     return !isEmpty(obj) && (obj as IDrillFromAttribute).type === "drillFromAttribute";
@@ -147,7 +147,7 @@ export function isDrillFromAttribute(obj: DrillOrigin): obj is IDrillFromAttribu
 
 /**
  * Drill base type
- * @alpha
+ * @public
  */
 export interface IDrill {
     /**
@@ -168,7 +168,7 @@ export interface IDrill {
 
 /**
  * Drill to PP dashboard
- * @alpha
+ * @public
  */
 export interface IDrillToLegacyDashboard extends IDrill {
     /**
@@ -194,7 +194,7 @@ export interface IDrillToLegacyDashboard extends IDrill {
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IDrillToLegacyDashboard}.
- * @alpha
+ * @public
  */
 export function isDrillToLegacyDashboard(obj: unknown): obj is IDrillToLegacyDashboard {
     return !isEmpty(obj) && (obj as IDrillToLegacyDashboard).type === "drillToLegacyDashboard";
@@ -202,7 +202,7 @@ export function isDrillToLegacyDashboard(obj: unknown): obj is IDrillToLegacyDas
 
 /**
  * Drill to dashboard
- * @alpha
+ * @public
  */
 export interface IDrillToDashboard extends IDrill {
     /**
@@ -231,7 +231,7 @@ export interface IDrillToDashboard extends IDrill {
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IDrillToDashboard}.
- * @alpha
+ * @public
  */
 export function isDrillToDashboard(obj: unknown): obj is IDrillToDashboard {
     return !isEmpty(obj) && (obj as IDrillToDashboard).type === "drillToDashboard";
@@ -239,7 +239,7 @@ export function isDrillToDashboard(obj: unknown): obj is IDrillToDashboard {
 
 /**
  * Drill to insight
- * @alpha
+ * @public
  */
 export interface IDrillToInsight extends IDrill {
     /**
@@ -260,7 +260,7 @@ export interface IDrillToInsight extends IDrill {
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IDrillToInsight}.
- * @alpha
+ * @public
  */
 export function isDrillToInsight(obj: unknown): obj is IDrillToInsight {
     return !isEmpty(obj) && (obj as IDrillToInsight).type === "drillToInsight";
@@ -268,7 +268,7 @@ export function isDrillToInsight(obj: unknown): obj is IDrillToInsight {
 
 /**
  * Drill to custom url
- * @alpha
+ * @public
  */
 export interface IDrillToCustomUrl extends IDrill {
     /**
@@ -289,7 +289,7 @@ export interface IDrillToCustomUrl extends IDrill {
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IDrillToCustomUrl}.
- * @alpha
+ * @public
  */
 export function isDrillToCustomUrl(obj: unknown): obj is IDrillToCustomUrl {
     return !isEmpty(obj) && (obj as IDrillToCustomUrl).type === "drillToCustomUrl";
@@ -297,7 +297,7 @@ export function isDrillToCustomUrl(obj: unknown): obj is IDrillToCustomUrl {
 
 /**
  * Drill to attribute url
- * @alpha
+ * @public
  */
 export interface IDrillToAttributeUrl extends IDrill {
     /**
@@ -318,7 +318,7 @@ export interface IDrillToAttributeUrl extends IDrill {
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IDrillToAttributeUrl}.
- * @alpha
+ * @public
  */
 export function isDrillToAttributeUrl(obj: unknown): obj is IDrillToAttributeUrl {
     return !isEmpty(obj) && (obj as IDrillToAttributeUrl).type === "drillToAttributeUrl";

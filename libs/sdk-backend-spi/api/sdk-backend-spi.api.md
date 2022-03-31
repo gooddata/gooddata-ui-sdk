@@ -4,7 +4,6 @@
 
 ```ts
 
-import { AnalyticalWidgetType as AnalyticalWidgetType_2 } from '@gooddata/sdk-model';
 import { CatalogItem as CatalogItem_2 } from '@gooddata/sdk-model';
 import { CatalogItemType as CatalogItemType_2 } from '@gooddata/sdk-model';
 import { DateFilterGranularity as DateFilterGranularity_2 } from '@gooddata/sdk-model';
@@ -37,10 +36,6 @@ import { IFilterContext as IFilterContext_2 } from '@gooddata/sdk-model';
 import { IFilterContextDefinition as IFilterContextDefinition_2 } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
-import { IInsightWidget as IInsightWidget_2 } from '@gooddata/sdk-model';
-import { IInsightWidgetDefinition as IInsightWidgetDefinition_2 } from '@gooddata/sdk-model';
-import { IKpiWidget as IKpiWidget_2 } from '@gooddata/sdk-model';
-import { IKpiWidgetDefinition as IKpiWidgetDefinition_2 } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureMetadataObject as IMeasureMetadataObject_2 } from '@gooddata/sdk-model';
 import { IMeasureMetadataObjectDefinition as IMeasureMetadataObjectDefinition_2 } from '@gooddata/sdk-model';
@@ -52,8 +47,10 @@ import { ISortItem } from '@gooddata/sdk-model';
 import { ITempFilterContext as ITempFilterContext_2 } from '@gooddata/sdk-model';
 import { IUser as IUser_2 } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
+import { IWidget as IWidget_2 } from '@gooddata/sdk-model';
 import { IWidgetAlert as IWidgetAlert_2 } from '@gooddata/sdk-model';
 import { IWidgetAlertDefinition as IWidgetAlertDefinition_2 } from '@gooddata/sdk-model';
+import { IWidgetDefinition as IWidgetDefinition_2 } from '@gooddata/sdk-model';
 import * as m from '@gooddata/sdk-model';
 import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
@@ -554,7 +551,7 @@ export interface IDashboardReferences {
 }
 
 // @public
-export type IDashboardWidget = IWidget | IWidgetDefinition | IDashboardLayout<IDashboardWidget>;
+export type IDashboardWidget = IWidget_2 | IWidgetDefinition_2 | IDashboardLayout<IDashboardWidget>;
 
 // @public
 export interface IDashboardWithReferences {
@@ -1334,17 +1331,17 @@ export const isFilterContext: typeof m.isFilterContext;
 // @public @deprecated
 export const isFilterContextDefinition: typeof m.isFilterContextDefinition;
 
-// @public
-export function isInsightWidget(obj: unknown): obj is IInsightWidget_2;
+// @public @deprecated
+export const isInsightWidget: typeof m.isInsightWidget;
 
-// @public
-export function isInsightWidgetDefinition(obj: unknown): obj is IInsightWidgetDefinition_2;
+// @public @deprecated
+export const isInsightWidgetDefinition: typeof m.isInsightWidgetDefinition;
 
-// @public
-export function isKpiWidget(obj: unknown): obj is IKpiWidget_2;
+// @public @deprecated
+export const isKpiWidget: typeof m.isKpiWidget;
 
-// @public
-export function isKpiWidgetDefinition(obj: unknown): obj is IKpiWidgetDefinition_2;
+// @public @deprecated
+export const isKpiWidgetDefinition: typeof m.isKpiWidgetDefinition;
 
 // @alpha @deprecated
 export const isLegacyKpi: typeof m.isLegacyKpi;
@@ -1430,8 +1427,8 @@ export function isValueBasedElementsQueryOptionsElements(obj: unknown): obj is I
 // @public @deprecated
 export const isVariableMetadataObject: typeof m.isVariableMetadataObject;
 
-// @public
-export function isWidget(obj: unknown): obj is IWidget;
+// @public @deprecated
+export const isWidget: typeof m.isWidget;
 
 // @alpha @deprecated
 export const isWidgetAlert: typeof m.isWidgetAlert;
@@ -1442,8 +1439,8 @@ export const isWidgetAlertDefinition: typeof m.isWidgetAlertDefinition;
 // @alpha
 export function isWidgetAttachment(obj: unknown): obj is IWidgetAttachment;
 
-// @public
-export function isWidgetDefinition(obj: unknown): obj is IWidgetDefinition;
+// @public @deprecated
+export const isWidgetDefinition: typeof m.isWidgetDefinition;
 
 // @public @deprecated
 export interface ITempFilterContext extends m.ITempFilterContext {
@@ -1779,8 +1776,8 @@ export interface IUserWorkspaceSettings extends IUserSettings, IWorkspaceSetting
 export interface IVariableMetadataObject extends m.IVariableMetadataObject {
 }
 
-// @alpha (undocumented)
-export type IWidget = IKpiWidget_2 | IInsightWidget_2;
+// @alpha @deprecated (undocumented)
+export type IWidget = m.IWidget;
 
 // @alpha @deprecated
 export interface IWidgetAlert extends m.IWidgetAlert {
@@ -1810,14 +1807,14 @@ export interface IWidgetAttachment {
     widgetDashboard: ObjRef;
 }
 
-// @alpha
-export type IWidgetDefinition = IKpiWidgetDefinition_2 | IInsightWidgetDefinition_2;
+// @alpha @deprecated
+export type IWidgetDefinition = m.IWidgetDefinition;
 
 // @alpha @deprecated
 export interface IWidgetDescription extends m.IWidgetDescription {
 }
 
-// @alpha
+// @public
 export interface IWidgetReferences {
     catalogItems?: CatalogItem_2[];
 }
@@ -1936,7 +1933,7 @@ export interface IWorkspaceDashboardsService {
     getDashboards(options?: IGetDashboardOptions): Promise<IListedDashboard[]>;
     getDashboardWidgetAlertsForCurrentUser(ref: ObjRef): Promise<IWidgetAlert_2[]>;
     getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardWithReferences>;
-    getResolvedFiltersForWidget(widget: IWidget, filters: IFilter[]): Promise<IFilter[]>;
+    getResolvedFiltersForWidget(widget: IWidget_2, filters: IFilter[]): Promise<IFilter[]>;
     getScheduledMailsCountForDashboard(ref: ObjRef): Promise<number>;
     getScheduledMailsForDashboard(ref: ObjRef, options?: IGetScheduledMailOptions): Promise<IScheduledMail[]>;
     getWidgetAlertsCountForWidgets(refs: ObjRef[]): Promise<IWidgetAlertCount[]>;
@@ -2099,7 +2096,7 @@ export type KpiDrillDefinition = m.KpiDrillDefinition;
 export type LayoutPath = Array<string | number>;
 
 // @alpha (undocumented)
-export function layoutWidgets<TWidget extends IDashboardWidget>(layout: IDashboardLayout<TWidget>): Array<IWidgetDefinition | IWidget>;
+export function layoutWidgets<TWidget extends IDashboardWidget>(layout: IDashboardLayout<TWidget>): Array<IWidgetDefinition_2 | IWidget_2>;
 
 // @alpha
 export function layoutWidgetsWithPaths<TWidget extends IDashboardWidget>(layout: IDashboardLayout<TWidget>): IWidgetWithLayoutPath<TWidget>[];
@@ -2196,7 +2193,7 @@ export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin";
 // @public
 export type SupportedInsightReferenceTypes = Exclude<InsightReferenceTypes, "displayForm" | "variable">;
 
-// @alpha
+// @public
 export type SupportedWidgetReferenceTypes = Exclude<ObjectType, "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable">;
 
 // @beta
@@ -2232,23 +2229,23 @@ export function walkLayout<TWidget extends IDashboardWidget>(layout: IDashboardL
     widgetCallback?: (widget: TWidget, widgetPath: LayoutPath) => void;
 }, path?: LayoutPath): void;
 
-// @public
-export function widgetId(widget: IWidget): string;
+// @public @deprecated
+export const widgetId: typeof m.widgetId;
 
-// @public
-export function widgetRef(widget: IWidget): ObjRef;
+// @public @deprecated
+export const widgetRef: typeof m.widgetRef;
 
-// @public
-export function widgetTitle(widget: IWidget): string;
+// @public @deprecated
+export const widgetTitle: typeof m.widgetTitle;
 
 // @alpha @deprecated (undocumented)
 export type WidgetType = m.WidgetType;
 
-// @public
-export function widgetType(widget: IWidget): AnalyticalWidgetType_2;
+// @public @deprecated
+export const widgetType: typeof m.widgetType;
 
-// @public
-export function widgetUri(widget: IWidget): string;
+// @public @deprecated
+export const widgetUri: typeof m.widgetUri;
 
 // @public
 export type WorkspacePermission =

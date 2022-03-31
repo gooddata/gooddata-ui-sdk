@@ -132,6 +132,10 @@ import { isDrillToLegacyDashboard } from '@gooddata/sdk-model';
 import { isFactMetadataObject } from '@gooddata/sdk-model';
 import { isFilterContext } from '@gooddata/sdk-model';
 import { isFilterContextDefinition } from '@gooddata/sdk-model';
+import { isInsightWidget } from '@gooddata/sdk-model';
+import { isInsightWidgetDefinition } from '@gooddata/sdk-model';
+import { isKpiWidget } from '@gooddata/sdk-model';
+import { isKpiWidgetDefinition } from '@gooddata/sdk-model';
 import { isLegacyKpi } from '@gooddata/sdk-model';
 import { isLegacyKpiWithComparison } from '@gooddata/sdk-model';
 import { isLegacyKpiWithoutComparison } from '@gooddata/sdk-model';
@@ -142,14 +146,18 @@ import { isRelativeDateFilterForm } from '@gooddata/sdk-model';
 import { isRelativeDateFilterPreset } from '@gooddata/sdk-model';
 import { isTempFilterContext } from '@gooddata/sdk-model';
 import { isVariableMetadataObject } from '@gooddata/sdk-model';
+import { isWidget } from '@gooddata/sdk-model';
 import { isWidgetAlert } from '@gooddata/sdk-model';
 import { isWidgetAlertDefinition } from '@gooddata/sdk-model';
+import { isWidgetDefinition } from '@gooddata/sdk-model';
 import { ITempFilterContext } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
 import { IVariableMetadataObject } from '@gooddata/sdk-model';
+import { IWidget } from '@gooddata/sdk-model';
 import { IWidgetAlert } from '@gooddata/sdk-model';
 import { IWidgetAlertBase } from '@gooddata/sdk-model';
 import { IWidgetAlertDefinition } from '@gooddata/sdk-model';
+import { IWidgetDefinition } from '@gooddata/sdk-model';
 import { IWidgetDescription } from '@gooddata/sdk-model';
 import { KpiDrillDefinition } from '@gooddata/sdk-model';
 import { MetadataObject } from '@gooddata/sdk-model';
@@ -163,7 +171,12 @@ import { RelativeGranularityOffset } from '@gooddata/sdk-model';
 import { RelativePresetType } from '@gooddata/sdk-model';
 import { RelativeType } from '@gooddata/sdk-model';
 import { userFullName } from '@gooddata/sdk-model';
+import { widgetId } from '@gooddata/sdk-model';
+import { widgetRef } from '@gooddata/sdk-model';
+import { widgetTitle } from '@gooddata/sdk-model';
 import { WidgetType } from '@gooddata/sdk-model';
+import { widgetType } from '@gooddata/sdk-model';
+import { widgetUri } from '@gooddata/sdk-model';
 
 export { AbsoluteFormType }
 
@@ -421,6 +434,14 @@ export { isFilterContext }
 
 export { isFilterContextDefinition }
 
+export { isInsightWidget }
+
+export { isInsightWidgetDefinition }
+
+export { isKpiWidget }
+
+export { isKpiWidgetDefinition }
+
 export { isLegacyKpi }
 
 export { isLegacyKpiWithComparison }
@@ -441,9 +462,13 @@ export { isTempFilterContext }
 
 export { isVariableMetadataObject }
 
+export { isWidget }
+
 export { isWidgetAlert }
 
 export { isWidgetAlertDefinition }
+
+export { isWidgetDefinition }
 
 export { ITempFilterContext }
 
@@ -451,11 +476,15 @@ export { IUser }
 
 export { IVariableMetadataObject }
 
+export { IWidget }
+
 export { IWidgetAlert }
 
 export { IWidgetAlertBase }
 
 export { IWidgetAlertDefinition }
+
+export { IWidgetDefinition }
 
 export { IWidgetDescription }
 
@@ -483,7 +512,17 @@ export { RelativeType }
 
 export { userFullName }
 
+export { widgetId }
+
+export { widgetRef }
+
+export { widgetTitle }
+
 export { WidgetType }
+
+export { widgetType }
+
+export { widgetUri }
 
 
 export * from "@gooddata/sdk-backend-spi";
