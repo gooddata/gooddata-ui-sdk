@@ -386,6 +386,11 @@ export class XhrModule {
             throw new ApiResponseError("Unauthorized", response, responseBody);
         }
 
+        if (!response.ok) {
+            // other non-2xx errors
+            throw new ApiResponseError(response.statusText, response, responseBody);
+        }
+
         return this.ajax(originalUrl, originalSettings);
     }
 
