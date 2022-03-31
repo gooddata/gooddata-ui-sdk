@@ -273,7 +273,7 @@ describe("PluggableHeatmap", () => {
             expect(sortConfig).toMatchSnapshot();
         });
 
-        it("should provide attribute normal as default sort, attribute area sorts as available sorts for 1M + 1SB", async () => {
+        it("should provide attribute normal as default sort, one metric sort as available sorts for 1M + 1SB", async () => {
             const chart = createComponent(defaultProps);
             const sortConfig = await chart.getSortConfig(referencePointMocks.oneMetricOneStackReferencePoint);
 

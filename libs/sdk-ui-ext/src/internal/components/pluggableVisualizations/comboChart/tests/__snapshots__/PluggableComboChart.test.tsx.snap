@@ -1,6 +1,45 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PluggableComboChart Sort config should provide attribute sort as default sort, attribute area  and two measures sorts as available sorts for 2 primary measures stacked + 1 VB 1`] = `
+exports[`PluggableComboChart Sort config should not offer area sort as available, when primary type is area but there is only singe measure 1`] = `
+Object {
+  "appliedSort": Array [],
+  "availableSorts": Array [
+    Object {
+      "attributeSort": Object {
+        "areaSortEnabled": false,
+        "normalSortEnabled": true,
+      },
+      "itemId": Object {
+        "localIdentifier": "a1",
+      },
+      "metricSorts": Array [
+        Object {
+          "locators": Array [
+            Object {
+              "measureLocatorItem": Object {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+      ],
+    },
+  ],
+  "defaultSort": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a1",
+        "direction": "asc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
+
+exports[`PluggableComboChart Sort config should provide attribute sort as default sort, attribute area and two measure sorts as available sorts for 2M + 1 VB 1`] = `
 Object {
   "appliedSort": Array [],
   "availableSorts": Array [
@@ -49,7 +88,7 @@ Object {
 }
 `;
 
-exports[`PluggableComboChart Sort config should provide attribute sort as default sort, attribute area and two measure sorts as available sorts for 2M + 1 VB 1`] = `
+exports[`PluggableComboChart Sort config should provide attribute sort as default sort, attribute area and two measures sorts as available sorts for 2 primary measures stacked + 1 VB 1`] = `
 Object {
   "appliedSort": Array [],
   "availableSorts": Array [
