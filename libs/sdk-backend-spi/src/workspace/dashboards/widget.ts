@@ -9,10 +9,10 @@ import {
     IInsightWidgetDefinition,
     IKpiWidget,
     IKpiWidgetDefinition,
+    CatalogItem,
 } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 import invariant from "ts-invariant";
-import { CatalogItem } from "../fromModel/ldm/catalog";
 
 /**
  * See {@link IWidget}]

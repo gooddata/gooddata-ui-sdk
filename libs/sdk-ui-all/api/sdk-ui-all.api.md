@@ -10,11 +10,15 @@ import { AbsoluteType } from '@gooddata/sdk-model';
 import { AllTimeType } from '@gooddata/sdk-model';
 import { AnalyticalWidgetType } from '@gooddata/sdk-model';
 import { BuiltInWidgetTypes } from '@gooddata/sdk-model';
+import { CatalogItem } from '@gooddata/sdk-model';
+import { catalogItemMetadataObject } from '@gooddata/sdk-model';
+import { CatalogItemType } from '@gooddata/sdk-model';
 import { dashboardFilterReferenceObjRef } from '@gooddata/sdk-model';
+import { DataColumnType } from '@gooddata/sdk-model';
+import { DatasetLoadStatus } from '@gooddata/sdk-model';
 import { DateFilterGranularity } from '@gooddata/sdk-model';
 import { DateFilterType } from '@gooddata/sdk-model';
 import { DateString } from '@gooddata/sdk-model';
-import { getColorMappingPredicate } from '@gooddata/sdk-ui-charts';
 import { DrillDefinition } from '@gooddata/sdk-model';
 import { DrillOrigin } from '@gooddata/sdk-model';
 import { DrillOriginType } from '@gooddata/sdk-model';
@@ -22,18 +26,38 @@ import { DrillTransition } from '@gooddata/sdk-model';
 import { DrillType } from '@gooddata/sdk-model';
 import { FilterContextItem } from '@gooddata/sdk-model';
 import { getColorMappingPredicate } from '@gooddata/sdk-ui-charts';
+import { GroupableCatalogItem } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilterForm } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilterPreset } from '@gooddata/sdk-model';
 import { IAllTimeDateFilterOption } from '@gooddata/sdk-model';
 import { IAnalyticalWidget } from '@gooddata/sdk-model';
+import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
+import { IAttributeElement } from '@gooddata/sdk-model';
+import { IAttributeMetadataObject } from '@gooddata/sdk-model';
 import { IBaseWidget } from '@gooddata/sdk-model';
+import { ICatalogAttribute } from '@gooddata/sdk-model';
+import { ICatalogDateAttribute } from '@gooddata/sdk-model';
+import { ICatalogDateDataset } from '@gooddata/sdk-model';
+import { ICatalogFact } from '@gooddata/sdk-model';
+import { ICatalogGroup } from '@gooddata/sdk-model';
+import { ICatalogItemBase } from '@gooddata/sdk-model';
+import { ICatalogMeasure } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilter } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilterParent } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilterReference } from '@gooddata/sdk-model';
 import { IDashboardDateFilter } from '@gooddata/sdk-model';
 import { IDashboardDateFilterReference } from '@gooddata/sdk-model';
 import { IDashboardFilterReference } from '@gooddata/sdk-model';
+import { IDashboardMetadataObject } from '@gooddata/sdk-model';
 import { IDashboardObjectIdentity } from '@gooddata/sdk-model';
+import { IDataColumn } from '@gooddata/sdk-model';
+import { IDataColumnBody } from '@gooddata/sdk-model';
+import { IDataHeader } from '@gooddata/sdk-model';
+import { IDataset } from '@gooddata/sdk-model';
+import { IDatasetBody } from '@gooddata/sdk-model';
+import { IDatasetLoadInfo } from '@gooddata/sdk-model';
+import { IDataSetMetadataObject } from '@gooddata/sdk-model';
+import { IDatasetUser } from '@gooddata/sdk-model';
 import { IDateFilterConfig } from '@gooddata/sdk-model';
 import { IDateFilterOption } from '@gooddata/sdk-model';
 import { IDrill } from '@gooddata/sdk-model';
@@ -49,10 +73,12 @@ import { IDrillToCustomUrlTarget } from '@gooddata/sdk-model';
 import { IDrillToDashboard } from '@gooddata/sdk-model';
 import { IDrillToInsight } from '@gooddata/sdk-model';
 import { IDrillToLegacyDashboard } from '@gooddata/sdk-model';
+import { IFactMetadataObject } from '@gooddata/sdk-model';
 import { IFilterableWidget } from '@gooddata/sdk-model';
 import { IFilterContext } from '@gooddata/sdk-model';
 import { IFilterContextBase } from '@gooddata/sdk-model';
 import { IFilterContextDefinition } from '@gooddata/sdk-model';
+import { IGroupableCatalogItemBase } from '@gooddata/sdk-model';
 import { IInsightWidget } from '@gooddata/sdk-model';
 import { IInsightWidgetBase } from '@gooddata/sdk-model';
 import { IInsightWidgetConfiguration } from '@gooddata/sdk-model';
@@ -68,6 +94,13 @@ import { ILegacyKpiWithComparison } from '@gooddata/sdk-model';
 import { ILegacyKpiWithoutComparison } from '@gooddata/sdk-model';
 import { ILegacyKpiWithPopComparison } from '@gooddata/sdk-model';
 import { ILegacyKpiWithPreviousPeriodComparison } from '@gooddata/sdk-model';
+import { IMeasureMetadataObject } from '@gooddata/sdk-model';
+import { IMeasureMetadataObjectBase } from '@gooddata/sdk-model';
+import { IMeasureMetadataObjectDefinition } from '@gooddata/sdk-model';
+import { IMetadataObject } from '@gooddata/sdk-model';
+import { IMetadataObjectBase } from '@gooddata/sdk-model';
+import { IMetadataObjectDefinition } from '@gooddata/sdk-model';
+import { IMetadataObjectIdentity } from '@gooddata/sdk-model';
 import { InsightDrillDefinition } from '@gooddata/sdk-model';
 import { IRelativeDateFilterForm } from '@gooddata/sdk-model';
 import { IRelativeDateFilterPreset } from '@gooddata/sdk-model';
@@ -76,10 +109,18 @@ import { isAbsoluteDateFilterForm } from '@gooddata/sdk-model';
 import { isAbsoluteDateFilterPreset } from '@gooddata/sdk-model';
 import { isAllTimeDashboardDateFilter } from '@gooddata/sdk-model';
 import { isAllTimeDateFilterOption } from '@gooddata/sdk-model';
+import { isAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
+import { isAttributeMetadataObject } from '@gooddata/sdk-model';
+import { isCatalogAttribute } from '@gooddata/sdk-model';
+import { isCatalogDateDataset } from '@gooddata/sdk-model';
+import { isCatalogFact } from '@gooddata/sdk-model';
+import { isCatalogMeasure } from '@gooddata/sdk-model';
 import { isDashboardAttributeFilter } from '@gooddata/sdk-model';
 import { isDashboardAttributeFilterReference } from '@gooddata/sdk-model';
 import { isDashboardDateFilter } from '@gooddata/sdk-model';
 import { isDashboardDateFilterReference } from '@gooddata/sdk-model';
+import { isDashboardMetadataObject } from '@gooddata/sdk-model';
+import { isDataSetMetadataObject } from '@gooddata/sdk-model';
 import { isDateFilterGranularity } from '@gooddata/sdk-model';
 import { isDrillFromAttribute } from '@gooddata/sdk-model';
 import { isDrillFromMeasure } from '@gooddata/sdk-model';
@@ -88,23 +129,31 @@ import { isDrillToCustomUrl } from '@gooddata/sdk-model';
 import { isDrillToDashboard } from '@gooddata/sdk-model';
 import { isDrillToInsight } from '@gooddata/sdk-model';
 import { isDrillToLegacyDashboard } from '@gooddata/sdk-model';
+import { isFactMetadataObject } from '@gooddata/sdk-model';
 import { isFilterContext } from '@gooddata/sdk-model';
 import { isFilterContextDefinition } from '@gooddata/sdk-model';
 import { isLegacyKpi } from '@gooddata/sdk-model';
 import { isLegacyKpiWithComparison } from '@gooddata/sdk-model';
 import { isLegacyKpiWithoutComparison } from '@gooddata/sdk-model';
+import { isMeasureMetadataObject } from '@gooddata/sdk-model';
+import { isMeasureMetadataObjectDefinition } from '@gooddata/sdk-model';
+import { isMetadataObject } from '@gooddata/sdk-model';
 import { isRelativeDateFilterForm } from '@gooddata/sdk-model';
 import { isRelativeDateFilterPreset } from '@gooddata/sdk-model';
 import { isTempFilterContext } from '@gooddata/sdk-model';
+import { isVariableMetadataObject } from '@gooddata/sdk-model';
 import { isWidgetAlert } from '@gooddata/sdk-model';
 import { isWidgetAlertDefinition } from '@gooddata/sdk-model';
 import { ITempFilterContext } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
+import { IVariableMetadataObject } from '@gooddata/sdk-model';
 import { IWidgetAlert } from '@gooddata/sdk-model';
 import { IWidgetAlertBase } from '@gooddata/sdk-model';
 import { IWidgetAlertDefinition } from '@gooddata/sdk-model';
 import { IWidgetDescription } from '@gooddata/sdk-model';
 import { KpiDrillDefinition } from '@gooddata/sdk-model';
+import { MetadataObject } from '@gooddata/sdk-model';
+import { metadataObjectId } from '@gooddata/sdk-model';
 import { newAbsoluteDashboardDateFilter } from '@gooddata/sdk-model';
 import { newAllTimeDashboardDateFilter } from '@gooddata/sdk-model';
 import { newRelativeDashboardDateFilter } from '@gooddata/sdk-model';
@@ -128,15 +177,23 @@ export { AnalyticalWidgetType }
 
 export { BuiltInWidgetTypes }
 
+export { CatalogItem }
+
+export { catalogItemMetadataObject }
+
+export { CatalogItemType }
+
 export { dashboardFilterReferenceObjRef }
+
+export { DataColumnType }
+
+export { DatasetLoadStatus }
 
 export { DateFilterGranularity }
 
 export { DateFilterType }
 
 export { DateString }
-
-export { getColorMappingPredicate }
 
 export { DrillDefinition }
 
@@ -152,6 +209,8 @@ export { FilterContextItem }
 
 export { getColorMappingPredicate }
 
+export { GroupableCatalogItem }
+
 export { IAbsoluteDateFilterForm }
 
 export { IAbsoluteDateFilterPreset }
@@ -160,7 +219,27 @@ export { IAllTimeDateFilterOption }
 
 export { IAnalyticalWidget }
 
+export { IAttributeDisplayFormMetadataObject }
+
+export { IAttributeElement }
+
+export { IAttributeMetadataObject }
+
 export { IBaseWidget }
+
+export { ICatalogAttribute }
+
+export { ICatalogDateAttribute }
+
+export { ICatalogDateDataset }
+
+export { ICatalogFact }
+
+export { ICatalogGroup }
+
+export { ICatalogItemBase }
+
+export { ICatalogMeasure }
 
 export { IDashboardAttributeFilter }
 
@@ -174,7 +253,25 @@ export { IDashboardDateFilterReference }
 
 export { IDashboardFilterReference }
 
+export { IDashboardMetadataObject }
+
 export { IDashboardObjectIdentity }
+
+export { IDataColumn }
+
+export { IDataColumnBody }
+
+export { IDataHeader }
+
+export { IDataset }
+
+export { IDatasetBody }
+
+export { IDatasetLoadInfo }
+
+export { IDataSetMetadataObject }
+
+export { IDatasetUser }
 
 export { IDateFilterConfig }
 
@@ -206,6 +303,8 @@ export { IDrillToInsight }
 
 export { IDrillToLegacyDashboard }
 
+export { IFactMetadataObject }
+
 export { IFilterableWidget }
 
 export { IFilterContext }
@@ -213,6 +312,8 @@ export { IFilterContext }
 export { IFilterContextBase }
 
 export { IFilterContextDefinition }
+
+export { IGroupableCatalogItemBase }
 
 export { IInsightWidget }
 
@@ -244,6 +345,20 @@ export { ILegacyKpiWithPopComparison }
 
 export { ILegacyKpiWithPreviousPeriodComparison }
 
+export { IMeasureMetadataObject }
+
+export { IMeasureMetadataObjectBase }
+
+export { IMeasureMetadataObjectDefinition }
+
+export { IMetadataObject }
+
+export { IMetadataObjectBase }
+
+export { IMetadataObjectDefinition }
+
+export { IMetadataObjectIdentity }
+
 export { InsightDrillDefinition }
 
 export { IRelativeDateFilterForm }
@@ -260,6 +375,18 @@ export { isAllTimeDashboardDateFilter }
 
 export { isAllTimeDateFilterOption }
 
+export { isAttributeDisplayFormMetadataObject }
+
+export { isAttributeMetadataObject }
+
+export { isCatalogAttribute }
+
+export { isCatalogDateDataset }
+
+export { isCatalogFact }
+
+export { isCatalogMeasure }
+
 export { isDashboardAttributeFilter }
 
 export { isDashboardAttributeFilterReference }
@@ -267,6 +394,10 @@ export { isDashboardAttributeFilterReference }
 export { isDashboardDateFilter }
 
 export { isDashboardDateFilterReference }
+
+export { isDashboardMetadataObject }
+
+export { isDataSetMetadataObject }
 
 export { isDateFilterGranularity }
 
@@ -284,6 +415,8 @@ export { isDrillToInsight }
 
 export { isDrillToLegacyDashboard }
 
+export { isFactMetadataObject }
+
 export { isFilterContext }
 
 export { isFilterContextDefinition }
@@ -294,11 +427,19 @@ export { isLegacyKpiWithComparison }
 
 export { isLegacyKpiWithoutComparison }
 
+export { isMeasureMetadataObject }
+
+export { isMeasureMetadataObjectDefinition }
+
+export { isMetadataObject }
+
 export { isRelativeDateFilterForm }
 
 export { isRelativeDateFilterPreset }
 
 export { isTempFilterContext }
+
+export { isVariableMetadataObject }
 
 export { isWidgetAlert }
 
@@ -307,6 +448,8 @@ export { isWidgetAlertDefinition }
 export { ITempFilterContext }
 
 export { IUser }
+
+export { IVariableMetadataObject }
 
 export { IWidgetAlert }
 
@@ -317,6 +460,10 @@ export { IWidgetAlertDefinition }
 export { IWidgetDescription }
 
 export { KpiDrillDefinition }
+
+export { MetadataObject }
+
+export { metadataObjectId }
 
 export { newAbsoluteDashboardDateFilter }
 

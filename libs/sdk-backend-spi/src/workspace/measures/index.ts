@@ -1,12 +1,23 @@
 // (C) 2019-2022 GoodData Corporation
-import { ObjRef } from "@gooddata/sdk-model";
-import { ICatalogMeasure } from "../fromModel/ldm/catalog";
-import { IMeasureExpressionToken } from "../fromModel/ldm/measure";
 import {
+    ObjRef,
     IMeasureMetadataObject,
     IMeasureMetadataObjectDefinition,
-    IMeasureReferencing,
-} from "../fromModel/ldm/metadata";
+    IMetadataObject,
+    IInsight,
+    ICatalogMeasure,
+} from "@gooddata/sdk-model";
+import { IMeasureExpressionToken } from "./measure";
+
+/**
+ * Contains information about objects that may be referencing an measure. {@link IWorkspaceMeasuresService.getMeasureReferencingObjects} function.
+ *
+ * @public
+ */
+export interface IMeasureReferencing {
+    measures?: IMetadataObject[];
+    insights?: IInsight[];
+}
 
 /**
  * Service for create, update or delete measures and querying additional measures data.

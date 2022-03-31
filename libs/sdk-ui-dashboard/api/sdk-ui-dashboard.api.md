@@ -32,6 +32,7 @@ import { IAccessControlAware } from '@gooddata/sdk-backend-spi';
 import { IAccessGrantee } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-backend-spi';
+import { IAttributeDisplayFormMetadataObject as IAttributeDisplayFormMetadataObject_2 } from '@gooddata/sdk-model';
 import { IAttributeElements } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeMetadataObject } from '@gooddata/sdk-backend-spi';
@@ -39,7 +40,8 @@ import { IAvailableDrillTargets } from '@gooddata/sdk-ui';
 import { IBackendCapabilities } from '@gooddata/sdk-backend-spi';
 import { IBaseWidget } from '@gooddata/sdk-backend-spi';
 import { ICatalogAttribute } from '@gooddata/sdk-backend-spi';
-import { ICatalogDateAttribute } from '@gooddata/sdk-backend-spi';
+import { ICatalogDateAttribute } from '@gooddata/sdk-model';
+import { ICatalogDateAttribute as ICatalogDateAttribute_2 } from '@gooddata/sdk-backend-spi';
 import { ICatalogDateDataset } from '@gooddata/sdk-backend-spi';
 import { ICatalogFact } from '@gooddata/sdk-backend-spi';
 import { ICatalogMeasure } from '@gooddata/sdk-backend-spi';
@@ -4153,7 +4155,7 @@ export const selectAlerts: (state: DashboardState) => IWidgetAlert[];
 export const selectAlertsMap: OutputSelector<DashboardState, ObjRefMap<IWidgetAlert>, (res: IWidgetAlert[]) => ObjRefMap<IWidgetAlert>>;
 
 // @alpha
-export const selectAllCatalogAttributesMap: OutputSelector<DashboardState, ObjRefMap<ICatalogAttribute | ICatalogDateAttribute>, (res1: ICatalogAttribute[], res2: ICatalogDateDataset[], res3: IBackendCapabilities) => ObjRefMap<ICatalogAttribute | ICatalogDateAttribute>>;
+export const selectAllCatalogAttributesMap: OutputSelector<DashboardState, ObjRefMap<ICatalogAttribute | ICatalogDateAttribute_2>, (res1: ICatalogAttribute[], res2: ICatalogDateDataset[], res3: IBackendCapabilities) => ObjRefMap<ICatalogAttribute | ICatalogDateAttribute_2>>;
 
 // @alpha
 export const selectAllCatalogDisplayFormsMap: OutputSelector<DashboardState, ObjRefMap<IAttributeDisplayFormMetadataObject>, (res1: ICatalogAttribute[], res2: ICatalogDateDataset[], res3: IBackendCapabilities) => ObjRefMap<IAttributeDisplayFormMetadataObject>>;
@@ -4177,7 +4179,7 @@ export const selectAttributeFilterDisplayForms: OutputSelector<DashboardState, I
 export const selectAttributeFilterDisplayFormsMap: OutputSelector<DashboardState, ObjRefMap<IAttributeDisplayFormMetadataObject>, (res: FilterContextState) => ObjRefMap<IAttributeDisplayFormMetadataObject>>;
 
 // @alpha (undocumented)
-export const selectAttributesWithDrillDown: OutputSelector<DashboardState, (ICatalogAttribute | ICatalogDateAttribute)[], (res1: ICatalogAttribute[], res2: ICatalogDateAttribute[]) => (ICatalogAttribute | ICatalogDateAttribute)[]>;
+export const selectAttributesWithDrillDown: OutputSelector<DashboardState, (ICatalogDateAttribute | ICatalogAttribute)[], (res1: ICatalogAttribute[], res2: ICatalogDateAttribute[]) => (ICatalogDateAttribute | ICatalogAttribute)[]>;
 
 // @public
 export const selectBackendCapabilities: OutputSelector<DashboardState, IBackendCapabilities, (res: BackendCapabilitiesState) => IBackendCapabilities>;
@@ -4231,7 +4233,7 @@ export const selectCanRefreshData: OutputSelector<DashboardState, boolean, (res:
 export const selectCanUploadNonProductionCSV: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @public (undocumented)
-export const selectCatalogAttributeDisplayForms: OutputSelector<DashboardState, IAttributeDisplayFormMetadataObject[], (res: ICatalogAttribute[]) => IAttributeDisplayFormMetadataObject[]>;
+export const selectCatalogAttributeDisplayForms: OutputSelector<DashboardState, IAttributeDisplayFormMetadataObject_2[], (res: ICatalogAttribute[]) => IAttributeDisplayFormMetadataObject_2[]>;
 
 // @public (undocumented)
 export const selectCatalogAttributes: OutputSelector<DashboardState, ICatalogAttribute[], (res: CatalogState) => ICatalogAttribute[]>;
@@ -4420,10 +4422,10 @@ export const selectFilterContextIdentity: OutputSelector<DashboardState, IDashbo
 export const selectHideKpiDrillInEmbedded: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @internal (undocumented)
-export const selectImplicitDrillsByAvailableDrillTargets: (availableDrillTargets: IAvailableDrillTargets | undefined) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: (ICatalogAttribute | ICatalogDateAttribute)[], res2: ICatalogAttribute[]) => IImplicitDrillWithPredicates[]>;
+export const selectImplicitDrillsByAvailableDrillTargets: (availableDrillTargets: IAvailableDrillTargets | undefined) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: (ICatalogDateAttribute | ICatalogAttribute)[], res2: ICatalogAttribute[]) => IImplicitDrillWithPredicates[]>;
 
 // @internal (undocumented)
-export const selectImplicitDrillsDownByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IDrillTargets | undefined, res2: (ICatalogAttribute | ICatalogDateAttribute)[], res3: boolean) => IImplicitDrillWithPredicates[]>;
+export const selectImplicitDrillsDownByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IDrillTargets | undefined, res2: (ICatalogDateAttribute | ICatalogAttribute)[], res3: boolean) => IImplicitDrillWithPredicates[]>;
 
 // @internal
 export const selectInsightAttributesMeta: (query: QueryInsightAttributesMeta) => Selector<DashboardState, QueryCacheEntryResult<InsightAttributesMeta> | undefined>;

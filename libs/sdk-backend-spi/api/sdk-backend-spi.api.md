@@ -5,18 +5,28 @@
 ```ts
 
 import { AnalyticalWidgetType as AnalyticalWidgetType_2 } from '@gooddata/sdk-model';
-import { DateAttributeGranularity } from '@gooddata/sdk-model';
+import { CatalogItem as CatalogItem_2 } from '@gooddata/sdk-model';
+import { CatalogItemType as CatalogItemType_2 } from '@gooddata/sdk-model';
 import { DateFilterGranularity as DateFilterGranularity_2 } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { FilterContextItem as FilterContextItem_2 } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilterPreset as IAbsoluteDateFilterPreset_2 } from '@gooddata/sdk-model';
+import { IAttributeDisplayFormMetadataObject as IAttributeDisplayFormMetadataObject_2 } from '@gooddata/sdk-model';
+import { IAttributeElement as IAttributeElement_2 } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
+import { IAttributeMetadataObject as IAttributeMetadataObject_2 } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IAuditableDates } from '@gooddata/sdk-model';
 import { IAuditableUsers } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
+import { ICatalogAttribute as ICatalogAttribute_2 } from '@gooddata/sdk-model';
+import { ICatalogDateDataset as ICatalogDateDataset_2 } from '@gooddata/sdk-model';
+import { ICatalogFact as ICatalogFact_2 } from '@gooddata/sdk-model';
+import { ICatalogGroup as ICatalogGroup_2 } from '@gooddata/sdk-model';
+import { ICatalogMeasure as ICatalogMeasure_2 } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDashboardObjectIdentity as IDashboardObjectIdentity_2 } from '@gooddata/sdk-model';
+import { IDataset as IDataset_2 } from '@gooddata/sdk-model';
 import { IDateFilterConfig as IDateFilterConfig_2 } from '@gooddata/sdk-model';
 import { Identifier } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
@@ -32,6 +42,9 @@ import { IInsightWidgetDefinition as IInsightWidgetDefinition_2 } from '@gooddat
 import { IKpiWidget as IKpiWidget_2 } from '@gooddata/sdk-model';
 import { IKpiWidgetDefinition as IKpiWidgetDefinition_2 } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
+import { IMeasureMetadataObject as IMeasureMetadataObject_2 } from '@gooddata/sdk-model';
+import { IMeasureMetadataObjectDefinition as IMeasureMetadataObjectDefinition_2 } from '@gooddata/sdk-model';
+import { IMetadataObject as IMetadataObject_2 } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { IRelativeDateFilterPreset as IRelativeDateFilterPreset_2 } from '@gooddata/sdk-model';
@@ -103,14 +116,14 @@ export type AuthenticationFlow = {
 // @alpha @deprecated
 export const BuiltInWidgetTypes: string[];
 
-// @public
-export type CatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact | ICatalogDateDataset;
+// @public @deprecated
+export type CatalogItem = m.CatalogItem;
 
-// @public
-export const catalogItemMetadataObject: (catalogItem: CatalogItem) => MetadataObject;
+// @public @deprecated
+export const catalogItemMetadataObject: (catalogItem: m.CatalogItem) => m.MetadataObject;
 
-// @public
-export type CatalogItemType = "attribute" | "measure" | "fact" | "dateDataset";
+// @public @deprecated
+export type CatalogItemType = m.CatalogItemType;
 
 // @public
 export type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
@@ -118,11 +131,11 @@ export type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
 // @public @deprecated
 export const dashboardFilterReferenceObjRef: typeof m.dashboardFilterReferenceObjRef;
 
-// @public
-export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
+// @public @deprecated
+export type DataColumnType = m.DataColumnType;
 
-// @public
-export type DatasetLoadStatus = "RUNNING" | "OK" | "ERROR" | "CANCELLED" | "ERROR_METADATA" | "REFRESHING";
+// @public @deprecated
+export type DatasetLoadStatus = m.DatasetLoadStatus;
 
 // @public
 export class DataTooLargeError extends AnalyticalBackendError {
@@ -170,8 +183,8 @@ export type FilterContextItem = m.FilterContextItem;
 // @public
 export type FilterWithResolvableElements = IAttributeFilter | IRelativeDateFilter;
 
-// @public
-export type GroupableCatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact;
+// @public @deprecated
+export type GroupableCatalogItem = m.GroupableCatalogItem;
 
 // @alpha @deprecated
 export interface IAbsoluteDateFilterForm extends m.IAbsoluteDateFilterForm {
@@ -262,19 +275,12 @@ export interface IAttributeDescriptorBody {
     uri: string;
 }
 
-// @public
-export interface IAttributeDisplayFormMetadataObject extends IMetadataObject {
-    attribute: ObjRef;
-    displayFormType?: string;
-    isDefault?: boolean;
-    // (undocumented)
-    type: "displayForm";
+// @public @deprecated
+export interface IAttributeDisplayFormMetadataObject extends m.IAttributeDisplayFormMetadataObject {
 }
 
-// @public
-export interface IAttributeElement {
-    readonly title: string;
-    readonly uri: string;
+// @public @deprecated
+export interface IAttributeElement extends m.IAttributeElement {
 }
 
 // @public
@@ -292,13 +298,8 @@ export interface IAttributeHeaderFormOf {
     uri: string;
 }
 
-// @public
-export interface IAttributeMetadataObject extends IMetadataObject {
-    displayForms: IAttributeDisplayFormMetadataObject[];
-    drillDownStep?: ObjRef;
-    drillToAttributeLink?: ObjRef;
-    // (undocumented)
-    type: "attribute";
+// @public @deprecated
+export interface IAttributeMetadataObject extends m.IAttributeMetadataObject {
 }
 
 // @public
@@ -363,52 +364,32 @@ export interface IBracketExpressionToken {
     value: string;
 }
 
-// @public
-export interface ICatalogAttribute extends IGroupableCatalogItemBase {
-    attribute: IAttributeMetadataObject;
-    defaultDisplayForm: IAttributeDisplayFormMetadataObject;
-    displayForms: IAttributeDisplayFormMetadataObject[];
-    geoPinDisplayForms: IAttributeDisplayFormMetadataObject[];
-    type: "attribute";
+// @public @deprecated
+export interface ICatalogAttribute extends m.ICatalogAttribute {
 }
 
-// @public
-export interface ICatalogDateAttribute {
-    attribute: IAttributeMetadataObject;
-    defaultDisplayForm: IAttributeDisplayFormMetadataObject;
-    granularity: DateAttributeGranularity;
+// @public @deprecated
+export interface ICatalogDateAttribute extends m.ICatalogDateAttribute {
 }
 
-// @public
-export interface ICatalogDateDataset extends ICatalogItemBase {
-    dataSet: IDataSetMetadataObject;
-    dateAttributes: ICatalogDateAttribute[];
-    relevance: number;
-    type: "dateDataset";
+// @public @deprecated
+export interface ICatalogDateDataset extends m.ICatalogDateDataset {
 }
 
-// @public
-export interface ICatalogFact extends IGroupableCatalogItemBase {
-    fact: IFactMetadataObject;
-    type: "fact";
+// @public @deprecated
+export interface ICatalogFact extends m.ICatalogFact {
 }
 
-// @public
-export interface ICatalogGroup {
-    tag: ObjRef;
-    title: string;
+// @public @deprecated
+export interface ICatalogGroup extends m.ICatalogGroup {
 }
 
-// @public
-export interface ICatalogItemBase {
-    // (undocumented)
-    type: CatalogItemType;
+// @public @deprecated
+export interface ICatalogItemBase extends m.ICatalogItemBase {
 }
 
-// @public
-export interface ICatalogMeasure extends IGroupableCatalogItemBase {
-    measure: IMeasureMetadataObject;
-    type: "measure";
+// @public @deprecated
+export interface ICatalogMeasure extends m.ICatalogMeasure {
 }
 
 // @public
@@ -532,10 +513,8 @@ export interface IDashboardLayoutSizeByScreenSize {
     xs?: IDashboardLayoutSize;
 }
 
-// @public
-export interface IDashboardMetadataObject extends IMetadataObject {
-    // (undocumented)
-    type: "analyticalDashboard";
+// @public @deprecated
+export interface IDashboardMetadataObject extends m.IDashboardMetadataObject {
 }
 
 // @alpha @deprecated
@@ -585,80 +564,36 @@ export interface IDashboardWithReferences {
     references: IDashboardReferences;
 }
 
-// @public
-export interface IDataColumn {
-    // (undocumented)
-    column: IDataColumnBody;
+// @public @deprecated
+export interface IDataColumn extends m.IDataColumn {
 }
 
-// @public
-export interface IDataColumnBody {
-    // (undocumented)
-    format?: string;
-    // (undocumented)
-    name: string;
-    // (undocumented)
-    skip?: boolean;
-    // (undocumented)
-    type: DataColumnType;
+// @public @deprecated
+export interface IDataColumnBody extends m.IDataColumnBody {
 }
 
-// @public
-export interface IDataHeader {
-    // (undocumented)
-    columns: IDataColumn[];
-    // (undocumented)
-    headerRowIndex?: number;
+// @public @deprecated
+export interface IDataHeader extends m.IDataHeader {
 }
 
-// @public
-export interface IDataset {
-    // (undocumented)
-    dataset: IDatasetBody;
+// @public @deprecated
+export interface IDataset extends m.IDataset {
 }
 
-// @public
-export interface IDatasetBody {
-    // (undocumented)
-    dataHeader: IDataHeader;
-    // (undocumented)
-    datasetId: string;
-    // (undocumented)
-    datasetLoadStatus: DatasetLoadStatus;
-    // (undocumented)
-    firstSuccessfulUpdate?: IDatasetLoadInfo;
-    // (undocumented)
-    lastSuccessfulUpdate?: IDatasetLoadInfo;
-    // (undocumented)
-    lastUpdate?: IDatasetLoadInfo;
-    // (undocumented)
-    loadedRowCount: number;
-    // (undocumented)
-    name: string;
+// @public @deprecated
+export interface IDatasetBody extends m.IDatasetBody {
 }
 
-// @public
-export interface IDatasetLoadInfo {
-    // (undocumented)
-    created: string;
-    // (undocumented)
-    owner: IDatasetUser;
-    // (undocumented)
-    status: DatasetLoadStatus;
+// @public @deprecated
+export interface IDatasetLoadInfo extends m.IDatasetLoadInfo {
 }
 
-// @public
-export interface IDataSetMetadataObject extends IMetadataObject {
-    // (undocumented)
-    type: "dataSet";
+// @public @deprecated
+export interface IDataSetMetadataObject extends m.IDataSetMetadataObject {
 }
 
-// @public
-export interface IDatasetUser {
-    // (undocumented)
-    fullName: string;
-    // (undocumented)
-    login: string;
+// @public @deprecated
+export interface IDatasetUser extends m.IDatasetUser {
 }
 
 // @public
@@ -808,7 +743,7 @@ export interface IElementsQueryOptionsElementsByValue {
 }
 
 // @public
-export type IElementsQueryResult = IPagedResource<IAttributeElement>;
+export type IElementsQueryResult = IPagedResource<IAttributeElement_2>;
 
 // @public
 export interface IExecutionFactory {
@@ -853,10 +788,8 @@ export interface IExportResult {
     uri: string;
 }
 
-// @public
-export interface IFactMetadataObject extends IMetadataObject {
-    // (undocumented)
-    type: "fact";
+// @public @deprecated
+export interface IFactMetadataObject extends m.IFactMetadataObject {
 }
 
 // @alpha @deprecated
@@ -904,20 +837,19 @@ export interface IGetVisualizationClassesOptions {
     includeDeprecated?: boolean;
 }
 
-// @public
-export interface IGroupableCatalogItemBase extends ICatalogItemBase {
-    groups: ObjRef[];
+// @public @deprecated
+export interface IGroupableCatalogItemBase extends m.IGroupableCatalogItemBase {
 }
 
 // @public
 export interface IInsightReferences {
-    catalogItems?: CatalogItem[];
-    dataSetMeta?: IMetadataObject[];
+    catalogItems?: CatalogItem_2[];
+    dataSetMeta?: IMetadataObject_2[];
 }
 
 // @public
 export interface IInsightReferencing {
-    analyticalDashboards?: IMetadataObject[];
+    analyticalDashboards?: IMetadataObject_2[];
 }
 
 // @public
@@ -1034,52 +966,38 @@ export interface IMeasureGroupDescriptor {
     measureGroupHeader: IMeasureDescriptorObject;
 }
 
-// @public
-export type IMeasureMetadataObject = IMetadataObject & IMeasureMetadataObjectBase;
+// @public @deprecated
+export type IMeasureMetadataObject = m.IMeasureMetadataObject;
 
-// @internal (undocumented)
-export interface IMeasureMetadataObjectBase {
-    expression: string;
-    format: string;
-    isLocked?: boolean;
-    // (undocumented)
-    type: "measure";
+// @internal @deprecated (undocumented)
+export interface IMeasureMetadataObjectBase extends m.IMeasureMetadataObjectBase {
 }
 
-// @public
-export type IMeasureMetadataObjectDefinition = IMetadataObjectDefinition & IMeasureMetadataObjectBase;
+// @public @deprecated
+export type IMeasureMetadataObjectDefinition = m.IMeasureMetadataObjectDefinition;
 
 // @public
 export interface IMeasureReferencing {
     // (undocumented)
     insights?: IInsight[];
     // (undocumented)
-    measures?: IMetadataObject[];
+    measures?: IMetadataObject_2[];
 }
 
-// @public (undocumented)
-export interface IMetadataObject extends IMetadataObjectBase, IMetadataObjectIdentity {
+// @public @deprecated (undocumented)
+export interface IMetadataObject extends m.IMetadataObject {
 }
 
-// @internal (undocumented)
-export interface IMetadataObjectBase {
-    deprecated: boolean;
-    description: string;
-    production: boolean;
-    title: string;
-    type: ObjectType;
-    unlisted: boolean;
+// @internal @deprecated (undocumented)
+export interface IMetadataObjectBase extends m.IMetadataObjectBase {
 }
 
-// @internal (undocumented)
-export interface IMetadataObjectDefinition extends Partial<IMetadataObjectBase>, Partial<Pick<IMetadataObject, "id">> {
+// @internal @deprecated (undocumented)
+export interface IMetadataObjectDefinition extends m.IMetadataObjectDefinition {
 }
 
-// @internal (undocumented)
-export interface IMetadataObjectIdentity {
-    id: string;
-    ref: ObjRef;
-    uri: string;
+// @internal @deprecated (undocumented)
+export interface IMetadataObjectIdentity extends m.IMetadataObjectIdentity {
 }
 
 // @alpha @deprecated
@@ -1227,23 +1145,23 @@ export function isAnalyticalBackendError(obj: unknown): obj is AnalyticalBackend
 // @public
 export function isAttributeDescriptor(obj: unknown): obj is IAttributeDescriptor;
 
-// @public
-export function isAttributeDisplayFormMetadataObject(obj: unknown): obj is IAttributeDisplayFormMetadataObject;
+// @public @deprecated
+export const isAttributeDisplayFormMetadataObject: typeof m.isAttributeDisplayFormMetadataObject;
 
-// @public
-export function isAttributeMetadataObject(obj: unknown): obj is IAttributeMetadataObject;
+// @public @deprecated
+export const isAttributeMetadataObject: typeof m.isAttributeMetadataObject;
 
-// @public
-export function isCatalogAttribute(obj: unknown): obj is ICatalogAttribute;
+// @public @deprecated
+export const isCatalogAttribute: typeof m.isCatalogAttribute;
 
-// @public
-export function isCatalogDateDataset(obj: unknown): obj is ICatalogDateDataset;
+// @public @deprecated
+export const isCatalogDateDataset: typeof m.isCatalogDateDataset;
 
-// @public
-export function isCatalogFact(obj: unknown): obj is ICatalogFact;
+// @public @deprecated
+export const isCatalogFact: typeof m.isCatalogFact;
 
-// @public
-export function isCatalogMeasure(obj: unknown): obj is ICatalogMeasure;
+// @public @deprecated
+export const isCatalogMeasure: typeof m.isCatalogMeasure;
 
 // @alpha
 export interface IScheduledMail extends IAuditableUsers, IScheduledMailBase, IDashboardObjectIdentity_2 {
@@ -1306,14 +1224,14 @@ export function isDashboardLayoutItem<TWidget>(obj: unknown): obj is IDashboardL
 // @public
 export function isDashboardLayoutSection<TWidget>(obj: unknown): obj is IDashboardLayoutSection<TWidget>;
 
-// @public
-export function isDashboardMetadataObject(obj: unknown): obj is IDashboardMetadataObject;
+// @public @deprecated
+export const isDashboardMetadataObject: typeof m.isDashboardMetadataObject;
 
 // @public
 export const isDashboardWidget: (obj: unknown) => obj is IDashboardWidget;
 
-// @public
-export function isDataSetMetadataObject(obj: unknown): obj is IDataSetMetadataObject;
+// @public @deprecated
+export const isDataSetMetadataObject: typeof m.isDataSetMetadataObject;
 
 // @public
 export function isDataTooLargeError(obj: unknown): obj is DataTooLargeError;
@@ -1407,8 +1325,8 @@ export interface ISettings {
     responsiveUiDateFormat?: string;
 }
 
-// @public
-export function isFactMetadataObject(obj: unknown): obj is IFactMetadataObject;
+// @public @deprecated
+export const isFactMetadataObject: typeof m.isFactMetadataObject;
 
 // @public @deprecated
 export const isFilterContext: typeof m.isFilterContext;
@@ -1443,14 +1361,14 @@ export function isMeasureDescriptor(obj: unknown): obj is IMeasureDescriptor;
 // @public
 export function isMeasureGroupDescriptor(obj: unknown): obj is IMeasureGroupDescriptor;
 
-// @public
-export function isMeasureMetadataObject(obj: unknown): obj is IMeasureMetadataObject;
+// @public @deprecated
+export const isMeasureMetadataObject: typeof m.isMeasureMetadataObject;
 
-// @public
-export function isMeasureMetadataObjectDefinition(obj: unknown): obj is IMeasureMetadataObjectDefinition;
+// @public @deprecated
+export const isMeasureMetadataObjectDefinition: typeof m.isMeasureMetadataObjectDefinition;
 
-// @public
-export function isMetadataObject(obj: unknown): obj is IMetadataObject;
+// @public @deprecated
+export const isMetadataObject: typeof m.isMetadataObject;
 
 // @public
 export function isNoDataError(obj: unknown): obj is NoDataError;
@@ -1509,8 +1427,8 @@ export const isUserGroupAccessGrantee: (obj: unknown) => obj is IUserGroupAccess
 // @public
 export function isValueBasedElementsQueryOptionsElements(obj: unknown): obj is IElementsQueryOptionsElementsByValue | IElementsQueryOptionsElementsByPrimaryDisplayFormValue;
 
-// @public
-export function isVariableMetadataObject(obj: unknown): obj is IVariableMetadataObject;
+// @public @deprecated
+export const isVariableMetadataObject: typeof m.isVariableMetadataObject;
 
 // @public
 export function isWidget(obj: unknown): obj is IWidget;
@@ -1857,10 +1775,8 @@ export interface IUserSettingsService {
 export interface IUserWorkspaceSettings extends IUserSettings, IWorkspaceSettings {
 }
 
-// @public
-export interface IVariableMetadataObject extends IMetadataObject {
-    // (undocumented)
-    type: "variable";
+// @public @deprecated
+export interface IVariableMetadataObject extends m.IVariableMetadataObject {
 }
 
 // @alpha (undocumented)
@@ -1903,7 +1819,7 @@ export interface IWidgetDescription extends m.IWidgetDescription {
 
 // @alpha
 export interface IWidgetReferences {
-    catalogItems?: CatalogItem[];
+    catalogItems?: CatalogItem_2[];
 }
 
 // @alpha
@@ -1927,12 +1843,12 @@ export interface IWorkspaceAccessControlService {
 // @public
 export interface IWorkspaceAttributesService {
     elements(): IElementsQueryFactory;
-    getAttribute(ref: ObjRef): Promise<IAttributeMetadataObject>;
-    getAttributeDatasetMeta(ref: ObjRef): Promise<IMetadataObject>;
-    getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject>;
-    getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]>;
-    getAttributes(refs: ObjRef[]): Promise<IAttributeMetadataObject[]>;
-    getCatalogAttributes(refs: ObjRef[]): Promise<ICatalogAttribute[]>;
+    getAttribute(ref: ObjRef): Promise<IAttributeMetadataObject_2>;
+    getAttributeDatasetMeta(ref: ObjRef): Promise<IMetadataObject_2>;
+    getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject_2>;
+    getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject_2[]>;
+    getAttributes(refs: ObjRef[]): Promise<IAttributeMetadataObject_2[]>;
+    getCatalogAttributes(refs: ObjRef[]): Promise<ICatalogAttribute_2[]>;
     getCommonAttributes(attributeRefs: ObjRef[]): Promise<ObjRef[]>;
     getCommonAttributesBatch(attributesRefsBatch: ObjRef[][]): Promise<ObjRef[][]>;
 }
@@ -1960,7 +1876,7 @@ export interface IWorkspaceCatalogFactory extends IWorkspaceCatalogFactoryMethod
 export interface IWorkspaceCatalogFactoryMethods<TFactory, TOptions> {
     excludeTags(tags: ObjRef[]): TFactory;
     forDataset(dataset: ObjRef): TFactory;
-    forTypes(types: CatalogItemType[]): TFactory;
+    forTypes(types: CatalogItemType_2[]): TFactory;
     includeTags(tags: ObjRef[]): TFactory;
     withOptions(options: Partial<TOptions>): TFactory;
 }
@@ -1972,26 +1888,26 @@ export interface IWorkspaceCatalogFactoryOptions {
     includeDateGranularities?: string[];
     includeTags: ObjRef[];
     production?: boolean;
-    types: CatalogItemType[];
+    types: CatalogItemType_2[];
 }
 
 // @public
 export interface IWorkspaceCatalogMethods {
-    allItems(): CatalogItem[];
-    attributes(): ICatalogAttribute[];
-    dateDatasets(): ICatalogDateDataset[];
-    facts(): ICatalogFact[];
-    groups(): ICatalogGroup[];
-    measures(): ICatalogMeasure[];
+    allItems(): CatalogItem_2[];
+    attributes(): ICatalogAttribute_2[];
+    dateDatasets(): ICatalogDateDataset_2[];
+    facts(): ICatalogFact_2[];
+    groups(): ICatalogGroup_2[];
+    measures(): ICatalogMeasure_2[];
 }
 
 // @public
 export interface IWorkspaceCatalogWithAvailableItems extends IWorkspaceCatalogMethods {
-    allAvailableItems(): CatalogItem[];
-    availableAttributes(): ICatalogAttribute[];
-    availableDateDatasets(): ICatalogDateDataset[];
-    availableFacts(): ICatalogFact[];
-    availableMeasures(): ICatalogMeasure[];
+    allAvailableItems(): CatalogItem_2[];
+    availableAttributes(): ICatalogAttribute_2[];
+    availableDateDatasets(): ICatalogDateDataset_2[];
+    availableFacts(): ICatalogFact_2[];
+    availableMeasures(): ICatalogMeasure_2[];
 }
 
 // @public
@@ -2033,8 +1949,8 @@ export interface IWorkspaceDashboardsService {
 
 // @public
 export interface IWorkspaceDatasetsService {
-    getAllDatasetsMeta(): Promise<IMetadataObject[]>;
-    getDatasets(): Promise<IDataset[]>;
+    getAllDatasetsMeta(): Promise<IMetadataObject_2[]>;
+    getDatasets(): Promise<IDataset_2[]>;
 }
 
 // @public
@@ -2052,8 +1968,8 @@ export interface IWorkspaceDescriptor {
 
 // @public
 export interface IWorkspaceFactsService {
-    getCatalogFacts(factRefs: ObjRef[]): Promise<ICatalogFact[]>;
-    getFactDatasetMeta(ref: ObjRef): Promise<IMetadataObject>;
+    getCatalogFacts(factRefs: ObjRef[]): Promise<ICatalogFact_2[]>;
+    getFactDatasetMeta(ref: ObjRef): Promise<IMetadataObject_2>;
 }
 
 // @public
@@ -2072,12 +1988,12 @@ export interface IWorkspaceInsightsService {
 
 // @public
 export interface IWorkspaceMeasuresService {
-    createMeasure(measure: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject>;
+    createMeasure(measure: IMeasureMetadataObjectDefinition_2): Promise<IMeasureMetadataObject_2>;
     deleteMeasure(measureRef: ObjRef): Promise<void>;
-    getCatalogMeasures(measureRefs: ObjRef[]): Promise<ICatalogMeasure[]>;
+    getCatalogMeasures(measureRefs: ObjRef[]): Promise<ICatalogMeasure_2[]>;
     getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
     getMeasureReferencingObjects(measureRef: ObjRef): Promise<IMeasureReferencing>;
-    updateMeasure(measure: IMeasureMetadataObject): Promise<IMeasureMetadataObject>;
+    updateMeasure(measure: IMeasureMetadataObject_2): Promise<IMeasureMetadataObject_2>;
 }
 
 // @public
@@ -2191,11 +2107,11 @@ export function layoutWidgetsWithPaths<TWidget extends IDashboardWidget>(layout:
 // @alpha
 export type ListedDashboardAvailability = "full" | "viaLink";
 
-// @public
-export type MetadataObject = IAttributeMetadataObject | IAttributeDisplayFormMetadataObject | IFactMetadataObject | IMeasureMetadataObject | IDataSetMetadataObject | IVariableMetadataObject | IDashboardMetadataObject;
+// @public @deprecated
+export type MetadataObject = m.MetadataObject;
 
-// @public
-export const metadataObjectId: (metadataObject: MetadataObject) => string;
+// @public @deprecated
+export const metadataObjectId: (metadataObject: m.MetadataObject) => string;
 
 // @public @deprecated
 export const newAbsoluteDashboardDateFilter: typeof m.newAbsoluteDashboardDateFilter;

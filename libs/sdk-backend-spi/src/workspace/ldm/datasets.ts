@@ -1,7 +1,5 @@
-// (C) 2019-2020 GoodData Corporation
-
-import { IDataset } from "../fromModel/ldm/datasets";
-import { IMetadataObject } from "../fromModel/ldm/metadata";
+// (C) 2019-2022 GoodData Corporation
+import { IDataset, IMetadataObject } from "@gooddata/sdk-model";
 
 /**
  * Service for querying workspace datasets

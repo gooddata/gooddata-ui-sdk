@@ -1,7 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import { ObjRef } from "@gooddata/sdk-model";
-import { ICatalogFact } from "../fromModel/ldm/catalog";
-import { IMetadataObject } from "../fromModel/ldm/metadata";
+import { ObjRef, IMetadataObject, ICatalogFact } from "@gooddata/sdk-model";
 
 /**
  * Service for querying additional facts data.

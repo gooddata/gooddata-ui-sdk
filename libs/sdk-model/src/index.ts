@@ -524,3 +524,66 @@ export {
     IInsightWidgetDefinition,
     IInsightWidgetConfiguration,
 } from "./dashboard/analyticalWidgets";
+
+export {
+    CatalogItemType,
+    CatalogItem,
+    ICatalogGroup,
+    ICatalogAttribute,
+    ICatalogFact,
+    ICatalogMeasure,
+    ICatalogDateDataset,
+    ICatalogDateAttribute,
+    isCatalogAttribute,
+    isCatalogFact,
+    isCatalogMeasure,
+    isCatalogDateDataset,
+    ICatalogItemBase,
+    IGroupableCatalogItemBase,
+    GroupableCatalogItem,
+    catalogItemMetadataObject,
+} from "./ldm/catalog";
+
+export {
+    IAttributeDisplayFormMetadataObject,
+    isAttributeDisplayFormMetadataObject,
+    IAttributeMetadataObject,
+    isAttributeMetadataObject,
+    IDataSetMetadataObject,
+    isDataSetMetadataObject,
+    IVariableMetadataObject,
+    isVariableMetadataObject,
+    IFactMetadataObject,
+    isFactMetadataObject,
+    IMetadataObjectDefinition,
+    IMeasureMetadataObject,
+    IMeasureMetadataObjectBase,
+    isMeasureMetadataObject,
+    IMeasureMetadataObjectDefinition,
+    isMeasureMetadataObjectDefinition,
+    IMetadataObject,
+    IMetadataObjectBase,
+    IMetadataObjectIdentity,
+    isMetadataObject,
+    MetadataObject,
+    metadataObjectId,
+    IDashboardMetadataObject,
+    isDashboardMetadataObject,
+    attributeDisplayFormMetadataObjectAttributeRef,
+    attributeDisplayFormMetadataObjectRef,
+    attributeDisplayFormMetadataObjectTitle,
+} from "./ldm/metadata";
+
+export {
+    DataColumnType,
+    DatasetLoadStatus,
+    IDataColumnBody,
+    IDataColumn,
+    IDataHeader,
+    IDatasetLoadInfo,
+    IDatasetUser,
+    IDataset,
+    IDatasetBody,
+} from "./ldm/datasets";
+
+export { IAttributeElement } from "./ldm/attributeElement";

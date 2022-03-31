@@ -5,7 +5,7 @@ import update from "lodash/fp/update";
 
 import { getDrillToCustomUrlPaths } from "../../toBackend/AnalyticalDashboardConverter";
 import isEmpty from "lodash/isEmpty";
-import { joinDrillUrlParts } from "@gooddata/sdk-backend-spi/dist/workspace/dashboards/drillUrls";
+import { joinDrillUrlParts } from "@gooddata/sdk-backend-spi/dist/deprecated/dashboard/drillUrls";
 
 function convertTargetUrlPartsToString(drill: IDrillToCustomUrl) {
     return update(["target", "url"], joinDrillUrlParts, drill);

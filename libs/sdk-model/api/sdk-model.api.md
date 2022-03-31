@@ -80,6 +80,15 @@ export class AttributeBuilder {
 export type AttributeBuilderInput = Identifier | ObjRef | IAttribute;
 
 // @public
+export function attributeDisplayFormMetadataObjectAttributeRef(displayForm: IAttributeDisplayFormMetadataObject): ObjRef;
+
+// @public
+export function attributeDisplayFormMetadataObjectRef(displayForm: IAttributeDisplayFormMetadataObject): ObjRef;
+
+// @public
+export function attributeDisplayFormMetadataObjectTitle(displayForm: IAttributeDisplayFormMetadataObject): string;
+
+// @public
 export function attributeDisplayFormRef(attribute: IAttribute): ObjRef;
 
 // @internal
@@ -204,6 +213,15 @@ export function bucketTotals(bucket: IBucket): ITotal[];
 export const BuiltInWidgetTypes: string[];
 
 // @public
+export type CatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact | ICatalogDateDataset;
+
+// @public
+export const catalogItemMetadataObject: (catalogItem: CatalogItem) => MetadataObject;
+
+// @public
+export type CatalogItemType = "attribute" | "measure" | "fact" | "dateDataset";
+
+// @public
 export function colorPaletteItemToRgb(item: IColorPaletteItem): string;
 
 // @public
@@ -224,6 +242,12 @@ export enum ComputeRatioRule {
 
 // @alpha
 export function dashboardFilterReferenceObjRef(ref: IDashboardFilterReference): ObjRef;
+
+// @public
+export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
+
+// @public
+export type DatasetLoadStatus = "RUNNING" | "OK" | "ERROR" | "CANCELLED" | "ERROR_METADATA" | "REFRESHING";
 
 // @public
 export type DateAttributeGranularity = "GDC.time.year" | "GDC.time.week_us" | "GDC.time.week_in_year" | "GDC.time.week_in_quarter" | "GDC.time.week" | "GDC.time.euweek_in_year" | "GDC.time.euweek_in_quarter" | "GDC.time.quarter" | "GDC.time.quarter_in_year" | "GDC.time.month" | "GDC.time.month_in_quarter" | "GDC.time.month_in_year" | "GDC.time.day_in_year" | "GDC.time.day_in_quarter" | "GDC.time.day_in_month" | "GDC.time.day_in_week" | "GDC.time.day_in_euweek" | "GDC.time.date" | "GDC.time.hour" | "GDC.time.hour_in_day" | "GDC.time.minute" | "GDC.time.minute_in_hour";
@@ -344,6 +368,9 @@ export function filterObjRef(filter: IAbsoluteDateFilter | IRelativeDateFilter |
 // @public
 export function filterObjRef(filter: IFilter): ObjRef | undefined;
 
+// @public
+export type GroupableCatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact;
+
 // @public (undocumented)
 export type GuidType = "guid";
 
@@ -411,6 +438,21 @@ export interface IAttributeBody {
 }
 
 // @public
+export interface IAttributeDisplayFormMetadataObject extends IMetadataObject {
+    attribute: ObjRef;
+    displayFormType?: string;
+    isDefault?: boolean;
+    // (undocumented)
+    type: "displayForm";
+}
+
+// @public
+export interface IAttributeElement {
+    readonly title: string;
+    readonly uri: string;
+}
+
+// @public
 export type IAttributeElements = IAttributeElementsByRef | IAttributeElementsByValue;
 
 // @public
@@ -438,6 +480,15 @@ export interface IAttributeLocatorItem {
 export interface IAttributeLocatorItemBody {
     attributeIdentifier: Identifier;
     element: string;
+}
+
+// @public
+export interface IAttributeMetadataObject extends IMetadataObject {
+    displayForms: IAttributeDisplayFormMetadataObject[];
+    drillDownStep?: ObjRef;
+    drillToAttributeLink?: ObjRef;
+    // (undocumented)
+    type: "attribute";
 }
 
 // @public
@@ -487,6 +538,54 @@ export interface IBucket {
     localIdentifier?: Identifier;
     // (undocumented)
     totals?: ITotal[];
+}
+
+// @public
+export interface ICatalogAttribute extends IGroupableCatalogItemBase {
+    attribute: IAttributeMetadataObject;
+    defaultDisplayForm: IAttributeDisplayFormMetadataObject;
+    displayForms: IAttributeDisplayFormMetadataObject[];
+    geoPinDisplayForms: IAttributeDisplayFormMetadataObject[];
+    type: "attribute";
+}
+
+// @public
+export interface ICatalogDateAttribute {
+    attribute: IAttributeMetadataObject;
+    defaultDisplayForm: IAttributeDisplayFormMetadataObject;
+    granularity: DateAttributeGranularity;
+}
+
+// @public
+export interface ICatalogDateDataset extends ICatalogItemBase {
+    dataSet: IDataSetMetadataObject;
+    dateAttributes: ICatalogDateAttribute[];
+    relevance: number;
+    type: "dateDataset";
+}
+
+// @public
+export interface ICatalogFact extends IGroupableCatalogItemBase {
+    fact: IFactMetadataObject;
+    type: "fact";
+}
+
+// @public
+export interface ICatalogGroup {
+    tag: ObjRef;
+    title: string;
+}
+
+// @public
+export interface ICatalogItemBase {
+    // (undocumented)
+    type: CatalogItemType;
+}
+
+// @public
+export interface ICatalogMeasure extends IGroupableCatalogItemBase {
+    measure: IMeasureMetadataObject;
+    type: "measure";
 }
 
 // @public
@@ -587,10 +686,92 @@ export interface IDashboardDateFilterReference {
 export type IDashboardFilterReference = IDashboardDateFilterReference | IDashboardAttributeFilterReference;
 
 // @public
+export interface IDashboardMetadataObject extends IMetadataObject {
+    // (undocumented)
+    type: "analyticalDashboard";
+}
+
+// @public
 export interface IDashboardObjectIdentity {
     readonly identifier: string;
     readonly ref: ObjRef;
     readonly uri: string;
+}
+
+// @public
+export interface IDataColumn {
+    // (undocumented)
+    column: IDataColumnBody;
+}
+
+// @public
+export interface IDataColumnBody {
+    // (undocumented)
+    format?: string;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    skip?: boolean;
+    // (undocumented)
+    type: DataColumnType;
+}
+
+// @public
+export interface IDataHeader {
+    // (undocumented)
+    columns: IDataColumn[];
+    // (undocumented)
+    headerRowIndex?: number;
+}
+
+// @public
+export interface IDataset {
+    // (undocumented)
+    dataset: IDatasetBody;
+}
+
+// @public
+export interface IDatasetBody {
+    // (undocumented)
+    dataHeader: IDataHeader;
+    // (undocumented)
+    datasetId: string;
+    // (undocumented)
+    datasetLoadStatus: DatasetLoadStatus;
+    // (undocumented)
+    firstSuccessfulUpdate?: IDatasetLoadInfo;
+    // (undocumented)
+    lastSuccessfulUpdate?: IDatasetLoadInfo;
+    // (undocumented)
+    lastUpdate?: IDatasetLoadInfo;
+    // (undocumented)
+    loadedRowCount: number;
+    // (undocumented)
+    name: string;
+}
+
+// @public
+export interface IDatasetLoadInfo {
+    // (undocumented)
+    created: string;
+    // (undocumented)
+    owner: IDatasetUser;
+    // (undocumented)
+    status: DatasetLoadStatus;
+}
+
+// @public
+export interface IDataSetMetadataObject extends IMetadataObject {
+    // (undocumented)
+    type: "dataSet";
+}
+
+// @public
+export interface IDatasetUser {
+    // (undocumented)
+    fullName: string;
+    // (undocumented)
+    login: string;
 }
 
 // @public
@@ -740,6 +921,12 @@ export interface IExecutionDefinition {
 }
 
 // @public
+export interface IFactMetadataObject extends IMetadataObject {
+    // (undocumented)
+    type: "fact";
+}
+
+// @public
 export type IFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter | IMeasureValueFilter | IRankingFilter;
 
 // @alpha
@@ -761,6 +948,11 @@ export interface IFilterContextBase {
 
 // @alpha
 export interface IFilterContextDefinition extends IFilterContextBase, Partial<IDashboardObjectIdentity> {
+}
+
+// @public
+export interface IGroupableCatalogItemBase extends ICatalogItemBase {
+    groups: ObjRef[];
 }
 
 // @public
@@ -926,6 +1118,21 @@ export interface IMeasureLocatorItemBody {
 }
 
 // @public
+export type IMeasureMetadataObject = IMetadataObject & IMeasureMetadataObjectBase;
+
+// @public (undocumented)
+export interface IMeasureMetadataObjectBase {
+    expression: string;
+    format: string;
+    isLocked?: boolean;
+    // (undocumented)
+    type: "measure";
+}
+
+// @public
+export type IMeasureMetadataObjectDefinition = IMetadataObjectDefinition & IMeasureMetadataObjectBase;
+
+// @public
 export interface IMeasureSortItem {
     // (undocumented)
     measureSortItem: IMeasureSortTarget & ISortDirection;
@@ -964,6 +1171,31 @@ export interface IMeasureValueFilterBody {
     condition?: MeasureValueFilterCondition;
     // (undocumented)
     measure: ObjRefInScope;
+}
+
+// @public (undocumented)
+export interface IMetadataObject extends IMetadataObjectBase, IMetadataObjectIdentity {
+}
+
+// @public (undocumented)
+export interface IMetadataObjectBase {
+    deprecated: boolean;
+    description: string;
+    production: boolean;
+    title: string;
+    type: ObjectType;
+    unlisted: boolean;
+}
+
+// @public (undocumented)
+export interface IMetadataObjectDefinition extends Partial<IMetadataObjectBase>, Partial<Pick<IMetadataObject, "id">> {
+}
+
+// @public (undocumented)
+export interface IMetadataObjectIdentity {
+    id: string;
+    ref: ObjRef;
+    uri: string;
 }
 
 // @public
@@ -1320,6 +1552,9 @@ export function isAttribute(obj: unknown): obj is IAttribute;
 export function isAttributeAreaSort(obj: unknown): obj is IAttributeSortItem;
 
 // @public
+export function isAttributeDisplayFormMetadataObject(obj: unknown): obj is IAttributeDisplayFormMetadataObject;
+
+// @public
 export function isAttributeElementsByRef(obj: unknown): obj is IAttributeElementsByRef;
 
 // @public
@@ -1332,6 +1567,9 @@ export function isAttributeFilter(obj: unknown): obj is IAttributeFilter;
 export function isAttributeLocator(obj: unknown): obj is IAttributeLocatorItem;
 
 // @public
+export function isAttributeMetadataObject(obj: unknown): obj is IAttributeMetadataObject;
+
+// @public
 export function isAttributeSort(obj: unknown): obj is IAttributeSortItem;
 
 // @public
@@ -1339,6 +1577,18 @@ export function isAttributeValueSort(obj: unknown): obj is IAttributeSortItem;
 
 // @public
 export function isBucket(obj: unknown): obj is IBucket;
+
+// @public
+export function isCatalogAttribute(obj: unknown): obj is ICatalogAttribute;
+
+// @public
+export function isCatalogDateDataset(obj: unknown): obj is ICatalogDateDataset;
+
+// @public
+export function isCatalogFact(obj: unknown): obj is ICatalogFact;
+
+// @public
+export function isCatalogMeasure(obj: unknown): obj is ICatalogMeasure;
 
 // @public
 export function isColorFromPalette(obj: unknown): obj is IColorFromPalette;
@@ -1363,6 +1613,12 @@ export function isDashboardDateFilter(obj: unknown): obj is IDashboardDateFilter
 
 // @alpha
 export function isDashboardDateFilterReference(obj: unknown): obj is IDashboardDateFilterReference;
+
+// @public
+export function isDashboardMetadataObject(obj: unknown): obj is IDashboardMetadataObject;
+
+// @public
+export function isDataSetMetadataObject(obj: unknown): obj is IDataSetMetadataObject;
 
 // @public
 export function isDateFilter(obj: unknown): obj is IDateFilter;
@@ -1393,6 +1649,9 @@ export function isDrillToInsight(obj: unknown): obj is IDrillToInsight;
 
 // @alpha
 export function isDrillToLegacyDashboard(obj: unknown): obj is IDrillToLegacyDashboard;
+
+// @public
+export function isFactMetadataObject(obj: unknown): obj is IFactMetadataObject;
 
 // @public
 export function isFilter(obj: unknown): obj is IFilter;
@@ -1434,10 +1693,19 @@ export function isMeasureFormatInPercent(measureOrFormat: IMeasure | string): bo
 export function isMeasureLocator(obj: unknown): obj is IMeasureLocatorItem;
 
 // @public
+export function isMeasureMetadataObject(obj: unknown): obj is IMeasureMetadataObject;
+
+// @public
+export function isMeasureMetadataObjectDefinition(obj: unknown): obj is IMeasureMetadataObjectDefinition;
+
+// @public
 export function isMeasureSort(obj: unknown): obj is IMeasureSortItem;
 
 // @public
 export function isMeasureValueFilter(obj: unknown): obj is IMeasureValueFilter;
+
+// @public
+export function isMetadataObject(obj: unknown): obj is IMetadataObject;
 
 // @public
 export function isNegativeAttributeFilter(obj: unknown): obj is INegativeAttributeFilter;
@@ -1501,6 +1769,9 @@ export function isTotal(obj: unknown): obj is ITotal;
 // @public
 export function isUriRef(obj: unknown): obj is UriRef;
 
+// @public
+export function isVariableMetadataObject(obj: unknown): obj is IVariableMetadataObject;
+
 // @alpha
 export function isWidgetAlert(obj: unknown): obj is IWidgetAlert;
 
@@ -1539,6 +1810,12 @@ export interface IUser {
     login: string;
     organizationName?: string;
     ref: ObjRef;
+}
+
+// @public
+export interface IVariableMetadataObject extends IMetadataObject {
+    // (undocumented)
+    type: "variable";
 }
 
 // @public
@@ -1740,6 +2017,12 @@ export function measureValueFilterOperator(filter: IMeasureValueFilter): Compari
 
 // @internal
 export function mergeFilters(originalFilters: IFilter[], addedFilters: INullableFilter[] | undefined): IFilter[];
+
+// @public
+export type MetadataObject = IAttributeMetadataObject | IAttributeDisplayFormMetadataObject | IFactMetadataObject | IMeasureMetadataObject | IDataSetMetadataObject | IVariableMetadataObject | IDashboardMetadataObject;
+
+// @public
+export const metadataObjectId: (metadataObject: MetadataObject) => string;
 
 // @public
 export function modifyAttribute(attribute: IAttribute, modifications?: AttributeModifications): IAttribute;

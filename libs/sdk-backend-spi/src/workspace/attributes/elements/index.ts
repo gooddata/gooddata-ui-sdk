@@ -1,7 +1,13 @@
 // (C) 2019-2022 GoodData Corporation
-import { SortDirection, ObjRef, IAttributeFilter, IMeasure, IRelativeDateFilter } from "@gooddata/sdk-model";
+import {
+    SortDirection,
+    ObjRef,
+    IAttributeFilter,
+    IMeasure,
+    IRelativeDateFilter,
+    IAttributeElement,
+} from "@gooddata/sdk-model";
 import { IPagedResource } from "../../../common/paging";
-import { IAttributeElement } from "../../fromModel/ldm/attributeElement";
 
 /**
  * Specification of particular elements to load in {@link IElementsQueryOptions} using their values.

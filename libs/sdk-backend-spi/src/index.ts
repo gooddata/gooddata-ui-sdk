@@ -91,19 +91,6 @@ export {
 } from "./workspace/insights";
 
 export {
-    IWorkspaceCatalogFactory,
-    IWorkspaceCatalogAvailableItemsFactory,
-    IWorkspaceCatalog,
-    IWorkspaceCatalogFactoryOptions,
-    IWorkspaceCatalogWithAvailableItems,
-    IWorkspaceCatalogWithAvailableItemsFactoryOptions,
-    IWorkspaceCatalogFactoryMethods,
-    IWorkspaceCatalogMethods,
-} from "./workspace/ldm/catalog";
-
-export { IWorkspaceDatasetsService } from "./workspace/ldm/datasets";
-
-export {
     IElementsQueryFactory,
     IElementsQueryResult,
     IElementsQuery,
@@ -200,7 +187,7 @@ export {
 
 export { IWorkspaceAttributesService } from "./workspace/attributes";
 
-export { IWorkspaceMeasuresService } from "./workspace/measures";
+export { IWorkspaceMeasuresService, IMeasureReferencing } from "./workspace/measures";
 
 export { IWorkspaceFactsService } from "./workspace/facts";
 
@@ -290,65 +277,17 @@ export {
 export { IDateFilterConfigsQuery, IDateFilterConfigsQueryResult } from "./workspace/dateFilterConfigs";
 
 export {
-    CatalogItemType,
-    CatalogItem,
-    ICatalogGroup,
-    ICatalogAttribute,
-    ICatalogFact,
-    ICatalogMeasure,
-    ICatalogDateDataset,
-    ICatalogDateAttribute,
-    isCatalogAttribute,
-    isCatalogFact,
-    isCatalogMeasure,
-    isCatalogDateDataset,
-    ICatalogItemBase,
-    IGroupableCatalogItemBase,
-    GroupableCatalogItem,
-    catalogItemMetadataObject,
-} from "./workspace/fromModel/ldm/catalog";
+    IWorkspaceCatalogFactory,
+    IWorkspaceCatalogAvailableItemsFactory,
+    IWorkspaceCatalog,
+    IWorkspaceCatalogFactoryOptions,
+    IWorkspaceCatalogWithAvailableItems,
+    IWorkspaceCatalogWithAvailableItemsFactoryOptions,
+    IWorkspaceCatalogFactoryMethods,
+    IWorkspaceCatalogMethods,
+} from "./workspace/ldm/catalog";
 
-export {
-    IAttributeDisplayFormMetadataObject,
-    isAttributeDisplayFormMetadataObject,
-    IAttributeMetadataObject,
-    isAttributeMetadataObject,
-    IDataSetMetadataObject,
-    isDataSetMetadataObject,
-    IVariableMetadataObject,
-    isVariableMetadataObject,
-    IFactMetadataObject,
-    isFactMetadataObject,
-    IMetadataObjectDefinition,
-    IMeasureMetadataObject,
-    IMeasureMetadataObjectBase,
-    isMeasureMetadataObject,
-    IMeasureMetadataObjectDefinition,
-    isMeasureMetadataObjectDefinition,
-    IMetadataObject,
-    IMetadataObjectBase,
-    IMetadataObjectIdentity,
-    isMetadataObject,
-    MetadataObject,
-    metadataObjectId,
-    IDashboardMetadataObject,
-    isDashboardMetadataObject,
-    IMeasureReferencing,
-} from "./workspace/fromModel/ldm/metadata";
-
-export {
-    DataColumnType,
-    DatasetLoadStatus,
-    IDataColumnBody,
-    IDataColumn,
-    IDataHeader,
-    IDatasetLoadInfo,
-    IDatasetUser,
-    IDataset,
-    IDatasetBody,
-} from "./workspace/fromModel/ldm/datasets";
-
-export { IAttributeElement } from "./workspace/fromModel/ldm/attributeElement";
+export { IWorkspaceDatasetsService } from "./workspace/ldm/datasets";
 
 export {
     IMeasureExpressionToken,
@@ -357,7 +296,7 @@ export {
     ITextExpressionToken,
     ICommentExpressionToken,
     IBracketExpressionToken,
-} from "./workspace/fromModel/ldm/measure";
+} from "./workspace/measures/measure";
 
 export { IOrganization, IOrganizations, IOrganizationDescriptor } from "./organization";
 export { ISecuritySettingsService, ValidationContext } from "./organization/securitySettings";
@@ -507,3 +446,63 @@ export {
     IInsightWidgetDefinition,
     IInsightWidgetConfiguration,
 } from "./deprecated/dashboard/analyticalWidgets";
+
+export {
+    CatalogItemType,
+    CatalogItem,
+    ICatalogGroup,
+    ICatalogAttribute,
+    ICatalogFact,
+    ICatalogMeasure,
+    ICatalogDateDataset,
+    ICatalogDateAttribute,
+    isCatalogAttribute,
+    isCatalogFact,
+    isCatalogMeasure,
+    isCatalogDateDataset,
+    ICatalogItemBase,
+    IGroupableCatalogItemBase,
+    GroupableCatalogItem,
+    catalogItemMetadataObject,
+} from "./deprecated/ldm/catalog";
+
+export {
+    IAttributeDisplayFormMetadataObject,
+    isAttributeDisplayFormMetadataObject,
+    IAttributeMetadataObject,
+    isAttributeMetadataObject,
+    IDataSetMetadataObject,
+    isDataSetMetadataObject,
+    IVariableMetadataObject,
+    isVariableMetadataObject,
+    IFactMetadataObject,
+    isFactMetadataObject,
+    IMetadataObjectDefinition,
+    IMeasureMetadataObject,
+    IMeasureMetadataObjectBase,
+    isMeasureMetadataObject,
+    IMeasureMetadataObjectDefinition,
+    isMeasureMetadataObjectDefinition,
+    IMetadataObject,
+    IMetadataObjectBase,
+    IMetadataObjectIdentity,
+    isMetadataObject,
+    MetadataObject,
+    metadataObjectId,
+    IDashboardMetadataObject,
+    isDashboardMetadataObject,
+} from "./deprecated/ldm/metadata";
+
+export {
+    DataColumnType,
+    DatasetLoadStatus,
+    IDataColumnBody,
+    IDataColumn,
+    IDataHeader,
+    IDatasetLoadInfo,
+    IDatasetUser,
+    IDataset,
+    IDatasetBody,
+} from "./deprecated/ldm/datasets";
+
+export { IAttributeElement } from "./deprecated/ldm/attributeElement";
