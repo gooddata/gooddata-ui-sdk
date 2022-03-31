@@ -49,13 +49,13 @@ export interface InitializeDashboard extends IDashboardCommand {
  *
  * In both cases the essential configuration, permissions and additional metadata gets loaded from the backend.
  *
- * @param config - optionally specify configuration to use for for the Dashboard; you MAY provide partial configuration.
+ * @param config - specify configuration to use for for the Dashboard; you MAY provide partial configuration.
  *  During the LoadDashboard processing the Dashboard component will resolve all the missing parts by reading them
  *  from the backend.
- * @param permissions - optionally specify permissions to use when determining whether the user is eligible for some
+ * @param permissions - specify permissions to use when determining whether the user is eligible for some
  *  actions with the dashboard; if you do not specify permissions Dashboard component will load the permissions
  *  from the backend.
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @public
@@ -92,7 +92,7 @@ export interface SaveDashboard extends IDashboardCommand {
  *
  * The command will not have any effect if dashboard is not initialized or is empty.
  *
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -151,11 +151,11 @@ export interface SaveDashboardAs extends IDashboardCommand {
  * that processed the command is unchanged - it still works with the original dashboard.
  *
  * @param title - new title for the dashboard; if not specified, the title of original dashboard will be used
- * @param switchToCopy - optionally indicate whether the dashboard component should switch to the dashboard that will
+ * @param switchToCopy - indicate whether the dashboard component should switch to the dashboard that will
  *  be created during save-as; the default is false
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
- *  @param useOriginalFilterContext - optionally indicate whether new dashboard should use original filter context
+ *  @param useOriginalFilterContext - indicate whether new dashboard should use original filter context
  *  or the one with current filter selection.
  * @public
  */
@@ -204,7 +204,7 @@ export interface RenameDashboard extends IDashboardCommand {
  * will be done only in-memory and have to be flushed to backend using the SaveDashboard command.
  *
  * @param newTitle - new dashboard title
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  * @alpha
  */
@@ -246,7 +246,7 @@ export interface ChangeSharing extends IDashboardCommand {
  * will be done in-memory and also propagated to the backend.
  *
  * @param newSharingProperties - new dashboard sharing properties
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  * @alpha
  */
@@ -284,7 +284,7 @@ export interface ResetDashboard extends IDashboardCommand {
  * Limitation: reset command will have no impact on alerts or scheduled emails. These entites are persisted outside
  * of the dashboard and have their own lifecycle.
  *
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -312,7 +312,7 @@ export interface DeleteDashboard extends IDashboardCommand {
  * rendered dashboard from analytical backend and reverting the dashboard component to an 'empty' state where
  * it is initialized to create a new dashboard.
  *
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -340,7 +340,7 @@ export interface ExportDashboardToPdf extends IDashboardCommand {
  * the dashboard to a PDF file. If successful, an instance of {@link DashboardExportToPdfResolved} will be emitted
  * with the URL of the resulting file.
  *
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha

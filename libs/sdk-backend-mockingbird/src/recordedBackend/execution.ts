@@ -409,8 +409,8 @@ function normalizedDataView(
  * @remarks see {@link dataViewWindow}
  *
  * @param recording - recording (as obtained from the index, typically using the Scenario mapping)
- * @param dataViewId - optionally identifier of the data view; defaults to view with all data
- * @param resultRefType - optionally specify what types of refs should the backend create in the result's dimension descriptors (uri refs returned by bear, id refs returned by tiger)
+ * @param dataViewId - Identifier of the data view; defaults to view with all data
+ * @param resultRefType - Specify what types of refs should the backend create in the result's dimension descriptors (uri refs returned by bear, id refs returned by tiger)
  * @internal
  */
 export function recordedDataView(

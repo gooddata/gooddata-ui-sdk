@@ -30,7 +30,7 @@ export const WorkspaceProvider: React.FC<IWorkspaceProviderProps> = ({ children,
  * Hook to get workspace instance provided to {@link WorkspaceProvider}.
  *
  * @remarks
- * You can optionally set a workspace override that will be returned if defined.
+ * You can set a workspace override that will be returned if defined.
  * This makes the usage more ergonomic (see the following example).
  *
  * Note: For a better TypeScript experience without the hassle of undefined values, you can use the {@link useWorkspaceStrict} hook.
@@ -56,7 +56,7 @@ export const useWorkspace = (workspace?: string): string | undefined => {
  * Hook to get workspace instance provided to {@link WorkspaceProvider}.
  *
  * @remarks
- * You can optionally set a workspace override that will be returned if defined.
+ * You can set a workspace override that will be returned if defined.
  * This makes the usage more ergonomic (see the following example).
  *
  * Note: Note: If you do not provide a workspace identifier to {@link WorkspaceProvider} or as a parameter for this hook,
@@ -72,7 +72,7 @@ export const useWorkspace = (workspace?: string): string | undefined => {
  * ```
  *
  * @param workspace - workspace to use instead of context value. If undefined, the context value is used.
- * @param context - optionally provide context to improve error message in raised invariant (e.g. parent hook name).
+ * @param context - provide context to improve error message in raised invariant (e.g. parent hook name).
  * @public
  */
 export const useWorkspaceStrict = (workspace?: string, context = "useWorkspaceStrict"): string => {

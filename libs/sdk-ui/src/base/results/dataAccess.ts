@@ -152,7 +152,7 @@ export type DataSeriesDescriptor = DataSeriesHeaders &
     };
 
 /**
- * Data series is a sequence of data points that are all computed from a single measure, optionally scoped for
+ * Data series is a sequence of data points that are all computed from a single measure, scoped for
  * particular attribute elements.
  *
  * @remarks
@@ -195,7 +195,7 @@ export interface IDataSeries extends DataSeriesDescriptorMethods, Iterable<DataP
  * @remarks
  * The collection additionally includes basic information about the
  * origin of the data series that can be iterated - their number, measures they were calculated from and
- * optionally the scoping attributes.
+ * the scoping attributes.
  *
  * @public
  */

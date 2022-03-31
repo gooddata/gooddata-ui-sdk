@@ -29,11 +29,13 @@ export interface CreateScheduledEmail extends IDashboardCommand {
 }
 
 /**
- * Creates the CreateScheduledEmail command. Dispatching this command will result in the creating scheduled email on the backend.
+ * Creates the CreateScheduledEmail command. 
+ * 
+ * Dispatching this command will result in the creating scheduled email on the backend.
  *
  * @param scheduledEmail - specify scheduled email to create.
  * @param filterContext - specify filter context to use for the scheduled email. If no filter context is provided, stored dashboard filter context will be used.
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
 
  * @alpha

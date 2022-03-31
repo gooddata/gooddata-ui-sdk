@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 
 import React from "react";
 import invariant from "ts-invariant";
@@ -122,7 +122,7 @@ export class ScenarioGroup<T extends VisProps> implements IScenarioGroup<T> {
      *
      * @param name - name of the scenario, SHOULD NOT contain name of the visualization, just focus on well formed scenario name
      * @param props - props for the visualization that exercise the scenario
-     * @param m - optionally specify function to modify the scenario being defined, this allows specifying extra tags or types of tests to run
+     * @param m - specify function to modify the scenario being defined, this allows specifying extra tags or types of tests to run
      */
     public addScenario(
         name: string,

@@ -26,7 +26,7 @@ export interface QueryInsightDateDatasets extends IDashboardQuery {
  *
  * @param insightOrRef - insight body or a reference to an insight. if the reference is provided, then it is expected
  *  to be a reference of an insight that is already placed on a dashboard
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  * @alpha
  */
@@ -47,6 +47,7 @@ export function queryDateDatasetsForInsight(
  * The insight date datasets is a digest of information related to what date datasets are used by the insight and
  * what date datasets are also relevant to the insight.
  *
+ * @remarks
  * The relevancy of date datasets is determined by relation of the entities used by the insight (facts, metric, attributes)
  * and the data datasets in the workspace's LDM.
  *
@@ -176,7 +177,7 @@ export interface InsightAttributesMeta {
  * attributes used by an insight.
  *
  * @param insightOrRef - insight body or a reference to an insight on the dashboard
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  * @alpha
  */

@@ -112,7 +112,9 @@ export function usePlaceholders<T extends IPlaceholder<any>[]>(
 
 /**
  * React hook to obtain composed placeholder value.
- * Optionally provide custom context for the composed placeholders resolution.
+ *
+ * @remarks
+ * You can provide custom context for the composed placeholders resolution.
  * See {@link IComposedPlaceholder}.
  *
  * @public
@@ -134,7 +136,7 @@ export function useComposedPlaceholder<
  * React hook that resolves any value(s) that can possibly contain also placeholder(s) to actual value(s).
  *
  * @remarks
- * Optionally provide custom context for the composed placeholders resolution.
+ * You can provide custom context for the composed placeholders resolution.
  *
  * @public
  */
@@ -151,7 +153,7 @@ export function useResolveValueWithPlaceholders<T, C>(
  * React hook that resolves multiple value(s) that can possibly contain also placeholder(s) to actual value(s).
  *
  * @remarks
- * Optionally provide custom context for the composed placeholders resolution.
+ * You can provide custom context for the composed placeholders resolution.
  *
  * @public
  */

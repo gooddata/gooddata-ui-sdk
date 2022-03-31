@@ -22,7 +22,7 @@ import { UnexpectedSdkError } from "../errors/GoodDataSdkError";
  *     - ["success", "success"] will be resolved to "success"
  *
  * @param states - cancelable promise states (useCancelablePromise return values)
- * @param options - optionally specify options for resolving the status
+ * @param options - specify options for resolving the status
  * @returns resolved status
  * @public
  */

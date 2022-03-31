@@ -61,12 +61,12 @@ export interface AddLayoutSection extends IDashboardCommand {
  * You may optionally specify the initial values of the section header and the items that will be in the new section.
  *
  * @param index - index to place the section at; -1 can be used as convenience to append a new section
- * @param initialHeader - optionally specify specify header for the newly created section
- * @param initialItems - optionally specify one or more items that the newly created section should include from the get-go
- * @param autoResolveDateFilterDataset - optionally specify whether dashboard should auto-resolve date dataset to use for date filtering of KPI
+ * @param initialHeader - specify specify header for the newly created section
+ * @param initialItems - specify one or more items that the newly created section should include from the get-go
+ * @param autoResolveDateFilterDataset - specify whether dashboard should auto-resolve date dataset to use for date filtering of KPI
  *  and insight widgets; default is disabled meaning date filtering will be enabled only for those KPI or Insight widgets
  *  that already specify dateDataset.
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -128,7 +128,7 @@ export interface MoveLayoutSection extends IDashboardCommand {
  *
  * @param sectionIndex - index of section to move
  * @param toIndex - the new index for the section
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -186,13 +186,16 @@ export interface RemoveLayoutSection extends IDashboardCommand {
 }
 
 /**
- * Creates the RemoveLayoutSection command. Dispatching this command will result in removal of the entire dashboard
+ * Creates the RemoveLayoutSection command.
+ *
+ * @remarks
+ * Dispatching this command will result in removal of the entire dashboard
  * section. You can optionally specify that the items in the section should not be physically removed but instead be
  * stashed for later 'resurrection'.
  *
  * @param index - index of section to remove
- * @param stashIdentifier - optionally specify identifier to stash items under; if you do not specify this, then the dashboard items in the removed section will also be removed
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param stashIdentifier - specify identifier to stash items under; if you do not specify this, then the dashboard items in the removed section will also be removed
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -252,13 +255,15 @@ export interface ChangeLayoutSectionHeader extends IDashboardCommand {
 }
 
 /**
- * Creates the ChangeLayoutSectionHeader command. Dispatching this command will result in change of the section's title and/or
- * description.
+ * Creates the ChangeLayoutSectionHeader command.
+ *
+ * @remarks
+ * Dispatching this command will result in change of the section's title and/or description.
  *
  * @param index - index of section to change
  * @param header - new header
  * @param merge - indicates whether the old header and the new header should be merged; default is no merging
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -339,7 +344,10 @@ export interface AddSectionItems extends IDashboardCommand {
 }
 
 /**
- * Creates the AddSectionItems command. Dispatching this command will result in addition of a new item into the existing
+ * Creates the AddSectionItems command.
+ *
+ * @remarks
+ * Dispatching this command will result in addition of a new item into the existing
  * section. This item may be a placeholder for KPI or insight, an actual dashboard widget or a previously stashed
  * dashboard item.
  *
@@ -347,10 +355,10 @@ export interface AddSectionItems extends IDashboardCommand {
  * @param sectionIndex - index of section to which the new item should be added
  * @param itemIndex - index at which to insert the new item
  * @param item - definition of the new item.
- * @param autoResolveDateFilterDataset - optionally specify whether dashboard should auto-resolve date dataset to use for date filtering of KPI
+ * @param autoResolveDateFilterDataset - specify whether dashboard should auto-resolve date dataset to use for date filtering of KPI
  *  and insight widgets; default is disabled meaning date filtering will be enabled only for those KPI or Insight widgets
  *  that already specify dateDataset.
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -436,11 +444,11 @@ export interface ReplaceSectionItem extends IDashboardCommand {
  * @param sectionIndex - index of section where the item to replace resides
  * @param itemIndex - index of item within the section
  * @param item - new item definition
- * @param stashIdentifier - optionally specify identifier of stash where the old item should be stored
- * @param autoResolveDateFilterDataset - optionally specify whether dashboard should auto-resolve date dataset
+ * @param stashIdentifier - specify identifier of stash where the old item should be stored
+ * @param autoResolveDateFilterDataset - specify whether dashboard should auto-resolve date dataset
  *  to use for date filtering of KPI or insight widget that is replacing the existing item; default is disabled
  *  meaning date filtering will be enabled only for those KPI or Insight widgets that already specify dateDataset.
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -514,14 +522,17 @@ export interface MoveSectionItem extends IDashboardCommand {
 }
 
 /**
- * Creates the MoveSectionItem command. Dispatching this command will result in move of single item within
+ * Creates the MoveSectionItem command.
+ *
+ * @remarks
+ * Dispatching this command will result in move of single item within
  * section or from one section to another.
  *
  * @param sectionIndex - source section index
  * @param itemIndex - index of item to move
  * @param toSectionIndex - target section index; you may specify -1 to move to last section
  * @param toItemIndex - index wihtin target section where the item should be inserted; you may specify -1 to append
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -601,7 +612,10 @@ export interface RemoveSectionItem extends IDashboardCommand {
 }
 
 /**
- * Creates the RemoveSectionItem command. Dispatching this command will result in removal
+ * Creates the RemoveSectionItem command.
+ *
+ * @remarks
+ * Dispatching this command will result in removal
  * of the item from a section. If the removed item was last in the section, the section will be left on the layout
  * and will contain no items.
  *
@@ -610,7 +624,7 @@ export interface RemoveSectionItem extends IDashboardCommand {
  * @param sectionIndex - index of section from which to remove the item
  * @param itemIndex - index of item to remove
  * @param stashIdentifier - stash identifier to store the removed item under; if not specified the item will be removed
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -634,7 +648,10 @@ export function removeSectionItem(
 }
 
 /**
- * Creates the RemoveSectionItem configured to do eager remove of item. Dispatching this command will result in removal
+ * Creates the RemoveSectionItem configured to do eager remove of item.
+ *
+ * @remarks
+ * Dispatching this command will result in removal
  * of the item from a section and if the section only contains that item then the whole section will be removed as well.
  *
  * You may optionally specify the stashIdentifier in order to stash the removed item for later resurrection.
@@ -642,7 +659,7 @@ export function removeSectionItem(
  * @param sectionIndex - index of section from which to remove the item
  * @param itemIndex - index of item to remove
  * @param stashIdentifier - stash identifier to store the removed item under; if not specified the item will be removed
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -737,14 +754,17 @@ export interface UndoLayoutChanges extends IDashboardCommand {
 }
 
 /**
- * Creates the UndoLayoutChanges command. Dispatching this command will result in reverting the state of the layout
+ * Creates the UndoLayoutChanges command.
+ *
+ * @remarks
+ * Dispatching this command will result in reverting the state of the layout
  * to a point before a particular layout command processing.
  *
  * By default, the very last command will be undone, however you can provide a function of your own to determine
  * up to which command should the undo go.
  *
- * @param undoPointSelector - optionally specify function to determine up to which command to undo; if not provided the very last command will be undone
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param undoPointSelector - specify function to determine up to which command to undo; if not provided the very last command will be undone
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -766,6 +786,7 @@ export function undoLayoutChanges(
  * A convenience function to create UndoLayoutChanges command that will revert the very last command and toss it out
  * of history.
  *
+ * @remarks
  * This is useful if you are implementing complex and cancellable interactions. For instance if you are building
  * drag-and-drop interaction which upon drag start removes item from a section using the RemoveSectionItem command and
  * upon drop places item in a new location using AddSectionItems command.
@@ -774,7 +795,7 @@ export function undoLayoutChanges(
  * something to cancel the interaction: you need to restore the layout to the original state: that means to revert
  * the last layout change that was done by your interaction.
  *
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha

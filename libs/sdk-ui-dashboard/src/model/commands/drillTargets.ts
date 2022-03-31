@@ -28,7 +28,7 @@ export interface AddDrillTargets extends IDashboardCommand {
  *
  * @param ref - Unique widget ref
  * @param availableDrillTargets - Available widget drill targets {@link @gooddata/sdk-ui#IAvailableDrillTargets}
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  * @returns AddDrillTargets command
  *
  * @alpha

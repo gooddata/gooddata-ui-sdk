@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import { ObjRef } from "@gooddata/sdk-model";
 import { IDashboardObjectIdentity } from "./common";
@@ -99,8 +99,10 @@ export interface IScheduledMailDefinition extends IScheduledMailBase, Partial<ID
 export type ScheduledMailAttachment = IDashboardAttachment | IWidgetAttachment;
 
 /**
- * Email attachment - dashboard exported as pdf
- * Optionally, you can setup specific filter context to use for the dashboard export
+ * Email attachment - dashboard exported as pdf.
+ *
+ * @remarks
+ * You can setup specific filter context to use for the dashboard export
  * @alpha
  */
 export interface IDashboardAttachment {
@@ -131,8 +133,10 @@ export function isDashboardAttachment(obj: unknown): obj is IDashboardAttachment
 }
 
 /**
- * Email attachment - widget exported as csv or/and xlsx
- * Optionally, you can setup specific filter context to use for the widget export
+ * Email attachment - widget exported as csv or/and xlsx.
+ *
+ * @remarks
+ * You can setup specific filter context to use for the widget export
  * @alpha
  */
 export interface IWidgetAttachment {

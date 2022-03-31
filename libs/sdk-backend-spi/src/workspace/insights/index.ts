@@ -42,7 +42,7 @@ export interface IWorkspaceInsightsService {
     /**
      * Request all visualization classes
      *
-     * @param options - optionally specify additional options
+     * @param options - specify additional options
      * @returns promise of visualization classes
      */
     getVisualizationClasses(options?: IGetVisualizationClassesOptions): Promise<IVisualizationClass[]>;
@@ -51,13 +51,13 @@ export interface IWorkspaceInsightsService {
      * Request insight for the given reference
      *
      * @param ref - insight reference
-     * @param options - optionally specify additional options
+     * @param options - specify additional options
      * @returns promise of insight
      */
     getInsight(ref: ObjRef, options?: IGetInsightOptions): Promise<IInsight>;
 
     /**
-     * Queries workspace insights, optionally using various criteria and paging settings.
+     * Queries workspace insights, using various criteria and paging settings.
      *
      * @param options - query options; if not specified defaults to no sorting, no filtering and 50 items per page
      * @returns paged results, empty page with zero total count if there are no insights stored in the workspace

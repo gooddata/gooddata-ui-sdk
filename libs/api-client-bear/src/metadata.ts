@@ -496,8 +496,11 @@ export class MetadataModule {
      * Returns all analytical dashboards (kpi dashboards) in a project specified by the given projectId
      *
      * @param projectId - Project identifier
-     * @param fetchAllListedDashboards - Optionally specify if also all the listed
-     *  dashboards should be loaded. Note that these include not just shared dashboards and dashboards
+     * @param fetchAllListedDashboards - Specify if also all the listed
+     *  dashboards should be loaded.
+     *
+     * @remarks
+     * Note that these include not just shared dashboards and dashboards
      *  that were not shared with the user but are accessible via link, but also dashboards that cannot
      *  be accessed because there were not shared are under strict control access (only its listed record
      *  is accessible, not the whole metadata object).

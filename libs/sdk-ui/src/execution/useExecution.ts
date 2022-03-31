@@ -18,7 +18,7 @@ import { createExecution } from "./createExecution";
  */
 export interface IUseExecutionConfig {
     /**
-     * Data series will be built using the provided measures that are optionally further scoped for
+     * Data series will be built using the provided measures that are further scoped for
      * elements of the specified attributes.
      */
     seriesBy: AttributesMeasuresOrPlaceholders;

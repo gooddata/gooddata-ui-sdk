@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import {
     InsightDateDatasets,
     MeasureDateDatasets,
@@ -40,7 +40,7 @@ import { IDashboardCommand } from "../../../commands";
  * @param cmd - dashboard command it the context of which the validation is done
  * @param widget - insight that whose date filter is about to change
  * @param dateDataSet - ref of a date dataset to validate
- * @param resolvedInsight - optionally specify entire insight used by the insight widget; if provided, the query
+ * @param resolvedInsight - specify entire insight used by the insight widget; if provided, the query
  *  to obtain date datasets for the insight will use insight instead of looking up insight ref in the current dashboard state.
  *  Passing resolved insight is essential in cases when this validation is done before the insight widget
  *  is actually added onto dashboard - because in that case the insight itself is not yet part of the state and

@@ -23,10 +23,10 @@ export interface QueryWidgetFilters extends IDashboardQuery {
  * Creates action thought which you can query dashboard component for filters that should be used by a given widget.
  *
  * @param widgetRef - reference to insight widget
- * @param insight - optionally specify insight to evaluate the filters for in context of the widget.
+ * @param insight - specify insight to evaluate the filters for in context of the widget.
  *  If null, InsightWidgets will ignore the insight the are referencing.
  *  If not specified, InsightWidgets will default to the insights they reference, Custom- and KpiWidgets will ignore it.
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  * @alpha
  */
@@ -61,7 +61,7 @@ export interface QueryWidgetBrokenAlerts extends IDashboardQuery {
  *  Creates action thought which you can query dashboard component for broken alert filters.
  *
  * @param widgetRef - reference to insight kpi widget
- * @param correlationId - optionally specify correlation id to use for this command.
+ * @param correlationId - specify correlation id to use for this command.
  * @returns
  *
  * @alpha

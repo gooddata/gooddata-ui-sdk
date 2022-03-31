@@ -49,7 +49,7 @@ export function emptyDef(workspace: string): IExecutionDefinition {
 }
 
 /**
- * Prepares a new execution definition for a list of attributes and measures, optionally filtered using the
+ * Prepares a new execution definition for a list of attributes and measures, filtered using the
  * provided filters.
  *
  * @remarks

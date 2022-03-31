@@ -52,7 +52,7 @@ export interface Drill extends IDashboardCommand {
  * @alpha
  * @param drillEvent - original drill event, that triggered this particular drill interaction.
  * @param drillContext - context in which the drill interaction was triggered (widget and insight details - if available).
- * @param correlationId - optionally specify correlation id. It will be included in all events that will be emitted during the command processing.
+ * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
  * @returns drill command
  */
 export function drill(
@@ -113,7 +113,7 @@ export interface DrillDown extends IDashboardCommand {
  * @param insight - insight to which the drill down should be applied.
  * @param drillDefinition - drill definition to apply.
  * @param drillEvent - original drill event, that triggered this particular drill interaction.
- * @param correlationId - optionally specify correlation id. It will be included in all events that will be emitted during the command processing.
+ * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
  * @returns drill down command
  */
 export function drillDown(
@@ -171,7 +171,7 @@ export interface DrillToInsight extends IDashboardCommand {
  * @alpha
  * @param drillDefinition - drill definition with the target insight.
  * @param drillEvent - original drill event, that triggered this particular drill interaction.
- * @param correlationId - optionally specify correlation id. It will be included in all events that will be emitted during the command processing.
+ * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
  * @returns drill to insight command
  */
 export function drillToInsight(
@@ -224,7 +224,7 @@ export interface DrillToDashboard extends IDashboardCommand {
  * @alpha
  * @param drillDefinition - drill definition with the target dashboard.
  * @param drillEvent - original drill event, that triggered this particular drill interaction.
- * @param correlationId - optionally specify correlation id. It will be included in all events that will be emitted during the command processing.
+ * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
  * @returns drill to dashboard command
  */
 export function drillToDashboard(
@@ -280,7 +280,7 @@ export interface DrillToCustomUrl extends IDashboardCommand {
  * @alpha
  * @param drillDefinition - drill definition with the target url to resolve.
  * @param drillEvent - original drill event, that triggered this particular drill interaction.
- * @param correlationId - optionally specify correlation id. It will be included in all events that will be emitted during the command processing.
+ * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
  * @returns drill to custom url command
  * @alpha
  */
@@ -336,7 +336,7 @@ export interface DrillToAttributeUrl extends IDashboardCommand {
  * @alpha
  * @param drillDefinition - drill definition with the target attribute url to resolve.
  * @param drillEvent - original drill event, that triggered this particular drill interaction.
- * @param correlationId - optionally specify correlation id. It will be included in all events that will be emitted during the command processing.
+ * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
  * @returns drill to attribute url command
  * @alpha
  */
@@ -391,7 +391,7 @@ export interface DrillToLegacyDashboard extends IDashboardCommand {
  * @alpha
  * @param drillDefinition - drill definition with the target dashboard.
  * @param drillEvent - original drill event, that triggered this particular drill interaction.
- * @param correlationId - optionally specify correlation id. It will be included in all events that will be emitted during the command processing.
+ * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
  * @returns drill to legacy dashboard command
  * @alpha
  */
@@ -444,7 +444,7 @@ export interface ChangeDrillableItems extends IDashboardCommand {
  *
  * @alpha
  * @param drillableItems - reference to the drillable items or predicates that enables insight/kpi drilling.
- * @param correlationId - optionally specify correlation id. It will be included in all events that will be emitted during the command processing.
+ * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
  * @returns change drillable items command
  */
 export function changeDrillableItems(

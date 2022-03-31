@@ -47,7 +47,7 @@ export type MeasureEnvelope = Omit<IMeasure["measure"], "definition">;
 
 /**
  * Abstract base class for measure builders. Measure builders allow for incremental, fluent construction
- * (and optionally modification) of measures.
+ * and modification of measures.
  *
  * @remarks
  * You should not be instantiating the builders directly. Instead, rely on the different functions to

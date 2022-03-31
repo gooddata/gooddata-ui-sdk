@@ -104,7 +104,7 @@ export interface ChangeDateFilterSelection extends IDashboardCommand {
  * @param from - start date; if not specified, then the start date will be unbounded
  * @param to - end date; if not specified, then the end date will be unbounded
  * @param dateFilterOptionLocalId - localId of the {@link @gooddata/sdk-backend-spi#IDateFilterOption} selected
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  * @see {@link ChangeDateFilterSelection} for a more complete description of the different parameters
  *
@@ -143,7 +143,7 @@ export function changeDateFilterSelection(
  * See {@link ChangeDateFilterSelection} for a more complete description of the different parameters
  *
  * @param filter - date filter to apply
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @public
@@ -179,7 +179,7 @@ export function applyDateFilter(filter: IDateFilter, correlationId?: string): Ch
  * This convenience function will create ChangeDateFilterSelection configured so that the date filter will be
  * unbounded - showing data for 'All Time'.
  *
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @public
@@ -255,7 +255,7 @@ export interface AddAttributeFilter extends IDashboardCommand {
  * @param displayForm - specify attribute display form which will be used for filtering
  * @param index - specify index among the attribute filters at which the new filter should be placed.
  *  The index starts at zero and there is convenience that index of -1 would add the filter at the end.
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  * @alpha
  */
@@ -303,7 +303,7 @@ export interface RemoveAttributeFilters extends IDashboardCommand {
  * of dashboard's attribute filter with the provided local identifier.
  *
  * @param filterLocalId - dashboard attribute filter's local identifier
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  * @alpha
  */
@@ -352,7 +352,7 @@ export interface MoveAttributeFilter extends IDashboardCommand {
  * @param filterLocalId - dashboard filter's local identifier
  * @param index - specify index among the attribute filters at which the new filter should be placed.
  *  The index starts at zero and there is convenience that index of -1 would add the filter at the end.
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -443,7 +443,7 @@ export interface ChangeAttributeFilterSelection extends IDashboardCommand {
  * @param filterLocalId - dashboard attribute filter's local id
  * @param elements - elements
  * @param selectionType - selection type. either 'IN' or 'NOT_IN'
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @public
@@ -480,7 +480,7 @@ export function changeAttributeFilterSelection(
  *
  * @param filterLocalId - dashboard attribute filter's local id
  * @param filter - attribute filter to apply
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @public
@@ -506,7 +506,7 @@ export function applyAttributeFilter(
  * This is same as creating the ChangeAttributeFilterSelection command with empty elements and NOT_IN selection type.
  *
  * @param filterLocalId - dashboard attribute filter's local id
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @public
@@ -563,7 +563,7 @@ export interface SetAttributeFilterParent extends IDashboardCommand {
  * @param filterLocalId - local id of filter that will be a child in the relationship
  * @param parentFilter - definition of the relationship to parent, this contains local id of the parent filter and
  *  one or more 'over' attributes. The 'over' attributes will be included when querying
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -628,7 +628,7 @@ export interface ChangeFilterContextSelection extends IDashboardCommand {
  * @public
  * @param filters - attribute filters and date filter to apply.
  * @param resetOthers - If true, filters not mentioned in the payload will be reset to All items selected/All time. Defaults to false.
- * @param correlationId - optionally specify correlation id. It will be included in all events that will be emitted during the command processing.
+ * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
  * @returns change filter selection command
  */
 export function changeFilterContextSelection(

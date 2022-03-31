@@ -30,7 +30,7 @@ export interface AttributeResolutionResult {
  *
  * @param ctx - dashboard context in which the resolution is done
  * @param refs - ObjRefs of display forms; the type of ObjRef can be either uri or id ref, the function will resolve it regardless
- * @param attributes - optionally specify mapping of attributes to use for in-memory resolution of refs to metadata objects; if
+ * @param attributes - specify mapping of attributes to use for in-memory resolution of refs to metadata objects; if
  *  not specified, the generator will retrieve all catalog attributes from state
  */
 export function* resolveAttributeMetadata(
