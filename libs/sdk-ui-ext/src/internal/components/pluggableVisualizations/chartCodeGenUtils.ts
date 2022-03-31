@@ -69,22 +69,28 @@ export function chartConfigFromInsight(
     )(withValuesFromContext);
 }
 
-export const chartAdditionalFactories: IAdditionalFactoryDefinition[] = [
-    {
-        importInfo: {
-            importType: "named",
-            name: "getColorMappingPredicate",
-            package: "@gooddata/sdk-ui-vis-commons",
+export function chartAdditionalFactories(options?: {
+    getColorMappingPredicatePackage?: string;
+}): IAdditionalFactoryDefinition[] {
+    const { getColorMappingPredicatePackage = "@gooddata/sdk-ui-charts" } = options ?? {};
+
+    return [
+        {
+            importInfo: {
+                importType: "named",
+                name: "getColorMappingPredicate",
+                package: getColorMappingPredicatePackage,
+            },
+            transformation: (obj) => {
+                return isColorMappingItem(obj)
+                    ? `{predicate: getColorMappingPredicate("${obj.id}"), color: ${factoryNotationFor(
+                          obj.color,
+                      )}}`
+                    : undefined;
+            },
         },
-        transformation: (obj) => {
-            return isColorMappingItem(obj)
-                ? `{predicate: getColorMappingPredicate("${obj.id}"), color: ${factoryNotationFor(
-                      obj.color,
-                  )}}`
-                : undefined;
-        },
-    },
-];
+    ];
+}
 
 const chartConfigPropMeta: PropMeta = {
     typeImport: {

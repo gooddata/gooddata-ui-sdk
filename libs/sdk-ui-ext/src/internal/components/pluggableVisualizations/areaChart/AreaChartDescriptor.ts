@@ -54,7 +54,7 @@ export class AreaChartDescriptor extends BigChartDescriptor implements IVisualiz
             sortBy: sortsInsightConversion("sortBy"),
             config: chartConfigInsightConversion("config"),
         }),
-        additionalFactories: chartAdditionalFactories,
+        additionalFactories: chartAdditionalFactories(),
     });
 
     private addFilters(source: IInsight, drillConfig: IDrillDownDefinition, event: IDrillEvent) {

@@ -40,6 +40,6 @@ export class ComboChartDescriptor extends BigChartDescriptor implements IVisuali
             sortBy: sortsInsightConversion("sortBy"),
             config: chartConfigInsightConversion("config"),
         }),
-        additionalFactories: chartAdditionalFactories,
+        additionalFactories: chartAdditionalFactories(),
     });
 }

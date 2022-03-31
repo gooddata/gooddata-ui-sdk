@@ -13,6 +13,7 @@ import { AttributesOrPlaceholders } from '@gooddata/sdk-ui';
 import { ChartType } from '@gooddata/sdk-ui';
 import { ColorUtils } from '@gooddata/sdk-ui-vis-commons';
 import { FiltersOrPlaceholders } from '@gooddata/sdk-ui';
+import { getColorMappingPredicate } from '@gooddata/sdk-ui-vis-commons';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IColorMapping } from '@gooddata/sdk-ui-vis-commons';
 import { IColorPalette } from '@gooddata/sdk-model';
@@ -75,6 +76,8 @@ export const DonutChart: (props: IDonutChartProps) => JSX.Element;
 
 // @public
 export const FunnelChart: (props: IFunnelChartProps) => JSX.Element;
+
+export { getColorMappingPredicate }
 
 // @public
 export const Headline: (props: IHeadlineProps) => JSX.Element;

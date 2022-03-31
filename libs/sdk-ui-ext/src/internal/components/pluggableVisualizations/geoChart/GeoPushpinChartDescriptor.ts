@@ -75,7 +75,9 @@ export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IV
                 geoConfigFromInsight,
             ),
         }),
-        additionalFactories: chartAdditionalFactories,
+        additionalFactories: chartAdditionalFactories({
+            getColorMappingPredicatePackage: "@gooddata/sdk-ui-geo",
+        }),
     });
 
     protected getMinHeight(enableCustomHeight: boolean): number {
