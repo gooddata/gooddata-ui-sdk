@@ -36,6 +36,6 @@ export class PieChartDescriptor extends BaseChartDescriptor implements IVisualiz
             sortBy: sortsInsightConversion("sortBy"),
             config: chartConfigInsightConversion("config"),
         }),
-        additionalFactories: chartAdditionalFactories,
+        additionalFactories: chartAdditionalFactories(),
     });
 }

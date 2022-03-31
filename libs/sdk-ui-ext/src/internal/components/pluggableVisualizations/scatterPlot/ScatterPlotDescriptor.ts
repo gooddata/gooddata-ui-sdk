@@ -34,6 +34,6 @@ export class ScatterPlotDescriptor extends BigChartDescriptor {
             sortBy: sortsInsightConversion("sortBy"),
             config: chartConfigInsightConversion("config"),
         }),
-        additionalFactories: chartAdditionalFactories,
+        additionalFactories: chartAdditionalFactories(),
     });
 }

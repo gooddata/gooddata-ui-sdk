@@ -4,8 +4,11 @@
 
 ```ts
 
+import { getColorMappingPredicate } from '@gooddata/sdk-ui-charts';
 import { IUser } from '@gooddata/sdk-model';
 import { userFullName } from '@gooddata/sdk-model';
+
+export { getColorMappingPredicate }
 
 export { IUser }
 

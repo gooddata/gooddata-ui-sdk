@@ -32,3 +32,6 @@ export {
     isTreemap,
     updateConfigWithSettings,
 } from "./highcharts";
+
+// export the getColorMappingPredicate so that users can import it directly without having to explicitly install vis-commons
+export { getColorMappingPredicate } from "@gooddata/sdk-ui-vis-commons";

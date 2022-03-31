@@ -36,6 +36,6 @@ export class DonutChartDescriptor extends BaseChartDescriptor implements IVisual
             sortBy: sortsInsightConversion("sortBy"),
             config: chartConfigInsightConversion("config"),
         }),
-        additionalFactories: chartAdditionalFactories,
+        additionalFactories: chartAdditionalFactories(),
     });
 }

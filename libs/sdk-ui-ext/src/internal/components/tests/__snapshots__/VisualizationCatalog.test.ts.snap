@@ -6957,8 +6957,7 @@ export function MyComponent() {
 exports[`getEmbeddingCode functionality should generate code for BarChart - assign color to attribute element stack 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
-import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
-import { getColorMappingPredicate } from \\"@gooddata/sdk-ui-vis-commons\\";
+import { BarChart, getColorMappingPredicate, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
@@ -6996,8 +6995,7 @@ export function MyComponent() {
 exports[`getEmbeddingCode functionality should generate code for BarChart - assign color to master measure impacts derived PoP 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure, newPopMeasure } from \\"@gooddata/sdk-model\\";
-import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
-import { getColorMappingPredicate } from \\"@gooddata/sdk-ui-vis-commons\\";
+import { BarChart, getColorMappingPredicate, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
@@ -7034,8 +7032,7 @@ export function MyComponent() {
 exports[`getEmbeddingCode functionality should generate code for BarChart - assign color to measures 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
-import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
-import { getColorMappingPredicate } from \\"@gooddata/sdk-ui-vis-commons\\";
+import { BarChart, getColorMappingPredicate, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
@@ -10512,8 +10509,7 @@ export function MyComponent() {
 exports[`getEmbeddingCode functionality should generate code for BubbleChart - assign color to attribute bubbles 1`] = `
 "import React from \\"react\\";
 import { IAttribute, idRef, IMeasure, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
-import { BubbleChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
-import { getColorMappingPredicate } from \\"@gooddata/sdk-ui-vis-commons\\";
+import { BubbleChart, getColorMappingPredicate, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const xAxisMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const yAxisMeasure: IMeasure = newMeasure(idRef(\\"abZgFKGPaGYM\\", \\"measure\\"), m => m.localId(\\"m_abZgFKGPaGYM\\"));
@@ -13267,8 +13263,7 @@ export function MyComponent() {
 exports[`getEmbeddingCode functionality should generate code for BulletChart - assign color to attribute bubbles 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, newArithmeticMeasure, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
-import { BulletChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
-import { getColorMappingPredicate } from \\"@gooddata/sdk-ui-vis-commons\\";
+import { BulletChart, getColorMappingPredicate, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const primaryMeasure: IAttributeOrMeasure = newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"));
 const targetMeasure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
@@ -16197,8 +16192,7 @@ export function MyComponent() {
 exports[`getEmbeddingCode functionality should generate code for ColumnChart - assign color to attribute element stack 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
-import { ColumnChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
-import { getColorMappingPredicate } from \\"@gooddata/sdk-ui-vis-commons\\";
+import { ColumnChart, getColorMappingPredicate, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
@@ -16236,8 +16230,7 @@ export function MyComponent() {
 exports[`getEmbeddingCode functionality should generate code for ColumnChart - assign color to master measure impacts derived PoP 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure, newPopMeasure } from \\"@gooddata/sdk-model\\";
-import { ColumnChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
-import { getColorMappingPredicate } from \\"@gooddata/sdk-ui-vis-commons\\";
+import { ColumnChart, getColorMappingPredicate, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
@@ -16274,8 +16267,7 @@ export function MyComponent() {
 exports[`getEmbeddingCode functionality should generate code for ColumnChart - assign color to measures 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
-import { ColumnChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
-import { getColorMappingPredicate } from \\"@gooddata/sdk-ui-vis-commons\\";
+import { ColumnChart, getColorMappingPredicate, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
@@ -20097,8 +20089,7 @@ export function MyComponent() {
 exports[`getEmbeddingCode functionality should generate code for ComboChart - assign color to measures 1`] = `
 "import React from \\"react\\";
 import { IAttribute, idRef, IMeasure, newArithmeticMeasure, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
-import { ComboChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
-import { getColorMappingPredicate } from \\"@gooddata/sdk-ui-vis-commons\\";
+import { ComboChart, getColorMappingPredicate, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const primaryMeasures: IMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
@@ -24820,8 +24811,7 @@ export function MyComponent() {
 exports[`getEmbeddingCode functionality should generate code for DonutChart - assign color to attributes 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
-import { DonutChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
-import { getColorMappingPredicate } from \\"@gooddata/sdk-ui-vis-commons\\";
+import { DonutChart, getColorMappingPredicate, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
@@ -24855,8 +24845,7 @@ export function MyComponent() {
 exports[`getEmbeddingCode functionality should generate code for DonutChart - assign color to measures 1`] = `
 "import React from \\"react\\";
 import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\";
-import { DonutChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
-import { getColorMappingPredicate } from \\"@gooddata/sdk-ui-vis-commons\\";
+import { DonutChart, getColorMappingPredicate, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
@@ -25694,8 +25683,7 @@ export function MyComponent() {
 exports[`getEmbeddingCode functionality should generate code for FunnelChart - assign color to attributes 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
-import { FunnelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
-import { getColorMappingPredicate } from \\"@gooddata/sdk-ui-vis-commons\\";
+import { FunnelChart, getColorMappingPredicate, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
@@ -25729,8 +25717,7 @@ export function MyComponent() {
 exports[`getEmbeddingCode functionality should generate code for FunnelChart - assign color to measures 1`] = `
 "import React from \\"react\\";
 import { IAttributeOrMeasure, idRef, newArithmeticMeasure, newMeasure } from \\"@gooddata/sdk-model\\";
-import { FunnelChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
-import { getColorMappingPredicate } from \\"@gooddata/sdk-ui-vis-commons\\";
+import { FunnelChart, getColorMappingPredicate, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
@@ -26461,8 +26448,7 @@ export function MyComponent() {
 exports[`getEmbeddingCode functionality should generate code for Heatmap - assign color to measures 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeSort, newMeasure } from \\"@gooddata/sdk-model\\";
-import { Heatmap, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
-import { getColorMappingPredicate } from \\"@gooddata/sdk-ui-vis-commons\\";
+import { getColorMappingPredicate, Heatmap, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measure: IAttributeOrMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const rows: IAttribute = newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"));
@@ -29283,8 +29269,7 @@ export function MyComponent() {
 exports[`getEmbeddingCode functionality should generate code for LineChart - assign color to measures 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
-import { IChartConfig, LineChart } from \\"@gooddata/sdk-ui-charts\\";
-import { getColorMappingPredicate } from \\"@gooddata/sdk-ui-vis-commons\\";
+import { getColorMappingPredicate, IChartConfig, LineChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
@@ -32062,8 +32047,7 @@ export function MyComponent() {
 exports[`getEmbeddingCode functionality should generate code for PieChart - assign color to attributes 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
-import { IChartConfig, PieChart } from \\"@gooddata/sdk-ui-charts\\";
-import { getColorMappingPredicate } from \\"@gooddata/sdk-ui-vis-commons\\";
+import { getColorMappingPredicate, IChartConfig, PieChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
@@ -32097,8 +32081,7 @@ export function MyComponent() {
 exports[`getEmbeddingCode functionality should generate code for PieChart - assign color to measures 1`] = `
 "import React from \\"react\\";
 import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\";
-import { IChartConfig, PieChart } from \\"@gooddata/sdk-ui-charts\\";
-import { getColorMappingPredicate } from \\"@gooddata/sdk-ui-vis-commons\\";
+import { getColorMappingPredicate, IChartConfig, PieChart } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
@@ -35667,8 +35650,7 @@ export function MyComponent() {
 exports[`getEmbeddingCode functionality should generate code for ScatterPlot - assign color to measures 1`] = `
 "import React from \\"react\\";
 import { IAttribute, idRef, IMeasure, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
-import { IChartConfig, ScatterPlot } from \\"@gooddata/sdk-ui-charts\\";
-import { getColorMappingPredicate } from \\"@gooddata/sdk-ui-vis-commons\\";
+import { getColorMappingPredicate, IChartConfig, ScatterPlot } from \\"@gooddata/sdk-ui-charts\\";
 
 const xAxisMeasure: IMeasure = newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"));
 const yAxisMeasure: IMeasure = newMeasure(idRef(\\"abZgFKGPaGYM\\", \\"measure\\"), m => m.localId(\\"m_abZgFKGPaGYM\\"));
@@ -37689,8 +37671,7 @@ export function MyComponent() {
 exports[`getEmbeddingCode functionality should generate code for Treemap - assign color to attributes 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
-import { IChartConfig, Treemap } from \\"@gooddata/sdk-ui-charts\\";
-import { getColorMappingPredicate } from \\"@gooddata/sdk-ui-vis-commons\\";
+import { getColorMappingPredicate, IChartConfig, Treemap } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))

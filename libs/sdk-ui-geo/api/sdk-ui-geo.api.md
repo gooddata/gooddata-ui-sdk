@@ -10,6 +10,7 @@
 import { AttributeMeasureOrPlaceholder } from '@gooddata/sdk-ui';
 import { AttributeOrPlaceholder } from '@gooddata/sdk-ui';
 import { ContentRect } from 'react-measure';
+import { getColorMappingPredicate } from '@gooddata/sdk-ui-vis-commons';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IColorMapping } from '@gooddata/sdk-ui-vis-commons';
@@ -42,6 +43,8 @@ export const CoreGeoChart: React_2.FC<ICoreGeoChartProps & WrappedComponentProps
 
 // @public (undocumented)
 export const GeoPushpinChart: (props: IGeoPushpinChartProps) => JSX.Element;
+
+export { getColorMappingPredicate }
 
 // @internal (undocumented)
 export function getGeoChartDimensions(def: IExecutionDefinition): IDimension[];

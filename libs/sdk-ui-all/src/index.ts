@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 /**
  * This is an all-in-one package that has all GoodData.UI packages as dependencies and re-exports their public API.
  *
@@ -17,7 +17,9 @@ export * from "@gooddata/sdk-model";
 // eslint-disable-next-line import/export
 export * from "@gooddata/sdk-backend-spi";
 export * from "@gooddata/sdk-ui";
+// eslint-disable-next-line import/export
 export * from "@gooddata/sdk-ui-charts";
+// eslint-disable-next-line import/export
 export * from "@gooddata/sdk-ui-geo";
 export * from "@gooddata/sdk-ui-pivot";
 export * from "@gooddata/sdk-ui-filters";
@@ -27,3 +29,8 @@ export * from "@gooddata/sdk-ui-ext";
 import { IUser, userFullName } from "@gooddata/sdk-model";
 // eslint-disable-next-line import/export
 export { IUser, userFullName };
+
+// override getColorMappingPredicate, it is exported by both charts and geo, so use the chart version
+import { getColorMappingPredicate } from "@gooddata/sdk-ui-charts";
+// eslint-disable-next-line import/export
+export { getColorMappingPredicate };

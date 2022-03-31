@@ -57,7 +57,7 @@ export class BarChartDescriptor extends BaseChartDescriptor implements IVisualiz
             sortBy: sortsInsightConversion("sortBy"),
             config: chartConfigInsightConversion("config"),
         }),
-        additionalFactories: chartAdditionalFactories,
+        additionalFactories: chartAdditionalFactories(),
     });
 
     private adjustIntersectionForColumnBar(

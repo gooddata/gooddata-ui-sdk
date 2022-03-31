@@ -57,7 +57,7 @@ export class ColumnChartDescriptor extends BaseChartDescriptor implements IVisua
             sortBy: sortsInsightConversion("sortBy"),
             config: chartConfigInsightConversion("config"),
         }),
-        additionalFactories: chartAdditionalFactories,
+        additionalFactories: chartAdditionalFactories(),
     });
 
     private adjustIntersectionForColumnBar(

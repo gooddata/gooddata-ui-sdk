@@ -38,6 +38,6 @@ export class BubbleChartDescriptor extends BigChartDescriptor implements IVisual
             sortBy: sortsInsightConversion("sortBy"),
             config: chartConfigInsightConversion("config"),
         }),
-        additionalFactories: chartAdditionalFactories,
+        additionalFactories: chartAdditionalFactories(),
     });
 }

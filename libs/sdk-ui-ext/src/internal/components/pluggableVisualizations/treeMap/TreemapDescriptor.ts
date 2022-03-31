@@ -44,7 +44,7 @@ export class TreemapDescriptor extends BigChartDescriptor {
             filters: filtersInsightConversion("filters"),
             config: chartConfigInsightConversion("config"),
         }),
-        additionalFactories: chartAdditionalFactories,
+        additionalFactories: chartAdditionalFactories(),
     });
 
     private addFilters(source: IInsight, drillConfig: IDrillDownDefinition, event: IDrillEvent) {
