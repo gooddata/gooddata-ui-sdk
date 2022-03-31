@@ -10,7 +10,7 @@ import {
     DATE_DATASET_ATTRIBUTE,
     IRankingFilter,
 } from "../../interfaces/Visualization";
-import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
+import { OverTimeComparisonTypes, VisualizationTypes } from "@gooddata/sdk-ui";
 import { ColumnWidthItem } from "@gooddata/sdk-ui-pivot";
 import { ObjRef, uriRef, idRef, ISortItem } from "@gooddata/sdk-model";
 
@@ -2294,6 +2294,32 @@ export const oneSecondaryMetricAndOneViewByRefPoint: IReferencePoint = {
     filters: {
         localIdentifier: "filters",
         items: [],
+    },
+};
+
+export const oneSecondaryMetricAndOneViewByAreaChartComboRefPoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: [],
+        },
+        {
+            localIdentifier: "secondary_measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "view",
+            items: attributeItems.slice(0, 1),
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+    properties: {
+        controls: {
+            primaryChartType: VisualizationTypes.AREA,
+        },
     },
 };
 

@@ -201,7 +201,14 @@ export class PluggableHeatmap extends PluggableBaseChart {
         if (!isEmpty(measures) && !isEmpty(stackBy)) {
             return {
                 defaultSort: [newAttributeSort(stackBy[0].localIdentifier, "asc")],
-                availableSorts: [newAvailableSortsGroup(stackBy[0].localIdentifier)],
+                availableSorts: [
+                    newAvailableSortsGroup(
+                        stackBy[0].localIdentifier,
+                        [measures[0].localIdentifier],
+                        true,
+                        false,
+                    ),
+                ],
             };
         }
 

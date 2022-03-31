@@ -569,6 +569,16 @@ describe("PluggableComboChart", () => {
             expect(sortConfig).toMatchSnapshot();
         });
 
+        it("should not offer area sort as available, when primary type is area but there is only singe measure", async () => {
+            const chart = createComponent(defaultProps);
+
+            const sortConfig = await chart.getSortConfig(
+                referencePointMocks.oneSecondaryMetricAndOneViewByAreaChartComboRefPoint,
+            );
+
+            expect(sortConfig).toMatchSnapshot();
+        });
+
         it("should provide attribute sort as default sort, attribute area and two measure sorts as available sorts for 2M + 1 VB", async () => {
             const chart = createComponent(defaultProps);
 
@@ -577,7 +587,7 @@ describe("PluggableComboChart", () => {
             expect(sortConfig).toMatchSnapshot();
         });
 
-        it("should provide attribute sort as default sort, attribute area  and two measures sorts as available sorts for 2 primary measures stacked + 1 VB", async () => {
+        it("should provide attribute sort as default sort, attribute area and two measures sorts as available sorts for 2 primary measures stacked + 1 VB", async () => {
             const chart = createComponent(defaultProps);
 
             const sortConfig = await chart.getSortConfig(

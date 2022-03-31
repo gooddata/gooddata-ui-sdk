@@ -42,33 +42,6 @@ Object {
 }
 `;
 
-exports[`PluggableHeatmap Sort config should provide attribute normal as default sort, attribute area sorts as available sorts for 1M + 1SB 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [
-    Object {
-      "attributeSort": Object {
-        "areaSortEnabled": true,
-        "normalSortEnabled": true,
-      },
-      "itemId": Object {
-        "localIdentifier": "a3",
-      },
-    },
-  ],
-  "defaultSort": Array [
-    Object {
-      "attributeSortItem": Object {
-        "attributeIdentifier": "a3",
-        "direction": "asc",
-      },
-    },
-  ],
-  "disabled": false,
-  "supported": true,
-}
-`;
-
 exports[`PluggableHeatmap Sort config should provide attribute normal as default sort, attribute normal and measuree sorts as available sorts for 1M + 1VB 1`] = `
 Object {
   "appliedSort": Array [],
@@ -100,6 +73,45 @@ Object {
       "attributeSortItem": Object {
         "attributeIdentifier": "a1",
         "direction": "desc",
+      },
+    },
+  ],
+  "disabled": false,
+  "supported": true,
+}
+`;
+
+exports[`PluggableHeatmap Sort config should provide attribute normal as default sort, one metric sort as available sorts for 1M + 1SB 1`] = `
+Object {
+  "appliedSort": Array [],
+  "availableSorts": Array [
+    Object {
+      "attributeSort": Object {
+        "areaSortEnabled": false,
+        "normalSortEnabled": true,
+      },
+      "itemId": Object {
+        "localIdentifier": "a3",
+      },
+      "metricSorts": Array [
+        Object {
+          "locators": Array [
+            Object {
+              "measureLocatorItem": Object {
+                "measureIdentifier": "m1",
+              },
+            },
+          ],
+          "type": "measureSort",
+        },
+      ],
+    },
+  ],
+  "defaultSort": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a3",
+        "direction": "asc",
       },
     },
   ],

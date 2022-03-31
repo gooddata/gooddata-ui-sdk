@@ -271,18 +271,14 @@ export class PluggableComboChart extends PluggableBaseChart {
         );
     }
 
-    protected getDefaultAndAvailableSort(
-        buckets: IBucketOfFun[],
-        properties: IVisualizationProperties,
-    ): {
+    protected getDefaultAndAvailableSort(buckets: IBucketOfFun[]): {
         defaultSort: ISortConfig["defaultSort"];
         availableSorts: ISortConfig["availableSorts"];
     } {
         const measures = getBucketItemsByType(buckets, BucketNames.MEASURES, [METRIC]);
         const secondaryMeasures = getBucketItemsByType(buckets, BucketNames.SECONDARY_MEASURES, [METRIC]);
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
-        const canSortStackTotal =
-            properties?.controls?.stackMeasures ?? this.getUiConfig().optionalStacking.stackMeasures;
+
         const defaultSort = viewBy.map((vb) => newAttributeSort(vb.localIdentifier, "asc"));
 
         if (!isEmpty(viewBy) && (!isEmpty(measures) || !isEmpty(secondaryMeasures))) {
@@ -295,7 +291,7 @@ export class PluggableComboChart extends PluggableBaseChart {
                         viewBy[0].localIdentifier,
                         mergedMeasures.map((m) => m.localIdentifier),
                         true,
-                        canSortStackTotal || mergedMeasures.length > 1,
+                        mergedMeasures.length > 1,
                     ),
                 ],
             };
@@ -337,7 +333,7 @@ export class PluggableComboChart extends PluggableBaseChart {
     public getSortConfig(referencePoint: IReferencePoint): Promise<ISortConfig> {
         const { buckets, properties, availableSorts: previousAvailableSorts } = referencePoint;
 
-        const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(buckets, properties);
+        const { defaultSort, availableSorts } = this.getDefaultAndAvailableSort(buckets);
         const { disabled, disabledExplanation } = this.isSortDisabled(referencePoint, availableSorts);
 
         return Promise.resolve({
