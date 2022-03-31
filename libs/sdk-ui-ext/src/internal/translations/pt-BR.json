@@ -110,7 +110,6 @@
     "dashboard.xirr.error.invalid_buckets.text._metric": "Não se esqueça de selecionar uma métrica e um atributo de data.",
     "dashboard.error.empty.heading": "Dashboard vazio",
     "dashboard.error.empty.text": "Todos os insights foram removidos.",
-    "dashboardView.error.empty.text": "Todos os insights foram removidos ou o dashboard foi salvo estando vazio.",
     "dashboard.embedded.error.empty.heading": "Nenhum widget no dashboard",
     "dashboard.embedded.error.empty.text": "Verifique se o dashboard que você está incorporando está correto.",
     "properties.unsupported": "A visualização é incompatível com a configuração",
