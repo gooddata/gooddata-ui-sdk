@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { ContentRect } from "react-measure";
 import { v4 } from "uuid";
@@ -220,7 +220,7 @@ export class HighChartsRenderer extends React.PureComponent<
         if (event.resetSelection) {
             resetZoomButton.style.display = "none";
         } else {
-            resetZoomButton.style.display = "block";
+            resetZoomButton.style.display = "grid";
         }
 
         return undefined;

@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { shallow, mount, ShallowWrapper } from "enzyme";
 import noop from "lodash/noop";
@@ -557,7 +557,7 @@ describe("HighChartsRenderer", () => {
                 ).instance();
                 const zoomOutButton = {
                     style: {
-                        display: "block",
+                        display: "grid",
                     },
                 };
                 wrapperInstance.onChartSelection({
@@ -573,7 +573,7 @@ describe("HighChartsRenderer", () => {
                     resetSelection,
                 });
 
-                expect(zoomOutButton.style.display).toBe(resetSelection ? "none" : "block");
+                expect(zoomOutButton.style.display).toBe(resetSelection ? "none" : "grid");
             },
         );
     });
