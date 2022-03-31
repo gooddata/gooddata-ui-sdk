@@ -61,14 +61,8 @@ function getRepeatBase(repeatType: string, repeatFrequency: IScheduleEmailRepeat
 }
 
 // Generates repeatData string
-export function generateRepeatString(repeatData: IScheduleEmailRepeat): string {
-    const {
-        repeatExecuteOn, // repeatSubType
-        repeatFrequency, // repeatStruct
-        repeatPeriod,
-        repeatType, // repeatBase
-        time,
-    } = repeatData;
+export function generateRepeatString(repeat: IScheduleEmailRepeat): string {
+    const { repeatType, repeatFrequency, repeatExecuteOn, repeatPeriod, time } = repeat;
 
     const fragments: IFragments = [0, 0, 0, 0, 0, 0, 0];
 

@@ -2,7 +2,7 @@
 
 import { createInternalIntl } from "../../../../localization/createInternalIntl";
 import { getScheduledEmailSummaryString } from "../scheduledMailSummary";
-import { IScheduleEmailRepeatOptions } from "../../interfaces";
+import { IScheduleEmailRepeat } from "../../interfaces";
 import { REPEAT_TYPES } from "../../constants";
 
 interface ICustomRepeatOptions {
@@ -22,7 +22,7 @@ describe("schedule email utils", () => {
 
     const getScheduleEmailRepeatOptions = (
         customOptions: ICustomRepeatOptions,
-    ): IScheduleEmailRepeatOptions => {
+    ): { repeatData: IScheduleEmailRepeat; startDate: Date } => {
         const {
             year = 2019,
             month = 1,
@@ -61,26 +61,26 @@ describe("schedule email utils", () => {
     };
 
     it("should generate correct summary message as selected time", () => {
-        let repeatOptions = getScheduleEmailRepeatOptions({
+        let { repeatData, startDate } = getScheduleEmailRepeatOptions({
             hour: 0,
             minute: 0,
         });
-        let summary = getScheduledEmailSummaryString(intl, repeatOptions);
+        let summary = getScheduledEmailSummaryString(intl, repeatData, startDate);
         expect(summary).toEqual("Daily at 12:00 AM");
 
-        repeatOptions = getScheduleEmailRepeatOptions({
+        ({ repeatData, startDate } = getScheduleEmailRepeatOptions({
             hour: 12,
             minute: 0,
-        });
-        summary = getScheduledEmailSummaryString(intl, repeatOptions);
+        }));
+        summary = getScheduledEmailSummaryString(intl, repeatData, startDate);
         expect(summary).toEqual("Daily at 12:00 PM");
     });
 
     it("should generate correct summary message with daily", () => {
-        const repeatOptions = getScheduleEmailRepeatOptions({
+        const { repeatData, startDate } = getScheduleEmailRepeatOptions({
             repeatType: REPEAT_TYPES.DAILY,
         });
-        const summary = getScheduledEmailSummaryString(intl, repeatOptions);
+        const summary = getScheduledEmailSummaryString(intl, repeatData, startDate);
         expect(summary).toEqual("Daily at 12:00 AM");
     });
 
@@ -92,23 +92,23 @@ describe("schedule email utils", () => {
                 day: true,
             },
         };
-        let repeatOptions = getScheduleEmailRepeatOptions(customDayOptions);
-        let summary = getScheduledEmailSummaryString(intl, repeatOptions);
+        let { repeatData, startDate } = getScheduleEmailRepeatOptions(customDayOptions);
+        let summary = getScheduledEmailSummaryString(intl, repeatData, startDate);
         expect(summary).toEqual("every 1 day at 12:00 AM");
 
-        repeatOptions = getScheduleEmailRepeatOptions({
+        ({ repeatData, startDate } = getScheduleEmailRepeatOptions({
             ...customDayOptions,
             repeatPeriod: 2,
-        });
-        summary = getScheduledEmailSummaryString(intl, repeatOptions);
+        }));
+        summary = getScheduledEmailSummaryString(intl, repeatData, startDate);
         expect(summary).toEqual("every 2 days at 12:00 AM");
     });
 
     it("should generate correct summary message with weekly", () => {
-        const repeatOptions = getScheduleEmailRepeatOptions({
+        const { repeatData, startDate } = getScheduleEmailRepeatOptions({
             repeatType: REPEAT_TYPES.WEEKLY,
         });
-        const summary = getScheduledEmailSummaryString(intl, repeatOptions);
+        const summary = getScheduledEmailSummaryString(intl, repeatData, startDate);
         expect(summary).toEqual("Weekly on Friday at 12:00 AM");
     });
 
@@ -122,23 +122,23 @@ describe("schedule email utils", () => {
                 },
             },
         };
-        let repeatOptions = getScheduleEmailRepeatOptions(customWeekOptions);
-        let summary = getScheduledEmailSummaryString(intl, repeatOptions);
+        let { repeatData, startDate } = getScheduleEmailRepeatOptions(customWeekOptions);
+        let summary = getScheduledEmailSummaryString(intl, repeatData, startDate);
         expect(summary).toEqual("every 1 week on the first Friday at 12:00 AM");
 
-        repeatOptions = getScheduleEmailRepeatOptions({
+        ({ repeatData, startDate } = getScheduleEmailRepeatOptions({
             ...customWeekOptions,
             repeatPeriod: 2,
-        });
-        summary = getScheduledEmailSummaryString(intl, repeatOptions);
+        }));
+        summary = getScheduledEmailSummaryString(intl, repeatData, startDate);
         expect(summary).toEqual("every 2 weeks on the first Friday at 12:00 AM");
     });
 
     it("should generate correct summary message with monthly", () => {
-        const repeatOptions = getScheduleEmailRepeatOptions({
+        const { repeatData, startDate } = getScheduleEmailRepeatOptions({
             repeatType: REPEAT_TYPES.WEEKLY,
         });
-        const summary = getScheduledEmailSummaryString(intl, repeatOptions);
+        const summary = getScheduledEmailSummaryString(intl, repeatData, startDate);
         expect(summary).toEqual("Weekly on Friday at 12:00 AM");
     });
 
@@ -154,15 +154,15 @@ describe("schedule email utils", () => {
             },
             repeatExecuteOn: "dayOfMonth",
         };
-        let repeatOptions = getScheduleEmailRepeatOptions(dayOfMonthOptions);
-        let summary = getScheduledEmailSummaryString(intl, repeatOptions);
+        let { repeatData, startDate } = getScheduleEmailRepeatOptions(dayOfMonthOptions);
+        let summary = getScheduledEmailSummaryString(intl, repeatData, startDate);
         expect(summary).toEqual("every 1 month on day 1 at 12:00 AM");
 
-        repeatOptions = getScheduleEmailRepeatOptions({
+        ({ repeatData, startDate } = getScheduleEmailRepeatOptions({
             ...dayOfMonthOptions,
             repeatPeriod: 2,
-        });
-        summary = getScheduledEmailSummaryString(intl, repeatOptions);
+        }));
+        summary = getScheduledEmailSummaryString(intl, repeatData, startDate);
         expect(summary).toEqual("every 2 months on day 1 at 12:00 AM");
     });
 
@@ -181,15 +181,15 @@ describe("schedule email utils", () => {
             },
             repeatExecuteOn: "dayOfWeek",
         };
-        let repeatOptions = getScheduleEmailRepeatOptions(dayOfweekOptions);
-        let summary = getScheduledEmailSummaryString(intl, repeatOptions);
+        let { repeatData, startDate } = getScheduleEmailRepeatOptions(dayOfweekOptions);
+        let summary = getScheduledEmailSummaryString(intl, repeatData, startDate);
         expect(summary).toEqual("every 1 month on the first Friday at 12:00 AM");
 
-        repeatOptions = getScheduleEmailRepeatOptions({
+        ({ repeatData, startDate } = getScheduleEmailRepeatOptions({
             ...dayOfweekOptions,
             repeatPeriod: 2,
-        });
-        summary = getScheduledEmailSummaryString(intl, repeatOptions);
+        }));
+        summary = getScheduledEmailSummaryString(intl, repeatData, startDate);
         expect(summary).toEqual("every 2 months on the first Friday at 12:00 AM");
     });
 });

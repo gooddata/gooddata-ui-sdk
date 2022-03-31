@@ -2,11 +2,7 @@
 import { IntlShape } from "react-intl";
 import invariant from "ts-invariant";
 
-import {
-    IScheduleEmailRepeatTime,
-    IScheduleEmailRepeatFrequency,
-    IScheduleEmailRepeatOptions,
-} from "../interfaces";
+import { IScheduleEmailRepeatTime, IScheduleEmailRepeatFrequency, IScheduleEmailRepeat } from "../interfaces";
 import { REPEAT_TYPES, REPEAT_FREQUENCIES, FREQUENCY_TYPE, REPEAT_EXECUTE_ON } from "../constants";
 
 import { getDayName, getWeek, getDate } from "./datetime";
@@ -21,11 +17,12 @@ function getRepeatFrequencyType(repeatFrequency: IScheduleEmailRepeatFrequency):
     return result;
 }
 
-function getScheduledEmailRepeatString(intl: IntlShape, options: IScheduleEmailRepeatOptions): string {
-    const {
-        repeatData: { repeatType, repeatPeriod, repeatFrequency, repeatExecuteOn },
-        startDate,
-    } = options;
+function getScheduledEmailRepeatString(
+    intl: IntlShape,
+    options: IScheduleEmailRepeat,
+    startDate: Date,
+): string {
+    const { repeatType, repeatPeriod, repeatFrequency, repeatExecuteOn } = options;
     const isCustomRepeatType = repeatType === REPEAT_TYPES.CUSTOM;
     const day = getDayName(startDate);
     const week = getWeek(startDate);
@@ -95,11 +92,12 @@ function getFormattedHour(hour: number): number {
 
 export function getScheduledEmailSummaryString(
     intl: IntlShape,
-    options: IScheduleEmailRepeatOptions,
+    recurrency: IScheduleEmailRepeat,
+    startDate: Date,
 ): string {
-    const repeatDays = getScheduledEmailRepeatString(intl, options);
+    const repeatDays = getScheduledEmailRepeatString(intl, recurrency, startDate);
     const atLocalization = intl.formatMessage({ id: "gs.date.at" });
-    const time = getFormattedTime(options.repeatData.time);
+    const time = getFormattedTime(recurrency.time);
 
     // every 2 months on the first Friday at 12:00 AM
     return `${repeatDays} ${atLocalization} ${time}`;
