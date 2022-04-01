@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import {
     IWorkspaceAttributesService,
@@ -9,6 +9,7 @@ import {
     IAttributeMetadataObject,
     isCatalogAttribute,
     IMetadataObject,
+    ICatalogAttribute,
 } from "@gooddata/sdk-backend-spi";
 import { RecordedBackendConfig, RecordingIndex } from "./types";
 import { RecordedElementQueryFactory } from "./elements";
@@ -99,6 +100,26 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
 
         return compact(await Promise.all(refs.map(loader)));
     };
+
+    public async getCatalogAttributes(refs: ObjRef[]): Promise<ICatalogAttribute[]> {
+        if (!this.recordings.metadata || !this.recordings.metadata.catalog) {
+            throw new UnexpectedResponseError("No recordings", 404, {});
+        }
+
+        const recording = this.recordings.metadata.catalog.items
+            .filter(isCatalogAttribute)
+            .filter((wrappedAttribute) => {
+                return refs.some((ref) => areObjRefsEqual(ref, wrappedAttribute.attribute.ref));
+            });
+
+        const stringifiedRefs = refs.map((ref) => objRefToString(ref)).join(",");
+
+        if (!recording) {
+            throw new UnexpectedResponseError(`No attribute recording ${stringifiedRefs}`, 404, {});
+        }
+
+        return compact(await Promise.resolve(recording));
+    }
 
     public getAttributeDatasetMeta(_: ObjRef): Promise<IMetadataObject> {
         throw new NotSupported("not supported");

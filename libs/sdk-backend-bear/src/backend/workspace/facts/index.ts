@@ -26,7 +26,7 @@ export class BearWorkspaceFacts implements IWorkspaceFactsService {
         });
     }
 
-    public async getFacts(factRefs: ObjRef[]): Promise<ICatalogFact[]> {
+    public async getCatalogFacts(factRefs: ObjRef[]): Promise<ICatalogFact[]> {
         const factUris = await objRefsToUris(factRefs, this.workspace, this.authCall, false);
         const wrappedFacts = await this.authCall((client) => {
             return client.md.getObjects<GdcMetadata.IWrappedFact>(this.workspace, factUris);

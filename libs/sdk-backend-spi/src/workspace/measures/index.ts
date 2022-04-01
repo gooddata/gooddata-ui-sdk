@@ -1,5 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
+import { ICatalogMeasure } from "../fromModel/ldm/catalog";
 import { IMeasureExpressionToken } from "../fromModel/ldm/measure";
 import {
     IMeasureMetadataObject,
@@ -66,5 +67,5 @@ export interface IWorkspaceMeasuresService {
      * @param measureRefs - references of the measures to get.
      * @returns promise of {@link IMeasureMetadataObject} array.
      */
-    getMeasures(measureRefs: ObjRef[]): Promise<IMeasureMetadataObject[]>;
+    getCatalogMeasures(measureRefs: ObjRef[]): Promise<ICatalogMeasure[]>;
 }

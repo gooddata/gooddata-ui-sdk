@@ -29,7 +29,7 @@ export class TigerWorkspaceFacts implements IWorkspaceFactsService {
         });
     }
 
-    public async getFacts(factRefs: ObjRef[]): Promise<ICatalogFact[]> {
+    public async getCatalogFacts(factRefs: ObjRef[]): Promise<ICatalogFact[]> {
         const filter = factRefs
             .map(async (ref) => {
                 const id = await objRefToIdentifier(ref, this.authCall);
