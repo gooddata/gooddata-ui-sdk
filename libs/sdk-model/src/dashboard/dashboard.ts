@@ -1,23 +1,15 @@
 // (C) 2019-2022 GoodData Corporation
+import isEmpty from "lodash/isEmpty";
+import { IAuditableDates, IAuditableUsers } from "../base/metadata";
 import {
-    IAuditableDates,
-    IAuditableUsers,
-    Identifier,
-    IInsight,
-    ObjRef,
-    IFilterContext,
-    IFilterContextDefinition,
-    ITempFilterContext,
-    IDashboardObjectIdentity,
-    IDashboardLayout,
-    IDashboardWidget,
-} from "@gooddata/sdk-model";
-import {
-    DateFilterGranularity,
     IAbsoluteDateFilterPreset,
     IRelativeDateFilterPreset,
-} from "@gooddata/sdk-model";
-import isEmpty from "lodash/isEmpty";
+    DateFilterGranularity,
+} from "../dateFilterConfig";
+import { Identifier, ObjRef } from "../objRef";
+import { IDashboardObjectIdentity } from "./common";
+import { IFilterContext, ITempFilterContext, IFilterContextDefinition } from "./filterContext";
+import { IDashboardWidget, IDashboardLayout } from "./layout";
 
 /**
  * Date filter configuration mode
@@ -73,7 +65,7 @@ export interface IDashboardDateFilterConfig {
 
 /**
  * Dashboard common properties
- * @alpha
+ * @public
  */
 export interface IDashboardBase {
     /**
@@ -99,7 +91,7 @@ export interface IDashboardBase {
 }
 
 /**
- * @alpha
+ * @public
  */
 export interface IDashboardPluginBase {
     readonly type: "IDashboardPlugin";
@@ -127,12 +119,12 @@ export interface IDashboardPluginBase {
 }
 
 /**
- * @alpha
+ * @public
  */
 export interface IDashboardPlugin extends IDashboardPluginBase, IDashboardObjectIdentity, IAuditableDates {}
 
 /**
- * @alpha
+ * @public
  */
 export interface IDashboardPluginDefinition extends IDashboardPluginBase, Partial<IDashboardObjectIdentity> {}
 
@@ -140,7 +132,7 @@ export interface IDashboardPluginDefinition extends IDashboardPluginBase, Partia
  * A link between dashboard and a plugin that it uses. Optionally contains parameters that should
  * be passed to the plugin at load time.
  *
- * @alpha
+ * @public
  */
 export interface IDashboardPluginLink {
     readonly type: "IDashboardPluginLink";
@@ -166,13 +158,13 @@ export interface IDashboardPluginLink {
  * shared - object shared with closed set of users/groups
  * public - accessible by everyone in project
  *
- * @alpha
+ * @public
  */
 export type ShareStatus = "private" | "shared" | "public";
 
 /**
  * Common properties for objects with controlled access
- * @alpha
+ * @public
  */
 export interface IAccessControlAware {
     /**
@@ -200,7 +192,7 @@ export interface IAccessControlAware {
  * It's also possible to setup scheduled emails for the dashboard
  * (user will receive an email with the exported dashboard attached at the specified time interval),
  * and optionally extended date filter config.
- * @alpha
+ * @public
  */
 export interface IDashboard<TWidget = IDashboardWidget>
     extends IDashboardBase,
@@ -235,7 +227,7 @@ export interface IDashboard<TWidget = IDashboardWidget>
 /**
  * Dashboard definition represents modified or created dashboard
  *
- * @alpha
+ * @public
  */
 export interface IDashboardDefinition<TWidget = IDashboardWidget>
     extends IDashboardBase,
@@ -292,7 +284,7 @@ export function isDashboardDefinition(obj: unknown): obj is IDashboardDefinition
  * Availability of {@link IListedDashboard}.
  * Either full (the listed dashboard is also available as a fully accessible metadata object) or
  * only via link (full metadata object is not accessible, only the listed dashboard record).
- * @alpha
+ * @public
  */
 export type ListedDashboardAvailability = "full" | "viaLink";
 
@@ -346,30 +338,4 @@ export interface IListedDashboard
      * States if dashboard is shared with the user and fully accessible or if it is hidden but accessible via link if user knows it.
      */
     readonly availability: ListedDashboardAvailability;
-}
-
-/**
- * Dashboard referenced objects
- *
- * @public
- */
-export interface IDashboardReferences {
-    /**
-     * Referenced insights. Empty if no insights on dashboard or referenced insights were not requested.
-     */
-    insights: IInsight[];
-
-    /**
-     * Referenced plugins. Empty if no plugins on dashboard or referenced plugins were not requested.
-     */
-    plugins: IDashboardPlugin[];
-}
-
-/**
- * Dashboard with referenced objects
- * @public
- */
-export interface IDashboardWithReferences {
-    dashboard: IDashboard;
-    references: IDashboardReferences;
 }

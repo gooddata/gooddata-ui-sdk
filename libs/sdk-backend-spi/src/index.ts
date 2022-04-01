@@ -199,27 +199,9 @@ export {
     SupportedDashboardReferenceTypes,
     IWidgetReferences,
     SupportedWidgetReferenceTypes,
-} from "./workspace/dashboards";
-export {
-    IDashboard,
     IDashboardReferences,
     IDashboardWithReferences,
-    IDashboardDefinition,
-    IListedDashboard,
-    ListedDashboardAvailability,
-    IDashboardBase,
-    IDashboardDateFilterConfig,
-    DashboardDateFilterConfigMode,
-    IDashboardDateFilterAddedPresets,
-    IDashboardPluginBase,
-    IDashboardPlugin,
-    IDashboardPluginDefinition,
-    IDashboardPluginLink,
-    isDashboard,
-    isDashboardDefinition,
-    IAccessControlAware,
-    ShareStatus,
-} from "./workspace/dashboards/dashboard";
+} from "./workspace/dashboards";
 export {
     isDashboardLayoutEmpty,
     IWidgetWithLayoutPath,
@@ -509,3 +491,22 @@ export {
     isDashboardLayoutItem,
     isDashboardWidget,
 } from "./deprecated/dashboard/layout";
+
+export {
+    IDashboard,
+    IDashboardDefinition,
+    IListedDashboard,
+    ListedDashboardAvailability,
+    IDashboardBase,
+    IDashboardDateFilterConfig,
+    DashboardDateFilterConfigMode,
+    IDashboardDateFilterAddedPresets,
+    IDashboardPluginBase,
+    IDashboardPlugin,
+    IDashboardPluginDefinition,
+    IDashboardPluginLink,
+    isDashboard,
+    isDashboardDefinition,
+    IAccessControlAware,
+    ShareStatus,
+} from "./deprecated/dashboard/dashboard";

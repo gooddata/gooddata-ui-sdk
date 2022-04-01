@@ -241,6 +241,9 @@ export enum ComputeRatioRule {
 }
 
 // @public
+export type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
+
+// @public
 export function dashboardFilterReferenceObjRef(ref: IDashboardFilterReference): ObjRef;
 
 // @public
@@ -402,6 +405,13 @@ export interface IAbsoluteDateFilterValues {
     from: string;
     // (undocumented)
     to: string;
+}
+
+// @public
+export interface IAccessControlAware {
+    readonly isLocked?: boolean;
+    readonly isUnderStrictControl?: boolean;
+    readonly shareStatus: ShareStatus;
 }
 
 // @public
@@ -637,6 +647,16 @@ export interface IComparisonConditionBody {
     value: number;
 }
 
+// @public
+export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, IDashboardObjectIdentity, Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers>, IAccessControlAware {
+    readonly dateFilterConfig?: IDashboardDateFilterConfig;
+    readonly filterContext?: IFilterContext | ITempFilterContext;
+    readonly layout?: IDashboardLayout<TWidget>;
+    readonly plugins?: IDashboardPluginLink[];
+    // (undocumented)
+    readonly type: "IDashboard";
+}
+
 // @alpha
 export interface IDashboardAttachment {
     dashboard: ObjRef;
@@ -671,6 +691,13 @@ export interface IDashboardAttributeFilterReference {
 }
 
 // @public
+export interface IDashboardBase {
+    readonly description: string;
+    readonly tags?: string[];
+    readonly title: string;
+}
+
+// @public
 export interface IDashboardDateFilter {
     // (undocumented)
     dateFilter: {
@@ -684,9 +711,34 @@ export interface IDashboardDateFilter {
 }
 
 // @public
+export interface IDashboardDateFilterAddedPresets {
+    absolutePresets?: IAbsoluteDateFilterPreset[];
+    relativePresets?: IRelativeDateFilterPreset[];
+}
+
+// @public
+export interface IDashboardDateFilterConfig {
+    addPresets?: IDashboardDateFilterAddedPresets;
+    filterName: string;
+    hideGranularities?: DateFilterGranularity[];
+    hideOptions?: Identifier[];
+    mode: DashboardDateFilterConfigMode;
+}
+
+// @public
 export interface IDashboardDateFilterReference {
     dataSet: ObjRef;
     type: "dateFilterReference";
+}
+
+// @public
+export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashboardBase, IAccessControlAware, Partial<IDashboardObjectIdentity> {
+    readonly dateFilterConfig?: IDashboardDateFilterConfig;
+    readonly filterContext?: IFilterContext | IFilterContextDefinition;
+    readonly layout?: IDashboardLayout<TWidget>;
+    readonly plugins?: IDashboardPluginLink[];
+    // (undocumented)
+    readonly type: "IDashboard";
 }
 
 // @public
@@ -746,6 +798,32 @@ export interface IDashboardObjectIdentity {
     readonly identifier: string;
     readonly ref: ObjRef;
     readonly uri: string;
+}
+
+// @public (undocumented)
+export interface IDashboardPlugin extends IDashboardPluginBase, IDashboardObjectIdentity, IAuditableDates {
+}
+
+// @public (undocumented)
+export interface IDashboardPluginBase {
+    readonly description?: string;
+    readonly name: string;
+    readonly tags: string[];
+    // (undocumented)
+    readonly type: "IDashboardPlugin";
+    readonly url: string;
+}
+
+// @public (undocumented)
+export interface IDashboardPluginDefinition extends IDashboardPluginBase, Partial<IDashboardObjectIdentity> {
+}
+
+// @public
+export interface IDashboardPluginLink {
+    readonly parameters?: string;
+    readonly plugin: ObjRef;
+    // (undocumented)
+    readonly type: "IDashboardPluginLink";
 }
 
 // @public
@@ -1122,6 +1200,17 @@ export interface ILegacyKpiWithPreviousPeriodComparison extends ILegacyKpiBase {
     comparisonDirection: ILegacyKpiComparisonDirection;
     // (undocumented)
     comparisonType: "previousPeriod";
+}
+
+// @public
+export interface IListedDashboard extends Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers>, IAccessControlAware {
+    readonly availability: ListedDashboardAvailability;
+    readonly description: string;
+    readonly identifier: string;
+    readonly ref: ObjRef;
+    readonly tags?: string[];
+    readonly title: string;
+    readonly uri: string;
 }
 
 // @public
@@ -1691,6 +1780,9 @@ export function isComparisonCondition(obj: unknown): obj is IComparisonCondition
 // @public
 export function isComparisonConditionOperator(obj: unknown): obj is ComparisonConditionOperator;
 
+// @public
+export function isDashboard(obj: unknown): obj is IDashboard;
+
 // @alpha
 export function isDashboardAttachment(obj: unknown): obj is IDashboardAttachment;
 
@@ -1705,6 +1797,9 @@ export function isDashboardDateFilter(obj: unknown): obj is IDashboardDateFilter
 
 // @public
 export function isDashboardDateFilterReference(obj: unknown): obj is IDashboardDateFilterReference;
+
+// @public
+export function isDashboardDefinition(obj: unknown): obj is IDashboardDefinition;
 
 // @public
 export function isDashboardLayout<TWidget = IDashboardWidget>(obj: unknown): obj is IDashboardLayout<TWidget>;
@@ -2018,6 +2113,9 @@ export interface IWorkspaceUser {
 
 // @public
 export type KpiDrillDefinition = IDrillToLegacyDashboard;
+
+// @public
+export type ListedDashboardAvailability = "full" | "viaLink";
 
 // @public
 export type LocalIdRef = {
@@ -2369,6 +2467,9 @@ export type ScreenSize = "xl" | "lg" | "md" | "sm" | "xs";
 
 // @public
 export function serializeObjRef(objRef: ObjRef | ObjRefInScope): string;
+
+// @public
+export type ShareStatus = "private" | "shared" | "public";
 
 // @public
 export type SortDirection = "asc" | "desc";

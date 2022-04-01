@@ -6,17 +6,13 @@
 
 import { CatalogItem as CatalogItem_2 } from '@gooddata/sdk-model';
 import { CatalogItemType as CatalogItemType_2 } from '@gooddata/sdk-model';
-import { DateFilterGranularity as DateFilterGranularity_2 } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { FilterContextItem as FilterContextItem_2 } from '@gooddata/sdk-model';
-import { IAbsoluteDateFilterPreset as IAbsoluteDateFilterPreset_2 } from '@gooddata/sdk-model';
 import { IAttributeDisplayFormMetadataObject as IAttributeDisplayFormMetadataObject_2 } from '@gooddata/sdk-model';
 import { IAttributeElement as IAttributeElement_2 } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeMetadataObject as IAttributeMetadataObject_2 } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
-import { IAuditableDates } from '@gooddata/sdk-model';
-import { IAuditableUsers } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { ICatalogAttribute as ICatalogAttribute_2 } from '@gooddata/sdk-model';
 import { ICatalogDateDataset as ICatalogDateDataset_2 } from '@gooddata/sdk-model';
@@ -24,33 +20,33 @@ import { ICatalogFact as ICatalogFact_2 } from '@gooddata/sdk-model';
 import { ICatalogGroup as ICatalogGroup_2 } from '@gooddata/sdk-model';
 import { ICatalogMeasure as ICatalogMeasure_2 } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
+import { IDashboard as IDashboard_2 } from '@gooddata/sdk-model';
+import { IDashboardDefinition as IDashboardDefinition_2 } from '@gooddata/sdk-model';
 import { IDashboardLayout as IDashboardLayout_2 } from '@gooddata/sdk-model';
 import { IDashboardLayoutItem as IDashboardLayoutItem_2 } from '@gooddata/sdk-model';
 import { IDashboardLayoutSection as IDashboardLayoutSection_2 } from '@gooddata/sdk-model';
-import { IDashboardObjectIdentity as IDashboardObjectIdentity_2 } from '@gooddata/sdk-model';
+import { IDashboardPlugin as IDashboardPlugin_2 } from '@gooddata/sdk-model';
+import { IDashboardPluginDefinition as IDashboardPluginDefinition_2 } from '@gooddata/sdk-model';
 import { IDashboardWidget as IDashboardWidget_2 } from '@gooddata/sdk-model';
 import { IDataset as IDataset_2 } from '@gooddata/sdk-model';
 import { IDateFilterConfig as IDateFilterConfig_2 } from '@gooddata/sdk-model';
-import { Identifier } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
 import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
-import { IFilterContext as IFilterContext_2 } from '@gooddata/sdk-model';
 import { IFilterContextDefinition as IFilterContextDefinition_2 } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
+import { IListedDashboard as IListedDashboard_2 } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureMetadataObject as IMeasureMetadataObject_2 } from '@gooddata/sdk-model';
 import { IMeasureMetadataObjectDefinition as IMeasureMetadataObjectDefinition_2 } from '@gooddata/sdk-model';
 import { IMetadataObject as IMetadataObject_2 } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
-import { IRelativeDateFilterPreset as IRelativeDateFilterPreset_2 } from '@gooddata/sdk-model';
 import { IScheduledMail as IScheduledMail_2 } from '@gooddata/sdk-model';
 import { IScheduledMailDefinition as IScheduledMailDefinition_2 } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
-import { ITempFilterContext as ITempFilterContext_2 } from '@gooddata/sdk-model';
 import { IUser as IUser_2 } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
 import { IWidget as IWidget_2 } from '@gooddata/sdk-model';
@@ -128,8 +124,8 @@ export const catalogItemMetadataObject: (catalogItem: m.CatalogItem) => m.Metada
 // @public @deprecated
 export type CatalogItemType = m.CatalogItemType;
 
-// @public
-export type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
+// @public @deprecated
+export type DashboardDateFilterConfigMode = m.DashboardDateFilterConfigMode;
 
 // @public @deprecated
 export const dashboardFilterReferenceObjRef: typeof m.dashboardFilterReferenceObjRef;
@@ -197,11 +193,8 @@ export interface IAbsoluteDateFilterForm extends m.IAbsoluteDateFilterForm {
 export interface IAbsoluteDateFilterPreset extends m.IAbsoluteDateFilterPreset {
 }
 
-// @alpha
-export interface IAccessControlAware {
-    readonly isLocked?: boolean;
-    readonly isUnderStrictControl?: boolean;
-    readonly shareStatus: ShareStatus;
+// @alpha @deprecated
+export interface IAccessControlAware extends m.IAccessControlAware {
 }
 
 // @public
@@ -401,14 +394,8 @@ export interface ICommentExpressionToken {
     value: string;
 }
 
-// @alpha
-export interface IDashboard<TWidget = IDashboardWidget_2> extends IDashboardBase, IDashboardObjectIdentity_2, Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers>, IAccessControlAware {
-    readonly dateFilterConfig?: IDashboardDateFilterConfig;
-    readonly filterContext?: IFilterContext_2 | ITempFilterContext_2;
-    readonly layout?: IDashboardLayout_2<TWidget>;
-    readonly plugins?: IDashboardPluginLink[];
-    // (undocumented)
-    readonly type: "IDashboard";
+// @alpha @deprecated
+export interface IDashboard<TWidget = m.IDashboardWidget> extends m.IDashboard<TWidget> {
 }
 
 // @alpha @deprecated
@@ -427,44 +414,28 @@ export interface IDashboardAttributeFilterParent extends m.IDashboardAttributeFi
 export interface IDashboardAttributeFilterReference extends m.IDashboardAttributeFilterReference {
 }
 
-// @alpha
-export interface IDashboardBase {
-    readonly description: string;
-    readonly tags?: string[];
-    readonly title: string;
+// @alpha @deprecated
+export interface IDashboardBase extends m.IDashboardBase {
 }
 
 // @public @deprecated
 export interface IDashboardDateFilter extends m.IDashboardDateFilter {
 }
 
-// @public
-export interface IDashboardDateFilterAddedPresets {
-    absolutePresets?: IAbsoluteDateFilterPreset_2[];
-    relativePresets?: IRelativeDateFilterPreset_2[];
+// @public @deprecated
+export interface IDashboardDateFilterAddedPresets extends m.IDashboardDateFilterAddedPresets {
 }
 
-// @public
-export interface IDashboardDateFilterConfig {
-    addPresets?: IDashboardDateFilterAddedPresets;
-    filterName: string;
-    hideGranularities?: DateFilterGranularity_2[];
-    hideOptions?: Identifier[];
-    mode: DashboardDateFilterConfigMode;
+// @public @deprecated
+export interface IDashboardDateFilterConfig extends m.IDashboardDateFilterConfig {
 }
 
 // @public @deprecated
 export interface IDashboardDateFilterReference extends m.IDashboardDateFilterReference {
 }
 
-// @alpha
-export interface IDashboardDefinition<TWidget = IDashboardWidget_2> extends IDashboardBase, IAccessControlAware, Partial<IDashboardObjectIdentity_2> {
-    readonly dateFilterConfig?: IDashboardDateFilterConfig;
-    readonly filterContext?: IFilterContext_2 | IFilterContextDefinition_2;
-    readonly layout?: IDashboardLayout_2<TWidget>;
-    readonly plugins?: IDashboardPluginLink[];
-    // (undocumented)
-    readonly type: "IDashboard";
+// @alpha @deprecated
+export interface IDashboardDefinition<TWidget = m.IDashboardWidget> extends m.IDashboardDefinition<TWidget> {
 }
 
 // @public @deprecated
@@ -502,36 +473,26 @@ export interface IDashboardMetadataObject extends m.IDashboardMetadataObject {
 export interface IDashboardObjectIdentity extends m.IDashboardObjectIdentity {
 }
 
-// @alpha (undocumented)
-export interface IDashboardPlugin extends IDashboardPluginBase, IDashboardObjectIdentity_2, IAuditableDates {
+// @alpha @deprecated (undocumented)
+export interface IDashboardPlugin extends m.IDashboardPlugin {
 }
 
-// @alpha (undocumented)
-export interface IDashboardPluginBase {
-    readonly description?: string;
-    readonly name: string;
-    readonly tags: string[];
-    // (undocumented)
-    readonly type: "IDashboardPlugin";
-    readonly url: string;
+// @alpha @deprecated (undocumented)
+export interface IDashboardPluginBase extends m.IDashboardPluginBase {
 }
 
-// @alpha (undocumented)
-export interface IDashboardPluginDefinition extends IDashboardPluginBase, Partial<IDashboardObjectIdentity_2> {
+// @alpha @deprecated (undocumented)
+export interface IDashboardPluginDefinition extends m.IDashboardPluginDefinition {
 }
 
-// @alpha
-export interface IDashboardPluginLink {
-    readonly parameters?: string;
-    readonly plugin: ObjRef;
-    // (undocumented)
-    readonly type: "IDashboardPluginLink";
+// @alpha @deprecated
+export interface IDashboardPluginLink extends m.IDashboardPluginLink {
 }
 
 // @public
 export interface IDashboardReferences {
     insights: IInsight[];
-    plugins: IDashboardPlugin[];
+    plugins: IDashboardPlugin_2[];
 }
 
 // @public @deprecated
@@ -540,7 +501,7 @@ export type IDashboardWidget = m.IDashboardWidget;
 // @public
 export interface IDashboardWithReferences {
     // (undocumented)
-    dashboard: IDashboard;
+    dashboard: IDashboard_2;
     // (undocumented)
     references: IDashboardReferences;
 }
@@ -898,15 +859,8 @@ export interface ILegacyKpiWithPopComparison extends m.ILegacyKpiWithPopComparis
 export interface ILegacyKpiWithPreviousPeriodComparison extends m.ILegacyKpiWithPreviousPeriodComparison {
 }
 
-// @public
-export interface IListedDashboard extends Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers>, IAccessControlAware {
-    readonly availability: ListedDashboardAvailability;
-    readonly description: string;
-    readonly identifier: string;
-    readonly ref: ObjRef;
-    readonly tags?: string[];
-    readonly title: string;
-    readonly uri: string;
+// @public @deprecated
+export interface IListedDashboard extends m.IListedDashboard {
 }
 
 // @public
@@ -1152,8 +1106,8 @@ export interface IScheduledMailBase extends m.IScheduledMailBase {
 export interface IScheduledMailDefinition extends m.IScheduledMailDefinition {
 }
 
-// @public
-export function isDashboard(obj: unknown): obj is IDashboard;
+// @public @deprecated
+export const isDashboard: typeof m.isDashboard;
 
 // @alpha @deprecated
 export const isDashboardAttachment: typeof m.isDashboardAttachment;
@@ -1170,8 +1124,8 @@ export const isDashboardDateFilter: typeof m.isDashboardDateFilter;
 // @public @deprecated
 export const isDashboardDateFilterReference: typeof m.isDashboardDateFilterReference;
 
-// @public
-export function isDashboardDefinition(obj: unknown): obj is IDashboardDefinition;
+// @public @deprecated
+export const isDashboardDefinition: typeof m.isDashboardDefinition;
 
 // @public @deprecated
 export const isDashboardLayout: typeof m.isDashboardLayout;
@@ -1873,8 +1827,8 @@ export interface IWorkspaceCatalogWithAvailableItemsFactoryOptions extends IWork
 
 // @public
 export interface IWorkspaceDashboardsService {
-    createDashboard(dashboard: IDashboardDefinition): Promise<IDashboard>;
-    createDashboardPlugin(plugin: IDashboardPluginDefinition): Promise<IDashboardPlugin>;
+    createDashboard(dashboard: IDashboardDefinition_2): Promise<IDashboard_2>;
+    createDashboardPlugin(plugin: IDashboardPluginDefinition_2): Promise<IDashboardPlugin_2>;
     createScheduledMail(scheduledMail: IScheduledMailDefinition_2, exportFilterContext?: IFilterContextDefinition_2): Promise<IScheduledMail_2>;
     createWidgetAlert(alert: IWidgetAlertDefinition_2): Promise<IWidgetAlert_2>;
     deleteDashboard(ref: ObjRef): Promise<void>;
@@ -1884,11 +1838,11 @@ export interface IWorkspaceDashboardsService {
     deleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
     exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem_2[]): Promise<string>;
     getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert_2[]>;
-    getDashboard(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboard>;
-    getDashboardPlugin(ref: ObjRef): Promise<IDashboardPlugin>;
-    getDashboardPlugins(): Promise<IDashboardPlugin[]>;
-    getDashboardReferencedObjects(dashboard: IDashboard, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardReferences>;
-    getDashboards(options?: IGetDashboardOptions): Promise<IListedDashboard[]>;
+    getDashboard(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboard_2>;
+    getDashboardPlugin(ref: ObjRef): Promise<IDashboardPlugin_2>;
+    getDashboardPlugins(): Promise<IDashboardPlugin_2[]>;
+    getDashboardReferencedObjects(dashboard: IDashboard_2, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardReferences>;
+    getDashboards(options?: IGetDashboardOptions): Promise<IListedDashboard_2[]>;
     getDashboardWidgetAlertsForCurrentUser(ref: ObjRef): Promise<IWidgetAlert_2[]>;
     getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardWithReferences>;
     getResolvedFiltersForWidget(widget: IWidget_2, filters: IFilter[]): Promise<IFilter[]>;
@@ -1896,7 +1850,7 @@ export interface IWorkspaceDashboardsService {
     getScheduledMailsForDashboard(ref: ObjRef, options?: IGetScheduledMailOptions): Promise<IScheduledMail_2[]>;
     getWidgetAlertsCountForWidgets(refs: ObjRef[]): Promise<IWidgetAlertCount[]>;
     getWidgetReferencedObjects(widget: IWidget_2, types?: SupportedWidgetReferenceTypes[]): Promise<IWidgetReferences>;
-    updateDashboard(dashboard: IDashboard, updatedDashboard: IDashboardDefinition): Promise<IDashboard>;
+    updateDashboard(dashboard: IDashboard_2, updatedDashboard: IDashboardDefinition_2): Promise<IDashboard_2>;
     updateWidgetAlert(alert: IWidgetAlert_2 | IWidgetAlertDefinition_2): Promise<IWidgetAlert_2>;
     // (undocumented)
     readonly workspace: string;
@@ -2051,8 +2005,8 @@ export function layoutWidgets<TWidget extends IDashboardWidget_2>(layout: IDashb
 // @alpha
 export function layoutWidgetsWithPaths<TWidget extends IDashboardWidget_2>(layout: IDashboardLayout_2<TWidget>): IWidgetWithLayoutPath<TWidget>[];
 
-// @alpha
-export type ListedDashboardAvailability = "full" | "viaLink";
+// @alpha @deprecated
+export type ListedDashboardAvailability = m.ListedDashboardAvailability;
 
 // @public @deprecated
 export type MetadataObject = m.MetadataObject;
@@ -2134,8 +2088,8 @@ export type ScheduledMailAttachment = m.ScheduledMailAttachment;
 // @public @deprecated
 export type ScreenSize = m.ScreenSize;
 
-// @alpha
-export type ShareStatus = "private" | "shared" | "public";
+// @alpha @deprecated
+export type ShareStatus = m.ShareStatus;
 
 // @alpha (undocumented)
 export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin";

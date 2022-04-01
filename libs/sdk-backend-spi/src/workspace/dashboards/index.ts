@@ -11,16 +11,38 @@ import {
     CatalogItem,
     IScheduledMail,
     IScheduledMailDefinition,
-} from "@gooddata/sdk-model";
-import {
-    IDashboard,
-    IDashboardDefinition,
+    IInsight,
     IDashboardPlugin,
-    IDashboardPluginDefinition,
-    IDashboardReferences,
-    IDashboardWithReferences,
+    IDashboard,
     IListedDashboard,
-} from "./dashboard";
+    IDashboardDefinition,
+    IDashboardPluginDefinition,
+} from "@gooddata/sdk-model";
+
+/**
+ * Dashboard referenced objects
+ * @public
+ */
+export interface IDashboardReferences {
+    /**
+     * Referenced insights. Empty if no insights on dashboard or referenced insights were not requested.
+     */
+    insights: IInsight[];
+
+    /**
+     * Referenced plugins. Empty if no plugins on dashboard or referenced plugins were not requested.
+     */
+    plugins: IDashboardPlugin[];
+}
+
+/**
+ * Dashboard with referenced objects
+ * @public
+ */
+export interface IDashboardWithReferences {
+    dashboard: IDashboard;
+    references: IDashboardReferences;
+}
 
 /**
  * List of currently supported types of references that can be retrieved using getWidgetReferencedObjects()

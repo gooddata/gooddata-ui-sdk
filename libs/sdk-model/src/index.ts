@@ -630,3 +630,22 @@ export {
     isDashboardLayoutItem,
     isDashboardWidget,
 } from "./dashboard/layout";
+
+export {
+    IDashboard,
+    IDashboardDefinition,
+    IListedDashboard,
+    ListedDashboardAvailability,
+    IDashboardBase,
+    IDashboardDateFilterConfig,
+    DashboardDateFilterConfigMode,
+    IDashboardDateFilterAddedPresets,
+    IDashboardPluginBase,
+    IDashboardPlugin,
+    IDashboardPluginDefinition,
+    IDashboardPluginLink,
+    isDashboard,
+    isDashboardDefinition,
+    IAccessControlAware,
+    ShareStatus,
+} from "./dashboard/dashboard";

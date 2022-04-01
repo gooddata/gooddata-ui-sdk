@@ -12,7 +12,7 @@ import { AnyAction } from '@reduxjs/toolkit';
 import { CaseReducer } from '@reduxjs/toolkit';
 import { CaseReducerActions } from '@reduxjs/toolkit';
 import { ComponentType } from 'react';
-import { DashboardDateFilterConfigMode } from '@gooddata/sdk-backend-spi';
+import { DashboardDateFilterConfigMode } from '@gooddata/sdk-model';
 import { DataViewFacade } from '@gooddata/sdk-ui';
 import { DateFilterGranularity } from '@gooddata/sdk-backend-spi';
 import { DateFilterGranularity as DateFilterGranularity_2 } from '@gooddata/sdk-model';
@@ -139,6 +139,7 @@ import { SagaIterator } from 'redux-saga';
 import { ScreenSize } from '@gooddata/sdk-backend-spi';
 import { Selector } from '@reduxjs/toolkit';
 import { ShareStatus } from '@gooddata/sdk-backend-spi';
+import { ShareStatus as ShareStatus_2 } from '@gooddata/sdk-model';
 import { TypedUseSelectorHook } from 'react-redux';
 import { UriRef } from '@gooddata/sdk-model';
 import { UseCancelablePromiseState } from '@gooddata/sdk-ui';
@@ -4290,7 +4291,7 @@ export const selectDashboardSaving: OutputSelector<DashboardState, SavingState, 
 export const selectDashboardShareInfo: OutputSelector<DashboardState, IAccessControlAware, (res: DashboardDescriptor) => IAccessControlAware>;
 
 // @alpha
-export const selectDashboardShareStatus: OutputSelector<DashboardState, ShareStatus, (res: DashboardDescriptor) => ShareStatus>;
+export const selectDashboardShareStatus: OutputSelector<DashboardState, ShareStatus_2, (res: DashboardDescriptor) => ShareStatus_2>;
 
 // @public
 export const selectDashboardTags: OutputSelector<DashboardState, string[] | undefined, (res: DashboardDescriptor) => string[] | undefined>;

@@ -13,6 +13,7 @@ import { BuiltInWidgetTypes } from '@gooddata/sdk-model';
 import { CatalogItem } from '@gooddata/sdk-model';
 import { catalogItemMetadataObject } from '@gooddata/sdk-model';
 import { CatalogItemType } from '@gooddata/sdk-model';
+import { DashboardDateFilterConfigMode } from '@gooddata/sdk-model';
 import { dashboardFilterReferenceObjRef } from '@gooddata/sdk-model';
 import { DataColumnType } from '@gooddata/sdk-model';
 import { DatasetLoadStatus } from '@gooddata/sdk-model';
@@ -29,6 +30,7 @@ import { getColorMappingPredicate } from '@gooddata/sdk-ui-charts';
 import { GroupableCatalogItem } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilterForm } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilterPreset } from '@gooddata/sdk-model';
+import { IAccessControlAware } from '@gooddata/sdk-model';
 import { IAllTimeDateFilterOption } from '@gooddata/sdk-model';
 import { IAnalyticalWidget } from '@gooddata/sdk-model';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
@@ -42,12 +44,17 @@ import { ICatalogFact } from '@gooddata/sdk-model';
 import { ICatalogGroup } from '@gooddata/sdk-model';
 import { ICatalogItemBase } from '@gooddata/sdk-model';
 import { ICatalogMeasure } from '@gooddata/sdk-model';
+import { IDashboard } from '@gooddata/sdk-model';
 import { IDashboardAttachment } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilter } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilterParent } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilterReference } from '@gooddata/sdk-model';
+import { IDashboardBase } from '@gooddata/sdk-model';
 import { IDashboardDateFilter } from '@gooddata/sdk-model';
+import { IDashboardDateFilterAddedPresets } from '@gooddata/sdk-model';
+import { IDashboardDateFilterConfig } from '@gooddata/sdk-model';
 import { IDashboardDateFilterReference } from '@gooddata/sdk-model';
+import { IDashboardDefinition } from '@gooddata/sdk-model';
 import { IDashboardFilterReference } from '@gooddata/sdk-model';
 import { IDashboardLayout } from '@gooddata/sdk-model';
 import { IDashboardLayoutItem } from '@gooddata/sdk-model';
@@ -57,6 +64,10 @@ import { IDashboardLayoutSize } from '@gooddata/sdk-model';
 import { IDashboardLayoutSizeByScreenSize } from '@gooddata/sdk-model';
 import { IDashboardMetadataObject } from '@gooddata/sdk-model';
 import { IDashboardObjectIdentity } from '@gooddata/sdk-model';
+import { IDashboardPlugin } from '@gooddata/sdk-model';
+import { IDashboardPluginBase } from '@gooddata/sdk-model';
+import { IDashboardPluginDefinition } from '@gooddata/sdk-model';
+import { IDashboardPluginLink } from '@gooddata/sdk-model';
 import { IDashboardWidget } from '@gooddata/sdk-model';
 import { IDataColumn } from '@gooddata/sdk-model';
 import { IDataColumnBody } from '@gooddata/sdk-model';
@@ -103,6 +114,7 @@ import { ILegacyKpiWithComparison } from '@gooddata/sdk-model';
 import { ILegacyKpiWithoutComparison } from '@gooddata/sdk-model';
 import { ILegacyKpiWithPopComparison } from '@gooddata/sdk-model';
 import { ILegacyKpiWithPreviousPeriodComparison } from '@gooddata/sdk-model';
+import { IListedDashboard } from '@gooddata/sdk-model';
 import { IMeasureMetadataObject } from '@gooddata/sdk-model';
 import { IMeasureMetadataObjectBase } from '@gooddata/sdk-model';
 import { IMeasureMetadataObjectDefinition } from '@gooddata/sdk-model';
@@ -127,11 +139,13 @@ import { isCatalogMeasure } from '@gooddata/sdk-model';
 import { IScheduledMail } from '@gooddata/sdk-model';
 import { IScheduledMailBase } from '@gooddata/sdk-model';
 import { IScheduledMailDefinition } from '@gooddata/sdk-model';
+import { isDashboard } from '@gooddata/sdk-model';
 import { isDashboardAttachment } from '@gooddata/sdk-model';
 import { isDashboardAttributeFilter } from '@gooddata/sdk-model';
 import { isDashboardAttributeFilterReference } from '@gooddata/sdk-model';
 import { isDashboardDateFilter } from '@gooddata/sdk-model';
 import { isDashboardDateFilterReference } from '@gooddata/sdk-model';
+import { isDashboardDefinition } from '@gooddata/sdk-model';
 import { isDashboardLayout } from '@gooddata/sdk-model';
 import { isDashboardLayoutItem } from '@gooddata/sdk-model';
 import { isDashboardLayoutSection } from '@gooddata/sdk-model';
@@ -180,6 +194,7 @@ import { IWidgetDefinition } from '@gooddata/sdk-model';
 import { IWidgetDescription } from '@gooddata/sdk-model';
 import { IWorkspaceUser } from '@gooddata/sdk-model';
 import { KpiDrillDefinition } from '@gooddata/sdk-model';
+import { ListedDashboardAvailability } from '@gooddata/sdk-model';
 import { MetadataObject } from '@gooddata/sdk-model';
 import { metadataObjectId } from '@gooddata/sdk-model';
 import { newAbsoluteDashboardDateFilter } from '@gooddata/sdk-model';
@@ -192,7 +207,7 @@ import { RelativePresetType } from '@gooddata/sdk-model';
 import { RelativeType } from '@gooddata/sdk-model';
 import { ScheduledMailAttachment } from '@gooddata/sdk-model';
 import { ScreenSize } from '@gooddata/sdk-model';
-import { SupportedWidgetReferenceTypes } from '@gooddata/sdk-model';
+import { ShareStatus } from '@gooddata/sdk-model';
 import { userFullName } from '@gooddata/sdk-model';
 import { widgetId } from '@gooddata/sdk-model';
 import { widgetRef } from '@gooddata/sdk-model';
@@ -218,6 +233,8 @@ export { CatalogItem }
 export { catalogItemMetadataObject }
 
 export { CatalogItemType }
+
+export { DashboardDateFilterConfigMode }
 
 export { dashboardFilterReferenceObjRef }
 
@@ -251,6 +268,8 @@ export { IAbsoluteDateFilterForm }
 
 export { IAbsoluteDateFilterPreset }
 
+export { IAccessControlAware }
+
 export { IAllTimeDateFilterOption }
 
 export { IAnalyticalWidget }
@@ -277,6 +296,8 @@ export { ICatalogItemBase }
 
 export { ICatalogMeasure }
 
+export { IDashboard }
+
 export { IDashboardAttachment }
 
 export { IDashboardAttributeFilter }
@@ -285,9 +306,17 @@ export { IDashboardAttributeFilterParent }
 
 export { IDashboardAttributeFilterReference }
 
+export { IDashboardBase }
+
 export { IDashboardDateFilter }
 
+export { IDashboardDateFilterAddedPresets }
+
+export { IDashboardDateFilterConfig }
+
 export { IDashboardDateFilterReference }
+
+export { IDashboardDefinition }
 
 export { IDashboardFilterReference }
 
@@ -306,6 +335,14 @@ export { IDashboardLayoutSizeByScreenSize }
 export { IDashboardMetadataObject }
 
 export { IDashboardObjectIdentity }
+
+export { IDashboardPlugin }
+
+export { IDashboardPluginBase }
+
+export { IDashboardPluginDefinition }
+
+export { IDashboardPluginLink }
 
 export { IDashboardWidget }
 
@@ -399,6 +436,8 @@ export { ILegacyKpiWithPopComparison }
 
 export { ILegacyKpiWithPreviousPeriodComparison }
 
+export { IListedDashboard }
+
 export { IMeasureMetadataObject }
 
 export { IMeasureMetadataObjectBase }
@@ -447,6 +486,8 @@ export { IScheduledMailBase }
 
 export { IScheduledMailDefinition }
 
+export { isDashboard }
+
 export { isDashboardAttachment }
 
 export { isDashboardAttributeFilter }
@@ -456,6 +497,8 @@ export { isDashboardAttributeFilterReference }
 export { isDashboardDateFilter }
 
 export { isDashboardDateFilterReference }
+
+export { isDashboardDefinition }
 
 export { isDashboardLayout }
 
@@ -553,6 +596,8 @@ export { IWorkspaceUser }
 
 export { KpiDrillDefinition }
 
+export { ListedDashboardAvailability }
+
 export { MetadataObject }
 
 export { metadataObjectId }
@@ -577,7 +622,7 @@ export { ScheduledMailAttachment }
 
 export { ScreenSize }
 
-export { SupportedWidgetReferenceTypes }
+export { ShareStatus }
 
 export { userFullName }
 
