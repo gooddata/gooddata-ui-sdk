@@ -42,6 +42,7 @@ import { ICatalogFact } from '@gooddata/sdk-model';
 import { ICatalogGroup } from '@gooddata/sdk-model';
 import { ICatalogItemBase } from '@gooddata/sdk-model';
 import { ICatalogMeasure } from '@gooddata/sdk-model';
+import { IDashboardAttachment } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilter } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilterParent } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilterReference } from '@gooddata/sdk-model';
@@ -73,6 +74,7 @@ import { IDrillToCustomUrlTarget } from '@gooddata/sdk-model';
 import { IDrillToDashboard } from '@gooddata/sdk-model';
 import { IDrillToInsight } from '@gooddata/sdk-model';
 import { IDrillToLegacyDashboard } from '@gooddata/sdk-model';
+import { IExportOptions } from '@gooddata/sdk-model';
 import { IFactMetadataObject } from '@gooddata/sdk-model';
 import { IFilterableWidget } from '@gooddata/sdk-model';
 import { IFilterContext } from '@gooddata/sdk-model';
@@ -115,6 +117,10 @@ import { isCatalogAttribute } from '@gooddata/sdk-model';
 import { isCatalogDateDataset } from '@gooddata/sdk-model';
 import { isCatalogFact } from '@gooddata/sdk-model';
 import { isCatalogMeasure } from '@gooddata/sdk-model';
+import { IScheduledMail } from '@gooddata/sdk-model';
+import { IScheduledMailBase } from '@gooddata/sdk-model';
+import { IScheduledMailDefinition } from '@gooddata/sdk-model';
+import { isDashboardAttachment } from '@gooddata/sdk-model';
 import { isDashboardAttributeFilter } from '@gooddata/sdk-model';
 import { isDashboardAttributeFilterReference } from '@gooddata/sdk-model';
 import { isDashboardDateFilter } from '@gooddata/sdk-model';
@@ -149,6 +155,7 @@ import { isVariableMetadataObject } from '@gooddata/sdk-model';
 import { isWidget } from '@gooddata/sdk-model';
 import { isWidgetAlert } from '@gooddata/sdk-model';
 import { isWidgetAlertDefinition } from '@gooddata/sdk-model';
+import { isWidgetAttachment } from '@gooddata/sdk-model';
 import { isWidgetDefinition } from '@gooddata/sdk-model';
 import { ITempFilterContext } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
@@ -157,8 +164,10 @@ import { IWidget } from '@gooddata/sdk-model';
 import { IWidgetAlert } from '@gooddata/sdk-model';
 import { IWidgetAlertBase } from '@gooddata/sdk-model';
 import { IWidgetAlertDefinition } from '@gooddata/sdk-model';
+import { IWidgetAttachment } from '@gooddata/sdk-model';
 import { IWidgetDefinition } from '@gooddata/sdk-model';
 import { IWidgetDescription } from '@gooddata/sdk-model';
+import { IWorkspaceUser } from '@gooddata/sdk-model';
 import { KpiDrillDefinition } from '@gooddata/sdk-model';
 import { MetadataObject } from '@gooddata/sdk-model';
 import { metadataObjectId } from '@gooddata/sdk-model';
@@ -170,6 +179,7 @@ import { RelativeFormType } from '@gooddata/sdk-model';
 import { RelativeGranularityOffset } from '@gooddata/sdk-model';
 import { RelativePresetType } from '@gooddata/sdk-model';
 import { RelativeType } from '@gooddata/sdk-model';
+import { ScheduledMailAttachment } from '@gooddata/sdk-model';
 import { userFullName } from '@gooddata/sdk-model';
 import { widgetId } from '@gooddata/sdk-model';
 import { widgetRef } from '@gooddata/sdk-model';
@@ -254,6 +264,8 @@ export { ICatalogItemBase }
 
 export { ICatalogMeasure }
 
+export { IDashboardAttachment }
+
 export { IDashboardAttributeFilter }
 
 export { IDashboardAttributeFilterParent }
@@ -315,6 +327,8 @@ export { IDrillToDashboard }
 export { IDrillToInsight }
 
 export { IDrillToLegacyDashboard }
+
+export { IExportOptions }
 
 export { IFactMetadataObject }
 
@@ -400,6 +414,14 @@ export { isCatalogFact }
 
 export { isCatalogMeasure }
 
+export { IScheduledMail }
+
+export { IScheduledMailBase }
+
+export { IScheduledMailDefinition }
+
+export { isDashboardAttachment }
+
 export { isDashboardAttributeFilter }
 
 export { isDashboardAttributeFilterReference }
@@ -468,6 +490,8 @@ export { isWidgetAlert }
 
 export { isWidgetAlertDefinition }
 
+export { isWidgetAttachment }
+
 export { isWidgetDefinition }
 
 export { ITempFilterContext }
@@ -484,9 +508,13 @@ export { IWidgetAlertBase }
 
 export { IWidgetAlertDefinition }
 
+export { IWidgetAttachment }
+
 export { IWidgetDefinition }
 
 export { IWidgetDescription }
+
+export { IWorkspaceUser }
 
 export { KpiDrillDefinition }
 
@@ -509,6 +537,8 @@ export { RelativeGranularityOffset }
 export { RelativePresetType }
 
 export { RelativeType }
+
+export { ScheduledMailAttachment }
 
 export { userFullName }
 

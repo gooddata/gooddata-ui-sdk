@@ -637,6 +637,13 @@ export interface IComparisonConditionBody {
     value: number;
 }
 
+// @alpha
+export interface IDashboardAttachment {
+    dashboard: ObjRef;
+    filterContext?: ObjRef;
+    format: "pdf";
+}
+
 // @public
 export interface IDashboardAttributeFilter {
     // (undocumented)
@@ -918,6 +925,14 @@ export interface IExecutionDefinition {
     readonly postProcessing?: IPostProcessing;
     readonly sortBy: ISortItem[];
     readonly workspace: string;
+}
+
+// @alpha
+export interface IExportOptions {
+    // (undocumented)
+    includeFilters?: boolean;
+    // (undocumented)
+    mergeHeaders?: boolean;
 }
 
 // @public
@@ -1590,6 +1605,34 @@ export function isCatalogFact(obj: unknown): obj is ICatalogFact;
 // @public
 export function isCatalogMeasure(obj: unknown): obj is ICatalogMeasure;
 
+// @alpha
+export interface IScheduledMail extends IAuditableUsers, IScheduledMailBase, IDashboardObjectIdentity {
+}
+
+// @alpha
+export interface IScheduledMailBase {
+    attachments: ScheduledMailAttachment[];
+    bcc?: string[];
+    body: string;
+    description: string;
+    lastSuccessful?: string;
+    subject: string;
+    title: string;
+    to: string[];
+    unlisted: boolean;
+    unsubscribed?: string[];
+    when: {
+        startDate: string;
+        endDate?: string;
+        recurrence: string;
+        timeZone: string;
+    };
+}
+
+// @alpha
+export interface IScheduledMailDefinition extends IScheduledMailBase, Partial<IDashboardObjectIdentity> {
+}
+
 // @public
 export function isColorFromPalette(obj: unknown): obj is IColorFromPalette;
 
@@ -1601,6 +1644,9 @@ export function isComparisonCondition(obj: unknown): obj is IComparisonCondition
 
 // @public
 export function isComparisonConditionOperator(obj: unknown): obj is ComparisonConditionOperator;
+
+// @alpha
+export function isDashboardAttachment(obj: unknown): obj is IDashboardAttachment;
 
 // @public
 export function isDashboardAttributeFilter(obj: unknown): obj is IDashboardAttributeFilter;
@@ -1793,6 +1839,9 @@ export function isWidgetAlert(obj: unknown): obj is IWidgetAlert;
 // @alpha
 export function isWidgetAlertDefinition(obj: unknown): obj is IWidgetAlertDefinition;
 
+// @alpha
+export function isWidgetAttachment(obj: unknown): obj is IWidgetAttachment;
+
 // @public
 export function isWidgetDefinition(obj: unknown): obj is IWidgetDefinition;
 
@@ -1878,6 +1927,16 @@ export interface IWidgetAlertDefinition extends IWidgetAlertBase, Partial<IDashb
     readonly filterContext?: IFilterContext | IFilterContextDefinition;
 }
 
+// @alpha
+export interface IWidgetAttachment {
+    // (undocumented)
+    exportOptions?: IExportOptions;
+    filterContext?: ObjRef;
+    formats: ("csv" | "xlsx")[];
+    widget: ObjRef;
+    widgetDashboard: ObjRef;
+}
+
 // @public
 export type IWidgetDefinition = IKpiWidgetDefinition | IInsightWidgetDefinition;
 
@@ -1885,6 +1944,18 @@ export type IWidgetDefinition = IKpiWidgetDefinition | IInsightWidgetDefinition;
 export interface IWidgetDescription {
     readonly description: string;
     readonly title: string;
+}
+
+// @public
+export interface IWorkspaceUser {
+    email: string;
+    firstName?: string;
+    fullName?: string;
+    lastName?: string;
+    login: string;
+    ref: ObjRef;
+    status?: "ENABLED" | "DISABLED";
+    uri: string;
 }
 
 // @public
@@ -2231,6 +2302,9 @@ export type RelativeType = "relative";
 
 // @public (undocumented)
 export type RgbType = "rgb";
+
+// @alpha
+export type ScheduledMailAttachment = IDashboardAttachment | IWidgetAttachment;
 
 // @public
 export function serializeObjRef(objRef: ObjRef | ObjRefInScope): string;

@@ -380,8 +380,6 @@ export {
     visClassUri,
 } from "./insight";
 
-export { IUser, userFullName } from "./user";
-
 export {
     insightCreatedComparator,
     insightCreatedByComparator,
@@ -603,3 +601,17 @@ export {
     isInsightWidgetDefinition,
     isInsightWidget,
 } from "./dashboard/widget";
+
+export {
+    IDashboardAttachment,
+    isDashboardAttachment,
+    IWidgetAttachment,
+    isWidgetAttachment,
+    IExportOptions,
+    IScheduledMail,
+    IScheduledMailDefinition,
+    ScheduledMailAttachment,
+    IScheduledMailBase,
+} from "./dashboard/scheduledMail";
+
+export { IUser, IWorkspaceUser, userFullName } from "./user";

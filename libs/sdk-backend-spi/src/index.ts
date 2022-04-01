@@ -243,17 +243,6 @@ export {
     walkLayout,
 } from "./workspace/dashboards/utils";
 export {
-    IDashboardAttachment,
-    isDashboardAttachment,
-    IWidgetAttachment,
-    isWidgetAttachment,
-    IExportOptions,
-    IScheduledMail,
-    IScheduledMailDefinition,
-    ScheduledMailAttachment,
-    IScheduledMailBase,
-} from "./workspace/dashboards/scheduledMail";
-export {
     IWorkspaceUser,
     IWorkspaceUsersQuery,
     IWorkspaceUsersQueryOptions,
@@ -507,3 +496,15 @@ export {
     isInsightWidgetDefinition,
     isInsightWidget,
 } from "./deprecated/dashboard/widget";
+
+export {
+    IDashboardAttachment,
+    isDashboardAttachment,
+    IWidgetAttachment,
+    isWidgetAttachment,
+    IExportOptions,
+    IScheduledMail,
+    IScheduledMailDefinition,
+    ScheduledMailAttachment,
+    IScheduledMailBase,
+} from "./deprecated/dashboard/scheduledMail";

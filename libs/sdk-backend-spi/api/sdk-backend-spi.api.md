@@ -43,6 +43,8 @@ import { IMetadataObject as IMetadataObject_2 } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { IRelativeDateFilterPreset as IRelativeDateFilterPreset_2 } from '@gooddata/sdk-model';
+import { IScheduledMail as IScheduledMail_2 } from '@gooddata/sdk-model';
+import { IScheduledMailDefinition as IScheduledMailDefinition_2 } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { ITempFilterContext as ITempFilterContext_2 } from '@gooddata/sdk-model';
 import { IUser as IUser_2 } from '@gooddata/sdk-model';
@@ -405,11 +407,8 @@ export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, 
     readonly type: "IDashboard";
 }
 
-// @alpha
-export interface IDashboardAttachment {
-    dashboard: ObjRef;
-    filterContext?: ObjRef;
-    format: "pdf";
+// @alpha @deprecated
+export interface IDashboardAttachment extends m.IDashboardAttachment {
 }
 
 // @public @deprecated
@@ -771,12 +770,8 @@ export interface IExportConfig {
     title?: string;
 }
 
-// @alpha
-export interface IExportOptions {
-    // (undocumented)
-    includeFilters?: boolean;
-    // (undocumented)
-    mergeHeaders?: boolean;
+// @alpha @deprecated
+export interface IExportOptions extends m.IExportOptions {
 }
 
 // @public
@@ -1160,39 +1155,23 @@ export const isCatalogFact: typeof m.isCatalogFact;
 // @public @deprecated
 export const isCatalogMeasure: typeof m.isCatalogMeasure;
 
-// @alpha
-export interface IScheduledMail extends IAuditableUsers, IScheduledMailBase, IDashboardObjectIdentity_2 {
+// @alpha @deprecated
+export interface IScheduledMail extends m.IScheduledMail {
 }
 
-// @alpha
-export interface IScheduledMailBase {
-    attachments: ScheduledMailAttachment[];
-    bcc?: string[];
-    body: string;
-    description: string;
-    lastSuccessful?: string;
-    subject: string;
-    title: string;
-    to: string[];
-    unlisted: boolean;
-    unsubscribed?: string[];
-    when: {
-        startDate: string;
-        endDate?: string;
-        recurrence: string;
-        timeZone: string;
-    };
+// @alpha @deprecated
+export interface IScheduledMailBase extends m.IScheduledMailBase {
 }
 
-// @alpha
-export interface IScheduledMailDefinition extends IScheduledMailBase, Partial<IDashboardObjectIdentity_2> {
+// @alpha @deprecated
+export interface IScheduledMailDefinition extends m.IScheduledMailDefinition {
 }
 
 // @public
 export function isDashboard(obj: unknown): obj is IDashboard;
 
-// @alpha
-export function isDashboardAttachment(obj: unknown): obj is IDashboardAttachment;
+// @alpha @deprecated
+export const isDashboardAttachment: typeof m.isDashboardAttachment;
 
 // @public @deprecated
 export const isDashboardAttributeFilter: typeof m.isDashboardAttributeFilter;
@@ -1436,8 +1415,8 @@ export const isWidgetAlert: typeof m.isWidgetAlert;
 // @alpha @deprecated
 export const isWidgetAlertDefinition: typeof m.isWidgetAlertDefinition;
 
-// @alpha
-export function isWidgetAttachment(obj: unknown): obj is IWidgetAttachment;
+// @alpha @deprecated
+export const isWidgetAttachment: typeof m.isWidgetAttachment;
 
 // @public @deprecated
 export const isWidgetDefinition: typeof m.isWidgetDefinition;
@@ -1797,14 +1776,8 @@ export interface IWidgetAlertCount {
 export interface IWidgetAlertDefinition extends m.IWidgetAlertDefinition {
 }
 
-// @alpha
-export interface IWidgetAttachment {
-    // (undocumented)
-    exportOptions?: IExportOptions;
-    filterContext?: ObjRef;
-    formats: ("csv" | "xlsx")[];
-    widget: ObjRef;
-    widgetDashboard: ObjRef;
+// @alpha @deprecated
+export interface IWidgetAttachment extends m.IWidgetAttachment {
 }
 
 // @alpha @deprecated
@@ -1917,7 +1890,7 @@ export interface IWorkspaceCatalogWithAvailableItemsFactoryOptions extends IWork
 export interface IWorkspaceDashboardsService {
     createDashboard(dashboard: IDashboardDefinition): Promise<IDashboard>;
     createDashboardPlugin(plugin: IDashboardPluginDefinition): Promise<IDashboardPlugin>;
-    createScheduledMail(scheduledMail: IScheduledMailDefinition, exportFilterContext?: IFilterContextDefinition_2): Promise<IScheduledMail>;
+    createScheduledMail(scheduledMail: IScheduledMailDefinition_2, exportFilterContext?: IFilterContextDefinition_2): Promise<IScheduledMail_2>;
     createWidgetAlert(alert: IWidgetAlertDefinition_2): Promise<IWidgetAlert_2>;
     deleteDashboard(ref: ObjRef): Promise<void>;
     deleteDashboardPlugin(ref: ObjRef): Promise<void>;
@@ -1935,9 +1908,9 @@ export interface IWorkspaceDashboardsService {
     getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardWithReferences>;
     getResolvedFiltersForWidget(widget: IWidget_2, filters: IFilter[]): Promise<IFilter[]>;
     getScheduledMailsCountForDashboard(ref: ObjRef): Promise<number>;
-    getScheduledMailsForDashboard(ref: ObjRef, options?: IGetScheduledMailOptions): Promise<IScheduledMail[]>;
+    getScheduledMailsForDashboard(ref: ObjRef, options?: IGetScheduledMailOptions): Promise<IScheduledMail_2[]>;
     getWidgetAlertsCountForWidgets(refs: ObjRef[]): Promise<IWidgetAlertCount[]>;
-    getWidgetReferencedObjects(widget: IWidget, types?: SupportedWidgetReferenceTypes[]): Promise<IWidgetReferences>;
+    getWidgetReferencedObjects(widget: IWidget_2, types?: SupportedWidgetReferenceTypes[]): Promise<IWidgetReferences>;
     updateDashboard(dashboard: IDashboard, updatedDashboard: IDashboardDefinition): Promise<IDashboard>;
     updateWidgetAlert(alert: IWidgetAlert_2 | IWidgetAlertDefinition_2): Promise<IWidgetAlert_2>;
     // (undocumented)
@@ -2037,16 +2010,8 @@ export interface IWorkspaceStylingService {
     getTheme(): Promise<ITheme>;
 }
 
-// @public
-export interface IWorkspaceUser {
-    email: string;
-    firstName?: string;
-    fullName?: string;
-    lastName?: string;
-    login: string;
-    ref: ObjRef;
-    status?: "ENABLED" | "DISABLED";
-    uri: string;
+// @public @deprecated
+export interface IWorkspaceUser extends m.IWorkspaceUser {
 }
 
 // @alpha
@@ -2178,8 +2143,8 @@ export type RelativeType = m.RelativeType;
 // @public
 export function resultHeaderName(header: IResultHeader): string;
 
-// @alpha
-export type ScheduledMailAttachment = IDashboardAttachment | IWidgetAttachment;
+// @alpha @deprecated
+export type ScheduledMailAttachment = m.ScheduledMailAttachment;
 
 // @public
 export type ScreenSize = "xl" | "lg" | "md" | "sm" | "xs";

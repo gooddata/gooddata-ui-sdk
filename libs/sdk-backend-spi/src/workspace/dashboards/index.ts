@@ -9,6 +9,8 @@ import {
     IWidget,
     ObjectType,
     CatalogItem,
+    IScheduledMail,
+    IScheduledMailDefinition,
 } from "@gooddata/sdk-model";
 import {
     IDashboard,
@@ -19,7 +21,6 @@ import {
     IDashboardWithReferences,
     IListedDashboard,
 } from "./dashboard";
-import { IScheduledMail, IScheduledMailDefinition } from "./scheduledMail";
 
 /**
  * List of currently supported types of references that can be retrieved using getWidgetReferencedObjects()

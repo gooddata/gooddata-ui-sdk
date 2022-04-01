@@ -32,6 +32,7 @@ import {
 import {
     // User
     IUser,
+    IWorkspaceUser,
     userFullName,
     // Date filter configs
     DateString,
@@ -216,11 +217,22 @@ import {
     isKpiWidget,
     isInsightWidgetDefinition,
     isInsightWidget,
+    // Scheduled Mail
+    IDashboardAttachment,
+    isDashboardAttachment,
+    IWidgetAttachment,
+    isWidgetAttachment,
+    IExportOptions,
+    IScheduledMail,
+    IScheduledMailDefinition,
+    ScheduledMailAttachment,
+    IScheduledMailBase,
 } from "@gooddata/sdk-model";
 export {
     getColorMappingPredicate,
     // User
     IUser,
+    IWorkspaceUser,
     userFullName,
     // Date filter configs
     DateString,
@@ -405,4 +417,14 @@ export {
     isKpiWidget,
     isInsightWidgetDefinition,
     isInsightWidget,
+    // Scheduled Mail
+    IDashboardAttachment,
+    isDashboardAttachment,
+    IWidgetAttachment,
+    isWidgetAttachment,
+    IExportOptions,
+    IScheduledMail,
+    IScheduledMailDefinition,
+    ScheduledMailAttachment,
+    IScheduledMailBase,
 };
