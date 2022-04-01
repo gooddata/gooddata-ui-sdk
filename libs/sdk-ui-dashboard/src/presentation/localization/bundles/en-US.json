@@ -418,7 +418,12 @@
         "limit": 0
     },
     "dialogs.schedule.management.noSchedules": {
-        "value": "This dashboard contains no scheduled exports yet.{br}Add one now.",
+        "value": "The dashboard contains no scheduled exports.{br}Add one now.",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.schedule.management.noSchedules.byUser": {
+        "value": "You have not scheduled any exports yet.{br}Add one now.",
         "comment": "",
         "limit": 0
     },

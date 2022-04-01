@@ -14,10 +14,11 @@ interface IScheduledEmailsProps {
     scheduledEmails: IScheduledMail[];
     currentUserEmail?: string;
     theme?: ITheme;
+    noSchedulesMessageId: string;
 }
 
 const ScheduledEmailsComponent: React.FC<IScheduledEmailsProps> = (props) => {
-    const { isLoading, scheduledEmails, currentUserEmail, onDelete, theme } = props;
+    const { isLoading, scheduledEmails, currentUserEmail, onDelete, theme, noSchedulesMessageId } = props;
 
     if (isLoading) {
         return (
@@ -35,7 +36,7 @@ const ScheduledEmailsComponent: React.FC<IScheduledEmailsProps> = (props) => {
     if (scheduledEmails.length === 0) {
         return (
             <div className="gd-scheduled-emails-message s-no-schedules-message">
-                <FormattedMessage id="dialogs.schedule.management.noSchedules" values={{ br: <br /> }} />
+                <FormattedMessage id={noSchedulesMessageId} values={{ br: <br /> }} />
             </div>
         );
     }

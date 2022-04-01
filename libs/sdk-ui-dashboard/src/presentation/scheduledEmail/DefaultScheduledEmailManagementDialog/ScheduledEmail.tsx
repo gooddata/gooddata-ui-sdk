@@ -13,8 +13,14 @@ interface IScheduledEmailProps {
     currentUserEmail?: string;
 }
 
-const ICON_TOOLTIP_ALIGN_POINTS = [{ align: "cr cl", offset: { x: 0, y: 0 } }];
-const TEXT_TOOLTIP_ALIGN_POINTS = [{ align: "tc bc", offset: { x: 0, y: 0 } }];
+const ICON_TOOLTIP_ALIGN_POINTS = [
+    { align: "cr cl", offset: { x: 0, y: 0 } },
+    { align: "cl cr", offset: { x: 0, y: 0 } },
+];
+const TEXT_TOOLTIP_ALIGN_POINTS = [
+    { align: "tc bc", offset: { x: 0, y: 0 } },
+    { align: "bc tc", offset: { x: 0, y: 0 } },
+];
 
 export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
     const intl = useIntl();
