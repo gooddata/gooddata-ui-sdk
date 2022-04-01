@@ -49,8 +49,15 @@ import { IDashboardAttributeFilterReference } from '@gooddata/sdk-model';
 import { IDashboardDateFilter } from '@gooddata/sdk-model';
 import { IDashboardDateFilterReference } from '@gooddata/sdk-model';
 import { IDashboardFilterReference } from '@gooddata/sdk-model';
+import { IDashboardLayout } from '@gooddata/sdk-model';
+import { IDashboardLayoutItem } from '@gooddata/sdk-model';
+import { IDashboardLayoutSection } from '@gooddata/sdk-model';
+import { IDashboardLayoutSectionHeader } from '@gooddata/sdk-model';
+import { IDashboardLayoutSize } from '@gooddata/sdk-model';
+import { IDashboardLayoutSizeByScreenSize } from '@gooddata/sdk-model';
 import { IDashboardMetadataObject } from '@gooddata/sdk-model';
 import { IDashboardObjectIdentity } from '@gooddata/sdk-model';
+import { IDashboardWidget } from '@gooddata/sdk-model';
 import { IDataColumn } from '@gooddata/sdk-model';
 import { IDataColumnBody } from '@gooddata/sdk-model';
 import { IDataHeader } from '@gooddata/sdk-model';
@@ -125,7 +132,11 @@ import { isDashboardAttributeFilter } from '@gooddata/sdk-model';
 import { isDashboardAttributeFilterReference } from '@gooddata/sdk-model';
 import { isDashboardDateFilter } from '@gooddata/sdk-model';
 import { isDashboardDateFilterReference } from '@gooddata/sdk-model';
+import { isDashboardLayout } from '@gooddata/sdk-model';
+import { isDashboardLayoutItem } from '@gooddata/sdk-model';
+import { isDashboardLayoutSection } from '@gooddata/sdk-model';
 import { isDashboardMetadataObject } from '@gooddata/sdk-model';
+import { isDashboardWidget } from '@gooddata/sdk-model';
 import { isDataSetMetadataObject } from '@gooddata/sdk-model';
 import { isDateFilterGranularity } from '@gooddata/sdk-model';
 import { isDrillFromAttribute } from '@gooddata/sdk-model';
@@ -180,6 +191,8 @@ import { RelativeGranularityOffset } from '@gooddata/sdk-model';
 import { RelativePresetType } from '@gooddata/sdk-model';
 import { RelativeType } from '@gooddata/sdk-model';
 import { ScheduledMailAttachment } from '@gooddata/sdk-model';
+import { ScreenSize } from '@gooddata/sdk-model';
+import { SupportedWidgetReferenceTypes } from '@gooddata/sdk-model';
 import { userFullName } from '@gooddata/sdk-model';
 import { widgetId } from '@gooddata/sdk-model';
 import { widgetRef } from '@gooddata/sdk-model';
@@ -278,9 +291,23 @@ export { IDashboardDateFilterReference }
 
 export { IDashboardFilterReference }
 
+export { IDashboardLayout }
+
+export { IDashboardLayoutItem }
+
+export { IDashboardLayoutSection }
+
+export { IDashboardLayoutSectionHeader }
+
+export { IDashboardLayoutSize }
+
+export { IDashboardLayoutSizeByScreenSize }
+
 export { IDashboardMetadataObject }
 
 export { IDashboardObjectIdentity }
+
+export { IDashboardWidget }
 
 export { IDataColumn }
 
@@ -430,7 +457,15 @@ export { isDashboardDateFilter }
 
 export { isDashboardDateFilterReference }
 
+export { isDashboardLayout }
+
+export { isDashboardLayoutItem }
+
+export { isDashboardLayoutSection }
+
 export { isDashboardMetadataObject }
+
+export { isDashboardWidget }
 
 export { isDataSetMetadataObject }
 
@@ -539,6 +574,10 @@ export { RelativePresetType }
 export { RelativeType }
 
 export { ScheduledMailAttachment }
+
+export { ScreenSize }
+
+export { SupportedWidgetReferenceTypes }
 
 export { userFullName }
 

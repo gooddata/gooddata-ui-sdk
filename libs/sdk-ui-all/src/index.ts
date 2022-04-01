@@ -227,6 +227,19 @@ import {
     IScheduledMailDefinition,
     ScheduledMailAttachment,
     IScheduledMailBase,
+    // Dashboard Layout
+    IDashboardLayout,
+    IDashboardWidget,
+    IDashboardLayoutSection,
+    IDashboardLayoutSectionHeader,
+    IDashboardLayoutSize,
+    IDashboardLayoutSizeByScreenSize,
+    IDashboardLayoutItem,
+    ScreenSize,
+    isDashboardLayout,
+    isDashboardLayoutSection,
+    isDashboardLayoutItem,
+    isDashboardWidget,
 } from "@gooddata/sdk-model";
 export {
     getColorMappingPredicate,
@@ -427,4 +440,17 @@ export {
     IScheduledMailDefinition,
     ScheduledMailAttachment,
     IScheduledMailBase,
+    // Dashboard Layout
+    IDashboardLayout,
+    IDashboardWidget,
+    IDashboardLayoutSection,
+    IDashboardLayoutSectionHeader,
+    IDashboardLayoutSize,
+    IDashboardLayoutSizeByScreenSize,
+    IDashboardLayoutItem,
+    ScreenSize,
+    isDashboardLayout,
+    isDashboardLayoutSection,
+    isDashboardLayoutItem,
+    isDashboardWidget,
 };

@@ -693,6 +693,49 @@ export interface IDashboardDateFilterReference {
 export type IDashboardFilterReference = IDashboardDateFilterReference | IDashboardAttributeFilterReference;
 
 // @public
+export interface IDashboardLayout<TWidget = IDashboardWidget> {
+    sections: IDashboardLayoutSection<TWidget>[];
+    size?: IDashboardLayoutSize;
+    type: "IDashboardLayout";
+}
+
+// @public
+export interface IDashboardLayoutItem<TWidget = IDashboardWidget> {
+    size: IDashboardLayoutSizeByScreenSize;
+    type: "IDashboardLayoutItem";
+    widget?: TWidget;
+}
+
+// @public
+export interface IDashboardLayoutSection<TWidget = IDashboardWidget> {
+    header?: IDashboardLayoutSectionHeader;
+    items: IDashboardLayoutItem<TWidget>[];
+    type: "IDashboardLayoutSection";
+}
+
+// @public
+export interface IDashboardLayoutSectionHeader {
+    description?: string;
+    title?: string;
+}
+
+// @public
+export interface IDashboardLayoutSize {
+    gridHeight?: number;
+    gridWidth: number;
+    heightAsRatio?: number;
+}
+
+// @public
+export interface IDashboardLayoutSizeByScreenSize {
+    lg?: IDashboardLayoutSize;
+    md?: IDashboardLayoutSize;
+    sm?: IDashboardLayoutSize;
+    xl: IDashboardLayoutSize;
+    xs?: IDashboardLayoutSize;
+}
+
+// @public
 export interface IDashboardMetadataObject extends IMetadataObject {
     // (undocumented)
     type: "analyticalDashboard";
@@ -704,6 +747,9 @@ export interface IDashboardObjectIdentity {
     readonly ref: ObjRef;
     readonly uri: string;
 }
+
+// @public
+export type IDashboardWidget = IWidget | IWidgetDefinition | IDashboardLayout<IDashboardWidget>;
 
 // @public
 export interface IDataColumn {
@@ -1661,7 +1707,19 @@ export function isDashboardDateFilter(obj: unknown): obj is IDashboardDateFilter
 export function isDashboardDateFilterReference(obj: unknown): obj is IDashboardDateFilterReference;
 
 // @public
+export function isDashboardLayout<TWidget = IDashboardWidget>(obj: unknown): obj is IDashboardLayout<TWidget>;
+
+// @public
+export function isDashboardLayoutItem<TWidget>(obj: unknown): obj is IDashboardLayoutItem<TWidget>;
+
+// @public
+export function isDashboardLayoutSection<TWidget>(obj: unknown): obj is IDashboardLayoutSection<TWidget>;
+
+// @public
 export function isDashboardMetadataObject(obj: unknown): obj is IDashboardMetadataObject;
+
+// @public
+export const isDashboardWidget: (obj: unknown) => obj is IDashboardWidget;
 
 // @public
 export function isDataSetMetadataObject(obj: unknown): obj is IDataSetMetadataObject;
@@ -2305,6 +2363,9 @@ export type RgbType = "rgb";
 
 // @alpha
 export type ScheduledMailAttachment = IDashboardAttachment | IWidgetAttachment;
+
+// @public
+export type ScreenSize = "xl" | "lg" | "md" | "sm" | "xs";
 
 // @public
 export function serializeObjRef(objRef: ObjRef | ObjRefInScope): string;

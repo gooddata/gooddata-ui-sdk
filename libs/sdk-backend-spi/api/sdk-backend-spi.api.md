@@ -24,7 +24,11 @@ import { ICatalogFact as ICatalogFact_2 } from '@gooddata/sdk-model';
 import { ICatalogGroup as ICatalogGroup_2 } from '@gooddata/sdk-model';
 import { ICatalogMeasure as ICatalogMeasure_2 } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
+import { IDashboardLayout as IDashboardLayout_2 } from '@gooddata/sdk-model';
+import { IDashboardLayoutItem as IDashboardLayoutItem_2 } from '@gooddata/sdk-model';
+import { IDashboardLayoutSection as IDashboardLayoutSection_2 } from '@gooddata/sdk-model';
 import { IDashboardObjectIdentity as IDashboardObjectIdentity_2 } from '@gooddata/sdk-model';
+import { IDashboardWidget as IDashboardWidget_2 } from '@gooddata/sdk-model';
 import { IDataset as IDataset_2 } from '@gooddata/sdk-model';
 import { IDateFilterConfig as IDateFilterConfig_2 } from '@gooddata/sdk-model';
 import { Identifier } from '@gooddata/sdk-model';
@@ -398,10 +402,10 @@ export interface ICommentExpressionToken {
 }
 
 // @alpha
-export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, IDashboardObjectIdentity_2, Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers>, IAccessControlAware {
+export interface IDashboard<TWidget = IDashboardWidget_2> extends IDashboardBase, IDashboardObjectIdentity_2, Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers>, IAccessControlAware {
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
     readonly filterContext?: IFilterContext_2 | ITempFilterContext_2;
-    readonly layout?: IDashboardLayout<TWidget>;
+    readonly layout?: IDashboardLayout_2<TWidget>;
     readonly plugins?: IDashboardPluginLink[];
     // (undocumented)
     readonly type: "IDashboard";
@@ -454,10 +458,10 @@ export interface IDashboardDateFilterReference extends m.IDashboardDateFilterRef
 }
 
 // @alpha
-export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashboardBase, IAccessControlAware, Partial<IDashboardObjectIdentity_2> {
+export interface IDashboardDefinition<TWidget = IDashboardWidget_2> extends IDashboardBase, IAccessControlAware, Partial<IDashboardObjectIdentity_2> {
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
     readonly filterContext?: IFilterContext_2 | IFilterContextDefinition_2;
-    readonly layout?: IDashboardLayout<TWidget>;
+    readonly layout?: IDashboardLayout_2<TWidget>;
     readonly plugins?: IDashboardPluginLink[];
     // (undocumented)
     readonly type: "IDashboard";
@@ -466,47 +470,28 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashb
 // @public @deprecated
 export type IDashboardFilterReference = m.IDashboardFilterReference;
 
-// @public
-export interface IDashboardLayout<TWidget = IDashboardWidget> {
-    sections: IDashboardLayoutSection<TWidget>[];
-    size?: IDashboardLayoutSize;
-    type: "IDashboardLayout";
+// @public @deprecated
+export interface IDashboardLayout<TWidget = m.IDashboardWidget> extends m.IDashboardLayout<TWidget> {
 }
 
-// @public
-export interface IDashboardLayoutItem<TWidget = IDashboardWidget> {
-    size: IDashboardLayoutSizeByScreenSize;
-    type: "IDashboardLayoutItem";
-    widget?: TWidget;
+// @public @deprecated
+export interface IDashboardLayoutItem<TWidget = m.IDashboardWidget> extends m.IDashboardLayoutItem<TWidget> {
 }
 
-// @public
-export interface IDashboardLayoutSection<TWidget = IDashboardWidget> {
-    header?: IDashboardLayoutSectionHeader;
-    items: IDashboardLayoutItem<TWidget>[];
-    type: "IDashboardLayoutSection";
+// @public @deprecated
+export interface IDashboardLayoutSection<TWidget = m.IDashboardWidget> extends m.IDashboardLayoutSection<TWidget> {
 }
 
-// @public
-export interface IDashboardLayoutSectionHeader {
-    description?: string;
-    title?: string;
+// @public @deprecated
+export interface IDashboardLayoutSectionHeader extends m.IDashboardLayoutSectionHeader {
 }
 
-// @public
-export interface IDashboardLayoutSize {
-    gridHeight?: number;
-    gridWidth: number;
-    heightAsRatio?: number;
+// @public @deprecated
+export interface IDashboardLayoutSize extends m.IDashboardLayoutSize {
 }
 
-// @public
-export interface IDashboardLayoutSizeByScreenSize {
-    lg?: IDashboardLayoutSize;
-    md?: IDashboardLayoutSize;
-    sm?: IDashboardLayoutSize;
-    xl: IDashboardLayoutSize;
-    xs?: IDashboardLayoutSize;
+// @public @deprecated
+export interface IDashboardLayoutSizeByScreenSize extends m.IDashboardLayoutSizeByScreenSize {
 }
 
 // @public @deprecated
@@ -549,8 +534,8 @@ export interface IDashboardReferences {
     plugins: IDashboardPlugin[];
 }
 
-// @public
-export type IDashboardWidget = IWidget_2 | IWidgetDefinition_2 | IDashboardLayout<IDashboardWidget>;
+// @public @deprecated
+export type IDashboardWidget = m.IDashboardWidget;
 
 // @public
 export interface IDashboardWithReferences {
@@ -1188,23 +1173,23 @@ export const isDashboardDateFilterReference: typeof m.isDashboardDateFilterRefer
 // @public
 export function isDashboardDefinition(obj: unknown): obj is IDashboardDefinition;
 
-// @public
-export function isDashboardLayout<TWidget = IDashboardWidget>(obj: unknown): obj is IDashboardLayout<TWidget>;
+// @public @deprecated
+export const isDashboardLayout: typeof m.isDashboardLayout;
 
 // @alpha
-export const isDashboardLayoutEmpty: (layout: IDashboardLayout<any>) => boolean;
+export const isDashboardLayoutEmpty: (layout: IDashboardLayout_2<any>) => boolean;
 
-// @public
-export function isDashboardLayoutItem<TWidget>(obj: unknown): obj is IDashboardLayoutItem<TWidget>;
+// @public @deprecated
+export const isDashboardLayoutItem: typeof m.isDashboardLayoutItem;
 
-// @public
-export function isDashboardLayoutSection<TWidget>(obj: unknown): obj is IDashboardLayoutSection<TWidget>;
+// @public @deprecated
+export const isDashboardLayoutSection: typeof m.isDashboardLayoutSection;
 
 // @public @deprecated
 export const isDashboardMetadataObject: typeof m.isDashboardMetadataObject;
 
-// @public
-export const isDashboardWidget: (obj: unknown) => obj is IDashboardWidget;
+// @public @deprecated
+export const isDashboardWidget: (obj: unknown) => obj is m.IDashboardWidget;
 
 // @public @deprecated
 export const isDataSetMetadataObject: typeof m.isDataSetMetadataObject;
@@ -1793,7 +1778,7 @@ export interface IWidgetReferences {
 }
 
 // @alpha
-export interface IWidgetWithLayoutPath<TWidget = IDashboardWidget> {
+export interface IWidgetWithLayoutPath<TWidget = IDashboardWidget_2> {
     // (undocumented)
     path: LayoutPath;
     // (undocumented)
@@ -2061,10 +2046,10 @@ export type KpiDrillDefinition = m.KpiDrillDefinition;
 export type LayoutPath = Array<string | number>;
 
 // @alpha (undocumented)
-export function layoutWidgets<TWidget extends IDashboardWidget>(layout: IDashboardLayout<TWidget>): Array<IWidgetDefinition_2 | IWidget_2>;
+export function layoutWidgets<TWidget extends IDashboardWidget_2>(layout: IDashboardLayout_2<TWidget>): Array<IWidgetDefinition_2 | IWidget_2>;
 
 // @alpha
-export function layoutWidgetsWithPaths<TWidget extends IDashboardWidget>(layout: IDashboardLayout<TWidget>): IWidgetWithLayoutPath<TWidget>[];
+export function layoutWidgetsWithPaths<TWidget extends IDashboardWidget_2>(layout: IDashboardLayout_2<TWidget>): IWidgetWithLayoutPath<TWidget>[];
 
 // @alpha
 export type ListedDashboardAvailability = "full" | "viaLink";
@@ -2146,8 +2131,8 @@ export function resultHeaderName(header: IResultHeader): string;
 // @alpha @deprecated
 export type ScheduledMailAttachment = m.ScheduledMailAttachment;
 
-// @public
-export type ScreenSize = "xl" | "lg" | "md" | "sm" | "xs";
+// @public @deprecated
+export type ScreenSize = m.ScreenSize;
 
 // @alpha
 export type ShareStatus = "private" | "shared" | "public";
@@ -2188,9 +2173,9 @@ export function userFullName(user: IUser): string | undefined;
 export type ValidationContext = "CORS" | "UI_EVENT" | "DRILL_TO_URI";
 
 // @alpha
-export function walkLayout<TWidget extends IDashboardWidget>(layout: IDashboardLayout<TWidget>, { sectionCallback, itemCallback, widgetCallback, }: {
-    sectionCallback?: (section: IDashboardLayoutSection<TWidget>, sectionPath: LayoutPath) => void;
-    itemCallback?: (item: IDashboardLayoutItem<TWidget>, widgetPath: LayoutPath) => void;
+export function walkLayout<TWidget extends IDashboardWidget_2>(layout: IDashboardLayout_2<TWidget>, { sectionCallback, itemCallback, widgetCallback, }: {
+    sectionCallback?: (section: IDashboardLayoutSection_2<TWidget>, sectionPath: LayoutPath) => void;
+    itemCallback?: (item: IDashboardLayoutItem_2<TWidget>, widgetPath: LayoutPath) => void;
     widgetCallback?: (widget: TWidget, widgetPath: LayoutPath) => void;
 }, path?: LayoutPath): void;
 

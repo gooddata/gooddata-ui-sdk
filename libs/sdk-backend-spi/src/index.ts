@@ -221,20 +221,6 @@ export {
     ShareStatus,
 } from "./workspace/dashboards/dashboard";
 export {
-    IDashboardLayout,
-    IDashboardWidget,
-    IDashboardLayoutSection,
-    IDashboardLayoutSectionHeader,
-    IDashboardLayoutSize,
-    IDashboardLayoutSizeByScreenSize,
-    IDashboardLayoutItem,
-    ScreenSize,
-    isDashboardLayout,
-    isDashboardLayoutSection,
-    isDashboardLayoutItem,
-    isDashboardWidget,
-} from "./workspace/dashboards/layout";
-export {
     isDashboardLayoutEmpty,
     IWidgetWithLayoutPath,
     LayoutPath,
@@ -508,3 +494,18 @@ export {
     ScheduledMailAttachment,
     IScheduledMailBase,
 } from "./deprecated/dashboard/scheduledMail";
+
+export {
+    IDashboardLayout,
+    IDashboardWidget,
+    IDashboardLayoutSection,
+    IDashboardLayoutSectionHeader,
+    IDashboardLayoutSize,
+    IDashboardLayoutSizeByScreenSize,
+    IDashboardLayoutItem,
+    ScreenSize,
+    isDashboardLayout,
+    isDashboardLayoutSection,
+    isDashboardLayoutItem,
+    isDashboardWidget,
+} from "./deprecated/dashboard/layout";

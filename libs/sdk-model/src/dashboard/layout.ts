@@ -1,7 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import isArray from "lodash/isArray";
-import { isWidget, isWidgetDefinition, IWidget, IWidgetDefinition } from "@gooddata/sdk-model";
+import { IWidget, IWidgetDefinition, isWidget, isWidgetDefinition } from "./widget";
 
 /**
  * Classification of the screen size according to its size with respect to the set breakpoints.

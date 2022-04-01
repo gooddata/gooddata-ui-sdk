@@ -9,8 +9,9 @@ import {
     IFilterContextDefinition,
     ITempFilterContext,
     IDashboardObjectIdentity,
+    IDashboardLayout,
+    IDashboardWidget,
 } from "@gooddata/sdk-model";
-import { IDashboardLayout, IDashboardWidget } from "./layout";
 import {
     DateFilterGranularity,
     IAbsoluteDateFilterPreset,

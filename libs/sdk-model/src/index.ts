@@ -615,3 +615,18 @@ export {
 } from "./dashboard/scheduledMail";
 
 export { IUser, IWorkspaceUser, userFullName } from "./user";
+
+export {
+    IDashboardLayout,
+    IDashboardWidget,
+    IDashboardLayoutSection,
+    IDashboardLayoutSectionHeader,
+    IDashboardLayoutSize,
+    IDashboardLayoutSizeByScreenSize,
+    IDashboardLayoutItem,
+    ScreenSize,
+    isDashboardLayout,
+    isDashboardLayoutSection,
+    isDashboardLayoutItem,
+    isDashboardWidget,
+} from "./dashboard/layout";
