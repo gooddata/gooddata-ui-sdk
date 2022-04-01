@@ -31,7 +31,7 @@ export const BackendProvider: React.FC<IBackendProviderProps> = ({ children, bac
  * Hook to get analytical backend instance provided to {@link BackendProvider}.
  *
  * @remarks
- * You can optionally set a backend override that will be returned if defined.
+ * You can set a backend override that will be returned if defined.
  * This makes the usage more ergonomic (see the following example).
  *
  * Note: For a better TypeScript experience without the hassle of undefined values, you can use the {@link useBackendStrict} hook.
@@ -57,7 +57,7 @@ export const useBackend = (backend?: IAnalyticalBackend): IAnalyticalBackend | u
  * Hook to get analytical backend instance provided to {@link BackendProvider}.
  *
  * @remarks
- * You can optionally set a backend override that will be returned if defined.
+ * You can set a backend override that will be returned if defined.
  * This makes the usage more ergonomic (see the following example).
  *
  * Note: If you do not provide an {@link @gooddata/sdk-backend-spi#IAnalyticalBackend} instance to {@link BackendProvider} or as a parameter for this hook,
@@ -73,7 +73,7 @@ export const useBackend = (backend?: IAnalyticalBackend): IAnalyticalBackend | u
  *```
  *
  * @param backend - backend to use instead of context value. If undefined, the context value is used.
- * @param context - optionally provide context to improve error message in raised invariant (e.g. parent hook name).
+ * @param context - provide context to improve error message in raised invariant (e.g. parent hook name).
  * @public
  */
 export const useBackendStrict = (

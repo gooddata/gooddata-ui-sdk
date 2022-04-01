@@ -1,8 +1,8 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import { Identifier, Uri, IdentifierRef, UriRef, LocalIdRef, ObjectType } from ".";
 
 /**
- * Creates an IdentifierRef from object identifier and optionally the object type.
+ * Creates an IdentifierRef from object identifier and given object type.
  *
  * @remarks see {@link IdentifierRef} for more information about identifier references
  *

@@ -28,7 +28,7 @@ export interface IAnalyticalBackendConfig {
 }
 
 /**
- * Factory function to create new instances of Analytical Backend realization using optionally both platform agnostic
+ * Factory function to create new instances of Analytical Backend realization using both platform agnostic
  * and platform specific configuration.
  *
  * @remarks

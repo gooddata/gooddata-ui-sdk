@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import {
     IAttributeDisplayFormMetadataObject,
@@ -17,7 +17,7 @@ import flatMap from "lodash/flatMap";
  *
  * @param attributes - catalog attributes
  * @param dateDatasets - catalog date datasets
- * @param strictTypeChecking - optionally indicate whether strict type checking should be done using 'type' property of input `idRef`; default is false - the type information will be ignored
+ * @param strictTypeChecking - indicate whether strict type checking should be done using 'type' property of input `idRef`; default is false - the type information will be ignored
  * @alpha
  */
 export function createDisplayFormMap(
@@ -40,7 +40,7 @@ export function createDisplayFormMap(
  * The lookups into the map can be done by any type of ObjRef.
  *
  * @param catalog - workspace catalog
- * @param strictTypeChecking - optionally indicate whether strict type checking should be done using 'type' property of input `idRef`; default is false - the type information will be ignored
+ * @param strictTypeChecking - indicate whether strict type checking should be done using 'type' property of input `idRef`; default is false - the type information will be ignored
  * @alpha
  */
 export function createDisplayFormMapFromCatalog(

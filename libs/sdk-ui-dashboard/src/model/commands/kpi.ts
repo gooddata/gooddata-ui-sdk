@@ -36,7 +36,7 @@ export interface ChangeKpiWidgetHeader extends IDashboardCommand {
  *
  * @param ref - reference of the KPI widget to modify
  * @param header - new header to use
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -100,8 +100,8 @@ export interface ChangeKpiWidgetMeasure extends IDashboardCommand {
  *
  * @param ref - reference of the KPI widget to modify
  * @param measureRef - reference of the measure to use
- * @param header - optionally specify new header to use; if not provided the existing header will be reused
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param header - specify new header to use; if not provided the existing header will be reused
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -159,7 +159,7 @@ export interface ChangeKpiWidgetFilterSettings extends IDashboardCommand {
  *
  * @param ref - reference of the KPI widget to modify
  * @param settings - new filter settings to apply
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -190,7 +190,7 @@ export function replaceKpiWidgetFilterSettings(
  *
  * @param ref - reference of the KPI widget to modify
  * @param dateDataset - date data set to use for filtering the KPI
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -220,7 +220,7 @@ export function enableKpiWidgetDateFilter(
  * be disabled.
  *
  * @param ref - reference of the KPI widget to modify
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -249,7 +249,7 @@ export function disableKpiWidgetDateFilter(
  *
  * @param ref - reference of the KPI widget to modify
  * @param displayForms - refs of display forms used by attribute filters that should be ignored
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -285,7 +285,7 @@ export function replaceKpiWidgetIgnoredFilters(
  *
  * @param ref - reference of the KPI widget to modify
  * @param oneOrMoreDisplayForms - one or more refs of display forms used by attribute filters that should be added to the ignore-list
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -320,7 +320,7 @@ export function ignoreFilterOnKpiWidget(
  *
  * @param ref - reference of the KPI widget to modify
  * @param oneOrMoreDisplayForms - one or more refs of display forms used by attribute filters that should be removed from the ignore-list
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -404,7 +404,7 @@ export interface ChangeKpiWidgetComparison extends IDashboardCommand {
  *
  * @param ref - reference of the KPI widget to modify
  * @param comparison - new comparison setting
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -451,7 +451,7 @@ export interface RefreshKpiWidget extends IDashboardCommand {
  * Creates the RefreshKpiWidget command. Dispatching this command will result in re-calculation of the KPI's value.
  *
  * @param ref - reference of the KPI widget to refresh
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha

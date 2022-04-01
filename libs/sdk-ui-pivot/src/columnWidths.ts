@@ -284,7 +284,7 @@ export function newMeasureColumnLocator(measureOrId: IMeasure | string): IMeasur
  *
  * @param attributeOrId - Attribute specified by value or by localId reference
  * @param width - Width in pixels
- * @param allowGrowToFit - Optionally indicates whether the column is allowed to grow if the table's growToFit is enabled
+ * @param allowGrowToFit - indicates whether the column is allowed to grow if the table's growToFit is enabled
  * @public
  */
 export function newWidthForAttributeColumn(
@@ -309,7 +309,7 @@ export function newWidthForAttributeColumn(
  * Creates width item that will set width for all measure columns in the table.
  *
  * @param width - Width in pixels
- * @param allowGrowToFit - Optionally indicates whether the column is allowed to grow if the table's growToFit is enabled
+ * @param allowGrowToFit - indicates whether the column is allowed to grow if the table's growToFit is enabled
  * @public
  */
 export function newWidthForAllMeasureColumns(
@@ -333,7 +333,7 @@ export function newWidthForAllMeasureColumns(
  *
  * @param measureOrId - Measure specified either by value or by localId reference
  * @param width - Width in pixels
- * @param allowGrowToFit - Optionally indicates whether the column is allowed to grow if the table's growToFit is enabled
+ * @param allowGrowToFit - indicates whether the column is allowed to grow if the table's growToFit is enabled
  * @public
  */
 export function newWidthForAllColumnsForMeasure(
@@ -364,7 +364,7 @@ export function newWidthForAllColumnsForMeasure(
  * @param measureOrId - Measure specified either by value or by localId reference
  * @param locators - Attribute locators to narrow down selection
  * @param width - Width in pixels
- * @param allowGrowToFit - Optionally indicates whether the column is allowed to grow if the table's growToFit is enabled
+ * @param allowGrowToFit - indicates whether the column is allowed to grow if the table's growToFit is enabled
  * @public
  */
 export function newWidthForSelectedColumns(
@@ -401,7 +401,7 @@ export function newWidthForSelectedColumns(
  * attribute.
  *
  * @param attributeOrId - Column attribute specified by either value or by localId reference
- * @param element - Optionally specify attribute element URI or primary key; if not specified, the locator will match
+ * @param element - specify attribute element URI or primary key; if not specified, the locator will match
  *  all elements of the attribute
  * @public
  */

@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import identity from "lodash/identity";
 import { IInsightDefinition, VisualizationProperties } from "./index";
 import { IBucket } from "../execution/buckets";
@@ -11,7 +11,7 @@ import { ISortItem } from "../execution/base/sort";
  */
 
 /**
- * Creates new, empty insight definition, optionally modifying its content.
+ * Creates new, empty insight definition, modifying its content with given modifications.
  *
  * @param visualizationUrl - visualization URL (e.g. local:bar, local:table..)
  * @param modifications - modification function which will be called with builder to update the insight

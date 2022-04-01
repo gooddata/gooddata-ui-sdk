@@ -72,7 +72,7 @@ export function isTotal(obj: unknown): obj is ITotal {
  * @param type - type of total, one of the enumerated types
  * @param measureOrId - measure instance OR measure local identifier
  * @param attributeOrId - attribute instance OR attribute local identifier
- * @param alias - optionally provide custom name (alias) for the total; this will be included in the computed results
+ * @param alias - provide custom name (alias) for the total; this will be included in the computed results
  * @returns new total
  * @public
  */

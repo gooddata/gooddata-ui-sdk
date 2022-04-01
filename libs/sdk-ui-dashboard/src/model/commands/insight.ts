@@ -37,7 +37,7 @@ export interface ChangeInsightWidgetHeader extends IDashboardCommand {
  *
  * @param ref - reference of the insight widget to modify
  * @param header - new header to use
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -93,7 +93,7 @@ export interface ChangeInsightWidgetFilterSettings extends IDashboardCommand {
  *
  * @param ref - reference of the insight widget to modify
  * @param settings - new filter settings to apply
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -124,7 +124,7 @@ export function replaceInsightWidgetFilterSettings(
  *
  * @param ref - reference of the insight widget to modify
  * @param dateDataset - date data set to use for filtering the insight
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -154,7 +154,7 @@ export function enableInsightWidgetDateFilter(
  * be disabled.
  *
  * @param ref - reference of the insight widget to modify
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -183,7 +183,7 @@ export function disableInsightWidgetDateFilter(
  *
  * @param ref - reference of the insight widget to modify
  * @param displayForms - refs of display forms used by attribute filters that should be ignored
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -219,7 +219,7 @@ export function replaceInsightWidgetIgnoredFilters(
  *
  * @param ref - reference of the insight widget to modify
  * @param oneOrMoreDisplayForms - one or more refs of display forms used by attribute filters that should be added to the ignore-list
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -254,7 +254,7 @@ export function ignoreFilterOnInsightWidget(
  *
  * @param ref - reference of the insight widget to modify
  * @param oneOrMoreDisplayForms - one or more refs of display forms used by attribute filters that should be removed from the ignore-list
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -322,7 +322,7 @@ export interface ChangeInsightWidgetVisProperties extends IDashboardCommand {
  *
  * @param ref - reference of the insight widget to modify
  * @param properties - new properties to set, undefined to clear any widget level visualization properties
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -390,8 +390,8 @@ export interface ChangeInsightWidgetInsight extends IDashboardCommand {
  *
  * @param ref - reference to insight widget whose insight should be changed
  * @param insightRef - reference to the new insight to use in the widget
- * @param visualizationProperties - optionally specify visualization properties to use. Undefined value means keeping the existing properties on record in the widget
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param visualizationProperties - specify visualization properties to use. Undefined value means keeping the existing properties on record in the widget
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -464,7 +464,7 @@ export interface ModifyDrillsForInsightWidget extends IDashboardCommand {
  *
  * @param ref - reference to insight widget whose drills should be modified
  * @param drills - drills to add or modify.
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -533,7 +533,7 @@ export interface RemoveDrillsForInsightWidget extends IDashboardCommand {
  *
  * @param ref - reference of insight widget whose drill should be removed
  * @param origins - measure or attribute localIdentifiers whose drill definitions should be removed
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -581,7 +581,7 @@ export interface RefreshInsightWidget extends IDashboardCommand {
  * insight and re-render.
  *
  * @param ref - reference to the Insight widget to refresh
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
@@ -628,7 +628,7 @@ export interface ExportInsightWidget extends IDashboardCommand {
  *
  * @param ref - reference to the Insight widget to refresh
  * @param config - configuration of the export operation
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha

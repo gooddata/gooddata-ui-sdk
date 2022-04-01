@@ -68,20 +68,20 @@ export interface IWorkspaceDashboardsService {
     /**
      * Gets all dashboards available in current workspace.
      *
-     * @param options - optionally specify additional options
+     * @param options - Specify additional options
      * @returns promise of list of the dashboards
      */
     getDashboards(options?: IGetDashboardOptions): Promise<IListedDashboard[]>;
 
     /**
      * Load dashboard by its reference,
-     * and optionally override filter context with the custom filter context
+     * and override filter context with the given custom filter context
      * (custom filter context is used mainly for exporting)
      *
      * @param ref - dashboard ref
      * @param filterContextRef - Override dashboard filter context with the custom filter context
      * (This allows to modify filter context when exporting the dashboard)
-     * @param options - optionally specify additional options
+     * @param options - Specify additional options
      * @returns promise of the dashboard
      */
     getDashboard(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboard>;
@@ -92,7 +92,7 @@ export interface IWorkspaceDashboardsService {
      * @param ref - dashboard ref
      * @param filterContextRef - Override dashboard filter context with the custom filter context
      * (This allows to modify filter context when exporting the dashboard)
-     * @param options - optionally specify additional options
+     * @param options - Specify additional options
      * @param types - types of dashboard references to load; if the types are undefined, the service
      *  must default to loading insights related to the dashboard
      * @returns promise of the dashboard and references
@@ -142,11 +142,11 @@ export interface IWorkspaceDashboardsService {
     deleteDashboard(ref: ObjRef): Promise<void>;
 
     /**
-     * Export dashboard to pdf. You can optionally override dashboard filters with custom filters.
+     * Export dashboard to pdf. You can override dashboard filters with custom filters.
      * When no custom filters are set, the persisted dashboard filters will be used.
      *
      * @param ref - dashboard reference
-     * @param filters - optionally override stored dashboard filters with custom filters
+     * @param filters - Override stored dashboard filters with custom filters
      * @returns promise with link to download the exported dashboard
      */
     exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<string>;
@@ -175,7 +175,7 @@ export interface IWorkspaceDashboardsService {
      * Get scheduled emails for particular dashboard
      *
      * @param ref - dashboard reference
-     * @param options - optionally specify additional options
+     * @param options - specify additional options
      * @returns promise with scheduled emails connected to the dashboard
      */
     getScheduledMailsForDashboard(ref: ObjRef, options?: IGetScheduledMailOptions): Promise<IScheduledMail[]>;

@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import { useCallback } from "react";
 import { v4 as uuid } from "uuid";
 
@@ -13,11 +13,12 @@ import { DashboardEventHandler } from "../eventHandlers/eventHandler";
  * that will result into dispatching this command, registering the event handlers,
  * and unregistering them once event type with the same type and correlation ID is triggered.
  *
+ * @remarks
  * If no correlationId is provided, it's auto-generated.
 
  * @param commandCreator - command factory
  * @param eventHandlers - record with eventTypes as keys and relevant callbacks as values
- * @param onBeforeRun - optionally provide callback that will be called before dispatching the command
+ * @param onBeforeRun - provide callback that will be called before dispatching the command
  * @returns callback that dispatches the command, registers relevant event handlers and unregisters them
  *          when an event that matches the correlation ID and one of the specified event types occurs
  * @internal

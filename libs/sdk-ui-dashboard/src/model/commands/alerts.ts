@@ -29,7 +29,7 @@ export interface CreateAlert extends IDashboardCommand {
  * Creates the SaveAlert command. Dispatching this command will result in the creating Kpi alert on the backend.
  *
  * @param alert - specify alert to create.
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  * @alpha
  */
@@ -72,7 +72,7 @@ export interface UpdateAlert extends IDashboardCommand {
  * Creates the UpdateAlert command. Dispatching this command will result in the updating Kpi alert on the backend.
  *
  * @param alert - specify alert to update.
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
 
  * @alpha
@@ -116,7 +116,7 @@ export interface RemoveAlerts extends IDashboardCommand {
  * Creates the RemoveAlerts command. Dispatching this command will result in the removing Kpi alerts on the backend.
  *
  * @param refs - specify ObjRef of the alerts to remove
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
 
  * @alpha

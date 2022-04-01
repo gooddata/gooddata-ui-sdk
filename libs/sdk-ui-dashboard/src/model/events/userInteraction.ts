@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import isString from "lodash/isString";
 import { DashboardEventBody, IDashboardEvent } from "./base";
 import { eventGuard } from "./util";
@@ -63,7 +63,7 @@ export interface DashboardUserInteractionTriggered extends IDashboardEvent {
  * Creates the {@link DashboardUserInteractionTriggered} event body.
  *
  * @param interactionPayloadOrType - interaction payload or a type of a user interaction without extra data (for convenience)
- * @param correlationId - optionally specify correlation id to use for this event. this can be used to correlate this event to a command that caused it.
+ * @param correlationId - specify correlation id to use for this event. this can be used to correlate this event to a command that caused it.
  * @alpha
  */
 export function userInteractionTriggered(

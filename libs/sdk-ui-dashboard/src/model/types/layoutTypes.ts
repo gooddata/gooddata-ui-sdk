@@ -50,7 +50,7 @@ export interface ICustomWidgetDefinition extends ICustomWidgetBase, Partial<IDas
  *
  * @param identifier - identifier for custom widget; once added onto a dashboard, widget will be referencable using this identifier
  * @param customType - custom widget type
- * @param extras - optionally provide extra data to include on the custom widget; the content of this argument can be an
+ * @param extras - provide extra data to include on the custom widget; the content of this argument can be an
  *  arbitrary plain object. note: the factory will make a copy of all the extra data. at this moment it is not possible
  *  to modify the data once the widget is added onto a dashboard.
  * @public

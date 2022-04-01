@@ -74,7 +74,7 @@ export function isPlaceholder<T>(obj: unknown): obj is IPlaceholder<T> {
  * You can perform computation on top of resolved placeholder values.
  * Composed placeholders accepts also other composed placeholders as an input.
  *
- * You can optionally provide custom resolution context to the composed placeholders,
+ * You can provide custom resolution context to the composed placeholders,
  * and use it in your computation, but be aware that this context is shared across all composed placeholders in the call tree
  * (e.g. when you are calling composed placeholder composed from other composed placeholders,
  * each composed placeholder will be called with the same resolution context).

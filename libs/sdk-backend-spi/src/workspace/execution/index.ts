@@ -39,7 +39,7 @@ export interface IExecutionFactory {
     forDefinition(def: IExecutionDefinition): IPreparedExecution;
 
     /**
-     * Prepares a new execution for a list of attributes and measures, optionally filtered using the
+     * Prepares a new execution for a list of attributes and measures, filtered using the
      * provided filters.
      *
      * @remarks

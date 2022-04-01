@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 
 import { IExecutionResult, IExportConfig, IExportResult } from "@gooddata/sdk-backend-spi";
 import { IExportFunction, IExtendedExportConfig } from "./Events";
@@ -11,7 +11,7 @@ const escapeFileName = (str: string) => str && str.replace(/[/?<>\\:*|":]/g, "")
  * components via the onExportReady callback.
  *
  * @param result - data view that will be exported
- * @param exportTitle - optionally specify title
+ * @param exportTitle - specify title
  * @internal
  */
 export function createExportFunction(result: IExecutionResult, exportTitle?: string): IExportFunction {

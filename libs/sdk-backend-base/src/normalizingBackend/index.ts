@@ -253,7 +253,7 @@ export type NormalizationConfig = {
  * The normalization is essential to increase cache hits - be it both on client or on the server.
  *
  * @param realBackend - real backend to decorate
- * @param config - optionally specify configuration of the normalization process, see {@link NormalizationConfig}
+ * @param config - Specify configuration of the normalization process, see {@link NormalizationConfig}
  * @returns new instance of backend
  * @beta
  */

@@ -103,7 +103,7 @@ export const defaultDummyBackendConfig: DummyBackendConfig = {
  * testing component behavior when backend returns no results.
  *
  * @remarks see {@link dummyBackendEmptyData} for a variant of dummy backend
- * @param config - optionally provide configuration of the backend (host/user)
+ * @param config - Provide configuration of the backend (host/user)
  * @internal
  */
 export function dummyBackend(config: DummyBackendConfig = defaultDummyBackendConfig): IAnalyticalBackend {
@@ -176,9 +176,9 @@ export function dummyBackendEmptyData(): IAnalyticalBackend {
  * will be empty.
  *
  * @param definition - execution definition
- * @param result - optionally a result to link with the data view, if not provided an execution result will be
+ * @param result - A result to link with the data view, if not provided an execution result will be
  *  created
- * @param config - optionally override config that will be passed to exec result that may be created for the
+ * @param config - Override config that will be passed to exec result that may be created for the
  *  data view (it is needed there in order to correctly handle readAll() and read()); config will not be used
  *  if the `result` parameter is provided explicitly
  * @returns new instance of data view

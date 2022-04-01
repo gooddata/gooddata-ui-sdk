@@ -117,7 +117,7 @@ function* sanitizeFilterContext(
  * @param dateFilterConfig - effective date filter config to use; note that this function will not store
  *  the date filter config anywhere; it uses the config during filter context sanitization & determining
  *  which date option is selected
- * @param displayForms - optionally specify display forms that should be used for in-memory resolution of
+ * @param displayForms - specify display forms that should be used for in-memory resolution of
  *  attribute filter display forms to metadata objects
  */
 export function* actionsToInitializeExistingDashboard(

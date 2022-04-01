@@ -41,7 +41,7 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
     workspace?: string;
 
     /**
-     * Data series will be built using the provided measures that are optionally further scoped for
+     * Data series will be built using the provided measures that are further scoped for
      * elements of the specified attributes.
      */
     seriesBy: AttributesMeasuresOrPlaceholders;
@@ -239,7 +239,7 @@ const WrappedExecute = withContexts(
  *
  * @remarks
  * It is aligned with the `DataAccess` infrastructure which exposes the underlying data as data series that can be
- * optionally sliced by additional attributes.
+ * sliced by additional attributes.
  *
  * Once the executor finishes, the {@link DataViewFacade.data} method will expose the data as series and
  * slices according to the specification to the executor.

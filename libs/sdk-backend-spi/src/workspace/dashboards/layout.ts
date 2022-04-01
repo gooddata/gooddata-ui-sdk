@@ -166,7 +166,7 @@ export interface IDashboardLayoutSection<TWidget = IDashboardWidget> {
     items: IDashboardLayoutItem<TWidget>[];
 
     /**
-     * Section can optionally contain a header with title and description.
+     * Section header with title and description.
      */
     header?: IDashboardLayoutSectionHeader;
 }

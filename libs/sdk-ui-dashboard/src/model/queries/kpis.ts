@@ -21,7 +21,7 @@ export interface QueryMeasureDateDatasets extends IDashboardQuery {
  * that are applicable for filtering of the provided measure. measures are typically used to obtain value to render on KPIs.
  *
  * @param measureRef - reference to measure
- * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  * @alpha
  */

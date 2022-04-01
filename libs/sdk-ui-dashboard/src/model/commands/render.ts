@@ -23,6 +23,7 @@ export interface RequestAsyncRender extends IDashboardCommand {
 /**
  * Notify the dashboard about async rendering of the component.
  *
+ * @remarks
  * Mechanism is following:
  * - You must request async rendering for at least 1 component within 2 seconds of the {@link DashboardInitialized} event.
  *   (If you do not register any asynchronous rendering, after 2 seconds the dashboard will announce that it is rendered.)
@@ -40,7 +41,7 @@ export interface RequestAsyncRender extends IDashboardCommand {
  *
  * @alpha
  * @param id - async render identifier
- * @param correlationId - optionally specify correlation id to use for this command.
+ * @param correlationId - specify correlation id to use for this command.
  *                        this will be included in all events that will be emitted during the command processing
  * @returns
  */
@@ -80,13 +81,14 @@ export interface ResolveAsyncRender extends IDashboardCommand {
 /**
  * Notify the dashboard about resolved async rendering of the component.
  *
+ * @remarks
  * - Each component on the dashboard that is rendered asynchronously should fire this command.
  * - This command should only be dispatched if a {@link requestAsyncRender} command with the corresponding identifier
  *   has already been dispatched.
  *
  * @alpha
  * @param id - async render identifier
- * @param correlationId - optionally specify correlation id to use for this command.
+ * @param correlationId - specify correlation id to use for this command.
  *                        this will be included in all events that will be emitted during the command processing
  * @returns
  */
