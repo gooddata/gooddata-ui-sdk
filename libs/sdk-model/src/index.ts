@@ -649,3 +649,5 @@ export {
     IAccessControlAware,
     ShareStatus,
 } from "./dashboard/dashboard";
+
+export { ISeparators, ISettings, PlatformEdition } from "./settings";

@@ -257,6 +257,10 @@ import {
     isDashboardDefinition,
     IAccessControlAware,
     ShareStatus,
+    // Settings
+    ISettings,
+    ISeparators,
+    PlatformEdition,
 } from "@gooddata/sdk-model";
 export {
     getColorMappingPredicate,
@@ -487,4 +491,8 @@ export {
     isDashboardDefinition,
     IAccessControlAware,
     ShareStatus,
+    // Settings
+    ISettings,
+    ISeparators,
+    PlatformEdition,
 };

@@ -46,6 +46,8 @@ import { INullableFilter } from '@gooddata/sdk-model';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { IScheduledMail as IScheduledMail_2 } from '@gooddata/sdk-model';
 import { IScheduledMailDefinition as IScheduledMailDefinition_2 } from '@gooddata/sdk-model';
+import { ISeparators as ISeparators_2 } from '@gooddata/sdk-model';
+import { ISettings as ISettings_2 } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { IUser as IUser_2 } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
@@ -1188,56 +1190,12 @@ export function isElementsQueryOptionsElementsByPrimaryDisplayFormValue(obj: unk
 // @public
 export function isElementsQueryOptionsElementsByValue(obj: unknown): obj is IElementsQueryOptionsElementsByValue;
 
-// @public
-export interface ISeparators {
-    decimal: string;
-    thousand: string;
+// @public @deprecated
+export interface ISeparators extends m.ISeparators {
 }
 
-// @public
-export interface ISettings {
-    // (undocumented)
-    [key: string]: number | boolean | string | object | undefined;
-    ADCatalogGroupsExpanded?: boolean;
-    ADMeasureValueFilterNullAsZeroOption?: string;
-    disableKpiDashboardHeadlineUnderline?: boolean;
-    enableAlternativeDisplayFormSelection?: boolean;
-    enableAnalyticalDashboardPermissions?: boolean;
-    enableApproxCount?: boolean;
-    enableAxisLabelFormat?: boolean;
-    enableAxisNameConfiguration?: boolean;
-    enableAxisNameViewByTwoAttributes?: boolean;
-    enableBulletChart?: boolean;
-    enableChartsSorting?: boolean;
-    enableClickableAttributeURL?: boolean;
-    enableCompanyLogoInEmbeddedUI?: boolean;
-    enableCustomColorPicker?: boolean;
-    enableDataSampling?: boolean;
-    enableDrilledInsightExport?: boolean;
-    enableEmbedButtonInKD?: boolean;
-    enableHidingOfDataPoints?: boolean;
-    enableHidingOfWidgetTitle?: boolean;
-    enableInsightExportScheduling?: boolean;
-    enableInsightToReport?: boolean;
-    enableKDWidgetCustomHeight?: boolean;
-    enableKDZooming?: boolean;
-    enableKPIDashboardDrillToDashboard?: boolean;
-    enableKPIDashboardDrillToInsight?: boolean;
-    enableKPIDashboardDrillToURL?: boolean;
-    enableKPIDashboardImplicitDrillDown?: boolean;
-    enableKPIDashboardSaveAsNew?: boolean;
-    enableKPIDashboardSchedule?: boolean;
-    enableKPIDashboardScheduleRecipients?: boolean;
-    enableMultipleDates?: boolean;
-    enablePushpinGeoChart?: boolean;
-    enableRenamingMeasureToMetric?: boolean;
-    enableTableColumnsAutoResizing?: boolean;
-    enableTableColumnsGrowToFit?: boolean;
-    enableTableColumnsManualResizing?: boolean;
-    enableWeekFilters?: boolean;
-    hideKpiDrillInEmbedded?: boolean;
-    platformEdition?: PlatformEdition;
-    responsiveUiDateFormat?: string;
+// @public @deprecated
+export interface ISettings extends m.ISettings {
 }
 
 // @public @deprecated
@@ -1675,9 +1633,9 @@ export interface IUserService {
 }
 
 // @public
-export interface IUserSettings extends ISettings {
+export interface IUserSettings extends ISettings_2 {
     locale: string;
-    separators: ISeparators;
+    separators: ISeparators_2;
     userId: string;
 }
 
@@ -1916,7 +1874,7 @@ export interface IWorkspacePermissionsService {
 }
 
 // @public
-export interface IWorkspaceSettings extends ISettings {
+export interface IWorkspaceSettings extends ISettings_2 {
     workspace: string;
 }
 
@@ -2056,8 +2014,8 @@ export class NotSupported extends AnalyticalBackendError {
 // @alpha @deprecated
 export type OptionType = m.OptionType;
 
-// @public
-export type PlatformEdition = "free" | "growth" | "enterprise";
+// @public @deprecated
+export type PlatformEdition = m.PlatformEdition;
 
 // @public
 export function prepareExecution(backend: IAnalyticalBackend, definition: IExecutionDefinition): IPreparedExecution;

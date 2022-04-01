@@ -22,14 +22,7 @@ export {
 
 export { IBackendCapabilities } from "./backend/capabilities";
 
-export {
-    ISettings,
-    IUserSettings,
-    IWorkspaceSettings,
-    IUserWorkspaceSettings,
-    ISeparators,
-    PlatformEdition,
-} from "./common/settings";
+export { IUserSettings, IWorkspaceSettings, IUserWorkspaceSettings } from "./common/settings";
 
 export { IUserService, IUser, userFullName } from "./user";
 export { IUserSettingsService } from "./user/settings";
@@ -510,3 +503,5 @@ export {
     IAccessControlAware,
     ShareStatus,
 } from "./deprecated/dashboard/dashboard";
+
+export { ISettings, ISeparators, PlatformEdition } from "./deprecated/settings";

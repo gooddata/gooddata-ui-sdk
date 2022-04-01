@@ -1850,6 +1850,58 @@ export function isDrillToInsight(obj: unknown): obj is IDrillToInsight;
 export function isDrillToLegacyDashboard(obj: unknown): obj is IDrillToLegacyDashboard;
 
 // @public
+export interface ISeparators {
+    decimal: string;
+    thousand: string;
+}
+
+// @public
+export interface ISettings {
+    // (undocumented)
+    [key: string]: number | boolean | string | object | undefined;
+    ADCatalogGroupsExpanded?: boolean;
+    ADMeasureValueFilterNullAsZeroOption?: string;
+    disableKpiDashboardHeadlineUnderline?: boolean;
+    enableAlternativeDisplayFormSelection?: boolean;
+    enableAnalyticalDashboardPermissions?: boolean;
+    enableApproxCount?: boolean;
+    enableAxisLabelFormat?: boolean;
+    enableAxisNameConfiguration?: boolean;
+    enableAxisNameViewByTwoAttributes?: boolean;
+    enableBulletChart?: boolean;
+    enableChartsSorting?: boolean;
+    enableClickableAttributeURL?: boolean;
+    enableCompanyLogoInEmbeddedUI?: boolean;
+    enableCustomColorPicker?: boolean;
+    enableDataSampling?: boolean;
+    enableDrilledInsightExport?: boolean;
+    enableEmbedButtonInKD?: boolean;
+    enableHidingOfDataPoints?: boolean;
+    enableHidingOfWidgetTitle?: boolean;
+    enableInsightExportScheduling?: boolean;
+    enableInsightToReport?: boolean;
+    enableKDWidgetCustomHeight?: boolean;
+    enableKDZooming?: boolean;
+    enableKPIDashboardDrillToDashboard?: boolean;
+    enableKPIDashboardDrillToInsight?: boolean;
+    enableKPIDashboardDrillToURL?: boolean;
+    enableKPIDashboardImplicitDrillDown?: boolean;
+    enableKPIDashboardSaveAsNew?: boolean;
+    enableKPIDashboardSchedule?: boolean;
+    enableKPIDashboardScheduleRecipients?: boolean;
+    enableMultipleDates?: boolean;
+    enablePushpinGeoChart?: boolean;
+    enableRenamingMeasureToMetric?: boolean;
+    enableTableColumnsAutoResizing?: boolean;
+    enableTableColumnsGrowToFit?: boolean;
+    enableTableColumnsManualResizing?: boolean;
+    enableWeekFilters?: boolean;
+    hideKpiDrillInEmbedded?: boolean;
+    platformEdition?: PlatformEdition;
+    responsiveUiDateFormat?: string;
+}
+
+// @public
 export function isFactMetadataObject(obj: unknown): obj is IFactMetadataObject;
 
 // @public
@@ -2398,6 +2450,9 @@ export function objRefToString(objRef: ObjRef | ObjRefInScope): string;
 
 // @public
 export type OptionType = AllTimeType | AbsoluteFormType | RelativeFormType | AbsolutePresetType | RelativePresetType;
+
+// @public
+export type PlatformEdition = "free" | "growth" | "enterprise";
 
 // @public
 export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition> {

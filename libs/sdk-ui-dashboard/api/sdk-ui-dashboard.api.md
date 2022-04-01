@@ -130,7 +130,7 @@ import { OnLoadingChanged } from '@gooddata/sdk-ui';
 import { OutputSelector } from '@reduxjs/toolkit';
 import { Patch } from 'immer';
 import { PayloadAction } from '@reduxjs/toolkit';
-import { PlatformEdition } from '@gooddata/sdk-backend-spi';
+import { PlatformEdition } from '@gooddata/sdk-model';
 import { PropsWithChildren } from 'react';
 import { default as React_2 } from 'react';
 import { ReactReduxContextValue } from 'react-redux';

@@ -160,6 +160,8 @@ import { isDrillToCustomUrl } from '@gooddata/sdk-model';
 import { isDrillToDashboard } from '@gooddata/sdk-model';
 import { isDrillToInsight } from '@gooddata/sdk-model';
 import { isDrillToLegacyDashboard } from '@gooddata/sdk-model';
+import { ISeparators } from '@gooddata/sdk-model';
+import { ISettings } from '@gooddata/sdk-model';
 import { isFactMetadataObject } from '@gooddata/sdk-model';
 import { isFilterContext } from '@gooddata/sdk-model';
 import { isFilterContextDefinition } from '@gooddata/sdk-model';
@@ -201,6 +203,7 @@ import { newAbsoluteDashboardDateFilter } from '@gooddata/sdk-model';
 import { newAllTimeDashboardDateFilter } from '@gooddata/sdk-model';
 import { newRelativeDashboardDateFilter } from '@gooddata/sdk-model';
 import { OptionType } from '@gooddata/sdk-model';
+import { PlatformEdition } from '@gooddata/sdk-model';
 import { RelativeFormType } from '@gooddata/sdk-model';
 import { RelativeGranularityOffset } from '@gooddata/sdk-model';
 import { RelativePresetType } from '@gooddata/sdk-model';
@@ -528,6 +531,10 @@ export { isDrillToInsight }
 
 export { isDrillToLegacyDashboard }
 
+export { ISeparators }
+
+export { ISettings }
+
 export { isFactMetadataObject }
 
 export { isFilterContext }
@@ -609,6 +616,8 @@ export { newAllTimeDashboardDateFilter }
 export { newRelativeDashboardDateFilter }
 
 export { OptionType }
+
+export { PlatformEdition }
 
 export { RelativeFormType }
 
