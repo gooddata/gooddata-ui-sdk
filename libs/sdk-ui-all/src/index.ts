@@ -330,6 +330,17 @@ import {
     resultHeaderName,
     attributeDescriptorLocalId,
     attributeDescriptorName,
+    // Access control
+    AccessGranteeDetail,
+    IAccessGrantee,
+    IUserAccessGrantee,
+    IUserGroupAccessGrantee,
+    IUserAccess,
+    IUserGroupAccess,
+    isUserAccess,
+    isUserGroupAccess,
+    isUserGroupAccessGrantee,
+    isUserAccessGrantee,
 } from "@gooddata/sdk-model";
 export {
     getColorMappingPredicate,
@@ -633,4 +644,15 @@ export {
     resultHeaderName,
     attributeDescriptorLocalId,
     attributeDescriptorName,
+    // Access control
+    AccessGranteeDetail,
+    IAccessGrantee,
+    IUserAccessGrantee,
+    IUserGroupAccessGrantee,
+    IUserAccess,
+    IUserGroupAccess,
+    isUserAccess,
+    isUserGroupAccess,
+    isUserGroupAccessGrantee,
+    isUserAccessGrantee,
 };

@@ -723,3 +723,16 @@ export {
     attributeDescriptorLocalId,
     attributeDescriptorName,
 } from "./execution/results";
+
+export {
+    AccessGranteeDetail,
+    IAccessGrantee,
+    IUserAccess,
+    IUserAccessGrantee,
+    IUserGroupAccess,
+    IUserGroupAccessGrantee,
+    isUserAccess,
+    isUserAccessGrantee,
+    isUserGroupAccess,
+    isUserGroupAccessGrantee,
+} from "./accessControl";

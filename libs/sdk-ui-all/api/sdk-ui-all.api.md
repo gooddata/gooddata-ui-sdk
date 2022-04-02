@@ -7,6 +7,7 @@
 import { AbsoluteFormType } from '@gooddata/sdk-model';
 import { AbsolutePresetType } from '@gooddata/sdk-model';
 import { AbsoluteType } from '@gooddata/sdk-model';
+import { AccessGranteeDetail } from '@gooddata/sdk-model';
 import { AllTimeType } from '@gooddata/sdk-model';
 import { AnalyticalWidgetType } from '@gooddata/sdk-model';
 import { attributeDescriptorLocalId } from '@gooddata/sdk-model';
@@ -34,6 +35,7 @@ import { GroupableCatalogItem } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilterForm } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilterPreset } from '@gooddata/sdk-model';
 import { IAccessControlAware } from '@gooddata/sdk-model';
+import { IAccessGrantee } from '@gooddata/sdk-model';
 import { IAllTimeDateFilterOption } from '@gooddata/sdk-model';
 import { IAnalyticalWidget } from '@gooddata/sdk-model';
 import { IAttributeDescriptor } from '@gooddata/sdk-model';
@@ -205,6 +207,10 @@ import { isResultMeasureHeader } from '@gooddata/sdk-model';
 import { isResultTotalHeader } from '@gooddata/sdk-model';
 import { isTempFilterContext } from '@gooddata/sdk-model';
 import { isTotalDescriptor } from '@gooddata/sdk-model';
+import { isUserAccess } from '@gooddata/sdk-model';
+import { isUserAccessGrantee } from '@gooddata/sdk-model';
+import { isUserGroupAccess } from '@gooddata/sdk-model';
+import { isUserGroupAccessGrantee } from '@gooddata/sdk-model';
 import { isVariableMetadataObject } from '@gooddata/sdk-model';
 import { isWidget } from '@gooddata/sdk-model';
 import { isWidgetAlert } from '@gooddata/sdk-model';
@@ -245,6 +251,10 @@ import { IThemeWidgetTitle } from '@gooddata/sdk-model';
 import { ITotalDescriptor } from '@gooddata/sdk-model';
 import { ITotalDescriptorItem } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
+import { IUserAccess } from '@gooddata/sdk-model';
+import { IUserAccessGrantee } from '@gooddata/sdk-model';
+import { IUserGroupAccess } from '@gooddata/sdk-model';
+import { IUserGroupAccessGrantee } from '@gooddata/sdk-model';
 import { IVariableMetadataObject } from '@gooddata/sdk-model';
 import { IWidget } from '@gooddata/sdk-model';
 import { IWidgetAlert } from '@gooddata/sdk-model';
@@ -291,6 +301,8 @@ export { AbsoluteFormType }
 export { AbsolutePresetType }
 
 export { AbsoluteType }
+
+export { AccessGranteeDetail }
 
 export { AllTimeType }
 
@@ -345,6 +357,8 @@ export { IAbsoluteDateFilterForm }
 export { IAbsoluteDateFilterPreset }
 
 export { IAccessControlAware }
+
+export { IAccessGrantee }
 
 export { IAllTimeDateFilterOption }
 
@@ -688,6 +702,14 @@ export { isTempFilterContext }
 
 export { isTotalDescriptor }
 
+export { isUserAccess }
+
+export { isUserAccessGrantee }
+
+export { isUserGroupAccess }
+
+export { isUserGroupAccessGrantee }
+
 export { isVariableMetadataObject }
 
 export { isWidget }
@@ -767,6 +789,14 @@ export { ITotalDescriptor }
 export { ITotalDescriptorItem }
 
 export { IUser }
+
+export { IUserAccess }
+
+export { IUserAccessGrantee }
+
+export { IUserGroupAccess }
+
+export { IUserGroupAccessGrantee }
 
 export { IVariableMetadataObject }
 

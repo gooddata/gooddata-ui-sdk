@@ -16,6 +16,9 @@ export type AbsolutePresetType = "absolutePreset";
 // @public
 export type AbsoluteType = "absolute";
 
+// @alpha
+export type AccessGranteeDetail = IUserAccess | IUserGroupAccess;
+
 // @public
 export type AllTimeGranularity = "ALL_TIME_GRANULARITY";
 
@@ -422,6 +425,9 @@ export interface IAccessControlAware {
     readonly isUnderStrictControl?: boolean;
     readonly shareStatus: ShareStatus;
 }
+
+// @public
+export type IAccessGrantee = IUserGroupAccessGrantee | IUserAccessGrantee;
 
 // @public
 export interface IAllTimeDateFilterOption extends IDateFilterOption {
@@ -2176,6 +2182,18 @@ export function isTotalDescriptor(obj: unknown): obj is ITotalDescriptor;
 // @public
 export function isUriRef(obj: unknown): obj is UriRef;
 
+// @alpha
+export const isUserAccess: (obj: unknown) => obj is IUserAccess;
+
+// @public
+export const isUserAccessGrantee: (obj: unknown) => obj is IUserAccessGrantee;
+
+// @alpha
+export const isUserGroupAccess: (obj: unknown) => obj is IUserGroupAccess;
+
+// @public
+export const isUserGroupAccessGrantee: (obj: unknown) => obj is IUserGroupAccessGrantee;
+
 // @public
 export function isVariableMetadataObject(obj: unknown): obj is IVariableMetadataObject;
 
@@ -2488,6 +2506,38 @@ export interface IUser {
     login: string;
     organizationName?: string;
     ref: ObjRef;
+}
+
+// @alpha
+export interface IUserAccess {
+    // (undocumented)
+    type: "user";
+    // (undocumented)
+    user: IWorkspaceUser;
+}
+
+// @public
+export interface IUserAccessGrantee {
+    // (undocumented)
+    granteeRef: ObjRef;
+    // (undocumented)
+    type: "user";
+}
+
+// @alpha
+export interface IUserGroupAccess {
+    // (undocumented)
+    type: "group";
+    // (undocumented)
+    userGroup: IWorkspaceUserGroup;
+}
+
+// @public
+export interface IUserGroupAccessGrantee {
+    // (undocumented)
+    granteeRef: ObjRef;
+    // (undocumented)
+    type: "group";
 }
 
 // @public

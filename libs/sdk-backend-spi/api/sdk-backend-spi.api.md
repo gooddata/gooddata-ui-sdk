@@ -4,11 +4,13 @@
 
 ```ts
 
+import { AccessGranteeDetail as AccessGranteeDetail_2 } from '@gooddata/sdk-model';
 import { CatalogItem as CatalogItem_2 } from '@gooddata/sdk-model';
 import { CatalogItemType as CatalogItemType_2 } from '@gooddata/sdk-model';
 import { DataValue as DataValue_2 } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { FilterContextItem as FilterContextItem_2 } from '@gooddata/sdk-model';
+import { IAccessGrantee as IAccessGrantee_2 } from '@gooddata/sdk-model';
 import { IAttributeDisplayFormMetadataObject as IAttributeDisplayFormMetadataObject_2 } from '@gooddata/sdk-model';
 import { IAttributeElement as IAttributeElement_2 } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
@@ -62,7 +64,6 @@ import { IWidgetAlertDefinition as IWidgetAlertDefinition_2 } from '@gooddata/sd
 import { IWidgetDefinition as IWidgetDefinition_2 } from '@gooddata/sdk-model';
 import { IWidgetReferences as IWidgetReferences_2 } from '@gooddata/sdk-model';
 import { IWorkspacePermissions as IWorkspacePermissions_2 } from '@gooddata/sdk-model';
-import { IWorkspaceUser as IWorkspaceUser_2 } from '@gooddata/sdk-model';
 import { IWorkspaceUserGroup as IWorkspaceUserGroup_2 } from '@gooddata/sdk-model';
 import * as m from '@gooddata/sdk-model';
 import { ObjectType } from '@gooddata/sdk-model';
@@ -78,7 +79,7 @@ export type AbsolutePresetType = m.AbsolutePresetType;
 // @public @deprecated
 export type AbsoluteType = m.AbsoluteType;
 
-// @alpha
+// @alpha @deprecated
 export type AccessGranteeDetail = IUserAccess | IUserGroupAccess;
 
 // @alpha @deprecated
@@ -208,8 +209,8 @@ export interface IAbsoluteDateFilterPreset extends m.IAbsoluteDateFilterPreset {
 export interface IAccessControlAware extends m.IAccessControlAware {
 }
 
-// @public
-export type IAccessGrantee = IUserGroupAccessGrantee | IUserAccessGrantee;
+// @public @deprecated
+export type IAccessGrantee = m.IAccessGrantee;
 
 // @alpha @deprecated
 export interface IAllTimeDateFilterOption extends m.IAllTimeDateFilterOption {
@@ -1246,17 +1247,17 @@ export function isUnexpectedError(obj: unknown): obj is UnexpectedError;
 // @public
 export function isUnexpectedResponseError(obj: unknown): obj is UnexpectedResponseError;
 
-// @alpha
-export const isUserAccess: (obj: unknown) => obj is IUserAccess;
+// @alpha @deprecated
+export const isUserAccess: (obj: unknown) => obj is m.IUserAccess;
 
-// @public
-export const isUserAccessGrantee: (obj: unknown) => obj is IUserAccessGrantee;
+// @public @deprecated
+export const isUserAccessGrantee: (obj: unknown) => obj is m.IUserAccessGrantee;
 
-// @alpha
-export const isUserGroupAccess: (obj: unknown) => obj is IUserGroupAccess;
+// @alpha @deprecated
+export const isUserGroupAccess: (obj: unknown) => obj is m.IUserGroupAccess;
 
-// @public
-export const isUserGroupAccessGrantee: (obj: unknown) => obj is IUserGroupAccessGrantee;
+// @public @deprecated
+export const isUserGroupAccessGrantee: (obj: unknown) => obj is m.IUserGroupAccessGrantee;
 
 // @public
 export function isValueBasedElementsQueryOptionsElements(obj: unknown): obj is IElementsQueryOptionsElementsByValue | IElementsQueryOptionsElementsByPrimaryDisplayFormValue;
@@ -1421,36 +1422,20 @@ export interface ITotalDescriptorItem extends m.ITotalDescriptorItem {
 export interface IUser extends IUser_2 {
 }
 
-// @alpha
-export interface IUserAccess {
-    // (undocumented)
-    type: "user";
-    // (undocumented)
-    user: IWorkspaceUser_2;
+// @alpha @deprecated
+export interface IUserAccess extends m.IUserAccess {
 }
 
-// @public
-export interface IUserAccessGrantee {
-    // (undocumented)
-    granteeRef: ObjRef;
-    // (undocumented)
-    type: "user";
+// @public @deprecated
+export interface IUserAccessGrantee extends m.IUserAccessGrantee {
 }
 
-// @alpha
-export interface IUserGroupAccess {
-    // (undocumented)
-    type: "group";
-    // (undocumented)
-    userGroup: IWorkspaceUserGroup_2;
+// @alpha @deprecated
+export interface IUserGroupAccess extends m.IUserGroupAccess {
 }
 
-// @public
-export interface IUserGroupAccessGrantee {
-    // (undocumented)
-    granteeRef: ObjRef;
-    // (undocumented)
-    type: "group";
+// @public @deprecated
+export interface IUserGroupAccessGrantee extends m.IUserGroupAccessGrantee {
 }
 
 // @public
@@ -1527,11 +1512,11 @@ export interface IWidgetWithLayoutPath<TWidget = IDashboardWidget_2> {
 // @alpha
 export interface IWorkspaceAccessControlService {
     // (undocumented)
-    getAccessList(sharedObject: ObjRef): Promise<AccessGranteeDetail[]>;
+    getAccessList(sharedObject: ObjRef): Promise<AccessGranteeDetail_2[]>;
     // (undocumented)
-    grantAccess(sharedObject: ObjRef, grantees: IAccessGrantee[]): Promise<void>;
+    grantAccess(sharedObject: ObjRef, grantees: IAccessGrantee_2[]): Promise<void>;
     // (undocumented)
-    revokeAccess(sharedObject: ObjRef, grantees: IAccessGrantee[]): Promise<void>;
+    revokeAccess(sharedObject: ObjRef, grantees: IAccessGrantee_2[]): Promise<void>;
 }
 
 // @public

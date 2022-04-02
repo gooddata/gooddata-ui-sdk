@@ -170,19 +170,7 @@ export {
     IWorkspaceUserGroupsQueryResult,
 } from "./workspace/userGroups";
 
-export {
-    IWorkspaceAccessControlService,
-    AccessGranteeDetail,
-    IAccessGrantee,
-    IUserAccessGrantee,
-    IUserGroupAccessGrantee,
-    IUserAccess,
-    IUserGroupAccess,
-    isUserAccess,
-    isUserGroupAccess,
-    isUserGroupAccessGrantee,
-    isUserAccessGrantee,
-} from "./workspace/accessControl";
+export { IWorkspaceAccessControlService } from "./workspace/accessControl";
 
 // Moved to @gooddata/sdk-model
 export {
@@ -504,3 +492,16 @@ export {
     attributeDescriptorLocalId,
     attributeDescriptorName,
 } from "./deprecated/execution/results";
+
+export {
+    AccessGranteeDetail,
+    IAccessGrantee,
+    IUserAccessGrantee,
+    IUserGroupAccessGrantee,
+    IUserAccess,
+    IUserGroupAccess,
+    isUserAccess,
+    isUserGroupAccess,
+    isUserGroupAccessGrantee,
+    isUserAccessGrantee,
+} from "./deprecated/accessControl";
