@@ -1,7 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
-
-import { ObjRef } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
+import { ObjRef } from "../../objRef";
 
 /**
  * Single calculated data value.
@@ -357,7 +356,7 @@ export interface IResultTotalHeader {
  * @remarks
  * They are integral part of the data view and are organized in per-dimension and per-dimension-item arrays.
  *
- * @remarks see {@link IDataView} for further detail on the organization.
+ * @remarks see {@link @gooddata/sdk-backend-spi#IDataView} for further detail on the organization.
  *
  * @public
  */

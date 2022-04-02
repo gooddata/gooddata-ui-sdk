@@ -6,6 +6,7 @@
 
 import { CatalogItem as CatalogItem_2 } from '@gooddata/sdk-model';
 import { CatalogItemType as CatalogItemType_2 } from '@gooddata/sdk-model';
+import { DataValue as DataValue_2 } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { FilterContextItem as FilterContextItem_2 } from '@gooddata/sdk-model';
 import { IAttributeDisplayFormMetadataObject as IAttributeDisplayFormMetadataObject_2 } from '@gooddata/sdk-model';
@@ -31,6 +32,7 @@ import { IDashboardWidget as IDashboardWidget_2 } from '@gooddata/sdk-model';
 import { IDataset as IDataset_2 } from '@gooddata/sdk-model';
 import { IDateFilterConfig as IDateFilterConfig_2 } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
+import { IDimensionDescriptor as IDimensionDescriptor_2 } from '@gooddata/sdk-model';
 import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
@@ -44,6 +46,8 @@ import { IMeasureMetadataObjectDefinition as IMeasureMetadataObjectDefinition_2 
 import { IMetadataObject as IMetadataObject_2 } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
+import { IResultHeader as IResultHeader_2 } from '@gooddata/sdk-model';
+import { IResultWarning as IResultWarning_2 } from '@gooddata/sdk-model';
 import { IScheduledMail as IScheduledMail_2 } from '@gooddata/sdk-model';
 import { IScheduledMailDefinition as IScheduledMailDefinition_2 } from '@gooddata/sdk-model';
 import { ISeparators as ISeparators_2 } from '@gooddata/sdk-model';
@@ -107,11 +111,11 @@ export type AnalyticalBackendFactory = (config?: IAnalyticalBackendConfig, implC
 // @alpha @deprecated
 export type AnalyticalWidgetType = m.AnalyticalWidgetType;
 
-// @public
-export function attributeDescriptorLocalId(descriptor: IAttributeDescriptor): string;
+// @public @deprecated
+export const attributeDescriptorLocalId: typeof m.attributeDescriptorLocalId;
 
-// @public
-export function attributeDescriptorName(descriptor: IAttributeDescriptor): string;
+// @public @deprecated
+export const attributeDescriptorName: typeof m.attributeDescriptorName;
 
 // @public
 export type AuthenticationFlow = {
@@ -148,8 +152,8 @@ export class DataTooLargeError extends AnalyticalBackendError {
     constructor(message: string, cause?: Error);
 }
 
-// @public
-export type DataValue = null | string | number;
+// @public @deprecated
+export type DataValue = m.DataValue;
 
 // @alpha @deprecated
 export type DateFilterGranularity = m.DateFilterGranularity;
@@ -260,22 +264,12 @@ export interface IAnalyticalWorkspace {
     readonly workspace: string;
 }
 
-// @public
-export interface IAttributeDescriptor {
-    attributeHeader: IAttributeDescriptorBody;
+// @public @deprecated
+export interface IAttributeDescriptor extends m.IAttributeDescriptor {
 }
 
-// @public
-export interface IAttributeDescriptorBody {
-    formOf: IAttributeHeaderFormOf;
-    identifier: string;
-    localIdentifier: string;
-    name: string;
-    ref: ObjRef;
-    // (undocumented)
-    totalItems?: ITotalDescriptor[];
-    type?: string;
-    uri: string;
+// @public @deprecated
+export interface IAttributeDescriptorBody extends m.IAttributeDescriptorBody {
 }
 
 // @public @deprecated
@@ -293,12 +287,8 @@ export interface IAttributeElementExpressionToken {
     value: string | undefined;
 }
 
-// @public
-export interface IAttributeHeaderFormOf {
-    identifier: string;
-    name: string;
-    ref: ObjRef;
-    uri: string;
+// @public @deprecated
+export interface IAttributeHeaderFormOf extends m.IAttributeHeaderFormOf {
 }
 
 // @public @deprecated
@@ -548,16 +538,16 @@ export interface IDatasetUser extends m.IDatasetUser {
 // @public
 export interface IDataView {
     readonly count: number[];
-    readonly data: DataValue[][] | DataValue[];
+    readonly data: DataValue_2[][] | DataValue_2[];
     readonly definition: IExecutionDefinition;
     equals(other: IDataView): boolean;
     fingerprint(): string;
-    readonly headerItems: IResultHeader[][][];
+    readonly headerItems: IResultHeader_2[][][];
     readonly offset: number[];
     readonly result: IExecutionResult;
     readonly totalCount: number[];
-    readonly totals?: DataValue[][][];
-    readonly warnings?: IResultWarning[];
+    readonly totals?: DataValue_2[][][];
+    readonly warnings?: IResultWarning_2[];
 }
 
 // @alpha @deprecated
@@ -578,14 +568,12 @@ export type IDateFilterConfigsQueryResult = IPagedResource<IDateFilterConfig_2>;
 export interface IDateFilterOption extends m.IDateFilterOption {
 }
 
-// @public
-export interface IDimensionDescriptor {
-    // (undocumented)
-    headers: IDimensionItemDescriptor[];
+// @public @deprecated
+export interface IDimensionDescriptor extends m.IDimensionDescriptor {
 }
 
-// @public
-export type IDimensionItemDescriptor = IMeasureGroupDescriptor | IAttributeDescriptor;
+// @public @deprecated
+export type IDimensionItemDescriptor = m.IDimensionItemDescriptor;
 
 // @alpha @deprecated
 export interface IDrill extends m.IDrill {
@@ -706,7 +694,7 @@ export interface IExecutionFactory {
 // @public
 export interface IExecutionResult {
     readonly definition: IExecutionDefinition;
-    readonly dimensions: IDimensionDescriptor[];
+    readonly dimensions: IDimensionDescriptor_2[];
     equals(other: IExecutionResult): boolean;
     export(options: IExportConfig): Promise<IExportResult>;
     fingerprint(): string;
@@ -870,38 +858,23 @@ export interface ILegacyKpiWithPreviousPeriodComparison extends m.ILegacyKpiWith
 export interface IListedDashboard extends m.IListedDashboard {
 }
 
-// @public
-export interface IMeasureDescriptor {
-    // (undocumented)
-    measureHeaderItem: IMeasureDescriptorItem;
+// @public @deprecated
+export interface IMeasureDescriptor extends m.IMeasureDescriptor {
 }
 
-// @public
-export interface IMeasureDescriptorItem {
-    format: string;
-    identifier?: string;
-    // (undocumented)
-    localIdentifier: string;
-    name: string;
-    ref?: ObjRef;
-    uri?: string;
+// @public @deprecated
+export interface IMeasureDescriptorItem extends m.IMeasureDescriptorItem {
 }
 
-// @public
-export interface IMeasureDescriptorObject {
-    // (undocumented)
-    items: IMeasureDescriptor[];
-    // (undocumented)
-    totalItems?: ITotalDescriptor[];
+// @public @deprecated
+export interface IMeasureDescriptorObject extends m.IMeasureDescriptorObject {
 }
 
 // @public
 export type IMeasureExpressionToken = IObjectExpressionToken | IAttributeElementExpressionToken | ITextExpressionToken | ICommentExpressionToken | IBracketExpressionToken;
 
-// @public
-export interface IMeasureGroupDescriptor {
-    // (undocumented)
-    measureGroupHeader: IMeasureDescriptorObject;
+// @public @deprecated
+export interface IMeasureGroupDescriptor extends m.IMeasureGroupDescriptor {
 }
 
 // @public @deprecated
@@ -1017,52 +990,35 @@ export interface IRelativeDateFilterPreset extends m.IRelativeDateFilterPreset {
 export interface IRelativeDateFilterPresetOfGranularity<Key extends DateFilterGranularity> extends m.IRelativeDateFilterPresetOfGranularity<Key> {
 }
 
-// @public
-export interface IResultAttributeHeader {
-    // (undocumented)
-    attributeHeaderItem: IResultAttributeHeaderItem;
+// @public @deprecated
+export interface IResultAttributeHeader extends m.IResultAttributeHeader {
 }
 
-// @public
-export interface IResultAttributeHeaderItem {
-    name: string;
-    uri: string;
+// @public @deprecated
+export interface IResultAttributeHeaderItem extends m.IResultAttributeHeaderItem {
 }
 
-// @public
-export type IResultHeader = IResultAttributeHeader | IResultMeasureHeader | IResultTotalHeader;
+// @public @deprecated
+export type IResultHeader = m.IResultHeader;
 
-// @public
-export interface IResultMeasureHeader {
-    // (undocumented)
-    measureHeaderItem: IResultMeasureHeaderItem;
+// @public @deprecated
+export interface IResultMeasureHeader extends m.IResultMeasureHeader {
 }
 
-// @public
-export interface IResultMeasureHeaderItem {
-    name: string;
-    order: number;
+// @public @deprecated
+export interface IResultMeasureHeaderItem extends m.IResultMeasureHeaderItem {
 }
 
-// @public
-export interface IResultTotalHeader {
-    // (undocumented)
-    totalHeaderItem: IResultTotalHeaderItem;
+// @public @deprecated
+export interface IResultTotalHeader extends m.IResultTotalHeader {
 }
 
-// @public
-export interface IResultTotalHeaderItem {
-    // (undocumented)
-    name: string;
-    // (undocumented)
-    type: string;
+// @public @deprecated
+export interface IResultTotalHeaderItem extends m.IResultTotalHeaderItem {
 }
 
-// @public
-export interface IResultWarning {
-    message: string;
-    parameters?: (ObjRef | string)[];
-    warningCode: string;
+// @public @deprecated
+export interface IResultWarning extends m.IResultWarning {
 }
 
 // @alpha @deprecated
@@ -1080,8 +1036,8 @@ export const isAllTimeDateFilterOption: (obj: unknown) => obj is m.IAllTimeDateF
 // @public
 export function isAnalyticalBackendError(obj: unknown): obj is AnalyticalBackendError;
 
-// @public
-export function isAttributeDescriptor(obj: unknown): obj is IAttributeDescriptor;
+// @public @deprecated
+export const isAttributeDescriptor: typeof m.isAttributeDescriptor;
 
 // @public @deprecated
 export const isAttributeDisplayFormMetadataObject: typeof m.isAttributeDisplayFormMetadataObject;
@@ -1233,11 +1189,11 @@ export const isLegacyKpiWithComparison: typeof m.isLegacyKpiWithComparison;
 // @alpha @deprecated
 export const isLegacyKpiWithoutComparison: typeof m.isLegacyKpiWithoutComparison;
 
-// @public
-export function isMeasureDescriptor(obj: unknown): obj is IMeasureDescriptor;
+// @public @deprecated
+export const isMeasureDescriptor: typeof m.isMeasureDescriptor;
 
-// @public
-export function isMeasureGroupDescriptor(obj: unknown): obj is IMeasureGroupDescriptor;
+// @public @deprecated
+export const isMeasureGroupDescriptor: typeof m.isMeasureGroupDescriptor;
 
 // @public @deprecated
 export const isMeasureMetadataObject: typeof m.isMeasureMetadataObject;
@@ -1269,20 +1225,20 @@ export const isRelativeDateFilterForm: (obj: unknown) => obj is m.IRelativeDateF
 // @alpha @deprecated
 export const isRelativeDateFilterPreset: (obj: unknown) => obj is m.IRelativeDateFilterPreset;
 
-// @public
-export function isResultAttributeHeader(obj: unknown): obj is IResultAttributeHeader;
+// @public @deprecated
+export const isResultAttributeHeader: typeof m.isResultAttributeHeader;
 
-// @public
-export function isResultMeasureHeader(obj: unknown): obj is IResultMeasureHeader;
+// @public @deprecated
+export const isResultMeasureHeader: typeof m.isResultMeasureHeader;
 
-// @public
-export function isResultTotalHeader(obj: unknown): obj is IResultTotalHeader;
+// @public @deprecated
+export const isResultTotalHeader: typeof m.isResultTotalHeader;
 
 // @public @deprecated
 export const isTempFilterContext: typeof m.isTempFilterContext;
 
-// @public
-export function isTotalDescriptor(obj: unknown): obj is ITotalDescriptor;
+// @public @deprecated
+export const isTotalDescriptor: typeof m.isTotalDescriptor;
 
 // @public
 export function isUnexpectedError(obj: unknown): obj is UnexpectedError;
@@ -1453,16 +1409,12 @@ export interface IThemeTypography extends m.IThemeTypography {
 export interface IThemeWidgetTitle extends m.IThemeWidgetTitle {
 }
 
-// @public
-export interface ITotalDescriptor {
-    // (undocumented)
-    totalHeaderItem: ITotalDescriptorItem;
+// @public @deprecated
+export interface ITotalDescriptor extends m.ITotalDescriptor {
 }
 
-// @public
-export interface ITotalDescriptorItem {
-    // (undocumented)
-    name: string;
+// @public @deprecated
+export interface ITotalDescriptorItem extends m.ITotalDescriptorItem {
 }
 
 // @alpha @deprecated
@@ -1906,8 +1858,8 @@ export type RelativePresetType = m.RelativePresetType;
 // @public @deprecated
 export type RelativeType = m.RelativeType;
 
-// @public
-export function resultHeaderName(header: IResultHeader): string;
+// @public @deprecated
+export const resultHeaderName: typeof m.resultHeaderName;
 
 // @alpha @deprecated
 export type ScheduledMailAttachment = m.ScheduledMailAttachment;

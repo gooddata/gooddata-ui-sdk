@@ -35,39 +35,6 @@ export {
     ExplainConfig,
 } from "./workspace/execution";
 
-export {
-    DataValue,
-    IMeasureDescriptor,
-    IMeasureDescriptorObject,
-    IMeasureDescriptorItem,
-    IDimensionItemDescriptor,
-    IDimensionDescriptor,
-    IAttributeHeaderFormOf,
-    IAttributeDescriptorBody,
-    IAttributeDescriptor,
-    IMeasureGroupDescriptor,
-    IResultAttributeHeader,
-    IResultHeader,
-    IResultMeasureHeader,
-    IResultAttributeHeaderItem,
-    IResultMeasureHeaderItem,
-    IResultTotalHeader,
-    IResultTotalHeaderItem,
-    ITotalDescriptor,
-    ITotalDescriptorItem,
-    IResultWarning,
-    isAttributeDescriptor,
-    isMeasureGroupDescriptor,
-    isTotalDescriptor,
-    isMeasureDescriptor,
-    isResultAttributeHeader,
-    isResultMeasureHeader,
-    isResultTotalHeader,
-    resultHeaderName,
-    attributeDescriptorLocalId,
-    attributeDescriptorName,
-} from "./workspace/execution/results";
-
 export { IWorkspaceSettingsService } from "./workspace/settings";
 
 export {
@@ -504,3 +471,36 @@ export {
 } from "./deprecated/theme";
 
 export { IWorkspacePermissions, WorkspacePermission } from "./deprecated/permissions";
+
+export {
+    DataValue,
+    IMeasureDescriptor,
+    IMeasureDescriptorObject,
+    IMeasureDescriptorItem,
+    IDimensionItemDescriptor,
+    IDimensionDescriptor,
+    IAttributeHeaderFormOf,
+    IAttributeDescriptorBody,
+    IAttributeDescriptor,
+    IMeasureGroupDescriptor,
+    IResultAttributeHeader,
+    IResultHeader,
+    IResultMeasureHeader,
+    IResultAttributeHeaderItem,
+    IResultMeasureHeaderItem,
+    IResultTotalHeader,
+    IResultTotalHeaderItem,
+    ITotalDescriptor,
+    ITotalDescriptorItem,
+    IResultWarning,
+    isAttributeDescriptor,
+    isMeasureGroupDescriptor,
+    isTotalDescriptor,
+    isMeasureDescriptor,
+    isResultAttributeHeader,
+    isResultMeasureHeader,
+    isResultTotalHeader,
+    resultHeaderName,
+    attributeDescriptorLocalId,
+    attributeDescriptorName,
+} from "./deprecated/execution/results";

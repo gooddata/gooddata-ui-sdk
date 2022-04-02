@@ -80,6 +80,12 @@ export class AttributeBuilder {
 export type AttributeBuilderInput = Identifier | ObjRef | IAttribute;
 
 // @public
+export function attributeDescriptorLocalId(descriptor: IAttributeDescriptor): string;
+
+// @public
+export function attributeDescriptorName(descriptor: IAttributeDescriptor): string;
+
+// @public
 export function attributeDisplayFormMetadataObjectAttributeRef(displayForm: IAttributeDisplayFormMetadataObject): ObjRef;
 
 // @public
@@ -251,6 +257,9 @@ export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
 
 // @public
 export type DatasetLoadStatus = "RUNNING" | "OK" | "ERROR" | "CANCELLED" | "ERROR_METADATA" | "REFRESHING";
+
+// @public
+export type DataValue = null | string | number;
 
 // @public
 export type DateAttributeGranularity = "GDC.time.year" | "GDC.time.week_us" | "GDC.time.week_in_year" | "GDC.time.week_in_quarter" | "GDC.time.week" | "GDC.time.euweek_in_year" | "GDC.time.euweek_in_quarter" | "GDC.time.quarter" | "GDC.time.quarter_in_year" | "GDC.time.month" | "GDC.time.month_in_quarter" | "GDC.time.month_in_year" | "GDC.time.day_in_year" | "GDC.time.day_in_quarter" | "GDC.time.day_in_month" | "GDC.time.day_in_week" | "GDC.time.day_in_euweek" | "GDC.time.date" | "GDC.time.hour" | "GDC.time.hour_in_day" | "GDC.time.minute" | "GDC.time.minute_in_hour";
@@ -448,6 +457,24 @@ export interface IAttributeBody {
 }
 
 // @public
+export interface IAttributeDescriptor {
+    attributeHeader: IAttributeDescriptorBody;
+}
+
+// @public
+export interface IAttributeDescriptorBody {
+    formOf: IAttributeHeaderFormOf;
+    identifier: string;
+    localIdentifier: string;
+    name: string;
+    ref: ObjRef;
+    // (undocumented)
+    totalItems?: ITotalDescriptor[];
+    type?: string;
+    uri: string;
+}
+
+// @public
 export interface IAttributeDisplayFormMetadataObject extends IMetadataObject {
     attribute: ObjRef;
     displayFormType?: string;
@@ -479,6 +506,14 @@ export interface IAttributeElementsByValue {
 
 // @public
 export type IAttributeFilter = IPositiveAttributeFilter | INegativeAttributeFilter;
+
+// @public
+export interface IAttributeHeaderFormOf {
+    identifier: string;
+    name: string;
+    ref: ObjRef;
+    uri: string;
+}
 
 // @public
 export interface IAttributeLocatorItem {
@@ -943,6 +978,15 @@ export interface IDimension {
 }
 
 // @public
+export interface IDimensionDescriptor {
+    // (undocumented)
+    headers: IDimensionItemDescriptor[];
+}
+
+// @public
+export type IDimensionItemDescriptor = IMeasureGroupDescriptor | IAttributeDescriptor;
+
+// @public
 export const idMatchAttribute: (id: string) => AttributePredicate;
 
 // @public
@@ -1254,7 +1298,38 @@ export interface IMeasureDefinitionBody {
 export type IMeasureDefinitionType = IMeasureDefinition | IArithmeticMeasureDefinition | IPoPMeasureDefinition | IPreviousPeriodMeasureDefinition;
 
 // @public
+export interface IMeasureDescriptor {
+    // (undocumented)
+    measureHeaderItem: IMeasureDescriptorItem;
+}
+
+// @public
+export interface IMeasureDescriptorItem {
+    format: string;
+    identifier?: string;
+    // (undocumented)
+    localIdentifier: string;
+    name: string;
+    ref?: ObjRef;
+    uri?: string;
+}
+
+// @public
+export interface IMeasureDescriptorObject {
+    // (undocumented)
+    items: IMeasureDescriptor[];
+    // (undocumented)
+    totalItems?: ITotalDescriptor[];
+}
+
+// @public
 export type IMeasureFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter;
+
+// @public
+export interface IMeasureGroupDescriptor {
+    // (undocumented)
+    measureGroupHeader: IMeasureDescriptorObject;
+}
 
 // @public
 export interface IMeasureLocatorItem {
@@ -1647,6 +1722,54 @@ export interface IRelativeDateFilterValues {
 }
 
 // @public
+export interface IResultAttributeHeader {
+    // (undocumented)
+    attributeHeaderItem: IResultAttributeHeaderItem;
+}
+
+// @public
+export interface IResultAttributeHeaderItem {
+    name: string;
+    uri: string;
+}
+
+// @public
+export type IResultHeader = IResultAttributeHeader | IResultMeasureHeader | IResultTotalHeader;
+
+// @public
+export interface IResultMeasureHeader {
+    // (undocumented)
+    measureHeaderItem: IResultMeasureHeaderItem;
+}
+
+// @public
+export interface IResultMeasureHeaderItem {
+    name: string;
+    order: number;
+}
+
+// @public
+export interface IResultTotalHeader {
+    // (undocumented)
+    totalHeaderItem: IResultTotalHeaderItem;
+}
+
+// @public
+export interface IResultTotalHeaderItem {
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    type: string;
+}
+
+// @public
+export interface IResultWarning {
+    message: string;
+    parameters?: (ObjRef | string)[];
+    warningCode: string;
+}
+
+// @public
 export interface IRgbColor {
     // (undocumented)
     type: RgbType;
@@ -1700,6 +1823,9 @@ export function isAttribute(obj: unknown): obj is IAttribute;
 
 // @public
 export function isAttributeAreaSort(obj: unknown): obj is IAttributeSortItem;
+
+// @public
+export function isAttributeDescriptor(obj: unknown): obj is IAttributeDescriptor;
 
 // @public
 export function isAttributeDisplayFormMetadataObject(obj: unknown): obj is IAttributeDisplayFormMetadataObject;
@@ -1950,7 +2076,13 @@ export function isMeasure(obj: unknown): obj is IMeasure;
 export function isMeasureDefinition(obj: unknown): obj is IMeasureDefinition;
 
 // @public
+export function isMeasureDescriptor(obj: unknown): obj is IMeasureDescriptor;
+
+// @public
 export function isMeasureFormatInPercent(measureOrFormat: IMeasure | string): boolean;
+
+// @public
+export function isMeasureGroupDescriptor(obj: unknown): obj is IMeasureGroupDescriptor;
 
 // @public
 export function isMeasureLocator(obj: unknown): obj is IMeasureLocatorItem;
@@ -2018,6 +2150,15 @@ export const isRelativeDateFilterForm: (obj: unknown) => obj is IRelativeDateFil
 export const isRelativeDateFilterPreset: (obj: unknown) => obj is IRelativeDateFilterPreset;
 
 // @public
+export function isResultAttributeHeader(obj: unknown): obj is IResultAttributeHeader;
+
+// @public
+export function isResultMeasureHeader(obj: unknown): obj is IResultMeasureHeader;
+
+// @public
+export function isResultTotalHeader(obj: unknown): obj is IResultTotalHeader;
+
+// @public
 export function isRgbColor(obj: unknown): obj is IRgbColor;
 
 // @public
@@ -2028,6 +2169,9 @@ export function isTempFilterContext(obj: unknown): obj is ITempFilterContext;
 
 // @public
 export function isTotal(obj: unknown): obj is ITotal;
+
+// @public
+export function isTotalDescriptor(obj: unknown): obj is ITotalDescriptor;
 
 // @public
 export function isUriRef(obj: unknown): obj is UriRef;
@@ -2321,6 +2465,18 @@ export interface ITotal {
     attributeIdentifier: Identifier;
     measureIdentifier: Identifier;
     type: TotalType;
+}
+
+// @public
+export interface ITotalDescriptor {
+    // (undocumented)
+    totalHeaderItem: ITotalDescriptorItem;
+}
+
+// @public
+export interface ITotalDescriptorItem {
+    // (undocumented)
+    name: string;
 }
 
 // @public
@@ -2778,6 +2934,9 @@ export type RelativePresetType = "relativePreset";
 
 // @public
 export type RelativeType = "relative";
+
+// @public
+export function resultHeaderName(header: IResultHeader): string;
 
 // @public (undocumented)
 export type RgbType = "rgb";

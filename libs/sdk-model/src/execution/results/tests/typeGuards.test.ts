@@ -11,7 +11,7 @@ import {
     isTotalDescriptor,
     isResultTotalHeader,
     IResultHeader,
-} from "../results";
+} from "../index";
 
 describe("result type guards", () => {
     describe("isAttributeDescriptor", () => {

@@ -690,3 +690,36 @@ export {
 } from "./theme";
 
 export { IWorkspacePermissions, WorkspacePermission } from "./permissions";
+
+export {
+    DataValue,
+    IMeasureDescriptor,
+    IMeasureDescriptorObject,
+    IMeasureDescriptorItem,
+    IDimensionItemDescriptor,
+    IDimensionDescriptor,
+    IAttributeHeaderFormOf,
+    IAttributeDescriptorBody,
+    IAttributeDescriptor,
+    IMeasureGroupDescriptor,
+    IResultAttributeHeader,
+    IResultHeader,
+    IResultMeasureHeader,
+    IResultAttributeHeaderItem,
+    IResultMeasureHeaderItem,
+    IResultTotalHeader,
+    IResultTotalHeaderItem,
+    ITotalDescriptor,
+    ITotalDescriptorItem,
+    IResultWarning,
+    isAttributeDescriptor,
+    isMeasureGroupDescriptor,
+    isTotalDescriptor,
+    isMeasureDescriptor,
+    isResultAttributeHeader,
+    isResultMeasureHeader,
+    isResultTotalHeader,
+    resultHeaderName,
+    attributeDescriptorLocalId,
+    attributeDescriptorName,
+} from "./execution/results";

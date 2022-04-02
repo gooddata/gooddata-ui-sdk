@@ -9,6 +9,8 @@ import { AbsolutePresetType } from '@gooddata/sdk-model';
 import { AbsoluteType } from '@gooddata/sdk-model';
 import { AllTimeType } from '@gooddata/sdk-model';
 import { AnalyticalWidgetType } from '@gooddata/sdk-model';
+import { attributeDescriptorLocalId } from '@gooddata/sdk-model';
+import { attributeDescriptorName } from '@gooddata/sdk-model';
 import { BuiltInWidgetTypes } from '@gooddata/sdk-model';
 import { CatalogItem } from '@gooddata/sdk-model';
 import { catalogItemMetadataObject } from '@gooddata/sdk-model';
@@ -17,6 +19,7 @@ import { DashboardDateFilterConfigMode } from '@gooddata/sdk-model';
 import { dashboardFilterReferenceObjRef } from '@gooddata/sdk-model';
 import { DataColumnType } from '@gooddata/sdk-model';
 import { DatasetLoadStatus } from '@gooddata/sdk-model';
+import { DataValue } from '@gooddata/sdk-model';
 import { DateFilterGranularity } from '@gooddata/sdk-model';
 import { DateFilterType } from '@gooddata/sdk-model';
 import { DateString } from '@gooddata/sdk-model';
@@ -33,8 +36,11 @@ import { IAbsoluteDateFilterPreset } from '@gooddata/sdk-model';
 import { IAccessControlAware } from '@gooddata/sdk-model';
 import { IAllTimeDateFilterOption } from '@gooddata/sdk-model';
 import { IAnalyticalWidget } from '@gooddata/sdk-model';
+import { IAttributeDescriptor } from '@gooddata/sdk-model';
+import { IAttributeDescriptorBody } from '@gooddata/sdk-model';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeElement } from '@gooddata/sdk-model';
+import { IAttributeHeaderFormOf } from '@gooddata/sdk-model';
 import { IAttributeMetadataObject } from '@gooddata/sdk-model';
 import { IBaseWidget } from '@gooddata/sdk-model';
 import { ICatalogAttribute } from '@gooddata/sdk-model';
@@ -79,6 +85,8 @@ import { IDataSetMetadataObject } from '@gooddata/sdk-model';
 import { IDatasetUser } from '@gooddata/sdk-model';
 import { IDateFilterConfig } from '@gooddata/sdk-model';
 import { IDateFilterOption } from '@gooddata/sdk-model';
+import { IDimensionDescriptor } from '@gooddata/sdk-model';
+import { IDimensionItemDescriptor } from '@gooddata/sdk-model';
 import { IDrill } from '@gooddata/sdk-model';
 import { IDrillableWidget } from '@gooddata/sdk-model';
 import { IDrillFromAttribute } from '@gooddata/sdk-model';
@@ -115,6 +123,10 @@ import { ILegacyKpiWithoutComparison } from '@gooddata/sdk-model';
 import { ILegacyKpiWithPopComparison } from '@gooddata/sdk-model';
 import { ILegacyKpiWithPreviousPeriodComparison } from '@gooddata/sdk-model';
 import { IListedDashboard } from '@gooddata/sdk-model';
+import { IMeasureDescriptor } from '@gooddata/sdk-model';
+import { IMeasureDescriptorItem } from '@gooddata/sdk-model';
+import { IMeasureDescriptorObject } from '@gooddata/sdk-model';
+import { IMeasureGroupDescriptor } from '@gooddata/sdk-model';
 import { IMeasureMetadataObject } from '@gooddata/sdk-model';
 import { IMeasureMetadataObjectBase } from '@gooddata/sdk-model';
 import { IMeasureMetadataObjectDefinition } from '@gooddata/sdk-model';
@@ -126,10 +138,19 @@ import { InsightDrillDefinition } from '@gooddata/sdk-model';
 import { IRelativeDateFilterForm } from '@gooddata/sdk-model';
 import { IRelativeDateFilterPreset } from '@gooddata/sdk-model';
 import { IRelativeDateFilterPresetOfGranularity } from '@gooddata/sdk-model';
+import { IResultAttributeHeader } from '@gooddata/sdk-model';
+import { IResultAttributeHeaderItem } from '@gooddata/sdk-model';
+import { IResultHeader } from '@gooddata/sdk-model';
+import { IResultMeasureHeader } from '@gooddata/sdk-model';
+import { IResultMeasureHeaderItem } from '@gooddata/sdk-model';
+import { IResultTotalHeader } from '@gooddata/sdk-model';
+import { IResultTotalHeaderItem } from '@gooddata/sdk-model';
+import { IResultWarning } from '@gooddata/sdk-model';
 import { isAbsoluteDateFilterForm } from '@gooddata/sdk-model';
 import { isAbsoluteDateFilterPreset } from '@gooddata/sdk-model';
 import { isAllTimeDashboardDateFilter } from '@gooddata/sdk-model';
 import { isAllTimeDateFilterOption } from '@gooddata/sdk-model';
+import { isAttributeDescriptor } from '@gooddata/sdk-model';
 import { isAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { isAttributeMetadataObject } from '@gooddata/sdk-model';
 import { isCatalogAttribute } from '@gooddata/sdk-model';
@@ -172,12 +193,18 @@ import { isKpiWidgetDefinition } from '@gooddata/sdk-model';
 import { isLegacyKpi } from '@gooddata/sdk-model';
 import { isLegacyKpiWithComparison } from '@gooddata/sdk-model';
 import { isLegacyKpiWithoutComparison } from '@gooddata/sdk-model';
+import { isMeasureDescriptor } from '@gooddata/sdk-model';
+import { isMeasureGroupDescriptor } from '@gooddata/sdk-model';
 import { isMeasureMetadataObject } from '@gooddata/sdk-model';
 import { isMeasureMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { isMetadataObject } from '@gooddata/sdk-model';
 import { isRelativeDateFilterForm } from '@gooddata/sdk-model';
 import { isRelativeDateFilterPreset } from '@gooddata/sdk-model';
+import { isResultAttributeHeader } from '@gooddata/sdk-model';
+import { isResultMeasureHeader } from '@gooddata/sdk-model';
+import { isResultTotalHeader } from '@gooddata/sdk-model';
 import { isTempFilterContext } from '@gooddata/sdk-model';
+import { isTotalDescriptor } from '@gooddata/sdk-model';
 import { isVariableMetadataObject } from '@gooddata/sdk-model';
 import { isWidget } from '@gooddata/sdk-model';
 import { isWidgetAlert } from '@gooddata/sdk-model';
@@ -215,6 +242,8 @@ import { IThemeTable } from '@gooddata/sdk-model';
 import { IThemeTooltip } from '@gooddata/sdk-model';
 import { IThemeTypography } from '@gooddata/sdk-model';
 import { IThemeWidgetTitle } from '@gooddata/sdk-model';
+import { ITotalDescriptor } from '@gooddata/sdk-model';
+import { ITotalDescriptorItem } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
 import { IVariableMetadataObject } from '@gooddata/sdk-model';
 import { IWidget } from '@gooddata/sdk-model';
@@ -241,6 +270,7 @@ import { RelativeFormType } from '@gooddata/sdk-model';
 import { RelativeGranularityOffset } from '@gooddata/sdk-model';
 import { RelativePresetType } from '@gooddata/sdk-model';
 import { RelativeType } from '@gooddata/sdk-model';
+import { resultHeaderName } from '@gooddata/sdk-model';
 import { ScheduledMailAttachment } from '@gooddata/sdk-model';
 import { ScreenSize } from '@gooddata/sdk-model';
 import { ShareStatus } from '@gooddata/sdk-model';
@@ -266,6 +296,10 @@ export { AllTimeType }
 
 export { AnalyticalWidgetType }
 
+export { attributeDescriptorLocalId }
+
+export { attributeDescriptorName }
+
 export { BuiltInWidgetTypes }
 
 export { CatalogItem }
@@ -281,6 +315,8 @@ export { dashboardFilterReferenceObjRef }
 export { DataColumnType }
 
 export { DatasetLoadStatus }
+
+export { DataValue }
 
 export { DateFilterGranularity }
 
@@ -314,9 +350,15 @@ export { IAllTimeDateFilterOption }
 
 export { IAnalyticalWidget }
 
+export { IAttributeDescriptor }
+
+export { IAttributeDescriptorBody }
+
 export { IAttributeDisplayFormMetadataObject }
 
 export { IAttributeElement }
+
+export { IAttributeHeaderFormOf }
 
 export { IAttributeMetadataObject }
 
@@ -406,6 +448,10 @@ export { IDateFilterConfig }
 
 export { IDateFilterOption }
 
+export { IDimensionDescriptor }
+
+export { IDimensionItemDescriptor }
+
 export { IDrill }
 
 export { IDrillableWidget }
@@ -478,6 +524,14 @@ export { ILegacyKpiWithPreviousPeriodComparison }
 
 export { IListedDashboard }
 
+export { IMeasureDescriptor }
+
+export { IMeasureDescriptorItem }
+
+export { IMeasureDescriptorObject }
+
+export { IMeasureGroupDescriptor }
+
 export { IMeasureMetadataObject }
 
 export { IMeasureMetadataObjectBase }
@@ -500,6 +554,22 @@ export { IRelativeDateFilterPreset }
 
 export { IRelativeDateFilterPresetOfGranularity }
 
+export { IResultAttributeHeader }
+
+export { IResultAttributeHeaderItem }
+
+export { IResultHeader }
+
+export { IResultMeasureHeader }
+
+export { IResultMeasureHeaderItem }
+
+export { IResultTotalHeader }
+
+export { IResultTotalHeaderItem }
+
+export { IResultWarning }
+
 export { isAbsoluteDateFilterForm }
 
 export { isAbsoluteDateFilterPreset }
@@ -507,6 +577,8 @@ export { isAbsoluteDateFilterPreset }
 export { isAllTimeDashboardDateFilter }
 
 export { isAllTimeDateFilterOption }
+
+export { isAttributeDescriptor }
 
 export { isAttributeDisplayFormMetadataObject }
 
@@ -592,6 +664,10 @@ export { isLegacyKpiWithComparison }
 
 export { isLegacyKpiWithoutComparison }
 
+export { isMeasureDescriptor }
+
+export { isMeasureGroupDescriptor }
+
 export { isMeasureMetadataObject }
 
 export { isMeasureMetadataObjectDefinition }
@@ -602,7 +678,15 @@ export { isRelativeDateFilterForm }
 
 export { isRelativeDateFilterPreset }
 
+export { isResultAttributeHeader }
+
+export { isResultMeasureHeader }
+
+export { isResultTotalHeader }
+
 export { isTempFilterContext }
+
+export { isTotalDescriptor }
 
 export { isVariableMetadataObject }
 
@@ -678,6 +762,10 @@ export { IThemeTypography }
 
 export { IThemeWidgetTitle }
 
+export { ITotalDescriptor }
+
+export { ITotalDescriptorItem }
+
 export { IUser }
 
 export { IVariableMetadataObject }
@@ -729,6 +817,8 @@ export { RelativeGranularityOffset }
 export { RelativePresetType }
 
 export { RelativeType }
+
+export { resultHeaderName }
 
 export { ScheduledMailAttachment }
 
