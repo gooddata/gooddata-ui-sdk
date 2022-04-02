@@ -195,6 +195,7 @@ import { IWidgetAttachment } from '@gooddata/sdk-model';
 import { IWidgetDefinition } from '@gooddata/sdk-model';
 import { IWidgetDescription } from '@gooddata/sdk-model';
 import { IWorkspaceUser } from '@gooddata/sdk-model';
+import { IWorkspaceUserGroup } from '@gooddata/sdk-model';
 import { KpiDrillDefinition } from '@gooddata/sdk-model';
 import { ListedDashboardAvailability } from '@gooddata/sdk-model';
 import { MetadataObject } from '@gooddata/sdk-model';
@@ -600,6 +601,8 @@ export { IWidgetDefinition }
 export { IWidgetDescription }
 
 export { IWorkspaceUser }
+
+export { IWorkspaceUserGroup }
 
 export { KpiDrillDefinition }
 

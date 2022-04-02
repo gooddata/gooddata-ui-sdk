@@ -1,9 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { ObjRef } from "@gooddata/sdk-model";
-
-import { IWorkspaceUser } from "../users";
-import { IWorkspaceUserGroup } from "../userGroups";
+import { ObjRef, IWorkspaceUser, IWorkspaceUserGroup } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 
 /**

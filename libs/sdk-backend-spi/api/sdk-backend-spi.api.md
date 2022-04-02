@@ -55,6 +55,9 @@ import { IWidget as IWidget_2 } from '@gooddata/sdk-model';
 import { IWidgetAlert as IWidgetAlert_2 } from '@gooddata/sdk-model';
 import { IWidgetAlertDefinition as IWidgetAlertDefinition_2 } from '@gooddata/sdk-model';
 import { IWidgetDefinition as IWidgetDefinition_2 } from '@gooddata/sdk-model';
+import { IWidgetReferences as IWidgetReferences_2 } from '@gooddata/sdk-model';
+import { IWorkspaceUser as IWorkspaceUser_2 } from '@gooddata/sdk-model';
+import { IWorkspaceUserGroup as IWorkspaceUserGroup_2 } from '@gooddata/sdk-model';
 import * as m from '@gooddata/sdk-model';
 import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
@@ -1599,7 +1602,7 @@ export interface IUserAccess {
     // (undocumented)
     type: "user";
     // (undocumented)
-    user: IWorkspaceUser;
+    user: IWorkspaceUser_2;
 }
 
 // @public
@@ -1615,7 +1618,7 @@ export interface IUserGroupAccess {
     // (undocumented)
     type: "group";
     // (undocumented)
-    userGroup: IWorkspaceUserGroup;
+    userGroup: IWorkspaceUserGroup_2;
 }
 
 // @public
@@ -1911,12 +1914,8 @@ export interface IWorkspaceStylingService {
 export interface IWorkspaceUser extends m.IWorkspaceUser {
 }
 
-// @alpha
-export interface IWorkspaceUserGroup {
-    description?: string;
-    id?: string;
-    name?: string;
-    ref: ObjRef;
+// @alpha @deprecated
+export interface IWorkspaceUserGroup extends m.IWorkspaceUserGroup {
 }
 
 // @alpha
@@ -1932,7 +1931,7 @@ export interface IWorkspaceUserGroupsQueryOptions {
 }
 
 // @alpha
-export type IWorkspaceUserGroupsQueryResult = IPagedResource<IWorkspaceUserGroup>;
+export type IWorkspaceUserGroupsQueryResult = IPagedResource<IWorkspaceUserGroup_2>;
 
 // @public
 export interface IWorkspaceUsersQuery {

@@ -2163,6 +2163,14 @@ export interface IWorkspaceUser {
     uri: string;
 }
 
+// @alpha
+export interface IWorkspaceUserGroup {
+    description?: string;
+    id?: string;
+    name?: string;
+    ref: ObjRef;
+}
+
 // @public
 export type KpiDrillDefinition = IDrillToLegacyDashboard;
 

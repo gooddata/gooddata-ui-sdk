@@ -238,7 +238,6 @@ export { ISecuritySettingsService, ValidationContext } from "./organization/secu
 
 export {
     IWorkspaceUserGroupsQuery,
-    IWorkspaceUserGroup,
     IWorkspaceUserGroupsQueryOptions,
     IWorkspaceUserGroupsQueryResult,
 } from "./workspace/userGroups";
@@ -505,3 +504,5 @@ export {
 } from "./deprecated/dashboard/dashboard";
 
 export { ISettings, ISeparators, PlatformEdition } from "./deprecated/settings";
+
+export { IWorkspaceUserGroup } from "./deprecated/userGroups";

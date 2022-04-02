@@ -651,3 +651,5 @@ export {
 } from "./dashboard/dashboard";
 
 export { ISeparators, ISettings, PlatformEdition } from "./settings";
+
+export { IWorkspaceUserGroup } from "./userGroup";

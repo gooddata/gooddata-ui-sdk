@@ -261,6 +261,8 @@ import {
     ISettings,
     ISeparators,
     PlatformEdition,
+    // User Groups
+    IWorkspaceUserGroup,
 } from "@gooddata/sdk-model";
 export {
     getColorMappingPredicate,
@@ -495,4 +497,6 @@ export {
     ISettings,
     ISeparators,
     PlatformEdition,
+    // User Groups
+    IWorkspaceUserGroup,
 };
