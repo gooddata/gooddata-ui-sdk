@@ -688,3 +688,5 @@ export {
     IThemeModalTitle,
     IThemeTooltip,
 } from "./theme";
+
+export { IWorkspacePermissions, WorkspacePermission } from "./permissions";

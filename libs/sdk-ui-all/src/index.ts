@@ -296,6 +296,9 @@ import {
     IThemeModal,
     IThemeModalTitle,
     IThemeTooltip,
+    // Permissions
+    IWorkspacePermissions,
+    WorkspacePermission,
 } from "@gooddata/sdk-model";
 export {
     getColorMappingPredicate,
@@ -565,4 +568,7 @@ export {
     IThemeModal,
     IThemeModalTitle,
     IThemeTooltip,
+    // Permissions
+    IWorkspacePermissions,
+    WorkspacePermission,
 };

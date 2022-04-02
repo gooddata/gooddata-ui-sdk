@@ -224,6 +224,8 @@ import { IWidgetAlertDefinition } from '@gooddata/sdk-model';
 import { IWidgetAttachment } from '@gooddata/sdk-model';
 import { IWidgetDefinition } from '@gooddata/sdk-model';
 import { IWidgetDescription } from '@gooddata/sdk-model';
+import { IWidgetReferences } from '@gooddata/sdk-model';
+import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { IWorkspaceUser } from '@gooddata/sdk-model';
 import { IWorkspaceUserGroup } from '@gooddata/sdk-model';
 import { KpiDrillDefinition } from '@gooddata/sdk-model';
@@ -252,6 +254,7 @@ import { widgetTitle } from '@gooddata/sdk-model';
 import { WidgetType } from '@gooddata/sdk-model';
 import { widgetType } from '@gooddata/sdk-model';
 import { widgetUri } from '@gooddata/sdk-model';
+import { WorkspacePermission } from '@gooddata/sdk-model';
 
 export { AbsoluteFormType }
 
@@ -693,6 +696,10 @@ export { IWidgetDefinition }
 
 export { IWidgetDescription }
 
+export { IWidgetReferences }
+
+export { IWorkspacePermissions }
+
 export { IWorkspaceUser }
 
 export { IWorkspaceUserGroup }
@@ -748,6 +755,8 @@ export { WidgetType }
 export { widgetType }
 
 export { widgetUri }
+
+export { WorkspacePermission }
 
 
 export * from "@gooddata/sdk-backend-spi";

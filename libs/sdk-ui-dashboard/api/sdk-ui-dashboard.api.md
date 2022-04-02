@@ -118,6 +118,7 @@ import { IWidgetAlert } from '@gooddata/sdk-backend-spi';
 import { IWidgetAlertDefinition } from '@gooddata/sdk-backend-spi';
 import { IWidgetDefinition } from '@gooddata/sdk-backend-spi';
 import { IWorkspacePermissions } from '@gooddata/sdk-backend-spi';
+import { IWorkspacePermissions as IWorkspacePermissions_2 } from '@gooddata/sdk-model';
 import { LocalIdRef } from '@gooddata/sdk-model';
 import { MemoizedFunction } from 'lodash';
 import { ObjectType } from '@gooddata/sdk-model';
@@ -4186,52 +4187,52 @@ export const selectAttributesWithDrillDown: OutputSelector<DashboardState, (ICat
 export const selectBackendCapabilities: OutputSelector<DashboardState, IBackendCapabilities, (res: BackendCapabilitiesState) => IBackendCapabilities>;
 
 // @public
-export const selectCanCreateAnalyticalDashboard: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+export const selectCanCreateAnalyticalDashboard: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions_2) => boolean>;
 
 // @public
-export const selectCanCreateScheduledMail: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+export const selectCanCreateScheduledMail: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions_2) => boolean>;
 
 // @public
-export const selectCanCreateVisualization: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+export const selectCanCreateVisualization: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions_2) => boolean>;
 
 // @public
-export const selectCanExecuteRaw: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+export const selectCanExecuteRaw: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions_2) => boolean>;
 
 // @public
-export const selectCanExportReport: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+export const selectCanExportReport: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions_2) => boolean>;
 
 // @public
-export const selectCanInitData: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+export const selectCanInitData: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions_2) => boolean>;
 
 // @public
-export const selectCanInviteUserToWorkspace: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+export const selectCanInviteUserToWorkspace: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions_2) => boolean>;
 
 // @public
-export const selectCanListUsersInWorkspace: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+export const selectCanListUsersInWorkspace: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions_2) => boolean>;
 
 // @public
-export const selectCanManageACL: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+export const selectCanManageACL: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions_2) => boolean>;
 
 // @public
-export const selectCanManageAnalyticalDashboard: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+export const selectCanManageAnalyticalDashboard: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions_2) => boolean>;
 
 // @public
-export const selectCanManageDomain: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+export const selectCanManageDomain: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions_2) => boolean>;
 
 // @public
-export const selectCanManageMetric: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+export const selectCanManageMetric: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions_2) => boolean>;
 
 // @public
-export const selectCanManageScheduledMail: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+export const selectCanManageScheduledMail: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions_2) => boolean>;
 
 // @public
-export const selectCanManageWorkspace: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+export const selectCanManageWorkspace: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions_2) => boolean>;
 
 // @public
-export const selectCanRefreshData: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+export const selectCanRefreshData: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions_2) => boolean>;
 
 // @public
-export const selectCanUploadNonProductionCSV: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
+export const selectCanUploadNonProductionCSV: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions_2) => boolean>;
 
 // @public (undocumented)
 export const selectCatalogAttributeDisplayForms: OutputSelector<DashboardState, IAttributeDisplayFormMetadataObject_2[], (res: ICatalogAttribute[]) => IAttributeDisplayFormMetadataObject_2[]>;
@@ -4513,7 +4514,7 @@ export const selectOriginalFilterContextDefinition: OutputSelector<DashboardStat
 export const selectOriginalFilterContextFilters: OutputSelector<DashboardState, FilterContextItem_2[], (res: IFilterContextDefinition | undefined) => FilterContextItem_2[]>;
 
 // @public
-export const selectPermissions: OutputSelector<DashboardState, IWorkspacePermissions, (res: PermissionsState) => IWorkspacePermissions>;
+export const selectPermissions: OutputSelector<DashboardState, IWorkspacePermissions_2, (res: PermissionsState) => IWorkspacePermissions_2>;
 
 // @internal
 export const selectPersistedDashboard: OutputSelector<DashboardState, IDashboard<IDashboardWidget> | undefined, (res: DashboardMetaState) => IDashboard<IDashboardWidget> | undefined>;

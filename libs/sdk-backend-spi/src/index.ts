@@ -137,11 +137,7 @@ export {
     IWorkspaceDescriptor,
 } from "./workspace";
 
-export {
-    IWorkspacePermissionsService,
-    IWorkspacePermissions,
-    WorkspacePermission,
-} from "./workspace/permissions";
+export { IWorkspacePermissionsService } from "./workspace/permissions";
 
 export { IWorkspaceAttributesService } from "./workspace/attributes";
 
@@ -506,3 +502,5 @@ export {
     IThemeModalTitle,
     IThemeTooltip,
 } from "./deprecated/theme";
+
+export { IWorkspacePermissions, WorkspacePermission } from "./deprecated/permissions";
