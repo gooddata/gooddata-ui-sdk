@@ -49,6 +49,7 @@ import { IScheduledMailDefinition as IScheduledMailDefinition_2 } from '@gooddat
 import { ISeparators as ISeparators_2 } from '@gooddata/sdk-model';
 import { ISettings as ISettings_2 } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
+import { ITheme as ITheme_2 } from '@gooddata/sdk-model';
 import { IUser as IUser_2 } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
 import { IWidget as IWidget_2 } from '@gooddata/sdk-model';
@@ -1331,254 +1332,124 @@ export interface ITextExpressionToken {
     value: string;
 }
 
-// @beta
-export interface ITheme {
-    analyticalDesigner?: IThemeAnalyticalDesigner;
-    button?: IThemeButton;
-    chart?: IThemeChart;
-    dashboards?: IThemeDashboard;
-    kpi?: IThemeKpi;
-    modal?: IThemeModal;
-    palette?: IThemePalette;
-    table?: IThemeTable;
-    tooltip?: IThemeTooltip;
-    typography?: IThemeTypography;
+// @beta @deprecated
+export interface ITheme extends m.ITheme {
 }
 
-// @beta
-export interface IThemeAnalyticalDesigner {
-    title?: IThemeAnalyticalDesignerTitle;
+// @beta @deprecated
+export interface IThemeAnalyticalDesigner extends m.IThemeAnalyticalDesigner {
 }
 
-// @beta
-export interface IThemeAnalyticalDesignerTitle {
-    color?: ThemeColor;
+// @beta @deprecated
+export interface IThemeAnalyticalDesignerTitle extends m.IThemeAnalyticalDesignerTitle {
 }
 
-// @beta
-export interface IThemeButton {
-    borderRadius?: string;
-    dropShadow?: boolean;
-    textCapitalization?: boolean;
+// @beta @deprecated
+export interface IThemeButton extends m.IThemeButton {
 }
 
-// @beta
-export interface IThemeChart {
-    axisColor?: ThemeColor;
-    axisLabelColor?: ThemeColor;
-    axisValueColor?: ThemeColor;
-    backgroundColor?: ThemeColor;
-    gridColor?: ThemeColor;
-    legendValueColor?: ThemeColor;
-    tooltipBackgroundColor?: ThemeColor;
-    tooltipBorderColor?: ThemeColor;
-    tooltipLabelColor?: ThemeColor;
-    tooltipValueColor?: ThemeColor;
+// @beta @deprecated
+export interface IThemeChart extends m.IThemeChart {
 }
 
-// @beta
-export interface IThemeColorFamily {
-    base: ThemeColor;
-    contrast?: ThemeColor;
-    dark?: ThemeColor;
-    light?: ThemeColor;
+// @beta @deprecated
+export interface IThemeColorFamily extends m.IThemeColorFamily {
 }
 
-// @beta
-export interface IThemeComplementaryPalette {
-    // (undocumented)
-    c0: ThemeColor;
-    // (undocumented)
-    c1?: ThemeColor;
-    // (undocumented)
-    c2?: ThemeColor;
-    // (undocumented)
-    c3?: ThemeColor;
-    // (undocumented)
-    c4?: ThemeColor;
-    // (undocumented)
-    c5?: ThemeColor;
-    // (undocumented)
-    c6?: ThemeColor;
-    // (undocumented)
-    c7?: ThemeColor;
-    // (undocumented)
-    c8?: ThemeColor;
-    // (undocumented)
-    c9: ThemeColor;
+// @beta @deprecated
+export interface IThemeComplementaryPalette extends m.IThemeComplementaryPalette {
 }
 
-// @beta
-export interface IThemeDashboard {
-    content?: IThemeDashboardContent;
-    editPanel?: IThemeDashboardEditPanel;
-    filterBar?: IThemeDashboardFilterBar;
-    navigation?: IThemeDashboardNavigation;
-    section?: IThemeDashboardSection;
-    title?: IThemeDashboardTitle;
+// @beta @deprecated
+export interface IThemeDashboard extends m.IThemeDashboard {
 }
 
-// @beta
-export interface IThemeDashboardContent {
-    backgroundColor?: ThemeColor;
-    kpiWidget?: IThemeDashboardContentKpi;
-    widget?: IThemeDashboardContentWidget;
+// @beta @deprecated
+export interface IThemeDashboardContent extends m.IThemeDashboardContent {
 }
 
-// @beta
-export interface IThemeDashboardContentKpi {
-    backgroundColor?: ThemeColor;
-    borderColor?: ThemeColor;
-    borderRadius?: string;
-    borderWidth?: string;
-    dropShadow?: boolean;
-    kpi?: IThemeKpi;
-    title?: IThemeWidgetTitle;
+// @beta @deprecated
+export interface IThemeDashboardContentKpi extends m.IThemeDashboardContentKpi {
 }
 
-// @beta
-export interface IThemeDashboardContentWidget {
-    backgroundColor?: ThemeColor;
-    borderColor?: ThemeColor;
-    borderRadius?: string;
-    borderWidth?: string;
-    dropShadow?: boolean;
-    title?: IThemeWidgetTitle;
+// @beta @deprecated
+export interface IThemeDashboardContentWidget extends m.IThemeDashboardContentWidget {
 }
 
-// @beta
-export interface IThemeDashboardEditPanel {
-    backgroundColor?: ThemeColor;
+// @beta @deprecated
+export interface IThemeDashboardEditPanel extends m.IThemeDashboardEditPanel {
 }
 
-// @beta
-export interface IThemeDashboardFilterBar {
-    backgroundColor?: ThemeColor;
-    borderColor?: ThemeColor;
-    filterButton?: IThemeDashboardFilterBarButton;
+// @beta @deprecated
+export interface IThemeDashboardFilterBar extends m.IThemeDashboardFilterBar {
 }
 
-// @beta
-export interface IThemeDashboardFilterBarButton {
-    backgroundColor?: ThemeColor;
+// @beta @deprecated
+export interface IThemeDashboardFilterBarButton extends m.IThemeDashboardFilterBarButton {
 }
 
-// @beta
-export interface IThemeDashboardNavigation {
-    backgroundColor?: ThemeColor;
-    borderColor?: ThemeColor;
-    item?: IThemeDashboardNavigationItem;
-    title?: IThemeDashboardNavigationTitle;
+// @beta @deprecated
+export interface IThemeDashboardNavigation extends m.IThemeDashboardNavigation {
 }
 
-// @beta
-export interface IThemeDashboardNavigationItem {
-    color?: ThemeColor;
-    hoverColor?: ThemeColor;
-    selectedBackgroundColor?: ThemeColor;
-    selectedColor?: ThemeColor;
+// @beta @deprecated
+export interface IThemeDashboardNavigationItem extends m.IThemeDashboardNavigationItem {
 }
 
-// @beta
-export interface IThemeDashboardNavigationTitle {
-    color?: ThemeColor;
+// @beta @deprecated
+export interface IThemeDashboardNavigationTitle extends m.IThemeDashboardNavigationTitle {
 }
 
-// @beta
-export interface IThemeDashboardSection {
-    description?: IThemeDashboardSectionDescription;
-    title?: IThemeDashboardSectionTitle;
+// @beta @deprecated
+export interface IThemeDashboardSection extends m.IThemeDashboardSection {
 }
 
-// @beta
-export interface IThemeDashboardSectionDescription {
-    color?: ThemeColor;
+// @beta @deprecated
+export interface IThemeDashboardSectionDescription extends m.IThemeDashboardSectionDescription {
 }
 
-// @beta
-export interface IThemeDashboardSectionTitle {
-    color?: ThemeColor;
-    lineColor?: ThemeColor;
+// @beta @deprecated
+export interface IThemeDashboardSectionTitle extends m.IThemeDashboardSectionTitle {
 }
 
-// @beta
-export interface IThemeDashboardTitle {
-    backgroundColor?: ThemeColor;
-    borderColor?: ThemeColor;
-    color?: ThemeColor;
+// @beta @deprecated
+export interface IThemeDashboardTitle extends m.IThemeDashboardTitle {
 }
 
-// @beta
-export interface IThemeKpi {
-    primaryMeasureColor?: ThemeColor;
-    secondaryInfoColor?: ThemeColor;
-    value?: IThemeKpiValue;
+// @beta @deprecated
+export interface IThemeKpi extends m.IThemeKpi {
 }
 
-// @beta
-export interface IThemeKpiValue {
-    negativeColor?: ThemeColor;
-    positiveColor?: ThemeColor;
-    textAlign?: string;
+// @beta @deprecated
+export interface IThemeKpiValue extends m.IThemeKpiValue {
 }
 
-// @beta
-export interface IThemeModal {
-    borderColor?: ThemeColor;
-    borderRadius?: string;
-    borderWidth?: string;
-    dropShadow?: boolean;
-    outsideBackgroundColor?: ThemeColor;
-    title?: IThemeModalTitle;
+// @beta @deprecated
+export interface IThemeModal extends m.IThemeModal {
 }
 
-// @beta
-export interface IThemeModalTitle {
-    color?: ThemeColor;
-    lineColor?: ThemeColor;
+// @beta @deprecated
+export interface IThemeModalTitle extends m.IThemeModalTitle {
 }
 
-// @beta
-export interface IThemePalette {
-    complementary?: IThemeComplementaryPalette;
-    error?: IThemeColorFamily;
-    info?: IThemeColorFamily;
-    primary?: IThemeColorFamily;
-    success?: IThemeColorFamily;
-    warning?: IThemeColorFamily;
+// @beta @deprecated
+export interface IThemePalette extends m.IThemePalette {
 }
 
-// @beta
-export interface IThemeTable {
-    backgroundColor?: ThemeColor;
-    gridColor?: ThemeColor;
-    headerHoverBackgroundColor?: ThemeColor;
-    headerLabelColor?: ThemeColor;
-    hoverBackgroundColor?: ThemeColor;
-    loadingIconColor?: ThemeColor;
-    nullValueColor?: ThemeColor;
-    subtotalBackgroundColor?: ThemeColor;
-    totalBackgroundColor?: ThemeColor;
-    totalValueColor?: ThemeColor;
-    valueColor?: ThemeColor;
+// @beta @deprecated
+export interface IThemeTable extends m.IThemeTable {
 }
 
-// @beta
-export interface IThemeTooltip {
-    backgroundColor?: ThemeColor;
-    color?: ThemeColor;
+// @beta @deprecated
+export interface IThemeTooltip extends m.IThemeTooltip {
 }
 
-// @beta
-export interface IThemeTypography {
-    font?: ThemeFontUri;
-    fontBold?: ThemeFontUri;
+// @beta @deprecated
+export interface IThemeTypography extends m.IThemeTypography {
 }
 
-// @beta
-export interface IThemeWidgetTitle {
-    color?: ThemeColor;
-    textAlign?: string;
+// @beta @deprecated
+export interface IThemeWidgetTitle extends m.IThemeWidgetTitle {
 }
 
 // @public
@@ -1907,7 +1778,7 @@ export type IWorkspacesQueryResult = IPagedResource<IAnalyticalWorkspace>;
 // @public
 export interface IWorkspaceStylingService {
     getColorPalette(): Promise<IColorPalette>;
-    getTheme(): Promise<ITheme>;
+    getTheme(): Promise<ITheme_2>;
 }
 
 // @public @deprecated
@@ -2057,11 +1928,11 @@ export type SupportedInsightReferenceTypes = Exclude<InsightReferenceTypes, "dis
 // @public
 export type SupportedWidgetReferenceTypes = Exclude<ObjectType, "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable">;
 
-// @beta
-export type ThemeColor = string;
+// @beta @deprecated
+export type ThemeColor = m.ThemeColor;
 
-// @beta
-export type ThemeFontUri = string;
+// @beta @deprecated
+export type ThemeFontUri = m.ThemeFontUri;
 
 // @public
 export class UnexpectedError extends AnalyticalBackendError {

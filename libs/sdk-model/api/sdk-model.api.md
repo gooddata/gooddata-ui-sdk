@@ -2065,6 +2065,256 @@ export interface ITempFilterContext {
     readonly uri: string;
 }
 
+// @beta
+export interface ITheme {
+    analyticalDesigner?: IThemeAnalyticalDesigner;
+    button?: IThemeButton;
+    chart?: IThemeChart;
+    dashboards?: IThemeDashboard;
+    kpi?: IThemeKpi;
+    modal?: IThemeModal;
+    palette?: IThemePalette;
+    table?: IThemeTable;
+    tooltip?: IThemeTooltip;
+    typography?: IThemeTypography;
+}
+
+// @beta
+export interface IThemeAnalyticalDesigner {
+    title?: IThemeAnalyticalDesignerTitle;
+}
+
+// @beta
+export interface IThemeAnalyticalDesignerTitle {
+    color?: ThemeColor;
+}
+
+// @beta
+export interface IThemeButton {
+    borderRadius?: string;
+    dropShadow?: boolean;
+    textCapitalization?: boolean;
+}
+
+// @beta
+export interface IThemeChart {
+    axisColor?: ThemeColor;
+    axisLabelColor?: ThemeColor;
+    axisValueColor?: ThemeColor;
+    backgroundColor?: ThemeColor;
+    gridColor?: ThemeColor;
+    legendValueColor?: ThemeColor;
+    tooltipBackgroundColor?: ThemeColor;
+    tooltipBorderColor?: ThemeColor;
+    tooltipLabelColor?: ThemeColor;
+    tooltipValueColor?: ThemeColor;
+}
+
+// @beta
+export interface IThemeColorFamily {
+    base: ThemeColor;
+    contrast?: ThemeColor;
+    dark?: ThemeColor;
+    light?: ThemeColor;
+}
+
+// @beta
+export interface IThemeComplementaryPalette {
+    // (undocumented)
+    c0: ThemeColor;
+    // (undocumented)
+    c1?: ThemeColor;
+    // (undocumented)
+    c2?: ThemeColor;
+    // (undocumented)
+    c3?: ThemeColor;
+    // (undocumented)
+    c4?: ThemeColor;
+    // (undocumented)
+    c5?: ThemeColor;
+    // (undocumented)
+    c6?: ThemeColor;
+    // (undocumented)
+    c7?: ThemeColor;
+    // (undocumented)
+    c8?: ThemeColor;
+    // (undocumented)
+    c9: ThemeColor;
+}
+
+// @beta
+export interface IThemeDashboard {
+    content?: IThemeDashboardContent;
+    editPanel?: IThemeDashboardEditPanel;
+    filterBar?: IThemeDashboardFilterBar;
+    navigation?: IThemeDashboardNavigation;
+    section?: IThemeDashboardSection;
+    title?: IThemeDashboardTitle;
+}
+
+// @beta
+export interface IThemeDashboardContent {
+    backgroundColor?: ThemeColor;
+    kpiWidget?: IThemeDashboardContentKpi;
+    widget?: IThemeDashboardContentWidget;
+}
+
+// @beta
+export interface IThemeDashboardContentKpi {
+    backgroundColor?: ThemeColor;
+    borderColor?: ThemeColor;
+    borderRadius?: string;
+    borderWidth?: string;
+    dropShadow?: boolean;
+    kpi?: IThemeKpi;
+    title?: IThemeWidgetTitle;
+}
+
+// @beta
+export interface IThemeDashboardContentWidget {
+    backgroundColor?: ThemeColor;
+    borderColor?: ThemeColor;
+    borderRadius?: string;
+    borderWidth?: string;
+    dropShadow?: boolean;
+    title?: IThemeWidgetTitle;
+}
+
+// @beta
+export interface IThemeDashboardEditPanel {
+    backgroundColor?: ThemeColor;
+}
+
+// @beta
+export interface IThemeDashboardFilterBar {
+    backgroundColor?: ThemeColor;
+    borderColor?: ThemeColor;
+    filterButton?: IThemeDashboardFilterBarButton;
+}
+
+// @beta
+export interface IThemeDashboardFilterBarButton {
+    backgroundColor?: ThemeColor;
+}
+
+// @beta
+export interface IThemeDashboardNavigation {
+    backgroundColor?: ThemeColor;
+    borderColor?: ThemeColor;
+    item?: IThemeDashboardNavigationItem;
+    title?: IThemeDashboardNavigationTitle;
+}
+
+// @beta
+export interface IThemeDashboardNavigationItem {
+    color?: ThemeColor;
+    hoverColor?: ThemeColor;
+    selectedBackgroundColor?: ThemeColor;
+    selectedColor?: ThemeColor;
+}
+
+// @beta
+export interface IThemeDashboardNavigationTitle {
+    color?: ThemeColor;
+}
+
+// @beta
+export interface IThemeDashboardSection {
+    description?: IThemeDashboardSectionDescription;
+    title?: IThemeDashboardSectionTitle;
+}
+
+// @beta
+export interface IThemeDashboardSectionDescription {
+    color?: ThemeColor;
+}
+
+// @beta
+export interface IThemeDashboardSectionTitle {
+    color?: ThemeColor;
+    lineColor?: ThemeColor;
+}
+
+// @beta
+export interface IThemeDashboardTitle {
+    backgroundColor?: ThemeColor;
+    borderColor?: ThemeColor;
+    color?: ThemeColor;
+}
+
+// @beta
+export interface IThemeKpi {
+    primaryMeasureColor?: ThemeColor;
+    secondaryInfoColor?: ThemeColor;
+    value?: IThemeKpiValue;
+}
+
+// @beta
+export interface IThemeKpiValue {
+    negativeColor?: ThemeColor;
+    positiveColor?: ThemeColor;
+    textAlign?: string;
+}
+
+// @beta
+export interface IThemeModal {
+    borderColor?: ThemeColor;
+    borderRadius?: string;
+    borderWidth?: string;
+    dropShadow?: boolean;
+    outsideBackgroundColor?: ThemeColor;
+    title?: IThemeModalTitle;
+}
+
+// @beta
+export interface IThemeModalTitle {
+    color?: ThemeColor;
+    lineColor?: ThemeColor;
+}
+
+// @beta
+export interface IThemePalette {
+    complementary?: IThemeComplementaryPalette;
+    error?: IThemeColorFamily;
+    info?: IThemeColorFamily;
+    primary?: IThemeColorFamily;
+    success?: IThemeColorFamily;
+    warning?: IThemeColorFamily;
+}
+
+// @beta
+export interface IThemeTable {
+    backgroundColor?: ThemeColor;
+    gridColor?: ThemeColor;
+    headerHoverBackgroundColor?: ThemeColor;
+    headerLabelColor?: ThemeColor;
+    hoverBackgroundColor?: ThemeColor;
+    loadingIconColor?: ThemeColor;
+    nullValueColor?: ThemeColor;
+    subtotalBackgroundColor?: ThemeColor;
+    totalBackgroundColor?: ThemeColor;
+    totalValueColor?: ThemeColor;
+    valueColor?: ThemeColor;
+}
+
+// @beta
+export interface IThemeTooltip {
+    backgroundColor?: ThemeColor;
+    color?: ThemeColor;
+}
+
+// @beta
+export interface IThemeTypography {
+    font?: ThemeFontUri;
+    fontBold?: ThemeFontUri;
+}
+
+// @beta
+export interface IThemeWidgetTitle {
+    color?: ThemeColor;
+    textAlign?: string;
+}
+
 // @public
 export interface ITotal {
     alias?: string;
@@ -2552,6 +2802,15 @@ export function sortEntityIds(sort: ISortItem): SortEntityIds;
 
 // @public
 export function sortMeasureLocators(sort: IMeasureSortItem): ILocatorItem[];
+
+// @public
+export type SupportedWidgetReferenceTypes = Exclude<ObjectType, "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable">;
+
+// @beta
+export type ThemeColor = string;
+
+// @beta
+export type ThemeFontUri = string;
 
 // @public
 export function totalIsNative(total: ITotal): boolean;

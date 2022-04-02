@@ -653,3 +653,38 @@ export {
 export { ISeparators, ISettings, PlatformEdition } from "./settings";
 
 export { IWorkspaceUserGroup } from "./userGroup";
+
+export {
+    ThemeFontUri,
+    ThemeColor,
+    IThemeColorFamily,
+    IThemeComplementaryPalette,
+    IThemeWidgetTitle,
+    IThemeTypography,
+    IThemePalette,
+    IThemeKpi,
+    IThemeKpiValue,
+    IThemeChart,
+    IThemeTable,
+    ITheme,
+    IThemeAnalyticalDesigner,
+    IThemeAnalyticalDesignerTitle,
+    IThemeButton,
+    IThemeDashboard,
+    IThemeDashboardContent,
+    IThemeDashboardContentKpi,
+    IThemeDashboardContentWidget,
+    IThemeDashboardEditPanel,
+    IThemeDashboardFilterBar,
+    IThemeDashboardFilterBarButton,
+    IThemeDashboardNavigation,
+    IThemeDashboardNavigationItem,
+    IThemeDashboardNavigationTitle,
+    IThemeDashboardSection,
+    IThemeDashboardSectionDescription,
+    IThemeDashboardSectionTitle,
+    IThemeDashboardTitle,
+    IThemeModal,
+    IThemeModalTitle,
+    IThemeTooltip,
+} from "./theme";

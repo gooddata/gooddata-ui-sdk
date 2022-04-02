@@ -101,42 +101,7 @@ export {
 
 export { IExportConfig, IExportResult } from "./workspace/execution/export";
 
-export {
-    IWorkspaceStylingService,
-    ThemeFontUri,
-    ThemeColor,
-    IThemeColorFamily,
-    IThemeComplementaryPalette,
-    IThemeWidgetTitle,
-    IThemeTypography,
-    IThemePalette,
-    IThemeKpi,
-    IThemeKpiValue,
-    IThemeChart,
-    IThemeTable,
-    ITheme,
-    IThemeAnalyticalDesigner,
-    IThemeAnalyticalDesignerTitle,
-    IThemeButton,
-    IThemeDashboard,
-    IThemeDashboardContent,
-    IThemeDashboardContentKpi,
-    IThemeDashboardContentWidget,
-    IThemeDashboardEditPanel,
-    IThemeDashboardFilterBar,
-    IThemeDashboardFilterBarButton,
-    IThemeDashboardNavigation,
-    IThemeDashboardNavigationItem,
-    IThemeDashboardNavigationTitle,
-    IThemeDashboardSection,
-    IThemeDashboardSectionDescription,
-    IThemeDashboardSectionTitle,
-    IThemeDashboardTitle,
-    IThemeModal,
-    IThemeModalTitle,
-    IThemeTooltip,
-} from "./workspace/styling";
-
+export { IWorkspaceStylingService } from "./workspace/styling";
 export {
     AnalyticalBackendError,
     NoDataError,
@@ -506,3 +471,38 @@ export {
 export { ISettings, ISeparators, PlatformEdition } from "./deprecated/settings";
 
 export { IWorkspaceUserGroup } from "./deprecated/userGroups";
+
+export {
+    ThemeFontUri,
+    ThemeColor,
+    IThemeColorFamily,
+    IThemeComplementaryPalette,
+    IThemeWidgetTitle,
+    IThemeTypography,
+    IThemePalette,
+    IThemeKpi,
+    IThemeKpiValue,
+    IThemeChart,
+    IThemeTable,
+    ITheme,
+    IThemeAnalyticalDesigner,
+    IThemeAnalyticalDesignerTitle,
+    IThemeButton,
+    IThemeDashboard,
+    IThemeDashboardContent,
+    IThemeDashboardContentKpi,
+    IThemeDashboardContentWidget,
+    IThemeDashboardEditPanel,
+    IThemeDashboardFilterBar,
+    IThemeDashboardFilterBarButton,
+    IThemeDashboardNavigation,
+    IThemeDashboardNavigationItem,
+    IThemeDashboardNavigationTitle,
+    IThemeDashboardSection,
+    IThemeDashboardSectionDescription,
+    IThemeDashboardSectionTitle,
+    IThemeDashboardTitle,
+    IThemeModal,
+    IThemeModalTitle,
+    IThemeTooltip,
+} from "./deprecated/theme";

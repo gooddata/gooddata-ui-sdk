@@ -185,6 +185,36 @@ import { isWidgetAlertDefinition } from '@gooddata/sdk-model';
 import { isWidgetAttachment } from '@gooddata/sdk-model';
 import { isWidgetDefinition } from '@gooddata/sdk-model';
 import { ITempFilterContext } from '@gooddata/sdk-model';
+import { ITheme } from '@gooddata/sdk-model';
+import { IThemeAnalyticalDesigner } from '@gooddata/sdk-model';
+import { IThemeAnalyticalDesignerTitle } from '@gooddata/sdk-model';
+import { IThemeButton } from '@gooddata/sdk-model';
+import { IThemeChart } from '@gooddata/sdk-model';
+import { IThemeColorFamily } from '@gooddata/sdk-model';
+import { IThemeComplementaryPalette } from '@gooddata/sdk-model';
+import { IThemeDashboard } from '@gooddata/sdk-model';
+import { IThemeDashboardContent } from '@gooddata/sdk-model';
+import { IThemeDashboardContentKpi } from '@gooddata/sdk-model';
+import { IThemeDashboardContentWidget } from '@gooddata/sdk-model';
+import { IThemeDashboardEditPanel } from '@gooddata/sdk-model';
+import { IThemeDashboardFilterBar } from '@gooddata/sdk-model';
+import { IThemeDashboardFilterBarButton } from '@gooddata/sdk-model';
+import { IThemeDashboardNavigation } from '@gooddata/sdk-model';
+import { IThemeDashboardNavigationItem } from '@gooddata/sdk-model';
+import { IThemeDashboardNavigationTitle } from '@gooddata/sdk-model';
+import { IThemeDashboardSection } from '@gooddata/sdk-model';
+import { IThemeDashboardSectionDescription } from '@gooddata/sdk-model';
+import { IThemeDashboardSectionTitle } from '@gooddata/sdk-model';
+import { IThemeDashboardTitle } from '@gooddata/sdk-model';
+import { IThemeKpi } from '@gooddata/sdk-model';
+import { IThemeKpiValue } from '@gooddata/sdk-model';
+import { IThemeModal } from '@gooddata/sdk-model';
+import { IThemeModalTitle } from '@gooddata/sdk-model';
+import { IThemePalette } from '@gooddata/sdk-model';
+import { IThemeTable } from '@gooddata/sdk-model';
+import { IThemeTooltip } from '@gooddata/sdk-model';
+import { IThemeTypography } from '@gooddata/sdk-model';
+import { IThemeWidgetTitle } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
 import { IVariableMetadataObject } from '@gooddata/sdk-model';
 import { IWidget } from '@gooddata/sdk-model';
@@ -212,6 +242,9 @@ import { RelativeType } from '@gooddata/sdk-model';
 import { ScheduledMailAttachment } from '@gooddata/sdk-model';
 import { ScreenSize } from '@gooddata/sdk-model';
 import { ShareStatus } from '@gooddata/sdk-model';
+import { SupportedWidgetReferenceTypes } from '@gooddata/sdk-model';
+import { ThemeColor } from '@gooddata/sdk-model';
+import { ThemeFontUri } from '@gooddata/sdk-model';
 import { userFullName } from '@gooddata/sdk-model';
 import { widgetId } from '@gooddata/sdk-model';
 import { widgetRef } from '@gooddata/sdk-model';
@@ -582,6 +615,66 @@ export { isWidgetDefinition }
 
 export { ITempFilterContext }
 
+export { ITheme }
+
+export { IThemeAnalyticalDesigner }
+
+export { IThemeAnalyticalDesignerTitle }
+
+export { IThemeButton }
+
+export { IThemeChart }
+
+export { IThemeColorFamily }
+
+export { IThemeComplementaryPalette }
+
+export { IThemeDashboard }
+
+export { IThemeDashboardContent }
+
+export { IThemeDashboardContentKpi }
+
+export { IThemeDashboardContentWidget }
+
+export { IThemeDashboardEditPanel }
+
+export { IThemeDashboardFilterBar }
+
+export { IThemeDashboardFilterBarButton }
+
+export { IThemeDashboardNavigation }
+
+export { IThemeDashboardNavigationItem }
+
+export { IThemeDashboardNavigationTitle }
+
+export { IThemeDashboardSection }
+
+export { IThemeDashboardSectionDescription }
+
+export { IThemeDashboardSectionTitle }
+
+export { IThemeDashboardTitle }
+
+export { IThemeKpi }
+
+export { IThemeKpiValue }
+
+export { IThemeModal }
+
+export { IThemeModalTitle }
+
+export { IThemePalette }
+
+export { IThemeTable }
+
+export { IThemeTooltip }
+
+export { IThemeTypography }
+
+export { IThemeWidgetTitle }
+
 export { IUser }
 
 export { IVariableMetadataObject }
@@ -635,6 +728,12 @@ export { ScheduledMailAttachment }
 export { ScreenSize }
 
 export { ShareStatus }
+
+export { SupportedWidgetReferenceTypes }
+
+export { ThemeColor }
+
+export { ThemeFontUri }
 
 export { userFullName }
 
