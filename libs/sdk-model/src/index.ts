@@ -736,3 +736,5 @@ export {
     isUserGroupAccess,
     isUserGroupAccessGrantee,
 } from "./accessControl";
+
+export { IOrganizationDescriptor } from "./organization";

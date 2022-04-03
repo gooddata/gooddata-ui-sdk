@@ -161,7 +161,7 @@ export {
     IBracketExpressionToken,
 } from "./workspace/measures/measure";
 
-export { IOrganization, IOrganizations, IOrganizationDescriptor } from "./organization";
+export { IOrganization, IOrganizations } from "./organization";
 export { ISecuritySettingsService, ValidationContext } from "./organization/securitySettings";
 
 export {
@@ -505,3 +505,5 @@ export {
     isUserGroupAccessGrantee,
     isUserAccessGrantee,
 } from "./deprecated/accessControl";
+
+export { IOrganizationDescriptor } from "./deprecated/organization";

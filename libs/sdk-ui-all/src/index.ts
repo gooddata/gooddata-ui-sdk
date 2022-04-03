@@ -341,6 +341,8 @@ import {
     isUserGroupAccess,
     isUserGroupAccessGrantee,
     isUserAccessGrantee,
+    // Organization
+    IOrganizationDescriptor,
 } from "@gooddata/sdk-model";
 export {
     getColorMappingPredicate,
@@ -655,4 +657,6 @@ export {
     isUserGroupAccess,
     isUserGroupAccessGrantee,
     isUserAccessGrantee,
+    // Organization
+    IOrganizationDescriptor,
 };

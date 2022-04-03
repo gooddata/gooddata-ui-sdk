@@ -47,6 +47,7 @@ import { IMeasureMetadataObject as IMeasureMetadataObject_2 } from '@gooddata/sd
 import { IMeasureMetadataObjectDefinition as IMeasureMetadataObjectDefinition_2 } from '@gooddata/sdk-model';
 import { IMetadataObject as IMetadataObject_2 } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
+import { IOrganizationDescriptor as IOrganizationDescriptor_2 } from '@gooddata/sdk-model';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { IResultHeader as IResultHeader_2 } from '@gooddata/sdk-model';
 import { IResultWarning as IResultWarning_2 } from '@gooddata/sdk-model';
@@ -931,17 +932,13 @@ export interface IObjectExpressionToken {
 
 // @public
 export interface IOrganization {
-    getDescriptor(): Promise<IOrganizationDescriptor>;
+    getDescriptor(): Promise<IOrganizationDescriptor_2>;
     readonly organizationId: string;
     securitySettings(): ISecuritySettingsService;
 }
 
 // @public
-export interface IOrganizationDescriptor {
-    // (undocumented)
-    id: string;
-    // (undocumented)
-    title: string;
+export interface IOrganizationDescriptor extends m.IOrganizationDescriptor {
 }
 
 // @public

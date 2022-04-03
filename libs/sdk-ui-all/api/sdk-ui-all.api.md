@@ -137,6 +137,7 @@ import { IMetadataObjectBase } from '@gooddata/sdk-model';
 import { IMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { IMetadataObjectIdentity } from '@gooddata/sdk-model';
 import { InsightDrillDefinition } from '@gooddata/sdk-model';
+import { IOrganizationDescriptor } from '@gooddata/sdk-model';
 import { IRelativeDateFilterForm } from '@gooddata/sdk-model';
 import { IRelativeDateFilterPreset } from '@gooddata/sdk-model';
 import { IRelativeDateFilterPresetOfGranularity } from '@gooddata/sdk-model';
@@ -561,6 +562,8 @@ export { IMetadataObjectDefinition }
 export { IMetadataObjectIdentity }
 
 export { InsightDrillDefinition }
+
+export { IOrganizationDescriptor }
 
 export { IRelativeDateFilterForm }
 

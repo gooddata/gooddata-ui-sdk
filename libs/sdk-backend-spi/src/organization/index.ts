@@ -1,5 +1,5 @@
-// (C) 2021 GoodData Corporation
-
+// (C) 2021-2022 GoodData Corporation
+import { IOrganizationDescriptor } from "@gooddata/sdk-model";
 import { ISecuritySettingsService } from "./securitySettings";
 
 /**
@@ -34,14 +34,4 @@ export interface IOrganizations {
      * Gets the organization the current user is part of.
      */
     getCurrentOrganization(): Promise<IOrganization>;
-}
-
-/**
- * Organization descriptor contains details about the organization that services analytical workspaces.
- *
- * @public
- */
-export interface IOrganizationDescriptor {
-    id: string;
-    title: string;
 }

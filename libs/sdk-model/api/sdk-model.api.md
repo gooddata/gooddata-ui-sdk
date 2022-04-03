@@ -1586,6 +1586,14 @@ export function insightVisualizationUrl(insight: IInsightDefinition): string;
 export type INullableFilter = IFilter | undefined | null;
 
 // @public
+export interface IOrganizationDescriptor {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    title: string;
+}
+
+// @public
 export interface IPoPMeasureDefinition {
     // (undocumented)
     popMeasureDefinition: IPoPMeasureDefinitionBody;
