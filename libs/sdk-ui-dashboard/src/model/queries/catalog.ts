@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import { IAttribute, IMeasure, ObjRef } from "@gooddata/sdk-model";
+import { ObjRef } from "@gooddata/sdk-model";
 import { IDashboardQuery } from "./base";
 
 /**
@@ -10,19 +10,19 @@ import { IDashboardQuery } from "./base";
 export interface QueryCatalogAttributes extends IDashboardQuery {
     readonly type: "GDC.DASH/QUERY.CATALOG.ATTRIBUTES";
     readonly payload: {
-        readonly attributesOrRefs: ObjRef[] | IAttribute[];
+        readonly attributeRefs: ObjRef[];
     };
 }
 
 export function queryCatalogAttributes(
-    attributesOrRefs: ObjRef[] | IAttribute[],
+    attributeRefs: ObjRef[],
     correlationId?: string,
 ): QueryCatalogAttributes {
     return {
         type: "GDC.DASH/QUERY.CATALOG.ATTRIBUTES",
         correlationId,
         payload: {
-            attributesOrRefs,
+            attributeRefs,
         },
     };
 }
@@ -47,19 +47,16 @@ export function queryCatalogFacts(factRefs: ObjRef[], correlationId?: string): Q
 export interface QueryCatalogMeasures extends IDashboardQuery {
     readonly type: "GDC.DASH/QUERY.CATALOG.MEASURES";
     readonly payload: {
-        measuresOrRefs: ObjRef[] | IMeasure[];
+        measureRefs: ObjRef[];
     };
 }
 
-export function queryCatalogMeasures(
-    measuresOrRefs: ObjRef[] | IMeasure[],
-    correlationId?: string,
-): QueryCatalogMeasures {
+export function queryCatalogMeasures(measureRefs: ObjRef[], correlationId?: string): QueryCatalogMeasures {
     return {
         type: "GDC.DASH/QUERY.CATALOG.MEASURES",
         correlationId,
         payload: {
-            measuresOrRefs,
+            measureRefs,
         },
     };
 }

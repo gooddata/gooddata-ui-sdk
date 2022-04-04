@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
 
 import { ICatalogAttribute } from "@gooddata/sdk-backend-spi";
-import { areObjRefsEqual, isObjRef, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
+import { areObjRefsEqual, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
 import { call, select } from "redux-saga/effects";
 import { QueryCatalogAttributes } from "../queries/catalog";
@@ -25,12 +25,8 @@ function* queryService(
     query: QueryCatalogAttributes,
 ): SagaIterator<ICatalogAttribute[]> {
     const {
-        payload: { attributesOrRefs },
+        payload: { attributeRefs },
     } = query;
-
-    const attributeRefs = attributesOrRefs.map((attributeOrRef) => {
-        return isObjRef(attributeOrRef) ? attributeOrRef : attributeOrRef.attribute.displayForm;
-    });
 
     const attributesLoaded: ReturnType<typeof selectCatalogAttributesLoaded> = yield select(
         selectCatalogAttributesLoaded,
@@ -52,14 +48,10 @@ export const QueryCatalogAttributesService = createCachedQueryService(
     queryService,
     (query: QueryCatalogAttributes) => {
         const {
-            payload: { attributesOrRefs },
+            payload: { attributeRefs },
         } = query;
 
-        const serializedRefs = attributesOrRefs.map((attributeOrRef) => {
-            return isObjRef(attributeOrRef)
-                ? serializeObjRef(attributeOrRef)
-                : serializeObjRef(attributeOrRef.attribute.displayForm);
-        });
+        const serializedRefs = attributeRefs.map((ref) => serializeObjRef(ref));
 
         return serializedRefs.toLocaleString();
     },

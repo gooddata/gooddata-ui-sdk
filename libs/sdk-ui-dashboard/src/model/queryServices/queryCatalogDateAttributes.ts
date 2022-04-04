@@ -60,7 +60,7 @@ function* queryService(
 }
 
 export const QueryCatalogDateAttributesService = createCachedQueryService(
-    "GDC.DASH/QUERY.CATALOG.ATTRIBUTES",
+    "GDC.DASH/QUERY.CATALOG.DATE.ATTRIBUTES",
     queryService,
     (query: QueryCatalogDateDatasets) => {
         const {

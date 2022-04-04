@@ -1,10 +1,9 @@
 // (C) 2022 GoodData Corporation
 
 import { ICatalogMeasure } from "@gooddata/sdk-backend-spi";
-import { areObjRefsEqual, isObjRef, measureItem, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
+import { areObjRefsEqual, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
 import { call, select } from "redux-saga/effects";
-import compact from "lodash/compact";
 import { QueryCatalogMeasures } from "../queries/catalog";
 import { createCachedQueryService } from "../store/_infra/queryService";
 import { DashboardContext } from "../types/commonTypes";
@@ -23,14 +22,8 @@ function* queryService(
     query: QueryCatalogMeasures,
 ): SagaIterator<ICatalogMeasure[]> {
     const {
-        payload: { measuresOrRefs },
+        payload: { measureRefs },
     } = query;
-
-    const measureRefs = compact(
-        measuresOrRefs.map((measureOrRef) => {
-            return isObjRef(measureOrRef) ? measureOrRef : measureItem(measureOrRef);
-        }),
-    );
 
     const measuresLoaded: ReturnType<typeof selectCatalogMeasuresLoaded> = yield select(
         selectCatalogMeasuresLoaded,
@@ -48,18 +41,14 @@ function* queryService(
 }
 
 export const QueryCatalogMeasuresService = createCachedQueryService(
-    "GDC.DASH/QUERY.CATALOG.ATTRIBUTES",
+    "GDC.DASH/QUERY.CATALOG.MEASURES",
     queryService,
     (query: QueryCatalogMeasures) => {
         const {
-            payload: { measuresOrRefs },
+            payload: { measureRefs },
         } = query;
 
-        const serializedRefs = measuresOrRefs.map((measureOrRef) => {
-            return isObjRef(measureOrRef)
-                ? serializeObjRef(measureOrRef)
-                : serializeObjRef(measureItem(measureOrRef)!);
-        });
+        const serializedRefs = measureRefs.map((ref) => serializeObjRef(ref));
 
         return serializedRefs.toLocaleString();
     },

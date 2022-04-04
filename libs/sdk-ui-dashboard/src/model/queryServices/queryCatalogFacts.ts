@@ -36,7 +36,7 @@ function* queryService(context: DashboardContext, query: QueryCatalogFacts): Sag
 }
 
 export const QueryCatalogFactsService = createCachedQueryService(
-    "GDC.DASH/QUERY.CATALOG.ATTRIBUTES",
+    "GDC.DASH/QUERY.CATALOG.FACTS",
     queryService,
     (query: QueryCatalogFacts) => {
         const {
