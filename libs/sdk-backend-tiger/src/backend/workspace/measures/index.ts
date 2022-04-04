@@ -235,9 +235,15 @@ function loadMetrics(
         })
         .join(",");
 
+    /**
+     * The RSQL filter will be omitted if its length is too long to be used
+     * as a query parameter.
+     */
+    const rsqlFilter = filter.length < MAX_FILTER_LENGTH ? filter : undefined;
+
     return MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesMetrics, {
         workspaceId,
-        filter: filter.length < MAX_FILTER_LENGTH ? filter : undefined,
+        filter: rsqlFilter,
     })
         .then(MetadataUtilities.mergeEntitiesResults)
         .then((measures) => measures.data.map(convertMeasure));

@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 
-import { ICatalogDateDataset } from "@gooddata/sdk-backend-spi";
+import { ICatalogDateAttribute, ICatalogDateDataset } from "@gooddata/sdk-backend-spi";
 import { areObjRefsEqual, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
 import { call, select } from "redux-saga/effects";
@@ -12,15 +12,17 @@ import {
 import { createCachedQueryService } from "../store/_infra/queryService";
 import { DashboardContext } from "../types/commonTypes";
 
-function filterByRefs(dateDatasets: ICatalogDateDataset[], refs: ObjRef[]): ICatalogDateDataset[] {
-    return dateDatasets.filter((dataset) => {
-        return dataset.dateAttributes.some((attr) =>
-            refs.some((ref) => areObjRefsEqual(ref, attr.defaultDisplayForm.ref)),
-        );
-    });
+function filterByRefsAndObtain(dateDatasets: ICatalogDateDataset[], refs: ObjRef[]): ICatalogDateAttribute[] {
+    return dateDatasets
+        .filter((dataset) => {
+            return dataset.dateAttributes.some((attr) =>
+                refs.some((ref) => areObjRefsEqual(ref, attr.defaultDisplayForm.ref)),
+            );
+        })
+        .flatMap((dataset) => dataset.dateAttributes);
 }
 
-async function loadDateDatasets(context: DashboardContext, refs: ObjRef[]): Promise<ICatalogDateDataset[]> {
+async function loadDateDatasets(context: DashboardContext, refs: ObjRef[]): Promise<ICatalogDateAttribute[]> {
     const { backend, workspace } = context;
 
     const catalog = await backend
@@ -31,13 +33,13 @@ async function loadDateDatasets(context: DashboardContext, refs: ObjRef[]): Prom
         })
         .load();
 
-    return filterByRefs(catalog.dateDatasets(), refs);
+    return filterByRefsAndObtain(catalog.dateDatasets(), refs);
 }
 
 function* queryService(
     context: DashboardContext,
     query: QueryCatalogDateDatasets,
-): SagaIterator<ICatalogDateDataset[]> {
+): SagaIterator<ICatalogDateAttribute[]> {
     const {
         payload: { refs },
     } = query;
@@ -51,13 +53,13 @@ function* queryService(
             selectCatalogDateDatasets,
         );
 
-        return filterByRefs(dateDatasets, refs);
+        return filterByRefsAndObtain(dateDatasets, refs);
     }
 
     return yield call(loadDateDatasets, context, refs);
 }
 
-export const QueryCatalogDateDatasetsService = createCachedQueryService(
+export const QueryCatalogDateAttributesService = createCachedQueryService(
     "GDC.DASH/QUERY.CATALOG.ATTRIBUTES",
     queryService,
     (query: QueryCatalogDateDatasets) => {

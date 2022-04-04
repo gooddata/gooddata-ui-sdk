@@ -79,11 +79,17 @@ export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
             })
             .join(",");
 
+        /**
+         * The RSQL filter will be omitted if its length is too long to be used
+         * as a query parameter.
+         */
+        const rsqlFilter = filter.length < MAX_FILTER_LENGTH ? filter : "";
+
         return this.authCall(async (client) => {
             const catalogItems = await loadAttributesAndDateDatasets(
                 client,
                 this.workspace,
-                filter.length < MAX_FILTER_LENGTH ? filter : "",
+                rsqlFilter,
                 true,
             );
 

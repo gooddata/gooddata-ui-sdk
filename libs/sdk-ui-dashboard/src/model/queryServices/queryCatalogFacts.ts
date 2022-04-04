@@ -35,7 +35,7 @@ function* queryService(context: DashboardContext, query: QueryCatalogFacts): Sag
     return yield call(loadFacts, context, factRefs);
 }
 
-export const QueryCatalogAttributesService = createCachedQueryService(
+export const QueryCatalogFactsService = createCachedQueryService(
     "GDC.DASH/QUERY.CATALOG.ATTRIBUTES",
     queryService,
     (query: QueryCatalogFacts) => {

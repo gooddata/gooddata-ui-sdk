@@ -47,7 +47,7 @@ function* queryService(
     return yield call(loadMeasures, context, measureRefs);
 }
 
-export const QueryCatalogAttributesService = createCachedQueryService(
+export const QueryCatalogMeasuresService = createCachedQueryService(
     "GDC.DASH/QUERY.CATALOG.ATTRIBUTES",
     queryService,
     (query: QueryCatalogMeasures) => {

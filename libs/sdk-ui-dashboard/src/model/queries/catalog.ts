@@ -80,3 +80,23 @@ export function queryCatalogDateDatasets(refs: ObjRef[], correlationId?: string)
         },
     };
 }
+
+export interface QueryCatalogDateAttributes extends IDashboardQuery {
+    readonly type: "GDC.DASH/QUERY.CATALOG.DATE.ATTRIBUTES";
+    readonly payload: {
+        refs: ObjRef[];
+    };
+}
+
+export function queryCatalogDateAttributes(
+    refs: ObjRef[],
+    correlationId?: string,
+): QueryCatalogDateAttributes {
+    return {
+        type: "GDC.DASH/QUERY.CATALOG.DATE.ATTRIBUTES",
+        correlationId,
+        payload: {
+            refs,
+        },
+    };
+}
