@@ -1,14 +1,14 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import { uriRef } from "../../objRef/factory";
-import { ILegacyKpiWithComparison, ILegacyKpiWithoutComparison } from "../kpi";
+import { IKpiWithComparison, IKpiWithoutComparison } from "../kpi";
 
-export const legacyKpiWithoutComparison: ILegacyKpiWithoutComparison = {
+export const kpiWithoutComparison: IKpiWithoutComparison = {
     comparisonType: "none",
     metric: uriRef("/measure"),
 };
 
-export const legacyKpiWithComparison: ILegacyKpiWithComparison = {
+export const kpiWithComparison: IKpiWithComparison = {
     comparisonDirection: "growIsGood",
     comparisonType: "previousPeriod",
     metric: uriRef("/measure"),

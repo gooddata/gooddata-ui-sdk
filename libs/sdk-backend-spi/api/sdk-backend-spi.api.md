@@ -8,6 +8,14 @@ import { AccessGranteeDetail as AccessGranteeDetail_2 } from '@gooddata/sdk-mode
 import { CatalogItem as CatalogItem_2 } from '@gooddata/sdk-model';
 import { CatalogItemType as CatalogItemType_2 } from '@gooddata/sdk-model';
 import { DataValue as DataValue_2 } from '@gooddata/sdk-model';
+import { DateFilterAbsoluteType } from '@gooddata/sdk-model';
+import { DateFilterOptionAbsoluteFormType } from '@gooddata/sdk-model';
+import { DateFilterOptionAbsolutePresetType } from '@gooddata/sdk-model';
+import { DateFilterOptionAllTimeType } from '@gooddata/sdk-model';
+import { DateFilterOptionRelativeFormType } from '@gooddata/sdk-model';
+import { DateFilterOptionRelativePresetType } from '@gooddata/sdk-model';
+import { DateFilterOptionType } from '@gooddata/sdk-model';
+import { DateFilterRelativeType } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { FilterContextItem as FilterContextItem_2 } from '@gooddata/sdk-model';
 import { IAccessGrantee as IAccessGrantee_2 } from '@gooddata/sdk-model';
@@ -41,6 +49,14 @@ import { IFilter } from '@gooddata/sdk-model';
 import { IFilterContextDefinition as IFilterContextDefinition_2 } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
+import { IKpi } from '@gooddata/sdk-model';
+import { IKpiBase } from '@gooddata/sdk-model';
+import { IKpiComparisonDirection } from '@gooddata/sdk-model';
+import { IKpiComparisonTypeComparison } from '@gooddata/sdk-model';
+import { IKpiWithComparison } from '@gooddata/sdk-model';
+import { IKpiWithoutComparison } from '@gooddata/sdk-model';
+import { IKpiWithPopComparison } from '@gooddata/sdk-model';
+import { IKpiWithPreviousPeriodComparison } from '@gooddata/sdk-model';
 import { IListedDashboard as IListedDashboard_2 } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureMetadataObject as IMeasureMetadataObject_2 } from '@gooddata/sdk-model';
@@ -55,6 +71,9 @@ import { IScheduledMail as IScheduledMail_2 } from '@gooddata/sdk-model';
 import { IScheduledMailDefinition as IScheduledMailDefinition_2 } from '@gooddata/sdk-model';
 import { ISeparators as ISeparators_2 } from '@gooddata/sdk-model';
 import { ISettings as ISettings_2 } from '@gooddata/sdk-model';
+import { isKpi } from '@gooddata/sdk-model';
+import { isKpiWithComparison } from '@gooddata/sdk-model';
+import { isKpiWithoutComparison } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { ITheme as ITheme_2 } from '@gooddata/sdk-model';
 import { IUser as IUser_2 } from '@gooddata/sdk-model';
@@ -63,28 +82,28 @@ import { IWidget as IWidget_2 } from '@gooddata/sdk-model';
 import { IWidgetAlert as IWidgetAlert_2 } from '@gooddata/sdk-model';
 import { IWidgetAlertDefinition as IWidgetAlertDefinition_2 } from '@gooddata/sdk-model';
 import { IWidgetDefinition as IWidgetDefinition_2 } from '@gooddata/sdk-model';
-import { IWidgetReferences as IWidgetReferences_2 } from '@gooddata/sdk-model';
 import { IWorkspacePermissions as IWorkspacePermissions_2 } from '@gooddata/sdk-model';
 import { IWorkspaceUserGroup as IWorkspaceUserGroup_2 } from '@gooddata/sdk-model';
 import * as m from '@gooddata/sdk-model';
 import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
+import { RelativeDateFilterGranularityOffset } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
 
 // @alpha @deprecated
-export type AbsoluteFormType = m.AbsoluteFormType;
+export type AbsoluteFormType = DateFilterOptionAbsoluteFormType;
 
 // @alpha @deprecated
-export type AbsolutePresetType = m.AbsolutePresetType;
+export type AbsolutePresetType = DateFilterOptionAbsolutePresetType;
 
 // @public @deprecated
-export type AbsoluteType = m.AbsoluteType;
+export type AbsoluteType = DateFilterAbsoluteType;
 
 // @alpha @deprecated
 export type AccessGranteeDetail = IUserAccess | IUserGroupAccess;
 
 // @alpha @deprecated
-export type AllTimeType = m.AllTimeType;
+export type AllTimeType = DateFilterOptionAllTimeType;
 
 // @public
 export abstract class AnalyticalBackendError extends Error {
@@ -829,31 +848,31 @@ export interface IKpiWidgetDefinition extends m.IKpiWidgetDefinition {
 }
 
 // @alpha @deprecated
-export type ILegacyKpi = m.ILegacyKpi;
+export type ILegacyKpi = IKpi;
 
 // @alpha @deprecated
-export interface ILegacyKpiBase extends m.ILegacyKpiBase {
+export interface ILegacyKpiBase extends IKpiBase {
 }
 
 // @alpha @deprecated
-export type ILegacyKpiComparisonDirection = m.ILegacyKpiComparisonDirection;
+export type ILegacyKpiComparisonDirection = IKpiComparisonDirection;
 
 // @alpha @deprecated
-export type ILegacyKpiComparisonTypeComparison = m.ILegacyKpiComparisonTypeComparison;
+export type ILegacyKpiComparisonTypeComparison = IKpiComparisonTypeComparison;
 
 // @alpha @deprecated
-export type ILegacyKpiWithComparison = m.ILegacyKpiWithComparison;
+export type ILegacyKpiWithComparison = IKpiWithComparison;
 
 // @alpha @deprecated
-export interface ILegacyKpiWithoutComparison extends m.ILegacyKpiWithoutComparison {
+export interface ILegacyKpiWithoutComparison extends IKpiWithoutComparison {
 }
 
 // @alpha @deprecated
-export interface ILegacyKpiWithPopComparison extends m.ILegacyKpiWithPopComparison {
+export interface ILegacyKpiWithPopComparison extends IKpiWithPopComparison {
 }
 
 // @alpha @deprecated
-export interface ILegacyKpiWithPreviousPeriodComparison extends m.ILegacyKpiWithPreviousPeriodComparison {
+export interface ILegacyKpiWithPreviousPeriodComparison extends IKpiWithPreviousPeriodComparison {
 }
 
 // @public @deprecated
@@ -1179,13 +1198,13 @@ export const isKpiWidget: typeof m.isKpiWidget;
 export const isKpiWidgetDefinition: typeof m.isKpiWidgetDefinition;
 
 // @alpha @deprecated
-export const isLegacyKpi: typeof m.isLegacyKpi;
+export const isLegacyKpi: typeof isKpi;
 
 // @alpha @deprecated
-export const isLegacyKpiWithComparison: typeof m.isLegacyKpiWithComparison;
+export const isLegacyKpiWithComparison: typeof isKpiWithComparison;
 
 // @alpha @deprecated
-export const isLegacyKpiWithoutComparison: typeof m.isLegacyKpiWithoutComparison;
+export const isLegacyKpiWithoutComparison: typeof isKpiWithoutComparison;
 
 // @public @deprecated
 export const isMeasureDescriptor: typeof m.isMeasureDescriptor;
@@ -1815,7 +1834,7 @@ export class NotSupported extends AnalyticalBackendError {
 }
 
 // @alpha @deprecated
-export type OptionType = m.OptionType;
+export type OptionType = DateFilterOptionType;
 
 // @public @deprecated
 export type PlatformEdition = m.PlatformEdition;
@@ -1829,16 +1848,16 @@ export class ProtectedDataError extends AnalyticalBackendError {
 }
 
 // @alpha @deprecated
-export type RelativeFormType = m.RelativeFormType;
+export type RelativeFormType = DateFilterOptionRelativeFormType;
 
 // @alpha @deprecated
-export type RelativeGranularityOffset = m.RelativeGranularityOffset;
+export type RelativeGranularityOffset = RelativeDateFilterGranularityOffset;
 
 // @alpha @deprecated
-export type RelativePresetType = m.RelativePresetType;
+export type RelativePresetType = DateFilterOptionRelativePresetType;
 
 // @public @deprecated
-export type RelativeType = m.RelativeType;
+export type RelativeType = DateFilterRelativeType;
 
 // @public @deprecated
 export const resultHeaderName: typeof m.resultHeaderName;

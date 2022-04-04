@@ -4,7 +4,7 @@ import { ObjRef } from "../objRef";
 import { IBaseWidget, IWidgetDescription, IFilterableWidget, IDrillableWidget } from "./baseWidget";
 import { IDashboardObjectIdentity } from "./common";
 import { KpiDrillDefinition, InsightDrillDefinition } from "./drill";
-import { ILegacyKpi } from "./kpi";
+import { IKpi } from "./kpi";
 
 /**
  * Reserved type names used for dashboard's built-in analytical widgets.
@@ -42,7 +42,7 @@ export interface IKpiWidgetBase extends IAnalyticalWidget {
     /**
      * Temporary place for legacy kpi properties
      */
-    readonly kpi: ILegacyKpi;
+    readonly kpi: IKpi;
 
     /**
      * Drill interactions configured for the kpi widget.

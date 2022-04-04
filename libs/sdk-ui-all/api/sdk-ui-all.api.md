@@ -4,11 +4,7 @@
 
 ```ts
 
-import { AbsoluteFormType } from '@gooddata/sdk-model';
-import { AbsolutePresetType } from '@gooddata/sdk-model';
-import { AbsoluteType } from '@gooddata/sdk-model';
 import { AccessGranteeDetail } from '@gooddata/sdk-model';
-import { AllTimeType } from '@gooddata/sdk-model';
 import { AnalyticalWidgetType } from '@gooddata/sdk-model';
 import { attributeDescriptorLocalId } from '@gooddata/sdk-model';
 import { attributeDescriptorName } from '@gooddata/sdk-model';
@@ -116,14 +112,6 @@ import { IInsightWidgetDefinition } from '@gooddata/sdk-model';
 import { IKpiWidget } from '@gooddata/sdk-model';
 import { IKpiWidgetBase } from '@gooddata/sdk-model';
 import { IKpiWidgetDefinition } from '@gooddata/sdk-model';
-import { ILegacyKpi } from '@gooddata/sdk-model';
-import { ILegacyKpiBase } from '@gooddata/sdk-model';
-import { ILegacyKpiComparisonDirection } from '@gooddata/sdk-model';
-import { ILegacyKpiComparisonTypeComparison } from '@gooddata/sdk-model';
-import { ILegacyKpiWithComparison } from '@gooddata/sdk-model';
-import { ILegacyKpiWithoutComparison } from '@gooddata/sdk-model';
-import { ILegacyKpiWithPopComparison } from '@gooddata/sdk-model';
-import { ILegacyKpiWithPreviousPeriodComparison } from '@gooddata/sdk-model';
 import { IListedDashboard } from '@gooddata/sdk-model';
 import { IMeasureDescriptor } from '@gooddata/sdk-model';
 import { IMeasureDescriptorItem } from '@gooddata/sdk-model';
@@ -193,9 +181,6 @@ import { isInsightWidget } from '@gooddata/sdk-model';
 import { isInsightWidgetDefinition } from '@gooddata/sdk-model';
 import { isKpiWidget } from '@gooddata/sdk-model';
 import { isKpiWidgetDefinition } from '@gooddata/sdk-model';
-import { isLegacyKpi } from '@gooddata/sdk-model';
-import { isLegacyKpiWithComparison } from '@gooddata/sdk-model';
-import { isLegacyKpiWithoutComparison } from '@gooddata/sdk-model';
 import { isMeasureDescriptor } from '@gooddata/sdk-model';
 import { isMeasureGroupDescriptor } from '@gooddata/sdk-model';
 import { isMeasureMetadataObject } from '@gooddata/sdk-model';
@@ -264,7 +249,6 @@ import { IWidgetAlertDefinition } from '@gooddata/sdk-model';
 import { IWidgetAttachment } from '@gooddata/sdk-model';
 import { IWidgetDefinition } from '@gooddata/sdk-model';
 import { IWidgetDescription } from '@gooddata/sdk-model';
-import { IWidgetReferences } from '@gooddata/sdk-model';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { IWorkspaceUser } from '@gooddata/sdk-model';
 import { IWorkspaceUserGroup } from '@gooddata/sdk-model';
@@ -275,17 +259,11 @@ import { metadataObjectId } from '@gooddata/sdk-model';
 import { newAbsoluteDashboardDateFilter } from '@gooddata/sdk-model';
 import { newAllTimeDashboardDateFilter } from '@gooddata/sdk-model';
 import { newRelativeDashboardDateFilter } from '@gooddata/sdk-model';
-import { OptionType } from '@gooddata/sdk-model';
 import { PlatformEdition } from '@gooddata/sdk-model';
-import { RelativeFormType } from '@gooddata/sdk-model';
-import { RelativeGranularityOffset } from '@gooddata/sdk-model';
-import { RelativePresetType } from '@gooddata/sdk-model';
-import { RelativeType } from '@gooddata/sdk-model';
 import { resultHeaderName } from '@gooddata/sdk-model';
 import { ScheduledMailAttachment } from '@gooddata/sdk-model';
 import { ScreenSize } from '@gooddata/sdk-model';
 import { ShareStatus } from '@gooddata/sdk-model';
-import { SupportedWidgetReferenceTypes } from '@gooddata/sdk-model';
 import { ThemeColor } from '@gooddata/sdk-model';
 import { ThemeFontUri } from '@gooddata/sdk-model';
 import { userFullName } from '@gooddata/sdk-model';
@@ -297,15 +275,7 @@ import { widgetType } from '@gooddata/sdk-model';
 import { widgetUri } from '@gooddata/sdk-model';
 import { WorkspacePermission } from '@gooddata/sdk-model';
 
-export { AbsoluteFormType }
-
-export { AbsolutePresetType }
-
-export { AbsoluteType }
-
 export { AccessGranteeDetail }
-
-export { AllTimeType }
 
 export { AnalyticalWidgetType }
 
@@ -521,22 +491,6 @@ export { IKpiWidgetBase }
 
 export { IKpiWidgetDefinition }
 
-export { ILegacyKpi }
-
-export { ILegacyKpiBase }
-
-export { ILegacyKpiComparisonDirection }
-
-export { ILegacyKpiComparisonTypeComparison }
-
-export { ILegacyKpiWithComparison }
-
-export { ILegacyKpiWithoutComparison }
-
-export { ILegacyKpiWithPopComparison }
-
-export { ILegacyKpiWithPreviousPeriodComparison }
-
 export { IListedDashboard }
 
 export { IMeasureDescriptor }
@@ -675,12 +629,6 @@ export { isKpiWidget }
 
 export { isKpiWidgetDefinition }
 
-export { isLegacyKpi }
-
-export { isLegacyKpiWithComparison }
-
-export { isLegacyKpiWithoutComparison }
-
 export { isMeasureDescriptor }
 
 export { isMeasureGroupDescriptor }
@@ -817,8 +765,6 @@ export { IWidgetDefinition }
 
 export { IWidgetDescription }
 
-export { IWidgetReferences }
-
 export { IWorkspacePermissions }
 
 export { IWorkspaceUser }
@@ -839,17 +785,7 @@ export { newAllTimeDashboardDateFilter }
 
 export { newRelativeDashboardDateFilter }
 
-export { OptionType }
-
 export { PlatformEdition }
-
-export { RelativeFormType }
-
-export { RelativeGranularityOffset }
-
-export { RelativePresetType }
-
-export { RelativeType }
 
 export { resultHeaderName }
 
@@ -858,8 +794,6 @@ export { ScheduledMailAttachment }
 export { ScreenSize }
 
 export { ShareStatus }
-
-export { SupportedWidgetReferenceTypes }
 
 export { ThemeColor }
 

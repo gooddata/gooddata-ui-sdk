@@ -1,6 +1,15 @@
 // (C) 2007-2022 GoodData Corporation
 /* eslint-disable @typescript-eslint/no-empty-interface, import/namespace */
 import * as m from "@gooddata/sdk-model";
+import {
+    DateFilterOptionAllTimeType,
+    DateFilterOptionAbsoluteFormType,
+    DateFilterOptionRelativeFormType,
+    DateFilterOptionAbsolutePresetType,
+    DateFilterOptionRelativePresetType,
+    DateFilterOptionType,
+    RelativeDateFilterGranularityOffset,
+} from "@gooddata/sdk-model";
 
 /**
  * Date string - ISO-8601 calendar date string, eg.: '2018-12-30'
@@ -12,53 +21,53 @@ export type DateString = m.DateString;
 
 /**
  * Type that identifies the the all time date filter
- * @deprecated Use {@link @gooddata/sdk-model#AllTimeType}
+ * @deprecated Use {@link @gooddata/sdk-model#DateFilterOptionAllTimeType}
  * @alpha
  */
-export type AllTimeType = m.AllTimeType;
+export type AllTimeType = DateFilterOptionAllTimeType;
 
 /**
  * Type that identifies the absolute date filter form
- * @deprecated Use {@link @gooddata/sdk-model#AbsoluteFormType}
+ * @deprecated Use {@link @gooddata/sdk-model#DateFilterOptionAbsoluteFormType}
  * @alpha
  */
-export type AbsoluteFormType = m.AbsoluteFormType;
+export type AbsoluteFormType = DateFilterOptionAbsoluteFormType;
 
 /**
  * Type that identifies the relative date filter form
- * @deprecated Use {@link @gooddata/sdk-model#RelativeFormType}
+ * @deprecated Use {@link @gooddata/sdk-model#DateFilterOptionRelativeFormType}
  * @alpha
  */
-export type RelativeFormType = m.RelativeFormType;
+export type RelativeFormType = DateFilterOptionRelativeFormType;
 
 /**
  * Type that identifies the absolute date filter preset
- * @deprecated Use {@link @gooddata/sdk-model#AbsolutePresetType}
+ * @deprecated Use {@link @gooddata/sdk-model#DateFilterOptionAbsolutePresetType}
  * @alpha
  */
-export type AbsolutePresetType = m.AbsolutePresetType;
+export type AbsolutePresetType = DateFilterOptionAbsolutePresetType;
 
 /**
  * Type that identifies the relative date filter preset
- * @deprecated Use {@link @gooddata/sdk-model#RelativePresetType}
+ * @deprecated Use {@link @gooddata/sdk-model#DateFilterOptionRelativePresetType}
  * @alpha
  */
-export type RelativePresetType = m.RelativePresetType;
+export type RelativePresetType = DateFilterOptionRelativePresetType;
 
 /**
  * Type that identifies the date filter option
- * @deprecated Use {@link @gooddata/sdk-model#OptionType}
+ * @deprecated Use {@link @gooddata/sdk-model#DateFilterOptionType}
  * @alpha
  */
-export type OptionType = m.OptionType;
+export type OptionType = DateFilterOptionType;
 
 /**
  * Relative granularity offset
  * (e.g. "GDC.time.year" granularity with offset -2 means "the previous 2 years")
- * @deprecated Use {@link @gooddata/sdk-model#RelativeGranularityOffset}
+ * @deprecated Use {@link @gooddata/sdk-model#RelativeDateFilterGranularityOffset}
  * @alpha
  */
-export type RelativeGranularityOffset = m.RelativeGranularityOffset;
+export type RelativeGranularityOffset = RelativeDateFilterGranularityOffset;
 
 /**
  * Supported date filter granularity for the relative date filter

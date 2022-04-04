@@ -7,23 +7,11 @@
 // @public
 export function absoluteDateFilterValues(filter: IAbsoluteDateFilter): IAbsoluteDateFilterValues;
 
-// @public
-export type AbsoluteFormType = "absoluteForm";
-
-// @public
-export type AbsolutePresetType = "absolutePreset";
-
-// @public
-export type AbsoluteType = "absolute";
-
 // @alpha
 export type AccessGranteeDetail = IUserAccess | IUserGroupAccess;
 
 // @public
 export type AllTimeGranularity = "ALL_TIME_GRANULARITY";
-
-// @public
-export type AllTimeType = "allTime";
 
 // @public
 export type AnalyticalWidgetType = "kpi" | "insight";
@@ -268,10 +256,34 @@ export type DataValue = null | string | number;
 export type DateAttributeGranularity = "GDC.time.year" | "GDC.time.week_us" | "GDC.time.week_in_year" | "GDC.time.week_in_quarter" | "GDC.time.week" | "GDC.time.euweek_in_year" | "GDC.time.euweek_in_quarter" | "GDC.time.quarter" | "GDC.time.quarter_in_year" | "GDC.time.month" | "GDC.time.month_in_quarter" | "GDC.time.month_in_year" | "GDC.time.day_in_year" | "GDC.time.day_in_quarter" | "GDC.time.day_in_month" | "GDC.time.day_in_week" | "GDC.time.day_in_euweek" | "GDC.time.date" | "GDC.time.hour" | "GDC.time.hour_in_day" | "GDC.time.minute" | "GDC.time.minute_in_hour";
 
 // @public
+export type DateFilterAbsoluteType = "absolute";
+
+// @public
 export type DateFilterGranularity = "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year";
 
 // @public
-export type DateFilterType = RelativeType | AbsoluteType;
+export type DateFilterOptionAbsoluteFormType = "absoluteForm";
+
+// @public
+export type DateFilterOptionAbsolutePresetType = "absolutePreset";
+
+// @public
+export type DateFilterOptionAllTimeType = "allTime";
+
+// @public
+export type DateFilterOptionRelativeFormType = "relativeForm";
+
+// @public
+export type DateFilterOptionRelativePresetType = "relativePreset";
+
+// @public
+export type DateFilterOptionType = DateFilterOptionAllTimeType | DateFilterOptionAbsoluteFormType | DateFilterOptionRelativeFormType | DateFilterOptionAbsolutePresetType | DateFilterOptionRelativePresetType;
+
+// @public
+export type DateFilterRelativeType = "relative";
+
+// @public
+export type DateFilterType = DateFilterRelativeType | DateFilterAbsoluteType;
 
 // @public
 export const DateGranularity: {
@@ -401,14 +413,14 @@ export interface IAbsoluteDateFilter {
 
 // @public
 export interface IAbsoluteDateFilterForm extends IDateFilterOption {
-    type: AbsoluteFormType;
+    type: DateFilterOptionAbsoluteFormType;
 }
 
 // @public
 export interface IAbsoluteDateFilterPreset extends IDateFilterOption {
     from: DateString;
     to: DateString;
-    type: AbsolutePresetType;
+    type: DateFilterOptionAbsolutePresetType;
 }
 
 // @public
@@ -431,7 +443,7 @@ export type IAccessGrantee = IUserGroupAccessGrantee | IUserAccessGrantee;
 
 // @public
 export interface IAllTimeDateFilterOption extends IDateFilterOption {
-    type: AllTimeType;
+    type: DateFilterOptionAllTimeType;
 }
 
 // @public
@@ -964,7 +976,7 @@ export interface IDateFilterConfig {
 export interface IDateFilterOption {
     localIdentifier: Identifier;
     name?: string;
-    type: OptionType;
+    type: DateFilterOptionType;
     visible: boolean;
 }
 
@@ -1192,6 +1204,25 @@ export interface IInsightWidgetConfiguration {
 export interface IInsightWidgetDefinition extends IInsightWidgetBase, Partial<IDashboardObjectIdentity> {
 }
 
+// @public
+export type IKpi = IKpiWithComparison | IKpiWithoutComparison;
+
+// @public
+export interface IKpiBase {
+    // (undocumented)
+    comparisonDirection?: IKpiComparisonDirection;
+    // (undocumented)
+    comparisonType: IKpiComparisonTypeComparison;
+    // (undocumented)
+    metric: ObjRef;
+}
+
+// @public
+export type IKpiComparisonDirection = "growIsGood" | "growIsBad";
+
+// @public
+export type IKpiComparisonTypeComparison = IKpiWithPreviousPeriodComparison["comparisonType"] | IKpiWithPopComparison["comparisonType"] | IKpiWithoutComparison["comparisonType"];
+
 // @public (undocumented)
 export interface IKpiWidget extends IKpiWidgetBase, IDashboardObjectIdentity {
 }
@@ -1199,7 +1230,7 @@ export interface IKpiWidget extends IKpiWidgetBase, IDashboardObjectIdentity {
 // @public (undocumented)
 export interface IKpiWidgetBase extends IAnalyticalWidget {
     readonly drills: KpiDrillDefinition[];
-    readonly kpi: ILegacyKpi;
+    readonly kpi: IKpi;
     // (undocumented)
     readonly type: "kpi";
 }
@@ -1209,45 +1240,26 @@ export interface IKpiWidgetDefinition extends IKpiWidgetBase, Partial<IDashboard
 }
 
 // @public
-export type ILegacyKpi = ILegacyKpiWithComparison | ILegacyKpiWithoutComparison;
+export type IKpiWithComparison = IKpiWithPreviousPeriodComparison | IKpiWithPopComparison;
 
 // @public
-export interface ILegacyKpiBase {
-    // (undocumented)
-    comparisonDirection?: ILegacyKpiComparisonDirection;
-    // (undocumented)
-    comparisonType: ILegacyKpiComparisonTypeComparison;
-    // (undocumented)
-    metric: ObjRef;
-}
-
-// @public
-export type ILegacyKpiComparisonDirection = "growIsGood" | "growIsBad";
-
-// @public
-export type ILegacyKpiComparisonTypeComparison = ILegacyKpiWithPreviousPeriodComparison["comparisonType"] | ILegacyKpiWithPopComparison["comparisonType"] | ILegacyKpiWithoutComparison["comparisonType"];
-
-// @public
-export type ILegacyKpiWithComparison = ILegacyKpiWithPreviousPeriodComparison | ILegacyKpiWithPopComparison;
-
-// @public
-export interface ILegacyKpiWithoutComparison extends ILegacyKpiBase {
+export interface IKpiWithoutComparison extends IKpiBase {
     // (undocumented)
     comparisonType: "none";
 }
 
 // @public
-export interface ILegacyKpiWithPopComparison extends ILegacyKpiBase {
+export interface IKpiWithPopComparison extends IKpiBase {
     // (undocumented)
-    comparisonDirection: ILegacyKpiComparisonDirection;
+    comparisonDirection: IKpiComparisonDirection;
     // (undocumented)
     comparisonType: "lastYear";
 }
 
 // @public
-export interface ILegacyKpiWithPreviousPeriodComparison extends ILegacyKpiBase {
+export interface IKpiWithPreviousPeriodComparison extends IKpiBase {
     // (undocumented)
-    comparisonDirection: ILegacyKpiComparisonDirection;
+    comparisonDirection: IKpiComparisonDirection;
     // (undocumented)
     comparisonType: "previousPeriod";
 }
@@ -1709,15 +1721,15 @@ export type IRelativeDateFilter = {
 // @public
 export interface IRelativeDateFilterForm extends IDateFilterOption {
     availableGranularities: DateFilterGranularity[];
-    type: RelativeFormType;
+    type: DateFilterOptionRelativeFormType;
 }
 
 // @public
 export interface IRelativeDateFilterPreset extends IDateFilterOption {
-    from: RelativeGranularityOffset;
+    from: RelativeDateFilterGranularityOffset;
     granularity: DateFilterGranularity;
-    to: RelativeGranularityOffset;
-    type: RelativePresetType;
+    to: RelativeDateFilterGranularityOffset;
+    type: DateFilterOptionRelativePresetType;
 }
 
 // @public
@@ -2066,19 +2078,19 @@ export function isInsightWidget(obj: unknown): obj is IInsightWidget;
 export function isInsightWidgetDefinition(obj: unknown): obj is IInsightWidgetDefinition;
 
 // @public
+export function isKpi(obj: unknown): obj is IKpi;
+
+// @public
 export function isKpiWidget(obj: unknown): obj is IKpiWidget;
 
 // @public
 export function isKpiWidgetDefinition(obj: unknown): obj is IKpiWidgetDefinition;
 
 // @public
-export function isLegacyKpi(obj: unknown): obj is ILegacyKpi;
+export function isKpiWithComparison(obj: unknown): obj is IKpiWithComparison;
 
 // @public
-export function isLegacyKpiWithComparison(obj: unknown): obj is ILegacyKpiWithComparison;
-
-// @public
-export function isLegacyKpiWithoutComparison(obj: unknown): obj is ILegacyKpiWithoutComparison;
+export function isKpiWithoutComparison(obj: unknown): obj is IKpiWithoutComparison;
 
 // @public
 export function isLocalIdRef(obj: unknown): obj is LocalIdRef;
@@ -2616,11 +2628,6 @@ export interface IWidgetDescription {
 }
 
 // @public
-export interface IWidgetReferences {
-    catalogItems?: CatalogItem[];
-}
-
-// @public
 export type IWorkspacePermissions = {
     [permission in WorkspacePermission]: boolean;
 };
@@ -2931,9 +2938,6 @@ export type ObjRefInScope = ObjRef | LocalIdRef;
 export function objRefToString(objRef: ObjRef | ObjRefInScope): string;
 
 // @public
-export type OptionType = AllTimeType | AbsoluteFormType | RelativeFormType | AbsolutePresetType | RelativePresetType;
-
-// @public
 export type PlatformEdition = "free" | "growth" | "enterprise";
 
 // @public
@@ -2979,19 +2983,10 @@ export type RangeConditionOperator = "BETWEEN" | "NOT_BETWEEN";
 export type RankingFilterOperator = "TOP" | "BOTTOM";
 
 // @public
+export type RelativeDateFilterGranularityOffset = number;
+
+// @public
 export function relativeDateFilterValues(filter: IRelativeDateFilter): IRelativeDateFilterValues;
-
-// @public
-export type RelativeFormType = "relativeForm";
-
-// @public
-export type RelativeGranularityOffset = number;
-
-// @public
-export type RelativePresetType = "relativePreset";
-
-// @public
-export type RelativeType = "relative";
 
 // @public
 export function resultHeaderName(header: IResultHeader): string;
@@ -3029,9 +3024,6 @@ export function sortEntityIds(sort: ISortItem): SortEntityIds;
 
 // @public
 export function sortMeasureLocators(sort: IMeasureSortItem): ILocatorItem[];
-
-// @public
-export type SupportedWidgetReferenceTypes = Exclude<ObjectType, "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable">;
 
 // @beta
 export type ThemeColor = string;

@@ -395,9 +395,13 @@ export { insightSanitize } from "./insight/sanitization";
 export { factoryNotationFor } from "./execution/objectFactoryNotation";
 
 export {
-    AbsoluteFormType,
-    AbsolutePresetType,
-    AllTimeType,
+    DateFilterOptionAbsoluteFormType,
+    DateFilterOptionAbsolutePresetType,
+    DateFilterOptionAllTimeType,
+    DateFilterOptionType,
+    DateFilterOptionRelativeFormType,
+    DateFilterOptionRelativePresetType,
+    RelativeDateFilterGranularityOffset,
     DateFilterGranularity,
     DateString,
     IAbsoluteDateFilterForm,
@@ -408,10 +412,6 @@ export {
     IRelativeDateFilterForm,
     IRelativeDateFilterPreset,
     IRelativeDateFilterPresetOfGranularity,
-    OptionType,
-    RelativeFormType,
-    RelativeGranularityOffset,
-    RelativePresetType,
     isAbsoluteDateFilterForm,
     isAbsoluteDateFilterPreset,
     isAllTimeDateFilterOption,
@@ -423,7 +423,8 @@ export {
 export { IDashboardObjectIdentity } from "./dashboard/common";
 
 export {
-    AbsoluteType,
+    DateFilterAbsoluteType,
+    DateFilterRelativeType,
     DateFilterType,
     FilterContextItem,
     IDashboardAttributeFilter,
@@ -436,7 +437,6 @@ export {
     IFilterContextBase,
     IFilterContextDefinition,
     ITempFilterContext,
-    RelativeType,
     dashboardFilterReferenceObjRef,
     isAllTimeDashboardDateFilter,
     isDashboardAttributeFilter,
@@ -497,17 +497,17 @@ export {
 } from "./dashboard/baseWidget";
 
 export {
-    ILegacyKpi,
-    ILegacyKpiBase,
-    ILegacyKpiComparisonDirection,
-    ILegacyKpiComparisonTypeComparison,
-    ILegacyKpiWithPopComparison,
-    ILegacyKpiWithPreviousPeriodComparison,
-    ILegacyKpiWithComparison,
-    ILegacyKpiWithoutComparison,
-    isLegacyKpiWithComparison,
-    isLegacyKpiWithoutComparison,
-    isLegacyKpi,
+    IKpi,
+    IKpiBase,
+    IKpiComparisonDirection,
+    IKpiComparisonTypeComparison,
+    IKpiWithPopComparison,
+    IKpiWithPreviousPeriodComparison,
+    IKpiWithComparison,
+    IKpiWithoutComparison,
+    isKpiWithComparison,
+    isKpiWithoutComparison,
+    isKpi,
 } from "./dashboard/kpi";
 
 export {

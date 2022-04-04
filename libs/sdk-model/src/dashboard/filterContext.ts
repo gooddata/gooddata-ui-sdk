@@ -10,19 +10,19 @@ import { IDashboardObjectIdentity } from "./common";
  * Date filter type - relative
  * @public
  */
-export type RelativeType = "relative";
+export type DateFilterRelativeType = "relative";
 
 /**
  * Date filter type - absolute
  * @public
  */
-export type AbsoluteType = "absolute";
+export type DateFilterAbsoluteType = "absolute";
 
 /**
  * Date filter type - relative or absolute
  * @public
  */
-export type DateFilterType = RelativeType | AbsoluteType;
+export type DateFilterType = DateFilterRelativeType | DateFilterAbsoluteType;
 
 /**
  * Parent filter of an attribute filter of the filter context

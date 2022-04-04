@@ -13,49 +13,49 @@ export type DateString = string;
  * Type that identifies the the all time date filter
  * @public
  */
-export type AllTimeType = "allTime";
+export type DateFilterOptionAllTimeType = "allTime";
 
 /**
  * Type that identifies the absolute date filter form
  * @public
  */
-export type AbsoluteFormType = "absoluteForm";
+export type DateFilterOptionAbsoluteFormType = "absoluteForm";
 
 /**
  * Type that identifies the relative date filter form
  * @public
  */
-export type RelativeFormType = "relativeForm";
+export type DateFilterOptionRelativeFormType = "relativeForm";
 
 /**
  * Type that identifies the absolute date filter preset
  * @public
  */
-export type AbsolutePresetType = "absolutePreset";
+export type DateFilterOptionAbsolutePresetType = "absolutePreset";
 
 /**
  * Type that identifies the relative date filter preset
  * @public
  */
-export type RelativePresetType = "relativePreset";
+export type DateFilterOptionRelativePresetType = "relativePreset";
 
 /**
  * Type that identifies the date filter option
  * @public
  */
-export type OptionType =
-    | AllTimeType
-    | AbsoluteFormType
-    | RelativeFormType
-    | AbsolutePresetType
-    | RelativePresetType;
+export type DateFilterOptionType =
+    | DateFilterOptionAllTimeType
+    | DateFilterOptionAbsoluteFormType
+    | DateFilterOptionRelativeFormType
+    | DateFilterOptionAbsolutePresetType
+    | DateFilterOptionRelativePresetType;
 
 /**
  * Relative granularity offset
  * (e.g. "GDC.time.year" granularity with offset -2 means "the previous 2 years")
  * @public
  */
-export type RelativeGranularityOffset = number;
+export type RelativeDateFilterGranularityOffset = number;
 
 /**
  * Supported date filter granularity for the relative date filter
@@ -99,7 +99,7 @@ export interface IDateFilterOption {
     /**
      * Option type
      */
-    type: OptionType;
+    type: DateFilterOptionType;
     /**
      * Sets whether this option will be visible in the dropdown
      */
@@ -114,7 +114,7 @@ export interface IAbsoluteDateFilterPreset extends IDateFilterOption {
     /**
      * Type to identify an absolute date filter preset
      */
-    type: AbsolutePresetType;
+    type: DateFilterOptionAbsolutePresetType;
     /**
      * Absolute date filter start date
      */
@@ -133,7 +133,7 @@ export interface IRelativeDateFilterPreset extends IDateFilterOption {
     /**
      * Type to identify a relative date filter preset
      */
-    type: RelativePresetType;
+    type: DateFilterOptionRelativePresetType;
     /**
      * Relative date filter granularity (day/week/year,etc.)
      */
@@ -141,11 +141,11 @@ export interface IRelativeDateFilterPreset extends IDateFilterOption {
     /**
      * Relative date filter granularity start offset
      */
-    from: RelativeGranularityOffset;
+    from: RelativeDateFilterGranularityOffset;
     /**
      * Relative date filter granularity end offset
      */
-    to: RelativeGranularityOffset;
+    to: RelativeDateFilterGranularityOffset;
 }
 
 /**
@@ -168,7 +168,7 @@ export interface IAbsoluteDateFilterForm extends IDateFilterOption {
     /**
      * Type to identify the global absolute date filter
      */
-    type: AbsoluteFormType;
+    type: DateFilterOptionAbsoluteFormType;
 }
 
 /**
@@ -179,7 +179,7 @@ export interface IRelativeDateFilterForm extends IDateFilterOption {
     /**
      * Type to identify the global relative date filter
      */
-    type: RelativeFormType;
+    type: DateFilterOptionRelativeFormType;
     /**
      * Available granularities for the global relative date filter
      */
@@ -194,7 +194,7 @@ export interface IAllTimeDateFilterOption extends IDateFilterOption {
     /**
      * Type to identify the global all time date filter
      */
-    type: AllTimeType;
+    type: DateFilterOptionAllTimeType;
 }
 
 /**

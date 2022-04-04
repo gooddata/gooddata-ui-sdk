@@ -3,26 +3,26 @@ import isEmpty from "lodash/isEmpty";
 import { ObjRef } from "../objRef";
 
 /**
- * Legacy kpi type - will be removed in the future
+ * Kpi
  * @public
  */
-export type ILegacyKpi = ILegacyKpiWithComparison | ILegacyKpiWithoutComparison;
+export type IKpi = IKpiWithComparison | IKpiWithoutComparison;
 
 /**
- * Type-guard testing whether the provided object is an instance of {@link ILegacyKpi}.
+ * Type-guard testing whether the provided object is an instance of {@link IKpi}.
  * @public
  */
-export function isLegacyKpi(obj: unknown): obj is ILegacyKpi {
-    return isLegacyKpiWithComparison(obj) || isLegacyKpiWithoutComparison(obj);
+export function isKpi(obj: unknown): obj is IKpi {
+    return isKpiWithComparison(obj) || isKpiWithoutComparison(obj);
 }
 
 /**
  * Common kpi properties
  * @public
  */
-export interface ILegacyKpiBase {
-    comparisonType: ILegacyKpiComparisonTypeComparison;
-    comparisonDirection?: ILegacyKpiComparisonDirection;
+export interface IKpiBase {
+    comparisonType: IKpiComparisonTypeComparison;
+    comparisonDirection?: IKpiComparisonDirection;
     metric: ObjRef;
 }
 
@@ -30,35 +30,35 @@ export interface ILegacyKpiBase {
  * Kpi with comparison
  * @public
  */
-export type ILegacyKpiWithComparison = ILegacyKpiWithPreviousPeriodComparison | ILegacyKpiWithPopComparison;
+export type IKpiWithComparison = IKpiWithPreviousPeriodComparison | IKpiWithPopComparison;
 
 /**
  * Kpi with previous period comparison
  * @public
  */
-export interface ILegacyKpiWithPreviousPeriodComparison extends ILegacyKpiBase {
+export interface IKpiWithPreviousPeriodComparison extends IKpiBase {
     comparisonType: "previousPeriod";
-    comparisonDirection: ILegacyKpiComparisonDirection;
+    comparisonDirection: IKpiComparisonDirection;
 }
 
 /**
  * Kpi with period over period comparison
  * @public
  */
-export interface ILegacyKpiWithPopComparison extends ILegacyKpiBase {
+export interface IKpiWithPopComparison extends IKpiBase {
     comparisonType: "lastYear";
-    comparisonDirection: ILegacyKpiComparisonDirection;
+    comparisonDirection: IKpiComparisonDirection;
 }
 
 /**
- * Type-guard testing whether the provided object is an instance of {@link ILegacyKpiWithComparison}.
+ * Type-guard testing whether the provided object is an instance of {@link IKpiWithComparison}.
  * @public
  */
-export function isLegacyKpiWithComparison(obj: unknown): obj is ILegacyKpiWithComparison {
+export function isKpiWithComparison(obj: unknown): obj is IKpiWithComparison {
     return (
         !isEmpty(obj) &&
-        ((obj as ILegacyKpiWithComparison).comparisonType === "previousPeriod" ||
-            (obj as ILegacyKpiWithComparison).comparisonType === "lastYear")
+        ((obj as IKpiWithComparison).comparisonType === "previousPeriod" ||
+            (obj as IKpiWithComparison).comparisonType === "lastYear")
     );
 }
 
@@ -66,29 +66,29 @@ export function isLegacyKpiWithComparison(obj: unknown): obj is ILegacyKpiWithCo
  * Kpi without comparison
  * @public
  */
-export interface ILegacyKpiWithoutComparison extends ILegacyKpiBase {
+export interface IKpiWithoutComparison extends IKpiBase {
     comparisonType: "none";
 }
 
 /**
- * Type-guard testing whether the provided object is an instance of {@link ILegacyKpiWithoutComparison}.
+ * Type-guard testing whether the provided object is an instance of {@link IKpiWithoutComparison}.
  * @public
  */
-export function isLegacyKpiWithoutComparison(obj: unknown): obj is ILegacyKpiWithoutComparison {
-    return !isEmpty(obj) && (obj as ILegacyKpiWithoutComparison).comparisonType === "none";
+export function isKpiWithoutComparison(obj: unknown): obj is IKpiWithoutComparison {
+    return !isEmpty(obj) && (obj as IKpiWithoutComparison).comparisonType === "none";
 }
 
 /**
  * Kpi comparison type
  * @public
  */
-export type ILegacyKpiComparisonTypeComparison =
-    | ILegacyKpiWithPreviousPeriodComparison["comparisonType"]
-    | ILegacyKpiWithPopComparison["comparisonType"]
-    | ILegacyKpiWithoutComparison["comparisonType"];
+export type IKpiComparisonTypeComparison =
+    | IKpiWithPreviousPeriodComparison["comparisonType"]
+    | IKpiWithPopComparison["comparisonType"]
+    | IKpiWithoutComparison["comparisonType"];
 
 /**
  * Kpi comparison direction
  * @public
  */
-export type ILegacyKpiComparisonDirection = "growIsGood" | "growIsBad";
+export type IKpiComparisonDirection = "growIsGood" | "growIsBad";

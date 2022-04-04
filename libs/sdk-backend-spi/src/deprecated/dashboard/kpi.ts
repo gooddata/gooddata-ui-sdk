@@ -1,80 +1,92 @@
 // (C) 2020-2022 GoodData Corporation
 /* eslint-disable @typescript-eslint/no-empty-interface, import/namespace */
-import * as m from "@gooddata/sdk-model";
+import {
+    IKpi,
+    isKpi,
+    IKpiBase,
+    IKpiWithComparison,
+    IKpiWithPreviousPeriodComparison,
+    IKpiWithPopComparison,
+    isKpiWithComparison,
+    IKpiWithoutComparison,
+    isKpiWithoutComparison,
+    IKpiComparisonTypeComparison,
+    IKpiComparisonDirection,
+} from "@gooddata/sdk-model";
 
 /**
  * Legacy kpi type - will be removed in the future
- * @deprecated Use {@link @gooddata/sdk-model#ILegacyKpi}
+ * @deprecated Use {@link @gooddata/sdk-model#IKpi}
  * @alpha
  */
-export type ILegacyKpi = m.ILegacyKpi;
+export type ILegacyKpi = IKpi;
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link ILegacyKpi}.
- * @deprecated Use {@link @gooddata/sdk-model#isLegacyKpi}
+ * @deprecated Use {@link @gooddata/sdk-model#isKpi}
  * @alpha
  */
-export const isLegacyKpi = m.isLegacyKpi;
+export const isLegacyKpi = isKpi;
 
 /**
  * Common kpi properties
- * @deprecated Use {@link @gooddata/sdk-model#ILegacyKpiBase}
+ * @deprecated Use {@link @gooddata/sdk-model#IKpiBase}
  * @alpha
  */
-export interface ILegacyKpiBase extends m.ILegacyKpiBase {}
+export interface ILegacyKpiBase extends IKpiBase {}
 
 /**
  * Kpi with comparison
- * @deprecated Use {@link @gooddata/sdk-model#ILegacyKpiWithComparison}
+ * @deprecated Use {@link @gooddata/sdk-model#IKpiWithComparison}
  * @alpha
  */
-export type ILegacyKpiWithComparison = m.ILegacyKpiWithComparison;
+export type ILegacyKpiWithComparison = IKpiWithComparison;
 
 /**
  * Kpi with previous period comparison
- * @deprecated Use {@link @gooddata/sdk-model#ILegacyKpiWithPreviousPeriodComparison}
+ * @deprecated Use {@link @gooddata/sdk-model#IKpiWithPreviousPeriodComparison}
  * @alpha
  */
-export interface ILegacyKpiWithPreviousPeriodComparison extends m.ILegacyKpiWithPreviousPeriodComparison {}
+export interface ILegacyKpiWithPreviousPeriodComparison extends IKpiWithPreviousPeriodComparison {}
 
 /**
  * Kpi with period over period comparison
- * @deprecated Use {@link @gooddata/sdk-model#ILegacyKpiWithPopComparison}
+ * @deprecated Use {@link @gooddata/sdk-model#IKpiWithPopComparison}
  * @alpha
  */
-export interface ILegacyKpiWithPopComparison extends m.ILegacyKpiWithPopComparison {}
+export interface ILegacyKpiWithPopComparison extends IKpiWithPopComparison {}
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link ILegacyKpiWithComparison}.
- * @deprecated Use {@link @gooddata/sdk-model#isLegacyKpiWithComparison}
+ * @deprecated Use {@link @gooddata/sdk-model#isKpiWithComparison}
  * @alpha
  */
-export const isLegacyKpiWithComparison = m.isLegacyKpiWithComparison;
+export const isLegacyKpiWithComparison = isKpiWithComparison;
 
 /**
  * Kpi without comparison
- * @deprecated Use {@link @gooddata/sdk-model#ILegacyKpiWithoutComparison}
+ * @deprecated Use {@link @gooddata/sdk-model#IKpiWithoutComparison}
  * @alpha
  */
-export interface ILegacyKpiWithoutComparison extends m.ILegacyKpiWithoutComparison {}
+export interface ILegacyKpiWithoutComparison extends IKpiWithoutComparison {}
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link ILegacyKpiWithoutComparison}.
- * @deprecated Use {@link @gooddata/sdk-model#isLegacyKpiWithoutComparison}
+ * @deprecated Use {@link @gooddata/sdk-model#isKpiWithoutComparison}
  * @alpha
  */
-export const isLegacyKpiWithoutComparison = m.isLegacyKpiWithoutComparison;
+export const isLegacyKpiWithoutComparison = isKpiWithoutComparison;
 
 /**
  * Kpi comparison type
- * @deprecated Use {@link @gooddata/sdk-model#ILegacyKpiComparisonTypeComparison}
+ * @deprecated Use {@link @gooddata/sdk-model#IKpiComparisonTypeComparison}
  * @alpha
  */
-export type ILegacyKpiComparisonTypeComparison = m.ILegacyKpiComparisonTypeComparison;
+export type ILegacyKpiComparisonTypeComparison = IKpiComparisonTypeComparison;
 
 /**
  * Kpi comparison direction
- * @deprecated Use {@link @gooddata/sdk-model#ILegacyKpiComparisonDirection}
+ * @deprecated Use {@link @gooddata/sdk-model#IKpiComparisonDirection}
  * @alpha
  */
-export type ILegacyKpiComparisonDirection = m.ILegacyKpiComparisonDirection;
+export type ILegacyKpiComparisonDirection = IKpiComparisonDirection;

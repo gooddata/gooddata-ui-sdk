@@ -1,31 +1,31 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import { InvalidInputTestCases } from "../../../__mocks__/typeGuards";
-import { isLegacyKpiWithComparison, isLegacyKpiWithoutComparison } from "../kpi";
-import { legacyKpiWithComparison, legacyKpiWithoutComparison } from "./kpi.fixtures";
+import { isKpiWithComparison, isKpiWithoutComparison } from "../kpi";
+import { kpiWithComparison, kpiWithoutComparison } from "./kpi.fixtures";
 
 describe("kpi type guards", () => {
-    describe("isLegacyKpiWithComparison", () => {
+    describe("isKpiWithComparison", () => {
         const Scenarios: Array<[boolean, string, any]> = [
             ...InvalidInputTestCases,
-            [true, "legacy kpi with comparison", legacyKpiWithComparison],
-            [false, "legacy kpi without comparison", legacyKpiWithoutComparison],
+            [true, "kpi with comparison", kpiWithComparison],
+            [false, "kpi without comparison", kpiWithoutComparison],
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(isLegacyKpiWithComparison(input)).toBe(expectedResult);
+            expect(isKpiWithComparison(input)).toBe(expectedResult);
         });
     });
 
-    describe("isLegacyKpiWithoutComparison", () => {
+    describe("isKpiWithoutComparison", () => {
         const Scenarios: Array<[boolean, string, any]> = [
             ...InvalidInputTestCases,
-            [false, "legacy kpi with comparison", legacyKpiWithComparison],
-            [true, "legacy kpi without comparison", legacyKpiWithoutComparison],
+            [false, "kpi with comparison", kpiWithComparison],
+            [true, "kpi without comparison", kpiWithoutComparison],
         ];
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
-            expect(isLegacyKpiWithoutComparison(input)).toBe(expectedResult);
+            expect(isKpiWithoutComparison(input)).toBe(expectedResult);
         });
     });
 });

@@ -1,20 +1,21 @@
 // (C) 2019-2022 GoodData Corporation
 /* eslint-disable @typescript-eslint/no-empty-interface, import/namespace */
 import * as m from "@gooddata/sdk-model";
+import { DateFilterRelativeType, DateFilterAbsoluteType } from "@gooddata/sdk-model";
 
 /**
  * Date filter type - relative
- * @deprecated Use {@link @gooddata/sdk-model#RelativeType}
+ * @deprecated Use {@link @gooddata/sdk-model#DateFilterRelativeType}
  * @public
  */
-export type RelativeType = m.RelativeType;
+export type RelativeType = DateFilterRelativeType;
 
 /**
  * Date filter type - absolute
- * @deprecated Use {@link @gooddata/sdk-model#AbsoluteType}
+ * @deprecated Use {@link @gooddata/sdk-model#DateFilterAbsoluteType}
  * @public
  */
-export type AbsoluteType = m.AbsoluteType;
+export type AbsoluteType = DateFilterAbsoluteType;
 /**
  * Date filter type - relative or absolute
  * @deprecated Use {@link @gooddata/sdk-model#DateFilterType}
