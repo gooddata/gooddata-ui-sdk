@@ -54,7 +54,7 @@ export const BackendToBearConvertors: {
     convertKpiDrill: (kpi: GdcKpi.IWrappedKPI) => IDrillToLegacyDashboard;
     convertInsight: (insight: IInsight) => GdcVisualizationObject.IVisualizationObject;
     convertVisualizationWidgetDrill: (drill: GdcVisualizationWidget.IDrillDefinition) => InsightDrillDefinition;
-    convertScheduledMail: (scheduledMail: GdcScheduledMail.IWrappedScheduledMail) => IScheduledMailDefinition | IScheduledMail;
+    convertScheduledMail: (scheduledMail: GdcScheduledMail.IWrappedScheduledMail, userMap?: Map<string, IUser> | undefined) => IScheduledMailDefinition | IScheduledMail;
     convertDashboardDateFilterConfig: (dateFilterConfig: GdcDashboard.IDashboardDateFilterConfig) => IDashboardDateFilterConfig;
     convertUrisToReferences: ReferenceConverter;
     serializeProperties: (properties: VisualizationProperties) => string;

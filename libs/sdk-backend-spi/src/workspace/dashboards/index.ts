@@ -44,6 +44,16 @@ export interface IGetDashboardOptions {
  */
 export interface IGetScheduledMailOptions {
     /**
+     * Specify if information about the users that created/modified the scheduled email should be loaded.
+     *
+     * @remarks
+     * Defaults to false.
+     *
+     * If user is inactive or logged in user has not rights to access this information than users that created/modified is undefined.
+     */
+    loadUserData?: boolean;
+
+    /**
      * List only subset of scheduled mails authored by current user.
      *
      * @remarks

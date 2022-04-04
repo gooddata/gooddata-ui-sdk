@@ -320,6 +320,14 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
             ? await this.getScheduledMailObjectLinksForDashboardAndCurrentUser(dashboardRef)
             : await this.getScheduledMailObjectLinksForDashboard(dashboardRef);
 
+        const userMap: Map<string, IUser> = options.loadUserData
+            ? await updateUserMap(
+                  new Map(),
+                  compact(flatMap(scheduledMailObjectLinks, (link) => [link.author, link.contributor])),
+                  this.authCall,
+              )
+            : new Map();
+
         const wrappedScheduledMails = await this.authCall(async (sdk) => {
             return sdk.md.getObjects<GdcScheduledMail.IWrappedScheduledMail>(
                 this.workspace,
@@ -327,7 +335,9 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
             );
         });
 
-        return wrappedScheduledMails.map(toSdkModel.convertScheduledMail) as IScheduledMail[];
+        return wrappedScheduledMails.map((scheduledMail) =>
+            toSdkModel.convertScheduledMail(scheduledMail, userMap),
+        ) as IScheduledMail[];
     };
 
     public getScheduledMailsCountForDashboard = async (dashboardRef: ObjRef): Promise<number> => {
