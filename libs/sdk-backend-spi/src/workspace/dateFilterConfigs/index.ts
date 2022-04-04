@@ -8,7 +8,7 @@ import { IPagedResource } from "../../common/paging";
  * Date filter configs allow to define your own date filter presets, that appear in the date filter.
  * To make date filter configs work, you have to set enableKPIDashboardExtendedDateFilters feature flag to true.
  *
- * @public
+ * @alpha
  */
 export interface IDateFilterConfigsQuery {
     /**

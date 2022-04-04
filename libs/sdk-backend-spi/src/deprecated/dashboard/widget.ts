@@ -18,14 +18,14 @@ export type IWidget = m.IWidget;
 /**
  * Type-guard testing whether the provided object is an instance of {@link IWidgetDefinition}.
  * @deprecated Use {@link @gooddata/sdk-model#isWidgetDefinition}
- * @public
+ * @alpha
  */
 export const isWidgetDefinition = m.isWidgetDefinition;
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IWidget}.
  * @deprecated Use {@link @gooddata/sdk-model#isWidget}
- * @public
+ * @alpha
  */
 export const isWidget = m.isWidget;
 
@@ -35,7 +35,7 @@ export const isWidget = m.isWidget;
  * @param widget - widget to get identifier of
  * @returns the widget identifier
  * @deprecated Use {@link @gooddata/sdk-model#widgetId}
- * @public
+ * @alpha
  */
 export const widgetId = m.widgetId;
 
@@ -45,7 +45,7 @@ export const widgetId = m.widgetId;
  * @param widget - widget to get uri of
  * @returns the widget uri
  * @deprecated Use {@link @gooddata/sdk-model#widgetUri}
- * @public
+ * @alpha
  */
 export const widgetUri = m.widgetUri;
 
@@ -55,7 +55,7 @@ export const widgetUri = m.widgetUri;
  * @param widget - widget to get ref of
  * @returns the widget ref
  * @deprecated Use {@link @gooddata/sdk-model#widgetRef}
- * @public
+ * @alpha
  */
 export const widgetRef = m.widgetRef;
 
@@ -65,7 +65,7 @@ export const widgetRef = m.widgetRef;
  * @param widget - widget to get type of
  * @returns the widget type
  * @deprecated Use {@link @gooddata/sdk-model#widgetType}
- * @public
+ * @alpha
  */
 export const widgetType = m.widgetType;
 
@@ -75,34 +75,34 @@ export const widgetType = m.widgetType;
  * @param widget - widget to get title of
  * @returns the widget title
  * @deprecated Use {@link @gooddata/sdk-model#widgetTitle}
- * @public
+ * @alpha
  */
 export const widgetTitle = m.widgetTitle;
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IInsightWidget}.
  * @deprecated Use {@link @gooddata/sdk-model#isInsightWidget}
- * @public
+ * @alpha
  */
 export const isInsightWidget = m.isInsightWidget;
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IInsightWidgetDefinition}.
  * @deprecated Use {@link @gooddata/sdk-model#isInsightWidgetDefinition}
- * @public
+ * @alpha
  */
 export const isInsightWidgetDefinition = m.isInsightWidgetDefinition;
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IKpiWidget}.
  * @deprecated Use {@link @gooddata/sdk-model#isKpiWidget}
- * @public
+ * @alpha
  */
 export const isKpiWidget = m.isKpiWidget;
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IKpiWidget}.
  * @deprecated Use {@link @gooddata/sdk-model#isKpiWidgetDefinition}
- * @public
+ * @alpha
  */
 export const isKpiWidgetDefinition = m.isKpiWidgetDefinition;

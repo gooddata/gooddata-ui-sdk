@@ -4,13 +4,13 @@ import { ObjRef } from "../objRef";
 
 /**
  * Kpi
- * @public
+ * @alpha
  */
 export type IKpi = IKpiWithComparison | IKpiWithoutComparison;
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IKpi}.
- * @public
+ * @alpha
  */
 export function isKpi(obj: unknown): obj is IKpi {
     return isKpiWithComparison(obj) || isKpiWithoutComparison(obj);
@@ -18,7 +18,7 @@ export function isKpi(obj: unknown): obj is IKpi {
 
 /**
  * Common kpi properties
- * @public
+ * @alpha
  */
 export interface IKpiBase {
     comparisonType: IKpiComparisonTypeComparison;
@@ -28,13 +28,13 @@ export interface IKpiBase {
 
 /**
  * Kpi with comparison
- * @public
+ * @alpha
  */
 export type IKpiWithComparison = IKpiWithPreviousPeriodComparison | IKpiWithPopComparison;
 
 /**
  * Kpi with previous period comparison
- * @public
+ * @alpha
  */
 export interface IKpiWithPreviousPeriodComparison extends IKpiBase {
     comparisonType: "previousPeriod";
@@ -43,7 +43,7 @@ export interface IKpiWithPreviousPeriodComparison extends IKpiBase {
 
 /**
  * Kpi with period over period comparison
- * @public
+ * @alpha
  */
 export interface IKpiWithPopComparison extends IKpiBase {
     comparisonType: "lastYear";
@@ -52,7 +52,7 @@ export interface IKpiWithPopComparison extends IKpiBase {
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IKpiWithComparison}.
- * @public
+ * @alpha
  */
 export function isKpiWithComparison(obj: unknown): obj is IKpiWithComparison {
     return (
@@ -64,7 +64,7 @@ export function isKpiWithComparison(obj: unknown): obj is IKpiWithComparison {
 
 /**
  * Kpi without comparison
- * @public
+ * @alpha
  */
 export interface IKpiWithoutComparison extends IKpiBase {
     comparisonType: "none";
@@ -72,7 +72,7 @@ export interface IKpiWithoutComparison extends IKpiBase {
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IKpiWithoutComparison}.
- * @public
+ * @alpha
  */
 export function isKpiWithoutComparison(obj: unknown): obj is IKpiWithoutComparison {
     return !isEmpty(obj) && (obj as IKpiWithoutComparison).comparisonType === "none";
@@ -80,7 +80,7 @@ export function isKpiWithoutComparison(obj: unknown): obj is IKpiWithoutComparis
 
 /**
  * Kpi comparison type
- * @public
+ * @alpha
  */
 export type IKpiComparisonTypeComparison =
     | IKpiWithPreviousPeriodComparison["comparisonType"]
@@ -89,6 +89,6 @@ export type IKpiComparisonTypeComparison =
 
 /**
  * Kpi comparison direction
- * @public
+ * @alpha
  */
 export type IKpiComparisonDirection = "growIsGood" | "growIsBad";

@@ -10,7 +10,7 @@ import { IDashboardFilterReference } from "./filterContext";
  * -  An ignore-list containing references to dashboard attribute filters that should be ignored by
  *    the widget.
  *
- * @public
+ * @alpha
  */
 export interface IFilterableWidget {
     /**
@@ -28,7 +28,7 @@ export interface IFilterableWidget {
  * Defines properties that are used for drillable widgets. Such widgets allow user clicking on
  * different parts of the widget and through this interaction navigate to other insights or dashboards.
  *
- * @public
+ * @alpha
  */
 export interface IDrillableWidget {
     /**
@@ -40,7 +40,7 @@ export interface IDrillableWidget {
 /**
  * Defines properties that are used to store widget's descriptive metadata.
  *
- * @public
+ * @alpha
  */
 export interface IWidgetDescription {
     /**
@@ -57,7 +57,7 @@ export interface IWidgetDescription {
 /**
  * Base type for dashboard widgets.
  *
- * @public
+ * @alpha
  */
 export interface IBaseWidget {
     /**
@@ -71,6 +71,6 @@ export interface IBaseWidget {
 /**
  * List of built-in widget types. These type names are reserved and must not be used by custom widgets.
  *
- * @public
+ * @alpha
  */
 export const BuiltInWidgetTypes: string[] = ["kpi", "insight"];

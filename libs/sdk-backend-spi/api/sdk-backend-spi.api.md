@@ -96,7 +96,7 @@ export type AbsoluteFormType = DateFilterOptionAbsoluteFormType;
 // @alpha @deprecated
 export type AbsolutePresetType = DateFilterOptionAbsolutePresetType;
 
-// @public @deprecated
+// @alpha @deprecated
 export type AbsoluteType = DateFilterAbsoluteType;
 
 // @alpha @deprecated
@@ -156,10 +156,10 @@ export const catalogItemMetadataObject: (catalogItem: m.CatalogItem) => m.Metada
 // @public @deprecated
 export type CatalogItemType = m.CatalogItemType;
 
-// @public @deprecated
+// @alpha @deprecated
 export type DashboardDateFilterConfigMode = m.DashboardDateFilterConfigMode;
 
-// @public @deprecated
+// @alpha @deprecated
 export const dashboardFilterReferenceObjRef: typeof m.dashboardFilterReferenceObjRef;
 
 // @public @deprecated
@@ -179,7 +179,7 @@ export type DataValue = m.DataValue;
 // @alpha @deprecated
 export type DateFilterGranularity = m.DateFilterGranularity;
 
-// @public @deprecated
+// @alpha @deprecated
 export type DateFilterType = m.DateFilterType;
 
 // @alpha @deprecated
@@ -208,7 +208,7 @@ export type ExplainConfig = {
     explainType?: "LDM" | "PDM" | "MAQL";
 };
 
-// @public @deprecated
+// @alpha @deprecated
 export type FilterContextItem = m.FilterContextItem;
 
 // @public
@@ -420,15 +420,15 @@ export interface IDashboard<TWidget = m.IDashboardWidget> extends m.IDashboard<T
 export interface IDashboardAttachment extends m.IDashboardAttachment {
 }
 
-// @public @deprecated
+// @alpha @deprecated
 export interface IDashboardAttributeFilter extends m.IDashboardAttributeFilter {
 }
 
-// @public @deprecated
+// @alpha @deprecated
 export interface IDashboardAttributeFilterParent extends m.IDashboardAttributeFilterParent {
 }
 
-// @public @deprecated
+// @alpha @deprecated
 export interface IDashboardAttributeFilterReference extends m.IDashboardAttributeFilterReference {
 }
 
@@ -436,19 +436,19 @@ export interface IDashboardAttributeFilterReference extends m.IDashboardAttribut
 export interface IDashboardBase extends m.IDashboardBase {
 }
 
-// @public @deprecated
+// @alpha @deprecated
 export interface IDashboardDateFilter extends m.IDashboardDateFilter {
 }
 
-// @public @deprecated
+// @alpha @deprecated
 export interface IDashboardDateFilterAddedPresets extends m.IDashboardDateFilterAddedPresets {
 }
 
-// @public @deprecated
+// @alpha @deprecated
 export interface IDashboardDateFilterConfig extends m.IDashboardDateFilterConfig {
 }
 
-// @public @deprecated
+// @alpha @deprecated
 export interface IDashboardDateFilterReference extends m.IDashboardDateFilterReference {
 }
 
@@ -456,30 +456,30 @@ export interface IDashboardDateFilterReference extends m.IDashboardDateFilterRef
 export interface IDashboardDefinition<TWidget = m.IDashboardWidget> extends m.IDashboardDefinition<TWidget> {
 }
 
-// @public @deprecated
+// @alpha @deprecated
 export type IDashboardFilterReference = m.IDashboardFilterReference;
 
-// @public @deprecated
+// @alpha @deprecated
 export interface IDashboardLayout<TWidget = m.IDashboardWidget> extends m.IDashboardLayout<TWidget> {
 }
 
-// @public @deprecated
+// @alpha @deprecated
 export interface IDashboardLayoutItem<TWidget = m.IDashboardWidget> extends m.IDashboardLayoutItem<TWidget> {
 }
 
-// @public @deprecated
+// @alpha @deprecated
 export interface IDashboardLayoutSection<TWidget = m.IDashboardWidget> extends m.IDashboardLayoutSection<TWidget> {
 }
 
-// @public @deprecated
+// @alpha @deprecated
 export interface IDashboardLayoutSectionHeader extends m.IDashboardLayoutSectionHeader {
 }
 
-// @public @deprecated
+// @alpha @deprecated
 export interface IDashboardLayoutSize extends m.IDashboardLayoutSize {
 }
 
-// @public @deprecated
+// @alpha @deprecated
 export interface IDashboardLayoutSizeByScreenSize extends m.IDashboardLayoutSizeByScreenSize {
 }
 
@@ -507,16 +507,16 @@ export interface IDashboardPluginDefinition extends m.IDashboardPluginDefinition
 export interface IDashboardPluginLink extends m.IDashboardPluginLink {
 }
 
-// @public
+// @alpha
 export interface IDashboardReferences {
     insights: IInsight[];
     plugins: IDashboardPlugin_2[];
 }
 
-// @public @deprecated
+// @alpha @deprecated
 export type IDashboardWidget = m.IDashboardWidget;
 
-// @public
+// @alpha
 export interface IDashboardWithReferences {
     // (undocumented)
     dashboard: IDashboard_2;
@@ -575,7 +575,7 @@ export interface IDataView {
 export interface IDateFilterConfig extends m.IDateFilterConfig {
 }
 
-// @public
+// @alpha
 export interface IDateFilterConfigsQuery {
     query(): Promise<IDateFilterConfigsQueryResult>;
     withLimit(limit: number): IDateFilterConfigsQuery;
@@ -750,15 +750,15 @@ export interface IFactMetadataObject extends m.IFactMetadataObject {
 export interface IFilterableWidget extends m.IFilterableWidget {
 }
 
-// @public @deprecated
+// @alpha @deprecated
 export interface IFilterContext extends m.IFilterContext {
 }
 
-// @public @deprecated
+// @alpha @deprecated
 export interface IFilterContextBase extends m.IFilterContextBase {
 }
 
-// @public @deprecated
+// @alpha @deprecated
 export interface IFilterContextDefinition extends m.IFilterContextDefinition {
 }
 
@@ -875,7 +875,7 @@ export interface ILegacyKpiWithPopComparison extends IKpiWithPopComparison {
 export interface ILegacyKpiWithPreviousPeriodComparison extends IKpiWithPreviousPeriodComparison {
 }
 
-// @public @deprecated
+// @alpha @deprecated
 export interface IListedDashboard extends m.IListedDashboard {
 }
 
@@ -1044,7 +1044,7 @@ export const isAbsoluteDateFilterForm: (obj: unknown) => obj is m.IAbsoluteDateF
 // @alpha @deprecated
 export const isAbsoluteDateFilterPreset: (obj: unknown) => obj is m.IAbsoluteDateFilterPreset;
 
-// @public @deprecated
+// @alpha @deprecated
 export const isAllTimeDashboardDateFilter: typeof m.isAllTimeDashboardDateFilter;
 
 // @alpha @deprecated
@@ -1086,43 +1086,43 @@ export interface IScheduledMailBase extends m.IScheduledMailBase {
 export interface IScheduledMailDefinition extends m.IScheduledMailDefinition {
 }
 
-// @public @deprecated
+// @alpha @deprecated
 export const isDashboard: typeof m.isDashboard;
 
 // @alpha @deprecated
 export const isDashboardAttachment: typeof m.isDashboardAttachment;
 
-// @public @deprecated
+// @alpha @deprecated
 export const isDashboardAttributeFilter: typeof m.isDashboardAttributeFilter;
 
-// @public @deprecated
+// @alpha @deprecated
 export const isDashboardAttributeFilterReference: typeof m.isDashboardAttributeFilterReference;
 
-// @public @deprecated
+// @alpha @deprecated
 export const isDashboardDateFilter: typeof m.isDashboardDateFilter;
 
-// @public @deprecated
+// @alpha @deprecated
 export const isDashboardDateFilterReference: typeof m.isDashboardDateFilterReference;
 
-// @public @deprecated
+// @alpha @deprecated
 export const isDashboardDefinition: typeof m.isDashboardDefinition;
 
-// @public @deprecated
+// @alpha @deprecated
 export const isDashboardLayout: typeof m.isDashboardLayout;
 
 // @alpha
 export const isDashboardLayoutEmpty: (layout: IDashboardLayout_2<any>) => boolean;
 
-// @public @deprecated
+// @alpha @deprecated
 export const isDashboardLayoutItem: typeof m.isDashboardLayoutItem;
 
-// @public @deprecated
+// @alpha @deprecated
 export const isDashboardLayoutSection: typeof m.isDashboardLayoutSection;
 
 // @public @deprecated
 export const isDashboardMetadataObject: typeof m.isDashboardMetadataObject;
 
-// @public @deprecated
+// @alpha @deprecated
 export const isDashboardWidget: (obj: unknown) => obj is m.IDashboardWidget;
 
 // @public @deprecated
@@ -1179,22 +1179,22 @@ export interface ISettings extends m.ISettings {
 // @public @deprecated
 export const isFactMetadataObject: typeof m.isFactMetadataObject;
 
-// @public @deprecated
+// @alpha @deprecated
 export const isFilterContext: typeof m.isFilterContext;
 
-// @public @deprecated
+// @alpha @deprecated
 export const isFilterContextDefinition: typeof m.isFilterContextDefinition;
 
-// @public @deprecated
+// @alpha @deprecated
 export const isInsightWidget: typeof m.isInsightWidget;
 
-// @public @deprecated
+// @alpha @deprecated
 export const isInsightWidgetDefinition: typeof m.isInsightWidgetDefinition;
 
-// @public @deprecated
+// @alpha @deprecated
 export const isKpiWidget: typeof m.isKpiWidget;
 
-// @public @deprecated
+// @alpha @deprecated
 export const isKpiWidgetDefinition: typeof m.isKpiWidgetDefinition;
 
 // @alpha @deprecated
@@ -1251,7 +1251,7 @@ export const isResultMeasureHeader: typeof m.isResultMeasureHeader;
 // @public @deprecated
 export const isResultTotalHeader: typeof m.isResultTotalHeader;
 
-// @public @deprecated
+// @alpha @deprecated
 export const isTempFilterContext: typeof m.isTempFilterContext;
 
 // @public @deprecated
@@ -1281,7 +1281,7 @@ export function isValueBasedElementsQueryOptionsElements(obj: unknown): obj is I
 // @public @deprecated
 export const isVariableMetadataObject: typeof m.isVariableMetadataObject;
 
-// @public @deprecated
+// @alpha @deprecated
 export const isWidget: typeof m.isWidget;
 
 // @alpha @deprecated
@@ -1293,10 +1293,10 @@ export const isWidgetAlertDefinition: typeof m.isWidgetAlertDefinition;
 // @alpha @deprecated
 export const isWidgetAttachment: typeof m.isWidgetAttachment;
 
-// @public @deprecated
+// @alpha @deprecated
 export const isWidgetDefinition: typeof m.isWidgetDefinition;
 
-// @public @deprecated
+// @alpha @deprecated
 export interface ITempFilterContext extends m.ITempFilterContext {
 }
 
@@ -1512,7 +1512,7 @@ export type IWidgetDefinition = m.IWidgetDefinition;
 export interface IWidgetDescription extends m.IWidgetDescription {
 }
 
-// @public
+// @alpha
 export interface IWidgetReferences {
     catalogItems?: CatalogItem_2[];
 }
@@ -1611,7 +1611,7 @@ export interface IWorkspaceCatalogWithAvailableItemsFactoryOptions extends IWork
     items?: IAttributeOrMeasure[];
 }
 
-// @public
+// @alpha
 export interface IWorkspaceDashboardsService {
     createDashboard(dashboard: IDashboardDefinition_2): Promise<IDashboard_2>;
     createDashboardPlugin(plugin: IDashboardPluginDefinition_2): Promise<IDashboardPlugin_2>;
@@ -1794,13 +1794,13 @@ export type MetadataObject = m.MetadataObject;
 // @public @deprecated
 export const metadataObjectId: (metadataObject: m.MetadataObject) => string;
 
-// @public @deprecated
+// @alpha @deprecated
 export const newAbsoluteDashboardDateFilter: typeof m.newAbsoluteDashboardDateFilter;
 
-// @public @deprecated
+// @alpha @deprecated
 export const newAllTimeDashboardDateFilter: typeof m.newAllTimeDashboardDateFilter;
 
-// @public @deprecated
+// @alpha @deprecated
 export const newRelativeDashboardDateFilter: typeof m.newRelativeDashboardDateFilter;
 
 // @public
@@ -1856,7 +1856,7 @@ export type RelativeGranularityOffset = RelativeDateFilterGranularityOffset;
 // @alpha @deprecated
 export type RelativePresetType = DateFilterOptionRelativePresetType;
 
-// @public @deprecated
+// @alpha @deprecated
 export type RelativeType = DateFilterRelativeType;
 
 // @public @deprecated
@@ -1865,7 +1865,7 @@ export const resultHeaderName: typeof m.resultHeaderName;
 // @alpha @deprecated
 export type ScheduledMailAttachment = m.ScheduledMailAttachment;
 
-// @public @deprecated
+// @alpha @deprecated
 export type ScreenSize = m.ScreenSize;
 
 // @alpha @deprecated
@@ -1877,7 +1877,7 @@ export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin";
 // @public
 export type SupportedInsightReferenceTypes = Exclude<InsightReferenceTypes, "displayForm" | "variable">;
 
-// @public
+// @alpha
 export type SupportedWidgetReferenceTypes = Exclude<ObjectType, "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable">;
 
 // @beta @deprecated
@@ -1913,22 +1913,22 @@ export function walkLayout<TWidget extends IDashboardWidget_2>(layout: IDashboar
     widgetCallback?: (widget: TWidget, widgetPath: LayoutPath) => void;
 }, path?: LayoutPath): void;
 
-// @public @deprecated
+// @alpha @deprecated
 export const widgetId: typeof m.widgetId;
 
-// @public @deprecated
+// @alpha @deprecated
 export const widgetRef: typeof m.widgetRef;
 
-// @public @deprecated
+// @alpha @deprecated
 export const widgetTitle: typeof m.widgetTitle;
 
 // @alpha @deprecated (undocumented)
 export type WidgetType = m.WidgetType;
 
-// @public @deprecated
+// @alpha @deprecated
 export const widgetType: typeof m.widgetType;
 
-// @public @deprecated
+// @alpha @deprecated
 export const widgetUri: typeof m.widgetUri;
 
 // @public @deprecated

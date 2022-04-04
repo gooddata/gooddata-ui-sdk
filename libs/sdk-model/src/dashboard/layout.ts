@@ -6,20 +6,20 @@ import { IWidget, IWidgetDefinition, isWidget, isWidgetDefinition } from "./widg
 /**
  * Classification of the screen size according to its size with respect to the set breakpoints.
  *
- * @public
+ * @alpha
  */
 export type ScreenSize = "xl" | "lg" | "md" | "sm" | "xs";
 
 /**
  * Default dashboard widgets - kpi widget, insight widget, or nested layout.
  *
- * @public
+ * @alpha
  */
 export type IDashboardWidget = IWidget | IWidgetDefinition | IDashboardLayout<IDashboardWidget>;
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IDashboardWidget}.
- * @public
+ * @alpha
  */
 export const isDashboardWidget = (obj: unknown): obj is IDashboardWidget =>
     [isDashboardLayout, isWidget, isWidgetDefinition].some((guard) => guard(obj));
@@ -28,7 +28,7 @@ export const isDashboardWidget = (obj: unknown): obj is IDashboardWidget =>
  * Dashboard layout item - usually contains kpi widget, insight widget or another nested layout.
  * Generic TWidget param is here to support type checking with custom widgets (e.g. in Dashboard component).
  *
- * @public
+ * @alpha
  */
 export interface IDashboardLayoutItem<TWidget = IDashboardWidget> {
     /**
@@ -49,7 +49,7 @@ export interface IDashboardLayoutItem<TWidget = IDashboardWidget> {
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IDashboardLayoutItem}.
- * @public
+ * @alpha
  */
 export function isDashboardLayoutItem<TWidget>(obj: unknown): obj is IDashboardLayoutItem<TWidget> {
     return !isEmpty(obj) && typeof (obj as IDashboardLayoutItem<TWidget>).size?.xl?.gridWidth === "number";
@@ -59,7 +59,7 @@ export function isDashboardLayoutItem<TWidget>(obj: unknown): obj is IDashboardL
  * Dashboard layout describes the data to be displayed on the dashboard, and their structure for UI rendering.
  * Generic TWidget param is here to support type checking with custom widgets (e.g. in Dashboard component).
  *
- * @public
+ * @alpha
  */
 export interface IDashboardLayout<TWidget = IDashboardWidget> {
     /**
@@ -80,7 +80,7 @@ export interface IDashboardLayout<TWidget = IDashboardWidget> {
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IDashboardLayout}.
- * @public
+ * @alpha
  */
 export function isDashboardLayout<TWidget = IDashboardWidget>(
     obj: unknown,
@@ -91,7 +91,7 @@ export function isDashboardLayout<TWidget = IDashboardWidget>(
 /**
  * Dashboard layout size configuration, defined by screen type.
  *
- * @public
+ * @alpha
  */
 export interface IDashboardLayoutSizeByScreenSize {
     /**
@@ -127,7 +127,7 @@ export interface IDashboardLayoutSizeByScreenSize {
 /**
  * Dashboard layout size definition.
  *
- * @public
+ * @alpha
  */
 export interface IDashboardLayoutSize {
     /**
@@ -152,7 +152,7 @@ export interface IDashboardLayoutSize {
 
 /**
  * Dashboard layout section represents a group of widgets on the dashboard with a title and description.
- * @public
+ * @alpha
  */
 export interface IDashboardLayoutSection<TWidget = IDashboardWidget> {
     /**
@@ -173,7 +173,7 @@ export interface IDashboardLayoutSection<TWidget = IDashboardWidget> {
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IDashboardLayoutSection}.
- * @public
+ * @alpha
  */
 export function isDashboardLayoutSection<TWidget>(obj: unknown): obj is IDashboardLayoutSection<TWidget> {
     return !isEmpty(obj) && isArray((obj as IDashboardLayoutSection<TWidget>).items);
@@ -182,7 +182,7 @@ export function isDashboardLayoutSection<TWidget>(obj: unknown): obj is IDashboa
 /**
  * Dashboard layout section header definition.
  *
- * @public
+ * @alpha
  */
 export interface IDashboardLayoutSectionHeader {
     /**

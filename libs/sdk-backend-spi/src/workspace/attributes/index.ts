@@ -4,7 +4,7 @@ import {
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
     IMetadataObject,
-    ICatalogAttribute
+    ICatalogAttribute,
 } from "@gooddata/sdk-model";
 import { IElementsQueryFactory } from "./elements";
 

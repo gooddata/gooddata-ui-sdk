@@ -9,13 +9,13 @@ import { IKpi } from "./kpi";
 /**
  * Reserved type names used for dashboard's built-in analytical widgets.
  *
- * @public
+ * @alpha
  */
 export type AnalyticalWidgetType = "kpi" | "insight";
 
 /**
  * @deprecated use {@link AnalyticalWidgetType} instead
- * @public
+ * @alpha
  */
 export type WidgetType = AnalyticalWidgetType;
 
@@ -23,7 +23,7 @@ export type WidgetType = AnalyticalWidgetType;
  * Analytical Widgets are a sub-type of dashboard widgets that display analytics. Be it charts rendering
  * insights (reports) or KPIs rendering measure values optionally with their comparison.
  *
- * @public
+ * @alpha
  */
 export interface IAnalyticalWidget
     extends IBaseWidget,
@@ -34,7 +34,7 @@ export interface IAnalyticalWidget
 }
 
 /**
- * @public
+ * @alpha
  */
 export interface IKpiWidgetBase extends IAnalyticalWidget {
     readonly type: "kpi";
@@ -51,17 +51,17 @@ export interface IKpiWidgetBase extends IAnalyticalWidget {
 }
 
 /**
- * @public
+ * @alpha
  */
 export interface IKpiWidget extends IKpiWidgetBase, IDashboardObjectIdentity {}
 
 /**
- * @public
+ * @alpha
  */
 export interface IKpiWidgetDefinition extends IKpiWidgetBase, Partial<IDashboardObjectIdentity> {}
 
 /**
- * @public
+ * @alpha
  */
 export interface IInsightWidgetBase extends IAnalyticalWidget {
     readonly type: "insight";
@@ -93,18 +93,18 @@ export interface IInsightWidgetBase extends IAnalyticalWidget {
 }
 
 /**
- * @public
+ * @alpha
  */
 export interface IInsightWidgetConfiguration {
     hideTitle?: boolean;
 }
 
 /**
- * @public
+ * @alpha
  */
 export interface IInsightWidget extends IInsightWidgetBase, IDashboardObjectIdentity {}
 
 /**
- * @public
+ * @alpha
  */
 export interface IInsightWidgetDefinition extends IInsightWidgetBase, Partial<IDashboardObjectIdentity> {}

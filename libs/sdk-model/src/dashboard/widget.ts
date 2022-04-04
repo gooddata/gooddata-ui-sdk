@@ -13,18 +13,18 @@ import {
 
 /**
  * See {@link IWidget}]
- * @public
+ * @alpha
  */
 export type IWidgetDefinition = IKpiWidgetDefinition | IInsightWidgetDefinition;
 
 /**
- * @public
+ * @alpha
  */
 export type IWidget = IKpiWidget | IInsightWidget;
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IWidgetDefinition}.
- * @public
+ * @alpha
  */
 export function isWidgetDefinition(obj: unknown): obj is IWidgetDefinition {
     return hasWidgetProps(obj) && !isObjRef((obj as any).ref);
@@ -32,7 +32,7 @@ export function isWidgetDefinition(obj: unknown): obj is IWidgetDefinition {
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IWidget}.
- * @public
+ * @alpha
  */
 export function isWidget(obj: unknown): obj is IWidget {
     return hasWidgetProps(obj) && isObjRef((obj as any).ref);
@@ -53,7 +53,7 @@ function hasWidgetProps(obj: unknown): boolean {
  *
  * @param widget - widget to get identifier of
  * @returns the widget identifier
- * @public
+ * @alpha
  */
 export function widgetId(widget: IWidget): string {
     invariant(widget, "widget to get identifier of must be specified");
@@ -66,7 +66,7 @@ export function widgetId(widget: IWidget): string {
  *
  * @param widget - widget to get uri of
  * @returns the widget uri
- * @public
+ * @alpha
  */
 export function widgetUri(widget: IWidget): string {
     invariant(widget, "widget to get uri of must be specified");
@@ -79,7 +79,7 @@ export function widgetUri(widget: IWidget): string {
  *
  * @param widget - widget to get ref of
  * @returns the widget ref
- * @public
+ * @alpha
  */
 export function widgetRef(widget: IWidget): ObjRef {
     invariant(widget, "widget to get ref of must be specified");
@@ -92,7 +92,7 @@ export function widgetRef(widget: IWidget): ObjRef {
  *
  * @param widget - widget to get type of
  * @returns the widget type
- * @public
+ * @alpha
  */
 export function widgetType(widget: IWidget): AnalyticalWidgetType {
     invariant(widget, "widget to get type of must be specified");
@@ -105,7 +105,7 @@ export function widgetType(widget: IWidget): AnalyticalWidgetType {
  *
  * @param widget - widget to get title of
  * @returns the widget title
- * @public
+ * @alpha
  */
 export function widgetTitle(widget: IWidget): string {
     invariant(widget, "widget to get title of must be specified");
@@ -115,7 +115,7 @@ export function widgetTitle(widget: IWidget): string {
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IInsightWidget}.
- * @public
+ * @alpha
  */
 export function isInsightWidget(obj: unknown): obj is IInsightWidget {
     return isWidget(obj) && (obj as IInsightWidget).type === "insight";
@@ -123,7 +123,7 @@ export function isInsightWidget(obj: unknown): obj is IInsightWidget {
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IInsightWidgetDefinition}.
- * @public
+ * @alpha
  */
 export function isInsightWidgetDefinition(obj: unknown): obj is IInsightWidgetDefinition {
     return isWidgetDefinition(obj) && (obj as IInsightWidget).type === "insight";
@@ -131,7 +131,7 @@ export function isInsightWidgetDefinition(obj: unknown): obj is IInsightWidgetDe
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IKpiWidget}.
- * @public
+ * @alpha
  */
 export function isKpiWidget(obj: unknown): obj is IKpiWidget {
     return isWidget(obj) && (obj as IKpiWidget).type === "kpi";
@@ -139,7 +139,7 @@ export function isKpiWidget(obj: unknown): obj is IKpiWidget {
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IKpiWidget}.
- * @public
+ * @alpha
  */
 export function isKpiWidgetDefinition(obj: unknown): obj is IKpiWidgetDefinition {
     return isWidgetDefinition(obj) && (obj as IKpiWidget).type === "kpi";

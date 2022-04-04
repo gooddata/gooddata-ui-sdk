@@ -5,21 +5,21 @@ import * as m from "@gooddata/sdk-model";
 /**
  * Date filter configuration mode
  * @deprecated Use {@link @gooddata/sdk-model#DashboardDateFilterConfigMode}
- * @public
+ * @alpha
  */
 export type DashboardDateFilterConfigMode = m.DashboardDateFilterConfigMode;
 
 /**
  * Date filter presets to add to the date filter for the current dashboard
  * @deprecated Use {@link @gooddata/sdk-model#IDashboardDateFilterAddedPresets}
- * @public
+ * @alpha
  */
 export interface IDashboardDateFilterAddedPresets extends m.IDashboardDateFilterAddedPresets {}
 
 /**
  * Extended date filter config
  * @deprecated Use {@link @gooddata/sdk-model#IDashboardDateFilterConfig}
- * @public
+ * @alpha
  */
 export interface IDashboardDateFilterConfig extends m.IDashboardDateFilterConfig {}
 
@@ -103,7 +103,7 @@ export interface IDashboardDefinition<TWidget = m.IDashboardWidget> extends m.ID
  *
  * @param obj - object to test
  * @deprecated Use {@link @gooddata/sdk-model#isDashboard}
- * @public
+ * @alpha
  */
 export const isDashboard = m.isDashboard;
 
@@ -112,7 +112,7 @@ export const isDashboard = m.isDashboard;
  *
  * @param obj - object to test
  * @deprecated Use {@link @gooddata/sdk-model#isDashboardDefinition}
- * @public
+ * @alpha
  */
 export const isDashboardDefinition = m.isDashboardDefinition;
 
@@ -130,6 +130,6 @@ export type ListedDashboardAvailability = m.ListedDashboardAvailability;
  * Only a subset of dashboard data is available,
  * for the full definition see {@link IDashboard}
  * @deprecated Use {@link @gooddata/sdk-model#IListedDashboard}
- * @public
+ * @alpha
  */
 export interface IListedDashboard extends m.IListedDashboard {}

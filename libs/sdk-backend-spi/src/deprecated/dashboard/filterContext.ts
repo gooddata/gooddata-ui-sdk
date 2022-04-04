@@ -6,55 +6,55 @@ import { DateFilterRelativeType, DateFilterAbsoluteType } from "@gooddata/sdk-mo
 /**
  * Date filter type - relative
  * @deprecated Use {@link @gooddata/sdk-model#DateFilterRelativeType}
- * @public
+ * @alpha
  */
 export type RelativeType = DateFilterRelativeType;
 
 /**
  * Date filter type - absolute
  * @deprecated Use {@link @gooddata/sdk-model#DateFilterAbsoluteType}
- * @public
+ * @alpha
  */
 export type AbsoluteType = DateFilterAbsoluteType;
 /**
  * Date filter type - relative or absolute
  * @deprecated Use {@link @gooddata/sdk-model#DateFilterType}
- * @public
+ * @alpha
  */
 export type DateFilterType = m.DateFilterType;
 
 /**
  * Parent filter of an attribute filter of the filter context
  * @deprecated Use {@link @gooddata/sdk-model#IDashboardAttributeFilterParent}
- * @public
+ * @alpha
  */
 export interface IDashboardAttributeFilterParent extends m.IDashboardAttributeFilterParent {}
 
 /**
  * Attribute filter of the filter context
  * @deprecated Use {@link @gooddata/sdk-model#IDashboardAttributeFilter}
- * @public
+ * @alpha
  */
 export interface IDashboardAttributeFilter extends m.IDashboardAttributeFilter {}
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IDashboardAttributeFilter}.
  * @deprecated Use {@link @gooddata/sdk-model#isDashboardAttributeFilter}
- * @public
+ * @alpha
  */
 export const isDashboardAttributeFilter = m.isDashboardAttributeFilter;
 
 /**
  * Date filter of the filter context
  * @deprecated Use {@link @gooddata/sdk-model#IDashboardDateFilter}
- * @public
+ * @alpha
  */
 export interface IDashboardDateFilter extends m.IDashboardDateFilter {}
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IDashboardDateFilter}.
  * @deprecated Use {@link @gooddata/sdk-model#isDashboardDateFilter}
- * @public
+ * @alpha
  */
 export const isDashboardDateFilter = m.isDashboardDateFilter;
 
@@ -64,7 +64,7 @@ export const isDashboardDateFilter = m.isDashboardDateFilter;
  * @param from - start of the interval – negative numbers mean the past, zero means today, positive numbers mean the future
  * @param to - end of the interval – negative numbers mean the past, zero means today, positive numbers mean the future
  * @deprecated Use {@link @gooddata/sdk-model#newRelativeDashboardDateFilter}
- * @public
+ * @alpha
  */
 export const newRelativeDashboardDateFilter = m.newRelativeDashboardDateFilter;
 
@@ -73,49 +73,49 @@ export const newRelativeDashboardDateFilter = m.newRelativeDashboardDateFilter;
  * @param from - start of the interval in ISO-8601 calendar date format
  * @param to - end of the interval in ISO-8601 calendar date format
  * @deprecated Use {@link @gooddata/sdk-model#newAbsoluteDashboardDateFilter}
- * @public
+ * @alpha
  */
 export const newAbsoluteDashboardDateFilter = m.newAbsoluteDashboardDateFilter;
 
 /**
  * Creates a new all time date filter. This filter is used to indicate that there should be no filtering on the dates.
  * @deprecated Use {@link @gooddata/sdk-model#newAllTimeDashboardDateFilter}
- * @public
+ * @alpha
  */
 export const newAllTimeDashboardDateFilter = m.newAllTimeDashboardDateFilter;
 
 /**
  * Type-guard testing whether the provided object is an All time dashboard date filter.
  * @deprecated Use {@link @gooddata/sdk-model#isAllTimeDashboardDateFilter}
- * @public
+ * @alpha
  */
 export const isAllTimeDashboardDateFilter = m.isAllTimeDashboardDateFilter;
 
 /**
  * Supported filter context items
  * @deprecated Use {@link @gooddata/sdk-model#FilterContextItem}
- * @public
+ * @alpha
  */
 export type FilterContextItem = m.FilterContextItem;
 
 /**
  * Common filter context properties
  * @deprecated Use {@link @gooddata/sdk-model#IFilterContextBase}
- * @public
+ * @alpha
  */
 export interface IFilterContextBase extends m.IFilterContextBase {}
 
 /**
  * Filter context definition represents modifier or created filter context
  * @deprecated Use {@link @gooddata/sdk-model#IFilterContextDefinition}
- * @public
+ * @alpha
  */
 export interface IFilterContextDefinition extends m.IFilterContextDefinition {}
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IFilterContextDefinition}.
  * @deprecated Use {@link @gooddata/sdk-model#isFilterContextDefinition}
- * @public
+ * @alpha
  */
 export const isFilterContextDefinition = m.isFilterContextDefinition;
 
@@ -123,28 +123,28 @@ export const isFilterContextDefinition = m.isFilterContextDefinition;
  * Filter context consists of configured attribute and date filters
  * (which could be applied to the dashboard, widget alert, or scheduled email)
  * @deprecated Use {@link @gooddata/sdk-model#IFilterContext}
- * @public
+ * @alpha
  */
 export interface IFilterContext extends m.IFilterContext {}
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IFilterContext}.
  * @deprecated Use {@link @gooddata/sdk-model#isFilterContext}
- * @public
+ * @alpha
  */
 export const isFilterContext = m.isFilterContext;
 
 /**
  * Temporary filter context serves to override original dashboard filter context during the dashboard export
  * @deprecated Use {@link @gooddata/sdk-model#ITempFilterContext}
- * @public
+ * @alpha
  */
 export interface ITempFilterContext extends m.ITempFilterContext {}
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link ITempFilterContext}.
  * @deprecated Use {@link @gooddata/sdk-model#isTempFilterContext}
- * @public
+ * @alpha
  */
 export const isTempFilterContext = m.isTempFilterContext;
 
@@ -153,14 +153,14 @@ export const isTempFilterContext = m.isTempFilterContext;
  * This is commonly used to define filters to ignore
  * for the particular dashboard widget
  * @deprecated Use {@link @gooddata/sdk-model#IDashboardDateFilterReference}
- * @public
+ * @alpha
  */
 export interface IDashboardDateFilterReference extends m.IDashboardDateFilterReference {}
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IDashboardDateFilterReference}.
  * @deprecated Use {@link @gooddata/sdk-model#isDashboardDateFilterReference}
- * @public
+ * @alpha
  */
 export const isDashboardDateFilterReference = m.isDashboardDateFilterReference;
 
@@ -169,14 +169,14 @@ export const isDashboardDateFilterReference = m.isDashboardDateFilterReference;
  * This is commonly used to define filters to ignore
  * for the particular dashboard widget
  * @deprecated Use {@link @gooddata/sdk-model#IDashboardAttributeFilterReference}
- * @public
+ * @alpha
  */
 export interface IDashboardAttributeFilterReference extends m.IDashboardAttributeFilterReference {}
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IDashboardAttributeFilterReference}.
  * @deprecated Use {@link @gooddata/sdk-model#isDashboardAttributeFilterReference}
- * @public
+ * @alpha
  */
 export const isDashboardAttributeFilterReference = m.isDashboardAttributeFilterReference;
 
@@ -185,7 +185,7 @@ export const isDashboardAttributeFilterReference = m.isDashboardAttributeFilterR
  * This is commonly used to define filters to ignore
  * for the particular dashboard widget
  * @deprecated Use {@link @gooddata/sdk-model#IDashboardFilterReference}
- * @public
+ * @alpha
  */
 export type IDashboardFilterReference = m.IDashboardFilterReference;
 
@@ -193,6 +193,6 @@ export type IDashboardFilterReference = m.IDashboardFilterReference;
  * Gets reference to object being used for filtering. For attribute filters, this will be reference to the display
  * form. For date filters this will be reference to the data set.
  * @deprecated Use {@link @gooddata/sdk-model#dashboardFilterReferenceObjRef}
- * @public
+ * @alpha
  */
 export const dashboardFilterReferenceObjRef = m.dashboardFilterReferenceObjRef;

@@ -13,13 +13,13 @@ import { IDashboardWidget, IDashboardLayout } from "./layout";
 
 /**
  * Date filter configuration mode
- * @public
+ * @alpha
  */
 export type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
 
 /**
  * Date filter presets to add to the date filter for the current dashboard
- * @public
+ * @alpha
  */
 export interface IDashboardDateFilterAddedPresets {
     /**
@@ -34,7 +34,7 @@ export interface IDashboardDateFilterAddedPresets {
 
 /**
  * Extended date filter config
- * @public
+ * @alpha
  */
 export interface IDashboardDateFilterConfig {
     /**
@@ -65,7 +65,7 @@ export interface IDashboardDateFilterConfig {
 
 /**
  * Dashboard common properties
- * @public
+ * @alpha
  */
 export interface IDashboardBase {
     /**
@@ -91,7 +91,7 @@ export interface IDashboardBase {
 }
 
 /**
- * @public
+ * @alpha
  */
 export interface IDashboardPluginBase {
     readonly type: "IDashboardPlugin";
@@ -119,12 +119,12 @@ export interface IDashboardPluginBase {
 }
 
 /**
- * @public
+ * @alpha
  */
 export interface IDashboardPlugin extends IDashboardPluginBase, IDashboardObjectIdentity, IAuditableDates {}
 
 /**
- * @public
+ * @alpha
  */
 export interface IDashboardPluginDefinition extends IDashboardPluginBase, Partial<IDashboardObjectIdentity> {}
 
@@ -132,7 +132,7 @@ export interface IDashboardPluginDefinition extends IDashboardPluginBase, Partia
  * A link between dashboard and a plugin that it uses. Optionally contains parameters that should
  * be passed to the plugin at load time.
  *
- * @public
+ * @alpha
  */
 export interface IDashboardPluginLink {
     readonly type: "IDashboardPluginLink";
@@ -158,13 +158,13 @@ export interface IDashboardPluginLink {
  * shared - object shared with closed set of users/groups
  * public - accessible by everyone in project
  *
- * @public
+ * @alpha
  */
 export type ShareStatus = "private" | "shared" | "public";
 
 /**
  * Common properties for objects with controlled access
- * @public
+ * @alpha
  */
 export interface IAccessControlAware {
     /**
@@ -192,7 +192,7 @@ export interface IAccessControlAware {
  * It's also possible to setup scheduled emails for the dashboard
  * (user will receive an email with the exported dashboard attached at the specified time interval),
  * and optionally extended date filter config.
- * @public
+ * @alpha
  */
 export interface IDashboard<TWidget = IDashboardWidget>
     extends IDashboardBase,
@@ -227,7 +227,7 @@ export interface IDashboard<TWidget = IDashboardWidget>
 /**
  * Dashboard definition represents modified or created dashboard
  *
- * @public
+ * @alpha
  */
 export interface IDashboardDefinition<TWidget = IDashboardWidget>
     extends IDashboardBase,
@@ -260,7 +260,7 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget>
  * Tests whether the provided object is an instance of {@link IDashboard}.
  *
  * @param obj - object to test
- * @public
+ * @alpha
  */
 export function isDashboard(obj: unknown): obj is IDashboard {
     const asDash: IDashboard | undefined = obj as IDashboard;
@@ -272,7 +272,7 @@ export function isDashboard(obj: unknown): obj is IDashboard {
  * Tests whether the provided object is an instance of {@link IDashboardDefinition}.
  *
  * @param obj - object to test
- * @public
+ * @alpha
  */
 export function isDashboardDefinition(obj: unknown): obj is IDashboardDefinition {
     const asDash: IDashboard | undefined = obj as IDashboard;
@@ -284,7 +284,7 @@ export function isDashboardDefinition(obj: unknown): obj is IDashboardDefinition
  * Availability of {@link IListedDashboard}.
  * Either full (the listed dashboard is also available as a fully accessible metadata object) or
  * only via link (full metadata object is not accessible, only the listed dashboard record).
- * @public
+ * @alpha
  */
 export type ListedDashboardAvailability = "full" | "viaLink";
 
@@ -292,7 +292,7 @@ export type ListedDashboardAvailability = "full" | "viaLink";
  * Listed dashboard - to display the dashboard in the list
  * Only a subset of dashboard data is available,
  * for the full definition see {@link IDashboard}
- * @public
+ * @alpha
  */
 export interface IListedDashboard
     extends Readonly<Required<IAuditableDates>>,

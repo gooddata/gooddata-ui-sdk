@@ -21,7 +21,7 @@ import {
 
 /**
  * Dashboard referenced objects
- * @public
+ * @alpha
  */
 export interface IDashboardReferences {
     /**
@@ -37,7 +37,7 @@ export interface IDashboardReferences {
 
 /**
  * Dashboard with referenced objects
- * @public
+ * @alpha
  */
 export interface IDashboardWithReferences {
     dashboard: IDashboard;
@@ -46,7 +46,7 @@ export interface IDashboardWithReferences {
 
 /**
  * List of currently supported types of references that can be retrieved using getWidgetReferencedObjects()
- * @public
+ * @alpha
  */
 export type SupportedWidgetReferenceTypes = Exclude<
     ObjectType,
@@ -58,7 +58,7 @@ export type SupportedWidgetReferenceTypes = Exclude<
  * Contains information about objects that may be referenced by a widget. The contents of this object
  * depend on the widget and the types requested at the time of call to getWidgetReferencedObjects.
  *
- * @public
+ * @alpha
  */
 export interface IWidgetReferences {
     /**
@@ -140,7 +140,7 @@ export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin";
 /**
  * Service to list, create and update analytical dashboards
  *
- * @public
+ * @alpha
  */
 export interface IWorkspaceDashboardsService {
     readonly workspace: string;
