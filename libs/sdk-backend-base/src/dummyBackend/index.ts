@@ -48,6 +48,8 @@ import {
     IMeasureReferencing,
     IWorkspaceUserGroupsQuery,
     IWorkspaceAccessControlService,
+    ICatalogAttribute,
+    ICatalogMeasure,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -502,6 +504,9 @@ class DummyWorkspaceAttributesService implements IWorkspaceAttributesService {
     getAttributes(_refs: ObjRef[]): Promise<IAttributeMetadataObject[]> {
         throw new NotSupported("not supported");
     }
+    getCatalogAttributes(_refs: ObjRef[]): Promise<ICatalogAttribute[]> {
+        throw new NotSupported("not supported");
+    }
     getCommonAttributes(_attributeRefs: ObjRef[]): Promise<ObjRef[]> {
         throw new NotSupported("not supported");
     }
@@ -549,7 +554,7 @@ class DummyWorkspaceMeasuresService implements IWorkspaceMeasuresService {
         return Promise.resolve({ ...measure });
     }
 
-    getMeasures(_measureRefs: ObjRef[]): Promise<IMeasureMetadataObject[]> {
+    getCatalogMeasures(_measureRefs: ObjRef[]): Promise<ICatalogMeasure[]> {
         return Promise.resolve([]);
     }
 }

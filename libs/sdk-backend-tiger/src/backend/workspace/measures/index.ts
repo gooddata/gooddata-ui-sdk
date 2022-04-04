@@ -5,6 +5,7 @@ import {
     IMeasureMetadataObject,
     IMeasureMetadataObjectDefinition,
     IMeasureReferencing,
+    ICatalogMeasure,
 } from "@gooddata/sdk-backend-spi";
 import {
     JsonApiAttributeOut,
@@ -19,6 +20,7 @@ import {
 } from "@gooddata/api-client-tiger";
 import { ObjRef, idRef, isIdentifierRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { convertMetricFromBackend } from "../../../convertors/fromBackend/MetricConverter";
+import { convertMeasure } from "../../../convertors/fromBackend/CatalogConverter";
 import { convertMetricToBackend } from "../../../convertors/toBackend/MetricConverter";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { objRefToIdentifier } from "../../../utils/api";
@@ -209,12 +211,12 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
         });
     };
 
-    public getMeasures = async (measureRefs: ObjRef[]): Promise<IMeasureMetadataObject[]> => {
+    public getCatalogMeasures = async (measureRefs: ObjRef[]): Promise<ICatalogMeasure[]> => {
         return this.authCall(async (client) => {
             const allMetrics = await loadMetrics(client, this.authCall, measureRefs, this.workspace);
 
             return allMetrics.filter((metric) =>
-                measureRefs.find((metricRef) => areObjRefsEqual(metricRef, metric.ref)),
+                measureRefs.find((metricRef) => areObjRefsEqual(metricRef, metric.measure.ref)),
             );
         });
     };
@@ -225,7 +227,7 @@ function loadMetrics(
     authCall: TigerAuthenticatedCallGuard,
     measureRefs: ObjRef[],
     workspaceId: string,
-): Promise<IMeasureMetadataObject[]> {
+): Promise<ICatalogMeasure[]> {
     const filter = measureRefs
         .map(async (ref) => {
             const id = await objRefToIdentifier(ref, authCall);
@@ -233,10 +235,16 @@ function loadMetrics(
         })
         .join(",");
 
+    /**
+     * The RSQL filter will be omitted if its length is too long to be used
+     * as a query parameter.
+     */
+    const rsqlFilter = filter.length < MAX_FILTER_LENGTH ? filter : undefined;
+
     return MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesMetrics, {
         workspaceId,
-        filter: filter.length < MAX_FILTER_LENGTH ? filter : undefined,
+        filter: rsqlFilter,
     })
         .then(MetadataUtilities.mergeEntitiesResults)
-        .then((measures) => measures.data.map(convertMetricFromBackend));
+        .then((measures) => measures.data.map(convertMeasure));
 }

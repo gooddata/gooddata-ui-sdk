@@ -7,6 +7,7 @@ import {
     IMeasureMetadataObject,
     IMeasureMetadataObjectDefinition,
     IMeasureReferencing,
+    ICatalogMeasure,
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
 
@@ -34,7 +35,7 @@ export class RecordedMeasures implements IWorkspaceMeasuresService {
         throw new NotSupported("not supported");
     }
 
-    getMeasures(_measureRefs: ObjRef[]): Promise<IMeasureMetadataObject[]> {
+    getCatalogMeasures(_measureRefs: ObjRef[]): Promise<ICatalogMeasure[]> {
         throw new NotSupported("not supported");
     }
 }

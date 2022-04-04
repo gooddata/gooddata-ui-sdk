@@ -30,5 +30,5 @@ export interface IWorkspaceFactsService {
      * @param factRefs - references of the facts to get.
      * @returns promise of {@link IFactMetadataObject} array.
      */
-    getFacts(factRefs: ObjRef[]): Promise<ICatalogFact[]>;
+    getCatalogFacts(factRefs: ObjRef[]): Promise<ICatalogFact[]>;
 }

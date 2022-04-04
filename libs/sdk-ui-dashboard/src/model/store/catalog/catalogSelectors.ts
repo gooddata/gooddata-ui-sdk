@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import flatMap from "lodash/flatMap";
 
@@ -18,6 +18,59 @@ import { createDisplayFormMap } from "../../../_staging/catalog/displayFormMap";
 const selectSelf = createSelector(
     (state: DashboardState) => state,
     (state) => state.catalog,
+);
+
+/**
+ * Checks if the catalog attributes are loaded.
+ *
+ * @public
+ */
+export const selectCatalogAttributesLoaded = createSelector(selectSelf, (state) => {
+    return state.attributes !== undefined;
+});
+
+/**
+ * Checks if the catalog facts are loaded.
+ *
+ * @public
+ */
+export const selectCatalogFactsLoaded = createSelector(selectSelf, (state) => {
+    return state.facts !== undefined;
+});
+
+/**
+ * Checks if catalog measures are loaded.
+ *
+ * @public
+ */
+export const selectCatalogMeasuresLoaded = createSelector(selectSelf, (state) => {
+    return state.measures !== undefined;
+});
+
+/**
+ * Checks if catalog date datasets are loaded.
+ *
+ * @public
+ */
+export const selectCatalogDateDatasetsLoaded = createSelector(selectSelf, (state) => {
+    return state.dateDatasets !== undefined;
+});
+
+/**
+ * Checks if all catalog is loaded.
+ *
+ * @public
+ */
+export const selectCatalogLoaded = createSelector(
+    [
+        selectCatalogAttributesLoaded,
+        selectCatalogFactsLoaded,
+        selectCatalogMeasuresLoaded,
+        selectCatalogDateDatasetsLoaded,
+    ],
+    (attributesLoaded, factsLoaded, measuresLoaded, dateDatasetsLoaded) => {
+        return attributesLoaded && factsLoaded && measuresLoaded && dateDatasetsLoaded;
+    },
 );
 
 /**

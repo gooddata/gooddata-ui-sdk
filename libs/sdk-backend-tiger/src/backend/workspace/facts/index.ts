@@ -29,7 +29,7 @@ export class TigerWorkspaceFacts implements IWorkspaceFactsService {
         });
     }
 
-    public async getFacts(factRefs: ObjRef[]): Promise<ICatalogFact[]> {
+    public async getCatalogFacts(factRefs: ObjRef[]): Promise<ICatalogFact[]> {
         const filter = factRefs
             .map(async (ref) => {
                 const id = await objRefToIdentifier(ref, this.authCall);
@@ -37,10 +37,16 @@ export class TigerWorkspaceFacts implements IWorkspaceFactsService {
             })
             .join(",");
 
+        /**
+         * The RSQL filter will be omitted if its length is too long to be used
+         * as a query parameter.
+         */
+        const rsqlFilter = filter.length < MAX_FILTER_LENGTH ? filter : undefined;
+
         const facts = await this.authCall((client) => {
             return MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesFacts, {
                 workspaceId: this.workspace,
-                filter: filter.length < MAX_FILTER_LENGTH ? filter : undefined,
+                filter: rsqlFilter,
             }).then(MetadataUtilities.mergeEntitiesResults);
         });
 

@@ -16,7 +16,7 @@ export class RecordedFacts implements IWorkspaceFactsService {
         throw new NotSupported("not supported");
     }
 
-    public getFacts(_factRefs: ObjRef[]): Promise<ICatalogFact[]> {
+    public getCatalogFacts(_factRefs: ObjRef[]): Promise<ICatalogFact[]> {
         throw new NotSupported("not supported");
     }
 }

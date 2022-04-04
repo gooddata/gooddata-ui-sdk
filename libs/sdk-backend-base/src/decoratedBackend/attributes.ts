@@ -3,6 +3,7 @@
 import {
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
+    ICatalogAttribute,
     IElementsQueryFactory,
     IMetadataObject,
     IWorkspaceAttributesService,
@@ -33,6 +34,10 @@ export abstract class DecoratedWorkspaceAttributesService implements IWorkspaceA
 
     public getAttributes(refs: ObjRef[]): Promise<IAttributeMetadataObject[]> {
         return this.decorated.getAttributes(refs);
+    }
+
+    public getCatalogAttributes(refs: ObjRef[]): Promise<ICatalogAttribute[]> {
+        return this.decorated.getCatalogAttributes(refs);
     }
 
     public getCommonAttributes(attributeRefs: ObjRef[]): Promise<ObjRef[]> {

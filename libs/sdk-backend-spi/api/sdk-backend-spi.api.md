@@ -2047,6 +2047,7 @@ export interface IWorkspaceAttributesService {
     getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject>;
     getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]>;
     getAttributes(refs: ObjRef[]): Promise<IAttributeMetadataObject[]>;
+    getCatalogAttributes(refs: ObjRef[]): Promise<ICatalogAttribute[]>;
     getCommonAttributes(attributeRefs: ObjRef[]): Promise<ObjRef[]>;
     getCommonAttributesBatch(attributesRefsBatch: ObjRef[][]): Promise<ObjRef[][]>;
 }
@@ -2166,8 +2167,8 @@ export interface IWorkspaceDescriptor {
 
 // @public
 export interface IWorkspaceFactsService {
+    getCatalogFacts(factRefs: ObjRef[]): Promise<ICatalogFact[]>;
     getFactDatasetMeta(ref: ObjRef): Promise<IMetadataObject>;
-    getFacts(factRefs: ObjRef[]): Promise<ICatalogFact[]>;
 }
 
 // @public
@@ -2188,9 +2189,9 @@ export interface IWorkspaceInsightsService {
 export interface IWorkspaceMeasuresService {
     createMeasure(measure: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject>;
     deleteMeasure(measureRef: ObjRef): Promise<void>;
+    getCatalogMeasures(measureRefs: ObjRef[]): Promise<ICatalogMeasure[]>;
     getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
     getMeasureReferencingObjects(measureRef: ObjRef): Promise<IMeasureReferencing>;
-    getMeasures(measureRefs: ObjRef[]): Promise<IMeasureMetadataObject[]>;
     updateMeasure(measure: IMeasureMetadataObject): Promise<IMeasureMetadataObject>;
 }
 
