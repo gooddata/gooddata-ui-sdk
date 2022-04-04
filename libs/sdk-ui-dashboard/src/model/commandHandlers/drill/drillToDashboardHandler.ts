@@ -16,7 +16,7 @@ import {
     selectFilterContextDateFilter,
 } from "../../store/filterContext/filterContextSelectors";
 import { selectAnalyticalWidgetByRef } from "../../store/layout/layoutSelectors";
-import { IInsightWidget } from "@gooddata/sdk-backend-spi";
+import { ICatalogDateAttribute, IInsightWidget } from "@gooddata/sdk-backend-spi";
 import { IDashboardFilter } from "../../../types";
 import {
     dashboardDateFilterToDateFilterByWidget,
@@ -41,9 +41,10 @@ import {
     measureFilters,
     isDateFilter,
 } from "@gooddata/sdk-model";
-import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors";
 import { DashboardState } from "../../store/types";
+import { query } from "../../store/_infra/queryCall";
+import { queryCatalogDateAttributes } from "../../queries/catalog";
 
 export function* drillToDashboardHandler(
     ctx: DashboardContext,
@@ -80,9 +81,15 @@ export function* drillToDashboardHandler(
         : // if drilling to other, resolve widget filter ignores
           yield call(getWidgetAwareAttributeFilters, ctx, widget);
 
-    const dateAttributes: ReturnType<typeof selectCatalogDateAttributes> = yield select(
-        selectCatalogDateAttributes,
+    const drillIntersectionAttributeRefs = getDrillIntersectionAttributeItemRefs(
+        cmd.payload.drillEvent.drillContext.intersection!,
     );
+
+    const dateAttributes: ICatalogDateAttribute[] = yield call(
+        query,
+        queryCatalogDateAttributes(drillIntersectionAttributeRefs),
+    );
+
     const drillIntersectionFilters = convertIntersectionToAttributeFilters(
         cmd.payload.drillEvent.drillContext.intersection!,
         dateAttributes.map((dA) => dA.attribute.ref),
@@ -177,4 +184,12 @@ export function convertIntersectionToAttributeFilters(
             (h: IDrillIntersectionAttributeItem): IAttributeFilter =>
                 newPositiveAttributeFilter(h.attributeHeader.ref, { uris: [h.attributeHeaderItem.uri] }),
         );
+}
+
+function getDrillIntersectionAttributeItemRefs(intersections: IDrillEventIntersectionElement[]) {
+    const attributeItems = intersections
+        .map((intersection) => intersection.header)
+        .filter(isDrillIntersectionAttributeItem);
+
+    return compact(attributeItems.map((item) => item?.attributeHeader?.formOf?.ref));
 }
