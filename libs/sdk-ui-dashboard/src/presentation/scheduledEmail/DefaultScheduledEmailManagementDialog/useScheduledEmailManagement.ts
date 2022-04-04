@@ -39,6 +39,7 @@ export const useScheduledEmailManagement = (props: IUseScheduledEmailManagementP
                   .workspace(effectiveWorkspace)
                   .dashboards()
                   .getScheduledMailsForDashboard(dashboardRef!, {
+                      loadUserData: canManageScheduledMail,
                       createdByCurrentUser: !canManageScheduledMail,
                   });
 

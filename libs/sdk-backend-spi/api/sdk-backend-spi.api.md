@@ -962,6 +962,7 @@ export interface IGetInsightOptions {
 // @alpha
 export interface IGetScheduledMailOptions {
     createdByCurrentUser?: boolean;
+    loadUserData?: boolean;
 }
 
 // @public
@@ -1346,7 +1347,7 @@ export function isCatalogFact(obj: unknown): obj is ICatalogFact;
 export function isCatalogMeasure(obj: unknown): obj is ICatalogMeasure;
 
 // @alpha
-export interface IScheduledMail extends IScheduledMailBase, IDashboardObjectIdentity {
+export interface IScheduledMail extends IAuditableUsers, IScheduledMailBase, IDashboardObjectIdentity {
 }
 
 // @alpha

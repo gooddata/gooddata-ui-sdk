@@ -1,6 +1,6 @@
 // (C) 2020-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
-import { ObjRef } from "@gooddata/sdk-model";
+import { IAuditableUsers, ObjRef } from "@gooddata/sdk-model";
 import { IDashboardObjectIdentity } from "./common";
 
 /**
@@ -189,4 +189,4 @@ export interface IExportOptions {
  * A scheduled email is used to notify a user with an exported dashboard according to a specified time interval
  * @alpha
  */
-export interface IScheduledMail extends IScheduledMailBase, IDashboardObjectIdentity {}
+export interface IScheduledMail extends IAuditableUsers, IScheduledMailBase, IDashboardObjectIdentity {}

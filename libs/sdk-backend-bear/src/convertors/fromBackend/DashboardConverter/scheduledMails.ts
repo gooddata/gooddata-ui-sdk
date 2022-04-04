@@ -6,7 +6,7 @@ import {
     NotSupported,
     ScheduledMailAttachment,
 } from "@gooddata/sdk-backend-spi";
-import { uriRef } from "@gooddata/sdk-model";
+import { IUser, uriRef } from "@gooddata/sdk-model";
 
 export const convertScheduledMailAttachment = (
     scheduledMailAttachment: GdcScheduledMail.ScheduledMailAttachment,
@@ -49,11 +49,12 @@ export const convertScheduledMailAttachment = (
 
 export const convertScheduledMail = (
     scheduledMail: GdcScheduledMail.IWrappedScheduledMail,
+    userMap?: Map<string, IUser>,
 ): IScheduledMail | IScheduledMailDefinition => {
     const {
         scheduledMail: {
             content: { attachments, body, subject, to, when, bcc, lastSuccessfull, unsubscribed },
-            meta: { uri, identifier, title, summary, unlisted },
+            meta: { uri, identifier, title, summary, unlisted, author, contributor },
         },
     } = scheduledMail;
 
@@ -81,5 +82,7 @@ export const convertScheduledMail = (
         unsubscribed,
         attachments: attachments.map(convertScheduledMailAttachment),
         unlisted: !!unlisted,
+        createdBy: author ? userMap?.get(author) : undefined,
+        updatedBy: contributor ? userMap?.get(contributor) : undefined,
     };
 };
