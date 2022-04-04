@@ -565,6 +565,18 @@ $vertical-space: 10px;
             margin-right: 6px;
             flex-shrink: 0;
         }
+
+        &-disabled {
+            color: $gd-color-disabled;
+
+            svg {
+                fill: $gd-color-disabled;
+            }
+
+            &:hover {
+                color: $gd-color-disabled;
+            }
+        }
     }
 
     &-body {
