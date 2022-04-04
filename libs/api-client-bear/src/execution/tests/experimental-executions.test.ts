@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 import range from "lodash/range";
@@ -15,6 +15,7 @@ import sortBy from "lodash/sortBy";
 import levenshtein from "fast-levenshtein";
 import includes from "lodash/includes";
 import find from "lodash/find";
+import { LocalStorageModule } from "../../localStorage";
 
 interface IReportDefinition {
     columns: string[];
@@ -93,7 +94,7 @@ function expectMetricDefinition(expected: IMetricDefinition, reportDefinition: I
 }
 
 function createExecution() {
-    const xhr = new XhrModule(fetch, {});
+    const xhr = new XhrModule(fetch, {}, new LocalStorageModule());
 
     const loaderModule = new AttributesMapLoaderModule(new MetadataModule(xhr));
     return new ExperimentalExecutionsModule(xhr, loaderModule.loadAttributesMap.bind(loaderModule));

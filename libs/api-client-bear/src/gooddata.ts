@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import { getAttributesDisplayForms } from "@gooddata/api-model-bear";
 import { XhrModule } from "./xhr";
@@ -9,10 +9,12 @@ import { ExecutionModule } from "./execution";
 import { ProjectModule } from "./project";
 import { ReportModule } from "./report/report";
 import { DashboardModule } from "./dashboard/dashboard";
-import { sanitizeConfig, IConfigStorage, ConfigModule } from "./config";
+import { sanitizeConfig, ConfigModule } from "./config";
 import { CatalogueModule } from "./catalogue";
 import { AttributesMapLoaderModule } from "./utils/attributesMapLoader";
 import { LdmModule } from "./ldm";
+import { LocalStorageModule } from "./localStorage";
+import { IConfigStorage } from "./interfaces";
 
 /**
  * This package provides low-level functions for communication with the GoodData platform.
@@ -57,15 +59,17 @@ export class SDK {
         loadAttributesMap: any;
         getAttributesDisplayForms: any;
     };
+    public localStore: LocalStorageModule;
 
     constructor(private fetchMethod: typeof fetch, config = {}) {
         this.configStorage = sanitizeConfig(config); // must be plain object, SDK modules MUST use this storage
 
         this.config = new ConfigModule(this.configStorage);
-        this.xhr = new XhrModule(fetchMethod, this.configStorage);
-        this.user = new UserModule(this.xhr);
+        this.localStore = new LocalStorageModule();
+        this.xhr = new XhrModule(fetchMethod, this.configStorage, this.localStore);
+        this.user = new UserModule(this.xhr, this.configStorage, this.localStore);
         this.md = new MetadataModule(this.xhr);
-        this.mdExt = new MetadataModuleExt(this.xhr);
+        this.mdExt = new MetadataModuleExt(this.xhr, this.configStorage, this.localStore);
         this.execution = new ExecutionModule(this.xhr, this.md);
         this.project = new ProjectModule(this.xhr);
         this.report = new ReportModule(this.xhr);

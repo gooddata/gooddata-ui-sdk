@@ -7,6 +7,8 @@ import merge from "lodash/merge";
 import result from "lodash/result";
 import pkgInfo from "../package.json";
 import { stringify } from "./utils/queryString";
+import { LocalStorageModule } from "./localStorage";
+import { IConfigStorage } from "./interfaces";
 
 const { name: pkgName, version: pkgVersion } = pkgInfo;
 /**
@@ -45,7 +47,11 @@ function simulateBeforeSend(url: string, settings: any) {
     }
 }
 
-function enrichSettingWithCustomDomain(originalUrl: string, originalSettings: any, domain: string): any {
+function enrichSettingWithCustomDomain(
+    originalUrl: string,
+    originalSettings: any,
+    domain: string | undefined,
+) {
     let url = originalUrl;
     const settings = originalSettings;
     if (domain) {
@@ -85,6 +91,24 @@ export function originPackageHeaders({ name, version }: IPackageHeaders): object
         "X-GDC-JS-PKG": name,
         "X-GDC-JS-PKG-VERSION": version,
     };
+}
+
+function ttHeader(localStore: LocalStorageModule, configStorage: IConfigStorage): object {
+    if (configStorage.verificationLevel === "header") {
+        return {
+            "x-gdc-authtt": localStore.getTT(),
+        };
+    }
+    return {};
+}
+
+function sstHeader(localStore: LocalStorageModule, configStorage: IConfigStorage): object {
+    if (configStorage.verificationLevel === "header") {
+        return {
+            "x-gdc-authsst": localStore.getSST(),
+        };
+    }
+    return {};
 }
 
 export class ApiError extends Error {
@@ -142,8 +166,12 @@ export class XhrModule {
     private tokenRequest?: any;
 
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    constructor(private fetch: any, private configStorage: any) {
-        defaults(configStorage, { xhrSettings: {} });
+    constructor(
+        private fetch: any,
+        private configStorage: IConfigStorage,
+        private localStore: LocalStorageModule,
+    ) {
+        defaults(configStorage, { xhrSettings: {}, verificationLevel: "cookie" });
     }
 
     /**
@@ -318,6 +346,7 @@ export class XhrModule {
                     "Content-Type": "application/json",
                     [REST_API_VERSION_HEADER]: LATEST_REST_API_VERSION,
                     ...originPackageHeaders(this.configStorage.originPackage || thisPackage),
+                    ...ttHeader(this.localStore, this.configStorage),
                 },
             },
             this.configStorage.xhrSettings,
@@ -364,7 +393,10 @@ export class XhrModule {
 
         const { url, settings } = enrichSettingWithCustomDomain(
             "/gdc/account/token",
-            this.createRequestSettings({}),
+            this.createRequestSettings({
+                // make sure the SST token is sent if needed
+                ...sstHeader(this.localStore, this.configStorage),
+            }),
             this.configStorage.domain,
         );
 

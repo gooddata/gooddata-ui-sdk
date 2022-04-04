@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import "isomorphic-fetch";
 import { GdcMetadata } from "@gooddata/api-model-bear";
 import fetchMock from "fetch-mock";
@@ -10,8 +10,9 @@ import { MetadataModule } from "../metadata";
 import { XhrModule } from "../xhr";
 import * as fixtures from "./metadata.fixtures";
 import { SortDirection } from "../interfaces";
+import { LocalStorageModule } from "../localStorage";
 
-const createMd = () => new MetadataModule(new XhrModule(fetch, {}));
+const createMd = () => new MetadataModule(new XhrModule(fetch, {}, new LocalStorageModule()));
 
 describe("metadata", () => {
     describe("with fake server", () => {

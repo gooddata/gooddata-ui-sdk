@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 import noop from "lodash/noop";
@@ -13,8 +13,9 @@ import { ApiError, XhrModule } from "../xhr";
 import { mockPollingRequest } from "./utils/polling";
 import { IColorPalette, IFeatureFlags } from "../interfaces";
 import { IStyleSettingsResponse, IFeatureFlagsResponse } from "../apiResponsesInterfaces";
+import { LocalStorageModule } from "../localStorage";
 
-const createProject = () => new ProjectModule(new XhrModule(fetch, {}));
+const createProject = () => new ProjectModule(new XhrModule(fetch, {}, new LocalStorageModule()));
 
 type ICustomCheck = (options: any) => void;
 

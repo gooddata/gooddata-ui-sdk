@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { GdcVisualizationObject, GdcExecuteAFM, GdcMetadata, Uri } from "@gooddata/api-model-bear";
 
 export type SortDirection = "asc" | "desc";
@@ -361,3 +361,15 @@ export interface IAdHocItemDescription {
 }
 
 export type ItemDescription = IStoredItemDescription | IAdHocItemDescription;
+
+export interface IOriginPackage {
+    name: string;
+    version: string;
+}
+
+export interface IConfigStorage {
+    domain?: string;
+    originPackage?: IOriginPackage;
+    xhrSettings?: { headers?: Record<string, string> };
+    verificationLevel?: "cookie" | "header";
+}

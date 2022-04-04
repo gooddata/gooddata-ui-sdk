@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 import { ReportModule } from "../report";
@@ -12,8 +12,9 @@ import {
     ERROR_RESTRICTED_MESSAGE,
 } from "../../constants/errors";
 import { GdcExport } from "@gooddata/api-model-bear";
+import { LocalStorageModule } from "../../localStorage";
 
-const mockedReportModule = () => new ReportModule(new XhrModule(fetch, {}));
+const mockedReportModule = () => new ReportModule(new XhrModule(fetch, {}, new LocalStorageModule()));
 
 describe("report", () => {
     const createdReport = "/gdc/exporter/result/12345";

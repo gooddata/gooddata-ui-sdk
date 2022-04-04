@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 import range from "lodash/range";
@@ -11,6 +11,7 @@ import {
     replaceLimitAndOffsetInUri,
 } from "../execute-afm";
 import { XhrModule } from "../../xhr";
+import { LocalStorageModule } from "../../localStorage";
 
 const DEFAULT_TEST_LIMIT = 1000;
 
@@ -18,7 +19,7 @@ interface IPagesByOffset {
     [offset: string]: GdcExecution.IExecutionResultWrapper;
 }
 
-const createExecuteAfm = () => new ExecuteAfmModule(new XhrModule(fetch, {}));
+const createExecuteAfm = () => new ExecuteAfmModule(new XhrModule(fetch, {}, new LocalStorageModule()));
 
 function createAttributeHeaderItem(name: string): GdcExecution.IResultAttributeHeaderItem {
     return {

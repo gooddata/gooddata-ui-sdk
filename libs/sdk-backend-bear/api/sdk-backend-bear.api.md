@@ -81,6 +81,7 @@ export abstract class BearAuthProviderBase implements IAuthenticationProvider {
 export type BearBackendConfig = {
     packageName?: string;
     packageVersion?: string;
+    verificationLevel?: "cookie" | "header";
 };
 
 // @public

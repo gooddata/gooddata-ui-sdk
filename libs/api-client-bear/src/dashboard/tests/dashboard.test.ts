@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 import { GdcFilterContext, GdcExport } from "@gooddata/api-model-bear";
@@ -6,8 +6,10 @@ import { DashboardModule } from "../dashboard";
 import { XhrModule } from "../../xhr";
 import { ACCEPTED_REQUEST_STATUS, BAD_REQUEST_STATUS, SUCCESS_REQUEST_STATUS } from "../../constants/errors";
 import { mockPollingRequest, mockPollingRequestWithStatus } from "../../tests/utils/polling";
+import { LocalStorageModule } from "../../localStorage";
 
-const dashboardExportModuleMock = () => new DashboardModule(new XhrModule(fetch, {}));
+const dashboardExportModuleMock = () =>
+    new DashboardModule(new XhrModule(fetch, {}, new LocalStorageModule()));
 
 describe("exportDashboard", () => {
     const projectId = "testProjectId";

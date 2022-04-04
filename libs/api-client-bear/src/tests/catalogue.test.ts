@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 
@@ -8,9 +8,10 @@ import { CatalogueModule } from "../catalogue";
 import { XhrModule } from "../xhr";
 import { ExecutionModule } from "../execution";
 import { MetadataModule } from "../metadata";
+import { LocalStorageModule } from "../localStorage";
 
 function createCatalogue() {
-    const xhr = new XhrModule(fetch, {});
+    const xhr = new XhrModule(fetch, {}, new LocalStorageModule());
 
     return new CatalogueModule(xhr, new ExecutionModule(xhr, new MetadataModule(xhr)));
 }

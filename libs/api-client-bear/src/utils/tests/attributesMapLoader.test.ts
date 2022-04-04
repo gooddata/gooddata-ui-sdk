@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 
@@ -6,9 +6,10 @@ import { AttributesMapLoaderModule, getMissingUrisInAttributesMap } from "../att
 import { XhrModule } from "../../xhr";
 import { MetadataModule } from "../../metadata";
 import * as fixtures from "./attributesMapLoader.fixtures";
+import { LocalStorageModule } from "../../localStorage";
 
 const createAttributesMapLoader = () =>
-    new AttributesMapLoaderModule(new MetadataModule(new XhrModule(fetch, {})));
+    new AttributesMapLoaderModule(new MetadataModule(new XhrModule(fetch, {}, new LocalStorageModule())));
 
 describe("loadAttributesMap", () => {
     const projectId = "mockProject";

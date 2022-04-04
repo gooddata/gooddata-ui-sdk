@@ -1,10 +1,11 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 import { mockPollingRequestWithStatus } from "./utils/polling";
 import { handleHeadPolling, IPollingOptions, queryString, parseSettingItemValue } from "../util";
 import { ApiResponse, XhrModule } from "../xhr";
 import { GdcExport } from "@gooddata/api-model-bear";
+import { LocalStorageModule } from "../localStorage";
 
 describe("util", () => {
     describe("queryString", () => {
@@ -41,7 +42,7 @@ describe("util", () => {
         };
 
         const mockedXHR = () => {
-            const xhr = new XhrModule(fetch, {});
+            const xhr = new XhrModule(fetch, {}, new LocalStorageModule());
             return xhr.get.bind(xhr);
         };
 

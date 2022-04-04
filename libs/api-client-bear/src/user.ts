@@ -4,7 +4,8 @@ import { XhrModule, ApiResponseError, ApiResponse } from "./xhr";
 import { ProjectModule } from "./project";
 import { GdcUser } from "@gooddata/api-model-bear";
 import { parseSettingItemValue } from "./util";
-import { IFeatureFlags } from "./interfaces";
+import { IConfigStorage, IFeatureFlags } from "./interfaces";
+import { LocalStorageModule } from "./localStorage";
 
 export interface IUserConfigsSettingItem {
     settingItem: {
@@ -24,7 +25,11 @@ export interface IUserConfigsResponse {
 }
 
 export class UserModule {
-    constructor(private xhr: XhrModule) {}
+    constructor(
+        private xhr: XhrModule,
+        private configStorage: IConfigStorage,
+        private localStore: LocalStorageModule,
+    ) {}
 
     /**
      * Find out whether a user is logged in
@@ -96,10 +101,22 @@ export class UserModule {
                         remember: 1,
                         captcha: "",
                         verifyCaptcha: "",
+                        verify_level: this.configStorage.verificationLevel === "header" ? 2 : 0,
                     },
                 }),
             })
-            .then((r) => r.getData());
+            .then((r) => {
+                if (this.configStorage.verificationLevel === "header") {
+                    const headers = r.getHeaders().headers;
+                    const sst = headers.get("x-gdc-authsst");
+                    const tt = headers.get("x-gdc-authtt");
+
+                    // TODO defaults or throw?
+                    this.localStore.storeSST(sst ?? "");
+                    this.localStore.storeTT(tt ?? "");
+                }
+                return r.getData();
+            });
     }
 
     /**

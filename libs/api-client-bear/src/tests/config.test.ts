@@ -1,5 +1,6 @@
-// (C) 2007-2014 GoodData Corporation
-import { sanitizeConfig, sanitizeDomain, IConfigStorage, ConfigModule } from "../config";
+// (C) 2007-2022 GoodData Corporation
+import { sanitizeConfig, sanitizeDomain, ConfigModule } from "../config";
+import { IConfigStorage } from "../interfaces";
 
 describe("sanitizeDomain", () => {
     it("should set url if valid", () => {

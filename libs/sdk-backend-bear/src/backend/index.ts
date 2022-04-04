@@ -87,6 +87,15 @@ export type BearBackendConfig = {
      * Version of the frontend package, this will be recorded by backend as initiator of HTTP requests.
      */
     packageVersion?: string;
+
+    /**
+     * Set the verification level of the backend.
+     *
+     * @remarks
+     * Defaults to "cookie". See the {@link https://help.gooddata.com/doc/enterprise/en/expand-your-gooddata-platform/api-reference#tag/login | API Reference } for more details.
+     * @internal
+     */
+    verificationLevel?: "cookie" | "header";
 };
 
 /**
@@ -466,7 +475,8 @@ function newSdkInstance(
     implConfig: BearBackendConfig & FactoryFunction,
     telemetry: TelemetryData,
 ): SDK {
-    const sdk = implConfig.factory ? implConfig.factory() : createSdk();
+    const factoryParams = { verificationLevel: implConfig.verificationLevel };
+    const sdk = implConfig.factory ? implConfig.factory(factoryParams) : createSdk(factoryParams);
 
     if (config.hostname) {
         sdk.config.setCustomDomain(config.hostname);

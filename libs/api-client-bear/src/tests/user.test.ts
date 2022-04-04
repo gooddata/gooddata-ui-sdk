@@ -3,8 +3,10 @@ import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 import { UserModule } from "../user";
 import { ApiResponse, XhrModule } from "../xhr";
+import { LocalStorageModule } from "../localStorage";
 
-const createUser = () => new UserModule(new XhrModule(fetch, {}));
+const createUser = () =>
+    new UserModule(new XhrModule(fetch, {}, new LocalStorageModule()), {}, new LocalStorageModule());
 
 describe("user", () => {
     describe("with fake server", () => {

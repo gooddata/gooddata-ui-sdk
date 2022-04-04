@@ -5,6 +5,7 @@ import isPlainObject from "lodash/isPlainObject";
 
 import { handlePolling, originPackageHeaders, XhrModule, thisPackage } from "../xhr";
 import { ConfigModule } from "../config";
+import { LocalStorageModule } from "../localStorage";
 
 function isHashMap(obj: any): obj is { [t: string]: string } {
     return isPlainObject(obj);
@@ -18,7 +19,7 @@ export function getHeaderValue(request: MockOptions | RequestInit | undefined, n
     throw new Error(`Could not get header ${name}`);
 }
 
-const createXhr = (configStorage = {}) => new XhrModule(fetch, configStorage);
+const createXhr = (configStorage = {}) => new XhrModule(fetch, configStorage, new LocalStorageModule());
 
 const dummyBody = '{ "test": "ok" }';
 const parsedDummyBody = { test: "ok" };
@@ -42,11 +43,12 @@ describe("originPackageHeaders", () => {
 describe("createModule", () => {
     it("should use configStorage", () => {
         const configStorage = { xhrSettings: { headers: {} } };
-        const xhr = new XhrModule(fetch, configStorage);
+        const xhr = new XhrModule(fetch, configStorage, new LocalStorageModule());
         xhr.ajaxSetup({ someSetting: "Run, Forrest, run tests!" });
 
         expect(configStorage).toEqual({
             xhrSettings: { headers: {}, someSetting: "Run, Forrest, run tests!" },
+            verificationLevel: "cookie",
         });
     });
 });

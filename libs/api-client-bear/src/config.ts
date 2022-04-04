@@ -1,5 +1,6 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import set from "lodash/set";
+import { IConfigStorage, IOriginPackage } from "./interfaces";
 
 /**
  * Config module holds SDK configuration variables
@@ -33,24 +34,12 @@ export function sanitizeDomain(domain: string | null): string | undefined {
  *
  * @returns config with sanitized domain
  */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function sanitizeConfig(config: any): any {
+export function sanitizeConfig(config: IConfigStorage): IConfigStorage {
     const sanitized = { ...config };
     if (config.domain) {
         sanitized.domain = sanitizeDomain(config.domain);
     }
     return sanitized;
-}
-
-export interface IOriginPackage {
-    name: string;
-    version: string;
-}
-
-export interface IConfigStorage {
-    domain?: string;
-    originPackage?: IOriginPackage;
-    xhrSettings?: { headers?: Record<string, string> };
 }
 
 /**
