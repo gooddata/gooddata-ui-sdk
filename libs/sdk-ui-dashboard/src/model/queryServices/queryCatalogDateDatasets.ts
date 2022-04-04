@@ -12,6 +12,14 @@ import {
 import { createCachedQueryService } from "../store/_infra/queryService";
 import { DashboardContext } from "../types/commonTypes";
 
+function filterByRefs(dateDatasets: ICatalogDateDataset[], refs: ObjRef[]): ICatalogDateDataset[] {
+    return dateDatasets.filter((dataset) => {
+        return dataset.dateAttributes.some((attr) =>
+            refs.some((ref) => areObjRefsEqual(ref, attr.defaultDisplayForm.ref)),
+        );
+    });
+}
+
 async function loadDateDatasets(context: DashboardContext, refs: ObjRef[]): Promise<ICatalogDateDataset[]> {
     const { backend, workspace } = context;
 
@@ -23,12 +31,7 @@ async function loadDateDatasets(context: DashboardContext, refs: ObjRef[]): Prom
         })
         .load();
 
-    const dateDatasets = catalog.dateDatasets();
-    return dateDatasets.filter((dataset) => {
-        return dataset.dateAttributes.some((attr) =>
-            refs.some((ref) => areObjRefsEqual(ref, attr.defaultDisplayForm.ref)),
-        );
-    });
+    return filterByRefs(catalog.dateDatasets(), refs);
 }
 
 function* queryService(
@@ -48,11 +51,7 @@ function* queryService(
             selectCatalogDateDatasets,
         );
 
-        return dateDatasets.filter((dataset) => {
-            return dataset.dateAttributes.some((attr) =>
-                refs.some((ref) => areObjRefsEqual(ref, attr.defaultDisplayForm.ref)),
-            );
-        });
+        return filterByRefs(dateDatasets, refs);
     }
 
     return yield call(loadDateDatasets, context, refs);
