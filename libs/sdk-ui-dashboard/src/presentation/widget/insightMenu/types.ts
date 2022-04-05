@@ -1,5 +1,5 @@
-// (C) 2020-2021 GoodData Corporation
-import { ComponentType } from "react";
+// (C) 2020-2022 GoodData Corporation
+import { ComponentType, MouseEvent } from "react";
 import { IInsightWidget } from "@gooddata/sdk-backend-spi";
 import { IInsight } from "@gooddata/sdk-model";
 
@@ -14,7 +14,7 @@ export interface IInsightMenuItemButton {
     type: "button";
     itemId: string;
     itemName: string;
-    onClick?: () => void;
+    onClick?: (e: MouseEvent) => void;
     /**
      * If specified, the value is shown on hover of the item as a tooltip.
      */

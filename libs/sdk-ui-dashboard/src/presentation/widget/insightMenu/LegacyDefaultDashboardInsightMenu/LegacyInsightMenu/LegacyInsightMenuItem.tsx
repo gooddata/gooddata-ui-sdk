@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { Bubble, BubbleHoverTrigger, IAlignPoint, Item } from "@gooddata/sdk-ui-kit";
@@ -9,7 +9,7 @@ interface ILegacyInsightMenuItemProps {
     className?: string;
     isDisabled?: boolean;
     title: string;
-    onClick?: () => void;
+    onClick?: (e: React.MouseEvent) => void;
 }
 
 const alignPoints: IAlignPoint[] = [{ align: "cl cr" }];
