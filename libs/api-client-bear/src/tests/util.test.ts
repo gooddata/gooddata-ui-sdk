@@ -5,7 +5,7 @@ import { mockPollingRequestWithStatus } from "./utils/polling";
 import { handleHeadPolling, IPollingOptions, queryString, parseSettingItemValue } from "../util";
 import { ApiResponse, XhrModule } from "../xhr";
 import { GdcExport } from "@gooddata/api-model-bear";
-import { LocalStorageModule } from "../localStorage";
+import { mockLocalStorageModule } from "./mockLocalStorageModule";
 
 describe("util", () => {
     describe("queryString", () => {
@@ -42,7 +42,7 @@ describe("util", () => {
         };
 
         const mockedXHR = () => {
-            const xhr = new XhrModule(fetch, {}, new LocalStorageModule());
+            const xhr = new XhrModule(fetch, {}, mockLocalStorageModule);
             return xhr.get.bind(xhr);
         };
 

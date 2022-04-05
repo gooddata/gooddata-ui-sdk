@@ -15,7 +15,7 @@ import sortBy from "lodash/sortBy";
 import levenshtein from "fast-levenshtein";
 import includes from "lodash/includes";
 import find from "lodash/find";
-import { LocalStorageModule } from "../../localStorage";
+import { mockLocalStorageModule } from "../../tests/mockLocalStorageModule";
 
 interface IReportDefinition {
     columns: string[];
@@ -94,7 +94,7 @@ function expectMetricDefinition(expected: IMetricDefinition, reportDefinition: I
 }
 
 function createExecution() {
-    const xhr = new XhrModule(fetch, {}, new LocalStorageModule());
+    const xhr = new XhrModule(fetch, {}, mockLocalStorageModule);
 
     const loaderModule = new AttributesMapLoaderModule(new MetadataModule(xhr));
     return new ExperimentalExecutionsModule(xhr, loaderModule.loadAttributesMap.bind(loaderModule));

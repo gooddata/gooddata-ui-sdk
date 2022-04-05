@@ -4,8 +4,8 @@ import { XhrModule, ApiResponseError, ApiResponse } from "./xhr";
 import { ProjectModule } from "./project";
 import { GdcUser } from "@gooddata/api-model-bear";
 import { parseSettingItemValue } from "./util";
-import { IConfigStorage, IFeatureFlags } from "./interfaces";
-import { LocalStorageModule } from "./localStorage";
+import { IConfigStorage, IFeatureFlags, ILocalStorageModule } from "./interfaces";
+import { sstHeader } from "./utils/headers";
 
 export interface IUserConfigsSettingItem {
     settingItem: {
@@ -28,7 +28,7 @@ export class UserModule {
     constructor(
         private xhr: XhrModule,
         private configStorage: IConfigStorage,
-        private localStore: LocalStorageModule,
+        private localStore: ILocalStorageModule,
     ) {}
 
     /**
@@ -38,22 +38,21 @@ export class UserModule {
      */
     public isLoggedIn(): Promise<boolean> {
         return new Promise((resolve, reject) => {
-            this.xhr.get("/gdc/account/token").then(
-                (r) => {
-                    if (r.response.ok) {
-                        resolve(true);
-                    }
-
-                    resolve(false);
-                },
-                (err: any) => {
-                    if (err?.response?.status === 401) {
-                        resolve(false);
-                    } else {
-                        reject(err);
-                    }
-                },
-            );
+            this.xhr
+                .get("/gdc/account/token", {
+                    // the token resource needs to be called with the SST header if header auth is used
+                    headers: { ...sstHeader(this.localStore, this.configStorage) },
+                })
+                .then(
+                    (r) => resolve(r.response.ok),
+                    (err: any) => {
+                        if (err?.response?.status === 401) {
+                            resolve(false);
+                        } else {
+                            reject(err);
+                        }
+                    },
+                );
         });
     }
 
@@ -155,7 +154,15 @@ export class UserModule {
                         const userUri = data.bootstrapResource.accountSetting.links.self;
                         const userId = userUri.match(/([^/]+)\/?$/)[1];
 
-                        return this.xhr.del(`/gdc/account/login/${userId}`);
+                        return this.xhr
+                            .del(`/gdc/account/login/${userId}`, {
+                                // the login resource needs to be called with the SST header if header auth is used
+                                headers: { ...sstHeader(this.localStore, this.configStorage) },
+                            })
+                            .then((r) => {
+                                this.localStore.clearTokens();
+                                return r;
+                            });
                     });
                 }
 

@@ -3,10 +3,10 @@ import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 import { UserModule } from "../user";
 import { ApiResponse, XhrModule } from "../xhr";
-import { LocalStorageModule } from "../localStorage";
+import { mockLocalStorageModule } from "./mockLocalStorageModule";
 
 const createUser = () =>
-    new UserModule(new XhrModule(fetch, {}, new LocalStorageModule()), {}, new LocalStorageModule());
+    new UserModule(new XhrModule(fetch, {}, mockLocalStorageModule), {}, mockLocalStorageModule);
 
 describe("user", () => {
     describe("with fake server", () => {
@@ -181,8 +181,7 @@ describe("user", () => {
                 return expect(createUser().logout()).resolves.toEqual(undefined);
             });
 
-            it("should log out user", () => {
-                expect.assertions(1);
+            it("should log out user", async () => {
                 const userId = "USER_ID";
 
                 fetchMock.mock("/gdc/account/token", 200);
@@ -205,11 +204,8 @@ describe("user", () => {
                     200, // should be 204, but see https://github.com/wheresrhys/fetch-mock/issues/36
                 );
 
-                return createUser()
-                    .logout()
-                    .then((r) => {
-                        expect((r as ApiResponse | undefined)?.response.ok).toBeTruthy();
-                    });
+                const result = await createUser().logout();
+                expect((result as ApiResponse | undefined)?.response.ok).toBeTruthy();
             });
         });
 

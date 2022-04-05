@@ -373,3 +373,11 @@ export interface IConfigStorage {
     xhrSettings?: { headers?: Record<string, string> };
     verificationLevel?: "cookie" | "header";
 }
+
+export interface ILocalStorageModule {
+    storeSST(sst: string): void;
+    storeTT(tt: string): void;
+    getSST(): string | null;
+    getTT(): string | null;
+    clearTokens(): void;
+}

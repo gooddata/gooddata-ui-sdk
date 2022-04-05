@@ -10,9 +10,9 @@ import { MetadataModule } from "../metadata";
 import { XhrModule } from "../xhr";
 import * as fixtures from "./metadata.fixtures";
 import { SortDirection } from "../interfaces";
-import { LocalStorageModule } from "../localStorage";
+import { mockLocalStorageModule } from "./mockLocalStorageModule";
 
-const createMd = () => new MetadataModule(new XhrModule(fetch, {}, new LocalStorageModule()));
+const createMd = () => new MetadataModule(new XhrModule(fetch, {}, mockLocalStorageModule));
 
 describe("metadata", () => {
     describe("with fake server", () => {

@@ -13,7 +13,7 @@ import {
     GdcMetadata,
     GdcVisualizationObject,
 } from "@gooddata/api-model-bear";
-import { LocalStorageModule } from "./localStorage";
+import { IConfigStorage, ILocalStorageModule } from "./interfaces";
 
 /**
  * Modify how and what should be copied to the cloned dashboard
@@ -113,8 +113,7 @@ export class MetadataModuleExt {
     private metadataModule: MetadataModule;
     private userModule: UserModule;
 
-    constructor(private xhr: XhrModule, configStorage: any, localStore: LocalStorageModule) {
-        this.xhr = xhr;
+    constructor(private xhr: XhrModule, configStorage: IConfigStorage, localStore: ILocalStorageModule) {
         this.metadataModule = new MetadataModule(xhr);
         this.userModule = new UserModule(xhr, configStorage, localStore);
     }

@@ -12,9 +12,9 @@ import {
     ERROR_RESTRICTED_MESSAGE,
 } from "../../constants/errors";
 import { GdcExport } from "@gooddata/api-model-bear";
-import { LocalStorageModule } from "../../localStorage";
+import { mockLocalStorageModule } from "../../tests/mockLocalStorageModule";
 
-const mockedReportModule = () => new ReportModule(new XhrModule(fetch, {}, new LocalStorageModule()));
+const mockedReportModule = () => new ReportModule(new XhrModule(fetch, {}, mockLocalStorageModule));
 
 describe("report", () => {
     const createdReport = "/gdc/exporter/result/12345";

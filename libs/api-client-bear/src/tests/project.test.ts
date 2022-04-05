@@ -13,9 +13,9 @@ import { ApiError, XhrModule } from "../xhr";
 import { mockPollingRequest } from "./utils/polling";
 import { IColorPalette, IFeatureFlags } from "../interfaces";
 import { IStyleSettingsResponse, IFeatureFlagsResponse } from "../apiResponsesInterfaces";
-import { LocalStorageModule } from "../localStorage";
+import { mockLocalStorageModule } from "./mockLocalStorageModule";
 
-const createProject = () => new ProjectModule(new XhrModule(fetch, {}, new LocalStorageModule()));
+const createProject = () => new ProjectModule(new XhrModule(fetch, {}, mockLocalStorageModule));
 
 type ICustomCheck = (options: any) => void;
 

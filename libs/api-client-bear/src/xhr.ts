@@ -7,8 +7,8 @@ import merge from "lodash/merge";
 import result from "lodash/result";
 import pkgInfo from "../package.json";
 import { stringify } from "./utils/queryString";
-import { LocalStorageModule } from "./localStorage";
-import { IConfigStorage } from "./interfaces";
+import { IConfigStorage, ILocalStorageModule } from "./interfaces";
+import { sstHeader, ttHeader } from "./utils/headers";
 
 const { name: pkgName, version: pkgVersion } = pkgInfo;
 /**
@@ -93,30 +93,6 @@ export function originPackageHeaders({ name, version }: IPackageHeaders): object
     };
 }
 
-function ttHeader(localStore: LocalStorageModule, configStorage: IConfigStorage): object {
-    if (configStorage.verificationLevel === "header") {
-        const tt = localStore.getTT();
-        if (tt) {
-            return {
-                "x-gdc-authtt": tt,
-            };
-        }
-    }
-    return {};
-}
-
-function sstHeader(localStore: LocalStorageModule, configStorage: IConfigStorage): object {
-    if (configStorage.verificationLevel === "header") {
-        const sst = localStore.getSST();
-        if (sst) {
-            return {
-                "x-gdc-authsst": sst,
-            };
-        }
-    }
-    return {};
-}
-
 export class ApiError extends Error {
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     constructor(message: string, public cause: any) {
@@ -175,7 +151,7 @@ export class XhrModule {
     constructor(
         private fetch: any,
         private configStorage: IConfigStorage,
-        private localStore: LocalStorageModule,
+        private localStore: ILocalStorageModule,
     ) {
         defaults(configStorage, { xhrSettings: {}, verificationLevel: "cookie" });
     }

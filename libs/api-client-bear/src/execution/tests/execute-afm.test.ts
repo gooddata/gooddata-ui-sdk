@@ -11,7 +11,7 @@ import {
     replaceLimitAndOffsetInUri,
 } from "../execute-afm";
 import { XhrModule } from "../../xhr";
-import { LocalStorageModule } from "../../localStorage";
+import { mockLocalStorageModule } from "../../tests/mockLocalStorageModule";
 
 const DEFAULT_TEST_LIMIT = 1000;
 
@@ -19,7 +19,7 @@ interface IPagesByOffset {
     [offset: string]: GdcExecution.IExecutionResultWrapper;
 }
 
-const createExecuteAfm = () => new ExecuteAfmModule(new XhrModule(fetch, {}, new LocalStorageModule()));
+const createExecuteAfm = () => new ExecuteAfmModule(new XhrModule(fetch, {}, mockLocalStorageModule));
 
 function createAttributeHeaderItem(name: string): GdcExecution.IResultAttributeHeaderItem {
     return {

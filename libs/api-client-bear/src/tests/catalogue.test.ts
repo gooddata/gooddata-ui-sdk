@@ -8,10 +8,10 @@ import { CatalogueModule } from "../catalogue";
 import { XhrModule } from "../xhr";
 import { ExecutionModule } from "../execution";
 import { MetadataModule } from "../metadata";
-import { LocalStorageModule } from "../localStorage";
+import { mockLocalStorageModule } from "./mockLocalStorageModule";
 
 function createCatalogue() {
-    const xhr = new XhrModule(fetch, {}, new LocalStorageModule());
+    const xhr = new XhrModule(fetch, {}, mockLocalStorageModule);
 
     return new CatalogueModule(xhr, new ExecutionModule(xhr, new MetadataModule(xhr)));
 }

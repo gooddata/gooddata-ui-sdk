@@ -6,10 +6,10 @@ import { AttributesMapLoaderModule, getMissingUrisInAttributesMap } from "../att
 import { XhrModule } from "../../xhr";
 import { MetadataModule } from "../../metadata";
 import * as fixtures from "./attributesMapLoader.fixtures";
-import { LocalStorageModule } from "../../localStorage";
+import { mockLocalStorageModule } from "../../tests/mockLocalStorageModule";
 
 const createAttributesMapLoader = () =>
-    new AttributesMapLoaderModule(new MetadataModule(new XhrModule(fetch, {}, new LocalStorageModule())));
+    new AttributesMapLoaderModule(new MetadataModule(new XhrModule(fetch, {}, mockLocalStorageModule)));
 
 describe("loadAttributesMap", () => {
     const projectId = "mockProject";

@@ -14,7 +14,7 @@ import { CatalogueModule } from "./catalogue";
 import { AttributesMapLoaderModule } from "./utils/attributesMapLoader";
 import { LdmModule } from "./ldm";
 import { LocalStorageModule } from "./localStorage";
-import { IConfigStorage } from "./interfaces";
+import { IConfigStorage, ILocalStorageModule } from "./interfaces";
 
 /**
  * This package provides low-level functions for communication with the GoodData platform.
@@ -59,7 +59,7 @@ export class SDK {
         loadAttributesMap: any;
         getAttributesDisplayForms: any;
     };
-    public localStore: LocalStorageModule;
+    public localStore: ILocalStorageModule;
 
     constructor(private fetchMethod: typeof fetch, config = {}) {
         this.configStorage = sanitizeConfig(config); // must be plain object, SDK modules MUST use this storage
