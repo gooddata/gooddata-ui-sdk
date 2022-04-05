@@ -217,7 +217,7 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
                 configuration: {
                     format: "csv",
                     mergeHeaders: true,
-                    includeFilters: false,
+                    includeFilters: true,
                 },
             },
         };

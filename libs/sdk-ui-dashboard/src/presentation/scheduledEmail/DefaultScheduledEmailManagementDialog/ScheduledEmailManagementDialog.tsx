@@ -2,13 +2,17 @@
 
 import React, { useCallback, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Button, Dialog, Typography } from "@gooddata/sdk-ui-kit";
+import { Button, Dialog, Typography, Tabs, ITab } from "@gooddata/sdk-ui-kit";
 import { IScheduledMail } from "@gooddata/sdk-backend-spi";
 import { IScheduledEmailManagementDialogProps } from "../types";
 import { ScheduledEmails } from "./ScheduledEmails";
 import { useScheduledEmailManagement } from "./useScheduledEmailManagement";
 import { DeleteScheduleConfirmDialog } from "./DeleteScheduleConfirmDialog";
-import { selectCurrentUser, useDashboardSelector } from "../../../model";
+import { selectCurrentUser, useDashboardSelector, selectCanManageScheduledMail } from "../../../model";
+import { areObjRefsEqual } from "@gooddata/sdk-model";
+
+const USER_TAB_ID = "gs.visualizationsList.tabs.my";
+const ALL_TAB_ID = "gs.visualizationsList.tabs.all";
 
 /**
  * @alpha
@@ -17,13 +21,27 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
     const { onAdd, onDeleteSuccess: onDelete, onClose, onLoadError, onDeleteError } = props;
     const [scheduledEmailToDelete, setScheduledEmailToDelete] = useState<IScheduledMail | null>(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [scheduledEmailsByUser, setScheduledEmailsByUser] = useState<IScheduledMail[]>([]);
     const [scheduledEmails, setScheduledEmails] = useState<IScheduledMail[]>([]);
+    const [selectedTabId, setSelectedTabId] = useState(USER_TAB_ID);
+    const [isFirstLoaded, setIsFirstLoaded] = useState(true);
+    const canManageScheduledMail = useDashboardSelector(selectCanManageScheduledMail);
     const currentUser = useDashboardSelector(selectCurrentUser);
     const intl = useIntl();
 
-    const onLoadSuccess = useCallback((scheduledEmails: IScheduledMail[]) => {
+    const onLoadSuccess = useCallback((emails: IScheduledMail[]) => {
+        const emailsByUser = emails.filter((email) => areObjRefsEqual(currentUser.ref, email.createdBy?.ref));
+
         setIsLoading(false);
-        setScheduledEmails(scheduledEmails);
+        setScheduledEmails(emails);
+        setScheduledEmailsByUser(canManageScheduledMail ? emailsByUser : emails);
+
+        if (isFirstLoaded) {
+            if (emailsByUser.length === 0 && canManageScheduledMail) {
+                setSelectedTabId(ALL_TAB_ID);
+            }
+            setIsFirstLoaded(false);
+        }
     }, []);
 
     const handleScheduleDelete = useCallback((scheduledEmail: IScheduledMail) => {
@@ -36,11 +54,20 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
         setIsLoading(true);
     }, []);
 
+    const handleTabChange = useCallback((tab: ITab) => {
+        setSelectedTabId(tab.id);
+    }, []);
+
     useScheduledEmailManagement({
         loadScheduledMails: isLoading,
         onError: onLoadError,
         onSuccess: onLoadSuccess,
     });
+
+    const noSchedulesMessageId =
+        selectedTabId === ALL_TAB_ID
+            ? "dialogs.schedule.management.noSchedules.all"
+            : "dialogs.schedule.management.noSchedules.byUser";
 
     return (
         <>
@@ -49,17 +76,28 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
                 onCancel={onClose}
                 className="gd-scheduled-email-management-dialog s-scheduled-email-management-dialog"
             >
-                <div>
-                    <Typography tagName="h3">
+                <div className="gd-scheduled-email-management-dialog-title">
+                    <Typography tagName="h3" className="gd-dialog-header">
                         <FormattedMessage id="dialogs.schedule.management.title" />
                     </Typography>
                 </div>
+                {!isFirstLoaded && canManageScheduledMail && (
+                    <Tabs
+                        className="gd-scheduled-email-management-dialog-tabs"
+                        tabs={[{ id: USER_TAB_ID }, { id: ALL_TAB_ID }]}
+                        selectedTabId={selectedTabId}
+                        onTabSelect={handleTabChange}
+                    />
+                )}
                 <div className="gd-scheduled-emails-content">
                     <ScheduledEmails
                         onDelete={handleScheduleDelete}
                         isLoading={isLoading}
-                        scheduledEmails={scheduledEmails}
+                        scheduledEmails={
+                            selectedTabId === ALL_TAB_ID ? scheduledEmails : scheduledEmailsByUser
+                        }
                         currentUserEmail={currentUser?.email}
+                        noSchedulesMessageId={noSchedulesMessageId}
                     />
                 </div>
                 <div className="gd-content-divider"></div>
