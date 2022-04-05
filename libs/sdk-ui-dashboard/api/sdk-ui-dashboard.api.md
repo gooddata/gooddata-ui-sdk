@@ -1605,7 +1605,7 @@ export abstract class DashboardPluginV1 implements IDashboardPluginContract_V1 {
 }
 
 // @alpha (undocumented)
-export type DashboardQueries = QueryInsightDateDatasets | QueryInsightAttributesMeta | QueryWidgetFilters | QueryWidgetBrokenAlerts;
+export type DashboardQueries = QueryInsightDateDatasets | QueryInsightAttributesMeta | QueryWidgetFilters | QueryWidgetBrokenAlerts | QueryCatalogAttributes | QueryCatalogFacts | QueryCatalogMeasures | QueryCatalogDateDatasets | QueryCatalogDateAttributes;
 
 // @alpha
 export interface DashboardQueryCompleted<TQuery extends IDashboardQuery, TResult> extends IDashboardEvent {
@@ -3729,6 +3729,71 @@ export type QueryCacheEntryResult<TResult> = {
 
 // @internal
 export type QueryCacheReducer<TQuery extends IDashboardQuery, TResult, TPayload> = CaseReducer<EntityState<QueryCacheEntry<TQuery, TResult>>, PayloadAction<TPayload>>;
+
+// @public
+export interface QueryCatalogAttributes extends IDashboardQuery {
+    // (undocumented)
+    readonly payload: {
+        readonly attributeRefs: ObjRef[];
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/QUERY.CATALOG.ATTRIBUTES";
+}
+
+// @public
+export function queryCatalogAttributes(attributeRefs: ObjRef[], correlationId?: string): QueryCatalogAttributes;
+
+// @public
+export interface QueryCatalogDateAttributes extends IDashboardQuery {
+    // (undocumented)
+    readonly payload: {
+        refs: ObjRef[];
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/QUERY.CATALOG.DATE.ATTRIBUTES";
+}
+
+// @public
+export function queryCatalogDateAttributes(refs: ObjRef[], correlationId?: string): QueryCatalogDateAttributes;
+
+// @public
+export interface QueryCatalogDateDatasets extends IDashboardQuery {
+    // (undocumented)
+    readonly payload: {
+        refs: ObjRef[];
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/QUERY.CATALOG.DATE.DATASETS";
+}
+
+// @public
+export function queryCatalogDateDatasets(refs: ObjRef[], correlationId?: string): QueryCatalogDateDatasets;
+
+// @public
+export interface QueryCatalogFacts extends IDashboardQuery {
+    // (undocumented)
+    readonly payload: {
+        factRefs: ObjRef[];
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/QUERY.CATALOG.FACTS";
+}
+
+// @public
+export function queryCatalogFacts(factRefs: ObjRef[], correlationId?: string): QueryCatalogFacts;
+
+// @public
+export interface QueryCatalogMeasures extends IDashboardQuery {
+    // (undocumented)
+    readonly payload: {
+        measureRefs: ObjRef[];
+    };
+    // (undocumented)
+    readonly type: "GDC.DASH/QUERY.CATALOG.MEASURES";
+}
+
+// @public
+export function queryCatalogMeasures(measureRefs: ObjRef[], correlationId?: string): QueryCatalogMeasures;
 
 // @alpha
 export function queryDateDatasetsForInsight(insightOrRef: ObjRef | IInsight, correlationId?: string): QueryInsightDateDatasets;
