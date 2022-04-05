@@ -22,14 +22,19 @@ export {
 } from "./insights";
 export {
     QueryCatalogAttributes,
+    QueryCatalogAttributesPayload,
     queryCatalogAttributes,
     QueryCatalogDateAttributes,
+    QueryCatalogDateAttributesPayload,
     queryCatalogDateAttributes,
     QueryCatalogDateDatasets,
+    QueryCatalogDateDatasetsPayload,
     queryCatalogDateDatasets,
     QueryCatalogFacts,
+    QueryCatalogFactsPayload,
     queryCatalogFacts,
     QueryCatalogMeasures,
+    QueryCatalogMeasuresPayload,
     queryCatalogMeasures,
 } from "./catalog";
 export { QueryMeasureDateDatasets, queryDateDatasetsForMeasure, MeasureDateDatasets } from "./kpis";

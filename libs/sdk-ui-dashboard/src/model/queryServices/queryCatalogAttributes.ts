@@ -25,7 +25,7 @@ function* queryService(
     query: QueryCatalogAttributes,
 ): SagaIterator<ICatalogAttribute[]> {
     const {
-        payload: { attributeRefs },
+        payload: { refs },
     } = query;
 
     const attributesLoaded: ReturnType<typeof selectCatalogAttributesLoaded> = yield select(
@@ -36,11 +36,11 @@ function* queryService(
         const attributes: ReturnType<typeof selectCatalogAttributes> = yield select(selectCatalogAttributes);
 
         return attributes.filter((attribute) => {
-            return attributeRefs.some((ref) => areObjRefsEqual(ref, attribute.attribute.ref));
+            return refs.some((ref) => areObjRefsEqual(ref, attribute.attribute.ref));
         });
     }
 
-    return yield call(loadAttributes, context, attributeRefs);
+    return yield call(loadAttributes, context, refs);
 }
 
 export const QueryCatalogAttributesService = createCachedQueryService(
@@ -48,10 +48,10 @@ export const QueryCatalogAttributesService = createCachedQueryService(
     queryService,
     (query: QueryCatalogAttributes) => {
         const {
-            payload: { attributeRefs },
+            payload: { refs },
         } = query;
 
-        const serializedRefs = attributeRefs.map((ref) => serializeObjRef(ref));
+        const serializedRefs = refs.map((ref) => serializeObjRef(ref));
 
         return serializedRefs.toLocaleString();
     },

@@ -22,7 +22,7 @@ function* queryService(
     query: QueryCatalogMeasures,
 ): SagaIterator<ICatalogMeasure[]> {
     const {
-        payload: { measureRefs },
+        payload: { refs },
     } = query;
 
     const measuresLoaded: ReturnType<typeof selectCatalogMeasuresLoaded> = yield select(
@@ -33,11 +33,11 @@ function* queryService(
         const measures: ReturnType<typeof selectCatalogMeasures> = yield select(selectCatalogMeasures);
 
         return measures.filter((measure) => {
-            return measureRefs.some((ref) => areObjRefsEqual(ref, measure.measure.ref));
+            return refs.some((ref) => areObjRefsEqual(ref, measure.measure.ref));
         });
     }
 
-    return yield call(loadMeasures, context, measureRefs);
+    return yield call(loadMeasures, context, refs);
 }
 
 export const QueryCatalogMeasuresService = createCachedQueryService(
@@ -45,10 +45,10 @@ export const QueryCatalogMeasuresService = createCachedQueryService(
     queryService,
     (query: QueryCatalogMeasures) => {
         const {
-            payload: { measureRefs },
+            payload: { refs },
         } = query;
 
-        const serializedRefs = measureRefs.map((ref) => serializeObjRef(ref));
+        const serializedRefs = refs.map((ref) => serializeObjRef(ref));
 
         return serializedRefs.toLocaleString();
     },

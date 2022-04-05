@@ -19,7 +19,7 @@ async function loadFacts(context: DashboardContext, factRefs: ObjRef[]): Promise
 
 function* queryService(context: DashboardContext, query: QueryCatalogFacts): SagaIterator<ICatalogFact[]> {
     const {
-        payload: { factRefs },
+        payload: { refs },
     } = query;
 
     const factsLoaded: ReturnType<typeof selectCatalogFactsLoaded> = yield select(selectCatalogFactsLoaded);
@@ -28,11 +28,11 @@ function* queryService(context: DashboardContext, query: QueryCatalogFacts): Sag
         const facts: ReturnType<typeof selectCatalogFacts> = yield select(selectCatalogFacts);
 
         return facts.filter((fact) => {
-            return factRefs.some((ref) => areObjRefsEqual(ref, fact.fact.ref));
+            return refs.some((ref) => areObjRefsEqual(ref, fact.fact.ref));
         });
     }
 
-    return yield call(loadFacts, context, factRefs);
+    return yield call(loadFacts, context, refs);
 }
 
 export const QueryCatalogFactsService = createCachedQueryService(
@@ -40,10 +40,10 @@ export const QueryCatalogFactsService = createCachedQueryService(
     queryService,
     (query: QueryCatalogFacts) => {
         const {
-            payload: { factRefs },
+            payload: { refs },
         } = query;
 
-        const serializedRefs = factRefs.map((ref) => serializeObjRef(ref));
+        const serializedRefs = refs.map((ref) => serializeObjRef(ref));
 
         return serializedRefs.toLocaleString();
     },

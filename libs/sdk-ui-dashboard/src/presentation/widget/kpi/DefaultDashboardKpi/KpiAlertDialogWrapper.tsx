@@ -25,7 +25,6 @@ interface IKpiAlertDialogWrapperProps
 
 const KpiAlertDialogWrapperCore: React.FC<IKpiAlertDialogWrapperProps> = (props) => {
     const { brokenAlertFiltersBasicInfo, backend, workspace, intl, ...restProps } = props;
-    // const dateDatasets = useDashboardSelector(selectCatalogDateDatasets);
 
     const brokenDateFiltersInfo: IDashboardDateFilter[] =
         brokenAlertFiltersBasicInfo
