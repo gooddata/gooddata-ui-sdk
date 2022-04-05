@@ -66,7 +66,7 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
 
     const noSchedulesMessageId =
         selectedTabId === ALL_TAB_ID
-            ? "dialogs.schedule.management.noSchedules.all"
+            ? "dialogs.schedule.management.noSchedules"
             : "dialogs.schedule.management.noSchedules.byUser";
 
     return (
