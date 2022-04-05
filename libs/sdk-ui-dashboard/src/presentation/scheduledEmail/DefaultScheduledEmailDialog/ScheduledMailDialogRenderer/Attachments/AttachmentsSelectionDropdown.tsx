@@ -66,6 +66,7 @@ const AttachmentsSelectionDropdownComponent: React.FC<IAttachmentsSelectionDropd
             onCancel={handleOnCancel}
             buttonClassName="s-schedule-select-attachments-button"
             bodyClassName="s-schedule-select-attachments-body"
+            buttonDisabled={insightWidgets.length === 0}
             iconComponent={
                 <Icon.AttachmentClip
                     color={theme?.palette?.complementary?.c6}

@@ -255,6 +255,17 @@
         "comment": "Label of a button that opens attachment selection",
         "limit": 0
     },
+    "dialogs.schedule.email.attachment.select.disabled.message|insight": {
+        "value": "This dashboard does not contain any insights.",
+        "comment": "Message for button to add insights to the export, if there are no insights.",
+        "limit": 0
+    },
+    "dialogs.schedule.email.attachment.select.disabled.message|report": {
+        "value": "This dashboard does not contain any reports.",
+        "comment": "Message for button to add reports to the export, if there are no reports.",
+        "limit": 0,
+        "translate": false
+    },
     "dialogs.schedule.email.attachment.format": {
         "value": "Format options",
         "comment": "Label of a button that opens format configuration",
