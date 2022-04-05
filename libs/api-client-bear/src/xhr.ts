@@ -95,18 +95,24 @@ export function originPackageHeaders({ name, version }: IPackageHeaders): object
 
 function ttHeader(localStore: LocalStorageModule, configStorage: IConfigStorage): object {
     if (configStorage.verificationLevel === "header") {
-        return {
-            "x-gdc-authtt": localStore.getTT(),
-        };
+        const tt = localStore.getTT();
+        if (tt) {
+            return {
+                "x-gdc-authtt": tt,
+            };
+        }
     }
     return {};
 }
 
 function sstHeader(localStore: LocalStorageModule, configStorage: IConfigStorage): object {
     if (configStorage.verificationLevel === "header") {
-        return {
-            "x-gdc-authsst": localStore.getSST(),
-        };
+        const sst = localStore.getSST();
+        if (sst) {
+            return {
+                "x-gdc-authsst": sst,
+            };
+        }
     }
     return {};
 }
@@ -163,7 +169,7 @@ export class ApiResponse<T = any> {
 let shouldLogDeprecatedRestApiCall = true;
 
 export class XhrModule {
-    private tokenRequest?: any;
+    private tokenRequest?: Promise<Response> | null;
 
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     constructor(
@@ -346,11 +352,14 @@ export class XhrModule {
                     "Content-Type": "application/json",
                     [REST_API_VERSION_HEADER]: LATEST_REST_API_VERSION,
                     ...originPackageHeaders(this.configStorage.originPackage || thisPackage),
-                    ...ttHeader(this.localStore, this.configStorage),
                 },
             },
             this.configStorage.xhrSettings,
             customSettings,
+            {
+                // the TT token needs to come last so that it is always up to date
+                headers: { ...ttHeader(this.localStore, this.configStorage) },
+            },
         );
 
         settings.pollDelay = settings.pollDelay !== undefined ? settings.pollDelay : DEFAULT_POLL_DELAY;
@@ -368,8 +377,8 @@ export class XhrModule {
     }
 
     private continueAfterTokenRequest(url: string, settings: any) {
-        return this.tokenRequest.then(
-            async (response: Response) => {
+        return this.tokenRequest!.then(
+            (response: Response) => {
                 if (!response.ok) {
                     throw new ApiResponseError("Unauthorized", response, null);
                 }
@@ -395,7 +404,7 @@ export class XhrModule {
             "/gdc/account/token",
             this.createRequestSettings({
                 // make sure the SST token is sent if needed
-                ...sstHeader(this.localStore, this.configStorage),
+                headers: { ...sstHeader(this.localStore, this.configStorage) },
             }),
             this.configStorage.domain,
         );
@@ -403,7 +412,7 @@ export class XhrModule {
         simulateBeforeSend(url, settings); // mutates `settings` param
 
         this.tokenRequest = this.fetch(url, settings);
-        const response = await this.tokenRequest;
+        const response = await this.tokenRequest!;
         const responseBody = await response.text();
         this.tokenRequest = null;
         // TODO jquery compat - allow to attach unauthorized callback and call it if attached
@@ -421,6 +430,15 @@ export class XhrModule {
         if (!response.ok) {
             // other non-2xx errors
             throw new ApiResponseError(response.statusText, response, responseBody);
+        }
+
+        if (this.configStorage.verificationLevel === "header") {
+            const tt = response.headers.get("x-gdc-authtt");
+            if (!tt) {
+                throw new ApiResponseError("Unauthorized", response, responseBody);
+            }
+
+            this.localStore.storeTT(tt);
         }
 
         return this.ajax(originalUrl, originalSettings);
