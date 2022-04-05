@@ -28,7 +28,7 @@ describe("tagsToRsqlFilter", () => {
         });
 
         expect(expectedResult).toEqual(
-            "tags=in=(Products,'Order Lines');tags=out=(\"'Campaign channels','Campaign ids'\")",
+            "tags=in=(Products,'Order Lines');tags=out=('Campaign channels','Campaign ids')",
         );
     });
 });
