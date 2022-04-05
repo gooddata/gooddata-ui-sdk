@@ -2795,11 +2795,11 @@ export interface ISingleSelectListItemProps {
     // (undocumented)
     isSelected?: boolean;
     // (undocumented)
-    onClick?: () => void;
+    onClick?: (e: React_2.MouseEvent<HTMLElement>) => void;
     // (undocumented)
-    onMouseOut?: () => void;
+    onMouseOut?: (e: React_2.MouseEvent<HTMLElement>) => void;
     // (undocumented)
-    onMouseOver?: () => void;
+    onMouseOver?: (e: React_2.MouseEvent<HTMLElement>) => void;
     // (undocumented)
     title?: string;
     // (undocumented)
