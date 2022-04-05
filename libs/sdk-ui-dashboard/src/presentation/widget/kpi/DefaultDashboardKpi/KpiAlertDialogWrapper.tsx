@@ -13,7 +13,7 @@ import { IBrokenAlertFilterBasicInfo, useDashboardQueryProcessing } from "../../
 
 import { enrichBrokenAlertsInfo, IKpiAlertDialogProps, KpiAlertDialog } from "./KpiAlerts";
 import { useBrokenAlertFiltersMeta } from "./useBrokenAlertFiltersMeta";
-import { queryCatalogDateDatasets } from "../../../../model/queries/catalog";
+import { queryCatalogDateDatasets } from "../../../../model";
 
 interface IKpiAlertDialogWrapperProps
     extends WrappedComponentProps,
