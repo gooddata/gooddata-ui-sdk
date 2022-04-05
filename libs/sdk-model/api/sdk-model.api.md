@@ -2026,6 +2026,7 @@ export interface ISettings {
     enableCompanyLogoInEmbeddedUI?: boolean;
     enableCustomColorPicker?: boolean;
     enableDataSampling?: boolean;
+    enableDataSourceManagement?: boolean;
     enableDrilledInsightExport?: boolean;
     enableEmbedButtonInKD?: boolean;
     enableHidingOfDataPoints?: boolean;

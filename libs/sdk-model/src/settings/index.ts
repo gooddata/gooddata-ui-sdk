@@ -214,6 +214,11 @@ export interface ISettings {
      */
     enableAxisNameViewByTwoAttributes?: boolean;
 
+    /**
+     * Enable Data Source Management page
+     */
+    enableDataSourceManagement?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 
