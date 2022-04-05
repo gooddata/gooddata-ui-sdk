@@ -14,6 +14,15 @@ export interface QueryCatalogAttributes extends IDashboardQuery {
     };
 }
 
+/**
+ * Query creator for {@link QueryCatalogAttributes} query.
+ *
+ * @param attributeRefs - references of attributes to query
+ * @param correlationId - correlation id
+ * @returns {@link QueryCatalogAttributes}
+ *
+ * @public
+ */
 export function queryCatalogAttributes(
     attributeRefs: ObjRef[],
     correlationId?: string,
@@ -27,6 +36,11 @@ export function queryCatalogAttributes(
     };
 }
 
+/**
+ * Query to obtain fact catalog objects according to given fact references
+ *
+ * @public
+ */
 export interface QueryCatalogFacts extends IDashboardQuery {
     readonly type: "GDC.DASH/QUERY.CATALOG.FACTS";
     readonly payload: {
@@ -34,6 +48,15 @@ export interface QueryCatalogFacts extends IDashboardQuery {
     };
 }
 
+/**
+ * Query creator for {@link QueryCatalogFacts} query.
+ *
+ * @param factRefs - references of facts to query
+ * @param correlationId - correlation id
+ * @returns {@link QueryCatalogFacts}
+ *
+ * @public
+ */
 export function queryCatalogFacts(factRefs: ObjRef[], correlationId?: string): QueryCatalogFacts {
     return {
         type: "GDC.DASH/QUERY.CATALOG.FACTS",
@@ -44,6 +67,11 @@ export function queryCatalogFacts(factRefs: ObjRef[], correlationId?: string): Q
     };
 }
 
+/**
+ * Query to obtain measure catalog items according to given measure references.
+ *
+ * @public
+ */
 export interface QueryCatalogMeasures extends IDashboardQuery {
     readonly type: "GDC.DASH/QUERY.CATALOG.MEASURES";
     readonly payload: {
@@ -51,6 +79,15 @@ export interface QueryCatalogMeasures extends IDashboardQuery {
     };
 }
 
+/**
+ * Query creator for {@link QueryCatalogMeasures} query.
+ *
+ * @param measureRefs - references of measures to query
+ * @param correlationId - correlation id
+ * @returns {@link QueryCatalogMeasures}
+ *
+ * @public
+ */
 export function queryCatalogMeasures(measureRefs: ObjRef[], correlationId?: string): QueryCatalogMeasures {
     return {
         type: "GDC.DASH/QUERY.CATALOG.MEASURES",
@@ -61,6 +98,11 @@ export function queryCatalogMeasures(measureRefs: ObjRef[], correlationId?: stri
     };
 }
 
+/**
+ * Query to obtain date dataset catalog items according to given references.
+ *
+ * @public
+ */
 export interface QueryCatalogDateDatasets extends IDashboardQuery {
     readonly type: "GDC.DASH/QUERY.CATALOG.DATE.DATASETS";
     readonly payload: {
@@ -68,6 +110,15 @@ export interface QueryCatalogDateDatasets extends IDashboardQuery {
     };
 }
 
+/**
+ * Query creator for {@link QueryCatalogDateDatasets} query.
+ *
+ * @param refs - references of objects to query
+ * @param correlationId - correlation id
+ * @returns {@link QueryCatalogDateDatasets}
+ *
+ * @public
+ */
 export function queryCatalogDateDatasets(refs: ObjRef[], correlationId?: string): QueryCatalogDateDatasets {
     return {
         type: "GDC.DASH/QUERY.CATALOG.DATE.DATASETS",
@@ -78,6 +129,11 @@ export function queryCatalogDateDatasets(refs: ObjRef[], correlationId?: string)
     };
 }
 
+/**
+ * Query to obtain date attribute catalog items according to given references.
+ *
+ * @public
+ */
 export interface QueryCatalogDateAttributes extends IDashboardQuery {
     readonly type: "GDC.DASH/QUERY.CATALOG.DATE.ATTRIBUTES";
     readonly payload: {
@@ -85,6 +141,15 @@ export interface QueryCatalogDateAttributes extends IDashboardQuery {
     };
 }
 
+/**
+ * Query creator for {@link QueryCatalogDateAttributes} query.
+ *
+ * @param refs - references of objects to query
+ * @param correlationId - correlation id
+ * @returns {@link QueryCatalogDateAttributes}
+ *
+ * @public
+ */
 export function queryCatalogDateAttributes(
     refs: ObjRef[],
     correlationId?: string,
