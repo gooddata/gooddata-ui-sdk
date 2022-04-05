@@ -27,7 +27,7 @@ export function tagsToRsqlFilter({
     if (!isEmpty(excludeTags)) {
         const excludeTagsIdentifiers = tagsToIdentifiers(excludeTags);
         const excludeParsedTagsIdentifiers = parseTagsToRSQLFormat(excludeTagsIdentifiers);
-        rsqlFilterParts.push(`tags=out=("${excludeParsedTagsIdentifiers.join(",")}")`);
+        rsqlFilterParts.push(`tags=out=(${excludeParsedTagsIdentifiers.join(",")})`);
     }
 
     return rsqlFilterParts.join(";");
