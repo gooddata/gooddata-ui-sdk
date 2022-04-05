@@ -31,7 +31,7 @@ import last from "lodash/last";
 import { DashboardDrillDefinition, IDrillDownDefinition } from "../../types";
 import isEqual from "lodash/isEqual";
 
-export { getAttributeIdentifiersPlaceholdersFromUrl } from "@gooddata/sdk-backend-spi/dist/workspace/dashboards/drills";
+export { getAttributeIdentifiersPlaceholdersFromUrl } from "@gooddata/sdk-backend-spi/dist/deprecated/dashboard/drills";
 
 interface IImplicitDrillWithPredicates {
     drillDefinition: DrillDefinition | IDrillDownDefinition;

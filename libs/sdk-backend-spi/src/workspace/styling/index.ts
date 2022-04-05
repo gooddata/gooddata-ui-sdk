@@ -1,42 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import { IColorPalette } from "@gooddata/sdk-model";
-
-import { ITheme } from "./theme";
-
-export {
-    ThemeFontUri,
-    ThemeColor,
-    IThemeColorFamily,
-    IThemeComplementaryPalette,
-    IThemeWidgetTitle,
-    IThemeTypography,
-    IThemePalette,
-    IThemeKpi,
-    IThemeKpiValue,
-    IThemeChart,
-    IThemeTable,
-    ITheme,
-    IThemeAnalyticalDesigner,
-    IThemeAnalyticalDesignerTitle,
-    IThemeButton,
-    IThemeDashboard,
-    IThemeDashboardContent,
-    IThemeDashboardContentKpi,
-    IThemeDashboardContentWidget,
-    IThemeDashboardEditPanel,
-    IThemeDashboardFilterBar,
-    IThemeDashboardFilterBarButton,
-    IThemeDashboardNavigation,
-    IThemeDashboardNavigationItem,
-    IThemeDashboardNavigationTitle,
-    IThemeDashboardSection,
-    IThemeDashboardSectionDescription,
-    IThemeDashboardSectionTitle,
-    IThemeDashboardTitle,
-    IThemeModal,
-    IThemeModalTitle,
-    IThemeTooltip,
-} from "./theme";
+import { IColorPalette, ITheme } from "@gooddata/sdk-model";
 
 /**
  * This service provides access to workspace styling settings such as color palette.

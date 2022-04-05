@@ -380,8 +380,6 @@ export {
     visClassUri,
 } from "./insight";
 
-export { IUser, userFullName } from "./user";
-
 export {
     insightCreatedComparator,
     insightCreatedByComparator,
@@ -395,3 +393,348 @@ export { newInsightDefinition, InsightDefinitionBuilder, InsightModifications } 
 export { insightSanitize } from "./insight/sanitization";
 
 export { factoryNotationFor } from "./execution/objectFactoryNotation";
+
+export {
+    DateFilterOptionAbsoluteFormType,
+    DateFilterOptionAbsolutePresetType,
+    DateFilterOptionAllTimeType,
+    DateFilterOptionType,
+    DateFilterOptionRelativeFormType,
+    DateFilterOptionRelativePresetType,
+    RelativeDateFilterGranularityOffset,
+    DateFilterGranularity,
+    DateString,
+    IAbsoluteDateFilterForm,
+    IAbsoluteDateFilterPreset,
+    IAllTimeDateFilterOption,
+    IDateFilterConfig,
+    IDateFilterOption,
+    IRelativeDateFilterForm,
+    IRelativeDateFilterPreset,
+    IRelativeDateFilterPresetOfGranularity,
+    isAbsoluteDateFilterForm,
+    isAbsoluteDateFilterPreset,
+    isAllTimeDateFilterOption,
+    isDateFilterGranularity,
+    isRelativeDateFilterForm,
+    isRelativeDateFilterPreset,
+} from "./dateFilterConfig";
+
+export { IDashboardObjectIdentity } from "./dashboard/common";
+
+export {
+    DateFilterAbsoluteType,
+    DateFilterRelativeType,
+    DateFilterType,
+    FilterContextItem,
+    IDashboardAttributeFilter,
+    IDashboardAttributeFilterParent,
+    IDashboardAttributeFilterReference,
+    IDashboardDateFilter,
+    IDashboardDateFilterReference,
+    IDashboardFilterReference,
+    IFilterContext,
+    IFilterContextBase,
+    IFilterContextDefinition,
+    ITempFilterContext,
+    dashboardFilterReferenceObjRef,
+    isAllTimeDashboardDateFilter,
+    isDashboardAttributeFilter,
+    isDashboardAttributeFilterReference,
+    isDashboardDateFilter,
+    isDashboardDateFilterReference,
+    isFilterContext,
+    isFilterContextDefinition,
+    isTempFilterContext,
+    newAbsoluteDashboardDateFilter,
+    newAllTimeDashboardDateFilter,
+    newRelativeDashboardDateFilter,
+} from "./dashboard/filterContext";
+
+export {
+    IWidgetAlert,
+    IWidgetAlertBase,
+    IWidgetAlertDefinition,
+    isWidgetAlert,
+    isWidgetAlertDefinition,
+} from "./dashboard/alert";
+
+export {
+    DrillDefinition,
+    DrillOrigin,
+    DrillOriginType,
+    DrillTransition,
+    DrillType,
+    IDrill,
+    IDrillFromAttribute,
+    IDrillFromMeasure,
+    IDrillOrigin,
+    IDrillTarget,
+    IDrillToAttributeUrl,
+    IDrillToAttributeUrlTarget,
+    IDrillToCustomUrl,
+    IDrillToCustomUrlTarget,
+    IDrillToDashboard,
+    IDrillToInsight,
+    IDrillToLegacyDashboard,
+    InsightDrillDefinition,
+    KpiDrillDefinition,
+    isDrillFromAttribute,
+    isDrillFromMeasure,
+    isDrillToAttributeUrl,
+    isDrillToCustomUrl,
+    isDrillToDashboard,
+    isDrillToInsight,
+    isDrillToLegacyDashboard,
+} from "./dashboard/drill";
+
+export {
+    BuiltInWidgetTypes,
+    IBaseWidget,
+    IDrillableWidget,
+    IFilterableWidget,
+    IWidgetDescription,
+} from "./dashboard/baseWidget";
+
+export {
+    IKpi,
+    IKpiBase,
+    IKpiComparisonDirection,
+    IKpiComparisonTypeComparison,
+    IKpiWithPopComparison,
+    IKpiWithPreviousPeriodComparison,
+    IKpiWithComparison,
+    IKpiWithoutComparison,
+    isKpiWithComparison,
+    isKpiWithoutComparison,
+    isKpi,
+} from "./dashboard/kpi";
+
+export {
+    AnalyticalWidgetType,
+    WidgetType,
+    IAnalyticalWidget,
+    IKpiWidget,
+    IKpiWidgetBase,
+    IKpiWidgetDefinition,
+    IInsightWidget,
+    IInsightWidgetBase,
+    IInsightWidgetDefinition,
+    IInsightWidgetConfiguration,
+} from "./dashboard/analyticalWidgets";
+
+export {
+    CatalogItemType,
+    CatalogItem,
+    ICatalogGroup,
+    ICatalogAttribute,
+    ICatalogFact,
+    ICatalogMeasure,
+    ICatalogDateDataset,
+    ICatalogDateAttribute,
+    isCatalogAttribute,
+    isCatalogFact,
+    isCatalogMeasure,
+    isCatalogDateDataset,
+    ICatalogItemBase,
+    IGroupableCatalogItemBase,
+    GroupableCatalogItem,
+    catalogItemMetadataObject,
+} from "./ldm/catalog";
+
+export {
+    IAttributeDisplayFormMetadataObject,
+    isAttributeDisplayFormMetadataObject,
+    IAttributeMetadataObject,
+    isAttributeMetadataObject,
+    IDataSetMetadataObject,
+    isDataSetMetadataObject,
+    IVariableMetadataObject,
+    isVariableMetadataObject,
+    IFactMetadataObject,
+    isFactMetadataObject,
+    IMetadataObjectDefinition,
+    IMeasureMetadataObject,
+    IMeasureMetadataObjectBase,
+    isMeasureMetadataObject,
+    IMeasureMetadataObjectDefinition,
+    isMeasureMetadataObjectDefinition,
+    IMetadataObject,
+    IMetadataObjectBase,
+    IMetadataObjectIdentity,
+    isMetadataObject,
+    MetadataObject,
+    metadataObjectId,
+    IDashboardMetadataObject,
+    isDashboardMetadataObject,
+    attributeDisplayFormMetadataObjectAttributeRef,
+    attributeDisplayFormMetadataObjectRef,
+    attributeDisplayFormMetadataObjectTitle,
+} from "./ldm/metadata";
+
+export {
+    DataColumnType,
+    DatasetLoadStatus,
+    IDataColumnBody,
+    IDataColumn,
+    IDataHeader,
+    IDatasetLoadInfo,
+    IDatasetUser,
+    IDataset,
+    IDatasetBody,
+} from "./ldm/datasets";
+
+export { IAttributeElement } from "./ldm/attributeElement";
+
+export {
+    IWidget,
+    IWidgetDefinition,
+    isWidget,
+    isWidgetDefinition,
+    widgetUri,
+    widgetId,
+    widgetRef,
+    widgetTitle,
+    widgetType,
+    isKpiWidgetDefinition,
+    isKpiWidget,
+    isInsightWidgetDefinition,
+    isInsightWidget,
+} from "./dashboard/widget";
+
+export {
+    IDashboardAttachment,
+    isDashboardAttachment,
+    IWidgetAttachment,
+    isWidgetAttachment,
+    IExportOptions,
+    IScheduledMail,
+    IScheduledMailDefinition,
+    ScheduledMailAttachment,
+    IScheduledMailBase,
+} from "./dashboard/scheduledMail";
+
+export { IUser, IWorkspaceUser, userFullName } from "./user";
+
+export {
+    IDashboardLayout,
+    IDashboardWidget,
+    IDashboardLayoutSection,
+    IDashboardLayoutSectionHeader,
+    IDashboardLayoutSize,
+    IDashboardLayoutSizeByScreenSize,
+    IDashboardLayoutItem,
+    ScreenSize,
+    isDashboardLayout,
+    isDashboardLayoutSection,
+    isDashboardLayoutItem,
+    isDashboardWidget,
+} from "./dashboard/layout";
+
+export {
+    IDashboard,
+    IDashboardDefinition,
+    IListedDashboard,
+    ListedDashboardAvailability,
+    IDashboardBase,
+    IDashboardDateFilterConfig,
+    DashboardDateFilterConfigMode,
+    IDashboardDateFilterAddedPresets,
+    IDashboardPluginBase,
+    IDashboardPlugin,
+    IDashboardPluginDefinition,
+    IDashboardPluginLink,
+    isDashboard,
+    isDashboardDefinition,
+    IAccessControlAware,
+    ShareStatus,
+} from "./dashboard/dashboard";
+
+export { ISeparators, ISettings, PlatformEdition } from "./settings";
+
+export { IWorkspaceUserGroup } from "./userGroup";
+
+export {
+    ThemeFontUri,
+    ThemeColor,
+    IThemeColorFamily,
+    IThemeComplementaryPalette,
+    IThemeWidgetTitle,
+    IThemeTypography,
+    IThemePalette,
+    IThemeKpi,
+    IThemeKpiValue,
+    IThemeChart,
+    IThemeTable,
+    ITheme,
+    IThemeAnalyticalDesigner,
+    IThemeAnalyticalDesignerTitle,
+    IThemeButton,
+    IThemeDashboard,
+    IThemeDashboardContent,
+    IThemeDashboardContentKpi,
+    IThemeDashboardContentWidget,
+    IThemeDashboardEditPanel,
+    IThemeDashboardFilterBar,
+    IThemeDashboardFilterBarButton,
+    IThemeDashboardNavigation,
+    IThemeDashboardNavigationItem,
+    IThemeDashboardNavigationTitle,
+    IThemeDashboardSection,
+    IThemeDashboardSectionDescription,
+    IThemeDashboardSectionTitle,
+    IThemeDashboardTitle,
+    IThemeModal,
+    IThemeModalTitle,
+    IThemeTooltip,
+} from "./theme";
+
+export { IWorkspacePermissions, WorkspacePermission } from "./permissions";
+
+export {
+    DataValue,
+    IMeasureDescriptor,
+    IMeasureDescriptorObject,
+    IMeasureDescriptorItem,
+    IDimensionItemDescriptor,
+    IDimensionDescriptor,
+    IAttributeHeaderFormOf,
+    IAttributeDescriptorBody,
+    IAttributeDescriptor,
+    IMeasureGroupDescriptor,
+    IResultAttributeHeader,
+    IResultHeader,
+    IResultMeasureHeader,
+    IResultAttributeHeaderItem,
+    IResultMeasureHeaderItem,
+    IResultTotalHeader,
+    IResultTotalHeaderItem,
+    ITotalDescriptor,
+    ITotalDescriptorItem,
+    IResultWarning,
+    isAttributeDescriptor,
+    isMeasureGroupDescriptor,
+    isTotalDescriptor,
+    isMeasureDescriptor,
+    isResultAttributeHeader,
+    isResultMeasureHeader,
+    isResultTotalHeader,
+    resultHeaderName,
+    attributeDescriptorLocalId,
+    attributeDescriptorName,
+} from "./execution/results";
+
+export {
+    AccessGranteeDetail,
+    IAccessGrantee,
+    IUserAccess,
+    IUserAccessGrantee,
+    IUserGroupAccess,
+    IUserGroupAccessGrantee,
+    isUserAccess,
+    isUserAccessGrantee,
+    isUserGroupAccess,
+    isUserGroupAccessGrantee,
+} from "./accessControl";
+
+export { IOrganizationDescriptor } from "./organization";

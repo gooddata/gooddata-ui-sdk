@@ -4,48 +4,106 @@
 
 ```ts
 
-import { DateAttributeGranularity } from '@gooddata/sdk-model';
+import { AccessGranteeDetail as AccessGranteeDetail_2 } from '@gooddata/sdk-model';
+import { CatalogItem as CatalogItem_2 } from '@gooddata/sdk-model';
+import { CatalogItemType as CatalogItemType_2 } from '@gooddata/sdk-model';
+import { DataValue as DataValue_2 } from '@gooddata/sdk-model';
+import { DateFilterAbsoluteType } from '@gooddata/sdk-model';
+import { DateFilterOptionAbsoluteFormType } from '@gooddata/sdk-model';
+import { DateFilterOptionAbsolutePresetType } from '@gooddata/sdk-model';
+import { DateFilterOptionAllTimeType } from '@gooddata/sdk-model';
+import { DateFilterOptionRelativeFormType } from '@gooddata/sdk-model';
+import { DateFilterOptionRelativePresetType } from '@gooddata/sdk-model';
+import { DateFilterOptionType } from '@gooddata/sdk-model';
+import { DateFilterRelativeType } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
-import { IAttributeElements } from '@gooddata/sdk-model';
+import { FilterContextItem as FilterContextItem_2 } from '@gooddata/sdk-model';
+import { IAccessGrantee as IAccessGrantee_2 } from '@gooddata/sdk-model';
+import { IAttributeDisplayFormMetadataObject as IAttributeDisplayFormMetadataObject_2 } from '@gooddata/sdk-model';
+import { IAttributeElement as IAttributeElement_2 } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
+import { IAttributeMetadataObject as IAttributeMetadataObject_2 } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
-import { IAuditableDates } from '@gooddata/sdk-model';
-import { IAuditableUsers } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
+import { ICatalogAttribute as ICatalogAttribute_2 } from '@gooddata/sdk-model';
+import { ICatalogDateDataset as ICatalogDateDataset_2 } from '@gooddata/sdk-model';
+import { ICatalogFact as ICatalogFact_2 } from '@gooddata/sdk-model';
+import { ICatalogGroup as ICatalogGroup_2 } from '@gooddata/sdk-model';
+import { ICatalogMeasure as ICatalogMeasure_2 } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
-import { Identifier } from '@gooddata/sdk-model';
+import { IDashboard as IDashboard_2 } from '@gooddata/sdk-model';
+import { IDashboardDefinition as IDashboardDefinition_2 } from '@gooddata/sdk-model';
+import { IDashboardLayout as IDashboardLayout_2 } from '@gooddata/sdk-model';
+import { IDashboardLayoutItem as IDashboardLayoutItem_2 } from '@gooddata/sdk-model';
+import { IDashboardLayoutSection as IDashboardLayoutSection_2 } from '@gooddata/sdk-model';
+import { IDashboardPlugin as IDashboardPlugin_2 } from '@gooddata/sdk-model';
+import { IDashboardPluginDefinition as IDashboardPluginDefinition_2 } from '@gooddata/sdk-model';
+import { IDashboardWidget as IDashboardWidget_2 } from '@gooddata/sdk-model';
+import { IDataset as IDataset_2 } from '@gooddata/sdk-model';
+import { IDateFilterConfig as IDateFilterConfig_2 } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
+import { IDimensionDescriptor as IDimensionDescriptor_2 } from '@gooddata/sdk-model';
 import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
+import { IFilterContextDefinition as IFilterContextDefinition_2 } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
+import { IKpi } from '@gooddata/sdk-model';
+import { IKpiBase } from '@gooddata/sdk-model';
+import { IKpiComparisonDirection } from '@gooddata/sdk-model';
+import { IKpiComparisonTypeComparison } from '@gooddata/sdk-model';
+import { IKpiWithComparison } from '@gooddata/sdk-model';
+import { IKpiWithoutComparison } from '@gooddata/sdk-model';
+import { IKpiWithPopComparison } from '@gooddata/sdk-model';
+import { IKpiWithPreviousPeriodComparison } from '@gooddata/sdk-model';
+import { IListedDashboard as IListedDashboard_2 } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
+import { IMeasureMetadataObject as IMeasureMetadataObject_2 } from '@gooddata/sdk-model';
+import { IMeasureMetadataObjectDefinition as IMeasureMetadataObjectDefinition_2 } from '@gooddata/sdk-model';
+import { IMetadataObject as IMetadataObject_2 } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
+import { IOrganizationDescriptor as IOrganizationDescriptor_2 } from '@gooddata/sdk-model';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
+import { IResultHeader as IResultHeader_2 } from '@gooddata/sdk-model';
+import { IResultWarning as IResultWarning_2 } from '@gooddata/sdk-model';
+import { IScheduledMail as IScheduledMail_2 } from '@gooddata/sdk-model';
+import { IScheduledMailDefinition as IScheduledMailDefinition_2 } from '@gooddata/sdk-model';
+import { ISeparators as ISeparators_2 } from '@gooddata/sdk-model';
+import { ISettings as ISettings_2 } from '@gooddata/sdk-model';
+import { isKpi } from '@gooddata/sdk-model';
+import { isKpiWithComparison } from '@gooddata/sdk-model';
+import { isKpiWithoutComparison } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
+import { ITheme as ITheme_2 } from '@gooddata/sdk-model';
 import { IUser as IUser_2 } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
+import { IWidget as IWidget_2 } from '@gooddata/sdk-model';
+import { IWidgetAlert as IWidgetAlert_2 } from '@gooddata/sdk-model';
+import { IWidgetAlertDefinition as IWidgetAlertDefinition_2 } from '@gooddata/sdk-model';
+import { IWidgetDefinition as IWidgetDefinition_2 } from '@gooddata/sdk-model';
+import { IWorkspacePermissions as IWorkspacePermissions_2 } from '@gooddata/sdk-model';
+import { IWorkspaceUserGroup as IWorkspaceUserGroup_2 } from '@gooddata/sdk-model';
+import * as m from '@gooddata/sdk-model';
 import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
-import { ObjRefInScope } from '@gooddata/sdk-model';
+import { RelativeDateFilterGranularityOffset } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
-import { VisualizationProperties } from '@gooddata/sdk-model';
 
-// @public
-export type AbsoluteFormType = "absoluteForm";
+// @alpha @deprecated
+export type AbsoluteFormType = DateFilterOptionAbsoluteFormType;
 
-// @public
-export type AbsolutePresetType = "absolutePreset";
+// @alpha @deprecated
+export type AbsolutePresetType = DateFilterOptionAbsolutePresetType;
 
-// @public
-export type AbsoluteType = "absolute";
+// @alpha @deprecated
+export type AbsoluteType = DateFilterAbsoluteType;
 
-// @alpha
+// @alpha @deprecated
 export type AccessGranteeDetail = IUserAccess | IUserGroupAccess;
 
-// @public
-export type AllTimeType = "allTime";
+// @alpha @deprecated
+export type AllTimeType = DateFilterOptionAllTimeType;
 
 // @public
 export abstract class AnalyticalBackendError extends Error {
@@ -71,14 +129,14 @@ export const AnalyticalBackendErrorTypes: {
 // @public
 export type AnalyticalBackendFactory = (config?: IAnalyticalBackendConfig, implConfig?: any) => IAnalyticalBackend;
 
-// @alpha
-export type AnalyticalWidgetType = "kpi" | "insight";
+// @alpha @deprecated
+export type AnalyticalWidgetType = m.AnalyticalWidgetType;
 
-// @public
-export function attributeDescriptorLocalId(descriptor: IAttributeDescriptor): string;
+// @public @deprecated
+export const attributeDescriptorLocalId: typeof m.attributeDescriptorLocalId;
 
-// @public
-export function attributeDescriptorName(descriptor: IAttributeDescriptor): string;
+// @public @deprecated
+export const attributeDescriptorName: typeof m.attributeDescriptorName;
 
 // @public
 export type AuthenticationFlow = {
@@ -86,61 +144,61 @@ export type AuthenticationFlow = {
     returnRedirectParam: string;
 };
 
-// @alpha
+// @alpha @deprecated
 export const BuiltInWidgetTypes: string[];
 
-// @public
-export type CatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact | ICatalogDateDataset;
+// @public @deprecated
+export type CatalogItem = m.CatalogItem;
 
-// @public
-export const catalogItemMetadataObject: (catalogItem: CatalogItem) => MetadataObject;
+// @public @deprecated
+export const catalogItemMetadataObject: (catalogItem: m.CatalogItem) => m.MetadataObject;
 
-// @public
-export type CatalogItemType = "attribute" | "measure" | "fact" | "dateDataset";
+// @public @deprecated
+export type CatalogItemType = m.CatalogItemType;
 
-// @public
-export type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
+// @alpha @deprecated
+export type DashboardDateFilterConfigMode = m.DashboardDateFilterConfigMode;
 
-// @public
-export function dashboardFilterReferenceObjRef(ref: IDashboardFilterReference): ObjRef;
+// @alpha @deprecated
+export const dashboardFilterReferenceObjRef: typeof m.dashboardFilterReferenceObjRef;
 
-// @public
-export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
+// @public @deprecated
+export type DataColumnType = m.DataColumnType;
 
-// @public
-export type DatasetLoadStatus = "RUNNING" | "OK" | "ERROR" | "CANCELLED" | "ERROR_METADATA" | "REFRESHING";
+// @public @deprecated
+export type DatasetLoadStatus = m.DatasetLoadStatus;
 
 // @public
 export class DataTooLargeError extends AnalyticalBackendError {
     constructor(message: string, cause?: Error);
 }
 
-// @public
-export type DataValue = null | string | number;
+// @public @deprecated
+export type DataValue = m.DataValue;
 
-// @alpha
-export type DateFilterGranularity = "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year";
+// @alpha @deprecated
+export type DateFilterGranularity = m.DateFilterGranularity;
 
-// @public
-export type DateFilterType = RelativeType | AbsoluteType;
+// @alpha @deprecated
+export type DateFilterType = m.DateFilterType;
 
-// @alpha
-export type DateString = string;
+// @alpha @deprecated
+export type DateString = m.DateString;
 
-// @public
-export type DrillDefinition = InsightDrillDefinition | KpiDrillDefinition;
+// @alpha @deprecated
+export type DrillDefinition = m.DrillDefinition;
 
-// @public
-export type DrillOrigin = IDrillFromMeasure | IDrillFromAttribute;
+// @alpha @deprecated
+export type DrillOrigin = m.DrillOrigin;
 
-// @public
-export type DrillOriginType = "drillFromMeasure" | "drillFromAttribute";
+// @alpha @deprecated
+export type DrillOriginType = m.DrillOriginType;
 
-// @public
-export type DrillTransition = "pop-up" | "in-place" | "new-window";
+// @alpha @deprecated
+export type DrillTransition = m.DrillTransition;
 
-// @public
-export type DrillType = "drillToInsight" | "drillToDashboard" | "drillToLegacyDashboard" | "drillToCustomUrl" | "drillToAttributeUrl";
+// @alpha @deprecated
+export type DrillType = m.DrillType;
 
 // @public
 export type ErrorConverter = (e: Error) => AnalyticalBackendError;
@@ -150,40 +208,32 @@ export type ExplainConfig = {
     explainType?: "LDM" | "PDM" | "MAQL";
 };
 
-// @public
-export type FilterContextItem = IDashboardAttributeFilter | IDashboardDateFilter;
+// @alpha @deprecated
+export type FilterContextItem = m.FilterContextItem;
 
 // @public
 export type FilterWithResolvableElements = IAttributeFilter | IRelativeDateFilter;
 
-// @public
-export type GroupableCatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact;
+// @public @deprecated
+export type GroupableCatalogItem = m.GroupableCatalogItem;
 
-// @public
-export interface IAbsoluteDateFilterForm extends IDateFilterOption {
-    type: AbsoluteFormType;
+// @alpha @deprecated
+export interface IAbsoluteDateFilterForm extends m.IAbsoluteDateFilterForm {
 }
 
-// @public
-export interface IAbsoluteDateFilterPreset extends IDateFilterOption {
-    from: DateString;
-    to: DateString;
-    type: AbsolutePresetType;
+// @alpha @deprecated
+export interface IAbsoluteDateFilterPreset extends m.IAbsoluteDateFilterPreset {
 }
 
-// @alpha
-export interface IAccessControlAware {
-    readonly isLocked?: boolean;
-    readonly isUnderStrictControl?: boolean;
-    readonly shareStatus: ShareStatus;
+// @alpha @deprecated
+export interface IAccessControlAware extends m.IAccessControlAware {
 }
 
-// @public
-export type IAccessGrantee = IUserGroupAccessGrantee | IUserAccessGrantee;
+// @public @deprecated
+export type IAccessGrantee = m.IAccessGrantee;
 
-// @public
-export interface IAllTimeDateFilterOption extends IDateFilterOption {
-    type: AllTimeType;
+// @alpha @deprecated
+export interface IAllTimeDateFilterOption extends m.IAllTimeDateFilterOption {
 }
 
 // @public
@@ -208,10 +258,8 @@ export interface IAnalyticalBackendConfig {
     readonly hostname?: string;
 }
 
-// @alpha
-export interface IAnalyticalWidget extends IBaseWidget, IWidgetDescription, IFilterableWidget, IDrillableWidget {
-    // (undocumented)
-    readonly type: AnalyticalWidgetType;
+// @alpha @deprecated
+export interface IAnalyticalWidget extends m.IAnalyticalWidget {
 }
 
 // @public
@@ -237,37 +285,20 @@ export interface IAnalyticalWorkspace {
     readonly workspace: string;
 }
 
-// @public
-export interface IAttributeDescriptor {
-    attributeHeader: IAttributeDescriptorBody;
+// @public @deprecated
+export interface IAttributeDescriptor extends m.IAttributeDescriptor {
 }
 
-// @public
-export interface IAttributeDescriptorBody {
-    formOf: IAttributeHeaderFormOf;
-    identifier: string;
-    localIdentifier: string;
-    name: string;
-    ref: ObjRef;
-    // (undocumented)
-    totalItems?: ITotalDescriptor[];
-    type?: string;
-    uri: string;
+// @public @deprecated
+export interface IAttributeDescriptorBody extends m.IAttributeDescriptorBody {
 }
 
-// @public
-export interface IAttributeDisplayFormMetadataObject extends IMetadataObject {
-    attribute: ObjRef;
-    displayFormType?: string;
-    isDefault?: boolean;
-    // (undocumented)
-    type: "displayForm";
+// @public @deprecated
+export interface IAttributeDisplayFormMetadataObject extends m.IAttributeDisplayFormMetadataObject {
 }
 
-// @public
-export interface IAttributeElement {
-    readonly title: string;
-    readonly uri: string;
+// @public @deprecated
+export interface IAttributeElement extends m.IAttributeElement {
 }
 
 // @public
@@ -277,21 +308,12 @@ export interface IAttributeElementExpressionToken {
     value: string | undefined;
 }
 
-// @public
-export interface IAttributeHeaderFormOf {
-    identifier: string;
-    name: string;
-    ref: ObjRef;
-    uri: string;
+// @public @deprecated
+export interface IAttributeHeaderFormOf extends m.IAttributeHeaderFormOf {
 }
 
-// @public
-export interface IAttributeMetadataObject extends IMetadataObject {
-    displayForms: IAttributeDisplayFormMetadataObject[];
-    drillDownStep?: ObjRef;
-    drillToAttributeLink?: ObjRef;
-    // (undocumented)
-    type: "attribute";
+// @public @deprecated
+export interface IAttributeMetadataObject extends m.IAttributeMetadataObject {
 }
 
 // @public
@@ -346,9 +368,8 @@ export interface IBackendCapabilities {
     usesStrictAccessControl?: boolean;
 }
 
-// @alpha
-export interface IBaseWidget {
-    readonly type: string;
+// @alpha @deprecated
+export interface IBaseWidget extends m.IBaseWidget {
 }
 
 // @public
@@ -357,52 +378,32 @@ export interface IBracketExpressionToken {
     value: string;
 }
 
-// @public
-export interface ICatalogAttribute extends IGroupableCatalogItemBase {
-    attribute: IAttributeMetadataObject;
-    defaultDisplayForm: IAttributeDisplayFormMetadataObject;
-    displayForms: IAttributeDisplayFormMetadataObject[];
-    geoPinDisplayForms: IAttributeDisplayFormMetadataObject[];
-    type: "attribute";
+// @public @deprecated
+export interface ICatalogAttribute extends m.ICatalogAttribute {
 }
 
-// @public
-export interface ICatalogDateAttribute {
-    attribute: IAttributeMetadataObject;
-    defaultDisplayForm: IAttributeDisplayFormMetadataObject;
-    granularity: DateAttributeGranularity;
+// @public @deprecated
+export interface ICatalogDateAttribute extends m.ICatalogDateAttribute {
 }
 
-// @public
-export interface ICatalogDateDataset extends ICatalogItemBase {
-    dataSet: IDataSetMetadataObject;
-    dateAttributes: ICatalogDateAttribute[];
-    relevance: number;
-    type: "dateDataset";
+// @public @deprecated
+export interface ICatalogDateDataset extends m.ICatalogDateDataset {
 }
 
-// @public
-export interface ICatalogFact extends IGroupableCatalogItemBase {
-    fact: IFactMetadataObject;
-    type: "fact";
+// @public @deprecated
+export interface ICatalogFact extends m.ICatalogFact {
 }
 
-// @public
-export interface ICatalogGroup {
-    tag: ObjRef;
-    title: string;
+// @public @deprecated
+export interface ICatalogGroup extends m.ICatalogGroup {
 }
 
-// @public
-export interface ICatalogItemBase {
-    // (undocumented)
-    type: CatalogItemType;
+// @public @deprecated
+export interface ICatalogItemBase extends m.ICatalogItemBase {
 }
 
-// @public
-export interface ICatalogMeasure extends IGroupableCatalogItemBase {
-    measure: IMeasureMetadataObject;
-    type: "measure";
+// @public @deprecated
+export interface ICatalogMeasure extends m.ICatalogMeasure {
 }
 
 // @public
@@ -411,305 +412,170 @@ export interface ICommentExpressionToken {
     value: string;
 }
 
-// @alpha
-export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, IDashboardObjectIdentity, Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers>, IAccessControlAware {
-    readonly dateFilterConfig?: IDashboardDateFilterConfig;
-    readonly filterContext?: IFilterContext | ITempFilterContext;
-    readonly layout?: IDashboardLayout<TWidget>;
-    readonly plugins?: IDashboardPluginLink[];
-    // (undocumented)
-    readonly type: "IDashboard";
+// @alpha @deprecated
+export interface IDashboard<TWidget = m.IDashboardWidget> extends m.IDashboard<TWidget> {
+}
+
+// @alpha @deprecated
+export interface IDashboardAttachment extends m.IDashboardAttachment {
+}
+
+// @alpha @deprecated
+export interface IDashboardAttributeFilter extends m.IDashboardAttributeFilter {
+}
+
+// @alpha @deprecated
+export interface IDashboardAttributeFilterParent extends m.IDashboardAttributeFilterParent {
+}
+
+// @alpha @deprecated
+export interface IDashboardAttributeFilterReference extends m.IDashboardAttributeFilterReference {
+}
+
+// @alpha @deprecated
+export interface IDashboardBase extends m.IDashboardBase {
+}
+
+// @alpha @deprecated
+export interface IDashboardDateFilter extends m.IDashboardDateFilter {
+}
+
+// @alpha @deprecated
+export interface IDashboardDateFilterAddedPresets extends m.IDashboardDateFilterAddedPresets {
+}
+
+// @alpha @deprecated
+export interface IDashboardDateFilterConfig extends m.IDashboardDateFilterConfig {
+}
+
+// @alpha @deprecated
+export interface IDashboardDateFilterReference extends m.IDashboardDateFilterReference {
+}
+
+// @alpha @deprecated
+export interface IDashboardDefinition<TWidget = m.IDashboardWidget> extends m.IDashboardDefinition<TWidget> {
+}
+
+// @alpha @deprecated
+export type IDashboardFilterReference = m.IDashboardFilterReference;
+
+// @alpha @deprecated
+export interface IDashboardLayout<TWidget = m.IDashboardWidget> extends m.IDashboardLayout<TWidget> {
+}
+
+// @alpha @deprecated
+export interface IDashboardLayoutItem<TWidget = m.IDashboardWidget> extends m.IDashboardLayoutItem<TWidget> {
+}
+
+// @alpha @deprecated
+export interface IDashboardLayoutSection<TWidget = m.IDashboardWidget> extends m.IDashboardLayoutSection<TWidget> {
+}
+
+// @alpha @deprecated
+export interface IDashboardLayoutSectionHeader extends m.IDashboardLayoutSectionHeader {
+}
+
+// @alpha @deprecated
+export interface IDashboardLayoutSize extends m.IDashboardLayoutSize {
+}
+
+// @alpha @deprecated
+export interface IDashboardLayoutSizeByScreenSize extends m.IDashboardLayoutSizeByScreenSize {
+}
+
+// @public @deprecated
+export interface IDashboardMetadataObject extends m.IDashboardMetadataObject {
+}
+
+// @alpha @deprecated
+export interface IDashboardObjectIdentity extends m.IDashboardObjectIdentity {
+}
+
+// @alpha @deprecated (undocumented)
+export interface IDashboardPlugin extends m.IDashboardPlugin {
+}
+
+// @alpha @deprecated (undocumented)
+export interface IDashboardPluginBase extends m.IDashboardPluginBase {
+}
+
+// @alpha @deprecated (undocumented)
+export interface IDashboardPluginDefinition extends m.IDashboardPluginDefinition {
+}
+
+// @alpha @deprecated
+export interface IDashboardPluginLink extends m.IDashboardPluginLink {
 }
 
 // @alpha
-export interface IDashboardAttachment {
-    dashboard: ObjRef;
-    filterContext?: ObjRef;
-    format: "pdf";
-}
-
-// @public
-export interface IDashboardAttributeFilter {
-    // (undocumented)
-    attributeFilter: {
-        displayForm: ObjRef;
-        negativeSelection: boolean;
-        attributeElements: IAttributeElements;
-        localIdentifier?: string;
-        filterElementsBy?: IDashboardAttributeFilterParent[];
-    };
-}
-
-// @public
-export interface IDashboardAttributeFilterParent {
-    filterLocalIdentifier: string;
-    over: {
-        attributes: ObjRef[];
-    };
-}
-
-// @public
-export interface IDashboardAttributeFilterReference {
-    displayForm: ObjRef;
-    type: "attributeFilterReference";
-}
-
-// @alpha
-export interface IDashboardBase {
-    readonly description: string;
-    readonly tags?: string[];
-    readonly title: string;
-}
-
-// @public
-export interface IDashboardDateFilter {
-    // (undocumented)
-    dateFilter: {
-        type: DateFilterType;
-        granularity: DateFilterGranularity;
-        from?: DateString | number;
-        to?: DateString | number;
-        dataSet?: ObjRef;
-        attribute?: ObjRef;
-    };
-}
-
-// @public
-export interface IDashboardDateFilterAddedPresets {
-    absolutePresets?: IAbsoluteDateFilterPreset[];
-    relativePresets?: IRelativeDateFilterPreset[];
-}
-
-// @public
-export interface IDashboardDateFilterConfig {
-    addPresets?: IDashboardDateFilterAddedPresets;
-    filterName: string;
-    hideGranularities?: DateFilterGranularity[];
-    hideOptions?: Identifier[];
-    mode: DashboardDateFilterConfigMode;
-}
-
-// @public
-export interface IDashboardDateFilterReference {
-    dataSet: ObjRef;
-    type: "dateFilterReference";
-}
-
-// @alpha
-export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashboardBase, IAccessControlAware, Partial<IDashboardObjectIdentity> {
-    readonly dateFilterConfig?: IDashboardDateFilterConfig;
-    readonly filterContext?: IFilterContext | IFilterContextDefinition;
-    readonly layout?: IDashboardLayout<TWidget>;
-    readonly plugins?: IDashboardPluginLink[];
-    // (undocumented)
-    readonly type: "IDashboard";
-}
-
-// @public
-export type IDashboardFilterReference = IDashboardDateFilterReference | IDashboardAttributeFilterReference;
-
-// @public
-export interface IDashboardLayout<TWidget = IDashboardWidget> {
-    sections: IDashboardLayoutSection<TWidget>[];
-    size?: IDashboardLayoutSize;
-    type: "IDashboardLayout";
-}
-
-// @public
-export interface IDashboardLayoutItem<TWidget = IDashboardWidget> {
-    size: IDashboardLayoutSizeByScreenSize;
-    type: "IDashboardLayoutItem";
-    widget?: TWidget;
-}
-
-// @public
-export interface IDashboardLayoutSection<TWidget = IDashboardWidget> {
-    header?: IDashboardLayoutSectionHeader;
-    items: IDashboardLayoutItem<TWidget>[];
-    type: "IDashboardLayoutSection";
-}
-
-// @public
-export interface IDashboardLayoutSectionHeader {
-    description?: string;
-    title?: string;
-}
-
-// @public
-export interface IDashboardLayoutSize {
-    gridHeight?: number;
-    gridWidth: number;
-    heightAsRatio?: number;
-}
-
-// @public
-export interface IDashboardLayoutSizeByScreenSize {
-    lg?: IDashboardLayoutSize;
-    md?: IDashboardLayoutSize;
-    sm?: IDashboardLayoutSize;
-    xl: IDashboardLayoutSize;
-    xs?: IDashboardLayoutSize;
-}
-
-// @public
-export interface IDashboardMetadataObject extends IMetadataObject {
-    // (undocumented)
-    type: "analyticalDashboard";
-}
-
-// @public
-export interface IDashboardObjectIdentity {
-    readonly identifier: string;
-    readonly ref: ObjRef;
-    readonly uri: string;
-}
-
-// @alpha (undocumented)
-export interface IDashboardPlugin extends IDashboardPluginBase, IDashboardObjectIdentity, IAuditableDates {
-}
-
-// @alpha (undocumented)
-export interface IDashboardPluginBase {
-    readonly description?: string;
-    readonly name: string;
-    readonly tags: string[];
-    // (undocumented)
-    readonly type: "IDashboardPlugin";
-    readonly url: string;
-}
-
-// @alpha (undocumented)
-export interface IDashboardPluginDefinition extends IDashboardPluginBase, Partial<IDashboardObjectIdentity> {
-}
-
-// @alpha
-export interface IDashboardPluginLink {
-    readonly parameters?: string;
-    readonly plugin: ObjRef;
-    // (undocumented)
-    readonly type: "IDashboardPluginLink";
-}
-
-// @public
 export interface IDashboardReferences {
     insights: IInsight[];
-    plugins: IDashboardPlugin[];
+    plugins: IDashboardPlugin_2[];
 }
 
-// @public
-export type IDashboardWidget = IWidget | IWidgetDefinition | IDashboardLayout<IDashboardWidget>;
+// @alpha @deprecated
+export type IDashboardWidget = m.IDashboardWidget;
 
-// @public
+// @alpha
 export interface IDashboardWithReferences {
     // (undocumented)
-    dashboard: IDashboard;
+    dashboard: IDashboard_2;
     // (undocumented)
     references: IDashboardReferences;
 }
 
-// @public
-export interface IDataColumn {
-    // (undocumented)
-    column: IDataColumnBody;
+// @public @deprecated
+export interface IDataColumn extends m.IDataColumn {
 }
 
-// @public
-export interface IDataColumnBody {
-    // (undocumented)
-    format?: string;
-    // (undocumented)
-    name: string;
-    // (undocumented)
-    skip?: boolean;
-    // (undocumented)
-    type: DataColumnType;
+// @public @deprecated
+export interface IDataColumnBody extends m.IDataColumnBody {
 }
 
-// @public
-export interface IDataHeader {
-    // (undocumented)
-    columns: IDataColumn[];
-    // (undocumented)
-    headerRowIndex?: number;
+// @public @deprecated
+export interface IDataHeader extends m.IDataHeader {
 }
 
-// @public
-export interface IDataset {
-    // (undocumented)
-    dataset: IDatasetBody;
+// @public @deprecated
+export interface IDataset extends m.IDataset {
 }
 
-// @public
-export interface IDatasetBody {
-    // (undocumented)
-    dataHeader: IDataHeader;
-    // (undocumented)
-    datasetId: string;
-    // (undocumented)
-    datasetLoadStatus: DatasetLoadStatus;
-    // (undocumented)
-    firstSuccessfulUpdate?: IDatasetLoadInfo;
-    // (undocumented)
-    lastSuccessfulUpdate?: IDatasetLoadInfo;
-    // (undocumented)
-    lastUpdate?: IDatasetLoadInfo;
-    // (undocumented)
-    loadedRowCount: number;
-    // (undocumented)
-    name: string;
+// @public @deprecated
+export interface IDatasetBody extends m.IDatasetBody {
 }
 
-// @public
-export interface IDatasetLoadInfo {
-    // (undocumented)
-    created: string;
-    // (undocumented)
-    owner: IDatasetUser;
-    // (undocumented)
-    status: DatasetLoadStatus;
+// @public @deprecated
+export interface IDatasetLoadInfo extends m.IDatasetLoadInfo {
 }
 
-// @public
-export interface IDataSetMetadataObject extends IMetadataObject {
-    // (undocumented)
-    type: "dataSet";
+// @public @deprecated
+export interface IDataSetMetadataObject extends m.IDataSetMetadataObject {
 }
 
-// @public
-export interface IDatasetUser {
-    // (undocumented)
-    fullName: string;
-    // (undocumented)
-    login: string;
+// @public @deprecated
+export interface IDatasetUser extends m.IDatasetUser {
 }
 
 // @public
 export interface IDataView {
     readonly count: number[];
-    readonly data: DataValue[][] | DataValue[];
+    readonly data: DataValue_2[][] | DataValue_2[];
     readonly definition: IExecutionDefinition;
     equals(other: IDataView): boolean;
     fingerprint(): string;
-    readonly headerItems: IResultHeader[][][];
+    readonly headerItems: IResultHeader_2[][][];
     readonly offset: number[];
     readonly result: IExecutionResult;
     readonly totalCount: number[];
-    readonly totals?: DataValue[][][];
-    readonly warnings?: IResultWarning[];
+    readonly totals?: DataValue_2[][][];
+    readonly warnings?: IResultWarning_2[];
 }
 
-// @public
-export interface IDateFilterConfig {
-    absoluteForm?: IAbsoluteDateFilterForm;
-    absolutePresets?: IAbsoluteDateFilterPreset[];
-    allTime?: IAllTimeDateFilterOption;
-    ref: ObjRef;
-    relativeForm?: IRelativeDateFilterForm;
-    relativePresets?: IRelativeDateFilterPreset[];
-    selectedOption: Identifier;
+// @alpha @deprecated
+export interface IDateFilterConfig extends m.IDateFilterConfig {
 }
 
-// @public
+// @alpha
 export interface IDateFilterConfigsQuery {
     query(): Promise<IDateFilterConfigsQueryResult>;
     withLimit(limit: number): IDateFilterConfigsQuery;
@@ -717,102 +583,68 @@ export interface IDateFilterConfigsQuery {
 }
 
 // @public
-export type IDateFilterConfigsQueryResult = IPagedResource<IDateFilterConfig>;
+export type IDateFilterConfigsQueryResult = IPagedResource<IDateFilterConfig_2>;
 
-// @public
-export interface IDateFilterOption {
-    localIdentifier: Identifier;
-    name?: string;
-    type: OptionType;
-    visible: boolean;
+// @alpha @deprecated
+export interface IDateFilterOption extends m.IDateFilterOption {
 }
 
-// @public
-export interface IDimensionDescriptor {
-    // (undocumented)
-    headers: IDimensionItemDescriptor[];
+// @public @deprecated
+export interface IDimensionDescriptor extends m.IDimensionDescriptor {
 }
 
-// @public
-export type IDimensionItemDescriptor = IMeasureGroupDescriptor | IAttributeDescriptor;
+// @public @deprecated
+export type IDimensionItemDescriptor = m.IDimensionItemDescriptor;
 
-// @public
-export interface IDrill {
-    origin: DrillOrigin;
-    transition: DrillTransition;
-    type: DrillType;
+// @alpha @deprecated
+export interface IDrill extends m.IDrill {
 }
 
-// @alpha
-export interface IDrillableWidget {
-    readonly drills: DrillDefinition[];
+// @alpha @deprecated
+export interface IDrillableWidget extends m.IDrillableWidget {
 }
 
-// @public
-export interface IDrillFromAttribute extends IDrillOrigin {
-    attribute: ObjRefInScope;
-    type: "drillFromAttribute";
+// @alpha @deprecated
+export interface IDrillFromAttribute extends m.IDrillFromAttribute {
 }
 
-// @public
-export interface IDrillFromMeasure extends IDrillOrigin {
-    measure: ObjRefInScope;
-    type: "drillFromMeasure";
+// @alpha @deprecated
+export interface IDrillFromMeasure extends m.IDrillFromMeasure {
 }
 
-// @public
-export interface IDrillOrigin {
-    type: DrillOriginType;
+// @alpha @deprecated
+export interface IDrillOrigin extends m.IDrillOrigin {
 }
 
-// @public
-export type IDrillTarget = ObjRef | IDrillToCustomUrlTarget | IDrillToAttributeUrlTarget;
+// @alpha @deprecated
+export type IDrillTarget = m.IDrillTarget;
 
-// @public
-export interface IDrillToAttributeUrl extends IDrill {
-    target: IDrillToAttributeUrlTarget;
-    transition: "new-window";
-    type: "drillToAttributeUrl";
+// @alpha @deprecated
+export interface IDrillToAttributeUrl extends m.IDrillToAttributeUrl {
 }
 
-// @public
-export interface IDrillToAttributeUrlTarget {
-    displayForm: ObjRef;
-    hyperlinkDisplayForm: ObjRef;
+// @alpha @deprecated
+export interface IDrillToAttributeUrlTarget extends m.IDrillToAttributeUrlTarget {
 }
 
-// @public
-export interface IDrillToCustomUrl extends IDrill {
-    target: IDrillToCustomUrlTarget;
-    transition: "new-window";
-    type: "drillToCustomUrl";
+// @alpha @deprecated
+export interface IDrillToCustomUrl extends m.IDrillToCustomUrl {
 }
 
-// @public
-export interface IDrillToCustomUrlTarget {
-    url: string;
+// @alpha @deprecated
+export interface IDrillToCustomUrlTarget extends m.IDrillToCustomUrlTarget {
 }
 
-// @public
-export interface IDrillToDashboard extends IDrill {
-    target?: ObjRef;
-    transition: "in-place";
-    type: "drillToDashboard";
+// @alpha @deprecated
+export interface IDrillToDashboard extends m.IDrillToDashboard {
 }
 
-// @public
-export interface IDrillToInsight extends IDrill {
-    target: ObjRef;
-    transition: "pop-up";
-    type: "drillToInsight";
+// @alpha @deprecated
+export interface IDrillToInsight extends m.IDrillToInsight {
 }
 
-// @public
-export interface IDrillToLegacyDashboard extends IDrill {
-    tab: string;
-    target: ObjRef;
-    transition: "in-place";
-    type: "drillToLegacyDashboard";
+// @alpha @deprecated
+export interface IDrillToLegacyDashboard extends m.IDrillToLegacyDashboard {
 }
 
 // @public
@@ -869,7 +701,7 @@ export interface IElementsQueryOptionsElementsByValue {
 }
 
 // @public
-export type IElementsQueryResult = IPagedResource<IAttributeElement>;
+export type IElementsQueryResult = IPagedResource<IAttributeElement_2>;
 
 // @public
 export interface IExecutionFactory {
@@ -883,7 +715,7 @@ export interface IExecutionFactory {
 // @public
 export interface IExecutionResult {
     readonly definition: IExecutionDefinition;
-    readonly dimensions: IDimensionDescriptor[];
+    readonly dimensions: IDimensionDescriptor_2[];
     equals(other: IExecutionResult): boolean;
     export(options: IExportConfig): Promise<IExportResult>;
     fingerprint(): string;
@@ -900,12 +732,8 @@ export interface IExportConfig {
     title?: string;
 }
 
-// @alpha
-export interface IExportOptions {
-    // (undocumented)
-    includeFilters?: boolean;
-    // (undocumented)
-    mergeHeaders?: boolean;
+// @alpha @deprecated
+export interface IExportOptions extends m.IExportOptions {
 }
 
 // @public
@@ -914,31 +742,24 @@ export interface IExportResult {
     uri: string;
 }
 
-// @public
-export interface IFactMetadataObject extends IMetadataObject {
-    // (undocumented)
-    type: "fact";
+// @public @deprecated
+export interface IFactMetadataObject extends m.IFactMetadataObject {
 }
 
-// @alpha
-export interface IFilterableWidget {
-    readonly dateDataSet?: ObjRef;
-    readonly ignoreDashboardFilters: IDashboardFilterReference[];
+// @alpha @deprecated
+export interface IFilterableWidget extends m.IFilterableWidget {
 }
 
-// @public
-export interface IFilterContext extends IFilterContextBase, IDashboardObjectIdentity {
+// @alpha @deprecated
+export interface IFilterContext extends m.IFilterContext {
 }
 
-// @public
-export interface IFilterContextBase {
-    readonly description: string;
-    readonly filters: FilterContextItem[];
-    readonly title: string;
+// @alpha @deprecated
+export interface IFilterContextBase extends m.IFilterContextBase {
 }
 
-// @public
-export interface IFilterContextDefinition extends IFilterContextBase, Partial<IDashboardObjectIdentity> {
+// @alpha @deprecated
+export interface IFilterContextDefinition extends m.IFilterContextDefinition {
 }
 
 // @public
@@ -970,20 +791,19 @@ export interface IGetVisualizationClassesOptions {
     includeDeprecated?: boolean;
 }
 
-// @public
-export interface IGroupableCatalogItemBase extends ICatalogItemBase {
-    groups: ObjRef[];
+// @public @deprecated
+export interface IGroupableCatalogItemBase extends m.IGroupableCatalogItemBase {
 }
 
 // @public
 export interface IInsightReferences {
-    catalogItems?: CatalogItem[];
-    dataSetMeta?: IMetadataObject[];
+    catalogItems?: CatalogItem_2[];
+    dataSetMeta?: IMetadataObject_2[];
 }
 
 // @public
 export interface IInsightReferencing {
-    analyticalDashboards?: IMetadataObject[];
+    analyticalDashboards?: IMetadataObject_2[];
 }
 
 // @public
@@ -999,185 +819,121 @@ export interface IInsightsQueryOptions {
 // @public
 export type IInsightsQueryResult = IPagedResource<IInsight>;
 
-// @alpha (undocumented)
-export interface IInsightWidget extends IInsightWidgetBase, IDashboardObjectIdentity {
+// @alpha @deprecated (undocumented)
+export interface IInsightWidget extends m.IInsightWidget {
 }
 
-// @alpha (undocumented)
-export interface IInsightWidgetBase extends IAnalyticalWidget {
-    readonly configuration?: IInsightWidgetConfiguration;
-    readonly drills: InsightDrillDefinition[];
-    readonly insight: ObjRef;
-    readonly properties?: VisualizationProperties;
-    // (undocumented)
-    readonly type: "insight";
+// @alpha @deprecated (undocumented)
+export interface IInsightWidgetBase extends m.IInsightWidgetBase {
 }
 
-// @alpha (undocumented)
-export interface IInsightWidgetConfiguration {
-    // (undocumented)
-    hideTitle?: boolean;
+// @alpha @deprecated (undocumented)
+export interface IInsightWidgetConfiguration extends m.IInsightWidgetConfiguration {
 }
 
-// @alpha (undocumented)
-export interface IInsightWidgetDefinition extends IInsightWidgetBase, Partial<IDashboardObjectIdentity> {
+// @alpha @deprecated (undocumented)
+export interface IInsightWidgetDefinition extends m.IInsightWidgetDefinition {
 }
 
-// @alpha (undocumented)
-export interface IKpiWidget extends IKpiWidgetBase, IDashboardObjectIdentity {
+// @alpha @deprecated (undocumented)
+export interface IKpiWidget extends m.IKpiWidget {
 }
 
-// @alpha (undocumented)
-export interface IKpiWidgetBase extends IAnalyticalWidget {
-    readonly drills: KpiDrillDefinition[];
-    readonly kpi: ILegacyKpi;
-    // (undocumented)
-    readonly type: "kpi";
+// @alpha @deprecated (undocumented)
+export interface IKpiWidgetBase extends m.IKpiWidgetBase {
 }
 
-// @alpha (undocumented)
-export interface IKpiWidgetDefinition extends IKpiWidgetBase, Partial<IDashboardObjectIdentity> {
+// @alpha @deprecated (undocumented)
+export interface IKpiWidgetDefinition extends m.IKpiWidgetDefinition {
 }
 
-// @alpha
-export type ILegacyKpi = ILegacyKpiWithComparison | ILegacyKpiWithoutComparison;
+// @alpha @deprecated
+export type ILegacyKpi = IKpi;
 
-// @alpha
-export interface ILegacyKpiBase {
-    // (undocumented)
-    comparisonDirection?: ILegacyKpiComparisonDirection;
-    // (undocumented)
-    comparisonType: ILegacyKpiComparisonTypeComparison;
-    // (undocumented)
-    metric: ObjRef;
+// @alpha @deprecated
+export interface ILegacyKpiBase extends IKpiBase {
 }
 
-// @alpha
-export type ILegacyKpiComparisonDirection = "growIsGood" | "growIsBad";
+// @alpha @deprecated
+export type ILegacyKpiComparisonDirection = IKpiComparisonDirection;
 
-// @alpha
-export type ILegacyKpiComparisonTypeComparison = ILegacyKpiWithPreviousPeriodComparison["comparisonType"] | ILegacyKpiWithPopComparison["comparisonType"] | ILegacyKpiWithoutComparison["comparisonType"];
+// @alpha @deprecated
+export type ILegacyKpiComparisonTypeComparison = IKpiComparisonTypeComparison;
 
-// @alpha
-export type ILegacyKpiWithComparison = ILegacyKpiWithPreviousPeriodComparison | ILegacyKpiWithPopComparison;
+// @alpha @deprecated
+export type ILegacyKpiWithComparison = IKpiWithComparison;
 
-// @alpha
-export interface ILegacyKpiWithoutComparison extends ILegacyKpiBase {
-    // (undocumented)
-    comparisonType: "none";
+// @alpha @deprecated
+export interface ILegacyKpiWithoutComparison extends IKpiWithoutComparison {
 }
 
-// @alpha
-export interface ILegacyKpiWithPopComparison extends ILegacyKpiBase {
-    // (undocumented)
-    comparisonDirection: ILegacyKpiComparisonDirection;
-    // (undocumented)
-    comparisonType: "lastYear";
+// @alpha @deprecated
+export interface ILegacyKpiWithPopComparison extends IKpiWithPopComparison {
 }
 
-// @alpha
-export interface ILegacyKpiWithPreviousPeriodComparison extends ILegacyKpiBase {
-    // (undocumented)
-    comparisonDirection: ILegacyKpiComparisonDirection;
-    // (undocumented)
-    comparisonType: "previousPeriod";
+// @alpha @deprecated
+export interface ILegacyKpiWithPreviousPeriodComparison extends IKpiWithPreviousPeriodComparison {
 }
 
-// @public
-export interface IListedDashboard extends Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers>, IAccessControlAware {
-    readonly availability: ListedDashboardAvailability;
-    readonly description: string;
-    readonly identifier: string;
-    readonly ref: ObjRef;
-    readonly tags?: string[];
-    readonly title: string;
-    readonly uri: string;
+// @alpha @deprecated
+export interface IListedDashboard extends m.IListedDashboard {
 }
 
-// @public
-export interface IMeasureDescriptor {
-    // (undocumented)
-    measureHeaderItem: IMeasureDescriptorItem;
+// @public @deprecated
+export interface IMeasureDescriptor extends m.IMeasureDescriptor {
 }
 
-// @public
-export interface IMeasureDescriptorItem {
-    format: string;
-    identifier?: string;
-    // (undocumented)
-    localIdentifier: string;
-    name: string;
-    ref?: ObjRef;
-    uri?: string;
+// @public @deprecated
+export interface IMeasureDescriptorItem extends m.IMeasureDescriptorItem {
 }
 
-// @public
-export interface IMeasureDescriptorObject {
-    // (undocumented)
-    items: IMeasureDescriptor[];
-    // (undocumented)
-    totalItems?: ITotalDescriptor[];
+// @public @deprecated
+export interface IMeasureDescriptorObject extends m.IMeasureDescriptorObject {
 }
 
 // @public
 export type IMeasureExpressionToken = IObjectExpressionToken | IAttributeElementExpressionToken | ITextExpressionToken | ICommentExpressionToken | IBracketExpressionToken;
 
-// @public
-export interface IMeasureGroupDescriptor {
-    // (undocumented)
-    measureGroupHeader: IMeasureDescriptorObject;
+// @public @deprecated
+export interface IMeasureGroupDescriptor extends m.IMeasureGroupDescriptor {
 }
 
-// @public
-export type IMeasureMetadataObject = IMetadataObject & IMeasureMetadataObjectBase;
+// @public @deprecated
+export type IMeasureMetadataObject = m.IMeasureMetadataObject;
 
-// @internal (undocumented)
-export interface IMeasureMetadataObjectBase {
-    expression: string;
-    format: string;
-    isLocked?: boolean;
-    // (undocumented)
-    type: "measure";
+// @internal @deprecated (undocumented)
+export interface IMeasureMetadataObjectBase extends m.IMeasureMetadataObjectBase {
 }
 
-// @public
-export type IMeasureMetadataObjectDefinition = IMetadataObjectDefinition & IMeasureMetadataObjectBase;
+// @public @deprecated
+export type IMeasureMetadataObjectDefinition = m.IMeasureMetadataObjectDefinition;
 
 // @public
 export interface IMeasureReferencing {
     // (undocumented)
     insights?: IInsight[];
     // (undocumented)
-    measures?: IMetadataObject[];
+    measures?: IMetadataObject_2[];
 }
 
-// @public (undocumented)
-export interface IMetadataObject extends IMetadataObjectBase, IMetadataObjectIdentity {
+// @public @deprecated (undocumented)
+export interface IMetadataObject extends m.IMetadataObject {
 }
 
-// @internal (undocumented)
-export interface IMetadataObjectBase {
-    deprecated: boolean;
-    description: string;
-    production: boolean;
-    title: string;
-    type: ObjectType;
-    unlisted: boolean;
+// @internal @deprecated (undocumented)
+export interface IMetadataObjectBase extends m.IMetadataObjectBase {
 }
 
-// @internal (undocumented)
-export interface IMetadataObjectDefinition extends Partial<IMetadataObjectBase>, Partial<Pick<IMetadataObject, "id">> {
+// @internal @deprecated (undocumented)
+export interface IMetadataObjectDefinition extends m.IMetadataObjectDefinition {
 }
 
-// @internal (undocumented)
-export interface IMetadataObjectIdentity {
-    id: string;
-    ref: ObjRef;
-    uri: string;
+// @internal @deprecated (undocumented)
+export interface IMetadataObjectIdentity extends m.IMetadataObjectIdentity {
 }
 
-// @public
-export type InsightDrillDefinition = IDrillToInsight | IDrillToDashboard | IDrillToCustomUrl | IDrillToAttributeUrl;
+// @alpha @deprecated
+export type InsightDrillDefinition = m.InsightDrillDefinition;
 
 // @public
 export type InsightOrdering = "id" | "title" | "updated";
@@ -1195,17 +951,13 @@ export interface IObjectExpressionToken {
 
 // @public
 export interface IOrganization {
-    getDescriptor(): Promise<IOrganizationDescriptor>;
+    getDescriptor(): Promise<IOrganizationDescriptor_2>;
     readonly organizationId: string;
     securitySettings(): ISecuritySettingsService;
 }
 
 // @public
-export interface IOrganizationDescriptor {
-    // (undocumented)
-    id: string;
-    // (undocumented)
-    title: string;
+export interface IOrganizationDescriptor extends m.IOrganizationDescriptor {
 }
 
 // @public
@@ -1243,205 +995,165 @@ export interface IPreparedExecution {
     withSorting(...items: ISortItem[]): IPreparedExecution;
 }
 
-// @public
-export interface IRelativeDateFilterForm extends IDateFilterOption {
-    availableGranularities: DateFilterGranularity[];
-    type: RelativeFormType;
+// @alpha @deprecated
+export interface IRelativeDateFilterForm extends m.IRelativeDateFilterForm {
 }
 
-// @public
-export interface IRelativeDateFilterPreset extends IDateFilterOption {
-    from: RelativeGranularityOffset;
-    granularity: DateFilterGranularity;
-    to: RelativeGranularityOffset;
-    type: RelativePresetType;
+// @alpha @deprecated
+export interface IRelativeDateFilterPreset extends m.IRelativeDateFilterPreset {
 }
 
-// @public
-export interface IRelativeDateFilterPresetOfGranularity<Key extends DateFilterGranularity> extends IRelativeDateFilterPreset {
-    granularity: Key;
+// @alpha @deprecated
+export interface IRelativeDateFilterPresetOfGranularity<Key extends DateFilterGranularity> extends m.IRelativeDateFilterPresetOfGranularity<Key> {
 }
 
-// @public
-export interface IResultAttributeHeader {
-    // (undocumented)
-    attributeHeaderItem: IResultAttributeHeaderItem;
+// @public @deprecated
+export interface IResultAttributeHeader extends m.IResultAttributeHeader {
 }
 
-// @public
-export interface IResultAttributeHeaderItem {
-    name: string;
-    uri: string;
+// @public @deprecated
+export interface IResultAttributeHeaderItem extends m.IResultAttributeHeaderItem {
 }
 
-// @public
-export type IResultHeader = IResultAttributeHeader | IResultMeasureHeader | IResultTotalHeader;
+// @public @deprecated
+export type IResultHeader = m.IResultHeader;
 
-// @public
-export interface IResultMeasureHeader {
-    // (undocumented)
-    measureHeaderItem: IResultMeasureHeaderItem;
+// @public @deprecated
+export interface IResultMeasureHeader extends m.IResultMeasureHeader {
 }
 
-// @public
-export interface IResultMeasureHeaderItem {
-    name: string;
-    order: number;
+// @public @deprecated
+export interface IResultMeasureHeaderItem extends m.IResultMeasureHeaderItem {
 }
 
-// @public
-export interface IResultTotalHeader {
-    // (undocumented)
-    totalHeaderItem: IResultTotalHeaderItem;
+// @public @deprecated
+export interface IResultTotalHeader extends m.IResultTotalHeader {
 }
 
-// @public
-export interface IResultTotalHeaderItem {
-    // (undocumented)
-    name: string;
-    // (undocumented)
-    type: string;
+// @public @deprecated
+export interface IResultTotalHeaderItem extends m.IResultTotalHeaderItem {
 }
 
-// @public
-export interface IResultWarning {
-    message: string;
-    parameters?: (ObjRef | string)[];
-    warningCode: string;
+// @public @deprecated
+export interface IResultWarning extends m.IResultWarning {
 }
 
-// @public
-export const isAbsoluteDateFilterForm: (obj: unknown) => obj is IAbsoluteDateFilterForm;
+// @alpha @deprecated
+export const isAbsoluteDateFilterForm: (obj: unknown) => obj is m.IAbsoluteDateFilterForm;
 
-// @public
-export const isAbsoluteDateFilterPreset: (obj: unknown) => obj is IAbsoluteDateFilterPreset;
+// @alpha @deprecated
+export const isAbsoluteDateFilterPreset: (obj: unknown) => obj is m.IAbsoluteDateFilterPreset;
 
-// @public
-export function isAllTimeDashboardDateFilter(obj: unknown): boolean;
+// @alpha @deprecated
+export const isAllTimeDashboardDateFilter: typeof m.isAllTimeDashboardDateFilter;
 
-// @public
-export const isAllTimeDateFilterOption: (obj: unknown) => obj is IAllTimeDateFilterOption;
+// @alpha @deprecated
+export const isAllTimeDateFilterOption: (obj: unknown) => obj is m.IAllTimeDateFilterOption;
 
 // @public
 export function isAnalyticalBackendError(obj: unknown): obj is AnalyticalBackendError;
 
-// @public
-export function isAttributeDescriptor(obj: unknown): obj is IAttributeDescriptor;
+// @public @deprecated
+export const isAttributeDescriptor: typeof m.isAttributeDescriptor;
 
-// @public
-export function isAttributeDisplayFormMetadataObject(obj: unknown): obj is IAttributeDisplayFormMetadataObject;
+// @public @deprecated
+export const isAttributeDisplayFormMetadataObject: typeof m.isAttributeDisplayFormMetadataObject;
 
-// @public
-export function isAttributeMetadataObject(obj: unknown): obj is IAttributeMetadataObject;
+// @public @deprecated
+export const isAttributeMetadataObject: typeof m.isAttributeMetadataObject;
 
-// @public
-export function isCatalogAttribute(obj: unknown): obj is ICatalogAttribute;
+// @public @deprecated
+export const isCatalogAttribute: typeof m.isCatalogAttribute;
 
-// @public
-export function isCatalogDateDataset(obj: unknown): obj is ICatalogDateDataset;
+// @public @deprecated
+export const isCatalogDateDataset: typeof m.isCatalogDateDataset;
 
-// @public
-export function isCatalogFact(obj: unknown): obj is ICatalogFact;
+// @public @deprecated
+export const isCatalogFact: typeof m.isCatalogFact;
 
-// @public
-export function isCatalogMeasure(obj: unknown): obj is ICatalogMeasure;
+// @public @deprecated
+export const isCatalogMeasure: typeof m.isCatalogMeasure;
 
-// @alpha
-export interface IScheduledMail extends IAuditableUsers, IScheduledMailBase, IDashboardObjectIdentity {
+// @alpha @deprecated
+export interface IScheduledMail extends m.IScheduledMail {
 }
 
-// @alpha
-export interface IScheduledMailBase {
-    attachments: ScheduledMailAttachment[];
-    bcc?: string[];
-    body: string;
-    description: string;
-    lastSuccessful?: string;
-    subject: string;
-    title: string;
-    to: string[];
-    unlisted: boolean;
-    unsubscribed?: string[];
-    when: {
-        startDate: string;
-        endDate?: string;
-        recurrence: string;
-        timeZone: string;
-    };
+// @alpha @deprecated
+export interface IScheduledMailBase extends m.IScheduledMailBase {
 }
 
-// @alpha
-export interface IScheduledMailDefinition extends IScheduledMailBase, Partial<IDashboardObjectIdentity> {
+// @alpha @deprecated
+export interface IScheduledMailDefinition extends m.IScheduledMailDefinition {
 }
 
-// @public
-export function isDashboard(obj: unknown): obj is IDashboard;
+// @alpha @deprecated
+export const isDashboard: typeof m.isDashboard;
+
+// @alpha @deprecated
+export const isDashboardAttachment: typeof m.isDashboardAttachment;
+
+// @alpha @deprecated
+export const isDashboardAttributeFilter: typeof m.isDashboardAttributeFilter;
+
+// @alpha @deprecated
+export const isDashboardAttributeFilterReference: typeof m.isDashboardAttributeFilterReference;
+
+// @alpha @deprecated
+export const isDashboardDateFilter: typeof m.isDashboardDateFilter;
+
+// @alpha @deprecated
+export const isDashboardDateFilterReference: typeof m.isDashboardDateFilterReference;
+
+// @alpha @deprecated
+export const isDashboardDefinition: typeof m.isDashboardDefinition;
+
+// @alpha @deprecated
+export const isDashboardLayout: typeof m.isDashboardLayout;
 
 // @alpha
-export function isDashboardAttachment(obj: unknown): obj is IDashboardAttachment;
+export const isDashboardLayoutEmpty: (layout: IDashboardLayout_2<any>) => boolean;
 
-// @public
-export function isDashboardAttributeFilter(obj: unknown): obj is IDashboardAttributeFilter;
+// @alpha @deprecated
+export const isDashboardLayoutItem: typeof m.isDashboardLayoutItem;
 
-// @public
-export function isDashboardAttributeFilterReference(obj: unknown): obj is IDashboardAttributeFilterReference;
+// @alpha @deprecated
+export const isDashboardLayoutSection: typeof m.isDashboardLayoutSection;
 
-// @public
-export function isDashboardDateFilter(obj: unknown): obj is IDashboardDateFilter;
+// @public @deprecated
+export const isDashboardMetadataObject: typeof m.isDashboardMetadataObject;
 
-// @public
-export function isDashboardDateFilterReference(obj: unknown): obj is IDashboardDateFilterReference;
+// @alpha @deprecated
+export const isDashboardWidget: (obj: unknown) => obj is m.IDashboardWidget;
 
-// @public
-export function isDashboardDefinition(obj: unknown): obj is IDashboardDefinition;
-
-// @public
-export function isDashboardLayout<TWidget = IDashboardWidget>(obj: unknown): obj is IDashboardLayout<TWidget>;
-
-// @alpha
-export const isDashboardLayoutEmpty: (layout: IDashboardLayout<any>) => boolean;
-
-// @public
-export function isDashboardLayoutItem<TWidget>(obj: unknown): obj is IDashboardLayoutItem<TWidget>;
-
-// @public
-export function isDashboardLayoutSection<TWidget>(obj: unknown): obj is IDashboardLayoutSection<TWidget>;
-
-// @public
-export function isDashboardMetadataObject(obj: unknown): obj is IDashboardMetadataObject;
-
-// @public
-export const isDashboardWidget: (obj: unknown) => obj is IDashboardWidget;
-
-// @public
-export function isDataSetMetadataObject(obj: unknown): obj is IDataSetMetadataObject;
+// @public @deprecated
+export const isDataSetMetadataObject: typeof m.isDataSetMetadataObject;
 
 // @public
 export function isDataTooLargeError(obj: unknown): obj is DataTooLargeError;
 
-// @public
-export const isDateFilterGranularity: (obj: unknown) => obj is DateFilterGranularity;
+// @alpha @deprecated
+export const isDateFilterGranularity: (obj: unknown) => obj is m.DateFilterGranularity;
 
-// @public
-export function isDrillFromAttribute(obj: DrillOrigin): obj is IDrillFromAttribute;
+// @alpha @deprecated
+export const isDrillFromAttribute: typeof m.isDrillFromAttribute;
 
-// @public
-export function isDrillFromMeasure(obj: DrillOrigin): obj is IDrillFromMeasure;
+// @alpha @deprecated
+export const isDrillFromMeasure: typeof m.isDrillFromMeasure;
 
-// @public
-export function isDrillToAttributeUrl(obj: unknown): obj is IDrillToAttributeUrl;
+// @alpha @deprecated
+export const isDrillToAttributeUrl: typeof m.isDrillToAttributeUrl;
 
-// @public
-export function isDrillToCustomUrl(obj: unknown): obj is IDrillToCustomUrl;
+// @alpha @deprecated
+export const isDrillToCustomUrl: typeof m.isDrillToCustomUrl;
 
-// @public
-export function isDrillToDashboard(obj: unknown): obj is IDrillToDashboard;
+// @alpha @deprecated
+export const isDrillToDashboard: typeof m.isDrillToDashboard;
 
-// @public
-export function isDrillToInsight(obj: unknown): obj is IDrillToInsight;
+// @alpha @deprecated
+export const isDrillToInsight: typeof m.isDrillToInsight;
 
-// @public
-export function isDrillToLegacyDashboard(obj: unknown): obj is IDrillToLegacyDashboard;
+// @alpha @deprecated
+export const isDrillToLegacyDashboard: typeof m.isDrillToLegacyDashboard;
 
 // @public
 export interface ISecuritySettingsService {
@@ -1456,102 +1168,58 @@ export function isElementsQueryOptionsElementsByPrimaryDisplayFormValue(obj: unk
 // @public
 export function isElementsQueryOptionsElementsByValue(obj: unknown): obj is IElementsQueryOptionsElementsByValue;
 
-// @public
-export interface ISeparators {
-    decimal: string;
-    thousand: string;
+// @public @deprecated
+export interface ISeparators extends m.ISeparators {
 }
 
-// @public
-export interface ISettings {
-    // (undocumented)
-    [key: string]: number | boolean | string | object | undefined;
-    ADCatalogGroupsExpanded?: boolean;
-    ADMeasureValueFilterNullAsZeroOption?: string;
-    disableKpiDashboardHeadlineUnderline?: boolean;
-    enableAlternativeDisplayFormSelection?: boolean;
-    enableAnalyticalDashboardPermissions?: boolean;
-    enableApproxCount?: boolean;
-    enableAxisLabelFormat?: boolean;
-    enableAxisNameConfiguration?: boolean;
-    enableAxisNameViewByTwoAttributes?: boolean;
-    enableBulletChart?: boolean;
-    enableChartsSorting?: boolean;
-    enableClickableAttributeURL?: boolean;
-    enableCompanyLogoInEmbeddedUI?: boolean;
-    enableCustomColorPicker?: boolean;
-    enableDataSampling?: boolean;
-    enableDrilledInsightExport?: boolean;
-    enableEmbedButtonInKD?: boolean;
-    enableHidingOfDataPoints?: boolean;
-    enableHidingOfWidgetTitle?: boolean;
-    enableInsightExportScheduling?: boolean;
-    enableInsightToReport?: boolean;
-    enableKDWidgetCustomHeight?: boolean;
-    enableKDZooming?: boolean;
-    enableKPIDashboardDrillToDashboard?: boolean;
-    enableKPIDashboardDrillToInsight?: boolean;
-    enableKPIDashboardDrillToURL?: boolean;
-    enableKPIDashboardImplicitDrillDown?: boolean;
-    enableKPIDashboardSaveAsNew?: boolean;
-    enableKPIDashboardSchedule?: boolean;
-    enableKPIDashboardScheduleRecipients?: boolean;
-    enableMultipleDates?: boolean;
-    enablePushpinGeoChart?: boolean;
-    enableRenamingMeasureToMetric?: boolean;
-    enableTableColumnsAutoResizing?: boolean;
-    enableTableColumnsGrowToFit?: boolean;
-    enableTableColumnsManualResizing?: boolean;
-    enableWeekFilters?: boolean;
-    hideKpiDrillInEmbedded?: boolean;
-    platformEdition?: PlatformEdition;
-    responsiveUiDateFormat?: string;
+// @public @deprecated
+export interface ISettings extends m.ISettings {
 }
 
-// @public
-export function isFactMetadataObject(obj: unknown): obj is IFactMetadataObject;
+// @public @deprecated
+export const isFactMetadataObject: typeof m.isFactMetadataObject;
 
-// @public
-export function isFilterContext(obj: unknown): obj is IFilterContext;
+// @alpha @deprecated
+export const isFilterContext: typeof m.isFilterContext;
 
-// @public
-export function isFilterContextDefinition(obj: unknown): obj is IFilterContextDefinition;
+// @alpha @deprecated
+export const isFilterContextDefinition: typeof m.isFilterContextDefinition;
 
-// @public
-export function isInsightWidget(obj: unknown): obj is IInsightWidget;
+// @alpha @deprecated
+export const isInsightWidget: typeof m.isInsightWidget;
 
-// @public
-export function isInsightWidgetDefinition(obj: unknown): obj is IInsightWidgetDefinition;
+// @alpha @deprecated
+export const isInsightWidgetDefinition: typeof m.isInsightWidgetDefinition;
 
-// @public
-export function isKpiWidget(obj: unknown): obj is IKpiWidget;
+// @alpha @deprecated
+export const isKpiWidget: typeof m.isKpiWidget;
 
-// @public
-export function isKpiWidgetDefinition(obj: unknown): obj is IKpiWidgetDefinition;
+// @alpha @deprecated
+export const isKpiWidgetDefinition: typeof m.isKpiWidgetDefinition;
 
-// @alpha
-export function isLegacyKpi(obj: unknown): obj is ILegacyKpi;
+// @alpha @deprecated
+export const isLegacyKpi: typeof isKpi;
 
-// @alpha
-export function isLegacyKpiWithComparison(obj: unknown): obj is ILegacyKpiWithComparison;
+// @alpha @deprecated
+export const isLegacyKpiWithComparison: typeof isKpiWithComparison;
 
-// @alpha
-export function isLegacyKpiWithoutComparison(obj: unknown): obj is ILegacyKpiWithoutComparison;
+// @alpha @deprecated
+export const isLegacyKpiWithoutComparison: typeof isKpiWithoutComparison;
 
-// @public
-export function isMeasureDescriptor(obj: unknown): obj is IMeasureDescriptor;
+// @public @deprecated
+export const isMeasureDescriptor: typeof m.isMeasureDescriptor;
 
-// @public
-export function isMeasureGroupDescriptor(obj: unknown): obj is IMeasureGroupDescriptor;
+// @public @deprecated
+export const isMeasureGroupDescriptor: typeof m.isMeasureGroupDescriptor;
 
-// @public
-export function isMeasureMetadataObject(obj: unknown): obj is IMeasureMetadataObject;
+// @public @deprecated
+export const isMeasureMetadataObject: typeof m.isMeasureMetadataObject;
 
-// @public
-export function isMeasureMetadataObjectDefinition(obj: unknown): obj is IMeasureMetadataObjectDefinition;
+// @public @deprecated
+export const isMeasureMetadataObjectDefinition: typeof m.isMeasureMetadataObjectDefinition;
 
-// @public
-export function isMetadataObject(obj: unknown): obj is IMetadataObject;
+// @public @deprecated
+export const isMetadataObject: typeof m.isMetadataObject;
 
 // @public
 export function isNoDataError(obj: unknown): obj is NoDataError;
@@ -1568,26 +1236,26 @@ export function isNotSupported(obj: unknown): obj is NotSupported;
 // @public
 export function isProtectedDataError(obj: unknown): obj is ProtectedDataError;
 
-// @public
-export const isRelativeDateFilterForm: (obj: unknown) => obj is IRelativeDateFilterForm;
+// @alpha @deprecated
+export const isRelativeDateFilterForm: (obj: unknown) => obj is m.IRelativeDateFilterForm;
 
-// @public
-export const isRelativeDateFilterPreset: (obj: unknown) => obj is IRelativeDateFilterPreset;
+// @alpha @deprecated
+export const isRelativeDateFilterPreset: (obj: unknown) => obj is m.IRelativeDateFilterPreset;
 
-// @public
-export function isResultAttributeHeader(obj: unknown): obj is IResultAttributeHeader;
+// @public @deprecated
+export const isResultAttributeHeader: typeof m.isResultAttributeHeader;
 
-// @public
-export function isResultMeasureHeader(obj: unknown): obj is IResultMeasureHeader;
+// @public @deprecated
+export const isResultMeasureHeader: typeof m.isResultMeasureHeader;
 
-// @public
-export function isResultTotalHeader(obj: unknown): obj is IResultTotalHeader;
+// @public @deprecated
+export const isResultTotalHeader: typeof m.isResultTotalHeader;
 
-// @public
-export function isTempFilterContext(obj: unknown): obj is ITempFilterContext;
+// @alpha @deprecated
+export const isTempFilterContext: typeof m.isTempFilterContext;
 
-// @public
-export function isTotalDescriptor(obj: unknown): obj is ITotalDescriptor;
+// @public @deprecated
+export const isTotalDescriptor: typeof m.isTotalDescriptor;
 
 // @public
 export function isUnexpectedError(obj: unknown): obj is UnexpectedError;
@@ -1595,45 +1263,41 @@ export function isUnexpectedError(obj: unknown): obj is UnexpectedError;
 // @public
 export function isUnexpectedResponseError(obj: unknown): obj is UnexpectedResponseError;
 
-// @alpha
-export const isUserAccess: (obj: unknown) => obj is IUserAccess;
+// @alpha @deprecated
+export const isUserAccess: (obj: unknown) => obj is m.IUserAccess;
 
-// @public
-export const isUserAccessGrantee: (obj: unknown) => obj is IUserAccessGrantee;
+// @public @deprecated
+export const isUserAccessGrantee: (obj: unknown) => obj is m.IUserAccessGrantee;
 
-// @alpha
-export const isUserGroupAccess: (obj: unknown) => obj is IUserGroupAccess;
+// @alpha @deprecated
+export const isUserGroupAccess: (obj: unknown) => obj is m.IUserGroupAccess;
 
-// @public
-export const isUserGroupAccessGrantee: (obj: unknown) => obj is IUserGroupAccessGrantee;
+// @public @deprecated
+export const isUserGroupAccessGrantee: (obj: unknown) => obj is m.IUserGroupAccessGrantee;
 
 // @public
 export function isValueBasedElementsQueryOptionsElements(obj: unknown): obj is IElementsQueryOptionsElementsByValue | IElementsQueryOptionsElementsByPrimaryDisplayFormValue;
 
-// @public
-export function isVariableMetadataObject(obj: unknown): obj is IVariableMetadataObject;
+// @public @deprecated
+export const isVariableMetadataObject: typeof m.isVariableMetadataObject;
 
-// @public
-export function isWidget(obj: unknown): obj is IWidget;
+// @alpha @deprecated
+export const isWidget: typeof m.isWidget;
 
-// @public
-export function isWidgetAlert(obj: unknown): obj is IWidgetAlert;
+// @alpha @deprecated
+export const isWidgetAlert: typeof m.isWidgetAlert;
 
-// @public
-export function isWidgetAlertDefinition(obj: unknown): obj is IWidgetAlertDefinition;
+// @alpha @deprecated
+export const isWidgetAlertDefinition: typeof m.isWidgetAlertDefinition;
 
-// @alpha
-export function isWidgetAttachment(obj: unknown): obj is IWidgetAttachment;
+// @alpha @deprecated
+export const isWidgetAttachment: typeof m.isWidgetAttachment;
 
-// @public
-export function isWidgetDefinition(obj: unknown): obj is IWidgetDefinition;
+// @alpha @deprecated
+export const isWidgetDefinition: typeof m.isWidgetDefinition;
 
-// @public
-export interface ITempFilterContext {
-    readonly created: string;
-    readonly filters: FilterContextItem[];
-    readonly ref: ObjRef;
-    readonly uri: string;
+// @alpha @deprecated
+export interface ITempFilterContext extends m.ITempFilterContext {
 }
 
 // @public
@@ -1642,302 +1306,152 @@ export interface ITextExpressionToken {
     value: string;
 }
 
-// @beta
-export interface ITheme {
-    analyticalDesigner?: IThemeAnalyticalDesigner;
-    button?: IThemeButton;
-    chart?: IThemeChart;
-    dashboards?: IThemeDashboard;
-    kpi?: IThemeKpi;
-    modal?: IThemeModal;
-    palette?: IThemePalette;
-    table?: IThemeTable;
-    tooltip?: IThemeTooltip;
-    typography?: IThemeTypography;
+// @beta @deprecated
+export interface ITheme extends m.ITheme {
 }
 
-// @beta
-export interface IThemeAnalyticalDesigner {
-    title?: IThemeAnalyticalDesignerTitle;
+// @beta @deprecated
+export interface IThemeAnalyticalDesigner extends m.IThemeAnalyticalDesigner {
 }
 
-// @beta
-export interface IThemeAnalyticalDesignerTitle {
-    color?: ThemeColor;
+// @beta @deprecated
+export interface IThemeAnalyticalDesignerTitle extends m.IThemeAnalyticalDesignerTitle {
 }
 
-// @beta
-export interface IThemeButton {
-    borderRadius?: string;
-    dropShadow?: boolean;
-    textCapitalization?: boolean;
+// @beta @deprecated
+export interface IThemeButton extends m.IThemeButton {
 }
 
-// @beta
-export interface IThemeChart {
-    axisColor?: ThemeColor;
-    axisLabelColor?: ThemeColor;
-    axisValueColor?: ThemeColor;
-    backgroundColor?: ThemeColor;
-    gridColor?: ThemeColor;
-    legendValueColor?: ThemeColor;
-    tooltipBackgroundColor?: ThemeColor;
-    tooltipBorderColor?: ThemeColor;
-    tooltipLabelColor?: ThemeColor;
-    tooltipValueColor?: ThemeColor;
+// @beta @deprecated
+export interface IThemeChart extends m.IThemeChart {
 }
 
-// @beta
-export interface IThemeColorFamily {
-    base: ThemeColor;
-    contrast?: ThemeColor;
-    dark?: ThemeColor;
-    light?: ThemeColor;
+// @beta @deprecated
+export interface IThemeColorFamily extends m.IThemeColorFamily {
 }
 
-// @beta
-export interface IThemeComplementaryPalette {
-    // (undocumented)
-    c0: ThemeColor;
-    // (undocumented)
-    c1?: ThemeColor;
-    // (undocumented)
-    c2?: ThemeColor;
-    // (undocumented)
-    c3?: ThemeColor;
-    // (undocumented)
-    c4?: ThemeColor;
-    // (undocumented)
-    c5?: ThemeColor;
-    // (undocumented)
-    c6?: ThemeColor;
-    // (undocumented)
-    c7?: ThemeColor;
-    // (undocumented)
-    c8?: ThemeColor;
-    // (undocumented)
-    c9: ThemeColor;
+// @beta @deprecated
+export interface IThemeComplementaryPalette extends m.IThemeComplementaryPalette {
 }
 
-// @beta
-export interface IThemeDashboard {
-    content?: IThemeDashboardContent;
-    editPanel?: IThemeDashboardEditPanel;
-    filterBar?: IThemeDashboardFilterBar;
-    navigation?: IThemeDashboardNavigation;
-    section?: IThemeDashboardSection;
-    title?: IThemeDashboardTitle;
+// @beta @deprecated
+export interface IThemeDashboard extends m.IThemeDashboard {
 }
 
-// @beta
-export interface IThemeDashboardContent {
-    backgroundColor?: ThemeColor;
-    kpiWidget?: IThemeDashboardContentKpi;
-    widget?: IThemeDashboardContentWidget;
+// @beta @deprecated
+export interface IThemeDashboardContent extends m.IThemeDashboardContent {
 }
 
-// @beta
-export interface IThemeDashboardContentKpi {
-    backgroundColor?: ThemeColor;
-    borderColor?: ThemeColor;
-    borderRadius?: string;
-    borderWidth?: string;
-    dropShadow?: boolean;
-    kpi?: IThemeKpi;
-    title?: IThemeWidgetTitle;
+// @beta @deprecated
+export interface IThemeDashboardContentKpi extends m.IThemeDashboardContentKpi {
 }
 
-// @beta
-export interface IThemeDashboardContentWidget {
-    backgroundColor?: ThemeColor;
-    borderColor?: ThemeColor;
-    borderRadius?: string;
-    borderWidth?: string;
-    dropShadow?: boolean;
-    title?: IThemeWidgetTitle;
+// @beta @deprecated
+export interface IThemeDashboardContentWidget extends m.IThemeDashboardContentWidget {
 }
 
-// @beta
-export interface IThemeDashboardEditPanel {
-    backgroundColor?: ThemeColor;
+// @beta @deprecated
+export interface IThemeDashboardEditPanel extends m.IThemeDashboardEditPanel {
 }
 
-// @beta
-export interface IThemeDashboardFilterBar {
-    backgroundColor?: ThemeColor;
-    borderColor?: ThemeColor;
-    filterButton?: IThemeDashboardFilterBarButton;
+// @beta @deprecated
+export interface IThemeDashboardFilterBar extends m.IThemeDashboardFilterBar {
 }
 
-// @beta
-export interface IThemeDashboardFilterBarButton {
-    backgroundColor?: ThemeColor;
+// @beta @deprecated
+export interface IThemeDashboardFilterBarButton extends m.IThemeDashboardFilterBarButton {
 }
 
-// @beta
-export interface IThemeDashboardNavigation {
-    backgroundColor?: ThemeColor;
-    borderColor?: ThemeColor;
-    item?: IThemeDashboardNavigationItem;
-    title?: IThemeDashboardNavigationTitle;
+// @beta @deprecated
+export interface IThemeDashboardNavigation extends m.IThemeDashboardNavigation {
 }
 
-// @beta
-export interface IThemeDashboardNavigationItem {
-    color?: ThemeColor;
-    hoverColor?: ThemeColor;
-    selectedBackgroundColor?: ThemeColor;
-    selectedColor?: ThemeColor;
+// @beta @deprecated
+export interface IThemeDashboardNavigationItem extends m.IThemeDashboardNavigationItem {
 }
 
-// @beta
-export interface IThemeDashboardNavigationTitle {
-    color?: ThemeColor;
+// @beta @deprecated
+export interface IThemeDashboardNavigationTitle extends m.IThemeDashboardNavigationTitle {
 }
 
-// @beta
-export interface IThemeDashboardSection {
-    description?: IThemeDashboardSectionDescription;
-    title?: IThemeDashboardSectionTitle;
+// @beta @deprecated
+export interface IThemeDashboardSection extends m.IThemeDashboardSection {
 }
 
-// @beta
-export interface IThemeDashboardSectionDescription {
-    color?: ThemeColor;
+// @beta @deprecated
+export interface IThemeDashboardSectionDescription extends m.IThemeDashboardSectionDescription {
 }
 
-// @beta
-export interface IThemeDashboardSectionTitle {
-    color?: ThemeColor;
-    lineColor?: ThemeColor;
+// @beta @deprecated
+export interface IThemeDashboardSectionTitle extends m.IThemeDashboardSectionTitle {
 }
 
-// @beta
-export interface IThemeDashboardTitle {
-    backgroundColor?: ThemeColor;
-    borderColor?: ThemeColor;
-    color?: ThemeColor;
+// @beta @deprecated
+export interface IThemeDashboardTitle extends m.IThemeDashboardTitle {
 }
 
-// @beta
-export interface IThemeKpi {
-    primaryMeasureColor?: ThemeColor;
-    secondaryInfoColor?: ThemeColor;
-    value?: IThemeKpiValue;
+// @beta @deprecated
+export interface IThemeKpi extends m.IThemeKpi {
 }
 
-// @beta
-export interface IThemeKpiValue {
-    negativeColor?: ThemeColor;
-    positiveColor?: ThemeColor;
-    textAlign?: string;
+// @beta @deprecated
+export interface IThemeKpiValue extends m.IThemeKpiValue {
 }
 
-// @beta
-export interface IThemeModal {
-    borderColor?: ThemeColor;
-    borderRadius?: string;
-    borderWidth?: string;
-    dropShadow?: boolean;
-    outsideBackgroundColor?: ThemeColor;
-    title?: IThemeModalTitle;
+// @beta @deprecated
+export interface IThemeModal extends m.IThemeModal {
 }
 
-// @beta
-export interface IThemeModalTitle {
-    color?: ThemeColor;
-    lineColor?: ThemeColor;
+// @beta @deprecated
+export interface IThemeModalTitle extends m.IThemeModalTitle {
 }
 
-// @beta
-export interface IThemePalette {
-    complementary?: IThemeComplementaryPalette;
-    error?: IThemeColorFamily;
-    info?: IThemeColorFamily;
-    primary?: IThemeColorFamily;
-    success?: IThemeColorFamily;
-    warning?: IThemeColorFamily;
+// @beta @deprecated
+export interface IThemePalette extends m.IThemePalette {
 }
 
-// @beta
-export interface IThemeTable {
-    backgroundColor?: ThemeColor;
-    gridColor?: ThemeColor;
-    headerHoverBackgroundColor?: ThemeColor;
-    headerLabelColor?: ThemeColor;
-    hoverBackgroundColor?: ThemeColor;
-    loadingIconColor?: ThemeColor;
-    nullValueColor?: ThemeColor;
-    subtotalBackgroundColor?: ThemeColor;
-    totalBackgroundColor?: ThemeColor;
-    totalValueColor?: ThemeColor;
-    valueColor?: ThemeColor;
+// @beta @deprecated
+export interface IThemeTable extends m.IThemeTable {
 }
 
-// @beta
-export interface IThemeTooltip {
-    backgroundColor?: ThemeColor;
-    color?: ThemeColor;
+// @beta @deprecated
+export interface IThemeTooltip extends m.IThemeTooltip {
 }
 
-// @beta
-export interface IThemeTypography {
-    font?: ThemeFontUri;
-    fontBold?: ThemeFontUri;
+// @beta @deprecated
+export interface IThemeTypography extends m.IThemeTypography {
 }
 
-// @beta
-export interface IThemeWidgetTitle {
-    color?: ThemeColor;
-    textAlign?: string;
+// @beta @deprecated
+export interface IThemeWidgetTitle extends m.IThemeWidgetTitle {
 }
 
-// @public
-export interface ITotalDescriptor {
-    // (undocumented)
-    totalHeaderItem: ITotalDescriptorItem;
+// @public @deprecated
+export interface ITotalDescriptor extends m.ITotalDescriptor {
 }
 
-// @public
-export interface ITotalDescriptorItem {
-    // (undocumented)
-    name: string;
+// @public @deprecated
+export interface ITotalDescriptorItem extends m.ITotalDescriptorItem {
 }
 
 // @alpha @deprecated
 export interface IUser extends IUser_2 {
 }
 
-// @alpha
-export interface IUserAccess {
-    // (undocumented)
-    type: "user";
-    // (undocumented)
-    user: IWorkspaceUser;
+// @alpha @deprecated
+export interface IUserAccess extends m.IUserAccess {
 }
 
-// @public
-export interface IUserAccessGrantee {
-    // (undocumented)
-    granteeRef: ObjRef;
-    // (undocumented)
-    type: "user";
+// @public @deprecated
+export interface IUserAccessGrantee extends m.IUserAccessGrantee {
 }
 
-// @alpha
-export interface IUserGroupAccess {
-    // (undocumented)
-    type: "group";
-    // (undocumented)
-    userGroup: IWorkspaceUserGroup;
+// @alpha @deprecated
+export interface IUserGroupAccess extends m.IUserGroupAccess {
 }
 
-// @public
-export interface IUserGroupAccessGrantee {
-    // (undocumented)
-    granteeRef: ObjRef;
-    // (undocumented)
-    type: "group";
+// @public @deprecated
+export interface IUserGroupAccessGrantee extends m.IUserGroupAccessGrantee {
 }
 
 // @public
@@ -1947,9 +1461,9 @@ export interface IUserService {
 }
 
 // @public
-export interface IUserSettings extends ISettings {
+export interface IUserSettings extends ISettings_2 {
     locale: string;
-    separators: ISeparators;
+    separators: ISeparators_2;
     userId: string;
 }
 
@@ -1962,68 +1476,49 @@ export interface IUserSettingsService {
 export interface IUserWorkspaceSettings extends IUserSettings, IWorkspaceSettings {
 }
 
-// @public
-export interface IVariableMetadataObject extends IMetadataObject {
-    // (undocumented)
-    type: "variable";
+// @public @deprecated
+export interface IVariableMetadataObject extends m.IVariableMetadataObject {
 }
 
-// @alpha (undocumented)
-export type IWidget = IKpiWidget | IInsightWidget;
+// @alpha @deprecated (undocumented)
+export type IWidget = m.IWidget;
 
-// @public
-export interface IWidgetAlert extends IWidgetAlertBase, IDashboardObjectIdentity {
-    readonly filterContext?: IFilterContext;
+// @alpha @deprecated
+export interface IWidgetAlert extends m.IWidgetAlert {
 }
 
-// @public
-export interface IWidgetAlertBase {
-    readonly dashboard: ObjRef;
-    readonly description: string;
-    readonly isTriggered: boolean;
-    readonly threshold: number;
-    readonly title: string;
-    readonly whenTriggered: "underThreshold" | "aboveThreshold";
-    readonly widget: ObjRef;
+// @alpha @deprecated
+export interface IWidgetAlertBase extends m.IWidgetAlertBase {
 }
 
-// @public
+// @alpha
 export interface IWidgetAlertCount {
     readonly alertCount: number;
     readonly ref: ObjRef;
 }
 
-// @public
-export interface IWidgetAlertDefinition extends IWidgetAlertBase, Partial<IDashboardObjectIdentity> {
-    readonly filterContext?: IFilterContext | IFilterContextDefinition;
+// @alpha @deprecated
+export interface IWidgetAlertDefinition extends m.IWidgetAlertDefinition {
 }
 
-// @alpha
-export interface IWidgetAttachment {
-    // (undocumented)
-    exportOptions?: IExportOptions;
-    filterContext?: ObjRef;
-    formats: ("csv" | "xlsx")[];
-    widget: ObjRef;
-    widgetDashboard: ObjRef;
+// @alpha @deprecated
+export interface IWidgetAttachment extends m.IWidgetAttachment {
 }
 
-// @alpha
-export type IWidgetDefinition = IKpiWidgetDefinition | IInsightWidgetDefinition;
+// @alpha @deprecated
+export type IWidgetDefinition = m.IWidgetDefinition;
 
-// @alpha
-export interface IWidgetDescription {
-    readonly description: string;
-    readonly title: string;
+// @alpha @deprecated
+export interface IWidgetDescription extends m.IWidgetDescription {
 }
 
 // @alpha
 export interface IWidgetReferences {
-    catalogItems?: CatalogItem[];
+    catalogItems?: CatalogItem_2[];
 }
 
 // @alpha
-export interface IWidgetWithLayoutPath<TWidget = IDashboardWidget> {
+export interface IWidgetWithLayoutPath<TWidget = IDashboardWidget_2> {
     // (undocumented)
     path: LayoutPath;
     // (undocumented)
@@ -2033,22 +1528,22 @@ export interface IWidgetWithLayoutPath<TWidget = IDashboardWidget> {
 // @alpha
 export interface IWorkspaceAccessControlService {
     // (undocumented)
-    getAccessList(sharedObject: ObjRef): Promise<AccessGranteeDetail[]>;
+    getAccessList(sharedObject: ObjRef): Promise<AccessGranteeDetail_2[]>;
     // (undocumented)
-    grantAccess(sharedObject: ObjRef, grantees: IAccessGrantee[]): Promise<void>;
+    grantAccess(sharedObject: ObjRef, grantees: IAccessGrantee_2[]): Promise<void>;
     // (undocumented)
-    revokeAccess(sharedObject: ObjRef, grantees: IAccessGrantee[]): Promise<void>;
+    revokeAccess(sharedObject: ObjRef, grantees: IAccessGrantee_2[]): Promise<void>;
 }
 
 // @public
 export interface IWorkspaceAttributesService {
     elements(): IElementsQueryFactory;
-    getAttribute(ref: ObjRef): Promise<IAttributeMetadataObject>;
-    getAttributeDatasetMeta(ref: ObjRef): Promise<IMetadataObject>;
-    getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject>;
-    getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]>;
-    getAttributes(refs: ObjRef[]): Promise<IAttributeMetadataObject[]>;
-    getCatalogAttributes(refs: ObjRef[]): Promise<ICatalogAttribute[]>;
+    getAttribute(ref: ObjRef): Promise<IAttributeMetadataObject_2>;
+    getAttributeDatasetMeta(ref: ObjRef): Promise<IMetadataObject_2>;
+    getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject_2>;
+    getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject_2[]>;
+    getAttributes(refs: ObjRef[]): Promise<IAttributeMetadataObject_2[]>;
+    getCatalogAttributes(refs: ObjRef[]): Promise<ICatalogAttribute_2[]>;
     getCommonAttributes(attributeRefs: ObjRef[]): Promise<ObjRef[]>;
     getCommonAttributesBatch(attributesRefsBatch: ObjRef[][]): Promise<ObjRef[][]>;
 }
@@ -2076,7 +1571,7 @@ export interface IWorkspaceCatalogFactory extends IWorkspaceCatalogFactoryMethod
 export interface IWorkspaceCatalogFactoryMethods<TFactory, TOptions> {
     excludeTags(tags: ObjRef[]): TFactory;
     forDataset(dataset: ObjRef): TFactory;
-    forTypes(types: CatalogItemType[]): TFactory;
+    forTypes(types: CatalogItemType_2[]): TFactory;
     includeTags(tags: ObjRef[]): TFactory;
     withOptions(options: Partial<TOptions>): TFactory;
 }
@@ -2088,26 +1583,26 @@ export interface IWorkspaceCatalogFactoryOptions {
     includeDateGranularities?: string[];
     includeTags: ObjRef[];
     production?: boolean;
-    types: CatalogItemType[];
+    types: CatalogItemType_2[];
 }
 
 // @public
 export interface IWorkspaceCatalogMethods {
-    allItems(): CatalogItem[];
-    attributes(): ICatalogAttribute[];
-    dateDatasets(): ICatalogDateDataset[];
-    facts(): ICatalogFact[];
-    groups(): ICatalogGroup[];
-    measures(): ICatalogMeasure[];
+    allItems(): CatalogItem_2[];
+    attributes(): ICatalogAttribute_2[];
+    dateDatasets(): ICatalogDateDataset_2[];
+    facts(): ICatalogFact_2[];
+    groups(): ICatalogGroup_2[];
+    measures(): ICatalogMeasure_2[];
 }
 
 // @public
 export interface IWorkspaceCatalogWithAvailableItems extends IWorkspaceCatalogMethods {
-    allAvailableItems(): CatalogItem[];
-    availableAttributes(): ICatalogAttribute[];
-    availableDateDatasets(): ICatalogDateDataset[];
-    availableFacts(): ICatalogFact[];
-    availableMeasures(): ICatalogMeasure[];
+    allAvailableItems(): CatalogItem_2[];
+    availableAttributes(): ICatalogAttribute_2[];
+    availableDateDatasets(): ICatalogDateDataset_2[];
+    availableFacts(): ICatalogFact_2[];
+    availableMeasures(): ICatalogMeasure_2[];
 }
 
 // @public
@@ -2116,41 +1611,41 @@ export interface IWorkspaceCatalogWithAvailableItemsFactoryOptions extends IWork
     items?: IAttributeOrMeasure[];
 }
 
-// @public
+// @alpha
 export interface IWorkspaceDashboardsService {
-    createDashboard(dashboard: IDashboardDefinition): Promise<IDashboard>;
-    createDashboardPlugin(plugin: IDashboardPluginDefinition): Promise<IDashboardPlugin>;
-    createScheduledMail(scheduledMail: IScheduledMailDefinition, exportFilterContext?: IFilterContextDefinition): Promise<IScheduledMail>;
-    createWidgetAlert(alert: IWidgetAlertDefinition): Promise<IWidgetAlert>;
+    createDashboard(dashboard: IDashboardDefinition_2): Promise<IDashboard_2>;
+    createDashboardPlugin(plugin: IDashboardPluginDefinition_2): Promise<IDashboardPlugin_2>;
+    createScheduledMail(scheduledMail: IScheduledMailDefinition_2, exportFilterContext?: IFilterContextDefinition_2): Promise<IScheduledMail_2>;
+    createWidgetAlert(alert: IWidgetAlertDefinition_2): Promise<IWidgetAlert_2>;
     deleteDashboard(ref: ObjRef): Promise<void>;
     deleteDashboardPlugin(ref: ObjRef): Promise<void>;
     deleteScheduledMail(ref: ObjRef): Promise<void>;
     deleteWidgetAlert(ref: ObjRef): Promise<void>;
     deleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
-    exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<string>;
-    getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;
-    getDashboard(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboard>;
-    getDashboardPlugin(ref: ObjRef): Promise<IDashboardPlugin>;
-    getDashboardPlugins(): Promise<IDashboardPlugin[]>;
-    getDashboardReferencedObjects(dashboard: IDashboard, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardReferences>;
-    getDashboards(options?: IGetDashboardOptions): Promise<IListedDashboard[]>;
-    getDashboardWidgetAlertsForCurrentUser(ref: ObjRef): Promise<IWidgetAlert[]>;
+    exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem_2[]): Promise<string>;
+    getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert_2[]>;
+    getDashboard(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboard_2>;
+    getDashboardPlugin(ref: ObjRef): Promise<IDashboardPlugin_2>;
+    getDashboardPlugins(): Promise<IDashboardPlugin_2[]>;
+    getDashboardReferencedObjects(dashboard: IDashboard_2, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardReferences>;
+    getDashboards(options?: IGetDashboardOptions): Promise<IListedDashboard_2[]>;
+    getDashboardWidgetAlertsForCurrentUser(ref: ObjRef): Promise<IWidgetAlert_2[]>;
     getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardWithReferences>;
-    getResolvedFiltersForWidget(widget: IWidget, filters: IFilter[]): Promise<IFilter[]>;
+    getResolvedFiltersForWidget(widget: IWidget_2, filters: IFilter[]): Promise<IFilter[]>;
     getScheduledMailsCountForDashboard(ref: ObjRef): Promise<number>;
-    getScheduledMailsForDashboard(ref: ObjRef, options?: IGetScheduledMailOptions): Promise<IScheduledMail[]>;
+    getScheduledMailsForDashboard(ref: ObjRef, options?: IGetScheduledMailOptions): Promise<IScheduledMail_2[]>;
     getWidgetAlertsCountForWidgets(refs: ObjRef[]): Promise<IWidgetAlertCount[]>;
-    getWidgetReferencedObjects(widget: IWidget, types?: SupportedWidgetReferenceTypes[]): Promise<IWidgetReferences>;
-    updateDashboard(dashboard: IDashboard, updatedDashboard: IDashboardDefinition): Promise<IDashboard>;
-    updateWidgetAlert(alert: IWidgetAlert | IWidgetAlertDefinition): Promise<IWidgetAlert>;
+    getWidgetReferencedObjects(widget: IWidget_2, types?: SupportedWidgetReferenceTypes[]): Promise<IWidgetReferences>;
+    updateDashboard(dashboard: IDashboard_2, updatedDashboard: IDashboardDefinition_2): Promise<IDashboard_2>;
+    updateWidgetAlert(alert: IWidgetAlert_2 | IWidgetAlertDefinition_2): Promise<IWidgetAlert_2>;
     // (undocumented)
     readonly workspace: string;
 }
 
 // @public
 export interface IWorkspaceDatasetsService {
-    getAllDatasetsMeta(): Promise<IMetadataObject[]>;
-    getDatasets(): Promise<IDataset[]>;
+    getAllDatasetsMeta(): Promise<IMetadataObject_2[]>;
+    getDatasets(): Promise<IDataset_2[]>;
 }
 
 // @public
@@ -2168,8 +1663,8 @@ export interface IWorkspaceDescriptor {
 
 // @public
 export interface IWorkspaceFactsService {
-    getCatalogFacts(factRefs: ObjRef[]): Promise<ICatalogFact[]>;
-    getFactDatasetMeta(ref: ObjRef): Promise<IMetadataObject>;
+    getCatalogFacts(factRefs: ObjRef[]): Promise<ICatalogFact_2[]>;
+    getFactDatasetMeta(ref: ObjRef): Promise<IMetadataObject_2>;
 }
 
 // @public
@@ -2188,26 +1683,24 @@ export interface IWorkspaceInsightsService {
 
 // @public
 export interface IWorkspaceMeasuresService {
-    createMeasure(measure: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject>;
+    createMeasure(measure: IMeasureMetadataObjectDefinition_2): Promise<IMeasureMetadataObject_2>;
     deleteMeasure(measureRef: ObjRef): Promise<void>;
-    getCatalogMeasures(measureRefs: ObjRef[]): Promise<ICatalogMeasure[]>;
+    getCatalogMeasures(measureRefs: ObjRef[]): Promise<ICatalogMeasure_2[]>;
     getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
     getMeasureReferencingObjects(measureRef: ObjRef): Promise<IMeasureReferencing>;
-    updateMeasure(measure: IMeasureMetadataObject): Promise<IMeasureMetadataObject>;
+    updateMeasure(measure: IMeasureMetadataObject_2): Promise<IMeasureMetadataObject_2>;
 }
 
-// @public
-export type IWorkspacePermissions = {
-    [permission in WorkspacePermission]: boolean;
-};
+// @public @deprecated
+export type IWorkspacePermissions = m.IWorkspacePermissions;
 
 // @public
 export interface IWorkspacePermissionsService {
-    getPermissionsForCurrentUser(): Promise<IWorkspacePermissions>;
+    getPermissionsForCurrentUser(): Promise<IWorkspacePermissions_2>;
 }
 
 // @public
-export interface IWorkspaceSettings extends ISettings {
+export interface IWorkspaceSettings extends ISettings_2 {
     workspace: string;
 }
 
@@ -2237,27 +1730,15 @@ export type IWorkspacesQueryResult = IPagedResource<IAnalyticalWorkspace>;
 // @public
 export interface IWorkspaceStylingService {
     getColorPalette(): Promise<IColorPalette>;
-    getTheme(): Promise<ITheme>;
+    getTheme(): Promise<ITheme_2>;
 }
 
-// @public
-export interface IWorkspaceUser {
-    email: string;
-    firstName?: string;
-    fullName?: string;
-    lastName?: string;
-    login: string;
-    ref: ObjRef;
-    status?: "ENABLED" | "DISABLED";
-    uri: string;
+// @public @deprecated
+export interface IWorkspaceUser extends m.IWorkspaceUser {
 }
 
-// @alpha
-export interface IWorkspaceUserGroup {
-    description?: string;
-    id?: string;
-    name?: string;
-    ref: ObjRef;
+// @alpha @deprecated
+export interface IWorkspaceUserGroup extends m.IWorkspaceUserGroup {
 }
 
 // @alpha
@@ -2273,7 +1754,7 @@ export interface IWorkspaceUserGroupsQueryOptions {
 }
 
 // @alpha
-export type IWorkspaceUserGroupsQueryResult = IPagedResource<IWorkspaceUserGroup>;
+export type IWorkspaceUserGroupsQueryResult = IPagedResource<IWorkspaceUserGroup_2>;
 
 // @public
 export interface IWorkspaceUsersQuery {
@@ -2292,35 +1773,35 @@ export interface IWorkspaceUsersQueryOptions {
 // @public
 export type IWorkspaceUsersQueryResult = IPagedResource<IWorkspaceUser>;
 
-// @public
-export type KpiDrillDefinition = IDrillToLegacyDashboard;
+// @alpha @deprecated
+export type KpiDrillDefinition = m.KpiDrillDefinition;
 
 // @alpha
 export type LayoutPath = Array<string | number>;
 
 // @alpha (undocumented)
-export function layoutWidgets<TWidget extends IDashboardWidget>(layout: IDashboardLayout<TWidget>): Array<IWidgetDefinition | IWidget>;
+export function layoutWidgets<TWidget extends IDashboardWidget_2>(layout: IDashboardLayout_2<TWidget>): Array<IWidgetDefinition_2 | IWidget_2>;
 
 // @alpha
-export function layoutWidgetsWithPaths<TWidget extends IDashboardWidget>(layout: IDashboardLayout<TWidget>): IWidgetWithLayoutPath<TWidget>[];
+export function layoutWidgetsWithPaths<TWidget extends IDashboardWidget_2>(layout: IDashboardLayout_2<TWidget>): IWidgetWithLayoutPath<TWidget>[];
 
-// @alpha
-export type ListedDashboardAvailability = "full" | "viaLink";
+// @alpha @deprecated
+export type ListedDashboardAvailability = m.ListedDashboardAvailability;
 
-// @public
-export type MetadataObject = IAttributeMetadataObject | IAttributeDisplayFormMetadataObject | IFactMetadataObject | IMeasureMetadataObject | IDataSetMetadataObject | IVariableMetadataObject | IDashboardMetadataObject;
+// @public @deprecated
+export type MetadataObject = m.MetadataObject;
 
-// @public
-export const metadataObjectId: (metadataObject: MetadataObject) => string;
+// @public @deprecated
+export const metadataObjectId: (metadataObject: m.MetadataObject) => string;
 
-// @public
-export function newAbsoluteDashboardDateFilter(from: DateString, to: DateString): IDashboardDateFilter;
+// @alpha @deprecated
+export const newAbsoluteDashboardDateFilter: typeof m.newAbsoluteDashboardDateFilter;
 
-// @public
-export function newAllTimeDashboardDateFilter(): IDashboardDateFilter;
+// @alpha @deprecated
+export const newAllTimeDashboardDateFilter: typeof m.newAllTimeDashboardDateFilter;
 
-// @public
-export function newRelativeDashboardDateFilter(granularity: DateFilterGranularity, from: number, to: number): IDashboardDateFilter;
+// @alpha @deprecated
+export const newRelativeDashboardDateFilter: typeof m.newRelativeDashboardDateFilter;
 
 // @public
 export class NoDataError extends AnalyticalBackendError {
@@ -2352,11 +1833,11 @@ export class NotSupported extends AnalyticalBackendError {
     constructor(message: string);
 }
 
-// @public
-export type OptionType = AllTimeType | AbsoluteFormType | RelativeFormType | AbsolutePresetType | RelativePresetType;
+// @alpha @deprecated
+export type OptionType = DateFilterOptionType;
 
-// @public
-export type PlatformEdition = "free" | "growth" | "enterprise";
+// @public @deprecated
+export type PlatformEdition = m.PlatformEdition;
 
 // @public
 export function prepareExecution(backend: IAnalyticalBackend, definition: IExecutionDefinition): IPreparedExecution;
@@ -2366,29 +1847,29 @@ export class ProtectedDataError extends AnalyticalBackendError {
     constructor(message: string, cause?: Error);
 }
 
-// @public
-export type RelativeFormType = "relativeForm";
+// @alpha @deprecated
+export type RelativeFormType = DateFilterOptionRelativeFormType;
 
-// @public
-export type RelativeGranularityOffset = number;
+// @alpha @deprecated
+export type RelativeGranularityOffset = RelativeDateFilterGranularityOffset;
 
-// @public
-export type RelativePresetType = "relativePreset";
+// @alpha @deprecated
+export type RelativePresetType = DateFilterOptionRelativePresetType;
 
-// @public
-export type RelativeType = "relative";
+// @alpha @deprecated
+export type RelativeType = DateFilterRelativeType;
 
-// @public
-export function resultHeaderName(header: IResultHeader): string;
+// @public @deprecated
+export const resultHeaderName: typeof m.resultHeaderName;
 
-// @alpha
-export type ScheduledMailAttachment = IDashboardAttachment | IWidgetAttachment;
+// @alpha @deprecated
+export type ScheduledMailAttachment = m.ScheduledMailAttachment;
 
-// @public
-export type ScreenSize = "xl" | "lg" | "md" | "sm" | "xs";
+// @alpha @deprecated
+export type ScreenSize = m.ScreenSize;
 
-// @alpha
-export type ShareStatus = "private" | "shared" | "public";
+// @alpha @deprecated
+export type ShareStatus = m.ShareStatus;
 
 // @alpha (undocumented)
 export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin";
@@ -2399,11 +1880,11 @@ export type SupportedInsightReferenceTypes = Exclude<InsightReferenceTypes, "dis
 // @alpha
 export type SupportedWidgetReferenceTypes = Exclude<ObjectType, "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable">;
 
-// @beta
-export type ThemeColor = string;
+// @beta @deprecated
+export type ThemeColor = m.ThemeColor;
 
-// @beta
-export type ThemeFontUri = string;
+// @beta @deprecated
+export type ThemeFontUri = m.ThemeFontUri;
 
 // @public
 export class UnexpectedError extends AnalyticalBackendError {
@@ -2426,107 +1907,31 @@ export function userFullName(user: IUser): string | undefined;
 export type ValidationContext = "CORS" | "UI_EVENT" | "DRILL_TO_URI";
 
 // @alpha
-export function walkLayout<TWidget extends IDashboardWidget>(layout: IDashboardLayout<TWidget>, { sectionCallback, itemCallback, widgetCallback, }: {
-    sectionCallback?: (section: IDashboardLayoutSection<TWidget>, sectionPath: LayoutPath) => void;
-    itemCallback?: (item: IDashboardLayoutItem<TWidget>, widgetPath: LayoutPath) => void;
+export function walkLayout<TWidget extends IDashboardWidget_2>(layout: IDashboardLayout_2<TWidget>, { sectionCallback, itemCallback, widgetCallback, }: {
+    sectionCallback?: (section: IDashboardLayoutSection_2<TWidget>, sectionPath: LayoutPath) => void;
+    itemCallback?: (item: IDashboardLayoutItem_2<TWidget>, widgetPath: LayoutPath) => void;
     widgetCallback?: (widget: TWidget, widgetPath: LayoutPath) => void;
 }, path?: LayoutPath): void;
 
-// @public
-export function widgetId(widget: IWidget): string;
+// @alpha @deprecated
+export const widgetId: typeof m.widgetId;
 
-// @public
-export function widgetRef(widget: IWidget): ObjRef;
+// @alpha @deprecated
+export const widgetRef: typeof m.widgetRef;
 
-// @public
-export function widgetTitle(widget: IWidget): string;
+// @alpha @deprecated
+export const widgetTitle: typeof m.widgetTitle;
 
 // @alpha @deprecated (undocumented)
-export type WidgetType = AnalyticalWidgetType;
+export type WidgetType = m.WidgetType;
 
-// @public
-export function widgetType(widget: IWidget): AnalyticalWidgetType;
+// @alpha @deprecated
+export const widgetType: typeof m.widgetType;
 
-// @public
-export function widgetUri(widget: IWidget): string;
+// @alpha @deprecated
+export const widgetUri: typeof m.widgetUri;
 
-// @public
-export type WorkspacePermission =
-/**
-* Whether the current user has permissions to run MAQL DDL and DML, access a workspace staging directory.
-*/
-"canInitData"
-/**
-* Whether the current user has permissions to upload CSV files via CSV Uploader.
-*/
-| "canUploadNonProductionCSV"
-/**
-* Whether the current user has permissions to download a complete report.
-*/
-| "canExecuteRaw"
-/**
-* Whether the current user has permissions to export the report.
-*/
-| "canExportReport"
-/**
-* Whether the current user has permissions to access GoodData portal directly (user can log in).
-*/
-| "canAccessWorkbench"
-/**
-* Whether the current user has permissions to create a report object via API.
-*/
-| "canCreateReport"
-/**
-* Whether the current user has permissions to create a KPI object, KPI widget object, and an insight object via API.
-*/
-| "canCreateVisualization"
-/**
-* Whether the current user has permissions to create a KPI dashboard object via API.
-*/
-| "canCreateAnalyticalDashboard"
-/**
-* Whether the current user has permissions to modify and delete a metric, run MAQL DDL, run the MAQL validator, change metric visibility via the `unlisted` flag.
-*/
-| "canManageMetric"
-/**
-* Whether the current user has permissions to modify and delete a report object, change report visibility via the `unlisted` flag.
-*/
-| "canManageReport"
-/**
-* Whether the current user has permissions to modify and delete a KPI dashboard object.
-*/
-| "canManageAnalyticalDashboard"
-/**
-* Whether the current user has permissions to modify workspace metadata, see the workspace token, lock and unlock objects, delete locked objects, set and unset the restricted flag on objects, clear cache, delete a workspace.
-*/
-| "canManageProject"
-/**
-* Whether the current user has permissions to create a scheduled email object and a KPI alert object.
-*/
-| "canCreateScheduledMail"
-/**
-* Whether the current user has permissions to list users, roles, and permissions.
-*/
-| "canListUsersInProject"
-/**
-* Whether the current user has permissions to modify and delete a domain, run MAQL DDL.
-*/
-| "canManageDomain"
-/**
-* Whether the current user has permissions to invite a user to a workspace or delete an invitation.
-*/
-| "canInviteUserToProject"
-/**
-* Whether the current user has permissions to run uploads, load date dimensions, access a workspace staging directory.
-*/
-| "canRefreshData"
-/**
-* Whether the current user has permissions to add, remove, and list ACLs (Access Control Lists) on an object.
-*/
-| "canManageACL"
-/**
-* Whether the current user has permissions to manage scheduled email objects.
-*/
-| "canManageScheduledMail";
+// @public @deprecated
+export type WorkspacePermission = m.WorkspacePermission;
 
 ```

@@ -1,18 +1,88 @@
 // (C) 2019-2022 GoodData Corporation
-import { IFilter, ObjRef } from "@gooddata/sdk-model";
 import {
-    IDashboard,
-    IDashboardDefinition,
+    IFilter,
+    ObjRef,
+    FilterContextItem,
+    IFilterContextDefinition,
+    IWidgetAlert,
+    IWidgetAlertDefinition,
+    IWidget,
+    ObjectType,
+    CatalogItem,
+    IScheduledMail,
+    IScheduledMailDefinition,
+    IInsight,
     IDashboardPlugin,
-    IDashboardPluginDefinition,
-    IDashboardReferences,
-    IDashboardWithReferences,
+    IDashboard,
     IListedDashboard,
-} from "./dashboard";
-import { IWidgetAlert, IWidgetAlertCount, IWidgetAlertDefinition } from "./alert";
-import { IScheduledMail, IScheduledMailDefinition } from "./scheduledMail";
-import { FilterContextItem, IFilterContextDefinition } from "./filterContext";
-import { IWidget, IWidgetReferences, SupportedWidgetReferenceTypes } from "./widget";
+    IDashboardDefinition,
+    IDashboardPluginDefinition,
+} from "@gooddata/sdk-model";
+
+/**
+ * Dashboard referenced objects
+ * @alpha
+ */
+export interface IDashboardReferences {
+    /**
+     * Referenced insights. Empty if no insights on dashboard or referenced insights were not requested.
+     */
+    insights: IInsight[];
+
+    /**
+     * Referenced plugins. Empty if no plugins on dashboard or referenced plugins were not requested.
+     */
+    plugins: IDashboardPlugin[];
+}
+
+/**
+ * Dashboard with referenced objects
+ * @alpha
+ */
+export interface IDashboardWithReferences {
+    dashboard: IDashboard;
+    references: IDashboardReferences;
+}
+
+/**
+ * List of currently supported types of references that can be retrieved using getWidgetReferencedObjects()
+ * @alpha
+ */
+export type SupportedWidgetReferenceTypes = Exclude<
+    ObjectType,
+    "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable"
+>;
+
+//
+/**
+ * Contains information about objects that may be referenced by a widget. The contents of this object
+ * depend on the widget and the types requested at the time of call to getWidgetReferencedObjects.
+ *
+ * @alpha
+ */
+export interface IWidgetReferences {
+    /**
+     * If requested, measures referenced by the widget will be returned here.
+     * If none of them were requested, the catalogItems will be undefined.
+     */
+    catalogItems?: CatalogItem[];
+}
+
+/**
+ * Pair of the widget and it's alert count
+ * @alpha
+ */
+export interface IWidgetAlertCount {
+    /**
+     * Widget reference
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Number of alerts for the referenced widget
+     */
+    readonly alertCount: number;
+}
 
 /**
  * Configuration options for getting dashboards.
@@ -70,7 +140,7 @@ export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin";
 /**
  * Service to list, create and update analytical dashboards
  *
- * @public
+ * @alpha
  */
 export interface IWorkspaceDashboardsService {
     readonly workspace: string;

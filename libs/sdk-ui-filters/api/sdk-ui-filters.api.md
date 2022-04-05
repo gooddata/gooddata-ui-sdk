@@ -7,6 +7,7 @@
 import { AttributeFiltersOrPlaceholders } from '@gooddata/sdk-ui';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-backend-spi';
 import { DateFilterGranularity } from '@gooddata/sdk-backend-spi';
+import { DateFilterGranularity as DateFilterGranularity_2 } from '@gooddata/sdk-model';
 import { DateString } from '@gooddata/sdk-backend-spi';
 import { IAbsoluteDateFilterForm } from '@gooddata/sdk-backend-spi';
 import { IAbsoluteDateFilterPreset } from '@gooddata/sdk-backend-spi';
@@ -80,7 +81,7 @@ export const DateFilterHelpers: {
     canExcludeCurrentPeriod: (dateFilterOption: DateFilterOption) => boolean;
     mapOptionToAfm: (value: DateFilterOption, dateDataSet: ObjRef, excludeCurrentPeriod: boolean) => IDateFilter;
     formatAbsoluteDateRange: (from: string | Date, to: string | Date, dateFormat: string) => string;
-    formatRelativeDateRange: (from: number, to: number, granularity: DateFilterGranularity, translator: IDateAndMessageTranslator) => string;
+    formatRelativeDateRange: (from: number, to: number, granularity: DateFilterGranularity_2, translator: IDateAndMessageTranslator) => string;
     filterVisibleDateFilterOptions: typeof filterVisibleDateFilterOptions;
 };
 

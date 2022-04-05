@@ -1,13 +1,14 @@
 // (C) 2019-2022 GoodData Corporation
+import { IDateFilterConfig } from "@gooddata/sdk-model";
+
 import { IPagedResource } from "../../common/paging";
-import { IDateFilterConfig } from "./types";
 
 /**
  * This service provides access to workspace date filter configs (also known as extended date filters).
  * Date filter configs allow to define your own date filter presets, that appear in the date filter.
  * To make date filter configs work, you have to set enableKPIDashboardExtendedDateFilters feature flag to true.
  *
- * @public
+ * @alpha
  */
 export interface IDateFilterConfigsQuery {
     /**

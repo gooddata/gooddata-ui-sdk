@@ -4,15 +4,816 @@
 
 ```ts
 
+import { AccessGranteeDetail } from '@gooddata/sdk-model';
+import { AnalyticalWidgetType } from '@gooddata/sdk-model';
+import { attributeDescriptorLocalId } from '@gooddata/sdk-model';
+import { attributeDescriptorName } from '@gooddata/sdk-model';
+import { BuiltInWidgetTypes } from '@gooddata/sdk-model';
+import { CatalogItem } from '@gooddata/sdk-model';
+import { catalogItemMetadataObject } from '@gooddata/sdk-model';
+import { CatalogItemType } from '@gooddata/sdk-model';
+import { DashboardDateFilterConfigMode } from '@gooddata/sdk-model';
+import { dashboardFilterReferenceObjRef } from '@gooddata/sdk-model';
+import { DataColumnType } from '@gooddata/sdk-model';
+import { DatasetLoadStatus } from '@gooddata/sdk-model';
+import { DataValue } from '@gooddata/sdk-model';
+import { DateFilterGranularity } from '@gooddata/sdk-model';
+import { DateFilterType } from '@gooddata/sdk-model';
+import { DateString } from '@gooddata/sdk-model';
+import { DrillDefinition } from '@gooddata/sdk-model';
+import { DrillOrigin } from '@gooddata/sdk-model';
+import { DrillOriginType } from '@gooddata/sdk-model';
+import { DrillTransition } from '@gooddata/sdk-model';
+import { DrillType } from '@gooddata/sdk-model';
+import { FilterContextItem } from '@gooddata/sdk-model';
 import { getColorMappingPredicate } from '@gooddata/sdk-ui-charts';
+import { GroupableCatalogItem } from '@gooddata/sdk-model';
+import { IAbsoluteDateFilterForm } from '@gooddata/sdk-model';
+import { IAbsoluteDateFilterPreset } from '@gooddata/sdk-model';
+import { IAccessControlAware } from '@gooddata/sdk-model';
+import { IAccessGrantee } from '@gooddata/sdk-model';
+import { IAllTimeDateFilterOption } from '@gooddata/sdk-model';
+import { IAnalyticalWidget } from '@gooddata/sdk-model';
+import { IAttributeDescriptor } from '@gooddata/sdk-model';
+import { IAttributeDescriptorBody } from '@gooddata/sdk-model';
+import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
+import { IAttributeElement } from '@gooddata/sdk-model';
+import { IAttributeHeaderFormOf } from '@gooddata/sdk-model';
+import { IAttributeMetadataObject } from '@gooddata/sdk-model';
+import { IBaseWidget } from '@gooddata/sdk-model';
+import { ICatalogAttribute } from '@gooddata/sdk-model';
+import { ICatalogDateAttribute } from '@gooddata/sdk-model';
+import { ICatalogDateDataset } from '@gooddata/sdk-model';
+import { ICatalogFact } from '@gooddata/sdk-model';
+import { ICatalogGroup } from '@gooddata/sdk-model';
+import { ICatalogItemBase } from '@gooddata/sdk-model';
+import { ICatalogMeasure } from '@gooddata/sdk-model';
+import { IDashboard } from '@gooddata/sdk-model';
+import { IDashboardAttachment } from '@gooddata/sdk-model';
+import { IDashboardAttributeFilter } from '@gooddata/sdk-model';
+import { IDashboardAttributeFilterParent } from '@gooddata/sdk-model';
+import { IDashboardAttributeFilterReference } from '@gooddata/sdk-model';
+import { IDashboardBase } from '@gooddata/sdk-model';
+import { IDashboardDateFilter } from '@gooddata/sdk-model';
+import { IDashboardDateFilterAddedPresets } from '@gooddata/sdk-model';
+import { IDashboardDateFilterConfig } from '@gooddata/sdk-model';
+import { IDashboardDateFilterReference } from '@gooddata/sdk-model';
+import { IDashboardDefinition } from '@gooddata/sdk-model';
+import { IDashboardFilterReference } from '@gooddata/sdk-model';
+import { IDashboardLayout } from '@gooddata/sdk-model';
+import { IDashboardLayoutItem } from '@gooddata/sdk-model';
+import { IDashboardLayoutSection } from '@gooddata/sdk-model';
+import { IDashboardLayoutSectionHeader } from '@gooddata/sdk-model';
+import { IDashboardLayoutSize } from '@gooddata/sdk-model';
+import { IDashboardLayoutSizeByScreenSize } from '@gooddata/sdk-model';
+import { IDashboardMetadataObject } from '@gooddata/sdk-model';
+import { IDashboardObjectIdentity } from '@gooddata/sdk-model';
+import { IDashboardPlugin } from '@gooddata/sdk-model';
+import { IDashboardPluginBase } from '@gooddata/sdk-model';
+import { IDashboardPluginDefinition } from '@gooddata/sdk-model';
+import { IDashboardPluginLink } from '@gooddata/sdk-model';
+import { IDashboardWidget } from '@gooddata/sdk-model';
+import { IDataColumn } from '@gooddata/sdk-model';
+import { IDataColumnBody } from '@gooddata/sdk-model';
+import { IDataHeader } from '@gooddata/sdk-model';
+import { IDataset } from '@gooddata/sdk-model';
+import { IDatasetBody } from '@gooddata/sdk-model';
+import { IDatasetLoadInfo } from '@gooddata/sdk-model';
+import { IDataSetMetadataObject } from '@gooddata/sdk-model';
+import { IDatasetUser } from '@gooddata/sdk-model';
+import { IDateFilterConfig } from '@gooddata/sdk-model';
+import { IDateFilterOption } from '@gooddata/sdk-model';
+import { IDimensionDescriptor } from '@gooddata/sdk-model';
+import { IDimensionItemDescriptor } from '@gooddata/sdk-model';
+import { IDrill } from '@gooddata/sdk-model';
+import { IDrillableWidget } from '@gooddata/sdk-model';
+import { IDrillFromAttribute } from '@gooddata/sdk-model';
+import { IDrillFromMeasure } from '@gooddata/sdk-model';
+import { IDrillOrigin } from '@gooddata/sdk-model';
+import { IDrillTarget } from '@gooddata/sdk-model';
+import { IDrillToAttributeUrl } from '@gooddata/sdk-model';
+import { IDrillToAttributeUrlTarget } from '@gooddata/sdk-model';
+import { IDrillToCustomUrl } from '@gooddata/sdk-model';
+import { IDrillToCustomUrlTarget } from '@gooddata/sdk-model';
+import { IDrillToDashboard } from '@gooddata/sdk-model';
+import { IDrillToInsight } from '@gooddata/sdk-model';
+import { IDrillToLegacyDashboard } from '@gooddata/sdk-model';
+import { IExportOptions } from '@gooddata/sdk-model';
+import { IFactMetadataObject } from '@gooddata/sdk-model';
+import { IFilterableWidget } from '@gooddata/sdk-model';
+import { IFilterContext } from '@gooddata/sdk-model';
+import { IFilterContextBase } from '@gooddata/sdk-model';
+import { IFilterContextDefinition } from '@gooddata/sdk-model';
+import { IGroupableCatalogItemBase } from '@gooddata/sdk-model';
+import { IInsightWidget } from '@gooddata/sdk-model';
+import { IInsightWidgetBase } from '@gooddata/sdk-model';
+import { IInsightWidgetConfiguration } from '@gooddata/sdk-model';
+import { IInsightWidgetDefinition } from '@gooddata/sdk-model';
+import { IKpiWidget } from '@gooddata/sdk-model';
+import { IKpiWidgetBase } from '@gooddata/sdk-model';
+import { IKpiWidgetDefinition } from '@gooddata/sdk-model';
+import { IListedDashboard } from '@gooddata/sdk-model';
+import { IMeasureDescriptor } from '@gooddata/sdk-model';
+import { IMeasureDescriptorItem } from '@gooddata/sdk-model';
+import { IMeasureDescriptorObject } from '@gooddata/sdk-model';
+import { IMeasureGroupDescriptor } from '@gooddata/sdk-model';
+import { IMeasureMetadataObject } from '@gooddata/sdk-model';
+import { IMeasureMetadataObjectBase } from '@gooddata/sdk-model';
+import { IMeasureMetadataObjectDefinition } from '@gooddata/sdk-model';
+import { IMetadataObject } from '@gooddata/sdk-model';
+import { IMetadataObjectBase } from '@gooddata/sdk-model';
+import { IMetadataObjectDefinition } from '@gooddata/sdk-model';
+import { IMetadataObjectIdentity } from '@gooddata/sdk-model';
+import { InsightDrillDefinition } from '@gooddata/sdk-model';
+import { IOrganizationDescriptor } from '@gooddata/sdk-model';
+import { IRelativeDateFilterForm } from '@gooddata/sdk-model';
+import { IRelativeDateFilterPreset } from '@gooddata/sdk-model';
+import { IRelativeDateFilterPresetOfGranularity } from '@gooddata/sdk-model';
+import { IResultAttributeHeader } from '@gooddata/sdk-model';
+import { IResultAttributeHeaderItem } from '@gooddata/sdk-model';
+import { IResultHeader } from '@gooddata/sdk-model';
+import { IResultMeasureHeader } from '@gooddata/sdk-model';
+import { IResultMeasureHeaderItem } from '@gooddata/sdk-model';
+import { IResultTotalHeader } from '@gooddata/sdk-model';
+import { IResultTotalHeaderItem } from '@gooddata/sdk-model';
+import { IResultWarning } from '@gooddata/sdk-model';
+import { isAbsoluteDateFilterForm } from '@gooddata/sdk-model';
+import { isAbsoluteDateFilterPreset } from '@gooddata/sdk-model';
+import { isAllTimeDashboardDateFilter } from '@gooddata/sdk-model';
+import { isAllTimeDateFilterOption } from '@gooddata/sdk-model';
+import { isAttributeDescriptor } from '@gooddata/sdk-model';
+import { isAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
+import { isAttributeMetadataObject } from '@gooddata/sdk-model';
+import { isCatalogAttribute } from '@gooddata/sdk-model';
+import { isCatalogDateDataset } from '@gooddata/sdk-model';
+import { isCatalogFact } from '@gooddata/sdk-model';
+import { isCatalogMeasure } from '@gooddata/sdk-model';
+import { IScheduledMail } from '@gooddata/sdk-model';
+import { IScheduledMailBase } from '@gooddata/sdk-model';
+import { IScheduledMailDefinition } from '@gooddata/sdk-model';
+import { isDashboard } from '@gooddata/sdk-model';
+import { isDashboardAttachment } from '@gooddata/sdk-model';
+import { isDashboardAttributeFilter } from '@gooddata/sdk-model';
+import { isDashboardAttributeFilterReference } from '@gooddata/sdk-model';
+import { isDashboardDateFilter } from '@gooddata/sdk-model';
+import { isDashboardDateFilterReference } from '@gooddata/sdk-model';
+import { isDashboardDefinition } from '@gooddata/sdk-model';
+import { isDashboardLayout } from '@gooddata/sdk-model';
+import { isDashboardLayoutItem } from '@gooddata/sdk-model';
+import { isDashboardLayoutSection } from '@gooddata/sdk-model';
+import { isDashboardMetadataObject } from '@gooddata/sdk-model';
+import { isDashboardWidget } from '@gooddata/sdk-model';
+import { isDataSetMetadataObject } from '@gooddata/sdk-model';
+import { isDateFilterGranularity } from '@gooddata/sdk-model';
+import { isDrillFromAttribute } from '@gooddata/sdk-model';
+import { isDrillFromMeasure } from '@gooddata/sdk-model';
+import { isDrillToAttributeUrl } from '@gooddata/sdk-model';
+import { isDrillToCustomUrl } from '@gooddata/sdk-model';
+import { isDrillToDashboard } from '@gooddata/sdk-model';
+import { isDrillToInsight } from '@gooddata/sdk-model';
+import { isDrillToLegacyDashboard } from '@gooddata/sdk-model';
+import { ISeparators } from '@gooddata/sdk-model';
+import { ISettings } from '@gooddata/sdk-model';
+import { isFactMetadataObject } from '@gooddata/sdk-model';
+import { isFilterContext } from '@gooddata/sdk-model';
+import { isFilterContextDefinition } from '@gooddata/sdk-model';
+import { isInsightWidget } from '@gooddata/sdk-model';
+import { isInsightWidgetDefinition } from '@gooddata/sdk-model';
+import { isKpiWidget } from '@gooddata/sdk-model';
+import { isKpiWidgetDefinition } from '@gooddata/sdk-model';
+import { isMeasureDescriptor } from '@gooddata/sdk-model';
+import { isMeasureGroupDescriptor } from '@gooddata/sdk-model';
+import { isMeasureMetadataObject } from '@gooddata/sdk-model';
+import { isMeasureMetadataObjectDefinition } from '@gooddata/sdk-model';
+import { isMetadataObject } from '@gooddata/sdk-model';
+import { isRelativeDateFilterForm } from '@gooddata/sdk-model';
+import { isRelativeDateFilterPreset } from '@gooddata/sdk-model';
+import { isResultAttributeHeader } from '@gooddata/sdk-model';
+import { isResultMeasureHeader } from '@gooddata/sdk-model';
+import { isResultTotalHeader } from '@gooddata/sdk-model';
+import { isTempFilterContext } from '@gooddata/sdk-model';
+import { isTotalDescriptor } from '@gooddata/sdk-model';
+import { isUserAccess } from '@gooddata/sdk-model';
+import { isUserAccessGrantee } from '@gooddata/sdk-model';
+import { isUserGroupAccess } from '@gooddata/sdk-model';
+import { isUserGroupAccessGrantee } from '@gooddata/sdk-model';
+import { isVariableMetadataObject } from '@gooddata/sdk-model';
+import { isWidget } from '@gooddata/sdk-model';
+import { isWidgetAlert } from '@gooddata/sdk-model';
+import { isWidgetAlertDefinition } from '@gooddata/sdk-model';
+import { isWidgetAttachment } from '@gooddata/sdk-model';
+import { isWidgetDefinition } from '@gooddata/sdk-model';
+import { ITempFilterContext } from '@gooddata/sdk-model';
+import { ITheme } from '@gooddata/sdk-model';
+import { IThemeAnalyticalDesigner } from '@gooddata/sdk-model';
+import { IThemeAnalyticalDesignerTitle } from '@gooddata/sdk-model';
+import { IThemeButton } from '@gooddata/sdk-model';
+import { IThemeChart } from '@gooddata/sdk-model';
+import { IThemeColorFamily } from '@gooddata/sdk-model';
+import { IThemeComplementaryPalette } from '@gooddata/sdk-model';
+import { IThemeDashboard } from '@gooddata/sdk-model';
+import { IThemeDashboardContent } from '@gooddata/sdk-model';
+import { IThemeDashboardContentKpi } from '@gooddata/sdk-model';
+import { IThemeDashboardContentWidget } from '@gooddata/sdk-model';
+import { IThemeDashboardEditPanel } from '@gooddata/sdk-model';
+import { IThemeDashboardFilterBar } from '@gooddata/sdk-model';
+import { IThemeDashboardFilterBarButton } from '@gooddata/sdk-model';
+import { IThemeDashboardNavigation } from '@gooddata/sdk-model';
+import { IThemeDashboardNavigationItem } from '@gooddata/sdk-model';
+import { IThemeDashboardNavigationTitle } from '@gooddata/sdk-model';
+import { IThemeDashboardSection } from '@gooddata/sdk-model';
+import { IThemeDashboardSectionDescription } from '@gooddata/sdk-model';
+import { IThemeDashboardSectionTitle } from '@gooddata/sdk-model';
+import { IThemeDashboardTitle } from '@gooddata/sdk-model';
+import { IThemeKpi } from '@gooddata/sdk-model';
+import { IThemeKpiValue } from '@gooddata/sdk-model';
+import { IThemeModal } from '@gooddata/sdk-model';
+import { IThemeModalTitle } from '@gooddata/sdk-model';
+import { IThemePalette } from '@gooddata/sdk-model';
+import { IThemeTable } from '@gooddata/sdk-model';
+import { IThemeTooltip } from '@gooddata/sdk-model';
+import { IThemeTypography } from '@gooddata/sdk-model';
+import { IThemeWidgetTitle } from '@gooddata/sdk-model';
+import { ITotalDescriptor } from '@gooddata/sdk-model';
+import { ITotalDescriptorItem } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
+import { IUserAccess } from '@gooddata/sdk-model';
+import { IUserAccessGrantee } from '@gooddata/sdk-model';
+import { IUserGroupAccess } from '@gooddata/sdk-model';
+import { IUserGroupAccessGrantee } from '@gooddata/sdk-model';
+import { IVariableMetadataObject } from '@gooddata/sdk-model';
+import { IWidget } from '@gooddata/sdk-model';
+import { IWidgetAlert } from '@gooddata/sdk-model';
+import { IWidgetAlertBase } from '@gooddata/sdk-model';
+import { IWidgetAlertDefinition } from '@gooddata/sdk-model';
+import { IWidgetAttachment } from '@gooddata/sdk-model';
+import { IWidgetDefinition } from '@gooddata/sdk-model';
+import { IWidgetDescription } from '@gooddata/sdk-model';
+import { IWorkspacePermissions } from '@gooddata/sdk-model';
+import { IWorkspaceUser } from '@gooddata/sdk-model';
+import { IWorkspaceUserGroup } from '@gooddata/sdk-model';
+import { KpiDrillDefinition } from '@gooddata/sdk-model';
+import { ListedDashboardAvailability } from '@gooddata/sdk-model';
+import { MetadataObject } from '@gooddata/sdk-model';
+import { metadataObjectId } from '@gooddata/sdk-model';
+import { newAbsoluteDashboardDateFilter } from '@gooddata/sdk-model';
+import { newAllTimeDashboardDateFilter } from '@gooddata/sdk-model';
+import { newRelativeDashboardDateFilter } from '@gooddata/sdk-model';
+import { PlatformEdition } from '@gooddata/sdk-model';
+import { resultHeaderName } from '@gooddata/sdk-model';
+import { ScheduledMailAttachment } from '@gooddata/sdk-model';
+import { ScreenSize } from '@gooddata/sdk-model';
+import { ShareStatus } from '@gooddata/sdk-model';
+import { ThemeColor } from '@gooddata/sdk-model';
+import { ThemeFontUri } from '@gooddata/sdk-model';
 import { userFullName } from '@gooddata/sdk-model';
+import { widgetId } from '@gooddata/sdk-model';
+import { widgetRef } from '@gooddata/sdk-model';
+import { widgetTitle } from '@gooddata/sdk-model';
+import { WidgetType } from '@gooddata/sdk-model';
+import { widgetType } from '@gooddata/sdk-model';
+import { widgetUri } from '@gooddata/sdk-model';
+import { WorkspacePermission } from '@gooddata/sdk-model';
+
+export { AccessGranteeDetail }
+
+export { AnalyticalWidgetType }
+
+export { attributeDescriptorLocalId }
+
+export { attributeDescriptorName }
+
+export { BuiltInWidgetTypes }
+
+export { CatalogItem }
+
+export { catalogItemMetadataObject }
+
+export { CatalogItemType }
+
+export { DashboardDateFilterConfigMode }
+
+export { dashboardFilterReferenceObjRef }
+
+export { DataColumnType }
+
+export { DatasetLoadStatus }
+
+export { DataValue }
+
+export { DateFilterGranularity }
+
+export { DateFilterType }
+
+export { DateString }
+
+export { DrillDefinition }
+
+export { DrillOrigin }
+
+export { DrillOriginType }
+
+export { DrillTransition }
+
+export { DrillType }
+
+export { FilterContextItem }
 
 export { getColorMappingPredicate }
 
+export { GroupableCatalogItem }
+
+export { IAbsoluteDateFilterForm }
+
+export { IAbsoluteDateFilterPreset }
+
+export { IAccessControlAware }
+
+export { IAccessGrantee }
+
+export { IAllTimeDateFilterOption }
+
+export { IAnalyticalWidget }
+
+export { IAttributeDescriptor }
+
+export { IAttributeDescriptorBody }
+
+export { IAttributeDisplayFormMetadataObject }
+
+export { IAttributeElement }
+
+export { IAttributeHeaderFormOf }
+
+export { IAttributeMetadataObject }
+
+export { IBaseWidget }
+
+export { ICatalogAttribute }
+
+export { ICatalogDateAttribute }
+
+export { ICatalogDateDataset }
+
+export { ICatalogFact }
+
+export { ICatalogGroup }
+
+export { ICatalogItemBase }
+
+export { ICatalogMeasure }
+
+export { IDashboard }
+
+export { IDashboardAttachment }
+
+export { IDashboardAttributeFilter }
+
+export { IDashboardAttributeFilterParent }
+
+export { IDashboardAttributeFilterReference }
+
+export { IDashboardBase }
+
+export { IDashboardDateFilter }
+
+export { IDashboardDateFilterAddedPresets }
+
+export { IDashboardDateFilterConfig }
+
+export { IDashboardDateFilterReference }
+
+export { IDashboardDefinition }
+
+export { IDashboardFilterReference }
+
+export { IDashboardLayout }
+
+export { IDashboardLayoutItem }
+
+export { IDashboardLayoutSection }
+
+export { IDashboardLayoutSectionHeader }
+
+export { IDashboardLayoutSize }
+
+export { IDashboardLayoutSizeByScreenSize }
+
+export { IDashboardMetadataObject }
+
+export { IDashboardObjectIdentity }
+
+export { IDashboardPlugin }
+
+export { IDashboardPluginBase }
+
+export { IDashboardPluginDefinition }
+
+export { IDashboardPluginLink }
+
+export { IDashboardWidget }
+
+export { IDataColumn }
+
+export { IDataColumnBody }
+
+export { IDataHeader }
+
+export { IDataset }
+
+export { IDatasetBody }
+
+export { IDatasetLoadInfo }
+
+export { IDataSetMetadataObject }
+
+export { IDatasetUser }
+
+export { IDateFilterConfig }
+
+export { IDateFilterOption }
+
+export { IDimensionDescriptor }
+
+export { IDimensionItemDescriptor }
+
+export { IDrill }
+
+export { IDrillableWidget }
+
+export { IDrillFromAttribute }
+
+export { IDrillFromMeasure }
+
+export { IDrillOrigin }
+
+export { IDrillTarget }
+
+export { IDrillToAttributeUrl }
+
+export { IDrillToAttributeUrlTarget }
+
+export { IDrillToCustomUrl }
+
+export { IDrillToCustomUrlTarget }
+
+export { IDrillToDashboard }
+
+export { IDrillToInsight }
+
+export { IDrillToLegacyDashboard }
+
+export { IExportOptions }
+
+export { IFactMetadataObject }
+
+export { IFilterableWidget }
+
+export { IFilterContext }
+
+export { IFilterContextBase }
+
+export { IFilterContextDefinition }
+
+export { IGroupableCatalogItemBase }
+
+export { IInsightWidget }
+
+export { IInsightWidgetBase }
+
+export { IInsightWidgetConfiguration }
+
+export { IInsightWidgetDefinition }
+
+export { IKpiWidget }
+
+export { IKpiWidgetBase }
+
+export { IKpiWidgetDefinition }
+
+export { IListedDashboard }
+
+export { IMeasureDescriptor }
+
+export { IMeasureDescriptorItem }
+
+export { IMeasureDescriptorObject }
+
+export { IMeasureGroupDescriptor }
+
+export { IMeasureMetadataObject }
+
+export { IMeasureMetadataObjectBase }
+
+export { IMeasureMetadataObjectDefinition }
+
+export { IMetadataObject }
+
+export { IMetadataObjectBase }
+
+export { IMetadataObjectDefinition }
+
+export { IMetadataObjectIdentity }
+
+export { InsightDrillDefinition }
+
+export { IOrganizationDescriptor }
+
+export { IRelativeDateFilterForm }
+
+export { IRelativeDateFilterPreset }
+
+export { IRelativeDateFilterPresetOfGranularity }
+
+export { IResultAttributeHeader }
+
+export { IResultAttributeHeaderItem }
+
+export { IResultHeader }
+
+export { IResultMeasureHeader }
+
+export { IResultMeasureHeaderItem }
+
+export { IResultTotalHeader }
+
+export { IResultTotalHeaderItem }
+
+export { IResultWarning }
+
+export { isAbsoluteDateFilterForm }
+
+export { isAbsoluteDateFilterPreset }
+
+export { isAllTimeDashboardDateFilter }
+
+export { isAllTimeDateFilterOption }
+
+export { isAttributeDescriptor }
+
+export { isAttributeDisplayFormMetadataObject }
+
+export { isAttributeMetadataObject }
+
+export { isCatalogAttribute }
+
+export { isCatalogDateDataset }
+
+export { isCatalogFact }
+
+export { isCatalogMeasure }
+
+export { IScheduledMail }
+
+export { IScheduledMailBase }
+
+export { IScheduledMailDefinition }
+
+export { isDashboard }
+
+export { isDashboardAttachment }
+
+export { isDashboardAttributeFilter }
+
+export { isDashboardAttributeFilterReference }
+
+export { isDashboardDateFilter }
+
+export { isDashboardDateFilterReference }
+
+export { isDashboardDefinition }
+
+export { isDashboardLayout }
+
+export { isDashboardLayoutItem }
+
+export { isDashboardLayoutSection }
+
+export { isDashboardMetadataObject }
+
+export { isDashboardWidget }
+
+export { isDataSetMetadataObject }
+
+export { isDateFilterGranularity }
+
+export { isDrillFromAttribute }
+
+export { isDrillFromMeasure }
+
+export { isDrillToAttributeUrl }
+
+export { isDrillToCustomUrl }
+
+export { isDrillToDashboard }
+
+export { isDrillToInsight }
+
+export { isDrillToLegacyDashboard }
+
+export { ISeparators }
+
+export { ISettings }
+
+export { isFactMetadataObject }
+
+export { isFilterContext }
+
+export { isFilterContextDefinition }
+
+export { isInsightWidget }
+
+export { isInsightWidgetDefinition }
+
+export { isKpiWidget }
+
+export { isKpiWidgetDefinition }
+
+export { isMeasureDescriptor }
+
+export { isMeasureGroupDescriptor }
+
+export { isMeasureMetadataObject }
+
+export { isMeasureMetadataObjectDefinition }
+
+export { isMetadataObject }
+
+export { isRelativeDateFilterForm }
+
+export { isRelativeDateFilterPreset }
+
+export { isResultAttributeHeader }
+
+export { isResultMeasureHeader }
+
+export { isResultTotalHeader }
+
+export { isTempFilterContext }
+
+export { isTotalDescriptor }
+
+export { isUserAccess }
+
+export { isUserAccessGrantee }
+
+export { isUserGroupAccess }
+
+export { isUserGroupAccessGrantee }
+
+export { isVariableMetadataObject }
+
+export { isWidget }
+
+export { isWidgetAlert }
+
+export { isWidgetAlertDefinition }
+
+export { isWidgetAttachment }
+
+export { isWidgetDefinition }
+
+export { ITempFilterContext }
+
+export { ITheme }
+
+export { IThemeAnalyticalDesigner }
+
+export { IThemeAnalyticalDesignerTitle }
+
+export { IThemeButton }
+
+export { IThemeChart }
+
+export { IThemeColorFamily }
+
+export { IThemeComplementaryPalette }
+
+export { IThemeDashboard }
+
+export { IThemeDashboardContent }
+
+export { IThemeDashboardContentKpi }
+
+export { IThemeDashboardContentWidget }
+
+export { IThemeDashboardEditPanel }
+
+export { IThemeDashboardFilterBar }
+
+export { IThemeDashboardFilterBarButton }
+
+export { IThemeDashboardNavigation }
+
+export { IThemeDashboardNavigationItem }
+
+export { IThemeDashboardNavigationTitle }
+
+export { IThemeDashboardSection }
+
+export { IThemeDashboardSectionDescription }
+
+export { IThemeDashboardSectionTitle }
+
+export { IThemeDashboardTitle }
+
+export { IThemeKpi }
+
+export { IThemeKpiValue }
+
+export { IThemeModal }
+
+export { IThemeModalTitle }
+
+export { IThemePalette }
+
+export { IThemeTable }
+
+export { IThemeTooltip }
+
+export { IThemeTypography }
+
+export { IThemeWidgetTitle }
+
+export { ITotalDescriptor }
+
+export { ITotalDescriptorItem }
+
 export { IUser }
 
+export { IUserAccess }
+
+export { IUserAccessGrantee }
+
+export { IUserGroupAccess }
+
+export { IUserGroupAccessGrantee }
+
+export { IVariableMetadataObject }
+
+export { IWidget }
+
+export { IWidgetAlert }
+
+export { IWidgetAlertBase }
+
+export { IWidgetAlertDefinition }
+
+export { IWidgetAttachment }
+
+export { IWidgetDefinition }
+
+export { IWidgetDescription }
+
+export { IWorkspacePermissions }
+
+export { IWorkspaceUser }
+
+export { IWorkspaceUserGroup }
+
+export { KpiDrillDefinition }
+
+export { ListedDashboardAvailability }
+
+export { MetadataObject }
+
+export { metadataObjectId }
+
+export { newAbsoluteDashboardDateFilter }
+
+export { newAllTimeDashboardDateFilter }
+
+export { newRelativeDashboardDateFilter }
+
+export { PlatformEdition }
+
+export { resultHeaderName }
+
+export { ScheduledMailAttachment }
+
+export { ScreenSize }
+
+export { ShareStatus }
+
+export { ThemeColor }
+
+export { ThemeFontUri }
+
 export { userFullName }
+
+export { widgetId }
+
+export { widgetRef }
+
+export { widgetTitle }
+
+export { WidgetType }
+
+export { widgetType }
+
+export { widgetUri }
+
+export { WorkspacePermission }
 
 
 export * from "@gooddata/sdk-backend-spi";

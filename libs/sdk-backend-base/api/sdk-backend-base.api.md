@@ -56,9 +56,9 @@ import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IInsightWidget } from '@gooddata/sdk-backend-spi';
 import { IInsightWidgetDefinition } from '@gooddata/sdk-backend-spi';
+import { IKpi } from '@gooddata/sdk-model';
 import { IKpiWidget } from '@gooddata/sdk-backend-spi';
 import { IKpiWidgetDefinition } from '@gooddata/sdk-backend-spi';
-import { ILegacyKpi } from '@gooddata/sdk-backend-spi';
 import { ILegacyKpiComparisonDirection } from '@gooddata/sdk-backend-spi';
 import { ILegacyKpiComparisonTypeComparison } from '@gooddata/sdk-backend-spi';
 import { IListedDashboard } from '@gooddata/sdk-backend-spi';
@@ -767,7 +767,7 @@ export class KpiWidgetBuilder extends WidgetBaseBuilder<IKpiWidget> implements I
     // (undocumented)
     measure: (valueOrUpdateCallback: ValueOrUpdateCallback<ObjRef>) => this;
     // (undocumented)
-    protected setKpiWidgetProp: <K extends "comparisonType" | "comparisonDirection" | "metric">(prop: K, valueOrUpdateCallback: ValueOrUpdateCallback<ILegacyKpi[K]>) => this;
+    protected setKpiWidgetProp: <K extends "comparisonType" | "comparisonDirection" | "metric">(prop: K, valueOrUpdateCallback: ValueOrUpdateCallback<IKpi[K]>) => this;
     // (undocumented)
     protected validator?: ((item: Partial<IKpiWidget>) => void) | undefined;
 }

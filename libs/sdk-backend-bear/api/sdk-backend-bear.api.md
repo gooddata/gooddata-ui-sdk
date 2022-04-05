@@ -5,7 +5,7 @@
 ```ts
 
 import { AnonymousAuthProvider } from '@gooddata/sdk-backend-base';
-import { FilterContextItem } from '@gooddata/sdk-backend-spi';
+import { FilterContextItem } from '@gooddata/sdk-model';
 import { GdcDashboard } from '@gooddata/api-model-bear';
 import { GdcDashboardLayout } from '@gooddata/api-model-bear';
 import { GdcExecuteAFM } from '@gooddata/api-model-bear';
@@ -21,7 +21,7 @@ import { IAuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
 import { IDashboardDateFilterConfig } from '@gooddata/sdk-backend-spi';
-import { IDashboardFilterReference } from '@gooddata/sdk-backend-spi';
+import { IDashboardFilterReference } from '@gooddata/sdk-model';
 import { IDashboardLayoutSize } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayoutSizeByScreenSize } from '@gooddata/sdk-backend-spi';
 import { IDrillToLegacyDashboard } from '@gooddata/sdk-backend-spi';
@@ -30,11 +30,11 @@ import { IFilterContext } from '@gooddata/sdk-backend-spi';
 import { IFilterContextDefinition } from '@gooddata/sdk-backend-spi';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
-import { IInsightWidget } from '@gooddata/sdk-backend-spi';
-import { IInsightWidgetDefinition } from '@gooddata/sdk-backend-spi';
-import { IKpiWidget } from '@gooddata/sdk-backend-spi';
-import { IKpiWidgetDefinition } from '@gooddata/sdk-backend-spi';
-import { InsightDrillDefinition } from '@gooddata/sdk-backend-spi';
+import { IInsightWidget } from '@gooddata/sdk-model';
+import { IInsightWidgetDefinition } from '@gooddata/sdk-model';
+import { IKpiWidget } from '@gooddata/sdk-model';
+import { IKpiWidgetDefinition } from '@gooddata/sdk-model';
+import { InsightDrillDefinition } from '@gooddata/sdk-model';
 import { IScheduledMail } from '@gooddata/sdk-backend-spi';
 import { IScheduledMailDefinition } from '@gooddata/sdk-backend-spi';
 import { IUser } from '@gooddata/sdk-model';

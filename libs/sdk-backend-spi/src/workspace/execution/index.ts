@@ -10,9 +10,12 @@ import {
     IInsight,
     INullableFilter,
     IExecutionConfig,
+    DataValue,
+    IDimensionDescriptor,
+    IResultHeader,
+    IResultWarning,
 } from "@gooddata/sdk-model";
 import { IExportConfig, IExportResult } from "./export";
-import { DataValue, IDimensionDescriptor, IResultHeader, IResultWarning } from "./results";
 
 /**
  * Execution factory provides several methods to create a prepared execution from different types

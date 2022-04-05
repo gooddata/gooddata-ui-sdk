@@ -7,10 +7,10 @@ import {
     ObjRef,
     ObjectType,
     IFilter,
+    CatalogItem,
+    IMetadataObject,
 } from "@gooddata/sdk-model";
 import { IPagedResource } from "../../common/paging";
-import { CatalogItem } from "../fromModel/ldm/catalog";
-import { IMetadataObject } from "../fromModel/ldm/metadata";
 
 /**
  * Additional options for the {@link IWorkspaceInsightsService.getVisualizationClasses} function.
