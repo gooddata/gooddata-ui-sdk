@@ -12,6 +12,7 @@ export interface UiState {
     };
     scheduleEmailDialog: {
         open: boolean;
+        defaultAttachmentRef: ObjRef | undefined;
     };
     saveAsDialog: {
         open: boolean;
@@ -38,6 +39,7 @@ export const uiInitialState: UiState = {
     },
     scheduleEmailDialog: {
         open: false,
+        defaultAttachmentRef: undefined,
     },
     saveAsDialog: {
         open: false,

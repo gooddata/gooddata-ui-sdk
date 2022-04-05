@@ -8,7 +8,7 @@ import {
     IInsightWidget,
 } from "@gooddata/sdk-backend-spi";
 import { GoodDataSdkError, ILocale } from "@gooddata/sdk-ui";
-import { UriRef, IUser } from "@gooddata/sdk-model";
+import { UriRef, IUser, ObjRef } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
 
 import {
@@ -28,6 +28,7 @@ import {
     selectWidgets,
     isCustomWidget,
     selectCanExportReport,
+    selectScheduleEmailDialogDefaultAttachment,
 } from "../../../model";
 
 import { useCreateScheduledEmail } from "./useCreateScheduledEmail";
@@ -111,6 +112,11 @@ interface UseScheduledEmailResult {
      * Status of the scheduled email creation -
      */
     scheduledEmailCreationStatus?: CommandProcessingStatus;
+
+    /**
+     * Attachment to be selected by default.
+     */
+    defaultAttachment?: ObjRef;
 }
 
 /**
@@ -160,6 +166,7 @@ export const useScheduledEmail = (props: UseScheduledEmailProps): UseScheduledEm
     const canExportReport = useDashboardSelector(selectCanExportReport);
     const enableKPIDashboardSchedule = useDashboardSelector(selectEnableKPIDashboardSchedule);
     const enableWidgetExportScheduling = useDashboardSelector(selectEnableInsightExportScheduling);
+    const defaultAttachment = useDashboardSelector(selectScheduleEmailDialogDefaultAttachment);
 
     const scheduledEmailCreator = useCreateScheduledEmail({
         onSuccess: onSubmitSuccess,
@@ -196,5 +203,6 @@ export const useScheduledEmail = (props: UseScheduledEmailProps): UseScheduledEm
         locale,
         handleCreateScheduledEmail,
         scheduledEmailCreationStatus,
+        defaultAttachment,
     };
 };

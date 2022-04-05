@@ -22,6 +22,14 @@ export const selectIsScheduleEmailDialogOpen = createSelector(
 /**
  * @alpha
  */
+export const selectScheduleEmailDialogDefaultAttachment = createSelector(
+    selectSelf,
+    (state) => state.scheduleEmailDialog.defaultAttachmentRef,
+);
+
+/**
+ * @alpha
+ */
 export const selectIsScheduleEmailManagementDialogOpen = createSelector(
     selectSelf,
     (state) => state.scheduleEmailManagementDialog.open,

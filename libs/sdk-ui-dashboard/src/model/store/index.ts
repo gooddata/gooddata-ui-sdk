@@ -179,6 +179,7 @@ export {
     selectIsKpiAlertOpenedByWidgetRef,
     selectIsKpiAlertHighlightedByWidgetRef,
     selectMenuButtonItemsVisibility,
+    selectScheduleEmailDialogDefaultAttachment,
 } from "./ui/uiSelectors";
 export { uiActions } from "./ui";
 

@@ -14,6 +14,14 @@ const closeScheduleEmailDialog: UiReducer = (state) => {
     state.scheduleEmailDialog.open = false;
 };
 
+const setScheduleEmailDialogDefaultAttachment: UiReducer<PayloadAction<ObjRef>> = (state, action) => {
+    state.scheduleEmailDialog.defaultAttachmentRef = action.payload;
+};
+
+const resetScheduleEmailDialogDefaultAttachment: UiReducer = (state) => {
+    state.scheduleEmailDialog.defaultAttachmentRef = undefined;
+};
+
 const openScheduleEmailManagementDialog: UiReducer = (state) => {
     state.scheduleEmailManagementDialog.open = true;
 };
@@ -68,6 +76,8 @@ const setMenuButtonItemsVisibility: UiReducer<PayloadAction<IMenuButtonItemsVisi
 export const uiReducers = {
     openScheduleEmailDialog,
     closeScheduleEmailDialog,
+    setScheduleEmailDialogDefaultAttachment,
+    resetScheduleEmailDialogDefaultAttachment,
     openScheduleEmailManagementDialog,
     closeScheduleEmailManagementDialog,
     openSaveAsDialog,

@@ -2305,8 +2305,11 @@ export type FluidLayoutCustomizationFn = (layout: IDashboardLayout<ExtendedDashb
 export function getDefaultInsightMenuItems(intl: IntlShape, config: {
     exportXLSXDisabled: boolean;
     exportCSVDisabled: boolean;
+    scheduleExportDisabled: boolean;
     onExportXLSX: () => void;
     onExportCSV: () => void;
+    onScheduleExport: () => void;
+    isScheduleExportVisible: boolean;
     tooltipMessage: string;
 }): IInsightMenuItem[];
 
@@ -4523,6 +4526,9 @@ export const selectPersistedDashboard: OutputSelector<DashboardState, IDashboard
 // @public
 export const selectPlatformEdition: OutputSelector<DashboardState, PlatformEdition, (res: ResolvedDashboardConfig) => PlatformEdition>;
 
+// @alpha (undocumented)
+export const selectScheduleEmailDialogDefaultAttachment: OutputSelector<DashboardState, UriRef | IdentifierRef | undefined, (res: UiState) => UriRef | IdentifierRef | undefined>;
+
 // @public
 export const selectSeparators: OutputSelector<DashboardState, ISeparators, (res: ResolvedDashboardConfig) => ISeparators>;
 
@@ -4632,6 +4638,11 @@ export interface TriggerEventPayload {
 export const uiActions: CaseReducerActions<    {
 openScheduleEmailDialog: CaseReducer<UiState, AnyAction>;
 closeScheduleEmailDialog: CaseReducer<UiState, AnyAction>;
+setScheduleEmailDialogDefaultAttachment: CaseReducer<UiState, {
+payload: ObjRef;
+type: string;
+}>;
+resetScheduleEmailDialogDefaultAttachment: CaseReducer<UiState, AnyAction>;
 openScheduleEmailManagementDialog: CaseReducer<UiState, AnyAction>;
 closeScheduleEmailManagementDialog: CaseReducer<UiState, AnyAction>;
 openSaveAsDialog: CaseReducer<UiState, AnyAction>;
@@ -4684,6 +4695,7 @@ export interface UiState {
     // (undocumented)
     scheduleEmailDialog: {
         open: boolean;
+        defaultAttachmentRef: ObjRef | undefined;
     };
     // (undocumented)
     scheduleEmailManagementDialog: {
@@ -5105,6 +5117,24 @@ export const useDashboardQueryProcessing: <TQuery extends DashboardQueries, TQue
 // @internal (undocumented)
 export type UseDashboardQueryProcessingResult<TQueryCreatorArgs extends any[], TQueryResult> = QueryProcessingState<TQueryResult> & {
     run: (...args: TQueryCreatorArgs) => void;
+};
+
+// @alpha
+export const useDashboardScheduledEmails: () => {
+    isScheduledEmailingVisible: boolean;
+    enableInsightExportScheduling: boolean;
+    defaultOnScheduleEmailing: () => void;
+    isScheduleEmailingDialogOpen: boolean;
+    isScheduleEmailingManagementDialogOpen: boolean;
+    onScheduleEmailingOpen: (attachmentRef?: UriRef | IdentifierRef | undefined) => void;
+    onScheduleEmailingCancel: () => void;
+    onScheduleEmailingError: () => void;
+    onScheduleEmailingSuccess: () => void;
+    onScheduleEmailingManagementAdd: () => void;
+    onScheduleEmailingManagementClose: () => void;
+    onScheduleEmailingManagementLoadingError: () => void;
+    onScheduleEmailingManagementDeleteSuccess: () => void;
+    onScheduleEmailingManagementDeleteError: () => void;
 };
 
 // @public

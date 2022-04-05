@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
@@ -20,10 +20,23 @@ export const useInsightMenu = (config: {
     widget: IInsightWidget;
     exportCSVEnabled: boolean;
     exportXLSXEnabled: boolean;
+    scheduleExportEnabled: boolean;
     onExportCSV: () => void;
     onExportXLSX: () => void;
+    onScheduleExport: () => void;
+    isScheduleExportVisible: boolean;
 }): { menuItems: IInsightMenuItem[]; isMenuOpen: boolean; openMenu: () => void; closeMenu: () => void } => {
-    const { exportCSVEnabled, exportXLSXEnabled, insight, onExportCSV, onExportXLSX, widget } = config;
+    const {
+        exportCSVEnabled,
+        exportXLSXEnabled,
+        scheduleExportEnabled,
+        insight,
+        onExportCSV,
+        onExportXLSX,
+        onScheduleExport,
+        isScheduleExportVisible,
+        widget,
+    } = config;
 
     const intl = useIntl();
 
@@ -49,6 +62,7 @@ export const useInsightMenu = (config: {
         return defaultMenuItemsGetter(intl, {
             exportCSVDisabled: !exportCSVEnabled,
             exportXLSXDisabled: !exportXLSXEnabled,
+            scheduleExportDisabled: !scheduleExportEnabled,
             onExportCSV: () => {
                 setIsMenuOpen(false);
                 onExportCSV();
@@ -57,6 +71,11 @@ export const useInsightMenu = (config: {
                 setIsMenuOpen(false);
                 onExportXLSX();
             },
+            onScheduleExport: () => {
+                setIsMenuOpen(false);
+                onScheduleExport();
+            },
+            isScheduleExportVisible,
             tooltipMessage: intl.formatMessage({ id: bubbleMessageKey }),
         });
     }, [
@@ -64,8 +83,11 @@ export const useInsightMenu = (config: {
         execution,
         exportCSVEnabled,
         exportXLSXEnabled,
+        scheduleExportEnabled,
         onExportCSV,
         onExportXLSX,
+        onScheduleExport,
+        isScheduleExportVisible,
         intl,
     ]);
 

@@ -24,3 +24,4 @@ export { useDashboardAsyncRender, UseDashboardAsyncRender } from "./useDashboard
 export { IDashboardStoreProviderProps } from "./types";
 export { useDispatchDashboardCommand } from "./useDispatchDashboardCommand";
 export { useWidgetExecutionsHandler } from "./useWidgetExecutionsHandler";
+export { useDashboardScheduledEmails } from "./useDashboardScheduledEmails";
