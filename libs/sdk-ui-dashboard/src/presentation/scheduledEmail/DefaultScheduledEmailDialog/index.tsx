@@ -10,7 +10,17 @@ import { useScheduledEmail } from "./useScheduledEmail";
  * @alpha
  */
 export const DefaultScheduledEmailDialog = (props: IScheduledEmailDialogProps): JSX.Element | null => {
-    const { onSubmit, onCancel, onError, isVisible, onSuccess } = props;
+    const {
+        onSubmit,
+        onSuccess,
+        onError,
+        onSave,
+        onSaveSuccess,
+        onSaveError,
+        onCancel,
+        isVisible,
+        editSchedule,
+    } = props;
 
     const {
         currentUser,
@@ -19,6 +29,7 @@ export const DefaultScheduledEmailDialog = (props: IScheduledEmailDialogProps): 
         dashboardInsightWidgets,
         hasDefaultFilters,
         handleCreateScheduledEmail,
+        handleSaveScheduledEmail,
         locale,
         canListUsersInWorkspace,
         canExportReport,
@@ -27,7 +38,14 @@ export const DefaultScheduledEmailDialog = (props: IScheduledEmailDialogProps): 
         enableKPIDashboardScheduleRecipients,
         enableWidgetExportScheduling,
         defaultAttachment,
-    } = useScheduledEmail({ onSubmit, onSubmitSuccess: onSuccess, onSubmitError: onError });
+    } = useScheduledEmail({
+        onSubmit,
+        onSubmitSuccess: onSuccess,
+        onSubmitError: onError,
+        onSave,
+        onSaveSuccess: onSaveSuccess,
+        onSaveError: onSaveError,
+    });
 
     // trigger the invariant only if the user tries to open the dialog
     if (isVisible) {
@@ -43,6 +61,7 @@ export const DefaultScheduledEmailDialog = (props: IScheduledEmailDialogProps): 
 
     return (
         <ScheduledMailDialogRenderer
+            editSchedule={editSchedule}
             locale={locale}
             canListUsersInProject={canListUsersInWorkspace}
             canExportReport={canExportReport}
@@ -55,6 +74,7 @@ export const DefaultScheduledEmailDialog = (props: IScheduledEmailDialogProps): 
             dashboardInsightWidgets={dashboardInsightWidgets}
             hasDefaultFilters={hasDefaultFilters}
             onSubmit={handleCreateScheduledEmail}
+            onSave={handleSaveScheduledEmail}
             onCancel={onCancel}
             onError={onError}
             defaultAttachment={defaultAttachment}

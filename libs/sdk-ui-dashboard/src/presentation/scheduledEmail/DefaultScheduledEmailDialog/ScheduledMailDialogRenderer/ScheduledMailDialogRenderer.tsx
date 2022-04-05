@@ -2,6 +2,7 @@
 import * as React from "react";
 import cloneDeep from "lodash/cloneDeep";
 import { injectIntl, WrappedComponentProps, FormattedMessage } from "react-intl";
+import invariant from "ts-invariant";
 import { normalizeTime, ConfirmDialogBase, Overlay, Alignment, Message } from "@gooddata/sdk-ui-kit";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
@@ -11,10 +12,19 @@ import {
     objRefToString,
     areObjRefsEqual,
     IInsightWidget,
+    IScheduledMail,
     IScheduledMailDefinition,
+    isDashboardAttachment,
+    isWidgetAttachment,
     ScheduledMailAttachment,
 } from "@gooddata/sdk-model";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import {
+    CancelError,
+    GoodDataSdkError,
+    ICancelablePromise,
+    makeCancelable,
+    withContexts,
+} from "@gooddata/sdk-ui";
 import memoize from "lodash/memoize";
 
 import { DEFAULT_REPEAT_PERIOD, REPEAT_EXECUTE_ON, REPEAT_FREQUENCIES, REPEAT_TYPES } from "../constants";
@@ -27,10 +37,16 @@ import {
     IWidgetExportConfiguration,
     IWidgetsSelection,
 } from "../interfaces";
-import { generateRepeatString, setDailyRepeat, setMonthlyRepeat, setWeeklyRepeat } from "../utils/repeat";
+import {
+    generateRepeatString,
+    setDailyRepeat,
+    setMonthlyRepeat,
+    setWeeklyRepeat,
+    parseRepeatString,
+} from "../utils/repeat";
 import { getScheduledEmailSummaryString } from "../utils/scheduledMailSummary";
 import { getScheduledEmailRecipientEmail } from "../utils/scheduledMailRecipients";
-import { getUserTimezone, ITimezone } from "../utils/timezone";
+import { getTimezoneByIdentifier, getUserTimezone, ITimezone, TIMEZONE_DEFAULT } from "../utils/timezone";
 import {
     getDate,
     getMonth,
@@ -77,7 +93,7 @@ export interface IScheduledMailDialogRendererOwnProps {
     hasDefaultFilters: boolean;
 
     /**
-     * Author of the scheduled email - is always recipient of the scheduled email.
+     * Current user - is always recipient of newly created scheduled email.
      */
     currentUser: IUser;
 
@@ -113,20 +129,9 @@ export interface IScheduledMailDialogRendererOwnProps {
     enableWidgetExportScheduling?: boolean;
 
     /**
-     * Backend to work with.
-     *
-     * Note: the backend must come either from this property or from BackendContext. If you do not specify
-     * backend here, then the component MUST be rendered within an existing BackendContext.
+     * Schedule to be edited. If defined, it switches the dialog to edit mode.
      */
-    backend?: IAnalyticalBackend;
-
-    /**
-     * Workspace to work with.
-     *
-     * Note: the workspace must come either from this property or from WorkspaceContext. If you do not specify
-     * workspace here, then the component MUST be rendered within an existing WorkspaceContext.
-     */
-    workspace?: string;
+    editSchedule?: IScheduledMail;
 
     /**
      * Attachment to be selected by default.
@@ -144,12 +149,18 @@ export interface IScheduledMailDialogRendererOwnProps {
     onSubmit?: (scheduledEmailData: IScheduledMailDefinition) => void;
 
     /**
+     * Callback to be called, when user saves the existing schedule.
+     */
+    onSave?: (scheduledEmailData: IScheduledMailDefinition) => void;
+
+    /**
      * Callback to be called, when error occurs.
      */
     onError?: (error: GoodDataSdkError) => void;
 }
 
-export type IScheduledMailDialogRendererProps = IScheduledMailDialogRendererOwnProps & WrappedComponentProps;
+export type IScheduledMailDialogRendererProps = IScheduledMailDialogRendererOwnProps &
+    WrappedComponentProps & { backend?: IAnalyticalBackend; workspace?: string };
 
 type IScheduledMailDialogRendererState = {
     alignment: string;
@@ -157,7 +168,7 @@ type IScheduledMailDialogRendererState = {
     emailSubject: string;
     emailBody: string;
     startDate: Date;
-    recurrency: IScheduleEmailRepeat;
+    repeat: IScheduleEmailRepeat;
     isValidScheduleEmailData: boolean;
     selectedRecipients: IScheduleEmailRecipient[];
     attachments: {
@@ -181,10 +192,18 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
         dateFormat: "MM/dd/yyyy",
     };
 
+    private getUsersCancellable: ICancelablePromise<IUser[]> | undefined;
+
     constructor(props: IScheduledMailDialogRendererProps) {
         super(props);
 
-        this.state = this.getDefaultState();
+        this.state = this.props.editSchedule
+            ? this.getEditState(this.props.editSchedule)
+            : this.getDefaultState();
+    }
+
+    public componentWillUnmount() {
+        this.getUsersCancellable?.cancel();
     }
 
     private getDefaultState(): IScheduledMailDialogRendererState {
@@ -197,7 +216,7 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
             userTimezone: getUserTimezone(),
             emailSubject: "",
             emailBody: "",
-            recurrency: {
+            repeat: {
                 time: {
                     hour: normalizedTime.getHours(),
                     minute: normalizedTime.getMinutes(),
@@ -205,12 +224,6 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
                 },
                 repeatType: REPEAT_TYPES.DAILY,
                 repeatPeriod: DEFAULT_REPEAT_PERIOD,
-                date: {
-                    day: getDate(now),
-                    month: getMonth(now),
-                    year: getYear(now),
-                },
-                repeatExecuteOn: REPEAT_EXECUTE_ON.DAY_OF_MONTH,
                 repeatFrequency: {
                     [REPEAT_FREQUENCIES.DAY]: true,
                 },
@@ -224,6 +237,62 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
                     mergeHeaders: true,
                     includeFilters: true,
                 },
+            },
+        };
+    }
+
+    private getEditState(schedule: IScheduledMail): IScheduledMailDialogRendererState {
+        const defaultState = this.getDefaultState();
+
+        /**
+         *  At this point, all recipients except the author are stored as external (IScheduleEmailExternalRecipient).
+         *  They will be compared with workspace users and potentially switched to workspace recipients (IScheduleEmailExistingRecipient)
+         *  silently by the method identifyWorkspaceRecipients.
+         */
+        const selectedRecipients = schedule.to.concat(schedule.bcc || []).map((email) => {
+            if (email === schedule.createdBy?.email) {
+                return userToRecipient(schedule.createdBy);
+            }
+            return {
+                email,
+            };
+        });
+        this.identifyWorkspaceRecipients();
+
+        const dashboardAttachments = schedule.attachments.filter(isDashboardAttachment);
+        const widgetAttachments = schedule.attachments.filter(isWidgetAttachment);
+        const widgetsSelected = this.props.dashboardInsightWidgets.reduce((acc, widget) => {
+            const widgetKey = objRefToString(widget);
+            return {
+                ...acc,
+                [widgetKey]: widgetAttachments.some((widgetAttachment) => {
+                    return areObjRefsEqual(widgetAttachment.widget, widget);
+                }),
+            };
+        }, {});
+
+        const configuration: IWidgetExportConfiguration =
+            widgetAttachments.length === 0
+                ? defaultState.attachments.configuration
+                : {
+                      format: widgetAttachments[0].formats[0] || "csv",
+                      mergeHeaders: widgetAttachments[0].exportOptions?.mergeHeaders || false,
+                      includeFilters: widgetAttachments[0].exportOptions?.includeFilters || false,
+                  };
+
+        return {
+            ...defaultState,
+            emailSubject: schedule.subject,
+            emailBody: schedule.body,
+            selectedRecipients,
+            userTimezone: getTimezoneByIdentifier(schedule.when.timeZone) || TIMEZONE_DEFAULT,
+            startDate: new Date(schedule.when.startDate), // check time zones
+            isValidScheduleEmailData: true,
+            repeat: parseRepeatString(schedule.when.recurrence),
+            attachments: {
+                dashboardSelected: dashboardAttachments.length !== 0,
+                widgetsSelected,
+                configuration,
             },
         };
     }
@@ -251,13 +320,19 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
     }
 
     public render(): React.ReactNode {
-        const { intl, onCancel } = this.props;
+        const { intl, onCancel, editSchedule } = this.props;
         const alignPoints = [
             {
                 align: this.state.alignment,
             },
         ];
 
+        const isSubmitDisabled =
+            !this.state.isValidScheduleEmailData ||
+            // in editing mode wait for email addresses to be processed by this.identifyWorkspaceRecipients()
+            (editSchedule && !this.getUsersCancellable?.getHasFulfilled());
+
+        const submitButtonTranslationId = `dialogs.schedule.email.${editSchedule ? "save" : "submit"}`;
         const headingTranslationId = this.props.enableWidgetExportScheduling
             ? "dialogs.schedule.email.heading"
             : "dialogs.schedule.email.headline";
@@ -274,8 +349,8 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
                     isPositive={true}
                     headline={intl.formatMessage({ id: headingTranslationId })}
                     cancelButtonText={intl.formatMessage({ id: "cancel" })}
-                    submitButtonText={intl.formatMessage({ id: "dialogs.schedule.email.submit" })}
-                    isSubmitDisabled={!this.state.isValidScheduleEmailData}
+                    submitButtonText={intl.formatMessage({ id: submitButtonTranslationId })}
+                    isSubmitDisabled={isSubmitDisabled}
                     submitOnEnterKey={false}
                     onCancel={onCancel}
                     onSubmit={this.onScheduleDialogSubmit}
@@ -293,6 +368,35 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
                 </ConfirmDialogBase>
             </Overlay>
         );
+    }
+
+    private async identifyWorkspaceRecipients() {
+        const { backend, workspace } = this.props;
+        invariant(backend, "backend must be defined");
+        invariant(workspace, "workspace must be defined");
+        this.getUsersCancellable = makeCancelable(backend.workspace(workspace).users().queryAll());
+        this.getUsersCancellable.promise
+            .then((workspaceUsers: IUser[]) => {
+                // process recipients and convert the general-external type to workspace recipient type
+                const processedRecipients = this.state.selectedRecipients.map((recipient) => {
+                    if (isScheduleEmailExternalRecipient(recipient)) {
+                        const user = workspaceUsers.find((user) => user.email === recipient.email);
+                        if (user) {
+                            return { user };
+                        }
+                    }
+                    return recipient;
+                });
+                this.setState({
+                    selectedRecipients: processedRecipients,
+                });
+            })
+            .catch((e) => {
+                // CancelError is expected from CancellablePromise and does not mean an actual error
+                if (!(e instanceof CancelError)) {
+                    throw e;
+                }
+            });
     }
 
     private getDashboardTitleMaxLength(displayDateString: string): number {
@@ -341,8 +445,18 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
     private renderDateTime = (): React.ReactNode => {
         const { dateFormat, intl, locale } = this.props;
 
-        const { time, date } = this.state.recurrency;
-        const sendDate = new Date(date.year, date.month - 1, date.day, time.hour, time.minute);
+        const {
+            repeat: { time },
+            startDate,
+        } = this.state;
+
+        const sendDate = new Date(
+            getYear(startDate),
+            getMonth(startDate) - 1,
+            getDate(startDate),
+            time.hour,
+            time.minute,
+        );
         return (
             <DateTime
                 date={sendDate}
@@ -367,6 +481,7 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
                 placeholder={defaultEmailBody}
                 rows={4}
                 onChange={this.onMessageChange}
+                value={this.state.emailBody}
             />
         );
     };
@@ -390,11 +505,13 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
             canListUsersInProject,
             enableKPIDashboardScheduleRecipients,
             currentUser,
+            editSchedule,
         } = this.props;
 
         return (
             <RecipientsSelect
-                currentUser={userToRecipient(currentUser)}
+                author={userToRecipient(editSchedule?.createdBy ? editSchedule?.createdBy : currentUser)}
+                currentUser={currentUser}
                 canListUsersInProject={canListUsersInProject}
                 enableKPIDashboardScheduleRecipients={enableKPIDashboardScheduleRecipients}
                 value={selectedRecipients}
@@ -408,14 +525,24 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
 
     private renderRepeats = (): React.ReactNode => {
         const { intl } = this.props;
-        const { startDate } = this.state;
+        const { startDate, repeat } = this.state;
+
+        let repeatFrequency = REPEAT_FREQUENCIES.DAY;
+        let repeatExecuteOn = REPEAT_EXECUTE_ON.DAY_OF_MONTH;
+
+        if (repeat.repeatFrequency.week) {
+            repeatFrequency = REPEAT_FREQUENCIES.WEEK;
+        } else if (repeat.repeatFrequency.month) {
+            repeatFrequency = REPEAT_FREQUENCIES.MONTH;
+            repeatExecuteOn = repeat.repeatFrequency.month.type;
+        }
         return (
             <RepeatSelect
                 label={intl.formatMessage({ id: "dialogs.schedule.email.repeats.label" })}
-                repeatExecuteOn={REPEAT_EXECUTE_ON.DAY_OF_MONTH}
-                repeatFrequency={REPEAT_FREQUENCIES.DAY}
-                repeatPeriod={DEFAULT_REPEAT_PERIOD}
-                repeatType={REPEAT_TYPES.DAILY}
+                repeatExecuteOn={repeatExecuteOn}
+                repeatFrequency={repeatFrequency}
+                repeatPeriod={repeat.repeatPeriod}
+                repeatType={repeat.repeatType}
                 startDate={startDate}
                 onChange={this.onRepeatsChange}
             />
@@ -424,13 +551,13 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
 
     private renderSubject = (): React.ReactNode => {
         const { intl } = this.props;
-        const defaultEmailSubject = this.getDefaultSubject();
         return (
             <Input
                 className="s-gd-schedule-email-dialog-subject"
                 label={intl.formatMessage({ id: "dialogs.schedule.email.subject.label" })}
                 maxlength={MAX_SUBJECT_LENGTH}
-                placeholder={defaultEmailSubject}
+                placeholder={this.getDefaultSubject()}
+                value={this.state.emailSubject}
                 onChange={this.onSubjectChange}
             />
         );
@@ -438,17 +565,23 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
 
     // Listeners
     private onScheduleDialogSubmit = (): void => {
-        const { onSubmit } = this.props;
-        if (onSubmit) {
-            onSubmit(this.getScheduleEmailData());
+        const { onSubmit, onSave, editSchedule } = this.props;
+        if (editSchedule) {
+            if (onSave) {
+                onSave(this.getScheduleEmailData());
+            }
+        } else {
+            if (onSubmit) {
+                onSubmit(this.getScheduleEmailData());
+            }
         }
     };
 
     private onDateChange = (selectedDateObject: Date): void => {
         this.setState((prevState) => {
             return {
-                recurrency: {
-                    ...prevState.recurrency,
+                repeat: {
+                    ...prevState.repeat,
                     date: {
                         day: getDate(selectedDateObject),
                         month: getMonth(selectedDateObject),
@@ -466,8 +599,8 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
     private onTimeChange = (time: IScheduleEmailRepeatTime): void => {
         this.setState((prevState) => {
             return {
-                recurrency: {
-                    ...prevState.recurrency,
+                repeat: {
+                    ...prevState.repeat,
                     time,
                 },
             };
@@ -475,12 +608,17 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
     };
 
     private onRecipientsChange = (selectedRecipients: IScheduleEmailRecipient[]): void => {
-        const isValidScheduleEmailData = selectedRecipients
-            .map(getScheduledEmailRecipientEmail)
-            .every(isEmail);
+        const { editSchedule, currentUser } = this.props;
+        const allRecipientsAreEmails = selectedRecipients.map(getScheduledEmailRecipientEmail).every(isEmail);
+        const hasNoExternalUSer = !selectedRecipients.some(isScheduleEmailExternalRecipient);
+        const author = userToRecipient(editSchedule?.createdBy ? editSchedule?.createdBy : currentUser);
+        const currentUserIsAuthor =
+            isScheduleEmailExistingRecipient(author) && areObjRefsEqual(author.user.ref, currentUser.ref);
+
         this.setState({
             selectedRecipients,
-            isValidScheduleEmailData,
+            // external emails are not allowed when the current user is not the author of edited schedule
+            isValidScheduleEmailData: (allRecipientsAreEmails && currentUserIsAuthor) || hasNoExternalUSer,
         });
     };
 
@@ -491,54 +629,46 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
     };
 
     private updateStartDateForRepeats(startDate: Date) {
-        const { repeatType, repeatFrequency, repeatExecuteOn } = this.state.recurrency;
+        const { repeatFrequency } = this.state.repeat;
 
-        const newRecurrency = cloneDeep(this.state.recurrency);
+        const newRepeat = cloneDeep(this.state.repeat);
 
-        if (repeatType === REPEAT_TYPES.CUSTOM) {
-            if (repeatFrequency === REPEAT_FREQUENCIES.MONTH) {
-                setMonthlyRepeat(newRecurrency, repeatExecuteOn, startDate);
-            } else if (repeatFrequency === REPEAT_FREQUENCIES.WEEK) {
-                setWeeklyRepeat(newRecurrency, startDate);
-            } else {
-                setDailyRepeat(newRecurrency);
-            }
-        } else if (repeatType === REPEAT_TYPES.MONTHLY) {
-            setMonthlyRepeat(newRecurrency, REPEAT_EXECUTE_ON.DAY_OF_WEEK, startDate);
-        } else if (repeatType === REPEAT_TYPES.WEEKLY) {
-            setWeeklyRepeat(newRecurrency, startDate);
+        if (repeatFrequency.month) {
+            setMonthlyRepeat(newRepeat, repeatFrequency.month.type, startDate);
+        } else if (repeatFrequency.week) {
+            setWeeklyRepeat(newRepeat, startDate);
         } else {
-            setDailyRepeat(newRecurrency);
+            setDailyRepeat(newRepeat);
         }
 
-        this.setState({ recurrency: newRecurrency });
+        this.setState({ repeat: newRepeat });
     }
 
     private onRepeatsChange = (data: IRepeatSelectData): void => {
         const { repeatExecuteOn, repeatFrequency, repeatPeriod, repeatType } = data;
         const { startDate } = this.state;
 
-        const newRecurrency = cloneDeep(this.state.recurrency);
-        newRecurrency.repeatType = repeatType;
-        newRecurrency.repeatPeriod = repeatPeriod;
+        const newRepeat = cloneDeep(this.state.repeat);
+        newRepeat.repeatType = repeatType;
+        newRepeat.repeatPeriod = repeatPeriod;
 
         if (repeatType === REPEAT_TYPES.CUSTOM) {
             if (repeatFrequency === REPEAT_FREQUENCIES.MONTH) {
-                setMonthlyRepeat(newRecurrency, repeatExecuteOn, startDate);
+                setMonthlyRepeat(newRepeat, repeatExecuteOn, startDate);
             } else if (repeatFrequency === REPEAT_FREQUENCIES.WEEK) {
-                setWeeklyRepeat(newRecurrency, startDate);
+                setWeeklyRepeat(newRepeat, startDate);
             } else {
-                setDailyRepeat(newRecurrency);
+                setDailyRepeat(newRepeat);
             }
         } else if (repeatType === REPEAT_TYPES.MONTHLY) {
-            setMonthlyRepeat(newRecurrency, REPEAT_EXECUTE_ON.DAY_OF_WEEK, startDate);
+            setMonthlyRepeat(newRepeat, REPEAT_EXECUTE_ON.DAY_OF_WEEK, startDate);
         } else if (repeatType === REPEAT_TYPES.WEEKLY) {
-            setWeeklyRepeat(newRecurrency, startDate);
+            setWeeklyRepeat(newRepeat, startDate);
         } else {
-            setDailyRepeat(newRecurrency);
+            setDailyRepeat(newRepeat);
         }
 
-        this.setState({ recurrency: newRecurrency });
+        this.setState({ repeat: newRepeat });
     };
 
     private onSubjectChange = (value: string): void => {
@@ -626,6 +756,8 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
     };
 
     private getScheduleEmailData = (): IScheduledMailDefinition => {
+        const { editSchedule } = this.props;
+
         const when = this.getTimeSchedule();
 
         const { selectedRecipients: recipients, emailSubject, emailBody } = this.state;
@@ -655,11 +787,12 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
             title: subject,
             // Every scheduled email is private for the logged in user.
             unlisted: true,
+            uri: editSchedule ? editSchedule.uri : undefined,
         };
     };
 
     private getTimeSchedule = (): IScheduledMailDefinition["when"] => {
-        const recurrence = generateRepeatString(this.state.recurrency);
+        const recurrence = generateRepeatString(this.state.repeat);
         const startDate = convertDateToPlatformDateString(this.state.startDate);
         return {
             recurrence,
@@ -669,12 +802,12 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
     };
 
     private getSummaryMessage = (): string => {
-        const { startDate, recurrency } = this.state;
-        return getScheduledEmailSummaryString(this.props.intl, recurrency, startDate);
+        const { startDate, repeat } = this.state;
+        return getScheduledEmailSummaryString(this.props.intl, repeat, startDate);
     };
 }
 
-export const ScheduledMailDialogRendererIntl = injectIntl(ScheduledMailDialogRendererUI);
+export const ScheduledMailDialogRendererIntl = withContexts(injectIntl(ScheduledMailDialogRendererUI));
 
 export const ScheduledMailDialogRenderer: React.FC<IScheduledMailDialogRendererOwnProps> = (props) => (
     <IntlWrapper locale={props.locale}>

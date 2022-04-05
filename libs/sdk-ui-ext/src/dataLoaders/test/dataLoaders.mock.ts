@@ -18,6 +18,7 @@ export const noopWorkspaceInsightsService: IWorkspaceInsightsService = {
 export const noopWorkspaceDashboardsService: IWorkspaceDashboardsService = {
     createDashboard: noop as any,
     createScheduledMail: noop as any,
+    updateScheduledMail: noop as any,
     createWidgetAlert: noop as any,
     deleteDashboard: noop as any,
     deleteWidgetAlert: noop as any,

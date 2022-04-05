@@ -64,7 +64,7 @@ import {
     DashboardWidgetExecutionFailed,
 } from "./widget";
 import { DashboardAlertCreated, DashboardAlertUpdated, DashboardAlertsRemoved } from "./alerts";
-import { DashboardScheduledEmailCreated } from "./scheduledEmail";
+import { DashboardScheduledEmailCreated, DashboardScheduledEmailSaved } from "./scheduledEmail";
 import { DashboardUserInteractionTriggered } from "./userInteraction";
 import { Action } from "@reduxjs/toolkit";
 import {
@@ -290,6 +290,8 @@ export {
     DashboardScheduledEmailCreated,
     DashboardScheduledEmailCreatedPayload,
     isDashboardScheduledEmailCreated,
+    DashboardScheduledEmailSaved,
+    isDashboardScheduledEmailSaved,
 } from "./scheduledEmail";
 
 export {
@@ -431,6 +433,7 @@ export type DashboardEvents =
     | DashboardAlertsRemoved
     | DashboardAlertUpdated
     | DashboardScheduledEmailCreated
+    | DashboardScheduledEmailSaved
     | DashboardDrillDownResolved
     | DashboardDrillToAttributeUrlResolved
     | DashboardDrillToCustomUrlResolved

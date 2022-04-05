@@ -35,6 +35,7 @@ import {
 
 import { useCreateScheduledEmail } from "./useCreateScheduledEmail";
 import { invariant } from "ts-invariant";
+import { useSaveScheduledEmail } from "./useSaveScheduledEmail";
 
 interface UseScheduledEmailResult {
     /**
@@ -103,6 +104,11 @@ interface UseScheduledEmailResult {
     locale: ILocale;
 
     /**
+     * Attachment to be selected by default.
+     */
+    defaultAttachment?: ObjRef;
+
+    /**
      * Function that results in the creation of the scheduled email on the backend.
      */
     handleCreateScheduledEmail: (
@@ -111,14 +117,19 @@ interface UseScheduledEmailResult {
     ) => void;
 
     /**
-     * Status of the scheduled email creation -
+     * Status of the scheduled email creation
      */
     scheduledEmailCreationStatus?: CommandProcessingStatus;
 
     /**
-     * Attachment to be selected by default.
+     * Function that results in saving the existing scheduled email on the backend.
      */
-    defaultAttachment?: ObjRef;
+    handleSaveScheduledEmail: (scheduledEmailToSave: IScheduledMailDefinition) => void;
+
+    /**
+     * Status of the scheduled email creation
+     */
+    scheduledEmailSavingStatus?: CommandProcessingStatus;
 }
 
 /**
@@ -139,10 +150,25 @@ export interface UseScheduledEmailProps {
      * Callback to be called, when submitting of the scheduled email failed.
      */
     onSubmitError?: (error: GoodDataSdkError) => void;
+
+    /**
+     * Callback to be called, when user saves the existing scheduled email.
+     */
+    onSave?: (scheduledEmailDefinition: IScheduledMailDefinition) => void;
+
+    /**
+     * Callback to be called, when saving of the scheduled email was successful.
+     */
+    onSaveSuccess?: () => void;
+
+    /**
+     * Callback to be called, when saving of the scheduled email failed.
+     */
+    onSaveError?: (error: GoodDataSdkError) => void;
 }
 
 export const useScheduledEmail = (props: UseScheduledEmailProps): UseScheduledEmailResult => {
-    const { onSubmit, onSubmitSuccess, onSubmitError } = props;
+    const { onSubmit, onSubmitSuccess, onSubmitError, onSave, onSaveSuccess, onSaveError } = props;
 
     // Bear model expects that all refs are sanitized to uriRefs.
     const dashboardUriRef = useDashboardSelector(selectDashboardUriRef);
@@ -187,8 +213,18 @@ export const useScheduledEmail = (props: UseScheduledEmailProps): UseScheduledEm
         },
         [filters, hasDefaultFilters],
     );
-
     const scheduledEmailCreationStatus = scheduledEmailCreator.creationStatus;
+
+    const scheduledEmailSaver = useSaveScheduledEmail({
+        onSuccess: onSaveSuccess,
+        onError: onSaveError,
+        onBeforeRun: onSave,
+    });
+
+    const handleSaveScheduledEmail = useCallback((scheduledEmail: IScheduledMailDefinition) => {
+        scheduledEmailSaver.save(scheduledEmail);
+    }, []);
+    const scheduledEmailSavingStatus = scheduledEmailSaver.savingStatus;
 
     return {
         dashboardRef: dashboardUriRef,
@@ -203,8 +239,10 @@ export const useScheduledEmail = (props: UseScheduledEmailProps): UseScheduledEm
         dateFormat,
         currentUser,
         locale,
+        defaultAttachment,
         handleCreateScheduledEmail,
         scheduledEmailCreationStatus,
-        defaultAttachment,
+        handleSaveScheduledEmail,
+        scheduledEmailSavingStatus,
     };
 };

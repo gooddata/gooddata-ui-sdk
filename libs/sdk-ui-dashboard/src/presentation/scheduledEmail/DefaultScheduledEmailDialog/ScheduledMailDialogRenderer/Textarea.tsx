@@ -10,6 +10,7 @@ interface ITextareaOwnProps {
     label: string;
     maxlength?: number;
     placeholder: string;
+    value: string;
     rows: number;
     onChange: (value: string) => void;
 }
@@ -35,7 +36,7 @@ export class Textarea extends React.PureComponent<ITextareaProps, ITextareaState
     }
 
     public render(): React.ReactNode {
-        const { className, label, maxlength, placeholder } = this.props;
+        const { className, label, maxlength, placeholder, value } = this.props;
         const { rows } = this.state;
 
         const classNames = cx(`gd-input-component gd-textarea-component ${className}`, {
@@ -50,6 +51,7 @@ export class Textarea extends React.PureComponent<ITextareaProps, ITextareaState
                         className={this.getTextareaClassNames()}
                         maxLength={maxlength}
                         placeholder={placeholder}
+                        value={value}
                         rows={rows}
                         onBlur={this.onBlur}
                         onChange={this.onChange}

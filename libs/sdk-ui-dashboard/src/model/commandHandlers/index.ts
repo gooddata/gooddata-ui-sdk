@@ -41,6 +41,7 @@ import { createAlertHandler } from "./alerts/createAlertHandler";
 import { updateAlertHandler } from "./alerts/updateAlertHandler";
 import { removeAlertsHandler } from "./alerts/removeAlertsHandler";
 import { createScheduledEmailHandler } from "./scheduledEmail/createScheduledEmailHandler";
+import { saveScheduledEmailHandler } from "./scheduledEmail/saveScheduledEmailHandler";
 import { drillHandler } from "./drill/drillHandler";
 import { drillDownHandler } from "./drill/drillDownHandler";
 import { drillToInsightHandler } from "./drill/drillToInsightHandler";
@@ -106,6 +107,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.ALERT.UPDATE": updateAlertHandler,
     "GDC.DASH/CMD.ALERTS.REMOVE": removeAlertsHandler,
     "GDC.DASH/CMD.SCHEDULED_EMAIL.CREATE": createScheduledEmailHandler,
+    "GDC.DASH/CMD.SCHEDULED_EMAIL.SAVE": saveScheduledEmailHandler,
     "GDC.DASH/CMD.DRILL": drillHandler,
     "GDC.DASH/CMD.DRILL.DRILL_DOWN": drillDownHandler,
     "GDC.DASH/CMD.DRILL.DRILL_TO_INSIGHT": drillToInsightHandler,

@@ -50,7 +50,7 @@ import {
     UndoLayoutChanges,
 } from "./layout";
 import { CreateAlert, RemoveAlerts, UpdateAlert } from "./alerts";
-import { CreateScheduledEmail } from "./scheduledEmail";
+import { CreateScheduledEmail, SaveScheduledEmail } from "./scheduledEmail";
 import {
     Drill,
     DrillDown,
@@ -165,7 +165,14 @@ export {
     updateAlert,
 } from "./alerts";
 
-export { CreateScheduledEmail, CreateScheduledEmailPayload, createScheduledEmail } from "./scheduledEmail";
+export {
+    CreateScheduledEmail,
+    CreateScheduledEmailPayload,
+    createScheduledEmail,
+    SaveScheduledEmail,
+    SaveScheduledEmailPayload,
+    saveScheduledEmail,
+} from "./scheduledEmail";
 
 export {
     Drill,
@@ -325,6 +332,7 @@ export type DashboardCommands =
     | UpdateAlert
     | RemoveAlerts
     | CreateScheduledEmail
+    | SaveScheduledEmail
     | Drill
     | DrillDown
     | DrillToAttributeUrl

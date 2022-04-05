@@ -1,4 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
+import identity from "lodash/identity";
 import { IScheduleEmailRepeat, IScheduleEmailRepeatFrequency } from "../interfaces";
 import { REPEAT_EXECUTE_ON, REPEAT_TYPES } from "../constants";
 
@@ -16,13 +17,13 @@ interface IFragmentObject {
 }
 
 // Delimits the frequency part from the rest.
-const REPEAT_DELIM = "*";
+export const REPEAT_DELIM = "*";
 
 // Delimits the fragments of repeatData string.
-const FRAGMENT_DELIM = ":";
+export const FRAGMENT_DELIM = ":";
 
 // Delimits parts in one fragment.
-const LIST_DELIM = ",";
+export const LIST_DELIM = ",";
 
 // Position of the REPEAT_DELIM determines the type of the repeat
 const REPEAT_TYPE_BY_REPEAT_INDEX = ["none", "yearly", "monthly", "weekly", "daily"];
@@ -62,7 +63,7 @@ function getRepeatBase(repeatType: string, repeatFrequency: IScheduleEmailRepeat
 
 // Generates repeatData string
 export function generateRepeatString(repeat: IScheduleEmailRepeat): string {
-    const { repeatType, repeatFrequency, repeatExecuteOn, repeatPeriod, time } = repeat;
+    const { repeatType, repeatFrequency, repeatPeriod, time } = repeat;
 
     const fragments: IFragments = [0, 0, 0, 0, 0, 0, 0];
 
@@ -73,13 +74,13 @@ export function generateRepeatString(repeat: IScheduleEmailRepeat): string {
     if (repeatBase === REPEAT_TYPES.MONTHLY) {
         const str = repeatFrequency.month;
         // Repeats on a day of week in n-th week of month (e.g. 3rd Monday)
-        if (repeatExecuteOn === REPEAT_EXECUTE_ON.DAY_OF_WEEK) {
+        if (repeatFrequency.month?.type === REPEAT_EXECUTE_ON.DAY_OF_WEEK) {
             const day = str!.dayOfWeek!.day;
             const week = str!.dayOfWeek!.week;
             fillFragments(fragments, { day, week });
         }
         // Repeats on a day of month 1-31
-        else if (repeatExecuteOn === REPEAT_EXECUTE_ON.DAY_OF_MONTH) {
+        else if (repeatFrequency.month?.type === REPEAT_EXECUTE_ON.DAY_OF_MONTH) {
             const day = str!.dayOfMonth;
             fillFragments(fragments, { day });
         }
@@ -135,7 +136,6 @@ export function setMonthlyRepeat(
         };
     }
 
-    repeatData.repeatExecuteOn = repeatExecuteOn;
     repeatData.repeatFrequency = {
         month: {
             type: repeatExecuteOn,
@@ -148,6 +148,81 @@ export function setWeeklyRepeat(repeatData: IScheduleEmailRepeat, startDate: Dat
     repeatData.repeatFrequency = {
         week: {
             days: [getDay(startDate)],
+        },
+    };
+}
+
+const MONTH_INDEX = 1;
+const WEEK_INDEX = 2;
+const DAY_INDEX = 3;
+const HOUR_INDEX = 4;
+const MINUTE_INDEX = 5;
+const SECOND_INDEX = 6;
+
+function getFirstUsedFragmentIndex(fragments: number[]): number {
+    const firstFragmentIndex = fragments.findIndex(identity);
+    if (firstFragmentIndex === -1) {
+        throw new Error("Invalid recurrence string");
+    }
+    return firstFragmentIndex;
+}
+
+export function parseRepeatString(repeat: string): IScheduleEmailRepeat {
+    const fragmentsStrings: string[] = repeat.replace(REPEAT_DELIM, FRAGMENT_DELIM).split(FRAGMENT_DELIM);
+    const fragments: number[] = fragmentsStrings.map((s) => {
+        if (s.indexOf(LIST_DELIM) !== -1) {
+            throw new Error("List items are not supported in recurrence string parsing");
+        }
+        return parseInt(s);
+    });
+
+    const firstFragmentIndex = getFirstUsedFragmentIndex(fragments);
+    const firstFragmentValue = fragments[firstFragmentIndex];
+    let repeatType = REPEAT_TYPES.CUSTOM;
+    let repeatFrequency: IScheduleEmailRepeatFrequency = {};
+    const customRepeatNumber = firstFragmentValue !== 1;
+    if (firstFragmentIndex === MONTH_INDEX) {
+        repeatType = customRepeatNumber ? REPEAT_TYPES.CUSTOM : REPEAT_TYPES.MONTHLY;
+        if (fragments[WEEK_INDEX] === 0) {
+            repeatFrequency = {
+                month: {
+                    type: REPEAT_EXECUTE_ON.DAY_OF_MONTH,
+                    dayOfMonth: fragments[DAY_INDEX],
+                },
+            };
+        } else {
+            repeatFrequency = {
+                month: {
+                    type: REPEAT_EXECUTE_ON.DAY_OF_WEEK,
+                    dayOfWeek: {
+                        day: fragments[DAY_INDEX],
+                        week: fragments[WEEK_INDEX],
+                    },
+                },
+            };
+        }
+    }
+    if (firstFragmentIndex === WEEK_INDEX) {
+        repeatType = customRepeatNumber ? REPEAT_TYPES.CUSTOM : REPEAT_TYPES.WEEKLY;
+        repeatFrequency = {
+            week: {
+                days: [fragments[3]],
+            },
+        };
+    }
+    if (firstFragmentIndex === DAY_INDEX) {
+        repeatType = customRepeatNumber ? REPEAT_TYPES.CUSTOM : REPEAT_TYPES.DAILY;
+        repeatFrequency = { day: true };
+    }
+
+    return {
+        repeatType,
+        repeatFrequency,
+        repeatPeriod: firstFragmentValue,
+        time: {
+            hour: fragments[HOUR_INDEX],
+            minute: fragments[MINUTE_INDEX],
+            second: fragments[SECOND_INDEX],
         },
     };
 }

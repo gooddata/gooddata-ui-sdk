@@ -54,3 +54,46 @@ export function createScheduledEmail(
         },
     };
 }
+
+/**
+ * Saves scheduled email.
+ *
+ * @alpha
+ */
+export interface SaveScheduledEmail extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.SCHEDULED_EMAIL.SAVE";
+    readonly payload: SaveScheduledEmailPayload;
+}
+
+/**
+ * Payload of the {@link SaveScheduledEmail} command.
+ * @alpha
+ */
+export interface SaveScheduledEmailPayload {
+    /**
+     * The scheduled email to save.
+     */
+    readonly scheduledEmail: IScheduledMailDefinition;
+}
+
+/**
+ * Saves existing SaveScheduledEmail command. Dispatching this command will result in saving scheduled email on the backend.
+ *
+ * @param scheduledEmail - specify scheduled email to save.
+ * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+
+ * @alpha
+ */
+export function saveScheduledEmail(
+    scheduledEmail: IScheduledMailDefinition,
+    correlationId?: string,
+): SaveScheduledEmail {
+    return {
+        type: "GDC.DASH/CMD.SCHEDULED_EMAIL.SAVE",
+        correlationId,
+        payload: {
+            scheduledEmail,
+        },
+    };
+}

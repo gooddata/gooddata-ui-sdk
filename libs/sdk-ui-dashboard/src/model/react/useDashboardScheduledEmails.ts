@@ -1,8 +1,8 @@
 // (C) 2022 GoodData Corporation
 
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
-import { ObjRef } from "@gooddata/sdk-model";
+import { IScheduledMail, ObjRef } from "@gooddata/sdk-model";
 import {
     selectCanCreateScheduledMail,
     selectDashboardRef,
@@ -46,6 +46,7 @@ export const useDashboardScheduledEmails = () => {
         dispatch(uiActions.setScheduleEmailDialogDefaultAttachment(attachmentRef));
     const resetScheduledEmailDefaultAttachment = () =>
         enableInsightExportScheduling && dispatch(uiActions.resetScheduleEmailDialogDefaultAttachment());
+    const [scheduledEmailToEdit, setScheduledEmailToEdit] = useState<IScheduledMail>();
 
     const isScheduledEmailingVisible =
         !isReadOnly &&
@@ -76,15 +77,28 @@ export const useDashboardScheduledEmails = () => {
         attachmentRef && setScheduledEmailDefaultAttachment(attachmentRef);
     }, []);
 
-    const onScheduleEmailingError = useCallback(() => {
+    const onScheduleEmailingCreateError = useCallback(() => {
         closeScheduleEmailingDialog();
         addError({ id: "dialogs.schedule.email.submit.error" });
     }, []);
 
-    const onScheduleEmailingSuccess = useCallback(() => {
+    const onScheduleEmailingCreateSuccess = useCallback(() => {
         closeScheduleEmailingDialog();
         addSuccess({ id: "dialogs.schedule.email.submit.success" });
         resetScheduledEmailDefaultAttachment();
+    }, []);
+
+    const onScheduleEmailingSaveError = useCallback(() => {
+        closeScheduleEmailingDialog();
+        addError({ id: "dialogs.schedule.email.save.error" });
+        setScheduledEmailToEdit(undefined);
+    }, []);
+
+    const onScheduleEmailingSaveSuccess = useCallback(() => {
+        closeScheduleEmailingDialog();
+        openScheduleEmailingManagementDialog();
+        addSuccess({ id: "dialogs.schedule.email.save.success" });
+        setScheduledEmailToEdit(undefined);
     }, []);
 
     const onScheduleEmailingCancel = useCallback(() => {
@@ -99,6 +113,12 @@ export const useDashboardScheduledEmails = () => {
 
     const onScheduleEmailingManagementAdd = useCallback(() => {
         closeScheduleEmailingManagementDialog();
+        openScheduleEmailingDialog();
+    }, []);
+
+    const onScheduleEmailingManagementEdit = useCallback((schedule) => {
+        closeScheduleEmailingManagementDialog();
+        setScheduledEmailToEdit(schedule);
         openScheduleEmailingDialog();
     }, []);
 
@@ -123,9 +143,13 @@ export const useDashboardScheduledEmails = () => {
         isScheduleEmailingDialogOpen,
         isScheduleEmailingManagementDialogOpen,
         onScheduleEmailingOpen,
+        onScheduleEmailingManagementEdit,
+        scheduledEmailToEdit,
         onScheduleEmailingCancel,
-        onScheduleEmailingError,
-        onScheduleEmailingSuccess,
+        onScheduleEmailingCreateError,
+        onScheduleEmailingCreateSuccess,
+        onScheduleEmailingSaveError,
+        onScheduleEmailingSaveSuccess,
         onScheduleEmailingManagementAdd,
         onScheduleEmailingManagementClose,
         onScheduleEmailingManagementLoadingError,

@@ -95,6 +95,16 @@
         "comment": "",
         "limit": 0
     },
+    "dialogs.schedule.email.save.success": {
+        "value": "Success! Your schedule has been saved.",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.schedule.email.save.error": {
+        "value": "Failed to save the schedule. Try again later.",
+        "comment": "",
+        "limit": 0
+    },
     "dialogs.save.as.new.title": {
         "value": "Save dashboard as new",
         "comment": "",
@@ -382,6 +392,11 @@
         "comment": "Translate as imperative. Submit the schedule config form.",
         "limit": 0
     },
+    "dialogs.schedule.email.save": {
+        "value": "Save",
+        "comment": "Translate as imperative. It's caption of a button for saving scheduled mail",
+        "limit": 0
+    },
     "dialogs.schedule.email.format.options": {
         "value": "Format options",
         "comment": "Header of a formatting dialog. Not an imperative!",
@@ -501,7 +516,12 @@
         "limit": 0
     },
     "options.menu.schedule.email.recipient.warning.belong.workspace": {
-        "value": "This email address does not belong to the workspace. Recipient may receive sensitive data.",
+        "value": "This email address does not belong to this workspace. The recipient may receive sensitive data.",
+        "comment": "Translate as imperative. Warning email on recipient field in schedule email dialog",
+        "limit": 0
+    },
+    "options.menu.schedule.email.recipient.external.not.allowed": {
+        "value": "This email address does not belong to this workspace. Only the author of the schedule can add this email address.",
         "comment": "Translate as imperative. Warning email on recipient field in schedule email dialog",
         "limit": 0
     },

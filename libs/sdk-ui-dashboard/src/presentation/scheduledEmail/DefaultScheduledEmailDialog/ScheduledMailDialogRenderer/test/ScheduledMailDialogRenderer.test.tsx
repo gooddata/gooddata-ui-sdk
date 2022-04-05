@@ -45,7 +45,6 @@ describe("ScheduledMailDialogRenderer", () => {
             enableKPIDashboardScheduleRecipients: true,
             canListUsersInProject: true,
             locale: "en-US",
-            workspace: "project",
             ...customProps,
         };
 

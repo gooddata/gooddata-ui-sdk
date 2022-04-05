@@ -1,7 +1,13 @@
 // (C) 2019-2021 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 
-import { generateRepeatString, setDailyRepeat, setMonthlyRepeat, setWeeklyRepeat } from "../repeat";
+import {
+    generateRepeatString,
+    parseRepeatString,
+    setDailyRepeat,
+    setMonthlyRepeat,
+    setWeeklyRepeat,
+} from "../repeat";
 import { REPEAT_EXECUTE_ON, REPEAT_TYPES } from "../../constants";
 import {
     IScheduleEmailRepeat,
@@ -12,14 +18,8 @@ import {
 } from "../../interfaces";
 import { getDate, getDay, getMonth, getWeek, getYear } from "../datetime";
 
-describe("RepeatGenerator", () => {
+describe("repeat string generator", () => {
     const now = new Date(2019, 10, 10, 10, 30, 0, 0);
-
-    const date: IScheduleEmailRepeatDate = {
-        day: getDay(now),
-        month: getMonth(now),
-        year: getYear(now),
-    };
 
     const time: IScheduleEmailRepeatTime = {
         hour: now.getHours(),
@@ -28,8 +28,6 @@ describe("RepeatGenerator", () => {
     };
 
     const repeatData: IScheduleEmailRepeat = {
-        date,
-        repeatExecuteOn: REPEAT_EXECUTE_ON.DAY_OF_WEEK,
         repeatFrequency: { month: { dayOfWeek: { day: 4, week: 2 }, type: REPEAT_EXECUTE_ON.DAY_OF_WEEK } },
         repeatPeriod: 9,
         repeatType: REPEAT_TYPES.CUSTOM,
@@ -41,67 +39,53 @@ describe("RepeatGenerator", () => {
             pattern: string,
             repeatType: string,
             frequency?: IScheduleEmailRepeatFrequency,
-            executeOn?: string,
             period?: number,
         ];
 
         const scenarios: Scenario[] = [
-            ["0:0:0:1*10:30:0", REPEAT_TYPES.DAILY, undefined, undefined, undefined],
-            ["0:0:1*4:10:30:0", REPEAT_TYPES.WEEKLY, { week: { days: [4] } }, undefined, undefined],
-            ["0:0:1*4,5:10:30:0", REPEAT_TYPES.WEEKLY, { week: { days: [4, 5] } }, undefined, undefined],
+            ["0:0:0:1*10:30:0", REPEAT_TYPES.DAILY, undefined, undefined],
+            ["0:0:1*4:10:30:0", REPEAT_TYPES.WEEKLY, { week: { days: [4] } }, undefined],
+            ["0:0:1*4,5:10:30:0", REPEAT_TYPES.WEEKLY, { week: { days: [4, 5] } }, undefined],
             [
                 "0:1*0:10:10:30:0",
                 REPEAT_TYPES.MONTHLY,
                 { month: { dayOfMonth: 10, type: REPEAT_EXECUTE_ON.DAY_OF_MONTH } },
-                REPEAT_EXECUTE_ON.DAY_OF_MONTH,
                 undefined,
             ],
             [
                 "0:1*2:4:10:30:0",
                 REPEAT_TYPES.MONTHLY,
                 { month: { dayOfWeek: { day: 4, week: 2 }, type: REPEAT_EXECUTE_ON.DAY_OF_WEEK } },
-                REPEAT_EXECUTE_ON.DAY_OF_WEEK,
                 undefined,
             ],
-            ["0:0:0:1*10:30:0", REPEAT_TYPES.CUSTOM, { day: undefined }, undefined, undefined],
-            ["0:0:1*4:10:30:0", REPEAT_TYPES.CUSTOM, { week: { days: [4] } }, undefined, undefined],
-            ["0:0:1*4,5:10:30:0", REPEAT_TYPES.CUSTOM, { week: { days: [4, 5] } }, undefined, undefined],
+            ["0:0:0:1*10:30:0", REPEAT_TYPES.CUSTOM, { day: undefined }, undefined],
+            ["0:0:1*4:10:30:0", REPEAT_TYPES.CUSTOM, { week: { days: [4] } }, undefined],
+            ["0:0:1*4,5:10:30:0", REPEAT_TYPES.CUSTOM, { week: { days: [4, 5] } }, undefined],
             [
                 "0:1*0:10:10:30:0",
                 REPEAT_TYPES.CUSTOM,
                 { month: { dayOfMonth: 10, type: REPEAT_EXECUTE_ON.DAY_OF_MONTH } },
-                REPEAT_EXECUTE_ON.DAY_OF_MONTH,
                 undefined,
             ],
             [
                 "0:1*2:4:10:30:0",
                 REPEAT_TYPES.CUSTOM,
                 { month: { dayOfWeek: { day: 4, week: 2 }, type: REPEAT_EXECUTE_ON.DAY_OF_WEEK } },
-                REPEAT_EXECUTE_ON.DAY_OF_WEEK,
                 undefined,
             ],
             [
                 "0:9*2:4:10:30:0",
                 REPEAT_TYPES.CUSTOM,
                 { month: { dayOfWeek: { day: 4, week: 2 }, type: REPEAT_EXECUTE_ON.DAY_OF_WEEK } },
-                REPEAT_EXECUTE_ON.DAY_OF_WEEK,
                 9,
             ],
         ];
 
         it.each(scenarios)(
             "should generate repeat string %s when repeat type is %s",
-            (
-                expectedRepeatString,
-                repeatType,
-                repeatFrequency = { day: true },
-                repeatExecuteOn = REPEAT_EXECUTE_ON.DAY_OF_MONTH,
-                repeatPeriod = 1,
-            ) => {
+            (expectedRepeatString, repeatType, repeatFrequency = { day: true }, repeatPeriod = 1) => {
                 expect(
                     generateRepeatString({
-                        date,
-                        repeatExecuteOn,
                         repeatFrequency,
                         repeatPeriod,
                         repeatType,
@@ -164,7 +148,6 @@ describe("RepeatGenerator", () => {
                 setMonthlyRepeat(data, repeatExecuteOn, now);
                 expect(data).toEqual({
                     ...repeatData,
-                    repeatExecuteOn,
                     repeatFrequency: {
                         month: {
                             type: repeatExecuteOn,
@@ -189,5 +172,63 @@ describe("RepeatGenerator", () => {
                 },
             });
         });
+    });
+});
+
+describe("repeat string parser", () => {
+    describe("parseRepeatString", () => {
+        type Scenario = [
+            pattern: string,
+            repeatType: string,
+            frequency?: IScheduleEmailRepeatFrequency,
+            period?: number,
+        ];
+
+        const scenarios: Scenario[] = [
+            ["0:0:0:1*10:30:12", REPEAT_TYPES.DAILY, { day: true }, undefined],
+            ["0:0:1*4:10:30:12", REPEAT_TYPES.WEEKLY, { week: { days: [4] } }, undefined],
+            [
+                "0:1*0:10:10:30:12",
+                REPEAT_TYPES.MONTHLY,
+                { month: { dayOfMonth: 10, type: REPEAT_EXECUTE_ON.DAY_OF_MONTH } },
+                undefined,
+            ],
+            [
+                "0:1*2:4:10:30:12",
+                REPEAT_TYPES.MONTHLY,
+                { month: { dayOfWeek: { day: 4, week: 2 }, type: REPEAT_EXECUTE_ON.DAY_OF_WEEK } },
+                undefined,
+            ],
+            [
+                // every 9 months on Thursday of the second week
+                "0:9*2:4:10:30:12",
+                REPEAT_TYPES.CUSTOM,
+                { month: { dayOfWeek: { day: 4, week: 2 }, type: REPEAT_EXECUTE_ON.DAY_OF_WEEK } },
+                9,
+            ],
+            [
+                // every 3 months on day 13
+                "0:3*0:13:10:30:12",
+                REPEAT_TYPES.CUSTOM,
+                { month: { dayOfMonth: 13, type: REPEAT_EXECUTE_ON.DAY_OF_MONTH } },
+                3,
+            ],
+        ];
+
+        it.each(scenarios)(
+            "should parse recurrence string %s to repeat type is %s",
+            (recurrencyString, repeatType, repeatFrequency, repeatPeriod = 1) => {
+                expect(parseRepeatString(recurrencyString)).toMatchObject({
+                    repeatType,
+                    repeatFrequency,
+                    repeatPeriod,
+                    time: {
+                        hour: 10,
+                        minute: 30,
+                        second: 12,
+                    },
+                });
+            },
+        );
     });
 });
