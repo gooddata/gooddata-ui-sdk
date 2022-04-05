@@ -110,9 +110,12 @@ export class UserModule {
                     const sst = headers.get("x-gdc-authsst");
                     const tt = headers.get("x-gdc-authtt");
 
-                    // TODO defaults or throw?
-                    this.localStore.storeSST(sst ?? "");
-                    this.localStore.storeTT(tt ?? "");
+                    if (!(tt && sst)) {
+                        throw new ApiResponseError("Unauthorized", r.response, r.responseBody);
+                    }
+
+                    this.localStore.storeSST(sst);
+                    this.localStore.storeTT(tt);
                 }
                 return r.getData();
             });
