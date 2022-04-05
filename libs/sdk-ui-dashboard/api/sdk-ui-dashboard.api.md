@@ -112,6 +112,7 @@ import { IWidgetDefinition } from '@gooddata/sdk-backend-spi';
 import { IWorkspacePermissions } from '@gooddata/sdk-backend-spi';
 import { LocalIdRef } from '@gooddata/sdk-model';
 import { MemoizedFunction } from 'lodash';
+import { MouseEvent as MouseEvent_2 } from 'react';
 import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { ObjRefInScope } from '@gooddata/sdk-model';
@@ -2880,7 +2881,7 @@ export interface IInsightMenuItemButton {
     // (undocumented)
     itemName: string;
     // (undocumented)
-    onClick?: () => void;
+    onClick?: (e: MouseEvent_2) => void;
     tooltip?: string;
     // (undocumented)
     type: "button";
