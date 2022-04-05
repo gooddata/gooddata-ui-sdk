@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { Component, createRef } from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
@@ -24,9 +24,9 @@ export interface ISingleSelectListItemProps {
 
     isSelected?: boolean;
 
-    onClick?: () => void;
-    onMouseOver?: () => void;
-    onMouseOut?: () => void;
+    onClick?: (e: React.MouseEvent<HTMLElement>) => void;
+    onMouseOver?: (e: React.MouseEvent<HTMLElement>) => void;
+    onMouseOut?: (e: React.MouseEvent<HTMLElement>) => void;
 }
 /**
  * @internal
