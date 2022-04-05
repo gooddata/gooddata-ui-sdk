@@ -1,16 +1,19 @@
-// (C) 2021 GoodData Corporation
-import React, { useMemo } from "react";
+// (C) 2021-2022 GoodData Corporation
+import React, { useEffect, useMemo } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-
 import {
-    useDashboardSelector,
-    selectCatalogDateDatasets,
-    IBrokenAlertFilterBasicInfo,
-} from "../../../../model";
+    IAnalyticalBackend,
+    ICatalogDateDataset,
+    IDashboardDateFilter,
+    isDashboardDateFilter,
+} from "@gooddata/sdk-backend-spi";
+import compact from "lodash/compact";
+
+import { IBrokenAlertFilterBasicInfo, useDashboardQueryProcessing } from "../../../../model";
 
 import { enrichBrokenAlertsInfo, IKpiAlertDialogProps, KpiAlertDialog } from "./KpiAlerts";
 import { useBrokenAlertFiltersMeta } from "./useBrokenAlertFiltersMeta";
+import { queryCatalogDateDatasets } from "../../../../model/queries/catalog";
 
 interface IKpiAlertDialogWrapperProps
     extends WrappedComponentProps,
@@ -22,7 +25,23 @@ interface IKpiAlertDialogWrapperProps
 
 const KpiAlertDialogWrapperCore: React.FC<IKpiAlertDialogWrapperProps> = (props) => {
     const { brokenAlertFiltersBasicInfo, backend, workspace, intl, ...restProps } = props;
-    const dateDatasets = useDashboardSelector(selectCatalogDateDatasets);
+    // const dateDatasets = useDashboardSelector(selectCatalogDateDatasets);
+
+    const brokenDateFiltersInfo: IDashboardDateFilter[] =
+        brokenAlertFiltersBasicInfo
+            ?.map((basicInfo) => basicInfo.alertFilter)
+            .filter(isDashboardDateFilter) || [];
+    const dateDatasetRefs = compact(brokenDateFiltersInfo.map((info) => info.dateFilter.attribute));
+
+    const { result: dateDatasetQueryResult, run: runDateDatasetsQuery } = useDashboardQueryProcessing({
+        queryCreator: queryCatalogDateDatasets,
+    });
+
+    useEffect(() => {
+        runDateDatasetsQuery(dateDatasetRefs);
+    }, [brokenAlertFiltersBasicInfo]);
+
+    const dateDatasets = dateDatasetQueryResult as ICatalogDateDataset[];
 
     const { result: brokenAlertFiltersMeta, status } = useBrokenAlertFiltersMeta({
         dateDatasets,

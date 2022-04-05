@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import {
     IAttributeElement,
     IDashboardAttributeFilter,
@@ -71,7 +71,7 @@ function enrichBrokenDateFilter(
     const dateFilterTitle = translateDateFilter(alertFilter, intl, dateFormat);
 
     const matchingDateDataset = dateDataSets.find((dataset) =>
-        areObjRefsEqual(dataset, alertFilter.dateFilter.dataSet),
+        areObjRefsEqual(dataset.ref, alertFilter.dateFilter.dataSet),
     );
 
     return {
