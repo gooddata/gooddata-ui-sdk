@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020 GoodData Corporation
 import React, { createRef } from "react";
 import cx from "classnames";
 import { Portal } from "react-portal";
@@ -48,6 +48,8 @@ function alignExceedsThreshold(firstAlignment: Alignment, secondAlignment: Align
     );
 }
 
+const stopPropagation = (e: React.MouseEvent<HTMLDivElement, MouseEvent>): void => e.stopPropagation();
+
 /**
  * @internal
  */
@@ -65,9 +67,9 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
 
         shouldCloseOnClick: () => true,
 
-        onClick: noop,
-        onMouseOver: noop,
-        onMouseUp: noop,
+        onClick: stopPropagation,
+        onMouseOver: stopPropagation,
+        onMouseUp: stopPropagation,
         onAlign: noop,
         onClose: noop,
     };
