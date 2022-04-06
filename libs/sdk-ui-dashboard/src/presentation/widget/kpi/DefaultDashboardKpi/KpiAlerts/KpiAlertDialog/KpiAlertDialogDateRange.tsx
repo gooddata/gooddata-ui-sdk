@@ -1,8 +1,7 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
-import { IDateFilter } from "@gooddata/sdk-model";
-import { IDashboardDateFilter, ITheme } from "@gooddata/sdk-backend-spi";
+import { IDateFilter, IDashboardDateFilter, ITheme } from "@gooddata/sdk-model";
 import { Icon } from "@gooddata/sdk-ui-kit";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 

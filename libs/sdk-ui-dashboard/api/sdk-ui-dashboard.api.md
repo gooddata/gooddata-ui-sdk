@@ -14,111 +14,102 @@ import { CaseReducerActions } from '@reduxjs/toolkit';
 import { ComponentType } from 'react';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-model';
 import { DataViewFacade } from '@gooddata/sdk-ui';
-import { DateFilterGranularity } from '@gooddata/sdk-backend-spi';
-import { DateFilterGranularity as DateFilterGranularity_2 } from '@gooddata/sdk-model';
-import { DateFilterType } from '@gooddata/sdk-backend-spi';
-import { DateString } from '@gooddata/sdk-backend-spi';
+import { DateFilterGranularity } from '@gooddata/sdk-model';
+import { DateFilterType } from '@gooddata/sdk-model';
+import { DateString } from '@gooddata/sdk-model';
 import { Dictionary } from '@reduxjs/toolkit';
 import { Dispatch } from '@reduxjs/toolkit';
-import { DrillDefinition } from '@gooddata/sdk-backend-spi';
+import { DrillDefinition } from '@gooddata/sdk-model';
 import { EntityId } from '@reduxjs/toolkit';
 import { EntityState } from '@reduxjs/toolkit';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
-import { FilterContextItem } from '@gooddata/sdk-backend-spi';
-import { FilterContextItem as FilterContextItem_2 } from '@gooddata/sdk-model';
+import { FilterContextItem } from '@gooddata/sdk-model';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
-import { IAccessControlAware } from '@gooddata/sdk-backend-spi';
-import { IAccessGrantee } from '@gooddata/sdk-backend-spi';
+import { IAccessControlAware } from '@gooddata/sdk-model';
+import { IAccessGrantee } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
-import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-backend-spi';
-import { IAttributeDisplayFormMetadataObject as IAttributeDisplayFormMetadataObject_2 } from '@gooddata/sdk-model';
+import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeElements } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
-import { IAttributeMetadataObject } from '@gooddata/sdk-backend-spi';
+import { IAttributeMetadataObject } from '@gooddata/sdk-model';
 import { IAvailableDrillTargets } from '@gooddata/sdk-ui';
 import { IBackendCapabilities } from '@gooddata/sdk-backend-spi';
-import { IBaseWidget } from '@gooddata/sdk-backend-spi';
-import { ICatalogAttribute } from '@gooddata/sdk-backend-spi';
+import { IBaseWidget } from '@gooddata/sdk-model';
+import { ICatalogAttribute } from '@gooddata/sdk-model';
 import { ICatalogDateAttribute } from '@gooddata/sdk-model';
-import { ICatalogDateAttribute as ICatalogDateAttribute_2 } from '@gooddata/sdk-backend-spi';
-import { ICatalogDateDataset } from '@gooddata/sdk-backend-spi';
-import { ICatalogFact } from '@gooddata/sdk-backend-spi';
-import { ICatalogMeasure } from '@gooddata/sdk-backend-spi';
+import { ICatalogDateDataset } from '@gooddata/sdk-model';
+import { ICatalogFact } from '@gooddata/sdk-model';
+import { ICatalogMeasure } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
-import { IDashboard } from '@gooddata/sdk-backend-spi';
-import { IDashboardAttributeFilter } from '@gooddata/sdk-backend-spi';
-import { IDashboardAttributeFilterParent } from '@gooddata/sdk-backend-spi';
-import { IDashboardDateFilter } from '@gooddata/sdk-backend-spi';
-import { IDashboardDateFilterConfig as IDashboardDateFilterConfig_2 } from '@gooddata/sdk-backend-spi';
-import { IDashboardLayout } from '@gooddata/sdk-backend-spi';
-import { IDashboardLayoutItem } from '@gooddata/sdk-backend-spi';
-import { IDashboardLayoutSection } from '@gooddata/sdk-backend-spi';
-import { IDashboardLayoutSectionHeader } from '@gooddata/sdk-backend-spi';
-import { IDashboardLayoutSizeByScreenSize } from '@gooddata/sdk-backend-spi';
-import { IDashboardObjectIdentity } from '@gooddata/sdk-backend-spi';
+import { IDashboard } from '@gooddata/sdk-model';
+import { IDashboardAttributeFilter } from '@gooddata/sdk-model';
+import { IDashboardAttributeFilterParent } from '@gooddata/sdk-model';
+import { IDashboardDateFilter } from '@gooddata/sdk-model';
+import { IDashboardDateFilterConfig as IDashboardDateFilterConfig_2 } from '@gooddata/sdk-model';
+import { IDashboardLayout } from '@gooddata/sdk-model';
+import { IDashboardLayoutItem } from '@gooddata/sdk-model';
+import { IDashboardLayoutSection } from '@gooddata/sdk-model';
+import { IDashboardLayoutSectionHeader } from '@gooddata/sdk-model';
+import { IDashboardLayoutSizeByScreenSize } from '@gooddata/sdk-model';
+import { IDashboardObjectIdentity } from '@gooddata/sdk-model';
 import { IDashboardWidget } from '@gooddata/sdk-model';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IDateFilter } from '@gooddata/sdk-model';
-import { IDateFilterConfig } from '@gooddata/sdk-backend-spi';
+import { IDateFilterConfig } from '@gooddata/sdk-model';
 import { IDateFilterOptionsByType } from '@gooddata/sdk-ui-filters';
 import { Identifier } from '@gooddata/sdk-model';
 import { IdentifierRef } from '@gooddata/sdk-model';
 import { IDrillEvent } from '@gooddata/sdk-ui';
-import { IDrillToAttributeUrl } from '@gooddata/sdk-backend-spi';
-import { IDrillToCustomUrl } from '@gooddata/sdk-backend-spi';
-import { IDrillToDashboard } from '@gooddata/sdk-backend-spi';
-import { IDrillToInsight } from '@gooddata/sdk-backend-spi';
-import { IDrillToLegacyDashboard } from '@gooddata/sdk-backend-spi';
-import { IDrillToLegacyDashboard as IDrillToLegacyDashboard_2 } from '@gooddata/sdk-model';
+import { IDrillToAttributeUrl } from '@gooddata/sdk-model';
+import { IDrillToCustomUrl } from '@gooddata/sdk-model';
+import { IDrillToDashboard } from '@gooddata/sdk-model';
+import { IDrillToInsight } from '@gooddata/sdk-model';
+import { IDrillToLegacyDashboard } from '@gooddata/sdk-model';
 import { IErrorProps } from '@gooddata/sdk-ui';
 import { IExecutionConfiguration } from '@gooddata/sdk-ui';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IExecutionResult } from '@gooddata/sdk-backend-spi';
 import { IFilter } from '@gooddata/sdk-model';
-import { IFilterableWidget } from '@gooddata/sdk-backend-spi';
-import { IFilterContext } from '@gooddata/sdk-backend-spi';
-import { IFilterContextDefinition } from '@gooddata/sdk-backend-spi';
+import { IFilterableWidget } from '@gooddata/sdk-model';
+import { IFilterContext } from '@gooddata/sdk-model';
+import { IFilterContextDefinition } from '@gooddata/sdk-model';
 import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
-import { IInsightWidget } from '@gooddata/sdk-backend-spi';
-import { IInsightWidget as IInsightWidget_2 } from '@gooddata/sdk-model';
-import { IInsightWidgetDefinition } from '@gooddata/sdk-backend-spi';
-import { IKpiWidget } from '@gooddata/sdk-backend-spi';
-import { IKpiWidget as IKpiWidget_2 } from '@gooddata/sdk-model';
-import { IKpiWidgetDefinition } from '@gooddata/sdk-backend-spi';
-import { ILegacyKpi } from '@gooddata/sdk-backend-spi';
-import { ILegacyKpiComparisonDirection } from '@gooddata/sdk-backend-spi';
-import { ILegacyKpiComparisonTypeComparison } from '@gooddata/sdk-backend-spi';
-import { IListedDashboard } from '@gooddata/sdk-backend-spi';
+import { IInsightWidget } from '@gooddata/sdk-model';
+import { IInsightWidgetDefinition } from '@gooddata/sdk-model';
+import { IKpi } from '@gooddata/sdk-model';
+import { IKpiComparisonDirection } from '@gooddata/sdk-model';
+import { IKpiComparisonTypeComparison } from '@gooddata/sdk-model';
+import { IKpiWidget } from '@gooddata/sdk-model';
+import { IKpiWidgetDefinition } from '@gooddata/sdk-model';
+import { IListedDashboard } from '@gooddata/sdk-model';
 import { ILoadingProps } from '@gooddata/sdk-ui';
 import { ILocale } from '@gooddata/sdk-ui';
-import { IMeasureMetadataObject } from '@gooddata/sdk-backend-spi';
+import { IMeasureMetadataObject } from '@gooddata/sdk-model';
 import { INegativeAttributeFilter } from '@gooddata/sdk-model';
 import { InsightDisplayFormUsage } from '@gooddata/sdk-model';
-import { InsightDrillDefinition } from '@gooddata/sdk-backend-spi';
-import { InsightDrillDefinition as InsightDrillDefinition_2 } from '@gooddata/sdk-model';
+import { InsightDrillDefinition } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
 import { IPositiveAttributeFilter } from '@gooddata/sdk-model';
 import { IPushData } from '@gooddata/sdk-ui';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
-import { IScheduledMail } from '@gooddata/sdk-backend-spi';
-import { IScheduledMailDefinition } from '@gooddata/sdk-backend-spi';
-import { ISeparators } from '@gooddata/sdk-backend-spi';
-import { ISettings } from '@gooddata/sdk-backend-spi';
+import { IScheduledMail } from '@gooddata/sdk-model';
+import { IScheduledMailDefinition } from '@gooddata/sdk-model';
+import { ISeparators } from '@gooddata/sdk-model';
+import { ISettings } from '@gooddata/sdk-model';
 import { ISharedObject } from '@gooddata/sdk-ui-kit';
 import { ISharingApplyPayload as ISharingApplyPayload_2 } from '@gooddata/sdk-ui-kit';
-import { ITempFilterContext } from '@gooddata/sdk-backend-spi';
-import { ITheme } from '@gooddata/sdk-backend-spi';
+import { ITempFilterContext } from '@gooddata/sdk-model';
+import { ITheme } from '@gooddata/sdk-model';
 import { ITranslations } from '@gooddata/sdk-ui';
 import { IUser } from '@gooddata/sdk-model';
-import { IWidget } from '@gooddata/sdk-backend-spi';
-import { IWidgetAlert } from '@gooddata/sdk-backend-spi';
-import { IWidgetAlertDefinition } from '@gooddata/sdk-backend-spi';
-import { IWidgetDefinition } from '@gooddata/sdk-backend-spi';
-import { IWorkspacePermissions } from '@gooddata/sdk-backend-spi';
-import { IWorkspacePermissions as IWorkspacePermissions_2 } from '@gooddata/sdk-model';
+import { IWidget } from '@gooddata/sdk-model';
+import { IWidgetAlert } from '@gooddata/sdk-model';
+import { IWidgetAlertDefinition } from '@gooddata/sdk-model';
+import { IWidgetDefinition } from '@gooddata/sdk-model';
+import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { LocalIdRef } from '@gooddata/sdk-model';
 import { MemoizedFunction } from 'lodash';
 import { MouseEvent as MouseEvent_2 } from 'react';
@@ -138,10 +129,9 @@ import { default as React_2 } from 'react';
 import { ReactReduxContextValue } from 'react-redux';
 import { Reducer } from '@reduxjs/toolkit';
 import { SagaIterator } from 'redux-saga';
-import { ScreenSize } from '@gooddata/sdk-backend-spi';
+import { ScreenSize } from '@gooddata/sdk-model';
 import { Selector } from '@reduxjs/toolkit';
-import { ShareStatus } from '@gooddata/sdk-backend-spi';
-import { ShareStatus as ShareStatus_2 } from '@gooddata/sdk-model';
+import { ShareStatus } from '@gooddata/sdk-model';
 import { TypedUseSelectorHook } from 'react-redux';
 import { UriRef } from '@gooddata/sdk-model';
 import { UseCancelablePromiseState } from '@gooddata/sdk-ui';
@@ -1381,7 +1371,7 @@ export interface DashboardKpiWidgetComparisonChanged extends IDashboardEvent {
 
 // @alpha
 export interface DashboardKpiWidgetComparisonChangedPayload {
-    readonly kpi: ILegacyKpi;
+    readonly kpi: IKpi;
     readonly ref: ObjRef;
 }
 
@@ -3439,7 +3429,7 @@ export type KpiAlertDialogOpenedPayload = UserInteractionPayloadWithDataBase<"kp
 }>;
 
 // @public (undocumented)
-export type KpiComponentProvider = (kpi: ILegacyKpi, widget: IKpiWidget) => CustomDashboardKpiComponent;
+export type KpiComponentProvider = (kpi: IKpi, widget: IKpiWidget) => CustomDashboardKpiComponent;
 
 // @alpha (undocumented)
 export interface KpiPlaceholderWidget extends ICustomWidgetBase {
@@ -3449,8 +3439,8 @@ export interface KpiPlaceholderWidget extends ICustomWidgetBase {
 
 // @alpha (undocumented)
 export interface KpiWidgetComparison {
-    comparisonDirection?: ILegacyKpiComparisonDirection;
-    comparisonType?: ILegacyKpiComparisonTypeComparison;
+    comparisonDirection?: IKpiComparisonDirection;
+    comparisonType?: IKpiComparisonTypeComparison;
 }
 
 // @alpha (undocumented)
@@ -4161,7 +4151,7 @@ export const selectAlerts: (state: DashboardState) => IWidgetAlert[];
 export const selectAlertsMap: OutputSelector<DashboardState, ObjRefMap<IWidgetAlert>, (res: IWidgetAlert[]) => ObjRefMap<IWidgetAlert>>;
 
 // @alpha
-export const selectAllCatalogAttributesMap: OutputSelector<DashboardState, ObjRefMap<ICatalogAttribute | ICatalogDateAttribute_2>, (res1: ICatalogAttribute[], res2: ICatalogDateDataset[], res3: IBackendCapabilities) => ObjRefMap<ICatalogAttribute | ICatalogDateAttribute_2>>;
+export const selectAllCatalogAttributesMap: OutputSelector<DashboardState, ObjRefMap<ICatalogAttribute | ICatalogDateAttribute>, (res1: ICatalogAttribute[], res2: ICatalogDateDataset[], res3: IBackendCapabilities) => ObjRefMap<ICatalogAttribute | ICatalogDateAttribute>>;
 
 // @alpha
 export const selectAllCatalogDisplayFormsMap: OutputSelector<DashboardState, ObjRefMap<IAttributeDisplayFormMetadataObject>, (res1: ICatalogAttribute[], res2: ICatalogDateDataset[], res3: IBackendCapabilities) => ObjRefMap<IAttributeDisplayFormMetadataObject>>;
@@ -4170,13 +4160,13 @@ export const selectAllCatalogDisplayFormsMap: OutputSelector<DashboardState, Obj
 export const selectAllCustomWidgets: OutputSelector<DashboardState, ICustomWidget[], (res: ExtendedDashboardWidget[]) => ICustomWidget[]>;
 
 // @alpha
-export const selectAllInsightWidgets: OutputSelector<DashboardState, IInsightWidget_2[], (res: ExtendedDashboardWidget[]) => IInsightWidget_2[]>;
+export const selectAllInsightWidgets: OutputSelector<DashboardState, IInsightWidget[], (res: ExtendedDashboardWidget[]) => IInsightWidget[]>;
 
 // @alpha
-export const selectAllKpiWidgets: OutputSelector<DashboardState, IKpiWidget_2[], (res: ExtendedDashboardWidget[]) => IKpiWidget_2[]>;
+export const selectAllKpiWidgets: OutputSelector<DashboardState, IKpiWidget[], (res: ExtendedDashboardWidget[]) => IKpiWidget[]>;
 
 // @alpha
-export const selectAnalyticalWidgetByRef: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IKpiWidget_2 | IInsightWidget_2 | undefined, (res: ObjRefMap<ExtendedDashboardWidget>) => IKpiWidget_2 | IInsightWidget_2 | undefined>;
+export const selectAnalyticalWidgetByRef: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IKpiWidget | IInsightWidget | undefined, (res: ObjRefMap<ExtendedDashboardWidget>) => IKpiWidget | IInsightWidget | undefined>;
 
 // @public
 export const selectAttributeFilterDisplayForms: OutputSelector<DashboardState, IAttributeDisplayFormMetadataObject[], (res: FilterContextState) => IAttributeDisplayFormMetadataObject[]>;
@@ -4185,61 +4175,61 @@ export const selectAttributeFilterDisplayForms: OutputSelector<DashboardState, I
 export const selectAttributeFilterDisplayFormsMap: OutputSelector<DashboardState, ObjRefMap<IAttributeDisplayFormMetadataObject>, (res: FilterContextState) => ObjRefMap<IAttributeDisplayFormMetadataObject>>;
 
 // @alpha (undocumented)
-export const selectAttributesWithDrillDown: OutputSelector<DashboardState, (ICatalogDateAttribute | ICatalogAttribute)[], (res1: ICatalogAttribute[], res2: ICatalogDateAttribute[]) => (ICatalogDateAttribute | ICatalogAttribute)[]>;
+export const selectAttributesWithDrillDown: OutputSelector<DashboardState, (ICatalogAttribute | ICatalogDateAttribute)[], (res1: ICatalogAttribute[], res2: ICatalogDateAttribute[]) => (ICatalogAttribute | ICatalogDateAttribute)[]>;
 
 // @public
 export const selectBackendCapabilities: OutputSelector<DashboardState, IBackendCapabilities, (res: BackendCapabilitiesState) => IBackendCapabilities>;
 
 // @public
-export const selectCanCreateAnalyticalDashboard: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions_2) => boolean>;
+export const selectCanCreateAnalyticalDashboard: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @public
-export const selectCanCreateScheduledMail: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions_2) => boolean>;
+export const selectCanCreateScheduledMail: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @public
-export const selectCanCreateVisualization: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions_2) => boolean>;
+export const selectCanCreateVisualization: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @public
-export const selectCanExecuteRaw: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions_2) => boolean>;
+export const selectCanExecuteRaw: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @public
-export const selectCanExportReport: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions_2) => boolean>;
+export const selectCanExportReport: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @public
-export const selectCanInitData: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions_2) => boolean>;
+export const selectCanInitData: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @public
-export const selectCanInviteUserToWorkspace: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions_2) => boolean>;
+export const selectCanInviteUserToWorkspace: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @public
-export const selectCanListUsersInWorkspace: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions_2) => boolean>;
+export const selectCanListUsersInWorkspace: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @public
-export const selectCanManageACL: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions_2) => boolean>;
+export const selectCanManageACL: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @public
-export const selectCanManageAnalyticalDashboard: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions_2) => boolean>;
+export const selectCanManageAnalyticalDashboard: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @public
-export const selectCanManageDomain: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions_2) => boolean>;
+export const selectCanManageDomain: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @public
-export const selectCanManageMetric: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions_2) => boolean>;
+export const selectCanManageMetric: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @public
-export const selectCanManageScheduledMail: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions_2) => boolean>;
+export const selectCanManageScheduledMail: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @public
-export const selectCanManageWorkspace: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions_2) => boolean>;
+export const selectCanManageWorkspace: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @public
-export const selectCanRefreshData: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions_2) => boolean>;
+export const selectCanRefreshData: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @public
-export const selectCanUploadNonProductionCSV: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions_2) => boolean>;
+export const selectCanUploadNonProductionCSV: OutputSelector<DashboardState, boolean, (res: IWorkspacePermissions) => boolean>;
 
 // @public (undocumented)
-export const selectCatalogAttributeDisplayForms: OutputSelector<DashboardState, IAttributeDisplayFormMetadataObject_2[], (res: ICatalogAttribute[]) => IAttributeDisplayFormMetadataObject_2[]>;
+export const selectCatalogAttributeDisplayForms: OutputSelector<DashboardState, IAttributeDisplayFormMetadataObject[], (res: ICatalogAttribute[]) => IAttributeDisplayFormMetadataObject[]>;
 
 // @public (undocumented)
 export const selectCatalogAttributes: OutputSelector<DashboardState, ICatalogAttribute[], (res: CatalogState) => ICatalogAttribute[]>;
@@ -4263,7 +4253,7 @@ export const selectConfig: OutputSelector<DashboardState, ResolvedDashboardConfi
 export const selectConfiguredAndImplicitDrillsByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IImplicitDrillWithPredicates[], res2: IImplicitDrillWithPredicates[], res3: IImplicitDrillWithPredicates[]) => IImplicitDrillWithPredicates[]>;
 
 // @internal (undocumented)
-export const selectConfiguredDrillsByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IDrillToLegacyDashboard_2[] | InsightDrillDefinition_2[], res2: boolean, res3: boolean, res4: boolean, res5: boolean, res6: boolean, res7: boolean, res8: boolean) => IImplicitDrillWithPredicates[]>;
+export const selectConfiguredDrillsByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IDrillToLegacyDashboard[] | InsightDrillDefinition[], res2: boolean, res3: boolean, res4: boolean, res5: boolean, res6: boolean, res7: boolean, res8: boolean) => IImplicitDrillWithPredicates[]>;
 
 // @public
 export const selectCurrentUser: OutputSelector<DashboardState, IUser, (res: UserState) => IUser>;
@@ -4296,7 +4286,7 @@ export const selectDashboardSaving: OutputSelector<DashboardState, SavingState, 
 export const selectDashboardShareInfo: OutputSelector<DashboardState, IAccessControlAware, (res: DashboardDescriptor) => IAccessControlAware>;
 
 // @alpha
-export const selectDashboardShareStatus: OutputSelector<DashboardState, ShareStatus_2, (res: DashboardDescriptor) => ShareStatus_2>;
+export const selectDashboardShareStatus: OutputSelector<DashboardState, ShareStatus, (res: DashboardDescriptor) => ShareStatus>;
 
 // @public
 export const selectDashboardTags: OutputSelector<DashboardState, string[] | undefined, (res: DashboardDescriptor) => string[] | undefined>;
@@ -4344,7 +4334,7 @@ export const selectDrillTargets: OutputSelector<DashboardState, ObjRefMap<IDrill
 export const selectDrillTargetsByWidgetRef: ((ref: ObjRef) => OutputSelector<DashboardState, IDrillTargets | undefined, (res: ObjRefMap<IDrillTargets>) => IDrillTargets | undefined>) & MemoizedFunction;
 
 // @alpha
-export const selectEffectiveDateFilterAvailableGranularities: OutputSelector<DashboardState, DateFilterGranularity_2[], (res: IDateFilterConfig) => DateFilterGranularity_2[]>;
+export const selectEffectiveDateFilterAvailableGranularities: OutputSelector<DashboardState, DateFilterGranularity[], (res: IDateFilterConfig) => DateFilterGranularity[]>;
 
 // @alpha
 export const selectEffectiveDateFilterConfig: OutputSelector<DashboardState, IDateFilterConfig, (res: DateFilterConfigState) => IDateFilterConfig>;
@@ -4410,16 +4400,16 @@ export const selectFilterBarHeight: OutputSelector<DashboardState, number, (res:
 export const selectFilterContextAttributeFilterByDisplayForm: (displayForm: ObjRef) => OutputSelector<DashboardState, IDashboardAttributeFilter | undefined, (res1: ObjRefMap<IAttributeDisplayFormMetadataObject>, res2: IDashboardAttributeFilter[]) => IDashboardAttributeFilter | undefined>;
 
 // @public
-export const selectFilterContextAttributeFilters: OutputSelector<DashboardState, IDashboardAttributeFilter[], (res: FilterContextItem_2[]) => IDashboardAttributeFilter[]>;
+export const selectFilterContextAttributeFilters: OutputSelector<DashboardState, IDashboardAttributeFilter[], (res: FilterContextItem[]) => IDashboardAttributeFilter[]>;
 
 // @public
-export const selectFilterContextDateFilter: OutputSelector<DashboardState, IDashboardDateFilter | undefined, (res: FilterContextItem_2[]) => IDashboardDateFilter | undefined>;
+export const selectFilterContextDateFilter: OutputSelector<DashboardState, IDashboardDateFilter | undefined, (res: FilterContextItem[]) => IDashboardDateFilter | undefined>;
 
 // @public
 export const selectFilterContextDefinition: OutputSelector<DashboardState, IFilterContextDefinition, (res: FilterContextState) => IFilterContextDefinition>;
 
 // @public
-export const selectFilterContextFilters: OutputSelector<DashboardState, FilterContextItem_2[], (res: IFilterContextDefinition) => FilterContextItem_2[]>;
+export const selectFilterContextFilters: OutputSelector<DashboardState, FilterContextItem[], (res: IFilterContextDefinition) => FilterContextItem[]>;
 
 // @internal
 export const selectFilterContextIdentity: OutputSelector<DashboardState, IDashboardObjectIdentity | undefined, (res: FilterContextState) => IDashboardObjectIdentity | undefined>;
@@ -4428,10 +4418,10 @@ export const selectFilterContextIdentity: OutputSelector<DashboardState, IDashbo
 export const selectHideKpiDrillInEmbedded: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @internal (undocumented)
-export const selectImplicitDrillsByAvailableDrillTargets: (availableDrillTargets: IAvailableDrillTargets | undefined) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: (ICatalogDateAttribute | ICatalogAttribute)[], res2: ICatalogAttribute[]) => IImplicitDrillWithPredicates[]>;
+export const selectImplicitDrillsByAvailableDrillTargets: (availableDrillTargets: IAvailableDrillTargets | undefined) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: (ICatalogAttribute | ICatalogDateAttribute)[], res2: ICatalogAttribute[]) => IImplicitDrillWithPredicates[]>;
 
 // @internal (undocumented)
-export const selectImplicitDrillsDownByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IDrillTargets | undefined, res2: (ICatalogDateAttribute | ICatalogAttribute)[], res3: boolean) => IImplicitDrillWithPredicates[]>;
+export const selectImplicitDrillsDownByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IDrillTargets | undefined, res2: (ICatalogAttribute | ICatalogDateAttribute)[], res3: boolean) => IImplicitDrillWithPredicates[]>;
 
 // @internal
 export const selectInsightAttributesMeta: (query: QueryInsightAttributesMeta) => Selector<DashboardState, QueryCacheEntryResult<InsightAttributesMeta> | undefined>;
@@ -4461,7 +4451,7 @@ export const selectIsExecutionResultExportableToCsvByRef: (ref: ObjRef) => Outpu
 export const selectIsExecutionResultExportableToXlsxByRef: (ref: ObjRef) => OutputSelector<DashboardState, boolean, (res1: boolean, res2: boolean, res3: ISettings) => boolean>;
 
 // @alpha (undocumented)
-export const selectIsExecutionResultReadyForExportByRef: (ref: ObjRef) => OutputSelector<DashboardState, boolean, (res1: IExecutionResultEnvelope | undefined, res2: IKpiWidget_2 | IInsightWidget_2 | undefined) => boolean>;
+export const selectIsExecutionResultReadyForExportByRef: (ref: ObjRef) => OutputSelector<DashboardState, boolean, (res1: IExecutionResultEnvelope | undefined, res2: IKpiWidget | IInsightWidget | undefined) => boolean>;
 
 // @internal
 export const selectIsExport: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
@@ -4515,10 +4505,10 @@ export const selectObjectAvailabilityConfig: OutputSelector<DashboardState, Obje
 export const selectOriginalFilterContextDefinition: OutputSelector<DashboardState, IFilterContextDefinition | undefined, (res: FilterContextState) => IFilterContextDefinition | undefined>;
 
 // @public
-export const selectOriginalFilterContextFilters: OutputSelector<DashboardState, FilterContextItem_2[], (res: IFilterContextDefinition | undefined) => FilterContextItem_2[]>;
+export const selectOriginalFilterContextFilters: OutputSelector<DashboardState, FilterContextItem[], (res: IFilterContextDefinition | undefined) => FilterContextItem[]>;
 
 // @public
-export const selectPermissions: OutputSelector<DashboardState, IWorkspacePermissions_2, (res: PermissionsState) => IWorkspacePermissions_2>;
+export const selectPermissions: OutputSelector<DashboardState, IWorkspacePermissions, (res: PermissionsState) => IWorkspacePermissions>;
 
 // @internal
 export const selectPersistedDashboard: OutputSelector<DashboardState, IDashboard<IDashboardWidget> | undefined, (res: DashboardMetaState) => IDashboard<IDashboardWidget> | undefined>;
@@ -4542,10 +4532,10 @@ export const selectStash: OutputSelector<DashboardState, Record<string, Extended
 export const selectValidConfiguredDrillsByWidgetRef: (ref: ObjRef) => OutputSelector<DashboardState, IImplicitDrillWithPredicates[], (res1: IImplicitDrillWithPredicates[], res2: ObjRefMap<IAttributeDisplayFormMetadataObject>, res3: ObjRefMap<IListedDashboard>, res4: ObjRefMap<IInsight>) => IImplicitDrillWithPredicates[]>;
 
 // @alpha
-export const selectWidgetByRef: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IKpiWidget_2 | IInsightWidget_2 | ICustomWidget | undefined, (res: ObjRefMap<ExtendedDashboardWidget>) => IKpiWidget_2 | IInsightWidget_2 | ICustomWidget | undefined>;
+export const selectWidgetByRef: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IKpiWidget | IInsightWidget | ICustomWidget | undefined, (res: ObjRefMap<ExtendedDashboardWidget>) => IKpiWidget | IInsightWidget | ICustomWidget | undefined>;
 
 // @alpha
-export const selectWidgetDrills: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IDrillToLegacyDashboard_2[] | InsightDrillDefinition_2[], (res: IKpiWidget_2 | IInsightWidget_2 | undefined) => IDrillToLegacyDashboard_2[] | InsightDrillDefinition_2[]>;
+export const selectWidgetDrills: (ref: ObjRef | undefined) => OutputSelector<DashboardState, IDrillToLegacyDashboard[] | InsightDrillDefinition[], (res: IKpiWidget | IInsightWidget | undefined) => IDrillToLegacyDashboard[] | InsightDrillDefinition[]>;
 
 // @internal
 export const selectWidgets: OutputSelector<DashboardState, ExtendedDashboardWidget[], (res: IDashboardLayout<ExtendedDashboardWidget>) => ExtendedDashboardWidget[]>;

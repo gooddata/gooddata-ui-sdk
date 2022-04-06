@@ -1,27 +1,28 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import flatten from "lodash/flatten";
 import round from "lodash/round";
 import isNil from "lodash/isNil";
 import isEqual from "lodash/isEqual";
 import clamp from "lodash/clamp";
+import invariant from "ts-invariant";
 import {
-    IDashboardLayoutSizeByScreenSize,
-    isDashboardLayout,
-    IDashboardLayoutSize,
-    ScreenSize,
+    IInsightDefinition,
+    isInsight,
+    AnalyticalWidgetType,
     isWidget,
     isWidgetDefinition,
-    IDashboardLayoutItem,
     IDashboardLayout,
     IDashboardLayoutSection,
-    isLegacyKpiWithoutComparison,
-    AnalyticalWidgetType,
-    isLegacyKpi,
+    IDashboardLayoutSize,
+    IDashboardLayoutSizeByScreenSize,
+    IDashboardLayoutItem,
+    ScreenSize,
+    isDashboardLayout,
     ISettings,
-    ILegacyKpi,
-} from "@gooddata/sdk-backend-spi";
-import invariant from "ts-invariant";
-import { IInsightDefinition, isInsight } from "@gooddata/sdk-model";
+    IKpi,
+    isKpiWithoutComparison,
+    isKpi,
+} from "@gooddata/sdk-model";
 import {
     IVisualizationSizeInfo,
     fluidLayoutDescriptor,
@@ -450,7 +451,7 @@ export function getDashboardLayoutItemMaxGridWidth(
 /**
  * @internal
  */
-export type MeasurableWidgetContent = IInsightDefinition | ILegacyKpi;
+export type MeasurableWidgetContent = IInsightDefinition | IKpi;
 
 const getSizeInfo = (
     settings: ISettings,
@@ -486,7 +487,7 @@ const getKpiSizeInfo = (settings: ISettings, kpi?: MeasurableWidgetContent): IVi
     if (!settings.enableKDWidgetCustomHeight) {
         return KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY;
     }
-    if (!isLegacyKpi(kpi)) {
+    if (!isKpi(kpi)) {
         return KPI_WIDGET_SIZE_INFO_DEFAULT;
     }
     return {
@@ -494,7 +495,7 @@ const getKpiSizeInfo = (settings: ISettings, kpi?: MeasurableWidgetContent): IVi
             min: 2,
             default: 2,
         },
-        height: isLegacyKpiWithoutComparison(kpi)
+        height: isKpiWithoutComparison(kpi)
             ? {
                   default: 8,
                   min: 6,

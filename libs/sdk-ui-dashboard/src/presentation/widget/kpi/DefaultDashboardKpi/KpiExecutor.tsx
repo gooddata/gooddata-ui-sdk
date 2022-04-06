@@ -7,16 +7,7 @@ import isNil from "lodash/isNil";
 import isNumber from "lodash/isNumber";
 import flowRight from "lodash/flowRight";
 import round from "lodash/round";
-import {
-    FilterContextItem,
-    IAnalyticalBackend,
-    IDataView,
-    IKpiWidget,
-    ISeparators,
-    IUserWorkspaceSettings,
-    IWidgetAlert,
-    widgetRef,
-} from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IDataView, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {
     IMeasure,
     IPoPMeasureDefinition,
@@ -25,6 +16,11 @@ import {
     measureLocalId,
     ObjRef,
     objRefToString,
+    FilterContextItem,
+    IWidgetAlert,
+    IKpiWidget,
+    widgetRef,
+    ISeparators,
 } from "@gooddata/sdk-model";
 import {
     convertDrillableItemsToPredicates,

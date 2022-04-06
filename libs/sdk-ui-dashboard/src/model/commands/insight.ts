@@ -3,7 +3,7 @@
 import { IDashboardCommand } from "./base";
 import { isObjRef, ObjRef, ObjRefInScope, VisualizationProperties } from "@gooddata/sdk-model";
 import { FilterOpReplaceAll, WidgetFilterOperation, WidgetHeader } from "../types/widgetTypes";
-import { InsightDrillDefinition } from "@gooddata/sdk-backend-spi";
+import { InsightDrillDefinition } from "@gooddata/sdk-model";
 import { IExportConfig } from "../types/exportTypes";
 
 /**

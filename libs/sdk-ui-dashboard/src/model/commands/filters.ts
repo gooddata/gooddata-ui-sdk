@@ -1,12 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
 import {
-    DateFilterGranularity,
-    DateFilterType,
-    DateString,
-    FilterContextItem,
-    IDashboardAttributeFilterParent,
-} from "@gooddata/sdk-backend-spi";
-import {
     absoluteDateFilterValues,
     filterAttributeElements,
     IAttributeElements,
@@ -17,6 +10,11 @@ import {
     isRelativeDateFilter,
     ObjRef,
     relativeDateFilterValues,
+    DateString,
+    DateFilterGranularity,
+    DateFilterType,
+    FilterContextItem,
+    IDashboardAttributeFilterParent,
 } from "@gooddata/sdk-model";
 import { IDashboardCommand } from "./base";
 import { IDashboardFilter } from "../../types";

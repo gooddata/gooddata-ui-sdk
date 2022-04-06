@@ -2,7 +2,7 @@
 
 import { IDashboardCommand } from "./base";
 import { DashboardItemDefinition, RelativeIndex, StashedDashboardItemsId } from "../types/layoutTypes";
-import { IDashboardLayoutSectionHeader } from "@gooddata/sdk-backend-spi";
+import { IDashboardLayoutSectionHeader } from "@gooddata/sdk-model";
 
 /**
  * Payload of the {@link AddLayoutSection} command.

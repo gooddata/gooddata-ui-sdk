@@ -1,13 +1,12 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import { alertsAdapter } from "./alertsEntityAdapter";
 import { DashboardState } from "../types";
 import { newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap";
 import memoize from "lodash/memoize";
-import { Identifier, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
+import { Identifier, ObjRef, serializeObjRef, IWidgetAlert } from "@gooddata/sdk-model";
 
 import { selectWidgetsMap } from "../layout/layoutSelectors";
-import { IWidgetAlert } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
 
 const selectSelf = createSelector(

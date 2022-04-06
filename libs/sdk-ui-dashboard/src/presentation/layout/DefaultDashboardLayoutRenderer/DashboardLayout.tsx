@@ -1,7 +1,7 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { useMemo } from "react";
 import { Container, ScreenClassProvider, ScreenClassRender, setConfiguration } from "react-grid-system";
-import { ScreenSize, IDashboardLayout } from "@gooddata/sdk-backend-spi";
+import { IDashboardLayout, ScreenSize } from "@gooddata/sdk-model";
 import { DashboardLayoutSection } from "./DashboardLayoutSection";
 import { IDashboardLayoutRenderProps } from "./interfaces";
 import cx from "classnames";

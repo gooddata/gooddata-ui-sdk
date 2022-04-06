@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
 import {
@@ -7,7 +7,7 @@ import {
     IDashboardLayoutFacade,
     IDashboardLayoutSectionFacade,
 } from "./interfaces";
-import { IDashboardLayoutSection, IDashboardLayoutSectionHeader } from "@gooddata/sdk-backend-spi";
+import { IDashboardLayoutSection, IDashboardLayoutSectionHeader } from "@gooddata/sdk-model";
 import { DashboardLayoutItemFacade } from "./item";
 import { DashboardLayoutItemsFacade } from "./items";
 

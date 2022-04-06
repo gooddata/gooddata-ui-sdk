@@ -1,12 +1,8 @@
 // (C) 2021-2022 GoodData Corporation
 import React, { useCallback, useMemo, useRef } from "react";
 import { useIntl } from "react-intl";
-import {
-    FilterContextItem,
-    IDashboardAttributeFilter,
-    IDashboardDateFilter,
-    isProtectedDataError,
-} from "@gooddata/sdk-backend-spi";
+import { isProtectedDataError } from "@gooddata/sdk-backend-spi";
+import { FilterContextItem, IDashboardAttributeFilter, IDashboardDateFilter } from "@gooddata/sdk-model";
 import { ToastMessages, useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import {

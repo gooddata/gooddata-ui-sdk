@@ -1,8 +1,7 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
-import { FilterContextItem } from "@gooddata/sdk-backend-spi";
-import { ObjRef } from "@gooddata/sdk-model";
+import { ObjRef, FilterContextItem } from "@gooddata/sdk-model";
 
 import { DashboardContext } from "../../types/commonTypes";
 import { ExportDashboardToPdf } from "../../commands";

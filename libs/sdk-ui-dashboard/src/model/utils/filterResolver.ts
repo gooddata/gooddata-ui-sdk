@@ -1,14 +1,14 @@
-// (C) 2021 GoodData Corporation
-import {
-    FilterContextItem,
-    IAttributeDisplayFormMetadataObject,
-    isDashboardAttributeFilter,
-} from "@gooddata/sdk-backend-spi";
+// (C) 2021-2022 GoodData Corporation
 import { ObjRefMap } from "../../_staging/metadata/objRefMap";
 import { call, SagaReturnType } from "redux-saga/effects";
 import { resolveDisplayFormMetadata } from "./displayFormResolver";
 import isEmpty from "lodash/isEmpty";
-import { objRefToString } from "@gooddata/sdk-model";
+import {
+    objRefToString,
+    FilterContextItem,
+    isDashboardAttributeFilter,
+    IAttributeDisplayFormMetadataObject,
+} from "@gooddata/sdk-model";
 import { DashboardContext } from "../types/commonTypes";
 import { SagaIterator } from "redux-saga";
 import invariant from "ts-invariant";

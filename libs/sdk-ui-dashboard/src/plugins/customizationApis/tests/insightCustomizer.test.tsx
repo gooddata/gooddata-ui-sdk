@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { DefaultInsightCustomizer } from "../insightCustomizer";
 import React from "react";
@@ -7,8 +7,7 @@ import {
     InsightComponentProvider,
     OptionalInsightComponentProvider,
 } from "../../../presentation";
-import { IInsight, insightTags, insightTitle } from "@gooddata/sdk-model";
-import { IInsightWidget } from "@gooddata/sdk-backend-spi";
+import { IInsight, insightTags, insightTitle, IInsightWidget } from "@gooddata/sdk-model";
 import { recordedInsight } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { mount } from "enzyme";

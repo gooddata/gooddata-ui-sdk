@@ -1,11 +1,11 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import {
     FilterContextItem,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
-} from "@gooddata/sdk-backend-spi";
+} from "@gooddata/sdk-model";
 
 /**
  * Type of broken alert filter basic info

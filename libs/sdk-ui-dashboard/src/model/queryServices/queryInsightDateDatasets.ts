@@ -16,8 +16,9 @@ import {
     ObjRef,
     objRefToString,
     serializeObjRef,
+    ICatalogDateDataset,
+    isCatalogDateDataset,
 } from "@gooddata/sdk-model";
-import { ICatalogDateDataset, isCatalogDateDataset } from "@gooddata/sdk-backend-spi";
 
 import { createCachedQueryService } from "../store/_infra/queryService";
 import { DashboardContext } from "../types/commonTypes";

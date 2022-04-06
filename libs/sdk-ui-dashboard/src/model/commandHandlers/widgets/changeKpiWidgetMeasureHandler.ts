@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { DashboardContext } from "../../types/commonTypes";
 import { ChangeKpiWidgetMeasure } from "../../commands";
 import { SagaIterator } from "redux-saga";
@@ -10,11 +10,10 @@ import { layoutActions } from "../../store/layout";
 import { kpiWidgetMeasureChanged } from "../../events/kpi";
 import { selectAllCatalogMeasuresMap } from "../../store/catalog/catalogSelectors";
 import { invalidArgumentsProvided } from "../../events/general";
-import { objRefToString } from "@gooddata/sdk-model";
+import { objRefToString, IKpiWidget, ICatalogMeasure, ICatalogDateDataset } from "@gooddata/sdk-model";
 import { batchActions } from "redux-batched-actions";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { isWidgetHeader, WidgetHeader } from "../../types/widgetTypes";
-import { ICatalogDateDataset, ICatalogMeasure, IKpiWidget } from "@gooddata/sdk-backend-spi";
 import { MeasureDateDatasets, queryDateDatasetsForMeasure } from "../../queries";
 import { query } from "../../store/_infra/queryCall";
 import { newCatalogDateDatasetMap } from "../../../_staging/metadata/objRefMap";

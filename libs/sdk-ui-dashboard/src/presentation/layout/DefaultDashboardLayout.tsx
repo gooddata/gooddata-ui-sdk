@@ -1,14 +1,18 @@
 // (C) 2020-2022 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
 import {
+    ObjRef,
+    IInsight,
+    insightId,
+    insightUri,
+    objRefToString,
     isWidget,
-    widgetId,
     widgetUri,
+    widgetId,
     isInsightWidget,
     IDashboardLayout,
     IDashboardWidget,
-} from "@gooddata/sdk-backend-spi";
-import { ObjRef, IInsight, insightId, insightUri, objRefToString } from "@gooddata/sdk-model";
+} from "@gooddata/sdk-model";
 
 import {
     selectSettings,

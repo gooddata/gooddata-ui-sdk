@@ -1,6 +1,5 @@
-// (C) 2021 GoodData Corporation
-import { idRef } from "@gooddata/sdk-model";
-import { IDashboardAttributeFilter, IDashboardAttributeFilterParent } from "@gooddata/sdk-backend-spi";
+// (C) 2021-2022 GoodData Corporation
+import { idRef, IDashboardAttributeFilter, IDashboardAttributeFilterParent } from "@gooddata/sdk-model";
 import { recordedBackend, objRefsToStringKey } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import {

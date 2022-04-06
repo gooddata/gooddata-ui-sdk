@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { all, call, put, SagaReturnType, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes";
@@ -24,20 +24,18 @@ import {
     isNegativeAttributeFilter,
     isAbsoluteDateFilter,
     isAllTimeDateFilter,
-} from "@gooddata/sdk-model";
-import {
     DateFilterGranularity,
     FilterContextItem,
+    IDashboardAttributeFilter,
+    IDashboardDateFilter,
     isAllTimeDashboardDateFilter,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
     newAbsoluteDashboardDateFilter,
     newAllTimeDashboardDateFilter,
     newRelativeDashboardDateFilter,
-    NotSupported,
-    IDashboardAttributeFilter,
-    IDashboardDateFilter,
-} from "@gooddata/sdk-backend-spi";
+} from "@gooddata/sdk-model";
+import { NotSupported } from "@gooddata/sdk-backend-spi";
 import { IUpsertDateFilterPayload } from "../../store/filterContext/filterContextReducers";
 import { IDashboardFilter } from "../../../types";
 import { resolveDisplayFormMetadata } from "../../utils/displayFormResolver";

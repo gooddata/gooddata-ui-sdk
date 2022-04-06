@@ -1,12 +1,13 @@
 // (C) 2021-2022 GoodData Corporation
 import {
-    ICatalogDateDataset,
+    areObjRefsEqual,
+    ObjRef,
     IDashboardAttributeFilter,
     IDashboardFilterReference,
     isDashboardAttributeFilterReference,
     IAnalyticalWidget,
-} from "@gooddata/sdk-backend-spi";
-import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
+    ICatalogDateDataset,
+} from "@gooddata/sdk-model";
 import { DashboardContext } from "../../../types/commonTypes";
 import { IDashboardCommand } from "../../../commands";
 import {

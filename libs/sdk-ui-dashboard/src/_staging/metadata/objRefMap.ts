@@ -1,14 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
 import {
-    IAttributeDisplayFormMetadataObject,
-    IAttributeMetadataObject,
-    ICatalogAttribute,
-    ICatalogDateAttribute,
-    ICatalogDateDataset,
-    ICatalogMeasure,
-    IMetadataObject,
-} from "@gooddata/sdk-backend-spi";
-import {
     Identifier,
     IInsight,
     insightId,
@@ -17,6 +8,13 @@ import {
     isIdentifierRef,
     ObjectType,
     ObjRef,
+    ICatalogAttribute,
+    ICatalogMeasure,
+    ICatalogDateDataset,
+    ICatalogDateAttribute,
+    IAttributeDisplayFormMetadataObject,
+    IAttributeMetadataObject,
+    IMetadataObject,
 } from "@gooddata/sdk-model";
 import values from "lodash/values";
 

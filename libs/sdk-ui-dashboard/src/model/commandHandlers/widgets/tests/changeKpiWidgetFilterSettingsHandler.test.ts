@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import {
@@ -10,10 +10,15 @@ import {
     replaceKpiWidgetIgnoredFilters,
     unignoreFilterOnKpiWidget,
 } from "../../../commands";
-import { attributeDisplayFormRef, idRef, ObjRef, uriRef } from "@gooddata/sdk-model";
+import {
+    attributeDisplayFormRef,
+    idRef,
+    ObjRef,
+    uriRef,
+    isDashboardAttributeFilterReference,
+} from "@gooddata/sdk-model";
 import { DashboardCommandFailed, DashboardKpiWidgetFilterSettingsChanged } from "../../../events";
 import { selectAnalyticalWidgetByRef } from "../../../store/layout/layoutSelectors";
-import { isDashboardAttributeFilterReference } from "@gooddata/sdk-backend-spi";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import {
     ComplexDashboardFilters,

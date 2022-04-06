@@ -1,21 +1,21 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
-    IDashboardLayoutItem,
+    ObjRef,
+    IKpiWidget,
+    IKpiWidgetDefinition,
+    IInsightWidget,
+    IInsightWidgetDefinition,
+    IWidget,
+    IWidgetDefinition,
+    IDashboardLayout,
+    IDashboardWidget,
+    IDashboardLayoutSection,
     IDashboardLayoutSectionHeader,
     IDashboardLayoutSize,
     IDashboardLayoutSizeByScreenSize,
-    IInsightWidget,
-    IInsightWidgetDefinition,
-    IKpiWidget,
-    IKpiWidgetDefinition,
-    IWidget,
-    IWidgetDefinition,
+    IDashboardLayoutItem,
     ScreenSize,
-    IDashboardLayout,
-    IDashboardLayoutSection,
-    IDashboardWidget,
-} from "@gooddata/sdk-backend-spi";
-import { ObjRef } from "@gooddata/sdk-model";
+} from "@gooddata/sdk-model";
 
 /**
  * Set of convenience methods for a {@link @gooddata/sdk-backend-spi#IDashboardLayoutItem}.

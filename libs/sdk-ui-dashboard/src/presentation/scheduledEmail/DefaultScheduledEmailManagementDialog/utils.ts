@@ -1,11 +1,7 @@
 // (C) 2022 GoodData Corporation
 
 import { IntlShape } from "react-intl";
-import {
-    isDashboardAttachment,
-    isWidgetAttachment,
-    ScheduledMailAttachment,
-} from "@gooddata/sdk-backend-spi";
+import { isDashboardAttachment, isWidgetAttachment, ScheduledMailAttachment } from "@gooddata/sdk-model";
 import { Icon } from "@gooddata/sdk-ui-kit";
 import compact from "lodash/compact";
 

@@ -1,10 +1,17 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { Component } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import Measure from "react-measure";
 import { GoodDataSdkError, isGoodDataSdkError, ErrorCodes, ISeparators } from "@gooddata/sdk-ui";
-import { isLegacyKpiWithComparison, IKpiWidget, IKpiWidgetDefinition } from "@gooddata/sdk-backend-spi";
-import { IFilter, isAbsoluteDateFilter, isAllTimeDateFilter, isDateFilter } from "@gooddata/sdk-model";
+import {
+    IFilter,
+    isAbsoluteDateFilter,
+    isAllTimeDateFilter,
+    isDateFilter,
+    IKpiWidget,
+    IKpiWidgetDefinition,
+    isKpiWithComparison,
+} from "@gooddata/sdk-model";
 
 import KpiValue from "./KpiValue";
 import KpiPop from "./KpiPop";
@@ -56,7 +63,7 @@ class KpiContent extends Component<IKpiContentProps & WrappedComponentProps> {
         const isSdkError = isGoodDataSdkError(this.props.error);
         const isNoData = isSdkError && this.props.error!.message === ErrorCodes.NO_DATA;
 
-        const comparisonMeaning = isLegacyKpiWithComparison(this.props.kpi.kpi)
+        const comparisonMeaning = isKpiWithComparison(this.props.kpi.kpi)
             ? this.props.kpi.kpi.comparisonDirection
             : undefined;
 

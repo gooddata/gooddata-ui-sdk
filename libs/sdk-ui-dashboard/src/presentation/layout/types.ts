@@ -1,7 +1,7 @@
 // (C) 2020-2022 GoodData Corporation
 import { ComponentType } from "react";
 import { IErrorProps, OnError } from "@gooddata/sdk-ui";
-import { FilterContextItem } from "@gooddata/sdk-backend-spi";
+import { FilterContextItem } from "@gooddata/sdk-model";
 
 import { IDashboardFilter, OnFiredDashboardDrillEvent } from "../../types";
 

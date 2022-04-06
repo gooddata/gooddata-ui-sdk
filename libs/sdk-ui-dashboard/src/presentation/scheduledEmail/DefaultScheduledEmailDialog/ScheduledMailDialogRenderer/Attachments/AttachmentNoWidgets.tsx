@@ -2,7 +2,7 @@
 import * as React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { Icon } from "@gooddata/sdk-ui-kit";
-import { ITheme } from "@gooddata/sdk-backend-spi";
+import { ITheme } from "@gooddata/sdk-model";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { isMobileView } from "../../utils/responsive";

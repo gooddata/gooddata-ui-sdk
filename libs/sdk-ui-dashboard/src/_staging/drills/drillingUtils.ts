@@ -1,16 +1,6 @@
 // (C) 2020-2022 GoodData Corporation
 import compact from "lodash/compact";
-import {
-    DrillDefinition,
-    ICatalogAttribute,
-    ICatalogDateAttribute,
-    isDrillFromAttribute,
-    isDrillFromMeasure,
-    UnexpectedError,
-    isDrillToLegacyDashboard,
-    isMeasureDescriptor,
-    InsightDrillDefinition,
-} from "@gooddata/sdk-backend-spi";
+import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
     isLocalIdRef,
     isIdentifierRef,
@@ -18,6 +8,14 @@ import {
     areObjRefsEqual,
     ObjRefInScope,
     localIdRef,
+    DrillDefinition,
+    InsightDrillDefinition,
+    isDrillFromAttribute,
+    isDrillFromMeasure,
+    isDrillToLegacyDashboard,
+    ICatalogAttribute,
+    ICatalogDateAttribute,
+    isMeasureDescriptor,
 } from "@gooddata/sdk-model";
 import {
     HeaderPredicates,

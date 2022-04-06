@@ -2,8 +2,7 @@
 
 import { useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
-import { IInsightWidget } from "@gooddata/sdk-backend-spi";
-import { IInsight } from "@gooddata/sdk-model";
+import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 
 import { selectExecutionResultByRef, useDashboardSelector } from "../../../model";
 

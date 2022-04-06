@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { ISettings } from "@gooddata/sdk-backend-spi";
+import { ISettings } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 
 import { disabledUnfinishedFeatureSettings } from "../../../disabledUnfinishedFeatureSettings";

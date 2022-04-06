@@ -1,14 +1,14 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { ObjRef } from "@gooddata/sdk-model";
 import {
-    ICatalogDateDataset,
+    ObjRef,
     IDashboardAttributeFilter,
     IKpiWidget,
     IKpiWidgetDefinition,
-    ILegacyKpi,
+    ICatalogDateDataset,
     IMeasureMetadataObject,
-} from "@gooddata/sdk-backend-spi";
+    IKpi,
+} from "@gooddata/sdk-model";
 
 import { IDashboardEvent } from "./base";
 import { WidgetHeader } from "../types/widgetTypes";
@@ -232,7 +232,7 @@ export interface DashboardKpiWidgetComparisonChangedPayload {
      *
      * Note: the comparison may be 'none' - meaning
      */
-    readonly kpi: ILegacyKpi;
+    readonly kpi: IKpi;
 }
 
 /**
@@ -250,7 +250,7 @@ export interface DashboardKpiWidgetComparisonChanged extends IDashboardEvent {
 export function kpiWidgetComparisonChanged(
     ctx: DashboardContext,
     ref: ObjRef,
-    kpi: ILegacyKpi,
+    kpi: IKpi,
     correlationId?: string,
 ): DashboardKpiWidgetComparisonChanged {
     return {

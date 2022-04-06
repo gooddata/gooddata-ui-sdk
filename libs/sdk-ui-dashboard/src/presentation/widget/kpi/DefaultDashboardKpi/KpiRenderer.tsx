@@ -1,8 +1,7 @@
 // (C) 2020-2022 GoodData Corporation
 import React, { useCallback } from "react";
 import { GoodDataSdkError, IDrillEventContext } from "@gooddata/sdk-ui";
-import { ISeparators, IKpiWidget, IKpiWidgetDefinition } from "@gooddata/sdk-backend-spi";
-import { IFilter } from "@gooddata/sdk-model";
+import { IFilter, IKpiWidget, IKpiWidgetDefinition, ISeparators } from "@gooddata/sdk-model";
 
 import { OnFiredDashboardDrillEvent } from "../../../../types";
 

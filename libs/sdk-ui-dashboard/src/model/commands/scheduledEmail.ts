@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { IScheduledMailDefinition, IFilterContextDefinition } from "@gooddata/sdk-backend-spi";
+import { IFilterContextDefinition, IScheduledMailDefinition } from "@gooddata/sdk-model";
 import { IDashboardCommand } from "./base";
 
 /**

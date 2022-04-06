@@ -1,5 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import { IScheduledMail } from "@gooddata/sdk-backend-spi";
+import { IScheduledMail } from "@gooddata/sdk-model";
 import { DashboardContext } from "../types/commonTypes";
 import { IDashboardEvent } from "./base";
 import { eventGuard } from "./util";

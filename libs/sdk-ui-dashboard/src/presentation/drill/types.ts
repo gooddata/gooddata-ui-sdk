@@ -1,15 +1,16 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { IAvailableDrillTargetMeasure, IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import isEmpty from "lodash/isEmpty";
-import { IInsight, ObjRef } from "@gooddata/sdk-model";
 import {
+    IInsight,
+    ObjRef,
     IDrillToAttributeUrl,
     IDrillToCustomUrl,
     IDrillToInsight,
-    IListedDashboard,
     isDrillToAttributeUrl,
     isDrillToCustomUrl,
-} from "@gooddata/sdk-backend-spi";
+    IListedDashboard,
+} from "@gooddata/sdk-model";
 import {
     DashboardDrillContext,
     DashboardDrillDefinition,

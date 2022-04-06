@@ -1,9 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
-import {
-    FilterContextItem,
-    IFilterContextDefinition,
-    IWidgetAlertDefinition,
-} from "@gooddata/sdk-backend-spi";
+// (C) 2007-2022 GoodData Corporation
 import {
     idRef,
     IFilter,
@@ -12,6 +7,9 @@ import {
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     newRelativeDateFilter,
+    FilterContextItem,
+    IFilterContextDefinition,
+    IWidgetAlertDefinition,
 } from "@gooddata/sdk-model";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 

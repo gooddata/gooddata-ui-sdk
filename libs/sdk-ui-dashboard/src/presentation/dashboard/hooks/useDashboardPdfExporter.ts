@@ -1,8 +1,8 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { useState } from "react";
-import { AnalyticalBackendError, FilterContextItem, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { AnalyticalBackendError, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { UseCancelablePromiseCallbacks, UseCancelablePromiseStatus } from "@gooddata/sdk-ui";
-import { ObjRef } from "@gooddata/sdk-model";
+import { ObjRef, FilterContextItem } from "@gooddata/sdk-model";
 import { useExportDashboardToPdf as useExportDashboardToPdfCore } from "./useExportDashboardToPdf";
 import { downloadFile } from "../../../_staging/fileUtils/downloadFile";
 

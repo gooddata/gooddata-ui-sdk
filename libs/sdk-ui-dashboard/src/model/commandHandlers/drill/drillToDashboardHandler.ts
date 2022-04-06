@@ -16,7 +16,6 @@ import {
     selectFilterContextDateFilter,
 } from "../../store/filterContext/filterContextSelectors";
 import { selectAnalyticalWidgetByRef } from "../../store/layout/layoutSelectors";
-import { ICatalogDateAttribute, IInsightWidget } from "@gooddata/sdk-backend-spi";
 import { IDashboardFilter } from "../../../types";
 import {
     dashboardDateFilterToDateFilterByWidget,
@@ -40,6 +39,8 @@ import {
     isSimpleMeasure,
     measureFilters,
     isDateFilter,
+    IInsightWidget,
+    ICatalogDateAttribute,
 } from "@gooddata/sdk-model";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors";
 import { DashboardState } from "../../store/types";

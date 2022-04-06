@@ -1,7 +1,7 @@
 // (C) 2020-2022 GoodData Corporation
 import { ComponentType } from "react";
-import { IAnalyticalBackend, IInsightWidget } from "@gooddata/sdk-backend-spi";
-import { IInsight } from "@gooddata/sdk-model";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 import {
     IErrorProps,
     ILoadingProps,

@@ -1,7 +1,7 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import { useEffect } from "react";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
-import { IKpiWidget, IWidgetAlert } from "@gooddata/sdk-backend-spi";
+import { IWidgetAlert, IKpiWidget } from "@gooddata/sdk-model";
 
 import {
     queryWidgetBrokenAlerts,

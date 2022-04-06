@@ -1,6 +1,6 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
-import { IDashboardLayout } from "@gooddata/sdk-backend-spi";
+import { IDashboardLayout } from "@gooddata/sdk-model";
 import { InitialUndoState, UndoEnhancedState } from "../_infra/undoEnhancer";
 import { ExtendedDashboardItem, ExtendedDashboardWidget } from "../../types/layoutTypes";
 import { DashboardLayoutCommands } from "../../commands";

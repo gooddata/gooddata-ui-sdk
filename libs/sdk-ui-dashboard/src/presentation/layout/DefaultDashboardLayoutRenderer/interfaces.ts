@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import { IDashboardWidget, IDashboardLayout, ScreenSize } from "@gooddata/sdk-backend-spi";
+import { IDashboardLayout, IDashboardWidget, ScreenSize } from "@gooddata/sdk-model";
 import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutSectionFacade,

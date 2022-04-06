@@ -1,7 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 import { IDashboardQuery } from "./base";
-import { ObjRef } from "@gooddata/sdk-model";
-import { ICatalogDateDataset } from "@gooddata/sdk-backend-spi";
+import { ObjRef, ICatalogDateDataset } from "@gooddata/sdk-model";
 
 /**
  * Given a reference to a measure, this query will obtain list of all date datasets that may be used

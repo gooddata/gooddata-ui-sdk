@@ -1,9 +1,9 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React, { useMemo } from "react";
 import { WrappedComponentProps } from "react-intl";
 import cx from "classnames";
 import { Dropdown, DropdownButton, DropdownList, ShortenedText } from "@gooddata/sdk-ui-kit";
-import { IWidgetAlertDefinition } from "@gooddata/sdk-backend-spi";
+import { IWidgetAlertDefinition } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
 
 const kpiAlertTypeItems = [

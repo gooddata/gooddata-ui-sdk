@@ -1,13 +1,17 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import {
-    IDashboardLayoutItem,
-    IDashboardLayoutSectionHeader,
-    IInsightWidget,
-    IInsightWidgetDefinition,
+    idRef,
+    IInsight,
+    insightId,
+    isObjRef,
+    ObjRef,
     IKpiWidget,
     IKpiWidgetDefinition,
-} from "@gooddata/sdk-backend-spi";
-import { idRef, IInsight, insightId, isObjRef, ObjRef } from "@gooddata/sdk-model";
+    IInsightWidget,
+    IInsightWidgetDefinition,
+    IDashboardLayoutSectionHeader,
+    IDashboardLayoutItem,
+} from "@gooddata/sdk-model";
 import { PivotTableWithRowAndColumnAttributes } from "./Insights.fixtures";
 import { InsightPlaceholderWidget, KpiPlaceholderWidget } from "../../../widgets/placeholders/types";
 

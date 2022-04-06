@@ -1,6 +1,5 @@
-// (C) 2021 GoodData Corporation
-import { IDashboardAttributeFilter } from "@gooddata/sdk-backend-spi";
-import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
+// (C) 2021-2022 GoodData Corporation
+import { areObjRefsEqual, ObjRef, IDashboardAttributeFilter } from "@gooddata/sdk-model";
 import { DashboardContext } from "../../../../types/commonTypes";
 
 export async function canFilterBeAdded(

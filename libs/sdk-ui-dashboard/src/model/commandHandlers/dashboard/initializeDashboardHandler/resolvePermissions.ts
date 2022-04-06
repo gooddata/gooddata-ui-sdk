@@ -1,10 +1,10 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../../types/commonTypes";
 import { InitializeDashboard } from "../../../commands/dashboard";
 import { PromiseFnReturnType } from "../../../types/sagas";
 import { call } from "redux-saga/effects";
-import { IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
+import { IWorkspacePermissions } from "@gooddata/sdk-model";
 
 function loadPermissionsFromBackend(ctx: DashboardContext): Promise<IWorkspacePermissions> {
     const { backend, workspace } = ctx;

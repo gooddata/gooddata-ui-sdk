@@ -1,6 +1,5 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
-import { IListedDashboard, InsightDrillDefinition } from "@gooddata/sdk-backend-spi";
 import { SagaIterator } from "redux-saga";
 import { call, SagaReturnType, select } from "redux-saga/effects";
 import { invalidArgumentsProvided } from "../../../events/general";
@@ -14,7 +13,7 @@ import {
 } from "./insightDrillDefinitionUtils";
 import { IDrillTargets } from "../../../store/drillTargets/drillTargetsTypes";
 import { ObjRefMap } from "../../../../_staging/metadata/objRefMap";
-import { ObjRef } from "@gooddata/sdk-model";
+import { ObjRef, InsightDrillDefinition, IListedDashboard } from "@gooddata/sdk-model";
 import { IDashboardCommand } from "../../../commands";
 import { InsightResolutionResult, resolveInsights } from "../../../utils/insightResolver";
 import {

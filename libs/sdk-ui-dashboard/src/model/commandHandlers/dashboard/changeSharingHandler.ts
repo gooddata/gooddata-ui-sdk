@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
-import { IDashboard, IDashboardDefinition, isFilterContext } from "@gooddata/sdk-backend-spi";
+import { isFilterContext, IDashboard, IDashboardDefinition } from "@gooddata/sdk-model";
 
 import { DashboardContext } from "../../types/commonTypes";
 import { ChangeSharing } from "../../commands";

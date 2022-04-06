@@ -6,12 +6,15 @@ import {
     isDrillIntersectionAttributeItem,
 } from "@gooddata/sdk-ui";
 import {
-    isAttributeDescriptor,
-    IAttributeDisplayFormMetadataObject,
+    idRef,
+    ObjRef,
+    areObjRefsEqual,
+    insightId,
     IDrillToCustomUrl,
     IInsightWidget,
-} from "@gooddata/sdk-backend-spi";
-import { idRef, ObjRef, areObjRefsEqual, insightId } from "@gooddata/sdk-model";
+    IAttributeDisplayFormMetadataObject,
+    isAttributeDescriptor,
+} from "@gooddata/sdk-model";
 import { DashboardContext } from "../../types/commonTypes";
 import { PromiseFnReturnType } from "../../types/sagas";
 import { SagaIterator } from "redux-saga";

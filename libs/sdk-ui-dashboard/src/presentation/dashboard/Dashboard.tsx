@@ -1,12 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
-import {
-    IAnalyticalBackend,
-    IDashboardAttributeFilter,
-    IInsightWidget,
-    IKpiWidget,
-    ILegacyKpi,
-} from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { ToastMessageContextProvider } from "@gooddata/sdk-ui-kit";
 import {
     BackendProvider,
@@ -70,7 +64,16 @@ import { DefaultButtonBar, DefaultMenuButton, DefaultTitle, DefaultTopBar } from
 import { defaultDashboardThemeModifier } from "./defaultDashboardThemeModifier";
 import { IDashboardProps } from "./types";
 import { DefaultSaveAsDialog } from "../saveAs";
-import { IdentifierRef, idRef, IInsight, UriRef } from "@gooddata/sdk-model";
+import {
+    IdentifierRef,
+    idRef,
+    IInsight,
+    UriRef,
+    IDashboardAttributeFilter,
+    IKpiWidget,
+    IInsightWidget,
+    IKpi,
+} from "@gooddata/sdk-model";
 import { DEFAULT_FILTER_BAR_HEIGHT } from "../constants";
 import { DefaultShareDialog } from "../shareDialog";
 import { DashboardHeader } from "./DashboardHeader/DashboardHeader";
@@ -205,7 +208,7 @@ const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
     );
 
     const kpiProvider = useCallback(
-        (kpi: ILegacyKpi, widget: IKpiWidget): CustomDashboardKpiComponent => {
+        (kpi: IKpi, widget: IKpiWidget): CustomDashboardKpiComponent => {
             const userSpecified = KpiComponentProvider?.(kpi, widget);
             return userSpecified ?? DefaultDashboardKpi;
         },

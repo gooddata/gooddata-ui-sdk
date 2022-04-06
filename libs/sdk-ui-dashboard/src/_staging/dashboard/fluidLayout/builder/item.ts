@@ -1,14 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
-import {
-    IDashboardLayoutSizeByScreenSize,
-    isDashboardLayoutItem,
-    isInsightWidget,
-    isInsightWidgetDefinition,
-    isKpiWidget,
-    isKpiWidgetDefinition,
-    IDashboardLayoutItem,
-    IDashboardLayoutSection,
-} from "@gooddata/sdk-backend-spi";
+// (C) 2019-2022 GoodData Corporation
 import invariant from "ts-invariant";
 import {
     DashboardLayoutItemModifications,
@@ -22,7 +12,17 @@ import {
     resolveValueOrUpdateCallback,
     ValueOrUpdateCallback,
 } from "@gooddata/sdk-backend-base";
-import { ObjRef } from "@gooddata/sdk-model";
+import {
+    ObjRef,
+    isKpiWidgetDefinition,
+    isKpiWidget,
+    isInsightWidgetDefinition,
+    isInsightWidget,
+    IDashboardLayoutSection,
+    IDashboardLayoutSizeByScreenSize,
+    IDashboardLayoutItem,
+    isDashboardLayoutItem,
+} from "@gooddata/sdk-model";
 import identity from "lodash/identity";
 
 /**

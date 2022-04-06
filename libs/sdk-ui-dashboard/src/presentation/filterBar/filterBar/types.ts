@@ -1,10 +1,6 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { ComponentType } from "react";
-import {
-    FilterContextItem,
-    IDashboardAttributeFilter,
-    IDashboardDateFilter,
-} from "@gooddata/sdk-backend-spi";
+import { FilterContextItem, IDashboardAttributeFilter, IDashboardDateFilter } from "@gooddata/sdk-model";
 
 /**
  * @alpha

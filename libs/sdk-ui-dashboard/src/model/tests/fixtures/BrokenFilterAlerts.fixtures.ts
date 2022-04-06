@@ -1,8 +1,8 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { IDashboardWithReferences, IWidgetAlertDefinition } from "@gooddata/sdk-backend-spi";
-import { ObjRef } from "@gooddata/sdk-model";
+import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
+import { ObjRef, IWidgetAlertDefinition } from "@gooddata/sdk-model";
 
 // This dashboard has all setup of broken alert user specific,
 // thats why this dashboard is set as offline because other user will have this dashboard without alerts.

@@ -1,8 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 
 import { IDashboardCommand } from "./base";
-import { isObjRef, ObjRef } from "@gooddata/sdk-model";
-import { ILegacyKpiComparisonDirection, ILegacyKpiComparisonTypeComparison } from "@gooddata/sdk-backend-spi";
+import { isObjRef, ObjRef, IKpiComparisonDirection, IKpiComparisonTypeComparison } from "@gooddata/sdk-model";
 import { FilterOpReplaceAll, WidgetFilterOperation, WidgetHeader } from "../types/widgetTypes";
 
 /**
@@ -361,13 +360,13 @@ export interface KpiWidgetComparison {
      *
      * If not specified, defaults to no comparison.
      */
-    comparisonType?: ILegacyKpiComparisonTypeComparison;
+    comparisonType?: IKpiComparisonTypeComparison;
 
     /**
      * Customizes whether growth of the measure compared to previous period is considered
      * a good thing or a bad thing. This setting influences the visuals (red vs green indicators)
      */
-    comparisonDirection?: ILegacyKpiComparisonDirection;
+    comparisonDirection?: IKpiComparisonDirection;
 }
 
 /**

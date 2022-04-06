@@ -1,10 +1,10 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     IDashboardLayout,
-    IDashboardLayoutItem,
     IDashboardLayoutSection,
     IDashboardLayoutSizeByScreenSize,
-} from "@gooddata/sdk-backend-spi";
+    IDashboardLayoutItem,
+} from "@gooddata/sdk-model";
 import { ValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
 import {
     createValueOrUpdateCallbackTestCases,

@@ -1,10 +1,9 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { IDashboardCommand, RemoveDrillsSelector } from "../../../commands/";
-import { InsightDrillDefinition } from "@gooddata/sdk-backend-spi";
 import { DashboardContext } from "../../../types/commonTypes";
 import { invalidArgumentsProvided } from "../../../events/general";
-import { objRefToString } from "@gooddata/sdk-model";
+import { objRefToString, InsightDrillDefinition } from "@gooddata/sdk-model";
 import { validateDrillDefinitionByLocalIdentifier } from "./insightDrillDefinitionUtils";
 import { isAllDrillSelector } from "../../../commands/insight";
 

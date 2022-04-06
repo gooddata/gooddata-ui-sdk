@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 import { Dropdown, DropdownButton, DropdownList, SingleSelectListItem, Icon } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
 import { ScheduleDropdown } from "./ScheduleDropdown";
-import { ITheme } from "@gooddata/sdk-backend-spi";
+import { ITheme } from "@gooddata/sdk-model";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 import { IWidgetExportConfiguration, WidgetExportFileFormat } from "../../interfaces";
 import { DEFAULT_DROPDOWN_ALIGN_POINTS, DEFAULT_DROPDOWN_ZINDEX } from "../../constants";

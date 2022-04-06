@@ -1,6 +1,6 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React from "react";
-import { IInsightWidget, widgetTitle } from "@gooddata/sdk-backend-spi";
+import { IInsightWidget, widgetTitle } from "@gooddata/sdk-model";
 import { Button, ItemsWrapper } from "@gooddata/sdk-ui-kit";
 
 import { DashboardInsightMenuHeader } from "./DashboardInsightMenuHeader";

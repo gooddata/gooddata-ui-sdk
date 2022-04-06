@@ -1,15 +1,7 @@
 // (C) 2020-2022 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import compact from "lodash/compact";
-import {
-    DrillDefinition,
-    ICatalogAttribute,
-    ICatalogDateAttribute,
-    IDrillToAttributeUrl,
-    isDrillFromAttribute,
-    isDrillFromMeasure,
-    UnexpectedError,
-} from "@gooddata/sdk-backend-spi";
+import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
     isLocalIdRef,
     isIdentifierRef,
@@ -18,6 +10,12 @@ import {
     areObjRefsEqual,
     ObjRefInScope,
     localIdRef,
+    DrillDefinition,
+    IDrillToAttributeUrl,
+    isDrillFromAttribute,
+    isDrillFromMeasure,
+    ICatalogAttribute,
+    ICatalogDateAttribute,
 } from "@gooddata/sdk-model";
 import {
     HeaderPredicates,

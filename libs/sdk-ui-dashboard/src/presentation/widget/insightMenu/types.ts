@@ -1,7 +1,6 @@
 // (C) 2020-2022 GoodData Corporation
 import { ComponentType, MouseEvent } from "react";
-import { IInsightWidget } from "@gooddata/sdk-backend-spi";
-import { IInsight } from "@gooddata/sdk-model";
+import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 
 ///
 /// Component props

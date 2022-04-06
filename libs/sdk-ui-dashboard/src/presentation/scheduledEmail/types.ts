@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import { ComponentType } from "react";
-import { IScheduledMail, IScheduledMailDefinition } from "@gooddata/sdk-backend-spi";
+import { IScheduledMail, IScheduledMailDefinition } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 ///

@@ -1,7 +1,14 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import { useEffect, useMemo, useState } from "react";
-import { FilterContextItem, isDashboardAttributeFilter } from "@gooddata/sdk-backend-spi";
-import { areObjRefsEqual, filterObjRef, IFilter, IInsightDefinition, ObjRef } from "@gooddata/sdk-model";
+import {
+    areObjRefsEqual,
+    filterObjRef,
+    IFilter,
+    IInsightDefinition,
+    ObjRef,
+    FilterContextItem,
+    isDashboardAttributeFilter,
+} from "@gooddata/sdk-model";
 import stringify from "json-stable-stringify";
 import compact from "lodash/compact";
 import first from "lodash/first";

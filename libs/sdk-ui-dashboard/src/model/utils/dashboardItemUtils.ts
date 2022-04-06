@@ -1,18 +1,19 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import {
     DashboardItemDefinition,
     ExtendedDashboardItem,
     InternalDashboardItemDefinition,
     isCustomWidgetDefinition,
 } from "../types/layoutTypes";
-import { idRef, ObjRef } from "@gooddata/sdk-model";
 import {
+    idRef,
+    ObjRef,
     IDashboardObjectIdentity,
-    isDashboardLayoutItem,
-    isInsightWidget,
-    isInsightWidgetDefinition,
     isKpiWidgetDefinition,
-} from "@gooddata/sdk-backend-spi";
+    isInsightWidgetDefinition,
+    isInsightWidget,
+    isDashboardLayoutItem,
+} from "@gooddata/sdk-model";
 import { v4 as uuidv4 } from "uuid";
 
 export function extractInsightRefsFromItems(items: ReadonlyArray<ExtendedDashboardItem>): ObjRef[] {

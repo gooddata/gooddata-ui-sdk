@@ -7,11 +7,10 @@ import identity from "lodash/identity";
 
 import { Icon, Typography } from "@gooddata/sdk-ui-kit";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
-import { IInsightWidget, ITheme } from "@gooddata/sdk-backend-spi";
 import { ScheduleDropdown } from "./ScheduleDropdown";
 
 import { IWidgetsSelection } from "../../interfaces";
-import { ObjRef, objRefToString } from "@gooddata/sdk-model";
+import { ObjRef, objRefToString, IInsightWidget, ITheme } from "@gooddata/sdk-model";
 
 const ICON_SIZE_BUTTON = 18;
 const ICON_SIZE = 24;

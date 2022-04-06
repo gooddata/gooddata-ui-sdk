@@ -1,14 +1,16 @@
 // (C) 2021-2022 GoodData Corporation
 
 import {
+    idRef,
+    newNegativeAttributeFilter,
+    newPositiveAttributeFilter,
     FilterContextItem,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
     IWidgetAlertDefinition,
     IAttributeDisplayFormMetadataObject,
     IWidgetDefinition,
-} from "@gooddata/sdk-backend-spi";
-import { idRef, newNegativeAttributeFilter, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+} from "@gooddata/sdk-model";
 import { IBrokenAlertFilterBasicInfo } from "../../types/alertTypes";
 import { getBrokenAlertFiltersBasicInfo } from "../alertsUtils";
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";

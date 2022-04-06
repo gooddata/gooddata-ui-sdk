@@ -1,10 +1,10 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     IDashboardLayout,
-    IDashboardLayoutItem,
     IDashboardLayoutSection,
     IDashboardLayoutSectionHeader,
-} from "@gooddata/sdk-backend-spi";
+    IDashboardLayoutItem,
+} from "@gooddata/sdk-model";
 import { DashboardLayoutBuilder } from "../layout";
 import { DashboardLayoutSectionBuilder } from "../section";
 import {

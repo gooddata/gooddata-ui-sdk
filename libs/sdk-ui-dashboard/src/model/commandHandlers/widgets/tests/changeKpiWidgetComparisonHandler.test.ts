@@ -1,16 +1,15 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import { ChangeKpiWidgetComparison, changeKpiWidgetComparison, KpiWidgetComparison } from "../../../commands";
 import { DashboardCommandFailed, DashboardKpiWidgetComparisonChanged } from "../../../events";
 import { selectAnalyticalWidgetByRef } from "../../../store/layout/layoutSelectors";
-import { uriRef } from "@gooddata/sdk-model";
+import { uriRef, IKpiWidget } from "@gooddata/sdk-model";
 import {
     ComplexDashboardIdentifier,
     ComplexDashboardWidgets,
 } from "../../../tests/fixtures/ComplexDashboard.fixtures";
-import { IKpiWidget } from "@gooddata/sdk-backend-spi";
 
 describe("change KPI widget comparison handler", () => {
     describe("for dashboard with KPIs and insights", () => {

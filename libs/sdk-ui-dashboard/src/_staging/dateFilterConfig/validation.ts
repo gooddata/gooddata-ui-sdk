@@ -1,15 +1,15 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import groupBy from "lodash/groupBy";
 import isEmpty from "lodash/isEmpty";
 import {
+    DateGranularity,
     DateFilterGranularity,
-    IDateFilterConfig,
     IDateFilterOption,
-    IRelativeDateFilterForm,
     IRelativeDateFilterPreset,
+    IRelativeDateFilterForm,
+    IDateFilterConfig,
     ISettings,
-} from "@gooddata/sdk-backend-spi";
-import { DateGranularity } from "@gooddata/sdk-model";
+} from "@gooddata/sdk-model";
 import includes from "lodash/includes";
 import { defaultDateFilterConfig } from "./defaultConfig";
 

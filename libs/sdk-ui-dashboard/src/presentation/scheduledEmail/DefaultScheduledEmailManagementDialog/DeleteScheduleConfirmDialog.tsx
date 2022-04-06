@@ -2,7 +2,7 @@
 
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { IScheduledMail } from "@gooddata/sdk-backend-spi";
+import { IScheduledMail } from "@gooddata/sdk-model";
 import { GoodDataSdkError, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { ConfirmDialog } from "@gooddata/sdk-ui-kit";
 

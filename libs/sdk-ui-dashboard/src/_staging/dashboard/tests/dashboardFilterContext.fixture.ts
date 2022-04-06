@@ -1,7 +1,6 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
-import { IFilterContextDefinition } from "@gooddata/sdk-backend-spi";
-import { idRef } from "@gooddata/sdk-model";
+import { idRef, IFilterContextDefinition } from "@gooddata/sdk-model";
 
 export const TestFilterContext: IFilterContextDefinition = {
     filters: [

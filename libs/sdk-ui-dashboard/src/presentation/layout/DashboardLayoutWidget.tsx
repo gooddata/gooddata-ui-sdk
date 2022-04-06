@@ -1,16 +1,16 @@
 // (C) 2020-2022 GoodData Corporation
 import React from "react";
 import {
-    isWidget,
-    ILegacyKpi,
-    isInsightWidget,
-    widgetType as getWidgetType,
+    IInsight,
     AnalyticalWidgetType,
+    isWidget,
+    widgetType as getWidgetType,
     isKpiWidget,
-    ISettings,
+    isInsightWidget,
     IDashboardLayoutSize,
-} from "@gooddata/sdk-backend-spi";
-import { IInsight } from "@gooddata/sdk-model";
+    ISettings,
+    IKpi,
+} from "@gooddata/sdk-model";
 import {
     ExtendedDashboardWidget,
     selectInsightsMap,
@@ -36,7 +36,7 @@ function calculateWidgetMinHeight(
 ): number | undefined {
     let widgetType: AnalyticalWidgetType;
     let insight: IInsight;
-    let content: IInsight | ILegacyKpi;
+    let content: IInsight | IKpi;
 
     if (isWidget(widget)) {
         widgetType = getWidgetType(widget);

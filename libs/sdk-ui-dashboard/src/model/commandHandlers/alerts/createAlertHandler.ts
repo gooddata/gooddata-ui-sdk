@@ -1,8 +1,8 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, put } from "redux-saga/effects";
 import { DashboardContext } from "../../types/commonTypes";
-import { IWidgetAlert, IWidgetAlertDefinition } from "@gooddata/sdk-backend-spi";
+import { IWidgetAlert, IWidgetAlertDefinition } from "@gooddata/sdk-model";
 import { CreateAlert } from "../../commands/alerts";
 import { alertCreated, DashboardAlertCreated } from "../../events/alerts";
 import { PromiseFnReturnType } from "../../types/sagas";

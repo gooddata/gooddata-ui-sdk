@@ -25,7 +25,7 @@ import {
     IAttributeDropdownBodyExtendedProps,
     isEmptyListItem,
 } from "@gooddata/sdk-ui-filters";
-import { IAttributeElement } from "@gooddata/sdk-backend-spi";
+import { IAttributeElement } from "@gooddata/sdk-model";
 import AttributeDropdownListItem from "./AttributeDropdownListItem";
 import { selectLocale, useDashboardSelector } from "../../../../model";
 

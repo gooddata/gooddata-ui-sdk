@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes";
 import { ChangeLayoutSectionHeader } from "../../commands";
@@ -6,7 +6,7 @@ import { invalidArgumentsProvided } from "../../events/general";
 import { selectLayout } from "../../store/layout/layoutSelectors";
 import { put, select } from "redux-saga/effects";
 import { validateSectionExists } from "./validation/layoutValidation";
-import { IDashboardLayoutSectionHeader } from "@gooddata/sdk-backend-spi";
+import { IDashboardLayoutSectionHeader } from "@gooddata/sdk-model";
 import merge from "lodash/merge";
 import { layoutActions } from "../../store/layout";
 import { DashboardLayoutSectionHeaderChanged, layoutSectionHeaderChanged } from "../../events/layout";

@@ -1,13 +1,8 @@
 // (C) 2020-2022 GoodData Corporation
 import React, { useMemo } from "react";
 import cx from "classnames";
-import {
-    IDataView,
-    isWidget,
-    isDashboardWidget,
-    UnexpectedError,
-    isInsightWidget,
-} from "@gooddata/sdk-backend-spi";
+import { IDataView, UnexpectedError } from "@gooddata/sdk-backend-spi";
+import { isWidget, isInsightWidget, isDashboardWidget } from "@gooddata/sdk-model";
 import { BackendProvider, convertError, useBackendStrict } from "@gooddata/sdk-ui";
 import { withEventing } from "@gooddata/sdk-backend-base";
 

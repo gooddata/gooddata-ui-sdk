@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import {
@@ -10,7 +10,7 @@ import { AddLayoutSection, addLayoutSection, undoLayoutChanges } from "../../../
 import { DashboardCommandFailed, DashboardLayoutChanged, DashboardLayoutSectionAdded } from "../../../events";
 import { selectLayout } from "../../../store/layout/layoutSelectors";
 import { selectInsightByRef } from "../../../store/insights/insightsSelectors";
-import { uriRef } from "@gooddata/sdk-model";
+import { uriRef, IAnalyticalWidget } from "@gooddata/sdk-model";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
 import {
     createTestInsightItem,
@@ -21,7 +21,6 @@ import {
     TestKpiPlaceholderItem,
 } from "../../../tests/fixtures/Layout.fixtures";
 import { ActivityDateDatasetRef } from "../../../tests/fixtures/CatalogAvailability.fixtures";
-import { IAnalyticalWidget } from "@gooddata/sdk-backend-spi";
 
 describe("add layout section handler", () => {
     describe("for an empty dashboard", () => {

@@ -3,13 +3,12 @@
 import React, { useCallback, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Button, Dialog, Typography, Tabs, ITab } from "@gooddata/sdk-ui-kit";
-import { IScheduledMail } from "@gooddata/sdk-backend-spi";
 import { IScheduledEmailManagementDialogProps } from "../types";
 import { ScheduledEmails } from "./ScheduledEmails";
 import { useScheduledEmailManagement } from "./useScheduledEmailManagement";
 import { DeleteScheduleConfirmDialog } from "./DeleteScheduleConfirmDialog";
 import { selectCurrentUser, useDashboardSelector, selectCanManageScheduledMail } from "../../../model";
-import { areObjRefsEqual } from "@gooddata/sdk-model";
+import { areObjRefsEqual, IScheduledMail } from "@gooddata/sdk-model";
 
 const USER_TAB_ID = "gs.visualizationsList.tabs.my";
 const ALL_TAB_ID = "gs.visualizationsList.tabs.all";

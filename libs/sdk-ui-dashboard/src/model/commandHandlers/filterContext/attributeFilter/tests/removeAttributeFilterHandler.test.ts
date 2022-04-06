@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { removeAttributeFilter } from "../../../../commands";
 import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester";
 import {
@@ -7,7 +7,7 @@ import {
 } from "../../../../store/filterContext/filterContextSelectors";
 import { SimpleDashboardIdentifier } from "../../../../tests/fixtures/SimpleDashboard.fixtures";
 import { selectLayout } from "../../../../store/layout/layoutSelectors";
-import { IDashboardAttributeFilterReference, IInsightWidget } from "@gooddata/sdk-backend-spi";
+import { IDashboardAttributeFilterReference, IInsightWidget } from "@gooddata/sdk-model";
 import { TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures";
 
 describe("removeAttributeFilterHandler", () => {

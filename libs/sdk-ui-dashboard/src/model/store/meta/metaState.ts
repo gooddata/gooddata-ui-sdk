@@ -1,6 +1,6 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
-import { IAccessControlAware, IDashboard } from "@gooddata/sdk-backend-spi";
+import { IDashboard, IAccessControlAware } from "@gooddata/sdk-model";
 
 /**
  * @public

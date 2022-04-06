@@ -1,15 +1,18 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { ExtendedDashboardItem } from "../../../types/layoutTypes";
 import { ObjRefMap } from "../../../../_staging/metadata/objRefMap";
-import { areObjRefsEqual, IInsight, insightRef, objRefToString } from "@gooddata/sdk-model";
 import {
+    areObjRefsEqual,
+    IInsight,
+    insightRef,
+    objRefToString,
     IDashboardAttributeFilter,
-    IInsightWidget,
-    IKpiWidget,
     isDashboardAttributeFilterReference,
-    isInsightWidget,
+    IKpiWidget,
+    IInsightWidget,
     isKpiWidget,
-} from "@gooddata/sdk-backend-spi";
+    isInsightWidget,
+} from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { InsightResolutionResult, resolveInsights } from "../../../utils/insightResolver";
 import { DashboardContext } from "../../../types/commonTypes";

@@ -2,7 +2,7 @@
 
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { IScheduledMail } from "@gooddata/sdk-backend-spi";
+import { IScheduledMail } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { getAttachmentType, getFormatsLabel, getRecipientsLabel } from "./utils";

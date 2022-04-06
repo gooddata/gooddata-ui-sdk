@@ -1,14 +1,9 @@
 // (C) 2021-2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { all, call } from "redux-saga/effects";
-import {
-    IDateFilterConfigsQueryResult,
-    ISeparators,
-    ISettings,
-    IUserWorkspaceSettings,
-} from "@gooddata/sdk-backend-spi";
+import { IDateFilterConfigsQueryResult, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { ILocale } from "@gooddata/sdk-ui";
-import { IColorPalette } from "@gooddata/sdk-model";
+import { IColorPalette, ISettings, ISeparators } from "@gooddata/sdk-model";
 
 import { defaultDateFilterConfig } from "../../../../_staging/dateFilterConfig/defaultConfig";
 import { getValidDateFilterConfig } from "../../../../_staging/dateFilterConfig/validation";

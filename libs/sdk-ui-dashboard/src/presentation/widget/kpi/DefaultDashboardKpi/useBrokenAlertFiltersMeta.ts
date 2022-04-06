@@ -2,9 +2,7 @@
 import {
     AnalyticalBackendError,
     IAnalyticalBackend,
-    IDataSetMetadataObject,
     NotSupported,
-    ICatalogDateDataset,
     IElementsQueryOptions,
 } from "@gooddata/sdk-backend-spi";
 import {
@@ -14,7 +12,12 @@ import {
     UseCancelablePromiseState,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
-import { isAttributeElementsByRef, objRefToString } from "@gooddata/sdk-model";
+import {
+    isAttributeElementsByRef,
+    objRefToString,
+    ICatalogDateDataset,
+    IDataSetMetadataObject,
+} from "@gooddata/sdk-model";
 
 import { IAttributeFilterMetaCollection } from "./KpiAlerts";
 

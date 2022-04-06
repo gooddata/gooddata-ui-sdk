@@ -1,16 +1,5 @@
 // (C) 2020-2022 GoodData Corporation
 import {
-    FilterContextItem,
-    IDashboardAttributeFilter,
-    IDashboardDateFilter,
-    IFilterableWidget,
-    IFilterContext,
-    IFilterContextDefinition,
-    isDashboardAttributeFilter,
-    ITempFilterContext,
-    IWidgetDefinition,
-} from "@gooddata/sdk-backend-spi";
-import {
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     newRelativeDateFilter,
@@ -18,6 +7,15 @@ import {
     IAttributeFilter,
     IDateFilter,
     ObjRef,
+    FilterContextItem,
+    IDashboardAttributeFilter,
+    IDashboardDateFilter,
+    IFilterContext,
+    IFilterContextDefinition,
+    ITempFilterContext,
+    isDashboardAttributeFilter,
+    IFilterableWidget,
+    IWidgetDefinition,
 } from "@gooddata/sdk-model";
 import isString from "lodash/isString";
 

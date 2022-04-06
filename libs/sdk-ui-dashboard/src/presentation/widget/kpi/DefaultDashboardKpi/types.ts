@@ -1,5 +1,5 @@
-// (C) 2021 GoodData Corporation
-import { IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
+// (C) 2021-2022 GoodData Corporation
+import { IMeasureDescriptor } from "@gooddata/sdk-model";
 
 export interface IKpiResult {
     measureFormat: string | undefined;

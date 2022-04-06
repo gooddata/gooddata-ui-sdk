@@ -1,11 +1,12 @@
 // (C) 2021-2022 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
-import { idRef, uriRef } from "@gooddata/sdk-model";
 import {
-    IAccessControlAware,
+    idRef,
+    uriRef,
     IFilterContextDefinition,
     isTempFilterContext,
-} from "@gooddata/sdk-backend-spi";
+    IAccessControlAware,
+} from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { DashboardState } from "../types";
 

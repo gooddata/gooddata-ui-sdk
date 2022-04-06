@@ -1,16 +1,19 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { Component } from "react";
 import isEqual from "lodash/isEqual";
 import last from "lodash/last";
 import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
 import { Button, Input, Typography, Overlay, useMediaQuery, Spinner, Message } from "@gooddata/sdk-ui-kit";
 import {
+    IDateFilter,
+    IFilter,
+    isAttributeFilter,
+    isDateFilter,
     IDashboardDateFilter,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
     IWidgetAlertDefinition,
-} from "@gooddata/sdk-backend-spi";
-import { IDateFilter, IFilter, isAttributeFilter, isDateFilter } from "@gooddata/sdk-model";
+} from "@gooddata/sdk-model";
 
 import { KpiAlertOperationStatus } from "../../types";
 

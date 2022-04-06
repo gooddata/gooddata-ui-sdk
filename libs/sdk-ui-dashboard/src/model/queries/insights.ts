@@ -2,10 +2,10 @@
 import { IDashboardQuery } from "./base";
 import { IInsight, InsightDisplayFormUsage, ObjRef } from "@gooddata/sdk-model";
 import {
+    ICatalogDateDataset,
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
-    ICatalogDateDataset,
-} from "@gooddata/sdk-backend-spi";
+} from "@gooddata/sdk-model";
 
 /**
  * Given a reference to an insight, this query will obtain list of all date datasets that may be used

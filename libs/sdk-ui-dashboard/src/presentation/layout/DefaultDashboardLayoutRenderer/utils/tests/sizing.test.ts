@@ -1,7 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import chunk from "lodash/chunk";
 import flatMap from "lodash/flatMap";
-import { IDashboardLayoutSize, ScreenSize, AnalyticalWidgetType } from "@gooddata/sdk-backend-spi";
 import { newKpiWidget } from "@gooddata/sdk-backend-base";
 import {
     getDashboardLayoutItemHeightForRatioAndScreen,
@@ -22,7 +21,13 @@ import {
     DashboardLayoutBuilder,
     DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,
 } from "../../../../../_staging/dashboard/fluidLayout";
-import { idRef, newInsightDefinition } from "@gooddata/sdk-model";
+import {
+    idRef,
+    newInsightDefinition,
+    AnalyticalWidgetType,
+    IDashboardLayoutSize,
+    ScreenSize,
+} from "@gooddata/sdk-model";
 import { ALL_SCREENS } from "../../../../constants";
 
 export const allVisTypes: VisType[] = [

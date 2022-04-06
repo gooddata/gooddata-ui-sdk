@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import {
     CustomDashboardInsightComponent,
     CustomDashboardInsightMenuButtonComponent,
@@ -8,8 +8,7 @@ import {
     IInsightMenuItem,
 } from "../widget/types";
 import { ExtendedDashboardWidget } from "../../model";
-import { IInsight } from "@gooddata/sdk-model";
-import { IDashboardAttributeFilter, IInsightWidget, IKpiWidget, ILegacyKpi } from "@gooddata/sdk-backend-spi";
+import { IInsight, IDashboardAttributeFilter, IKpiWidget, IInsightWidget, IKpi } from "@gooddata/sdk-model";
 import { CustomDashboardAttributeFilterComponent } from "../filterBar/types";
 
 /**
@@ -81,7 +80,7 @@ export type InsightMenuItemsProvider = (
 /**
  * @public
  */
-export type KpiComponentProvider = (kpi: ILegacyKpi, widget: IKpiWidget) => CustomDashboardKpiComponent;
+export type KpiComponentProvider = (kpi: IKpi, widget: IKpiWidget) => CustomDashboardKpiComponent;
 
 /**
  * @public

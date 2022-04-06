@@ -1,7 +1,6 @@
 // (C) 2022 GoodData Corporation
 
-import { IDashboardAttachment, IWidgetAttachment } from "@gooddata/sdk-backend-spi";
-import { uriRef } from "@gooddata/sdk-model";
+import { uriRef, IDashboardAttachment, IWidgetAttachment } from "@gooddata/sdk-model";
 import { Icon } from "@gooddata/sdk-ui-kit";
 import { createInternalIntl } from "../../../localization";
 import { getAttachmentType, getFormatsLabel, getRecipientsLabel } from "../utils";

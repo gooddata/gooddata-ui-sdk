@@ -1,11 +1,10 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
 
 import { IDashboardInsightMenuProps } from "../../types";
-import { objRefToString } from "@gooddata/sdk-model";
-import { widgetRef } from "@gooddata/sdk-backend-spi";
+import { objRefToString, widgetRef } from "@gooddata/sdk-model";
 import { ArrowDirections, ArrowOffsets, Bubble, IAlignPoint, Separator } from "@gooddata/sdk-ui-kit";
 import { DashboardInsightMenuContainer } from "./DashboardInsightMenuContainer";
 import { DashboardInsightMenuItemButton } from "./DashboardInsightMenuItemButton";

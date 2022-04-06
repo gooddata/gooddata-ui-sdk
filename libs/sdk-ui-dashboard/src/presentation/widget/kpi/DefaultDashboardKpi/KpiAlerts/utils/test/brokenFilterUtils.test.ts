@@ -1,10 +1,10 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import {
+    objRefToString,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
     IDataSetMetadataObject,
-} from "@gooddata/sdk-backend-spi";
-import { objRefToString } from "@gooddata/sdk-model";
+} from "@gooddata/sdk-model";
 import { createIntlMock } from "@gooddata/sdk-ui";
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 

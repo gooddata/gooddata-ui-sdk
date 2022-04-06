@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import {
@@ -6,7 +6,7 @@ import {
     newAbsoluteDashboardDateFilter,
     newAllTimeDashboardDateFilter,
     newRelativeDashboardDateFilter,
-} from "@gooddata/sdk-backend-spi";
+} from "@gooddata/sdk-model";
 import toNumber from "lodash/toNumber";
 import { ChangeDateFilterSelection, DateFilterSelection } from "../../../commands/filters";
 import { dateFilterChanged } from "../../../events/filters";

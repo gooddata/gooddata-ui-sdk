@@ -1,5 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import { ISettings } from "@gooddata/sdk-backend-spi";
+import { ISettings } from "@gooddata/sdk-model";
 
 /**
  * As plugins now allow to use KD with some old version of UI SDK,

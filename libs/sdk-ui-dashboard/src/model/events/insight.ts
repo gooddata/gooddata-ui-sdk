@@ -1,12 +1,14 @@
 // (C) 2021-2022 GoodData Corporation
-import { IInsight, ObjRef, VisualizationProperties } from "@gooddata/sdk-model";
 import {
-    DrillDefinition,
-    ICatalogDateDataset,
+    IInsight,
+    ObjRef,
+    VisualizationProperties,
     IDashboardAttributeFilter,
+    DrillDefinition,
     IInsightWidget,
     IInsightWidgetDefinition,
-} from "@gooddata/sdk-backend-spi";
+    ICatalogDateDataset,
+} from "@gooddata/sdk-model";
 
 import { IDashboardEvent } from "./base";
 import { WidgetHeader } from "../types/widgetTypes";

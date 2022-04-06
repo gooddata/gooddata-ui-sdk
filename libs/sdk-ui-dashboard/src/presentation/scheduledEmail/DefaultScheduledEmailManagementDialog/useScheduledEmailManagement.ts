@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 
-import { IScheduledMail } from "@gooddata/sdk-backend-spi";
+import { IScheduledMail } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
     useBackendStrict,

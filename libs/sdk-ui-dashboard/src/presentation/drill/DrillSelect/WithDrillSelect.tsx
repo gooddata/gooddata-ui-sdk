@@ -12,13 +12,14 @@ import {
     OnDrillToInsightSuccess,
 } from "../types";
 import { DrillSelectContext } from "./types";
-import { IInsight, ObjRef } from "@gooddata/sdk-model";
 import {
-    isDrillToCustomUrl,
+    IInsight,
+    ObjRef,
     isDrillToAttributeUrl,
+    isDrillToCustomUrl,
     isDrillToDashboard,
     isDrillToInsight,
-} from "@gooddata/sdk-backend-spi";
+} from "@gooddata/sdk-model";
 import { IntlWrapper } from "../../localization";
 import {
     DashboardCommandFailed,

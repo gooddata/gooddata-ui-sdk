@@ -3,13 +3,17 @@ import * as React from "react";
 import cloneDeep from "lodash/cloneDeep";
 import { injectIntl, WrappedComponentProps, FormattedMessage } from "react-intl";
 import { normalizeTime, ConfirmDialogBase, Overlay, Alignment, Message } from "@gooddata/sdk-ui-kit";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
-    IAnalyticalBackend,
+    ObjRef,
+    IUser,
+    uriRef,
+    objRefToString,
+    areObjRefsEqual,
     IInsightWidget,
     IScheduledMailDefinition,
     ScheduledMailAttachment,
-} from "@gooddata/sdk-backend-spi";
-import { ObjRef, IUser, uriRef, objRefToString, areObjRefsEqual } from "@gooddata/sdk-model";
+} from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import memoize from "lodash/memoize";
 

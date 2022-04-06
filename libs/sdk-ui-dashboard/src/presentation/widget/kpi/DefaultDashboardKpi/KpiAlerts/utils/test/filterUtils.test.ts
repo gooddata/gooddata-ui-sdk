@@ -1,6 +1,12 @@
-// (C) 2007-2021 GoodData Corporation
-import { IUserWorkspaceSettings, IWidgetDefinition } from "@gooddata/sdk-backend-spi";
-import { IFilter, newAbsoluteDateFilter, newAllTimeFilter, newRelativeDateFilter } from "@gooddata/sdk-model";
+// (C) 2007-2022 GoodData Corporation
+import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import {
+    IFilter,
+    newAbsoluteDateFilter,
+    newAllTimeFilter,
+    newRelativeDateFilter,
+    IWidgetDefinition,
+} from "@gooddata/sdk-model";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 
 import { isAlertingTemporarilyDisabledForGivenFilter } from "../filterUtils";

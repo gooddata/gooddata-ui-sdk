@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import cloneDeep from "lodash/cloneDeep";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
@@ -10,8 +10,7 @@ import {
 } from "../../../commands";
 import { DashboardCommandFailed, DashboardInsightWidgetDrillsModified } from "../../../events";
 import { selectAnalyticalWidgetByRef } from "../../../store/layout/layoutSelectors";
-import { idRef, uriRef } from "@gooddata/sdk-model";
-import { DrillOrigin } from "@gooddata/sdk-backend-spi";
+import { idRef, uriRef, DrillOrigin } from "@gooddata/sdk-model";
 import {
     DrillToAttributeUrlFromMeasureDefinition,
     drillToAttributeUrlWidgetRef,

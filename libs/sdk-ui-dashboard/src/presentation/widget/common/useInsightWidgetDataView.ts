@@ -1,5 +1,4 @@
 // (C) 2022 GoodData Corporation
-import { IInsightWidget } from "@gooddata/sdk-backend-spi";
 import {
     DataViewFacade,
     GoodDataSdkError,
@@ -9,7 +8,7 @@ import {
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 import { useMemo } from "react";
-import { insightSetFilters } from "@gooddata/sdk-model";
+import { insightSetFilters, IInsightWidget } from "@gooddata/sdk-model";
 import stringify from "json-stable-stringify";
 import { selectInsightByRef, useDashboardSelector } from "../../../model";
 import { useWidgetFilters } from "./useWidgetFilters";
