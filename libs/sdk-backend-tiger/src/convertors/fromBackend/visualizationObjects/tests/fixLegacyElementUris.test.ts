@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import { IInsightWidget } from "@gooddata/sdk-backend-spi";
+import { IInsightWidget } from "@gooddata/sdk-model";
 import {
     ColorMapping,
     fixInsightLegacyElementUris,

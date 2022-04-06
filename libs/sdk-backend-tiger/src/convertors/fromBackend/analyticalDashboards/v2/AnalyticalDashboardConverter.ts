@@ -6,21 +6,22 @@ import {
     JsonApiDashboardPluginOutWithLinks,
     JsonApiFilterContextOutDocument,
 } from "@gooddata/api-client-tiger";
+import { LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";
+
 import {
+    IdentifierRef,
+    idRef,
+    ObjectType,
     FilterContextItem,
-    IDashboard,
-    IDashboardDateFilterConfig,
-    IDashboardLayout,
-    IDashboardPlugin,
-    IDashboardPluginLink,
-    IDashboardWidget,
     IFilterContext,
     IInsightWidget,
-    LayoutPath,
-    walkLayout,
-} from "@gooddata/sdk-backend-spi";
-
-import { IdentifierRef, idRef, ObjectType } from "@gooddata/sdk-model";
+    IDashboardLayout,
+    IDashboardWidget,
+    IDashboard,
+    IDashboardDateFilterConfig,
+    IDashboardPlugin,
+    IDashboardPluginLink,
+} from "@gooddata/sdk-model";
 import updateWith from "lodash/updateWith";
 import { cloneWithSanitizedIds } from "../../IdSanitization";
 import { isInheritedObject } from "../../utils";

@@ -1,5 +1,6 @@
 // (C) 2020-2022 GoodData Corporation
-import { ISettings, IUserSettings } from "@gooddata/sdk-backend-spi";
+import { IUserSettings } from "@gooddata/sdk-backend-spi";
+import { ISettings } from "@gooddata/sdk-model";
 
 /**
  * Tiger does not yet have endpoints for settings. All the UI-specific

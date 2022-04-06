@@ -11,27 +11,31 @@ import {
     ValidateRelationsHeader,
 } from "@gooddata/api-client-tiger";
 import {
-    IDashboard,
-    IDashboardDefinition,
-    IDashboardPlugin,
-    IDashboardPluginDefinition,
     IDashboardReferences,
     IDashboardWithReferences,
-    IFilterContext,
-    IFilterContextDefinition,
     IGetDashboardOptions,
-    IListedDashboard,
-    isFilterContext,
-    isFilterContextDefinition,
-    isTempFilterContext,
-    ITempFilterContext,
-    IWidget,
     IWorkspaceDashboardsService,
     NotSupported,
     SupportedDashboardReferenceTypes,
     UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
-import { areObjRefsEqual, IFilter, ObjRef } from "@gooddata/sdk-model";
+import {
+    areObjRefsEqual,
+    IFilter,
+    ObjRef,
+    IFilterContext,
+    IFilterContextDefinition,
+    ITempFilterContext,
+    isFilterContext,
+    isFilterContextDefinition,
+    isTempFilterContext,
+    IWidget,
+    IDashboard,
+    IDashboardDefinition,
+    IListedDashboard,
+    IDashboardPlugin,
+    IDashboardPluginDefinition,
+} from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
 import { v4 as uuidv4 } from "uuid";
 import {

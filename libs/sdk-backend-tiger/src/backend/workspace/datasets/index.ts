@@ -1,5 +1,6 @@
-// (C) 2019-2020 GoodData Corporation
-import { IWorkspaceDatasetsService, IDataset, IMetadataObject } from "@gooddata/sdk-backend-spi";
+// (C) 2019-2022 GoodData Corporation
+import { IWorkspaceDatasetsService } from "@gooddata/sdk-backend-spi";
+import { IMetadataObject, IDataset } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 
 export class TigerWorkspaceDataSets implements IWorkspaceDatasetsService {

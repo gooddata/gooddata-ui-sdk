@@ -1,20 +1,19 @@
 // (C) 2020-2022 GoodData Corporation
 import { AnalyticalDashboardModelV2 } from "@gooddata/api-client-tiger";
+import { LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";
 import {
-    IDashboardDefinition,
+    ObjRef,
+    IFilterContextDefinition,
+    IDrillToCustomUrl,
+    isDrillToCustomUrl,
+    isInsightWidgetDefinition,
+    isInsightWidget,
     IDashboardLayout,
+    IDashboardWidget,
+    IDashboardDefinition,
     IDashboardPluginDefinition,
     IDashboardPluginLink,
-    IDashboardWidget,
-    IDrillToCustomUrl,
-    IFilterContextDefinition,
-    isDrillToCustomUrl,
-    isInsightWidget,
-    isInsightWidgetDefinition,
-    LayoutPath,
-    walkLayout,
-} from "@gooddata/sdk-backend-spi";
-import { ObjRef } from "@gooddata/sdk-model";
+} from "@gooddata/sdk-model";
 import omit from "lodash/omit";
 import updateWith from "lodash/updateWith";
 import { cloneWithSanitizedIds } from "./IdSanitization";

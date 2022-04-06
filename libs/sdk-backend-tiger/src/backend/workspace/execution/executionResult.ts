@@ -2,20 +2,17 @@
 
 import { AfmExecutionResponse, ExecutionResult } from "@gooddata/api-client-tiger";
 import {
-    DataValue,
     IDataView,
-    IDimensionDescriptor,
     IExecutionFactory,
     IExecutionResult,
     IExportConfig,
     IExportResult,
     IPreparedExecution,
-    IResultHeader,
     NoDataError,
     NotSupported,
     UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
-import { IExecutionDefinition } from "@gooddata/sdk-model";
+import { IExecutionDefinition, DataValue, IDimensionDescriptor, IResultHeader } from "@gooddata/sdk-model";
 import SparkMD5 from "spark-md5";
 import { transformResultDimensions } from "../../../convertors/fromBackend/afm/dimensions";
 import {

@@ -1,5 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
-import { IWorkspacePermissionsService, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
+import { IWorkspacePermissionsService } from "@gooddata/sdk-backend-spi";
+import { IWorkspacePermissions } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 
 type TigerPermissionType = "MANAGE" | "VIEW" | "ANALYZE";

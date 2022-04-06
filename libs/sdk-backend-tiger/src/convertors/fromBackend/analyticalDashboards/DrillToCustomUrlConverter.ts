@@ -1,6 +1,7 @@
 // (C) 2022 GoodData Corporation
 
-import { IDashboardLayout, IDrillToCustomUrl, LayoutPath } from "@gooddata/sdk-backend-spi";
+import { LayoutPath } from "@gooddata/sdk-backend-spi";
+import { IDrillToCustomUrl, IDashboardLayout } from "@gooddata/sdk-model";
 import update from "lodash/fp/update";
 
 import { getDrillToCustomUrlPaths } from "../../toBackend/AnalyticalDashboardConverter";

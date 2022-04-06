@@ -4,18 +4,19 @@ import {
     JsonApiAnalyticalDashboardOutDocument,
     JsonApiFilterContextOutDocument,
 } from "@gooddata/api-client-tiger";
+import { LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";
 import {
+    IdentifierRef,
+    idRef,
+    ObjectType,
     FilterContextItem,
-    IDashboard,
-    IDashboardDateFilterConfig,
-    IDashboardLayout,
-    IDashboardWidget,
     IFilterContext,
     IInsightWidget,
-    LayoutPath,
-    walkLayout,
-} from "@gooddata/sdk-backend-spi";
-import { IdentifierRef, idRef, ObjectType } from "@gooddata/sdk-model";
+    IDashboardLayout,
+    IDashboardWidget,
+    IDashboard,
+    IDashboardDateFilterConfig,
+} from "@gooddata/sdk-model";
 import updateWith from "lodash/updateWith";
 import { fixWidgetLegacyElementUris } from "../../fixLegacyElementUris";
 import { cloneWithSanitizedIds } from "../../IdSanitization";

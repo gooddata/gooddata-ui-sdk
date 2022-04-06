@@ -15,19 +15,19 @@ import {
 } from "@gooddata/api-client-tiger";
 import keyBy from "lodash/keyBy";
 import {
-    IAttributeDisplayFormMetadataObject,
-    IAttributeMetadataObject,
-    IDashboardMetadataObject,
-    IDataSetMetadataObject,
-} from "@gooddata/sdk-backend-spi";
-import {
     IMetadataObjectBuilder,
     newAttributeDisplayFormMetadataObject,
     newAttributeMetadataObject,
     newDashboardMetadataObject,
     newDataSetMetadataObject,
 } from "@gooddata/sdk-backend-base";
-import { idRef } from "@gooddata/sdk-model";
+import {
+    idRef,
+    IAttributeDisplayFormMetadataObject,
+    IAttributeMetadataObject,
+    IDataSetMetadataObject,
+    IDashboardMetadataObject,
+} from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { convertLabelType } from "./LabelTypeConverter";
 

@@ -2,10 +2,7 @@
 import {
     IWorkspaceMeasuresService,
     IMeasureExpressionToken,
-    IMeasureMetadataObject,
-    IMeasureMetadataObjectDefinition,
     IMeasureReferencing,
-    ICatalogMeasure,
 } from "@gooddata/sdk-backend-spi";
 import {
     JsonApiAttributeOut,
@@ -18,7 +15,15 @@ import {
     MetadataUtilities,
     ITigerClient,
 } from "@gooddata/api-client-tiger";
-import { ObjRef, idRef, isIdentifierRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import {
+    ObjRef,
+    idRef,
+    isIdentifierRef,
+    areObjRefsEqual,
+    ICatalogMeasure,
+    IMeasureMetadataObject,
+    IMeasureMetadataObjectDefinition,
+} from "@gooddata/sdk-model";
 import { convertMetricFromBackend } from "../../../convertors/fromBackend/MetricConverter";
 import { convertMeasure } from "../../../convertors/fromBackend/CatalogConverter";
 import { convertMetricToBackend } from "../../../convertors/toBackend/MetricConverter";

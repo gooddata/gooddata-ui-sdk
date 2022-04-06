@@ -6,8 +6,7 @@ import {
     JsonApiMetricOutWithLinks,
 } from "@gooddata/api-client-tiger";
 import { newMeasureMetadataObject } from "@gooddata/sdk-backend-base";
-import { IMeasureMetadataObject } from "@gooddata/sdk-backend-spi";
-import { idRef } from "@gooddata/sdk-model";
+import { idRef, IMeasureMetadataObject } from "@gooddata/sdk-model";
 import { isInheritedObject } from "./utils";
 
 /**

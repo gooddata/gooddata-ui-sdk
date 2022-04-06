@@ -1,19 +1,22 @@
 // (C) 2019-2022 GoodData Corporation
 import {
-    CatalogItem,
-    CatalogItemType,
-    ICatalogFact,
-    ICatalogGroup,
-    ICatalogMeasure,
-    IGroupableCatalogItemBase,
-    isCatalogAttribute,
-    isCatalogFact,
-    isCatalogMeasure,
     IWorkspaceCatalog,
     IWorkspaceCatalogFactory,
     IWorkspaceCatalogFactoryOptions,
 } from "@gooddata/sdk-backend-spi";
-import { IdentifierRef, ObjRef } from "@gooddata/sdk-model";
+import {
+    IdentifierRef,
+    ObjRef,
+    CatalogItemType,
+    CatalogItem,
+    ICatalogGroup,
+    ICatalogFact,
+    ICatalogMeasure,
+    isCatalogAttribute,
+    isCatalogFact,
+    isCatalogMeasure,
+    IGroupableCatalogItemBase,
+} from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { convertFact, convertMeasure } from "../../../convertors/fromBackend/CatalogConverter";
 import { TigerWorkspaceCatalog } from "./catalog";

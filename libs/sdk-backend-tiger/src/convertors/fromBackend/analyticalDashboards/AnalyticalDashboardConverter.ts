@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import invariant from "ts-invariant";
 import {
     AnalyticalDashboardModelV1,
@@ -12,13 +12,6 @@ import {
     JsonApiDashboardPluginOutDocument,
     JsonApiDashboardPluginOutWithLinks,
 } from "@gooddata/api-client-tiger";
-import {
-    FilterContextItem,
-    IDashboard,
-    IDashboardPlugin,
-    IFilterContext,
-    IListedDashboard,
-} from "@gooddata/sdk-backend-spi";
 
 import {
     convertDashboard as convertDashboardV1,
@@ -32,7 +25,15 @@ import {
     convertDashboardPlugin as convertDashboardPluginV2,
     convertDashboardPluginWithLinks as convertDashboardPluginWithLinksV2,
 } from "./v2/AnalyticalDashboardConverter";
-import { idRef, ObjectType } from "@gooddata/sdk-model";
+import {
+    idRef,
+    ObjectType,
+    FilterContextItem,
+    IFilterContext,
+    IDashboard,
+    IListedDashboard,
+    IDashboardPlugin,
+} from "@gooddata/sdk-model";
 import { isInheritedObject } from "../utils";
 
 export const convertAnalyticalDashboard = (

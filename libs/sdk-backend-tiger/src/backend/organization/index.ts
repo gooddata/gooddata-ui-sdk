@@ -1,11 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 
-import {
-    IOrganization,
-    IOrganizationDescriptor,
-    IOrganizations,
-    ISecuritySettingsService,
-} from "@gooddata/sdk-backend-spi";
+import { IOrganization, IOrganizations, ISecuritySettingsService } from "@gooddata/sdk-backend-spi";
+import { IOrganizationDescriptor } from "@gooddata/sdk-model";
 
 import { SecuritySettingsService } from "./securitySettings";
 import { TigerAuthenticatedCallGuard } from "../../types";

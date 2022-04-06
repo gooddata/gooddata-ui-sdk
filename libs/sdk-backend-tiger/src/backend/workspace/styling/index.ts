@@ -1,6 +1,6 @@
-// (C) 2019-2020 GoodData Corporation
-import { IWorkspaceStylingService, ITheme } from "@gooddata/sdk-backend-spi";
-import { IColorPaletteItem } from "@gooddata/sdk-model";
+// (C) 2019-2022 GoodData Corporation
+import { IWorkspaceStylingService } from "@gooddata/sdk-backend-spi";
+import { IColorPaletteItem, ITheme } from "@gooddata/sdk-model";
 
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { DefaultColorPalette } from "./mocks/colorPalette";

@@ -1,11 +1,7 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
-import {
-    IDateFilterConfig,
-    IDateFilterConfigsQuery,
-    IDateFilterConfigsQueryResult,
-} from "@gooddata/sdk-backend-spi";
-import { idRef } from "@gooddata/sdk-model";
+import { IDateFilterConfigsQuery, IDateFilterConfigsQueryResult } from "@gooddata/sdk-backend-spi";
+import { idRef, IDateFilterConfig } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 
 const DefaultDateFilterConfig: IDateFilterConfig = {

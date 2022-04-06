@@ -1,5 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
-import { IDimensionDescriptor, IDimensionItemDescriptor, ITotalDescriptor } from "@gooddata/sdk-backend-spi";
+// (C) 2019-2022 GoodData Corporation
 import { isAttributeHeader, ResultDimension } from "@gooddata/api-client-tiger";
 
 import {
@@ -11,6 +10,9 @@ import {
     measureItem,
     measureLocalId,
     ObjRef,
+    IDimensionItemDescriptor,
+    IDimensionDescriptor,
+    ITotalDescriptor,
 } from "@gooddata/sdk-model";
 import keyBy from "lodash/keyBy";
 import mapValues from "lodash/mapValues";

@@ -4,11 +4,11 @@ import {
     attributeDisplayFormRef,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
+    IAttributeElement,
 } from "@gooddata/sdk-model";
 
 import * as Md from "../../src/fixtures/full";
 import * as ReferenceRecords from "../../src/fixtures/referenceObjects";
-import { IAttributeElement } from "@gooddata/sdk-backend-spi";
 
 const backend = testBackend();
 
