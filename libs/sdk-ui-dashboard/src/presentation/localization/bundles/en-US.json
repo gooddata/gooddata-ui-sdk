@@ -505,6 +505,16 @@
         "comment": "",
         "limit": 0
     },
+    "dialogs.schedule.management.tab.all": {
+        "value": "all",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.schedule.management.tab.user": {
+        "value": "created by me",
+        "comment": "",
+        "limit": 0
+    },
     "options.menu.schedule.email.recipient.invalid": {
         "value": "This is not a valid email address.",
         "comment": "Translate as imperative. Error message for recipient email address",

@@ -907,9 +907,23 @@ export const Icon: {
     Dashboard: FC<IIconProps>;
     Many: FC<IIconProps>;
     Widget: FC<IIconProps>;
-    Chart: FC<IIconProps>;
     SettingsGear: FC<IIconProps>;
     AttachmentClip: FC<IIconProps>;
+    Table: FC<IIconProps>;
+    Column: FC<IIconProps>;
+    Bar: FC<IIconProps>;
+    Line: FC<IIconProps>;
+    StackedArea: FC<IIconProps>;
+    Combo: FC<IIconProps>;
+    HeadlineChart: FC<IIconProps>;
+    ScatterPlot: FC<IIconProps>;
+    Bubble: FC<IIconProps>;
+    Pie: FC<IIconProps>;
+    Donut: FC<IIconProps>;
+    TreeMap: FC<IIconProps>;
+    HeatMap: FC<IIconProps>;
+    Bullet: FC<IIconProps>;
+    Geo: FC<IIconProps>;
 };
 
 // @internal (undocumented)
@@ -1585,6 +1599,14 @@ export interface IIconProps {
     height?: number;
     // (undocumented)
     width?: number;
+}
+
+// @internal (undocumented)
+export interface IInsightIconProps {
+    // (undocumented)
+    iconProps?: IIconProps;
+    // (undocumented)
+    visualizationUrl?: string;
 }
 
 // @internal (undocumented)
@@ -2454,6 +2476,9 @@ export interface InputWithNumberFormatState {
     // (undocumented)
     value: number;
 }
+
+// @internal (undocumented)
+export const InsightIcon: React_2.FC<IInsightIconProps>;
 
 // @internal (undocumented)
 export const InsightListItem: React_2.FC<WithIntlProps<IInsightListItemProps & WrappedComponentProps<"intl">>> & {

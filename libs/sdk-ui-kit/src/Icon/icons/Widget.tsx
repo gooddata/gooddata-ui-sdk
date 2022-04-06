@@ -7,7 +7,7 @@ import { IIconProps } from "../typings";
 /**
  * @internal
  */
-export const Widget: React.FC<IIconProps> = ({ color, className, width = 16, height = 16 }) => {
+export const Widget: React.FC<IIconProps> = ({ color, className, width, height }) => {
     return (
         <svg
             className={className}

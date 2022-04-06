@@ -35,9 +35,24 @@ import { Minimize } from "./icons/Minimize";
 import { Dashboard } from "./icons/Dashboard";
 import { Many } from "./icons/Many";
 import { Widget } from "./icons/Widget";
-import { Chart } from "./icons/Chart";
 import { SettingsGear } from "./icons/SettingsGear";
 import { AttachmentClip } from "./icons/AttachmentClip";
+
+import { Table } from "./icons/InsightIcons/Table";
+import { Column } from "./icons/InsightIcons/Column";
+import { Bar } from "./icons/InsightIcons/Bar";
+import { Line } from "./icons/InsightIcons/Line";
+import { StackedArea } from "./icons/InsightIcons/StackedArea";
+import { Combo } from "./icons/InsightIcons/Combo";
+import { HeadlineChart } from "./icons/InsightIcons/HeadlineChart";
+import { ScatterPlot } from "./icons/InsightIcons/ScatterPlot";
+import { Bubble } from "./icons/InsightIcons/Bubble";
+import { Pie } from "./icons/InsightIcons/Pie";
+import { Donut } from "./icons/InsightIcons/Donut";
+import { TreeMap } from "./icons/InsightIcons/TreeMap";
+import { HeatMap } from "./icons/InsightIcons/HeatMap";
+import { Bullet } from "./icons/InsightIcons/Bullet";
+import { Geo } from "./icons/InsightIcons/Geo";
 
 /**
  * @internal
@@ -79,9 +94,23 @@ export const Icon = {
     Dashboard,
     Many,
     Widget,
-    Chart,
     SettingsGear,
     AttachmentClip,
+    Table,
+    Column,
+    Bar,
+    Line,
+    StackedArea,
+    Combo,
+    HeadlineChart,
+    ScatterPlot,
+    Bubble,
+    Pie,
+    Donut,
+    TreeMap,
+    HeatMap,
+    Bullet,
+    Geo,
 };
 
 export { IRowsIconProps };

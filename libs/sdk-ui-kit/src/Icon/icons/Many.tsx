@@ -7,13 +7,13 @@ import { IIconProps } from "../typings";
 /**
  * @internal
  */
-export const Many: React.FC<IIconProps> = ({ color, className, width = 20, height = 20 }) => {
+export const Many: React.FC<IIconProps> = ({ color, className, width, height }) => {
     return (
         <svg
             className={className}
             width={width}
             height={height}
-            viewBox="0 0 20 16"
+            viewBox="0.5 0.5 19 15"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             stroke={color ?? "#B0BECA"}

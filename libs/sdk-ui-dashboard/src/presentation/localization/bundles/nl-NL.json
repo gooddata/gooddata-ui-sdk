@@ -88,6 +88,8 @@
     "dialogs.schedule.management.attachments.mixed": "Dashboard en {n, plural, one {# rapport} other {# rapporten}}",
     "dialogs.schedule.management.load.error": "Laden mislukt. Probeer het later opnieuw.",
     "dialogs.schedule.management.delete.error": "Verwijderen planning mislukt. Probeer het later opnieuw.",
+    "dialogs.schedule.management.tab.all": "alle",
+    "dialogs.schedule.management.tab.user": "door mij aangemaakt",
     "options.menu.schedule.email.recipient.invalid": "Dit is geen geldig e-mailadres.",
     "options.menu.schedule.email.recipient.warning.existed": "U hebt deze ontvanger al toegevoegd.",
     "options.menu.schedule.email.recipient.warning.belong.workspace": "Dit e-mailadres hoort niet bij de workspace. De ontvanger ontvangt mogelijk vertrouwelijke gegevens.",

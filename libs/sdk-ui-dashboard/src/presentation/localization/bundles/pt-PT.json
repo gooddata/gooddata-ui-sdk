@@ -88,6 +88,8 @@
     "dialogs.schedule.management.attachments.mixed": "Dashboard e {n, plural, one {# relatório} other {# relatórios}}",
     "dialogs.schedule.management.load.error": "Falha ao carregar. Tente mais tarde.",
     "dialogs.schedule.management.delete.error": "Falha ao eliminar programação. Tente mais tarde.",
+    "dialogs.schedule.management.tab.all": "todos",
+    "dialogs.schedule.management.tab.user": "criadas por mim",
     "options.menu.schedule.email.recipient.invalid": "Este não é um endereço de e-mail válido.",
     "options.menu.schedule.email.recipient.warning.existed": "Já adicionou este destinatário.",
     "options.menu.schedule.email.recipient.warning.belong.workspace": "Este endereço de e-mail não pertence à área de trabalho. O destinatário poderá receber dados sensíveis.",

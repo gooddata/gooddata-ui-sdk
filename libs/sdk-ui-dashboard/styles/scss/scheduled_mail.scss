@@ -745,7 +745,7 @@ $vertical-space: 10px;
 
             & > svg {
                 margin-left: 4px;
-                margin-right: 10px;
+                margin-right: 6px;
                 flex-shrink: 0;
             }
 
@@ -753,6 +753,7 @@ $vertical-space: 10px;
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
+                margin-left: 4px;
             }
         }
     }

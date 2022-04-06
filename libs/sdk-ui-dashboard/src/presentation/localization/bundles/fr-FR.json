@@ -88,6 +88,8 @@
     "dialogs.schedule.management.attachments.mixed": "Tableau de bord et {n, plural, one {# rapport} other {# rapports}}",
     "dialogs.schedule.management.load.error": "Le chargement a échoué. Veuillez réessayer plus tard.",
     "dialogs.schedule.management.delete.error": "La suppression de la planification a échoué. Veuillez réessayer plus tard.",
+    "dialogs.schedule.management.tab.all": "tout",
+    "dialogs.schedule.management.tab.user": "créées par moi",
     "options.menu.schedule.email.recipient.invalid": "Ceci n'est pas une adresse e-mail valide.",
     "options.menu.schedule.email.recipient.warning.existed": "Vous avez déjà ajouté ce destinataire.",
     "options.menu.schedule.email.recipient.warning.belong.workspace": "Cette adresse e-mail n'appartient pas à l'espace de travail. Le destinataire peut recevoir des données sensibles. ",

@@ -88,6 +88,8 @@
     "dialogs.schedule.management.attachments.mixed": "控制面板和 {n, plural, one {# 报表} other {# 报表}}",
     "dialogs.schedule.management.load.error": "加载失败，请稍后重试。",
     "dialogs.schedule.management.delete.error": "计划删除失败，请稍后再试。",
+    "dialogs.schedule.management.tab.all": "全部",
+    "dialogs.schedule.management.tab.user": "由我创建",
     "options.menu.schedule.email.recipient.invalid": "此电子邮件地址无效。",
     "options.menu.schedule.email.recipient.warning.existed": "您已经添加了此收件人。",
     "options.menu.schedule.email.recipient.warning.belong.workspace": "此电子邮件地址不属于该工作空间。收件人可能会收到敏感数据。",

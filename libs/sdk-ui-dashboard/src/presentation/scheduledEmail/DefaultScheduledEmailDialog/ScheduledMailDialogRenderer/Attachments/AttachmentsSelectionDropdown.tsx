@@ -5,20 +5,18 @@ import { useCallback, useState } from "react";
 import { injectIntl, WrappedComponentProps, FormattedMessage } from "react-intl";
 import identity from "lodash/identity";
 
-import { Icon, Typography } from "@gooddata/sdk-ui-kit";
+import { Icon, InsightIcon, Typography } from "@gooddata/sdk-ui-kit";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 import { ScheduleDropdown } from "./ScheduleDropdown";
 
 import { IWidgetsSelection } from "../../interfaces";
-import { ObjRef, objRefToString, IInsightWidget, ITheme } from "@gooddata/sdk-model";
-
-const ICON_SIZE_BUTTON = 18;
-const ICON_SIZE = 24;
+import { ObjRef, objRefToString, ITheme } from "@gooddata/sdk-model";
+import { IInsightWidgetExtended } from "../../useScheduledEmail";
 
 export interface IAttachmentsSelectionDropdownOwnProps {
     dashboardTitle: string;
     dashboardSelected: boolean;
-    insightWidgets: IInsightWidget[];
+    insightWidgets: IInsightWidgetExtended[];
     widgetsSelected: { [widgetUri: string]: boolean };
     onApply(dashboardSelected: boolean, widgetsSelected: IWidgetsSelection): void;
     theme?: ITheme;
@@ -29,6 +27,9 @@ export type IAttachmentsSelectionDropdownProps = IAttachmentsSelectionDropdownOw
 
 const AttachmentsSelectionDropdownComponent: React.FC<IAttachmentsSelectionDropdownProps> = (props) => {
     const { intl, theme, dashboardTitle, insightWidgets = [], onApply } = props;
+    const ICON_COLOR = theme?.palette?.complementary?.c5;
+    const ICON_SIZE_BUTTON = 18;
+    const ICON_PROPS = { color: ICON_COLOR, height: 19, width: 26 };
 
     const [dashboardSelected, setDashboardSelected] = useState(props.dashboardSelected);
     const [widgetsSelected, setWidgetsSelected] = useState(props.widgetsSelected);
@@ -67,11 +68,7 @@ const AttachmentsSelectionDropdownComponent: React.FC<IAttachmentsSelectionDropd
             bodyClassName="s-schedule-select-attachments-body"
             buttonDisabled={insightWidgets.length === 0}
             iconComponent={
-                <Icon.AttachmentClip
-                    color={theme?.palette?.complementary?.c6}
-                    width={ICON_SIZE_BUTTON}
-                    height={ICON_SIZE_BUTTON}
-                />
+                <Icon.AttachmentClip color={ICON_COLOR} width={ICON_SIZE_BUTTON} height={ICON_SIZE_BUTTON} />
             }
             contentComponent={
                 <div className="gd-attachments-selection-dropdown">
@@ -86,11 +83,7 @@ const AttachmentsSelectionDropdownComponent: React.FC<IAttachmentsSelectionDropd
                                 checked={dashboardSelected}
                                 onChange={(event) => setDashboardSelected(event.target.checked)}
                             />
-                            <Icon.Dashboard
-                                color={theme?.palette?.complementary?.c6}
-                                width={ICON_SIZE}
-                                height={ICON_SIZE}
-                            />
+                            <Icon.Dashboard {...ICON_PROPS} />
                             <span title={dashboardTitle} className="input-label-text">
                                 {dashboardTitle}
                             </span>
@@ -108,10 +101,9 @@ const AttachmentsSelectionDropdownComponent: React.FC<IAttachmentsSelectionDropd
                                     checked={widgetsSelected[objRefToString(widget)]}
                                     onChange={() => handleWidgetSelectedChange(widget)}
                                 />
-                                <Icon.Chart
-                                    color={theme?.palette?.complementary?.c6}
-                                    width={ICON_SIZE}
-                                    height={ICON_SIZE}
+                                <InsightIcon
+                                    visualizationUrl={widget.visualizationUrl}
+                                    iconProps={ICON_PROPS}
                                 />
                                 <span title={widget.title} className="input-label-text">
                                     {widget.title}

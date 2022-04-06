@@ -10,8 +10,8 @@ import { DeleteScheduleConfirmDialog } from "./DeleteScheduleConfirmDialog";
 import { selectCurrentUser, useDashboardSelector, selectCanManageScheduledMail } from "../../../model";
 import { areObjRefsEqual, IScheduledMail } from "@gooddata/sdk-model";
 
-const USER_TAB_ID = "gs.visualizationsList.tabs.my";
-const ALL_TAB_ID = "gs.visualizationsList.tabs.all";
+const USER_TAB_ID = "dialogs.schedule.management.tab.user";
+const ALL_TAB_ID = "dialogs.schedule.management.tab.all";
 
 /**
  * @alpha

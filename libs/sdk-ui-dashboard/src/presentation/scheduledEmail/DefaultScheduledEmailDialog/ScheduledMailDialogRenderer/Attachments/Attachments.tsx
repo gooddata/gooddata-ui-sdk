@@ -8,12 +8,13 @@ import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 import { AttachmentsSelectionDropdown } from "./AttachmentsSelectionDropdown";
 import { FormatOptionsDropdown } from "./FormatOptionsDropdown";
 import { IWidgetExportConfiguration, IWidgetsSelection } from "../../interfaces";
-import { objRefToString, IInsightWidget, ITheme } from "@gooddata/sdk-model";
+import { objRefToString, ITheme } from "@gooddata/sdk-model";
+import { IInsightWidgetExtended } from "../../useScheduledEmail";
 
 export interface IAttachmentsOwnProps {
     theme?: ITheme;
     dashboardTitle: string;
-    insightWidgets: IInsightWidget[];
+    insightWidgets: IInsightWidgetExtended[];
     dashboardSelected: boolean;
     widgetsSelected: IWidgetsSelection;
     configuration: IWidgetExportConfiguration;
