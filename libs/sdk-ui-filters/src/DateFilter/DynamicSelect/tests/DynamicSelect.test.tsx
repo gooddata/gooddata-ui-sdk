@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { mount } from "enzyme";
 import range from "lodash/range";
@@ -10,7 +10,7 @@ import { SelectSeparator } from "../../Select/SelectSeparator";
 import { getRelativeDateFilterItems, DAY, WEEK_US, MONTH, QUARTER, YEAR } from "../utils";
 import { IMessageTranslator } from "../../utils/Translations/Translators";
 import { DynamicSelectItem } from "../types";
-import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
+import { DateFilterGranularity } from "@gooddata/sdk-model";
 
 const optionTranslator =
     (lastOneString: string, thisString: string, nextOneString: string, plural: string) =>

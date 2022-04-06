@@ -1,12 +1,11 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 
 import { AttributeDropdownList } from "./AttributeDropdownList";
 import { AttributeDropdownButtons } from "./AttributeDropdownButtons";
 import { AttributeDropdownItemsFilteredBody } from "./AttributeDropdownItemsFilteredBody";
 import { AttributeListItem } from "./types";
-import { IAttributeElement } from "@gooddata/sdk-backend-spi";
-import { ObjRef } from "@gooddata/sdk-model";
+import { ObjRef, IAttributeElement } from "@gooddata/sdk-model";
 import { WrappedComponentProps } from "react-intl";
 
 /**

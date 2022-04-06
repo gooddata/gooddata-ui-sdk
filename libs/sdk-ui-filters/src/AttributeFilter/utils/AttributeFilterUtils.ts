@@ -1,10 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 
-import {
-    IAnalyticalBackend,
-    IAttributeElement,
-    IElementsQueryAttributeFilter,
-} from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import { IntlShape } from "react-intl";
 import isFunction from "lodash/isFunction";
 import {
@@ -23,6 +19,7 @@ import {
     isAttributeElementsByRef,
     isAttributeElementsByValue,
     ObjRef,
+    IAttributeElement,
 } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 

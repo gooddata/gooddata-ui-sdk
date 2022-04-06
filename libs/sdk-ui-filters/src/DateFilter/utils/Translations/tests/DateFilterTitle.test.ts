@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { DEFAULT_DATE_FORMAT } from "../../../constants/Platform";
 import {
     getDateFilterRepresentation,
@@ -13,7 +13,7 @@ import {
     absolutePresetFilter,
     relativePresetFilter,
 } from "./fixtures";
-import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
+import { DateFilterGranularity } from "@gooddata/sdk-model";
 import { IUiRelativeDateFilterForm } from "../../../interfaces";
 
 const serializingTranslator: IDateAndMessageTranslator = {

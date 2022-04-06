@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import {
     DateFilterOption,
@@ -8,11 +8,11 @@ import {
 } from "../interfaces";
 import {
     DateFilterGranularity,
-    IAbsoluteDateFilterPreset,
     IDateFilterOption,
+    IAbsoluteDateFilterPreset,
     IRelativeDateFilterPreset,
     isRelativeDateFilterPreset,
-} from "@gooddata/sdk-backend-spi";
+} from "@gooddata/sdk-model";
 
 export function getDateFilterOptionGranularity(dateFilterOption: DateFilterOption): DateFilterGranularity {
     return isUiRelativeDateFilterForm(dateFilterOption) || isRelativeDateFilterPreset(dateFilterOption)

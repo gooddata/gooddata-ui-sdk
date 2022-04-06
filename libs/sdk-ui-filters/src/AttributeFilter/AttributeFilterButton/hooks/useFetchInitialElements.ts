@@ -3,17 +3,17 @@ import { useMemo } from "react";
 import { useCancelablePromise } from "@gooddata/sdk-ui";
 import compact from "lodash/compact";
 import isEmpty from "lodash/isEmpty";
-import {
-    IAnalyticalBackend,
-    IAttributeElement,
-    IElementsQueryOptions,
-    IElementsQueryResult,
-} from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IElementsQueryOptions, IElementsQueryResult } from "@gooddata/sdk-backend-spi";
 import stringify from "json-stable-stringify";
 import { getObjRef } from "../../utils/AttributeFilterUtils";
 import { AttributeFilterButtonContextProps } from "./types";
 import { IAttributeFilterButtonState } from "./useAttributeFilterButtonState";
-import { filterAttributeElements, IAttributeFilter, isAttributeElementsByRef } from "@gooddata/sdk-model";
+import {
+    filterAttributeElements,
+    IAttributeFilter,
+    isAttributeElementsByRef,
+    IAttributeElement,
+} from "@gooddata/sdk-model";
 
 interface IUseFetchInitialElementsProps {
     context: Omit<AttributeFilterButtonContextProps, "filterObjRef">;

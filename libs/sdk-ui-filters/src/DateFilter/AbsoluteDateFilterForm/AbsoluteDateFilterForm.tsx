@@ -1,10 +1,10 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 
 import { dateFilterValueToDateRange, dateRangeToDateFilterValue } from "./conversions";
 import { DateRangePicker, IDateRange } from "../DateRangePicker/DateRangePicker";
 import { IExtendedDateFilterErrors, DateFilterOption } from "../interfaces";
-import { IAbsoluteDateFilterForm } from "@gooddata/sdk-backend-spi";
+import { IAbsoluteDateFilterForm } from "@gooddata/sdk-model";
 
 interface IAbsoluteDateFilterFormProps {
     dateFormat: string;

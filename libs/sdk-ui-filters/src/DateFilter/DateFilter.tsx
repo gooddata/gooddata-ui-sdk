@@ -1,13 +1,13 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
 import noop from "lodash/noop";
 import {
     DateFilterGranularity,
-    DashboardDateFilterConfigMode,
     isAbsoluteDateFilterForm,
-} from "@gooddata/sdk-backend-spi";
+    DashboardDateFilterConfigMode,
+} from "@gooddata/sdk-model";
 import { canExcludeCurrentPeriod } from "./utils/PeriodExclusion";
 
 import { DateFilterCore } from "./DateFilterCore";

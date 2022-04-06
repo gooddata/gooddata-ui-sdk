@@ -1,19 +1,19 @@
 // (C) 2007-2022 GoodData Corporation
 import {
-    IAbsoluteDateFilterForm,
+    DateString,
+    DateFilterGranularity,
     IAbsoluteDateFilterPreset,
+    IRelativeDateFilterPreset,
+    IRelativeDateFilterPresetOfGranularity,
+    IAbsoluteDateFilterForm,
+    IRelativeDateFilterForm,
+    IAllTimeDateFilterOption,
     isAbsoluteDateFilterForm,
     isAbsoluteDateFilterPreset,
-    IRelativeDateFilterForm,
-    IRelativeDateFilterPreset,
     isRelativeDateFilterForm,
     isRelativeDateFilterPreset,
-    IAllTimeDateFilterOption,
-    DateFilterGranularity,
-    IRelativeDateFilterPresetOfGranularity,
-    DateString,
-    RelativeGranularityOffset,
-} from "@gooddata/sdk-backend-spi";
+    RelativeDateFilterGranularityOffset,
+} from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 
 /**
@@ -51,11 +51,11 @@ export interface IUiRelativeDateFilterForm extends Omit<IRelativeDateFilterForm,
     /**
      * Selected global relative date filter granularity start offset
      */
-    from?: RelativeGranularityOffset;
+    from?: RelativeDateFilterGranularityOffset;
     /**
      * Selected global relative date filter granularity end offset
      */
-    to?: RelativeGranularityOffset;
+    to?: RelativeDateFilterGranularityOffset;
 }
 
 /**

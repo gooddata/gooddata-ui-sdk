@@ -4,7 +4,7 @@ import { MediaQueries } from "../../../constants";
 import AttributeFilterButtonDropdownButton from "./AttributeFilterButtonDropdownButton";
 import { Dropdown } from "@gooddata/sdk-ui-kit";
 import MediaQuery from "react-responsive";
-import { IAttributeElement } from "@gooddata/sdk-backend-spi";
+import { IAttributeElement } from "@gooddata/sdk-model";
 import AttributeFilterButtonDefaultDropdownBody from "./AttributeFilterButtonDefaultDropdownBody";
 import {
     IAttributeDropdownBodyExtendedProps,

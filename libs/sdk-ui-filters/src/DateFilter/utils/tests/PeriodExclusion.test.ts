@@ -1,7 +1,7 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { canExcludeCurrentPeriod, applyExcludeCurrentPeriod } from "../PeriodExclusion";
 import { DateFilterOption } from "../../interfaces";
-import { IRelativeDateFilterPreset } from "@gooddata/sdk-backend-spi";
+import { IRelativeDateFilterPreset } from "@gooddata/sdk-model";
 
 describe("canExcludeCurrentPeriod", () => {
     it.each([

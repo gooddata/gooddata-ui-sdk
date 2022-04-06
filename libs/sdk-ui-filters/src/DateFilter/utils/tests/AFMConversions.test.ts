@@ -1,9 +1,9 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
-    IAllTimeDateFilterOption,
     IAbsoluteDateFilterPreset,
     IRelativeDateFilterPreset,
-} from "@gooddata/sdk-backend-spi";
+    IAllTimeDateFilterOption,
+} from "@gooddata/sdk-model";
 import { mapAbsoluteFilterToAfm, mapOptionToAfm, mapRelativeFilterToAfm } from "../AFMConversions";
 import { IUiAbsoluteDateFilterForm, IUiRelativeDateFilterForm } from "../../interfaces";
 

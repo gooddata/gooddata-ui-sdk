@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import isEmpty from "lodash/isEmpty";
 import cx from "classnames";
@@ -30,7 +30,7 @@ import {
     DateFilterGranularity,
     isAbsoluteDateFilterForm,
     isRelativeDateFilterForm,
-} from "@gooddata/sdk-backend-spi";
+} from "@gooddata/sdk-model";
 
 const ACTIONS_BUTTONS_HEIGHT = 53;
 const EXCLUDE_OPEN_PERIOD_HEIGHT = 30; // height of 'Exclude open period' checkbox component

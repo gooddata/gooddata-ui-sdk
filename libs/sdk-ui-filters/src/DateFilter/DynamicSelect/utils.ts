@@ -1,11 +1,11 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import range from "lodash/range";
 import { IMessageTranslator } from "../utils/Translations/Translators";
 import { granularityIntlCodes } from "../constants/i18n";
 
 import { getSelectableItems } from "../Select/utils";
 import { DynamicSelectItem, DynamicSelectOption } from "./types";
-import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
+import { DateFilterGranularity } from "@gooddata/sdk-model";
 
 export const DAY: DateFilterGranularity = "GDC.time.date";
 export const WEEK_US: DateFilterGranularity = "GDC.time.week_us";

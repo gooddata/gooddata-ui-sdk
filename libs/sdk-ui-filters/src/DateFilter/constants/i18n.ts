@@ -1,5 +1,5 @@
-// (C) 2019-2020 GoodData Corporation
-import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
+// (C) 2019-2022 GoodData Corporation
+import { DateFilterGranularity } from "@gooddata/sdk-model";
 
 /**
  * @beta

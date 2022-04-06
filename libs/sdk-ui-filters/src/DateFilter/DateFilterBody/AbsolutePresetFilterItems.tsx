@@ -1,10 +1,10 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import kebabCase from "lodash/kebabCase";
 import cx from "classnames";
 import { ListItem } from "../ListItem/ListItem";
 import { DateFilterTextLocalized } from "../DateFilterTextLocalized/DateFilterTextLocalized";
-import { IAbsoluteDateFilterPreset } from "@gooddata/sdk-backend-spi";
+import { IAbsoluteDateFilterPreset } from "@gooddata/sdk-model";
 import { DateFilterOption } from "../interfaces";
 
 interface IAbsolutePresetFilterItemsProps {

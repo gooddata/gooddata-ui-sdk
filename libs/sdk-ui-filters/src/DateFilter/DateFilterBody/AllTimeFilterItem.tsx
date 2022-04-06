@@ -1,9 +1,9 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { ListItem } from "../ListItem/ListItem";
-import { IAllTimeDateFilterOption } from "@gooddata/sdk-backend-spi";
+import { IAllTimeDateFilterOption } from "@gooddata/sdk-model";
 import { DateFilterOption } from "../interfaces";
 
 export const AllTimeFilterItem: React.FC<{
