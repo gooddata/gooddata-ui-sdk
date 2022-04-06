@@ -1,15 +1,19 @@
 // (C) 2019-2022 GoodData Corporation
 import {
-    IAttributeDisplayFormMetadataObject,
-    IAttributeMetadataObject,
     IElementsQueryFactory,
     IWorkspaceAttributesService,
     UnexpectedError,
-    IMetadataObject,
-    ICatalogAttribute,
 } from "@gooddata/sdk-backend-spi";
 import { GdcMetadata } from "@gooddata/api-model-bear";
-import { UriRef, ObjRef, uriRef } from "@gooddata/sdk-model";
+import {
+    UriRef,
+    ObjRef,
+    uriRef,
+    ICatalogAttribute,
+    IAttributeDisplayFormMetadataObject,
+    IAttributeMetadataObject,
+    IMetadataObject,
+} from "@gooddata/sdk-model";
 import {
     newAttributeDisplayFormMetadataObject,
     newAttributeMetadataObject,

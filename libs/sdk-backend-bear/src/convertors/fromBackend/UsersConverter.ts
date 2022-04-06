@@ -1,7 +1,7 @@
-// (C) 2019-2021 GoodData Corporation
-import { IWorkspaceUser, IUser } from "@gooddata/sdk-backend-spi";
+// (C) 2019-2022 GoodData Corporation
+import { IUser } from "@gooddata/sdk-backend-spi";
 import { GdcUser } from "@gooddata/api-model-bear";
-import { uriRef } from "@gooddata/sdk-model";
+import { uriRef, IWorkspaceUser } from "@gooddata/sdk-model";
 
 const getUserFullName = (
     firstName: string | null | undefined,

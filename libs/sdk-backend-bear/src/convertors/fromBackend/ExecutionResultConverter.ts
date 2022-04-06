@@ -1,14 +1,14 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import { GdcExecution } from "@gooddata/api-model-bear";
+import { isUri } from "@gooddata/api-client-bear";
 import {
-    IAttributeDescriptor,
+    uriRef,
     IDimensionDescriptor,
+    IAttributeDescriptor,
     IMeasureGroupDescriptor,
     IResultWarning,
-} from "@gooddata/sdk-backend-spi";
-import { isUri } from "@gooddata/api-client-bear";
-import { uriRef } from "@gooddata/sdk-model";
+} from "@gooddata/sdk-model";
 import isAttributeHeader = GdcExecution.isAttributeHeader;
 
 export function convertWarning(warning: GdcExecution.Warning): IResultWarning {

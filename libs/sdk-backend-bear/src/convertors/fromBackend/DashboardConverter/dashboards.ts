@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import {
     GdcMetadata,
@@ -9,20 +9,21 @@ import {
     GdcVisualizationObject,
     GdcVisualizationClass,
 } from "@gooddata/api-model-bear";
-import { IUser, uriRef } from "@gooddata/sdk-model";
-import keyBy from "lodash/keyBy";
 import {
-    IListedDashboard,
-    IDashboard,
+    IUser,
+    uriRef,
     IFilterContext,
-    IDashboardDateFilterAddedPresets,
     ITempFilterContext,
     isWidget,
+    IDashboard,
+    IListedDashboard,
+    ListedDashboardAvailability,
     IDashboardDateFilterConfig,
+    IDashboardDateFilterAddedPresets,
     IDashboardPluginLink,
     ShareStatus,
-    ListedDashboardAvailability,
-} from "@gooddata/sdk-backend-spi";
+} from "@gooddata/sdk-model";
+import keyBy from "lodash/keyBy";
 import { sanitizeExportFilterContext, convertFilterContext, convertTempFilterContext } from "./filterContext";
 import { convertLayout, createImplicitDashboardLayout } from "./layout";
 import { DashboardDependency, BearDashboardDependency } from "./types";

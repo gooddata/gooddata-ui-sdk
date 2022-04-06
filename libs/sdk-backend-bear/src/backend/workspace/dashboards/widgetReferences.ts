@@ -1,13 +1,8 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
-import {
-    CatalogItem,
-    IWidgetReferences,
-    SupportedWidgetReferenceTypes,
-    IWidget,
-    widgetUri,
-} from "@gooddata/sdk-backend-spi";
+import { IWidgetReferences, SupportedWidgetReferenceTypes } from "@gooddata/sdk-backend-spi";
+import { CatalogItem, IWidget, widgetUri } from "@gooddata/sdk-model";
 import { GdcMetadata, GdcMetadataObject } from "@gooddata/api-model-bear";
 import { getObjectIdFromUri } from "../../../utils/api";
 import { convertMetadataObject } from "../../../convertors/fromBackend/MetaConverter";

@@ -1,18 +1,20 @@
-// (C) 2019-2021 GoodData Corporation
-import { uriRef, idRef, ObjRef } from "@gooddata/sdk-model";
+// (C) 2019-2022 GoodData Corporation
+import {
+    uriRef,
+    idRef,
+    ObjRef,
+    CatalogItemType,
+    CatalogItem,
+    ICatalogGroup,
+    ICatalogAttribute,
+    ICatalogFact,
+    ICatalogMeasure,
+    ICatalogDateDataset,
+    ICatalogDateAttribute,
+    IAttributeDisplayFormMetadataObject,
+} from "@gooddata/sdk-model";
 import { GdcCatalog, GdcMetadata, GdcDateDataSets } from "@gooddata/api-model-bear";
 import { IDisplayFormByKey, IAttributeByKey } from "../../types/catalog";
-import {
-    CatalogItem,
-    CatalogItemType,
-    IAttributeDisplayFormMetadataObject,
-    ICatalogAttribute,
-    ICatalogDateAttribute,
-    ICatalogDateDataset,
-    ICatalogFact,
-    ICatalogGroup,
-    ICatalogMeasure,
-} from "@gooddata/sdk-backend-spi";
 import {
     IMetadataObjectBuilder,
     newAttributeDisplayFormMetadataObject,

@@ -1,10 +1,10 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     IWorkspaceSettings,
     IWorkspaceSettingsService,
     IUserWorkspaceSettings,
-    ISettings,
 } from "@gooddata/sdk-backend-spi";
+import { ISettings } from "@gooddata/sdk-model";
 import { IFeatureFlags } from "@gooddata/api-client-bear";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { userLoginMd5FromAuthenticatedPrincipalWithAnonymous } from "../../../utils/api";

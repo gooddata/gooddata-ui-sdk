@@ -1,14 +1,15 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import compact from "lodash/compact";
 import flatMap from "lodash/flatMap";
 import zip from "lodash/zip";
 import {
+    ObjRef,
+    uriRef,
     FilterContextItem,
     IDashboardAttributeFilterParent,
     IFilterContextDefinition,
     isDashboardAttributeFilter,
-} from "@gooddata/sdk-backend-spi";
-import { ObjRef, uriRef } from "@gooddata/sdk-model";
+} from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 
 type ObjRefsToUris = (refs: ObjRef[]) => Promise<string[]>;

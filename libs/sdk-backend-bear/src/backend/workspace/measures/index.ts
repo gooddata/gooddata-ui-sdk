@@ -1,13 +1,15 @@
 // (C) 2019-2022 GoodData Corporation
 import { GdcMetadata, GdcMetadataObject } from "@gooddata/api-model-bear";
 import {
-    ICatalogMeasure,
     IMeasureExpressionToken,
-    IMeasureMetadataObject,
-    IMeasureMetadataObjectDefinition,
     IMeasureReferencing,
     IWorkspaceMeasuresService,
 } from "@gooddata/sdk-backend-spi";
+import {
+    ICatalogMeasure,
+    IMeasureMetadataObject,
+    IMeasureMetadataObjectDefinition,
+} from "@gooddata/sdk-model";
 import { ObjRef } from "@gooddata/sdk-model";
 import flow from "lodash/flow";
 import map from "lodash/fp/map";

@@ -6,8 +6,8 @@ import {
     attributeDisplayFormRef,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
+    IAttributeElement,
 } from "@gooddata/sdk-model";
-import { IAttributeElement } from "@gooddata/sdk-backend-spi";
 const backend = testBackend();
 
 beforeAll(async () => {

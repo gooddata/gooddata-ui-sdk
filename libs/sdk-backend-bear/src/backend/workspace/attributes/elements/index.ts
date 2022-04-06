@@ -4,7 +4,6 @@ import {
     IElementsQuery,
     IElementsQueryOptions,
     IElementsQueryResult,
-    IAttributeElement,
     IElementsQueryAttributeFilter,
     IFilterElementsQuery,
     FilterWithResolvableElements,
@@ -22,6 +21,7 @@ import {
     IAttributeElementsByValue,
     IAttributeElementsByRef,
     isRelativeDateFilter,
+    IAttributeElement,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 

@@ -1,5 +1,5 @@
-// (C) 2020 GoodData Corporation
-import { IDimensionDescriptor } from "@gooddata/sdk-backend-spi";
+// (C) 2020-2022 GoodData Corporation
+import { IDimensionDescriptor } from "@gooddata/sdk-model";
 import { GdcExecution } from "@gooddata/api-model-bear";
 
 export const dimensions: IDimensionDescriptor[] = [
