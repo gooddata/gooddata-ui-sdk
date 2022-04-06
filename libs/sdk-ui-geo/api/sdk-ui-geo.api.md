@@ -26,7 +26,7 @@ import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { ILoadingInjectedProps } from '@gooddata/sdk-ui';
 import { IPushpinCategoryLegendItem } from '@gooddata/sdk-ui-vis-commons';
 import { ISeparators } from '@gooddata/sdk-ui';
-import { ITheme } from '@gooddata/sdk-backend-spi';
+import { ITheme } from '@gooddata/sdk-model';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IVisualizationProps } from '@gooddata/sdk-ui';
 import { NullableFiltersOrPlaceholders } from '@gooddata/sdk-ui';

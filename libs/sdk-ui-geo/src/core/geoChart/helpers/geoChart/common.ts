@@ -1,8 +1,7 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { BucketNames, DataViewFacade, IColorAssignment } from "@gooddata/sdk-ui";
 import { IGeoData, IGeoPointsConfig } from "../../../../GeoChart";
-import { bucketIsEmpty, bucketsFind, IBucket } from "@gooddata/sdk-model";
-import { DataValue, IResultHeader } from "@gooddata/sdk-backend-spi";
+import { bucketIsEmpty, bucketsFind, IBucket, DataValue, IResultHeader } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
 import { getResponsiveInfo } from "./responsive";
 

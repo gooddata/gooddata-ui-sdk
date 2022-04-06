@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import range from "lodash/range";
 import isEmpty from "lodash/isEmpty";
 import isFinite from "lodash/isFinite";
@@ -9,7 +9,7 @@ import {
 } from "./constants/geoChart";
 import { IPushpinColor } from "../../GeoChart";
 import { getColorPalette, rgbToRgba } from "./helpers/geoChart/colors";
-import { isAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
+import { isAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-model";
 import { getMinMax } from "./helpers/geoChart/common";
 import { IColorLegendItem, IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 import { IColorAssignment } from "@gooddata/sdk-ui";
