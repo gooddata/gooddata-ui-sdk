@@ -1,6 +1,6 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
-import { IInsightDefinition } from "@gooddata/sdk-model";
+import { IInsightDefinition, ISettings } from "@gooddata/sdk-model";
 
 import {
     IVisualizationSizeInfo,
@@ -9,7 +9,6 @@ import {
 import { IFluidLayoutDescriptor } from "../../interfaces/LayoutDescriptor";
 import { MIDDLE_VISUALIZATION_HEIGHT, DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT } from "./constants";
 import { BaseChartDescriptor } from "./baseChart/BaseChartDescriptor";
-import { ISettings } from "@gooddata/sdk-backend-spi";
 
 export abstract class BigChartDescriptor extends BaseChartDescriptor {
     public abstract getFactory(): PluggableVisualizationFactory;

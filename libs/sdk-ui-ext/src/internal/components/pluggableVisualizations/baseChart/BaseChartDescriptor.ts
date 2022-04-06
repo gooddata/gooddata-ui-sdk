@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
 
@@ -14,7 +14,7 @@ import {
     MIN_VISUALIZATION_HEIGHT,
     MIDDLE_VISUALIZATION_HEIGHT,
 } from "../constants";
-import { ISettings } from "@gooddata/sdk-backend-spi";
+import { ISettings } from "@gooddata/sdk-model";
 import { IDrillDownContext } from "../../../interfaces/Visualization";
 import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil";
 

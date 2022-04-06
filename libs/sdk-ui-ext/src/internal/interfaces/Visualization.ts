@@ -1,13 +1,8 @@
 // (C) 2019-2022 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
 import isEmpty from "lodash/isEmpty";
-import {
-    IAnalyticalBackend,
-    IExecutionFactory,
-    IPreparedExecution,
-    ISettings,
-    ITheme,
-} from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { ISettings, ITheme } from "@gooddata/sdk-model";
 import {
     IColorPalette,
     IInsight,

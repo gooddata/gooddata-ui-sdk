@@ -26,8 +26,7 @@ import { UICONFIG_AXIS } from "../constants/uiConfig";
 import { AxisType, IAxisNameProperties } from "../interfaces/AxisType";
 import { OPTIONAL_STACKING_PROPERTIES } from "../constants/supportedProperties";
 import { ColumnWidthItem } from "@gooddata/sdk-ui-pivot";
-import { bucketsIsEmpty, IInsightDefinition, insightBuckets } from "@gooddata/sdk-model";
-import { ISettings } from "@gooddata/sdk-backend-spi";
+import { bucketsIsEmpty, IInsightDefinition, insightBuckets, ISettings } from "@gooddata/sdk-model";
 
 export function getSupportedPropertiesControls(
     visualizationControlsProperties: IVisualizationProperties["controls"],

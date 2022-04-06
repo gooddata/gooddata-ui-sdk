@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import set from "lodash/set";
 import isEqual from "lodash/isEqual";
 import uniqBy from "lodash/uniqBy";
@@ -9,12 +9,15 @@ import compact from "lodash/compact";
 import { IVisualizationProperties } from "../interfaces/Visualization";
 import { IColorConfiguration, IColoredItem } from "../interfaces/Colors";
 import {
+    IColor,
+    IColorMappingItem,
+    isColorFromPalette,
+    isRgbColor,
     IMeasureDescriptor,
     isAttributeDescriptor,
     isMeasureDescriptor,
     isResultAttributeHeader,
-} from "@gooddata/sdk-backend-spi";
-import { IColor, IColorMappingItem, isColorFromPalette, isRgbColor } from "@gooddata/sdk-model";
+} from "@gooddata/sdk-model";
 import { getMappingHeaderName, IColorAssignment, IMappingHeader } from "@gooddata/sdk-ui";
 import { ColorUtils } from "@gooddata/sdk-ui-charts";
 

@@ -10,7 +10,7 @@ import flatMap from "lodash/flatMap";
 import isNil from "lodash/isNil";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
-import { IBackendCapabilities, IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
+import { IBackendCapabilities, IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
     bucketAttribute,
     IDimension,
@@ -24,6 +24,7 @@ import {
     insightSorts,
     ISortItem,
     newAttributeSort,
+    ISettings,
 } from "@gooddata/sdk-model";
 
 import { BucketNames, VisualizationEnvironment, VisualizationTypes } from "@gooddata/sdk-ui";

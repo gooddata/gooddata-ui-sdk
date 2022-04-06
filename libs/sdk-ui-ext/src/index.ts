@@ -11,8 +11,7 @@
  * @packageDocumentation
  */
 
-import { ISettings } from "@gooddata/sdk-backend-spi";
-import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
+import { IInsight, IInsightDefinition, ISettings } from "@gooddata/sdk-model";
 import { IDrillEvent } from "@gooddata/sdk-ui";
 import {
     fluidLayoutDescriptor,

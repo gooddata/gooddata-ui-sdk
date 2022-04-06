@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { ChartType, DefaultLocale } from "@gooddata/sdk-ui";
 
@@ -7,9 +7,8 @@ import { IColorConfiguration } from "../../interfaces/Colors";
 import ColorsSection from "../configurationControls/colors/ColorsSection";
 import LegendSection from "../configurationControls/legend/LegendSection";
 import { InternalIntlWrapper } from "../../utils/internalIntlProvider";
-import { IInsightDefinition, insightHasMeasures } from "@gooddata/sdk-model";
+import { IInsightDefinition, insightHasMeasures, ISettings } from "@gooddata/sdk-model";
 import { getMeasuresFromMdObject } from "../../utils/bucketHelper";
-import { ISettings } from "@gooddata/sdk-backend-spi";
 import noop from "lodash/noop";
 
 export interface IConfigurationPanelContentProps {

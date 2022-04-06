@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import ReactDom from "react-dom";
 
@@ -23,9 +23,9 @@ import {
 } from "../../../../interfaces/Visualization";
 import { DefaultLocale, IDrillableItem, ILocale, VisualizationEnvironment } from "@gooddata/sdk-ui";
 import { ColumnWidthItem, CorePivotTable } from "@gooddata/sdk-ui-pivot";
-import { IInsight, ISortItem } from "@gooddata/sdk-model";
+import { IInsight, ISortItem, ISettings } from "@gooddata/sdk-model";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { IBackendCapabilities, ISettings } from "@gooddata/sdk-backend-spi";
+import { IBackendCapabilities } from "@gooddata/sdk-backend-spi";
 import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
 import {

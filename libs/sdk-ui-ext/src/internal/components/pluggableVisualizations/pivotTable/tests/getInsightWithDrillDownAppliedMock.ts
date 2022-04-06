@@ -15,10 +15,10 @@ import {
     newPositiveAttributeFilter,
     newTotal,
     uriRef,
+    IMeasureDescriptor,
 } from "@gooddata/sdk-model";
 import { Department, Region, Status, Won } from "@gooddata/reference-workspace/dist/md/full";
 import { newWidthForAllMeasureColumns, newWidthForAttributeColumn } from "@gooddata/sdk-ui-pivot";
-import { IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 import { IDrillEventIntersectionElement, IDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
 import { ReferenceData } from "@gooddata/reference-workspace";
 import { IVisualizationProperties, IDrillDownDefinition } from "../../../../interfaces/Visualization";

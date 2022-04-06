@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
+import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
     IColorMappingItem,
     IDimension,
@@ -8,6 +8,7 @@ import {
     insightHasMeasures,
     insightMeasures,
     ISortItem,
+    ISettings,
 } from "@gooddata/sdk-model";
 import { BucketNames, ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
