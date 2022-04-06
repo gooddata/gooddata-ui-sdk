@@ -1,5 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
-import { IAnalyticalBackend, ISettings } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { ISettings } from "@gooddata/sdk-model";
 import { withCustomWorkspaceSettings } from "@gooddata/sdk-backend-base";
 import { IDashboardPluginTestConfig } from "./setup";
 

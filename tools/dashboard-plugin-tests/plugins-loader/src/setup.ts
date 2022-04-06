@@ -1,10 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
-import {
-    IDashboardPlugin,
-    IDashboardPluginLink,
-    ISettings,
-    UnexpectedError,
-} from "@gooddata/sdk-backend-spi";
+import { UnexpectedError } from "@gooddata/sdk-backend-spi";
+import { IDashboardPlugin, IDashboardPluginLink, ISettings } from "@gooddata/sdk-model";
 
 // Test configuration
 declare global {
