@@ -1,5 +1,5 @@
-// (C) 2021 GoodData Corporation
-import { ThemeColor, IThemePalette } from "@gooddata/sdk-backend-spi";
+// (C) 2021-2022 GoodData Corporation
+import { ThemeColor, IThemePalette } from "@gooddata/sdk-model";
 
 import {
     getHigherContrastColor,

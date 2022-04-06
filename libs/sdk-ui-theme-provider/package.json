@@ -50,6 +50,7 @@
     },
     "dependencies": {
         "@gooddata/sdk-backend-spi": "^8.10.0-alpha.51",
+        "@gooddata/sdk-model": "^8.10.0-alpha.51",
         "@gooddata/sdk-ui": "^8.10.0-alpha.51",
         "lodash": "^4.17.19",
         "polished": "^3.6.7",

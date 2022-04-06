@@ -5,7 +5,7 @@
 ```ts
 
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
-import { ITheme } from '@gooddata/sdk-backend-spi';
+import { ITheme } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
 
 // @internal (undocumented)
@@ -46,6 +46,5 @@ export function withTheme<T extends {
     theme?: ITheme;
     workspace?: string;
 }>(Component: React_2.ComponentType<T>): React_2.ComponentType<Omit<T, "theme" | "themeIsLoading">>;
-
 
 ```

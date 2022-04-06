@@ -1,5 +1,5 @@
-// (C) 2019-2021 GoodData Corporation
-import { ITheme } from "@gooddata/sdk-backend-spi";
+// (C) 2019-2022 GoodData Corporation
+import { ITheme } from "@gooddata/sdk-model";
 
 import {
     parseThemeToCssProperties,
