@@ -50,7 +50,6 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/sdk-backend-spi": "^8.10.0-alpha.51",
         "@gooddata/sdk-model": "^8.10.0-alpha.51",
         "axios": "^0.21.4",
         "lodash": "^4.17.19",

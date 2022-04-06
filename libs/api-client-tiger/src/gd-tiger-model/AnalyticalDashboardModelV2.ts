@@ -1,11 +1,11 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import {
-    IDashboardDateFilterConfig,
+    ObjRef,
+    IFilterContext as IFilterContextModel,
     IDashboardLayout,
-    IFilterContext as IFilterContextSPI,
-} from "@gooddata/sdk-backend-spi";
-import { ObjRef } from "@gooddata/sdk-model";
+    IDashboardDateFilterConfig,
+} from "@gooddata/sdk-model";
 
 export namespace AnalyticalDashboardModelV2 {
     export interface IAnalyticalDashboard {
@@ -18,7 +18,7 @@ export namespace AnalyticalDashboardModelV2 {
 
     export interface IFilterContext {
         version: "2";
-        filters: IFilterContextSPI["filters"];
+        filters: IFilterContextModel["filters"];
     }
 
     export interface IDashboardPlugin {

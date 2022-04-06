@@ -17,8 +17,7 @@
         "noImplicitReturns": true,
         "baseUrl": "..",
         "paths": {
-            "@gooddata/sdk-model": ["sdk-model/src"],
-            "@gooddata/sdk-backend-spi": ["sdk-backend-spi/src"]
+            "@gooddata/sdk-model": ["sdk-model/src"]
         }
     },
     "exclude": ["**/node_modules", "dist", "esm"]
