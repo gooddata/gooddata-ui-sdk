@@ -1,5 +1,5 @@
-// (C) 2007-2021 GoodData Corporation
-import { IMeasureDescriptor, IMeasureGroupDescriptor, ITheme } from "@gooddata/sdk-backend-spi";
+// (C) 2007-2022 GoodData Corporation
+import { ITheme, IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess";
 import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 import { IPointData, ISeriesItemConfig } from "../../typings/unsafe";

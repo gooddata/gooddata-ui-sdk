@@ -1,6 +1,6 @@
 // (C) 2007-2022 GoodData Corporation
 
-import { ISettings } from "@gooddata/sdk-backend-spi";
+import { ISettings } from "@gooddata/sdk-model";
 import { IChartConfig } from "../../../interfaces";
 
 /**

@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 
 import {
     ColorStrategy,
@@ -8,10 +8,16 @@ import {
     getColorFromMapping,
     getLighterColorFromRGB,
 } from "@gooddata/sdk-ui-vis-commons";
-import { IColor, IColorFromPalette, IColorPalette, isColorFromPalette, RgbType } from "@gooddata/sdk-model";
+import {
+    IColor,
+    IColorFromPalette,
+    IColorPalette,
+    isColorFromPalette,
+    RgbType,
+    IMeasureDescriptor,
+} from "@gooddata/sdk-model";
 import { isDarkTheme } from "@gooddata/sdk-ui-theme-provider";
 import { IColorMapping } from "../../../interfaces";
-import { IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 import { IColorAssignment, DataViewFacade } from "@gooddata/sdk-ui";
 import { findMeasureGroupInDimensions } from "../_util/executionResultHelper";
 

@@ -1,5 +1,5 @@
-// (C) 2007-2021 GoodData Corporation
-import { IColorPalette } from "@gooddata/sdk-model";
+// (C) 2007-2022 GoodData Corporation
+import { IColorPalette, ITheme } from "@gooddata/sdk-model";
 import { DataViewFacade, DefaultColorPalette, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IColorMapping } from "../../../interfaces";
 import {
@@ -17,7 +17,6 @@ import { HeatmapColorStrategy } from "../heatmap/heatmapColoring";
 import { TreemapColorStrategy } from "../treemap/treemapColoring";
 import { BubbleChartColorStrategy } from "../bubbleChart/bubbleChartColoring";
 import { ScatterPlotColorStrategy } from "../scatterPlot/scatterPlotColoring";
-import { ITheme } from "@gooddata/sdk-backend-spi";
 
 const attributeChartSupportedTypes = [
     VisualizationTypes.PIE,

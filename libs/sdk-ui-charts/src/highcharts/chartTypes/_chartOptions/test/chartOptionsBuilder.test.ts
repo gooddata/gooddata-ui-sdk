@@ -20,7 +20,7 @@ import {
 } from "@gooddata/sdk-ui-vis-commons";
 
 import { IChartConfig } from "../../../../interfaces";
-import { emptyDef, IColorPaletteItem, idRef } from "@gooddata/sdk-model";
+import { emptyDef, IColorPaletteItem, idRef, IMeasureDescriptor } from "@gooddata/sdk-model";
 import { customEscape } from "../../_util/common";
 import { StackingType } from "../../../constants/stacking";
 import { IChartOptions, IUnsafeHighchartsTooltipPoint } from "../../../typings/unsafe";
@@ -42,7 +42,6 @@ import {
 } from "../chartTooltips";
 import { getDrillableSeries } from "../chartDrilling";
 import { IUnwrappedAttributeHeadersWithItems } from "../../../typings/mess";
-import { IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 
 const FIRST_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DefaultColorPalette[0]);
 const SECOND_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DefaultColorPalette[1]);

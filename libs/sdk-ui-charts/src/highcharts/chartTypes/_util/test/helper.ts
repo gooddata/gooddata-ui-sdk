@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { DataViewFacade, IHeaderPredicate } from "@gooddata/sdk-ui";
 import { findAttributeInDimension, findMeasureGroupInDimensions } from "../executionResultHelper";
 import { getChartOptions } from "../../_chartOptions/chartOptionsBuilder";
@@ -13,7 +13,7 @@ import {
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { IChartOptions } from "../../../typings/unsafe";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings";
-import { IMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
+import { IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 import { IUnwrappedAttributeHeadersWithItems } from "../../../typings/mess";
 
 const defaultDv = recordedDataFacade(

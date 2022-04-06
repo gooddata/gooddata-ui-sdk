@@ -1,8 +1,8 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import isEmpty from "lodash/isEmpty";
 import isNumber from "lodash/isNumber";
-import { DataValue, IDataView, IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
+import { IDataView } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
 import { IntlShape } from "react-intl";
 import {
@@ -16,7 +16,7 @@ import {
     VisualizationTypes,
 } from "@gooddata/sdk-ui";
 import { IHeadlineData, IHeadlineDataItem } from "../../Headlines";
-import { Identifier } from "@gooddata/sdk-model";
+import { Identifier, DataValue, IMeasureDescriptor } from "@gooddata/sdk-model";
 
 export interface IHeadlineExecutionData {
     measureHeaderItem: IMeasureDescriptor["measureHeaderItem"];

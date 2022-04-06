@@ -1,7 +1,7 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import { ISeriesItemConfig } from "../../typings/unsafe";
 import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
-import { IMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
+import { IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 import { parseValue, unwrap } from "../_util/common";
 import last from "lodash/last";

@@ -1,7 +1,7 @@
 // (C) 2007-2022 GoodData Corporation
 import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
 import { IChartConfig } from "../../../interfaces";
-import { IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
+import { IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 import { IAxis, ISeriesItem } from "../../typings/unsafe";
 import {
     isBarChart,

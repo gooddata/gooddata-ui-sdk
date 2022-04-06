@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { ICoreChartProps, OnLegendReady } from "../../interfaces";
 import { getValidColorPalette, ChartTransformation } from "../../highcharts";
@@ -19,7 +19,7 @@ import {
     withEntireDataView,
 } from "@gooddata/sdk-ui";
 import { getSanitizedStackingConfig } from "../_commons/sanitizeStacking";
-import { ITheme } from "@gooddata/sdk-backend-spi";
+import { ITheme } from "@gooddata/sdk-model";
 import { ThemeContextProvider } from "@gooddata/sdk-ui-theme-provider";
 
 /**

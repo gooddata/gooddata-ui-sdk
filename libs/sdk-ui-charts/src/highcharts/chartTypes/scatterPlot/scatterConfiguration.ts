@@ -1,7 +1,6 @@
-// (C) 2007-2021 GoodData Corporation
-import { IExecutionDefinition } from "@gooddata/sdk-model";
+// (C) 2007-2022 GoodData Corporation
+import { IExecutionDefinition, ITheme } from "@gooddata/sdk-model";
 import { IChartOptions } from "../../typings/unsafe";
-import { ITheme } from "@gooddata/sdk-backend-spi";
 import { styleVariables } from "../_chartCreators/styles/variables";
 
 export const LINE_WIDTH = 3;

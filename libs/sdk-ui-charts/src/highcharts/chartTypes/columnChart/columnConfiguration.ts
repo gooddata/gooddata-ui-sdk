@@ -1,7 +1,6 @@
-// (C) 2007-2021 GoodData Corporation
-import { IExecutionDefinition } from "@gooddata/sdk-model";
+// (C) 2007-2022 GoodData Corporation
+import { IExecutionDefinition, ITheme } from "@gooddata/sdk-model";
 import { IChartConfig } from "../../../interfaces";
-import { ITheme } from "@gooddata/sdk-backend-spi";
 import { getCommonResponsiveConfig } from "../_chartCreators/responsive";
 import { HighchartsOptions } from "../../../highcharts/lib";
 
