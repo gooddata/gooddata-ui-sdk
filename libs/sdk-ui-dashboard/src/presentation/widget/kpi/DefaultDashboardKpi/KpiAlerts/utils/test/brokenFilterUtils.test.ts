@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import {
     IDashboardAttributeFilter,
     IDashboardDateFilter,
@@ -14,6 +14,7 @@ import { BrokenAlertType, IBrokenAlertFilterBasicInfo } from "../../../../../../
 
 describe("enrichBrokenAlertsInfo", () => {
     const DEFAULT_DATE_TITLE = "Date";
+    const ACTIVITY_DATASET_TITLE = "Activity";
     const intl = createIntlMock({ "kpiAlertDialog.brokenAlertDefaultDateLabel": DEFAULT_DATE_TITLE });
     const dateFormat = "yyyy/MM/dd";
     const dateDataSets: IDataSetMetadataObject[] = [
@@ -89,7 +90,7 @@ describe("enrichBrokenAlertsInfo", () => {
                     type: "date",
                     brokenType: "ignored",
                     dateFilterTitle: expectedDateFilterTitle,
-                    title: DEFAULT_DATE_TITLE,
+                    title: ACTIVITY_DATASET_TITLE,
                 },
             ];
 
