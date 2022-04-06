@@ -1,5 +1,5 @@
-// (C) 2020-2021 GoodData Corporation
-import { ISettings } from "@gooddata/sdk-backend-spi";
+// (C) 2020-2022 GoodData Corporation
+import { ISettings } from "@gooddata/sdk-model";
 
 import { generateSupportUrl } from "../utils/featureFlags";
 import { IHeaderMenuItem } from "./typings";

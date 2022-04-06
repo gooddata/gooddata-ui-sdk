@@ -1,13 +1,16 @@
-// (C) 2021 GoodData Corporation
-import { areObjRefsEqual, IUser, ObjRef } from "@gooddata/sdk-model";
+// (C) 2021-2022 GoodData Corporation
 import {
+    areObjRefsEqual,
+    IUser,
+    ObjRef,
+    IWorkspaceUser,
+    ShareStatus,
+    IWorkspaceUserGroup,
     AccessGranteeDetail,
     IAccessGrantee,
-    IWorkspaceUser,
-    IWorkspaceUserGroup,
-    ShareStatus,
-} from "@gooddata/sdk-backend-spi";
-import { isUserAccess, isUserGroupAccess } from "@gooddata/sdk-backend-spi";
+    isUserAccess,
+    isUserGroupAccess,
+} from "@gooddata/sdk-model";
 import { typesUtils } from "@gooddata/util";
 
 import {

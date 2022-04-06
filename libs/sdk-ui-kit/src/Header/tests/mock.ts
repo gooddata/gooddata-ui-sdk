@@ -1,5 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import { ISettings, IWorkspacePermissions, PlatformEdition } from "@gooddata/sdk-backend-spi";
+import { ISettings, PlatformEdition, IWorkspacePermissions } from "@gooddata/sdk-model";
 
 export const getHelpMenuFeatureFlagsMock = (
     enableUniversityHelpMenuItem: boolean,
