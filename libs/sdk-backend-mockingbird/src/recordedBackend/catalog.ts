@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     IWorkspaceCatalogFactoryOptions,
     IWorkspaceCatalog,
@@ -7,19 +7,23 @@ import {
     IWorkspaceCatalogFactory,
     IWorkspaceCatalogWithAvailableItems,
     IWorkspaceCatalogWithAvailableItemsFactoryOptions,
-    CatalogItemType,
-    ICatalogGroup,
-    CatalogItem,
-    ICatalogAttribute,
-    isCatalogAttribute,
-    ICatalogMeasure,
-    isCatalogMeasure,
-    ICatalogFact,
-    isCatalogFact,
-    ICatalogDateDataset,
-    isCatalogDateDataset,
 } from "@gooddata/sdk-backend-spi";
-import { ObjRef, IAttributeOrMeasure, IInsightDefinition } from "@gooddata/sdk-model";
+import {
+    ObjRef,
+    IAttributeOrMeasure,
+    IInsightDefinition,
+    CatalogItemType,
+    CatalogItem,
+    ICatalogGroup,
+    ICatalogAttribute,
+    ICatalogFact,
+    ICatalogMeasure,
+    ICatalogDateDataset,
+    isCatalogAttribute,
+    isCatalogFact,
+    isCatalogMeasure,
+    isCatalogDateDataset,
+} from "@gooddata/sdk-model";
 import identity from "lodash/identity";
 
 import { RecordedBackendConfig, RecordingIndex } from "./types";

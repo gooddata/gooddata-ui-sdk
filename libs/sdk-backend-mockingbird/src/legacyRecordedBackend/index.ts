@@ -5,12 +5,8 @@ import {
     IAuthenticatedPrincipal,
     IAnalyticalBackend,
     IAnalyticalWorkspace,
-    IAttributeDescriptor,
-    IAttributeDisplayFormMetadataObject,
-    IAttributeElement,
     IAuthenticationProvider,
     IDataView,
-    IDimensionDescriptor,
     IWorkspaceAttributesService,
     IWorkspaceMeasuresService,
     IWorkspaceFactsService,
@@ -18,7 +14,6 @@ import {
     IExecutionResult,
     IExportConfig,
     IExportResult,
-    IMeasureGroupDescriptor,
     IPreparedExecution,
     IUserService,
     IWorkspaceCatalogFactory,
@@ -49,6 +44,11 @@ import {
     uriRef,
     defWithDateFormat,
     IExecutionConfig,
+    IAttributeDisplayFormMetadataObject,
+    IAttributeElement,
+    IDimensionDescriptor,
+    IAttributeDescriptor,
+    IMeasureGroupDescriptor,
 } from "@gooddata/sdk-model";
 import { AbstractExecutionFactory } from "@gooddata/sdk-backend-base";
 import isEqual from "lodash/isEqual";

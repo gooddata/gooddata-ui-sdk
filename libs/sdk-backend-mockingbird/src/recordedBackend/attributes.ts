@@ -5,15 +5,20 @@ import {
     IElementsQueryFactory,
     UnexpectedResponseError,
     NotSupported,
-    IAttributeDisplayFormMetadataObject,
-    IAttributeMetadataObject,
-    isCatalogAttribute,
-    IMetadataObject,
-    ICatalogAttribute,
 } from "@gooddata/sdk-backend-spi";
 import { RecordedBackendConfig, RecordingIndex } from "./types";
 import { RecordedElementQueryFactory } from "./elements";
-import { ObjRef, areObjRefsEqual, objRefToString, isIdentifierRef } from "@gooddata/sdk-model";
+import {
+    ObjRef,
+    areObjRefsEqual,
+    objRefToString,
+    isIdentifierRef,
+    ICatalogAttribute,
+    isCatalogAttribute,
+    IAttributeDisplayFormMetadataObject,
+    IAttributeMetadataObject,
+    IMetadataObject,
+} from "@gooddata/sdk-model";
 import { newAttributeMetadataObject } from "@gooddata/sdk-backend-base";
 import values from "lodash/values";
 import { objRefsToStringKey } from "./utils";

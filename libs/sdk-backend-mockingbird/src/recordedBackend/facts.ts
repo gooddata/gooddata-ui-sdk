@@ -1,12 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 
-import {
-    IWorkspaceFactsService,
-    IMetadataObject,
-    NotSupported,
-    ICatalogFact,
-} from "@gooddata/sdk-backend-spi";
-import { ObjRef } from "@gooddata/sdk-model";
+import { IWorkspaceFactsService, NotSupported } from "@gooddata/sdk-backend-spi";
+import { ObjRef, ICatalogFact, IMetadataObject } from "@gooddata/sdk-model";
 
 /**
  * @internal
