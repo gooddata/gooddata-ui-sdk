@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { ISettings } from "@gooddata/sdk-backend-spi";
+import { ISettings } from "@gooddata/sdk-model";
 import { getHost } from "../support/constants";
 import VisitOptions = Cypress.VisitOptions;
 
