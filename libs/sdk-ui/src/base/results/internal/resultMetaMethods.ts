@@ -1,18 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import flatMap from "lodash/flatMap";
-import {
-    IAttributeDescriptor,
-    IDataView,
-    IDimensionDescriptor,
-    IDimensionItemDescriptor,
-    IMeasureDescriptor,
-    IMeasureGroupDescriptor,
-    IResultAttributeHeader,
-    IResultHeader,
-    isAttributeDescriptor,
-    isMeasureGroupDescriptor,
-    isResultAttributeHeader,
-} from "@gooddata/sdk-backend-spi";
+import { IDataView } from "@gooddata/sdk-backend-spi";
 import {
     attributeLocatorElement,
     attributeLocatorIdentifier,
@@ -26,6 +14,16 @@ import {
     isPoPMeasure,
     isPreviousPeriodMeasure,
     sortMeasureLocators,
+    IMeasureDescriptor,
+    IDimensionItemDescriptor,
+    IDimensionDescriptor,
+    IAttributeDescriptor,
+    IMeasureGroupDescriptor,
+    IResultAttributeHeader,
+    IResultHeader,
+    isAttributeDescriptor,
+    isMeasureGroupDescriptor,
+    isResultAttributeHeader,
 } from "@gooddata/sdk-model";
 import findIndex from "lodash/findIndex";
 

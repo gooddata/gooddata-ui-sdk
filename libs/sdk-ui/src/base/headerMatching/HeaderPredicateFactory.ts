@@ -7,7 +7,6 @@ import {
     hasMappingHeaderLocalIdentifier,
     IMappingHeader,
 } from "./MappingHeader";
-import { IMeasureDescriptor, isMeasureDescriptor, isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import {
     attributeDisplayFormRef,
     attributeLocalId,
@@ -24,6 +23,9 @@ import {
     measureMasterIdentifier,
     measureUri,
     ObjRef,
+    IMeasureDescriptor,
+    isMeasureDescriptor,
+    isResultAttributeHeader,
 } from "@gooddata/sdk-model";
 import { DataViewFacade } from "../results/facade";
 

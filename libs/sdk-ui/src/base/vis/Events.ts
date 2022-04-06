@@ -1,12 +1,13 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
+import { IDataView, IExportConfig, IExportResult } from "@gooddata/sdk-backend-spi";
 import {
-    IDataView,
-    IExportConfig,
-    IExportResult,
-    IAttributeDescriptor,
+    IColor,
+    IColorPalette,
+    ITotal,
+    ISortItem,
     IMeasureDescriptor,
-} from "@gooddata/sdk-backend-spi";
-import { IColor, IColorPalette, ITotal, ISortItem } from "@gooddata/sdk-model";
+    IAttributeDescriptor,
+} from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "../errors/GoodDataSdkError";
 import { IMappingHeader } from "../headerMatching/MappingHeader";
 

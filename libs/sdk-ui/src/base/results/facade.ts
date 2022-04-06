@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
-import { defFingerprint, IExecutionDefinition } from "@gooddata/sdk-model";
-import { IDataView, IExecutionResult, IResultWarning } from "@gooddata/sdk-backend-spi";
+import { defFingerprint, IExecutionDefinition, IResultWarning } from "@gooddata/sdk-model";
+import { IDataView, IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { DataAccessConfig } from "./dataAccessConfig";
 import { IExecutionDefinitionMethods, newExecutionDefinitonMethods } from "./internal/definitionMethods";
 import { IResultMetaMethods, newResultMetaMethods } from "./internal/resultMetaMethods";

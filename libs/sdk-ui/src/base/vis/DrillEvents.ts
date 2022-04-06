@@ -1,11 +1,11 @@
 // (C) 2007-2022 GoodData Corporation
+import { IDataView } from "@gooddata/sdk-backend-spi";
 import {
-    IAttributeDescriptor,
-    IDataView,
     IMeasureDescriptor,
+    IAttributeDescriptor,
     IResultAttributeHeader,
     ITotalDescriptor,
-} from "@gooddata/sdk-backend-spi";
+} from "@gooddata/sdk-model";
 import {
     ChartElementType,
     ChartType,

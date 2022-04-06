@@ -1,5 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
-import { DataValue, IDataView } from "@gooddata/sdk-backend-spi";
+import { IDataView } from "@gooddata/sdk-backend-spi";
+import { DataValue } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import isArray from "lodash/isArray";
 

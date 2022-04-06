@@ -1,13 +1,13 @@
 // (C) 2007-2022 GoodData Corporation
 import {
-    IAttributeDescriptor,
     IMeasureDescriptor,
+    IAttributeDescriptor,
     IResultAttributeHeader,
+    ITotalDescriptor,
     isAttributeDescriptor,
     isMeasureDescriptor,
     isResultAttributeHeader,
-    ITotalDescriptor,
-} from "@gooddata/sdk-backend-spi";
+} from "@gooddata/sdk-model";
 
 /**
  * @privateRemarks
