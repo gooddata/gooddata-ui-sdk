@@ -17,7 +17,7 @@ import {
 import intersection from "lodash/intersection";
 import identity from "lodash/identity";
 import cloneDeep from "lodash/cloneDeep";
-import { ISettings } from "@gooddata/sdk-backend-spi";
+import { ISettings } from "@gooddata/sdk-model";
 
 //
 // Scenario groups
