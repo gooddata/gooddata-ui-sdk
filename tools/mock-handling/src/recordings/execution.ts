@@ -1,13 +1,12 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 
-import { defFingerprint, IExecutionDefinition } from "@gooddata/sdk-model";
 import {
-    IAnalyticalBackend,
-    IDataView,
-    IExecutionResult,
+    defFingerprint,
+    IExecutionDefinition,
     IDimensionDescriptor,
     isAttributeDescriptor,
-} from "@gooddata/sdk-backend-spi";
+} from "@gooddata/sdk-model";
+import { IAnalyticalBackend, IDataView, IExecutionResult } from "@gooddata/sdk-backend-spi";
 import * as fs from "fs";
 import * as path from "path";
 import { logWarn } from "../cli/loggers";
