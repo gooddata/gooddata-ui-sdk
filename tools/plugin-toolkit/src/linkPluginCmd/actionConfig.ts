@@ -1,6 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import { createWorkspaceTargetConfig, WorkspaceTargetConfig } from "../_base/workspaceTargetConfig";
-import { IAnalyticalBackend, IDashboardPlugin, IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
+import { IDashboardPlugin } from "@gooddata/sdk-model";
 import { ActionOptions } from "../_base/types";
 import { createBackend } from "../_base/backend";
 import { getDashboardFromOptions } from "../_base/inputHandling/extractors";

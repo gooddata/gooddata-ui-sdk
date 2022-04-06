@@ -2,7 +2,7 @@
 import { ActionOptions } from "../_base/types";
 import { logInfo, logSuccess, logWarn } from "../_base/terminal/loggers";
 import { AddCmdActionConfig, getAddCmdActionConfig } from "./actionConfig";
-import { IDashboardPlugin } from "@gooddata/sdk-backend-spi";
+import { IDashboardPlugin } from "@gooddata/sdk-model";
 import { genericErrorReporter } from "../_base/utils";
 import isEmpty from "lodash/isEmpty";
 
