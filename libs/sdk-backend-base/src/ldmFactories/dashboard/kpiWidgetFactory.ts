@@ -1,16 +1,16 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import invariant from "ts-invariant";
-import { ObjRef } from "@gooddata/sdk-model";
 import {
-    IKpiWidget,
+    ObjRef,
     KpiDrillDefinition,
-    ILegacyKpiComparisonTypeComparison,
-    ILegacyKpiComparisonDirection,
-    ILegacyKpi,
-    isKpiWidgetDefinition,
+    IKpiWidget,
     IKpiWidgetDefinition,
+    isKpiWidgetDefinition,
     isKpiWidget,
-} from "@gooddata/sdk-backend-spi";
+    IKpi,
+    IKpiComparisonDirection,
+    IKpiComparisonTypeComparison,
+} from "@gooddata/sdk-model";
 import { IWidgetBaseBuilder, WidgetBaseBuilder } from "./widgetFactory";
 import { resolveValueOrUpdateCallback, ValueOrUpdateCallback } from "../builder";
 
@@ -22,9 +22,9 @@ import { resolveValueOrUpdateCallback, ValueOrUpdateCallback } from "../builder"
 export interface IKpiWidgetBuilder extends IWidgetBaseBuilder<IKpiWidget> {
     drills(valueOrUpdateCallback: ValueOrUpdateCallback<KpiDrillDefinition[]>): this;
     measure(valueOrUpdateCallback: ValueOrUpdateCallback<ObjRef>): this;
-    comparisonType(valueOrUpdateCallback: ValueOrUpdateCallback<ILegacyKpiComparisonTypeComparison>): this;
+    comparisonType(valueOrUpdateCallback: ValueOrUpdateCallback<IKpiComparisonTypeComparison>): this;
     comparisonDirection(
-        valueOrUpdateCallback: ValueOrUpdateCallback<ILegacyKpiComparisonDirection | undefined>,
+        valueOrUpdateCallback: ValueOrUpdateCallback<IKpiComparisonDirection | undefined>,
     ): this;
 }
 
@@ -61,7 +61,7 @@ export class KpiWidgetBuilder extends WidgetBaseBuilder<IKpiWidget> implements I
     }
 
     // TODO: un-nest legacy kpi
-    protected setKpiWidgetProp = <K extends keyof ILegacyKpi>(
+    protected setKpiWidgetProp = <K extends keyof IKpi>(
         prop: K,
         valueOrUpdateCallback: ValueOrUpdateCallback<IKpiWidget["kpi"][K]>,
     ): this => {
@@ -82,11 +82,11 @@ export class KpiWidgetBuilder extends WidgetBaseBuilder<IKpiWidget> implements I
         this.setKpiWidgetProp("metric", valueOrUpdateCallback);
 
     public comparisonType = (
-        valueOrUpdateCallback: ValueOrUpdateCallback<ILegacyKpiComparisonTypeComparison>,
+        valueOrUpdateCallback: ValueOrUpdateCallback<IKpiComparisonTypeComparison>,
     ): this => this.setKpiWidgetProp("comparisonType", valueOrUpdateCallback);
 
     public comparisonDirection = (
-        valueOrUpdateCallback: ValueOrUpdateCallback<ILegacyKpiComparisonDirection | undefined>,
+        valueOrUpdateCallback: ValueOrUpdateCallback<IKpiComparisonDirection | undefined>,
     ): this => this.setKpiWidgetProp("comparisonDirection", valueOrUpdateCallback);
 }
 

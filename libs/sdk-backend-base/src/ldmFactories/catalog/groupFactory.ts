@@ -1,7 +1,6 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import identity from "lodash/identity";
-import { ObjRef } from "@gooddata/sdk-model";
-import { ICatalogGroup, IGroupableCatalogItemBase } from "@gooddata/sdk-backend-spi";
+import { ObjRef, ICatalogGroup, IGroupableCatalogItemBase } from "@gooddata/sdk-model";
 import { Builder, builderFactory, BuilderModifications, IBuilder } from "../builder";
 
 /**

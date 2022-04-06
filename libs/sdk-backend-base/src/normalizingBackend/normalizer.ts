@@ -30,15 +30,13 @@ import {
     IMeasureDefinition,
     isAttributeFilter,
     isRankingFilter,
-} from "@gooddata/sdk-model";
-import {
     IDimensionDescriptor,
     IResultHeader,
     IResultMeasureHeader,
     isAttributeDescriptor,
     isMeasureDescriptor,
     isResultMeasureHeader,
-} from "@gooddata/sdk-backend-spi";
+} from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import cloneDeep from "lodash/cloneDeep";
 import cloneDeepWith from "lodash/cloneDeepWith";

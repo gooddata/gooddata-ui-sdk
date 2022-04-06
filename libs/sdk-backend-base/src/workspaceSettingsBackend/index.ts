@@ -1,12 +1,12 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import identity from "lodash/identity";
 import {
     IAnalyticalBackend,
-    ISettings,
     IUserWorkspaceSettings,
     IWorkspaceSettings,
     IWorkspaceSettingsService,
 } from "@gooddata/sdk-backend-spi";
+import { ISettings } from "@gooddata/sdk-model";
 import { decoratedBackend, WorkspaceSettingsDecoratorFactory } from "../decoratedBackend";
 import { DecoratedWorkspaceSettingsService } from "../decoratedBackend/workspaceSettings";
 

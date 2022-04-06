@@ -12,9 +12,9 @@ import {
     defWithDateFormat,
     defWithExecConfig,
     IExecutionConfig,
+    IDimensionDescriptor,
 } from "@gooddata/sdk-model";
 import {
-    IDimensionDescriptor,
     IExecutionFactory,
     IExecutionResult,
     IExportConfig,

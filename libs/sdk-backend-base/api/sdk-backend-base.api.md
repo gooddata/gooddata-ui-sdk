@@ -5,83 +5,83 @@
 ```ts
 
 import { AttributeModifications } from '@gooddata/sdk-model';
-import { CatalogItem } from '@gooddata/sdk-backend-spi';
-import { CatalogItemType } from '@gooddata/sdk-backend-spi';
+import { CatalogItem } from '@gooddata/sdk-model';
+import { CatalogItemType } from '@gooddata/sdk-model';
 import { DateAttributeGranularity } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { ErrorConverter } from '@gooddata/sdk-backend-spi';
 import { ExplainConfig } from '@gooddata/sdk-backend-spi';
-import { FilterContextItem } from '@gooddata/sdk-backend-spi';
+import { FilterContextItem } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
-import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-backend-spi';
-import { IAttributeMetadataObject } from '@gooddata/sdk-backend-spi';
+import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
+import { IAttributeMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IAuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
 import { IBucket } from '@gooddata/sdk-model';
-import { ICatalogAttribute } from '@gooddata/sdk-backend-spi';
-import { ICatalogDateAttribute } from '@gooddata/sdk-backend-spi';
-import { ICatalogDateDataset } from '@gooddata/sdk-backend-spi';
-import { ICatalogFact } from '@gooddata/sdk-backend-spi';
-import { ICatalogGroup } from '@gooddata/sdk-backend-spi';
-import { ICatalogMeasure } from '@gooddata/sdk-backend-spi';
-import { IDashboard } from '@gooddata/sdk-backend-spi';
-import { IDashboardDefinition } from '@gooddata/sdk-backend-spi';
-import { IDashboardFilterReference } from '@gooddata/sdk-backend-spi';
-import { IDashboardMetadataObject } from '@gooddata/sdk-backend-spi';
-import { IDashboardPlugin } from '@gooddata/sdk-backend-spi';
-import { IDashboardPluginDefinition } from '@gooddata/sdk-backend-spi';
+import { ICatalogAttribute } from '@gooddata/sdk-model';
+import { ICatalogDateAttribute } from '@gooddata/sdk-model';
+import { ICatalogDateDataset } from '@gooddata/sdk-model';
+import { ICatalogFact } from '@gooddata/sdk-model';
+import { ICatalogGroup } from '@gooddata/sdk-model';
+import { ICatalogMeasure } from '@gooddata/sdk-model';
+import { IDashboard } from '@gooddata/sdk-model';
+import { IDashboardDefinition } from '@gooddata/sdk-model';
+import { IDashboardFilterReference } from '@gooddata/sdk-model';
+import { IDashboardMetadataObject } from '@gooddata/sdk-model';
+import { IDashboardPlugin } from '@gooddata/sdk-model';
+import { IDashboardPluginDefinition } from '@gooddata/sdk-model';
 import { IDashboardReferences } from '@gooddata/sdk-backend-spi';
 import { IDashboardWithReferences } from '@gooddata/sdk-backend-spi';
-import { IDataSetMetadataObject } from '@gooddata/sdk-backend-spi';
+import { IDataSetMetadataObject } from '@gooddata/sdk-model';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IDimension } from '@gooddata/sdk-model';
-import { IDimensionDescriptor } from '@gooddata/sdk-backend-spi';
+import { IDimensionDescriptor } from '@gooddata/sdk-model';
 import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IExecutionFactory } from '@gooddata/sdk-backend-spi';
 import { IExecutionResult } from '@gooddata/sdk-backend-spi';
 import { IExportConfig } from '@gooddata/sdk-backend-spi';
 import { IExportResult } from '@gooddata/sdk-backend-spi';
-import { IFactMetadataObject } from '@gooddata/sdk-backend-spi';
+import { IFactMetadataObject } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
-import { IFilterContextDefinition } from '@gooddata/sdk-backend-spi';
+import { IFilterContextDefinition } from '@gooddata/sdk-model';
 import { IGetDashboardOptions } from '@gooddata/sdk-backend-spi';
 import { IGetScheduledMailOptions } from '@gooddata/sdk-backend-spi';
-import { IGroupableCatalogItemBase } from '@gooddata/sdk-backend-spi';
+import { IGroupableCatalogItemBase } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
-import { IInsightWidget } from '@gooddata/sdk-backend-spi';
-import { IInsightWidgetDefinition } from '@gooddata/sdk-backend-spi';
+import { IInsightWidget } from '@gooddata/sdk-model';
+import { IInsightWidgetDefinition } from '@gooddata/sdk-model';
 import { IKpi } from '@gooddata/sdk-model';
-import { IKpiWidget } from '@gooddata/sdk-backend-spi';
-import { IKpiWidgetDefinition } from '@gooddata/sdk-backend-spi';
-import { ILegacyKpiComparisonDirection } from '@gooddata/sdk-backend-spi';
-import { ILegacyKpiComparisonTypeComparison } from '@gooddata/sdk-backend-spi';
-import { IListedDashboard } from '@gooddata/sdk-backend-spi';
+import { IKpiComparisonDirection } from '@gooddata/sdk-model';
+import { IKpiComparisonTypeComparison } from '@gooddata/sdk-model';
+import { IKpiWidget } from '@gooddata/sdk-model';
+import { IKpiWidgetDefinition } from '@gooddata/sdk-model';
+import { IListedDashboard } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
-import { IMeasureMetadataObject } from '@gooddata/sdk-backend-spi';
-import { IMetadataObject } from '@gooddata/sdk-backend-spi';
-import { InsightDrillDefinition } from '@gooddata/sdk-backend-spi';
+import { IMeasureMetadataObject } from '@gooddata/sdk-model';
+import { IMetadataObject } from '@gooddata/sdk-model';
+import { InsightDrillDefinition } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
 import { IPagedResource } from '@gooddata/sdk-backend-spi';
 import { IPostProcessing } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
-import { IResultHeader } from '@gooddata/sdk-backend-spi';
-import { IScheduledMail } from '@gooddata/sdk-backend-spi';
-import { IScheduledMailDefinition } from '@gooddata/sdk-backend-spi';
+import { IResultHeader } from '@gooddata/sdk-model';
+import { IScheduledMail } from '@gooddata/sdk-model';
+import { IScheduledMailDefinition } from '@gooddata/sdk-model';
 import { ISecuritySettingsService } from '@gooddata/sdk-backend-spi';
-import { ISettings } from '@gooddata/sdk-backend-spi';
+import { ISettings } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
-import { IVariableMetadataObject } from '@gooddata/sdk-backend-spi';
-import { IWidget } from '@gooddata/sdk-backend-spi';
-import { IWidgetAlert } from '@gooddata/sdk-backend-spi';
+import { IVariableMetadataObject } from '@gooddata/sdk-model';
+import { IWidget } from '@gooddata/sdk-model';
+import { IWidgetAlert } from '@gooddata/sdk-model';
 import { IWidgetAlertCount } from '@gooddata/sdk-backend-spi';
-import { IWidgetAlertDefinition } from '@gooddata/sdk-backend-spi';
+import { IWidgetAlertDefinition } from '@gooddata/sdk-model';
 import { IWidgetReferences } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceAttributesService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalog } from '@gooddata/sdk-backend-spi';
@@ -91,7 +91,7 @@ import { IWorkspaceCatalogFactoryOptions } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceDashboardsService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceSettingsService } from '@gooddata/sdk-backend-spi';
-import { KpiDrillDefinition } from '@gooddata/sdk-backend-spi';
+import { KpiDrillDefinition } from '@gooddata/sdk-model';
 import { MeasureBuilder } from '@gooddata/sdk-model';
 import { MeasureModifications } from '@gooddata/sdk-model';
 import { NotAuthenticated } from '@gooddata/sdk-backend-spi';
@@ -650,9 +650,9 @@ export interface IInsightWidgetBuilder extends IWidgetBaseBuilder<IInsightWidget
 // @alpha
 export interface IKpiWidgetBuilder extends IWidgetBaseBuilder<IKpiWidget> {
     // (undocumented)
-    comparisonDirection(valueOrUpdateCallback: ValueOrUpdateCallback<ILegacyKpiComparisonDirection | undefined>): this;
+    comparisonDirection(valueOrUpdateCallback: ValueOrUpdateCallback<IKpiComparisonDirection | undefined>): this;
     // (undocumented)
-    comparisonType(valueOrUpdateCallback: ValueOrUpdateCallback<ILegacyKpiComparisonTypeComparison>): this;
+    comparisonType(valueOrUpdateCallback: ValueOrUpdateCallback<IKpiComparisonTypeComparison>): this;
     // (undocumented)
     drills(valueOrUpdateCallback: ValueOrUpdateCallback<KpiDrillDefinition[]>): this;
     // (undocumented)
@@ -753,9 +753,9 @@ export interface IWidgetBaseBuilder<T extends IWidget> extends IBuilder<T> {
 export class KpiWidgetBuilder extends WidgetBaseBuilder<IKpiWidget> implements IKpiWidgetBuilder {
     constructor(item: IKpiWidget, validator?: ((item: Partial<IKpiWidget>) => void) | undefined);
     // (undocumented)
-    comparisonDirection: (valueOrUpdateCallback: ValueOrUpdateCallback<ILegacyKpiComparisonDirection | undefined>) => this;
+    comparisonDirection: (valueOrUpdateCallback: ValueOrUpdateCallback<IKpiComparisonDirection | undefined>) => this;
     // (undocumented)
-    comparisonType: (valueOrUpdateCallback: ValueOrUpdateCallback<ILegacyKpiComparisonTypeComparison>) => this;
+    comparisonType: (valueOrUpdateCallback: ValueOrUpdateCallback<IKpiComparisonTypeComparison>) => this;
     // (undocumented)
     drills: (valueOrUpdateCallback: ValueOrUpdateCallback<KpiDrillDefinition[]>) => this;
     // (undocumented)
