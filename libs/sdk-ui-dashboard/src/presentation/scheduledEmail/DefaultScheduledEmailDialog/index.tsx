@@ -26,6 +26,7 @@ export const DefaultScheduledEmailDialog = (props: IScheduledEmailDialogProps): 
         enableKPIDashboardSchedule,
         enableKPIDashboardScheduleRecipients,
         enableWidgetExportScheduling,
+        defaultAttachment,
     } = useScheduledEmail({ onSubmit, onSubmitSuccess: onSuccess, onSubmitError: onError });
 
     // trigger the invariant only if the user tries to open the dialog
@@ -56,6 +57,7 @@ export const DefaultScheduledEmailDialog = (props: IScheduledEmailDialogProps): 
             onSubmit={handleCreateScheduledEmail}
             onCancel={onCancel}
             onError={onError}
+            defaultAttachment={defaultAttachment}
         />
     );
 };

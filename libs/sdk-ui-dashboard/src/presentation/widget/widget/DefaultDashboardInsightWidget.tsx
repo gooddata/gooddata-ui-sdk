@@ -1,12 +1,17 @@
 // (C) 2020-2022 GoodData Corporation
-import React, { useMemo } from "react";
+import React, { useMemo, useCallback } from "react";
 import cx from "classnames";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IInsight, insightVisualizationUrl } from "@gooddata/sdk-model";
 import { IInsightWidget, ScreenSize, widgetTitle } from "@gooddata/sdk-backend-spi";
 import { OnError, OnExportReady, OnLoadingChanged, VisType } from "@gooddata/sdk-ui";
 
-import { useDashboardSelector, selectInsightsMap } from "../../../model";
+import {
+    useDashboardSelector,
+    selectInsightsMap,
+    isCustomWidget,
+    useDashboardScheduledEmails,
+} from "../../../model";
 import {
     DashboardItem,
     DashboardItemHeadline,
@@ -77,20 +82,31 @@ const DefaultDashboardInsightWidgetCore: React.FC<
     index,
 }) => {
     const visType = insightVisualizationUrl(insight).split(":")[1] as VisType;
+    const { ref: widgetRef } = widget;
 
     const { exportCSVEnabled, exportXLSXEnabled, onExportCSV, onExportXLSX } = useInsightExport({
-        widgetRef: widget.ref,
+        widgetRef,
         title: widgetTitle(widget) || intl.formatMessage({ id: "export.defaultTitle" }),
         insight,
     });
+
+    const { isScheduledEmailingVisible, enableInsightExportScheduling, onScheduleEmailingOpen } =
+        useDashboardScheduledEmails();
+    const onScheduleExport = useCallback(() => {
+        onScheduleEmailingOpen(widgetRef);
+    }, [widgetRef]);
+    const scheduleExportEnabled = !isCustomWidget(widget);
 
     const { closeMenu, isMenuOpen, menuItems, openMenu } = useInsightMenu({
         insight,
         widget,
         exportCSVEnabled,
         exportXLSXEnabled,
+        scheduleExportEnabled,
         onExportCSV,
         onExportXLSX,
+        onScheduleExport,
+        isScheduleExportVisible: isScheduledEmailingVisible && enableInsightExportScheduling,
     });
 
     const {

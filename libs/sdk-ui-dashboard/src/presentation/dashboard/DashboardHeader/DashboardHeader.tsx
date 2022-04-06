@@ -16,13 +16,11 @@ import {
     exportDashboardToPdf,
     renameDashboard,
     selectCanCreateAnalyticalDashboard,
-    selectCanCreateScheduledMail,
     selectCanExportReport,
     selectDashboardRef,
     selectDashboardShareInfo,
     selectDashboardTitle,
     selectEnableKPIDashboardExportPDF,
-    selectEnableKPIDashboardSchedule,
     selectFilterContextFilters,
     selectIsLayoutEmpty,
     selectIsReadOnly,
@@ -33,6 +31,7 @@ import {
     useDashboardCommandProcessing,
     useDashboardDispatch,
     useDashboardSelector,
+    useDashboardScheduledEmails,
 } from "../../../model";
 
 import { ExportDialogProvider } from "../../dialogs";
@@ -42,10 +41,7 @@ import { DefaultButtonBar, DefaultMenuButton, DefaultTopBar, IMenuButtonItem, To
 import { SaveAsDialog } from "../../saveAs";
 import { DefaultFilterBar, FilterBar } from "../../filterBar";
 import { ShareDialogDashboardHeader } from "./ShareDialogDashboardHeader";
-import {
-    ScheduledEmailDialogProvider,
-    useScheduledEmailDialogProvider,
-} from "./ScheduledEmailDialogProvider";
+import { ScheduledEmailDialogProvider } from "./ScheduledEmailDialogProvider";
 
 const useFilterBar = (): {
     filters: FilterContextItem[];
@@ -116,7 +112,7 @@ export const DashboardHeader = (): JSX.Element => {
     const { filters, onAttributeFilterChanged, onDateFilterChanged } = useFilterBar();
     const { title, onTitleChanged, onShareButtonClick, shareInfo } = useTopBar();
     const { addSuccess, addError, addProgress, removeMessage } = useToastMessage();
-    const { defaultOnScheduleEmailing } = useScheduledEmailDialogProvider();
+    const { isScheduledEmailingVisible, defaultOnScheduleEmailing } = useDashboardScheduledEmails();
 
     const dispatch = useDashboardDispatch();
     const isSaveAsDialogOpen = useDashboardSelector(selectIsSaveAsDialogOpen);
@@ -178,8 +174,6 @@ export const DashboardHeader = (): JSX.Element => {
     const canExportReport = useDashboardSelector(selectCanExportReport);
     const isKPIDashboardExportPDFEnabled = !!useDashboardSelector(selectEnableKPIDashboardExportPDF);
 
-    const canCreateScheduledMail = useDashboardSelector(selectCanCreateScheduledMail);
-    const isScheduledEmailingEnabled = !!useDashboardSelector(selectEnableKPIDashboardSchedule);
     const menuButtonItemsVisibility = useDashboardSelector(selectMenuButtonItemsVisibility);
 
     const defaultMenuItems = useMemo<IMenuButtonItem[]>(() => {
@@ -194,12 +188,6 @@ export const DashboardHeader = (): JSX.Element => {
             canExportReport &&
             isKPIDashboardExportPDFEnabled &&
             (menuButtonItemsVisibility.pdfExportButton ?? true);
-
-        const isScheduledEmailingVisible =
-            !isReadOnly &&
-            canCreateScheduledMail &&
-            isScheduledEmailingEnabled &&
-            (menuButtonItemsVisibility.scheduleEmailButton ?? true);
 
         return [
             {
@@ -238,8 +226,7 @@ export const DashboardHeader = (): JSX.Element => {
         menuButtonItemsVisibility,
         canExportReport,
         isKPIDashboardExportPDFEnabled,
-        canCreateScheduledMail,
-        isScheduledEmailingEnabled,
+        isScheduledEmailingVisible,
     ]);
 
     const onSaveAsError = useCallback(() => {

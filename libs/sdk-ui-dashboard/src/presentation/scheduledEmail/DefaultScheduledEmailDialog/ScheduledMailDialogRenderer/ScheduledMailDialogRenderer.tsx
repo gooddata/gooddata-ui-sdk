@@ -9,7 +9,7 @@ import {
     IScheduledMailDefinition,
     ScheduledMailAttachment,
 } from "@gooddata/sdk-backend-spi";
-import { ObjRef, IUser, uriRef, objRefToString } from "@gooddata/sdk-model";
+import { ObjRef, IUser, uriRef, objRefToString, areObjRefsEqual } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import memoize from "lodash/memoize";
 
@@ -125,6 +125,11 @@ export interface IScheduledMailDialogRendererOwnProps {
     workspace?: string;
 
     /**
+     * Attachment to be selected by default.
+     */
+    defaultAttachment?: ObjRef;
+
+    /**
      * Callback to be called, when user close the scheduled email dialog.
      */
     onCancel?: () => void;
@@ -209,11 +214,7 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
             selectedRecipients: [userToRecipient(this.props.currentUser)],
             isValidScheduleEmailData: true,
             attachments: {
-                dashboardSelected: true,
-                widgetsSelected: this.props.dashboardInsightWidgets.reduce(
-                    (acc, widget) => ({ ...acc, [objRefToString(widget)]: false }),
-                    {},
-                ),
+                ...this.getDefaultAttachments(),
                 configuration: {
                     format: "csv",
                     mergeHeaders: true,
@@ -221,6 +222,28 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
                 },
             },
         };
+    }
+
+    private getDefaultAttachments() {
+        const { enableWidgetExportScheduling, defaultAttachment, dashboardInsightWidgets } = this.props;
+        const isDefaultAttachmentValid = dashboardInsightWidgets.some((widget) =>
+            areObjRefsEqual(widget.ref, defaultAttachment),
+        );
+
+        if (enableWidgetExportScheduling && defaultAttachment && isDefaultAttachmentValid) {
+            return {
+                dashboardSelected: false,
+                widgetsSelected: { [objRefToString(defaultAttachment)]: true },
+            };
+        } else {
+            return {
+                dashboardSelected: true,
+                widgetsSelected: dashboardInsightWidgets.reduce(
+                    (acc, widget) => ({ ...acc, [objRefToString(widget)]: false }),
+                    {},
+                ),
+            };
+        }
     }
 
     public render(): React.ReactNode {

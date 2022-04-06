@@ -1,5 +1,6 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { IntlShape } from "react-intl";
+import compact from "lodash/compact";
 
 import { IInsightMenuItem } from "../types";
 
@@ -11,14 +12,26 @@ export function getDefaultInsightMenuItems(
     config: {
         exportXLSXDisabled: boolean;
         exportCSVDisabled: boolean;
+        scheduleExportDisabled: boolean;
         onExportXLSX: () => void;
         onExportCSV: () => void;
+        onScheduleExport: () => void;
+        isScheduleExportVisible: boolean;
         tooltipMessage: string;
     },
 ): IInsightMenuItem[] {
-    const { exportCSVDisabled, exportXLSXDisabled, onExportCSV, onExportXLSX, tooltipMessage } = config;
+    const {
+        exportCSVDisabled,
+        exportXLSXDisabled,
+        scheduleExportDisabled,
+        onExportCSV,
+        onExportXLSX,
+        onScheduleExport,
+        isScheduleExportVisible,
+        tooltipMessage,
+    } = config;
 
-    return [
+    return compact([
         {
             type: "button",
             itemId: "ExportXLSXBubble",
@@ -39,5 +52,15 @@ export function getDefaultInsightMenuItems(
             icon: "gd-icon-download",
             className: "s-options-menu-export-csv",
         },
-    ];
+        isScheduleExportVisible && {
+            type: "button",
+            itemId: "ScheduleExport",
+            itemName: intl.formatMessage({ id: "widget.options.menu.scheduleExport" }),
+            onClick: onScheduleExport,
+            disabled: scheduleExportDisabled,
+            tooltip: tooltipMessage,
+            icon: "gd-icon-clock",
+            className: "s-options-menu-schedule-export",
+        },
+    ]);
 }

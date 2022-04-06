@@ -867,6 +867,11 @@
         "comment": "Export to file with XLSX extension.",
         "limit": 0
     },
+    "widget.options.menu.scheduleExport": {
+        "value": "Schedule export",
+        "comment": "",
+        "limit": 0
+    },
     "share.button.text": {
         "value": "Share",
         "comment": "Text of button that opens share dialog",

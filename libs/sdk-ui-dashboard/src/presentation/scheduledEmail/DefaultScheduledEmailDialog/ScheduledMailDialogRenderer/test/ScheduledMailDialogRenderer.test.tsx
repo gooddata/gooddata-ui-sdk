@@ -13,6 +13,7 @@ import { DateTime } from "../DateTime";
 import { getUserTimezone, ITimezone } from "../../utils/timezone";
 import { useWorkspaceUsers } from "../../useWorkspaceUsers";
 import { IntlWrapper } from "../../../../localization/IntlWrapper";
+import { newInsightWidget } from "@gooddata/sdk-backend-base";
 
 jest.mock("../../useWorkspaceUsers", () => ({
     useWorkspaceUsers: (): ReturnType<typeof useWorkspaceUsers> => ({
@@ -185,5 +186,57 @@ describe("ScheduledMailDialogRenderer", () => {
         const subjectInput = wrapper.find(".s-gd-schedule-email-dialog-subject input");
         const valueInput = subjectInput.prop("placeholder");
         expect(valueInput?.length).toBe(255);
+    });
+
+    describe("default attachment", () => {
+        const widgetUri1 = "/widget/uri1";
+        const widgetUri2 = "/widget/uri2";
+        const widgetRef1 = uriRef(widgetUri1);
+        const widgetRef2 = uriRef(widgetUri2);
+        const insightWidget1 = newInsightWidget(uriRef("/insight/uri1"), (w) =>
+            w.title("Widget 1").ref(widgetRef1).uri(widgetUri1),
+        );
+        const insightWidget2 = newInsightWidget(uriRef("/insight/uri2"), (w) =>
+            w.title("Widget 2").ref(widgetRef2).uri(widgetUri2),
+        );
+
+        it("should not render default csv attachment selected when FF is false", () => {
+            const wrapper = renderComponent({
+                enableWidgetExportScheduling: false,
+                defaultAttachment: widgetRef2,
+                dashboardInsightWidgets: [insightWidget1, insightWidget2],
+            });
+
+            expect(wrapper.find(".s-gd-dashboard-attachment")).not.toExist();
+        });
+
+        it("should not render default csv attachment selected when default attachment is not provided", () => {
+            const wrapper = renderComponent({
+                enableWidgetExportScheduling: true,
+                dashboardInsightWidgets: [insightWidget1, insightWidget2],
+            });
+
+            expect(wrapper.find(".s-gd-dashboard-attachment").text()).toEqual("pdfDashboard title");
+        });
+
+        it("should not render default csv attachment selected when default attachment is not valid", () => {
+            const wrapper = renderComponent({
+                enableWidgetExportScheduling: true,
+                defaultAttachment: uriRef("invalidWidgetUri"),
+                dashboardInsightWidgets: [insightWidget1, insightWidget2],
+            });
+
+            expect(wrapper.find(".s-gd-dashboard-attachment").text()).toEqual("pdfDashboard title");
+        });
+
+        it("should render default csv attachment selected when provided", () => {
+            const wrapper = renderComponent({
+                enableWidgetExportScheduling: true,
+                defaultAttachment: widgetRef2,
+                dashboardInsightWidgets: [insightWidget1, insightWidget2],
+            });
+
+            expect(wrapper.find(".s-gd-dashboard-attachment").text()).toEqual("csvWidget 2");
+        });
     });
 });
