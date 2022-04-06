@@ -1,6 +1,6 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { TableDescriptor } from "../structure/tableDescriptor";
-import { DataValue } from "@gooddata/sdk-backend-spi";
+import { DataValue } from "@gooddata/sdk-model";
 import { getMappingHeaderUri } from "@gooddata/sdk-ui";
 import { invariant } from "ts-invariant";
 import { IGridRow } from "../data/resultTypes";

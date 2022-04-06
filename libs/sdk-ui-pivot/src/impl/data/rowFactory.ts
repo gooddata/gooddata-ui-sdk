@@ -1,14 +1,9 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { IntlShape } from "react-intl";
 
 import { DataViewFacade, IMappingHeader } from "@gooddata/sdk-ui";
 import { ROW_SUBTOTAL, ROW_TOTAL } from "../base/constants";
-import {
-    DataValue,
-    IResultHeader,
-    isResultAttributeHeader,
-    isResultTotalHeader,
-} from "@gooddata/sdk-backend-spi";
+import { DataValue, IResultHeader, isResultAttributeHeader, isResultTotalHeader } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { isSeriesCol, SliceCol } from "../structure/tableDescriptorTypes";
 import { TableDescriptor } from "../structure/tableDescriptor";

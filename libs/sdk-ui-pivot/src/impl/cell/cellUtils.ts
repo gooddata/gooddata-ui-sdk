@@ -1,8 +1,8 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import cx from "classnames";
 import { colors2Object, ISeparators, numberFormat } from "@gooddata/numberjs";
 
-import { DataValue } from "@gooddata/sdk-backend-spi";
+import { DataValue } from "@gooddata/sdk-model";
 
 export interface ITableCellStyle {
     backgroundColor?: string;

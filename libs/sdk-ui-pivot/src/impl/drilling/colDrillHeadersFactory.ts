@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import {
     AnyCol,
     ScopeCol,
@@ -9,7 +9,7 @@ import {
     SliceCol,
 } from "../structure/tableDescriptorTypes";
 import { IMappingHeader } from "@gooddata/sdk-ui";
-import { IAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
+import { IAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-model";
 import invariant, { InvariantError } from "ts-invariant";
 import { IGridRow } from "../data/resultTypes";
 

@@ -1,11 +1,11 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { recordedDataFacade } from "../../../../__mocks__/recordings";
 import { DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
 import { TableDescriptor } from "../../structure/tableDescriptor";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { IGridRow } from "../../data/resultTypes";
 import invariant from "ts-invariant";
-import { IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
+import { IResultAttributeHeader } from "@gooddata/sdk-model";
 import { fromPairs } from "lodash";
 
 export const TwoMeasuresWithTwoRowAndTwoColumnAttributes = recordedDataFacade(

@@ -1,10 +1,6 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { DataViewFacade } from "@gooddata/sdk-ui";
-import {
-    IAttributeDescriptor,
-    IResultAttributeHeader,
-    isAttributeDescriptor,
-} from "@gooddata/sdk-backend-spi";
+import { IAttributeDescriptor, IResultAttributeHeader, isAttributeDescriptor } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import range from "lodash/range";
 import {

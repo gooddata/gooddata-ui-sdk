@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { AnyCol, isSeriesCol, isSliceCol } from "./tableDescriptorTypes";
 import { invariant, InvariantError } from "ts-invariant";
 import {
@@ -12,8 +12,10 @@ import {
     newAttributeAreaSort,
     newAttributeSort,
     SortDirection,
+    IMeasureDescriptor,
+    IAttributeDescriptor,
+    IResultAttributeHeader,
 } from "@gooddata/sdk-model";
-import { IAttributeDescriptor, IMeasureDescriptor, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import zip from "lodash/zip";
 
 function createAttributeLocator(
