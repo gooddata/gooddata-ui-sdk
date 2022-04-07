@@ -219,6 +219,11 @@ export interface ISettings {
      */
     enableDataSourceManagement?: boolean;
 
+    /**
+     * Enable floating data range form with excluded period control in AD date filter
+     */
+    enableAdFloatingDateRangeFilter?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

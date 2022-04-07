@@ -79,6 +79,7 @@ export const DefaultUiSettings: ISettings = {
     enableAxisNameViewByTwoAttributes: true,
     enableAxisNameConfiguration: true,
     enableDataSourceManagement: false,
+    enableAdFloatingDateRangeFilter: true,
 };
 
 /**
