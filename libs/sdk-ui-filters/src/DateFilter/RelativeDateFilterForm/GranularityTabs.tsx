@@ -8,11 +8,13 @@ import { TabsWrapper, Tab } from "../Tabs/Tabs";
 import { granularityIntlCodes } from "../constants/i18n";
 
 const granularityOrders: { [G in DateFilterGranularity]: number } = {
-    "GDC.time.date": 0,
-    "GDC.time.week_us": 1,
+    "GDC.time.year": 0,
+    "GDC.time.quarter": 1,
     "GDC.time.month": 2,
-    "GDC.time.quarter": 3,
-    "GDC.time.year": 4,
+    "GDC.time.week_us": 3,
+    "GDC.time.date": 4,
+    "GDC.time.hour": 5,
+    "GDC.time.minute": 6,
 };
 
 const sortGranularities = (granularities: DateFilterGranularity[]): DateFilterGranularity[] =>

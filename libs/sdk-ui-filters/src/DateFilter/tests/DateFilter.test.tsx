@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     createDateFilter,
     clickDateFilterButton,
@@ -374,17 +374,17 @@ describe("DateFilter", () => {
 
         it("should sort static filters in ASC order", () => {
             const expectedItems = [
-                "Last 7 days",
-                "Last 30 days",
-                "Last 90 days",
-                "This month",
-                "Last month",
-                "Last 12 months",
+                "This year",
+                "Last year",
                 "This quarter",
                 "Last quarter",
                 "Last 4 quarters",
-                "This year",
-                "Last year",
+                "This month",
+                "Last month",
+                "Last 12 months",
+                "Last 7 days",
+                "Last 30 days",
+                "Last 90 days",
             ];
 
             const wrapper = createDateFilter();

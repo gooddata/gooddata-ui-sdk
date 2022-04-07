@@ -4,6 +4,8 @@ import { FormattedMessage } from "react-intl";
 import { DateFilterGranularity } from "@gooddata/sdk-model";
 
 const intlIdDict: { [key in DateFilterGranularity]: string } = {
+    "GDC.time.minute": "filters.minute.title",
+    "GDC.time.hour": "filters.hour.title",
     "GDC.time.date": "filters.day.title",
     "GDC.time.week_us": "filters.week.title",
     "GDC.time.month": "filters.month.title",

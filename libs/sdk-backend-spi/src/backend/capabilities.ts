@@ -147,6 +147,11 @@ export interface IBackendCapabilities {
     allowsInconsistentRelations?: boolean;
 
     /**
+     * Indicates whether backend supports time granularities (gdc.time.minute, gdc.time.hour);
+     */
+    supportsTimeGranularities?: boolean;
+
+    /**
      * Catchall for additional capabilities
      */
     [key: string]: undefined | boolean | number | string;

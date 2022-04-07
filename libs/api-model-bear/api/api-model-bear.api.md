@@ -1052,7 +1052,7 @@ export namespace GdcExport {
 // @public (undocumented)
 export namespace GdcExtendedDateFilters {
     // (undocumented)
-    export type DateFilterGranularity = "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year";
+    export type DateFilterGranularity = "GDC.time.minute" | "GDC.time.hour" | "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year";
     // (undocumented)
     export type DateString = string;
     // (undocumented)

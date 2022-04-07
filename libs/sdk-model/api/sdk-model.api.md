@@ -259,7 +259,7 @@ export type DateAttributeGranularity = "GDC.time.year" | "GDC.time.week_us" | "G
 export type DateFilterAbsoluteType = "absolute";
 
 // @alpha
-export type DateFilterGranularity = "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year";
+export type DateFilterGranularity = "GDC.time.minute" | "GDC.time.hour" | "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year";
 
 // @alpha
 export type DateFilterOptionAbsoluteFormType = "absoluteForm";
@@ -2014,6 +2014,7 @@ export interface ISettings {
     ADCatalogGroupsExpanded?: boolean;
     ADMeasureValueFilterNullAsZeroOption?: string;
     disableKpiDashboardHeadlineUnderline?: boolean;
+    enableAdFloatingDateRangeFilter?: boolean;
     enableAlternativeDisplayFormSelection?: boolean;
     enableAnalyticalDashboardPermissions?: boolean;
     enableApproxCount?: boolean;

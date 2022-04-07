@@ -471,6 +471,36 @@
         "comment": "Do not translate non-breakable space '{nbsp}'",
         "limit": 0
     },
+    "filters.thisMinute.title": {
+        "value": "This minute",
+        "comment": "",
+        "limit": 0
+    },
+    "filters.lastMinute.title": {
+        "value": "Last minute",
+        "comment": "",
+        "limit": 0
+    },
+    "filters.nextMinute.title": {
+        "value": "Next minute",
+        "comment": "",
+        "limit": 0
+    },
+    "filters.thisHour.title": {
+        "value": "This hour",
+        "comment": "",
+        "limit": 0
+    },
+    "filters.lastHour.title": {
+        "value": "Last hour",
+        "comment": "",
+        "limit": 0
+    },
+    "filters.nextHour.title": {
+        "value": "Next hour",
+        "comment": "",
+        "limit": 0
+    },
     "filters.thisDay.title": {
         "value": "Today",
         "comment": "",
@@ -546,6 +576,16 @@
         "comment": "",
         "limit": 0
     },
+    "filters.lastNMinutes": {
+        "value": "{n, plural, one {Last # minute} other {Last # minutes}}",
+        "comment": "In '{n, plural, one {LAST # MINUTE} other {LAST # MINUTES}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "limit": 0
+    },
+    "filters.lastNHours": {
+        "value": "{n, plural, one {Last # hour} other {Last # hours}}",
+        "comment": "In '{n, plural, one {LAST # HOUR} other {LAST # HOURS}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "limit": 0
+    },
     "filters.lastNDays": {
         "value": "{n, plural, one {Last # day} other {Last # days}}",
         "comment": "In '{n, plural, one {LAST # DAY} other {LAST # DAYS}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
@@ -571,6 +611,16 @@
         "comment": "In '{n, plural, one {LAST # YEAR} other {LAST # YEARS}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
         "limit": 0
     },
+    "filters.nextNMinutes": {
+        "value": "{n, plural, one {Next # minute} other {Next # minutes}}",
+        "comment": "In '{n, plural, one {NEXT # MINUTE} other {NEXT # MINUTES}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "limit": 0
+    },
+    "filters.nextNHours": {
+        "value": "{n, plural, one {Next # hour} other {Next # hours}}",
+        "comment": "In '{n, plural, one {NEXT # HOUR} other {NEXT # HOURS}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "limit": 0
+    },
     "filters.nextNDays": {
         "value": "{n, plural, one {Next # day} other {Next # days}}",
         "comment": "In '{n, plural, one {NEXT # DAY} other {NEXT # DAYS}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
@@ -594,6 +644,56 @@
     "filters.nextNYears": {
         "value": "{n, plural, one {Next # year} other {Next # years}}",
         "comment": "In '{n, plural, one {NEXT # YEAR} other {NEXT # YEARS}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "limit": 0
+    },
+    "filters.interval.minutes.past": {
+        "value": "From {from} to {to} {to, plural, one {minute} other {minutes}} ago",
+        "comment": "Example: 'From 5 to 3 minutes ago'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {MINUTE} other {MINUTES}}' translate only uppercase words.",
+        "limit": 0
+    },
+    "filters.interval.minutes.past.sameValue": {
+        "value": "{value} {value, plural, one {minute} other {minutes}} ago",
+        "comment": "Example: '5 minutes ago'. Don't translate placeholder '{value}'. In '{value, plural, one {MINUTE} other {MINUTES}}' translate only uppercase words.",
+        "limit": 0
+    },
+    "filters.interval.minutes.future": {
+        "value": "From {from} to {to} {to, plural, one {minute} other {minutes}} ahead",
+        "comment": "Example: 'From 3 to 5 minutes ahead'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {MINUTE} other {MINUTES}}' translate only uppercase words.",
+        "limit": 0
+    },
+    "filters.interval.minutes.future.sameValue": {
+        "value": "{value} {value, plural, one {minute} other {minutes}} ahead",
+        "comment": "Example: '5 minutes ahead'. Don't translate placeholder '{value}'. In '{value, plural, one {MINUTE} other {MINUTES}}' translate only uppercase words.",
+        "limit": 0
+    },
+    "filters.interval.minutes.mixed": {
+        "value": "From {from} {from, plural, one {minute} other {minutes}} ago to {to} {to, plural, one {minute} other {minutes}} ahead",
+        "comment": "Example: 'From 5 minutes ago to 3 minutes ahead'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {MINUTE} other {MINUTES}}' translate only uppercase words.",
+        "limit": 0
+    },
+    "filters.interval.hours.past": {
+        "value": "From {from} to {to} {to, plural, one {hour} other {hours}} ago",
+        "comment": "Example: 'From 5 to 3 hours ago'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {MINUTE} other {MINUTEs}}' translate only uppercase words.",
+        "limit": 0
+    },
+    "filters.interval.hours.past.sameValue": {
+        "value": "{value} {value, plural, one {hour} other {hours}} ago",
+        "comment": "Example: '5 hours ago'. Don't translate placeholder '{value}'. In '{value, plural, one {MINUTE} other {MINUTES}}' translate only uppercase words.",
+        "limit": 0
+    },
+    "filters.interval.hours.future": {
+        "value": "From {from} to {to} {to, plural, one {hour} other {hours}} ahead",
+        "comment": "Example: 'From 3 to 5 hours ahead'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {MINUTE} other {MINUTES}}' translate only uppercase words.",
+        "limit": 0
+    },
+    "filters.interval.hours.future.sameValue": {
+        "value": "{value} {value, plural, one {hour} other {hours}} ahead",
+        "comment": "Example: '5 hours ahead'. Don't translate placeholder '{value}'. In '{value, plural, one {MINUTE} other {MINUTES}}' translate only uppercase words.",
+        "limit": 0
+    },
+    "filters.interval.hours.mixed": {
+        "value": "From {from} {from, plural, one {hour} other {hours}} ago to {to} {to, plural, one {day} other {days}} ahead",
+        "comment": "Example: 'From 5 hours ago to 3 hours ahead'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {MINUTE} other {MINUTES}}' translate only uppercase words.",
         "limit": 0
     },
     "filters.interval.days.past": {
@@ -721,6 +821,16 @@
         "comment": "Example: 'From 5 years ago to 3 years ahead'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {YEAR} other {YEARS}}' translate only uppercase words.",
         "limit": 0
     },
+    "filters.granularity.minutes": {
+        "value": "Minutes",
+        "comment": "",
+        "limit": 0
+    },
+    "filters.granularity.hours": {
+        "value": "Hours",
+        "comment": "",
+        "limit": 0
+    },
     "filters.granularity.days": {
         "value": "Days",
         "comment": "",
@@ -756,6 +866,11 @@
         "comment": "Displayed as placeholder in static period inputs where user enters date",
         "limit": 0
     },
+    "filters.setTime": {
+        "value": "set time",
+        "comment": "Displayed as label of checkbox that opens panel where user can specify time to a date",
+        "limit": 0
+    },
     "filters.floatingRange": {
         "value": "Floating range",
         "comment": "",
@@ -775,6 +890,36 @@
         "value": "Maximum value: {limit}",
         "comment": "This string should be as short as possible to fit in the container. Don't translate placeholder '{limit}'.",
         "limit": 32
+    },
+    "filters.floatingRange.option.minute.offset.history": {
+        "value": "{n, plural, one {last minute} other {# minutes ago}}",
+        "comment": "In '{n, plural, one {LAST MINUTE} other {# MINUTES AGO}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "limit": 0
+    },
+    "filters.floatingRange.option.minute.offset.today": {
+        "value": "this minute",
+        "comment": "",
+        "limit": 0
+    },
+    "filters.floatingRange.option.minute.offset.future": {
+        "value": "{n, plural, one {next minute} other {# minutes ahead}}",
+        "comment": "In '{n, plural, one {NEXT MINUTE} other {# MINUTES AHEAD}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "limit": 0
+    },
+    "filters.floatingRange.option.hour.offset.history": {
+        "value": "{n, plural, one {last hour} other {# hours ago}}",
+        "comment": "In '{n, plural, one {LAST HOUR} other {# HOURS AGO}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "limit": 0
+    },
+    "filters.floatingRange.option.hour.offset.today": {
+        "value": "this hour",
+        "comment": "",
+        "limit": 0
+    },
+    "filters.floatingRange.option.hour.offset.future": {
+        "value": "{n, plural, one {next hour} other {# hours ahead}}",
+        "comment": "In '{n, plural, one {NEXT HOUR} other {# HOURS AHEAD}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "limit": 0
     },
     "filters.floatingRange.option.day.offset.history": {
         "value": "{n, plural, one {yesterday} other {# days ago}}",
@@ -858,6 +1003,26 @@
     },
     "filters.allTime.excludeCurrentPeriod": {
         "value": "Exclude open period",
+        "comment": "",
+        "limit": 0
+    },
+    "filters.minute.title": {
+        "value": "MINUTE",
+        "comment": "",
+        "limit": 0
+    },
+    "filters.minute.excludeCurrentPeriod": {
+        "value": "Exclude this minute",
+        "comment": "",
+        "limit": 0
+    },
+    "filters.hour.title": {
+        "value": "HOUR",
+        "comment": "",
+        "limit": 0
+    },
+    "filters.hour.excludeCurrentPeriod": {
+        "value": "Exclude this hour",
         "comment": "",
         "limit": 0
     },
