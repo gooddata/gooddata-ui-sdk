@@ -60,7 +60,7 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsElementsQueryParentFiltering: false,
     supportsKpiWidget: false,
     supportsWidgetEntity: false,
-    supportsHyperlinkAttributeLabels: false,
+    supportsHyperlinkAttributeLabels: true,
     supportsGenericDateAttributeElements: false,
     supportsExplain: true,
     supportsAccessControl: false,

@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     JsonApiAnalyticalDashboardOutWithLinks,
     JsonApiAttributeOut,
@@ -7,10 +7,10 @@ import {
     JsonApiAttributeOutWithLinks,
     JsonApiDatasetOutWithLinks,
     JsonApiFactOutWithLinks,
+    JsonApiLabelLinkage,
     JsonApiLabelOutDocument,
     JsonApiLabelOutWithLinks,
     JsonApiLabelOutWithLinksTypeEnum,
-    JsonApiLabelLinkage,
     JsonApiMetricOutWithLinks,
 } from "@gooddata/api-client-tiger";
 import keyBy from "lodash/keyBy";
@@ -29,6 +29,7 @@ import {
 } from "@gooddata/sdk-backend-base";
 import { idRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
+import { convertLabelType } from "./LabelTypeConverter";
 
 export type MetadataObjectFromApi =
     | JsonApiAttributeOutWithLinks
@@ -131,7 +132,8 @@ function convertLabelWithLinks(
             .description(label.attributes?.description || "")
             .uri(label.links!.self)
             .attribute(idRef(attributeId, "attribute"))
-            .isDefault(label.attributes!.primary),
+            .isDefault(label.attributes!.primary)
+            .displayFormType(convertLabelType(label.attributes?.valueType)),
     );
 }
 
@@ -151,7 +153,8 @@ function convertLabelDocument(labelDoc: JsonApiLabelOutDocument): IAttributeDisp
             .description(attributes.description || "")
             .uri(labelDoc.links!.self)
             .isDefault(attributes.primary)
-            .attribute(idRef(label.relationships!.attribute!.data!.id, "attribute")),
+            .attribute(idRef(label.relationships!.attribute!.data!.id, "attribute"))
+            .displayFormType(convertLabelType(attributes.valueType)),
     );
 }
 

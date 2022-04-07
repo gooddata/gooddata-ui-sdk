@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { idRef } from "@gooddata/sdk-model";
 import {
     JsonApiAttributeOutWithLinks,
@@ -9,6 +9,7 @@ import {
 } from "@gooddata/api-client-tiger";
 import { toSdkGranularity } from "./dateGranularityConversions";
 import {
+    AttributeDisplayFormMetadataObjectBuilder,
     IGroupableCatalogItemBuilder,
     newAttributeDisplayFormMetadataObject,
     newCatalogAttribute,
@@ -28,6 +29,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { commonMetadataObjectModifications, MetadataObjectFromApi } from "./MetadataConverter";
 import { isInheritedObject } from "./utils";
+import { convertLabelType } from "./LabelTypeConverter";
 
 const commonGroupableCatalogItemModifications =
     <TItem extends IGroupableCatalogItemBase, T extends IGroupableCatalogItemBuilder<TItem>>(
@@ -39,10 +41,13 @@ const commonGroupableCatalogItemModifications =
     };
 
 const tigerLabelToDisplayFormMd = (label: JsonApiLabelOutWithLinks): IAttributeDisplayFormMetadataObject => {
-    return newAttributeDisplayFormMetadataObject(
-        idRef(label.id, "displayForm"),
-        commonMetadataObjectModifications(label),
-    );
+    return newAttributeDisplayFormMetadataObject(idRef(label.id, "displayForm"), (builder) => {
+        const labelBuilder = commonMetadataObjectModifications(label)(
+            builder,
+        ) as AttributeDisplayFormMetadataObjectBuilder;
+        labelBuilder.displayFormType(convertLabelType(label.attributes?.valueType));
+        return labelBuilder;
+    });
 };
 
 export const convertAttribute = (
