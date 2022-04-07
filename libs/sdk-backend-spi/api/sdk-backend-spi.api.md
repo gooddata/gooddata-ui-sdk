@@ -364,6 +364,7 @@ export interface IBackendCapabilities {
     supportsOwners?: boolean;
     supportsRankingFilter?: boolean;
     supportsRankingFilterWithMeasureValueFilter?: boolean;
+    supportsTimeGranularities?: boolean;
     supportsWidgetEntity?: boolean;
     usesStrictAccessControl?: boolean;
 }
