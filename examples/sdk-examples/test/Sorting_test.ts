@@ -4,7 +4,7 @@ import { config } from "./utils/config";
 import { loginUserAndNavigate } from "./utils/helpers";
 
 fixture("Sorting").beforeEach(loginUserAndNavigate(`${config.url}/sorting`));
-test("should display sorted graphs", async t => {
+test("should display sorted graphs", async (t) => {
     const measureSortingAxisLabels = Selector(".s-measure-sorting .highcharts-xaxis-labels");
     const attributeSortingAxisLabels = Selector(".s-attribute-sorting .highcharts-xaxis-labels");
 

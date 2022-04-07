@@ -1,7 +1,7 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { RawExecute, LoadingComponent, ErrorComponent, IExecuteErrorComponentProps } from "@gooddata/sdk-ui";
-import { IResultHeader, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
+import { IResultAttributeHeader, IResultHeader } from "@gooddata/sdk-model";
 import toPairs from "lodash/toPairs";
 import groupBy from "lodash/groupBy";
 

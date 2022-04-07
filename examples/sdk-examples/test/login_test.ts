@@ -5,7 +5,7 @@ import { loginUsingLoginForm } from "./utils/helpers";
 
 fixture("Login").page(config.url);
 
-test("should show login overlay and log in successfully", async t => {
+test("should show login overlay and log in successfully", async (t) => {
     const getLocation = ClientFunction(() => document.location.pathname);
     const isLoggedInElement = Selector(".s-isLoggedIn");
     await loginUsingLoginForm()(t);
