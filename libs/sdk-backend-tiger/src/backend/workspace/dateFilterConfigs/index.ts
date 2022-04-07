@@ -22,7 +22,14 @@ const DefaultDateFilterConfig: IDateFilterConfig = {
     relativeForm: {
         type: "relativeForm",
         // month has to be the first as it should be the default selected option
-        availableGranularities: ["GDC.time.month", "GDC.time.date", "GDC.time.quarter", "GDC.time.year"],
+        availableGranularities: [
+            "GDC.time.month",
+            "GDC.time.minute",
+            "GDC.time.hour",
+            "GDC.time.date",
+            "GDC.time.quarter",
+            "GDC.time.year",
+        ],
         localIdentifier: "RELATIVE_FORM",
         name: "",
         visible: true,

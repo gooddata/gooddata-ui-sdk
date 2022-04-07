@@ -23,6 +23,8 @@ InMemoryPaging {
       "relativeForm": Object {
         "availableGranularities": Array [
           "GDC.time.month",
+          "GDC.time.minute",
+          "GDC.time.hour",
           "GDC.time.date",
           "GDC.time.quarter",
           "GDC.time.year",
@@ -211,6 +213,8 @@ InMemoryPaging {
       "relativeForm": Object {
         "availableGranularities": Array [
           "GDC.time.month",
+          "GDC.time.minute",
+          "GDC.time.hour",
           "GDC.time.date",
           "GDC.time.quarter",
           "GDC.time.year",
@@ -407,6 +411,8 @@ InMemoryPaging {
       "relativeForm": Object {
         "availableGranularities": Array [
           "GDC.time.month",
+          "GDC.time.minute",
+          "GDC.time.hour",
           "GDC.time.date",
           "GDC.time.quarter",
           "GDC.time.year",
