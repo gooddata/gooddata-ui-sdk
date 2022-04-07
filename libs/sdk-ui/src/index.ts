@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 /**
  * This package provides base functionality useful for building React visualizations on top of GoodData.
  *
@@ -23,4 +23,4 @@ export * from "./kpi";
  * Common interface uses to specify number separators for the different SDK components.
  * @public
  */
-export { ISeparators } from "@gooddata/sdk-backend-spi";
+export { ISeparators } from "@gooddata/sdk-model";

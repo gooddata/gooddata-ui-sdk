@@ -2,8 +2,7 @@
 import { ActionOptions } from "../_base/types";
 import { logInfo, logSuccess, logWarn } from "../_base/terminal/loggers";
 import { getLinkCmdActionConfig, LinkCmdActionConfig } from "./actionConfig";
-import { IDashboard, IDashboardDefinition } from "@gooddata/sdk-backend-spi";
-import { idRef } from "@gooddata/sdk-model";
+import { idRef, IDashboard, IDashboardDefinition } from "@gooddata/sdk-model";
 import ora from "ora";
 import { genericErrorReporter } from "../_base/utils";
 

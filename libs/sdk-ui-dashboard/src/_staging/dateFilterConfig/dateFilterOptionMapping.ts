@@ -1,11 +1,11 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import {
     IAbsoluteDateFilterPreset,
+    IRelativeDateFilterPreset,
     IAllTimeDateFilterOption,
     IDashboardDateFilter,
-    IRelativeDateFilterPreset,
-    OptionType,
-} from "@gooddata/sdk-backend-spi";
+    DateFilterOptionType,
+} from "@gooddata/sdk-model";
 import {
     DateFilterOption,
     IDateFilterOptionsByType,
@@ -190,7 +190,7 @@ export function findDateFilterOptionByValue(
 function findDateFilterOptionByValueAndType(
     dateFilter: IDashboardDateFilter,
     dateFilterOptions: IDateFilterOptionsByType,
-    type: OptionType,
+    type: DateFilterOptionType,
 ) {
     return flattenDateFilterOptions(dateFilterOptions)
         .filter((option) => option.type === type)

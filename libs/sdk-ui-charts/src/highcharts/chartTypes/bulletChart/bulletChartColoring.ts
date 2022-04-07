@@ -1,14 +1,21 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import {
     getOccupiedMeasureBucketsLocalIdentifiers,
     isComparativeSeries,
     isPrimarySeries,
     isTargetSeries,
 } from "./bulletChartSeries";
-import { IColorPalette, Identifier, isColorFromPalette, isRgbColor, IColor } from "@gooddata/sdk-model";
+import {
+    IColorPalette,
+    Identifier,
+    isColorFromPalette,
+    isRgbColor,
+    IColor,
+    IMeasureDescriptor,
+    IMeasureGroupDescriptor,
+} from "@gooddata/sdk-model";
 import { isDarkTheme } from "@gooddata/sdk-ui-theme-provider";
 import { IColorMapping } from "../../../interfaces";
-import { IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
 import { findMeasureGroupInDimensions } from "../_util/executionResultHelper";
 import { IColorAssignment, DataViewFacade } from "@gooddata/sdk-ui";
 import {

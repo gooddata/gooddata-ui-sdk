@@ -1,15 +1,11 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     IDataView,
-    IDimensionDescriptor,
     IExecutionFactory,
     IExecutionResult,
     IExportConfig,
     IExportResult,
     IPreparedExecution,
-    IResultHeader,
-    DataValue,
-    IResultWarning,
     ExplainConfig,
 } from "@gooddata/sdk-backend-spi";
 import {
@@ -23,6 +19,10 @@ import {
     IInsight,
     INullableFilter,
     IExecutionConfig,
+    DataValue,
+    IDimensionDescriptor,
+    IResultHeader,
+    IResultWarning,
 } from "@gooddata/sdk-model";
 import identity from "lodash/identity";
 

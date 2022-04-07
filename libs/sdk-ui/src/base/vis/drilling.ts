@@ -1,10 +1,10 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import {
     isAttributeDescriptor,
+    isTotalDescriptor,
     isMeasureDescriptor,
     isResultAttributeHeader,
-    isTotalDescriptor,
-} from "@gooddata/sdk-backend-spi";
+} from "@gooddata/sdk-model";
 import CustomEventPolyfill from "custom-event";
 import findIndex from "lodash/findIndex";
 import { identifierMatch, uriMatch } from "../headerMatching/HeaderPredicateFactory";

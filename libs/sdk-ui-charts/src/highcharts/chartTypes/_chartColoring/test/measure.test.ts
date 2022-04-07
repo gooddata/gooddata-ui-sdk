@@ -1,6 +1,6 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import { HeaderPredicates } from "@gooddata/sdk-ui";
-import { IColorPalette } from "@gooddata/sdk-model";
+import { IColorPalette, ITheme } from "@gooddata/sdk-model";
 import { ReferenceRecordings, ReferenceMd } from "@gooddata/reference-workspace";
 
 import { getMVS } from "../../_util/test/helper";
@@ -10,7 +10,6 @@ import { IColorMapping } from "../../../../interfaces";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings";
 import { TwoColorPalette } from "./color.fixture";
 import { getColorsFromStrategy } from "./helper";
-import { ITheme } from "@gooddata/sdk-backend-spi";
 
 describe("MeasureColorStrategy", () => {
     describe("derived measure color", () => {

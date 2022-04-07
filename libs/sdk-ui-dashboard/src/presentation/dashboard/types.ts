@@ -1,8 +1,8 @@
 // (C) 2021-2022 GoodData Corporation
 import React, { ComponentType } from "react";
 import { ReactReduxContextValue } from "react-redux";
-import { IAnalyticalBackend, IDashboard, ITheme, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
-import { ObjRef } from "@gooddata/sdk-model";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { ObjRef, IDashboard, ITheme, IWorkspacePermissions } from "@gooddata/sdk-model";
 import { IErrorProps, ILoadingProps } from "@gooddata/sdk-ui";
 
 import {

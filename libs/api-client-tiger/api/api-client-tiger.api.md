@@ -7,10 +7,10 @@
 import { AxiosInstance } from 'axios';
 import { AxiosPromise } from 'axios';
 import { IBucket } from '@gooddata/sdk-model';
-import { IDashboardDateFilterConfig } from '@gooddata/sdk-backend-spi';
-import { IDashboardLayout } from '@gooddata/sdk-backend-spi';
+import { IDashboardDateFilterConfig } from '@gooddata/sdk-model';
+import { IDashboardLayout } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
-import { IFilterContext } from '@gooddata/sdk-backend-spi';
+import { IFilterContext } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { VisualizationProperties } from '@gooddata/sdk-model';

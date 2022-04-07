@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { shallow, ShallowWrapper } from "enzyme";
 import { DEFAULT_DATE_FORMAT } from "../../constants/Platform";
@@ -9,7 +9,7 @@ import {
     DateFilterButtonLocalized,
     IDateFilterButtonLocalizedProps,
 } from "../../DateFilterButtonLocalized/DateFilterButtonLocalized";
-import { IAllTimeDateFilterOption } from "@gooddata/sdk-backend-spi";
+import { IAllTimeDateFilterOption } from "@gooddata/sdk-model";
 
 describe("ExtendedDateFilterBody", () => {
     const allTime: IAllTimeDateFilterOption = {

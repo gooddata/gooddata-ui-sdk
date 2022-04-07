@@ -18,7 +18,7 @@ import {
     ICustomDashboardEvent,
     ICustomWidget,
 } from "../model";
-import { IDashboardLayout, IDashboardLayoutItem, IDashboardLayoutSection } from "@gooddata/sdk-backend-spi";
+import { IDashboardLayout, IDashboardLayoutSection, IDashboardLayoutItem } from "@gooddata/sdk-model";
 
 /**
  * Set of functions you can use to customize how insights are rendered.

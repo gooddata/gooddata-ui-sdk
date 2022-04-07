@@ -1,10 +1,10 @@
 // (C) 2021-2022 GoodData Corporation
 
 import {
-    IAttributeDisplayFormMetadataObject,
     IDashboardObjectIdentity,
     IFilterContextDefinition,
-} from "@gooddata/sdk-backend-spi";
+    IAttributeDisplayFormMetadataObject,
+} from "@gooddata/sdk-model";
 
 /**
  * @alpha

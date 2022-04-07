@@ -1,9 +1,8 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { DashboardTester } from "../../tests/DashboardTester";
 import { EmptyDashboardIdentifier } from "../../tests/fixtures/Dashboard.fixtures";
 import { MeasureDateDatasets, queryDateDatasetsForMeasure } from "../../queries";
-import { measureItem } from "@gooddata/sdk-model";
-import { ICatalogDateDataset } from "@gooddata/sdk-backend-spi";
+import { measureItem, ICatalogDateDataset } from "@gooddata/sdk-model";
 import { initializeDashboard } from "../../commands";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import {

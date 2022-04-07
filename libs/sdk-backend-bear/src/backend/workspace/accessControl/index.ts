@@ -1,12 +1,8 @@
-// (C) 2021 GoodData Corporation
-import {
-    IWorkspaceAccessControlService,
-    AccessGranteeDetail,
-    IAccessGrantee,
-} from "@gooddata/sdk-backend-spi";
+// (C) 2021-2022 GoodData Corporation
+import { IWorkspaceAccessControlService } from "@gooddata/sdk-backend-spi";
 import { objRefToUri } from "../../../utils/api";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
-import { ObjRef } from "@gooddata/sdk-model";
+import { ObjRef, AccessGranteeDetail, IAccessGrantee } from "@gooddata/sdk-model";
 import { convertGranteeEntry } from "../../../convertors/fromBackend/GranteeEntryConverter";
 
 export class BearWorkspaceAccessControlService implements IWorkspaceAccessControlService {

@@ -1,6 +1,7 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { GdcMetadata } from "@gooddata/api-model-bear";
-import { IWorkspaceDatasetsService, IDataset, IMetadataObject } from "@gooddata/sdk-backend-spi";
+import { IWorkspaceDatasetsService } from "@gooddata/sdk-backend-spi";
+import { IMetadataObject, IDataset } from "@gooddata/sdk-model";
 import { convertMetadataObjectXrefEntry } from "../../../convertors/fromBackend/MetaConverter";
 import { convertDataSet } from "../../../convertors/fromBackend/DataSetConverter";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";

@@ -1,7 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
-import { ObjRef } from "@gooddata/sdk-model";
+import { ObjRef, IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
-import { IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-backend-spi";
 import { selectAllCatalogDisplayFormsMap } from "../store/catalog/catalogSelectors";
 import { call, select } from "redux-saga/effects";
 import { DashboardContext } from "../types/commonTypes";

@@ -1,6 +1,7 @@
 // (C) 2007-2022 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
-import { IAnalyticalBackend, IPreparedExecution, ITheme } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { ITheme } from "@gooddata/sdk-model";
 import { TotalType, IExecutionConfig } from "@gooddata/sdk-model";
 import {
     IVisualizationCallbacks,

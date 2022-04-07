@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import { DataValue } from "@gooddata/sdk-backend-spi";
+import { DataValue } from "@gooddata/sdk-model";
 import { ISeparators, numberFormat, colors2Object, INumberObject } from "@gooddata/numberjs";
 import isEmpty from "lodash/isEmpty";
 import escape from "lodash/escape";

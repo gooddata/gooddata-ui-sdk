@@ -1,5 +1,5 @@
-// (C) 2020 GoodData Corporation
-import { IResultHeader, isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
+// (C) 2020-2022 GoodData Corporation
+import { IResultHeader, isResultAttributeHeader } from "@gooddata/sdk-model";
 import { transformResultHeaders } from "../afm/result";
 import { resultHeaders, transformedResultHeaders } from "./AfmResultConverter.fixtures";
 

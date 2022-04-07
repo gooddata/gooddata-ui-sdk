@@ -1,9 +1,10 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { DataViewAll, dataViewWindow, recordedDataView } from "../execution";
 import { isIdentifierRef, isUriRef, ObjRef } from "@gooddata/sdk-model";
-import { IExecutionResult, isAttributeDescriptor } from "@gooddata/sdk-backend-spi";
+import { IExecutionResult } from "@gooddata/sdk-backend-spi";
+import { isAttributeDescriptor } from "@gooddata/sdk-model";
 import { recordedBackend } from "../index";
 
 describe("recordedDataView", () => {

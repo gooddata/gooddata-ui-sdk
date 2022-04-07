@@ -1,7 +1,6 @@
-// (C) 2020-2021 GoodData Corporation
-import { IDimensionDescriptor } from "@gooddata/sdk-backend-spi";
+// (C) 2020-2022 GoodData Corporation
 import { ExecutionResult } from "@gooddata/api-client-tiger";
-import { idRef } from "@gooddata/sdk-model";
+import { idRef, IDimensionDescriptor } from "@gooddata/sdk-model";
 
 export const mockResult: ExecutionResult = {
     data: [["20.0", "40.2"]],

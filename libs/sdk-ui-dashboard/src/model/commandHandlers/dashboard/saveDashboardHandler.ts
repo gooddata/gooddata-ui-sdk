@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { DashboardContext } from "../../types/commonTypes";
 import { SaveDashboard } from "../../commands";
 import { SagaIterator } from "redux-saga";
@@ -11,11 +11,11 @@ import {
 import { selectDashboardDescriptor, selectPersistedDashboard } from "../../store/meta/metaSelectors";
 import { selectDateFilterConfigOverrides } from "../../store/dateFilterConfig/dateFilterConfigSelectors";
 import {
-    IAccessControlAware,
+    IDashboardObjectIdentity,
     IDashboard,
     IDashboardDefinition,
-    IDashboardObjectIdentity,
-} from "@gooddata/sdk-backend-spi";
+    IAccessControlAware,
+} from "@gooddata/sdk-model";
 import { BatchAction, batchActions } from "redux-batched-actions";
 import { PromiseFnReturnType } from "../../types/sagas";
 import { DashboardSaved, dashboardSaved } from "../../events/dashboard";

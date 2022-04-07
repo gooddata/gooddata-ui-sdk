@@ -1,13 +1,15 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
-    IDashboard,
-    IDashboardLayoutItem,
-    IDrillToDashboard,
+    idRef,
+    localIdRef,
+    uriRef,
     IFilterContext,
     ITempFilterContext,
+    IDrillToDashboard,
     IWidget,
-} from "@gooddata/sdk-backend-spi";
-import { idRef, localIdRef, uriRef } from "@gooddata/sdk-model";
+    IDashboardLayoutItem,
+    IDashboard,
+} from "@gooddata/sdk-model";
 
 const createObjectMeta = (id: string) => {
     const uri = `/gdc/md/obj/${id}`;

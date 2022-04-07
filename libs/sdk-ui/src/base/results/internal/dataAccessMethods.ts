@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import {
     IDataAccessMethods,
@@ -7,10 +7,17 @@ import {
     IDataSlice,
     IDataSliceCollection,
 } from "../dataAccess";
-import { IDataView, IMeasureDescriptor, IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
+import { IDataView } from "@gooddata/sdk-backend-spi";
 import { DataAccessImpl } from "./dataAccessImpl";
 import { DataAccessConfig, DefaultDataAccessConfig } from "../dataAccessConfig";
-import { IMeasure, IAttribute, ITotal, measureLocalId } from "@gooddata/sdk-model";
+import {
+    IMeasure,
+    IAttribute,
+    ITotal,
+    measureLocalId,
+    IMeasureDescriptor,
+    IAttributeDescriptor,
+} from "@gooddata/sdk-model";
 
 class FilteredIterator<T> implements Iterator<T> {
     private idx = 0;

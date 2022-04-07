@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import { IAvailableLegends, IGeoData, IGeoLngLat } from "../../../../GeoChart";
 import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
 import {
@@ -18,14 +18,12 @@ import {
     measureItem,
     measureLocalId,
     ObjRef,
-} from "@gooddata/sdk-model";
-import {
-    IAttributeDescriptor,
     IMeasureDescriptor,
+    IAttributeDescriptor,
     IResultHeader,
     isResultAttributeHeader,
     resultHeaderName,
-} from "@gooddata/sdk-backend-spi";
+} from "@gooddata/sdk-model";
 import { IPushpinCategoryLegendItem } from "@gooddata/sdk-ui-vis-commons";
 import findIndex from "lodash/findIndex";
 

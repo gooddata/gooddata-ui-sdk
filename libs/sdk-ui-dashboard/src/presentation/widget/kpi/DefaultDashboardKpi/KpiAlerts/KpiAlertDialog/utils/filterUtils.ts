@@ -1,9 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
-import {
-    isDashboardAttributeFilter,
-    isDashboardDateFilter,
-    IWidgetAlertDefinition,
-} from "@gooddata/sdk-backend-spi";
+// (C) 2007-2022 GoodData Corporation
 import {
     absoluteDateFilterValues,
     areObjRefsEqual,
@@ -19,6 +14,9 @@ import {
     isNegativeAttributeFilter,
     isRelativeDateFilter,
     relativeDateFilterValues,
+    isDashboardAttributeFilter,
+    isDashboardDateFilter,
+    IWidgetAlertDefinition,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
 import last from "lodash/last";

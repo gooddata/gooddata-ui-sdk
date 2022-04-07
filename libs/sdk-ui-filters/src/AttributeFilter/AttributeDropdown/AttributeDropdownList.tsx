@@ -1,7 +1,7 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React, { useCallback } from "react";
 import { FormattedMessage } from "react-intl";
-import { IAttributeElement } from "@gooddata/sdk-backend-spi";
+import { IAttributeElement } from "@gooddata/sdk-model";
 import { LegacyInvertableList, LoadingMask } from "@gooddata/sdk-ui-kit";
 
 import { AttributeFilterItem } from "./AttributeFilterItem";

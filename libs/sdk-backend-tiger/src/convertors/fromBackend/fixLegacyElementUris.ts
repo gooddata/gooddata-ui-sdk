@@ -1,5 +1,4 @@
 // (C) 2019-2022 GoodData Corporation
-import { isInsightWidget, IWidgetDefinition } from "@gooddata/sdk-backend-spi";
 import {
     IInsightDefinition,
     ILocatorItem,
@@ -7,6 +6,8 @@ import {
     isMeasureSort,
     ISortItem,
     VisualizationProperties,
+    IWidgetDefinition,
+    isInsightWidget,
 } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 import flow from "lodash/flow";

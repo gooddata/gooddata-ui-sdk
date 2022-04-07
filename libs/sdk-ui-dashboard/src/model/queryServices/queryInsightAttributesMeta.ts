@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { DashboardContext } from "../types/commonTypes";
 import { SagaIterator } from "redux-saga";
 import {
@@ -10,6 +10,10 @@ import {
     ObjRef,
     objRefToString,
     serializeObjRef,
+    ICatalogAttribute,
+    ICatalogDateAttribute,
+    IAttributeDisplayFormMetadataObject,
+    IAttributeMetadataObject,
 } from "@gooddata/sdk-model";
 import { createCachedQueryService } from "../store/_infra/queryService";
 import { InsightAttributesMeta, QueryInsightAttributesMeta } from "../queries";
@@ -20,12 +24,6 @@ import {
     selectAllCatalogAttributesMap,
     selectAllCatalogDisplayFormsMap,
 } from "../store/catalog/catalogSelectors";
-import {
-    IAttributeDisplayFormMetadataObject,
-    IAttributeMetadataObject,
-    ICatalogAttribute,
-    ICatalogDateAttribute,
-} from "@gooddata/sdk-backend-spi";
 import { invariant } from "ts-invariant";
 import { ObjRefMap } from "../../_staging/metadata/objRefMap";
 import uniqBy from "lodash/uniqBy";

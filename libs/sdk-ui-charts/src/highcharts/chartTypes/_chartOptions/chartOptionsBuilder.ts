@@ -1,5 +1,6 @@
 // (C) 2007-2022 GoodData Corporation
-import { IDataView, IMeasureDescriptor, IMeasureGroupDescriptor, ITheme } from "@gooddata/sdk-backend-spi";
+import { IDataView } from "@gooddata/sdk-backend-spi";
+import { ITheme, IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 
 import { BucketNames, DataViewFacade, IHeaderPredicate } from "@gooddata/sdk-ui";

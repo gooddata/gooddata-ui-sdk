@@ -1,13 +1,14 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import { GdcVisualizationWidget, GdcKpi } from "@gooddata/api-model-bear";
-import { uriRef, idRef } from "@gooddata/sdk-model";
 import {
+    uriRef,
+    idRef,
+    DrillOrigin,
     IDrillToLegacyDashboard,
     InsightDrillDefinition,
-    UnexpectedError,
-    DrillOrigin,
-} from "@gooddata/sdk-backend-spi";
+} from "@gooddata/sdk-model";
+import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 
 export const convertKpiDrill = (kpi: GdcKpi.IWrappedKPI): IDrillToLegacyDashboard => {
     const { drillTo: { projectDashboard, projectDashboardTab } = {}, metric } = kpi.kpi.content;

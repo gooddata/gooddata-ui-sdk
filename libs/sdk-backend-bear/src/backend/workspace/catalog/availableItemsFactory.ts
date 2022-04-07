@@ -1,15 +1,17 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     IWorkspaceCatalogAvailableItemsFactory,
     IWorkspaceCatalogWithAvailableItemsFactoryOptions,
+} from "@gooddata/sdk-backend-spi";
+import {
     CatalogItemType,
     CatalogItem,
     ICatalogGroup,
     ICatalogDateDataset,
     isCatalogAttribute,
-    isCatalogMeasure,
     isCatalogFact,
-} from "@gooddata/sdk-backend-spi";
+    isCatalogMeasure,
+} from "@gooddata/sdk-model";
 import {
     IAttributeOrMeasure,
     IInsightDefinition,

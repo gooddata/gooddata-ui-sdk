@@ -3,7 +3,7 @@ import * as React from "react";
 import cx from "classnames";
 import { Bubble, BubbleHoverTrigger, Dropdown, Button } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
-import { ITheme } from "@gooddata/sdk-backend-spi";
+import { ITheme } from "@gooddata/sdk-model";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 import { DEFAULT_DROPDOWN_ALIGN_POINTS, DEFAULT_DROPDOWN_ZINDEX } from "../../constants";
 

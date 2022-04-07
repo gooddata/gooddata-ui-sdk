@@ -1,5 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import { IDashboardLayout, IDashboardLayoutSectionHeader } from "@gooddata/sdk-backend-spi";
+import { IDashboardLayout, IDashboardLayoutSectionHeader } from "@gooddata/sdk-model";
 
 import {
     ExtendedDashboardItem,

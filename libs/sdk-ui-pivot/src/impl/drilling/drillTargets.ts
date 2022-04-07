@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import {
     DataViewFacade,
     getIntersectionAttributes,
@@ -6,7 +6,7 @@ import {
     IAvailableDrillTargetMeasure,
     IAvailableDrillTargets,
 } from "@gooddata/sdk-ui";
-import { IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
+import { IMeasureDescriptor } from "@gooddata/sdk-model";
 
 export function getAvailableDrillTargets(dv: DataViewFacade): IAvailableDrillTargets {
     const measureDescriptors = dv

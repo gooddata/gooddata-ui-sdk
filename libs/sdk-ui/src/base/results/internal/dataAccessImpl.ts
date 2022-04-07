@@ -1,13 +1,13 @@
 // (C) 2019-2022 GoodData Corporation
 
+import { IDataView } from "@gooddata/sdk-backend-spi";
 import {
     DataValue,
-    IDataView,
     IResultAttributeHeader,
     IResultTotalHeader,
     isResultTotalHeader,
     resultHeaderName,
-} from "@gooddata/sdk-backend-spi";
+} from "@gooddata/sdk-model";
 import { DataPoint, DataSeriesDescriptor, DataSliceDescriptor, IDataSeries, IDataSlice } from "../dataAccess";
 import { createDataAccessDigest, DataAccessDigest } from "./dataAccessDigest";
 import { LazyInitArray } from "./lazyInitArray";

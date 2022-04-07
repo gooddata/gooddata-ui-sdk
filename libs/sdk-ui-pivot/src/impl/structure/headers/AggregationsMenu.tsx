@@ -1,9 +1,8 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import cx from "classnames";
 import React from "react";
 import { IntlShape } from "react-intl";
 import noop from "lodash/noop";
-import { attributeDescriptorLocalId, IAttributeDescriptor, ITheme } from "@gooddata/sdk-backend-spi";
 import {
     IExecutionDefinition,
     isMeasureValueFilter,
@@ -11,6 +10,9 @@ import {
     TotalType,
     measureValueFilterCondition,
     isRankingFilter,
+    ITheme,
+    IAttributeDescriptor,
+    attributeDescriptorLocalId,
 } from "@gooddata/sdk-model";
 import {
     Bubble,

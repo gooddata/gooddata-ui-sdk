@@ -1,9 +1,9 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { IUiRelativeDateFilterForm, DateFilterOption } from "../interfaces";
 import { GranularityTabs } from "./GranularityTabs";
 import { RelativeRangePicker } from "../RelativeRangePicker/RelativeRangePicker";
-import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
+import { DateFilterGranularity } from "@gooddata/sdk-model";
 
 export interface IRelativeDateFilterFormProps {
     /**

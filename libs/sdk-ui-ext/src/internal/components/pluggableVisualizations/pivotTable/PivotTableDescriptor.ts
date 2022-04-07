@@ -1,12 +1,11 @@
 // (C) 2021-2022 GoodData Corporation
-import { IInsight, IInsightDefinition, insightSanitize } from "@gooddata/sdk-model";
+import { IInsight, IInsightDefinition, insightSanitize, ISettings } from "@gooddata/sdk-model";
 import {
     IAttributeColumnWidthItem,
     IPivotTableProps,
     isAttributeColumnWidthItem,
 } from "@gooddata/sdk-ui-pivot";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { ISettings } from "@gooddata/sdk-backend-spi";
 
 import {
     IVisualizationDescriptor,

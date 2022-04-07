@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import React from "react";
 import {
@@ -6,8 +6,7 @@ import {
     KpiComponentProvider,
     OptionalKpiComponentProvider,
 } from "../../../presentation";
-import { idRef, measureItem } from "@gooddata/sdk-model";
-import { IKpiWidget, ILegacyKpi } from "@gooddata/sdk-backend-spi";
+import { idRef, measureItem, IKpiWidget, IKpi } from "@gooddata/sdk-model";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { mount } from "enzyme";
 import invariant from "ts-invariant";
@@ -50,7 +49,7 @@ function createTestComponent(name: string): React.FC {
 
 function createTestComponentProvider(
     name: string,
-    predicate: (kpi: ILegacyKpi, widget: IKpiWidget) => boolean,
+    predicate: (kpi: IKpi, widget: IKpiWidget) => boolean,
 ): OptionalKpiComponentProvider {
     const Component = createTestComponent(name);
 
@@ -63,10 +62,7 @@ function createTestComponentProvider(
     };
 }
 
-function createTestDecoratorFactory(
-    name: string,
-    predicate: (kpi: ILegacyKpi, widget: IKpiWidget) => boolean,
-) {
+function createTestDecoratorFactory(name: string, predicate: (kpi: IKpi, widget: IKpiWidget) => boolean) {
     return (next: KpiComponentProvider): OptionalKpiComponentProvider => {
         return (kpi, widget) => {
             if (!predicate(kpi, widget)) {

@@ -9,7 +9,7 @@ import {
     JsonApiLabelOutWithLinks,
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
-import { CatalogItem, ICatalogAttribute, ICatalogDateDataset } from "@gooddata/sdk-backend-spi";
+import { CatalogItem, ICatalogAttribute, ICatalogDateDataset } from "@gooddata/sdk-model";
 import values from "lodash/values";
 import {
     convertAttribute,

@@ -1,8 +1,8 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { isScopeCol, LeafDataCol } from "./tableDescriptorTypes";
 import { ColumnLocator, IAttributeColumnLocator, IMeasureColumnLocator } from "../../columnWidths";
-import { IAttributeDescriptor, IMeasureDescriptor, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
+import { IMeasureDescriptor, IAttributeDescriptor, IResultAttributeHeader } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import zip from "lodash/zip";
 

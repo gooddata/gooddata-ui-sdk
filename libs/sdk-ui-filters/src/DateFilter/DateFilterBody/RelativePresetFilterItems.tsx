@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import kebabCase from "lodash/kebabCase";
 import cx from "classnames";
@@ -7,7 +7,7 @@ import { ListHeading } from "../ListHeading/ListHeading";
 import { RelativePresetTitleTranslated } from "../RelativePresetTitleTranslated/RelativePresetTitleTranslated";
 import { DateFilterTextLocalized } from "../DateFilterTextLocalized/DateFilterTextLocalized";
 import { DateFilterRelativeOptionGroup, DateFilterOption } from "../interfaces";
-import { IRelativeDateFilterPreset, DateFilterGranularity } from "@gooddata/sdk-backend-spi";
+import { DateFilterGranularity, IRelativeDateFilterPreset } from "@gooddata/sdk-model";
 
 const granularityOrder: DateFilterGranularity[] = [
     "GDC.time.date",

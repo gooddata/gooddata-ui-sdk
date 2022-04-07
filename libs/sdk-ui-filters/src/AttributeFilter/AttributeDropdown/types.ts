@@ -1,5 +1,6 @@
-// (C) 2019-2021 GoodData Corporation
-import { IPagedResource, IAttributeElement } from "@gooddata/sdk-backend-spi";
+// (C) 2019-2022 GoodData Corporation
+import { IPagedResource } from "@gooddata/sdk-backend-spi";
+import { IAttributeElement } from "@gooddata/sdk-model";
 
 export const emptyListItem: EmptyListItem = { empty: true };
 

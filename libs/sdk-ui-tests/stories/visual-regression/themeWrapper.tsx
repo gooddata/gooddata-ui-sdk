@@ -3,7 +3,7 @@ import React from "react";
 import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { ITheme } from "@gooddata/sdk-backend-spi";
+import { ITheme } from "@gooddata/sdk-model";
 
 import "./themeWrapper.scss";
 

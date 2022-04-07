@@ -1,7 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
 import compose from "lodash/flowRight";
-import { ITheme } from "@gooddata/sdk-backend-spi";
+import { ITheme } from "@gooddata/sdk-model";
 import { wrapDisplayName } from "@gooddata/sdk-ui";
 
 const ThemeContext = React.createContext<ITheme | undefined>(undefined);

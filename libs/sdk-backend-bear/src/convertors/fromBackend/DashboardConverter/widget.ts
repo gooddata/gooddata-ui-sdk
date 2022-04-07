@@ -1,8 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 
 import { GdcVisualizationWidget, GdcKpi, GdcExtendedDateFilters } from "@gooddata/api-model-bear";
-import { uriRef } from "@gooddata/sdk-model";
-import { IWidget, IDashboardFilterReference } from "@gooddata/sdk-backend-spi";
+import { uriRef, IDashboardFilterReference, IWidget } from "@gooddata/sdk-model";
 import { convertVisualizationWidgetDrill, convertKpiDrill } from "./drills";
 import { convertReferencesToUris } from "../ReferenceConverter";
 import { deserializeProperties } from "../PropertiesConverter";

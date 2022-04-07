@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { DashboardContext } from "../../types/commonTypes";
 import { ChangeInsightWidgetFilterSettings } from "../../commands";
@@ -9,11 +9,7 @@ import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { validateExistingInsightWidget } from "./validation/widgetValidations";
 import { layoutActions } from "../../store/layout";
 import { insightWidgetFilterSettingsChanged } from "../../events/insight";
-import {
-    IDashboardAttributeFilterReference,
-    IInsightWidget,
-    IAnalyticalWidget,
-} from "@gooddata/sdk-backend-spi";
+import { IDashboardAttributeFilterReference, IAnalyticalWidget, IInsightWidget } from "@gooddata/sdk-model";
 import { FilterValidators, processFilterOp } from "./common/filterOperations";
 import {
     validateAttributeFiltersToIgnore,

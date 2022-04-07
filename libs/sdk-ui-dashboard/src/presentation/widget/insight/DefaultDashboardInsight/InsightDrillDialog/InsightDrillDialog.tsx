@@ -1,6 +1,6 @@
 // (C) 2020-2022 GoodData Corporation
 import React, { useCallback, useState } from "react";
-import { IInsightWidget } from "@gooddata/sdk-backend-spi";
+import { IInsightWidget } from "@gooddata/sdk-model";
 import { idRef, IInsight, insightTitle } from "@gooddata/sdk-model";
 import { FullScreenOverlay, Overlay, useMediaQuery } from "@gooddata/sdk-ui-kit";
 import { ILocale, OnLoadingChanged } from "@gooddata/sdk-ui";

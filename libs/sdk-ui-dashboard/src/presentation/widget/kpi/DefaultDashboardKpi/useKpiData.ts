@@ -1,5 +1,5 @@
 // (C) 2020-2022 GoodData Corporation
-import { FilterContextItem, IAnalyticalBackend, IKpiWidget } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     IMeasure,
     IPoPMeasureDefinition,
@@ -11,6 +11,8 @@ import {
     newPopMeasure,
     newPreviousPeriodMeasure,
     ObjRef,
+    FilterContextItem,
+    IKpiWidget,
 } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,

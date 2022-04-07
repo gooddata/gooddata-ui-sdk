@@ -1,13 +1,13 @@
 // (C) 2021-2022 GoodData Corporation
-import { IInsight } from "@gooddata/sdk-model";
-import { ExplicitDrill } from "@gooddata/sdk-ui";
 import {
-    IDrillToDashboard,
-    IDrillToInsight,
+    IInsight,
     IDrillToAttributeUrl,
     IDrillToCustomUrl,
+    IDrillToDashboard,
+    IDrillToInsight,
     IDrillToLegacyDashboard,
-} from "@gooddata/sdk-backend-spi";
+} from "@gooddata/sdk-model";
+import { ExplicitDrill } from "@gooddata/sdk-ui";
 
 import { DashboardContext, FiltersInfo } from "../types/commonTypes";
 import { IDashboardEvent } from "./base";

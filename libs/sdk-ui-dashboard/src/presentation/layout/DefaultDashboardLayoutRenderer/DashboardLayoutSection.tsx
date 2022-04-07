@@ -1,7 +1,7 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import flatMap from "lodash/flatMap";
-import { ScreenSize } from "@gooddata/sdk-backend-spi";
+import { ScreenSize } from "@gooddata/sdk-model";
 import {
     IDashboardLayoutItemKeyGetter,
     IDashboardLayoutItemRenderer,

@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from "react";
 import { mount, ReactWrapper } from "enzyme";
@@ -9,7 +9,7 @@ import formatDate from "date-fns/format";
 import noop from "lodash/noop";
 import { IDateFilterProps, DateFilter } from "../DateFilter";
 import { IDateFilterOptionsByType } from "../interfaces";
-import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
+import { DateFilterGranularity } from "@gooddata/sdk-model";
 
 export const defaultDateFilterOptions: IDateFilterOptionsByType = {
     allTime: {

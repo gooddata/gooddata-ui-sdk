@@ -14,8 +14,9 @@ import {
     isAttributeFilter,
     IRelativeDateFilter,
     isObjRef,
+    IAttributeElement,
 } from "@gooddata/sdk-model";
-import { IAnalyticalBackend, IAttributeElement } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import {
     IResolvedAttributeFilterValues,

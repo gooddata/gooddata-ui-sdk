@@ -3,7 +3,8 @@ import React, { useEffect, useState, useRef } from "react";
 import { getLuminance } from "polished";
 import identity from "lodash/identity";
 import { useBackend, useWorkspace } from "@gooddata/sdk-ui";
-import { ITheme, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { ITheme } from "@gooddata/sdk-model";
 
 import { clearCssProperties, setCssProperties } from "../cssProperties";
 import { ThemeContextProvider } from "./Context";

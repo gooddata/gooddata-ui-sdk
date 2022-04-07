@@ -1,6 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import { IInsightDefinition } from "@gooddata/sdk-model";
-import { ISettings } from "@gooddata/sdk-backend-spi";
+import { IInsightDefinition, ISettings } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { IGeoPushpinChartProps } from "@gooddata/sdk-ui-geo";
 

@@ -1,12 +1,12 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
+import { IDataView } from "@gooddata/sdk-backend-spi";
 import {
-    IDataView,
-    IDimensionItemDescriptor,
     IMeasureDescriptor,
+    IDimensionItemDescriptor,
     IMeasureGroupDescriptor,
     IResultHeader,
-} from "@gooddata/sdk-backend-spi";
+} from "@gooddata/sdk-model";
 
 /**
  * @internal

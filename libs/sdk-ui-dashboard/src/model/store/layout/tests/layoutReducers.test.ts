@@ -1,8 +1,8 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import { LayoutState } from "../layoutState";
 import { InitialUndoState } from "../../_infra/undoEnhancer";
-import { IDashboardLayout, IInsightWidget, InsightDrillDefinition } from "@gooddata/sdk-backend-spi";
+import { InsightDrillDefinition, IInsightWidget, IDashboardLayout } from "@gooddata/sdk-model";
 import { layoutReducers } from "../layoutReducers";
 import { modifyDrillsForInsightWidget, removeLayoutSection } from "../../../commands";
 import { layoutActions } from "../index";

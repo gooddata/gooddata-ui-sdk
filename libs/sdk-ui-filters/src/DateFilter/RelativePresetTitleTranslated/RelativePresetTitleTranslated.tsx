@@ -1,7 +1,7 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
+import { DateFilterGranularity } from "@gooddata/sdk-model";
 
 const intlIdDict: { [key in DateFilterGranularity]: string } = {
     "GDC.time.date": "filters.day.title",

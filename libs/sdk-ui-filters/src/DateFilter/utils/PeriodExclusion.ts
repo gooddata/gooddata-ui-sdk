@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 
 import {
     isAllTimeDateFilterOption,
@@ -6,7 +6,7 @@ import {
     isAbsoluteDateFilterPreset,
     isRelativeDateFilterForm,
     isRelativeDateFilterPreset,
-} from "@gooddata/sdk-backend-spi";
+} from "@gooddata/sdk-model";
 import { DateFilterOption } from "../interfaces";
 
 /**

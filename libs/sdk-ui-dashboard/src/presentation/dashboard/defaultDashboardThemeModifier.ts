@@ -1,6 +1,6 @@
 // (C) 2020-2022 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
-import { ITheme } from "@gooddata/sdk-backend-spi";
+import { ITheme } from "@gooddata/sdk-model";
 
 /**
  * Default modifier applied to any theme passed to Dashboard component

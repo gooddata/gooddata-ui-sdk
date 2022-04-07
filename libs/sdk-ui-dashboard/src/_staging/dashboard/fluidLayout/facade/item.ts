@@ -1,29 +1,30 @@
-// (C) 2019-2021 GoodData Corporation
-import {
-    IDashboardLayoutSize,
-    IDashboardLayoutSizeByScreenSize,
-    IInsightWidget,
-    IInsightWidgetDefinition,
-    IKpiWidget,
-    IKpiWidgetDefinition,
-    isDashboardLayoutItem,
-    isDashboardLayout,
-    isInsightWidget,
-    isInsightWidgetDefinition,
-    isKpiWidget,
-    isKpiWidgetDefinition,
-    IWidget,
-    IWidgetDefinition,
-    IDashboardLayout,
-    IDashboardLayoutItem,
-    ScreenSize,
-    IDashboardWidget,
-    isWidget,
-    isWidgetDefinition,
-} from "@gooddata/sdk-backend-spi";
+// (C) 2019-2022 GoodData Corporation
 import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
-import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import {
+    ObjRef,
+    areObjRefsEqual,
+    IKpiWidget,
+    IKpiWidgetDefinition,
+    IInsightWidget,
+    IInsightWidgetDefinition,
+    IWidget,
+    IWidgetDefinition,
+    isWidget,
+    isWidgetDefinition,
+    isKpiWidgetDefinition,
+    isKpiWidget,
+    isInsightWidgetDefinition,
+    isInsightWidget,
+    IDashboardLayout,
+    IDashboardWidget,
+    IDashboardLayoutSize,
+    IDashboardLayoutSizeByScreenSize,
+    IDashboardLayoutItem,
+    ScreenSize,
+    isDashboardLayout,
+    isDashboardLayoutItem,
+} from "@gooddata/sdk-model";
 import { IDashboardLayoutItemFacade, IDashboardLayoutSectionFacade } from "./interfaces";
 
 /**

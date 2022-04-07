@@ -1,12 +1,10 @@
 // (C) 2007-2022 GoodData Corporation
 import {
     IAnalyticalBackend,
-    IAttributeDisplayFormMetadataObject,
     IBackendCapabilities,
     IDataView,
     IExecutionFactory,
     IExecutionResult,
-    IMetadataObject,
     IPreparedExecution,
     ISecuritySettingsService,
     IWorkspaceAttributesService,
@@ -48,6 +46,8 @@ import {
     ObjectType,
     ObjRef,
     uriRef,
+    IAttributeDisplayFormMetadataObject,
+    IMetadataObject,
 } from "@gooddata/sdk-model";
 import { DecoratedWorkspaceAttributesService } from "../decoratedBackend/attributes";
 

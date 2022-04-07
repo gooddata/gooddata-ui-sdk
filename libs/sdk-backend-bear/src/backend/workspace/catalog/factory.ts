@@ -1,19 +1,19 @@
-// (C) 2019-2021 GoodData Corporation
-import {
-    CatalogItem,
-    CatalogItemType,
-    ICatalogGroup,
-    ICatalogMeasure,
-    isCatalogFact,
-    isCatalogMeasure,
-    IWorkspaceCatalogFactory,
-    IWorkspaceCatalogFactoryOptions,
-} from "@gooddata/sdk-backend-spi";
+// (C) 2019-2022 GoodData Corporation
+import { IWorkspaceCatalogFactory, IWorkspaceCatalogFactoryOptions } from "@gooddata/sdk-backend-spi";
 import partition from "lodash/partition";
 import uniq from "lodash/uniq";
 import flatMap from "lodash/flatMap";
 import keyBy from "lodash/keyBy";
-import { Identifier, ObjRef } from "@gooddata/sdk-model";
+import {
+    Identifier,
+    ObjRef,
+    CatalogItemType,
+    CatalogItem,
+    ICatalogGroup,
+    ICatalogMeasure,
+    isCatalogFact,
+    isCatalogMeasure,
+} from "@gooddata/sdk-model";
 import { GdcCatalog, GdcDateDataSets, GdcMetadata } from "@gooddata/api-model-bear";
 import {
     convertAttribute,

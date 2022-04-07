@@ -1,11 +1,5 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
-    CatalogItem,
-    CatalogItemType,
-    ICatalogGroup,
-    isCatalogAttribute,
-    isCatalogFact,
-    isCatalogMeasure,
     IWorkspaceCatalogAvailableItemsFactory,
     IWorkspaceCatalogWithAvailableItemsFactoryOptions,
 } from "@gooddata/sdk-backend-spi";
@@ -20,6 +14,12 @@ import {
     isMeasure,
     insightFilters,
     areObjRefsEqual,
+    CatalogItemType,
+    CatalogItem,
+    ICatalogGroup,
+    isCatalogAttribute,
+    isCatalogFact,
+    isCatalogMeasure,
 } from "@gooddata/sdk-model";
 import { AfmValidObjectsQuery, AfmValidObjectsQueryTypesEnum } from "@gooddata/api-client-tiger";
 import intersectionWith from "lodash/intersectionWith";

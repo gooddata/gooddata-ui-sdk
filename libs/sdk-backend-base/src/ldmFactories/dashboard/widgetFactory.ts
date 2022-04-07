@@ -1,7 +1,6 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 // import invariant from "ts-invariant";
-import { ObjRef } from "@gooddata/sdk-model";
-import { IWidget, IDashboardFilterReference } from "@gooddata/sdk-backend-spi";
+import { ObjRef, IDashboardFilterReference, IWidget } from "@gooddata/sdk-model";
 import { Builder, IBuilder, resolveValueOrUpdateCallback, ValueOrUpdateCallback } from "../builder";
 
 /**

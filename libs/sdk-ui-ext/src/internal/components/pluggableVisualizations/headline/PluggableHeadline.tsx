@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 
-import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
+import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
     bucketIsEmpty,
     IInsightDefinition,
@@ -8,6 +8,7 @@ import {
     insightHasDataDefined,
     MeasureGroupIdentifier,
     newDimension,
+    ISettings,
 } from "@gooddata/sdk-model";
 
 import { BucketNames } from "@gooddata/sdk-ui";

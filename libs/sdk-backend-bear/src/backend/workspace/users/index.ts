@@ -1,10 +1,10 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     IWorkspaceUsersQuery,
     IWorkspaceUsersQueryOptions,
-    IWorkspaceUser,
     IWorkspaceUsersQueryResult,
 } from "@gooddata/sdk-backend-spi";
+import { IWorkspaceUser } from "@gooddata/sdk-model";
 
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { convertWorkspaceUser } from "../../../convertors/fromBackend/UsersConverter";

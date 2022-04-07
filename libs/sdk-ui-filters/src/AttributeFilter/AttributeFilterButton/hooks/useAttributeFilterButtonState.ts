@@ -1,10 +1,10 @@
 // (C) 2022 GoodData Corporation
 
-import { IAnalyticalBackend, IAttributeElement, IElementsQueryResult } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IElementsQueryResult } from "@gooddata/sdk-backend-spi";
 import { IElementQueryResultWithEmptyItems, isNonEmptyListItem } from "../../AttributeDropdown/types";
 import { useCallback, useEffect, useState } from "react";
 import { ATTRIBUTE_FILTER_BUTTON_LIMIT } from "../constants";
-import { IAttributeFilter } from "@gooddata/sdk-model";
+import { IAttributeFilter, IAttributeElement } from "@gooddata/sdk-model";
 import {
     checkFilterSetupForBackend,
     getInitialIsInverted,

@@ -1,22 +1,24 @@
 // (C) 2020 GoodData Corporation
 
-import { IDataView, isAttributeDescriptor } from "@gooddata/sdk-backend-spi";
+import { IDataView } from "@gooddata/sdk-backend-spi";
 import { recordedDataViews } from "@gooddata/sdk-backend-mockingbird";
 import { DataViewFacade, IDataSeriesCollection, IDataSliceCollection } from "@gooddata/sdk-ui";
-import { isTotal } from "@gooddata/sdk-model";
+import { isTotal, isAttributeDescriptor } from "@gooddata/sdk-model";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
 describe("DataAccess", () => {
-    const Scenarios: Array<[string, IDataView]> = recordedDataViews(
-        ReferenceRecordings.Recordings,
-    ).map(dv => [dv.name, dv.dataView]);
+    const Scenarios: Array<[string, IDataView]> = recordedDataViews(ReferenceRecordings.Recordings).map(
+        (dv) => [dv.name, dv.dataView],
+    );
 
     function seriesCollectionDigest(series: IDataSeriesCollection) {
         return {
             allSeries: series.count,
             measures: series.fromMeasures.length,
             attributes: series.scopingAttributes?.length,
-            seriesNames: Array.from(series).map(s => `${s.scopeTitles().join(" > ")} > ${s.measureTitle()}`),
+            seriesNames: Array.from(series).map(
+                (s) => `${s.scopeTitles().join(" > ")} > ${s.measureTitle()}`,
+            ),
         };
     }
 
@@ -25,7 +27,7 @@ describe("DataAccess", () => {
             allSlices: slice.count,
             attributes: slice.descriptors.filter(isAttributeDescriptor).length,
             totals: slice.descriptors.filter(isTotal).length,
-            sliceNames: Array.from(slice).map(s => `${s.sliceTitles().join(" > ")}`),
+            sliceNames: Array.from(slice).map((s) => `${s.sliceTitles().join(" > ")}`),
         };
     }
 
@@ -55,7 +57,7 @@ describe("DataAccess", () => {
              */
             expect(series.rawData().length).toEqual(slicesCol.count || 1);
 
-            const valuesFromPoints = Array.from(series).map(dp => dp.rawValue);
+            const valuesFromPoints = Array.from(series).map((dp) => dp.rawValue);
 
             expect(valuesFromPoints).toEqual(series.rawData());
         }

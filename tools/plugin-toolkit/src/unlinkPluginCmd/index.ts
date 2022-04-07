@@ -2,8 +2,8 @@
 import { ActionOptions } from "../_base/types";
 import { logInfo, logSuccess, logWarn } from "../_base/terminal/loggers";
 import { getUnlinkCmdActionConfig, UnlinkCmdActionConfig } from "./actionConfig";
-import { IDashboardDefinition, IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
-import { areObjRefsEqual, idRef } from "@gooddata/sdk-model";
+import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
+import { areObjRefsEqual, idRef, IDashboardDefinition } from "@gooddata/sdk-model";
 import ora from "ora";
 import { genericErrorReporter } from "../_base/utils";
 

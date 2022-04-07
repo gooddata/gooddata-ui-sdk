@@ -1,5 +1,5 @@
-// (C) 2021 GoodData Corporation
-import { FilterContextItem, isDashboardDateFilter } from "@gooddata/sdk-backend-spi";
+// (C) 2021-2022 GoodData Corporation
+import { FilterContextItem, isDashboardDateFilter } from "@gooddata/sdk-model";
 
 // the value is taken from gdc-dashboards
 const allTimeFilterContextItem: FilterContextItem = {

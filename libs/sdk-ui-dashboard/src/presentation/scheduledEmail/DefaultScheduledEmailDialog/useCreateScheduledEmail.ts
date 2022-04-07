@@ -1,11 +1,11 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import { useCallback } from "react";
 import {
-    IScheduledMailDefinition,
     FilterContextItem,
-    IScheduledMail,
     IFilterContextDefinition,
-} from "@gooddata/sdk-backend-spi";
+    IScheduledMail,
+    IScheduledMailDefinition,
+} from "@gooddata/sdk-model";
 import { CommandProcessingStatus, createScheduledEmail, useDashboardCommandProcessing } from "../../../model";
 import { ensureAllTimeFilterForExport } from "../../../_staging/exportUtils/filterUtils";
 

@@ -1,5 +1,5 @@
-// (C) 2020-2021 GoodData Corporation
-import { AnalyticalWidgetType } from "@gooddata/sdk-backend-spi";
+// (C) 2020-2022 GoodData Corporation
+import { AnalyticalWidgetType } from "@gooddata/sdk-model";
 import { VisType } from "@gooddata/sdk-ui";
 
 const typeVisTypeCssClassMapping: {

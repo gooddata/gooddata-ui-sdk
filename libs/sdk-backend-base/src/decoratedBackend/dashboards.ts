@@ -3,26 +3,29 @@ import {
     IWorkspaceDashboardsService,
     IGetDashboardOptions,
     IGetScheduledMailOptions,
-    IListedDashboard,
-    IDashboard,
     SupportedDashboardReferenceTypes,
     IDashboardWithReferences,
     IDashboardReferences,
-    IDashboardDefinition,
-    FilterContextItem,
-    IScheduledMail,
-    IScheduledMailDefinition,
-    IFilterContextDefinition,
-    IWidgetAlert,
     IWidgetAlertCount,
-    IWidgetAlertDefinition,
-    IWidget,
     SupportedWidgetReferenceTypes,
     IWidgetReferences,
+} from "@gooddata/sdk-backend-spi";
+import {
+    IFilter,
+    ObjRef,
+    FilterContextItem,
+    IFilterContextDefinition,
+    IWidgetAlert,
+    IWidgetAlertDefinition,
+    IWidget,
+    IScheduledMail,
+    IScheduledMailDefinition,
+    IDashboard,
+    IDashboardDefinition,
+    IListedDashboard,
     IDashboardPlugin,
     IDashboardPluginDefinition,
-} from "@gooddata/sdk-backend-spi";
-import { IFilter, ObjRef } from "@gooddata/sdk-model";
+} from "@gooddata/sdk-model";
 
 /**
  * @alpha

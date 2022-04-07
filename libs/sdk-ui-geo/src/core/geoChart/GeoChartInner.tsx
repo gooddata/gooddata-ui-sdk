@@ -35,8 +35,7 @@ import {
 } from "@gooddata/sdk-ui-vis-commons";
 import { isColorAssignmentItemChanged, isFluidLegendEnabled } from "./helpers/geoChart/common";
 import { getResponsiveInfo, isAutoPositionWithPopup } from "./helpers/geoChart/responsive";
-import { IColorPalette } from "@gooddata/sdk-model";
-import { ITheme } from "@gooddata/sdk-backend-spi";
+import { IColorPalette, ITheme } from "@gooddata/sdk-model";
 
 export { IGeoChartRendererProps, IGeoChartLegendRendererProps };
 

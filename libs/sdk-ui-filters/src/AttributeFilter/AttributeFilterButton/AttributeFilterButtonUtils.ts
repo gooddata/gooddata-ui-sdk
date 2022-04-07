@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import { IAnalyticalBackend, IAttributeElement } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     attributeElementsToAttributeElementArray,
     getAllExceptTitle,
@@ -17,6 +17,7 @@ import {
     isNegativeAttributeFilter,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
+    IAttributeElement,
 } from "@gooddata/sdk-model";
 import { UseCancelablePromiseStatus } from "@gooddata/sdk-ui";
 import isEmpty from "lodash/isEmpty";

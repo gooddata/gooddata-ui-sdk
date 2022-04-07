@@ -1,11 +1,11 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { GdcMetadata } from "@gooddata/api-model-bear";
 import {
     IMeasureMetadataObject,
-    IMeasureMetadataObjectDefinition,
     isMeasureMetadataObject,
-} from "@gooddata/sdk-backend-spi";
+    IMeasureMetadataObjectDefinition,
+} from "@gooddata/sdk-model";
 import IMetric = GdcMetadata.IMetric;
 
 export function convertMetricToBackend(

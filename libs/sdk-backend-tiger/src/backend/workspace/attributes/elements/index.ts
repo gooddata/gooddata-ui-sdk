@@ -7,7 +7,6 @@ import {
 import { InMemoryPaging, ServerPaging } from "@gooddata/sdk-backend-base";
 import {
     FilterWithResolvableElements,
-    IAttributeElement,
     IElementsQuery,
     IElementsQueryFactory,
     IElementsQueryOptions,
@@ -26,6 +25,7 @@ import {
     isAttributeFilter,
     isIdentifierRef,
     ObjRef,
+    IAttributeElement,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { TigerAuthenticatedCallGuard } from "../../../../types";

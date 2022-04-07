@@ -1,8 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import React from "react";
 import partition from "lodash/partition";
-import { isDashboardDateFilter } from "@gooddata/sdk-backend-spi";
-import { objRefToString } from "@gooddata/sdk-model";
+import { objRefToString, isDashboardDateFilter } from "@gooddata/sdk-model";
 
 import {
     selectEffectiveDateFilterAvailableGranularities,

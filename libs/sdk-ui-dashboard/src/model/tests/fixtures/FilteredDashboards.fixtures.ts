@@ -1,6 +1,7 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { IDashboardWithReferences, IInsightWidget, IKpiWidget } from "@gooddata/sdk-backend-spi";
+import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
+import { IKpiWidget, IInsightWidget } from "@gooddata/sdk-model";
 
 /**
  * Basic dashboard aimed at testing the widget filters query.

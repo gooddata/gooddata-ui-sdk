@@ -1,6 +1,6 @@
 // (C) 2020-2022 GoodData Corporation
 import React, { useCallback } from "react";
-import { IDrillToLegacyDashboard } from "@gooddata/sdk-backend-spi";
+import { IDrillToLegacyDashboard } from "@gooddata/sdk-model";
 import { IDashboardKpiProps } from "../types";
 import { DashboardKpiCore } from "./DashboardKpiCore";
 import { OnFiredDashboardDrillEvent } from "../../../../types";

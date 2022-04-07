@@ -1,6 +1,6 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { RelativeDateFilterOption, AbsoluteDateFilterOption } from "@gooddata/sdk-ui-filters";
-import { IAbsoluteDateFilterPreset, IRelativeDateFilterPreset } from "@gooddata/sdk-backend-spi";
+import { IAbsoluteDateFilterPreset, IRelativeDateFilterPreset } from "@gooddata/sdk-model";
 
 const max = <T>(a: T, b: T): T => (a > b ? a : b);
 const min = <T>(a: T, b: T): T => (a <= b ? a : b);

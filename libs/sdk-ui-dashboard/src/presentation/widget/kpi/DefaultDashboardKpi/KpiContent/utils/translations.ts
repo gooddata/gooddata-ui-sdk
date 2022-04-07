@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { IntlShape } from "react-intl";
 import {
     IDateFilter,
@@ -6,8 +6,9 @@ import {
     isAllTimeDateFilter,
     isRelativeDateFilter,
     relativeDateFilterValues,
+    DateFilterGranularity,
+    IKpiComparisonTypeComparison,
 } from "@gooddata/sdk-model";
-import { DateFilterGranularity, ILegacyKpiComparisonTypeComparison } from "@gooddata/sdk-backend-spi";
 
 const granularityIntlCodes: {
     [key in DateFilterGranularity]: string;
@@ -37,7 +38,7 @@ const getRelativeFilterKpiPopLabel = (filter: IRelativeDateFilter, intl: IntlSha
 
 export const getKpiPopLabel = (
     filter: IDateFilter | undefined,
-    comparisonType: ILegacyKpiComparisonTypeComparison,
+    comparisonType: IKpiComparisonTypeComparison,
     intl: IntlShape,
 ): string => {
     if (comparisonType === "lastYear") {

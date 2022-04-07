@@ -1,7 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { IDashboard, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
-import { IInsight, ObjRef } from "@gooddata/sdk-model";
+import { IInsight, ObjRef, IDashboard, IWorkspacePermissions } from "@gooddata/sdk-model";
 
 import { DateFilterConfigValidationResult } from "../../_staging/dateFilterConfig/validation";
 import { ISharingProperties } from "../../types";

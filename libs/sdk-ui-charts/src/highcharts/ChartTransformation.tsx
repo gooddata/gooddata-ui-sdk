@@ -1,5 +1,6 @@
-// (C) 2007-2018 GoodData Corporation
-import { IDataView, ITheme } from "@gooddata/sdk-backend-spi";
+// (C) 2007-2022 GoodData Corporation
+import { IDataView } from "@gooddata/sdk-backend-spi";
+import { ITheme } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import React from "react";
 import { ContentRect } from "react-measure";

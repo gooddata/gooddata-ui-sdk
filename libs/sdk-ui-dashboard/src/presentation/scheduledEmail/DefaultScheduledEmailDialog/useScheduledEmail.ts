@@ -1,14 +1,16 @@
 // (C) 2019-2022 GoodData Corporation
 import { useCallback } from "react";
-import {
-    IScheduledMailDefinition,
-    IScheduledMail,
-    FilterContextItem,
-    isInsightWidget,
-    IInsightWidget,
-} from "@gooddata/sdk-backend-spi";
 import { GoodDataSdkError, ILocale } from "@gooddata/sdk-ui";
-import { UriRef, IUser, ObjRef } from "@gooddata/sdk-model";
+import {
+    ObjRef,
+    UriRef,
+    IUser,
+    FilterContextItem,
+    IInsightWidget,
+    isInsightWidget,
+    IScheduledMail,
+    IScheduledMailDefinition,
+} from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
 
 import {

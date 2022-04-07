@@ -1,5 +1,14 @@
 // (C) 2019-2022 GoodData Corporation
-import { idRef } from "@gooddata/sdk-model";
+import {
+    idRef,
+    ICatalogAttribute,
+    ICatalogFact,
+    ICatalogMeasure,
+    ICatalogDateDataset,
+    ICatalogDateAttribute,
+    IGroupableCatalogItemBase,
+    IAttributeDisplayFormMetadataObject,
+} from "@gooddata/sdk-model";
 import {
     JsonApiAttributeOutWithLinks,
     JsonApiDatasetOutWithLinks,
@@ -18,15 +27,6 @@ import {
     newCatalogFact,
     newCatalogMeasure,
 } from "@gooddata/sdk-backend-base";
-import {
-    IAttributeDisplayFormMetadataObject,
-    ICatalogAttribute,
-    ICatalogDateAttribute,
-    ICatalogDateDataset,
-    ICatalogFact,
-    ICatalogMeasure,
-    IGroupableCatalogItemBase,
-} from "@gooddata/sdk-backend-spi";
 import { commonMetadataObjectModifications, MetadataObjectFromApi } from "./MetadataConverter";
 import { isInheritedObject } from "./utils";
 import { convertLabelType } from "./LabelTypeConverter";

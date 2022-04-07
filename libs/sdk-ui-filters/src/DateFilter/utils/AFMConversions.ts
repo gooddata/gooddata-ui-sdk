@@ -1,5 +1,11 @@
-// (C) 2007-2020 GoodData Corporation
-import { IAbsoluteDateFilter, IRelativeDateFilter, ObjRef, IDateFilter } from "@gooddata/sdk-model";
+// (C) 2007-2022 GoodData Corporation
+import {
+    IAbsoluteDateFilter,
+    IRelativeDateFilter,
+    ObjRef,
+    IDateFilter,
+    isAllTimeDateFilterOption,
+} from "@gooddata/sdk-model";
 import { applyExcludeCurrentPeriod } from "./PeriodExclusion";
 import {
     AbsoluteDateFilterOption,
@@ -8,7 +14,6 @@ import {
     DateFilterOption,
     isRelativeDateFilterOption,
 } from "../interfaces";
-import { isAllTimeDateFilterOption } from "@gooddata/sdk-backend-spi";
 
 export const mapAbsoluteFilterToAfm = (
     value: AbsoluteDateFilterOption,

@@ -1,5 +1,5 @@
-// (C) 2021 GoodData Corporation
-import { ICatalogDateDataset } from "@gooddata/sdk-backend-spi";
+// (C) 2021-2022 GoodData Corporation
+import { ICatalogDateDataset } from "@gooddata/sdk-model";
 
 const relevanceComparator = (a: ICatalogDateDataset, b: ICatalogDateDataset) => b.relevance - a.relevance; // descending sort
 

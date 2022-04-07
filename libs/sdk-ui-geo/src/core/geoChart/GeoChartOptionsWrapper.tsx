@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import invariant from "ts-invariant";
 import { IGeoData, IValidationResult } from "../../GeoChart";
@@ -15,7 +15,7 @@ import {
     ErrorComponent as DefaultErrorComponent,
     LoadingComponent as DefaultLoadingComponent,
 } from "@gooddata/sdk-ui";
-import { IColorPalette } from "@gooddata/sdk-model";
+import { IColorPalette, isResultAttributeHeader } from "@gooddata/sdk-model";
 import {
     getValidColorPalette,
     IColorStrategy,
@@ -23,7 +23,6 @@ import {
     fixEmptyHeaderItems,
 } from "@gooddata/sdk-ui-vis-commons";
 import { getColorStrategy } from "./colorStrategy/geoChart";
-import { isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 
 import "../../../styles/css/main.css";
 

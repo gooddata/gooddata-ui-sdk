@@ -1,6 +1,6 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess";
-import { IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
+import { IResultAttributeHeader } from "@gooddata/sdk-model";
 
 type NameAndCategories = {
     name: string;

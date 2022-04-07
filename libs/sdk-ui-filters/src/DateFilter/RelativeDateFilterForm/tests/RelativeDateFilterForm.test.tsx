@@ -1,10 +1,10 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { mount } from "enzyme";
 import noop from "lodash/noop";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
-import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
+import { DateFilterGranularity } from "@gooddata/sdk-model";
 import { RelativeDateFilterForm, IRelativeDateFilterFormProps } from "../RelativeDateFilterForm";
 import { clickOn } from "../../tests/utils";
 import { GranularityTabs } from "../GranularityTabs";

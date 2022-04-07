@@ -1,11 +1,7 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
-import {
-    IOrganization,
-    IOrganizations,
-    IOrganizationDescriptor,
-    ISecuritySettingsService,
-} from "@gooddata/sdk-backend-spi";
+import { IOrganization, IOrganizations, ISecuritySettingsService } from "@gooddata/sdk-backend-spi";
+import { IOrganizationDescriptor } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 
 import { SecuritySettingsService } from "./securitySettings";

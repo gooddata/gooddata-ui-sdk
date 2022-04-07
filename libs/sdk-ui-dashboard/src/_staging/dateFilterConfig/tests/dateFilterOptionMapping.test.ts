@@ -1,10 +1,10 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import {
     DateFilterOption,
     defaultDateFilterOptions,
     IDateFilterOptionsByType,
 } from "@gooddata/sdk-ui-filters";
-import { IDashboardDateFilter, IRelativeDateFilterPresetOfGranularity } from "@gooddata/sdk-backend-spi";
+import { IRelativeDateFilterPresetOfGranularity, IDashboardDateFilter } from "@gooddata/sdk-model";
 
 import { matchDateFilterToDateFilterOption } from "../dateFilterOptionMapping";
 

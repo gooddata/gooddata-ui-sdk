@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import format from "date-fns/format";
 import capitalize from "lodash/capitalize";
 import isEqual from "lodash/isEqual";
@@ -10,12 +10,12 @@ import {
     DateFilterGranularity,
     IAbsoluteDateFilterPreset,
     IRelativeDateFilterPreset,
-    isAbsoluteDateFilterForm,
-    isRelativeDateFilterForm,
     isAllTimeDateFilterOption,
+    isAbsoluteDateFilterForm,
     isAbsoluteDateFilterPreset,
+    isRelativeDateFilterForm,
     isRelativeDateFilterPreset,
-} from "@gooddata/sdk-backend-spi";
+} from "@gooddata/sdk-model";
 import { IUiAbsoluteDateFilterForm, IUiRelativeDateFilterForm, DateFilterOption } from "../../interfaces";
 import { DEFAULT_DATE_FORMAT } from "../../constants/Platform";
 

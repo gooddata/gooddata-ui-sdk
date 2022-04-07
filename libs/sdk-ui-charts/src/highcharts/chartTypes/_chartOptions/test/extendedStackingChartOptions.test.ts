@@ -1,10 +1,9 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { IUnwrappedAttributeHeadersWithItems } from "../../../typings/mess";
 import { getCategoriesForTwoAttributes } from "../extendedStackingChartOptions";
 import { getMVSForViewByTwoAttributes } from "../../_util/test/helper";
-import { attributeIdentifier, measureIdentifier, uriRef } from "@gooddata/sdk-model";
+import { attributeIdentifier, measureIdentifier, uriRef, IAttributeDescriptor } from "@gooddata/sdk-model";
 import { HeaderPredicates, DefaultColorPalette } from "@gooddata/sdk-ui";
-import { IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { MeasureColorStrategy } from "../../_chartColoring/measure";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings";

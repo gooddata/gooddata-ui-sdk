@@ -1,6 +1,5 @@
-// (C) 2020 GoodData Corporation
-import { IResultHeader } from "@gooddata/sdk-backend-spi";
-import { IPostProcessing } from "@gooddata/sdk-model";
+// (C) 2020-2022 GoodData Corporation
+import { IPostProcessing, IResultHeader } from "@gooddata/sdk-model";
 
 /**
  * @public

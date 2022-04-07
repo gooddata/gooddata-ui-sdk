@@ -1,5 +1,5 @@
-// (C) 2021 GoodData Corporation
-import { IWidgetAlertBase } from "@gooddata/sdk-backend-spi";
+// (C) 2021-2022 GoodData Corporation
+import { IWidgetAlertBase } from "@gooddata/sdk-model";
 import isNil from "lodash/isNil";
 import round from "lodash/round";
 

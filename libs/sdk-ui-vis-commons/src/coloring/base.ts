@@ -1,7 +1,13 @@
 // (C) 2020-2022 GoodData Corporation
 import { IColorAssignment, DataViewFacade } from "@gooddata/sdk-ui";
-import { IColor, IColorPalette, IColorPaletteItem, isColorFromPalette } from "@gooddata/sdk-model";
-import { IResultAttributeHeader, ITheme } from "@gooddata/sdk-backend-spi";
+import {
+    IColor,
+    IColorPalette,
+    IColorPaletteItem,
+    isColorFromPalette,
+    ITheme,
+    IResultAttributeHeader,
+} from "@gooddata/sdk-model";
 import { getColorByGuid, getColorFromMapping, getRgbStringFromRGB } from "./color";
 import uniqBy from "lodash/uniqBy";
 import { IColorMapping } from "./types";

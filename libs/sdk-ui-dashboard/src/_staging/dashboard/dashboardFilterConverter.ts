@@ -1,10 +1,5 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
-import {
-    DateFilterGranularity,
-    IDashboardAttributeFilter,
-    IDashboardDateFilter,
-} from "@gooddata/sdk-backend-spi";
 import {
     absoluteDateFilterValues,
     filterAttributeElements,
@@ -16,6 +11,9 @@ import {
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     relativeDateFilterValues,
+    DateFilterGranularity,
+    IDashboardAttributeFilter,
+    IDashboardDateFilter,
 } from "@gooddata/sdk-model";
 import { DateFilterHelpers, DateFilterOption } from "@gooddata/sdk-ui-filters";
 

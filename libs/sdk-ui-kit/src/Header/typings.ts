@@ -1,7 +1,7 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import React from "react";
-import { ITheme } from "@gooddata/sdk-backend-spi";
+import { ITheme } from "@gooddata/sdk-model";
 
 /**
  * @internal

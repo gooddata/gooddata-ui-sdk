@@ -1,13 +1,13 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import flow from "lodash/flow";
 import uniqBy from "lodash/uniqBy";
 import stringify from "json-stable-stringify";
 import {
-    IDashboardDateFilterConfig,
-    IDateFilterConfig,
     IAbsoluteDateFilterPreset,
     IRelativeDateFilterPreset,
-} from "@gooddata/sdk-backend-spi";
+    IDateFilterConfig,
+    IDashboardDateFilterConfig,
+} from "@gooddata/sdk-model";
 
 import { sanitizeDateFilterOption } from "./sanitization";
 

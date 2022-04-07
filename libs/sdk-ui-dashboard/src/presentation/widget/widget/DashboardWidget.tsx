@@ -3,7 +3,7 @@ import React, { useMemo } from "react";
 import { useDashboardComponentsContext } from "../../dashboardContexts";
 import { extendedWidgetDebugStr } from "../../../model";
 import { DefaultDashboardWidget } from "./DefaultDashboardWidget";
-import { isDashboardWidget } from "@gooddata/sdk-backend-spi";
+import { isDashboardWidget } from "@gooddata/sdk-model";
 import { IDashboardWidgetProps } from "./types";
 
 const BadWidgetType: React.FC = () => {

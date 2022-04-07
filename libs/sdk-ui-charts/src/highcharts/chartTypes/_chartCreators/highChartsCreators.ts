@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import merge from "lodash/merge";
 import invariant from "ts-invariant";
 import { VisualizationTypes, IDrillConfig } from "@gooddata/sdk-ui";
@@ -22,10 +22,9 @@ import { getTreemapConfiguration } from "../treemap/treemapConfiguration";
 import { getFunnelConfiguration } from "../funnelChart/funnelConfiguration";
 import { getHeatmapConfiguration } from "../heatmap/heatmapConfiguration";
 import { getBubbleConfiguration } from "../bubbleChart/bubbleConfiguration";
-import { IExecutionDefinition } from "@gooddata/sdk-model";
+import { IExecutionDefinition, ITheme } from "@gooddata/sdk-model";
 import { IChartOptions } from "../../typings/unsafe";
 import { IntlShape } from "react-intl";
-import { ITheme } from "@gooddata/sdk-backend-spi";
 import { HighchartsOptions } from "../../lib";
 
 const chartConfigurationMap = {

@@ -1,9 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import {
-    AccessGranteeDetail,
-    IAccessGrantee,
     IWorkspaceAccessControlService,
-    IWorkspaceUser,
     IWorkspaceUserGroupsQuery,
     IWorkspaceUserGroupsQueryOptions,
     IWorkspaceUsersQuery,
@@ -12,7 +9,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { RecordedBackendConfig } from "./types";
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
-import { ObjRef } from "@gooddata/sdk-model";
+import { ObjRef, IWorkspaceUser, AccessGranteeDetail, IAccessGrantee } from "@gooddata/sdk-model";
 import noop from "lodash/noop";
 
 /**

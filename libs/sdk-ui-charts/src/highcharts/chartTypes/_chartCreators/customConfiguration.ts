@@ -59,10 +59,9 @@ import {
 } from "../../typings/unsafe";
 import { AXIS_LINE_COLOR } from "../_util/color";
 import { IntlShape } from "react-intl";
-import { ITheme } from "@gooddata/sdk-backend-spi";
 import { HighchartsOptions, XAxisOptions, YAxisOptions } from "../../lib";
 import { AxisLabelsFormatterCallbackFunction } from "highcharts";
-import { isMeasureFormatInPercent } from "@gooddata/sdk-model";
+import { isMeasureFormatInPercent, ITheme } from "@gooddata/sdk-model";
 
 const { stripColors, numberFormat }: any = numberJS;
 

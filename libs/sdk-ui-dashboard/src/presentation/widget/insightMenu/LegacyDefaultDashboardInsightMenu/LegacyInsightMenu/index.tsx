@@ -1,9 +1,8 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { objRefToString } from "@gooddata/sdk-model";
+import { objRefToString, widgetRef } from "@gooddata/sdk-model";
 import { Bubble, IAlignPoint, ItemsWrapper } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
-import { widgetRef } from "@gooddata/sdk-backend-spi";
 
 import { LegacyInsightMenuItem } from "./LegacyInsightMenuItem";
 import { DOWNLOADER_ID } from "../../../../../_staging/fileUtils/downloadFile";

@@ -3,13 +3,12 @@ import * as React from "react";
 
 import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
 import identity from "lodash/identity";
-import { ITheme, IInsightWidget } from "@gooddata/sdk-backend-spi";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { AttachmentsSelectionDropdown } from "./AttachmentsSelectionDropdown";
 import { FormatOptionsDropdown } from "./FormatOptionsDropdown";
 import { IWidgetExportConfiguration, IWidgetsSelection } from "../../interfaces";
-import { objRefToString } from "@gooddata/sdk-model";
+import { objRefToString, IInsightWidget, ITheme } from "@gooddata/sdk-model";
 
 export interface IAttachmentsOwnProps {
     theme?: ITheme;

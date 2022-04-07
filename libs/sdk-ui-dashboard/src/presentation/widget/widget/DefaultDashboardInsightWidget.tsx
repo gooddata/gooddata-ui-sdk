@@ -2,8 +2,13 @@
 import React, { useMemo, useCallback } from "react";
 import cx from "classnames";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { IInsight, insightVisualizationUrl } from "@gooddata/sdk-model";
-import { IInsightWidget, ScreenSize, widgetTitle } from "@gooddata/sdk-backend-spi";
+import {
+    IInsight,
+    insightVisualizationUrl,
+    IInsightWidget,
+    widgetTitle,
+    ScreenSize,
+} from "@gooddata/sdk-model";
 import { OnError, OnExportReady, OnLoadingChanged, VisType } from "@gooddata/sdk-ui";
 
 import {

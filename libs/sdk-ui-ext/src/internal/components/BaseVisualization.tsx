@@ -1,5 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
-import { IAnalyticalBackend, IExecutionFactory, ISettings, ITheme } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { ISettings, ITheme } from "@gooddata/sdk-model";
 import {
     IInsight,
     IInsightDefinition,

@@ -25,19 +25,17 @@ import {
     ObjRef,
     objRefToString,
     uriRef,
+    isDashboardAttributeFilterReference,
+    IKpiWidget,
+    ICatalogDateDataset,
+    IAttributeDisplayFormMetadataObject,
+    IMetadataObject,
+    isInsightWidget,
 } from "@gooddata/sdk-model";
 import { QueryWidgetFilters } from "../queries/widgets";
 import { selectAllFiltersForWidgetByRef, selectWidgetByRef } from "../store/layout/layoutSelectors";
 import { selectInsightByRef } from "../store/insights/insightsSelectors";
 import { invalidQueryArguments } from "../events/general";
-import {
-    IAttributeDisplayFormMetadataObject,
-    ICatalogDateDataset,
-    IKpiWidget,
-    IMetadataObject,
-    isDashboardAttributeFilterReference,
-    isInsightWidget,
-} from "@gooddata/sdk-backend-spi";
 import compact from "lodash/compact";
 import { selectAllCatalogDateDatasetsMap } from "../store/catalog/catalogSelectors";
 import { DashboardState } from "../store/types";

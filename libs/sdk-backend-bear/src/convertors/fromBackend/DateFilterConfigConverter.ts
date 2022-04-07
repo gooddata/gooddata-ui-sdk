@@ -1,14 +1,14 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { GdcExtendedDateFilters } from "@gooddata/api-model-bear";
 import {
-    IDateFilterConfig,
-    IAllTimeDateFilterOption,
-    IAbsoluteDateFilterForm,
-    IRelativeDateFilterForm,
+    uriRef,
     IAbsoluteDateFilterPreset,
     IRelativeDateFilterPreset,
-} from "@gooddata/sdk-backend-spi";
-import { uriRef } from "@gooddata/sdk-model";
+    IAbsoluteDateFilterForm,
+    IRelativeDateFilterForm,
+    IAllTimeDateFilterOption,
+    IDateFilterConfig,
+} from "@gooddata/sdk-model";
 
 const convertAllTime = (allTime: GdcExtendedDateFilters.IDateFilterAllTime): IAllTimeDateFilterOption => {
     return {

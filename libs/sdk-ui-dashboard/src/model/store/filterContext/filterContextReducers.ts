@@ -2,19 +2,6 @@
 
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
-import {
-    DateFilterGranularity,
-    DateFilterType,
-    DateString,
-    FilterContextItem,
-    IAttributeDisplayFormMetadataObject,
-    IDashboardAttributeFilter,
-    IDashboardAttributeFilterParent,
-    IDashboardObjectIdentity,
-    IFilterContextDefinition,
-    isDashboardAttributeFilter,
-    isDashboardDateFilter,
-} from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
 import { FilterContextState } from "./filterContextState";
 import {
@@ -23,6 +10,17 @@ import {
     IAttributeElements,
     isAttributeElementsByRef,
     ObjRef,
+    DateString,
+    DateFilterGranularity,
+    IDashboardObjectIdentity,
+    DateFilterType,
+    FilterContextItem,
+    IDashboardAttributeFilter,
+    IDashboardAttributeFilterParent,
+    IFilterContextDefinition,
+    isDashboardAttributeFilter,
+    isDashboardDateFilter,
+    IAttributeDisplayFormMetadataObject,
 } from "@gooddata/sdk-model";
 
 type FilterContextReducer<A extends Action> = CaseReducer<FilterContextState, A>;

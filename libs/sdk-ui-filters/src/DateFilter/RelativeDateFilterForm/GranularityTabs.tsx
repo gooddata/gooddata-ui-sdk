@@ -1,7 +1,7 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
+import { DateFilterGranularity } from "@gooddata/sdk-model";
 import sortBy from "lodash/sortBy";
 
 import { TabsWrapper, Tab } from "../Tabs/Tabs";

@@ -1,6 +1,5 @@
 // (C) 2007-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
-import { DrillDefinition, IAccessGrantee, IWidget, ShareStatus } from "@gooddata/sdk-backend-spi";
 import {
     IAbsoluteDateFilter,
     IInsight,
@@ -11,6 +10,10 @@ import {
     isDateFilter,
     LocalIdRef,
     ObjRef,
+    DrillDefinition,
+    IWidget,
+    ShareStatus,
+    IAccessGrantee,
 } from "@gooddata/sdk-model";
 import { IDrillEvent, OnFiredDrillEvent } from "@gooddata/sdk-ui";
 

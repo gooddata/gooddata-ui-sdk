@@ -1,13 +1,9 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { Component, MouseEvent } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
-import {
-    IUserWorkspaceSettings,
-    IWidgetAlertDefinition,
-    IKpiWidgetDefinition,
-} from "@gooddata/sdk-backend-spi";
-import { IFilter } from "@gooddata/sdk-model";
+import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import { IFilter, IWidgetAlertDefinition, IKpiWidgetDefinition } from "@gooddata/sdk-model";
 import { GoodDataSdkError, isNoDataSdkError } from "@gooddata/sdk-ui";
 import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
 

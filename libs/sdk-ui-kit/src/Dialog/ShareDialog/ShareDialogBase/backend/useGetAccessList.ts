@@ -1,9 +1,8 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { useCallback } from "react";
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { AccessGranteeDetail } from "@gooddata/sdk-backend-spi";
 import { mapAccessGranteeDetailToGrantee } from "../../shareDialogMappers";
-import { ObjRef } from "@gooddata/sdk-model";
+import { ObjRef, AccessGranteeDetail } from "@gooddata/sdk-model";
 import { GranteeItem } from "../types";
 
 /**

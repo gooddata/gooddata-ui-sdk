@@ -1,7 +1,6 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { createEntityAdapter } from "@reduxjs/toolkit";
-import { IWidgetAlert } from "@gooddata/sdk-backend-spi";
-import { objRefToString } from "@gooddata/sdk-model";
+import { objRefToString, IWidgetAlert } from "@gooddata/sdk-model";
 
 export const alertsAdapter = createEntityAdapter<IWidgetAlert>({
     selectId: (alert) => objRefToString(alert.ref),

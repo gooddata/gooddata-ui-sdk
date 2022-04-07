@@ -1,14 +1,17 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 
-import {
-    IAnalyticalBackend,
-    IAttributeDisplayFormMetadataObject,
-    IExecutionResult,
-} from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { CacheControl, withCaching } from "../index";
 import { dummyBackend, dummyBackendEmptyData } from "../../dummyBackend";
 import { ReferenceMd } from "@gooddata/reference-workspace";
-import { IAttributeOrMeasure, IBucket, newBucket, newInsightDefinition, ObjRef } from "@gooddata/sdk-model";
+import {
+    IAttributeOrMeasure,
+    IBucket,
+    newBucket,
+    newInsightDefinition,
+    ObjRef,
+    IAttributeDisplayFormMetadataObject,
+} from "@gooddata/sdk-model";
 import { withEventing } from "../../eventingBackend";
 
 const defaultBackend = dummyBackendEmptyData();

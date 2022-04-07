@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import {
     AnyCol,
@@ -16,11 +16,10 @@ import {
 import { ColDef, ColGroupDef, Column } from "@ag-grid-community/all-modules";
 import invariant from "ts-invariant";
 import { IAttributeColumnWidthItem, IMeasureColumnWidthItem } from "../../columnWidths";
-import { IAttributeDescriptor, IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 import { searchForLocatorMatch } from "./colLocatorMatching";
 import { DataViewFacade } from "@gooddata/sdk-ui";
 import { createHeadersAndColDefs } from "./tableDescriptorFactory";
-import { ISortItem } from "@gooddata/sdk-model";
+import { ISortItem, IMeasureDescriptor, IAttributeDescriptor } from "@gooddata/sdk-model";
 import { createSortIndicators, SortIndicator } from "./tableDescriptorSorting";
 import { createSortItemForCol } from "./colSortItemFactory";
 import keyBy from "lodash/keyBy";

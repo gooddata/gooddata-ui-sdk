@@ -1,18 +1,22 @@
 // (C) 2021-2022 GoodData Corporation
 
+import last from "lodash/last";
+import partition from "lodash/partition";
 import {
-    IAttributeDisplayFormMetadataObject,
-    IDashboardDateFilter,
+    areObjRefsEqual,
+    filterObjRef,
+    IFilter,
+    isAttributeFilter,
+    ObjRef,
     IDashboardAttributeFilter,
+    IDashboardDateFilter,
     isDashboardAttributeFilterReference,
     isDashboardDateFilter,
     isDashboardDateFilterReference,
     IWidgetAlertDefinition,
+    IAttributeDisplayFormMetadataObject,
     IWidgetDefinition,
-} from "@gooddata/sdk-backend-spi";
-import last from "lodash/last";
-import partition from "lodash/partition";
-import { areObjRefsEqual, filterObjRef, IFilter, isAttributeFilter, ObjRef } from "@gooddata/sdk-model";
+} from "@gooddata/sdk-model";
 import { IBrokenAlertFilterBasicInfo } from "../types/alertTypes";
 import { ObjRefMap } from "../../_staging/metadata/objRefMap";
 import invariant from "ts-invariant";

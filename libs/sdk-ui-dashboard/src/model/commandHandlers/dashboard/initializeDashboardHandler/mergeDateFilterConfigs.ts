@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { IDashboardDateFilterConfig, IDateFilterConfig } from "@gooddata/sdk-backend-spi";
+import { IDateFilterConfig, IDashboardDateFilterConfig } from "@gooddata/sdk-model";
 
 import { mergeDateFilterConfigs } from "../../../../_staging/dateFilterConfig/merge";
 import { validateDateFilterConfig } from "../../../../_staging/dateFilterConfig/validation";

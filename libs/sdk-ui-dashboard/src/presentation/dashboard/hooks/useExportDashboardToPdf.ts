@@ -1,6 +1,6 @@
 // (C) 2020-2022 GoodData Corporation
-import { AnalyticalBackendError, FilterContextItem, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { ObjRef } from "@gooddata/sdk-model";
+import { AnalyticalBackendError, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { ObjRef, FilterContextItem } from "@gooddata/sdk-model";
 import {
     useBackendStrict,
     useCancelablePromise,

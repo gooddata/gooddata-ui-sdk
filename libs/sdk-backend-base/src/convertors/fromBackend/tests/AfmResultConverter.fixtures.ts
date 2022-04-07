@@ -1,5 +1,5 @@
-// (C) 2020 GoodData Corporation
-import { IResultHeader } from "@gooddata/sdk-backend-spi";
+// (C) 2020-2022 GoodData Corporation
+import { IResultHeader } from "@gooddata/sdk-model";
 
 export const resultHeaders: IResultHeader[][][] = [
     [

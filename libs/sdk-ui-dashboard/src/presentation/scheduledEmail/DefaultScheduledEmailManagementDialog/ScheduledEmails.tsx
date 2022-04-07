@@ -1,11 +1,9 @@
 // (C) 2022 GoodData Corporation
-
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import { IScheduledMail } from "@gooddata/sdk-backend-spi";
+import { IScheduledMail, ITheme } from "@gooddata/sdk-model";
 import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
 import { ScheduledEmail } from "./ScheduledEmail";
-import { ITheme } from "@gooddata/sdk-backend-spi";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
 interface IScheduledEmailsProps {

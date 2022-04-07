@@ -1,10 +1,10 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React, { SyntheticEvent } from "react";
 import cx from "classnames";
 import compact from "lodash/compact";
 import { Icon } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
-import { ITheme } from "@gooddata/sdk-backend-spi";
+import { ITheme } from "@gooddata/sdk-model";
 import { DashboardDrillDefinition } from "../../../types";
 import { DrillType, DrillSelectItem } from "./types";
 

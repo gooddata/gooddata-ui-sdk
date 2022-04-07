@@ -5,16 +5,18 @@ import stringify from "json-stable-stringify";
 import { useIntl, IntlShape } from "react-intl";
 import invariant from "ts-invariant";
 import { IDrillEvent, UnexpectedSdkError } from "@gooddata/sdk-ui";
-import {
-    IListedDashboard,
-    isDrillToInsight,
-    isDrillToDashboard,
-    isDrillToLegacyDashboard,
-    isDrillFromAttribute,
-} from "@gooddata/sdk-backend-spi";
 import { Overlay } from "@gooddata/sdk-ui-kit";
 import { DashboardDrillDefinition, isDrillDownDefinition } from "../../../types";
-import { IInsight, insightTitle, ObjRef } from "@gooddata/sdk-model";
+import {
+    IInsight,
+    insightTitle,
+    ObjRef,
+    isDrillFromAttribute,
+    isDrillToDashboard,
+    isDrillToInsight,
+    isDrillToLegacyDashboard,
+    IListedDashboard,
+} from "@gooddata/sdk-model";
 import { isDrillToUrl } from "../types";
 import { DrillSelectListBody } from "./DrillSelectListBody";
 import { getDrillDownAttributeTitle, getTotalDrillToUrlCount } from "../utils/drillDownUtils";

@@ -1,12 +1,12 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import {
-    IDashboardDateFilter,
     IDateFilterConfig,
-    IFilterContextDefinition,
-    isAbsoluteDateFilterPreset,
     isAllTimeDateFilterOption,
+    isAbsoluteDateFilterPreset,
     isRelativeDateFilterPreset,
-} from "@gooddata/sdk-backend-spi";
+    IDashboardDateFilter,
+    IFilterContextDefinition,
+} from "@gooddata/sdk-model";
 import { convertDateFilterConfigToDateFilterOptions } from "../dateFilterConfig/dateFilterConfigConverters";
 import { flattenDateFilterOptions } from "../dateFilterConfig/dateFilterOptionMapping";
 import { DateFilterOption } from "@gooddata/sdk-ui-filters";

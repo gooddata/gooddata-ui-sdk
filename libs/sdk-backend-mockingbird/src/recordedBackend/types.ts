@@ -1,24 +1,9 @@
 // (C) 2019-2022 GoodData Corporation
 import {
-    CatalogItem,
     IAnalyticalBackendConfig,
-    IAttributeDisplayFormMetadataObject,
-    IAttributeElement,
-    ICatalogAttribute,
-    ICatalogDateDataset,
-    ICatalogFact,
-    ICatalogGroup,
-    ICatalogMeasure,
     IDashboardWithReferences,
-    IDateFilterConfig,
-    ISettings,
-    ITheme,
-    IWidgetAlert,
     ValidationContext,
     IWorkspaceDescriptor,
-    AccessGranteeDetail,
-    IWorkspaceUserGroup,
-    IWorkspaceUser,
 } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
@@ -27,6 +12,21 @@ import {
     IVisualizationClass,
     ObjRef,
     IUser,
+    IWorkspaceUser,
+    IDateFilterConfig,
+    IWidgetAlert,
+    CatalogItem,
+    ICatalogGroup,
+    ICatalogAttribute,
+    ICatalogFact,
+    ICatalogMeasure,
+    ICatalogDateDataset,
+    IAttributeDisplayFormMetadataObject,
+    IAttributeElement,
+    ISettings,
+    IWorkspaceUserGroup,
+    ITheme,
+    AccessGranteeDetail,
 } from "@gooddata/sdk-model";
 
 /**

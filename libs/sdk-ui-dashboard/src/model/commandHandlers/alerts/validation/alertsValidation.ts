@@ -1,7 +1,6 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
-import { IWidgetAlert } from "@gooddata/sdk-backend-spi";
-import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
+import { ObjRef, serializeObjRef, IWidgetAlert } from "@gooddata/sdk-model";
 import { invalidArgumentsProvided } from "../../../events/general";
 import { ObjRefMap } from "../../../../_staging/metadata/objRefMap";
 import { IDashboardCommand } from "../../../commands";

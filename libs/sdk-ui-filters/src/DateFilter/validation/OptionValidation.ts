@@ -1,11 +1,11 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import {
     IExtendedDateFilterErrors,
     DateFilterOption,
     IUiAbsoluteDateFilterForm,
     IUiRelativeDateFilterForm,
 } from "../interfaces";
-import { isAbsoluteDateFilterForm, isRelativeDateFilterForm } from "@gooddata/sdk-backend-spi";
+import { isAbsoluteDateFilterForm, isRelativeDateFilterForm } from "@gooddata/sdk-model";
 
 const validateVisibility = (filterOption: DateFilterOption): IExtendedDateFilterErrors => {
     const errors: IExtendedDateFilterErrors = {};

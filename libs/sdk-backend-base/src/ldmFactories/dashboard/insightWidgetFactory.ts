@@ -1,13 +1,14 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import invariant from "ts-invariant";
-import { ObjRef, VisualizationProperties } from "@gooddata/sdk-model";
 import {
-    IInsightWidget,
+    ObjRef,
+    VisualizationProperties,
     InsightDrillDefinition,
-    isInsightWidgetDefinition,
+    IInsightWidget,
     IInsightWidgetDefinition,
+    isInsightWidgetDefinition,
     isInsightWidget,
-} from "@gooddata/sdk-backend-spi";
+} from "@gooddata/sdk-model";
 import { IWidgetBaseBuilder, WidgetBaseBuilder } from "./widgetFactory";
 import { ValueOrUpdateCallback } from "../builder";
 

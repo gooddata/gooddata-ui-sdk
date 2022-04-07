@@ -3,7 +3,7 @@ import {
     IDashboardAttributeFilter,
     IDashboardDateFilter,
     IFilterContextDefinition,
-} from "@gooddata/sdk-backend-spi";
+} from "@gooddata/sdk-model";
 import { IDashboardEvent } from "./base";
 import { DashboardContext } from "../types/commonTypes";
 import { eventGuard } from "./util";

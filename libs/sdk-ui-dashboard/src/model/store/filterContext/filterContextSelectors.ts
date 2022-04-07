@@ -3,13 +3,14 @@ import { createSelector } from "@reduxjs/toolkit";
 import { DashboardState } from "../types";
 import invariant from "ts-invariant";
 import {
+    areObjRefsEqual,
+    ObjRef,
     FilterContextItem,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
-} from "@gooddata/sdk-backend-spi";
-import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
+} from "@gooddata/sdk-model";
 import { newDisplayFormMap } from "../../../_staging/metadata/objRefMap";
 import { createMemoizedSelector } from "../_infra/selectors";
 import compact from "lodash/compact";

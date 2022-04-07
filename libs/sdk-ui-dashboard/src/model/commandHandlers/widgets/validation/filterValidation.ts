@@ -9,19 +9,22 @@ import { call, SagaReturnType, select } from "redux-saga/effects";
 import { query } from "../../../store/_infra/queryCall";
 import { newCatalogDateDatasetMap } from "../../../../_staging/metadata/objRefMap";
 import { invalidArgumentsProvided } from "../../../events/general";
-import { areObjRefsEqual, IInsight, ObjRef, objRefToString } from "@gooddata/sdk-model";
+import {
+    areObjRefsEqual,
+    IInsight,
+    ObjRef,
+    objRefToString,
+    IDashboardAttributeFilter,
+    IAnalyticalWidget,
+    IKpiWidget,
+    IInsightWidget,
+    ICatalogDateDataset,
+} from "@gooddata/sdk-model";
 import { DashboardContext } from "../../../types/commonTypes";
 import { SagaIterator } from "redux-saga";
 import { resolveDisplayFormMetadata } from "../../../utils/displayFormResolver";
 import isEmpty from "lodash/isEmpty";
 import { selectFilterContextAttributeFilters } from "../../../store/filterContext/filterContextSelectors";
-import {
-    ICatalogDateDataset,
-    IDashboardAttributeFilter,
-    IInsightWidget,
-    IKpiWidget,
-    IAnalyticalWidget,
-} from "@gooddata/sdk-backend-spi";
 import { IDashboardCommand } from "../../../commands";
 
 /**

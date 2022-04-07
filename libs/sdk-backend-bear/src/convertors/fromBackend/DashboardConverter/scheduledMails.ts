@@ -1,12 +1,13 @@
 // (C) 2019-2022 GoodData Corporation
 import { GdcScheduledMail } from "@gooddata/api-model-bear";
+import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
+    IUser,
+    uriRef,
     IScheduledMail,
     IScheduledMailDefinition,
-    NotSupported,
     ScheduledMailAttachment,
-} from "@gooddata/sdk-backend-spi";
-import { IUser, uriRef } from "@gooddata/sdk-model";
+} from "@gooddata/sdk-model";
 
 export const convertScheduledMailAttachment = (
     scheduledMailAttachment: GdcScheduledMail.ScheduledMailAttachment,

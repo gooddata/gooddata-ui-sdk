@@ -1,10 +1,9 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { DashboardCustomizationLogger } from "../customizationLogging";
 import { DefaultLayoutCustomizer } from "../layoutCustomizer";
-import { IDashboard } from "@gooddata/sdk-backend-spi";
 import { ExtendedDashboardWidget } from "../../../model";
-import { idRef } from "@gooddata/sdk-model";
+import { idRef, IDashboard } from "@gooddata/sdk-model";
 
 const EmptyDashboard: IDashboard<ExtendedDashboardWidget> = {
     type: "IDashboard",

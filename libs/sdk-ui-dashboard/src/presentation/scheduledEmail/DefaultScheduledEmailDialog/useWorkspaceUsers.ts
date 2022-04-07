@@ -1,5 +1,6 @@
-// (C) 2020-2021 GoodData Corporation
-import { IAnalyticalBackend, IWorkspaceUser } from "@gooddata/sdk-backend-spi";
+// (C) 2020-2022 GoodData Corporation
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IWorkspaceUser } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
     useBackendStrict,

@@ -1,14 +1,13 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import range from "lodash/range";
 import { ColorFactory } from "../../_chartOptions/colorFactory";
-import { IColorPalette, IMeasure } from "@gooddata/sdk-model";
+import { IColorPalette, IMeasure, ITheme } from "@gooddata/sdk-model";
 import { CUSTOM_COLOR_PALETTE } from "../../_util/test/colorPalette.fixture";
 import { DataViewFacade, HeaderPredicates } from "@gooddata/sdk-ui";
 import { IColorMapping } from "../../../../interfaces";
 import { ReferenceMd, ReferenceMdExt, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings";
-import { ITheme } from "@gooddata/sdk-backend-spi";
 
 const defaultColorMapping: IColorMapping[] = [
     {

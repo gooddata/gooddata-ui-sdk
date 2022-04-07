@@ -1,11 +1,11 @@
 // (C) 2021-2022 GoodData Corporation
 
+import { IWorkspaceCatalog } from "@gooddata/sdk-backend-spi";
 import {
-    IAttributeDisplayFormMetadataObject,
     ICatalogAttribute,
     ICatalogDateDataset,
-    IWorkspaceCatalog,
-} from "@gooddata/sdk-backend-spi";
+    IAttributeDisplayFormMetadataObject,
+} from "@gooddata/sdk-model";
 import { newDisplayFormMap, ObjRefMap } from "../metadata/objRefMap";
 import flatMap from "lodash/flatMap";
 

@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     IAttributeLocatorItem,
     idRef,
@@ -6,7 +6,7 @@ import {
     ISortItem,
     VisualizationProperties,
 } from "@gooddata/sdk-model";
-import { IWidget } from "@gooddata/sdk-backend-spi";
+import { IWidget } from "@gooddata/sdk-model";
 import { newInsightWidget } from "@gooddata/sdk-backend-base";
 
 import { ColorMapping } from "../../fixLegacyElementUris";

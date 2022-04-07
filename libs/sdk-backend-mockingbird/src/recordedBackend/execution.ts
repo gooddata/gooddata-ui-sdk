@@ -1,18 +1,12 @@
 // (C) 2019-2022 GoodData Corporation
 
 import {
-    DataValue,
-    IAttributeDescriptor,
     IDataView,
-    IDimensionDescriptor,
     IExecutionFactory,
     IExecutionResult,
     IExportConfig,
     IExportResult,
-    IMeasureGroupDescriptor,
     IPreparedExecution,
-    IResultHeader,
-    isAttributeDescriptor,
     NoDataError,
     NotSupported,
 } from "@gooddata/sdk-backend-spi";
@@ -31,6 +25,12 @@ import {
     uriRef,
     defWithDateFormat,
     IExecutionConfig,
+    DataValue,
+    IDimensionDescriptor,
+    IAttributeDescriptor,
+    IMeasureGroupDescriptor,
+    IResultHeader,
+    isAttributeDescriptor,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import {

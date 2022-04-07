@@ -1,6 +1,12 @@
 // (C) 2007-2022 GoodData Corporation
-import { IColor, IColorPalette, IColorPaletteItem, IRgbColorValue } from "@gooddata/sdk-model";
-import { isAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
+import {
+    IColor,
+    IColorPalette,
+    IColorPaletteItem,
+    IRgbColorValue,
+    isAttributeDescriptor,
+    isResultAttributeHeader,
+} from "@gooddata/sdk-model";
 import {
     DataViewFacade,
     DefaultColorPalette,

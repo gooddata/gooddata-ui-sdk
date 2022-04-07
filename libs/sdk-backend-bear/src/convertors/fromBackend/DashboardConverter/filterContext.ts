@@ -1,15 +1,15 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { GdcFilterContext } from "@gooddata/api-model-bear";
-import { uriRef } from "@gooddata/sdk-model";
 import {
-    IFilterContext,
+    uriRef,
     FilterContextItem,
+    IDashboardAttributeFilterParent,
     IDashboardDateFilter,
+    IFilterContext,
+    IFilterContextDefinition,
     ITempFilterContext,
     isDashboardDateFilter,
-    IFilterContextDefinition,
-    IDashboardAttributeFilterParent,
-} from "@gooddata/sdk-backend-spi";
+} from "@gooddata/sdk-model";
 
 function isNotTemporaryAllTimeDateFilter(filter: FilterContextItem): boolean {
     if (isDashboardDateFilter(filter)) {

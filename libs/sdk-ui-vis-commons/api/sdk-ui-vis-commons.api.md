@@ -14,7 +14,7 @@ import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { IMappingHeader } from '@gooddata/sdk-ui';
 import { IRgbColorValue } from '@gooddata/sdk-model';
-import { ITheme } from '@gooddata/sdk-backend-spi';
+import { ITheme } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
 import { Rect } from 'react-measure';
 

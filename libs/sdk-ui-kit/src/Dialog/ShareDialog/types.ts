@@ -1,11 +1,12 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
+    IAuditableUsers,
+    ObjRef,
     IAccessControlAware,
-    IAccessGrantee,
-    IAnalyticalBackend,
     ShareStatus,
-} from "@gooddata/sdk-backend-spi";
-import { IAuditableUsers, ObjRef } from "@gooddata/sdk-model";
+    IAccessGrantee,
+} from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 /**

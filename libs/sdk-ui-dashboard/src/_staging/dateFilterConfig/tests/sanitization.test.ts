@@ -1,5 +1,5 @@
-// (C) 2019-2021 GoodData Corporation
-import { IAbsoluteDateFilterForm } from "@gooddata/sdk-backend-spi";
+// (C) 2019-2022 GoodData Corporation
+import { IAbsoluteDateFilterForm } from "@gooddata/sdk-model";
 import { IUiAbsoluteDateFilterForm, IUiRelativeDateFilterForm } from "@gooddata/sdk-ui-filters";
 
 import { sanitizeDateFilterOption } from "../sanitization";

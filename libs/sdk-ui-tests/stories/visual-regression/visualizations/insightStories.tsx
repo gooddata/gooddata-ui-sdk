@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { RecordingIndex } from "@gooddata/sdk-backend-mockingbird";
-import { IAnalyticalBackend, ISettings } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     IInsight,
     IInsightDefinition,
@@ -9,6 +9,7 @@ import {
     insightTitle,
     insightVisualizationUrl,
     IVisualizationClass,
+    ISettings,
 } from "@gooddata/sdk-model";
 
 import { BaseVisualization, FullVisualizationCatalog, IGdcConfig } from "@gooddata/sdk-ui-ext/dist/internal";

@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { DashboardContext } from "../../types/commonTypes";
 import { ChangeKpiWidgetFilterSettings } from "../../commands";
@@ -8,7 +8,7 @@ import { selectWidgetsMap } from "../../store/layout/layoutSelectors";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { validateExistingKpiWidget } from "./validation/widgetValidations";
 import { layoutActions } from "../../store/layout";
-import { IDashboardAttributeFilterReference, IKpiWidget, IAnalyticalWidget } from "@gooddata/sdk-backend-spi";
+import { IDashboardAttributeFilterReference, IAnalyticalWidget, IKpiWidget } from "@gooddata/sdk-model";
 import { FilterValidators, processFilterOp } from "./common/filterOperations";
 import {
     validateAttributeFiltersToIgnore,

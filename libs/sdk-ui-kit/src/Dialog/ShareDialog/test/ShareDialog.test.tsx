@@ -1,8 +1,7 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
-import { ShareStatus, IUserAccessGrantee } from "@gooddata/sdk-backend-spi";
 import { ISharedObject, ISharingApplyPayload } from "../types";
-import { IUser } from "@gooddata/sdk-model";
+import { IUser, ShareStatus, IUserAccessGrantee } from "@gooddata/sdk-model";
 import { userAccessGrantee, workspaceUser } from "../ShareDialogBase/test/GranteeMock";
 import {
     createComponent,

@@ -1,17 +1,15 @@
-// (C) 2021 GoodData Corporation
-import {
-    IAttributeElement,
-    IDashboardAttributeFilter,
-    IDashboardDateFilter,
-    IDataSetMetadataObject,
-    UnexpectedError,
-} from "@gooddata/sdk-backend-spi";
+// (C) 2021-2022 GoodData Corporation
+import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
     areObjRefsEqual,
     attributeElementsCount,
     attributeElementsIsEmpty,
     isAttributeElementsByRef,
     objRefToString,
+    IDashboardAttributeFilter,
+    IDashboardDateFilter,
+    IDataSetMetadataObject,
+    IAttributeElement,
 } from "@gooddata/sdk-model";
 import { IntlShape } from "react-intl";
 

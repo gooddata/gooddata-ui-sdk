@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { DashboardContext } from "../../types/commonTypes";
 import { ChangeKpiWidgetComparison } from "../../commands";
 import { SagaIterator } from "redux-saga";
@@ -8,7 +8,7 @@ import { put, select } from "redux-saga/effects";
 import { validateExistingKpiWidget } from "./validation/widgetValidations";
 import { layoutActions } from "../../store/layout";
 import { kpiWidgetComparisonChanged } from "../../events/kpi";
-import { IKpiWidget } from "@gooddata/sdk-backend-spi";
+import { IKpiWidget } from "@gooddata/sdk-model";
 
 export function* changeKpiWidgetComparisonHandler(
     ctx: DashboardContext,

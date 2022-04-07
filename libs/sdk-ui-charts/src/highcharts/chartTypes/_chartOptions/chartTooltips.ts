@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { IChartConfig } from "../../../interfaces";
 import { colors2Object, numberFormat } from "@gooddata/numberjs";
 import { ICategory, IUnsafeHighchartsTooltipPoint, ITooltipFactory } from "../../typings/unsafe";
@@ -7,7 +7,7 @@ import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess";
 import { formatValueForTooltip, getFormattedValueForTooltip } from "./tooltip";
 import { multiMeasuresAlternatingTypes } from "./chartCapabilities";
 import cx from "classnames";
-import { IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
+import { IMeasureDescriptor } from "@gooddata/sdk-model";
 
 const TOOLTIP_PADDING = 10;
 

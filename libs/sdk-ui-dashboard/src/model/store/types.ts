@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 import { AnyAction, Dispatch, EntityState } from "@reduxjs/toolkit";
-import { IInsight } from "@gooddata/sdk-model";
+import { IInsight, IWidgetAlert, IListedDashboard } from "@gooddata/sdk-model";
 import { LoadingState } from "./loading/loadingState";
 import { SavingState } from "./saving/savingState";
 import { FilterContextState } from "./filterContext/filterContextState";
@@ -8,7 +8,6 @@ import { LayoutState } from "./layout/layoutState";
 import { ConfigState } from "./config/configState";
 import { DateFilterConfigState } from "./dateFilterConfig/dateFilterConfigState";
 import { PermissionsState } from "./permissions/permissionsState";
-import { IListedDashboard, IWidgetAlert } from "@gooddata/sdk-backend-spi";
 import { CatalogState } from "./catalog/catalogState";
 import { UserState } from "./user/userState";
 import { DrillState } from "./drill/drillState";

@@ -1,7 +1,7 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 
 import { findAttributeInDimension, findMeasureGroupInDimensions } from "../executionResultHelper";
-import { IAttributeDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
+import { IAttributeDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings";
 

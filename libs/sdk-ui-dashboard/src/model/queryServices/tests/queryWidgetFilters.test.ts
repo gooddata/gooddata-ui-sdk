@@ -1,8 +1,7 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester";
 import { queryWidgetFilters } from "../../queries";
-import { idRef, IFilter } from "@gooddata/sdk-model";
-import { IWidget } from "@gooddata/sdk-backend-spi";
+import { idRef, IFilter, IWidget } from "@gooddata/sdk-model";
 import {
     AdvancedFilterTestingDashboardIdentifier,
     AdvancedFilterTestingDashboardWidgets,

@@ -1,12 +1,15 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import {
+    idRef,
+    isIdentifierRef,
+    ObjRef,
+    uriRef,
     FilterContextItem,
     IDashboardAttributeFilter,
     IDashboardAttributeFilterParent,
     IDashboardDateFilter,
     IFilterContext,
-} from "@gooddata/sdk-backend-spi";
-import { idRef, isIdentifierRef, ObjRef, uriRef } from "@gooddata/sdk-model";
+} from "@gooddata/sdk-model";
 
 import { sanitizeFilterContext } from "../filterContexts";
 

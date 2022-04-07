@@ -1,11 +1,10 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React, { useCallback, useState } from "react";
 import { Button, Typography } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
 import { ConfigurationParentItems } from "./ConfigurationParentItems";
-import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
+import { areObjRefsEqual, ObjRef, IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-model";
 import { IAttributeFilterParent, IAttributeFiltersMetaState } from "../types";
-import { IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-backend-spi";
 import { useItems } from "../useItemsHook";
 import { ConfigurationDisplayForms } from "./ConfigurationDisplayForms";
 import { IConfigurationParentItem } from "./ConfigurationParentItem";

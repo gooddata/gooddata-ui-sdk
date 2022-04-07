@@ -1,22 +1,24 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import { GdcExecution, GdcExport } from "@gooddata/api-model-bear";
 import { transformResultHeaders } from "@gooddata/sdk-backend-base";
 import {
-    DataValue,
     IDataView,
-    IDimensionDescriptor,
     IExecutionFactory,
     IExecutionResult,
     IExportConfig,
     IExportResult,
     IPreparedExecution,
-    IResultHeader,
-    IResultWarning,
     NoDataError,
     UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
-import { IExecutionDefinition } from "@gooddata/sdk-model";
+import {
+    IExecutionDefinition,
+    DataValue,
+    IDimensionDescriptor,
+    IResultHeader,
+    IResultWarning,
+} from "@gooddata/sdk-model";
 import SparkMD5 from "spark-md5";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { convertExecutionApiError } from "../../../utils/errorHandling";

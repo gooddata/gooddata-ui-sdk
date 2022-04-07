@@ -1,10 +1,10 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import {
+    IDimensionDescriptor,
     IAttributeDescriptor,
     IMeasureGroupDescriptor,
-    IDimensionDescriptor,
     IResultHeader,
-} from "@gooddata/sdk-backend-spi";
+} from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess";
 

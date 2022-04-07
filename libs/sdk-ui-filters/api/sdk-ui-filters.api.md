@@ -5,15 +5,14 @@
 ```ts
 
 import { AttributeFiltersOrPlaceholders } from '@gooddata/sdk-ui';
-import { DashboardDateFilterConfigMode } from '@gooddata/sdk-backend-spi';
-import { DateFilterGranularity } from '@gooddata/sdk-backend-spi';
-import { DateFilterGranularity as DateFilterGranularity_2 } from '@gooddata/sdk-model';
-import { DateString } from '@gooddata/sdk-backend-spi';
-import { IAbsoluteDateFilterForm } from '@gooddata/sdk-backend-spi';
-import { IAbsoluteDateFilterPreset } from '@gooddata/sdk-backend-spi';
-import { IAllTimeDateFilterOption } from '@gooddata/sdk-backend-spi';
+import { DashboardDateFilterConfigMode } from '@gooddata/sdk-model';
+import { DateFilterGranularity } from '@gooddata/sdk-model';
+import { DateString } from '@gooddata/sdk-model';
+import { IAbsoluteDateFilterForm } from '@gooddata/sdk-model';
+import { IAbsoluteDateFilterPreset } from '@gooddata/sdk-model';
+import { IAllTimeDateFilterOption } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
-import { IAttributeElement } from '@gooddata/sdk-backend-spi';
+import { IAttributeElement } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IDateFilter } from '@gooddata/sdk-model';
 import { IElementsQueryAttributeFilter } from '@gooddata/sdk-backend-spi';
@@ -24,15 +23,15 @@ import { IMeasureValueFilter } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
 import { IPlaceholder } from '@gooddata/sdk-ui';
 import { IRankingFilter } from '@gooddata/sdk-model';
-import { IRelativeDateFilterForm } from '@gooddata/sdk-backend-spi';
-import { IRelativeDateFilterPreset } from '@gooddata/sdk-backend-spi';
-import { IRelativeDateFilterPresetOfGranularity } from '@gooddata/sdk-backend-spi';
+import { IRelativeDateFilterForm } from '@gooddata/sdk-model';
+import { IRelativeDateFilterPreset } from '@gooddata/sdk-model';
+import { IRelativeDateFilterPresetOfGranularity } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-ui';
 import { ObjRef } from '@gooddata/sdk-model';
 import { ObjRefInScope } from '@gooddata/sdk-model';
 import { OnError } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
-import { RelativeGranularityOffset } from '@gooddata/sdk-backend-spi';
+import { RelativeDateFilterGranularityOffset } from '@gooddata/sdk-model';
 import { WrappedComponentProps } from 'react-intl';
 
 // @public
@@ -81,7 +80,7 @@ export const DateFilterHelpers: {
     canExcludeCurrentPeriod: (dateFilterOption: DateFilterOption) => boolean;
     mapOptionToAfm: (value: DateFilterOption, dateDataSet: ObjRef, excludeCurrentPeriod: boolean) => IDateFilter;
     formatAbsoluteDateRange: (from: string | Date, to: string | Date, dateFormat: string) => string;
-    formatRelativeDateRange: (from: number, to: number, granularity: DateFilterGranularity_2, translator: IDateAndMessageTranslator) => string;
+    formatRelativeDateRange: (from: number, to: number, granularity: DateFilterGranularity, translator: IDateAndMessageTranslator) => string;
     filterVisibleDateFilterOptions: typeof filterVisibleDateFilterOptions;
 };
 
@@ -503,9 +502,9 @@ export interface IUiAbsoluteDateFilterForm extends IAbsoluteDateFilterForm {
 
 // @public
 export interface IUiRelativeDateFilterForm extends Omit<IRelativeDateFilterForm, "availableGranularities"> {
-    from?: RelativeGranularityOffset;
+    from?: RelativeDateFilterGranularityOffset;
     granularity?: DateFilterGranularity;
-    to?: RelativeGranularityOffset;
+    to?: RelativeDateFilterGranularityOffset;
 }
 
 // @beta (undocumented)

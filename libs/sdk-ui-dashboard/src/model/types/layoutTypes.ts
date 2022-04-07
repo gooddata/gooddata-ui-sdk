@@ -1,18 +1,18 @@
 // (C) 2021-2022 GoodData Corporation
 
 import {
+    idRef,
+    IDashboardObjectIdentity,
     IBaseWidget,
-    IDashboardLayoutItem,
+    IFilterableWidget,
+    IWidget,
+    IWidgetDefinition,
+    isWidget,
     IDashboardLayoutSection,
     IDashboardLayoutSectionHeader,
     IDashboardLayoutSizeByScreenSize,
-    IDashboardObjectIdentity,
-    IFilterableWidget,
-    isWidget,
-    IWidget,
-    IWidgetDefinition,
-} from "@gooddata/sdk-backend-spi";
-import { idRef } from "@gooddata/sdk-model";
+    IDashboardLayoutItem,
+} from "@gooddata/sdk-model";
 import cloneDeep from "lodash/cloneDeep";
 import isEmpty from "lodash/isEmpty";
 

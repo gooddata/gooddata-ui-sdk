@@ -6,8 +6,7 @@ import {
     getLighterColor,
     normalizeColorToRGB,
 } from "@gooddata/sdk-ui-vis-commons";
-import { IAttributeDescriptor, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
-import { emptyDef, uriRef } from "@gooddata/sdk-model";
+import { emptyDef, uriRef, IAttributeDescriptor, IResultAttributeHeader } from "@gooddata/sdk-model";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { getValidColorPalette } from "../color";
 

@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     DimensionHeader,
     ExecutionResult,
@@ -7,15 +7,16 @@ import {
     JsonApiAttributeOutAttributesGranularityEnum,
 } from "@gooddata/api-client-tiger";
 import {
+    DateAttributeGranularity,
+    IExecutionDefinition,
     DataValue,
-    IDimensionDescriptor,
-    IDimensionItemDescriptor,
     IMeasureDescriptor,
+    IDimensionItemDescriptor,
+    IDimensionDescriptor,
     IResultHeader,
     isAttributeDescriptor,
     isMeasureGroupDescriptor,
-} from "@gooddata/sdk-backend-spi";
-import { DateAttributeGranularity, IExecutionDefinition } from "@gooddata/sdk-model";
+} from "@gooddata/sdk-model";
 import { createDateValueFormatter } from "../dateFormatting/dateValueFormatter";
 import { DateFormatter } from "../dateFormatting/types";
 import { toSdkGranularity } from "../dateGranularityConversions";

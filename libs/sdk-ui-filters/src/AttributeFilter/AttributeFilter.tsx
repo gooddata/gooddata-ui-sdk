@@ -10,8 +10,9 @@ import {
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     ObjRef,
+    IAttributeElement,
 } from "@gooddata/sdk-model";
-import { IAnalyticalBackend, IAttributeElement } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import { AttributeDropdown } from "./AttributeDropdown/AttributeDropdown";
 import {

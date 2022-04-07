@@ -1,15 +1,15 @@
 // (C) 2019-2022 GoodData Corporation
+import { IElementsQueryFactory, IWorkspaceAttributesService, NotSupported } from "@gooddata/sdk-backend-spi";
 import {
+    areObjRefsEqual,
+    isIdentifierRef,
+    ObjRef,
+    ICatalogAttribute,
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
-    IElementsQueryFactory,
-    IWorkspaceAttributesService,
-    NotSupported,
-    IMetadataObject,
     IDataSetMetadataObject,
-    ICatalogAttribute,
-} from "@gooddata/sdk-backend-spi";
-import { areObjRefsEqual, isIdentifierRef, ObjRef } from "@gooddata/sdk-model";
+    IMetadataObject,
+} from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { TigerWorkspaceElements } from "./elements";
 import {

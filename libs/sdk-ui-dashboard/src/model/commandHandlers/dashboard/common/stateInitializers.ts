@@ -1,23 +1,24 @@
 // (C) 2021-2022 GoodData Corporation
 
 import { PayloadAction } from "@reduxjs/toolkit";
-import {
-    FilterContextItem,
-    IAttributeDisplayFormMetadataObject,
-    IDashboard,
-    IDashboardLayout,
-    IDateFilterConfig,
-    isDashboardAttributeFilter,
-    ISettings,
-    IWidget,
-} from "@gooddata/sdk-backend-spi";
 import { alertsActions } from "../../../store/alerts";
 import { filterContextActions } from "../../../store/filterContext";
 import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext";
 import { layoutActions } from "../../../store/layout";
 import { insightsActions } from "../../../store/insights";
 import { metaActions } from "../../../store/meta";
-import { areObjRefsEqual, IInsight } from "@gooddata/sdk-model";
+import {
+    areObjRefsEqual,
+    IInsight,
+    IDateFilterConfig,
+    FilterContextItem,
+    isDashboardAttributeFilter,
+    IAttributeDisplayFormMetadataObject,
+    IWidget,
+    IDashboardLayout,
+    IDashboard,
+    ISettings,
+} from "@gooddata/sdk-model";
 import {
     dashboardFilterContextDefinition,
     dashboardFilterContextIdentity,

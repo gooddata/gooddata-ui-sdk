@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import { useCallback } from "react";
 import isEqual from "lodash/isEqual";
 import {
@@ -9,11 +9,10 @@ import {
     selectDrillableItemsByWidgetRef,
     selectConfiguredAndImplicitDrillsByWidgetRef,
 } from "../../../../../model";
-import { IInsightWidget } from "@gooddata/sdk-backend-spi";
 import { OnWidgetDrill } from "../../../../drill/types";
 import { DataViewFacade, IDrillEvent, IPushData, isSomeHeaderPredicateMatched } from "@gooddata/sdk-ui";
 import { IDashboardDrillEvent } from "../../../../../types";
-import { IInsight } from "@gooddata/sdk-model";
+import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 /**
  * @internal
  */

@@ -1,11 +1,11 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { Header, Icon, Item, ItemsWrapper, SubMenu } from "@gooddata/sdk-ui-kit";
 import {
+    TotalType,
+    IAttributeDescriptor,
     attributeDescriptorLocalId,
     attributeDescriptorName,
-    IAttributeDescriptor,
-} from "@gooddata/sdk-backend-spi";
-import { TotalType } from "@gooddata/sdk-model";
+} from "@gooddata/sdk-model";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import cx from "classnames";
 import React from "react";

@@ -1,27 +1,11 @@
 // (C) 2019-2022 GoodData Corporation
 
 import {
-    FilterContextItem,
-    IDashboard,
-    IDashboardDefinition,
-    IDashboardPlugin,
-    IDashboardPluginDefinition,
     IDashboardReferences,
     IDashboardWithReferences,
-    IFilterContextDefinition,
     IGetDashboardOptions,
     IGetScheduledMailOptions,
-    IListedDashboard,
-    IScheduledMail,
-    IScheduledMailDefinition,
-    isFilterContextDefinition,
-    isInsightWidget,
-    isInsightWidgetDefinition,
-    isKpiWidgetDefinition,
-    IWidget,
-    IWidgetAlert,
     IWidgetAlertCount,
-    IWidgetAlertDefinition,
     IWidgetReferences,
     IWorkspaceDashboardsService,
     IWorkspaceInsightsService,
@@ -31,7 +15,30 @@ import {
     UnexpectedResponseError,
     walkLayout,
 } from "@gooddata/sdk-backend-spi";
-import { areObjRefsEqual, idRef, IFilter, IInsight, isIdentifierRef, ObjRef } from "@gooddata/sdk-model";
+import {
+    areObjRefsEqual,
+    idRef,
+    IFilter,
+    IInsight,
+    isIdentifierRef,
+    ObjRef,
+    FilterContextItem,
+    IFilterContextDefinition,
+    isFilterContextDefinition,
+    IWidgetAlert,
+    IWidgetAlertDefinition,
+    IWidget,
+    isKpiWidgetDefinition,
+    isInsightWidgetDefinition,
+    isInsightWidget,
+    IScheduledMail,
+    IScheduledMailDefinition,
+    IDashboard,
+    IDashboardDefinition,
+    IListedDashboard,
+    IDashboardPlugin,
+    IDashboardPluginDefinition,
+} from "@gooddata/sdk-model";
 import cloneDeep from "lodash/cloneDeep";
 import isEqual from "lodash/isEqual";
 import values from "lodash/values";

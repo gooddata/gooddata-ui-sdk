@@ -1,8 +1,14 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import set from "lodash/set";
 import cloneDeep from "lodash/cloneDeep";
-import { IMeasureGroupDescriptor, IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
-import { IBucket, IAttributeOrMeasure, isMeasure, measureLocalId } from "@gooddata/sdk-model";
+import {
+    IBucket,
+    IAttributeOrMeasure,
+    isMeasure,
+    measureLocalId,
+    IMeasureDescriptor,
+    IMeasureGroupDescriptor,
+} from "@gooddata/sdk-model";
 import { BucketNames, DataViewFacade, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IChartConfig } from "../../../interfaces";
 import { isLineChart } from "../_util/common";

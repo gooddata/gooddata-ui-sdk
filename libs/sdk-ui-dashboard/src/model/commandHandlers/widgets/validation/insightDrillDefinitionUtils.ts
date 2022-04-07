@@ -1,12 +1,15 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import flatMap from "lodash/flatMap";
 import {
-    IAttributeDisplayFormMetadataObject,
+    idRef,
+    IInsight,
+    ObjRef,
+    ObjRefInScope,
+    objRefToString,
     IDrillToAttributeUrl,
     IDrillToCustomUrl,
     IDrillToDashboard,
     IDrillToInsight,
-    IListedDashboard,
     InsightDrillDefinition,
     isDrillFromAttribute,
     isDrillFromMeasure,
@@ -14,8 +17,9 @@ import {
     isDrillToCustomUrl,
     isDrillToDashboard,
     isDrillToInsight,
-} from "@gooddata/sdk-backend-spi";
-import { idRef, IInsight, ObjRef, ObjRefInScope, objRefToString } from "@gooddata/sdk-model";
+    IAttributeDisplayFormMetadataObject,
+    IListedDashboard,
+} from "@gooddata/sdk-model";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { typesUtils } from "@gooddata/util";
 import {

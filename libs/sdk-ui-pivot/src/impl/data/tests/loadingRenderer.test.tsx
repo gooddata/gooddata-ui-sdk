@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { shallow, mount } from "enzyme";
 import React from "react";
 import { LoadingComponent } from "@gooddata/sdk-ui";
@@ -8,7 +8,7 @@ import noop from "lodash/noop";
 import { SingleMeasureWithRowAndColumnAttributes } from "../../structure/tests/table.fixture";
 import { createTestTableFacade } from "../../tests/tableFacade.fixture";
 import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
-import { ITheme } from "@gooddata/sdk-backend-spi";
+import { ITheme } from "@gooddata/sdk-model";
 
 async function createTestRenderer() {
     const [TestFacade, TestProps] = await createTestTableFacade(SingleMeasureWithRowAndColumnAttributes);

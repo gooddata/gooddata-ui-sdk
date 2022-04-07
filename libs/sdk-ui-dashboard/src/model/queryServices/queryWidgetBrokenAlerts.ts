@@ -1,13 +1,14 @@
 // (C) 2021-2022 GoodData Corporation
 
 import {
-    IAttributeDisplayFormMetadataObject,
-    IKpiWidget,
+    ObjRef,
+    objRefToString,
     isDashboardAttributeFilter,
-    isKpiWidget,
     IWidgetAlert,
-} from "@gooddata/sdk-backend-spi";
-import { ObjRef, objRefToString } from "@gooddata/sdk-model";
+    IKpiWidget,
+    IAttributeDisplayFormMetadataObject,
+    isKpiWidget,
+} from "@gooddata/sdk-model";
 import { filterContextItemsToDashboardFiltersByWidget } from "../../converters";
 import isEmpty from "lodash/isEmpty";
 import { SagaIterator } from "redux-saga";

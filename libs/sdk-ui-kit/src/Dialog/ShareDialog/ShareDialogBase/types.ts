@@ -1,6 +1,5 @@
-// (C) 2021 GoodData Corporation
-import { ShareStatus } from "@gooddata/sdk-backend-spi";
-import { ObjRef } from "@gooddata/sdk-model";
+// (C) 2021-2022 GoodData Corporation
+import { ObjRef, ShareStatus } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 import { IShareDialogLabels } from "../types";
 

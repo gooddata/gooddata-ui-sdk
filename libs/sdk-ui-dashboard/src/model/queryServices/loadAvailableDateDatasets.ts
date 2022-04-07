@@ -1,11 +1,10 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { DashboardContext } from "../types/commonTypes";
-import { idRef, IInsightDefinition } from "@gooddata/sdk-model";
+import { idRef, IInsightDefinition, ICatalogDateDataset } from "@gooddata/sdk-model";
 import { selectObjectAvailabilityConfig } from "../store/config/configSelectors";
 import { call, select } from "redux-saga/effects";
 import { PromiseFnReturnType } from "../types/sagas";
 import { SagaIterator } from "redux-saga";
-import { ICatalogDateDataset } from "@gooddata/sdk-backend-spi";
 
 /**
  * This generator function will communicate with backend to obtain the available date data sets that can be

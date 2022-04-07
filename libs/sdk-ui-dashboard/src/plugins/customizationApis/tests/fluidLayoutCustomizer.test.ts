@@ -1,7 +1,7 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { FluidLayoutCustomizer } from "../fluidLayoutCustomizer";
-import { IDashboardLayout, IDashboardLayoutItem, IDashboardLayoutSection } from "@gooddata/sdk-backend-spi";
+import { IDashboardLayout, IDashboardLayoutSection, IDashboardLayoutItem } from "@gooddata/sdk-model";
 import { ExtendedDashboardWidget, ICustomWidget, newCustomWidget } from "../../../model";
 import { DashboardCustomizationLogger } from "../customizationLogging";
 

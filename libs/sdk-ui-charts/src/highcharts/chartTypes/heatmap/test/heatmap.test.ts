@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 
 import { getMVS } from "../../_util/test/helper";
 import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
@@ -11,8 +11,7 @@ import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace"
 import range from "lodash/range";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings";
 import { HEATMAP_BLUE_COLOR_PALETTE } from "../../_util/color";
-import { ITheme } from "@gooddata/sdk-backend-spi";
-import { IColorPalette } from "@gooddata/sdk-model";
+import { IColorPalette, ITheme } from "@gooddata/sdk-model";
 
 describe("HeatmapColorStrategy", () => {
     it("should return HeatmapColorStrategy strategy with 7 colors from default heatmap color palette", () => {

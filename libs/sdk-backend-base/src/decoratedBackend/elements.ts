@@ -8,10 +8,9 @@ import {
     IElementsQueryAttributeFilter,
     IElementsQueryOptions,
     IElementsQueryResult,
-    IAttributeElement,
     IPagedResource,
 } from "@gooddata/sdk-backend-spi";
-import { IMeasure, IRelativeDateFilter, ObjRef } from "@gooddata/sdk-model";
+import { IMeasure, IRelativeDateFilter, ObjRef, IAttributeElement } from "@gooddata/sdk-model";
 
 /**
  * @alpha

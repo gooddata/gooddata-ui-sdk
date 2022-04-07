@@ -1,6 +1,6 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess";
-import { IAttributeDescriptor, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
+import { IAttributeDescriptor, IResultAttributeHeader } from "@gooddata/sdk-model";
 import { isBubbleChart, isHeatmap, isOneOfTypes, isScatterPlot, isTreemap, unwrap } from "../_util/common";
 import omit from "lodash/omit";
 import {

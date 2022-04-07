@@ -25,11 +25,11 @@ import {
     IWorkspaceDescriptor,
     IOrganization,
     ISecuritySettingsService,
-    IOrganizationDescriptor,
     IOrganizations,
     IWorkspaceUserGroupsQuery,
     IWorkspaceAccessControlService,
 } from "@gooddata/sdk-backend-spi";
+import { IOrganizationDescriptor } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 
 class BackendWithDecoratedServices implements IAnalyticalBackend {

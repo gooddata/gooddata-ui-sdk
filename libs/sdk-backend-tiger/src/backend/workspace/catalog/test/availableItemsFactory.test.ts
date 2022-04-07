@@ -1,8 +1,7 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { CatalogItem } from "@gooddata/sdk-backend-spi";
-import { uriRef } from "@gooddata/sdk-model";
+import { uriRef, CatalogItem } from "@gooddata/sdk-model";
 import { filterAvailableItems } from "../availableItemsFactory";
 
 describe("available item filtering", () => {

@@ -1,11 +1,11 @@
-// (C) 2021 GoodData Corporation
-import { uriRef } from "@gooddata/sdk-model";
+// (C) 2021-2022 GoodData Corporation
 import {
-    IUserAccess,
-    IUserGroupAccess,
+    uriRef,
     IWorkspaceUser,
     IWorkspaceUserGroup,
-} from "@gooddata/sdk-backend-spi";
+    IUserAccess,
+    IUserGroupAccess,
+} from "@gooddata/sdk-model";
 import { GranteeItem, IGranteeGroup, IGranteeGroupAll, IGranteeUser } from "../types";
 
 export const user: IGranteeUser = {

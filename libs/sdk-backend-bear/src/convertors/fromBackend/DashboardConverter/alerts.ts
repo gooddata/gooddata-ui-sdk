@@ -1,7 +1,6 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { GdcMetadata, GdcFilterContext } from "@gooddata/api-model-bear";
-import { IWidgetAlert, IWidgetAlertDefinition } from "@gooddata/sdk-backend-spi";
-import { uriRef } from "@gooddata/sdk-model";
+import { uriRef, IWidgetAlert, IWidgetAlertDefinition } from "@gooddata/sdk-model";
 import { convertFilterContext } from "./filterContext";
 
 export const convertAlert = (

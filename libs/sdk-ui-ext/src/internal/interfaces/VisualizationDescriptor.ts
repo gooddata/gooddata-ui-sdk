@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
-import { IAnalyticalBackend, ISettings, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { IColorPalette, IInsight, IInsightDefinition } from "@gooddata/sdk-model";
+import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import { IColorPalette, IInsight, IInsightDefinition, ISettings } from "@gooddata/sdk-model";
 import { IFluidLayoutDescriptor } from "./LayoutDescriptor";
 import { IDrillDownContext, IVisConstruct, IVisualization } from "./Visualization";
 

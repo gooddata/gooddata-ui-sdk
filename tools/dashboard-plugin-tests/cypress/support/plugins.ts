@@ -1,6 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import { idRef } from "@gooddata/sdk-model";
-import { IDashboardPlugin, IDashboardPluginLink } from "@gooddata/sdk-backend-spi";
+import { idRef, IDashboardPlugin, IDashboardPluginLink } from "@gooddata/sdk-model";
 import snakeCase from "lodash/snakeCase";
 
 function convertToPluginIdentifier(name: string): string {

@@ -1,10 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
-import {
-    ICatalogFact,
-    IDataSetMetadataObject,
-    IMetadataObject,
-    IWorkspaceFactsService,
-} from "@gooddata/sdk-backend-spi";
+import { IWorkspaceFactsService } from "@gooddata/sdk-backend-spi";
+import { ICatalogFact, IDataSetMetadataObject, IMetadataObject } from "@gooddata/sdk-model";
 import { isIdentifierRef, ObjRef } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { ITigerClient, jsonApiHeaders, MetadataUtilities } from "@gooddata/api-client-tiger";

@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import range from "lodash/range";
 import head from "lodash/head";
 import last from "lodash/last";
@@ -7,7 +7,7 @@ import isEqual from "lodash/isEqual";
 import { numberFormat } from "@gooddata/numberjs";
 import { IColorLegendItem, IColorLegendSize } from "./types";
 import { LEFT, RIGHT } from "./PositionTypes";
-import { ITheme } from "@gooddata/sdk-backend-spi";
+import { ITheme } from "@gooddata/sdk-model";
 import { parseRGBString } from "../coloring/color";
 
 export const RESPONSIVE_ITEM_MIN_WIDTH = 200;

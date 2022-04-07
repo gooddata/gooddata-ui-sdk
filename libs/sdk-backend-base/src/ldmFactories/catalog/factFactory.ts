@@ -1,7 +1,6 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import identity from "lodash/identity";
-import { ObjRef } from "@gooddata/sdk-model";
-import { ICatalogFact, IFactMetadataObject, isFactMetadataObject } from "@gooddata/sdk-backend-spi";
+import { ObjRef, ICatalogFact, IFactMetadataObject, isFactMetadataObject } from "@gooddata/sdk-model";
 import { GroupableCatalogItemBuilder } from "./groupFactory";
 import { builderFactory, BuilderModifications } from "../builder";
 import { FactMetadataObjectBuilder, newFactMetadataObject } from "../metadata/factFactory";

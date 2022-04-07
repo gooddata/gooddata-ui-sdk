@@ -1,9 +1,9 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import isEmpty from "lodash/isEmpty";
 import invariant from "ts-invariant";
-import { IDataView, IMeasureDescriptor, DataValue } from "@gooddata/sdk-backend-spi";
-import { Identifier } from "@gooddata/sdk-model";
+import { IDataView } from "@gooddata/sdk-backend-spi";
+import { Identifier, DataValue, IMeasureDescriptor } from "@gooddata/sdk-model";
 
 import { calculateXirr } from "./calculateXirr";
 import {

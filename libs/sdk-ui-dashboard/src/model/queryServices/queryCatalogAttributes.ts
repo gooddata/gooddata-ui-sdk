@@ -1,7 +1,6 @@
 // (C) 2022 GoodData Corporation
 
-import { ICatalogAttribute } from "@gooddata/sdk-backend-spi";
-import { areObjRefsEqual, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
+import { areObjRefsEqual, ObjRef, serializeObjRef, ICatalogAttribute } from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
 import { call, select } from "redux-saga/effects";
 import { QueryCatalogAttributes } from "../queries/catalog";

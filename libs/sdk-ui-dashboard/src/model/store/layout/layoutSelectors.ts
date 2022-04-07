@@ -1,16 +1,17 @@
 // (C) 2021-2022 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
-import { ObjRef, objRefToString } from "@gooddata/sdk-model";
+import {
+    ObjRef,
+    objRefToString,
+    IWidget,
+    isKpiWidget,
+    isInsightWidget,
+    IDashboardLayout,
+    IDashboardLayoutItem,
+} from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { DashboardState } from "../types";
 import { LayoutState } from "./layoutState";
-import {
-    IDashboardLayout,
-    IDashboardLayoutItem,
-    isInsightWidget,
-    isKpiWidget,
-    IWidget,
-} from "@gooddata/sdk-backend-spi";
 import { ExtendedDashboardWidget, isCustomWidget } from "../../types/layoutTypes";
 import { createUndoableCommandsMapping } from "../_infra/undoEnhancer";
 import { newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap";

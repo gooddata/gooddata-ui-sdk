@@ -1,5 +1,5 @@
-// (C) 2021 GoodData Corporation
-import { IDashboardLayout } from "@gooddata/sdk-backend-spi";
+// (C) 2021-2022 GoodData Corporation
+import { IDashboardLayout } from "@gooddata/sdk-model";
 import { ExtendedDashboardLayoutSection, ExtendedDashboardWidget } from "../../../types/layoutTypes";
 import isEmpty from "lodash/isEmpty";
 

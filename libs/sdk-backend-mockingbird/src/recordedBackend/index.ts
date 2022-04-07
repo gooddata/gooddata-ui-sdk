@@ -22,24 +22,27 @@ import {
     IUserSettingsService,
     IWorkspaceDashboardsService,
     IUserWorkspaceSettings,
-    ISeparators,
     IWorkspaceUsersQuery,
     IDateFilterConfigsQuery,
     IBackendCapabilities,
     IWorkspaceDescriptor,
-    IWorkspacePermissions,
-    ITheme,
     IOrganization,
     ISecuritySettingsService,
     ValidationContext,
-    IOrganizationDescriptor,
     IOrganizations,
     IDateFilterConfigsQueryResult,
     IUser,
     IWorkspaceUserGroupsQuery,
     IWorkspaceAccessControlService,
 } from "@gooddata/sdk-backend-spi";
-import { IColorPalette, idRef } from "@gooddata/sdk-model";
+import {
+    IColorPalette,
+    idRef,
+    ISeparators,
+    ITheme,
+    IWorkspacePermissions,
+    IOrganizationDescriptor,
+} from "@gooddata/sdk-model";
 import { RecordedExecutionFactory } from "./execution";
 import { RecordedBackendConfig, RecordingIndex } from "./types";
 import { RecordedInsights } from "./insights";

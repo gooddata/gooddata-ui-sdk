@@ -6,13 +6,12 @@ import { InputValidationError, TargetBackendType } from "../types";
 import axios, { AxiosError } from "axios";
 import {
     IAnalyticalBackend,
-    IDashboardPlugin,
     isUnexpectedResponseError,
     IDashboardWithReferences,
     IAnalyticalWorkspace,
 } from "@gooddata/sdk-backend-spi";
 import { convertToPluginEntrypoint, extractRootCause } from "../utils";
-import { idRef } from "@gooddata/sdk-model";
+import { idRef, IDashboardPlugin } from "@gooddata/sdk-model";
 
 export type InputValidator<T = string> = (value: T) => boolean | string;
 export type AsyncInputValidator = (value: string) => Promise<boolean | string>;

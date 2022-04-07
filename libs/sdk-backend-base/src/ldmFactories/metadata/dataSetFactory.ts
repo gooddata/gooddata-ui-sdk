@@ -1,8 +1,7 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import identity from "lodash/identity";
-import { ObjRef } from "@gooddata/sdk-model";
+import { ObjRef, IDataSetMetadataObject } from "@gooddata/sdk-model";
 import { MetadataObjectBuilder } from "./factory";
-import { IDataSetMetadataObject } from "@gooddata/sdk-backend-spi";
 import { builderFactory, BuilderModifications } from "../builder";
 
 /**

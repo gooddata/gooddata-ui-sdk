@@ -8,16 +8,21 @@ import {
     IExportConfig,
     IPreparedExecution,
     IExportResult,
-    IDimensionDescriptor,
-    DataValue,
-    IResultHeader,
     NotSupported,
     isNoDataError,
     NoDataError,
 } from "@gooddata/sdk-backend-spi";
 import { decoratedBackend } from "../decoratedBackend";
 import { DecoratedExecutionFactory, DecoratedPreparedExecution } from "../decoratedBackend/execution";
-import { defFingerprint, IExecutionDefinition, IFilter, IInsight } from "@gooddata/sdk-model";
+import {
+    defFingerprint,
+    IExecutionDefinition,
+    IFilter,
+    IInsight,
+    DataValue,
+    IDimensionDescriptor,
+    IResultHeader,
+} from "@gooddata/sdk-model";
 import { Denormalizer, NormalizationState, Normalizer } from "./normalizer";
 import cloneDeep from "lodash/cloneDeep";
 

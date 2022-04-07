@@ -1,11 +1,11 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import {
-    IAttributeDescriptor,
     IDimensionDescriptor,
+    IAttributeDescriptor,
     IResultHeader,
     isAttributeDescriptor,
     isResultAttributeHeader,
-} from "@gooddata/sdk-backend-spi";
+} from "@gooddata/sdk-model";
 import { createDateValueFormatter } from "./dateValueFormatter";
 import { DateFormat, DEFAULT_DATE_FORMAT } from "./dateValueParser";
 import { createDefaultDateFormatter } from "./defaultDateFormatter";

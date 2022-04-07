@@ -4,12 +4,14 @@ import {
     IWorkspaceMeasuresService,
     NotSupported,
     IMeasureExpressionToken,
+    IMeasureReferencing,
+} from "@gooddata/sdk-backend-spi";
+import {
+    ObjRef,
+    ICatalogMeasure,
     IMeasureMetadataObject,
     IMeasureMetadataObjectDefinition,
-    IMeasureReferencing,
-    ICatalogMeasure,
-} from "@gooddata/sdk-backend-spi";
-import { ObjRef } from "@gooddata/sdk-model";
+} from "@gooddata/sdk-model";
 
 /**
  * @internal

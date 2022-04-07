@@ -4,35 +4,35 @@
 
 ```ts
 
-import { AccessGranteeDetail } from '@gooddata/sdk-backend-spi';
-import { CatalogItem } from '@gooddata/sdk-backend-spi';
+import { AccessGranteeDetail } from '@gooddata/sdk-model';
+import { CatalogItem } from '@gooddata/sdk-model';
 import { dummyBackend } from '@gooddata/sdk-backend-base';
 import { dummyBackendEmptyData } from '@gooddata/sdk-backend-base';
 import { dummyDataView } from '@gooddata/sdk-backend-base';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
-import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-backend-spi';
-import { IAttributeElement } from '@gooddata/sdk-backend-spi';
+import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
+import { IAttributeElement } from '@gooddata/sdk-model';
 import { IBackendCapabilities } from '@gooddata/sdk-backend-spi';
-import { ICatalogAttribute } from '@gooddata/sdk-backend-spi';
-import { ICatalogDateDataset } from '@gooddata/sdk-backend-spi';
-import { ICatalogFact } from '@gooddata/sdk-backend-spi';
-import { ICatalogGroup } from '@gooddata/sdk-backend-spi';
-import { ICatalogMeasure } from '@gooddata/sdk-backend-spi';
+import { ICatalogAttribute } from '@gooddata/sdk-model';
+import { ICatalogDateDataset } from '@gooddata/sdk-model';
+import { ICatalogFact } from '@gooddata/sdk-model';
+import { ICatalogGroup } from '@gooddata/sdk-model';
+import { ICatalogMeasure } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDashboardWithReferences } from '@gooddata/sdk-backend-spi';
 import { IDataView } from '@gooddata/sdk-backend-spi';
-import { IDateFilterConfig } from '@gooddata/sdk-backend-spi';
+import { IDateFilterConfig } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
-import { ISettings } from '@gooddata/sdk-backend-spi';
-import { ITheme } from '@gooddata/sdk-backend-spi';
+import { ISettings } from '@gooddata/sdk-model';
+import { ITheme } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
-import { IWidgetAlert } from '@gooddata/sdk-backend-spi';
+import { IWidgetAlert } from '@gooddata/sdk-model';
 import { IWorkspaceDescriptor } from '@gooddata/sdk-backend-spi';
-import { IWorkspaceUser } from '@gooddata/sdk-backend-spi';
-import { IWorkspaceUserGroup } from '@gooddata/sdk-backend-spi';
+import { IWorkspaceUser } from '@gooddata/sdk-model';
+import { IWorkspaceUserGroup } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { ValidationContext } from '@gooddata/sdk-backend-spi';
 

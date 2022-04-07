@@ -1,7 +1,7 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import uniqBy from "lodash/fp/uniqBy";
 import flatten from "lodash/flatten";
-import { IAttributeDescriptor, IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
+import { IMeasureDescriptor, IAttributeDescriptor } from "@gooddata/sdk-model";
 import {
     IAvailableDrillTargetAttribute,
     IAvailableDrillTargetMeasure,

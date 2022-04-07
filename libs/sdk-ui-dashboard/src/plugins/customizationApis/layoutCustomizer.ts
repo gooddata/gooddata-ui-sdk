@@ -2,7 +2,7 @@
 import { FluidLayoutCustomizationFn, IDashboardLayoutCustomizer } from "../customizer";
 import { IDashboardCustomizationLogger } from "./customizationLogging";
 import { FluidLayoutCustomizer } from "./fluidLayoutCustomizer";
-import { IDashboardLayout } from "@gooddata/sdk-backend-spi";
+import { IDashboardLayout } from "@gooddata/sdk-model";
 import { DashboardTransformFn, ExtendedDashboardWidget } from "../../model";
 
 export class DefaultLayoutCustomizer implements IDashboardLayoutCustomizer {

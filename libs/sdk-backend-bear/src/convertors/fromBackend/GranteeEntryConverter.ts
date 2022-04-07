@@ -1,9 +1,9 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { GdcAccessControl } from "@gooddata/api-model-bear";
 
 import { convertWorkspaceUserGroup } from "./UserGroupsConverter";
 import { convertUsersItem } from "./UsersConverter";
-import { AccessGranteeDetail } from "@gooddata/sdk-backend-spi";
+import { AccessGranteeDetail } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 
 function isGranteeUserInfo(

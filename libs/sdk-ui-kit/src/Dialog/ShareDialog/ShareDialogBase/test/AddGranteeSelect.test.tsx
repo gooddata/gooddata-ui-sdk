@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { mount, ReactWrapper } from "enzyme";
 import { AddGranteeSelect } from "../AddGranteeSelect";
@@ -7,11 +7,10 @@ import { noop } from "lodash";
 import { BackendProvider, withIntl, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { recordedBackend, RecordedBackendConfig } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { IWorkspaceUser, IWorkspaceUserGroup } from "@gooddata/sdk-backend-spi";
 import { groupAll, workSpaceGroup, workspaceUser } from "./GranteeMock";
 import { mapWorkspaceUserGroupToGrantee, mapWorkspaceUserToGrantee } from "../../shareDialogMappers";
 import { getGranteeItemTestId } from "../utils";
-import { uriRef } from "@gooddata/sdk-model";
+import { uriRef, IWorkspaceUser, IWorkspaceUserGroup } from "@gooddata/sdk-model";
 
 const defaultProps: IAddGranteeSelectProps = {
     onSelectGrantee: noop,

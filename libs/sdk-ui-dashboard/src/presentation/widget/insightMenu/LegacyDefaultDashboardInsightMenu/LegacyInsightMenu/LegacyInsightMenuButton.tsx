@@ -1,11 +1,10 @@
 // (C) 2019-2022 GoodData Corporation
 import React, { useCallback } from "react";
-import { insightVisualizationUrl, objRefToString } from "@gooddata/sdk-model";
+import { insightVisualizationUrl, objRefToString, widgetRef } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
 import cx from "classnames";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
-import { widgetRef } from "@gooddata/sdk-backend-spi";
 import { VisType } from "@gooddata/sdk-ui";
 
 import { selectCanExportReport, selectSettings, useDashboardSelector } from "../../../../../model";

@@ -1,7 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { IWidgetAlert, IWidgetAlertDefinition } from "@gooddata/sdk-backend-spi";
-import { ObjRef } from "@gooddata/sdk-model";
+import { ObjRef, IWidgetAlert, IWidgetAlertDefinition } from "@gooddata/sdk-model";
 import { IDashboardCommand } from "./base";
 
 /**

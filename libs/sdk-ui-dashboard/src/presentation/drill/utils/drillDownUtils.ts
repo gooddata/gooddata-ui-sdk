@@ -1,6 +1,6 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 
-import { isDrillToLegacyDashboard } from "@gooddata/sdk-backend-spi";
+import { isDrillToLegacyDashboard } from "@gooddata/sdk-model";
 import { IDrillEvent, isDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
 import isEqual from "lodash/isEqual";
 import compact from "lodash/compact";

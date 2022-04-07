@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 
 import { DashboardConfig } from "../types/commonTypes";
-import { IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
+import { IWorkspacePermissions } from "@gooddata/sdk-model";
 import { IDashboardCommand } from "./base";
 import { ISharingApplyPayload } from "@gooddata/sdk-ui-kit";
 

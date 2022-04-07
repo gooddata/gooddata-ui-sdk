@@ -1,17 +1,19 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import {
-    IDashboardLayout,
-    IDashboardLayoutItem,
+    IInsight,
+    insightRef,
+    serializeObjRef,
     IDashboardObjectIdentity,
+    AnalyticalWidgetType,
+    isKpiWidget,
+    isInsightWidget,
+    IDashboardLayout,
     IDashboardWidget,
+    IDashboardLayoutItem,
     isDashboardLayout,
     ISettings,
-    isInsightWidget,
-    isKpiWidget,
-    AnalyticalWidgetType,
-} from "@gooddata/sdk-backend-spi";
-import { IInsight, insightRef, serializeObjRef } from "@gooddata/sdk-model";
+} from "@gooddata/sdk-model";
 import compact from "lodash/compact";
 import keyBy from "lodash/keyBy";
 import invariant, { InvariantError } from "ts-invariant";

@@ -1,8 +1,8 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { DateFilterConfigState } from "./dateFilterConfigState";
-import { IDashboardDateFilterConfig, IDateFilterConfig } from "@gooddata/sdk-backend-spi";
+import { IDateFilterConfig, IDashboardDateFilterConfig } from "@gooddata/sdk-model";
 
 type DateFilterConfigReducer<A extends Action> = CaseReducer<DateFilterConfigState, A>;
 

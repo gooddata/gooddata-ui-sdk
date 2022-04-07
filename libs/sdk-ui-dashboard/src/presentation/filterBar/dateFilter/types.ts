@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 import { ComponentType } from "react";
-import { DateFilterGranularity, IDashboardDateFilter } from "@gooddata/sdk-backend-spi";
+import { DateFilterGranularity, IDashboardDateFilter } from "@gooddata/sdk-model";
 import { IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
 
 /**

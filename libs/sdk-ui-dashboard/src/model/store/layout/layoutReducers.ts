@@ -1,17 +1,6 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { LayoutState } from "./layoutState";
-import {
-    IDashboardFilterReference,
-    IDashboardLayout,
-    IDashboardLayoutSectionHeader,
-    ILegacyKpiComparisonDirection,
-    ILegacyKpiComparisonTypeComparison,
-    InsightDrillDefinition,
-    isDashboardDateFilterReference,
-    isInsightWidget,
-    isKpiWidget,
-} from "@gooddata/sdk-backend-spi";
 import { invariant } from "ts-invariant";
 import { resetUndoReducer, undoReducer, withUndo } from "../_infra/undoEnhancer";
 import {
@@ -22,7 +11,20 @@ import {
     StashedDashboardItemsId,
 } from "../../types/layoutTypes";
 import { addArrayElements, moveArrayElement, removeArrayElement } from "../../utils/arrayOps";
-import { areObjRefsEqual, ObjRef, VisualizationProperties } from "@gooddata/sdk-model";
+import {
+    areObjRefsEqual,
+    ObjRef,
+    VisualizationProperties,
+    IDashboardFilterReference,
+    isDashboardDateFilterReference,
+    InsightDrillDefinition,
+    isKpiWidget,
+    isInsightWidget,
+    IDashboardLayout,
+    IDashboardLayoutSectionHeader,
+    IKpiComparisonDirection,
+    IKpiComparisonTypeComparison,
+} from "@gooddata/sdk-model";
 import { WidgetHeader } from "../../types/widgetTypes";
 import flatMap from "lodash/flatMap";
 import { Draft } from "immer";
@@ -456,8 +458,8 @@ const replaceKpiWidgetMeasure: LayoutReducer<ReplaceKpiWidgetMeasure> = (state, 
 
 type ReplaceKpiWidgetComparison = {
     ref: ObjRef;
-    comparisonType: ILegacyKpiComparisonTypeComparison;
-    comparisonDirection?: ILegacyKpiComparisonDirection;
+    comparisonType: IKpiComparisonTypeComparison;
+    comparisonDirection?: IKpiComparisonDirection;
 };
 
 const replaceKpiWidgetComparison: LayoutReducer<ReplaceKpiWidgetComparison> = (state, action) => {

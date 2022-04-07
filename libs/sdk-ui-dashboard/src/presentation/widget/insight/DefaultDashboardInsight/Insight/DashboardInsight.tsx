@@ -1,12 +1,13 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React, { CSSProperties, useCallback, useMemo, useState } from "react";
-import { IUserWorkspaceSettings, widgetRef } from "@gooddata/sdk-backend-spi";
+import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { createSelector } from "@reduxjs/toolkit";
 import {
     insightProperties,
     insightSetFilters,
     insightVisualizationUrl,
     objRefToString,
+    widgetRef,
 } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,

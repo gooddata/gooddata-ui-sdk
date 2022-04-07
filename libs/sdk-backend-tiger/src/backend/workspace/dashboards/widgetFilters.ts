@@ -1,6 +1,5 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 
-import { dashboardFilterReferenceObjRef, IWidget } from "@gooddata/sdk-backend-spi";
 import {
     filterObjRef,
     IAttributeFilter,
@@ -10,6 +9,8 @@ import {
     isAttributeFilter,
     isDateFilter,
     ObjRef,
+    dashboardFilterReferenceObjRef,
+    IWidget,
 } from "@gooddata/sdk-model";
 import last from "lodash/last";
 import zip from "lodash/zip";

@@ -6,8 +6,14 @@ import noop from "lodash/noop";
 import isEqual from "lodash/isEqual";
 import compose from "lodash/flowRight";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { IExecutionFactory, IExportResult, ITheme, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { IInsightDefinition, insightProperties, IColorPalette, insightTitle } from "@gooddata/sdk-model";
+import { IExecutionFactory, IExportResult, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import {
+    IInsightDefinition,
+    insightProperties,
+    IColorPalette,
+    insightTitle,
+    ITheme,
+} from "@gooddata/sdk-model";
 
 import { IVisualization, IVisProps, FullVisualizationCatalog } from "../internal";
 import {

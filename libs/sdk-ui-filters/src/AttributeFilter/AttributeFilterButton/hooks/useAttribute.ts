@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
 import { useMemo } from "react";
 import { useCancelablePromise } from "@gooddata/sdk-ui";
-import { IAttributeMetadataObject } from "@gooddata/sdk-backend-spi";
+import { IAttributeMetadataObject } from "@gooddata/sdk-model";
 import { getObjRef } from "../../utils/AttributeFilterUtils";
 import stringify from "json-stable-stringify";
 import { AttributeFilterButtonContextProps } from "./types";

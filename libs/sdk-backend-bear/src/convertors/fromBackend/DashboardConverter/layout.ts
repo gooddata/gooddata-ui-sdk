@@ -1,16 +1,19 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import { GdcDashboardLayout, GdcVisualizationObject, GdcVisualizationClass } from "@gooddata/api-model-bear";
-import { uriRef, idRef, UriRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import {
+    uriRef,
+    idRef,
+    UriRef,
+    areObjRefsEqual,
+    IWidget,
+    IDashboardLayout,
+    IDashboardLayoutSection,
     IDashboardLayoutSize,
     IDashboardLayoutSizeByScreenSize,
-    IDashboardLayout,
     IDashboardLayoutItem,
-    IDashboardLayoutSection,
-    IWidget,
     ScreenSize,
-} from "@gooddata/sdk-backend-spi";
+} from "@gooddata/sdk-model";
 import { BearDashboardDependency } from "./types";
 
 // Default layout column size for the kpi widget, when generating implicit layout

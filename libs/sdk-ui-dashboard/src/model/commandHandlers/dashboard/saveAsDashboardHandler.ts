@@ -1,6 +1,6 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
-import { IAccessControlAware, IDashboard, IDashboardDefinition } from "@gooddata/sdk-backend-spi";
+import { IDashboard, IDashboardDefinition, IAccessControlAware } from "@gooddata/sdk-model";
 import { BatchAction, batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
 import { call, put, SagaReturnType, select, setContext } from "redux-saga/effects";

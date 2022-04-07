@@ -1,5 +1,5 @@
-// (C) 2007-2021 GoodData Corporation
-import { IAttributeDescriptor, IResultAttributeHeader, ITotalDescriptor } from "@gooddata/sdk-backend-spi";
+// (C) 2007-2022 GoodData Corporation
+import { IAttributeDescriptor, IResultAttributeHeader, ITotalDescriptor } from "@gooddata/sdk-model";
 import { DataSeriesDescriptor, DataSeriesId } from "@gooddata/sdk-ui";
 import { ColDef, ColGroupDef, Column } from "@ag-grid-community/all-modules";
 

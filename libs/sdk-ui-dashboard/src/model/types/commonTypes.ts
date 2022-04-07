@@ -1,12 +1,13 @@
 // (C) 2021-2022 GoodData Corporation
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
-    IAnalyticalBackend,
-    IDashboard,
+    IColorPalette,
+    ObjRef,
     IDateFilterConfig,
-    ISeparators,
+    IDashboard,
     ISettings,
-} from "@gooddata/sdk-backend-spi";
-import { IColorPalette, ObjRef } from "@gooddata/sdk-model";
+    ISeparators,
+} from "@gooddata/sdk-model";
 import { ILocale } from "@gooddata/sdk-ui";
 import keys from "lodash/keys";
 import includes from "lodash/includes";

@@ -1,6 +1,7 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { GdcProject, GdcUser } from "@gooddata/api-model-bear";
-import { IWorkspaceDescriptor, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
+import { IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
+import { IWorkspacePermissions } from "@gooddata/sdk-model";
 
 export const convertUserProject = ({ userProject }: GdcProject.IUserProject): IWorkspaceDescriptor => {
     const workspace: IWorkspaceDescriptor = {
