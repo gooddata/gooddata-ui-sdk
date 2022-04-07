@@ -1,5 +1,5 @@
 // (C) 2020-2022 GoodData Corporation
-import { call, select, all, CallEffect, SagaReturnType } from "redux-saga/effects";
+import { all, call, CallEffect, SagaReturnType, select } from "redux-saga/effects";
 import {
     IDrillEvent,
     IDrillEventIntersectionElement,
@@ -25,6 +25,8 @@ import { getElementTitle } from "./getElementTitle";
 import { getAttributeIdentifiersPlaceholdersFromUrl } from "../../../_staging/drills/drillingUtils";
 import { DrillToCustomUrl } from "../../commands/drill";
 import { invalidArgumentsProvided } from "../../events/general";
+import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors";
+import groupBy from "lodash/groupBy";
 
 export enum DRILL_TO_URL_PLACEHOLDER {
     PROJECT_ID = "{project_id}",
@@ -66,44 +68,106 @@ export function* loadElementTitle(
     };
 }
 
+function isInRefList(list: ObjRef[], ref: ObjRef) {
+    return list.some((itemRef) => areObjRefsEqual(itemRef, ref));
+}
+
+function findDrillIntersectionAttributeHeaderItem(
+    drillIntersectionElements: IDrillEventIntersectionElement[],
+    attributeRef: ObjRef,
+) {
+    const intersectionForAttribute = drillIntersectionElements.find(
+        ({ header }) =>
+            isAttributeDescriptor(header) && areObjRefsEqual(attributeRef, header.attributeHeader.formOf.ref),
+    );
+
+    if (intersectionForAttribute && isDrillIntersectionAttributeItem(intersectionForAttribute.header)) {
+        return intersectionForAttribute.header.attributeHeaderItem;
+    }
+}
+
+export function* splitDFToLoadingAndMapping(
+    attributesDisplayForms: IAttributeDisplayFormMetadataObject[],
+    ctx: DashboardContext,
+): SagaIterator<{
+    displayFormsWithKnownValues: IAttributeDisplayFormMetadataObject[];
+    displayFormForValueLoad: IAttributeDisplayFormMetadataObject[];
+}> {
+    if (ctx.backend.capabilities.supportsElementUris) {
+        return {
+            displayFormForValueLoad: attributesDisplayForms,
+            displayFormsWithKnownValues: [],
+        };
+    }
+    // in tiger there are no uris for attribute values, only primary values
+    // we can't call collectLabelElements for date attributes because there are no date "elements", but we can use this values directly.
+
+    const dateAttributes: ReturnType<typeof selectCatalogDateAttributes> = yield select(
+        selectCatalogDateAttributes,
+    );
+    const dateAttributeRefs = dateAttributes.map((da) => da.attribute.ref);
+
+    const { true: displayFormsWithKnownValues = [], false: displayFormForValueLoad = [] } = groupBy(
+        attributesDisplayForms,
+        (df) => isInRefList(dateAttributeRefs, df.attribute),
+    );
+
+    return {
+        displayFormsWithKnownValues,
+        displayFormForValueLoad,
+    };
+}
+
 export function* loadAttributeElementsForDrillIntersection(
     drillIntersectionElements: IDrillEventIntersectionElement[],
     attributesDisplayForms: IAttributeDisplayFormMetadataObject[],
     ctx: DashboardContext,
 ): SagaIterator<IDrillToUrlElement[]> {
-    const elements: IDrillToUrlElement[] = yield all(
-        attributesDisplayForms.reduce((acc: CallEffect[], displayForm) => {
+    const splitDisplayForms: SagaReturnType<typeof splitDFToLoadingAndMapping> = yield call(
+        splitDFToLoadingAndMapping,
+        attributesDisplayForms,
+        ctx,
+    );
+    const { displayFormsWithKnownValues, displayFormForValueLoad } = splitDisplayForms;
+
+    const mappedElements = displayFormsWithKnownValues.reduce(
+        (acc: IDrillToUrlElement[], { id: dfIdentifier, attribute }) => {
+            const attributeHeaderItem = findDrillIntersectionAttributeHeaderItem(
+                drillIntersectionElements,
+                attribute,
+            );
+            if (!attributeHeaderItem) {
+                return acc;
+            }
+
+            acc.push({
+                identifier: dfIdentifier,
+                elementTitle: attributeHeaderItem.uri,
+            });
+            return acc;
+        },
+        [],
+    );
+
+    const loadedElement: IDrillToUrlElement[] = yield all(
+        displayFormForValueLoad.reduce((acc: CallEffect[], displayForm) => {
             const { id: dfIdentifier, attribute, ref: dfRef } = displayForm;
 
-            const intersectionForAttribute = drillIntersectionElements.find(
-                ({ header }) =>
-                    isAttributeDescriptor(header) &&
-                    areObjRefsEqual(attribute, header.attributeHeader.formOf.ref),
+            const attributeHeaderItem = findDrillIntersectionAttributeHeaderItem(
+                drillIntersectionElements,
+                attribute,
             );
-
-            if (!intersectionForAttribute) {
+            if (!attributeHeaderItem) {
                 return acc;
             }
 
-            if (!isDrillIntersectionAttributeItem(intersectionForAttribute.header)) {
-                return acc;
-            }
-
-            acc.push(
-                call(
-                    loadElementTitle,
-                    dfRef,
-                    dfIdentifier,
-                    intersectionForAttribute.header.attributeHeaderItem.uri,
-                    ctx,
-                ),
-            );
+            acc.push(call(loadElementTitle, dfRef, dfIdentifier, attributeHeaderItem.uri, ctx));
 
             return acc;
         }, []),
     );
 
-    return elements;
+    return [...mappedElements, ...loadedElement];
 }
 
 const encodeParameterIfSet = (parameter: string | undefined): string | undefined =>
