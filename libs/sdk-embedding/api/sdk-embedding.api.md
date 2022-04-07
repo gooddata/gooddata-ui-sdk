@@ -183,7 +183,7 @@ export namespace EmbeddedGdc {
     // (undocumented)
     export type DashboardDateFilter = IDashboardAllTimeDateFilter | IDashboardAbsoluteDateFilter | IDashboardRelativeDateFilter;
     // (undocumented)
-    export type DateFilterGranularity = "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year";
+    export type DateFilterGranularity = "GDC.time.minute" | "GDC.time.hour" | "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year";
     // (undocumented)
     export type DateFilterItem = IAbsoluteDateFilter | IRelativeDateFilter;
     // (undocumented)

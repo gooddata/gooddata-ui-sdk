@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import isObject from "lodash/isObject";
 import { GdcExecuteAFM } from "@gooddata/api-model-bear";
@@ -394,6 +394,8 @@ export namespace EmbeddedGdc {
 
     export type DateString = string;
     export type DateFilterGranularity =
+        | "GDC.time.minute"
+        | "GDC.time.hour"
         | "GDC.time.date"
         | "GDC.time.week_us"
         | "GDC.time.month"
