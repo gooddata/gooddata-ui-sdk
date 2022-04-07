@@ -7,10 +7,9 @@ import {
     IDateFilterOptionsByType,
 } from "@gooddata/sdk-ui-filters";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
-import { modifyMeasure } from "@gooddata/sdk-model";
+import { modifyMeasure, DateFilterGranularity } from "@gooddata/sdk-model";
 
 import * as Md from "../../../md/full";
-import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
 
 const TotalSales = modifyMeasure(Md.$TotalSales, (m) => m.format("#,##0").alias("$ Total Sales"));
 

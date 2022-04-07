@@ -1,7 +1,7 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { useState } from "react";
 import { DateFilter, IDateFilterOptionsByType, DateFilterOption } from "@gooddata/sdk-ui-filters";
-import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
+import { DateFilterGranularity } from "@gooddata/sdk-model";
 
 const dateFrom = new Date();
 dateFrom.setMonth(dateFrom.getMonth() - 1);

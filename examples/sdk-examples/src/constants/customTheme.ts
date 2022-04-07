@@ -1,5 +1,5 @@
-// (C) 2020-2021 GoodData Corporation
-import { ITheme } from "@gooddata/sdk-backend-spi";
+// (C) 2020-2022 GoodData Corporation
+import { ITheme } from "@gooddata/sdk-model";
 
 export const customTheme: ITheme = {
     button: {
