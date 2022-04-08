@@ -46,13 +46,7 @@ import {
 import { getScheduledEmailSummaryString } from "../utils/scheduledMailSummary";
 import { getScheduledEmailRecipientEmail } from "../utils/scheduledMailRecipients";
 import { getTimezoneByIdentifier, getUserTimezone, ITimezone, TIMEZONE_DEFAULT } from "../utils/timezone";
-import {
-    getDate,
-    getMonth,
-    getYear,
-    convertDateToDisplayDateString,
-    convertDateToPlatformDateString,
-} from "../utils/datetime";
+import { getDate, getMonth, getYear, convertDateToPlatformDateString } from "../utils/datetime";
 import { isEmail } from "../utils/validate";
 
 import { Textarea } from "./Textarea";
@@ -69,7 +63,6 @@ import { IInsightWidgetExtended } from "../useScheduledEmail";
 const MAX_MESSAGE_LENGTH = 200;
 const MAX_SUBJECT_LENGTH = 200;
 const MAX_DASHBOARD_TITLE_LENGTH = DASHBOARD_TITLE_MAX_LENGTH;
-const MAX_HYPHEN_LENGTH = 3;
 
 export interface IScheduledMailDialogRendererOwnProps {
     /**
@@ -357,6 +350,7 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
                 >
                     {this.renderFiltersMessage()}
                     {this.renderRecipients()}
+                    {this.renderUnsubscribedRecipients()}
                     {this.renderSubject()}
                     {this.renderMessage()}
                     {this.renderAttachment()}
@@ -397,10 +391,6 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
                     throw e;
                 }
             });
-    }
-
-    private getDashboardTitleMaxLength(displayDateString: string): number {
-        return MAX_DASHBOARD_TITLE_LENGTH - displayDateString.trim().length - MAX_HYPHEN_LENGTH;
     }
 
     private onAlign = (alignment: Alignment) => {
@@ -520,6 +510,24 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
                 backend={backend}
                 workspace={workspace}
             />
+        );
+    };
+
+    private renderUnsubscribedRecipients = (): React.ReactNode => {
+        const { intl, editSchedule } = this.props;
+        const unsubscribedAmount =
+            editSchedule?.unsubscribed?.length === undefined ? 0 : editSchedule.unsubscribed.length;
+        return (
+            unsubscribedAmount !== 0 && (
+                <div className="gd-input-component">
+                    <span className="gd-schedule-email-dialog-unsubscribed-recipients">
+                        {intl.formatMessage(
+                            { id: "dialogs.schedule.email.unsubscribed.recipients" },
+                            { n: unsubscribedAmount },
+                        )}
+                    </span>
+                </div>
+            )
         );
     };
 
@@ -698,15 +706,12 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
     // Internal utils
 
     private getDefaultSubject = (): string => {
-        const { dashboardTitle, dateFormat } = this.props;
-        const { startDate } = this.state;
-        const displayDateString = convertDateToDisplayDateString(startDate, dateFormat!);
-        const dashboardTitleMaxLength = this.getDashboardTitleMaxLength(displayDateString);
-        const isDashboardTitleTooLong = dashboardTitle.length > dashboardTitleMaxLength;
+        const { dashboardTitle } = this.props;
+        const isDashboardTitleTooLong = dashboardTitle.length > MAX_DASHBOARD_TITLE_LENGTH;
         const truncatedDashboardTitle = isDashboardTitleTooLong
-            ? dashboardTitle.substring(0, dashboardTitleMaxLength)
+            ? dashboardTitle.substring(0, MAX_DASHBOARD_TITLE_LENGTH)
             : dashboardTitle;
-        return `${truncatedDashboardTitle} - ${displayDateString}`;
+        return truncatedDashboardTitle;
     };
 
     private getDefaultEmailBody = (): string => {
