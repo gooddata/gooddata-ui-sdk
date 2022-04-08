@@ -315,10 +315,6 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@types/node-static",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
       "name": "@types/prettier",
       "allowedCategories": [ "tools" ]
     },
@@ -772,10 +768,6 @@
     },
     {
       "name": "node-sass-magic-importer",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "node-static",
       "allowedCategories": [ "production", "tools" ]
     },
     {
