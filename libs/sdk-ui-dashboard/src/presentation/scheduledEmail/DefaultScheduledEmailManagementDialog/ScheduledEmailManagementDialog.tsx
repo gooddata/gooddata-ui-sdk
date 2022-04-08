@@ -17,7 +17,7 @@ const ALL_TAB_ID = "gs.visualizationsList.tabs.all";
  * @alpha
  */
 export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementDialogProps> = (props) => {
-    const { onAdd, onDeleteSuccess: onDelete, onClose, onLoadError, onDeleteError } = props;
+    const { onAdd, onEdit, onDeleteSuccess: onDelete, onClose, onLoadError, onDeleteError } = props;
     const [scheduledEmailToDelete, setScheduledEmailToDelete] = useState<IScheduledMail | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [scheduledEmailsByUser, setScheduledEmailsByUser] = useState<IScheduledMail[]>([]);
@@ -45,6 +45,10 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
 
     const handleScheduleDelete = useCallback((scheduledEmail: IScheduledMail) => {
         setScheduledEmailToDelete(scheduledEmail);
+    }, []);
+
+    const handleScheduleEdit = useCallback((scheduledEmail: IScheduledMail) => {
+        onEdit?.(scheduledEmail);
     }, []);
 
     const handleScheduleDeleteSuccess = useCallback(() => {
@@ -91,6 +95,7 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
                 <div className="gd-scheduled-emails-content">
                     <ScheduledEmails
                         onDelete={handleScheduleDelete}
+                        onEdit={handleScheduleEdit}
                         isLoading={isLoading}
                         scheduledEmails={
                             selectedTabId === ALL_TAB_ID ? scheduledEmails : scheduledEmailsByUser

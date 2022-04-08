@@ -314,6 +314,10 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         throw new NotSupported("Tiger backend does not support scheduled emails.");
     };
 
+    public updateScheduledMail = async () => {
+        throw new NotSupported("Tiger backend does not support scheduled emails.");
+    };
+
     public deleteScheduledMail = async () => {
         throw new NotSupported("Tiger backend does not support scheduled emails.");
     };

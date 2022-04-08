@@ -2,11 +2,11 @@
 /* eslint-disable import/named,import/namespace */
 import React, { useMemo, useState } from "react";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IUser } from "@gooddata/sdk-backend-spi";
 import sortBy from "lodash/sortBy";
 
 import { useWorkspaceUsers } from "../../useWorkspaceUsers";
-import { IScheduleEmailRecipient } from "../../interfaces";
+import { IScheduleEmailExistingRecipient, IScheduleEmailRecipient } from "../../interfaces";
 
 import { RecipientsSelectRenderer } from "./RecipientsSelectRenderer";
 
@@ -14,8 +14,12 @@ interface IRecipientsSelectProps {
     /**
      * Author of the scheduled email - is always recipient of the scheduled email.
      */
-    currentUser: IScheduleEmailRecipient;
+    author: IScheduleEmailRecipient;
 
+    /**
+     * Current user creating or editing the schedule
+     */
+    currentUser: IUser;
     /**
      * Currently selected recipients.
      */
@@ -62,6 +66,7 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
     const {
         backend,
         workspace,
+        author,
         currentUser,
         value,
         onChange,
@@ -74,7 +79,7 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
     const { result, status } = useWorkspaceUsers({ backend, workspace, search, onError });
 
     const options = useMemo(
-        () => sortBy(result?.map((user): IScheduleEmailRecipient => ({ user })) ?? [], "user.email"),
+        () => sortBy(result?.map((user): IScheduleEmailExistingRecipient => ({ user })) ?? [], "user.email"),
         [result],
     );
 
@@ -85,6 +90,7 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
             options={options}
             value={value}
             onChange={onChange}
+            author={author}
             currentUser={currentUser}
             onLoad={(queryOptions) => {
                 setSearch(queryOptions?.search);

@@ -2,19 +2,26 @@
 import React from "react";
 import noop from "lodash/noop";
 import { ReactWrapper, mount } from "enzyme";
-import { uriRef } from "@gooddata/sdk-model";
+import { IUser, uriRef } from "@gooddata/sdk-model";
 
 import { IRecipientsSelectRendererProps, RecipientsSelectRenderer } from "../RecipientsSelectRenderer";
 import { IScheduleEmailRecipient } from "../../../interfaces";
 import { IntlWrapper } from "../../../../../localization/IntlWrapper";
 
-const currentUser: IScheduleEmailRecipient = {
+const author: IScheduleEmailRecipient = {
     user: {
         login: "user@gooddata.com",
         ref: uriRef("/gdc/user"),
         email: "user@gooddata.com",
         fullName: "John Doe",
     },
+};
+
+const currentUser: IUser = {
+    login: "user@gooddata.com",
+    ref: uriRef("/gdc/user"),
+    email: "user@gooddata.com",
+    fullName: "John Doe",
 };
 
 const options: IScheduleEmailRecipient[] = [
@@ -35,8 +42,9 @@ describe("RecipientsSelect", () => {
     function renderComponent(customProps: Partial<IRecipientsSelectRendererProps> = {}): ReactWrapper {
         const defaultProps = {
             options,
-            value: [currentUser],
+            value: [author],
             currentUser,
+            author,
             isMulti: false,
             onChange: noop,
             onLoad: noop,

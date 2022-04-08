@@ -149,8 +149,12 @@ const TIMEZONE_BY_OFFSETS = timezones.find(
     (tz) => tz.januaryOffset === JANUARY_OFFSET && tz.juneOffset === JUNE_OFFSET,
 );
 
-const TIMEZONE_DEFAULT = timezones.find((tz) => tz.identifier === "Etc/UTC")!;
+export const TIMEZONE_DEFAULT = getTimezoneByIdentifier("Etc/UTC")!;
 
 export function getUserTimezone(): ITimezone {
     return TIMEZONE_BY_OFFSETS || TIMEZONE_DEFAULT;
+}
+
+export function getTimezoneByIdentifier(title: string) {
+    return timezones.find((tz) => tz.identifier === title);
 }

@@ -14,6 +14,7 @@ describe("Textarea", () => {
             label: "",
             maxlength: 100,
             placeholder: "",
+            value: "",
             rows: 4,
             onChange: noop,
             ...customProps,
@@ -26,15 +27,12 @@ describe("Textarea", () => {
         );
     }
 
-    it("should render component", () => {
-        const component = renderComponent();
-        expect(component).toExist();
-    });
-
-    it("should render label", () => {
+    it("should render label and text area with value", () => {
         const label = "subject";
-        const component = renderComponent({ label });
+        const value = "value";
+        const component = renderComponent({ label, value });
         expect(component.find("label.gd-label").text()).toBe(label);
+        expect(component.find("textarea").text()).toBe(value);
     });
 
     it("should trigger onChange event", () => {

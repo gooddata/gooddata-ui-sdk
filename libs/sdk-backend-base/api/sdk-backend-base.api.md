@@ -524,6 +524,8 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     // (undocumented)
     updateDashboard(dashboard: IDashboard, updatedDashboard: IDashboardDefinition): Promise<IDashboard>;
     // (undocumented)
+    updateScheduledMail(ref: ObjRef, scheduledMailDefinition: IScheduledMailDefinition): Promise<void>;
+    // (undocumented)
     updateWidgetAlert(alert: IWidgetAlert | IWidgetAlertDefinition): Promise<IWidgetAlert>;
     // (undocumented)
     workspace: string;

@@ -244,6 +244,15 @@ export interface IWorkspaceDashboardsService {
     ): Promise<IScheduledMail>;
 
     /**
+     * Update existing scheduled mail for the dashboard
+     *
+     * @param ref - reference to the existing scheduled email object
+     * @param scheduledMail - scheduled email definition
+     * @returns promise of the updated scheduled email
+     */
+    updateScheduledMail(ref: ObjRef, scheduledMail: IScheduledMailDefinition): Promise<void>;
+
+    /**
      * Delete scheduled mail
      *
      * @param ref - scheduled email reference

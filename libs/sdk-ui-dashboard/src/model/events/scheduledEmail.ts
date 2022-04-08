@@ -49,3 +49,33 @@ export function scheduledEmailCreated(
 export const isDashboardScheduledEmailCreated = eventGuard<DashboardScheduledEmailCreated>(
     "GDC.DASH/EVT.SCHEDULED_EMAIL.CREATED",
 );
+
+/**
+ * This event is emitted after the scheduled email is successfully saved.
+ *
+ * @alpha
+ */
+export interface DashboardScheduledEmailSaved extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.SCHEDULED_EMAIL.SAVED";
+}
+
+export function scheduledEmailSaved(
+    ctx: DashboardContext,
+    correlationId?: string,
+): DashboardScheduledEmailSaved {
+    return {
+        type: "GDC.DASH/EVT.SCHEDULED_EMAIL.SAVED",
+        ctx,
+        correlationId,
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardScheduledEmailSaved}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardScheduledEmailSaved = eventGuard<DashboardScheduledEmailSaved>(
+    "GDC.DASH/EVT.SCHEDULED_EMAIL.SAVED",
+);

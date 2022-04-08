@@ -22,7 +22,7 @@ function getScheduledEmailRepeatString(
     options: IScheduleEmailRepeat,
     startDate: Date,
 ): string {
-    const { repeatType, repeatPeriod, repeatFrequency, repeatExecuteOn } = options;
+    const { repeatType, repeatPeriod, repeatFrequency } = options;
     const isCustomRepeatType = repeatType === REPEAT_TYPES.CUSTOM;
     const day = getDayName(startDate);
     const week = getWeek(startDate);
@@ -46,7 +46,10 @@ function getScheduledEmailRepeatString(
         },
     );
     const appliedRepeatExecuteOn =
-        repeatFrequencyType === REPEAT_FREQUENCIES.WEEK ? REPEAT_EXECUTE_ON.DAY_OF_WEEK : repeatExecuteOn;
+        repeatFrequencyType === REPEAT_FREQUENCIES.WEEK
+            ? REPEAT_EXECUTE_ON.DAY_OF_WEEK
+            : repeatFrequency.month?.type;
+
     const executeOn =
         repeatFrequencyType !== REPEAT_FREQUENCIES.DAY
             ? intl.formatMessage(

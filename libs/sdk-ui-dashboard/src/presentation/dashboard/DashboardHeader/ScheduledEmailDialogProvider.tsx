@@ -9,9 +9,13 @@ export const ScheduledEmailDialogProvider = () => {
         isScheduleEmailingDialogOpen,
         isScheduleEmailingManagementDialogOpen,
         onScheduleEmailingCancel,
-        onScheduleEmailingError,
-        onScheduleEmailingSuccess,
+        onScheduleEmailingCreateError,
+        onScheduleEmailingCreateSuccess,
         onScheduleEmailingManagementAdd,
+        onScheduleEmailingManagementEdit,
+        scheduledEmailToEdit,
+        onScheduleEmailingSaveError,
+        onScheduleEmailingSaveSuccess,
         onScheduleEmailingManagementClose,
         onScheduleEmailingManagementLoadingError,
         onScheduleEmailingManagementDeleteSuccess,
@@ -24,6 +28,7 @@ export const ScheduledEmailDialogProvider = () => {
                 <ScheduledEmailManagementDialog
                     isVisible={isScheduleEmailingManagementDialogOpen}
                     onAdd={onScheduleEmailingManagementAdd}
+                    onEdit={onScheduleEmailingManagementEdit}
                     onClose={onScheduleEmailingManagementClose}
                     onDeleteSuccess={onScheduleEmailingManagementDeleteSuccess}
                     onLoadError={onScheduleEmailingManagementLoadingError}
@@ -34,8 +39,11 @@ export const ScheduledEmailDialogProvider = () => {
                 <ScheduledEmailDialog
                     isVisible={isScheduleEmailingDialogOpen}
                     onCancel={onScheduleEmailingCancel}
-                    onError={onScheduleEmailingError}
-                    onSuccess={onScheduleEmailingSuccess}
+                    onError={onScheduleEmailingCreateError}
+                    onSuccess={onScheduleEmailingCreateSuccess}
+                    editSchedule={scheduledEmailToEdit}
+                    onSaveError={onScheduleEmailingSaveError}
+                    onSaveSuccess={onScheduleEmailingSaveSuccess}
                 />
             )}
         </>

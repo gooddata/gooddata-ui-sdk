@@ -9,6 +9,7 @@ import { getAttachmentType, getFormatsLabel, getRecipientsLabel } from "./utils"
 
 interface IScheduledEmailProps {
     onDelete: (scheduledEmail: IScheduledMail) => void;
+    onEdit: (scheduledEmail: IScheduledMail) => void;
     scheduledEmail: IScheduledMail;
     currentUserEmail?: string;
 }
@@ -26,7 +27,7 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
     const intl = useIntl();
     const theme = useTheme();
 
-    const { scheduledEmail, currentUserEmail, onDelete } = props;
+    const { scheduledEmail, currentUserEmail, onDelete, onEdit } = props;
     const { subject, to, bcc, attachments } = scheduledEmail;
     const recipients = [...to, ...(bcc ?? [])];
     const recipientsLabel = getRecipientsLabel(intl, recipients, currentUserEmail);
@@ -47,7 +48,7 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
                     </Bubble>
                 </BubbleHoverTrigger>
             </div>
-            <div className="gd-scheduled-email-content">
+            <div className="gd-scheduled-email-content" onClick={() => onEdit(scheduledEmail)}>
                 <div className="gd-scheduled-email-icon">
                     <AttachmentIcon color={theme?.palette?.complementary?.c5} />
                 </div>

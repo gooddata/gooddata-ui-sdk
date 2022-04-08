@@ -22,6 +22,11 @@ export interface IScheduledEmailDialogProps {
     onSubmit?: (scheduledEmailDefinition: IScheduledMailDefinition) => void;
 
     /**
+     * Callback to be called, when user save the existing scheduled email.
+     */
+    onSave?: (scheduledEmailDefinition: IScheduledMailDefinition) => void;
+
+    /**
      * Callback to be called, when user closes the scheduled email dialog.
      */
     onCancel?: () => void;
@@ -34,7 +39,22 @@ export interface IScheduledEmailDialogProps {
     /**
      * Callback to be called, when scheduling finishes successfully.
      */
-    onSuccess?: (scheduledMail: IScheduledMail) => void;
+    onSuccess?: () => void;
+
+    /**
+     * Callback to be called, when error occurs.
+     */
+    onSaveError?: (error: GoodDataSdkError) => void;
+
+    /**
+     * Callback to be called, when scheduling finishes successfully.
+     */
+    onSaveSuccess?: () => void;
+
+    /**
+     * Schedule to be edited in the dialog.
+     */
+    editSchedule?: IScheduledMail;
 }
 
 /**
@@ -50,6 +70,11 @@ export interface IScheduledEmailManagementDialogProps {
      * Callback to be called, when user adds new scheduled email item.
      */
     onAdd?: () => void;
+
+    /**
+     * Callback to be called, when user clicks scheduled email item for editing.
+     */
+    onEdit?: (scheduledMail: IScheduledMail) => void;
 
     /**
      * Callback to be called, when user closes the scheduled email management dialog.

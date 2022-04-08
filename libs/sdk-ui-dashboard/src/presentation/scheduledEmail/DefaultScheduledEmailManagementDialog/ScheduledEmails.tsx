@@ -8,6 +8,7 @@ import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
 interface IScheduledEmailsProps {
     onDelete: (scheduledEmail: IScheduledMail) => void;
+    onEdit: (scheduledEmail: IScheduledMail) => void;
     isLoading: boolean;
     scheduledEmails: IScheduledMail[];
     currentUserEmail?: string;
@@ -16,7 +17,8 @@ interface IScheduledEmailsProps {
 }
 
 const ScheduledEmailsComponent: React.FC<IScheduledEmailsProps> = (props) => {
-    const { isLoading, scheduledEmails, currentUserEmail, onDelete, theme, noSchedulesMessageId } = props;
+    const { isLoading, scheduledEmails, currentUserEmail, onDelete, onEdit, theme, noSchedulesMessageId } =
+        props;
 
     if (isLoading) {
         return (
@@ -47,6 +49,7 @@ const ScheduledEmailsComponent: React.FC<IScheduledEmailsProps> = (props) => {
                     scheduledEmail={scheduledEmail}
                     currentUserEmail={currentUserEmail}
                     onDelete={onDelete}
+                    onEdit={onEdit}
                 />
             ))}
         </>

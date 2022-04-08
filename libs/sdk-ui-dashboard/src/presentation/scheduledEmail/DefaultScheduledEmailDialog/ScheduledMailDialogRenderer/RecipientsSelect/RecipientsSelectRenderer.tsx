@@ -17,11 +17,12 @@ import debounce from "lodash/debounce";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
 import includes from "lodash/includes";
-import { IWorkspaceUsersQueryOptions } from "@gooddata/sdk-backend-spi";
+import { IUser, IWorkspaceUsersQueryOptions } from "@gooddata/sdk-backend-spi";
 import { Bubble, BubbleHoverTrigger, Message, LoadingMask, IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 import { isEmail } from "../../utils/validate";
 import {
+    IScheduleEmailExternalRecipient,
     IScheduleEmailRecipient,
     isScheduleEmailExistingRecipient,
     isScheduleEmailExternalRecipient,
@@ -31,6 +32,7 @@ import {
     getScheduledEmailRecipientEmail,
     getScheduledEmailRecipientUniqueIdentifier,
 } from "../../utils/scheduledMailRecipients";
+import { areObjRefsEqual } from "@gooddata/sdk-model";
 
 const MAXIMUM_RECIPIENTS_RECEIVE = 20;
 const DELAY_TIME = 500;
@@ -45,7 +47,12 @@ export interface IRecipientsSelectRendererProps {
     /**
      * Author of the scheduled email - is always recipient of the scheduled email.
      */
-    currentUser: IScheduleEmailRecipient;
+    author: IScheduleEmailRecipient;
+
+    /**
+     * Current user creating or editing the schedule
+     */
+    currentUser: IUser;
 
     /**
      * Currently selected recipients.
@@ -186,7 +193,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
     };
 
     private renderMenuOptions = (menuProps: MenuProps<any, boolean>): React.ReactElement | null => {
-        const { isLoading, currentUser } = this.props;
+        const { isLoading, author } = this.props;
         const {
             options,
             getValue,
@@ -198,7 +205,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
             options.length &&
             options.every(
                 (option: IScheduleEmailRecipient) =>
-                    (isScheduleEmailExistingRecipient(option) && isEqual(option, currentUser)) ||
+                    (isScheduleEmailExistingRecipient(option) && isEqual(option, author)) ||
                     this.isRecipientAdded(selectedValues, getScheduledEmailRecipientEmail(option)),
             );
 
@@ -229,9 +236,16 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
         );
     };
 
-    private renderOwnerValueContainer = (value: string): React.ReactElement => {
+    private currentUserIsAuthor() {
+        const { currentUser, author } = this.props;
+        return isScheduleEmailExistingRecipient(author) && areObjRefsEqual(author.user.ref, currentUser.ref);
+    }
+
+    private renderOwnerValueContainer = (name: string, email: string): React.ReactElement => {
         const { isMulti } = this.props;
         const selectTypeClassName = isMulti ? "multiple-value" : "single-value";
+        // when editing schedule created by another user, the owner should be rendered as email address
+        const value = this.currentUserIsAuthor() ? name : email;
         return (
             <div
                 style={this.getStyle()}
@@ -259,6 +273,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
     private renderErrorValueContainer = (
         label: string,
         removeIcon: React.ReactElement | null,
+        bubbleMessageTranslationId: string,
     ): React.ReactElement => {
         return (
             <div className="gd-recipient-value-item s-gd-recipient-value-item multiple-value not-valid">
@@ -273,7 +288,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
                         className="bubble-negative s-gd-recipient-not-valid-email"
                         alignPoints={bubbleAlignPoints}
                     >
-                        <FormattedMessage id="options.menu.schedule.email.recipient.invalid" />
+                        <FormattedMessage id={bubbleMessageTranslationId} />
                     </Bubble>
                 </BubbleHoverTrigger>
             </div>
@@ -285,7 +300,8 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
     ): React.ReactElement => {
         const { data } = singleValueProps;
         const displayName = getScheduledEmailRecipientDisplayName(data);
-        return this.renderOwnerValueContainer(displayName);
+        const email = getScheduledEmailRecipientEmail(data);
+        return this.renderOwnerValueContainer(displayName, email);
     };
 
     private renderMultiValueContainer = (
@@ -296,17 +312,41 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
         // MultiValueRemove component from react-select
         const removeIcon: React.ReactElement | null = children![1];
 
-        if (isScheduleEmailExistingRecipient(data) && isEqual(data, this.props.currentUser)) {
-            return this.renderOwnerValueContainer(getScheduledEmailRecipientDisplayName(data));
+        if (isScheduleEmailExistingRecipient(data) && isEqual(data, this.props.author)) {
+            const displayName = getScheduledEmailRecipientDisplayName(data);
+            const email = getScheduledEmailRecipientEmail(data);
+            return this.renderOwnerValueContainer(displayName, email);
         }
 
         const email = getScheduledEmailRecipientEmail(data);
         if (!isEmail(email)) {
-            return this.renderErrorValueContainer(email, removeIcon);
+            return this.renderErrorValueContainer(
+                email,
+                removeIcon,
+                "options.menu.schedule.email.recipient.invalid",
+            );
+        }
+        // don't allow adding external recipients to schedules created by somebody else than the current user
+        if (
+            !this.currentUserIsAuthor() &&
+            isScheduleEmailExternalRecipient(data) &&
+            this.isExternalRecipientAddedByAuthor(data)
+        ) {
+            return this.renderErrorValueContainer(
+                email,
+                removeIcon,
+                "options.menu.schedule.email.recipient.external.not.allowed",
+            );
         }
 
         return this.renderMultiValueItemContainer(email, removeIcon);
     };
+
+    private isExternalRecipientAddedByAuthor(recipient: IScheduleEmailExternalRecipient) {
+        this.props.options.some((option) => {
+            return isScheduleEmailExternalRecipient(option) && option.email === recipient.email;
+        });
+    }
 
     private renderOptionLabel = (recipient: IScheduleEmailRecipient): React.ReactElement | null => {
         const email = getScheduledEmailRecipientEmail(recipient);
@@ -322,16 +362,27 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
             return null;
         }
 
-        // Render warning message, when it's an external user
-        if (isExternalUser && isEmail(email)) {
-            return (
-                // This class is necessary for testcafes
-                <div className="s-gd-recipient-option-item s-recipient-not-in-workspace-warning">
-                    <Message type="warning" contrast={true}>
-                        <FormattedMessage id="options.menu.schedule.email.recipient.warning.belong.workspace" />
-                    </Message>
-                </div>
-            );
+        if (isEmail(email) && isExternalUser) {
+            if (this.currentUserIsAuthor()) {
+                // Render warning message, when it's an external recipient
+                return (
+                    <div className="s-gd-recipient-option-item s-recipient-not-in-workspace-warning">
+                        <Message type="warning" contrast={true}>
+                            <FormattedMessage id="options.menu.schedule.email.recipient.warning.belong.workspace" />
+                        </Message>
+                    </div>
+                );
+            } else {
+                // Render warning message, when it's an external recipient and the current user is not the author
+                // Other users cannot add external recipients
+                return (
+                    <div className="s-gd-recipient-option-item s-external-recipient-not-allowed">
+                        <Message type="error" contrast={true}>
+                            <FormattedMessage id="options.menu.schedule.email.recipient.external.not.allowed" />
+                        </Message>
+                    </div>
+                );
+            }
         }
 
         return (

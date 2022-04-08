@@ -48,12 +48,10 @@ export interface IScheduleEmailRepeatFrequency {
  * @internal
  */
 export interface IScheduleEmailRepeat {
-    date: IScheduleEmailRepeatDate;
-    repeatExecuteOn: string;
+    time: IScheduleEmailRepeatTime;
     repeatFrequency: IScheduleEmailRepeatFrequency;
     repeatPeriod: number;
     repeatType: string;
-    time: IScheduleEmailRepeatTime;
 }
 
 /**
