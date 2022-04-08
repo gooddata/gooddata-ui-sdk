@@ -105,6 +105,7 @@ export const useDashboardScheduledEmails = () => {
         closeScheduleEmailingDialog();
         openScheduleEmailingManagementDialog();
         resetScheduledEmailDefaultAttachment();
+        setScheduledEmailToEdit(undefined);
     }, []);
 
     const onScheduleEmailingManagementDeleteSuccess = useCallback(() => {
