@@ -140,8 +140,8 @@ export class TigerTokenAuthProvider extends TigerAuthProviderBase {
  * Note: the not authenticated handler MAY be called many times in succession so you may want to wrap it in a
  * call guard or in a debounce.
  *
- * @remarks See {@link redirectToTigerAuthentication} for implementation of the NotAuthenticated handler which
- *  you may use with this provider.
+ * See {@link redirectToTigerAuthentication} for implementation of the NotAuthenticated handler which
+ * you may use with this provider.
  * @public
  */
 export class ContextDeferredAuthProvider extends TigerAuthProviderBase {
