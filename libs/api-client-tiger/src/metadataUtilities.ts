@@ -8,6 +8,7 @@ import { ITigerClient } from "./client";
 import { jsonApiHeaders } from "./constants";
 import {
     JsonApiAnalyticalDashboardOutList,
+    JsonApiApiTokenOutList,
     JsonApiAttributeOutList,
     JsonApiDashboardPluginOutList,
     JsonApiDatasetOutList,
@@ -31,6 +32,26 @@ function createOptionsForPage(page: number, options: MetadataGetEntitiesOptions)
 }
 
 /**
+ * Workspace get entities params
+ *
+ * @internal
+ */
+export type MetadataGetEntitiesWorkspaceParams = {
+    workspaceId: string;
+    filter?: string;
+};
+
+/**
+ * User get entities params
+ *
+ * @internal
+ */
+export type MetadataGetEntitiesUserParams = {
+    userId: string;
+    filter?: string;
+};
+
+/**
  * Common parameters for all API client getEntities* parameters.
  *
  * Note: the different generated client functions are actually incorrect. They list page, size, include, sort in
@@ -38,10 +59,7 @@ function createOptionsForPage(page: number, options: MetadataGetEntitiesOptions)
  *
  * @internal
  */
-export type MetadataGetEntitiesParams = {
-    workspaceId: string;
-    filter?: string;
-};
+export type MetadataGetEntitiesParams = MetadataGetEntitiesWorkspaceParams | MetadataGetEntitiesUserParams;
 
 /**
  * Common parameters for all API client getEntities* parameters.
@@ -73,7 +91,8 @@ export type MetadataGetEntitiesResult =
     | JsonApiLabelOutList
     | JsonApiMetricOutList
     | JsonApiFactOutList
-    | JsonApiFilterContextOutList;
+    | JsonApiFilterContextOutList
+    | JsonApiApiTokenOutList;
 
 /**
  * All API client getEntities* functions follow this signature.
