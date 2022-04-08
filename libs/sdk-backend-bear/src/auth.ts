@@ -67,7 +67,7 @@ export class FixedLoginAndPasswordAuthProvider
 
         invariant(this.principal, "Principal must be obtainable after login");
 
-        return this.principal!;
+        return this.principal;
     }
 }
 
