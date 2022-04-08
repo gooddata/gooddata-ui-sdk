@@ -1,6 +1,10 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React from "react";
-import Truncate from "react-truncate";
+import LinesEllipsis from "react-lines-ellipsis";
+import responsiveHOC from "react-lines-ellipsis/lib/responsiveHOC";
+
+const ResponsiveEllipsis = responsiveHOC()(LinesEllipsis);
+
 /**
  * @public
  */
@@ -15,9 +19,12 @@ const InsightTitle: React.FC<IInsightTitleProps> = ({ title }) => {
     return (
         <div className="insight-title-outer">
             <div className="insight-title">
-                <Truncate lines={2} ellipsis={"..."} className="item-headline-inner s-headline">
-                    {title}
-                </Truncate>
+                <ResponsiveEllipsis
+                    text={title}
+                    maxLine={2}
+                    ellipsis="..."
+                    className="item-headline-inner s-headline"
+                />
             </div>
         </div>
     );

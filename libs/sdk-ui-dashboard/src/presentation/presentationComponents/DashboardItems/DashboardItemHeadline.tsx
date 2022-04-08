@@ -1,6 +1,9 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React, { useMemo } from "react";
-import Truncate from "react-truncate";
+import LinesEllipsis from "react-lines-ellipsis";
+import responsiveHOC from "react-lines-ellipsis/lib/responsiveHOC";
+
+const ResponsiveEllipsis = responsiveHOC()(LinesEllipsis);
 
 import { DashboardItemHeadlineContainer } from "./DashboardItemHeadlineContainer";
 
@@ -13,9 +16,12 @@ export const DashboardItemHeadline: React.FC<IDashboardItemHeadlineProps> = ({ t
     // memoize the Truncate render as it is quite expensive
     const truncatedTitlePart = useMemo(() => {
         return (
-            <Truncate lines={2} ellipsis="..." className="item-headline-inner s-headline">
-                {title}
-            </Truncate>
+            <ResponsiveEllipsis
+                maxLine={2}
+                ellipsis="..."
+                className="item-headline-inner s-headline"
+                text={title}
+            />
         );
     }, [title]);
 

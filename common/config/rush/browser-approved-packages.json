@@ -151,6 +151,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "@gooddata/sdk-ui-charts",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
       "name": "@gooddata/sdk-ui-dashboard",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -164,10 +168,6 @@
     },
     {
       "name": "@gooddata/sdk-ui-geo",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@gooddata/sdk-ui-charts",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
@@ -351,6 +351,10 @@
       "allowedCategories": [ "examples", "production" ]
     },
     {
+      "name": "@types/react-lines-ellipsis",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@types/react-measure",
       "allowedCategories": [ "examples", "production" ]
     },
@@ -380,10 +384,6 @@
     },
     {
       "name": "@types/react-transition-group",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@types/react-truncate",
       "allowedCategories": [ "production" ]
     },
     {
@@ -484,6 +484,14 @@
     },
     {
       "name": "case-sensitive-paths-webpack-plugin",
+      "allowedCategories": [ "tools" ]
+    },
+    {
+      "name": "chalk",
+      "allowedCategories": [ "tools" ]
+    },
+    {
+      "name": "chokidar",
       "allowedCategories": [ "tools" ]
     },
     {
@@ -683,14 +691,6 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "chalk",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "chokidar",
-      "allowedCategories": [ "tools" ]
-    },
-    {
       "name": "immer",
       "allowedCategories": [ "production" ]
     },
@@ -867,6 +867,10 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
+      "name": "react-lines-ellipsis",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "react-measure",
       "allowedCategories": [ "examples", "production" ]
     },
@@ -907,12 +911,12 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "react-truncate",
+      "name": "react-window",
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "react-window",
-      "allowedCategories": [ "production" ]
+      "name": "recharts",
+      "allowedCategories": [ "examples" ]
     },
     {
       "name": "redux-batched-actions",
@@ -921,10 +925,6 @@
     {
       "name": "redux-saga",
       "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "recharts",
-      "allowedCategories": [ "examples" ]
     },
     {
       "name": "rimraf",
@@ -975,11 +975,11 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "stylelint-config-prettier",
+      "name": "stylelint-checkstyle-formatter",
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "stylelint-checkstyle-formatter",
+      "name": "stylelint-config-prettier",
       "allowedCategories": [ "production" ]
     },
     {
