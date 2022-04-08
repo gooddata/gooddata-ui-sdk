@@ -88,6 +88,8 @@
     "dialogs.schedule.management.attachments.mixed": "ダッシュボードと {n, plural, one {# レポート} other {# レポート}}",
     "dialogs.schedule.management.load.error": "読み込みに失敗しました。後で再試行してください。",
     "dialogs.schedule.management.delete.error": "スケジュールの削除に失敗しました。後で再試行してください。",
+    "dialogs.schedule.management.tab.all": "すべて",
+    "dialogs.schedule.management.tab.user": "自分が作成",
     "options.menu.schedule.email.recipient.invalid": "これは有効なメールアドレスではありません。",
     "options.menu.schedule.email.recipient.warning.existed": "この受信者はすでに追加されています。",
     "options.menu.schedule.email.recipient.warning.belong.workspace": "このメールアドレスはワークスペースに属していません。受信者は機密データを受け取る可能性があります。",

@@ -88,6 +88,8 @@
     "dialogs.schedule.management.attachments.mixed": "Информационная панель и {n, plural, one {# отчет} few {# отчета} many {# отчетов} other {# отчетов}}",
     "dialogs.schedule.management.load.error": "Не удалось загрузить. Повторите попытку позже.",
     "dialogs.schedule.management.delete.error": "Не удалось удалить расписание. Повторите попытку позже.",
+    "dialogs.schedule.management.tab.all": "все",
+    "dialogs.schedule.management.tab.user": "создано мной",
     "options.menu.schedule.email.recipient.invalid": "Это недействительный адрес электронной почты.",
     "options.menu.schedule.email.recipient.warning.existed": "Вы уже добавили этого получателя.",
     "options.menu.schedule.email.recipient.warning.belong.workspace": "Этот адрес электронной почты не принадлежит рабочей области. Получатель может получать конфиденциальные данные.",

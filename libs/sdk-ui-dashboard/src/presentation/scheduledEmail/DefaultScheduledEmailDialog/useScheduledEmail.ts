@@ -6,10 +6,10 @@ import {
     UriRef,
     IUser,
     FilterContextItem,
-    IInsightWidget,
     isInsightWidget,
     IScheduledMail,
     IScheduledMailDefinition,
+    IInsightWidget,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
 
@@ -31,11 +31,15 @@ import {
     isCustomWidget,
     selectCanExportReport,
     selectScheduleEmailDialogDefaultAttachment,
+    selectInsightsMap,
 } from "../../../model";
-
 import { useCreateScheduledEmail } from "./useCreateScheduledEmail";
 import { invariant } from "ts-invariant";
 import { useSaveScheduledEmail } from "./useSaveScheduledEmail";
+
+export interface IInsightWidgetExtended extends IInsightWidget {
+    visualizationUrl?: string;
+}
 
 interface UseScheduledEmailResult {
     /**
@@ -56,7 +60,7 @@ interface UseScheduledEmailResult {
     /**
      * Analytical insights widgets on the dashboard
      */
-    dashboardInsightWidgets: IInsightWidget[];
+    dashboardInsightWidgets: IInsightWidgetExtended[];
 
     /**
      * Filters on the dashboard have not been changed so the dashboard filters should be used for the schedule
@@ -179,9 +183,16 @@ export const useScheduledEmail = (props: UseScheduledEmailProps): UseScheduledEm
 
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
     const dashboardWidgets = useDashboardSelector(selectWidgets);
-    const dashboardInsightWidgets: IInsightWidget[] = dashboardWidgets
+    const dashboardInsights = useDashboardSelector(selectInsightsMap);
+    const dashboardInsightWidgets: IInsightWidgetExtended[] = dashboardWidgets
         .filter(isInsightWidget)
-        .filter((widget) => !isCustomWidget(widget));
+        .filter((widget) => !isCustomWidget(widget))
+        .map((widget) => {
+            return {
+                ...widget,
+                visualizationUrl: dashboardInsights.get(widget.insight)?.insight.visualizationUrl,
+            };
+        });
     const currentUser = useDashboardSelector(selectCurrentUser);
     const locale = useDashboardSelector(selectLocale);
     const filters = useDashboardSelector(selectFilterContextFilters);

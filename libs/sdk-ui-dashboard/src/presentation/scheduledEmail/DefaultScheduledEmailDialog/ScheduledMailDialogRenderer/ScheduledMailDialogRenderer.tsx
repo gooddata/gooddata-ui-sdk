@@ -11,7 +11,6 @@ import {
     uriRef,
     objRefToString,
     areObjRefsEqual,
-    IInsightWidget,
     IScheduledMail,
     IScheduledMailDefinition,
     isDashboardAttachment,
@@ -65,6 +64,7 @@ import { RecipientsSelect } from "./RecipientsSelect/RecipientsSelect";
 import { IntlWrapper } from "../../../localization";
 import { DASHBOARD_TITLE_MAX_LENGTH } from "../../../constants";
 import { AttachmentNoWidgets } from "./Attachments/AttachmentNoWidgets";
+import { IInsightWidgetExtended } from "../useScheduledEmail";
 
 const MAX_MESSAGE_LENGTH = 200;
 const MAX_SUBJECT_LENGTH = 200;
@@ -85,7 +85,7 @@ export interface IScheduledMailDialogRendererOwnProps {
     /**
      * Analytical insights widgets on the dashboard
      */
-    dashboardInsightWidgets: IInsightWidget[];
+    dashboardInsightWidgets: IInsightWidgetExtended[];
 
     /**
      * Filters on the dashboard have not been changed so the dashboard filters should be used for the schedule

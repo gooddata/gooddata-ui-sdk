@@ -1,19 +1,17 @@
 // (C) 2022 GoodData Corporation
-
 import React from "react";
-
 import { IIconProps } from "../typings";
 
 /**
  * @internal
  */
-export const Dashboard: React.FC<IIconProps> = ({ color, className, width = 20, height = 20 }) => {
+export const Dashboard: React.FC<IIconProps> = ({ color, className, width, height }) => {
     return (
         <svg
-            className={className}
             width={width}
             height={height}
-            viewBox="0 0 19 15"
+            className={className}
+            viewBox="0.5 0.5 18 14"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             stroke={color ?? "#B0BECA"}

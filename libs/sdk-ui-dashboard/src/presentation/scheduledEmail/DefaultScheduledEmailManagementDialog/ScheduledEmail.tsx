@@ -50,7 +50,7 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
             </div>
             <div className="gd-scheduled-email-content" onClick={() => onEdit(scheduledEmail)}>
                 <div className="gd-scheduled-email-icon">
-                    <AttachmentIcon color={theme?.palette?.complementary?.c5} />
+                    <AttachmentIcon color={theme?.palette?.complementary?.c5} width={18} height={16} />
                 </div>
                 <div className="gd-scheduled-email-text-content">
                     <div className="gd-scheduled-email-title">

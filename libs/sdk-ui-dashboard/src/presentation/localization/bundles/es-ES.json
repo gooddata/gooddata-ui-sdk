@@ -88,6 +88,8 @@
     "dialogs.schedule.management.attachments.mixed": "Panel y {n, plural, one {# informe} other {# informes}}",
     "dialogs.schedule.management.load.error": "Error al cargar. Inténtelo de nuevo más tarde.",
     "dialogs.schedule.management.delete.error": "Error al eliminar la programación. Inténtelo de nuevo más tarde.",
+    "dialogs.schedule.management.tab.all": "todo",
+    "dialogs.schedule.management.tab.user": "creado por mí",
     "options.menu.schedule.email.recipient.invalid": "Debe introducir una dirección de correo electrónico válida.",
     "options.menu.schedule.email.recipient.warning.existed": "Ya ha añadido a este destinatario.",
     "options.menu.schedule.email.recipient.warning.belong.workspace": "Esta dirección de correo electrónico no pertenece al espacio de trabajo. El destinatario puede recibir datos confidenciales.",
