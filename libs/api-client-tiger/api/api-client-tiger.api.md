@@ -7661,13 +7661,22 @@ export type MetadataGetEntitiesOptions = {
 };
 
 // @internal
-export type MetadataGetEntitiesParams = {
-    workspaceId: string;
+export type MetadataGetEntitiesParams = MetadataGetEntitiesWorkspaceParams | MetadataGetEntitiesUserParams;
+
+// @internal
+export type MetadataGetEntitiesResult = JsonApiVisualizationObjectOutList | JsonApiAnalyticalDashboardOutList | JsonApiDashboardPluginOutList | JsonApiDatasetOutList | JsonApiAttributeOutList | JsonApiLabelOutList | JsonApiMetricOutList | JsonApiFactOutList | JsonApiFilterContextOutList | JsonApiApiTokenOutList;
+
+// @internal
+export type MetadataGetEntitiesUserParams = {
+    userId: string;
     filter?: string;
 };
 
 // @internal
-export type MetadataGetEntitiesResult = JsonApiVisualizationObjectOutList | JsonApiAnalyticalDashboardOutList | JsonApiDashboardPluginOutList | JsonApiDatasetOutList | JsonApiAttributeOutList | JsonApiLabelOutList | JsonApiMetricOutList | JsonApiFactOutList | JsonApiFilterContextOutList;
+export type MetadataGetEntitiesWorkspaceParams = {
+    workspaceId: string;
+    filter?: string;
+};
 
 // @public
 export interface MetadataRequestArgs {

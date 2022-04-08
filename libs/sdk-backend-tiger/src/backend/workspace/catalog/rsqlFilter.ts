@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import { isUriRef, ObjRef } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
-import { MetadataGetEntitiesParams } from "@gooddata/api-client-tiger";
+import { MetadataGetEntitiesWorkspaceParams } from "@gooddata/api-client-tiger";
 import invariant from "ts-invariant";
 
 // Since tags can have spaces, need to parse this specific values to work with RSQL filtering. See https://github.com/jirutka/rsql-parser#grammar-and-semantic.
@@ -34,9 +34,9 @@ export function tagsToRsqlFilter({
 }
 
 export function addRsqlFilterToParams(
-    params: MetadataGetEntitiesParams,
+    params: MetadataGetEntitiesWorkspaceParams,
     filter: string,
-): MetadataGetEntitiesParams {
+): MetadataGetEntitiesWorkspaceParams {
     if (isEmpty(filter)) {
         return params;
     }

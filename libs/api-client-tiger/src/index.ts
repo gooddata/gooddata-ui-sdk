@@ -163,6 +163,8 @@ export {
     MetadataGetEntitiesFn,
     MetadataGetEntitiesOptions,
     MetadataGetEntitiesParams,
+    MetadataGetEntitiesWorkspaceParams,
+    MetadataGetEntitiesUserParams,
 } from "./metadataUtilities";
 
 export {
