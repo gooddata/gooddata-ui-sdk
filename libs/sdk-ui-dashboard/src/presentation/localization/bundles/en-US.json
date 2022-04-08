@@ -312,6 +312,11 @@
         "comment": "Message of the scheduled email.",
         "limit": 0
     },
+    "dialogs.schedule.email.unsubscribed.recipients": {
+        "value": "{n, plural, one {1 recipient unsubscribed} other {# recipients unsubscribed}} from this schedule.",
+        "comment": "Translate only 'recipient unsubscribed'/'recipients unsubscribed' and 'from this schedule.' to form a proper sentence with correct plural form for given language",
+        "limit": 0
+    },
     "dialogs.schedule.email.repeats.label": {
         "value": "Repeats:",
         "comment": "Count of repeats of the scheduled email.",

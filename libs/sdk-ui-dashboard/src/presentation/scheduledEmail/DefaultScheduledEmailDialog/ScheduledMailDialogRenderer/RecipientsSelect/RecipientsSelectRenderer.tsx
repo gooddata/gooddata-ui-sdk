@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 /* eslint-disable import/named,import/namespace */
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -34,7 +34,7 @@ import {
 } from "../../utils/scheduledMailRecipients";
 import { areObjRefsEqual } from "@gooddata/sdk-model";
 
-const MAXIMUM_RECIPIENTS_RECEIVE = 20;
+const MAXIMUM_RECIPIENTS_RECEIVE = 60;
 const DELAY_TIME = 500;
 const PADDING = 16;
 const REMOVE_ICON_WIDTH = 21;

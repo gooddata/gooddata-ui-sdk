@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import isDate from "lodash/isDate";
 import format from "date-fns/format";
 
@@ -9,22 +9,6 @@ import capitalize from "lodash/capitalize";
 export function convertDateToPlatformDateString(date: Date): string;
 export function convertDateToPlatformDateString(date: Date | undefined | null): string | undefined | null {
     return isDate(date) ? format(date, PLATFORM_DATE_FORMAT) : date;
-}
-
-export function convertDateToDisplayDateString(date: Date, dateFormat: string): string;
-export function convertDateToDisplayDateString(
-    date: Date | undefined | null,
-    dateFormat: string,
-): string | undefined | null {
-    // In schedule email dialog, use date string as sub-fix of attached file name
-    // to avoid "/" character in file name
-    const DISPLAY_DATE_FORMAT_MAPPER = {
-        "MM/dd/yyyy": "MM-dd-yyyy",
-        "dd/MM/yyyy": "dd-MM-yyyy",
-        "M/d/yy": "M-d-yy",
-    };
-    const displayDateFormat = DISPLAY_DATE_FORMAT_MAPPER[dateFormat] || dateFormat;
-    return isDate(date) ? format(date, displayDateFormat) : date;
 }
 
 export function getDate(date: Date): number {

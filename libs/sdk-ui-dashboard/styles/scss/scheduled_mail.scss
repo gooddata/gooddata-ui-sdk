@@ -35,6 +35,21 @@ $vertical-space: 10px;
     }
 }
 
+.gd-schedule-email-dialog-unsubscribed-recipients {
+    margin-top: -5px;
+    margin-left: 105px;
+    overflow: hidden;
+    width: 100%;
+    line-height: 16px;
+    white-space: normal;
+    font-size: 12px;
+    color: $gd-color-link;
+
+    @media #{$small-only} {
+        margin-left: 0;
+    }
+}
+
 .gd-input-component {
     margin-bottom: $vertical-space;
 

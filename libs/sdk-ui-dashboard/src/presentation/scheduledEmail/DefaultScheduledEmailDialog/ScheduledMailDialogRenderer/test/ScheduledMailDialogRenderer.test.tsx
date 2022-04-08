@@ -111,8 +111,8 @@ describe("ScheduledMailDialogRenderer", () => {
             bcc: [],
             body: "Hello,\n\nYour scheduled email is ready. You can download the dashboard in attachments.",
             description: "Daily at 12:30 PM",
-            subject: "Dashboard title - 01-02-2022",
-            title: "Dashboard title - 01-02-2022",
+            subject: "Dashboard title",
+            title: "Dashboard title",
             to: ["user@gooddata.com"],
             unlisted: true,
             when: {
