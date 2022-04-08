@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React, { createRef } from "react";
 import cx from "classnames";
 import { Portal } from "react-portal";
@@ -48,7 +48,18 @@ function alignExceedsThreshold(firstAlignment: Alignment, secondAlignment: Align
     );
 }
 
-const stopPropagation = (e: React.MouseEvent<HTMLDivElement, MouseEvent>): void => e.stopPropagation();
+const stopPropagation = (e: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
+    e.stopPropagation();
+    const reactMajorVersion = parseInt(React.version?.split(".")[0], 10);
+    // Propagate events to `document` for react 17
+    // (We need to get them for other overlays to close and the events did not get there due to changes
+    // introduced in https://reactjs.org/blog/2020/08/10/react-v17-rc.html#changes-to-event-delegation)
+    if (reactMajorVersion >= 17) {
+        const evt = new MouseEvent(e.nativeEvent.type, e.nativeEvent);
+        Object.defineProperty(evt, "target", { value: e.nativeEvent.target, enumerable: true });
+        document.dispatchEvent(evt);
+    }
+};
 
 /**
  * @internal
