@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import NativeListener from "react-native-listener";
@@ -105,10 +105,6 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
     };
 
     onClear = (e?: React.ChangeEvent<HTMLInputElement>): void => {
-        if (e) {
-            e.stopPropagation();
-        }
-
         this.props.onChange("", e);
     };
 

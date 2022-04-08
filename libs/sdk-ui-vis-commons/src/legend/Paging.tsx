@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
@@ -55,8 +55,7 @@ function renderPagingButton(
         "paging-button",
     );
 
-    const onClick = (e: React.MouseEvent) => {
-        e.stopPropagation();
+    const onClick = () => {
         handler();
     };
 

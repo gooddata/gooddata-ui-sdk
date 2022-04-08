@@ -1,5 +1,5 @@
 // (C) 2007-2022 GoodData Corporation
-import React, { Component, MouseEvent } from "react";
+import React, { Component } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
@@ -259,8 +259,7 @@ export class DashboardItemWithKpiAlert extends Component<
         );
     };
 
-    onAlertDialogOpenClick = (e: MouseEvent): void => {
-        e.stopPropagation();
+    onAlertDialogOpenClick = (): void => {
         this.props.onAlertDialogOpenClick();
     };
 

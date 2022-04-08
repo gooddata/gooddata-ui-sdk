@@ -138,12 +138,8 @@ export class EditableLabel extends Component<IEditableLabelProps, IEditableLabel
         });
     };
 
-    edit = (e?: React.MouseEvent<HTMLDivElement>): void => {
+    edit = (_e?: React.MouseEvent<HTMLDivElement>): void => {
         if (!this.state.isEditing) {
-            if (e) {
-                e.stopPropagation();
-            }
-
             this.setState(
                 {
                     isEditing: true,

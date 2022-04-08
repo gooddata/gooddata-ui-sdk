@@ -9,13 +9,9 @@ import { objRefToString, widgetRef } from "@gooddata/sdk-model";
 export const DashboardInsightMenuButton = (props: IDashboardInsightMenuButtonProps): JSX.Element | null => {
     const { isOpen, items, widget, onClick } = props;
 
-    const onMenuButtonClick = useCallback(
-        (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-            e.stopPropagation();
-            onClick();
-        },
-        [onClick],
-    );
+    const onMenuButtonClick = useCallback(() => {
+        onClick();
+    }, [onClick]);
 
     if (!items.length) {
         return null;
