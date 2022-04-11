@@ -248,5 +248,6 @@
     "sorting.type.numerical.desc": "从最大到最小",
     "sorting.by": "通过",
     "sorting.sum.of.all.measure": "总计",
-    "sorting.default.tooltip": "使用属性中定义的顺序。"
+    "sorting.default.tooltip": "使用属性中定义的顺序。",
+    "attributeFilterDropdown.emptyValue": "空值"
 }

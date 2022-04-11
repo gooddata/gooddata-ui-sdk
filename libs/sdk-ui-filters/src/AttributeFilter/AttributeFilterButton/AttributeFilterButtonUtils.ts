@@ -186,16 +186,20 @@ export const getSubtitle = (props: GetSubtitleProps) => {
             return getAllPartIntl;
         }
 
+        const emptyTitle = ownProps.intl.formatMessage({ id: "attributeFilterDropdown.emptyValue" });
+
         return state.isInverted
             ? `${getAllPartIntl} ${getItemsTitles(
                   state.selectedFilterOptions,
                   state.uriToAttributeElementMap,
                   ownProps.isElementsByRef,
+                  emptyTitle,
               )}`
             : `${getItemsTitles(
                   state.selectedFilterOptions,
                   state.uriToAttributeElementMap,
                   ownProps.isElementsByRef,
+                  emptyTitle,
               )}`;
     }
     return "";

@@ -1473,5 +1473,10 @@
         "value": "Use the order defined in the attribute.",
         "comment": "Tooltip that explains user that default sorting of the selected attribute will be applied on the insight.",
         "limit": 0
+    },
+    "attributeFilterDropdown.emptyValue": {
+        "value": "empty value",
+        "comment": "",
+        "limit": 0
     }
 }
