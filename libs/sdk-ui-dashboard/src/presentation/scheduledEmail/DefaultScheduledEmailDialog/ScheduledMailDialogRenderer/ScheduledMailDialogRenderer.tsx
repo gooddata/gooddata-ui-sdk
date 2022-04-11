@@ -46,7 +46,13 @@ import {
 import { getScheduledEmailSummaryString } from "../utils/scheduledMailSummary";
 import { getScheduledEmailRecipientEmail } from "../utils/scheduledMailRecipients";
 import { getTimezoneByIdentifier, getUserTimezone, ITimezone, TIMEZONE_DEFAULT } from "../utils/timezone";
-import { getDate, getMonth, getYear, convertDateToPlatformDateString } from "../utils/datetime";
+import {
+    getDate,
+    getMonth,
+    getYear,
+    convertDateToDisplayDateString,
+    convertDateToPlatformDateString,
+} from "../utils/datetime";
 import { isEmail } from "../utils/validate";
 
 import { Textarea } from "./Textarea";
@@ -63,6 +69,7 @@ import { IInsightWidgetExtended } from "../useScheduledEmail";
 const MAX_MESSAGE_LENGTH = 200;
 const MAX_SUBJECT_LENGTH = 200;
 const MAX_DASHBOARD_TITLE_LENGTH = DASHBOARD_TITLE_MAX_LENGTH;
+const MAX_HYPHEN_LENGTH = 3;
 
 export interface IScheduledMailDialogRendererOwnProps {
     /**
@@ -393,6 +400,10 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
             });
     }
 
+    private getDashboardTitleMaxLength(displayDateString: string): number {
+        return MAX_DASHBOARD_TITLE_LENGTH - displayDateString.trim().length - MAX_HYPHEN_LENGTH;
+    }
+
     private onAlign = (alignment: Alignment) => {
         if (alignment.top < 0) {
             this.setState({ alignment: "tc tc" });
@@ -410,8 +421,8 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
 
         const { dashboardSelected, widgetsSelected, configuration } = this.state.attachments;
 
-        const defaultEmailSubject = this.getDefaultSubject();
-        const fileName = `${defaultEmailSubject}.pdf`;
+        const defaultAttachment = this.getDefaultAttachment();
+        const fileName = `${defaultAttachment}.pdf`;
         return enableWidgetExportScheduling ? (
             <Attachments
                 dashboardTitle={dashboardTitle}
@@ -704,6 +715,18 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
     };
 
     // Internal utils
+
+    private getDefaultAttachment = (): string => {
+        const { dashboardTitle, dateFormat } = this.props;
+        const { startDate } = this.state;
+        const displayDateString = convertDateToDisplayDateString(startDate, dateFormat!);
+        const dashboardTitleMaxLength = this.getDashboardTitleMaxLength(displayDateString);
+        const isDashboardTitleTooLong = dashboardTitle.length > dashboardTitleMaxLength;
+        const truncatedDashboardTitle = isDashboardTitleTooLong
+            ? dashboardTitle.substring(0, dashboardTitleMaxLength)
+            : dashboardTitle;
+        return `${truncatedDashboardTitle} - ${displayDateString}`;
+    };
 
     private getDefaultSubject = (): string => {
         const { dashboardTitle } = this.props;
