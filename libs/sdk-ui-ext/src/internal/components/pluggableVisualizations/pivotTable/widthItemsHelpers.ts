@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import includes from "lodash/includes";
 import {
     ColumnWidthItem,
@@ -21,6 +21,7 @@ import {
     insightMeasures,
     isMeasureLocator,
     measureLocalId,
+    isAttributeLocator,
 } from "@gooddata/sdk-model";
 import { isAttributeFilter } from "../../../utils/bucketHelper";
 import { BucketNames } from "@gooddata/sdk-ui";
@@ -129,6 +130,7 @@ function adaptWidthItemsToPivotTable(
     filters: IBucketFilter[],
     firstColumnAttributeAdded: boolean,
     columnAttributes: IBucketItem[],
+    isAdaptPropertiesToInsight?: boolean,
 ): ColumnWidthItem[] {
     if (!originalColumnWidths) {
         return originalColumnWidths;
@@ -147,6 +149,25 @@ function adaptWidthItemsToPivotTable(
                 },
             };
 
+            // need to filter this too, so it takes in consideration previous row bucket identifiers that were moved to column bucket, as same as is done with referencePoint
+            let filteredColumnAttributeLocalIdentifiers: string[] = [];
+            if (isAdaptPropertiesToInsight) {
+                filteredColumnAttributeLocalIdentifiers = [];
+                filteredMeasureColumnWidthItem.measureColumnWidthItem.locators.forEach((locator) => {
+                    if (isAttributeLocator(locator)) {
+                        columnAttributeLocalIdentifiers.forEach((columnAttributeIdentifier) => {
+                            if (
+                                columnAttributeIdentifier === locator.attributeLocatorItem.attributeIdentifier
+                            ) {
+                                filteredColumnAttributeLocalIdentifiers.push(columnAttributeIdentifier);
+                            }
+                        });
+                    }
+                });
+            } else {
+                filteredColumnAttributeLocalIdentifiers = columnAttributeLocalIdentifiers;
+            }
+
             if (firstColumnAttributeAdded) {
                 const transformedWeakMeasureWidthItem = transformToWeakMeasureColumnWidthItem(columnWidth);
                 if (transformedWeakMeasureWidthItem) {
@@ -159,7 +180,7 @@ function adaptWidthItemsToPivotTable(
                 widthItemLocatorsHaveProperLength(
                     filteredMeasureColumnWidthItem,
                     measureLocalIdentifiers.length,
-                    columnAttributeLocalIdentifiers.length,
+                    filteredColumnAttributeLocalIdentifiers.length,
                 )
             ) {
                 return [...columnWidths, filteredMeasureColumnWidthItem];
@@ -246,5 +267,6 @@ export function adaptMdObjectWidthItemsToPivotTable(
         [],
         false,
         [],
+        true,
     );
 }
