@@ -24,13 +24,9 @@ const LegacyInsightMenuButtonCore: React.FC<IDashboardInsightMenuButtonProps & W
     intl,
     isOpen,
 }) => {
-    const onOptionsMenuClick = useCallback(
-        (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-            e.stopPropagation();
-            onClick();
-        },
-        [onClick],
-    );
+    const onOptionsMenuClick = useCallback(() => {
+        onClick();
+    }, [onClick]);
 
     const settings = useDashboardSelector(selectSettings);
     const canExportReport = useDashboardSelector(selectCanExportReport);

@@ -33,8 +33,7 @@ class LegendItem extends React.Component<ILegendItemProps> {
 
         const style = width ? { width: `${width}px` } : {};
 
-        const onItemClick = (e: React.MouseEvent) => {
-            e.stopPropagation();
+        const onItemClick = () => {
             return this.props.onItemClick(item);
         };
 

@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { useState } from "react";
 import { Icon } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
@@ -42,8 +42,7 @@ export const RowLegendIcoButton: React.FC<IRowLegendIcoButton> = (props) => {
         return null;
     }
 
-    const handleOnClick = (e: React.MouseEvent) => {
-        e.stopPropagation();
+    const handleOnClick = () => {
         onIconClick();
     };
 

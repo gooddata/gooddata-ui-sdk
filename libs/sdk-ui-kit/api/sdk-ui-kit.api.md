@@ -362,7 +362,7 @@ export class EditableLabel extends Component<IEditableLabelProps, IEditableLabel
         autofocus: boolean;
     };
     // (undocumented)
-    edit: (e?: React_2.MouseEvent<HTMLDivElement>) => void;
+    edit: (_e?: React_2.MouseEvent<HTMLDivElement>) => void;
     // (undocumented)
     isClickOutsideTextarea(clickedTarget: EventTarget): boolean;
     // (undocumented)

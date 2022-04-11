@@ -41,7 +41,7 @@ import isEqual from "lodash/isEqual";
 import noop from "lodash/noop";
 import debounce from "lodash/debounce";
 import { invariant } from "ts-invariant";
-import { isHeaderResizer, isManualResizing, scrollBarExists } from "./impl/base/agUtils";
+import { isManualResizing, scrollBarExists } from "./impl/base/agUtils";
 import {
     ColumnResizingConfig,
     IMenuAggregationClickConfig,
@@ -668,10 +668,6 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     };
 
     private onContainerMouseDown = (event: MouseEvent) => {
-        if (event.target && isHeaderResizer(event.target as HTMLElement)) {
-            event.stopPropagation();
-        }
-
         this.internal.isMetaOrCtrlKeyPressed = event.metaKey || event.ctrlKey;
         this.internal.isAltKeyPressed = event.altKey;
     };
