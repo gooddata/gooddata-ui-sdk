@@ -248,5 +248,6 @@
     "sorting.type.numerical.desc": "Grootst naar kleinst",
     "sorting.by": "met",
     "sorting.sum.of.all.measure": "Totaal",
-    "sorting.default.tooltip": "Gebruik de volgorde zoals gedefinieerd in het attribuut."
+    "sorting.default.tooltip": "Gebruik de volgorde zoals gedefinieerd in het attribuut.",
+    "attributeFilterDropdown.emptyValue": "lege waarde"
 }

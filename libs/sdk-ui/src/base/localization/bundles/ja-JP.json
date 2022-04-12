@@ -248,5 +248,6 @@
     "sorting.type.numerical.desc": "最大から最小の順",
     "sorting.by": "別",
     "sorting.sum.of.all.measure": "合計",
-    "sorting.default.tooltip": "属性で定義された順序を使用します。"
+    "sorting.default.tooltip": "属性で定義された順序を使用します。",
+    "attributeFilterDropdown.emptyValue": "空の値"
 }

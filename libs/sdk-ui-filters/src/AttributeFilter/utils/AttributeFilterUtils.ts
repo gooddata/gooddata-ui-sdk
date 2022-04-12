@@ -59,17 +59,19 @@ export const getItemsTitles = (
     selectedFilterOptions: IAttributeElement[],
     elementTitles: Map<string, IAttributeElement>,
     isElementsByRef: boolean,
+    emptyTitle?: string,
 ): string => {
     return selectedFilterOptions
         .map((selectedOption) => {
             const key = isElementsByRef ? selectedOption.uri : selectedOption.title;
-            return key
+            const title = key
                 ? elementTitles.get(key)?.title
                 : selectedOption?.title
                 ? selectedOption.title
                 : undefined;
+
+            return !isEmpty(title) ? title : emptyTitle;
         })
-        .filter((title) => !isEmpty(title))
         .join(", ");
 };
 

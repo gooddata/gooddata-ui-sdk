@@ -248,5 +248,6 @@
     "sorting.type.numerical.desc": "Do maior para o menor",
     "sorting.by": "por",
     "sorting.sum.of.all.measure": "Total",
-    "sorting.default.tooltip": "Use a ordem definida no atributo."
+    "sorting.default.tooltip": "Use a ordem definida no atributo.",
+    "attributeFilterDropdown.emptyValue": "valor vazio"
 }
