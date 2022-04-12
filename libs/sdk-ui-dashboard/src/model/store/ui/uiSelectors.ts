@@ -123,3 +123,18 @@ export const selectMenuButtonItemsVisibility = createSelector(
     selectSelf,
     (state) => state.menuButton.itemsVisibility ?? {},
 );
+
+/**
+ * @internal
+ */
+export const selectRenderMode = createSelector(selectSelf, (state) => state.renderMode);
+
+/**
+ * @internal
+ */
+export const selectIsInViewMode = createSelector(selectSelf, (state) => state.renderMode === "view");
+
+/**
+ * @internal
+ */
+export const selectIsInEditMode = createSelector(selectSelf, (state) => state.renderMode === "edit");

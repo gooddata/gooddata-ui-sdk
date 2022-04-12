@@ -1,7 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
 
-import { IMenuButtonItemsVisibility } from "../../../types";
+import { IMenuButtonItemsVisibility, RenderMode } from "../../../types";
 
 /**
  * @alpha
@@ -31,6 +31,7 @@ export interface UiState {
     menuButton: {
         itemsVisibility: IMenuButtonItemsVisibility;
     };
+    renderMode: RenderMode;
 }
 
 export const uiInitialState: UiState = {
@@ -58,4 +59,5 @@ export const uiInitialState: UiState = {
     menuButton: {
         itemsVisibility: {},
     },
+    renderMode: "view",
 };

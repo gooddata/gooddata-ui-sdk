@@ -122,6 +122,7 @@ export const useInitializeDashboardStore = (
                     ...props.customizationFns,
                     preloadedDashboard: isDashboard(dashboard) ? dashboard : undefined,
                 },
+                initialRenderMode: props.initialRenderMode ?? "view",
             });
             newDashboardStore.store.dispatch(
                 initializeDashboard(props.config, props.permissions, InitialLoadCorrelationId),

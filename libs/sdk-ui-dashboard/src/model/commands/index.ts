@@ -63,6 +63,7 @@ import {
 } from "./drill";
 import { AddDrillTargets } from "./drillTargets";
 import { RequestAsyncRender, ResolveAsyncRender } from "./render";
+import { ChangeRenderMode } from "./ui";
 
 export { DashboardCommandType, IDashboardCommand, CommandProcessingMeta } from "./base";
 export {
@@ -275,6 +276,8 @@ export {
     resolveAsyncRender,
 } from "./render";
 
+export { changeRenderMode, ChangeRenderMode, ChangeRenderModePayload } from "./ui";
+
 export { AddDrillTargets, AddDrillTargetsPayload, addDrillTargets } from "./drillTargets";
 
 /**
@@ -342,4 +345,5 @@ export type DashboardCommands =
     | DrillToLegacyDashboard
     | ChangeDrillableItems
     | AddDrillTargets
-    | ChangeSharing;
+    | ChangeSharing
+    | ChangeRenderMode;

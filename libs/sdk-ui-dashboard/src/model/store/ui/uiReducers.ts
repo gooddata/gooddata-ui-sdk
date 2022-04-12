@@ -2,7 +2,7 @@
 import { Action, AnyAction, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { ObjRef } from "@gooddata/sdk-model";
 import { UiState } from "./uiState";
-import { IMenuButtonItemsVisibility } from "../../../types";
+import { IMenuButtonItemsVisibility, RenderMode } from "../../../types";
 
 type UiReducer<A extends Action = AnyAction> = CaseReducer<UiState, A>;
 
@@ -73,6 +73,10 @@ const setMenuButtonItemsVisibility: UiReducer<PayloadAction<IMenuButtonItemsVisi
     state.menuButton.itemsVisibility = action.payload;
 };
 
+const setRenderMode: UiReducer<PayloadAction<RenderMode>> = (state, action) => {
+    state.renderMode = action.payload;
+};
+
 export const uiReducers = {
     openScheduleEmailDialog,
     closeScheduleEmailDialog,
@@ -90,4 +94,5 @@ export const uiReducers = {
     openShareDialog,
     closeShareDialog,
     setMenuButtonItemsVisibility,
+    setRenderMode,
 };

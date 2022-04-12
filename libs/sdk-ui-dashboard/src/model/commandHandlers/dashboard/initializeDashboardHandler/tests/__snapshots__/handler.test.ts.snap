@@ -179,6 +179,7 @@ Object {
   },
   "disableDefaultDrills": false,
   "enableFilterValuesResolutionInDrillEvents": false,
+  "initialRenderMode": "view",
   "isEmbedded": false,
   "isExport": false,
   "isReadOnly": false,

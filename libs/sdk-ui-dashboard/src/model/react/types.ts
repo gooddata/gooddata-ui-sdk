@@ -6,6 +6,7 @@ import { DashboardDispatch, DashboardState } from "../store";
 import { DashboardConfig, DashboardModelCustomizationFns } from "../types/commonTypes";
 import React from "react";
 import { ReactReduxContextValue } from "react-redux";
+import { RenderMode } from "../../types";
 
 /**
  * Subset of IDashboardProps required during initialization of the dashboard component's store.
@@ -27,4 +28,5 @@ export interface IDashboardStoreProviderProps {
     ) => void;
     additionalReduxContext?: React.Context<ReactReduxContextValue>;
     customizationFns?: DashboardModelCustomizationFns;
+    initialRenderMode?: RenderMode;
 }
