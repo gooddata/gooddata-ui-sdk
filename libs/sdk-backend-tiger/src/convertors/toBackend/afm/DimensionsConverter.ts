@@ -126,11 +126,13 @@ function dimensionsWithSorts(dims: Dimension[], sorts: ISortItem[]): Dimension[]
     sorts.forEach((sortItem) => {
         if (isAttributeSort(sortItem)) {
             const attributeIdentifier = sortItem.attributeSortItem.attributeIdentifier;
+            const direction = convertSortDirection(sortItem.attributeSortItem.direction);
 
             const attributeSortKey: SortKeyAttribute = {
                 attribute: {
                     attributeIdentifier,
-                    direction: convertSortDirection(sortItem.attributeSortItem.direction),
+                    // ASC direction is default for Tiger backend. Dont send it to execution to prevent override of possible default sort label direction. It has the same meaning as TigerSortDirection.DEFAULT which does not exist.
+                    ...(direction !== TigerSortDirection.ASC ? { direction } : {}),
                     sortType: convertAttributeSortType(sortItem),
                 },
             };
