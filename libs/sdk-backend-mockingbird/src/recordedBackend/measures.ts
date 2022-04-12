@@ -6,12 +6,7 @@ import {
     IMeasureExpressionToken,
     IMeasureReferencing,
 } from "@gooddata/sdk-backend-spi";
-import {
-    ObjRef,
-    ICatalogMeasure,
-    IMeasureMetadataObject,
-    IMeasureMetadataObjectDefinition,
-} from "@gooddata/sdk-model";
+import { ObjRef, IMeasureMetadataObject, IMeasureMetadataObjectDefinition } from "@gooddata/sdk-model";
 
 /**
  * @internal
