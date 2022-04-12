@@ -5,6 +5,9 @@ import { GranularityTabs } from "./GranularityTabs";
 import { RelativeRangePicker } from "../RelativeRangePicker/RelativeRangePicker";
 import { DateFilterGranularity } from "@gooddata/sdk-model";
 
+/**
+ * @internal
+ */
 export interface IRelativeDateFilterFormProps {
     /**
      * @deprecated use availableGranularities in {@link IDateFilterOwnProps} instead
@@ -15,6 +18,9 @@ export interface IRelativeDateFilterFormProps {
     isMobile: boolean;
 }
 
+/**
+ * @internal
+ */
 export const RelativeDateFilterForm: React.FC<IRelativeDateFilterFormProps> = ({
     selectedFilterOption,
     availableGranularities,
