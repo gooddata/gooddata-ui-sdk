@@ -13,19 +13,15 @@ import {
     jsonApiHeaders,
     JsonApiMetricInTypeEnum,
     MetadataUtilities,
-    ITigerClient,
 } from "@gooddata/api-client-tiger";
 import {
     ObjRef,
     idRef,
     isIdentifierRef,
-    areObjRefsEqual,
-    ICatalogMeasure,
-    IMeasureMetadataObject,
     IMeasureMetadataObjectDefinition,
+    IMeasureMetadataObject,
 } from "@gooddata/sdk-model";
 import { convertMetricFromBackend } from "../../../convertors/fromBackend/MetricConverter";
-import { convertMeasure } from "../../../convertors/fromBackend/CatalogConverter";
 import { convertMetricToBackend } from "../../../convertors/toBackend/MetricConverter";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { objRefToIdentifier } from "../../../utils/api";
@@ -33,12 +29,6 @@ import { tokenizeExpression, IExpressionToken } from "./measureExpressionTokens"
 import { v4 as uuidv4 } from "uuid";
 import { visualizationObjectsItemToInsight } from "../../../convertors/fromBackend/InsightConverter";
 
-/**
- * Max filter length is calculated from the maximal length of the URL (2048 characters) and
- * its query parameters (1024 characters). As we can expect there are others query params,
- * filter parameter length specified as below.
- */
-const MAX_FILTER_LENGTH = 800;
 export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
 
@@ -215,41 +205,4 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
             };
         });
     };
-
-    public getCatalogMeasures = async (measureRefs: ObjRef[]): Promise<ICatalogMeasure[]> => {
-        return this.authCall(async (client) => {
-            const allMetrics = await loadMetrics(client, this.authCall, measureRefs, this.workspace);
-
-            return allMetrics.filter((metric) =>
-                measureRefs.find((metricRef) => areObjRefsEqual(metricRef, metric.measure.ref)),
-            );
-        });
-    };
-}
-
-function loadMetrics(
-    client: ITigerClient,
-    authCall: TigerAuthenticatedCallGuard,
-    measureRefs: ObjRef[],
-    workspaceId: string,
-): Promise<ICatalogMeasure[]> {
-    const filter = measureRefs
-        .map(async (ref) => {
-            const id = await objRefToIdentifier(ref, authCall);
-            return `metrics.id==${id}`;
-        })
-        .join(",");
-
-    /**
-     * The RSQL filter will be omitted if its length is too long to be used
-     * as a query parameter.
-     */
-    const rsqlFilter = filter.length < MAX_FILTER_LENGTH ? filter : undefined;
-
-    return MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesMetrics, {
-        workspaceId,
-        filter: rsqlFilter,
-    })
-        .then(MetadataUtilities.mergeEntitiesResults)
-        .then((measures) => measures.data.map(convertMeasure));
 }

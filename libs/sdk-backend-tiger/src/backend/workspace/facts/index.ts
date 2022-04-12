@@ -1,20 +1,10 @@
 // (C) 2019-2022 GoodData Corporation
 import { IWorkspaceFactsService } from "@gooddata/sdk-backend-spi";
-import { ICatalogFact, IDataSetMetadataObject, IMetadataObject } from "@gooddata/sdk-model";
-import { isIdentifierRef, ObjRef } from "@gooddata/sdk-model";
+import { IDataSetMetadataObject, IMetadataObject, isIdentifierRef, ObjRef } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types";
-import { ITigerClient, jsonApiHeaders, MetadataUtilities } from "@gooddata/api-client-tiger";
+import { ITigerClient, jsonApiHeaders } from "@gooddata/api-client-tiger";
 import { invariant } from "ts-invariant";
 import { convertDatasetWithLinks } from "../../../convertors/fromBackend/MetadataConverter";
-import { convertFact } from "../../../convertors/fromBackend/CatalogConverter";
-import { objRefToIdentifier } from "../../../utils/api";
-
-/**
- * Max filter length is calculated from the maximal length of the URL (2048 characters) and
- * its query parameters (1024 characters). As we can expect there are others query params,
- * filter parameter length specified as below.
- */
-const MAX_FILTER_LENGTH = 800;
 
 export class TigerWorkspaceFacts implements IWorkspaceFactsService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -23,30 +13,6 @@ export class TigerWorkspaceFacts implements IWorkspaceFactsService {
         return this.authCall((client) => {
             return loadFactDataset(client, this.workspace, ref);
         });
-    }
-
-    public async getCatalogFacts(factRefs: ObjRef[]): Promise<ICatalogFact[]> {
-        const filter = factRefs
-            .map(async (ref) => {
-                const id = await objRefToIdentifier(ref, this.authCall);
-                return `facts.id=${id}`;
-            })
-            .join(",");
-
-        /**
-         * The RSQL filter will be omitted if its length is too long to be used
-         * as a query parameter.
-         */
-        const rsqlFilter = filter.length < MAX_FILTER_LENGTH ? filter : undefined;
-
-        const facts = await this.authCall((client) => {
-            return MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesFacts, {
-                workspaceId: this.workspace,
-                filter: rsqlFilter,
-            }).then(MetadataUtilities.mergeEntitiesResults);
-        });
-
-        return facts.data.map(convertFact);
     }
 }
 

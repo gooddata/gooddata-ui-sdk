@@ -4,7 +4,6 @@ import {
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
     IMetadataObject,
-    ICatalogAttribute,
 } from "@gooddata/sdk-model";
 import { IElementsQueryFactory } from "./elements";
 
@@ -64,18 +63,6 @@ export interface IWorkspaceAttributesService {
      * @returns promise of list of attribute metadata object.
      */
     getAttributes(refs: ObjRef[]): Promise<IAttributeMetadataObject[]>;
-
-    /**
-     * Gets the list of catalog attributes with the provided list of uris. (list of object refs)
-     *
-     * @remarks
-     * If a display form referenced by any of the refs does not exist, then the call must not fail and instead return only
-     * those display forms that exist.
-     *
-     * @param refs - list of refs of the attribute to retrieve.
-     * @returns promise of list of attribute catalog objects.
-     */
-    getCatalogAttributes(refs: ObjRef[]): Promise<ICatalogAttribute[]>;
 
     /**
      * Request list of attributes that are "center of star" for the input attributes in the data model.

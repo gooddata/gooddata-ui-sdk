@@ -1,15 +1,9 @@
 // (C) 2019-2022 GoodData Corporation
-import {
-    IElementsQueryFactory,
-    IWorkspaceAttributesService,
-    UnexpectedError,
-} from "@gooddata/sdk-backend-spi";
 import { GdcMetadata } from "@gooddata/api-model-bear";
 import {
     UriRef,
     ObjRef,
     uriRef,
-    ICatalogAttribute,
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
     IMetadataObject,
@@ -25,7 +19,11 @@ import { objRefToUri, objRefsToUris, getObjectIdFromUri } from "../../../utils/a
 import { convertMetadataObjectXrefEntry } from "../../../convertors/fromBackend/MetaConverter";
 
 import { BearWorkspaceElements } from "./elements";
-import { convertWrappedAttribute } from "../../../convertors/fromBackend/CatalogConverter";
+import {
+    IElementsQueryFactory,
+    IWorkspaceAttributesService,
+    UnexpectedError,
+} from "@gooddata/sdk-backend-spi";
 
 export class BearWorkspaceAttributes implements IWorkspaceAttributesService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -135,15 +133,6 @@ export class BearWorkspaceAttributes implements IWorkspaceAttributesService {
             },
         );
     };
-
-    public async getCatalogAttributes(refs: ObjRef[]): Promise<ICatalogAttribute[]> {
-        const attributeUris = await objRefsToUris(refs, this.workspace, this.authCall, false);
-        const wrappedAttributes = await this.authCall((client) => {
-            return client.md.getObjects<GdcMetadata.IWrappedAttribute>(this.workspace, attributeUris);
-        });
-
-        return wrappedAttributes.map(convertWrappedAttribute);
-    }
 
     private buildAttributeDisplayForm = (
         displayFormDetails: GdcMetadata.IAttributeDisplayForm,

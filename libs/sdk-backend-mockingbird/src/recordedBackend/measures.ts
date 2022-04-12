@@ -36,8 +36,4 @@ export class RecordedMeasures implements IWorkspaceMeasuresService {
     getMeasureReferencingObjects(_: ObjRef): Promise<IMeasureReferencing> {
         throw new NotSupported("not supported");
     }
-
-    getCatalogMeasures(_measureRefs: ObjRef[]): Promise<ICatalogMeasure[]> {
-        throw new NotSupported("not supported");
-    }
 }

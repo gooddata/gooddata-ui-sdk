@@ -21,59 +21,6 @@ const selectSelf = createSelector(
 );
 
 /**
- * Checks if the catalog attributes are loaded.
- *
- * @public
- */
-export const selectCatalogAttributesLoaded = createSelector(selectSelf, (state) => {
-    return state.attributes !== undefined;
-});
-
-/**
- * Checks if the catalog facts are loaded.
- *
- * @public
- */
-export const selectCatalogFactsLoaded = createSelector(selectSelf, (state) => {
-    return state.facts !== undefined;
-});
-
-/**
- * Checks if catalog measures are loaded.
- *
- * @public
- */
-export const selectCatalogMeasuresLoaded = createSelector(selectSelf, (state) => {
-    return state.measures !== undefined;
-});
-
-/**
- * Checks if catalog date datasets are loaded.
- *
- * @public
- */
-export const selectCatalogDateDatasetsLoaded = createSelector(selectSelf, (state) => {
-    return state.dateDatasets !== undefined;
-});
-
-/**
- * Checks if all catalog is loaded.
- *
- * @public
- */
-export const selectCatalogLoaded = createSelector(
-    [
-        selectCatalogAttributesLoaded,
-        selectCatalogFactsLoaded,
-        selectCatalogMeasuresLoaded,
-        selectCatalogDateDatasetsLoaded,
-    ],
-    (attributesLoaded, factsLoaded, measuresLoaded, dateDatasetsLoaded) => {
-        return attributesLoaded && factsLoaded && measuresLoaded && dateDatasetsLoaded;
-    },
-);
-
-/**
  * @public
  */
 export const selectCatalogAttributes = createSelector(selectSelf, (state) => {

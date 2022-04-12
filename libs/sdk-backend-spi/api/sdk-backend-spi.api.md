@@ -1539,12 +1539,11 @@ export interface IWorkspaceAccessControlService {
 // @public
 export interface IWorkspaceAttributesService {
     elements(): IElementsQueryFactory;
-    getAttribute(ref: ObjRef): Promise<IAttributeMetadataObject_2>;
-    getAttributeDatasetMeta(ref: ObjRef): Promise<IMetadataObject_2>;
-    getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject_2>;
-    getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject_2[]>;
-    getAttributes(refs: ObjRef[]): Promise<IAttributeMetadataObject_2[]>;
-    getCatalogAttributes(refs: ObjRef[]): Promise<ICatalogAttribute_2[]>;
+    getAttribute(ref: ObjRef): Promise<IAttributeMetadataObject>;
+    getAttributeDatasetMeta(ref: ObjRef): Promise<IMetadataObject>;
+    getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject>;
+    getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]>;
+    getAttributes(refs: ObjRef[]): Promise<IAttributeMetadataObject[]>;
     getCommonAttributes(attributeRefs: ObjRef[]): Promise<ObjRef[]>;
     getCommonAttributesBatch(attributesRefsBatch: ObjRef[][]): Promise<ObjRef[][]>;
 }
@@ -1665,8 +1664,7 @@ export interface IWorkspaceDescriptor {
 
 // @public
 export interface IWorkspaceFactsService {
-    getCatalogFacts(factRefs: ObjRef[]): Promise<ICatalogFact_2[]>;
-    getFactDatasetMeta(ref: ObjRef): Promise<IMetadataObject_2>;
+    getFactDatasetMeta(ref: ObjRef): Promise<IMetadataObject>;
 }
 
 // @public
@@ -1687,10 +1685,9 @@ export interface IWorkspaceInsightsService {
 export interface IWorkspaceMeasuresService {
     createMeasure(measure: IMeasureMetadataObjectDefinition_2): Promise<IMeasureMetadataObject_2>;
     deleteMeasure(measureRef: ObjRef): Promise<void>;
-    getCatalogMeasures(measureRefs: ObjRef[]): Promise<ICatalogMeasure_2[]>;
     getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
     getMeasureReferencingObjects(measureRef: ObjRef): Promise<IMeasureReferencing>;
-    updateMeasure(measure: IMeasureMetadataObject_2): Promise<IMeasureMetadataObject_2>;
+    updateMeasure(measure: IMeasureMetadataObject): Promise<IMeasureMetadataObject>;
 }
 
 // @public @deprecated

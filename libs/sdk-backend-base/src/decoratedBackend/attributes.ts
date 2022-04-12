@@ -1,12 +1,12 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { IElementsQueryFactory, IWorkspaceAttributesService } from "@gooddata/sdk-backend-spi";
 import {
-    ICatalogAttribute,
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
+    IElementsQueryFactory,
     IMetadataObject,
-} from "@gooddata/sdk-model";
+    IWorkspaceAttributesService,
+} from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
 
 /**
@@ -33,10 +33,6 @@ export abstract class DecoratedWorkspaceAttributesService implements IWorkspaceA
 
     public getAttributes(refs: ObjRef[]): Promise<IAttributeMetadataObject[]> {
         return this.decorated.getAttributes(refs);
-    }
-
-    public getCatalogAttributes(refs: ObjRef[]): Promise<ICatalogAttribute[]> {
-        return this.decorated.getCatalogAttributes(refs);
     }
 
     public getCommonAttributes(attributeRefs: ObjRef[]): Promise<ObjRef[]> {

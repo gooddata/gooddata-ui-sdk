@@ -1,15 +1,16 @@
 // (C) 2019-2022 GoodData Corporation
-import { IElementsQueryFactory, IWorkspaceAttributesService, NotSupported } from "@gooddata/sdk-backend-spi";
 import {
-    areObjRefsEqual,
-    isIdentifierRef,
-    ObjRef,
-    ICatalogAttribute,
+    IElementsQueryFactory,
+    IMetadataObject,
+    IWorkspaceAttributesService,
+    NotSupported,
+} from "@gooddata/sdk-backend-spi";
+import {
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
     IDataSetMetadataObject,
-    IMetadataObject,
-} from "@gooddata/sdk-model";
+} from "@gooddata/sdk-backend-spi";
+import { areObjRefsEqual, isIdentifierRef, ObjRef } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { TigerWorkspaceElements } from "./elements";
 import {
@@ -28,15 +29,6 @@ import {
     convertLabelWithSideloadedAttribute,
     convertDatasetWithLinks,
 } from "../../../convertors/fromBackend/MetadataConverter";
-import { objRefToIdentifier } from "../../../utils/api";
-import { loadAttributesAndDateDatasets } from "../catalog/datasetLoader";
-
-/**
- * Max filter length is calculated from the maximal length of the URL (2048 characters) and
- * its query parameters (1024 characters). As we can expect there are others query params,
- * filter parameter length specified as below.
- */
-const MAX_FILTER_LENGTH = 800;
 
 export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -68,32 +60,6 @@ export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
             const allAttributes = await loadAttributes(client, this.workspace);
 
             return allAttributes.filter((attr) => refs.find((ref) => areObjRefsEqual(ref, attr.ref)));
-        });
-    }
-
-    public getCatalogAttributes(refs: ObjRef[]): Promise<ICatalogAttribute[]> {
-        const filter = refs
-            .map(async (ref) => {
-                const id = await objRefToIdentifier(ref, this.authCall);
-                return `attributes.id=${id}`;
-            })
-            .join(",");
-
-        /**
-         * The RSQL filter will be omitted if its length is too long to be used
-         * as a query parameter.
-         */
-        const rsqlFilter = filter.length < MAX_FILTER_LENGTH ? filter : "";
-
-        return this.authCall(async (client) => {
-            const catalogItems = await loadAttributesAndDateDatasets(
-                client,
-                this.workspace,
-                rsqlFilter,
-                true,
-            );
-
-            return catalogItems.filter((item) => item.type === "attribute") as ICatalogAttribute[];
         });
     }
 
