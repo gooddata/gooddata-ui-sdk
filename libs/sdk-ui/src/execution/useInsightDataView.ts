@@ -9,12 +9,15 @@ import {
     UseCancelablePromiseState,
     DataViewFacade,
     GoodDataSdkError,
+    UseCancelablePromiseCallbacks,
 } from "../base";
 import { useExecutionDataView } from "./useExecutionDataView";
 import { DataViewWindow } from "./withExecutionLoading";
 import { useInsight } from "./useInsight";
 
 /**
+ * Configuration for {@link useInsightDataView} hook.
+ *
  * @public
  */
 export interface IUseInsightDataViewConfig {
@@ -92,12 +95,19 @@ export interface IUseInsightDataViewConfig {
 }
 
 /**
+ * Callbacks for {@link useInsightDataView} hook.
+ *
+ * @public
+ */
+export type UseInsightDataViewCallbacks = UseCancelablePromiseCallbacks<DataViewFacade, GoodDataSdkError>;
+
+/**
  * React hook to get data for a specific insight.
  *
  * @public
  */
 export function useInsightDataView(
-    config: IUseInsightDataViewConfig,
+    config: IUseInsightDataViewConfig & UseInsightDataViewCallbacks,
     deps?: React.DependencyList,
 ): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError> {
     const {
@@ -108,6 +118,11 @@ export function useInsightDataView(
         filters,
         window,
         executeByReference,
+        onCancel,
+        onError,
+        onLoading,
+        onPending,
+        onSuccess,
     } = config;
     const backend = useBackendStrict(config.backend, "useInsightDataView");
     const workspace = useWorkspaceStrict(config.workspace, "useInsightDataView");
@@ -146,6 +161,11 @@ export function useInsightDataView(
             window,
             backend,
             workspace,
+            onCancel,
+            onError,
+            onLoading,
+            onPending,
+            onSuccess,
         },
         deps,
     );

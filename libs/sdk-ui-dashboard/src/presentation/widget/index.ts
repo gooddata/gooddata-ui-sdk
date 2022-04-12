@@ -7,6 +7,9 @@ export {
     IUseCustomWidgetInsightDataViewConfig,
     useInsightWidgetDataView,
     IUseInsightWidgetDataView,
+    UseCustomWidgetExecutionDataViewCallbacks,
+    UseCustomWidgetInsightDataViewCallbacks,
+    UseInsightWidgetInsightDataViewCallbacks,
 } from "./common";
 
 export * from "./insight";

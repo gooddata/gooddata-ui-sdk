@@ -134,6 +134,7 @@ import { Selector } from '@reduxjs/toolkit';
 import { ShareStatus } from '@gooddata/sdk-model';
 import { TypedUseSelectorHook } from 'react-redux';
 import { UriRef } from '@gooddata/sdk-model';
+import { UseCancelablePromiseCallbacks } from '@gooddata/sdk-ui';
 import { UseCancelablePromiseState } from '@gooddata/sdk-ui';
 import { VisualizationProperties } from '@gooddata/sdk-model';
 import { WithIntlProps } from 'react-intl';
@@ -668,7 +669,7 @@ export interface DashboardAlertUpdatedPayload {
     readonly updated: IWidgetAlert;
 }
 
-// @alpha
+// @public
 export interface DashboardAsyncRenderRequested extends IDashboardEvent {
     // (undocumented)
     readonly payload: {
@@ -678,12 +679,12 @@ export interface DashboardAsyncRenderRequested extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED";
 }
 
-// @alpha
+// @public
 export interface DashboardAsyncRenderRequestedPayload {
     readonly id: string;
 }
 
-// @alpha
+// @public
 export interface DashboardAsyncRenderResolved extends IDashboardEvent {
     // (undocumented)
     readonly payload: DashboardAsyncRenderResolvedPayload;
@@ -691,7 +692,7 @@ export interface DashboardAsyncRenderResolved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.RENDER.ASYNC.RESOLVED";
 }
 
-// @alpha
+// @public
 export interface DashboardAsyncRenderResolvedPayload {
     readonly id: string;
 }
@@ -1672,13 +1673,13 @@ export interface DashboardRenamedPayload {
     readonly newTitle: string;
 }
 
-// @alpha
+// @public
 export interface DashboardRenderRequested extends IDashboardEvent {
     // (undocumented)
     readonly type: "GDC.DASH/EVT.RENDER.REQUESTED";
 }
 
-// @alpha (undocumented)
+// @public (undocumented)
 export interface DashboardRenderResolved extends IDashboardEvent {
     // (undocumented)
     readonly type: "GDC.DASH/EVT.RENDER.RESOLVED";
@@ -3113,10 +3114,10 @@ export const isDashboardAlertsRemoved: (obj: unknown) => obj is DashboardAlertsR
 // @alpha
 export const isDashboardAlertUpdated: (obj: unknown) => obj is DashboardAlertUpdated;
 
-// @alpha
+// @public
 export const isDashboardAsyncRenderRequested: (obj: unknown) => obj is DashboardAsyncRenderRequested;
 
-// @alpha
+// @public
 export const isDashboardAsyncRenderResolved: (obj: unknown) => obj is DashboardAsyncRenderResolved;
 
 // @alpha
@@ -3305,10 +3306,10 @@ export const isDashboardQueryStarted: (obj: unknown) => obj is DashboardQuerySta
 // @alpha
 export const isDashboardRenamed: (obj: unknown) => obj is DashboardRenamed;
 
-// @alpha
+// @public
 export const isDashboardRenderRequested: (obj: unknown) => obj is DashboardRenderRequested;
 
-// @alpha
+// @public
 export const isDashboardRenderResolved: (obj: unknown) => obj is DashboardRenderResolved;
 
 // @public
@@ -4041,7 +4042,7 @@ export interface ReplaceSectionItemPayload {
     readonly stashIdentifier?: StashedDashboardItemsId;
 }
 
-// @alpha (undocumented)
+// @public (undocumented)
 export interface RequestAsyncRender extends IDashboardCommand {
     // (undocumented)
     readonly payload: RequestAsyncRenderPayload;
@@ -4049,10 +4050,10 @@ export interface RequestAsyncRender extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.RENDER.ASYNC.REQUEST";
 }
 
-// @alpha
+// @public
 export function requestAsyncRender(id: string, correlationId?: string): RequestAsyncRender;
 
-// @alpha
+// @public
 export interface RequestAsyncRenderPayload {
     readonly id: string;
 }
@@ -4072,7 +4073,7 @@ export function resetDashboard(correlationId?: string): ResetDashboard;
 // @alpha
 export type ResolvableFilter = IDashboardFilter;
 
-// @alpha (undocumented)
+// @public (undocumented)
 export interface ResolveAsyncRender extends IDashboardCommand {
     // (undocumented)
     readonly payload: ResolveAsyncRenderPayload;
@@ -4080,10 +4081,10 @@ export interface ResolveAsyncRender extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE";
 }
 
-// @alpha
+// @public
 export function resolveAsyncRender(id: string, correlationId?: string): ResolveAsyncRender;
 
-// @alpha
+// @public
 export interface ResolveAsyncRenderPayload {
     readonly id: string;
 }
@@ -4793,18 +4794,24 @@ export interface UpsertExecutionResult extends IDashboardCommand {
 }
 
 // @public
-export function useCustomWidgetExecutionDataView({ widget, execution, }: IUseCustomWidgetExecutionDataViewConfig): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
+export function useCustomWidgetExecutionDataView({ widget, execution, onCancel, onError, onLoading, onPending, onSuccess, }: IUseCustomWidgetExecutionDataViewConfig & UseCustomWidgetExecutionDataViewCallbacks): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
 
 // @public
-export function useCustomWidgetInsightDataView({ widget, insight, }: IUseCustomWidgetInsightDataViewConfig): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
+export type UseCustomWidgetExecutionDataViewCallbacks = UseCancelablePromiseCallbacks<DataViewFacade, GoodDataSdkError>;
 
-// @internal (undocumented)
+// @public
+export function useCustomWidgetInsightDataView({ widget, insight, onCancel, onError, onLoading, onPending, onSuccess, }: IUseCustomWidgetInsightDataViewConfig & UseCustomWidgetInsightDataViewCallbacks): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
+
+// @public
+export type UseCustomWidgetInsightDataViewCallbacks = UseCancelablePromiseCallbacks<DataViewFacade, GoodDataSdkError>;
+
+// @public
 export interface UseDashboardAsyncRender {
     onRequestAsyncRender: () => void;
     onResolveAsyncRender: () => void;
 }
 
-// @internal
+// @public
 export const useDashboardAsyncRender: (id: string) => UseDashboardAsyncRender;
 
 // @internal (undocumented)
@@ -5291,7 +5298,10 @@ export interface UseDrillToLegacyDashboardProps {
 }
 
 // @public
-export function useInsightWidgetDataView(config: IUseInsightWidgetDataView): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
+export function useInsightWidgetDataView(config: IUseInsightWidgetDataView & UseInsightWidgetInsightDataViewCallbacks): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
+
+// @public
+export type UseInsightWidgetInsightDataViewCallbacks = UseCancelablePromiseCallbacks<DataViewFacade, GoodDataSdkError>;
 
 // @alpha (undocumented)
 export type UserInteractionPayload = UserInteractionPayloadWithData | BareUserInteractionPayload;

@@ -3,6 +3,7 @@ import {
     DataViewFacade,
     GoodDataSdkError,
     useBackendStrict,
+    UseCancelablePromiseCallbacks,
     UseCancelablePromiseState,
     useExecutionDataView,
     useWorkspaceStrict,
@@ -29,6 +30,16 @@ export interface IUseInsightWidgetDataView {
 }
 
 /**
+ * Callbacks for {@link useInsightWidgetDataView} hook.
+ *
+ * @public
+ */
+export type UseInsightWidgetInsightDataViewCallbacks = UseCancelablePromiseCallbacks<
+    DataViewFacade,
+    GoodDataSdkError
+>;
+
+/**
  * This hook provides an easy way to read a data view from insight widget.
  *
  * @param config - configuration of the hook
@@ -36,9 +47,9 @@ export interface IUseInsightWidgetDataView {
  * @public
  */
 export function useInsightWidgetDataView(
-    config: IUseInsightWidgetDataView,
+    config: IUseInsightWidgetDataView & UseInsightWidgetInsightDataViewCallbacks,
 ): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError> {
-    const { insightWidget } = config;
+    const { insightWidget, onCancel, onError, onLoading, onPending, onSuccess } = config;
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
     const insight = useDashboardSelector(selectInsightByRef(insightWidget?.insight));
@@ -63,5 +74,12 @@ export function useInsightWidgetDataView(
             : undefined;
     }, [backend, workspace, insightWithAddedFilters, insightWidget]);
 
-    return useExecutionDataView({ execution: insightExecution });
+    return useExecutionDataView({
+        execution: insightExecution,
+        onCancel,
+        onError,
+        onLoading,
+        onPending,
+        onSuccess,
+    });
 }

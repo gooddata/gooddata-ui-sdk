@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 
 export { withExecution, IWithExecution } from "./withExecution";
 export {
@@ -16,8 +16,13 @@ export { useExecution, IUseExecutionConfig } from "./useExecution";
 export {
     IExecutionConfiguration,
     IUseExecutionDataViewConfig,
+    UseExecutionDataViewCallbacks,
     useExecutionDataView,
 } from "./useExecutionDataView";
-export { IUseInsightDataViewConfig, useInsightDataView } from "./useInsightDataView";
+export {
+    IUseInsightDataViewConfig,
+    UseInsightDataViewCallbacks,
+    useInsightDataView,
+} from "./useInsightDataView";
 export { ExecuteInsight, IExecuteInsightProps } from "./ExecuteInsight";
 export { IExecuteErrorComponent, IExecuteErrorComponentProps, IExecuteLoadingComponent } from "./interfaces";

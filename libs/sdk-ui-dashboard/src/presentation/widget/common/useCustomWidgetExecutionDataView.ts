@@ -4,6 +4,7 @@ import {
     GoodDataSdkError,
     IExecutionConfiguration,
     UnexpectedSdkError,
+    UseCancelablePromiseCallbacks,
     UseCancelablePromiseState,
     useExecutionDataView,
 } from "@gooddata/sdk-ui";
@@ -32,6 +33,16 @@ export interface IUseCustomWidgetExecutionDataViewConfig {
 }
 
 /**
+ * Callbacks for {@link useCustomWidgetExecutionDataView} hook.
+ *
+ * @public
+ */
+export type UseCustomWidgetExecutionDataViewCallbacks = UseCancelablePromiseCallbacks<
+    DataViewFacade,
+    GoodDataSdkError
+>;
+
+/**
  * This hook provides an easy way to read a data view from a custom widget. It resolves the appropriate filters
  * for the widget based on the filters currently set on the whole dashboard.
  *
@@ -40,7 +51,13 @@ export interface IUseCustomWidgetExecutionDataViewConfig {
 export function useCustomWidgetExecutionDataView({
     widget,
     execution,
-}: IUseCustomWidgetExecutionDataViewConfig): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError> {
+    onCancel,
+    onError,
+    onLoading,
+    onPending,
+    onSuccess,
+}: IUseCustomWidgetExecutionDataViewConfig &
+    UseCustomWidgetExecutionDataViewCallbacks): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError> {
     const filterQueryTask = useWidgetFilters(widget);
     const dataViewTask = useExecutionDataView({
         execution: execution
@@ -49,6 +66,11 @@ export function useCustomWidgetExecutionDataView({
                   filters: filterQueryTask.result,
               }
             : undefined,
+        onCancel,
+        onError,
+        onLoading,
+        onPending,
+        onSuccess,
     });
 
     if (filterQueryTask.status === "pending" || dataViewTask.status === "pending") {
@@ -68,6 +90,9 @@ export function useCustomWidgetExecutionDataView({
     }
 
     if (filterQueryTask.status === "error" || dataViewTask.status === "error") {
+        if (filterQueryTask.status === "error") {
+            onError?.(filterQueryTask.error);
+        }
         return {
             error: (filterQueryTask.error ?? dataViewTask.error)!,
             result: undefined,
@@ -76,8 +101,10 @@ export function useCustomWidgetExecutionDataView({
     }
 
     if (filterQueryTask.status === "rejected") {
+        const error = new UnexpectedSdkError("The widget filter query was rejected");
+        onError?.(error);
         return {
-            error: new UnexpectedSdkError("The widget filter query was rejected"),
+            error,
             result: undefined,
             status: "error",
         };
