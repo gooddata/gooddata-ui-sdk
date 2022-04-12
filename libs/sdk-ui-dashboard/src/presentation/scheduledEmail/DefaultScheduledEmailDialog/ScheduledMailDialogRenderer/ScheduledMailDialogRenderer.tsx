@@ -286,7 +286,7 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
             emailBody: schedule.body,
             selectedRecipients,
             userTimezone: getTimezoneByIdentifier(schedule.when.timeZone) || TIMEZONE_DEFAULT,
-            startDate: new Date(schedule.when.startDate), // check time zones
+            startDate: new Date(schedule.when.startDate),
             isValidScheduleEmailData: true,
             repeat: parseRepeatString(schedule.when.recurrence),
             attachments: {
@@ -808,6 +808,7 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
             when,
             to: toEmails,
             bcc: bccEmails,
+            unsubscribed: editSchedule ? editSchedule.unsubscribed : undefined,
             subject,
             body,
             attachments,
