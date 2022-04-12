@@ -9,8 +9,6 @@ import {
     NotAuthenticatedHandler,
 } from "@gooddata/sdk-backend-spi";
 import { ITigerClient, setAxiosAuthorizationToken } from "@gooddata/api-client-tiger";
-import { AxiosError } from "axios";
-import { StatusCodes as HttpStatusCodes } from "http-status-codes";
 
 import { convertApiError } from "./utils/errorHandling";
 
@@ -29,25 +27,9 @@ export abstract class TigerAuthProviderBase implements IAuthenticationProvider {
 
     public abstract authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal>;
 
-    public async deauthenticate(context: IAuthenticationContext): Promise<void> {
-        const client = context.client as ITigerClient;
-
+    public deauthenticate(context: IAuthenticationContext): Promise<void> {
         const logoutUrl = createTigerDeauthenticationUrl(context.backend, window.location);
-
-        // TODO: replace with direct call of TigerClient (once methods are generated from OpenAPI)
-        try {
-            await client.axios.post(logoutUrl);
-        } catch (error) {
-            if ((error as AxiosError).response?.status === HttpStatusCodes.METHOD_NOT_ALLOWED) {
-                // this means we are on tiger >= 1.1 -> we must redirect to the /logout resource instead of POSTing to it
-                return window.location.assign(logoutUrl);
-            }
-
-            // eslint-disable-next-line no-console
-            console.debug("Error during logout", error);
-
-            throw convertApiError(error);
-        }
+        return Promise.resolve(window.location.assign(logoutUrl));
     }
 
     public async getCurrentPrincipal(
