@@ -1,11 +1,4 @@
 // (C) 2019-2022 GoodData Corporation
-
-import {
-    IWorkspaceAttributesService,
-    IElementsQueryFactory,
-    UnexpectedResponseError,
-    NotSupported,
-} from "@gooddata/sdk-backend-spi";
 import { RecordedBackendConfig, RecordingIndex } from "./types";
 import { RecordedElementQueryFactory } from "./elements";
 import {
@@ -13,7 +6,6 @@ import {
     areObjRefsEqual,
     objRefToString,
     isIdentifierRef,
-    ICatalogAttribute,
     isCatalogAttribute,
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
@@ -23,6 +15,12 @@ import { newAttributeMetadataObject } from "@gooddata/sdk-backend-base";
 import values from "lodash/values";
 import { objRefsToStringKey } from "./utils";
 import compact from "lodash/compact";
+import {
+    IElementsQueryFactory,
+    IWorkspaceAttributesService,
+    NotSupported,
+    UnexpectedResponseError,
+} from "@gooddata/sdk-backend-spi";
 
 /**
  * @internal
@@ -105,26 +103,6 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
 
         return compact(await Promise.all(refs.map(loader)));
     };
-
-    public async getCatalogAttributes(refs: ObjRef[]): Promise<ICatalogAttribute[]> {
-        if (!this.recordings.metadata || !this.recordings.metadata.catalog) {
-            throw new UnexpectedResponseError("No recordings", 404, {});
-        }
-
-        const recording = this.recordings.metadata.catalog.items
-            .filter(isCatalogAttribute)
-            .filter((wrappedAttribute) => {
-                return refs.some((ref) => areObjRefsEqual(ref, wrappedAttribute.attribute.ref));
-            });
-
-        const stringifiedRefs = refs.map((ref) => objRefToString(ref)).join(",");
-
-        if (!recording) {
-            throw new UnexpectedResponseError(`No attribute recording ${stringifiedRefs}`, 404, {});
-        }
-
-        return compact(await Promise.resolve(recording));
-    }
 
     public getAttributeDatasetMeta(_: ObjRef): Promise<IMetadataObject> {
         throw new NotSupported("not supported");

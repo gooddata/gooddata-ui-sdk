@@ -5,12 +5,7 @@ import {
     IMeasureReferencing,
     IWorkspaceMeasuresService,
 } from "@gooddata/sdk-backend-spi";
-import {
-    ICatalogMeasure,
-    IMeasureMetadataObject,
-    IMeasureMetadataObjectDefinition,
-} from "@gooddata/sdk-model";
-import { ObjRef } from "@gooddata/sdk-model";
+import { IMeasureMetadataObject, IMeasureMetadataObjectDefinition, ObjRef } from "@gooddata/sdk-model";
 import flow from "lodash/flow";
 import map from "lodash/fp/map";
 import replace from "lodash/fp/replace";
@@ -26,10 +21,9 @@ import {
 } from "../../../convertors/fromBackend/MetricConverter";
 import { convertMetricToBackend } from "../../../convertors/toBackend/MetricConverter";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
-import { objRefsToUris, objRefToUri } from "../../../utils/api";
+import { objRefToUri } from "../../../utils/api";
 import { getTokenValuesOfType, tokenizeExpression, IExpressionToken } from "./measureExpressionTokens";
 import { convertListedVisualization } from "../../../convertors/fromBackend/VisualizationConverter";
-import { convertMetric } from "../../../convertors/fromBackend/CatalogConverter";
 
 export class BearWorkspaceMeasures implements IWorkspaceMeasuresService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -170,15 +164,6 @@ export class BearWorkspaceMeasures implements IWorkspaceMeasuresService {
                 .filter((item) => item.category === "visualizationObject")
                 .map(convertListedVisualization),
         });
-    }
-
-    async getCatalogMeasures(measureRefs: ObjRef[]): Promise<ICatalogMeasure[]> {
-        const measureUris = await objRefsToUris(measureRefs, this.workspace, this.authCall, false);
-        const wrappedMetrics = await this.authCall((client) => {
-            return client.md.getObjects<GdcMetadata.IWrappedMetric>(this.workspace, measureUris);
-        });
-
-        return wrappedMetrics.map(convertMetric);
     }
 }
 

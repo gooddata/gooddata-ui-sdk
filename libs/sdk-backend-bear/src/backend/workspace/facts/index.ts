@@ -2,11 +2,10 @@
 import invariant from "ts-invariant";
 import { IWorkspaceFactsService } from "@gooddata/sdk-backend-spi";
 import { GdcMetadata } from "@gooddata/api-model-bear";
-import { ObjRef, ICatalogFact, IMetadataObject } from "@gooddata/sdk-model";
+import { ObjRef, IMetadataObject } from "@gooddata/sdk-model";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { convertMetadataObjectXrefEntry } from "../../../convertors/fromBackend/MetaConverter";
-import { getObjectIdFromUri, objRefsToUris, objRefToUri } from "../../../utils/api";
-import { convertWrappedFact } from "../../../convertors/fromBackend/CatalogConverter";
+import { getObjectIdFromUri, objRefToUri } from "../../../utils/api";
 
 export class BearWorkspaceFacts implements IWorkspaceFactsService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -24,14 +23,5 @@ export class BearWorkspaceFacts implements IWorkspaceFactsService {
 
             return convertMetadataObjectXrefEntry("dataSet", usedBy.entries[0]);
         });
-    }
-
-    public async getCatalogFacts(factRefs: ObjRef[]): Promise<ICatalogFact[]> {
-        const factUris = await objRefsToUris(factRefs, this.workspace, this.authCall, false);
-        const wrappedFacts = await this.authCall((client) => {
-            return client.md.getObjects<GdcMetadata.IWrappedFact>(this.workspace, factUris);
-        });
-
-        return wrappedFacts.map(convertWrappedFact);
     }
 }

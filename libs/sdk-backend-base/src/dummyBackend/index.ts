@@ -57,8 +57,6 @@ import {
     isIdentifierRef,
     isUriRef,
     CatalogItemType,
-    ICatalogAttribute,
-    ICatalogMeasure,
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
     IMeasureMetadataObject,
@@ -504,9 +502,6 @@ class DummyWorkspaceAttributesService implements IWorkspaceAttributesService {
     getAttributes(_refs: ObjRef[]): Promise<IAttributeMetadataObject[]> {
         throw new NotSupported("not supported");
     }
-    getCatalogAttributes(_refs: ObjRef[]): Promise<ICatalogAttribute[]> {
-        throw new NotSupported("not supported");
-    }
     getCommonAttributes(_attributeRefs: ObjRef[]): Promise<ObjRef[]> {
         throw new NotSupported("not supported");
     }
@@ -552,9 +547,5 @@ class DummyWorkspaceMeasuresService implements IWorkspaceMeasuresService {
 
     updateMeasure(measure: IMeasureMetadataObject): Promise<IMeasureMetadataObject> {
         return Promise.resolve({ ...measure });
-    }
-
-    getCatalogMeasures(_measureRefs: ObjRef[]): Promise<ICatalogMeasure[]> {
-        return Promise.resolve([]);
     }
 }
