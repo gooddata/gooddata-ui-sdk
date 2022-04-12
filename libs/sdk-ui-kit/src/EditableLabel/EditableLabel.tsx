@@ -13,7 +13,14 @@ import { IEditableLabelProps, IEditableLabelState } from "./typings";
 /**
  * @internal
  */
-export class EditableLabel extends Component<IEditableLabelProps, IEditableLabelState> {
+export interface IEditableLabelInnerProps extends IEditableLabelProps {
+    innerRef: React.ForwardedRef<HTMLDivElement>;
+}
+
+/**
+ * @internal
+ */
+export class EditableLabelInner extends Component<IEditableLabelInnerProps, IEditableLabelState> {
     static defaultProps = {
         children: false,
         className: "",
@@ -30,7 +37,7 @@ export class EditableLabel extends Component<IEditableLabelProps, IEditableLabel
     private readonly root: RefObject<any>;
     private readonly textarea: RefObject<HTMLTextAreaElement>;
 
-    constructor(props: IEditableLabelProps) {
+    constructor(props: IEditableLabelInnerProps) {
         super(props);
 
         this.state = {
@@ -256,9 +263,18 @@ export class EditableLabel extends Component<IEditableLabelProps, IEditableLabel
         const displayValue = this.props.children || this.state.value || this.props.placeholder;
 
         return (
-            <div ref={this.root} className={editableLabelClasses} onClick={this.edit}>
-                {this.state.isEditing ? this.renderEditableLabelEdit() : displayValue}
+            <div ref={this.props.innerRef} className={editableLabelClasses} onClick={this.edit}>
+                <div ref={this.root}>
+                    {this.state.isEditing ? this.renderEditableLabelEdit() : displayValue}
+                </div>
             </div>
         );
     }
 }
+
+/**
+ * @internal
+ */
+export const EditableLabel = React.forwardRef<HTMLDivElement, IEditableLabelProps>((props, ref) => {
+    return <EditableLabelInner {...props} innerRef={ref} />;
+});

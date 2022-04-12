@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { mount, ReactWrapper } from "enzyme";
 
@@ -8,7 +8,7 @@ import Mock = jest.Mock;
 
 function renderEditableLabel(
     options: IEditableLabelProps,
-): ReactWrapper<IEditableLabelProps, IEditableLabelState, EditableLabel> {
+): ReactWrapper<IEditableLabelProps, IEditableLabelState, any> {
     return mount(<EditableLabel {...options} />);
 }
 
@@ -88,7 +88,7 @@ describe("EditableLabel", () => {
             onCancel?: Mock;
             onSubmit?: Mock;
             onChange?: Mock;
-        }): ReactWrapper<IEditableLabelProps, IEditableLabelState, EditableLabel> => {
+        }): ReactWrapper<IEditableLabelProps, IEditableLabelState, any> => {
             const wrapper = renderEditableLabel({
                 value: "aaa",
                 onCancel,
@@ -108,7 +108,7 @@ describe("EditableLabel", () => {
             wrapper.find("textarea").simulate("blur");
 
             expect(onSubmit).not.toHaveBeenCalled();
-            expect(wrapper.state().isEditing).toEqual(false);
+            expect(wrapper.find(".is-editing").length).toEqual(0);
         });
 
         it("should call onSubmit when user press the enter key", () => {
@@ -120,7 +120,7 @@ describe("EditableLabel", () => {
 
             expect(onSubmit).toHaveBeenCalledTimes(1);
             expect(onSubmit).toHaveBeenCalledWith("This is new text");
-            expect(wrapper.state().isEditing).toEqual(false);
+            expect(wrapper.find(".is-editing").length).toEqual(0);
         });
 
         it("should call onCancel callback and discard temporary value when user press the escape key", () => {
@@ -132,7 +132,7 @@ describe("EditableLabel", () => {
 
             expect(onCancel).toHaveBeenCalledTimes(1);
             expect(onCancel).toHaveBeenCalledWith("aaa");
-            expect(wrapper.state().isEditing).toEqual(false);
+            expect(wrapper.find(".is-editing").length).toEqual(0);
         });
 
         it("should trim value when user enters only spaces", () => {
@@ -144,7 +144,7 @@ describe("EditableLabel", () => {
 
             expect(onSubmit).toHaveBeenCalledTimes(1);
             expect(onSubmit).toHaveBeenCalledWith("");
-            expect(wrapper.state().isEditing).toEqual(false);
+            expect(wrapper.find(".is-editing").length).toEqual(0);
         });
 
         it("should call onChange when user change value", () => {
