@@ -63,7 +63,6 @@
         "@gooddata/sdk-model": "^8.10.0-alpha.61",
         "axios": "^0.21.4",
         "date-fns": "^2.22.1",
-        "http-status-codes": "^2.1.4",
         "lodash": "^4.17.19",
         "spark-md5": "^3.0.0",
         "ts-invariant": "^0.7.3",
