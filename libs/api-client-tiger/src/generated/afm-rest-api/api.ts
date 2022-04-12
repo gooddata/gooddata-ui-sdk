@@ -248,10 +248,10 @@ export enum AfmValidObjectsQueryTypesEnum {
 export interface AfmValidObjectsResponse {
     /**
      *
-     * @type {Array<ObjectIdentifier>}
+     * @type {Array<RestApiIdentifier>}
      * @memberof AfmValidObjectsResponse
      */
-    items: Array<ObjectIdentifier>;
+    items: Array<RestApiIdentifier>;
 }
 /**
  * Metric representing arithmetics between metrics.
@@ -734,7 +734,7 @@ export interface DimensionHeader {
  */
 export interface Element {
     /**
-     * Title of primary label of attribute owning requested label.
+     * Title of primary label of attribute owning requested label or null if the primary label is excluded
      * @type {string}
      * @memberof Element
      */
@@ -760,10 +760,10 @@ export interface ElementsRequest {
     label: string;
     /**
      *
-     * @type {ElementsRequestFilterBy}
+     * @type {FilterBy}
      * @memberof ElementsRequest
      */
-    filterBy?: ElementsRequestFilterBy;
+    filterBy?: FilterBy;
     /**
      * Sort order of returned items. Items are sorted by ```label``` title.
      * @type {string}
@@ -806,29 +806,6 @@ export enum ElementsRequestSortOrderEnum {
 }
 
 /**
- * Specifies what is used for filtering.
- * @export
- * @interface ElementsRequestFilterBy
- */
-export interface ElementsRequestFilterBy {
-    /**
-     * Specifies which label is used for filtering - primary or requested.
-     * @type {string}
-     * @memberof ElementsRequestFilterBy
-     */
-    labelType?: ElementsRequestFilterByLabelTypeEnum;
-}
-
-/**
- * @export
- * @enum {string}
- */
-export enum ElementsRequestFilterByLabelTypeEnum {
-    PRIMARY = "PRIMARY",
-    REQUESTED = "REQUESTED",
-}
-
-/**
  * Entity holding list of sorted & filtered label elements, related primary label of attribute owning requested label and paging.
  * @export
  * @interface ElementsResponse
@@ -836,10 +813,10 @@ export enum ElementsRequestFilterByLabelTypeEnum {
 export interface ElementsResponse {
     /**
      *
-     * @type {ObjectIdentifier}
+     * @type {RestApiIdentifier}
      * @memberof ElementsResponse
      */
-    primaryLabel: ObjectIdentifier;
+    primaryLabel: RestApiIdentifier;
     /**
      * List of returned elements.
      * @type {Array<Element>}
@@ -852,43 +829,6 @@ export interface ElementsResponse {
      * @memberof ElementsResponse
      */
     paging: Paging;
-}
-/**
- * Contains information about the error.
- * @export
- * @interface ErrorMessage
- */
-export interface ErrorMessage {
-    /**
-     * Error timestamp in ISO 8601.
-     * @type {string}
-     * @memberof ErrorMessage
-     */
-    timestamp: string;
-    /**
-     * HTTP error response status code.
-     * @type {number}
-     * @memberof ErrorMessage
-     */
-    status: number;
-    /**
-     * HTTP error message like: Bad Request, Not Found, etc.
-     * @type {string}
-     * @memberof ErrorMessage
-     */
-    error: string;
-    /**
-     * Error message returned by the server application.
-     * @type {string}
-     * @memberof ErrorMessage
-     */
-    message: string;
-    /**
-     * Path of the failed request.
-     * @type {string}
-     * @memberof ErrorMessage
-     */
-    path: string;
 }
 /**
  *
@@ -966,7 +906,7 @@ export interface ExecutionResultGrandTotal {
      */
     data: object;
     /**
-     *
+     * Grand total identification within this request. The corresponding data in the result are expected to be matched using this identifier.
      * @type {string}
      * @memberof ExecutionResultGrandTotal
      */
@@ -1017,6 +957,29 @@ export interface ExecutionSettings {
     dataSamplingPercentage?: number;
 }
 /**
+ * Specifies what is used for filtering.
+ * @export
+ * @interface FilterBy
+ */
+export interface FilterBy {
+    /**
+     * Specifies which label is used for filtering - primary or requested.
+     * @type {string}
+     * @memberof FilterBy
+     */
+    labelType: FilterByLabelTypeEnum;
+}
+
+/**
+ * @export
+ * @enum {string}
+ */
+export enum FilterByLabelTypeEnum {
+    PRIMARY = "PRIMARY",
+    REQUESTED = "REQUESTED",
+}
+
+/**
  * @type FilterDefinition
  * Abstract filter definition type
  * @export
@@ -1052,11 +1015,11 @@ export interface GrandTotal {
      */
     function: string;
     /**
-     * Mapping specifying dimensions on which this grand total will be computed. Dimensions are referenced via their localIdentifiers. Optionally one can specify also the values (properties) of the dimensions\' attributes (see ```dimensionAttributesValues```).
-     * @type {{ [key: string]: IncludedDimensionProps; }}
+     *
+     * @type {IncludedDimensions}
      * @memberof GrandTotal
      */
-    includedDimensions: { [key: string]: IncludedDimensionProps };
+    includedDimensions: IncludedDimensions;
 }
 /**
  * Contains the information specific for a group of headers. These groups correlate to attributes and metric groups.
@@ -1089,6 +1052,19 @@ export interface IncludedDimensionProps {
      * @memberof IncludedDimensionProps
      */
     dimensionAttributesValues: { [key: string]: Array<string> };
+}
+/**
+ *
+ * @export
+ * @interface IncludedDimensions
+ */
+export interface IncludedDimensions {
+    /**
+     * Mapping specifying dimensions on which this grand total will be computed. Dimensions are referenced via their localIdentifiers. Optionally one can specify also the values (properties) of the dimensions\' attributes (see DimensionAttributesValues).
+     * @type {{ [key: string]: IncludedDimensionProps; }}
+     * @memberof IncludedDimensions
+     */
+    properties?: { [key: string]: IncludedDimensionProps };
 }
 /**
  * Filter in form of direct MAQL query.
@@ -1529,6 +1505,49 @@ export interface PositiveAttributeFilterBodyAllOf {
     in: AttributeFilterElements;
 }
 /**
+ * Contains information about the error.
+ * @export
+ * @interface Problem
+ */
+export interface Problem {
+    /**
+     * An relative URI that identifies the specific occurrence of the problem. It may yield further information if dereferenced.
+     * @type {string}
+     * @memberof Problem
+     */
+    instance?: string;
+    /**
+     * An relative URI that identifies the problem type. When dereferenced, it should provide human-readable documentation for the problem type (e.g., using HTML).
+     * @type {string}
+     * @memberof Problem
+     */
+    type: string;
+    /**
+     *
+     * @type {StatusType}
+     * @memberof Problem
+     */
+    status: StatusType;
+    /**
+     * A short, summary of the problem type. Written in english and readable for engineers (usually not suited for non technical stakeholders and not localized).
+     * @type {string}
+     * @memberof Problem
+     */
+    title?: string;
+    /**
+     * Unique trace id used in open-tracing (semantics of transactions in distributed systems). Can be used to correlate client error with concrete request processing in the system.
+     * @type {string}
+     * @memberof Problem
+     */
+    traceId: string;
+    /**
+     * A human readable explanation specific to this occurrence of the problem.
+     * @type {string}
+     * @memberof Problem
+     */
+    detail?: string;
+}
+/**
  * Filter the result by comparing specified metric to given range of values.
  * @export
  * @interface RangeMeasureValueFilter
@@ -1852,6 +1871,25 @@ export enum RelativeDateFilterBodyAllOfGranularityEnum {
 }
 
 /**
+ * Identifier of primary label of attribute owning requested label, or null if the primary label is excluded.
+ * @export
+ * @interface RestApiIdentifier
+ */
+export interface RestApiIdentifier {
+    /**
+     *
+     * @type {string}
+     * @memberof RestApiIdentifier
+     */
+    id: string;
+    /**
+     *
+     * @type {string}
+     * @memberof RestApiIdentifier
+     */
+    type: string;
+}
+/**
  *
  * @export
  * @interface ResultDimension
@@ -1865,7 +1903,7 @@ export interface ResultDimension {
     headers: Array<MeasureGroupHeader | AttributeHeader>;
 }
 /**
- * Specifies how the result data will formatted (```dimensions```) and which additional data shall be computed (```grandTotals```).
+ * Specifies how the result data will be formatted (```dimensions```) and which additional data shall be computed (```grandTotals```).
  * @export
  * @interface ResultSpec
  */
@@ -1978,6 +2016,12 @@ export interface SortKeyAttributeAttribute {
      */
     direction?: SortDirection;
     /**
+     *
+     * @type {SortType}
+     * @memberof SortKeyAttributeAttribute
+     */
+    sortType?: SortType;
+    /**
      * One of the \'Dimension.itemIdentifiers\' referencing the attribute which should be used for sorting the dimension.s
      * @type {string}
      * @memberof SortKeyAttributeAttribute
@@ -2015,6 +2059,36 @@ export interface SortKeyValueValue {
      * @memberof SortKeyValueValue
      */
     dataColumnLocators: { [key: string]: { [key: string]: string } };
+}
+/**
+ * Mechanism by which this attribute should be sorted. Available options are: - DEFAULT: sorting based on default rules (using sort column if defined, otherwise this label)  - LABEL: sorting by this label values  - ATTRIBUTE: sorting by values of this label\'s attribute (or rather the primary label)  - AREA: sorting by area (total or subtotal) corresponding to each attribute value. The area is computed by summing up all metric values in all other dimensions.
+ * @export
+ * @enum {string}
+ */
+export enum SortType {
+    DEFAULT = "DEFAULT",
+    LABEL = "LABEL",
+    ATTRIBUTE = "ATTRIBUTE",
+    AREA = "AREA",
+}
+/**
+ * The HTTP status code generated by the origin server for this occurrence of the problem.
+ * @export
+ * @interface StatusType
+ */
+export interface StatusType {
+    /**
+     *
+     * @type {string}
+     * @memberof StatusType
+     */
+    reasonPhrase?: string;
+    /**
+     *
+     * @type {number}
+     * @memberof StatusType
+     */
+    statusCode?: number;
 }
 /**
  * Sorting elements - ascending/descending order.
@@ -2259,11 +2333,11 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * The resource provides static structures needed for investigation of a problem with given AFM. The structures differs for AQE and for Calcique. They are either MAQL (internal form of AFM) and logical and physical models (LDM and PDM) of corresponding workspace or MAQL and GRPC and WDF models.
+         * The resource provides static structures needed for investigation of a problem with given AFM. The structures are MAQL (internal form of AFM) and GRPC and WDF models.
          * @summary AFM explain resource.
          * @param {string} workspaceId Workspace identifier
          * @param {AfmExecution} afmExecution
-         * @param {string} [explainType] Requested explain type (LDM, PDM, GRPC_MODEL, WDF or MAQL). If not specified all types are bundled in a ZIP archive.
+         * @param {string} [explainType] Requested explain type (LDM, PDM, GRPC_MODEL, WDF, MAQL, QT, QT_SVG, OPT_QT, OPT_QT_SVG or SQL). If not specified all types are bundled in a ZIP archive.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2495,11 +2569,11 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             };
         },
         /**
-         * The resource provides static structures needed for investigation of a problem with given AFM. The structures differs for AQE and for Calcique. They are either MAQL (internal form of AFM) and logical and physical models (LDM and PDM) of corresponding workspace or MAQL and GRPC and WDF models.
+         * The resource provides static structures needed for investigation of a problem with given AFM. The structures are MAQL (internal form of AFM) and GRPC and WDF models.
          * @summary AFM explain resource.
          * @param {string} workspaceId Workspace identifier
          * @param {AfmExecution} afmExecution
-         * @param {string} [explainType] Requested explain type (LDM, PDM, GRPC_MODEL, WDF or MAQL). If not specified all types are bundled in a ZIP archive.
+         * @param {string} [explainType] Requested explain type (LDM, PDM, GRPC_MODEL, WDF, MAQL, QT, QT_SVG, OPT_QT, OPT_QT_SVG or SQL). If not specified all types are bundled in a ZIP archive.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2510,7 +2584,7 @@ export const ActionsApiFp = function (configuration?: Configuration) {
                 explainType?: string;
             },
             options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<any> {
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
             const localVarAxiosArgs = ActionsApiAxiosParamCreator(configuration).explainAFM(params, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {
@@ -2626,11 +2700,11 @@ export const ActionsApiFactory = function (
             return ActionsApiFp(configuration).computeValidObjects(params, options)(axios, basePath);
         },
         /**
-         * The resource provides static structures needed for investigation of a problem with given AFM. The structures differs for AQE and for Calcique. They are either MAQL (internal form of AFM) and logical and physical models (LDM and PDM) of corresponding workspace or MAQL and GRPC and WDF models.
+         * The resource provides static structures needed for investigation of a problem with given AFM. The structures are MAQL (internal form of AFM) and GRPC and WDF models.
          * @summary AFM explain resource.
          * @param {string} workspaceId Workspace identifier
          * @param {AfmExecution} afmExecution
-         * @param {string} [explainType] Requested explain type (LDM, PDM, GRPC_MODEL, WDF or MAQL). If not specified all types are bundled in a ZIP archive.
+         * @param {string} [explainType] Requested explain type (LDM, PDM, GRPC_MODEL, WDF, MAQL, QT, QT_SVG, OPT_QT, OPT_QT_SVG or SQL). If not specified all types are bundled in a ZIP archive.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -2641,7 +2715,7 @@ export const ActionsApiFactory = function (
                 explainType?: string;
             },
             options?: any,
-        ): AxiosPromise<any> {
+        ): AxiosPromise<void> {
             return ActionsApiFp(configuration).explainAFM(params, options)(axios, basePath);
         },
         /**
@@ -2736,11 +2810,11 @@ export interface ActionsApiInterface {
     ): AxiosPromise<AfmValidObjectsResponse>;
 
     /**
-     * The resource provides static structures needed for investigation of a problem with given AFM. The structures differs for AQE and for Calcique. They are either MAQL (internal form of AFM) and logical and physical models (LDM and PDM) of corresponding workspace or MAQL and GRPC and WDF models.
+     * The resource provides static structures needed for investigation of a problem with given AFM. The structures are MAQL (internal form of AFM) and GRPC and WDF models.
      * @summary AFM explain resource.
      * @param {string} workspaceId Workspace identifier
      * @param {AfmExecution} afmExecution
-     * @param {string} [explainType] Requested explain type (LDM, PDM, GRPC_MODEL, WDF or MAQL). If not specified all types are bundled in a ZIP archive.
+     * @param {string} [explainType] Requested explain type (LDM, PDM, GRPC_MODEL, WDF, MAQL, QT, QT_SVG, OPT_QT, OPT_QT_SVG or SQL). If not specified all types are bundled in a ZIP archive.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ActionsApiInterface
@@ -2752,7 +2826,7 @@ export interface ActionsApiInterface {
             explainType?: string;
         },
         options?: any,
-    ): AxiosPromise<any>;
+    ): AxiosPromise<void>;
 
     /**
      * Gets a single execution result.
@@ -2857,11 +2931,11 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * The resource provides static structures needed for investigation of a problem with given AFM. The structures differs for AQE and for Calcique. They are either MAQL (internal form of AFM) and logical and physical models (LDM and PDM) of corresponding workspace or MAQL and GRPC and WDF models.
+     * The resource provides static structures needed for investigation of a problem with given AFM. The structures are MAQL (internal form of AFM) and GRPC and WDF models.
      * @summary AFM explain resource.
      * @param {string} workspaceId Workspace identifier
      * @param {AfmExecution} afmExecution
-     * @param {string} [explainType] Requested explain type (LDM, PDM, GRPC_MODEL, WDF or MAQL). If not specified all types are bundled in a ZIP archive.
+     * @param {string} [explainType] Requested explain type (LDM, PDM, GRPC_MODEL, WDF, MAQL, QT, QT_SVG, OPT_QT, OPT_QT_SVG or SQL). If not specified all types are bundled in a ZIP archive.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ActionsApi
