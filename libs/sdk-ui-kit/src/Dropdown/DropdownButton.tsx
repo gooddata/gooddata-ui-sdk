@@ -1,5 +1,5 @@
-// (C) 2007-2020 GoodData Corporation
-import React from "react";
+// (C) 2007-2022 GoodData Corporation
+import React, { ReactNode } from "react";
 import cx from "classnames";
 import { Button } from "../Button/Button";
 
@@ -9,7 +9,7 @@ import { Button } from "../Button/Button";
 export interface IDropdownButtonProps {
     className?: string;
 
-    value?: string;
+    value?: ReactNode;
     title?: string;
     disabled?: boolean;
 
@@ -50,7 +50,7 @@ export const DropdownButton: React.FC<IDropdownButtonProps> = ({
 
     return (
         <Button
-            title={title}
+            title={title && typeof title === "string" ? title : undefined}
             className={buttonClasses}
             value={value}
             iconLeft={iconLeft}

@@ -1,4 +1,6 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
+
+import { ReactNode } from "react";
 
 /**
  * @internal
@@ -10,7 +12,7 @@ export interface IButtonProps {
     tagName?: string;
     title?: string;
     type?: string;
-    value?: string;
+    value?: ReactNode;
     iconLeft?: string;
     iconRight?: string;
     onClick?(e: React.MouseEvent): void;

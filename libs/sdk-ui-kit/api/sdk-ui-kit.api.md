@@ -829,7 +829,7 @@ export interface IButtonProps {
     // (undocumented)
     type?: string;
     // (undocumented)
-    value?: string;
+    value?: ReactNode;
 }
 
 // @internal (undocumented)
@@ -1109,7 +1109,7 @@ export interface IDropdownButtonProps {
     // (undocumented)
     title?: string;
     // (undocumented)
-    value?: string;
+    value?: ReactNode;
 }
 
 // @internal (undocumented)
