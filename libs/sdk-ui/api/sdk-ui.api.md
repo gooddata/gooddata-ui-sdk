@@ -932,7 +932,7 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
     workspace?: string;
 }
 
-// @public (undocumented)
+// @public
 export interface IExecutionConfiguration {
     componentName?: string;
     filters?: NullableFiltersOrPlaceholders;
@@ -1318,7 +1318,7 @@ export interface IUseExecutionConfig {
     workspace?: string;
 }
 
-// @public (undocumented)
+// @public
 export interface IUseExecutionDataViewConfig {
     backend?: IAnalyticalBackend;
     execution?: IPreparedExecution | IExecutionConfiguration;
@@ -1326,7 +1326,7 @@ export interface IUseExecutionDataViewConfig {
     workspace?: string;
 }
 
-// @public (undocumented)
+// @public
 export interface IUseInsightDataViewConfig {
     backend?: IAnalyticalBackend;
     dateFormat?: string | ((def: IExecutionDefinition) => string);
@@ -1707,10 +1707,16 @@ export type UseDataViewState = UseCancelablePromiseState<DataViewFacade, GoodDat
 export function useExecution(config: IUseExecutionConfig): IPreparedExecution;
 
 // @public
-export function useExecutionDataView(config: IUseExecutionDataViewConfig, deps?: React.DependencyList): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
+export function useExecutionDataView(config: IUseExecutionDataViewConfig & UseExecutionDataViewCallbacks, deps?: React.DependencyList): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
 
 // @public
-export function useInsightDataView(config: IUseInsightDataViewConfig, deps?: React.DependencyList): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
+export type UseExecutionDataViewCallbacks = UseCancelablePromiseCallbacks<DataViewFacade, GoodDataSdkError>;
+
+// @public
+export function useInsightDataView(config: IUseInsightDataViewConfig & UseInsightDataViewCallbacks, deps?: React.DependencyList): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
+
+// @public
+export type UseInsightDataViewCallbacks = UseCancelablePromiseCallbacks<DataViewFacade, GoodDataSdkError>;
 
 // @public
 export function usePagedResource<TParams, TItem>(resourceFactory: (params: TParams) => Promise<IPagedResource<TItem>>, fetchParams: TParams[], fetchDeps: React.DependencyList, resetDeps: React.DependencyList, getCacheKey?: (params: TParams) => string, initialState?: IUsePagedResourceState<TItem>): IUsePagedResourceResult<TItem>;

@@ -7,14 +7,14 @@ import { eventGuard } from "./util";
  * This event is emitted as soon as the dashboard component is mounted,
  * and rendering of its content started.
  *
- * @alpha
+ * @public
  */
 export interface DashboardRenderRequested extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.RENDER.REQUESTED";
 }
 
 /**
- * @alpha
+ * @public
  */
 export function renderRequested(ctx: DashboardContext, correlationId?: string): DashboardRenderRequested {
     return {
@@ -28,7 +28,7 @@ export function renderRequested(ctx: DashboardContext, correlationId?: string): 
  * Tests whether the provided object is an instance of {@link DashboardRenderRequested}.
  *
  * @param obj - object to test
- * @alpha
+ * @public
  */
 export const isDashboardRenderRequested = eventGuard<DashboardRenderRequested>(
     "GDC.DASH/EVT.RENDER.REQUESTED",
@@ -40,7 +40,7 @@ export const isDashboardRenderRequested = eventGuard<DashboardRenderRequested>(
 
 /**
  * Payload of the {@link DashboardAsyncRenderRequested} event.
- * @alpha
+ * @public
  */
 export interface DashboardAsyncRenderRequestedPayload {
     /**
@@ -52,7 +52,7 @@ export interface DashboardAsyncRenderRequestedPayload {
 /**
  * This event is emitted when a component on the dashboard requests async rendering.
  *
- * @alpha
+ * @public
  */
 export interface DashboardAsyncRenderRequested extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED";
@@ -65,7 +65,7 @@ export interface DashboardAsyncRenderRequested extends IDashboardEvent {
 }
 
 /**
- * @alpha
+ * @public
  */
 export function asyncRenderRequested(
     id: string,
@@ -86,7 +86,7 @@ export function asyncRenderRequested(
  * Tests whether the provided object is an instance of {@link DashboardAsyncRenderRequested}.
  *
  * @param obj - object to test
- * @alpha
+ * @public
  */
 export const isDashboardAsyncRenderRequested = eventGuard<DashboardAsyncRenderRequested>(
     "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
@@ -98,7 +98,7 @@ export const isDashboardAsyncRenderRequested = eventGuard<DashboardAsyncRenderRe
 
 /**
  * Payload of the {@link DashboardAsyncRenderResolved} event.
- * @alpha
+ * @public
  */
 export interface DashboardAsyncRenderResolvedPayload {
     /**
@@ -110,7 +110,7 @@ export interface DashboardAsyncRenderResolvedPayload {
 /**
  * This event is emitted when a component on the dashboard resolves async rendering.
  *
- * @alpha
+ * @public
  */
 export interface DashboardAsyncRenderResolved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.RENDER.ASYNC.RESOLVED";
@@ -118,7 +118,7 @@ export interface DashboardAsyncRenderResolved extends IDashboardEvent {
 }
 
 /**
- * @alpha
+ * @public
  */
 export function asyncRenderResolved(
     id: string,
@@ -139,7 +139,7 @@ export function asyncRenderResolved(
  * Tests whether the provided object is an instance of {@link DashboardAsyncRenderResolved}.
  *
  * @param obj - object to test
- * @alpha
+ * @public
  */
 export const isDashboardAsyncRenderResolved = eventGuard<DashboardAsyncRenderResolved>(
     "GDC.DASH/EVT.RENDER.ASYNC.RESOLVED",
@@ -150,7 +150,7 @@ export const isDashboardAsyncRenderResolved = eventGuard<DashboardAsyncRenderRes
 //
 
 /**
- * @alpha
+ * @public
  */
 export interface DashboardRenderResolved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.RENDER.RESOLVED";
@@ -160,7 +160,7 @@ export interface DashboardRenderResolved extends IDashboardEvent {
  * This event is emitted as soon as the dashboard component is fully rendered,
  * and asynchronous rendering of each component is complete.
  *
- * @alpha
+ * @public
  */
 export function renderResolved(ctx: DashboardContext, correlationId?: string): DashboardRenderResolved {
     return {
@@ -174,6 +174,6 @@ export function renderResolved(ctx: DashboardContext, correlationId?: string): D
  * Tests whether the provided object is an instance of {@link DashboardRenderResolved}.
  *
  * @param obj - object to test
- * @alpha
+ * @public
  */
 export const isDashboardRenderResolved = eventGuard<DashboardRenderResolved>("GDC.DASH/EVT.RENDER.RESOLVED");

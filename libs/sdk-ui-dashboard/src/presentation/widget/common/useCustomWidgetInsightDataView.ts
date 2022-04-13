@@ -6,6 +6,7 @@ import {
     GoodDataSdkError,
     useBackendStrict,
     useCancelablePromise,
+    UseCancelablePromiseCallbacks,
     UseCancelablePromiseState,
     useExecutionDataView,
     useWorkspaceStrict,
@@ -37,6 +38,16 @@ export interface IUseCustomWidgetInsightDataViewConfig {
 }
 
 /**
+ * Callbacks for {@link useCustomWidgetInsightDataView} hook.
+ *
+ * @public
+ */
+export type UseCustomWidgetInsightDataViewCallbacks = UseCancelablePromiseCallbacks<
+    DataViewFacade,
+    GoodDataSdkError
+>;
+
+/**
  * This hook provides an easy way to read a data view for an insight from a custom widget.
  * It resolves the appropriate filters for the widget based on the filters currently set on the whole dashboard.
  *
@@ -45,7 +56,13 @@ export interface IUseCustomWidgetInsightDataViewConfig {
 export function useCustomWidgetInsightDataView({
     widget,
     insight,
-}: IUseCustomWidgetInsightDataViewConfig): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError> {
+    onCancel,
+    onError,
+    onLoading,
+    onPending,
+    onSuccess,
+}: IUseCustomWidgetInsightDataViewConfig &
+    UseCustomWidgetInsightDataViewCallbacks): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError> {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
 
@@ -61,6 +78,10 @@ export function useCustomWidgetInsightDataView({
                                 .getInsight(insight as ObjRef);
                   }
                 : null,
+            onCancel,
+            onPending,
+            onError,
+            onLoading,
         },
         [backend, workspace, insight],
     );
@@ -93,7 +114,12 @@ export function useCustomWidgetInsightDataView({
             : undefined;
     }, [backend, workspace, insightWithAddedFilters, widget]);
 
-    const dataViewTask = useExecutionDataView({ execution: insightExecution });
+    const dataViewTask = useExecutionDataView({
+        execution: insightExecution,
+        onCancel,
+        onError,
+        onSuccess,
+    });
 
     // insight non-success status has precedence, other things cannot run without an insight
     if (
@@ -105,7 +131,7 @@ export function useCustomWidgetInsightDataView({
             error: effectiveInsightTask.error,
             result: undefined,
             status: effectiveInsightTask.status,
-        };
+        } as UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
     }
 
     if (filterQueryTask.status === "pending" || dataViewTask.status === "pending") {
@@ -125,6 +151,9 @@ export function useCustomWidgetInsightDataView({
     }
 
     if (filterQueryTask.status === "error" || dataViewTask.status === "error") {
+        if (filterQueryTask.status === "error") {
+            onError?.(filterQueryTask.error);
+        }
         return {
             error: (dataViewTask.error ?? filterQueryTask.error)!,
             result: undefined,

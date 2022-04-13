@@ -13,12 +13,15 @@ import {
     NullableFiltersOrPlaceholders,
     SortsOrPlaceholders,
     TotalsOrPlaceholders,
+    UseCancelablePromiseCallbacks,
 } from "../base";
 import { useDataView } from "./useDataView";
 import isEmpty from "lodash/isEmpty";
 import { createExecution } from "./createExecution";
 
 /**
+ * Convenient interfance to define execution by series and slices.
+ *
  * @public
  */
 export interface IExecutionConfiguration {
@@ -73,6 +76,9 @@ function isExecutionConfiguration(obj: unknown): obj is IExecutionConfiguration 
 }
 
 /**
+ * Configuration for {@link useExecutionDataView} hook.
+ * See also {@link UseExecutionDataViewCallbacks}.
+ *
  * @public
  */
 export interface IUseExecutionDataViewConfig {
@@ -109,15 +115,22 @@ export interface IUseExecutionDataViewConfig {
 }
 
 /**
+ * Callbacks for {@link useExecutionDataView} hook.
+ *
+ * @public
+ */
+export type UseExecutionDataViewCallbacks = UseCancelablePromiseCallbacks<DataViewFacade, GoodDataSdkError>;
+
+/**
  * React hook to get data for a specific execution.
  *
  * @public
  */
 export function useExecutionDataView(
-    config: IUseExecutionDataViewConfig,
+    config: IUseExecutionDataViewConfig & UseExecutionDataViewCallbacks,
     deps?: React.DependencyList,
 ): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError> {
-    const { execution, window } = config;
+    const { execution, window, onCancel, onError, onLoading, onPending, onSuccess } = config;
     const backend = useBackendStrict(config.backend, "useExecutionDataView");
     const workspace = useWorkspaceStrict(config.workspace, "useExecutionDataView");
     const effectiveDeps = deps ?? [];
@@ -147,12 +160,15 @@ export function useExecutionDataView(
           })
         : execution;
 
-    return useDataView({ execution: preparedExecution, window }, [
-        backend,
-        workspace,
-        preparedExecution?.fingerprint() ?? "__executionFingerprint__",
-        ...effectiveDeps,
-    ]);
+    return useDataView(
+        { execution: preparedExecution, window, onCancel, onError, onLoading, onPending, onSuccess },
+        [
+            backend,
+            workspace,
+            preparedExecution?.fingerprint() ?? "__executionFingerprint__",
+            ...effectiveDeps,
+        ],
+    );
 }
 
 /**
