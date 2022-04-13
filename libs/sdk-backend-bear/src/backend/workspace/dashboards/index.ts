@@ -85,6 +85,7 @@ import includes from "lodash/includes";
 import isVisualization = GdcVisualizationObject.isVisualization;
 import isDashboardPlugin = GdcDashboardPlugin.isDashboardPlugin;
 import remove from "lodash/remove";
+import { convertUser } from "../../../convertors/fromBackend/UsersConverter";
 
 /**
  * Metadata object types closely related to the dashboard object.
@@ -329,13 +330,25 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
             ? await this.getScheduledMailObjectLinksForDashboardAndCurrentUser(dashboardRef)
             : await this.getScheduledMailObjectLinksForDashboard(dashboardRef);
 
-        const userMap: Map<string, IUser> = options.loadUserData
-            ? await updateUserMap(
-                  new Map(),
-                  compact(flatMap(scheduledMailObjectLinks, (link) => [link.author, link.contributor])),
-                  this.authCall,
-              )
-            : new Map();
+        let userMap: Map<string, IUser> = new Map();
+        if (options.loadUserData) {
+            userMap = await updateUserMap(
+                userMap,
+                compact(flatMap(scheduledMailObjectLinks, (link) => [link.author, link.contributor])),
+                this.authCall,
+            );
+
+            // if listing users is not allowed add at least the current user
+            if (userMap.values.length === 0) {
+                await this.authCall(async (sdk) => {
+                    const profile = await sdk.user.getCurrentProfile();
+                    const user = convertUser(profile);
+                    if (profile.links?.self) {
+                        userMap.set(profile.links?.self, user);
+                    }
+                });
+            }
+        }
 
         const wrappedScheduledMails = await this.authCall(async (sdk) => {
             return sdk.md.getObjects<GdcScheduledMail.IWrappedScheduledMail>(
