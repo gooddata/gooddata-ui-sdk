@@ -332,8 +332,11 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element;
 export const DropdownTabs: React_2.FC<IDropdownTagsProps>;
 
 // @internal (undocumented)
-export class EditableLabel extends Component<IEditableLabelProps, IEditableLabelState> {
-    constructor(props: IEditableLabelProps);
+export const EditableLabel: React_2.ForwardRefExoticComponent<IEditableLabelProps & React_2.RefAttributes<HTMLDivElement>>;
+
+// @internal (undocumented)
+export class EditableLabelInner extends Component<IEditableLabelInnerProps, IEditableLabelState> {
+    constructor(props: IEditableLabelInnerProps);
     // (undocumented)
     componentDidMount(): void;
     // (undocumented)
@@ -1212,6 +1215,12 @@ export interface IDropdownTagsProps {
     selectedTabId?: string;
     // (undocumented)
     tabs?: ITab[];
+}
+
+// @internal (undocumented)
+export interface IEditableLabelInnerProps extends IEditableLabelProps {
+    // (undocumented)
+    innerRef: React_2.ForwardedRef<HTMLDivElement>;
 }
 
 // @internal (undocumented)
