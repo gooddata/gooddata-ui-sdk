@@ -88,6 +88,11 @@ export interface IRecipientsSelectRendererProps {
      * Has user canListUsersInProject permission?
      */
     canListUsersInProject?: boolean;
+
+    /**
+     * Allow to remove the last recipient
+     */
+    allowEmptySelection?: boolean;
 }
 
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "cr cl" }];
@@ -432,7 +437,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
         selectedValues: IScheduleEmailRecipient[],
         actionTypes: ActionMeta<IScheduleEmailRecipient>,
     ): void => {
-        const { value } = this.props;
+        const { value, allowEmptySelection } = this.props;
         const { action } = actionTypes;
         if (
             value.length >= MAXIMUM_RECIPIENTS_RECEIVE &&
@@ -442,7 +447,11 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
             return;
         }
         if (selectedValues === null) {
-            this.props.onChange?.([value[0]]);
+            if (allowEmptySelection) {
+                this.props.onChange?.([]);
+            } else {
+                this.props.onChange?.([value[0]]);
+            }
             return;
         }
 
