@@ -1,6 +1,6 @@
 // (C) 2020-2021 GoodData Corporation
 import { useCallback } from "react";
-import { IScheduledMailDefinition } from "@gooddata/sdk-backend-spi";
+import { IScheduledMailDefinition } from "@gooddata/sdk-model";
 import { CommandProcessingStatus, saveScheduledEmail, useDashboardCommandProcessing } from "../../../model";
 
 export const useSaveScheduledEmail = ({
