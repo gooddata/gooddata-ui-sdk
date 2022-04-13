@@ -86,7 +86,7 @@
             "post": {
                 "tags": ["actions"],
                 "summary": "AFM explain resource.",
-                "description": "The resource provides static structures needed for investigation of a problem with given AFM. The structures differs for AQE and for Calcique. They are either MAQL (internal form of AFM) and logical and physical models (LDM and PDM) of corresponding workspace or MAQL and GRPC and WDF models.",
+                "description": "The resource provides static structures needed for investigation of a problem with given AFM. The structures are MAQL (internal form of AFM) and GRPC and WDF models.",
                 "operationId": "explainAFM",
                 "parameters": [
                     {
@@ -102,7 +102,7 @@
                     {
                         "name": "explainType",
                         "in": "query",
-                        "description": "Requested explain type (LDM, PDM, GRPC_MODEL, WDF or MAQL). If not specified all types are bundled in a ZIP archive.",
+                        "description": "Requested explain type (LDM, PDM, GRPC_MODEL, WDF, MAQL, QT, QT_SVG, OPT_QT, OPT_QT_SVG or SQL). If not specified all types are bundled in a ZIP archive.",
                         "required": false,
                         "schema": {
                             "type": "string"
@@ -121,14 +121,17 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "ZIP archive with MAQL, LDM and PDM files; or with MAQL, GRPC_MODEL and WDF files",
+                        "description": "ZIP archive with MAQL, LDM and PDM files; or with MAQL, GRPC_MODEL, WDF, QT, QT_SVG, OPT_QT, OPT_QT_SVG and SQL files",
                         "content": {
+                            "application/json": {},
+                            "application/sql": {},
                             "application/zip": {
                                 "schema": {
                                     "type": "string",
                                     "format": "binary"
                                 }
-                            }
+                            },
+                            "image/svg+xml": {}
                         }
                     }
                 },
@@ -170,7 +173,7 @@
                     "200": {
                         "description": "List of attributes, facts and metrics valid with respect to given AFM.",
                         "content": {
-                            "*/*": {
+                            "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/AfmValidObjectsResponse"
                                 }
@@ -251,7 +254,7 @@
                     "200": {
                         "description": "List of label values.",
                         "content": {
-                            "*/*": {
+                            "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ElementsResponse"
                                 }
@@ -331,7 +334,7 @@
                     "200": {
                         "description": "Execution result was found and returned.",
                         "content": {
-                            "*/*": {
+                            "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ExecutionResult"
                                 }
@@ -341,9 +344,9 @@
                     "400": {
                         "description": "Limit and/or offset query parameters (paging) were invalid.",
                         "content": {
-                            "*/*": {
+                            "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ErrorMessage"
+                                    "$ref": "#/components/schemas/Problem"
                                 }
                             }
                         }
@@ -351,9 +354,9 @@
                     "404": {
                         "description": "Execution result was not found.",
                         "content": {
-                            "*/*": {
+                            "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ErrorMessage"
+                                    "$ref": "#/components/schemas/Problem"
                                 }
                             }
                         }
@@ -361,9 +364,9 @@
                     "500": {
                         "description": "The result processing has failed unexpectedly.",
                         "content": {
-                            "*/*": {
+                            "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ErrorMessage"
+                                    "$ref": "#/components/schemas/Problem"
                                 }
                             }
                         }
@@ -459,7 +462,7 @@
                 "properties": {
                     "localIdentifier": {
                         "type": "string",
-                        "pattern": "^[.A-Za-z0-9_-]+$"
+                        "pattern": "^[.a-zA-Z0-9_-]+$"
                     },
                     "label": {
                         "$ref": "#/components/schemas/AfmObjectIdentifier"
@@ -474,14 +477,14 @@
                     "itemIdentifiers": {
                         "type": "array",
                         "description": "List of items in current dimension. Can reference 'localIdentifier' from 'AttributeItem', or special pseudo attribute \"measureGroup\" representing list of metrics.",
-                        "example": "[ \"attribute1\", \"measureGroup\"]",
+                        "example": ["attribute1", "measureGroup"],
                         "items": {
                             "type": "string"
                         }
                     },
                     "localIdentifier": {
                         "type": "string",
-                        "pattern": "^[.A-Za-z0-9_-]+$",
+                        "pattern": "^[.a-zA-Z0-9_-]+$",
                         "description": "Dimension identification within requests. Other entities can reference this dimension by this value.",
                         "example": "firstDimension"
                     },
@@ -517,8 +520,16 @@
                         "example": "SUM"
                     },
                     "includedDimensions": {
+                        "$ref": "#/components/schemas/IncludedDimensions"
+                    }
+                }
+            },
+            "IncludedDimensions": {
+                "type": "object",
+                "properties": {
+                    "properties": {
                         "type": "object",
-                        "description": "Mapping specifying dimensions on which this grand total will be computed. Dimensions are referenced via their localIdentifiers. Optionally one can specify also the values (properties) of the dimensions' attributes (see ```dimensionAttributesValues```).",
+                        "description": "Mapping specifying dimensions on which this grand total will be computed. Dimensions are referenced via their localIdentifiers. Optionally one can specify also the values (properties) of the dimensions' attributes (see DimensionAttributesValues).",
                         "example": "{\"dim1\": null, \"dim2\": {\"dimensionAttributesValues\": {\"measureGroup\": [\"m1\"]}}",
                         "additionalProperties": {
                             "$ref": "#/components/schemas/IncludedDimensionProps"
@@ -532,15 +543,7 @@
                 "nullable": true,
                 "properties": {
                     "dimensionAttributesValues": {
-                        "type": "object",
-                        "description": "Allows to customize for which attribute values the grand total will be computed. If the values for particular attribute are not specified then the totals for all values are computed. Note that this also covers the case of individual metrics (treated as values of the \"measureGroup\" pseudo attribute).",
-                        "example": "{\"measureGroup\": [\"m1\"], \"status\": [\"Lost\", \"Won\"]}",
-                        "additionalProperties": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
+                        "$ref": "#/components/schemas/DimensionAttributesValues"
                     }
                 }
             },
@@ -560,6 +563,9 @@
                         "properties": {
                             "direction": {
                                 "$ref": "#/components/schemas/SortDirection"
+                            },
+                            "sortType": {
+                                "$ref": "#/components/schemas/SortType"
                             },
                             "attributeIdentifier": {
                                 "type": "string",
@@ -597,6 +603,12 @@
                 "type": "string",
                 "description": "Sorting elements - ascending/descending order.",
                 "enum": ["ASC", "DESC"]
+            },
+            "SortType": {
+                "type": "string",
+                "description": "Mechanism by which this attribute should be sorted. Available options are:\n- DEFAULT: sorting based on default rules (using sort column if defined, otherwise this label) \n- LABEL: sorting by this label values \n- ATTRIBUTE: sorting by values of this label's attribute (or rather the primary label) \n- AREA: sorting by area (total or subtotal) corresponding to each attribute value. The area is computed by summing up all metric values in all other dimensions.",
+                "enum": ["DEFAULT", "LABEL", "ATTRIBUTE", "AREA"],
+                "default": "DEFAULT"
             },
             "DataColumnLocator": {
                 "type": "object",
@@ -1077,7 +1089,7 @@
                 "properties": {
                     "localIdentifier": {
                         "type": "string",
-                        "pattern": "^[.A-Za-z0-9_-]+$",
+                        "pattern": "^[.a-zA-Z0-9_-]+$",
                         "example": "sampleAutoGenerated0123_ID"
                     },
                     "definition": {
@@ -1158,7 +1170,7 @@
             "ResultSpec": {
                 "required": ["dimensions"],
                 "type": "object",
-                "description": "Specifies how the result data will formatted (```dimensions```) and which additional data shall be computed (```grandTotals```).",
+                "description": "Specifies how the result data will be formatted (```dimensions```) and which additional data shall be computed (```grandTotals```).",
                 "properties": {
                     "dimensions": {
                         "type": "array",
@@ -1259,6 +1271,22 @@
                     }
                 }
             },
+            "RestApiIdentifier": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "pattern": "^((?!\\\\.)[.A-Za-z0-9_-]{1,255}:)?(?!\\\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "example": "sample_item.price"
+                    },
+                    "type": {
+                        "type": "string",
+                        "example": "fact"
+                    }
+                },
+                "description": "Identifier of primary label of attribute owning requested label, or null if the primary label is excluded."
+            },
             "AfmObjectIdentifier": {
                 "required": ["identifier"],
                 "type": "object",
@@ -1276,7 +1304,7 @@
                 "properties": {
                     "localIdentifier": {
                         "type": "string",
-                        "pattern": "^[.A-Za-z0-9_-]+$",
+                        "pattern": "^[.a-zA-Z0-9_-]+$",
                         "example": "sampleAutoGenerated0123_ID"
                     }
                 }
@@ -1393,7 +1421,7 @@
                         "properties": {
                             "localIdentifier": {
                                 "type": "string",
-                                "pattern": "^[.A-Za-z0-9_-]+$"
+                                "pattern": "^[.a-zA-Z0-9_-]+$"
                             },
                             "attribute": {
                                 "$ref": "#/components/schemas/ObjectIdentifier"
@@ -1461,7 +1489,7 @@
                     "items": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/ObjectIdentifier"
+                            "$ref": "#/components/schemas/RestApiIdentifier"
                         }
                     }
                 }
@@ -1472,7 +1500,7 @@
                 "properties": {
                     "primaryTitle": {
                         "type": "string",
-                        "description": "Title of primary label of attribute owning requested label."
+                        "description": "Title of primary label of attribute owning requested label or null if the primary label is excluded"
                     },
                     "title": {
                         "type": "string",
@@ -1490,19 +1518,7 @@
                         "description": "Requested label."
                     },
                     "filterBy": {
-                        "type": "object",
-                        "properties": {
-                            "labelType": {
-                                "type": "string",
-                                "description": "Specifies which label is used for filtering - primary or requested.",
-                                "default": "REQUESTED",
-                                "enum": ["PRIMARY", "REQUESTED"]
-                            }
-                        },
-                        "description": "Specifies what is used for filtering.",
-                        "default": {
-                            "labelType": "REQUESTED"
-                        }
+                        "$ref": "#/components/schemas/FilterBy"
                     },
                     "sortOrder": {
                         "type": "string",
@@ -1542,7 +1558,7 @@
                 "description": "Entity holding list of sorted & filtered label elements, related primary label of attribute owning requested label and paging.",
                 "properties": {
                     "primaryLabel": {
-                        "$ref": "#/components/schemas/ObjectIdentifier"
+                        "$ref": "#/components/schemas/RestApiIdentifier"
                     },
                     "elements": {
                         "type": "array",
@@ -1586,35 +1602,37 @@
                 },
                 "description": "Current page description."
             },
-            "ErrorMessage": {
-                "required": ["error", "message", "path", "status", "timestamp"],
+            "Problem": {
+                "required": ["status", "traceId", "type"],
                 "type": "object",
                 "properties": {
-                    "timestamp": {
+                    "instance": {
                         "type": "string",
-                        "description": "Error timestamp in ISO 8601.",
-                        "example": "1970-01-01T00:00:00.000+0000"
+                        "description": "An relative URI that identifies the specific occurrence of the problem. It may yield further information if dereferenced.",
+                        "format": "uri"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "An relative URI that identifies the problem type. When dereferenced, it should provide human-readable documentation for the problem type (e.g., using HTML).",
+                        "format": "uri"
                     },
                     "status": {
-                        "type": "integer",
-                        "description": "HTTP error response status code.",
-                        "format": "int32",
-                        "example": 400
+                        "$ref": "#/components/schemas/StatusType"
                     },
-                    "error": {
+                    "title": {
                         "type": "string",
-                        "description": "HTTP error message like: Bad Request, Not Found, etc.",
-                        "example": "Bad Request"
+                        "description": "A short, summary of the problem type. Written in english and readable for engineers (usually not suited for non technical stakeholders and not localized).",
+                        "example": "Service Unavailable"
                     },
-                    "message": {
+                    "traceId": {
                         "type": "string",
-                        "description": "Error message returned by the server application.",
-                        "example": "The request couldn't be processed"
+                        "description": "Unique trace id used in open-tracing (semantics of transactions in distributed systems). Can be used to correlate client error with concrete request processing in the system.",
+                        "example": "5202292772879600441"
                     },
-                    "path": {
+                    "detail": {
                         "type": "string",
-                        "description": "Path of the failed request.",
-                        "example": "/api/fail"
+                        "description": "A human readable explanation specific to this occurrence of the problem.",
+                        "example": "Connection to database timed out"
                     }
                 },
                 "description": "Contains information about the error."
@@ -1703,6 +1721,22 @@
                         "type": "object"
                     },
                     "localIdentifier": {
+                        "type": "string",
+                        "description": "Grand total identification within this request. The corresponding data in the result are expected to be matched using this identifier.",
+                        "example": "firstGrandTotal"
+                    }
+                }
+            },
+            "DimensionAttributesValues": {
+                "type": "object",
+                "description": "Allows to customize for which attribute values the grand total will be computed. If the values for particular attribute are not specified then the totals for all values are computed. Note that this also covers the case of individual metrics (treated as values of the \"measureGroup\" pseudo attribute).",
+                "example": {
+                    "measureGroup": ["m1"],
+                    "status": ["Lost", "Won"]
+                },
+                "additionalProperties": {
+                    "type": "array",
+                    "items": {
                         "type": "string"
                     }
                 }
@@ -1788,6 +1822,37 @@
                     }
                 },
                 "description": "Header containing the information related to metrics."
+            },
+            "FilterBy": {
+                "required": ["labelType"],
+                "type": "object",
+                "properties": {
+                    "labelType": {
+                        "type": "string",
+                        "description": "Specifies which label is used for filtering - primary or requested.",
+                        "default": "REQUESTED",
+                        "enum": ["PRIMARY", "REQUESTED"]
+                    }
+                },
+                "description": "Specifies what is used for filtering."
+            },
+            "StatusType": {
+                "maximum": 600,
+                "exclusiveMaximum": true,
+                "minimum": 100,
+                "type": "object",
+                "properties": {
+                    "reasonPhrase": {
+                        "type": "string"
+                    },
+                    "statusCode": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                },
+                "description": "The HTTP status code generated by the origin server for this occurrence of the problem.",
+                "format": "int32",
+                "example": 503
             }
         }
     }

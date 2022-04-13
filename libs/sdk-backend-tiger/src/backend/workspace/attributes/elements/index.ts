@@ -1,7 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 import {
     ElementsRequest,
-    ElementsRequestFilterByLabelTypeEnum,
+    FilterByLabelTypeEnum,
     ElementsRequestSortOrderEnum,
 } from "@gooddata/api-client-tiger";
 import { InMemoryPaging, ServerPaging } from "@gooddata/sdk-backend-base";
@@ -107,13 +107,13 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
                 ? {
                       exactFilter: elements.values,
                       filterBy: {
-                          labelType: ElementsRequestFilterByLabelTypeEnum.REQUESTED,
+                          labelType: FilterByLabelTypeEnum.REQUESTED,
                       },
                   }
                 : {
                       exactFilter: elements.primaryValues,
                       filterBy: {
-                          labelType: ElementsRequestFilterByLabelTypeEnum.PRIMARY,
+                          labelType: FilterByLabelTypeEnum.PRIMARY,
                       },
                   };
         } else if (uris) {
@@ -122,7 +122,7 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
                 // filtering by uris on tiger forces filtering by primary label value
                 // this is way how we load non-primary label by primary label values list in uris option (related to NAS-137)
                 filterBy: {
-                    labelType: ElementsRequestFilterByLabelTypeEnum.PRIMARY,
+                    labelType: FilterByLabelTypeEnum.PRIMARY,
                 },
             };
         }

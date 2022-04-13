@@ -4,10 +4,12 @@ import {
     SortDirection as TigerSortDirection,
     SortKeyAttribute,
     SortKeyValue,
+    SortType,
 } from "@gooddata/api-client-tiger";
 import {
     IExecutionDefinition,
     ILocatorItem,
+    isAttributeAreaSort,
     isAttributeLocator,
     isAttributeSort,
     ISortItem,
@@ -38,6 +40,19 @@ function convertSortDirection(direction: SortDirection): TigerSortDirection {
     }
 
     return TigerSortDirection.DESC;
+}
+
+/**
+ * For normal attribute sort by value:
+ * - DEFAULT sort type is always used.
+ * It means, that potential default sort label on model will have always higher priority over sort label provided by execution.
+ * It behaves similar to the Bear behavior and according UX but it limits API capabilities as API can override default sort label by the one from execution by using SortType.LABEL
+ * If someone needs this here too, we need to extend IAttributeSortItem by some label prioritization flag and consider it in this convertor.
+ *
+ * For area sort it just uses SortType.AREA to use this sort by numerical sum in execution.
+ */
+function convertAttributeSortType(sortItem: ISortItem): SortType {
+    return isAttributeAreaSort(sortItem) ? SortType.AREA : SortType.DEFAULT;
 }
 
 /**
@@ -111,11 +126,14 @@ function dimensionsWithSorts(dims: Dimension[], sorts: ISortItem[]): Dimension[]
     sorts.forEach((sortItem) => {
         if (isAttributeSort(sortItem)) {
             const attributeIdentifier = sortItem.attributeSortItem.attributeIdentifier;
+            const direction = convertSortDirection(sortItem.attributeSortItem.direction);
 
             const attributeSortKey: SortKeyAttribute = {
                 attribute: {
                     attributeIdentifier,
-                    direction: convertSortDirection(sortItem.attributeSortItem.direction),
+                    // ASC direction is default for Tiger backend. Dont send it to execution to prevent override of possible default sort label direction. It has the same meaning as TigerSortDirection.DEFAULT which does not exist.
+                    ...(direction !== TigerSortDirection.ASC ? { direction } : {}),
+                    sortType: convertAttributeSortType(sortItem),
                 },
             };
 
