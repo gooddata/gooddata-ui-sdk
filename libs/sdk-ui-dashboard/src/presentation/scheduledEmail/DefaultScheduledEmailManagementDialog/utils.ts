@@ -34,7 +34,7 @@ export const getAttachmentType = (intl: IntlShape, attachments: ScheduledMailAtt
         };
     } else if (numberOfWidgetAttachments) {
         return {
-            AttachmentIcon: Icon.Widget,
+            AttachmentIcon: Icon.Insight,
             attachmentLabel: intl.formatMessage(
                 { id: "dialogs.schedule.management.attachments.widgets" },
                 { n: numberOfWidgetAttachments },
