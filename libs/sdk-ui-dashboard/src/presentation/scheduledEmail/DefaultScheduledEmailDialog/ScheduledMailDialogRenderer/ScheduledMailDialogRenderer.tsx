@@ -1,6 +1,8 @@
 // (C) 2019-2022 GoodData Corporation
 import * as React from "react";
 import cloneDeep from "lodash/cloneDeep";
+import isEqual from "lodash/isEqual";
+import omit from "lodash/omit";
 import { injectIntl, WrappedComponentProps, FormattedMessage } from "react-intl";
 import invariant from "ts-invariant";
 import { normalizeTime, ConfirmDialogBase, Overlay, Alignment, Message } from "@gooddata/sdk-ui-kit";
@@ -193,6 +195,8 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
     };
 
     private getUsersCancellable: ICancelablePromise<IUser[]> | undefined;
+    // when editing, save initial state to compare if anything changed
+    private originalEditState: IScheduledMailDialogRendererState | undefined;
 
     constructor(props: IScheduledMailDialogRendererProps) {
         super(props);
@@ -286,7 +290,7 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
             emailBody: schedule.body,
             selectedRecipients,
             userTimezone: getTimezoneByIdentifier(schedule.when.timeZone) || TIMEZONE_DEFAULT,
-            startDate: new Date(schedule.when.startDate), // check time zones
+            startDate: new Date(schedule.when.startDate),
             isValidScheduleEmailData: true,
             repeat: parseRepeatString(schedule.when.recurrence),
             attachments: {
@@ -329,8 +333,10 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
 
         const isSubmitDisabled =
             !this.state.isValidScheduleEmailData ||
-            // in editing mode wait for email addresses to be processed by this.identifyWorkspaceRecipients()
-            (editSchedule && !this.getUsersCancellable?.getHasFulfilled());
+            (editSchedule &&
+                // in editing mode wait for email addresses to be processed by this.identifyWorkspaceRecipients() and check whether anything changed
+                (!this.getUsersCancellable?.getHasFulfilled() ||
+                    isEqual(omit(this.originalEditState, "alignment"), omit(this.state, "alignment"))));
 
         const submitButtonTranslationId = `dialogs.schedule.email.${editSchedule ? "save" : "submit"}`;
         const headingTranslationId = this.props.enableWidgetExportScheduling
@@ -388,9 +394,12 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
                     }
                     return recipient;
                 });
-                this.setState({
+                const newState = {
+                    ...this.state,
                     selectedRecipients: processedRecipients,
-                });
+                };
+                this.originalEditState = newState;
+                this.setState(newState);
             })
             .catch((e) => {
                 // CancelError is expected from CancellablePromise and does not mean an actual error
@@ -509,6 +518,13 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
             editSchedule,
         } = this.props;
 
+        // it should be possible to remove the only remaining recipient if the author unsubscribed
+        const allowEmptySelection =
+            editSchedule &&
+            editSchedule.unsubscribed?.some(
+                (unsubscribedRecipient) => unsubscribedRecipient === editSchedule.createdBy?.email,
+            );
+
         return (
             <RecipientsSelect
                 author={userToRecipient(editSchedule?.createdBy ? editSchedule?.createdBy : currentUser)}
@@ -520,6 +536,7 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
                 onError={this.props.onError}
                 backend={backend}
                 workspace={workspace}
+                allowEmptySelection={allowEmptySelection}
             />
         );
     };
@@ -597,22 +614,19 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
     };
 
     private onDateChange = (selectedDateObject: Date): void => {
-        this.setState((prevState) => {
-            return {
-                repeat: {
-                    ...prevState.repeat,
-                    date: {
-                        day: getDate(selectedDateObject),
-                        month: getMonth(selectedDateObject),
-                        year: getYear(selectedDateObject),
-                    },
-                },
-            };
-        });
+        const { repeatFrequency } = this.state.repeat;
 
-        this.setState({ startDate: selectedDateObject }, () => {
-            this.updateStartDateForRepeats(selectedDateObject);
-        });
+        const newRepeat = cloneDeep(this.state.repeat);
+
+        if (repeatFrequency.month) {
+            setMonthlyRepeat(newRepeat, repeatFrequency.month.type, selectedDateObject);
+        } else if (repeatFrequency.week) {
+            setWeeklyRepeat(newRepeat, selectedDateObject);
+        } else {
+            setDailyRepeat(newRepeat);
+        }
+
+        this.setState({ repeat: newRepeat });
     };
 
     private onTimeChange = (time: IScheduleEmailRepeatTime): void => {
@@ -646,22 +660,6 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
             emailBody: value,
         });
     };
-
-    private updateStartDateForRepeats(startDate: Date) {
-        const { repeatFrequency } = this.state.repeat;
-
-        const newRepeat = cloneDeep(this.state.repeat);
-
-        if (repeatFrequency.month) {
-            setMonthlyRepeat(newRepeat, repeatFrequency.month.type, startDate);
-        } else if (repeatFrequency.week) {
-            setWeeklyRepeat(newRepeat, startDate);
-        } else {
-            setDailyRepeat(newRepeat);
-        }
-
-        this.setState({ repeat: newRepeat });
-    }
 
     private onRepeatsChange = (data: IRepeatSelectData): void => {
         const { repeatExecuteOn, repeatFrequency, repeatPeriod, repeatType } = data;
@@ -808,6 +806,7 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
             when,
             to: toEmails,
             bcc: bccEmails,
+            unsubscribed: editSchedule ? editSchedule.unsubscribed : undefined,
             subject,
             body,
             attachments,

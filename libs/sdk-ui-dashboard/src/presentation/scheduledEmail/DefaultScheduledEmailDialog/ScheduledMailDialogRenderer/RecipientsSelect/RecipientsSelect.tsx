@@ -60,6 +60,11 @@ interface IRecipientsSelectProps {
      * workspace here, then the component MUST be rendered within an existing WorkspaceContext.
      */
     workspace?: string;
+
+    /**
+     * Allow to remove the last recipient
+     */
+    allowEmptySelection?: boolean;
 }
 
 export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
@@ -73,6 +78,7 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
         onError,
         canListUsersInProject,
         enableKPIDashboardScheduleRecipients,
+        allowEmptySelection,
     } = props;
 
     const [search, setSearch] = useState<string>();
@@ -96,6 +102,7 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
                 setSearch(queryOptions?.search);
             }}
             isLoading={status === "loading" || status === "pending"}
+            allowEmptySelection={allowEmptySelection}
         />
     );
 };
