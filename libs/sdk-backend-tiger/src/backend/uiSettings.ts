@@ -24,7 +24,6 @@ export const DefaultUiSettings: ISettings = {
     portalLogoPage: false,
     analyticalDesigner: true,
     enableWeekFilters: true,
-    enableCustomMeasureFormatting: true,
     enableAnalyticalDashboards: true,
     enableHidingOfDataPoints: true,
     enableAdCatalogRefresh: true,
