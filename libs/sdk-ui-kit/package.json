@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-kit",
-    "version": "8.10.0-alpha.62",
+    "version": "8.10.0-alpha.63",
     "description": "GoodData SDK - UI Building Components",
     "repository": {
         "type": "git",
@@ -64,11 +64,11 @@
     "dependencies": {
         "@aaronhayes/react-use-hubspot-form": "^2.0.1",
         "@gooddata/numberjs": "^4.0.1",
-        "@gooddata/sdk-backend-spi": "^8.10.0-alpha.62",
-        "@gooddata/sdk-model": "^8.10.0-alpha.62",
-        "@gooddata/sdk-ui": "^8.10.0-alpha.62",
-        "@gooddata/sdk-ui-theme-provider": "^8.10.0-alpha.62",
-        "@gooddata/util": "^8.10.0-alpha.62",
+        "@gooddata/sdk-backend-spi": "^8.10.0-alpha.63",
+        "@gooddata/sdk-model": "^8.10.0-alpha.63",
+        "@gooddata/sdk-ui": "^8.10.0-alpha.63",
+        "@gooddata/sdk-ui-theme-provider": "^8.10.0-alpha.63",
+        "@gooddata/util": "^8.10.0-alpha.63",
         "classnames": "^2.3.1",
         "codemirror": "^5.54.0",
         "date-fns": "^2.22.1",
@@ -101,8 +101,8 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^2.1.0",
-        "@gooddata/reference-workspace": "^8.10.0-alpha.62",
-        "@gooddata/sdk-backend-mockingbird": "^8.10.0-alpha.62",
+        "@gooddata/reference-workspace": "^8.10.0-alpha.63",
+        "@gooddata/sdk-backend-mockingbird": "^8.10.0-alpha.63",
         "@gooddata/stylelint-config": "^5.0.0",
         "@microsoft/api-documenter": "^7.17.0",
         "@microsoft/api-extractor": "^7.20.0",
