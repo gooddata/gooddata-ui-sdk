@@ -1572,10 +1572,10 @@ export interface JsonApiAnalyticalDashboardIn {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiAnalyticalDashboardIn
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
 }
 
 /**
@@ -1647,10 +1647,10 @@ export interface JsonApiAnalyticalDashboardOut {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiAnalyticalDashboardOut
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationships}
@@ -1667,6 +1667,43 @@ export enum JsonApiAnalyticalDashboardOutTypeEnum {
     AnalyticalDashboard = "analyticalDashboard",
 }
 
+/**
+ *
+ * @export
+ * @interface JsonApiAnalyticalDashboardOutAttributes
+ */
+export interface JsonApiAnalyticalDashboardOutAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiAnalyticalDashboardOutAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiAnalyticalDashboardOutAttributes
+     */
+    description?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof JsonApiAnalyticalDashboardOutAttributes
+     */
+    tags?: Array<string>;
+    /**
+     *
+     * @type {boolean}
+     * @memberof JsonApiAnalyticalDashboardOutAttributes
+     */
+    areRelationsValid?: boolean;
+    /**
+     * Free-form JSON content.
+     * @type {object}
+     * @memberof JsonApiAnalyticalDashboardOutAttributes
+     */
+    content?: object;
+}
 /**
  *
  * @export
@@ -1889,10 +1926,10 @@ export interface JsonApiAnalyticalDashboardOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiAnalyticalDashboardOutWithLinks
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationships}
@@ -1935,10 +1972,10 @@ export interface JsonApiAnalyticalDashboardPatch {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiAnalyticalDashboardPatch
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
 }
 
 /**
@@ -1949,43 +1986,6 @@ export enum JsonApiAnalyticalDashboardPatchTypeEnum {
     AnalyticalDashboard = "analyticalDashboard",
 }
 
-/**
- *
- * @export
- * @interface JsonApiAnalyticalDashboardPatchAttributes
- */
-export interface JsonApiAnalyticalDashboardPatchAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiAnalyticalDashboardPatchAttributes
-     */
-    title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiAnalyticalDashboardPatchAttributes
-     */
-    description?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof JsonApiAnalyticalDashboardPatchAttributes
-     */
-    tags?: Array<string>;
-    /**
-     *
-     * @type {boolean}
-     * @memberof JsonApiAnalyticalDashboardPatchAttributes
-     */
-    areRelationsValid?: boolean;
-    /**
-     * Free-form JSON content.
-     * @type {object}
-     * @memberof JsonApiAnalyticalDashboardPatchAttributes
-     */
-    content?: object;
-}
 /**
  *
  * @export
@@ -2610,10 +2610,10 @@ export interface JsonApiDashboardPluginIn {
     id: string;
     /**
      *
-     * @type {JsonApiDashboardPluginPatchAttributes}
+     * @type {JsonApiDashboardPluginOutAttributes}
      * @memberof JsonApiDashboardPluginIn
      */
-    attributes?: JsonApiDashboardPluginPatchAttributes;
+    attributes?: JsonApiDashboardPluginOutAttributes;
 }
 
 /**
@@ -2685,10 +2685,10 @@ export interface JsonApiDashboardPluginOut {
     id: string;
     /**
      *
-     * @type {JsonApiDashboardPluginPatchAttributes}
+     * @type {JsonApiDashboardPluginOutAttributes}
      * @memberof JsonApiDashboardPluginOut
      */
-    attributes?: JsonApiDashboardPluginPatchAttributes;
+    attributes?: JsonApiDashboardPluginOutAttributes;
 }
 
 /**
@@ -2699,6 +2699,43 @@ export enum JsonApiDashboardPluginOutTypeEnum {
     DashboardPlugin = "dashboardPlugin",
 }
 
+/**
+ *
+ * @export
+ * @interface JsonApiDashboardPluginOutAttributes
+ */
+export interface JsonApiDashboardPluginOutAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiDashboardPluginOutAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiDashboardPluginOutAttributes
+     */
+    description?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof JsonApiDashboardPluginOutAttributes
+     */
+    tags?: Array<string>;
+    /**
+     *
+     * @type {boolean}
+     * @memberof JsonApiDashboardPluginOutAttributes
+     */
+    areRelationsValid?: boolean;
+    /**
+     * Free-form JSON content.
+     * @type {object}
+     * @memberof JsonApiDashboardPluginOutAttributes
+     */
+    content?: object;
+}
 /**
  *
  * @export
@@ -2757,10 +2794,10 @@ export interface JsonApiDashboardPluginOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiDashboardPluginPatchAttributes}
+     * @type {JsonApiDashboardPluginOutAttributes}
      * @memberof JsonApiDashboardPluginOutWithLinks
      */
-    attributes?: JsonApiDashboardPluginPatchAttributes;
+    attributes?: JsonApiDashboardPluginOutAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -2797,10 +2834,10 @@ export interface JsonApiDashboardPluginPatch {
     id: string;
     /**
      *
-     * @type {JsonApiDashboardPluginPatchAttributes}
+     * @type {JsonApiDashboardPluginOutAttributes}
      * @memberof JsonApiDashboardPluginPatch
      */
-    attributes?: JsonApiDashboardPluginPatchAttributes;
+    attributes?: JsonApiDashboardPluginOutAttributes;
 }
 
 /**
@@ -2811,43 +2848,6 @@ export enum JsonApiDashboardPluginPatchTypeEnum {
     DashboardPlugin = "dashboardPlugin",
 }
 
-/**
- *
- * @export
- * @interface JsonApiDashboardPluginPatchAttributes
- */
-export interface JsonApiDashboardPluginPatchAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiDashboardPluginPatchAttributes
-     */
-    title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiDashboardPluginPatchAttributes
-     */
-    description?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof JsonApiDashboardPluginPatchAttributes
-     */
-    tags?: Array<string>;
-    /**
-     *
-     * @type {boolean}
-     * @memberof JsonApiDashboardPluginPatchAttributes
-     */
-    areRelationsValid?: boolean;
-    /**
-     * Free-form JSON content.
-     * @type {object}
-     * @memberof JsonApiDashboardPluginPatchAttributes
-     */
-    content?: object;
-}
 /**
  *
  * @export
@@ -3951,22 +3951,48 @@ export interface JsonApiDatasetOutList {
 export interface JsonApiDatasetOutRelationships {
     /**
      *
-     * @type {JsonApiFilterContextOutRelationshipsAttributes}
+     * @type {JsonApiDatasetOutRelationshipsAttributes}
      * @memberof JsonApiDatasetOutRelationships
      */
-    attributes?: JsonApiFilterContextOutRelationshipsAttributes;
+    attributes?: JsonApiDatasetOutRelationshipsAttributes;
     /**
      *
-     * @type {JsonApiMetricOutRelationshipsFacts}
+     * @type {JsonApiDatasetOutRelationshipsFacts}
      * @memberof JsonApiDatasetOutRelationships
      */
-    facts?: JsonApiMetricOutRelationshipsFacts;
+    facts?: JsonApiDatasetOutRelationshipsFacts;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationshipsDatasets}
      * @memberof JsonApiDatasetOutRelationships
      */
     references?: JsonApiAnalyticalDashboardOutRelationshipsDatasets;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiDatasetOutRelationshipsAttributes
+ */
+export interface JsonApiDatasetOutRelationshipsAttributes {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     * @type {Array<JsonApiAttributeLinkage>}
+     * @memberof JsonApiDatasetOutRelationshipsAttributes
+     */
+    data: Array<JsonApiAttributeLinkage>;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiDatasetOutRelationshipsFacts
+ */
+export interface JsonApiDatasetOutRelationshipsFacts {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     * @type {Array<JsonApiFactLinkage>}
+     * @memberof JsonApiDatasetOutRelationshipsFacts
+     */
+    data: Array<JsonApiFactLinkage>;
 }
 /**
  *
@@ -4254,10 +4280,10 @@ export interface JsonApiFilterContextIn {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiFilterContextIn
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
 }
 
 /**
@@ -4329,10 +4355,10 @@ export interface JsonApiFilterContextOut {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiFilterContextOut
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
     /**
      *
      * @type {JsonApiFilterContextOutRelationships}
@@ -4415,10 +4441,10 @@ export interface JsonApiFilterContextOutList {
 export interface JsonApiFilterContextOutRelationships {
     /**
      *
-     * @type {JsonApiFilterContextOutRelationshipsAttributes}
+     * @type {JsonApiDatasetOutRelationshipsAttributes}
      * @memberof JsonApiFilterContextOutRelationships
      */
-    attributes?: JsonApiFilterContextOutRelationshipsAttributes;
+    attributes?: JsonApiDatasetOutRelationshipsAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationshipsDatasets}
@@ -4431,19 +4457,6 @@ export interface JsonApiFilterContextOutRelationships {
      * @memberof JsonApiFilterContextOutRelationships
      */
     labels?: JsonApiAnalyticalDashboardOutRelationshipsLabels;
-}
-/**
- *
- * @export
- * @interface JsonApiFilterContextOutRelationshipsAttributes
- */
-export interface JsonApiFilterContextOutRelationshipsAttributes {
-    /**
-     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
-     * @type {Array<JsonApiAttributeLinkage>}
-     * @memberof JsonApiFilterContextOutRelationshipsAttributes
-     */
-    data: Array<JsonApiAttributeLinkage>;
 }
 /**
  *
@@ -4465,10 +4478,10 @@ export interface JsonApiFilterContextOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiFilterContextOutWithLinks
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
     /**
      *
      * @type {JsonApiFilterContextOutRelationships}
@@ -4511,10 +4524,10 @@ export interface JsonApiFilterContextPatch {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiFilterContextPatch
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
 }
 
 /**
@@ -4941,10 +4954,29 @@ export interface JsonApiMetricOutAttributes {
     areRelationsValid?: boolean;
     /**
      *
-     * @type {JsonApiMetricPatchAttributesContent}
+     * @type {JsonApiMetricOutAttributesContent}
      * @memberof JsonApiMetricOutAttributes
      */
-    content: JsonApiMetricPatchAttributesContent;
+    content: JsonApiMetricOutAttributesContent;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiMetricOutAttributesContent
+ */
+export interface JsonApiMetricOutAttributesContent {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiMetricOutAttributesContent
+     */
+    format?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiMetricOutAttributesContent
+     */
+    maql: string;
 }
 /**
  *
@@ -5013,16 +5045,16 @@ export interface JsonApiMetricOutList {
 export interface JsonApiMetricOutRelationships {
     /**
      *
-     * @type {JsonApiMetricOutRelationshipsFacts}
+     * @type {JsonApiDatasetOutRelationshipsFacts}
      * @memberof JsonApiMetricOutRelationships
      */
-    facts?: JsonApiMetricOutRelationshipsFacts;
+    facts?: JsonApiDatasetOutRelationshipsFacts;
     /**
      *
-     * @type {JsonApiFilterContextOutRelationshipsAttributes}
+     * @type {JsonApiDatasetOutRelationshipsAttributes}
      * @memberof JsonApiMetricOutRelationships
      */
-    attributes?: JsonApiFilterContextOutRelationshipsAttributes;
+    attributes?: JsonApiDatasetOutRelationshipsAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationshipsLabels}
@@ -5035,19 +5067,6 @@ export interface JsonApiMetricOutRelationships {
      * @memberof JsonApiMetricOutRelationships
      */
     metrics?: JsonApiAnalyticalDashboardOutRelationshipsMetrics;
-}
-/**
- *
- * @export
- * @interface JsonApiMetricOutRelationshipsFacts
- */
-export interface JsonApiMetricOutRelationshipsFacts {
-    /**
-     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
-     * @type {Array<JsonApiFactLinkage>}
-     * @memberof JsonApiMetricOutRelationshipsFacts
-     */
-    data: Array<JsonApiFactLinkage>;
 }
 /**
  *
@@ -5161,29 +5180,10 @@ export interface JsonApiMetricPatchAttributes {
     areRelationsValid?: boolean;
     /**
      *
-     * @type {JsonApiMetricPatchAttributesContent}
+     * @type {JsonApiMetricOutAttributesContent}
      * @memberof JsonApiMetricPatchAttributes
      */
-    content?: JsonApiMetricPatchAttributesContent;
-}
-/**
- *
- * @export
- * @interface JsonApiMetricPatchAttributesContent
- */
-export interface JsonApiMetricPatchAttributesContent {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiMetricPatchAttributesContent
-     */
-    format?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiMetricPatchAttributesContent
-     */
-    maql: string;
+    content?: JsonApiMetricOutAttributesContent;
 }
 /**
  *
@@ -6068,10 +6068,10 @@ export interface JsonApiVisualizationObjectIn {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiVisualizationObjectIn
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
 }
 
 /**
@@ -6143,10 +6143,10 @@ export interface JsonApiVisualizationObjectOut {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiVisualizationObjectOut
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
     /**
      *
      * @type {JsonApiVisualizationObjectOutRelationships}
@@ -6231,16 +6231,16 @@ export interface JsonApiVisualizationObjectOutList {
 export interface JsonApiVisualizationObjectOutRelationships {
     /**
      *
-     * @type {JsonApiMetricOutRelationshipsFacts}
+     * @type {JsonApiDatasetOutRelationshipsFacts}
      * @memberof JsonApiVisualizationObjectOutRelationships
      */
-    facts?: JsonApiMetricOutRelationshipsFacts;
+    facts?: JsonApiDatasetOutRelationshipsFacts;
     /**
      *
-     * @type {JsonApiFilterContextOutRelationshipsAttributes}
+     * @type {JsonApiDatasetOutRelationshipsAttributes}
      * @memberof JsonApiVisualizationObjectOutRelationships
      */
-    attributes?: JsonApiFilterContextOutRelationshipsAttributes;
+    attributes?: JsonApiDatasetOutRelationshipsAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationshipsLabels}
@@ -6280,10 +6280,10 @@ export interface JsonApiVisualizationObjectOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiVisualizationObjectOutWithLinks
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
     /**
      *
      * @type {JsonApiVisualizationObjectOutRelationships}
@@ -6326,10 +6326,10 @@ export interface JsonApiVisualizationObjectPatch {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiVisualizationObjectPatch
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
 }
 
 /**
@@ -6373,16 +6373,16 @@ export interface JsonApiWorkspaceDataFilterIn {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterPatchAttributes}
+     * @type {JsonApiWorkspaceDataFilterOutAttributes}
      * @memberof JsonApiWorkspaceDataFilterIn
      */
-    attributes?: JsonApiWorkspaceDataFilterPatchAttributes;
+    attributes?: JsonApiWorkspaceDataFilterOutAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterPatchRelationships}
+     * @type {JsonApiWorkspaceDataFilterOutRelationships}
      * @memberof JsonApiWorkspaceDataFilterIn
      */
-    relationships?: JsonApiWorkspaceDataFilterPatchRelationships;
+    relationships?: JsonApiWorkspaceDataFilterOutRelationships;
 }
 
 /**
@@ -6454,16 +6454,16 @@ export interface JsonApiWorkspaceDataFilterOut {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterPatchAttributes}
+     * @type {JsonApiWorkspaceDataFilterOutAttributes}
      * @memberof JsonApiWorkspaceDataFilterOut
      */
-    attributes?: JsonApiWorkspaceDataFilterPatchAttributes;
+    attributes?: JsonApiWorkspaceDataFilterOutAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterPatchRelationships}
+     * @type {JsonApiWorkspaceDataFilterOutRelationships}
      * @memberof JsonApiWorkspaceDataFilterOut
      */
-    relationships?: JsonApiWorkspaceDataFilterPatchRelationships;
+    relationships?: JsonApiWorkspaceDataFilterOutRelationships;
 }
 
 /**
@@ -6474,6 +6474,31 @@ export enum JsonApiWorkspaceDataFilterOutTypeEnum {
     WorkspaceDataFilter = "workspaceDataFilter",
 }
 
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspaceDataFilterOutAttributes
+ */
+export interface JsonApiWorkspaceDataFilterOutAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceDataFilterOutAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceDataFilterOutAttributes
+     */
+    description?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceDataFilterOutAttributes
+     */
+    columnName?: string;
+}
 /**
  *
  * @export
@@ -6527,6 +6552,32 @@ export interface JsonApiWorkspaceDataFilterOutList {
 /**
  *
  * @export
+ * @interface JsonApiWorkspaceDataFilterOutRelationships
+ */
+export interface JsonApiWorkspaceDataFilterOutRelationships {
+    /**
+     *
+     * @type {JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings}
+     * @memberof JsonApiWorkspaceDataFilterOutRelationships
+     */
+    filterSettings?: JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings
+ */
+export interface JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     * @type {Array<JsonApiWorkspaceDataFilterSettingLinkage>}
+     * @memberof JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings
+     */
+    data: Array<JsonApiWorkspaceDataFilterSettingLinkage>;
+}
+/**
+ *
+ * @export
  * @interface JsonApiWorkspaceDataFilterOutWithLinks
  */
 export interface JsonApiWorkspaceDataFilterOutWithLinks {
@@ -6544,16 +6595,16 @@ export interface JsonApiWorkspaceDataFilterOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterPatchAttributes}
+     * @type {JsonApiWorkspaceDataFilterOutAttributes}
      * @memberof JsonApiWorkspaceDataFilterOutWithLinks
      */
-    attributes?: JsonApiWorkspaceDataFilterPatchAttributes;
+    attributes?: JsonApiWorkspaceDataFilterOutAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterPatchRelationships}
+     * @type {JsonApiWorkspaceDataFilterOutRelationships}
      * @memberof JsonApiWorkspaceDataFilterOutWithLinks
      */
-    relationships?: JsonApiWorkspaceDataFilterPatchRelationships;
+    relationships?: JsonApiWorkspaceDataFilterOutRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -6590,16 +6641,16 @@ export interface JsonApiWorkspaceDataFilterPatch {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterPatchAttributes}
+     * @type {JsonApiWorkspaceDataFilterOutAttributes}
      * @memberof JsonApiWorkspaceDataFilterPatch
      */
-    attributes?: JsonApiWorkspaceDataFilterPatchAttributes;
+    attributes?: JsonApiWorkspaceDataFilterOutAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterPatchRelationships}
+     * @type {JsonApiWorkspaceDataFilterOutRelationships}
      * @memberof JsonApiWorkspaceDataFilterPatch
      */
-    relationships?: JsonApiWorkspaceDataFilterPatchRelationships;
+    relationships?: JsonApiWorkspaceDataFilterOutRelationships;
 }
 
 /**
@@ -6613,31 +6664,6 @@ export enum JsonApiWorkspaceDataFilterPatchTypeEnum {
 /**
  *
  * @export
- * @interface JsonApiWorkspaceDataFilterPatchAttributes
- */
-export interface JsonApiWorkspaceDataFilterPatchAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterPatchAttributes
-     */
-    title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterPatchAttributes
-     */
-    description?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterPatchAttributes
-     */
-    columnName?: string;
-}
-/**
- *
- * @export
  * @interface JsonApiWorkspaceDataFilterPatchDocument
  */
 export interface JsonApiWorkspaceDataFilterPatchDocument {
@@ -6647,32 +6673,6 @@ export interface JsonApiWorkspaceDataFilterPatchDocument {
      * @memberof JsonApiWorkspaceDataFilterPatchDocument
      */
     data: JsonApiWorkspaceDataFilterPatch;
-}
-/**
- *
- * @export
- * @interface JsonApiWorkspaceDataFilterPatchRelationships
- */
-export interface JsonApiWorkspaceDataFilterPatchRelationships {
-    /**
-     *
-     * @type {JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings}
-     * @memberof JsonApiWorkspaceDataFilterPatchRelationships
-     */
-    filterSettings?: JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings;
-}
-/**
- *
- * @export
- * @interface JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings
- */
-export interface JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings {
-    /**
-     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
-     * @type {Array<JsonApiWorkspaceDataFilterSettingLinkage>}
-     * @memberof JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings
-     */
-    data: Array<JsonApiWorkspaceDataFilterSettingLinkage>;
 }
 /**
  * The \\\"type\\\" and \\\"id\\\" to non-empty members.

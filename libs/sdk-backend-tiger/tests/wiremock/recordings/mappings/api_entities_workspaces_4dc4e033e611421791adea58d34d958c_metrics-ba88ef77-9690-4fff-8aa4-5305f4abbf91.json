@@ -1,8 +1,8 @@
 {
-    "id": "202294c6-754b-486e-ae53-d510494a9597",
-    "name": "api_entities_workspaces_4dc4e033e611421791adea58d34d958c_visualizationobjects",
+    "id": "ba88ef77-9690-4fff-8aa4-5305f4abbf91",
+    "name": "api_entities_workspaces_4dc4e033e611421791adea58d34d958c_metrics",
     "request": {
-        "url": "/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/visualizationObjects?size=250&page=0",
+        "url": "/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics?size=250&page=0",
         "method": "GET",
         "headers": {
             "Accept": {
@@ -16,12 +16,12 @@
     },
     "response": {
         "status": 200,
-        "body": "{\"data\":[{\"attributes\":{\"title\":\"Insight Activities\",\"description\":\"Insight Activities\",\"areRelationsValid\":true,\"content\":{\"buckets\":[{\"items\":[{\"measure\":{\"localIdentifier\":\"e7ffd6fe32b04f2eb28eac903f3df8eb\",\"definition\":{\"measureDefinition\":{\"item\":{\"identifier\":{\"id\":\"bb512c36-4627-4dd8-8b92-3ef5d364e8f5\",\"type\":\"metric\"}},\"filters\":[]}},\"title\":\"# of Activities\"}}],\"localIdentifier\":\"measures\"}],\"filters\":[],\"sorts\":[],\"properties\":{},\"visualizationUrl\":\"local:column\",\"version\":\"2\"}},\"id\":\"2ec4862e-4559-42d9-a628-fd4e80c16d59\",\"links\":{\"self\":\"https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/visualizationObjects/2ec4862e-4559-42d9-a628-fd4e80c16d59\"},\"type\":\"visualizationObject\"}],\"links\":{\"self\":\"https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/visualizationObjects?page=0&size=250\",\"next\":\"https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/visualizationObjects?page=1&size=250\"}}",
+        "bodyFileName": "api_entities_workspaces_4dc4e033e611421791adea58d34d958c_metrics-ba88ef77-9690-4fff-8aa4-5305f4abbf91.json",
         "headers": {
             "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
             "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' matomo.anywhere.gooddata.com connectors.tableau.com gdc-dev-dashboard-plugins.s3.amazonaws.com; img-src 'self' data: blob: www.gooddata.com gdc-dev-dashboard-plugins.s3.amazonaws.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com gdc-dev-dashboard-plugins.s3.amazonaws.com; font-src 'self' data: fonts.gstatic.com at.alicdn.com gdc-dev-dashboard-plugins.s3.amazonaws.com; frame-src 'self'; object-src 'none'; worker-src 'self' blob:; child-src blob:; connect-src 'self' *.tiles.mapbox.com api.mapbox.com events.mapbox.com matomo.anywhere.gooddata.com *.okta.com;",
             "Content-Type": "application/vnd.gooddata.api+json",
-            "Date": "Thu, 17 Feb 2022 14:29:31 GMT",
+            "Date": "Thu, 14 Apr 2022 12:37:36 GMT",
             "Expires": "0",
             "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';",
             "Pragma": "no-cache",
@@ -30,11 +30,11 @@
             "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
             "X-Content-Type-Options": "nosniff",
             "X-Frame-Options": "DENY",
-            "X-GDC-TRACE-ID": "e16d9229ad0c2cdf",
+            "X-GDC-TRACE-ID": "1ff733cd780a23af",
             "X-XSS-Protection": "1; mode=block"
         }
     },
-    "uuid": "202294c6-754b-486e-ae53-d510494a9597",
+    "uuid": "ba88ef77-9690-4fff-8aa4-5305f4abbf91",
     "persistent": true,
-    "insertionIndex": 14
+    "insertionIndex": 11
 }

@@ -61,8 +61,11 @@ function createNonDateAttributes(attributes: JsonApiAttributeOutList): ICatalogA
     return nonDateAttributes.map((attribute) => {
         const allLabels = getAttributeLabels(attribute, attributes.included);
         const geoLabels = allLabels.filter(isGeoLabel);
-        // exactly one label is guaranteed to be primary
-        const defaultLabel = allLabels.filter((label) => label.attributes!.primary)[0];
+
+        const defaultView = attribute.relationships?.defaultView?.data;
+        const defaultViewLabel = defaultView && allLabels.find((label) => label.id === defaultView.id);
+        // use the defaultView if available, fall back to primary: exactly one label is guaranteed to be primary
+        const defaultLabel = defaultViewLabel ?? allLabels.filter((label) => label.attributes!.primary)[0];
 
         return convertAttribute(attribute, defaultLabel, geoLabels, allLabels);
     });
@@ -125,9 +128,10 @@ export async function loadAttributesAndDateDatasets(
     loadAttributes?: boolean,
     loadDateDatasets?: boolean,
 ): Promise<CatalogItem[]> {
-    const includeObjects = ["labels"];
+    type Include = Parameters<ITigerClient["entities"]["getAllEntitiesAttributes"]>[0]["include"];
+    const includeObjects: Include = ["labels", "defaultView"];
     if (loadDateDatasets) {
-        includeObjects.push("datasets");
+        includeObjects.push("dataset");
     }
     const params = addRsqlFilterToParams({ workspaceId }, rsqlFilter);
 

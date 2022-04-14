@@ -1,5 +1,5 @@
 {
-    "id": "dde3c90d-eea0-468a-9ee1-5bdca4261763",
+    "id": "0240a20c-005d-40d1-b920-97ff1fdde3e5",
     "name": "api_profile",
     "request": {
         "url": "/api/profile",
@@ -12,12 +12,12 @@
     },
     "response": {
         "status": 200,
-        "body": "{\"organizationId\":\"staging\",\"organizationName\":\"Anywhere Staging\",\"userId\":\"first.last\",\"telemetry\":{\"host\":\"https://matomo.anywhere.gooddata.com/matomo.php\",\"siteId\":2,\"deploymentId\":\"deploymentId\",\"organizationHash\":\"d9390b2c40115621a794999e812abc00bf9e5c7b\",\"userHash\":\"35fc7016022ae6140d4dbe0edfb2bc867267d793\"},\"links\":{\"self\":\"https://staging.anywhere.gooddata.com/api/profile\",\"organization\":\"https://staging.anywhere.gooddata.com/api/entities/admin/organizations/staging\",\"user\":\"https://staging.anywhere.gooddata.com/api/entities/users/first.last\"}}",
+        "body": "{\"organizationId\":\"staging\",\"organizationName\":\"Default Organization\",\"userId\":\"first.last\",\"telemetry\":{\"host\":\"https://matomo.anywhere.gooddata.com/matomo.php\",\"siteId\":2,\"deploymentId\":\"deploymentId\",\"organizationHash\":\"d9390b2c40115621a794999e812abc00bf9e5c7b\",\"userHash\":\"870cac2da9deb4afc53f353964438cf955a8d4d8\"},\"links\":{\"self\":\"https://staging.anywhere.gooddata.com/api/profile\",\"organization\":\"https://staging.anywhere.gooddata.com/api/entities/admin/organizations/staging\",\"user\":\"https://staging.anywhere.gooddata.com/api/entities/users/first.last\"}}",
         "headers": {
             "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
             "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' matomo.anywhere.gooddata.com connectors.tableau.com gdc-dev-dashboard-plugins.s3.amazonaws.com; img-src 'self' data: blob: www.gooddata.com gdc-dev-dashboard-plugins.s3.amazonaws.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com gdc-dev-dashboard-plugins.s3.amazonaws.com; font-src 'self' data: fonts.gstatic.com at.alicdn.com gdc-dev-dashboard-plugins.s3.amazonaws.com; frame-src 'self'; object-src 'none'; worker-src 'self' blob:; child-src blob:; connect-src 'self' *.tiles.mapbox.com api.mapbox.com events.mapbox.com matomo.anywhere.gooddata.com *.okta.com;",
             "Content-Type": "application/json",
-            "Date": "Thu, 17 Feb 2022 14:29:24 GMT",
+            "Date": "Thu, 14 Apr 2022 12:37:30 GMT",
             "Expires": "0",
             "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';",
             "Pragma": "no-cache",
@@ -31,11 +31,11 @@
                 "Access-Control-Request-Headers"
             ],
             "X-Content-Type-Options": "nosniff",
-            "X-GDC-TRACE-ID": "08f5ee71531713eb",
+            "X-GDC-TRACE-ID": "aae61472e107af6b",
             "X-XSS-Protection": "1 ; mode=block"
         }
     },
-    "uuid": "dde3c90d-eea0-468a-9ee1-5bdca4261763",
+    "uuid": "0240a20c-005d-40d1-b920-97ff1fdde3e5",
     "persistent": true,
     "insertionIndex": 2
 }

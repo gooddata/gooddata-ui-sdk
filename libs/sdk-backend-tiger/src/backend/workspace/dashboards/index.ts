@@ -2,6 +2,7 @@
 import {
     isDashboardPluginsItem,
     isVisualizationObjectsItem,
+    ITigerClient,
     JsonApiAnalyticalDashboardInTypeEnum,
     JsonApiAnalyticalDashboardOutDocument,
     JsonApiDashboardPluginInTypeEnum,
@@ -180,7 +181,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         ref: ObjRef,
         types: SupportedDashboardReferenceTypes[],
     ): Promise<JsonApiAnalyticalDashboardOutDocument> => {
-        const include = ["filterContexts"];
+        type Include = Parameters<ITigerClient["entities"]["getEntityAnalyticalDashboards"]>[0]["include"];
+        const include: Include = ["filterContexts"];
 
         if (includes(types, "insight")) {
             include.push("visualizationObjects");
