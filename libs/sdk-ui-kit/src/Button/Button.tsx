@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
@@ -48,7 +48,8 @@ export class Button extends React.Component<IButtonProps> {
 
     private getClassnames() {
         const { value } = this.props;
-        const generatedSeleniumClass = value ? `s-${stringUtils.simplifyText(value)}` : "";
+        const generatedSeleniumClass =
+            value && typeof value === "string" ? `s-${stringUtils.simplifyText(value)}` : "";
 
         return cx({
             [this.props.className]: !!this.props.className,

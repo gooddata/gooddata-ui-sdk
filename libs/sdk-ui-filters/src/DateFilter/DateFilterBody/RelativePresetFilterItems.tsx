@@ -2,12 +2,13 @@
 import React from "react";
 import kebabCase from "lodash/kebabCase";
 import cx from "classnames";
+import { DateFilterGranularity, IRelativeDateFilterPreset } from "@gooddata/sdk-model";
+
 import { ListItem } from "../ListItem/ListItem";
 import { ListHeading } from "../ListHeading/ListHeading";
 import { RelativePresetTitleTranslated } from "../RelativePresetTitleTranslated/RelativePresetTitleTranslated";
 import { DateFilterTextLocalized } from "../DateFilterTextLocalized/DateFilterTextLocalized";
 import { DateFilterRelativeOptionGroup, DateFilterOption } from "../interfaces";
-import { DateFilterGranularity, IRelativeDateFilterPreset } from "@gooddata/sdk-model";
 
 const granularityOrder: DateFilterGranularity[] = [
     "GDC.time.year",
@@ -19,13 +20,27 @@ const granularityOrder: DateFilterGranularity[] = [
     "GDC.time.minute",
 ];
 
-export const RelativePresetFilterItems: React.FC<{
+/**
+ * @internal
+ */
+export interface IRelativePresetFilterItemsProps {
     dateFormat: string;
     filterOption: DateFilterRelativeOptionGroup;
     selectedFilterOption: DateFilterOption;
     className?: string;
     onSelectedFilterOptionChange: (option: DateFilterOption) => void;
-}> = ({ dateFormat, filterOption, selectedFilterOption, onSelectedFilterOptionChange, className }) => {
+}
+
+/**
+ * @internal
+ */
+export const RelativePresetFilterItems: React.FC<IRelativePresetFilterItemsProps> = ({
+    dateFormat,
+    filterOption,
+    selectedFilterOption,
+    onSelectedFilterOptionChange,
+    className,
+}) => {
     const relativePresets = granularityOrder
         .filter((granularity) => {
             return Boolean(filterOption && filterOption[granularity] && filterOption[granularity].length > 0);
