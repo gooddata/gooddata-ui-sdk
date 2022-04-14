@@ -15,6 +15,8 @@ const selectSelf = createSelector(
  * It is expected that the selector is called only after the permission state is correctly initialized.
  * Invocations before initialization lead to invariant errors.
  *
+ * NOTE: The GoodData.CN backends returns only `name`, `userId`, `organization` and `links` properties.
+ *
  * @example - on how to use `selectCurrentUser` selector within a Dashboard Plugin.
  * ```
  * // create the component using current user selector
