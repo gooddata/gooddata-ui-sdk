@@ -30,7 +30,7 @@ import findIndex from "lodash/findIndex";
 /**
  * Methods to access result metadata - dimension descriptors and result headers.
  *
- * @public
+ * @internal
  */
 export interface IResultMetaMethods {
     /**

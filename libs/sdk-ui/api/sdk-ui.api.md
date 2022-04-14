@@ -17,6 +17,7 @@ import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeDescriptor } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
+import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { IColor } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
@@ -327,6 +328,18 @@ export class DataViewFacade {
     result(): IExecutionResult;
     // (undocumented)
     warnings(): IResultWarning[];
+}
+
+// @alpha
+export class DataViewLoader {
+    filterBy: (...filters: INullableFilter[]) => DataViewLoader;
+    static for(backend: IAnalyticalBackend, workspace: string): DataViewLoader;
+    loadAll: () => Promise<DataViewFacade>;
+    loadWindow: (dataWindow: DataViewWindow) => Promise<DataViewFacade>;
+    seriesFrom: (...measuresAndScopingAttributes: IAttributeOrMeasure[]) => DataViewLoader;
+    slicesFrom: (...attributes: IAttribute[]) => DataViewLoader;
+    sortBy: (...sorts: ISortItem[]) => DataViewLoader;
+    withTotals: (...totals: ITotal[]) => DataViewLoader;
 }
 
 // @public
@@ -949,7 +962,7 @@ export interface IExecutionConfiguration {
     totals?: TotalsOrPlaceholders;
 }
 
-// @public
+// @internal
 export interface IExecutionDefinitionMethods {
     // (undocumented)
     attributes(): IAttribute[];
@@ -1150,7 +1163,7 @@ export interface IRawExecuteProps extends IWithLoadingEvents<IRawExecuteProps> {
     window?: DataViewWindow;
 }
 
-// @public
+// @internal
 export interface IResultDataMethods {
     // (undocumented)
     data(): DataValue[][] | DataValue[];
@@ -1167,7 +1180,7 @@ export interface IResultDataMethods {
     twoDimData(): DataValue[][];
 }
 
-// @public
+// @internal
 export interface IResultMetaMethods {
     // (undocumented)
     allHeaders(): IResultHeader[][][];

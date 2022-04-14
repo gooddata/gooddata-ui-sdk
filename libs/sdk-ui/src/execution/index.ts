@@ -26,3 +26,4 @@ export {
 } from "./useInsightDataView";
 export { ExecuteInsight, IExecuteInsightProps } from "./ExecuteInsight";
 export { IExecuteErrorComponent, IExecuteErrorComponentProps, IExecuteLoadingComponent } from "./interfaces";
+export { DataViewLoader } from "./DataViewLoader";
