@@ -128,7 +128,8 @@ export async function loadAttributesAndDateDatasets(
     loadAttributes?: boolean,
     loadDateDatasets?: boolean,
 ): Promise<CatalogItem[]> {
-    const includeObjects = ["labels", "defaultView"];
+    type Include = Parameters<ITigerClient["entities"]["getAllEntitiesAttributes"]>[0]["include"];
+    const includeObjects: Include = ["labels", "defaultView"];
     if (loadDateDatasets) {
         includeObjects.push("dataset");
     }
