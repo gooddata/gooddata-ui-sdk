@@ -626,7 +626,10 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
             setDailyRepeat(newRepeat);
         }
 
-        this.setState({ repeat: newRepeat });
+        this.setState({
+            startDate: selectedDateObject,
+            repeat: newRepeat,
+        });
     };
 
     private onTimeChange = (time: IScheduleEmailRepeatTime): void => {

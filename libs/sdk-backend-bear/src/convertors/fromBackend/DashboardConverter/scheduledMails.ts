@@ -1,6 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
 import { GdcScheduledMail } from "@gooddata/api-model-bear";
-import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
     IUser,
     uriRef,
@@ -8,10 +7,11 @@ import {
     IScheduledMailDefinition,
     ScheduledMailAttachment,
 } from "@gooddata/sdk-model";
+import compact from "lodash/compact";
 
 export const convertScheduledMailAttachment = (
     scheduledMailAttachment: GdcScheduledMail.ScheduledMailAttachment,
-): ScheduledMailAttachment => {
+): ScheduledMailAttachment | undefined => {
     if (GdcScheduledMail.isKpiDashboardAttachment(scheduledMailAttachment)) {
         const {
             kpiDashboardAttachment: { format, uri, filterContext },
@@ -42,9 +42,7 @@ export const convertScheduledMailAttachment = (
             ...convertedExportOptions,
         };
     } else {
-        throw new NotSupported(
-            "Cannot convert attachment - only dashboard and widget attachments are currently supported.",
-        );
+        return undefined;
     }
 };
 
@@ -58,6 +56,8 @@ export const convertScheduledMail = (
             meta: { uri, identifier, title, summary, unlisted, author, contributor },
         },
     } = scheduledMail;
+
+    const convertedAttachments = compact(attachments.map(convertScheduledMailAttachment));
 
     return {
         title,
@@ -81,7 +81,7 @@ export const convertScheduledMail = (
         bcc,
         lastSuccessful: lastSuccessfull,
         unsubscribed,
-        attachments: attachments.map(convertScheduledMailAttachment),
+        attachments: convertedAttachments,
         unlisted: !!unlisted,
         createdBy: author ? userMap?.get(author) : undefined,
         updatedBy: contributor ? userMap?.get(contributor) : undefined,
