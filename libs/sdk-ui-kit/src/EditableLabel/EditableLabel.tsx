@@ -264,7 +264,7 @@ export class EditableLabelInner extends Component<IEditableLabelInnerProps, IEdi
 
         return (
             <div ref={this.props.innerRef} className={editableLabelClasses} onClick={this.edit}>
-                <div ref={this.root}>
+                <div className="gd-editable-label-inner" ref={this.root}>
                     {this.state.isEditing ? this.renderEditableLabelEdit() : displayValue}
                 </div>
             </div>

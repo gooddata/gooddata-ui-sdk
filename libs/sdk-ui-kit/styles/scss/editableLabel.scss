@@ -72,6 +72,14 @@ $editable-label-border: #b1c1d1;
     }
 }
 
+.gd-editable-label-inner {
+    width: 100%;
+    height: 100%;
+    line-height: inherit;
+    vertical-align: inherit;
+    min-width: 5em;
+}
+
 .gd-editable-label-overlay {
     textarea {
         @extend %textarea-base;
