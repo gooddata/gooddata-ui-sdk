@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import set from "lodash/set";
 import uniq from "lodash/uniq";
 import uniqBy from "lodash/uniqBy";
@@ -56,7 +56,7 @@ export function isDateFilter(filter: IBucketFilter): filter is IDateFilter {
 }
 
 export function isFiltersBucketItem(filter: IFiltersBucketItem): filter is IFiltersBucketItem {
-    return !!filter && filter.attribute === DATE_DATASET_ATTRIBUTE;
+    return filter?.attribute === DATE_DATASET_ATTRIBUTE;
 }
 
 export function isAttributeFilter(filter: IBucketFilter): filter is IAttributeFilter {
@@ -262,7 +262,7 @@ export function filterOutIncompatibleArithmeticMeasures(
 }
 
 export function isDateBucketItem(bucketItem: IBucketItem): boolean {
-    return !!bucketItem && bucketItem.type === DATE;
+    return bucketItem?.type === DATE;
 }
 
 export const isNotDateBucketItem = negate(isDateBucketItem);

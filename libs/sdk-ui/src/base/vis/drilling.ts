@@ -117,7 +117,7 @@ export function fireDrillEvent(
     drillEventData: IDrillEvent,
     target: EventTarget,
 ): void {
-    const shouldDispatchPostMessage = drillEventFunction && drillEventFunction(drillEventData);
+    const shouldDispatchPostMessage = drillEventFunction?.(drillEventData);
 
     if (shouldDispatchPostMessage !== false) {
         target.dispatchEvent(

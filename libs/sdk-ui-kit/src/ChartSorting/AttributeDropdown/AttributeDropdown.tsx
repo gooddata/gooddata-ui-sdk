@@ -83,10 +83,7 @@ const getSortTypeItems = (
             },
         );
     }
-    if (
-        available.attributeSort.areaSortEnabled ||
-        (available.metricSorts && available.metricSorts.length > 0)
-    ) {
+    if (available.attributeSort.areaSortEnabled || available.metricSorts?.length > 0) {
         sortTypeItems.push(
             {
                 id: SORT_TARGET_TYPE.NUMERICAL_ASC,
@@ -133,10 +130,10 @@ const getSelectedItemId = (currentItem: ISortItem, bucketItems: IBucketItemDescr
         if (isAttributeAreaSort(currentItem)) {
             return getNumericSortTargetType(currentItem);
         }
-        if (bucketItem && bucketItem.type === "chronologicalDate") {
+        if (bucketItem?.type === "chronologicalDate") {
             return getDateSortTargetType(currentItem);
         }
-        if (bucketItem && bucketItem.type === "genericDate") {
+        if (bucketItem?.type === "genericDate") {
             return SORT_TARGET_TYPE.DEFAULT;
         }
         return getAlphabeticalSortTargetType(currentItem);
@@ -176,8 +173,8 @@ export const AttributeDropdown: React.FC<AttributeDropdownProps> = ({
     const buttonRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        if (buttonRef && buttonRef.current) {
-            setWidth(buttonRef?.current.getBoundingClientRect().width);
+        if (buttonRef?.current) {
+            setWidth(buttonRef.current.getBoundingClientRect().width);
         }
     }, []);
 

@@ -62,7 +62,7 @@ const granularityOffsetLimits: { [key in DateFilterGranularity]: number } = {
 
 const offsetMaxValue = 99_999;
 
-const getTrimmedInput = (input: string) => input && input.trim();
+const getTrimmedInput = (input: string) => input?.trim();
 
 const isOffsetReasonablyBig = (offset: number) => Math.abs(offset) <= offsetMaxValue;
 

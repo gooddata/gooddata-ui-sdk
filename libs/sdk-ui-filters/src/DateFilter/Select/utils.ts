@@ -1,8 +1,8 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { ISelectItem, ISelectItemOption } from "./types";
 
 export const itemToString = <V>(item: ISelectItem<V>): string => {
-    if (item && item.type === "option" && item.label) {
+    if (item?.type === "option" && item.label) {
         return item.label;
     }
     return "";

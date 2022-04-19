@@ -109,7 +109,7 @@ async function run() {
             logError(`${err.message}`);
             process.exit(err.rc);
         } else {
-            if (err.code && err.code === "ENOENT") {
+            if (err.code === "ENOENT") {
                 logError(`${err.code} Could not create file`);
             } else {
                 logError(`${err.name}: ${err.message}`);

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 
 import { program } from "commander";
 import ora from "ora";
@@ -68,7 +68,7 @@ async function promptForMissingConfig(config: DataRecorderConfig): Promise<DataR
         clearLine();
         logError(`Unable to log in to platform. The error was: ${err}`);
 
-        if (err.message && err.message.search(/.*(certificate|self-signed).*/) > -1) {
+        if (err.message?.search(/.*(certificate|self-signed).*/) > -1) {
             logError(
                 "It seems that this error is due to invalid certificates used on the server. " +
                     "If you trust the server, you can use the --accept-untrusted-ssl option " +

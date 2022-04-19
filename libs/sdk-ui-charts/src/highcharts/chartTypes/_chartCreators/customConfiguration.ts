@@ -89,7 +89,7 @@ const TOOLTIP_FULLSCREEN_THRESHOLD = 480;
 export const TOOLTIP_PADDING = 24; // padding of tooltip container - defined by CSS
 export const TOOLTIP_VIEWPORT_MARGIN_TOP = 20;
 
-const escapeAngleBrackets = (str: any) => str && str.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const escapeAngleBrackets = (str: any) => str?.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 function getAxisTitleConfiguration<T extends XAxisOptions | YAxisOptions>(axis: IAxis): T {
     return (

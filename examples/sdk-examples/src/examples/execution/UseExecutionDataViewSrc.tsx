@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { useState } from "react";
 import { LoadingComponent, ErrorComponent, useExecutionDataView } from "@gooddata/sdk-ui";
 import { newMeasure } from "@gooddata/sdk-model";
@@ -78,9 +78,7 @@ const UseExecutionDataViewExample: React.FC = () => {
                         `}
                     </style>
                     {retryButton}
-                    <p className="kpi s-execute-kpi">
-                        {measureSeries && measureSeries.dataPoints()[0].formattedValue()}
-                    </p>
+                    <p className="kpi s-execute-kpi">{measureSeries?.dataPoints()[0].formattedValue()}</p>
                 </div>
             )}
         </div>

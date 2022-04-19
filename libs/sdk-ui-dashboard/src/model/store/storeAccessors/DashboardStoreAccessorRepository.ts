@@ -150,6 +150,6 @@ export class DashboardStoreAccessorRepository {
     static isAccessorInitializedForDashboard(dashboard: ObjRef | string): boolean {
         const serializedDashboardRef = this.getSerializedDashboardRef(dashboard);
         const accessor = DashboardStoreAccessorRepository.accessors.get(serializedDashboardRef);
-        return !!accessor && accessor.isDashboardStoreAccessorInitialized();
+        return !!accessor?.isDashboardStoreAccessorInitialized();
     }
 }

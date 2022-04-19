@@ -271,7 +271,7 @@ export function createCachedQueryService<TQuery extends IDashboardQuery, TResult
             queryCache.selectById(cacheKey),
         );
 
-        if (cachedResult && cachedResult.result && !refresh) {
+        if (cachedResult?.result && !refresh) {
             return cachedResult.result;
         }
 

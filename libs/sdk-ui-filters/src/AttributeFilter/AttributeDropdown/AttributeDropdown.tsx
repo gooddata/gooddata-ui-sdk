@@ -367,7 +367,7 @@ export class AttributeDropdownCore extends React.PureComponent<
         const { selectedItems, isInverted, error, isLoading, validElements, searchString } = this.state;
 
         const shouldDisableApplyButton = error || isLoading || (validElements && !validElements.items.length);
-        const hasTriedToLoadData = validElements && validElements.items;
+        const hasTriedToLoadData = validElements?.items;
 
         const isAllFiltered = showAllFilteredMessage(
             this.state.isLoading,

@@ -26,7 +26,7 @@ export const repeatItemsNTimes = <T>(array: T[], n: number): T[] =>
     new Array(n).fill(null).reduce((result) => [...result, ...array], []);
 
 export const unEscapeAngleBrackets = (str: string): string =>
-    str && str.replace(/&lt;|&#60;/g, "<").replace(/&gt;|&#62;/g, ">");
+    str?.replace(/&lt;|&#60;/g, "<").replace(/&gt;|&#62;/g, ">");
 
 export function isRotationInRange(rotation: number, min: number, max: number): boolean {
     return rotation >= min && rotation <= max;
@@ -129,7 +129,7 @@ export function formatLegendLabel(
     diff: number,
     numericSymbols: string[],
 ): string {
-    if (format && format.includes("%")) {
+    if (format?.includes("%")) {
         return numberFormat(value, "#,#0%");
     }
 

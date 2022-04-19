@@ -34,12 +34,11 @@ export const convertListedDashboard = (
     availability: ListedDashboardAvailability,
     userMap?: Map<string, IUser>,
 ): IListedDashboard => {
-    const isUnderStrictControlProp =
-        dashboardLink.flags && dashboardLink.flags.findIndex((flag) => flag === "strictAccessControl") !== -1
-            ? {
-                  isUnderStrictControl: true,
-              }
-            : {};
+    const isUnderStrictControlProp = dashboardLink.flags?.some((flag) => flag === "strictAccessControl")
+        ? {
+              isUnderStrictControl: true,
+          }
+        : {};
     return {
         ref: uriRef(dashboardLink.link),
         identifier: dashboardLink.identifier!,
@@ -143,12 +142,11 @@ export const convertDashboard = (
         exportFilterContextUri ? dep.uri === exportFilterContextUri : dep.uri === filterContext,
     ) as IFilterContext | ITempFilterContext | undefined;
 
-    const isUnderStrictControlProp =
-        flags && flags.findIndex((flag) => flag === "strictAccessControl") !== -1
-            ? {
-                  isUnderStrictControl: true,
-              }
-            : {};
+    const isUnderStrictControlProp = flags?.some((flag) => flag === "strictAccessControl")
+        ? {
+              isUnderStrictControl: true,
+          }
+        : {};
 
     return {
         type: "IDashboard",

@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import Downshift, { ControllerStateAndHelpers } from "downshift";
 import cx from "classnames";
@@ -208,7 +208,7 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
     ): void => {
         const { customValueValidator } = this.props;
         const currentValue = (event.target as HTMLInputElement).value;
-        if (customValueValidator && customValueValidator(currentValue)) {
+        if (customValueValidator?.(currentValue)) {
             selectItem({
                 type: "option",
                 value: Number(currentValue),

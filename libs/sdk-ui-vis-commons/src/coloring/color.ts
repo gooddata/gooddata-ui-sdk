@@ -156,7 +156,7 @@ export function getColorFromMapping(
     }
 
     const mapping = colorMapping.find((item) => item.predicate(mappingHeader, { dv }));
-    return mapping && mapping.color;
+    return mapping?.color;
 }
 
 /**

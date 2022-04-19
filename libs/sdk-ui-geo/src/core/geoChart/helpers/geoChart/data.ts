@@ -239,7 +239,7 @@ export function getAvailableLegends(
     const { min: minColor, max: maxColor } = getMinMax(colorData);
     const { min: minSize, max: maxSize } = getMinMax(sizeData);
 
-    const hasCategoryLegend = Boolean(categoryItems && categoryItems.length);
+    const hasCategoryLegend = Boolean(categoryItems?.length);
     const hasColorLegend = Boolean(colorData.length) && minColor !== maxColor && !hasCategoryLegend;
     const hasSizeLegend = Boolean(sizeData.length) && minSize !== maxSize;
 
@@ -295,21 +295,19 @@ export function findGeoAttributesInDimension(
         items: attributeResultHeaderItems[locationIndex],
     };
 
-    const segmentByAttribute: AttributeInfo | undefined =
-        segment && segment.data.length
-            ? {
-                  ...attributeDescriptors[segment.index].attributeHeader,
-                  items: attributeResultHeaderItems[segment.index],
-              }
-            : undefined;
+    const segmentByAttribute: AttributeInfo | undefined = segment?.data.length
+        ? {
+              ...attributeDescriptors[segment.index].attributeHeader,
+              items: attributeResultHeaderItems[segment.index],
+          }
+        : undefined;
 
-    const tooltipTextAttribute: AttributeInfo | undefined =
-        tooltipText && tooltipText.data.length
-            ? {
-                  ...attributeDescriptors[tooltipText.index].attributeHeader,
-                  items: attributeResultHeaderItems[tooltipText.index],
-              }
-            : undefined;
+    const tooltipTextAttribute: AttributeInfo | undefined = tooltipText?.data.length
+        ? {
+              ...attributeDescriptors[tooltipText.index].attributeHeader,
+              items: attributeResultHeaderItems[tooltipText.index],
+          }
+        : undefined;
 
     return {
         locationAttribute,

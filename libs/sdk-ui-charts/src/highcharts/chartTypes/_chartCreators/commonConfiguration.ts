@@ -91,7 +91,7 @@ function getThemedConfiguration(theme: ITheme): any {
                 events: {
                     legendItemClick() {
                         if (this.visible) {
-                            this.points.forEach((point: any) => point.dataLabel && point.dataLabel.hide());
+                            this.points.forEach((point: any) => point.dataLabel?.hide());
                         }
                     },
                 },

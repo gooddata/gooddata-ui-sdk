@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import {
     ColorStrategy,
     ICreateColorAssignmentReturnValue,
@@ -41,7 +41,7 @@ export class HeatmapColorStrategy extends ColorStrategy {
         let mappedColor;
         let colorAssignment: IColorAssignment[];
         const measureGroup = findMeasureGroupInDimensions(dv.meta().dimensions());
-        const headerItem = measureGroup && measureGroup.items[0];
+        const headerItem = measureGroup?.items[0];
         if (colorMapping) {
             mappedColor = getColorFromMapping(headerItem, colorMapping, dv);
             if (mappedColor) {

@@ -77,7 +77,7 @@ export const convertDateFilterConfig = (
         allTime: allTime && convertAllTime(allTime),
         absoluteForm: absoluteForm && convertAbsoluteForm(absoluteForm),
         relativeForm: relativeForm && convertRelativeForm(relativeForm),
-        absolutePresets: absolutePresets && absolutePresets.map(convertAbsolutePreset),
-        relativePresets: relativePresets && relativePresets.map(convertRelativePreset),
+        absolutePresets: absolutePresets?.map(convertAbsolutePreset),
+        relativePresets: relativePresets?.map(convertRelativePreset),
     };
 };

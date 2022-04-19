@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import flatten from "lodash/flatten";
 import pick from "lodash/pick";
 import map from "lodash/map";
@@ -54,10 +54,10 @@ export const isIntersecting = (r1: IRectBySize, r2: IRectBySize): boolean =>
 export const toNeighbors = (array: any[]): any[] => zip(initial(array), tail(array));
 
 export const getVisibleSeries = (chart: Highcharts.Chart): Highcharts.Series[] =>
-    chart.series && chart.series.filter((s: Highcharts.Series) => s.visible);
+    chart.series?.filter((s: Highcharts.Series) => s.visible);
 
 export const getHiddenSeries = (chart: Highcharts.Chart): Highcharts.Series[] =>
-    chart.series && chart.series.filter((s: Highcharts.Series) => !s.visible);
+    chart.series?.filter((s: Highcharts.Series) => !s.visible);
 
 export const getDataPoints = (series: Highcharts.Series[]): Highcharts.Point[] =>
     compact(flatten(unzip(map(series, (s: Highcharts.Series) => s.points))));
@@ -248,12 +248,12 @@ function getDataExtremeDataValues(chartOptions: IChartOptions) {
 }
 
 function getSerieMaxDataValue(serieData: ISeriesDataItem[]): number {
-    const max = maxBy(serieData, (item: ISeriesDataItem) => (item && item.y ? item.y : null));
+    const max = maxBy(serieData, (item: ISeriesDataItem) => (item?.y ? item.y : null));
     return max ? max.y : Number.MIN_SAFE_INTEGER;
 }
 
 function getSerieMinDataValue(serieData: ISeriesDataItem[]): number {
-    const min = minBy(serieData, (item: ISeriesDataItem) => (item && item.y ? item.y : null));
+    const min = minBy(serieData, (item: ISeriesDataItem) => (item?.y ? item.y : null));
     return min ? min.y : Number.MAX_SAFE_INTEGER;
 }
 

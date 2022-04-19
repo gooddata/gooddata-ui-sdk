@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import noop from "lodash/noop";
@@ -57,7 +57,7 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
                     {displayCloseButton && this.renderCloseButton()}
 
                     <div className="gd-dialog-header-wrapper">
-                        {headerLeftButtonRenderer && headerLeftButtonRenderer()}
+                        {headerLeftButtonRenderer?.()}
                         <div className="gd-dialog-header">
                             <h3>{headline}</h3>
                         </div>

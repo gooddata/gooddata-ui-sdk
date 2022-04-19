@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import Measure, { Rect } from "react-measure";
 import cx from "classnames";
@@ -95,10 +95,7 @@ export class Legend extends React.PureComponent<ILegendProps> {
         return (
             <Measure client={true}>
                 {({ measureRef, contentRect }: any) => {
-                    const usedWidth =
-                        contentRect.client && contentRect.client.width
-                            ? Math.floor(contentRect.client.width)
-                            : 0;
+                    const usedWidth = contentRect.client?.width ? Math.floor(contentRect.client.width) : 0;
                     return (
                         <div className="viz-fluid-legend-wrap" ref={measureRef}>
                             <FluidLegend
@@ -135,10 +132,9 @@ export class Legend extends React.PureComponent<ILegendProps> {
         return (
             <Measure client={true}>
                 {({ measureRef, contentRect }: any) => {
-                    const measuredHeight =
-                        contentRect.client && contentRect.client.height
-                            ? Math.floor(contentRect.client.height)
-                            : 0;
+                    const measuredHeight = contentRect.client?.height
+                        ? Math.floor(contentRect.client.height)
+                        : 0;
                     const usedHeight = height || measuredHeight;
 
                     if (!isEmpty(contentRect.client)) {

@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { Component } from "react";
 import { Table, Column, Cell } from "fixed-data-table-2";
 import cx from "classnames";
@@ -82,7 +82,7 @@ export class LegacyList extends Component<ILegacyListProps, ILegacyListState> {
         if (scrollToSelected) {
             [...Array(dataSource.rowsCount).keys()].forEach((row) => {
                 const item = this.props.dataSource.getObjectAt(row);
-                if (item && item.selected) {
+                if (item?.selected) {
                     // Because list items start from 0 we need to add the +1 here
                     this.setState({ selected: row + 1 });
                 }

@@ -125,14 +125,13 @@ export function getDrillsBySourceLocalIdentifiers(
 }
 
 export function getLocalIdentifiersFromEvent(drillEvent: IDrillEvent): string[] {
-    const drillIntersection =
-        (drillEvent && drillEvent.drillContext && drillEvent.drillContext.intersection) || [];
+    const drillIntersection = drillEvent?.drillContext?.intersection || [];
     return drillIntersection.map((x) => x.header).map(getMappingHeaderLocalIdentifier);
 }
 
 const getMeasureLocalIdentifier = (drillEvent: IDrillEvent): string =>
     first(
-        ((drillEvent && drillEvent.drillContext.intersection) || [])
+        (drillEvent?.drillContext?.intersection || [])
             .map((intersection) => intersection.header)
             .filter(isMeasureDescriptor)
             .map(getMappingHeaderLocalIdentifier),

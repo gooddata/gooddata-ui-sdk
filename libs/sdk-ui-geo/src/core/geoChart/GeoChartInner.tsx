@@ -165,7 +165,7 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
                     const { client: contentRectClient } = contentRect;
                     return this.renderVisualizationContent(
                         measureRef,
-                        (contentRectClient && contentRectClient.height) ?? 0,
+                        contentRectClient?.height ?? 0,
                         contentRect,
                     );
                 }}

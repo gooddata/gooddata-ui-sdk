@@ -117,7 +117,7 @@ export default class BaseChartConfigurationPanel<
 
     protected getBaseChartAxisSection(axes: IAxisProperties[]): React.ReactNode {
         const { featureFlags, type, properties, propertiesMeta, pushData, insight } = this.props;
-        const controls = properties && properties.controls;
+        const controls = properties?.controls;
         const controlsDisabled = this.isControlDisabled();
         const isViewedBy = this.isViewedBy();
         const itemsOnAxes = countItemsOnAxes(type, controls, insight);

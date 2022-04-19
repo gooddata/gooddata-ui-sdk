@@ -44,7 +44,7 @@ export function getCategoriesForTwoAttributes(
             const value = children[index]?.attributeHeaderItem?.name ?? "";
 
             const existingEntry = result[uri];
-            const childCategories = existingEntry && existingEntry.categories ? existingEntry.categories : [];
+            const childCategories = existingEntry?.categories ?? [];
 
             if (!childCategories.length) {
                 keys.push(uri);

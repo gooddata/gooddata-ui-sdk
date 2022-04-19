@@ -590,7 +590,7 @@ export function formatLegendLabel(
     diff: number,
     numericSymbols: string[],
 ): string {
-    if (format && format.includes("%")) {
+    if (format?.includes("%")) {
         return numberFormat(value, "#,#0%");
     }
 

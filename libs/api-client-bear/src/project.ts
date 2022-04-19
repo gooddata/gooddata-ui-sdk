@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { getAllPagesByOffsetLimit, getQueryEntries, handlePolling, parseSettingItemValue } from "./util";
 import { IColor, IColorPalette, IFeatureFlags, ITimezone } from "./interfaces";
 import { IFeatureFlagsResponse, IStyleSettingsResponse } from "./apiResponsesInterfaces";
@@ -195,7 +195,7 @@ export class ProjectModule {
                 return apiResponse.getData();
             })
             .then((result: IStyleSettingsResponse) => {
-                if (result && result.styleSettings) {
+                if (result?.styleSettings) {
                     return result.styleSettings.chartPalette;
                 } else {
                     return undefined;
@@ -345,7 +345,7 @@ export class ProjectModule {
                 return apiResponse.getData();
             })
             .then((result: IFeatureFlagsResponse) => {
-                if (result && result.featureFlags) {
+                if (result?.featureFlags) {
                     return result.featureFlags;
                 }
                 return {};
@@ -365,7 +365,7 @@ export class ProjectModule {
                 return apiResponse.getData();
             })
             .then((result: IProjectConfigResponse) => {
-                if (result && result.settings && result.settings.items) {
+                if (result?.settings?.items) {
                     return result.settings.items;
                 }
                 return [];

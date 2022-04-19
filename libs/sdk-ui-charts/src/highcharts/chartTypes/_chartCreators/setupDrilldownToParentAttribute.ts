@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import partial from "lodash/partial";
 import Highcharts from "../../lib";
 import { styleVariables } from "./styles/variables";
@@ -48,7 +48,7 @@ function setParentTickDrillable(
             .on("click", () => {
                 tickLabelClick(drillConfig, ddPoints, target, chartType);
             });
-    } else if (label && label.basicStyles) {
+    } else if (label?.basicStyles) {
         label.styles = {}; // reset for full overwrite of styles
         label.css(label.basicStyles);
         label.on("click", null);
@@ -56,7 +56,7 @@ function setParentTickDrillable(
 }
 
 export function setupDrilldown(chart: Highcharts.Chart, chartType: ChartType): void {
-    const xAxes: any[] = (chart && chart.xAxis) || [];
+    const xAxes: any[] = chart?.xAxis || [];
     const axis = xAxes[0];
     if (!axis) {
         return;

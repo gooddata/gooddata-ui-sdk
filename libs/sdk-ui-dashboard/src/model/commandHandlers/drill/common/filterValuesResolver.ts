@@ -104,7 +104,7 @@ async function resolveRelativeDateFilterValues(
             const foundDayAttribute = dateDataSetAttributes.find(
                 (dateDataSetAttr) => dateDataSetAttr.granularity === "GDC.time.date",
             );
-            foundDayDisplayForm = foundDayAttribute && foundDayAttribute.defaultDisplayForm;
+            foundDayDisplayForm = foundDayAttribute?.defaultDisplayForm;
         }
     }
 

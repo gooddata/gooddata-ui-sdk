@@ -257,7 +257,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
 
         if (this.visualization && newReferencePoint && onExtendedReferencePointChanged) {
             this.visualization
-                .getExtendedReferencePoint(newReferencePoint, currentProps && currentProps.referencePoint)
+                .getExtendedReferencePoint(newReferencePoint, currentProps?.referencePoint)
                 .then(async (extendedReferencePoint) => {
                     const sortConfig = await this.visualization.getSortConfig(extendedReferencePoint);
                     // new sort config needs to be sent together with new reference point to avoid double executions with old invalid sort until new one arrives by its own handler
@@ -274,7 +274,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         // Some of the properties eg. stacking of measures, dual axes influence sorting
         if (this.visualization && newReferencePoint && onSortingChanged) {
             this.visualization
-                .getExtendedReferencePoint(newReferencePoint, currentProps && currentProps.referencePoint)
+                .getExtendedReferencePoint(newReferencePoint, currentProps?.referencePoint)
                 .then((extendedRefPoint) => {
                     this.visualization.getSortConfig(extendedRefPoint).then(onSortingChanged);
                 });

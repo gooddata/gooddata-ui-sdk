@@ -72,7 +72,7 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
                 return results.filter((workspace) => {
                     const { title } = workspace;
 
-                    return title && title.toLowerCase().indexOf(lowercaseSearch) > -1;
+                    return title?.toLowerCase().indexOf(lowercaseSearch) > -1;
                 });
             }
             return results;

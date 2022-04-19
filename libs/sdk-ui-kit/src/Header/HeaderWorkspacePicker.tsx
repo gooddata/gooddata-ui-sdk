@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { injectIntl, IntlShape } from "react-intl";
 import cx from "classnames";
@@ -93,7 +93,7 @@ export const CoreHeaderWorkspacePicker: React.FC<IHeaderWorkspacePickerProps> = 
             }}
             renderButton={({ isOpen, toggleDropdown }) => (
                 <HeaderWorkspacePickerButton
-                    title={selectedWorkspace && selectedWorkspace.title}
+                    title={selectedWorkspace?.title}
                     isOpen={isOpen}
                     onClick={toggleDropdown}
                 />

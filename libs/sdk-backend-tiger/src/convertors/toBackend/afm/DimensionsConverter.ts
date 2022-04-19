@@ -70,7 +70,7 @@ function convertAttributeSortType(sortItem: ISortItem): SortType {
 function extractItemValueFromElement(elementUri: string): string {
     const parsedUri = elementUri.match(/obj\/([^/]*)(\/elements\?id=)?(.*)?$/);
 
-    if (parsedUri && parsedUri[3]) {
+    if (parsedUri?.[3]) {
         return parsedUri[3];
     }
 

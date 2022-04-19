@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { ColDef, ValueFormatterParams } from "@ag-grid-community/all-modules";
 import { TableFacade } from "../tableFacade";
 import { ICorePivotTableProps } from "../../publicTypes";
@@ -20,8 +20,7 @@ export function rowAttributeTemplate(table: TableFacade, props: Readonly<ICorePi
         colSpan: (params) => {
             if (
                 // params.data is undefined when rows are in loading state
-                params.data &&
-                params.data.colSpan &&
+                params.data?.colSpan &&
                 AVAILABLE_TOTALS.find((item: string) => item === params.data[params.data.colSpan.headerKey])
             ) {
                 return params.data.colSpan.count;

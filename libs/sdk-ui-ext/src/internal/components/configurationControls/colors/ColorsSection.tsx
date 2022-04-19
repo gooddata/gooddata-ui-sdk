@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import set from "lodash/set";
 import cloneDeep from "lodash/cloneDeep";
@@ -88,7 +88,7 @@ class ColorsSection extends React.Component<IColorsSectionProps & WrappedCompone
         const { colors, showCustomPicker, controlsDisabled, isLoading } = this.props;
 
         const inputItems = getColoredInputItems(colors);
-        const colorPalette = colors && colors.colorPalette ? colors.colorPalette : [];
+        const colorPalette = colors?.colorPalette ? colors.colorPalette : [];
 
         return (
             <div>

@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import {
     ICustomGridOptions,
     TableAgGridCallbacks,
@@ -53,7 +53,7 @@ export function createGridOptions(
      * extra buffer of couple of rows in case it is possible add subtotals. while there will be some expanding
      * and shrinking, it will not be so big.
      */
-    const extraTotalsBuffer = props.config && props.config.menu ? 10 : 0;
+    const extraTotalsBuffer = props.config?.menu ? 10 : 0;
     const effectivePageSize = Math.min(pageSize!, totalRowCount + extraTotalsBuffer);
 
     const commonHeaderComponentParams: ICommonHeaderParams = {

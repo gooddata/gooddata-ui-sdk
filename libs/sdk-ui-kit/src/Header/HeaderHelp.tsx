@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React, { useState } from "react";
 import { FormattedMessage, injectIntl, IntlShape } from "react-intl";
 import cx from "classnames";
@@ -61,7 +61,7 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
     });
 
     const toggleHelpMenu = (isMenuOpen = !isOpen) => {
-        onHelpClicked && onHelpClicked(isMenuOpen);
+        onHelpClicked?.(isMenuOpen);
         setIsOpen(isMenuOpen);
     };
 

@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import xor from "lodash/xor";
 import { PlaceholdersProvider, newPlaceholder } from "@gooddata/sdk-ui";
@@ -41,7 +41,7 @@ const MeasuresSelect: React.FC = () => {
             <h3>Select measures:</h3>
             {allMeasures.map((measure) => {
                 const id = measureIdentifier(measure);
-                const isActive = measures && measures.some((m) => id === measureIdentifier(m));
+                const isActive = measures?.some((m) => id === measureIdentifier(m));
                 return (
                     <button
                         key={id}

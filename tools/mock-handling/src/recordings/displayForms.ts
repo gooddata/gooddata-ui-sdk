@@ -121,7 +121,7 @@ export class DisplayFormRecording implements IRecording {
          * - last page of data reached
          *
          */
-        while ((!elementCount || elementCount > result.length) && page.items && page.items.length > 0) {
+        while ((!elementCount || elementCount > result.length) && page.items?.length > 0) {
             result.push(...page.items);
 
             page = await page.next();

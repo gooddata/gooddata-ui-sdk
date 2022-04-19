@@ -21,7 +21,7 @@ export function getDateFilterOptionGranularity(dateFilterOption: DateFilterOptio
 }
 
 function isDateFilterOptionVisible(option: IDateFilterOption) {
-    return option && option.visible;
+    return option?.visible;
 }
 
 function pickDateFilterOptionIfVisible<T extends IDateFilterOption>(option: T) {

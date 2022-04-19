@@ -195,7 +195,7 @@ class ResultMetaMethods implements IResultMetaMethods {
     public dimensionItemDescriptors(dimIdx: number): IDimensionItemDescriptor[] {
         const dim = this.dataView.result.dimensions[dimIdx];
 
-        return dim && dim.headers ? dim.headers : [];
+        return dim?.headers ? dim.headers : [];
     }
 
     public attributeDescriptors(): IAttributeDescriptor[] {

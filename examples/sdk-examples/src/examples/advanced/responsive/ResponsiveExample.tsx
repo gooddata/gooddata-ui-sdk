@@ -40,10 +40,9 @@ export const ResponsiveExample: React.FC = () => {
             <div style={{ width, height }} className="s-resizable-vis">
                 <Measure client>
                     {({ measureRef, contentRect }) => {
-                        const usedHeight =
-                            contentRect.client && contentRect.client.height
-                                ? Math.floor(contentRect.client.height)
-                                : 0;
+                        const usedHeight = contentRect.client?.height
+                            ? Math.floor(contentRect.client.height)
+                            : 0;
                         return (
                             <div style={{ width: "100%", height: "100%" }} ref={measureRef}>
                                 <BarChart

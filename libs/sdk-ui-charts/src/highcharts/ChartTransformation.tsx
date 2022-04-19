@@ -139,7 +139,7 @@ const ChartTransformationImpl = (props: IChartTransformationProps) => {
         );
     }
 
-    if (numericSymbols && numericSymbols.length) {
+    if (numericSymbols?.length) {
         Highcharts.setOptions({
             lang: {
                 numericSymbols,

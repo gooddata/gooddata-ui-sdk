@@ -67,7 +67,7 @@ export class BubbleTrigger<P extends IBubbleTriggerProps> extends React.PureComp
 
         React.Children.map(children, (child: any) => {
             if (child) {
-                if (child.type && child.type.identifier === "Bubble") {
+                if (child.type?.identifier === "Bubble") {
                     BubbleElement = child;
                 } else {
                     WrappedTrigger = child;

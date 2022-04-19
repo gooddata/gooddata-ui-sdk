@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import { IntlShape } from "react-intl";
 
 import { DynamicSelectItem } from "../../DateFilter/DynamicSelect/types";
@@ -12,7 +12,7 @@ const DEFAULT_ITEMS: ISelectItemOption<number>[] = [3, 5, 10, 15, 20, 25, 50, 10
     label: `${value}`,
 }));
 
-const trimInput = (input: string) => input && input.trim();
+const trimInput = (input: string) => input?.trim();
 
 const matchNumericValues = (input: string) => /^[^-\d]*(-?\d+)(?:\s|$)/.exec(input);
 

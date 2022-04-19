@@ -64,12 +64,11 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
         DefaultSectionRenderer: DashboardLayoutSectionRenderer,
         children: (
             <>
-                {sectionHeaderRenderer &&
-                    sectionHeaderRenderer({
-                        section,
-                        screen,
-                        DefaultSectionHeaderRenderer: DashboardLayoutSectionHeaderRenderer,
-                    })}
+                {sectionHeaderRenderer?.({
+                    section,
+                    screen,
+                    DefaultSectionHeaderRenderer: DashboardLayoutSectionHeaderRenderer,
+                })}
                 {items}
             </>
         ),
