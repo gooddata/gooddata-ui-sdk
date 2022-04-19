@@ -172,6 +172,7 @@ export function* resolveDashboardConfig(
         enableFilterValuesResolutionInDrillEvents: config.enableFilterValuesResolutionInDrillEvents ?? false,
         menuButtonItemsVisibility: config.menuButtonItemsVisibility ?? {},
         allowUnfinishedFeatures,
+        initialRenderMode: config.initialRenderMode ?? "view",
     };
 
     return resolvedConfig;

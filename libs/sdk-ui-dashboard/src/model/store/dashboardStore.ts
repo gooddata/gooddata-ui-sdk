@@ -37,6 +37,7 @@ import { DashboardCommandType } from "../commands";
 import { drillSliceReducer } from "./drill";
 import { uiSliceReducer } from "./ui";
 import { getDashboardContext } from "./_infra/contexts";
+import { RenderMode } from "../../types";
 
 const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandType | string)[] = [
     "GDC.DASH/EVT.COMMAND.STARTED",
@@ -176,6 +177,16 @@ export interface DashboardStoreConfig {
      * Background workers are processed last in the chain of all command and event processing.
      */
     backgroundWorkers: ((context: DashboardContext) => SagaIterator<void>)[];
+
+    /**
+     * @internal
+     *
+     * Specify which render mode will be used for initial rendering.
+     *
+     * @remarks
+     * If you do not specify initialRenderMode, the dashboard component will be display in view mode.
+     */
+    initialRenderMode: RenderMode;
 }
 
 function* rootSaga(

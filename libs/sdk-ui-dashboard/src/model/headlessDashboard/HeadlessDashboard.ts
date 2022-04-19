@@ -67,6 +67,7 @@ export class HeadlessDashboard {
             queryServices: config?.queryServices,
             backgroundWorkers: config?.backgroundWorkers || [],
             privateContext: config?.customizationFns,
+            initialRenderMode: "view",
         });
     }
 

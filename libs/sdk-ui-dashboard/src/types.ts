@@ -180,3 +180,8 @@ export interface IMenuButtonItemsVisibility {
      */
     scheduleEmailButton?: boolean;
 }
+
+/**
+ * @internal
+ */
+export type RenderMode = "view" | "edit";

@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { DashboardCommands, IDashboardCommand } from "../commands";
 import { SagaIterator } from "redux-saga";
 import { initializeDashboardHandler } from "./dashboard/initializeDashboardHandler";
@@ -56,6 +56,7 @@ import { resolveAsyncRenderHandler } from "./render/resolveAsyncRenderHandler";
 import { DashboardContext } from "../types/commonTypes";
 import { dispatchDashboardEvent } from "../store/_infra/eventDispatcher";
 import { commandRejected } from "../events/general";
+import { changeRenderModeHandler } from "./ui/changeRenderModeHandler";
 
 function* notImplementedCommand(ctx: DashboardContext, cmd: IDashboardCommand): SagaIterator<void> {
     yield dispatchDashboardEvent(commandRejected(ctx, cmd.correlationId));
@@ -70,6 +71,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.RESET": resetDashboardHandler,
     "GDC.DASH/CMD.RENAME": renameDashboardHandler,
     "GDC.DASH/CMD.DELETE": deleteDashboardHandler,
+    "GDC.DASH/CMD.CHANGE_RENDER_MODE": changeRenderModeHandler,
     "GDC.DASH/CMD.SHARING.CHANGE": changeSharingHandler,
     "GDC.DASH/CMD.EXPORT.PDF": exportDashboardToPdfHandler,
     "GDC.DASH/CMD.EVENT.TRIGGER": triggerEventHandler,

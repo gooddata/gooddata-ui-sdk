@@ -151,6 +151,7 @@ function* loadExistingDashboard(
             listedDashboardsActions.setListedDashboards(listedDashboards),
             accessibleDashboardsActions.setAccessibleDashboards(accessibleDashboards),
             uiActions.setMenuButtonItemsVisibility(config.menuButtonItemsVisibility),
+            uiActions.setRenderMode(config.initialRenderMode),
         ],
         "@@GDC.DASH/BATCH.INIT.EXISTING",
     );
@@ -206,6 +207,7 @@ function* initializeNewDashboard(
                 isUsingDashboardOverrides: false,
             }),
             uiActions.setMenuButtonItemsVisibility(config.menuButtonItemsVisibility),
+            uiActions.setRenderMode(config.initialRenderMode),
         ],
         "@@GDC.DASH/BATCH.INIT.NEW",
     );

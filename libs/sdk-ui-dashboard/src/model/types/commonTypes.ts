@@ -11,7 +11,7 @@ import {
 import { ILocale } from "@gooddata/sdk-ui";
 import keys from "lodash/keys";
 import includes from "lodash/includes";
-import { IDashboardFilter, IMenuButtonItemsVisibility } from "../../types";
+import { IDashboardFilter, IMenuButtonItemsVisibility, RenderMode } from "../../types";
 import { ExtendedDashboardWidget } from "./layoutTypes";
 
 /**
@@ -155,6 +155,15 @@ export interface DashboardConfig {
      * Defaults to false.
      */
     allowUnfinishedFeatures?: boolean;
+
+    /**
+     * @internal
+     * Specify which render mode will be use d for initial rendering.
+     *
+     * @remarks
+     * If you do not specify initialRenderMode, the dashboard component will be display in view mode.
+     */
+    initialRenderMode?: RenderMode;
 }
 
 /**
