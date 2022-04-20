@@ -40,6 +40,7 @@ import {
 import { DateFormatter } from "../convertors/fromBackend/dateFormatting/types";
 import { createDefaultDateFormatter } from "../convertors/fromBackend/dateFormatting/defaultDateFormatter";
 import { TigerOrganization, TigerOrganizations } from "./organization";
+import packageJson from "../../package.json";
 
 const CAPABILITIES: IBackendCapabilities = {
     hasTypeScopedIdentifiers: true,
@@ -359,7 +360,10 @@ function interceptBackendErrorsToConsole(client: AxiosInstance): AxiosInstance {
 }
 
 function createHeaders(implConfig: TigerBackendConfig, telemetry: TelemetryData): { [name: string]: string } {
-    const headers: { [name: string]: string } = {};
+    const headers: { [name: string]: string } = {
+        "X-GDC-JS-PACKAGE": packageJson.name,
+        "X-GDC-JS-PACKAGE-VERSION": packageJson.version,
+    };
 
     if (telemetry.componentName) {
         headers["X-GDC-JS-SDK-COMP"] = telemetry.componentName;

@@ -2,6 +2,7 @@
 import a, { AxiosInstance, AxiosRequestConfig } from "axios";
 import cloneDeep from "lodash/cloneDeep";
 import merge from "lodash/merge";
+import packageJson from "../package.json";
 
 /**
  * Default config from axios sets request headers:
@@ -21,6 +22,8 @@ const _CONFIG: AxiosRequestConfig = {
     headers: {
         common: {
             "X-Requested-With": "XMLHttpRequest",
+            "X-GDC-JS-PACKAGE": packageJson.name,
+            "X-GDC-JS-PACKAGE-VERSION": packageJson.version,
         },
         post: {
             "Content-Type": "application/json;charset=utf8",

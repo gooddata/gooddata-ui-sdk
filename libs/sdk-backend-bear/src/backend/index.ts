@@ -41,6 +41,7 @@ import {
 } from "@gooddata/sdk-backend-base";
 import { IDrillableItemsCommandBody } from "@gooddata/sdk-embedding";
 import { BearOrganization, BearOrganizations } from "./organization";
+import packageJson from "../../package.json";
 
 const CAPABILITIES: IBackendCapabilities = {
     canCalculateGrandTotals: true,
@@ -473,6 +474,8 @@ function newSdkInstance(
 
     if (implConfig.packageName && implConfig.packageVersion) {
         sdk.config.setJsPackage(implConfig.packageName, implConfig.packageVersion);
+    } else {
+        sdk.config.setJsPackage(packageJson.name, packageJson.version);
     }
 
     if (telemetry.componentName) {
