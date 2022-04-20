@@ -14,11 +14,20 @@ interface IScheduledEmailsProps {
     currentUserEmail?: string;
     theme?: ITheme;
     noSchedulesMessageId: string;
+    canManageScheduledMail: boolean;
 }
 
 const ScheduledEmailsComponent: React.FC<IScheduledEmailsProps> = (props) => {
-    const { isLoading, scheduledEmails, currentUserEmail, onDelete, onEdit, theme, noSchedulesMessageId } =
-        props;
+    const {
+        isLoading,
+        scheduledEmails,
+        currentUserEmail,
+        onDelete,
+        onEdit,
+        theme,
+        noSchedulesMessageId,
+        canManageScheduledMail,
+    } = props;
 
     if (isLoading) {
         return (
@@ -50,6 +59,7 @@ const ScheduledEmailsComponent: React.FC<IScheduledEmailsProps> = (props) => {
                     currentUserEmail={currentUserEmail}
                     onDelete={onDelete}
                     onEdit={onEdit}
+                    canManageScheduledMail={canManageScheduledMail}
                 />
             ))}
         </>

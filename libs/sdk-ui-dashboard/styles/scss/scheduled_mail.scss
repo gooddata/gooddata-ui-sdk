@@ -389,7 +389,6 @@ $vertical-space: 10px;
 
         &:hover {
             background: $is-focused-background;
-            cursor: pointer;
 
             .gd-scheduled-email-icon {
                 background: transparent;
@@ -398,6 +397,9 @@ $vertical-space: 10px;
             .gd-scheduled-email-delete-icon {
                 display: block;
             }
+        }
+        &.editable:hover {
+            cursor: pointer;
         }
     }
 

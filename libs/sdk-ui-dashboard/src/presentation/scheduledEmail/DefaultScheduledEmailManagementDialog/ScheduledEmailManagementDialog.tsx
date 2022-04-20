@@ -102,6 +102,7 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
                         }
                         currentUserEmail={currentUser?.email}
                         noSchedulesMessageId={noSchedulesMessageId}
+                        canManageScheduledMail={canManageScheduledMail}
                     />
                 </div>
                 <div className="gd-content-divider"></div>

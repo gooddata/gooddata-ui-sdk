@@ -1,7 +1,8 @@
 // (C) 2022 GoodData Corporation
 
-import React from "react";
+import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import cx from "classnames";
 import { IScheduledMail } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
@@ -12,6 +13,7 @@ interface IScheduledEmailProps {
     onEdit: (scheduledEmail: IScheduledMail) => void;
     scheduledEmail: IScheduledMail;
     currentUserEmail?: string;
+    canManageScheduledMail: boolean;
 }
 
 const ICON_TOOLTIP_ALIGN_POINTS = [
@@ -27,7 +29,7 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
     const intl = useIntl();
     const theme = useTheme();
 
-    const { scheduledEmail, currentUserEmail, onDelete, onEdit } = props;
+    const { scheduledEmail, currentUserEmail, onDelete, onEdit, canManageScheduledMail } = props;
     const { subject, to, bcc, attachments } = scheduledEmail;
     const recipients = [...to, ...(bcc ?? [])];
     const recipientsLabel = getRecipientsLabel(intl, recipients, currentUserEmail);
@@ -35,8 +37,14 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
     const { AttachmentIcon, attachmentLabel } = getAttachmentType(intl, attachments);
     const subtitle = `${recipientsLabel} • ${attachmentLabel} • ${formatsLabel}`;
 
+    const handleClick = useCallback(() => {
+        if (canManageScheduledMail) {
+            onEdit(scheduledEmail);
+        }
+    }, [scheduledEmail, canManageScheduledMail]);
+
     return (
-        <div className="gd-scheduled-email s-scheduled-email">
+        <div className={cx("gd-scheduled-email", "s-scheduled-email", { editable: canManageScheduledMail })}>
             <div className="gd-scheduled-email-delete">
                 <BubbleHoverTrigger showDelay={0} hideDelay={0}>
                     <span
@@ -48,7 +56,7 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
                     </Bubble>
                 </BubbleHoverTrigger>
             </div>
-            <div className="gd-scheduled-email-content" onClick={() => onEdit(scheduledEmail)}>
+            <div className="gd-scheduled-email-content" onClick={handleClick}>
                 <div className="gd-scheduled-email-icon">
                     <AttachmentIcon color={theme?.palette?.complementary?.c5} width={18} height={16} />
                 </div>
