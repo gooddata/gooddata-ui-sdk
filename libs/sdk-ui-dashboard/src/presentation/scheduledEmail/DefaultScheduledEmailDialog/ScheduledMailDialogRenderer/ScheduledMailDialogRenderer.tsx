@@ -531,6 +531,7 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
                 canListUsersInProject={canListUsersInProject}
                 enableKPIDashboardScheduleRecipients={enableKPIDashboardScheduleRecipients}
                 value={selectedRecipients}
+                originalValue={this.originalEditState?.selectedRecipients || []}
                 onChange={this.onRecipientsChange}
                 onError={this.props.onError}
                 backend={backend}
@@ -644,16 +645,22 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
 
     private onRecipientsChange = (selectedRecipients: IScheduleEmailRecipient[]): void => {
         const { editSchedule, currentUser } = this.props;
+        const newExternalRecipients = selectedRecipients.filter(isScheduleEmailExternalRecipient);
         const allRecipientsAreEmails = selectedRecipients.map(getScheduledEmailRecipientEmail).every(isEmail);
-        const hasNoExternalUSer = !selectedRecipients.some(isScheduleEmailExternalRecipient);
+
+        const hasNewExternalRecipients = editSchedule
+            ? editSchedule.bcc?.length !== newExternalRecipients.length
+            : false;
+
         const author = userToRecipient(editSchedule?.createdBy ? editSchedule?.createdBy : currentUser);
         const currentUserIsAuthor =
             isScheduleEmailExistingRecipient(author) && areObjRefsEqual(author.user.ref, currentUser.ref);
 
         this.setState({
             selectedRecipients,
-            // external emails are not allowed when the current user is not the author of edited schedule
-            isValidScheduleEmailData: (allRecipientsAreEmails && currentUserIsAuthor) || hasNoExternalUSer,
+            // new external recipients are not allowed when the current user is not the author of edited schedule
+            isValidScheduleEmailData:
+                allRecipientsAreEmails && (currentUserIsAuthor || !hasNewExternalRecipients),
         });
     };
 

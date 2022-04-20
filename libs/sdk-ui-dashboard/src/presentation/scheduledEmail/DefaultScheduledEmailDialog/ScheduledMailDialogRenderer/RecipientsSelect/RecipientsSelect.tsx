@@ -2,7 +2,8 @@
 /* eslint-disable import/named,import/namespace */
 import React, { useMemo, useState } from "react";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
-import { IAnalyticalBackend, IUser } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IUser } from "@gooddata/sdk-model";
 import sortBy from "lodash/sortBy";
 
 import { useWorkspaceUsers } from "../../useWorkspaceUsers";
@@ -20,10 +21,16 @@ interface IRecipientsSelectProps {
      * Current user creating or editing the schedule
      */
     currentUser: IUser;
+
     /**
      * Currently selected recipients.
      */
     value: IScheduleEmailRecipient[];
+
+    /**
+     * Originally selected recipients of a edited schedule
+     */
+    originalValue: IScheduleEmailRecipient[];
 
     /**
      * Callback to be called, when recipients are changed.
@@ -74,6 +81,7 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
         author,
         currentUser,
         value,
+        originalValue,
         onChange,
         onError,
         canListUsersInProject,
@@ -95,6 +103,7 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
             isMulti={enableKPIDashboardScheduleRecipients}
             options={options}
             value={value}
+            originalValue={originalValue}
             onChange={onChange}
             author={author}
             currentUser={currentUser}
