@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 /**
  * Resolved LCM identifiers of the workspace.
@@ -25,4 +25,11 @@ export interface IClientWorkspaceIdentifiers {
      * Workspace identifier.
      */
     workspace?: string;
+}
+
+/**
+ * @internal
+ */
+export interface IClientWorkspaceStatus {
+    isInitialized: boolean;
 }
