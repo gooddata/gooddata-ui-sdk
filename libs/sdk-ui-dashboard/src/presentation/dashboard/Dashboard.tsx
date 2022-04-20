@@ -31,7 +31,5 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
         return <LoadingComponent />;
     }
 
-    console.log("client WS identifiers", clientWsIdentifiers);
-
     return <DashboardRenderer workspace={clientWsIdentifiers.workspace} {...props} />;
 };
