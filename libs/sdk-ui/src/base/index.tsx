@@ -153,8 +153,12 @@ export {
     useClientWorkspaceIdentifiers,
     useClientWorkspaceStatus,
     useClientWorkspaceError,
+    useClientWorkspaceInitialized,
 } from "./react/ClientWorkspaceContext/ClientWorkspaceContext";
-export { IClientWorkspaceIdentifiers } from "./react/ClientWorkspaceContext/interfaces";
+export {
+    IClientWorkspaceIdentifiers,
+    IClientWorkspaceStatus,
+} from "./react/ClientWorkspaceContext/interfaces";
 export { resolveLCMWorkspaceIdentifiers } from "./react/ClientWorkspaceContext/resolveLCMWorkspaceIdentifiers";
 export { usePrevious } from "./react/usePrevious";
 /*

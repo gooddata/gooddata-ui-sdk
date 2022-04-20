@@ -603,6 +603,12 @@ export interface IClientWorkspaceProviderWithWorkspaceProps extends IClientWorks
 }
 
 // @internal (undocumented)
+export interface IClientWorkspaceStatus {
+    // (undocumented)
+    isInitialized: boolean;
+}
+
+// @internal (undocumented)
 export interface IColorAssignment {
     // (undocumented)
     color: IColor;
@@ -1672,6 +1678,9 @@ export const useClientWorkspaceError: () => GoodDataSdkError | undefined;
 
 // @alpha
 export const useClientWorkspaceIdentifiers: () => IClientWorkspaceIdentifiers;
+
+// @alpha
+export const useClientWorkspaceInitialized: () => boolean;
 
 // @alpha
 export const useClientWorkspaceStatus: () => UseCancelablePromiseStatus;
