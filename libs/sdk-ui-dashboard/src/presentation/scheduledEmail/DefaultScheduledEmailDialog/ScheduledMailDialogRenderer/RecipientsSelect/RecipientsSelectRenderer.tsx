@@ -60,6 +60,11 @@ export interface IRecipientsSelectRendererProps {
     value: IScheduleEmailRecipient[];
 
     /**
+     * Originally selected recipients of a edited schedule
+     */
+    originalValue: IScheduleEmailRecipient[];
+
+    /**
      * Recipients to display in the autocomplete.
      */
     options: IScheduleEmailRecipient[];
@@ -335,7 +340,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
         if (
             !this.currentUserIsAuthor() &&
             isScheduleEmailExternalRecipient(data) &&
-            this.isExternalRecipientAddedByAuthor(data)
+            !this.isOriginalExternalRecipient(data)
         ) {
             return this.renderErrorValueContainer(
                 email,
@@ -347,8 +352,8 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
         return this.renderMultiValueItemContainer(email, removeIcon);
     };
 
-    private isExternalRecipientAddedByAuthor(recipient: IScheduleEmailExternalRecipient) {
-        this.props.options.some((option) => {
+    private isOriginalExternalRecipient(recipient: IScheduleEmailExternalRecipient) {
+        return this.props.originalValue.some((option) => {
             return isScheduleEmailExternalRecipient(option) && option.email === recipient.email;
         });
     }

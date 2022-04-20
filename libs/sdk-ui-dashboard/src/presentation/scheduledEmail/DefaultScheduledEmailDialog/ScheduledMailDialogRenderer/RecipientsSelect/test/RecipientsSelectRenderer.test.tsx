@@ -43,6 +43,7 @@ describe("RecipientsSelect", () => {
         const defaultProps = {
             options,
             value: [author],
+            originalValue: [],
             currentUser,
             author,
             isMulti: false,

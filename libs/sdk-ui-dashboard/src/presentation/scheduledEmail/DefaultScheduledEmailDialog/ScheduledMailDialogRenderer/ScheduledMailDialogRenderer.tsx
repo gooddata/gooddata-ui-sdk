@@ -1,6 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 import * as React from "react";
 import cloneDeep from "lodash/cloneDeep";
+import differenceBy from "lodash/differenceBy";
 import isEqual from "lodash/isEqual";
 import omit from "lodash/omit";
 import { injectIntl, WrappedComponentProps, FormattedMessage } from "react-intl";
@@ -497,7 +498,14 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
     };
 
     private renderFiltersMessage = (): React.ReactNode => {
-        const { enableWidgetExportScheduling, hasDefaultFilters } = this.props;
+        const { enableWidgetExportScheduling, hasDefaultFilters, editSchedule } = this.props;
+        if (editSchedule) {
+            return (
+                <Message className="gd-schedule-email-dialog-filters-message " type="progress">
+                    <FormattedMessage id="dialogs.schedule.email.filters.not.saved" />
+                </Message>
+            );
+        }
         if (enableWidgetExportScheduling && !hasDefaultFilters) {
             return (
                 <Message className="gd-schedule-email-dialog-filters-message " type="progress">
@@ -530,6 +538,7 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
                 canListUsersInProject={canListUsersInProject}
                 enableKPIDashboardScheduleRecipients={enableKPIDashboardScheduleRecipients}
                 value={selectedRecipients}
+                originalValue={this.originalEditState?.selectedRecipients || []}
                 onChange={this.onRecipientsChange}
                 onError={this.props.onError}
                 backend={backend}
@@ -643,16 +652,22 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
 
     private onRecipientsChange = (selectedRecipients: IScheduleEmailRecipient[]): void => {
         const { editSchedule, currentUser } = this.props;
+        const newExternalRecipients = selectedRecipients.filter(isScheduleEmailExternalRecipient);
         const allRecipientsAreEmails = selectedRecipients.map(getScheduledEmailRecipientEmail).every(isEmail);
-        const hasNoExternalUSer = !selectedRecipients.some(isScheduleEmailExternalRecipient);
+
+        const hasNewExternalRecipients = editSchedule
+            ? editSchedule.bcc?.length !== newExternalRecipients.length
+            : false;
+
         const author = userToRecipient(editSchedule?.createdBy ? editSchedule?.createdBy : currentUser);
         const currentUserIsAuthor =
             isScheduleEmailExistingRecipient(author) && areObjRefsEqual(author.user.ref, currentUser.ref);
 
         this.setState({
             selectedRecipients,
-            // external emails are not allowed when the current user is not the author of edited schedule
-            isValidScheduleEmailData: (allRecipientsAreEmails && currentUserIsAuthor) || hasNoExternalUSer,
+            // new external recipients are not allowed when the current user is not the author of edited schedule
+            isValidScheduleEmailData:
+                allRecipientsAreEmails && (currentUserIsAuthor || !hasNewExternalRecipients),
         });
     };
 
@@ -803,11 +818,16 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
         const description = this.getSummaryMessage();
         const attachments = this.getAttachments(this.props.dashboard);
 
+        let unsubscribed: string[] | undefined = undefined;
+        if (editSchedule) {
+            unsubscribed = differenceBy(editSchedule.unsubscribed, toEmails.concat(bccEmails));
+        }
+
         return {
             when,
             to: toEmails,
             bcc: bccEmails,
-            unsubscribed: editSchedule ? editSchedule.unsubscribed : undefined,
+            unsubscribed,
             subject,
             body,
             attachments,
