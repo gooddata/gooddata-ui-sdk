@@ -424,7 +424,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         // we need to shallow copy the buckets so that we can add more without mutating the original array
         const buckets = [...insightBuckets(insight)];
 
-        if (supportedControls && supportedControls?.tooltipText) {
+        if (supportedControls?.tooltipText) {
             const tooltipText: string = supportedControls?.tooltipText;
             /*
              * The display form to use for tooltip text is provided in properties :( This is unfortunate; the chart

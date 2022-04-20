@@ -22,7 +22,7 @@ export default class BulletChartConfigurationPanel extends ConfigurationPanelCon
     protected renderConfigurationPanel(): React.ReactNode {
         const { featureFlags, propertiesMeta, properties, pushData, type, insight } = this.props;
 
-        const controls = (properties && properties.controls) || {};
+        const controls = properties?.controls || {};
 
         const { xaxis, yaxis, grid } = controls;
         const xAxisVisible = xaxis && typeof xaxis.visible !== "undefined" ? xaxis.visible : true;

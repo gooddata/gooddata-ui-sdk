@@ -127,7 +127,7 @@ function recordedPreparedExecution(
         execute(): Promise<IExecutionResult> {
             return new Promise((resolve, reject) => {
                 const key = recordedExecutionKey(fp);
-                const recording = recordings.executions && recordings.executions[key];
+                const recording = recordings.executions?.[key];
 
                 if (!recording) {
                     reject(new NoDataError("recording was not found"));

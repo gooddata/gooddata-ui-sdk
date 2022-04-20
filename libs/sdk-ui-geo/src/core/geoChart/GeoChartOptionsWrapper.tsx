@@ -73,7 +73,7 @@ export class GeoChartOptionsWrapper extends React.Component<IGeoChartInnerProps>
         const geoData: IGeoData = getGeoData(dv);
         const validationResult = this.validateData(geoData, sanitizedProps);
 
-        if (validationResult && validationResult.isDataTooLarge) {
+        if (validationResult?.isDataTooLarge) {
             invariant(onDataTooLarge, "GeoChart's onDataTooLarge callback is missing.");
             onDataTooLarge();
 

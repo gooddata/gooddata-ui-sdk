@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import some from "lodash/some";
 import every from "lodash/every";
 import isEmpty from "lodash/isEmpty";

@@ -138,7 +138,7 @@ export class HighChartsRenderer extends React.PureComponent<
             if (this.chartRef) {
                 const chart = this.chartRef.getChart();
 
-                if (chart.container && chart.container.style) {
+                if (chart.container?.style) {
                     chart.container.style.height = (this.props.height && String(this.props.height)) || "100%";
                     chart.container.style.position = this.props.height ? "relative" : "absolute";
                     chart.reflow();
@@ -356,7 +356,7 @@ export class HighChartsRenderer extends React.PureComponent<
             theme,
             resetZoomButtonTooltip,
         } = this.props;
-        if (chart && chart.zoomType) {
+        if (chart?.zoomType) {
             return (
                 <BubbleHoverTrigger
                     tagName="abbr"

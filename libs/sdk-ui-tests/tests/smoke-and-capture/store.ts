@@ -80,7 +80,7 @@ export function storeDirectoryFor(
     scenario: IScenario<any>,
     defType: SupportedDefinitionTypes,
 ): string | undefined {
-    return Stores && Stores[defType][scenario.workspaceType];
+    return Stores?.[defType][scenario.workspaceType];
 }
 
 /*

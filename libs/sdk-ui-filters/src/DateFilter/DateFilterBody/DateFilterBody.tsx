@@ -234,7 +234,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                     <DateFilterFormWrapper isMobile={isMobile}>
                         <AbsoluteDateFilterForm
                             dateFormat={dateFormat}
-                            errors={(errors && errors.absoluteForm) || undefined}
+                            errors={errors?.absoluteForm || undefined}
                             onSelectedFilterOptionChange={onSelectedFilterOptionChange}
                             selectedFilterOption={selectedFilterOption as IUiAbsoluteDateFilterForm}
                             isMobile={isMobile}

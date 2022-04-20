@@ -277,7 +277,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
 
     private isEventOnParent = (event: any) => {
         const node = this.containerRef.current;
-        const eventNode = (event.detail && event.detail.node) || event.target;
+        const eventNode = event.detail?.node || event.target;
         return eventNode.contains(node);
     };
 
@@ -314,7 +314,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
 
         const ignoredRefElements = [this.overlayRef.current, ...this.props.ignoreClicksOn];
         const clickInsideIgnoredRefElement = ignoredRefElements.some((ref: any) => {
-            return ref && ref.contains(clickedElement);
+            return ref?.contains(clickedElement);
         });
         if (clickInsideIgnoredRefElement) {
             return true;

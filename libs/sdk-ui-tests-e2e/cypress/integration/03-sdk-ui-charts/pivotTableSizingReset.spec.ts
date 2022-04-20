@@ -55,7 +55,7 @@ export const getMeasureColumnWidthItemByLocator = (
     element: any,
 ) => {
     return data.find((item: any) => {
-        if (item.measureColumnWidthItem && item.measureColumnWidthItem.locators) {
+        if (item.measureColumnWidthItem?.locators) {
             return (
                 item.measureColumnWidthItem.locators[0].attributeLocatorItem.attributeIdentifier ===
                     attributeIdentifier &&

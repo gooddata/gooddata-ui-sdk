@@ -519,11 +519,9 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
         } = this.props;
 
         // it should be possible to remove the only remaining recipient if the author unsubscribed
-        const allowEmptySelection =
-            editSchedule &&
-            editSchedule.unsubscribed?.some(
-                (unsubscribedRecipient) => unsubscribedRecipient === editSchedule.createdBy?.email,
-            );
+        const allowEmptySelection = editSchedule?.unsubscribed?.some(
+            (unsubscribedRecipient) => unsubscribedRecipient === editSchedule.createdBy?.email,
+        );
 
         return (
             <RecipientsSelect

@@ -38,7 +38,7 @@ export function getSearchedItems(inputItems: IColoredItem[], searchString: strin
 export function getColoredInputItems(colors: IColorConfiguration): IColoredItem[] {
     let inputItems: IColoredItem[] = [];
 
-    if (colors && colors.colorAssignments) {
+    if (colors?.colorAssignments) {
         inputItems = colors.colorAssignments.map((assignmentItem: IColorAssignment, index: number) => {
             if (isColorFromPalette(assignmentItem.color)) {
                 return {

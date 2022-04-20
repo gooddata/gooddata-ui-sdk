@@ -81,7 +81,7 @@ describe("chartOptionsBuilder", () => {
         const strWithoutHiddenSpan = str.replace(/<span[^><]+max-content[^<>]+>[^<]+<\/span>/g, "");
         const test = />([^<]+)<\/span>/g;
         const result = strWithoutHiddenSpan.match(test).map((match: string) => match.slice(1, -7));
-        return (result && result.length) >= 2 ? result : null;
+        return result?.length >= 2 ? result : null;
     }
 
     function getStyleMaxWidth(str: string): string[] {

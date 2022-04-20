@@ -65,7 +65,7 @@ export function randomString(len: number): string {
  * @internal
  */
 export function simplifyText(value: string | number | null): string {
-    const s = value && value.toString ? value.toString() : "";
+    const s = value?.toString?.() ?? "";
     return s.replace(/[^a-zA-Z0-9]/g, "_").toLowerCase();
 }
 

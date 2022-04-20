@@ -103,7 +103,7 @@ export function buildTooltipFactory(
                 customEscape(viewByAttribute.formOf.name),
                 // since applying 'grouped-categories' plugin,
                 // 'category' type is replaced from string to object in highchart
-                customEscape((point.category && point.category.name) || point.name),
+                customEscape(point.category?.name || point.name),
             ]);
         } else if (isOneOfTypes(type, multiMeasuresAlternatingTypes)) {
             // Pie charts with measure only have to use point.name instead of series.name to get the measure name
@@ -266,7 +266,7 @@ export function buildTooltipTreemapFactory(
             ]);
             textData.push([customEscape(point.series.name), formattedValue]);
         } else {
-            textData.push([customEscape(point.category && point.category.name), formattedValue]);
+            textData.push([customEscape(point.category?.name), formattedValue]);
         }
 
         return renderTooltipHTML(textData, maxTooltipContentWidth);

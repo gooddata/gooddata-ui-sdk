@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { DayPickerProps } from "react-day-picker";
@@ -165,7 +165,7 @@ class DateRangePickerComponent extends React.Component<IDateRangePickerProps & W
     };
 
     private getSanitizedInputValue = (inputRef: React.RefObject<DayPickerInput>, date: Date) => {
-        const inputValue = inputRef.current && inputRef.current.getInput().value;
+        const inputValue = inputRef.current?.getInput().value;
         return !date && !inputValue ? null : date;
     };
 

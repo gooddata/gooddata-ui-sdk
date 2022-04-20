@@ -473,7 +473,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
     }
 
     private handlePushData(data: any) {
-        if (data && data.properties && data.properties.sortItems) {
+        if (data?.properties?.sortItems) {
             this.pushData({
                 properties: {
                     sortItems: data.properties.sortItems,

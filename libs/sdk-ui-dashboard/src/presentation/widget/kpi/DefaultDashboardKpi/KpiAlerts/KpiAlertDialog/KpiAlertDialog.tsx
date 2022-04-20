@@ -546,12 +546,7 @@ export class KpiAlertDialog extends Component<
 
     focusThresholdInput(): void {
         setTimeout(() => {
-            if (
-                this.threshold &&
-                this.threshold.current &&
-                this.threshold.current.inputNodeRef &&
-                this.threshold.current.inputNodeRef.inputNodeRef
-            ) {
+            if (this.threshold?.current?.inputNodeRef?.inputNodeRef) {
                 const thresholdInputElement = this.threshold.current.inputNodeRef.inputNodeRef;
 
                 thresholdInputElement.focus();

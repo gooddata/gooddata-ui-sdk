@@ -1,8 +1,8 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 import { UserModule } from "../user";
-import { XhrModule } from "../xhr";
+import { ApiResponse, XhrModule } from "../xhr";
 
 const createUser = () => new UserModule(new XhrModule(fetch, {}));
 
@@ -206,7 +206,7 @@ describe("user", () => {
                 return createUser()
                     .logout()
                     .then((r) => {
-                        expect(r && r.response.ok).toBeTruthy();
+                        expect((r as ApiResponse | undefined)?.response.ok).toBeTruthy();
                     });
             });
         });

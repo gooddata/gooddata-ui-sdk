@@ -13,7 +13,7 @@ const DROPDOWN_ALIGNMENTS = alignPoints.map((align) => ({ align, offset: { x: 1,
 
 export const prepareRankingFilterState = (filter: IRankingFilter): IRankingFilter => {
     const { measure, attributes, operator, value } = filter.rankingFilter;
-    const firstAttribute = attributes && attributes[0];
+    const firstAttribute = attributes?.[0];
     const attributesProp = firstAttribute ? { attributes: [firstAttribute] } : {};
 
     return {

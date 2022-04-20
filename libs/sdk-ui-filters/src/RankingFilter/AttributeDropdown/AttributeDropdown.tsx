@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React, { useState } from "react";
 import { Button, Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import { ObjRefInScope, areObjRefsEqual } from "@gooddata/sdk-model";
@@ -48,7 +48,7 @@ const AttributeDropdownComponent: React.FC<AttributeDropdownProps> = ({
     const onItemSelect = (ref: ObjRefInScope) => {
         onSelect(ref);
         setIsOpen(false);
-        onDropDownItemMouseOut && onDropDownItemMouseOut();
+        onDropDownItemMouseOut?.();
     };
 
     const buttonClassNames = cx(

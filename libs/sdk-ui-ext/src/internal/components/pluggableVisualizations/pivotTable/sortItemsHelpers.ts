@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 // removes attribute sortItems with invalid identifiers
 // removes measure sortItems with invalid identifiers and invalid number of locators
@@ -140,7 +140,7 @@ export function addDefaultSort(
 
     // detect custom sort
     const firstRow = rowAttributes[0];
-    const previousFirstRow = previousRowAttributes && previousRowAttributes[0];
+    const previousFirstRow = previousRowAttributes?.[0];
     const hasVisibleCustomSort = sortItems.some((sortItem) => {
         if (!isSortItemVisible(sortItem, filters, columnAttributes, tableSortingCheckDisabled)) {
             return false;

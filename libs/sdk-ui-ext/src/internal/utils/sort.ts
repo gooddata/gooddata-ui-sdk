@@ -124,7 +124,7 @@ function getDefaultHeatmapSortFromBuckets(viewBy: IBucket): ISortItem[] {
 
 function getDefaultHeatmapSort(insight: IInsightDefinition): ISortItem[] {
     const sorts = insightSorts(insight);
-    if (sorts && sorts.length > 0) {
+    if (sorts?.length > 0) {
         return sorts;
     }
 
@@ -154,7 +154,7 @@ export function createSorts(
     canSortStackTotalValue: boolean = false,
     enableChartsSorting?: boolean,
 ): ISortItem[] {
-    if (insight.insight.sorts && insight.insight.sorts.length > 0) {
+    if (insight.insight.sorts?.length > 0) {
         return insight.insight.sorts;
     }
     switch (type) {
@@ -258,7 +258,7 @@ function reuseAttributeAreaSortItem(currentSortItem: ISortItem, availableSortGro
         return newAttributeAreaSort(availableSortGroup.itemId.localIdentifier, currentSortDirection);
     }
     // reuse numeric sort type
-    const availableMetricSort = availableSortGroup.metricSorts && availableSortGroup.metricSorts[0];
+    const availableMetricSort = availableSortGroup.metricSorts?.[0];
     if (availableMetricSort) {
         return newMeasureSortFromLocators(availableMetricSort.locators, currentSortDirection);
     }
@@ -271,7 +271,7 @@ function reuseMetricSortItem(currentSortItem: IMeasureSortItem, availableSortGro
         return currentSortItem;
     }
     // reuse direction
-    const availableMetricSort = availableSortGroup.metricSorts && availableSortGroup.metricSorts[0];
+    const availableMetricSort = availableSortGroup.metricSorts?.[0];
     if (availableMetricSort) {
         return newMeasureSortFromLocators(availableMetricSort.locators, currentSortDirection);
     }

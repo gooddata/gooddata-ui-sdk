@@ -126,7 +126,7 @@ const AttributeFilterBodyCore: React.FC<IAttributeDropdownBodyExtendedProps> = (
             itemsCount={props.totalCount}
             isLoading={isElementsLoading}
             isLoadingClass={LoadingMask}
-            getItemKey={(item: IAttributeElement) => (item && item.uri) || uuid()}
+            getItemKey={(item: IAttributeElement) => item?.uri || uuid()}
             itemHeight={currentItemHeight}
             height={getDropdownBodyHeight()}
             searchPlaceholder={intl.formatMessage({ id: "attributeFilterDropdown.searchPlaceholder" })}

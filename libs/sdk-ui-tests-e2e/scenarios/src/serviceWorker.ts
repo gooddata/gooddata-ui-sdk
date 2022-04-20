@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 // This optional code is used to register a service worker.
 // register() is not called by default.
@@ -80,9 +80,7 @@ function registerValidSW(swUrl: string, config: Config) {
                             );
 
                             // Execute callback
-                            if (config && config.onUpdate) {
-                                config.onUpdate(registration);
-                            }
+                            config?.onUpdate?.(registration);
                         } else {
                             // At this point, everything has been precached.
                             // It's the perfect time to display a
@@ -90,9 +88,7 @@ function registerValidSW(swUrl: string, config: Config) {
                             console.log("Content is cached for offline use.");
 
                             // Execute callback
-                            if (config && config.onSuccess) {
-                                config.onSuccess(registration);
-                            }
+                            config?.onSuccess?.(registration);
                         }
                     }
                 };

@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import { MetadataModule } from "./metadata";
 import { XhrModule } from "./xhr";
 import { UserModule } from "./user";
@@ -69,7 +69,7 @@ function getSanitizedMeta(
             "created",
             "updated",
             "contributor",
-            options && options.clearLockedFlag && "locked",
+            options?.clearLockedFlag && "locked",
         ]),
     );
 }

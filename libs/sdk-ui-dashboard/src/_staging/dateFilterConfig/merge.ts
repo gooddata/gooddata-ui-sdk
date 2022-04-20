@@ -85,20 +85,14 @@ const shouldHideRelativePreset = (
     preset: IRelativeDateFilterPreset,
     dashboardConfig: IDashboardDateFilterConfig,
 ): boolean => {
-    const hideForGranularity =
-        dashboardConfig.hideGranularities && dashboardConfig.hideGranularities.includes(preset.granularity);
-    const hideForId =
-        dashboardConfig.hideOptions && dashboardConfig.hideOptions.includes(preset.localIdentifier);
+    const hideForGranularity = dashboardConfig.hideGranularities?.includes(preset.granularity);
+    const hideForId = dashboardConfig.hideOptions?.includes(preset.localIdentifier);
 
     return hideForGranularity || hideForId || false;
 };
 
 const hideAbsolutePresets: DashboardConfigMerger = (dashboardConfig) => (projectConfig) => {
-    if (
-        !projectConfig.absolutePresets ||
-        !projectConfig.absolutePresets.length ||
-        !dashboardConfig.hideOptions
-    ) {
+    if (!projectConfig.absolutePresets?.length || !dashboardConfig.hideOptions) {
         return projectConfig;
     }
 

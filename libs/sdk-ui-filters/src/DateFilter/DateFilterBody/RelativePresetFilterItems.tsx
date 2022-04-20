@@ -43,7 +43,7 @@ export const RelativePresetFilterItems: React.FC<IRelativePresetFilterItemsProps
 }) => {
     const relativePresets = granularityOrder
         .filter((granularity) => {
-            return Boolean(filterOption && filterOption[granularity] && filterOption[granularity].length > 0);
+            return Boolean(filterOption?.[granularity]?.length > 0);
         })
         .map((granularity) => ({
             granularity,

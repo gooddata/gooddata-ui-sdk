@@ -4,7 +4,7 @@ import { IExecutionResult, IExportConfig, IExportResult } from "@gooddata/sdk-ba
 import { IExportFunction, IExtendedExportConfig } from "./Events";
 import { GoodDataSdkError } from "../errors/GoodDataSdkError";
 
-const escapeFileName = (str: string) => str && str.replace(/[/?<>\\:*|":]/g, "");
+const escapeFileName = (str: string) => str?.replace(/[/?<>\\:*|":]/g, "");
 
 /**
  * Creates function to export data in the provided result. This function is typically passed by visualization

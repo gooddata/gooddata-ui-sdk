@@ -76,104 +76,99 @@ export function getDrillableSeries(
     return series.map((seriesItem) => {
         const seriesIndex = seriesItem.seriesIndex;
         let isSeriesDrillable = false;
-        let data =
-            seriesItem.data &&
-            seriesItem.data.map((pointData: IPointData, pointIndex: number) => {
-                let measureHeaders: IMappingHeader[] = [];
+        let data = seriesItem.data?.map((pointData: IPointData, pointIndex: number) => {
+            let measureHeaders: IMappingHeader[] = [];
 
-                const isStackedTreemap = isTreemap(type) && !!stackByAttribute;
-                if (isScatterPlot(type)) {
-                    measureHeaders = (measureGroup.items ?? []).slice(0, 2);
-                } else if (isBubbleChart(type)) {
-                    measureHeaders = (measureGroup.items ?? []).slice(0, 3);
-                } else if (isStackedTreemap) {
-                    if (pointData.id !== undefined) {
-                        // not leaf -> can't be drillable
-                        return pointData;
-                    }
-                    const measureIndex = viewByChildAttribute ? 0 : parseInt(pointData.parent, 10);
-                    measureHeaders = [measureGroup.items[measureIndex]];
-                } else {
-                    // measureIndex is usually seriesIndex,
-                    // except for stack by attribute and metricOnly pie or donut chart
-                    // it is looped-around pointIndex instead
-                    // Looping around the end of items array only works when
-                    // measureGroup is the last header on it's dimension
-                    // We do not support setups with measureGroup before attributeHeaders
-                    const measureIndex =
-                        !stackByAttribute && !isMultiMeasureWithOnlyMeasures
-                            ? seriesIndex
-                            : pointIndex % measureGroup.items.length;
-                    measureHeaders = [measureGroup.items[measureIndex]];
+            const isStackedTreemap = isTreemap(type) && !!stackByAttribute;
+            if (isScatterPlot(type)) {
+                measureHeaders = (measureGroup.items ?? []).slice(0, 2);
+            } else if (isBubbleChart(type)) {
+                measureHeaders = (measureGroup.items ?? []).slice(0, 3);
+            } else if (isStackedTreemap) {
+                if (pointData.id !== undefined) {
+                    // not leaf -> can't be drillable
+                    return pointData;
                 }
+                const measureIndex = viewByChildAttribute ? 0 : parseInt(pointData.parent, 10);
+                measureHeaders = [measureGroup.items[measureIndex]];
+            } else {
+                // measureIndex is usually seriesIndex,
+                // except for stack by attribute and metricOnly pie or donut chart
+                // it is looped-around pointIndex instead
+                // Looping around the end of items array only works when
+                // measureGroup is the last header on it's dimension
+                // We do not support setups with measureGroup before attributeHeaders
+                const measureIndex =
+                    !stackByAttribute && !isMultiMeasureWithOnlyMeasures
+                        ? seriesIndex
+                        : pointIndex % measureGroup.items.length;
+                measureHeaders = [measureGroup.items[measureIndex]];
+            }
 
-                const viewByIndex = isHeatmap(type) || isStackedTreemap ? pointData.x : pointIndex;
-                let stackByIndex = isHeatmap(type) || isStackedTreemap ? pointData.y : seriesIndex;
-                if (isScatterPlot(type)) {
-                    stackByIndex = viewByIndex; // scatter plot uses stack by attribute but has only one serie
-                }
+            const viewByIndex = isHeatmap(type) || isStackedTreemap ? pointData.x : pointIndex;
+            let stackByIndex = isHeatmap(type) || isStackedTreemap ? pointData.y : seriesIndex;
+            if (isScatterPlot(type)) {
+                stackByIndex = viewByIndex; // scatter plot uses stack by attribute but has only one serie
+            }
 
-                const { stackByHeader, stackByAttributeDescriptor } = getStackBy(
-                    stackByAttribute,
-                    stackByIndex,
-                );
+            const { stackByHeader, stackByAttributeDescriptor } = getStackBy(stackByAttribute, stackByIndex);
 
-                const {
-                    viewByHeader: viewByChildHeader,
-                    viewByAttributeDescriptor: viewByChildAttributeDescriptor,
-                } = getViewBy(viewByChildAttribute, viewByIndex);
+            const {
+                viewByHeader: viewByChildHeader,
+                viewByAttributeDescriptor: viewByChildAttributeDescriptor,
+            } = getViewBy(viewByChildAttribute, viewByIndex);
 
-                const {
-                    viewByHeader: viewByParentHeader,
-                    viewByAttributeDescriptor: viewByParentdAttributeDescriptor,
-                } = getViewBy(viewByParentAttribute, viewByIndex);
+            const {
+                viewByHeader: viewByParentHeader,
+                viewByAttributeDescriptor: viewByParentAttributeDescriptor,
+            } = getViewBy(viewByParentAttribute, viewByIndex);
 
-                // point is drillable if a drillableItem matches:
-                //   point's measure,
-                //   point's viewBy attribute,
-                //   point's viewBy attribute item,
-                //   point's stackBy attribute,
-                //   point's stackBy attribute item,
-                const drillableHooks: IMappingHeader[] = without(
-                    [
-                        ...measureHeaders,
-                        viewByChildAttributeDescriptor,
-                        viewByChildHeader,
-                        viewByParentdAttributeDescriptor,
-                        viewByParentHeader,
-                        stackByAttributeDescriptor,
-                        stackByHeader,
-                    ],
-                    null,
-                );
+            // point is drillable if a drillableItem matches:
+            //   point's measure,
+            //   point's viewBy attribute,
+            //   point's viewBy attribute item,
+            //   point's stackBy attribute,
+            //   point's stackBy attribute item,
+            const drillableHooks: IMappingHeader[] = without(
+                [
+                    ...measureHeaders,
+                    viewByChildAttributeDescriptor,
+                    viewByChildHeader,
+                    viewByParentAttributeDescriptor,
+                    viewByParentHeader,
+                    stackByAttributeDescriptor,
+                    stackByHeader,
+                ],
+                null,
+            );
 
-                const drilldown: boolean = drillableHooks.some((drillableHook) =>
-                    isSomeHeaderPredicateMatched(drillableItems, drillableHook, dv),
-                );
+            const drilldown: boolean = drillableHooks.some((drillableHook) =>
+                isSomeHeaderPredicateMatched(drillableItems, drillableHook, dv),
+            );
 
-                const drillableProps: any = {
-                    drilldown,
-                };
+            const drillableProps: any = {
+                drilldown,
+            };
 
-                if (drilldown) {
-                    const headers: IMappingHeader[] = [
-                        ...measureHeaders,
-                        viewByChildHeader,
-                        viewByChildAttributeDescriptor,
-                        viewByParentHeader,
-                        viewByParentdAttributeDescriptor,
-                        stackByHeader,
-                        stackByAttributeDescriptor,
-                    ];
-                    const sanitizedHeaders = without([...headers], null);
-                    drillableProps.drillIntersection = getDrillIntersection(sanitizedHeaders);
-                    isSeriesDrillable = true;
-                }
-                return {
-                    ...pointData,
-                    ...drillableProps,
-                };
-            });
+            if (drilldown) {
+                const headers: IMappingHeader[] = [
+                    ...measureHeaders,
+                    viewByChildHeader,
+                    viewByChildAttributeDescriptor,
+                    viewByParentHeader,
+                    viewByParentAttributeDescriptor,
+                    stackByHeader,
+                    stackByAttributeDescriptor,
+                ];
+                const sanitizedHeaders = without([...headers], null);
+                drillableProps.drillIntersection = getDrillIntersection(sanitizedHeaders);
+                isSeriesDrillable = true;
+            }
+            return {
+                ...pointData,
+                ...drillableProps,
+            };
+        });
 
         if (isScatterPlot(type)) {
             data = data.filter((dataItem: ISeriesDataItem) => {

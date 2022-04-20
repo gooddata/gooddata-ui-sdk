@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
@@ -32,7 +32,7 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
         const { xAxisVisible, gridEnabled, yAxisVisible } = this.getControlProperties();
 
         const { featureFlags, propertiesMeta, properties, pushData, insight, type } = this.props;
-        const controls = properties && properties.controls;
+        const controls = properties?.controls;
         const controlsDisabled = this.isControlDisabled();
         const { xaxis: itemsOnXAxis, yaxis: itemsOnYAxis } = countItemsOnAxes(type, controls, insight);
         const xAxisNameSectionDisabled = controlsDisabled || itemsOnXAxis !== 1;

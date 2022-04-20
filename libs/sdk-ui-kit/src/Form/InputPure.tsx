@@ -72,7 +72,7 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
 
         if (autofocus && !nativeLikeAutofocus) {
             // https://github.com/facebook/react/issues/1791
-            this.focusTimer = window.setTimeout(() => this.inputNodeRef && this.inputNodeRef.focus(), 100);
+            this.focusTimer = window.setTimeout(() => this.inputNodeRef?.focus(), 100);
         }
         if (autofocus && nativeLikeAutofocus) {
             this.focusInterval = tryFocus(() => this.inputNodeRef);

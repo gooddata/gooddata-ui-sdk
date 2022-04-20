@@ -92,15 +92,12 @@ function convertRelativeForm(
 function convertAbsolutePresets(
     filters: IAbsoluteDateFilterPreset[] | undefined,
 ): IAbsoluteDateFilterPreset[] | undefined {
-    return (
-        filters &&
-        filters.map(
-            (preset): IAbsoluteDateFilterPreset =>
-                sanitizeDateFilterOption({
-                    ...preset,
-                    type: "absolutePreset",
-                }),
-        )
+    return filters?.map(
+        (preset): IAbsoluteDateFilterPreset =>
+            sanitizeDateFilterOption({
+                ...preset,
+                type: "absolutePreset",
+            }),
     );
 }
 

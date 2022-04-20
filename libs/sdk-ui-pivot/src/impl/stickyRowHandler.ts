@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import { GridApi } from "@ag-grid-community/all-modules";
 import { IGroupingProvider } from "./data/rowGroupingProvider";
@@ -86,7 +86,7 @@ export function updateStickyRowContentClassesAndData(
     // TODO: consider obtaining row-col descriptors from tableDescriptor instead
     const attributeKeys = Object.keys(firstVisibleNodeData).filter((colId: string) => {
         const colDef = gridApi.getColumnDef(colId);
-        return colDef && colDef.type === ROW_ATTRIBUTE_COLUMN;
+        return colDef?.type === ROW_ATTRIBUTE_COLUMN;
     });
 
     const stickyRowData = {};

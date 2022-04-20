@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import partition from "lodash/partition";
 import { FormattedMessage } from "react-intl";
@@ -25,7 +25,7 @@ export const DrillSelectList: React.FunctionComponent<DrillSelectListProps> = (p
     };
 
     const renderDrillDownItems = (items: DrillSelectItem[]) => {
-        if (items && items.length > 0) {
+        if (items?.length > 0) {
             return (
                 <>
                     <div className="gd-drill-modal-picker-title">
@@ -38,7 +38,7 @@ export const DrillSelectList: React.FunctionComponent<DrillSelectListProps> = (p
     };
 
     const renderDrillItems = (items: DrillSelectItem[]) => {
-        if (items && items.length > 0) {
+        if (items?.length > 0) {
             return (
                 <>
                     <div className="gd-drill-modal-picker-title">

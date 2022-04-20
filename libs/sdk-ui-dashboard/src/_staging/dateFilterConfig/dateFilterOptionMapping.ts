@@ -173,7 +173,7 @@ function reconstructFormForStoredFilter(
 }
 
 function isDateFilterOptionVisible(option: DateFilterOption | undefined) {
-    return !!(option && option.visible);
+    return !!option?.visible;
 }
 
 function findDateFilterOptionById(id: string, dateFilterOptions: IDateFilterOptionsByType) {

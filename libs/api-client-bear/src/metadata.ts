@@ -213,7 +213,7 @@ export class MetadataModule {
         projectId: string,
         options: IGetObjectsByQueryOptions,
     ): Promise<IGetObjectsByQueryWithPagingResponse<T>> {
-        const getTotalCount = options && options.getTotalCount ? 1 : 0;
+        const getTotalCount = options?.getTotalCount ? 1 : 0;
         const uri = `/gdc/md/${projectId}/objects/query?${stringify({ ...options, getTotalCount })}`;
         return this.xhr
             .get(uri)

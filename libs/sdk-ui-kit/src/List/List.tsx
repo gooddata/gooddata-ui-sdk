@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { Component } from "react";
 import { Table, Column, Cell } from "fixed-data-table-2";
 import cx from "classnames";
@@ -103,7 +103,7 @@ export class List<T> extends Component<IListProps<T>> {
         };
 
         const getItemIndex = memoize((items) => {
-            const rowIndex = items.findIndex((item: any) => item && item.selected);
+            const rowIndex = items.findIndex((item: any) => item?.selected);
 
             return rowIndex + 1;
         });

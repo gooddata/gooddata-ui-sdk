@@ -25,7 +25,7 @@ export function useScrollEvent(
     const onScrollHandler = useCallback(
         (event: React.MouseEvent<HTMLDivElement>) => {
             calculateOpacities(content, size, [top, setTop], [bottom, setBottom]);
-            onScroll && onScroll(event);
+            onScroll?.(event);
         },
         [bottom, onScroll, setBottom, setTop, size, top, content],
     );

@@ -49,8 +49,7 @@ export const adaptiveDashboardPluginLoaderFactory =
         options?: IDashboardPluginsLoaderOptions,
     ): Promise<LoadedPlugin[]> => {
         if (!isEmpty(dashboard.references.plugins)) {
-            options &&
-                options.beforePluginsLoaded({ externalPluginsCount: dashboard.references.plugins.length });
+            options?.beforePluginsLoaded({ externalPluginsCount: dashboard.references.plugins.length });
             return dynamicDashboardPluginLoader(ctx, dashboard, moduleFederationIntegration);
         }
 

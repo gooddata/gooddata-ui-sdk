@@ -189,7 +189,7 @@ export function pivotTableMenuForCapabilities(
         );
     }
 
-    if (effectiveMenu.aggregationTypes && effectiveMenu.aggregationTypes.length === 0) {
+    if (effectiveMenu.aggregationTypes?.length === 0) {
         return {
             aggregations: false,
         };

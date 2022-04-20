@@ -21,6 +21,7 @@ module.exports = {
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-inferrable-types": "off",
         "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/prefer-optional-chain": "error",
         "import/order": "off",
         "no-restricted-imports": [
             "error",
@@ -33,7 +34,7 @@ module.exports = {
         "sonarjs/no-duplicate-string": "off",
         // some of these findings are not actionable in a reasonable time
         "sonarjs/cognitive-complexity": "warn",
-        "tsdoc/syntax": "error"
+        "tsdoc/syntax": "error",
     },
     overrides: [
         {

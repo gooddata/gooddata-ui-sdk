@@ -279,7 +279,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         filters?: FilterContextItem[],
     ): Promise<string> => {
         const dashboardUri = await objRefToUri(dashboardRef, this.workspace, this.authCall);
-        const convertedFilters = filters && filters.map(fromSdkModel.convertFilterContextItem);
+        const convertedFilters = filters?.map(fromSdkModel.convertFilterContextItem);
         return this.authCall((sdk) =>
             sdk.dashboard.exportToPdf(this.workspace, dashboardUri, convertedFilters).then((res) => res.uri),
         );

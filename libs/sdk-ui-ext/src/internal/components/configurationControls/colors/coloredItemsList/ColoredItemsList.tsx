@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import CustomEvent from "custom-event";
 import { injectIntl, WrappedComponentProps } from "react-intl";
@@ -77,7 +77,7 @@ class ColoredItemsList extends React.PureComponent<IColoredItemsListProps, IColo
     }
 
     private onScroll = () => {
-        if (this.listRef && this.listRef.current) {
+        if (this.listRef?.current) {
             const node = this.listRef.current;
             node.dispatchEvent(new CustomEvent("goodstrap.scrolled", { bubbles: true }));
         }

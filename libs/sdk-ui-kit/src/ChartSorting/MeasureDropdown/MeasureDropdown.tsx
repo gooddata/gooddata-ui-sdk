@@ -128,7 +128,7 @@ export const MeasureDropdown: React.FC<MeasureDropdownProps> = ({
         : buttonValue.title;
 
     useEffect(() => {
-        if (buttonRef && buttonRef.current) {
+        if (buttonRef?.current) {
             setWidth(buttonRef.current.getBoundingClientRect().width);
         }
     }, []);

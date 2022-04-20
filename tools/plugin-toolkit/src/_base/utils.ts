@@ -116,7 +116,7 @@ export function genericErrorReporter(error: any): void {
     } else {
         const e = extractRootCause(error);
 
-        if (e.message && e.message.search(/.*(certificate|self-signed).*/) > -1) {
+        if (e.message?.search(/.*(certificate|self-signed).*/) > -1) {
             logError(
                 "Server does not have valid certificate. The login has failed. " +
                     "If you trust the server, you can use the --accept-untrusted-ssl option " +
