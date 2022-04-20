@@ -498,7 +498,14 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
     };
 
     private renderFiltersMessage = (): React.ReactNode => {
-        const { enableWidgetExportScheduling, hasDefaultFilters } = this.props;
+        const { enableWidgetExportScheduling, hasDefaultFilters, editSchedule } = this.props;
+        if (editSchedule) {
+            return (
+                <Message className="gd-schedule-email-dialog-filters-message " type="progress">
+                    <FormattedMessage id="dialogs.schedule.email.filters.not.saved" />
+                </Message>
+            );
+        }
         if (enableWidgetExportScheduling && !hasDefaultFilters) {
             return (
                 <Message className="gd-schedule-email-dialog-filters-message " type="progress">

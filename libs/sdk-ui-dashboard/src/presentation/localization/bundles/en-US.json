@@ -245,6 +245,11 @@
         "comment": "",
         "limit": 0
     },
+    "dialogs.schedule.email.filters.not.saved": {
+        "value": "The schedule will be saved with the original filter settings.",
+        "comment": "",
+        "limit": 0
+    },
     "dialogs.schedule.email.attachment.filter": {
         "value": "(with currently set filters)",
         "comment": "Keep the parentheses. Attachment with filters included.",
