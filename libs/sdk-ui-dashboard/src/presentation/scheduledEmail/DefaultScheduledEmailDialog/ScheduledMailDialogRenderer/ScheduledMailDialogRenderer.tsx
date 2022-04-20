@@ -1,6 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 import * as React from "react";
 import cloneDeep from "lodash/cloneDeep";
+import differenceBy from "lodash/differenceBy";
 import isEqual from "lodash/isEqual";
 import omit from "lodash/omit";
 import { injectIntl, WrappedComponentProps, FormattedMessage } from "react-intl";
@@ -803,11 +804,16 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
         const description = this.getSummaryMessage();
         const attachments = this.getAttachments(this.props.dashboard);
 
+        let unsubscribed: string[] | undefined = undefined;
+        if (editSchedule) {
+            unsubscribed = differenceBy(editSchedule.unsubscribed, toEmails.concat(bccEmails));
+        }
+
         return {
             when,
             to: toEmails,
             bcc: bccEmails,
-            unsubscribed: editSchedule ? editSchedule.unsubscribed : undefined,
+            unsubscribed,
             subject,
             body,
             attachments,
