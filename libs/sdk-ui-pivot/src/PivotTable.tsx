@@ -49,6 +49,7 @@ function prepareExecution(props: IPivotTableProps): IPreparedExecution {
     const { backend, workspace, filters, sortBy = [], execConfig = {} } = props;
 
     return backend!
+        .withTelemetry("PivotTable", props)
         .workspace(workspace!)
         .execution()
         .forBuckets(getBuckets(props), filters as INullableFilter[])
