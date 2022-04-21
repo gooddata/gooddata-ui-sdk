@@ -171,7 +171,8 @@ function adaptWidthItemsToPivotTable(
             if (firstColumnAttributeAdded) {
                 const transformedWeakMeasureWidthItem = transformToWeakMeasureColumnWidthItem(columnWidth);
                 if (transformedWeakMeasureWidthItem) {
-                    return [...columnWidths, transformedWeakMeasureWidthItem];
+                    columnWidths.push(transformedWeakMeasureWidthItem);
+                    return columnWidths;
                 }
             }
 
@@ -183,7 +184,8 @@ function adaptWidthItemsToPivotTable(
                     filteredColumnAttributeLocalIdentifiers.length,
                 )
             ) {
-                return [...columnWidths, filteredMeasureColumnWidthItem];
+                columnWidths.push(filteredMeasureColumnWidthItem);
+                return columnWidths;
             }
         } else if (isAttributeColumnWidthItem(columnWidth)) {
             if (
@@ -192,13 +194,15 @@ function adaptWidthItemsToPivotTable(
                     columnWidth.attributeColumnWidthItem.attributeIdentifier,
                 )
             ) {
-                return [...columnWidths, columnWidth];
+                columnWidths.push(columnWidth);
+                return columnWidths;
             }
         } else if (
             (isAllMeasureColumnWidthItem(columnWidth) || isWeakMeasureColumnWidthItem(columnWidth)) &&
             measureLocalIdentifiers.length > 0
         ) {
-            return [...columnWidths, columnWidth];
+            columnWidths.push(columnWidth);
+            return columnWidths;
         }
 
         return columnWidths;

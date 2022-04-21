@@ -49,7 +49,7 @@ export function hasOneMasterMeasureInBucket(buckets: IBucketOfFun[], bucketLocal
 
 export function filteredByDerivedMeasure(buckets: IBucketOfFun[], filters: IFilters): boolean {
     const measures = getAllItemsByType(buckets, [METRIC]);
-    const derivedMeasuresLocalIdentifiers = measures.reduce((acc, measure) => {
+    const derivedMeasuresLocalIdentifiers = measures.reduce((acc: string[], measure) => {
         if (measure.masterLocalIdentifier) {
             acc.push(measure.localIdentifier);
         }

@@ -23,7 +23,10 @@ export const immutableSet = <T extends object, U>(
 ): T => setWith({ ...dataSet }, path, newValue, clone);
 
 export const repeatItemsNTimes = <T>(array: T[], n: number): T[] =>
-    new Array(n).fill(null).reduce((result) => [...result, ...array], []);
+    new Array(n).fill(null).reduce((result: T[]) => {
+        result.push(...array);
+        return result;
+    }, []);
 
 export const unEscapeAngleBrackets = (str: string): string =>
     str?.replace(/&lt;|&#60;/g, "<").replace(/&gt;|&#62;/g, ">");

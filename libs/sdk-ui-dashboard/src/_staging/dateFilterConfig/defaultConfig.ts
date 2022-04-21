@@ -24,7 +24,9 @@ export const defaultDateFilterConfig: IDateFilterConfig = {
         (presets: IRelativeDateFilterPreset[], granularityKey: string) => {
             const granularityPresets: IRelativeDateFilterPreset[] =
                 DateFilterHelpers.defaultDateFilterOptions.relativePreset![granularityKey];
-            return [...presets, ...granularityPresets];
+
+            presets.push(...granularityPresets);
+            return presets;
         },
         [],
     ),

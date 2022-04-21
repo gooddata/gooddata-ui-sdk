@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import {
     areObjRefsEqual,
     attributeLocalId,
@@ -91,25 +91,24 @@ function removePropertiesForRemovedAttributes(insight: IInsight): IInsight {
         bucketItemLocalId(bucketItem),
     );
 
-    const result = Object.entries(properties).reduce((acc, [key, value]) => {
-        if (key === ENUM_PROPERTIES_TYPE.CONTROLS && value.columnWidths) {
-            const columns = value.columnWidths.filter((columnWidth: ColumnWidthItem) => {
-                if (isAttributeColumnWidthItem(columnWidth)) {
-                    return identifiers.includes(columnWidth.attributeColumnWidthItem.attributeIdentifier);
-                }
-                return true;
-            });
-
-            return {
-                ...acc,
-                [key]: {
+    const result = Object.entries(properties).reduce(
+        (acc, [key, value]) => {
+            if (key === ENUM_PROPERTIES_TYPE.CONTROLS && value.columnWidths) {
+                const columns = value.columnWidths.filter((columnWidth: ColumnWidthItem) => {
+                    if (isAttributeColumnWidthItem(columnWidth)) {
+                        return identifiers.includes(columnWidth.attributeColumnWidthItem.attributeIdentifier);
+                    }
+                    return true;
+                });
+                acc[key] = {
                     columnWidths: columns,
-                },
-            };
-        }
+                };
+            }
 
-        return { ...acc };
-    }, properties);
+            return acc;
+        },
+        { ...properties },
+    );
 
     return insightSetProperties(insight, result);
 }

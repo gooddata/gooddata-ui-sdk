@@ -32,7 +32,7 @@ import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { getTranslation } from "./translations";
 
 import { SORT_DIR_DESC } from "../constants/sort";
-import { IBucketItem, IBucketOfFun, IExtendedReferencePoint } from "../interfaces/Visualization";
+import { IBucketItem, IExtendedReferencePoint } from "../interfaces/Visualization";
 import { IAvailableSortsGroup } from "../interfaces/SortConfig";
 
 export function getAttributeSortItem(
@@ -178,9 +178,10 @@ export function createSorts(
 
 export function getBucketItemIdentifiers(referencePoint: IExtendedReferencePoint): string[] {
     const buckets = referencePoint?.buckets ?? [];
-    return buckets.reduce((localIdentifiers: string[], bucket: IBucketOfFun): string[] => {
+    return buckets.reduce((localIdentifiers: string[], bucket): string[] => {
         const items = bucket?.items ?? [];
-        return localIdentifiers.concat(items.map((item: IBucketItem): string => item.localIdentifier));
+        localIdentifiers.push(...items.map((item) => item.localIdentifier));
+        return localIdentifiers;
     }, []);
 }
 

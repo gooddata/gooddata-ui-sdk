@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import invariant, { InvariantError } from "ts-invariant";
 import omit from "lodash/omit";
 import omitBy from "lodash/omitBy";
@@ -329,24 +329,20 @@ export class ResizedColumnsStore {
         columnWidths: ColumnWidthItem[] | undefined,
     ): IWeakMeasureColumnWidthItemsMap => {
         if (columnWidths) {
-            const onlyWeakWidthItems: IWeakMeasureColumnWidthItem[] = columnWidths.filter(
-                isWeakMeasureColumnWidthItem,
-            );
+            const onlyWeakWidthItems = columnWidths.filter(isWeakMeasureColumnWidthItem);
             return onlyWeakWidthItems.reduce(
                 (map: IWeakMeasureColumnWidthItemsMap, weakWidthItem: IWeakMeasureColumnWidthItem) => {
                     const validatedWidth = defaultWidthValidator(weakWidthItem.measureColumnWidthItem.width);
 
                     if (isAbsoluteColumnWidth(validatedWidth)) {
-                        return {
-                            ...map,
-                            [weakWidthItem.measureColumnWidthItem.locator.measureLocatorItem
-                                .measureIdentifier]: {
-                                measureColumnWidthItem: {
-                                    ...weakWidthItem.measureColumnWidthItem,
-                                    width: {
-                                        ...weakWidthItem.measureColumnWidthItem.width,
-                                        value: validatedWidth.value,
-                                    },
+                        map[
+                            weakWidthItem.measureColumnWidthItem.locator.measureLocatorItem.measureIdentifier
+                        ] = {
+                            measureColumnWidthItem: {
+                                ...weakWidthItem.measureColumnWidthItem,
+                                width: {
+                                    ...weakWidthItem.measureColumnWidthItem.width,
+                                    value: validatedWidth.value,
                                 },
                             },
                         };

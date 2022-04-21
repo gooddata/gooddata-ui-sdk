@@ -55,10 +55,9 @@ export function getColorPaletteMapping(colorStrategy: IColorStrategy): ColorPale
             const name: string = isResultAttributeHeader(item.headerItem)
                 ? item.headerItem.attributeHeaderItem.name
                 : DEFAULT_SEGMENT_ITEM;
-            return {
-                ...result,
-                [name]: colorPalette,
-            };
+
+            result[name] = colorPalette;
+            return result;
         },
         {},
     );

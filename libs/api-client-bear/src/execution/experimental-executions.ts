@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import SparkMD5 from "spark-md5";
 import invariant from "ts-invariant";
 import cloneDeep from "lodash/cloneDeep";
@@ -497,10 +497,10 @@ function getAttributesInBucket(bucket: any) {
 
 function getAttributes(mdObject: any) {
     const buckets = getBuckets(mdObject);
-    return buckets.reduce(
-        (categoriesList: any, bucket: any) => categoriesList.concat(getAttributesInBucket(bucket)),
-        [],
-    );
+    return buckets.reduce((categoriesList: any, bucket: any) => {
+        categoriesList.push(...getAttributesInBucket(bucket));
+        return categoriesList;
+    }, []);
 }
 
 function getDefinition(measure: any) {
@@ -518,10 +518,10 @@ function getMeasuresInBucket(bucket: any) {
 
 function getMeasures(mdObject: any) {
     const buckets = getBuckets(mdObject);
-    return buckets.reduce(
-        (measuresList: any, bucket: any) => measuresList.concat(getMeasuresInBucket(bucket)),
-        [],
-    );
+    return buckets.reduce((categoriesList: any, bucket: any) => {
+        categoriesList.push(...getMeasuresInBucket(bucket));
+        return categoriesList;
+    }, []);
 }
 
 function getMeasureFilters(measure: any) {

@@ -34,11 +34,7 @@ export function getCategoriesForTwoAttributes(
     const { items: parent } = viewByParentAttribute;
 
     const combinedResult = parent.reduce(
-        (
-            result: { [property: string]: NameAndCategories },
-            parentAttr: IResultAttributeHeader,
-            index: number,
-        ) => {
+        (result: Record<string, NameAndCategories>, parentAttr: IResultAttributeHeader, index: number) => {
             const uri = parentAttr?.attributeHeaderItem?.uri ?? "";
             const name = parentAttr?.attributeHeaderItem?.name ?? "";
             const value = children[index]?.attributeHeaderItem?.name ?? "";
@@ -50,13 +46,12 @@ export function getCategoriesForTwoAttributes(
                 keys.push(uri);
             }
 
-            return {
-                ...result,
-                [uri]: {
-                    name,
-                    categories: [...childCategories, value], // append value
-                },
+            result[uri] = {
+                name,
+                categories: [...childCategories, value], // append value
             };
+
+            return result;
         },
         {},
     );

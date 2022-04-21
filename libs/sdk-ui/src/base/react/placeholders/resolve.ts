@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import isArray from "lodash/isArray";
 import {
     IPlaceholder,
@@ -102,11 +102,13 @@ export function resolveValueWithPlaceholders<T, C>(
                 if (!resolvedValue) {
                     return acc;
                 } else if (isArray(resolvedValue)) {
-                    return [...acc, ...resolvedValue.filter((v) => typeof v !== "undefined")];
+                    acc.push(...resolvedValue.filter((v) => typeof v !== "undefined"));
+                    return acc;
                 }
             }
 
-            return [...acc, resolvedValue];
+            acc.push(resolvedValue);
+            return acc;
         }, []);
     }
 

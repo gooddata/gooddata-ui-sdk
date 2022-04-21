@@ -21,10 +21,9 @@ export const convertPermissions = ({ permissions }: GdcUser.IProjectPermissions)
     const workspacePermissions = Object.keys(permissions).reduce(
         (acc: Partial<IWorkspacePermissions>, permission) => {
             const hasPermission = permissions[permission as GdcUser.ProjectPermission];
-            return {
-                ...acc,
-                [permission]: hasPermission === "1",
-            };
+            // the cast is necessary here, otherwise the indexing does not work
+            (acc as any)[permission] = hasPermission === "1";
+            return acc;
         },
         {},
     );

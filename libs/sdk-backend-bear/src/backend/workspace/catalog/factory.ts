@@ -68,10 +68,8 @@ const createLookups = (
             const displayForm = displayFormByUri[displayFormUri];
             const attributeUri = displayForm.content.formOf;
             const attribute = attributeByUri[attributeUri];
-            return {
-                ...acc,
-                [displayFormUri]: attribute,
-            };
+            acc[displayFormUri] = attribute;
+            return acc;
         },
         {},
     );

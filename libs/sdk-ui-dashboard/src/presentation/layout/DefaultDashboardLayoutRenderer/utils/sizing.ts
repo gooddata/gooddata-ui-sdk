@@ -64,13 +64,11 @@ export function unifyDashboardLayoutItemHeights<TWidget>(
             sections: DashboardLayoutFacade.for(itemsOrLayout)
                 .sections()
                 .reduce((acc: IDashboardLayoutSection<TWidget>[], section) => {
-                    return [
-                        ...acc,
-                        {
-                            ...section.raw(),
-                            items: unifyDashboardLayoutItemHeights(section.items().raw()),
-                        },
-                    ];
+                    acc.push({
+                        ...section.raw(),
+                        items: unifyDashboardLayoutItemHeights(section.items().raw()),
+                    });
+                    return acc;
                 }, []),
         };
 

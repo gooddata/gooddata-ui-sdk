@@ -371,15 +371,14 @@ export function getItemsFromBuckets(
     localIdentifiers: string[],
     types?: string[],
 ): IBucketItem[] {
-    return localIdentifiers.reduce(
-        (bucketItems, localIdentifier) =>
-            bucketItems.concat(
-                types
-                    ? getBucketItemsByType(buckets, localIdentifier, types)
-                    : getBucketItems(buckets, localIdentifier),
-            ),
-        [],
-    );
+    return localIdentifiers.reduce((bucketItems: IBucketItem[], localIdentifier) => {
+        const toAdd = types
+            ? getBucketItemsByType(buckets, localIdentifier, types)
+            : getBucketItems(buckets, localIdentifier);
+
+        bucketItems.push(...toAdd);
+        return bucketItems;
+    }, []);
 }
 
 export function getBucketItemsByType(
@@ -432,10 +431,10 @@ function getAllBucketItemsByType(bucket: IBucketOfFun, types: string[]): IBucket
 }
 
 export function getAllItemsByType(buckets: IBucketOfFun[], types: string[]): IBucketItem[] {
-    return buckets.reduce(
-        (items: IBucketItem[], bucket: IBucketOfFun) => [...items, ...getAllBucketItemsByType(bucket, types)],
-        [],
-    );
+    return buckets.reduce((items: IBucketItem[], bucket: IBucketOfFun) => {
+        items.push(...getAllBucketItemsByType(bucket, types));
+        return items;
+    }, []);
 }
 
 export function removeDuplicateBucketItems(buckets: IBucketOfFun[]): IBucketOfFun[] {
@@ -501,7 +500,8 @@ export function getMeasureItems(buckets: IBucketOfFun[]): IBucketItem[] {
     const preference = [BucketNames.MEASURES, BucketNames.SECONDARY_MEASURES, BucketNames.TERTIARY_MEASURES];
     const preferredMeasures = preference.reduce((acc: IBucketItem[], pref) => {
         const prefBucketItems = getPreferredBucketItems(buckets, [pref], [METRIC]);
-        return [...acc, ...prefBucketItems];
+        acc.push(...prefBucketItems);
+        return acc;
     }, []);
 
     // if no preferred items are found, return all available items
@@ -572,17 +572,19 @@ export function getAllAttributeItemsWithPreference(
     buckets: IBucketOfFun[],
     preference: string[],
 ): IBucketItem[] {
-    const preferredAttributes = preference.reduce((acc, pref) => {
+    const preferredAttributes = preference.reduce((acc: IBucketItem[], pref) => {
         const prefBucket = getPreferredBucket(buckets, [pref], [ATTRIBUTE, DATE]);
-        return [...acc, ...(prefBucket?.items ?? [])];
+        if (prefBucket?.items?.length) {
+            acc.push(...prefBucket.items);
+        }
+        return acc;
     }, []);
     const allBucketNames = buckets.map((bucket) => bucket?.localIdentifier);
     const otherBucketNames = allBucketNames.filter((bucketName) => !includes(preference, bucketName));
-    const allOtherAttributes = otherBucketNames.reduce(
-        (attributes, bucketName) =>
-            attributes.concat(getBucketItemsByType(buckets, bucketName, [ATTRIBUTE, DATE])),
-        [],
-    );
+    const allOtherAttributes = otherBucketNames.reduce((attributes: IBucketItem[], bucketName) => {
+        attributes.push(...getBucketItemsByType(buckets, bucketName, [ATTRIBUTE, DATE]));
+        return attributes;
+    }, []);
     return [...preferredAttributes, ...allOtherAttributes];
 }
 
@@ -1000,10 +1002,10 @@ const getDateFilterRef = (filters: IFilters): ObjRef | undefined => {
 };
 
 export const isComparisonAvailable = (buckets: IBucketOfFun[], filters: IFilters): boolean => {
-    const itemsFromBucket: IBucketItem[] = buckets.reduce(
-        (acc: IBucketItem[], bucket: IBucketOfFun) => acc.concat(bucket.items),
-        [],
-    );
+    const itemsFromBucket: IBucketItem[] = buckets.reduce((acc: IBucketItem[], bucket) => {
+        acc.push(...bucket.items);
+        return acc;
+    }, []);
     const bucketDateItems = itemsFromBucket.filter(isDateBucketItem);
     const areDateBucketItemsEmpty = bucketDateItems.length === 0;
     const dateFilterRef = getDateFilterRef(filters);

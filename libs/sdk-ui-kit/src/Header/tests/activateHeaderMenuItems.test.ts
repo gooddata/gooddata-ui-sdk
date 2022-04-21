@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { getAccountMenuFeatureFlagsMock, getWorkspacePermissionsMock } from "./mock";
 import {
     generateHeaderMenuItemsGroups,
@@ -12,9 +12,10 @@ describe("activateHeaderMenuItems", () => {
     let items: IHeaderMenuItem[][];
 
     function findAllActiveIds(all: IHeaderMenuItem[][]): string[] {
-        return all.reduce((prev, current) => {
-            return [...prev, ...current.filter((item) => item.isActive).map((item) => item.key)];
-        }, [] as string[]);
+        return all.reduce((acc: string[], current) => {
+            acc.push(...current.filter((item) => item.isActive).map((item) => item.key));
+            return acc;
+        }, []);
     }
 
     beforeAll(() => {

@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import head from "lodash/head";
 import isEmpty from "lodash/isEmpty";
 
@@ -120,7 +120,7 @@ export function groupSeriesItemsByType(series: ISeriesItem[]): { [key: string]: 
     const primaryType = head(series)?.type;
 
     return series.reduce(
-        (result: { [key: string]: ISeriesItem[] }, item: ISeriesItem) => {
+        (result: Record<string, ISeriesItem[]>, item: ISeriesItem) => {
             if (primaryType === item.type) {
                 result.primaryItems.push(item);
             } else {

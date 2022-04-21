@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { GdcVisualizationObject } from "./GdcVisualizationObject";
 import IVisualizationObjectContent = GdcVisualizationObject.IVisualizationObjectContent;
 import IBucket = GdcVisualizationObject.IBucket;
@@ -23,11 +23,10 @@ function getAttributesInBucket(bucket: IBucket): IVisualizationAttributeContent[
 
 function getAttributes(mdObject: IVisualizationObjectContent): IVisualizationAttributeContent[] {
     const buckets = mdObject.buckets;
-    return buckets.reduce(
-        (categoriesList: IVisualizationAttributeContent[], bucket: IBucket) =>
-            categoriesList.concat(getAttributesInBucket(bucket)),
-        [],
-    );
+    return buckets.reduce((categoriesList: IVisualizationAttributeContent[], bucket: IBucket) => {
+        categoriesList.push(...getAttributesInBucket(bucket));
+        return categoriesList;
+    }, []);
 }
 
 function getMeasuresInBucket(bucket: IBucket): IMeasureContent[] {
@@ -47,11 +46,10 @@ function getDefinition(measure: IMeasureContent): IMeasureDefinition["measureDef
 
 function getMeasures(mdObject: IVisualizationObjectContent): IMeasureContent[] {
     const buckets = mdObject.buckets;
-    return buckets.reduce(
-        (measuresList: IMeasureContent[], bucket: IBucket) =>
-            measuresList.concat(getMeasuresInBucket(bucket)),
-        [],
-    );
+    return buckets.reduce((measuresList: IMeasureContent[], bucket: IBucket) => {
+        measuresList.push(...getMeasuresInBucket(bucket));
+        return measuresList;
+    }, []);
 }
 
 function getMeasureFilters(measure: IMeasureContent): Filter[] {
@@ -63,11 +61,10 @@ function getMeasureAttributeFilters(measure: IMeasureContent): AttributeFilter[]
 }
 
 function getAttributeFilters(mdObject: IVisualizationObjectContent): AttributeFilter[] {
-    return getMeasures(mdObject).reduce(
-        (filters: AttributeFilter[], measure: IMeasureContent) =>
-            filters.concat(getMeasureAttributeFilters(measure)),
-        [],
-    );
+    return getMeasures(mdObject).reduce((filters: AttributeFilter[], measure: IMeasureContent) => {
+        filters.push(...getMeasureAttributeFilters(measure));
+        return filters;
+    }, []);
 }
 
 function getAttributeFilterDisplayForm(measureFilter: AttributeFilter): string {

@@ -45,10 +45,7 @@ export const convertLayoutItemSize = (
     return allScreens.reduce((acc: IDashboardLayoutSizeByScreenSize, el) => {
         const size = column[el];
         if (size) {
-            return {
-                ...acc,
-                [el]: convertLayoutSize(size),
-            };
+            acc[el] = convertLayoutSize(size);
         }
 
         return acc;
