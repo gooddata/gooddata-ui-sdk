@@ -5,6 +5,7 @@ import { IHeatmapProps } from "@gooddata/sdk-ui-charts";
 
 import {
     IVisualizationDescriptor,
+    IVisualizationMeta,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor";
 import { PluggableHeatmap } from "./PluggableHeatmap";
@@ -52,6 +53,13 @@ export class HeatmapDescriptor extends BigChartDescriptor implements IVisualizat
         }),
         additionalFactories: chartAdditionalFactories(),
     });
+
+    public getMeta(): IVisualizationMeta {
+        return {
+            documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/heatmap_component.html",
+            supportsExport: true,
+        };
+    }
 
     private addFilters(source: IInsight, drillConfig: IDrillDownDefinition, event: IDrillEvent) {
         const clicked = drillDownFromAttributeLocalId(drillConfig);

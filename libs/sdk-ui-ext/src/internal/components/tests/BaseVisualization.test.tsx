@@ -24,7 +24,7 @@ import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
 import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { DummyVisConstruct } from "../pluggableVisualizations/tests/visConstruct.fixture";
 import { BaseChartDescriptor } from "../pluggableVisualizations/baseChart/BaseChartDescriptor";
-import { PluggableVisualizationFactory } from "../../interfaces/VisualizationDescriptor";
+import { IVisualizationMeta, PluggableVisualizationFactory } from "../../interfaces/VisualizationDescriptor";
 
 const { delay } = testUtils;
 const pluggableVisualizationGetExecutionMock = jest.fn(() => ({} as IPreparedExecution));
@@ -76,6 +76,9 @@ class DummyClass extends AbstractPluggableVisualization {
 class DummyClassDescriptor extends BaseChartDescriptor {
     public getFactory(): PluggableVisualizationFactory {
         return (params) => new DummyClass(params);
+    }
+    public getMeta(): IVisualizationMeta {
+        return { supportsExport: true };
     }
 }
 
@@ -135,6 +138,9 @@ describe("BaseVisualization", () => {
             public getFactory(): PluggableVisualizationFactory {
                 return (params) => new DummyTable(params);
             }
+            public getMeta(): IVisualizationMeta {
+                return { supportsExport: true };
+            }
         }
 
         const columnConstructorCall = jest.fn();
@@ -157,6 +163,9 @@ describe("BaseVisualization", () => {
         class DummyColumnDescriptor extends DummyClassDescriptor {
             public getFactory(): PluggableVisualizationFactory {
                 return () => new DummyColumn();
+            }
+            public getMeta(): IVisualizationMeta {
+                return { supportsExport: true };
             }
         }
 

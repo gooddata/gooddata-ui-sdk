@@ -1,8 +1,9 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { useCallback, useState } from "react";
 import invariant from "ts-invariant";
-import { IExtendedExportConfig, VisualizationTypes } from "@gooddata/sdk-ui";
-import { IInsightDefinition, insightVisualizationUrl, ObjRef } from "@gooddata/sdk-model";
+import { IExtendedExportConfig } from "@gooddata/sdk-ui";
+import { IInsightDefinition, ObjRef } from "@gooddata/sdk-model";
+import { getInsightVisualizationMeta } from "@gooddata/sdk-ui-ext";
 import { v4 as uuid } from "uuid";
 
 import {
@@ -18,15 +19,6 @@ import {
 } from "../../../model";
 import { useExportHandler } from "./useExportHandler";
 import { useExportDialogContext } from "../../dashboardContexts";
-
-// TODO: FET-910 this should be handled by the pluggable visualizations, not hardcoded here
-function canInsightBeExported(insight: IInsightDefinition) {
-    const insightVisUrl = insightVisualizationUrl(insight);
-
-    // currently Headline and its derivatives have the export disabled globally
-    const exportDisabledVisualizations = [VisualizationTypes.HEADLINE, VisualizationTypes.XIRR];
-    return !exportDisabledVisualizations.some((disabled) => insightVisUrl.includes(disabled));
-}
 
 export const useInsightExport = (config: {
     title: string;
@@ -53,7 +45,7 @@ export const useInsightExport = (config: {
         [widgetRef],
     );
 
-    const isInsightExportable = canInsightBeExported(insight);
+    const isInsightExportable = getInsightVisualizationMeta(insight).supportsExport;
     const isExportableToCsv = useDashboardSelector(selectIsExecutionResultExportableToCsvByRef(widgetRef));
     const isExportableToXlsx = useDashboardSelector(selectIsExecutionResultExportableToXlsxByRef(widgetRef));
 

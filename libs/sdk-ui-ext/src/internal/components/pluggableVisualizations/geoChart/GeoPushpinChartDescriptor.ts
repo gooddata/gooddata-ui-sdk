@@ -5,6 +5,7 @@ import { IGeoPushpinChartProps } from "@gooddata/sdk-ui-geo";
 
 import {
     IVisualizationDescriptor,
+    IVisualizationMeta,
     IVisualizationSizeInfo,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor";
@@ -78,6 +79,13 @@ export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IV
             getColorMappingPredicatePackage: "@gooddata/sdk-ui-geo",
         }),
     });
+
+    public getMeta(): IVisualizationMeta {
+        return {
+            documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/geo_pushpin_chart_component.html",
+            supportsExport: true,
+        };
+    }
 
     protected getMinHeight(enableCustomHeight: boolean): number {
         if (!enableCustomHeight) {

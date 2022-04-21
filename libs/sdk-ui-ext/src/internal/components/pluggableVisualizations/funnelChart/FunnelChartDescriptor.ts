@@ -4,6 +4,7 @@ import { BucketNames } from "@gooddata/sdk-ui";
 
 import {
     IVisualizationDescriptor,
+    IVisualizationMeta,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor";
 import { PluggableFunnelChart } from "./PluggableFunnelChart";
@@ -38,4 +39,10 @@ export class FunnelChartDescriptor extends BaseChartDescriptor implements IVisua
         }),
         additionalFactories: chartAdditionalFactories(),
     });
+
+    public getMeta(): IVisualizationMeta {
+        return {
+            supportsExport: true,
+        };
+    }
 }

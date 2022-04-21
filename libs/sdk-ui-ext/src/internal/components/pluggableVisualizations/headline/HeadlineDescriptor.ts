@@ -8,6 +8,7 @@ import {
     IVisualizationSizeInfo,
     IVisualizationDescriptor,
     PluggableVisualizationFactory,
+    IVisualizationMeta,
 } from "../../../interfaces/VisualizationDescriptor";
 import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor";
 import { PluggableHeadline } from "./PluggableHeadline";
@@ -86,4 +87,11 @@ export class HeadlineDescriptor implements IVisualizationDescriptor {
             filters: filtersInsightConversion("filters"),
         }),
     });
+
+    public getMeta(): IVisualizationMeta {
+        return {
+            documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/headline_component.html",
+            supportsExport: false,
+        };
+    }
 }

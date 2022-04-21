@@ -5,6 +5,7 @@ import { ILineChartProps } from "@gooddata/sdk-ui-charts";
 
 import {
     IVisualizationDescriptor,
+    IVisualizationMeta,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor";
 import { PluggableLineChart } from "./PluggableLineChart";
@@ -51,6 +52,13 @@ export class LineChartDescriptor extends BaseChartDescriptor implements IVisuali
         }),
         additionalFactories: chartAdditionalFactories(),
     });
+
+    public getMeta(): IVisualizationMeta {
+        return {
+            documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/line_chart_component.html",
+            supportsExport: true,
+        };
+    }
 
     private addFilters(source: IInsight, drillConfig: IDrillDownDefinition, event: IDrillEvent) {
         const cutIntersection = reverseAndTrimIntersection(drillConfig, event.drillContext.intersection);

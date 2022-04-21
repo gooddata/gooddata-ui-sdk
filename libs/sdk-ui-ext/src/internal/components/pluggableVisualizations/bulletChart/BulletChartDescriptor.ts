@@ -5,6 +5,7 @@ import { IBulletChartProps } from "@gooddata/sdk-ui-charts";
 
 import {
     IVisualizationDescriptor,
+    IVisualizationMeta,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor";
 import { PluggableBulletChart } from "./PluggableBulletChart";
@@ -59,6 +60,13 @@ export class BulletChartDescriptor extends BaseChartDescriptor implements IVisua
         }),
         additionalFactories: chartAdditionalFactories(),
     });
+
+    public getMeta(): IVisualizationMeta {
+        return {
+            documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/bullet_chart_component.html",
+            supportsExport: true,
+        };
+    }
 
     private addFiltersForBullet(insight: IInsight, drillConfig: IDrillDownDefinition, event: IDrillEvent) {
         const clicked = drillDownFromAttributeLocalId(drillConfig);

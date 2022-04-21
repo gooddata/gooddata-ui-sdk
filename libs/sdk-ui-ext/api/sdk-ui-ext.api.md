@@ -70,6 +70,9 @@ export const fluidLayoutDescriptor: FluidLayoutDescriptor;
 export function getInsightSizeInfo(insight: IInsightDefinition, settings: ISettings): IVisualizationSizeInfo;
 
 // @internal (undocumented)
+export function getInsightVisualizationMeta(insight: IInsightDefinition): IVisualizationMeta;
+
+// @internal (undocumented)
 export function getInsightWithAppliedDrillDown(insight: IInsight, drillEvent: IDrillEvent, drillDefinition: IDrillDownDefinition): IInsight;
 
 // @beta
@@ -183,6 +186,12 @@ export interface ISizeInfo {
     max?: number;
     // (undocumented)
     min?: number;
+}
+
+// @alpha
+export interface IVisualizationMeta {
+    documentationUrl?: string;
+    supportsExport: boolean;
 }
 
 // @alpha

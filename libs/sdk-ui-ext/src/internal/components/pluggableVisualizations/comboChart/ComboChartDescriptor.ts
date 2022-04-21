@@ -4,6 +4,7 @@ import { BucketNames } from "@gooddata/sdk-ui";
 
 import {
     IVisualizationDescriptor,
+    IVisualizationMeta,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor";
 import { PluggableComboChart } from "./PluggableComboChart";
@@ -42,4 +43,11 @@ export class ComboChartDescriptor extends BigChartDescriptor implements IVisuali
         }),
         additionalFactories: chartAdditionalFactories(),
     });
+
+    public getMeta(): IVisualizationMeta {
+        return {
+            documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/combo_chart_component.html",
+            supportsExport: true,
+        };
+    }
 }

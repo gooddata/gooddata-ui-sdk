@@ -83,6 +83,25 @@ export interface IEmbeddingCodeConfig {
 }
 
 /**
+ * Metadata of the visualization.
+ *
+ * @privateRemarks
+ * This should probably come from the visualizationClass objects, but that is not feasible right now.
+ *
+ * @alpha
+ */
+export interface IVisualizationMeta {
+    /**
+     * URL where documentation of the visualization can be found.
+     */
+    documentationUrl?: string;
+    /**
+     * If true, the visualization supports being exported (if the currently used backend supports exports as well).
+     */
+    supportsExport: boolean;
+}
+
+/**
  * @alpha
  * Visualization descriptor
  * Provides access to the visualization's factory and additional details about visualization
@@ -131,4 +150,9 @@ export interface IVisualizationDescriptor {
      * @returns the source code as a string
      */
     getEmbeddingCode?(insight: IInsightDefinition, config?: IEmbeddingCodeConfig): string;
+
+    /**
+     * Gets additional metadata related to the particular visualization.
+     */
+    getMeta(): IVisualizationMeta;
 }
