@@ -401,6 +401,9 @@ export class EditableLabelInner extends Component<IEditableLabelInnerProps, IEdi
 }
 
 // @internal (undocumented)
+export const EmbedInsightDialog: React_2.VFC<IEmbedInsightDialogProps>;
+
+// @internal (undocumented)
 export enum ENUM_KEY_CODE {
     // (undocumented)
     KEY_CODE_ENTER = 13,
@@ -1266,6 +1269,12 @@ export interface IEditableLabelState {
     textareaWidth: number;
     // (undocumented)
     value: string;
+}
+
+// @internal (undocumented)
+export interface IEmbedInsightDialogProps {
+    // (undocumented)
+    locale?: string;
 }
 
 // @internal (undocumented)

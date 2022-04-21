@@ -1478,5 +1478,25 @@
         "value": "empty value",
         "comment": "",
         "limit": 0
+    },
+    "embedInsightDialog.actions.close": {
+        "value": "Close",
+        "comment": "",
+        "limit": 0
+    },
+    "embedInsightDialog.actions.copyCode": {
+        "value": "Copy code",
+        "comment": "",
+        "limit": 0
+    },
+    "embedInsightDialog.headLine.byReference": {
+        "value": "Embed insight by reference",
+        "comment": "",
+        "limit": 0
+    },
+    "embedInsightDialog.headLine.byDefinition": {
+        "value": "Embed insight as a copy of it's definition",
+        "comment": "",
+        "limit": 0
     }
 }
