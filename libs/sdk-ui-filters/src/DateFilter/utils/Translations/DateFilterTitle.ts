@@ -35,7 +35,7 @@ export const formatAbsoluteDateRange = (
         return fromTitle;
     }
 
-    return `${fromTitle}\u2013${toTitle}`;
+    return `${fromTitle} - ${toTitle}`;
 };
 
 const relativeDateRangeFormatters: Array<{
