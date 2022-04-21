@@ -27,6 +27,7 @@ const DefaultDateFilterConfig: IDateFilterConfig = {
             "GDC.time.minute",
             "GDC.time.hour",
             "GDC.time.date",
+            "GDC.time.week_us",
             "GDC.time.quarter",
             "GDC.time.year",
         ],
