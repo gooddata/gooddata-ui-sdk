@@ -246,7 +246,7 @@
         "limit": 0
     },
     "dialogs.schedule.email.filters.not.saved": {
-        "value": "The schedule will be saved with the original filter settings.",
+        "value": "Dashboard filters saved in the schedule will not be affected.",
         "comment": "",
         "limit": 0
     },
