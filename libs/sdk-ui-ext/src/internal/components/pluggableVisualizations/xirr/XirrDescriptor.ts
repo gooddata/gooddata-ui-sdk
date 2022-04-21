@@ -7,6 +7,7 @@ import {
     IVisualizationSizeInfo,
     IVisualizationDescriptor,
     PluggableVisualizationFactory,
+    IVisualizationMeta,
 } from "../../../interfaces/VisualizationDescriptor";
 import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor";
 import { PluggableXirr } from "./PluggableXirr";
@@ -80,4 +81,10 @@ export class XirrDescriptor implements IVisualizationDescriptor {
             filters: filtersInsightConversion("filters"),
         }),
     });
+
+    public getMeta(): IVisualizationMeta {
+        return {
+            supportsExport: false,
+        };
+    }
 }

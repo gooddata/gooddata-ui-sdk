@@ -2,7 +2,10 @@
 import { IScatterPlotProps } from "@gooddata/sdk-ui-charts";
 import { BucketNames } from "@gooddata/sdk-ui";
 
-import { PluggableVisualizationFactory } from "../../../interfaces/VisualizationDescriptor";
+import {
+    IVisualizationMeta,
+    PluggableVisualizationFactory,
+} from "../../../interfaces/VisualizationDescriptor";
 import { PluggableScatterPlot } from "./PluggableScatterPlot";
 import { BigChartDescriptor } from "../BigChartDescriptor";
 import {
@@ -36,4 +39,11 @@ export class ScatterPlotDescriptor extends BigChartDescriptor {
         }),
         additionalFactories: chartAdditionalFactories(),
     });
+
+    public getMeta(): IVisualizationMeta {
+        return {
+            documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/scatter_plot_component.html",
+            supportsExport: true,
+        };
+    }
 }

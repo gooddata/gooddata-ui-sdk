@@ -18,6 +18,7 @@ import {
     FullVisualizationCatalog,
     IDrillDownDefinition,
     IVisualizationSizeInfo,
+    IVisualizationMeta,
 } from "./internal";
 
 export { clearInsightViewCaches } from "./dataLoaders";
@@ -28,6 +29,7 @@ export {
     IDrillDownDefinition,
     isDrillDownDefinition,
     IVisualizationSizeInfo,
+    IVisualizationMeta,
     ISizeInfo,
     fluidLayoutDescriptor,
     FluidLayoutDescriptor,
@@ -66,4 +68,11 @@ export function getInsightWithAppliedDrillDown(
         drillDefinition,
         event: drillEvent,
     });
+}
+
+/**
+ * @internal
+ */
+export function getInsightVisualizationMeta(insight: IInsightDefinition): IVisualizationMeta {
+    return FullVisualizationCatalog.forInsight(insight).getMeta();
 }

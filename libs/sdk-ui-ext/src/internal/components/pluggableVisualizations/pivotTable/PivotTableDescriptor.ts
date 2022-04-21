@@ -9,6 +9,7 @@ import { BucketNames } from "@gooddata/sdk-ui";
 
 import {
     IVisualizationDescriptor,
+    IVisualizationMeta,
     IVisualizationSizeInfo,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor";
@@ -110,6 +111,13 @@ export class PivotTableDescriptor extends BaseChartDescriptor implements IVisual
             },
         ],
     });
+
+    public getMeta(): IVisualizationMeta {
+        return {
+            documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/pivot_table_component.html",
+            supportsExport: true,
+        };
+    }
 }
 
 function factoryNotationForAttributeColumnWidthItem(obj: IAttributeColumnWidthItem): string {

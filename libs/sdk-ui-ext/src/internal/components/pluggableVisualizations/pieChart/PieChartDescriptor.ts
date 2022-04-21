@@ -4,6 +4,7 @@ import { BucketNames } from "@gooddata/sdk-ui";
 
 import {
     IVisualizationDescriptor,
+    IVisualizationMeta,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor";
 import { PluggablePieChart } from "./PluggablePieChart";
@@ -38,4 +39,11 @@ export class PieChartDescriptor extends BaseChartDescriptor implements IVisualiz
         }),
         additionalFactories: chartAdditionalFactories(),
     });
+
+    public getMeta(): IVisualizationMeta {
+        return {
+            documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/pie_chart_component.html",
+            supportsExport: true,
+        };
+    }
 }

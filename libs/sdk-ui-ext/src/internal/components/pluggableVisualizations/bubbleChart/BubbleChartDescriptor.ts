@@ -4,6 +4,7 @@ import { BucketNames } from "@gooddata/sdk-ui";
 
 import {
     IVisualizationDescriptor,
+    IVisualizationMeta,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor";
 import { PluggableBubbleChart } from "./PluggableBubbleChart";
@@ -40,4 +41,11 @@ export class BubbleChartDescriptor extends BigChartDescriptor implements IVisual
         }),
         additionalFactories: chartAdditionalFactories(),
     });
+
+    public getMeta(): IVisualizationMeta {
+        return {
+            documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/bubble_chart_component.html",
+            supportsExport: true,
+        };
+    }
 }

@@ -3,7 +3,10 @@ import { IInsight } from "@gooddata/sdk-model";
 import { BucketNames, IDrillEvent } from "@gooddata/sdk-ui";
 import { ITreemapProps } from "@gooddata/sdk-ui-charts";
 
-import { PluggableVisualizationFactory } from "../../../interfaces/VisualizationDescriptor";
+import {
+    IVisualizationMeta,
+    PluggableVisualizationFactory,
+} from "../../../interfaces/VisualizationDescriptor";
 import { PluggableTreemap } from "./PluggableTreemap";
 import { BigChartDescriptor } from "../BigChartDescriptor";
 import {
@@ -46,6 +49,13 @@ export class TreemapDescriptor extends BigChartDescriptor {
         }),
         additionalFactories: chartAdditionalFactories(),
     });
+
+    public getMeta(): IVisualizationMeta {
+        return {
+            documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/treemap_component.html",
+            supportsExport: true,
+        };
+    }
 
     private addFilters(source: IInsight, drillConfig: IDrillDownDefinition, event: IDrillEvent) {
         const cutIntersection = reverseAndTrimIntersection(drillConfig, event.drillContext.intersection);

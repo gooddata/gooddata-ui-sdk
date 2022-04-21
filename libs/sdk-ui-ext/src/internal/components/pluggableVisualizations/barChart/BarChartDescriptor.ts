@@ -11,6 +11,7 @@ import { IBarChartProps } from "@gooddata/sdk-ui-charts";
 
 import {
     IVisualizationDescriptor,
+    IVisualizationMeta,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor";
 import { PluggableBarChart } from "./PluggableBarChart";
@@ -59,6 +60,13 @@ export class BarChartDescriptor extends BaseChartDescriptor implements IVisualiz
         }),
         additionalFactories: chartAdditionalFactories(),
     });
+
+    public getMeta(): IVisualizationMeta {
+        return {
+            documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/bar_chart_component.html",
+            supportsExport: true,
+        };
+    }
 
     private adjustIntersectionForColumnBar(
         source: IInsight,

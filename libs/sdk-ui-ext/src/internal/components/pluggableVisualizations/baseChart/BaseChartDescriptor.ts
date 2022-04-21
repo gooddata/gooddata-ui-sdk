@@ -4,6 +4,7 @@ import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
 
 import {
     IVisualizationDescriptor,
+    IVisualizationMeta,
     IVisualizationSizeInfo,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor";
@@ -20,6 +21,7 @@ import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } 
 
 export abstract class BaseChartDescriptor implements IVisualizationDescriptor {
     public abstract getFactory(): PluggableVisualizationFactory;
+    public abstract getMeta(): IVisualizationMeta;
 
     public getSizeInfo(
         _insight: IInsightDefinition,

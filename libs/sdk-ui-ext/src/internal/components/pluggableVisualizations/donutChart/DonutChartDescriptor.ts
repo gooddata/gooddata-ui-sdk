@@ -4,6 +4,7 @@ import { BucketNames } from "@gooddata/sdk-ui";
 
 import {
     IVisualizationDescriptor,
+    IVisualizationMeta,
     PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor";
 import { PluggableDonutChart } from "./PluggableDonutChart";
@@ -38,4 +39,11 @@ export class DonutChartDescriptor extends BaseChartDescriptor implements IVisual
         }),
         additionalFactories: chartAdditionalFactories(),
     });
+
+    public getMeta(): IVisualizationMeta {
+        return {
+            documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/donut_chart_component.html",
+            supportsExport: true,
+        };
+    }
 }
