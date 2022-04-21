@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 
-import { IFilterContextDefinition, IScheduledMailDefinition } from "@gooddata/sdk-model";
+import { IFilterContextDefinition, IScheduledMailDefinition, ObjRef } from "@gooddata/sdk-model";
 import { IDashboardCommand } from "./base";
 
 /**
@@ -74,12 +74,17 @@ export interface SaveScheduledEmailPayload {
      * The scheduled email to save.
      */
     readonly scheduledEmail: IScheduledMailDefinition;
+    /**
+     * optionally specify existing filter context reference to be used for all attachments
+     */
+    readonly filterContextRef?: ObjRef;
 }
 
 /**
  * Saves existing SaveScheduledEmail command. Dispatching this command will result in saving scheduled email on the backend.
  *
  * @param scheduledEmail - specify scheduled email to save.
+ * @param filterContextRef - optionally specify existing filter context reference to be used for all attachments
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
 
@@ -87,6 +92,7 @@ export interface SaveScheduledEmailPayload {
  */
 export function saveScheduledEmail(
     scheduledEmail: IScheduledMailDefinition,
+    filterContextRef?: ObjRef,
     correlationId?: string,
 ): SaveScheduledEmail {
     return {
@@ -94,6 +100,7 @@ export function saveScheduledEmail(
         correlationId,
         payload: {
             scheduledEmail,
+            filterContextRef,
         },
     };
 }

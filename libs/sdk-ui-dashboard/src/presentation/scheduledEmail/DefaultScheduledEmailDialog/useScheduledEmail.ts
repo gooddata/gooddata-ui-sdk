@@ -232,9 +232,12 @@ export const useScheduledEmail = (props: UseScheduledEmailProps): UseScheduledEm
         onBeforeRun: onSave,
     });
 
-    const handleSaveScheduledEmail = useCallback((scheduledEmail: IScheduledMailDefinition) => {
-        scheduledEmailSaver.save(scheduledEmail);
-    }, []);
+    const handleSaveScheduledEmail = useCallback(
+        (scheduledEmail: IScheduledMailDefinition, filterContextRef?: ObjRef) => {
+            scheduledEmailSaver.save(scheduledEmail, filterContextRef);
+        },
+        [],
+    );
     const scheduledEmailSavingStatus = scheduledEmailSaver.savingStatus;
 
     return {

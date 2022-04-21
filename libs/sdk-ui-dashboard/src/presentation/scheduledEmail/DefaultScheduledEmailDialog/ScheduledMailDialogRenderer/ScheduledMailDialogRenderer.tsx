@@ -154,7 +154,7 @@ export interface IScheduledMailDialogRendererOwnProps {
     /**
      * Callback to be called, when user saves the existing schedule.
      */
-    onSave?: (scheduledEmailData: IScheduledMailDefinition) => void;
+    onSave?: (scheduledEmailData: IScheduledMailDefinition, filterContextRef?: ObjRef) => void;
 
     /**
      * Callback to be called, when error occurs.
@@ -611,7 +611,8 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
         const { onSubmit, onSave, editSchedule } = this.props;
         if (editSchedule) {
             if (onSave) {
-                onSave(this.getScheduleEmailData());
+                const originalFilterContext = editSchedule?.attachments[0]?.filterContext;
+                onSave(this.getScheduleEmailData(), originalFilterContext);
             }
         } else {
             if (onSubmit) {

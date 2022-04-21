@@ -1,6 +1,6 @@
 // (C) 2020-2021 GoodData Corporation
 import { useCallback } from "react";
-import { IScheduledMailDefinition } from "@gooddata/sdk-model";
+import { IScheduledMailDefinition, ObjRef } from "@gooddata/sdk-model";
 import { CommandProcessingStatus, saveScheduledEmail, useDashboardCommandProcessing } from "../../../model";
 
 export const useSaveScheduledEmail = ({
@@ -12,7 +12,7 @@ export const useSaveScheduledEmail = ({
     onSuccess?: () => void;
     onError?: (error: any) => void;
 } = {}): {
-    save: (scheduledEmailToSave: IScheduledMailDefinition) => void;
+    save: (scheduledEmailToSave: IScheduledMailDefinition, filterContextRef?: ObjRef) => void;
     savingStatus?: CommandProcessingStatus;
 } => {
     const scheduledEmailCommandProcessing = useDashboardCommandProcessing({
@@ -30,8 +30,8 @@ export const useSaveScheduledEmail = ({
         },
     });
 
-    const save = useCallback((scheduledEmailToSave: IScheduledMailDefinition) => {
-        scheduledEmailCommandProcessing.run(scheduledEmailToSave);
+    const save = useCallback((scheduledEmailToSave: IScheduledMailDefinition, filterContextRef?: ObjRef) => {
+        scheduledEmailCommandProcessing.run(scheduledEmailToSave, filterContextRef);
     }, []);
 
     return {

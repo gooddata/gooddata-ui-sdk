@@ -311,8 +311,17 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
     public updateScheduledMail = async (
         ref: ObjRef,
         scheduledMailDefinition: IScheduledMailDefinition,
+        filterContextRef?: ObjRef,
     ): Promise<void> => {
-        const convertedScheduledMail = fromSdkModel.convertScheduledMail(scheduledMailDefinition);
+        const scheduledMailWithFilterContext = {
+            ...scheduledMailDefinition,
+            attachments: scheduledMailDefinition.attachments.map((attachment) => ({
+                ...attachment,
+                filterContext: filterContextRef,
+            })),
+        };
+
+        const convertedScheduledMail = fromSdkModel.convertScheduledMail(scheduledMailWithFilterContext);
 
         await this.updateBearMetadataObject(ref, convertedScheduledMail);
     };

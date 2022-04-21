@@ -248,9 +248,14 @@ export interface IWorkspaceDashboardsService {
      *
      * @param ref - reference to the existing scheduled email object
      * @param scheduledMail - scheduled email definition
+     * @param filterContextRef - optional reference to an existing filter context to be used in all attachments
      * @returns promise of the updated scheduled email
      */
-    updateScheduledMail(ref: ObjRef, scheduledMail: IScheduledMailDefinition): Promise<void>;
+    updateScheduledMail(
+        ref: ObjRef,
+        scheduledMail: IScheduledMailDefinition,
+        filterContextRef?: ObjRef,
+    ): Promise<void>;
 
     /**
      * Delete scheduled mail
