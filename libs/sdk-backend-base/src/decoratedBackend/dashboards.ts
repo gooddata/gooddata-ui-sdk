@@ -84,8 +84,12 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
         return this.decorated.createScheduledMail(scheduledMail, exportFilterContext);
     }
 
-    updateScheduledMail(ref: ObjRef, scheduledMailDefinition: IScheduledMailDefinition): Promise<void> {
-        return this.decorated.updateScheduledMail(ref, scheduledMailDefinition);
+    updateScheduledMail(
+        ref: ObjRef,
+        scheduledMailDefinition: IScheduledMailDefinition,
+        filterContextRef?: ObjRef,
+    ): Promise<void> {
+        return this.decorated.updateScheduledMail(ref, scheduledMailDefinition, filterContextRef);
     }
 
     deleteScheduledMail(ref: ObjRef): Promise<void> {

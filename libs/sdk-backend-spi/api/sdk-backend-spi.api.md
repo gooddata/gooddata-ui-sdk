@@ -1637,7 +1637,7 @@ export interface IWorkspaceDashboardsService {
     getWidgetAlertsCountForWidgets(refs: ObjRef[]): Promise<IWidgetAlertCount[]>;
     getWidgetReferencedObjects(widget: IWidget_2, types?: SupportedWidgetReferenceTypes[]): Promise<IWidgetReferences>;
     updateDashboard(dashboard: IDashboard_2, updatedDashboard: IDashboardDefinition_2): Promise<IDashboard_2>;
-    updateScheduledMail(ref: ObjRef, scheduledMail: IScheduledMailDefinition_2): Promise<void>;
+    updateScheduledMail(ref: ObjRef, scheduledMail: IScheduledMailDefinition_2, filterContextRef?: ObjRef): Promise<void>;
     updateWidgetAlert(alert: IWidgetAlert_2 | IWidgetAlertDefinition_2): Promise<IWidgetAlert_2>;
     // (undocumented)
     readonly workspace: string;

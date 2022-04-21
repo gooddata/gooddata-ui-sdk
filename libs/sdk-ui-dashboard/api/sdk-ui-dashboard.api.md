@@ -4164,10 +4164,11 @@ export interface SaveScheduledEmail extends IDashboardCommand {
 }
 
 // @alpha
-export function saveScheduledEmail(scheduledEmail: IScheduledMailDefinition, correlationId?: string): SaveScheduledEmail;
+export function saveScheduledEmail(scheduledEmail: IScheduledMailDefinition, filterContextRef?: ObjRef, correlationId?: string): SaveScheduledEmail;
 
 // @alpha
 export interface SaveScheduledEmailPayload {
+    readonly filterContextRef?: ObjRef;
     readonly scheduledEmail: IScheduledMailDefinition;
 }
 
