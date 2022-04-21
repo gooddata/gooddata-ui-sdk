@@ -24,11 +24,11 @@ const playgroundDefinitions = {
 };
 
 module.exports = async (env, argv) => {
-    const backendParam = (env && env.backend) || "public";
+    const backendParam = env?.backend || "public";
     const [backendUrl, workspace] = playgroundDefinitions[backendParam] || playgroundDefinitions.public;
 
     // eslint-disable-next-line no-mixed-operators
-    const basePath = (env && env.basePath) || "";
+    const basePath = env?.basePath || "";
 
     // eslint-disable-next-line no-console
     console.log("Backend URI:", backendUrl, "Workspace to use:", workspace);
