@@ -23,9 +23,9 @@ const backendShortcuts = {
 };
 
 module.exports = async (env, argv) => {
-    const backendParam = (env && env.backend) || "public";
+    const backendParam = env?.backend || "public";
 
-    const basePath = (env && env.basePath) || ""; // eslint-disable-line no-mixed-operators
+    const basePath = env?.basePath || ""; // eslint-disable-line no-mixed-operators
     const backendUrl = backendShortcuts[backendParam] || backendParam;
     console.log("Backend URI: ", backendUrl); // eslint-disable-line no-console
 
