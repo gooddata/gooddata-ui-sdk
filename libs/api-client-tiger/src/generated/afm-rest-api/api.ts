@@ -2456,20 +2456,12 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (offset !== undefined) {
-                if (typeof offset === "object") {
-                    addFlattenedObjectTo(offset, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["offset"] = offset;
-                }
+            if (offset) {
+                localVarQueryParameter["offset"] = offset.join(COLLECTION_FORMATS.csv);
             }
 
-            if (limit !== undefined) {
-                if (typeof limit === "object") {
-                    addFlattenedObjectTo(limit, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["limit"] = limit;
-                }
+            if (limit) {
+                localVarQueryParameter["limit"] = limit.join(COLLECTION_FORMATS.csv);
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };

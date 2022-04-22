@@ -7812,12 +7812,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -8056,12 +8052,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -8128,12 +8120,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -8186,12 +8174,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -8244,12 +8228,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -8317,12 +8297,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -8394,12 +8370,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -8456,12 +8428,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -9304,12 +9272,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             if (page !== undefined) {
@@ -9328,12 +9292,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort !== undefined) {
-                if (typeof sort === "object") {
-                    addFlattenedObjectTo(sort, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["sort"] = sort;
-                }
+            if (sort) {
+                localVarQueryParameter["sort"] = sort;
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -9427,12 +9387,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort !== undefined) {
-                if (typeof sort === "object") {
-                    addFlattenedObjectTo(sort, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["sort"] = sort;
-                }
+            if (sort) {
+                localVarQueryParameter["sort"] = sort;
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
@@ -9509,12 +9465,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             if (page !== undefined) {
@@ -9533,12 +9485,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort !== undefined) {
-                if (typeof sort === "object") {
-                    addFlattenedObjectTo(sort, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["sort"] = sort;
-                }
+            if (sort) {
+                localVarQueryParameter["sort"] = sort;
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -9634,12 +9582,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort !== undefined) {
-                if (typeof sort === "object") {
-                    addFlattenedObjectTo(sort, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["sort"] = sort;
-                }
+            if (sort) {
+                localVarQueryParameter["sort"] = sort;
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -9723,20 +9667,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort !== undefined) {
-                if (typeof sort === "object") {
-                    addFlattenedObjectTo(sort, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["sort"] = sort;
-                }
+            if (sort) {
+                localVarQueryParameter["sort"] = sort;
             }
 
-            if (metaInclude !== undefined) {
-                if (typeof metaInclude === "object") {
-                    addFlattenedObjectTo(metaInclude, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["metaInclude"] = metaInclude;
-                }
+            if (metaInclude) {
+                localVarQueryParameter["metaInclude"] = metaInclude.join(COLLECTION_FORMATS.csv);
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
@@ -9824,12 +9760,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort !== undefined) {
-                if (typeof sort === "object") {
-                    addFlattenedObjectTo(sort, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["sort"] = sort;
-                }
+            if (sort) {
+                localVarQueryParameter["sort"] = sort;
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
@@ -9907,20 +9839,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort !== undefined) {
-                if (typeof sort === "object") {
-                    addFlattenedObjectTo(sort, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["sort"] = sort;
-                }
+            if (sort) {
+                localVarQueryParameter["sort"] = sort;
             }
 
-            if (metaInclude !== undefined) {
-                if (typeof metaInclude === "object") {
-                    addFlattenedObjectTo(metaInclude, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["metaInclude"] = metaInclude;
-                }
+            if (metaInclude) {
+                localVarQueryParameter["metaInclude"] = metaInclude.join(COLLECTION_FORMATS.csv);
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
@@ -9997,12 +9921,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             if (page !== undefined) {
@@ -10021,12 +9941,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort !== undefined) {
-                if (typeof sort === "object") {
-                    addFlattenedObjectTo(sort, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["sort"] = sort;
-                }
+            if (sort) {
+                localVarQueryParameter["sort"] = sort;
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -10109,12 +10025,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             if (page !== undefined) {
@@ -10133,12 +10045,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort !== undefined) {
-                if (typeof sort === "object") {
-                    addFlattenedObjectTo(sort, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["sort"] = sort;
-                }
+            if (sort) {
+                localVarQueryParameter["sort"] = sort;
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -10221,12 +10129,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             if (page !== undefined) {
@@ -10245,12 +10149,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort !== undefined) {
-                if (typeof sort === "object") {
-                    addFlattenedObjectTo(sort, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["sort"] = sort;
-                }
+            if (sort) {
+                localVarQueryParameter["sort"] = sort;
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -10333,12 +10233,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             if (page !== undefined) {
@@ -10357,12 +10253,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort !== undefined) {
-                if (typeof sort === "object") {
-                    addFlattenedObjectTo(sort, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["sort"] = sort;
-                }
+            if (sort) {
+                localVarQueryParameter["sort"] = sort;
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -10445,12 +10337,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             if (page !== undefined) {
@@ -10469,12 +10357,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort !== undefined) {
-                if (typeof sort === "object") {
-                    addFlattenedObjectTo(sort, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["sort"] = sort;
-                }
+            if (sort) {
+                localVarQueryParameter["sort"] = sort;
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -10542,12 +10426,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             if (page !== undefined) {
@@ -10566,12 +10446,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort !== undefined) {
-                if (typeof sort === "object") {
-                    addFlattenedObjectTo(sort, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["sort"] = sort;
-                }
+            if (sort) {
+                localVarQueryParameter["sort"] = sort;
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
@@ -10633,12 +10509,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             if (page !== undefined) {
@@ -10657,12 +10529,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort !== undefined) {
-                if (typeof sort === "object") {
-                    addFlattenedObjectTo(sort, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["sort"] = sort;
-                }
+            if (sort) {
+                localVarQueryParameter["sort"] = sort;
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
@@ -10739,12 +10607,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             if (page !== undefined) {
@@ -10763,12 +10627,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort !== undefined) {
-                if (typeof sort === "object") {
-                    addFlattenedObjectTo(sort, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["sort"] = sort;
-                }
+            if (sort) {
+                localVarQueryParameter["sort"] = sort;
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -10851,12 +10711,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             if (page !== undefined) {
@@ -10875,12 +10731,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort !== undefined) {
-                if (typeof sort === "object") {
-                    addFlattenedObjectTo(sort, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["sort"] = sort;
-                }
+            if (sort) {
+                localVarQueryParameter["sort"] = sort;
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -10963,12 +10815,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             if (page !== undefined) {
@@ -10987,12 +10835,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort !== undefined) {
-                if (typeof sort === "object") {
-                    addFlattenedObjectTo(sort, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["sort"] = sort;
-                }
+            if (sort) {
+                localVarQueryParameter["sort"] = sort;
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -11062,12 +10906,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             if (page !== undefined) {
@@ -11086,20 +10926,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort !== undefined) {
-                if (typeof sort === "object") {
-                    addFlattenedObjectTo(sort, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["sort"] = sort;
-                }
+            if (sort) {
+                localVarQueryParameter["sort"] = sort;
             }
 
-            if (metaInclude !== undefined) {
-                if (typeof metaInclude === "object") {
-                    addFlattenedObjectTo(metaInclude, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["metaInclude"] = metaInclude;
-                }
+            if (metaInclude) {
+                localVarQueryParameter["metaInclude"] = metaInclude.join(COLLECTION_FORMATS.csv);
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
@@ -11242,12 +11074,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -11402,12 +11230,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -11623,12 +11447,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (metaInclude !== undefined) {
-                if (typeof metaInclude === "object") {
-                    addFlattenedObjectTo(metaInclude, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["metaInclude"] = metaInclude;
-                }
+            if (metaInclude) {
+                localVarQueryParameter["metaInclude"] = metaInclude.join(COLLECTION_FORMATS.csv);
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
@@ -11767,12 +11587,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (metaInclude !== undefined) {
-                if (typeof metaInclude === "object") {
-                    addFlattenedObjectTo(metaInclude, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["metaInclude"] = metaInclude;
-                }
+            if (metaInclude) {
+                localVarQueryParameter["metaInclude"] = metaInclude.join(COLLECTION_FORMATS.csv);
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
@@ -11850,12 +11666,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -11939,12 +11751,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -12028,12 +11836,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -12117,12 +11921,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -12206,12 +12006,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -12287,20 +12083,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
-            if (metaInclude !== undefined) {
-                if (typeof metaInclude === "object") {
-                    addFlattenedObjectTo(metaInclude, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["metaInclude"] = metaInclude;
-                }
+            if (metaInclude) {
+                localVarQueryParameter["metaInclude"] = metaInclude.join(COLLECTION_FORMATS.csv);
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
@@ -12368,12 +12156,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
@@ -12441,12 +12225,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
@@ -12524,12 +12304,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -12614,12 +12390,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -12703,12 +12475,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -12784,20 +12552,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
-            if (metaInclude !== undefined) {
-                if (typeof metaInclude === "object") {
-                    addFlattenedObjectTo(metaInclude, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["metaInclude"] = metaInclude;
-                }
+            if (metaInclude) {
+                localVarQueryParameter["metaInclude"] = metaInclude.join(COLLECTION_FORMATS.csv);
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
@@ -12834,12 +12594,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (metaInclude !== undefined) {
-                if (typeof metaInclude === "object") {
-                    addFlattenedObjectTo(metaInclude, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["metaInclude"] = metaInclude;
-                }
+            if (metaInclude) {
+                localVarQueryParameter["metaInclude"] = metaInclude.join(COLLECTION_FORMATS.csv);
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
@@ -12943,12 +12699,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -13226,12 +12978,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -13328,12 +13076,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -13418,12 +13162,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -13510,12 +13250,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -13618,12 +13354,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -13730,12 +13462,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -13824,12 +13552,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -13943,12 +13667,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -14303,12 +14023,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -14403,12 +14119,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -14493,12 +14205,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -14585,12 +14293,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -14675,12 +14379,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -14783,12 +14483,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -14895,12 +14591,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -14989,12 +14681,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
