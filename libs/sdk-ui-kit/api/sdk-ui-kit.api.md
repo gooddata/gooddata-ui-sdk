@@ -1276,7 +1276,7 @@ export interface IEmbedInsightDialogBaseProps {
     // (undocumented)
     code: string;
     // (undocumented)
-    codeByReference: boolean;
+    codeType: InsightCodeType;
     // (undocumented)
     onClose: () => void;
     // (undocumented)
@@ -2503,6 +2503,9 @@ export interface InputWithNumberFormatState {
     // (undocumented)
     value: number;
 }
+
+// @internal (undocumented)
+export type InsightCodeType = "definition" | "reference";
 
 // @internal (undocumented)
 export const InsightIcon: React_2.FC<IInsightIconProps>;

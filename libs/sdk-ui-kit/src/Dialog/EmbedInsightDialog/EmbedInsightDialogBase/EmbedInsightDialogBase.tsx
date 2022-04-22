@@ -8,8 +8,13 @@ import { ConfirmDialogBase } from "../../ConfirmDialogBase";
 /**
  * @internal
  */
+export type InsightCodeType = "definition" | "reference";
+
+/**
+ * @internal
+ */
 export interface IEmbedInsightDialogBaseProps {
-    codeByReference: boolean;
+    codeType: InsightCodeType;
     code: string;
     onClose: () => void;
     onCopyCode: () => void;
@@ -19,13 +24,14 @@ export interface IEmbedInsightDialogBaseProps {
  * @internal
  */
 export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (props) => {
-    const { code, codeByReference, onClose, onCopyCode } = props;
+    const { code, codeType, onClose, onCopyCode } = props;
 
     const intl = useIntl();
 
-    const dialogLabelId = codeByReference
-        ? "embedInsightDialog.headLine.byReference"
-        : "embedInsightDialog.headLine.byDefinition";
+    const dialogLabelId =
+        codeType === "definition"
+            ? "embedInsightDialog.headLine.byDefinition"
+            : "embedInsightDialog.headLine.byReference";
 
     return (
         <ConfirmDialogBase

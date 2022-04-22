@@ -89,6 +89,10 @@ export interface IDrillDownDefinition {
 // @internal (undocumented)
 export interface IEmbedInsightDialogProps {
     // (undocumented)
+    backend?: IAnalyticalBackend;
+    // (undocumented)
+    colorPalette?: IColorPalette;
+    // (undocumented)
     insight: IInsight;
     // (undocumented)
     locale?: string;
@@ -96,6 +100,8 @@ export interface IEmbedInsightDialogProps {
     onClose: () => void;
     // (undocumented)
     onCopyCode: () => void;
+    // (undocumented)
+    settings?: IUserWorkspaceSettings;
 }
 
 // @alpha
