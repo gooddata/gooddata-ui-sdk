@@ -653,11 +653,13 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
 
     private onRecipientsChange = (selectedRecipients: IScheduleEmailRecipient[]): void => {
         const { editSchedule, currentUser } = this.props;
-        const newExternalRecipients = selectedRecipients.filter(isScheduleEmailExternalRecipient);
         const allRecipientsAreEmails = selectedRecipients.map(getScheduledEmailRecipientEmail).every(isEmail);
 
+        const newExternalRecipientsEmails: string[] = selectedRecipients
+            .filter(isScheduleEmailExternalRecipient)
+            .map((recipient) => recipient.email);
         const hasNewExternalRecipients = editSchedule
-            ? editSchedule.bcc?.length !== newExternalRecipients.length
+            ? differenceBy(newExternalRecipientsEmails, editSchedule.bcc || []).length > 0
             : false;
 
         const author = userToRecipient(editSchedule?.createdBy ? editSchedule?.createdBy : currentUser);
