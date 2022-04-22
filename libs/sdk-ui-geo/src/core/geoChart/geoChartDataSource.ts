@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { getPushpinColors } from "./geoChartColor";
 import {
     DEFAULT_CLUSTER_RADIUS,
@@ -71,40 +71,39 @@ function transformPushpinDataSource(dataSourceProps: IGeoDataSourceProps): IGeoD
 
             const pushpinColor = pushpinColors[index] || pushpinColors[0] || {};
 
-            return [
-                ...result,
-                {
-                    type: "Feature",
-                    geometry: {
-                        type: "Point",
-                        coordinates: [lng, lat], // Mapbox requires number[]
+            result.push({
+                type: "Feature",
+                geometry: {
+                    type: "Point",
+                    coordinates: [lng, lat], // Mapbox requires number[]
+                },
+                properties: {
+                    pushpinSize,
+                    locationName: {
+                        title: locationNameTitle,
+                        value: locationNameData[index],
                     },
-                    properties: {
-                        pushpinSize,
-                        locationName: {
-                            title: locationNameTitle,
-                            value: locationNameData[index],
-                        },
-                        locationIndex: index,
-                        color: {
-                            ...pushpinColor,
-                            title: colorTitle,
-                            value: colorValue,
-                            format: colorFormat,
-                        },
-                        size: {
-                            title: sizeTitle,
-                            value: sizeData[index],
-                            format: sizeFormat,
-                        },
-                        segment: {
-                            title: segmentTitle,
-                            value: segmentValue,
-                            uri: segmentUri,
-                        },
+                    locationIndex: index,
+                    color: {
+                        ...pushpinColor,
+                        title: colorTitle,
+                        value: colorValue,
+                        format: colorFormat,
+                    },
+                    size: {
+                        title: sizeTitle,
+                        value: sizeData[index],
+                        format: sizeFormat,
+                    },
+                    segment: {
+                        title: segmentTitle,
+                        value: segmentValue,
+                        uri: segmentUri,
                     },
                 },
-            ];
+            });
+
+            return result;
         },
         [],
     );

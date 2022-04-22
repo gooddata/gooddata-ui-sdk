@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import React from "react";
 import { render } from "react-dom";
@@ -67,7 +67,7 @@ export class PluggableComboChartDeprecated extends PluggableBaseChart {
                 [BucketNames.MEASURES, BucketNames.SECONDARY_MEASURES],
                 [METRIC],
             );
-            secondaryMeasures = secondaryMeasures.concat(restMeasures);
+            secondaryMeasures.push(...restMeasures);
         } else {
             // take all measures, first and its derived to primary, rest to secondary
             const allMeasures = getAllItemsByType(buckets, [METRIC]);

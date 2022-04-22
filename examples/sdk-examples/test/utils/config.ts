@@ -44,13 +44,10 @@ program.parse(process.argv);
 // get config defaults
 const configDefaults = definedOptions
     .filter((definedOption) => definedOption.defaultValue)
-    .reduce(
-        (defaults, defaultOption) => ({
-            ...defaults,
-            [defaultOption.key]: defaultOption.defaultValue,
-        }),
-        {} as IConfig,
-    );
+    .reduce((defaults: IConfig, defaultOption) => {
+        defaults[defaultOption.key] = defaultOption.defaultValue;
+        return defaults;
+    }, {});
 
 const options = program.opts();
 // get options from local config if it exists
@@ -71,16 +68,12 @@ if (configExists) {
 }
 
 // get options from params
-const paramOptions = definedOptionKeys.reduce(
-    (setOptions, key) =>
-        options[key] !== undefined
-            ? {
-                  ...setOptions,
-                  [key]: options[key],
-              }
-            : setOptions,
-    {} as IConfig,
-);
+const paramOptions = definedOptionKeys.reduce((setOptions: IConfig, key) => {
+    if (options[key] !== undefined) {
+        setOptions[key] = options[key];
+    }
+    return setOptions;
+}, {});
 
 interface IConfig {
     username?: string;

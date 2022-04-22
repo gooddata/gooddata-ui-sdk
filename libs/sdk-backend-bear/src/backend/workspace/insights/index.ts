@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import flatMap from "lodash/flatMap";
 import flow from "lodash/flow";
 import map from "lodash/fp/map";
@@ -101,14 +101,11 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
         [key: string]: string;
     }> => {
         const visualizationClasses = await this.getVisualizationClasses(options);
-        return visualizationClasses.reduce((acc, el) => {
-            if (!el.visualizationClass.uri) {
-                return acc;
+        return visualizationClasses.reduce((acc: Record<string, string>, el) => {
+            if (el.visualizationClass.uri) {
+                acc[el.visualizationClass.uri] = el.visualizationClass.url;
             }
-            return {
-                ...acc,
-                [el.visualizationClass.uri]: el.visualizationClass.url,
-            };
+            return acc;
         }, {});
     };
 

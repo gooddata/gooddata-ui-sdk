@@ -380,15 +380,9 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
         };
 
         if (segmentIndex) {
-            const selectedSegmentItems: string[] = categoryItems.reduce(
-                (result: string[], item: IPushpinCategoryLegendItem): string[] => {
-                    if (item.isVisible) {
-                        return [...result, item.uri];
-                    }
-                    return result;
-                },
-                [],
-            );
+            const selectedSegmentItems = categoryItems
+                .filter((item) => item.isVisible)
+                .map((item) => item.uri);
             return {
                 ...chartProps,
                 config: { ...config, selectedSegmentItems },

@@ -266,15 +266,16 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
 
         const dashboardAttachments = schedule.attachments.filter(isDashboardAttachment);
         const widgetAttachments = schedule.attachments.filter(isWidgetAttachment);
-        const widgetsSelected = this.props.dashboardInsightWidgets.reduce((acc, widget) => {
-            const widgetKey = objRefToString(widget);
-            return {
-                ...acc,
-                [widgetKey]: widgetAttachments.some((widgetAttachment) => {
+        const widgetsSelected = this.props.dashboardInsightWidgets.reduce(
+            (acc: IWidgetsSelection, widget) => {
+                const widgetKey = objRefToString(widget);
+                acc[widgetKey] = widgetAttachments.some((widgetAttachment) => {
                     return areObjRefsEqual(widgetAttachment.widget, widget);
-                }),
-            };
-        }, {});
+                });
+                return acc;
+            },
+            {},
+        );
 
         const configuration: IWidgetExportConfiguration =
             widgetAttachments.length === 0
@@ -316,10 +317,10 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
         } else {
             return {
                 dashboardSelected: true,
-                widgetsSelected: dashboardInsightWidgets.reduce(
-                    (acc, widget) => ({ ...acc, [objRefToString(widget)]: false }),
-                    {},
-                ),
+                widgetsSelected: dashboardInsightWidgets.reduce((acc: IWidgetsSelection, widget) => {
+                    acc[objRefToString(widget)] = false;
+                    return acc;
+                }, {}),
             };
         }
     }
@@ -777,13 +778,10 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
                       includeFilters: configuration.includeFilters,
                   }
                 : undefined;
-        const widgetsRefStringToUriRefMap = this.props.dashboardInsightWidgets.reduce(
-            (acc, widget) => ({
-                [objRefToString(widget)]: uriRef(widget.uri),
-                ...acc,
-            }),
-            {},
-        );
+        const widgetsRefStringToUriRefMap = this.props.dashboardInsightWidgets.reduce((acc, widget) => {
+            acc[objRefToString(widget)] = uriRef(widget.uri);
+            return acc;
+        }, {});
         for (const widgetRefString in widgetsSelected) {
             if (widgetsSelected[widgetRefString]) {
                 result.push({

@@ -58,7 +58,7 @@ function filterInvalidSortItems(
                 filteredSortItem.measureSortItem.locators.length ===
                     columnAttributeLocalIdentifiers.length + 1
             ) {
-                return [...sortItems, filteredSortItem];
+                sortItems.push(filteredSortItem);
             }
 
             // otherwise just carry over previous sortItems

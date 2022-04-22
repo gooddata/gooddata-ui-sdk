@@ -71,34 +71,27 @@ export class BearWorkspaceMeasures implements IWorkspaceMeasuresService {
         );
 
         const objectsByUri = allExpressionObjects.reduce(
-            (acc: { [key: string]: GdcMetadataObject.IObject }, el) => {
-                return {
-                    ...acc,
-                    [el.meta.uri!]: el,
-                };
+            (acc: Record<string, GdcMetadataObject.IObject>, el) => {
+                acc[el.meta.uri!] = el;
+                return acc;
             },
             {},
         );
 
         const objectsByIdentifier = allExpressionObjects.reduce(
-            (acc: { [key: string]: GdcMetadataObject.IObject }, el) => {
-                return {
-                    ...acc,
-                    [el.meta.identifier!]: el,
-                };
+            (acc: Record<string, GdcMetadataObject.IObject>, el) => {
+                acc[el.meta.identifier!] = el;
+                return acc;
             },
             {},
         );
 
         const attributeElementsByUri = allExpressionAttributeElements.reduce(
-            (acc: { [key: string]: GdcMetadata.IAttributeElement }, el) => {
-                if (!el) {
-                    return acc;
+            (acc: Record<string, GdcMetadata.IAttributeElement>, el) => {
+                if (el) {
+                    acc[el.uri] = el;
                 }
-                return {
-                    ...acc,
-                    [el.uri]: el,
-                };
+                return acc;
             },
             {},
         );

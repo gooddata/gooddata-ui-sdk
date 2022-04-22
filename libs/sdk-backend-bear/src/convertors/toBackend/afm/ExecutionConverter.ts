@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import { GdcExecuteAFM } from "@gooddata/api-model-bear";
 import { convertFilters } from "./FilterConverter";
@@ -49,7 +49,10 @@ function convertNativeTotals(def: IExecutionDefinition): GdcExecuteAFM.INativeTo
     // first find all native totals defined across dimensions
     const nativeTotals = def.dimensions
         .map(dimensionTotals)
-        .reduce((acc, totals) => acc.concat(...totals), [])
+        .reduce((acc, totals) => {
+            acc.push(...totals);
+            return acc;
+        }, [])
         .filter(totalIsNative);
 
     return nativeTotals.map((t) => {

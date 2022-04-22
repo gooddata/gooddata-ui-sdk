@@ -11,7 +11,6 @@ import {
     attributeDisplayFormRef,
     attributeLocalId,
     IAttributeOrMeasure,
-    IBucket,
     Identifier,
     isAttribute,
     isIdentifierRef,
@@ -127,13 +126,10 @@ function getBucketItemNameAndDataIndex(dv: DataViewFacade): IGeoData {
     const measureDescriptors = dv.meta().measureDescriptors();
     const attributeDescriptors = dv.meta().attributeDescriptors();
 
-    const bucketItemInfos = buckets.reduce(
-        (result: BucketInfos, bucket: IBucket): BucketInfos => ({
-            ...result,
-            [bucket.localIdentifier!]: getBucketItemInfo(bucket.items[0]),
-        }),
-        {},
-    );
+    const bucketItemInfos = buckets.reduce((result: BucketInfos, bucket) => {
+        result[bucket.localIdentifier!] = getBucketItemInfo(bucket.items[0]);
+        return result;
+    }, {});
 
     // init data
     const result: IGeoData = {};
