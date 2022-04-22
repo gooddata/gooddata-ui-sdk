@@ -6855,6 +6855,135 @@
                     }
                 ]
             },
+            "JsonApiDataSourceTableOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiDataSourceTableOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiDataSourceTableOutList": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiDataSourceTableOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiDataSourceTableOut": {
+                "required": ["attributes", "id", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "dataSourceTable",
+                        "enum": ["dataSourceTable"]
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "required": ["columns"],
+                        "type": "object",
+                        "properties": {
+                            "path": {
+                                "type": "array",
+                                "description": "Path to table.",
+                                "example": ["table_schema", "table_name"],
+                                "items": {
+                                    "type": "string",
+                                    "example": "table_name"
+                                }
+                            },
+                            "type": {
+                                "type": "string",
+                                "enum": ["TABLE", "VIEW"]
+                            },
+                            "namePrefix": {
+                                "type": "string"
+                            },
+                            "columns": {
+                                "type": "array",
+                                "items": {
+                                    "required": ["dataType", "name"],
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "dataType": {
+                                            "type": "string",
+                                            "enum": [
+                                                "INT",
+                                                "STRING",
+                                                "DATE",
+                                                "NUMERIC",
+                                                "TIMESTAMP",
+                                                "BOOLEAN"
+                                            ]
+                                        },
+                                        "isPrimaryKey": {
+                                            "type": "boolean"
+                                        },
+                                        "referencedTableId": {
+                                            "type": "string"
+                                        },
+                                        "referencedTableColumn": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "description": "Table columns in data source"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Tables in data source"
+            },
+            "JsonApiApiTokenInDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiApiTokenIn"
+                    }
+                }
+            },
+            "JsonApiApiTokenIn": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "apiToken",
+                        "enum": ["apiToken"]
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    }
+                },
+                "description": "JSON:API representation of apiToken entity."
+            },
             "JsonApiApiTokenOutDocument": {
                 "required": ["data"],
                 "type": "object",
@@ -6894,15 +7023,64 @@
                 },
                 "description": "JSON:API representation of apiToken entity."
             },
-            "JsonApiAnalyticalDashboardOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiAnalyticalDashboardOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
+            "JsonApiAnalyticalDashboardInDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiAnalyticalDashboardIn"
                     }
-                ]
+                }
+            },
+            "JsonApiAnalyticalDashboardIn": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "analyticalDashboard",
+                        "enum": ["analyticalDashboard"]
+                    },
+                    "id": {
+                        "pattern": "^((?!\\.)[.A-Za-z0-9_-]{1,255}:)?(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form JSON content.",
+                                "example": {
+                                    "identifier": {
+                                        "id": "label.leaf",
+                                        "type": "label"
+                                    },
+                                    "someBoolProp": false
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of analyticalDashboard entity."
             },
             "JsonApiAnalyticalDashboardOutIncludes": {
                 "oneOf": [
@@ -6929,19 +7107,15 @@
                     }
                 ]
             },
-            "JsonApiAnalyticalDashboardOutList": {
+            "JsonApiAnalyticalDashboardOutDocument": {
                 "required": ["data"],
                 "type": "object",
                 "properties": {
                     "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiAnalyticalDashboardOutWithLinks"
-                        }
+                        "$ref": "#/components/schemas/JsonApiAnalyticalDashboardOut"
                     },
                     "links": {
-                        "$ref": "#/components/schemas/ListLinks"
+                        "$ref": "#/components/schemas/ObjectLinks"
                     },
                     "included": {
                         "uniqueItems": true,
@@ -6951,8 +7125,7 @@
                             "$ref": "#/components/schemas/JsonApiAnalyticalDashboardOutIncludes"
                         }
                     }
-                },
-                "description": "A JSON:API document with a list of resources"
+                }
             },
             "JsonApiAnalyticalDashboardOut": {
                 "required": ["id", "type"],
@@ -7219,60 +7392,24 @@
                     "$ref": "#/components/schemas/JsonApiVisualizationObjectLinkage"
                 }
             },
-            "JsonApiAttributeOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiAttributeOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiAttributeOutIncludes": {
-                "oneOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
-                    },
-                    {
-                        "$ref": "#/components/schemas/JsonApiLabelOutWithLinks"
-                    }
-                ]
-            },
-            "JsonApiAttributeOutList": {
+            "JsonApiDashboardPluginInDocument": {
                 "required": ["data"],
                 "type": "object",
                 "properties": {
                     "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiAttributeOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiAttributeOutIncludes"
-                        }
+                        "$ref": "#/components/schemas/JsonApiDashboardPluginIn"
                     }
-                },
-                "description": "A JSON:API document with a list of resources"
+                }
             },
-            "JsonApiAttributeOut": {
+            "JsonApiDashboardPluginIn": {
                 "required": ["id", "type"],
                 "type": "object",
                 "properties": {
                     "type": {
                         "type": "string",
                         "description": "Object type",
-                        "example": "attribute",
-                        "enum": ["attribute"]
+                        "example": "dashboardPlugin",
+                        "enum": ["dashboardPlugin"]
                     },
                     "id": {
                         "pattern": "^((?!\\.)[.A-Za-z0-9_-]{1,255}:)?(?!\\.)[.A-Za-z0-9_-]{1,255}$",
@@ -7295,117 +7432,32 @@
                                     "type": "string"
                                 }
                             },
-                            "granularity": {
-                                "type": "string",
-                                "enum": [
-                                    "MINUTE",
-                                    "HOUR",
-                                    "DAY",
-                                    "WEEK",
-                                    "MONTH",
-                                    "QUARTER",
-                                    "YEAR",
-                                    "MINUTE_OF_HOUR",
-                                    "HOUR_OF_DAY",
-                                    "DAY_OF_WEEK",
-                                    "DAY_OF_MONTH",
-                                    "DAY_OF_YEAR",
-                                    "WEEK_OF_YEAR",
-                                    "MONTH_OF_YEAR",
-                                    "QUARTER_OF_YEAR"
-                                ]
-                            },
                             "areRelationsValid": {
                                 "type": "boolean"
                             },
-                            "sortColumn": {
-                                "type": "string"
-                            },
-                            "sortDirection": {
-                                "type": "string",
-                                "enum": ["ASC", "DESC"]
-                            }
-                        }
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "dataset": {
-                                "required": ["data"],
+                            "content": {
                                 "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiDatasetToOneLinkage"
-                                    }
-                                }
-                            },
-                            "defaultView": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiLabelToOneLinkage"
-                                    }
-                                }
-                            },
-                            "labels": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiLabelToManyLinkage"
-                                    }
+                                "description": "Free-form JSON content.",
+                                "example": {
+                                    "url": "<plugin-url>"
                                 }
                             }
                         }
                     }
                 },
-                "description": "JSON:API representation of attribute entity."
+                "description": "JSON:API representation of dashboardPlugin entity."
             },
-            "JsonApiDatasetToOneLinkage": {
-                "description": "References to other resource objects in a to-one (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
-                "nullable": true,
-                "oneOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiDatasetLinkage"
-                    }
-                ]
-            },
-            "JsonApiLabelToOneLinkage": {
-                "description": "References to other resource objects in a to-one (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
-                "nullable": true,
-                "oneOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiLabelLinkage"
-                    }
-                ]
-            },
-            "JsonApiDashboardPluginOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiDashboardPluginOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiDashboardPluginOutList": {
+            "JsonApiDashboardPluginOutDocument": {
                 "required": ["data"],
                 "type": "object",
                 "properties": {
                     "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiDashboardPluginOutWithLinks"
-                        }
+                        "$ref": "#/components/schemas/JsonApiDashboardPluginOut"
                     },
                     "links": {
-                        "$ref": "#/components/schemas/ListLinks"
+                        "$ref": "#/components/schemas/ObjectLinks"
                     }
-                },
-                "description": "A JSON:API document with a list of resources"
+                }
             },
             "JsonApiDashboardPluginOut": {
                 "required": ["id", "type"],
@@ -7453,269 +7505,24 @@
                 },
                 "description": "JSON:API representation of dashboardPlugin entity."
             },
-            "JsonApiDatasetOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiDatasetOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiDatasetOutIncludes": {
-                "oneOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiAttributeOutWithLinks"
-                    },
-                    {
-                        "$ref": "#/components/schemas/JsonApiFactOutWithLinks"
-                    },
-                    {
-                        "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
-                    }
-                ]
-            },
-            "JsonApiDatasetOutList": {
+            "JsonApiFilterContextInDocument": {
                 "required": ["data"],
                 "type": "object",
                 "properties": {
                     "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiDatasetOutIncludes"
-                        }
-                    }
-                },
-                "description": "A JSON:API document with a list of resources"
-            },
-            "JsonApiDatasetOut": {
-                "required": ["attributes", "id", "type"],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "dataset",
-                        "enum": ["dataset"]
-                    },
-                    "id": {
-                        "pattern": "^((?!\\.)[.A-Za-z0-9_-]{1,255}:)?(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "required": ["type"],
-                        "type": "object",
-                        "properties": {
-                            "title": {
-                                "type": "string"
-                            },
-                            "description": {
-                                "type": "string"
-                            },
-                            "tags": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": {
-                                "type": "string",
-                                "enum": ["NORMAL", "DATE"]
-                            },
-                            "grain": {
-                                "type": "array",
-                                "items": {
-                                    "required": ["id", "type"],
-                                    "type": "object",
-                                    "properties": {
-                                        "id": {
-                                            "type": "string"
-                                        },
-                                        "type": {
-                                            "type": "string",
-                                            "enum": ["attribute", "dataset"]
-                                        }
-                                    }
-                                }
-                            },
-                            "referenceProperties": {
-                                "type": "array",
-                                "items": {
-                                    "required": ["identifier", "multivalue", "sourceColumns"],
-                                    "type": "object",
-                                    "properties": {
-                                        "identifier": {
-                                            "$ref": "#/components/schemas/DatasetReferenceIdentifier"
-                                        },
-                                        "multivalue": {
-                                            "type": "boolean"
-                                        },
-                                        "sourceColumns": {
-                                            "type": "array",
-                                            "items": {
-                                                "type": "string"
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            "dataSourceTableId": {
-                                "type": "string"
-                            },
-                            "areRelationsValid": {
-                                "type": "boolean"
-                            }
-                        }
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "attributes": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiAttributeToManyLinkage"
-                                    }
-                                }
-                            },
-                            "facts": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiFactToManyLinkage"
-                                    }
-                                }
-                            },
-                            "references": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiDatasetToManyLinkage"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of dataset entity."
-            },
-            "DatasetReferenceIdentifier": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "type": {
-                        "type": "string",
-                        "enum": ["dataset"]
+                        "$ref": "#/components/schemas/JsonApiFilterContextIn"
                     }
                 }
             },
-            "JsonApiAttributeLinkage": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "type": {
-                        "type": "string",
-                        "enum": ["attribute"]
-                    }
-                },
-                "description": "The \\\"type\\\" and \\\"id\\\" to non-empty members."
-            },
-            "JsonApiAttributeToManyLinkage": {
-                "type": "array",
-                "description": "References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
-                "items": {
-                    "$ref": "#/components/schemas/JsonApiAttributeLinkage"
-                }
-            },
-            "JsonApiFactLinkage": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "type": {
-                        "type": "string",
-                        "enum": ["fact"]
-                    }
-                },
-                "description": "The \\\"type\\\" and \\\"id\\\" to non-empty members."
-            },
-            "JsonApiFactToManyLinkage": {
-                "type": "array",
-                "description": "References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
-                "items": {
-                    "$ref": "#/components/schemas/JsonApiFactLinkage"
-                }
-            },
-            "JsonApiFactOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiFactOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiFactOutList": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiFactOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
-                        }
-                    }
-                },
-                "description": "A JSON:API document with a list of resources"
-            },
-            "JsonApiFactOut": {
+            "JsonApiFilterContextIn": {
                 "required": ["id", "type"],
                 "type": "object",
                 "properties": {
                     "type": {
                         "type": "string",
                         "description": "Object type",
-                        "example": "fact",
-                        "enum": ["fact"]
+                        "example": "filterContext",
+                        "enum": ["filterContext"]
                     },
                     "id": {
                         "pattern": "^((?!\\.)[.A-Za-z0-9_-]{1,255}:)?(?!\\.)[.A-Za-z0-9_-]{1,255}$",
@@ -7738,40 +7545,24 @@
                                     "type": "string"
                                 }
                             },
-                            "sourceColumn": {
-                                "type": "string"
-                            },
                             "areRelationsValid": {
                                 "type": "boolean"
-                            }
-                        }
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "dataset": {
-                                "required": ["data"],
+                            },
+                            "content": {
                                 "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiDatasetToOneLinkage"
-                                    }
+                                "description": "Free-form JSON content.",
+                                "example": {
+                                    "identifier": {
+                                        "id": "label.leaf",
+                                        "type": "label"
+                                    },
+                                    "someBoolProp": false
                                 }
                             }
                         }
                     }
                 },
-                "description": "JSON:API representation of fact entity."
-            },
-            "JsonApiFilterContextOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiFilterContextOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
+                "description": "JSON:API representation of filterContext entity."
             },
             "JsonApiFilterContextOutIncludes": {
                 "oneOf": [
@@ -7786,19 +7577,15 @@
                     }
                 ]
             },
-            "JsonApiFilterContextOutList": {
+            "JsonApiFilterContextOutDocument": {
                 "required": ["data"],
                 "type": "object",
                 "properties": {
                     "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiFilterContextOutWithLinks"
-                        }
+                        "$ref": "#/components/schemas/JsonApiFilterContextOut"
                     },
                     "links": {
-                        "$ref": "#/components/schemas/ListLinks"
+                        "$ref": "#/components/schemas/ObjectLinks"
                     },
                     "included": {
                         "uniqueItems": true,
@@ -7808,8 +7595,7 @@
                             "$ref": "#/components/schemas/JsonApiFilterContextOutIncludes"
                         }
                     }
-                },
-                "description": "A JSON:API document with a list of resources"
+                }
             },
             "JsonApiFilterContextOut": {
                 "required": ["id", "type"],
@@ -7893,50 +7679,45 @@
                 },
                 "description": "JSON:API representation of filterContext entity."
             },
-            "JsonApiLabelOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiLabelOut"
+            "JsonApiAttributeLinkage": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
                     },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    "type": {
+                        "type": "string",
+                        "enum": ["attribute"]
                     }
-                ]
+                },
+                "description": "The \\\"type\\\" and \\\"id\\\" to non-empty members."
             },
-            "JsonApiLabelOutList": {
+            "JsonApiAttributeToManyLinkage": {
+                "type": "array",
+                "description": "References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
+                "items": {
+                    "$ref": "#/components/schemas/JsonApiAttributeLinkage"
+                }
+            },
+            "JsonApiMetricInDocument": {
                 "required": ["data"],
                 "type": "object",
                 "properties": {
                     "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiLabelOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiAttributeOutWithLinks"
-                        }
+                        "$ref": "#/components/schemas/JsonApiMetricIn"
                     }
-                },
-                "description": "A JSON:API document with a list of resources"
+                }
             },
-            "JsonApiLabelOut": {
-                "required": ["id", "type"],
+            "JsonApiMetricIn": {
+                "required": ["attributes", "id", "type"],
                 "type": "object",
                 "properties": {
                     "type": {
                         "type": "string",
                         "description": "Object type",
-                        "example": "label",
-                        "enum": ["label"]
+                        "example": "metric",
+                        "enum": ["metric"]
                     },
                     "id": {
                         "pattern": "^((?!\\.)[.A-Za-z0-9_-]{1,255}:)?(?!\\.)[.A-Za-z0-9_-]{1,255}$",
@@ -7945,6 +7726,7 @@
                         "example": "id1"
                     },
                     "attributes": {
+                        "required": ["content"],
                         "type": "object",
                         "properties": {
                             "title": {
@@ -7959,56 +7741,25 @@
                                     "type": "string"
                                 }
                             },
-                            "primary": {
-                                "type": "boolean"
-                            },
-                            "sourceColumn": {
-                                "type": "string"
-                            },
-                            "valueType": {
-                                "type": "string",
-                                "enum": ["TEXT", "HYPERLINK", "GEO"]
-                            },
                             "areRelationsValid": {
                                 "type": "boolean"
-                            }
-                        }
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "attribute": {
-                                "required": ["data"],
+                            },
+                            "content": {
+                                "required": ["maql"],
                                 "type": "object",
                                 "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiAttributeToOneLinkage"
+                                    "format": {
+                                        "type": "string"
+                                    },
+                                    "maql": {
+                                        "type": "string"
                                     }
                                 }
                             }
                         }
                     }
                 },
-                "description": "JSON:API representation of label entity."
-            },
-            "JsonApiAttributeToOneLinkage": {
-                "description": "References to other resource objects in a to-one (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
-                "nullable": true,
-                "oneOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiAttributeLinkage"
-                    }
-                ]
-            },
-            "JsonApiMetricOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiMetricOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
+                "description": "JSON:API representation of metric entity."
             },
             "JsonApiMetricOutIncludes": {
                 "oneOf": [
@@ -8026,19 +7777,15 @@
                     }
                 ]
             },
-            "JsonApiMetricOutList": {
+            "JsonApiMetricOutDocument": {
                 "required": ["data"],
                 "type": "object",
                 "properties": {
                     "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiMetricOutWithLinks"
-                        }
+                        "$ref": "#/components/schemas/JsonApiMetricOut"
                     },
                     "links": {
-                        "$ref": "#/components/schemas/ListLinks"
+                        "$ref": "#/components/schemas/ObjectLinks"
                     },
                     "included": {
                         "uniqueItems": true,
@@ -8048,8 +7795,7 @@
                             "$ref": "#/components/schemas/JsonApiMetricOutIncludes"
                         }
                     }
-                },
-                "description": "A JSON:API document with a list of resources"
+                }
             },
             "JsonApiMetricOut": {
                 "required": ["attributes", "id", "type"],
@@ -8144,15 +7890,85 @@
                 },
                 "description": "JSON:API representation of metric entity."
             },
-            "JsonApiVisualizationObjectOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiVisualizationObjectOut"
+            "JsonApiFactLinkage": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
                     },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    "type": {
+                        "type": "string",
+                        "enum": ["fact"]
                     }
-                ]
+                },
+                "description": "The \\\"type\\\" and \\\"id\\\" to non-empty members."
+            },
+            "JsonApiFactToManyLinkage": {
+                "type": "array",
+                "description": "References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
+                "items": {
+                    "$ref": "#/components/schemas/JsonApiFactLinkage"
+                }
+            },
+            "JsonApiVisualizationObjectInDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiVisualizationObjectIn"
+                    }
+                }
+            },
+            "JsonApiVisualizationObjectIn": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "visualizationObject",
+                        "enum": ["visualizationObject"]
+                    },
+                    "id": {
+                        "pattern": "^((?!\\.)[.A-Za-z0-9_-]{1,255}:)?(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form JSON content.",
+                                "example": {
+                                    "identifier": {
+                                        "id": "label.leaf",
+                                        "type": "label"
+                                    },
+                                    "someBoolProp": false
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of visualizationObject entity."
             },
             "JsonApiVisualizationObjectOutIncludes": {
                 "oneOf": [
@@ -8173,19 +7989,15 @@
                     }
                 ]
             },
-            "JsonApiVisualizationObjectOutList": {
+            "JsonApiVisualizationObjectOutDocument": {
                 "required": ["data"],
                 "type": "object",
                 "properties": {
                     "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiVisualizationObjectOutWithLinks"
-                        }
+                        "$ref": "#/components/schemas/JsonApiVisualizationObjectOut"
                     },
                     "links": {
-                        "$ref": "#/components/schemas/ListLinks"
+                        "$ref": "#/components/schemas/ObjectLinks"
                     },
                     "included": {
                         "uniqueItems": true,
@@ -8195,8 +8007,7 @@
                             "$ref": "#/components/schemas/JsonApiVisualizationObjectOutIncludes"
                         }
                     }
-                },
-                "description": "A JSON:API document with a list of resources"
+                }
             },
             "JsonApiVisualizationObjectOut": {
                 "required": ["id", "type"],
@@ -8298,150 +8109,16 @@
                 },
                 "description": "JSON:API representation of visualizationObject entity."
             },
-            "JsonApiWorkspaceDataFilterSettingOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterSettingOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiWorkspaceDataFilterSettingOutList": {
+            "JsonApiWorkspaceDataFilterInDocument": {
                 "required": ["data"],
                 "type": "object",
                 "properties": {
                     "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterSettingOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterOutWithLinks"
-                        }
+                        "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterIn"
                     }
-                },
-                "description": "A JSON:API document with a list of resources"
+                }
             },
-            "JsonApiWorkspaceDataFilterSettingOut": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "workspaceDataFilterSetting",
-                        "enum": ["workspaceDataFilterSetting"]
-                    },
-                    "id": {
-                        "pattern": "^((?!\\.)[.A-Za-z0-9_-]{1,255}:)?(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "title": {
-                                "type": "string"
-                            },
-                            "description": {
-                                "type": "string"
-                            },
-                            "filterValues": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "workspaceDataFilter": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterToOneLinkage"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of workspaceDataFilterSetting entity."
-            },
-            "JsonApiWorkspaceDataFilterLinkage": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "type": {
-                        "type": "string",
-                        "enum": ["workspaceDataFilter"]
-                    }
-                },
-                "description": "The \\\"type\\\" and \\\"id\\\" to non-empty members."
-            },
-            "JsonApiWorkspaceDataFilterToOneLinkage": {
-                "description": "References to other resource objects in a to-one (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
-                "nullable": true,
-                "oneOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterLinkage"
-                    }
-                ]
-            },
-            "JsonApiWorkspaceDataFilterOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiWorkspaceDataFilterOutList": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterSettingOutWithLinks"
-                        }
-                    }
-                },
-                "description": "A JSON:API document with a list of resources"
-            },
-            "JsonApiWorkspaceDataFilterOut": {
+            "JsonApiWorkspaceDataFilterIn": {
                 "required": ["id", "type"],
                 "type": "object",
                 "properties": {
@@ -8508,6 +8185,625 @@
                 "items": {
                     "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterSettingLinkage"
                 }
+            },
+            "JsonApiWorkspaceDataFilterOutDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterOut"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterSettingOutWithLinks"
+                        }
+                    }
+                }
+            },
+            "JsonApiWorkspaceDataFilterOut": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "workspaceDataFilter",
+                        "enum": ["workspaceDataFilter"]
+                    },
+                    "id": {
+                        "pattern": "^((?!\\.)[.A-Za-z0-9_-]{1,255}:)?(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "columnName": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "filterSettings": {
+                                "required": ["data"],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterSettingToManyLinkage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of workspaceDataFilter entity."
+            },
+            "JsonApiDataSourceInDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiDataSourceIn"
+                    }
+                }
+            },
+            "JsonApiDataSourceIn": {
+                "required": ["attributes", "id", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "dataSource",
+                        "enum": ["dataSource"]
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "required": ["name", "schema", "type", "url"],
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "type": {
+                                "type": "string",
+                                "enum": [
+                                    "POSTGRESQL",
+                                    "REDSHIFT",
+                                    "VERTICA",
+                                    "SNOWFLAKE",
+                                    "ADS",
+                                    "BIGQUERY",
+                                    "MSSQL",
+                                    "PRESTO",
+                                    "DREMIO",
+                                    "DRILL"
+                                ]
+                            },
+                            "url": {
+                                "type": "string"
+                            },
+                            "schema": {
+                                "type": "string"
+                            },
+                            "username": {
+                                "type": "string"
+                            },
+                            "password": {
+                                "type": "string"
+                            },
+                            "token": {
+                                "type": "string"
+                            },
+                            "enableCaching": {
+                                "type": "boolean"
+                            },
+                            "cachePath": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of dataSource entity."
+            },
+            "JsonApiDataSourceOutDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiDataSourceOut"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    }
+                }
+            },
+            "JsonApiDataSourceOut": {
+                "required": ["attributes", "id", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "dataSource",
+                        "enum": ["dataSource"]
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "permissions": {
+                                "type": "array",
+                                "description": "List of valid permissions for a logged user.",
+                                "items": {
+                                    "type": "string",
+                                    "enum": ["MANAGE", "USE"]
+                                }
+                            }
+                        }
+                    },
+                    "attributes": {
+                        "required": ["name", "schema", "type", "url"],
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "type": {
+                                "type": "string",
+                                "enum": [
+                                    "POSTGRESQL",
+                                    "REDSHIFT",
+                                    "VERTICA",
+                                    "SNOWFLAKE",
+                                    "ADS",
+                                    "BIGQUERY",
+                                    "MSSQL",
+                                    "PRESTO",
+                                    "DREMIO",
+                                    "DRILL"
+                                ]
+                            },
+                            "url": {
+                                "type": "string"
+                            },
+                            "schema": {
+                                "type": "string"
+                            },
+                            "username": {
+                                "type": "string"
+                            },
+                            "enableCaching": {
+                                "type": "boolean"
+                            },
+                            "cachePath": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of dataSource entity."
+            },
+            "JsonApiUserGroupInDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiUserGroupIn"
+                    }
+                }
+            },
+            "JsonApiUserGroupIn": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "userGroup",
+                        "enum": ["userGroup"]
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "parents": {
+                                "required": ["data"],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiUserGroupToManyLinkage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of userGroup entity."
+            },
+            "JsonApiUserGroupLinkage": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": ["userGroup"]
+                    }
+                },
+                "description": "The \\\"type\\\" and \\\"id\\\" to non-empty members."
+            },
+            "JsonApiUserGroupToManyLinkage": {
+                "type": "array",
+                "description": "References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
+                "items": {
+                    "$ref": "#/components/schemas/JsonApiUserGroupLinkage"
+                }
+            },
+            "JsonApiUserGroupOutDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiUserGroupOut"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiUserGroupOutWithLinks"
+                        }
+                    }
+                }
+            },
+            "JsonApiUserGroupOut": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "userGroup",
+                        "enum": ["userGroup"]
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "parents": {
+                                "required": ["data"],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiUserGroupToManyLinkage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of userGroup entity."
+            },
+            "JsonApiUserInDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiUserIn"
+                    }
+                }
+            },
+            "JsonApiUserIn": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "user",
+                        "enum": ["user"]
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "authenticationId": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "userGroups": {
+                                "required": ["data"],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiUserGroupToManyLinkage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of user entity."
+            },
+            "JsonApiUserOutDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiUserOut"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiUserGroupOutWithLinks"
+                        }
+                    }
+                }
+            },
+            "JsonApiUserOut": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "user",
+                        "enum": ["user"]
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "authenticationId": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "userGroups": {
+                                "required": ["data"],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiUserGroupToManyLinkage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of user entity."
+            },
+            "JsonApiWorkspaceInDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiWorkspaceIn"
+                    }
+                }
+            },
+            "JsonApiWorkspaceIn": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "workspace",
+                        "enum": ["workspace"]
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "parent": {
+                                "required": ["data"],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiWorkspaceToOneLinkage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of workspace entity."
+            },
+            "JsonApiWorkspaceLinkage": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": ["workspace"]
+                    }
+                },
+                "description": "The \\\"type\\\" and \\\"id\\\" to non-empty members."
+            },
+            "JsonApiWorkspaceToOneLinkage": {
+                "description": "References to other resource objects in a to-one (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
+                "nullable": true,
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiWorkspaceLinkage"
+                    }
+                ]
+            },
+            "JsonApiWorkspaceOutDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiWorkspaceOut"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiWorkspaceOutWithLinks"
+                        }
+                    }
+                }
+            },
+            "JsonApiWorkspaceOut": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "workspace",
+                        "enum": ["workspace"]
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "config": {
+                                "required": ["approximateCountAvailable", "dataSamplingAvailable"],
+                                "type": "object",
+                                "properties": {
+                                    "dataSamplingAvailable": {
+                                        "type": "boolean",
+                                        "description": "is sampling enabled - based on type of data-source connected to this workspace",
+                                        "default": false
+                                    },
+                                    "approximateCountAvailable": {
+                                        "type": "boolean",
+                                        "description": "is approximate count enabled - based on type of data-source connected to this workspace",
+                                        "default": false
+                                    }
+                                }
+                            },
+                            "permissions": {
+                                "type": "array",
+                                "description": "List of valid permissions for a logged user.",
+                                "items": {
+                                    "type": "string",
+                                    "enum": ["MANAGE", "ANALYZE", "VIEW"]
+                                }
+                            }
+                        }
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "parent": {
+                                "required": ["data"],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiWorkspaceToOneLinkage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of workspace entity."
             },
             "JsonApiCookieSecurityConfigurationInDocument": {
                 "required": ["data"],
@@ -8758,20 +9054,6 @@
                 },
                 "description": "JSON:API representation of organization entity."
             },
-            "JsonApiUserGroupLinkage": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "type": {
-                        "type": "string",
-                        "enum": ["userGroup"]
-                    }
-                },
-                "description": "The \\\"type\\\" and \\\"id\\\" to non-empty members."
-            },
             "JsonApiUserGroupToOneLinkage": {
                 "description": "References to other resource objects in a to-one (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
                 "nullable": true,
@@ -8804,17 +9086,59 @@
                     }
                 ]
             },
-            "JsonApiDataSourceIdentifierOutDocument": {
+            "JsonApiApiTokenOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiApiTokenOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiApiTokenOutList": {
                 "required": ["data"],
                 "type": "object",
                 "properties": {
                     "data": {
-                        "$ref": "#/components/schemas/JsonApiDataSourceIdentifierOut"
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiApiTokenOutWithLinks"
+                        }
                     },
                     "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
+                        "$ref": "#/components/schemas/ListLinks"
                     }
-                }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiDataSourceIdentifierOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiDataSourceIdentifierOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiDataSourceIdentifierOutList": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiDataSourceIdentifierOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
             },
             "JsonApiDataSourceIdentifierOut": {
                 "required": ["attributes", "id", "type"],
@@ -8875,101 +9199,56 @@
                 },
                 "description": "JSON:API representation of dataSourceIdentifier entity."
             },
-            "JsonApiDataSourceOutDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
+            "JsonApiDataSourceOutWithLinks": {
+                "allOf": [
+                    {
                         "$ref": "#/components/schemas/JsonApiDataSourceOut"
                     },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
                     }
-                }
+                ]
             },
-            "JsonApiDataSourceOut": {
-                "required": ["attributes", "id", "type"],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "dataSource",
-                        "enum": ["dataSource"]
-                    },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "meta": {
-                        "type": "object",
-                        "properties": {
-                            "permissions": {
-                                "type": "array",
-                                "description": "List of valid permissions for a logged user.",
-                                "items": {
-                                    "type": "string",
-                                    "enum": ["MANAGE", "USE"]
-                                }
-                            }
-                        }
-                    },
-                    "attributes": {
-                        "required": ["name", "schema", "type", "url"],
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                                "type": "string"
-                            },
-                            "type": {
-                                "type": "string",
-                                "enum": [
-                                    "POSTGRESQL",
-                                    "REDSHIFT",
-                                    "VERTICA",
-                                    "SNOWFLAKE",
-                                    "ADS",
-                                    "BIGQUERY",
-                                    "MSSQL",
-                                    "PRESTO",
-                                    "DREMIO",
-                                    "DRILL"
-                                ]
-                            },
-                            "url": {
-                                "type": "string"
-                            },
-                            "schema": {
-                                "type": "string"
-                            },
-                            "username": {
-                                "type": "string"
-                            },
-                            "enableCaching": {
-                                "type": "boolean"
-                            },
-                            "cachePath": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of dataSource entity."
-            },
-            "JsonApiUserGroupOutDocument": {
+            "JsonApiDataSourceOutList": {
                 "required": ["data"],
                 "type": "object",
                 "properties": {
                     "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiDataSourceOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiUserGroupOutWithLinks": {
+                "allOf": [
+                    {
                         "$ref": "#/components/schemas/JsonApiUserGroupOut"
                     },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiUserGroupOutList": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiUserGroupOutWithLinks"
+                        }
+                    },
                     "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
+                        "$ref": "#/components/schemas/ListLinks"
                     },
                     "included": {
                         "uniqueItems": true,
@@ -8979,57 +9258,32 @@
                             "$ref": "#/components/schemas/JsonApiUserGroupOutWithLinks"
                         }
                     }
-                }
-            },
-            "JsonApiUserGroupOut": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "userGroup",
-                        "enum": ["userGroup"]
-                    },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "parents": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiUserGroupToManyLinkage"
-                                    }
-                                }
-                            }
-                        }
-                    }
                 },
-                "description": "JSON:API representation of userGroup entity."
+                "description": "A JSON:API document with a list of resources"
             },
-            "JsonApiUserGroupToManyLinkage": {
-                "type": "array",
-                "description": "References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
-                "items": {
-                    "$ref": "#/components/schemas/JsonApiUserGroupLinkage"
-                }
-            },
-            "JsonApiUserOutDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
+            "JsonApiUserOutWithLinks": {
+                "allOf": [
+                    {
                         "$ref": "#/components/schemas/JsonApiUserOut"
                     },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiUserOutList": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiUserOutWithLinks"
+                        }
+                    },
                     "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
+                        "$ref": "#/components/schemas/ListLinks"
                     },
                     "included": {
                         "uniqueItems": true,
@@ -9039,58 +9293,32 @@
                             "$ref": "#/components/schemas/JsonApiUserGroupOutWithLinks"
                         }
                     }
-                }
-            },
-            "JsonApiUserOut": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "user",
-                        "enum": ["user"]
-                    },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "authenticationId": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "userGroups": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiUserGroupToManyLinkage"
-                                    }
-                                }
-                            }
-                        }
-                    }
                 },
-                "description": "JSON:API representation of user entity."
+                "description": "A JSON:API document with a list of resources"
             },
-            "JsonApiWorkspaceOutDocument": {
+            "JsonApiWorkspaceOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiWorkspaceOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiWorkspaceOutList": {
                 "required": ["data"],
                 "type": "object",
                 "properties": {
                     "data": {
-                        "$ref": "#/components/schemas/JsonApiWorkspaceOut"
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiWorkspaceOutWithLinks"
+                        }
                     },
                     "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
+                        "$ref": "#/components/schemas/ListLinks"
                     },
                     "included": {
                         "uniqueItems": true,
@@ -9100,452 +9328,8 @@
                             "$ref": "#/components/schemas/JsonApiWorkspaceOutWithLinks"
                         }
                     }
-                }
-            },
-            "JsonApiWorkspaceOut": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "workspace",
-                        "enum": ["workspace"]
-                    },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "meta": {
-                        "type": "object",
-                        "properties": {
-                            "config": {
-                                "required": ["approximateCountAvailable", "dataSamplingAvailable"],
-                                "type": "object",
-                                "properties": {
-                                    "dataSamplingAvailable": {
-                                        "type": "boolean",
-                                        "description": "is sampling enabled - based on type of data-source connected to this workspace",
-                                        "default": false
-                                    },
-                                    "approximateCountAvailable": {
-                                        "type": "boolean",
-                                        "description": "is approximate count enabled - based on type of data-source connected to this workspace",
-                                        "default": false
-                                    }
-                                }
-                            },
-                            "permissions": {
-                                "type": "array",
-                                "description": "List of valid permissions for a logged user.",
-                                "items": {
-                                    "type": "string",
-                                    "enum": ["MANAGE", "ANALYZE", "VIEW"]
-                                }
-                            }
-                        }
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "parent": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiWorkspaceToOneLinkage"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of workspace entity."
-            },
-            "JsonApiWorkspaceLinkage": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "type": {
-                        "type": "string",
-                        "enum": ["workspace"]
-                    }
-                },
-                "description": "The \\\"type\\\" and \\\"id\\\" to non-empty members."
-            },
-            "JsonApiWorkspaceToOneLinkage": {
-                "description": "References to other resource objects in a to-one (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
-                "nullable": true,
-                "oneOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiWorkspaceLinkage"
-                    }
-                ]
-            },
-            "JsonApiApiTokenOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiApiTokenOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiApiTokenOutList": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiApiTokenOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    }
                 },
                 "description": "A JSON:API document with a list of resources"
-            },
-            "JsonApiAnalyticalDashboardOutDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiAnalyticalDashboardOut"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiAnalyticalDashboardOutIncludes"
-                        }
-                    }
-                }
-            },
-            "JsonApiAttributeOutDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiAttributeOut"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiAttributeOutIncludes"
-                        }
-                    }
-                }
-            },
-            "JsonApiDashboardPluginOutDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiDashboardPluginOut"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
-                    }
-                }
-            },
-            "JsonApiDatasetOutDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiDatasetOut"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiDatasetOutIncludes"
-                        }
-                    }
-                }
-            },
-            "JsonApiFactOutDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiFactOut"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
-                        }
-                    }
-                }
-            },
-            "JsonApiFilterContextOutDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiFilterContextOut"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiFilterContextOutIncludes"
-                        }
-                    }
-                }
-            },
-            "JsonApiLabelOutDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiLabelOut"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiAttributeOutWithLinks"
-                        }
-                    }
-                }
-            },
-            "JsonApiMetricOutDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiMetricOut"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiMetricOutIncludes"
-                        }
-                    }
-                }
-            },
-            "JsonApiVisualizationObjectOutDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiVisualizationObjectOut"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiVisualizationObjectOutIncludes"
-                        }
-                    }
-                }
-            },
-            "JsonApiWorkspaceDataFilterSettingOutDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterSettingOut"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterOutWithLinks"
-                        }
-                    }
-                }
-            },
-            "JsonApiWorkspaceDataFilterOutDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterOut"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterSettingOutWithLinks"
-                        }
-                    }
-                }
-            },
-            "JsonApiDataSourceTableOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiDataSourceTableOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiDataSourceTableOutList": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiDataSourceTableOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    }
-                },
-                "description": "A JSON:API document with a list of resources"
-            },
-            "JsonApiDataSourceTableOut": {
-                "required": ["attributes", "id", "type"],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "dataSourceTable",
-                        "enum": ["dataSourceTable"]
-                    },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "required": ["columns"],
-                        "type": "object",
-                        "properties": {
-                            "path": {
-                                "type": "array",
-                                "description": "Path to table.",
-                                "example": ["table_schema", "table_name"],
-                                "items": {
-                                    "type": "string",
-                                    "example": "table_name"
-                                }
-                            },
-                            "type": {
-                                "type": "string",
-                                "enum": ["TABLE", "VIEW"]
-                            },
-                            "namePrefix": {
-                                "type": "string"
-                            },
-                            "columns": {
-                                "type": "array",
-                                "items": {
-                                    "required": ["dataType", "name"],
-                                    "type": "object",
-                                    "properties": {
-                                        "name": {
-                                            "type": "string"
-                                        },
-                                        "dataType": {
-                                            "type": "string",
-                                            "enum": [
-                                                "INT",
-                                                "STRING",
-                                                "DATE",
-                                                "NUMERIC",
-                                                "TIMESTAMP",
-                                                "BOOLEAN"
-                                            ]
-                                        },
-                                        "isPrimaryKey": {
-                                            "type": "boolean"
-                                        },
-                                        "referencedTableId": {
-                                            "type": "string"
-                                        },
-                                        "referencedTableColumn": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "description": "Table columns in data source"
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "Tables in data source"
-            },
-            "JsonApiDataSourceTableOutDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiDataSourceTableOut"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
-                    }
-                }
             },
             "JsonApiDataSourcePatchDocument": {
                 "required": ["data"],
@@ -9763,601 +9547,6 @@
                     }
                 },
                 "description": "JSON:API representation of patching workspace entity."
-            },
-            "JsonApiAnalyticalDashboardInDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiAnalyticalDashboardIn"
-                    }
-                }
-            },
-            "JsonApiAnalyticalDashboardIn": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "analyticalDashboard",
-                        "enum": ["analyticalDashboard"]
-                    },
-                    "id": {
-                        "pattern": "^((?!\\.)[.A-Za-z0-9_-]{1,255}:)?(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "title": {
-                                "type": "string"
-                            },
-                            "description": {
-                                "type": "string"
-                            },
-                            "tags": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "areRelationsValid": {
-                                "type": "boolean"
-                            },
-                            "content": {
-                                "type": "object",
-                                "description": "Free-form JSON content.",
-                                "example": {
-                                    "identifier": {
-                                        "id": "label.leaf",
-                                        "type": "label"
-                                    },
-                                    "someBoolProp": false
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of analyticalDashboard entity."
-            },
-            "JsonApiDashboardPluginInDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiDashboardPluginIn"
-                    }
-                }
-            },
-            "JsonApiDashboardPluginIn": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "dashboardPlugin",
-                        "enum": ["dashboardPlugin"]
-                    },
-                    "id": {
-                        "pattern": "^((?!\\.)[.A-Za-z0-9_-]{1,255}:)?(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "title": {
-                                "type": "string"
-                            },
-                            "description": {
-                                "type": "string"
-                            },
-                            "tags": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "areRelationsValid": {
-                                "type": "boolean"
-                            },
-                            "content": {
-                                "type": "object",
-                                "description": "Free-form JSON content.",
-                                "example": {
-                                    "url": "<plugin-url>"
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of dashboardPlugin entity."
-            },
-            "JsonApiFilterContextInDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiFilterContextIn"
-                    }
-                }
-            },
-            "JsonApiFilterContextIn": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "filterContext",
-                        "enum": ["filterContext"]
-                    },
-                    "id": {
-                        "pattern": "^((?!\\.)[.A-Za-z0-9_-]{1,255}:)?(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "title": {
-                                "type": "string"
-                            },
-                            "description": {
-                                "type": "string"
-                            },
-                            "tags": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "areRelationsValid": {
-                                "type": "boolean"
-                            },
-                            "content": {
-                                "type": "object",
-                                "description": "Free-form JSON content.",
-                                "example": {
-                                    "identifier": {
-                                        "id": "label.leaf",
-                                        "type": "label"
-                                    },
-                                    "someBoolProp": false
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of filterContext entity."
-            },
-            "JsonApiMetricInDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiMetricIn"
-                    }
-                }
-            },
-            "JsonApiMetricIn": {
-                "required": ["attributes", "id", "type"],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "metric",
-                        "enum": ["metric"]
-                    },
-                    "id": {
-                        "pattern": "^((?!\\.)[.A-Za-z0-9_-]{1,255}:)?(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "required": ["content"],
-                        "type": "object",
-                        "properties": {
-                            "title": {
-                                "type": "string"
-                            },
-                            "description": {
-                                "type": "string"
-                            },
-                            "tags": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "areRelationsValid": {
-                                "type": "boolean"
-                            },
-                            "content": {
-                                "required": ["maql"],
-                                "type": "object",
-                                "properties": {
-                                    "format": {
-                                        "type": "string"
-                                    },
-                                    "maql": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of metric entity."
-            },
-            "JsonApiVisualizationObjectInDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiVisualizationObjectIn"
-                    }
-                }
-            },
-            "JsonApiVisualizationObjectIn": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "visualizationObject",
-                        "enum": ["visualizationObject"]
-                    },
-                    "id": {
-                        "pattern": "^((?!\\.)[.A-Za-z0-9_-]{1,255}:)?(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "title": {
-                                "type": "string"
-                            },
-                            "description": {
-                                "type": "string"
-                            },
-                            "tags": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "areRelationsValid": {
-                                "type": "boolean"
-                            },
-                            "content": {
-                                "type": "object",
-                                "description": "Free-form JSON content.",
-                                "example": {
-                                    "identifier": {
-                                        "id": "label.leaf",
-                                        "type": "label"
-                                    },
-                                    "someBoolProp": false
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of visualizationObject entity."
-            },
-            "JsonApiWorkspaceDataFilterInDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterIn"
-                    }
-                }
-            },
-            "JsonApiWorkspaceDataFilterIn": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "workspaceDataFilter",
-                        "enum": ["workspaceDataFilter"]
-                    },
-                    "id": {
-                        "pattern": "^((?!\\.)[.A-Za-z0-9_-]{1,255}:)?(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "title": {
-                                "type": "string"
-                            },
-                            "description": {
-                                "type": "string"
-                            },
-                            "columnName": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "filterSettings": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterSettingToManyLinkage"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of workspaceDataFilter entity."
-            },
-            "JsonApiApiTokenInDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiApiTokenIn"
-                    }
-                }
-            },
-            "JsonApiApiTokenIn": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "apiToken",
-                        "enum": ["apiToken"]
-                    },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    }
-                },
-                "description": "JSON:API representation of apiToken entity."
-            },
-            "JsonApiDataSourceInDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiDataSourceIn"
-                    }
-                }
-            },
-            "JsonApiDataSourceIn": {
-                "required": ["attributes", "id", "type"],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "dataSource",
-                        "enum": ["dataSource"]
-                    },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "required": ["name", "schema", "type", "url"],
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                                "type": "string"
-                            },
-                            "type": {
-                                "type": "string",
-                                "enum": [
-                                    "POSTGRESQL",
-                                    "REDSHIFT",
-                                    "VERTICA",
-                                    "SNOWFLAKE",
-                                    "ADS",
-                                    "BIGQUERY",
-                                    "MSSQL",
-                                    "PRESTO",
-                                    "DREMIO",
-                                    "DRILL"
-                                ]
-                            },
-                            "url": {
-                                "type": "string"
-                            },
-                            "schema": {
-                                "type": "string"
-                            },
-                            "username": {
-                                "type": "string"
-                            },
-                            "password": {
-                                "type": "string"
-                            },
-                            "token": {
-                                "type": "string"
-                            },
-                            "enableCaching": {
-                                "type": "boolean"
-                            },
-                            "cachePath": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of dataSource entity."
-            },
-            "JsonApiUserGroupInDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiUserGroupIn"
-                    }
-                }
-            },
-            "JsonApiUserGroupIn": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "userGroup",
-                        "enum": ["userGroup"]
-                    },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "parents": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiUserGroupToManyLinkage"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of userGroup entity."
-            },
-            "JsonApiUserInDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiUserIn"
-                    }
-                }
-            },
-            "JsonApiUserIn": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "user",
-                        "enum": ["user"]
-                    },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "authenticationId": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "userGroups": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiUserGroupToManyLinkage"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of user entity."
-            },
-            "JsonApiWorkspaceInDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiWorkspaceIn"
-                    }
-                }
-            },
-            "JsonApiWorkspaceIn": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "workspace",
-                        "enum": ["workspace"]
-                    },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "parent": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiWorkspaceToOneLinkage"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of workspace entity."
             },
             "JsonApiAnalyticalDashboardPatchDocument": {
                 "required": ["data"],
@@ -10707,44 +9896,598 @@
                 },
                 "description": "JSON:API representation of patching workspaceDataFilter entity."
             },
-            "JsonApiDataSourceIdentifierOutWithLinks": {
-                "allOf": [
+            "JsonApiAttributeOutIncludes": {
+                "oneOf": [
                     {
+                        "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiLabelOutWithLinks"
+                    }
+                ]
+            },
+            "JsonApiAttributeOutDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiAttributeOut"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiAttributeOutIncludes"
+                        }
+                    }
+                }
+            },
+            "JsonApiAttributeOut": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "attribute",
+                        "enum": ["attribute"]
+                    },
+                    "id": {
+                        "pattern": "^((?!\\.)[.A-Za-z0-9_-]{1,255}:)?(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "granularity": {
+                                "type": "string",
+                                "enum": [
+                                    "MINUTE",
+                                    "HOUR",
+                                    "DAY",
+                                    "WEEK",
+                                    "MONTH",
+                                    "QUARTER",
+                                    "YEAR",
+                                    "MINUTE_OF_HOUR",
+                                    "HOUR_OF_DAY",
+                                    "DAY_OF_WEEK",
+                                    "DAY_OF_MONTH",
+                                    "DAY_OF_YEAR",
+                                    "WEEK_OF_YEAR",
+                                    "MONTH_OF_YEAR",
+                                    "QUARTER_OF_YEAR"
+                                ]
+                            },
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "sortColumn": {
+                                "type": "string"
+                            },
+                            "sortDirection": {
+                                "type": "string",
+                                "enum": ["ASC", "DESC"]
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "dataset": {
+                                "required": ["data"],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiDatasetToOneLinkage"
+                                    }
+                                }
+                            },
+                            "defaultView": {
+                                "required": ["data"],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiLabelToOneLinkage"
+                                    }
+                                }
+                            },
+                            "labels": {
+                                "required": ["data"],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiLabelToManyLinkage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of attribute entity."
+            },
+            "JsonApiDatasetToOneLinkage": {
+                "description": "References to other resource objects in a to-one (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
+                "nullable": true,
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiDatasetLinkage"
+                    }
+                ]
+            },
+            "JsonApiLabelToOneLinkage": {
+                "description": "References to other resource objects in a to-one (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
+                "nullable": true,
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiLabelLinkage"
+                    }
+                ]
+            },
+            "JsonApiDatasetOutIncludes": {
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiAttributeOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiFactOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
+                    }
+                ]
+            },
+            "JsonApiDatasetOutDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiDatasetOut"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiDatasetOutIncludes"
+                        }
+                    }
+                }
+            },
+            "JsonApiDatasetOut": {
+                "required": ["attributes", "id", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "dataset",
+                        "enum": ["dataset"]
+                    },
+                    "id": {
+                        "pattern": "^((?!\\.)[.A-Za-z0-9_-]{1,255}:)?(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "required": ["type"],
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": {
+                                "type": "string",
+                                "enum": ["NORMAL", "DATE"]
+                            },
+                            "grain": {
+                                "type": "array",
+                                "items": {
+                                    "required": ["id", "type"],
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "type": {
+                                            "type": "string",
+                                            "enum": ["attribute", "dataset"]
+                                        }
+                                    }
+                                }
+                            },
+                            "referenceProperties": {
+                                "type": "array",
+                                "items": {
+                                    "required": ["identifier", "multivalue", "sourceColumns"],
+                                    "type": "object",
+                                    "properties": {
+                                        "identifier": {
+                                            "$ref": "#/components/schemas/DatasetReferenceIdentifier"
+                                        },
+                                        "multivalue": {
+                                            "type": "boolean"
+                                        },
+                                        "sourceColumns": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "dataSourceTableId": {
+                                "type": "string"
+                            },
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "attributes": {
+                                "required": ["data"],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiAttributeToManyLinkage"
+                                    }
+                                }
+                            },
+                            "facts": {
+                                "required": ["data"],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiFactToManyLinkage"
+                                    }
+                                }
+                            },
+                            "references": {
+                                "required": ["data"],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiDatasetToManyLinkage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of dataset entity."
+            },
+            "DatasetReferenceIdentifier": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": ["dataset"]
+                    }
+                }
+            },
+            "JsonApiFactOutDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiFactOut"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
+                        }
+                    }
+                }
+            },
+            "JsonApiFactOut": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "fact",
+                        "enum": ["fact"]
+                    },
+                    "id": {
+                        "pattern": "^((?!\\.)[.A-Za-z0-9_-]{1,255}:)?(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "sourceColumn": {
+                                "type": "string"
+                            },
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "dataset": {
+                                "required": ["data"],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiDatasetToOneLinkage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of fact entity."
+            },
+            "JsonApiLabelOutDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiLabelOut"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiAttributeOutWithLinks"
+                        }
+                    }
+                }
+            },
+            "JsonApiLabelOut": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "label",
+                        "enum": ["label"]
+                    },
+                    "id": {
+                        "pattern": "^((?!\\.)[.A-Za-z0-9_-]{1,255}:)?(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "primary": {
+                                "type": "boolean"
+                            },
+                            "sourceColumn": {
+                                "type": "string"
+                            },
+                            "valueType": {
+                                "type": "string",
+                                "enum": ["TEXT", "HYPERLINK", "GEO"]
+                            },
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "attribute": {
+                                "required": ["data"],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiAttributeToOneLinkage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of label entity."
+            },
+            "JsonApiAttributeToOneLinkage": {
+                "description": "References to other resource objects in a to-one (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
+                "nullable": true,
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiAttributeLinkage"
+                    }
+                ]
+            },
+            "JsonApiWorkspaceDataFilterSettingOutDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterSettingOut"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterOutWithLinks"
+                        }
+                    }
+                }
+            },
+            "JsonApiWorkspaceDataFilterSettingOut": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "workspaceDataFilterSetting",
+                        "enum": ["workspaceDataFilterSetting"]
+                    },
+                    "id": {
+                        "pattern": "^((?!\\.)[.A-Za-z0-9_-]{1,255}:)?(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "filterValues": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "workspaceDataFilter": {
+                                "required": ["data"],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterToOneLinkage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of workspaceDataFilterSetting entity."
+            },
+            "JsonApiWorkspaceDataFilterLinkage": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": ["workspaceDataFilter"]
+                    }
+                },
+                "description": "The \\\"type\\\" and \\\"id\\\" to non-empty members."
+            },
+            "JsonApiWorkspaceDataFilterToOneLinkage": {
+                "description": "References to other resource objects in a to-one (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
+                "nullable": true,
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterLinkage"
+                    }
+                ]
+            },
+            "JsonApiDataSourceIdentifierOutDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
                         "$ref": "#/components/schemas/JsonApiDataSourceIdentifierOut"
                     },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiDataSourceIdentifierOutList": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiDataSourceIdentifierOutWithLinks"
-                        }
-                    },
                     "links": {
-                        "$ref": "#/components/schemas/ListLinks"
+                        "$ref": "#/components/schemas/ObjectLinks"
                     }
-                },
-                "description": "A JSON:API document with a list of resources"
+                }
             },
-            "JsonApiDataSourceOutWithLinks": {
+            "JsonApiAnalyticalDashboardOutWithLinks": {
                 "allOf": [
                     {
-                        "$ref": "#/components/schemas/JsonApiDataSourceOut"
+                        "$ref": "#/components/schemas/JsonApiAnalyticalDashboardOut"
                     },
                     {
                         "$ref": "#/components/schemas/ObjectLinksContainer"
                     }
                 ]
             },
-            "JsonApiDataSourceOutList": {
+            "JsonApiAnalyticalDashboardOutList": {
                 "required": ["data"],
                 "type": "object",
                 "properties": {
@@ -10752,34 +10495,7 @@
                         "uniqueItems": true,
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/JsonApiDataSourceOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    }
-                },
-                "description": "A JSON:API document with a list of resources"
-            },
-            "JsonApiUserGroupOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiUserGroupOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiUserGroupOutList": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiUserGroupOutWithLinks"
+                            "$ref": "#/components/schemas/JsonApiAnalyticalDashboardOutWithLinks"
                         }
                     },
                     "links": {
@@ -10790,23 +10506,23 @@
                         "type": "array",
                         "description": "Included resources",
                         "items": {
-                            "$ref": "#/components/schemas/JsonApiUserGroupOutWithLinks"
+                            "$ref": "#/components/schemas/JsonApiAnalyticalDashboardOutIncludes"
                         }
                     }
                 },
                 "description": "A JSON:API document with a list of resources"
             },
-            "JsonApiUserOutWithLinks": {
+            "JsonApiAttributeOutWithLinks": {
                 "allOf": [
                     {
-                        "$ref": "#/components/schemas/JsonApiUserOut"
+                        "$ref": "#/components/schemas/JsonApiAttributeOut"
                     },
                     {
                         "$ref": "#/components/schemas/ObjectLinksContainer"
                     }
                 ]
             },
-            "JsonApiUserOutList": {
+            "JsonApiAttributeOutList": {
                 "required": ["data"],
                 "type": "object",
                 "properties": {
@@ -10814,7 +10530,7 @@
                         "uniqueItems": true,
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/JsonApiUserOutWithLinks"
+                            "$ref": "#/components/schemas/JsonApiAttributeOutWithLinks"
                         }
                     },
                     "links": {
@@ -10825,23 +10541,23 @@
                         "type": "array",
                         "description": "Included resources",
                         "items": {
-                            "$ref": "#/components/schemas/JsonApiUserGroupOutWithLinks"
+                            "$ref": "#/components/schemas/JsonApiAttributeOutIncludes"
                         }
                     }
                 },
                 "description": "A JSON:API document with a list of resources"
             },
-            "JsonApiWorkspaceOutWithLinks": {
+            "JsonApiDashboardPluginOutWithLinks": {
                 "allOf": [
                     {
-                        "$ref": "#/components/schemas/JsonApiWorkspaceOut"
+                        "$ref": "#/components/schemas/JsonApiDashboardPluginOut"
                     },
                     {
                         "$ref": "#/components/schemas/ObjectLinksContainer"
                     }
                 ]
             },
-            "JsonApiWorkspaceOutList": {
+            "JsonApiDashboardPluginOutList": {
                 "required": ["data"],
                 "type": "object",
                 "properties": {
@@ -10849,7 +10565,34 @@
                         "uniqueItems": true,
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/JsonApiWorkspaceOutWithLinks"
+                            "$ref": "#/components/schemas/JsonApiDashboardPluginOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiDatasetOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiDatasetOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiDatasetOutList": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
                         }
                     },
                     "links": {
@@ -10860,11 +10603,268 @@
                         "type": "array",
                         "description": "Included resources",
                         "items": {
-                            "$ref": "#/components/schemas/JsonApiWorkspaceOutWithLinks"
+                            "$ref": "#/components/schemas/JsonApiDatasetOutIncludes"
                         }
                     }
                 },
                 "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiFactOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiFactOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiFactOutList": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiFactOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiFilterContextOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiFilterContextOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiFilterContextOutList": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiFilterContextOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiFilterContextOutIncludes"
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiLabelOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiLabelOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiLabelOutList": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiLabelOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiAttributeOutWithLinks"
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiMetricOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiMetricOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiMetricOutList": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiMetricOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiMetricOutIncludes"
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiVisualizationObjectOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiVisualizationObjectOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiVisualizationObjectOutList": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiVisualizationObjectOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiVisualizationObjectOutIncludes"
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiWorkspaceDataFilterSettingOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterSettingOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiWorkspaceDataFilterSettingOutList": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterSettingOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterOutWithLinks"
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiWorkspaceDataFilterOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiWorkspaceDataFilterOutList": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterSettingOutWithLinks"
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiDataSourceTableOutDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiDataSourceTableOut"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    }
+                }
             },
             "AssigneeIdentifier": {
                 "required": ["id", "type"],
@@ -12242,15 +12242,6 @@
             }
         },
         "parameters": {
-            "idPathParameter": {
-                "name": "id",
-                "in": "path",
-                "required": true,
-                "schema": {
-                    "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                    "type": "string"
-                }
-            },
             "page": {
                 "name": "page",
                 "in": "query",
@@ -12278,6 +12269,15 @@
                     "items": {
                         "type": "string"
                     }
+                }
+            },
+            "idPathParameter": {
+                "name": "id",
+                "in": "path",
+                "required": true,
+                "schema": {
+                    "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                    "type": "string"
                 }
             }
         }

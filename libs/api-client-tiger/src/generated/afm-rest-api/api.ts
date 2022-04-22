@@ -234,16 +234,15 @@ export interface AfmValidObjectsQuery {
     afm: AFM;
 }
 
-/**
- * @export
- * @enum {string}
- */
-export enum AfmValidObjectsQueryTypesEnum {
-    FACTS = "facts",
-    ATTRIBUTES = "attributes",
-    MEASURES = "measures",
-    UNRECOGNIZED = "UNRECOGNIZED",
-}
+export const AfmValidObjectsQueryTypesEnum = {
+    FACTS: "facts",
+    ATTRIBUTES: "attributes",
+    MEASURES: "measures",
+    UNRECOGNIZED: "UNRECOGNIZED",
+} as const;
+
+export type AfmValidObjectsQueryTypesEnum =
+    typeof AfmValidObjectsQueryTypesEnum[keyof typeof AfmValidObjectsQueryTypesEnum];
 
 /**
  * All objects of specified types valid with respect to given AFM.
@@ -291,17 +290,16 @@ export interface ArithmeticMeasureDefinitionArithmeticMeasure {
     operator: ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum;
 }
 
-/**
- * @export
- * @enum {string}
- */
-export enum ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum {
-    SUM = "SUM",
-    DIFFERENCE = "DIFFERENCE",
-    MULTIPLICATION = "MULTIPLICATION",
-    RATIO = "RATIO",
-    CHANGE = "CHANGE",
-}
+export const ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum = {
+    SUM: "SUM",
+    DIFFERENCE: "DIFFERENCE",
+    MULTIPLICATION: "MULTIPLICATION",
+    RATIO: "RATIO",
+    CHANGE: "CHANGE",
+} as const;
+
+export type ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum =
+    typeof ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum[keyof typeof ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum];
 
 /**
  *
@@ -322,6 +320,7 @@ export interface AttributeExecutionResultHeader {
  * @export
  */
 export type AttributeFilter = NegativeAttributeFilter | PositiveAttributeFilter;
+
 /**
  * Filter on specific set of label values.
  * @export
@@ -398,27 +397,26 @@ export interface AttributeHeaderAttributeHeader {
     granularity?: AttributeHeaderAttributeHeaderGranularityEnum;
 }
 
-/**
- * @export
- * @enum {string}
- */
-export enum AttributeHeaderAttributeHeaderGranularityEnum {
-    YEAR = "YEAR",
-    DAY = "DAY",
-    HOUR = "HOUR",
-    MINUTE = "MINUTE",
-    QUARTER = "QUARTER",
-    MONTH = "MONTH",
-    WEEK = "WEEK",
-    QUARTER_OF_YEAR = "QUARTER_OF_YEAR",
-    MONTH_OF_YEAR = "MONTH_OF_YEAR",
-    DAY_OF_YEAR = "DAY_OF_YEAR",
-    DAY_OF_WEEK = "DAY_OF_WEEK",
-    DAY_OF_MONTH = "DAY_OF_MONTH",
-    HOUR_OF_DAY = "HOUR_OF_DAY",
-    MINUTE_OF_HOUR = "MINUTE_OF_HOUR",
-    WEEK_OF_YEAR = "WEEK_OF_YEAR",
-}
+export const AttributeHeaderAttributeHeaderGranularityEnum = {
+    YEAR: "YEAR",
+    DAY: "DAY",
+    HOUR: "HOUR",
+    MINUTE: "MINUTE",
+    QUARTER: "QUARTER",
+    MONTH: "MONTH",
+    WEEK: "WEEK",
+    QUARTER_OF_YEAR: "QUARTER_OF_YEAR",
+    MONTH_OF_YEAR: "MONTH_OF_YEAR",
+    DAY_OF_YEAR: "DAY_OF_YEAR",
+    DAY_OF_WEEK: "DAY_OF_WEEK",
+    DAY_OF_MONTH: "DAY_OF_MONTH",
+    HOUR_OF_DAY: "HOUR_OF_DAY",
+    MINUTE_OF_HOUR: "MINUTE_OF_HOUR",
+    WEEK_OF_YEAR: "WEEK_OF_YEAR",
+} as const;
+
+export type AttributeHeaderAttributeHeaderGranularityEnum =
+    typeof AttributeHeaderAttributeHeaderGranularityEnum[keyof typeof AttributeHeaderAttributeHeaderGranularityEnum];
 
 /**
  *
@@ -642,18 +640,17 @@ export interface ComparisonMeasureValueFilterBody {
     value: number;
 }
 
-/**
- * @export
- * @enum {string}
- */
-export enum ComparisonMeasureValueFilterBodyOperatorEnum {
-    GREATER_THAN = "GREATER_THAN",
-    GREATER_THAN_OR_EQUAL_TO = "GREATER_THAN_OR_EQUAL_TO",
-    LESS_THAN = "LESS_THAN",
-    LESS_THAN_OR_EQUAL_TO = "LESS_THAN_OR_EQUAL_TO",
-    EQUAL_TO = "EQUAL_TO",
-    NOT_EQUAL_TO = "NOT_EQUAL_TO",
-}
+export const ComparisonMeasureValueFilterBodyOperatorEnum = {
+    GREATER_THAN: "GREATER_THAN",
+    GREATER_THAN_OR_EQUAL_TO: "GREATER_THAN_OR_EQUAL_TO",
+    LESS_THAN: "LESS_THAN",
+    LESS_THAN_OR_EQUAL_TO: "LESS_THAN_OR_EQUAL_TO",
+    EQUAL_TO: "EQUAL_TO",
+    NOT_EQUAL_TO: "NOT_EQUAL_TO",
+} as const;
+
+export type ComparisonMeasureValueFilterBodyOperatorEnum =
+    typeof ComparisonMeasureValueFilterBodyOperatorEnum[keyof typeof ComparisonMeasureValueFilterBodyOperatorEnum];
 
 /**
  *
@@ -675,18 +672,17 @@ export interface ComparisonMeasureValueFilterBodyAllOf {
     value: number;
 }
 
-/**
- * @export
- * @enum {string}
- */
-export enum ComparisonMeasureValueFilterBodyAllOfOperatorEnum {
-    GREATER_THAN = "GREATER_THAN",
-    GREATER_THAN_OR_EQUAL_TO = "GREATER_THAN_OR_EQUAL_TO",
-    LESS_THAN = "LESS_THAN",
-    LESS_THAN_OR_EQUAL_TO = "LESS_THAN_OR_EQUAL_TO",
-    EQUAL_TO = "EQUAL_TO",
-    NOT_EQUAL_TO = "NOT_EQUAL_TO",
-}
+export const ComparisonMeasureValueFilterBodyAllOfOperatorEnum = {
+    GREATER_THAN: "GREATER_THAN",
+    GREATER_THAN_OR_EQUAL_TO: "GREATER_THAN_OR_EQUAL_TO",
+    LESS_THAN: "LESS_THAN",
+    LESS_THAN_OR_EQUAL_TO: "LESS_THAN_OR_EQUAL_TO",
+    EQUAL_TO: "EQUAL_TO",
+    NOT_EQUAL_TO: "NOT_EQUAL_TO",
+} as const;
+
+export type ComparisonMeasureValueFilterBodyAllOfOperatorEnum =
+    typeof ComparisonMeasureValueFilterBodyAllOfOperatorEnum[keyof typeof ComparisonMeasureValueFilterBodyAllOfOperatorEnum];
 
 /**
  * @type DateFilter
@@ -694,6 +690,7 @@ export enum ComparisonMeasureValueFilterBodyAllOfOperatorEnum {
  * @export
  */
 export type DateFilter = AbsoluteDateFilter | RelativeDateFilter;
+
 /**
  * Single dimension description.
  * @export
@@ -803,18 +800,18 @@ export interface ElementsRequest {
      * Specifies percentage of source table data scanned during the computation. This field is deprecated and is no longer used during the elements computation.
      * @type {number}
      * @memberof ElementsRequest
+     * @deprecated
      */
     dataSamplingPercentage?: number;
 }
 
-/**
- * @export
- * @enum {string}
- */
-export enum ElementsRequestSortOrderEnum {
-    ASC = "ASC",
-    DESC = "DESC",
-}
+export const ElementsRequestSortOrderEnum = {
+    ASC: "ASC",
+    DESC: "DESC",
+} as const;
+
+export type ElementsRequestSortOrderEnum =
+    typeof ElementsRequestSortOrderEnum[keyof typeof ElementsRequestSortOrderEnum];
 
 /**
  * Entity holding list of sorted & filtered label elements, related primary label of attribute owning requested label and paging.
@@ -929,6 +926,7 @@ export interface ExecutionResultGrandTotal {
  * @export
  */
 export type ExecutionResultHeader = AttributeExecutionResultHeader | MeasureExecutionResultHeader;
+
 /**
  * A paging information related to the data presented in the execution result. These paging information are multi-dimensional.
  * @export
@@ -981,14 +979,12 @@ export interface FilterBy {
     labelType: FilterByLabelTypeEnum;
 }
 
-/**
- * @export
- * @enum {string}
- */
-export enum FilterByLabelTypeEnum {
-    PRIMARY = "PRIMARY",
-    REQUESTED = "REQUESTED",
-}
+export const FilterByLabelTypeEnum = {
+    PRIMARY: "PRIMARY",
+    REQUESTED: "REQUESTED",
+} as const;
+
+export type FilterByLabelTypeEnum = typeof FilterByLabelTypeEnum[keyof typeof FilterByLabelTypeEnum];
 
 /**
  * @type FilterDefinition
@@ -1001,12 +997,14 @@ export type FilterDefinition =
     | InlineFilterDefinition
     | MeasureValueFilter
     | RankingFilter;
+
 /**
  * @type FilterDefinitionForSimpleMeasure
  * Abstract filter definition type for simple metric.
  * @export
  */
 export type FilterDefinitionForSimpleMeasure = AttributeFilter | DateFilter;
+
 /**
  * Definition of a grand total. Grand total data will be computed into a separate section of the result structure so that client has more options how to visualize them.
  * @export
@@ -1051,6 +1049,7 @@ export interface HeaderGroup {
  * @export
  */
 export type Identifier = AfmObjectIdentifier | LocalIdentifier;
+
 /**
  *
  * @export
@@ -1172,6 +1171,7 @@ export type MeasureDefinition =
     | PopDatasetMeasureDefinition
     | PopDateMeasureDefinition
     | SimpleMeasureDefinition;
+
 /**
  *
  * @export
@@ -1261,6 +1261,7 @@ export interface MeasureResultHeader {
  * @export
  */
 export type MeasureValueFilter = ComparisonMeasureValueFilter | RangeMeasureValueFilter;
+
 /**
  * Filter able to limit element values by label and related selected negated elements.
  * @export
@@ -1621,14 +1622,13 @@ export interface RangeMeasureValueFilterBody {
     to: number;
 }
 
-/**
- * @export
- * @enum {string}
- */
-export enum RangeMeasureValueFilterBodyOperatorEnum {
-    BETWEEN = "BETWEEN",
-    NOT_BETWEEN = "NOT_BETWEEN",
-}
+export const RangeMeasureValueFilterBodyOperatorEnum = {
+    BETWEEN: "BETWEEN",
+    NOT_BETWEEN: "NOT_BETWEEN",
+} as const;
+
+export type RangeMeasureValueFilterBodyOperatorEnum =
+    typeof RangeMeasureValueFilterBodyOperatorEnum[keyof typeof RangeMeasureValueFilterBodyOperatorEnum];
 
 /**
  *
@@ -1656,14 +1656,13 @@ export interface RangeMeasureValueFilterBodyAllOf {
     to: number;
 }
 
-/**
- * @export
- * @enum {string}
- */
-export enum RangeMeasureValueFilterBodyAllOfOperatorEnum {
-    BETWEEN = "BETWEEN",
-    NOT_BETWEEN = "NOT_BETWEEN",
-}
+export const RangeMeasureValueFilterBodyAllOfOperatorEnum = {
+    BETWEEN: "BETWEEN",
+    NOT_BETWEEN: "NOT_BETWEEN",
+} as const;
+
+export type RangeMeasureValueFilterBodyAllOfOperatorEnum =
+    typeof RangeMeasureValueFilterBodyAllOfOperatorEnum[keyof typeof RangeMeasureValueFilterBodyAllOfOperatorEnum];
 
 /**
  * Filter the result on top/bottom N values according to given metric(s).
@@ -1716,14 +1715,13 @@ export interface RankingFilterBody {
     value: number;
 }
 
-/**
- * @export
- * @enum {string}
- */
-export enum RankingFilterBodyOperatorEnum {
-    TOP = "TOP",
-    BOTTOM = "BOTTOM",
-}
+export const RankingFilterBodyOperatorEnum = {
+    TOP: "TOP",
+    BOTTOM: "BOTTOM",
+} as const;
+
+export type RankingFilterBodyOperatorEnum =
+    typeof RankingFilterBodyOperatorEnum[keyof typeof RankingFilterBodyOperatorEnum];
 
 /**
  *
@@ -1751,14 +1749,13 @@ export interface RankingFilterBodyAllOf {
     value: number;
 }
 
-/**
- * @export
- * @enum {string}
- */
-export enum RankingFilterBodyAllOfOperatorEnum {
-    TOP = "TOP",
-    BOTTOM = "BOTTOM",
-}
+export const RankingFilterBodyAllOfOperatorEnum = {
+    TOP: "TOP",
+    BOTTOM: "BOTTOM",
+} as const;
+
+export type RankingFilterBodyAllOfOperatorEnum =
+    typeof RankingFilterBodyAllOfOperatorEnum[keyof typeof RankingFilterBodyAllOfOperatorEnum];
 
 /**
  *
@@ -1811,27 +1808,26 @@ export interface RelativeDateFilterBody {
     to: number;
 }
 
-/**
- * @export
- * @enum {string}
- */
-export enum RelativeDateFilterBodyGranularityEnum {
-    MINUTE = "MINUTE",
-    HOUR = "HOUR",
-    DAY = "DAY",
-    WEEK = "WEEK",
-    MONTH = "MONTH",
-    QUARTER = "QUARTER",
-    YEAR = "YEAR",
-    MINUTE_OF_HOUR = "MINUTE_OF_HOUR",
-    HOUR_OF_DAY = "HOUR_OF_DAY",
-    DAY_OF_WEEK = "DAY_OF_WEEK",
-    DAY_OF_MONTH = "DAY_OF_MONTH",
-    DAY_OF_YEAR = "DAY_OF_YEAR",
-    WEEK_OF_YEAR = "WEEK_OF_YEAR",
-    MONTH_OF_YEAR = "MONTH_OF_YEAR",
-    QUARTER_OF_YEAR = "QUARTER_OF_YEAR",
-}
+export const RelativeDateFilterBodyGranularityEnum = {
+    MINUTE: "MINUTE",
+    HOUR: "HOUR",
+    DAY: "DAY",
+    WEEK: "WEEK",
+    MONTH: "MONTH",
+    QUARTER: "QUARTER",
+    YEAR: "YEAR",
+    MINUTE_OF_HOUR: "MINUTE_OF_HOUR",
+    HOUR_OF_DAY: "HOUR_OF_DAY",
+    DAY_OF_WEEK: "DAY_OF_WEEK",
+    DAY_OF_MONTH: "DAY_OF_MONTH",
+    DAY_OF_YEAR: "DAY_OF_YEAR",
+    WEEK_OF_YEAR: "WEEK_OF_YEAR",
+    MONTH_OF_YEAR: "MONTH_OF_YEAR",
+    QUARTER_OF_YEAR: "QUARTER_OF_YEAR",
+} as const;
+
+export type RelativeDateFilterBodyGranularityEnum =
+    typeof RelativeDateFilterBodyGranularityEnum[keyof typeof RelativeDateFilterBodyGranularityEnum];
 
 /**
  * A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension.
@@ -1859,27 +1855,26 @@ export interface RelativeDateFilterBodyAllOf {
     to: number;
 }
 
-/**
- * @export
- * @enum {string}
- */
-export enum RelativeDateFilterBodyAllOfGranularityEnum {
-    MINUTE = "MINUTE",
-    HOUR = "HOUR",
-    DAY = "DAY",
-    WEEK = "WEEK",
-    MONTH = "MONTH",
-    QUARTER = "QUARTER",
-    YEAR = "YEAR",
-    MINUTE_OF_HOUR = "MINUTE_OF_HOUR",
-    HOUR_OF_DAY = "HOUR_OF_DAY",
-    DAY_OF_WEEK = "DAY_OF_WEEK",
-    DAY_OF_MONTH = "DAY_OF_MONTH",
-    DAY_OF_YEAR = "DAY_OF_YEAR",
-    WEEK_OF_YEAR = "WEEK_OF_YEAR",
-    MONTH_OF_YEAR = "MONTH_OF_YEAR",
-    QUARTER_OF_YEAR = "QUARTER_OF_YEAR",
-}
+export const RelativeDateFilterBodyAllOfGranularityEnum = {
+    MINUTE: "MINUTE",
+    HOUR: "HOUR",
+    DAY: "DAY",
+    WEEK: "WEEK",
+    MONTH: "MONTH",
+    QUARTER: "QUARTER",
+    YEAR: "YEAR",
+    MINUTE_OF_HOUR: "MINUTE_OF_HOUR",
+    HOUR_OF_DAY: "HOUR_OF_DAY",
+    DAY_OF_WEEK: "DAY_OF_WEEK",
+    DAY_OF_MONTH: "DAY_OF_MONTH",
+    DAY_OF_YEAR: "DAY_OF_YEAR",
+    WEEK_OF_YEAR: "WEEK_OF_YEAR",
+    MONTH_OF_YEAR: "MONTH_OF_YEAR",
+    QUARTER_OF_YEAR: "QUARTER_OF_YEAR",
+} as const;
+
+export type RelativeDateFilterBodyAllOfGranularityEnum =
+    typeof RelativeDateFilterBodyAllOfGranularityEnum[keyof typeof RelativeDateFilterBodyAllOfGranularityEnum];
 
 /**
  * Identifier of primary label of attribute owning requested label, or null if the primary label is excluded.
@@ -1977,30 +1972,33 @@ export interface SimpleMeasureDefinitionMeasure {
     filters?: Array<FilterDefinitionForSimpleMeasure>;
 }
 
-/**
- * @export
- * @enum {string}
- */
-export enum SimpleMeasureDefinitionMeasureAggregationEnum {
-    SUM = "SUM",
-    COUNT = "COUNT",
-    APPROXIMATE_COUNT = "APPROXIMATE_COUNT",
-    AVG = "AVG",
-    MIN = "MIN",
-    MAX = "MAX",
-    MEDIAN = "MEDIAN",
-    RUNSUM = "RUNSUM",
-}
+export const SimpleMeasureDefinitionMeasureAggregationEnum = {
+    SUM: "SUM",
+    COUNT: "COUNT",
+    APPROXIMATE_COUNT: "APPROXIMATE_COUNT",
+    AVG: "AVG",
+    MIN: "MIN",
+    MAX: "MAX",
+    MEDIAN: "MEDIAN",
+    RUNSUM: "RUNSUM",
+} as const;
+
+export type SimpleMeasureDefinitionMeasureAggregationEnum =
+    typeof SimpleMeasureDefinitionMeasureAggregationEnum[keyof typeof SimpleMeasureDefinitionMeasureAggregationEnum];
 
 /**
  * Sorting elements - ascending/descending order.
  * @export
  * @enum {string}
  */
-export enum SortDirection {
-    ASC = "ASC",
-    DESC = "DESC",
-}
+
+export const SortDirection = {
+    ASC: "ASC",
+    DESC: "DESC",
+} as const;
+
+export type SortDirection = typeof SortDirection[keyof typeof SortDirection];
+
 /**
  * Sorting rule for sorting by attribute value in current dimension.
  * @export
@@ -2076,12 +2074,16 @@ export interface SortKeyValueValue {
  * @export
  * @enum {string}
  */
-export enum SortType {
-    DEFAULT = "DEFAULT",
-    LABEL = "LABEL",
-    ATTRIBUTE = "ATTRIBUTE",
-    AREA = "AREA",
-}
+
+export const SortType = {
+    DEFAULT: "DEFAULT",
+    LABEL: "LABEL",
+    ATTRIBUTE: "ATTRIBUTE",
+    AREA: "AREA",
+} as const;
+
+export type SortType = typeof SortType[keyof typeof SortType];
+
 /**
  * The HTTP status code generated by the origin server for this occurrence of the problem.
  * @export
@@ -2106,13 +2108,16 @@ export interface StatusType {
  * @export
  * @enum {string}
  */
-export enum TotalFunction {
-    SUM = "SUM",
-    MIN = "MIN",
-    MAX = "MAX",
-    AVG = "AVG",
-    MED = "MED",
-}
+
+export const TotalFunction = {
+    SUM: "SUM",
+    MIN: "MIN",
+    MAX: "MAX",
+    AVG: "AVG",
+    MED: "MED",
+} as const;
+
+export type TotalFunction = typeof TotalFunction[keyof typeof TotalFunction];
 
 /**
  * ActionsApi - axios parameter creator
