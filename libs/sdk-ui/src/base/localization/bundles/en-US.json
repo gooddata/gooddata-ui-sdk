@@ -673,27 +673,27 @@
     },
     "filters.interval.hours.past": {
         "value": "From {from} to {to} {to, plural, one {hour} other {hours}} ago",
-        "comment": "Example: 'From 5 to 3 hours ago'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {MINUTE} other {MINUTEs}}' translate only uppercase words.",
+        "comment": "Example: 'From 5 to 3 hours ago'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {HOUR} other {HOURS}}' translate only uppercase words.",
         "limit": 0
     },
     "filters.interval.hours.past.sameValue": {
         "value": "{value} {value, plural, one {hour} other {hours}} ago",
-        "comment": "Example: '5 hours ago'. Don't translate placeholder '{value}'. In '{value, plural, one {MINUTE} other {MINUTES}}' translate only uppercase words.",
+        "comment": "Example: '5 hours ago'. Don't translate placeholder '{value}'. In '{value, plural, one {HOUR} other {HOURS}}' translate only uppercase words.",
         "limit": 0
     },
     "filters.interval.hours.future": {
         "value": "From {from} to {to} {to, plural, one {hour} other {hours}} ahead",
-        "comment": "Example: 'From 3 to 5 hours ahead'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {MINUTE} other {MINUTES}}' translate only uppercase words.",
+        "comment": "Example: 'From 3 to 5 hours ahead'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {HOUR} other {HOURS}}' translate only uppercase words.",
         "limit": 0
     },
     "filters.interval.hours.future.sameValue": {
         "value": "{value} {value, plural, one {hour} other {hours}} ahead",
-        "comment": "Example: '5 hours ahead'. Don't translate placeholder '{value}'. In '{value, plural, one {MINUTE} other {MINUTES}}' translate only uppercase words.",
+        "comment": "Example: '5 hours ahead'. Don't translate placeholder '{value}'. In '{value, plural, one {HOUR} other {HOURS}}' translate only uppercase words.",
         "limit": 0
     },
     "filters.interval.hours.mixed": {
-        "value": "From {from} {from, plural, one {hour} other {hours}} ago to {to} {to, plural, one {day} other {days}} ahead",
-        "comment": "Example: 'From 5 hours ago to 3 hours ahead'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {MINUTE} other {MINUTES}}' translate only uppercase words.",
+        "value": "From {from} {from, plural, one {hour} other {hours}} ago to {to} {to, plural, one {hour} other {hours}} ahead",
+        "comment": "Example: 'From 5 hours ago to 3 hours ahead'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {HOUR} other {HOURS}}' translate only uppercase words.",
         "limit": 0
     },
     "filters.interval.days.past": {
@@ -872,7 +872,7 @@
         "limit": 0
     },
     "filters.floatingRange": {
-        "value": "Floating range",
+        "value": "Relative period",
         "comment": "",
         "limit": 0
     },

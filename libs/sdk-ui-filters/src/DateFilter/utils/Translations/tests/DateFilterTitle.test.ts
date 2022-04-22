@@ -38,7 +38,7 @@ describe("getDateFilterTitleUsingTranslator", () => {
             serializingTranslator,
             DEFAULT_DATE_FORMAT,
         );
-        expect(actual).toEqual("01/01/2019–02/01/2019");
+        expect(actual).toEqual("01/01/2019 - 02/01/2019");
     });
 
     it("should return the correct translation for absolute form filter for one day", () => {
@@ -174,7 +174,7 @@ describe("getDateFilterTitle", () => {
 
     it("should return title with desired format", () => {
         const filter = { ...absoluteFormFilter };
-        const expected = "01/01/2019–02/01/2019";
+        const expected = "01/01/2019 - 02/01/2019";
         const actual = getDateFilterTitle(filter, "en-US", DEFAULT_DATE_FORMAT);
         expect(actual).toEqual(expected);
     });
@@ -183,7 +183,7 @@ describe("getDateFilterTitle", () => {
 describe("getDateFilterRepresentation", () => {
     it("should return title with desired format", () => {
         const filter = { ...absoluteFormFilter };
-        const expected = "01/01/2019–02/01/2019";
+        const expected = "01/01/2019 - 02/01/2019";
         const actual = getDateFilterRepresentation(filter, "en-US", DEFAULT_DATE_FORMAT);
         expect(actual).toEqual(expected);
     });
