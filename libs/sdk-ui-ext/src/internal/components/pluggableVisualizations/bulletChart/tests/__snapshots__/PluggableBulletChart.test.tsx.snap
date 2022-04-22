@@ -370,3 +370,598 @@ Object {
   "supported": true,
 }
 `;
+
+exports[`PluggableBulletChart should return reference point with target and comparative measures and one category 1`] = `
+Object {
+  "buckets": Array [
+    Object {
+      "items": Array [],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "af2Ewj9Re2vK",
+          "localIdentifier": "m2",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "tertiary_measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "attr.owner.department",
+          "dfRef": Object {
+            "uri": "a1/df",
+          },
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+        Object {
+          "aggregation": null,
+          "attribute": "attr.stage.iswon",
+          "dfRef": Object {
+            "uri": "a2/df",
+          },
+          "localIdentifier": "a2",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "filters": Object {
+    "items": Array [
+      Object {
+        "aggregation": null,
+        "attribute": "attr.owner.department",
+        "filters": Array [
+          Object {
+            "attribute": "attr.owner.department",
+            "displayFormRef": Object {
+              "uri": "owner/attribute/df/uri",
+            },
+            "isInverted": false,
+            "selectedElements": Array [
+              Object {
+                "title": "string",
+                "uri": "string",
+              },
+            ],
+            "totalElementsCount": 10,
+          },
+        ],
+        "localIdentifier": "a1",
+        "type": "attribute",
+      },
+      Object {
+        "aggregation": null,
+        "attribute": "attr.stage.iswon",
+        "filters": Array [
+          Object {
+            "attribute": "attr.stage.iswon",
+            "displayFormRef": Object {
+              "uri": "iswon/attribute/df/uri",
+            },
+            "isInverted": true,
+            "selectedElements": Array [
+              Object {
+                "title": "string",
+                "uri": "string",
+              },
+            ],
+            "totalElementsCount": 10,
+          },
+        ],
+        "localIdentifier": "a2",
+        "type": "attribute",
+      },
+    ],
+    "localIdentifier": "filters",
+  },
+  "properties": Object {},
+  "uiConfig": Object {
+    "buckets": Object {
+      "filters": Object {
+        "accepts": Array [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": Object {
+          "date": 1,
+        },
+      },
+      "measures": Object {
+        "accepts": Array [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:bullet/bucket-title-primary.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "isShowOnSecondaryAxisVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "Primary",
+        "title": "Measure",
+      },
+      "secondary_measures": Object {
+        "accepts": Array [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:bullet/bucket-title-target.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "isShowOnSecondaryAxisVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "Target",
+        "title": "Measure",
+      },
+      "tertiary_measures": Object {
+        "accepts": Array [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:bullet/bucket-title-comparative.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "isShowOnSecondaryAxisVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "Comparative",
+        "title": "Measure",
+      },
+      "view": Object {
+        "accepts": Array [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:bullet/bucket-title-view-by.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 2,
+        "itemsLimitByType": Object {
+          "date": 1,
+        },
+        "title": "View by",
+      },
+    },
+    "customError": Object {
+      "heading": "No primary measure in your insight",
+      "text": "Add a primary measure to your insight, or switch to table.
+Once done, you'll be able to save it.",
+    },
+    "exportConfig": Object {
+      "supported": true,
+    },
+    "openAsReport": Object {
+      "supported": false,
+    },
+    "recommendations": Object {},
+    "supportedOverTimeComparisonTypes": Array [
+      "same_period_previous_year",
+      "previous_period",
+    ],
+  },
+}
+`;
+
+exports[`PluggableBulletChart should return reference point with three measures and no attribute 1`] = `
+Object {
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "af2Ewj9Re2vK",
+          "localIdentifier": "m2",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "dt.opportunitysnapshot.snapshotdate",
+          "localIdentifier": "m3",
+          "showInPercent": null,
+          "showOnSecondaryAxis": true,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "tertiary_measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "view",
+    },
+  ],
+  "filters": Object {
+    "items": Array [],
+    "localIdentifier": "filters",
+  },
+  "properties": Object {},
+  "uiConfig": Object {
+    "buckets": Object {
+      "filters": Object {
+        "accepts": Array [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": Object {
+          "date": 1,
+        },
+      },
+      "measures": Object {
+        "accepts": Array [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:bullet/bucket-title-primary.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "isShowOnSecondaryAxisVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "Primary",
+        "title": "Measure",
+      },
+      "secondary_measures": Object {
+        "accepts": Array [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:bullet/bucket-title-target.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "isShowOnSecondaryAxisVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "Target",
+        "title": "Measure",
+      },
+      "tertiary_measures": Object {
+        "accepts": Array [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:bullet/bucket-title-comparative.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "isShowOnSecondaryAxisVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "Comparative",
+        "title": "Measure",
+      },
+      "view": Object {
+        "accepts": Array [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:bullet/bucket-title-view-by.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 2,
+        "itemsLimitByType": Object {
+          "date": 1,
+        },
+        "title": "View by",
+      },
+    },
+    "exportConfig": Object {
+      "supported": true,
+    },
+    "openAsReport": Object {
+      "supported": false,
+    },
+    "recommendations": Object {},
+    "supportedOverTimeComparisonTypes": Array [
+      "same_period_previous_year",
+      "previous_period",
+    ],
+  },
+}
+`;
+
+exports[`PluggableBulletChart should return reference point with three measures and one category and only valid filters 1`] = `
+Object {
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "af2Ewj9Re2vK",
+          "localIdentifier": "m2",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "dt.opportunitysnapshot.snapshotdate",
+          "localIdentifier": "m3",
+          "showInPercent": null,
+          "showOnSecondaryAxis": true,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "tertiary_measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "attr.owner.department",
+          "dfRef": Object {
+            "uri": "a1/df",
+          },
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+        Object {
+          "aggregation": null,
+          "attribute": "attr.stage.iswon",
+          "dfRef": Object {
+            "uri": "a2/df",
+          },
+          "localIdentifier": "a2",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "filters": Object {
+    "items": Array [
+      Object {
+        "aggregation": null,
+        "attribute": "attr.owner.department",
+        "filters": Array [
+          Object {
+            "attribute": "attr.owner.department",
+            "displayFormRef": Object {
+              "uri": "owner/attribute/df/uri",
+            },
+            "isInverted": false,
+            "selectedElements": Array [
+              Object {
+                "title": "string",
+                "uri": "string",
+              },
+            ],
+            "totalElementsCount": 10,
+          },
+        ],
+        "localIdentifier": "a1",
+        "type": "attribute",
+      },
+      Object {
+        "aggregation": null,
+        "attribute": "attr.stage.iswon",
+        "filters": Array [
+          Object {
+            "attribute": "attr.stage.iswon",
+            "displayFormRef": Object {
+              "uri": "iswon/attribute/df/uri",
+            },
+            "isInverted": true,
+            "selectedElements": Array [
+              Object {
+                "title": "string",
+                "uri": "string",
+              },
+            ],
+            "totalElementsCount": 10,
+          },
+        ],
+        "localIdentifier": "a2",
+        "type": "attribute",
+      },
+    ],
+    "localIdentifier": "filters",
+  },
+  "properties": Object {},
+  "uiConfig": Object {
+    "buckets": Object {
+      "filters": Object {
+        "accepts": Array [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": Object {
+          "date": 1,
+        },
+      },
+      "measures": Object {
+        "accepts": Array [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:bullet/bucket-title-primary.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "isShowOnSecondaryAxisVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "Primary",
+        "title": "Measure",
+      },
+      "secondary_measures": Object {
+        "accepts": Array [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:bullet/bucket-title-target.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "isShowOnSecondaryAxisVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "Target",
+        "title": "Measure",
+      },
+      "tertiary_measures": Object {
+        "accepts": Array [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:bullet/bucket-title-comparative.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": false,
+        "isShowOnSecondaryAxisVisible": false,
+        "itemsLimit": 1,
+        "subtitle": "Comparative",
+        "title": "Measure",
+      },
+      "view": Object {
+        "accepts": Array [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:bullet/bucket-title-view-by.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 2,
+        "itemsLimitByType": Object {
+          "date": 1,
+        },
+        "title": "View by",
+      },
+    },
+    "exportConfig": Object {
+      "supported": true,
+    },
+    "openAsReport": Object {
+      "supported": false,
+    },
+    "recommendations": Object {},
+    "supportedOverTimeComparisonTypes": Array [
+      "same_period_previous_year",
+      "previous_period",
+    ],
+  },
+}
+`;

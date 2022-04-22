@@ -1,10 +1,9 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import noop from "lodash/noop";
 import { PluggableBubbleChart } from "../PluggableBubbleChart";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
-import * as uiConfigMocks from "../../../../tests/mocks/uiConfigMocks";
 
-import { IBucketOfFun, IFilters } from "../../../../interfaces/Visualization";
+import { IBucketOfFun } from "../../../../interfaces/Visualization";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 describe("PluggableBubbleChart", () => {
@@ -34,150 +33,31 @@ describe("PluggableBubbleChart", () => {
     it("should return reference point with three measures and one category and only valid filters", async () => {
         const bubbleChart = createComponent();
 
-        const expectedBuckets: IBucketOfFun[] = [
-            {
-                localIdentifier: "measures",
-                items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items.slice(
-                    0,
-                    1,
-                ),
-            },
-            {
-                localIdentifier: "secondary_measures",
-                items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items.slice(
-                    1,
-                    2,
-                ),
-            },
-            {
-                localIdentifier: "tertiary_measures",
-                items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items.slice(
-                    2,
-                    3,
-                ),
-            },
-            {
-                localIdentifier: "view",
-                items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[1].items.slice(
-                    0,
-                    1,
-                ),
-            },
-        ];
-
-        const expectedFilters: IFilters = {
-            localIdentifier: "filters",
-            items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.filters.items.slice(0, 1),
-        };
-
         const extendedReferencePoint = await bubbleChart.getExtendedReferencePoint(
             referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
         );
 
-        expect(extendedReferencePoint).toEqual({
-            buckets: expectedBuckets,
-            filters: expectedFilters,
-            uiConfig: uiConfigMocks.bubbleChartUiConfig,
-            properties: {},
-        });
+        expect(extendedReferencePoint).toMatchSnapshot();
     });
 
     it("should return reference point with three measures and no attribute", async () => {
         const scatterPlot = createComponent();
 
-        const expectedBuckets: IBucketOfFun[] = [
-            {
-                localIdentifier: "measures",
-                items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items.slice(
-                    0,
-                    1,
-                ),
-            },
-            {
-                localIdentifier: "secondary_measures",
-                items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items.slice(
-                    1,
-                    2,
-                ),
-            },
-            {
-                localIdentifier: "tertiary_measures",
-                items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items.slice(
-                    2,
-                    3,
-                ),
-            },
-            {
-                localIdentifier: "view",
-                items: [],
-            },
-        ];
-
-        const expectedFilters: IFilters = {
-            localIdentifier: "filters",
-            items: [],
-        };
-
         const extendedReferencePoint = await scatterPlot.getExtendedReferencePoint(
             referencePointMocks.multipleMetricsNoCategoriesReferencePoint,
         );
 
-        expect(extendedReferencePoint).toEqual({
-            buckets: expectedBuckets,
-            filters: expectedFilters,
-            uiConfig: uiConfigMocks.bubbleChartUiConfig,
-            properties: {},
-        });
+        expect(extendedReferencePoint).toMatchSnapshot();
     });
 
     it("should return reference point with secondary metric, tertiary metric and one category", async () => {
         const bubbleChart = createComponent();
 
-        const expectedBuckets: IBucketOfFun[] = [
-            {
-                localIdentifier: "measures",
-                items: referencePointMocks.secondaryMeasuresAndAttributeReferencePoint.buckets[1].items.slice(
-                    1,
-                    2,
-                ),
-            },
-            {
-                localIdentifier: "secondary_measures",
-                items: referencePointMocks.secondaryMeasuresAndAttributeReferencePoint.buckets[1].items.slice(
-                    0,
-                    1,
-                ),
-            },
-            {
-                localIdentifier: "tertiary_measures",
-                items: referencePointMocks.secondaryMeasuresAndAttributeReferencePoint.buckets[1].items.slice(
-                    2,
-                    3,
-                ),
-            },
-            {
-                localIdentifier: "view",
-                items: referencePointMocks.secondaryMeasuresAndAttributeReferencePoint.buckets[2].items.slice(
-                    0,
-                    1,
-                ),
-            },
-        ];
-        const expectedFilters: IFilters = {
-            localIdentifier: "filters",
-            items: referencePointMocks.secondaryMeasuresAndAttributeReferencePoint.filters.items.slice(0, 1),
-        };
-
         const extendedReferencePoint = await bubbleChart.getExtendedReferencePoint(
             referencePointMocks.secondaryMeasuresAndAttributeReferencePoint,
         );
 
-        expect(extendedReferencePoint).toEqual({
-            buckets: expectedBuckets,
-            filters: expectedFilters,
-            uiConfig: uiConfigMocks.bubbleChartUiConfig,
-            properties: {},
-        });
+        expect(extendedReferencePoint).toMatchSnapshot();
     });
 
     describe("Arithmetic measures", () => {

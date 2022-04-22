@@ -1,13 +1,11 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import ReactDom from "react-dom";
-import cloneDeep from "lodash/cloneDeep";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 import { PluggableXirr } from "../PluggableXirr";
-import { IVisConstruct, IVisProps, IBucketOfFun, IFilters } from "../../../../interfaces/Visualization";
+import { IVisConstruct, IVisProps } from "../../../../interfaces/Visualization";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
-import * as uiConfigMocks from "../../../../tests/mocks/uiConfigMocks";
 import * as testMocks from "../../../../tests/mocks/testMocks";
 import { IDrillableItem } from "@gooddata/sdk-ui";
 import { CoreXirr } from "@gooddata/sdk-ui-charts";
@@ -166,62 +164,17 @@ describe("PluggableXirr", () => {
                 referencePointMocks.measuresAndDateReferencePoint,
             );
 
-            const expectedBuckets: IBucketOfFun[] = [
-                {
-                    localIdentifier: "measures",
-                    items: referencePointMocks.measuresAndDateReferencePoint.buckets[0].items.slice(0, 1),
-                },
-                {
-                    localIdentifier: "attribute",
-                    items: referencePointMocks.measuresAndDateReferencePoint.buckets[1].items.slice(0, 1),
-                },
-            ];
-
-            const expectedFilters: IFilters = {
-                localIdentifier: "filters",
-                items: [],
-            };
-
-            expect(extendedReferencePoint).toEqual({
-                buckets: expectedBuckets,
-                filters: expectedFilters,
-                properties: {},
-                uiConfig: uiConfigMocks.fullySpecifiedXirrUiConfig,
-            });
+            expect(extendedReferencePoint).toMatchSnapshot();
         });
 
         it("should correctly process empty reference point", async () => {
             const headline = createComponent();
+
             const extendedReferencePoint = await headline.getExtendedReferencePoint(
                 referencePointMocks.emptyReferencePoint,
             );
 
-            const expectedBuckets: IBucketOfFun[] = [
-                {
-                    localIdentifier: "measures",
-                    items: [],
-                },
-                {
-                    localIdentifier: "attribute",
-                    items: [],
-                },
-            ];
-
-            const expectedFilters: IFilters = {
-                localIdentifier: "filters",
-                items: [],
-            };
-
-            const expectedUiConfig = cloneDeep(uiConfigMocks.fullySpecifiedXirrUiConfig);
-            expectedUiConfig.buckets.measures.canAddItems = true;
-            expectedUiConfig.buckets.attribute.canAddItems = true;
-
-            expect(extendedReferencePoint).toMatchObject({
-                buckets: expectedBuckets,
-                filters: expectedFilters,
-                properties: {},
-                uiConfig: expectedUiConfig,
-            });
+            expect(extendedReferencePoint).toMatchSnapshot();
         });
     });
 });

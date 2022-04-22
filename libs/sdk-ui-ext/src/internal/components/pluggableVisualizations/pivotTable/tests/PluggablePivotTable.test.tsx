@@ -10,7 +10,6 @@ import {
 } from "../PluggablePivotTable";
 import * as testMocks from "../../../../tests/mocks/testMocks";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
-import * as uiConfigMocks from "../../../../tests/mocks/uiConfigMocks";
 import {
     IBucketItem,
     IBucketOfFun,
@@ -245,7 +244,7 @@ describe("PluggablePivotTable", () => {
 
             it("should return a new reference point with pivotTable UI config", () => {
                 return extendedReferencePointPromise.then((extendedReferencePoint) => {
-                    expect(extendedReferencePoint.uiConfig).toEqual(mockPivotTableReferencePoint.uiConfig);
+                    expect(extendedReferencePoint.uiConfig).toMatchSnapshot();
                 });
             });
 
@@ -309,7 +308,7 @@ describe("PluggablePivotTable", () => {
 
             it("should return a new reference point with pivotTable UI config", () => {
                 return extendedReferencePointPromise.then((extendedReferencePoint) => {
-                    expect(extendedReferencePoint.uiConfig).toEqual(uiConfigMocks.defaultPivotTableUiConfig);
+                    expect(extendedReferencePoint.uiConfig).toMatchSnapshot();
                 });
             });
 
@@ -429,7 +428,7 @@ describe("PluggablePivotTable", () => {
 
             it("should return a new reference point with pivotTable UI config", () => {
                 return extendedReferencePointPromise.then((extendedReferencePoint) => {
-                    expect(extendedReferencePoint.uiConfig).toEqual(mockReferencePoint.uiConfig);
+                    expect(extendedReferencePoint.uiConfig).toMatchSnapshot();
                 });
             });
 
@@ -574,23 +573,11 @@ describe("PluggablePivotTable", () => {
                 },
             });
             const sourceReferencePoint = referencePointMocks.simpleStackedReferencePoint;
-            const mockReferencePointWithMultipleDatesAllowed = getMockReferencePoint(
-                sourceReferencePoint.buckets[0].items,
-                sourceReferencePoint.buckets[1].items,
-                sourceReferencePoint.buckets[2].items,
-                [],
-                [],
-                true,
-                [],
-                true,
-            );
 
             return pivotTable
                 .getExtendedReferencePoint(sourceReferencePoint)
                 .then((extendedReferencePoint) => {
-                    expect(extendedReferencePoint.uiConfig).toEqual(
-                        mockReferencePointWithMultipleDatesAllowed.uiConfig,
-                    );
+                    expect(extendedReferencePoint.uiConfig).toMatchSnapshot();
                 });
         });
     });

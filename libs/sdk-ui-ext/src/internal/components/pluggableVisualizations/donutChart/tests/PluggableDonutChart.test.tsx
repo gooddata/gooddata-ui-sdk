@@ -1,10 +1,9 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import noop from "lodash/noop";
 import { PluggableDonutChart } from "../PluggableDonutChart";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
-import * as uiConfigMocks from "../../../../tests/mocks/uiConfigMocks";
 
-import { IBucketOfFun, IFilters } from "../../../../interfaces/Visualization";
+import { IBucketOfFun } from "../../../../interfaces/Visualization";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 describe("PluggableDonutChart", () => {
@@ -38,33 +37,7 @@ describe("PluggableDonutChart", () => {
             referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
         );
 
-        const expectedBuckets: IBucketOfFun[] = [
-            {
-                localIdentifier: "measures",
-                items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items.slice(
-                    0,
-                    1,
-                ),
-            },
-            {
-                localIdentifier: "view",
-                items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[1].items.slice(
-                    0,
-                    1,
-                ),
-            },
-        ];
-        const expectedFilters: IFilters = {
-            localIdentifier: "filters",
-            items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.filters.items.slice(0, 1),
-        };
-
-        expect(extendedReferencePoint).toEqual({
-            buckets: expectedBuckets,
-            filters: expectedFilters,
-            uiConfig: uiConfigMocks.multipleMetricsAndCategoriesDonutUiConfig,
-            properties: {},
-        });
+        expect(extendedReferencePoint).toMatchSnapshot();
     });
 
     it("should return reference point with multiple metrics and no category", async () => {
@@ -74,57 +47,17 @@ describe("PluggableDonutChart", () => {
             referencePointMocks.multipleMetricsNoCategoriesReferencePoint,
         );
 
-        const expectedBuckets: IBucketOfFun[] = [
-            {
-                localIdentifier: "measures",
-                items: referencePointMocks.multipleMetricsNoCategoriesReferencePoint.buckets[0].items,
-            },
-            {
-                localIdentifier: "view",
-                items: [],
-            },
-        ];
-        const expectedFilters: IFilters = {
-            localIdentifier: "filters",
-            items: [],
-        };
-        const expectedProperties = {};
-        expect(extendedReferencePoint).toEqual({
-            buckets: expectedBuckets,
-            filters: expectedFilters,
-            uiConfig: uiConfigMocks.multipleMetricsNoCategoriesDonutUiConfig,
-            properties: expectedProperties,
-        });
+        expect(extendedReferencePoint).toMatchSnapshot();
     });
 
     it("should return reference point with one metric and no category", async () => {
         const donutChart = createComponent();
 
-        const expectedBuckets: IBucketOfFun[] = [
-            {
-                localIdentifier: "measures",
-                items: referencePointMocks.oneMetricNoCategoriesReferencePoint.buckets[0].items,
-            },
-            {
-                localIdentifier: "view",
-                items: [],
-            },
-        ];
-        const expectedFilters: IFilters = {
-            localIdentifier: "filters",
-            items: referencePointMocks.oneMetricNoCategoriesReferencePoint.filters.items,
-        };
-
         const extendedReferencePoint = await donutChart.getExtendedReferencePoint(
             referencePointMocks.oneMetricNoCategoriesReferencePoint,
         );
 
-        expect(extendedReferencePoint).toEqual({
-            buckets: expectedBuckets,
-            filters: expectedFilters,
-            uiConfig: uiConfigMocks.oneMetricNoCategoriesDonutUiConfig,
-            properties: {},
-        });
+        expect(extendedReferencePoint).toMatchSnapshot();
     });
 
     describe("Arithmetic measures", () => {

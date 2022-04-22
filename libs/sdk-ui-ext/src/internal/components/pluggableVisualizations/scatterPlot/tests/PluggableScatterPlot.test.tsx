@@ -1,10 +1,8 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import noop from "lodash/noop";
 import { PluggableScatterPlot } from "../PluggableScatterPlot";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
-import * as uiConfigMocks from "../../../../tests/mocks/uiConfigMocks";
 
-import { IBucketOfFun, IFilters } from "../../../../interfaces/Visualization";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 describe("PluggableScatterPlot", () => {
@@ -34,195 +32,51 @@ describe("PluggableScatterPlot", () => {
     it("should return reference point with primary and secondary measure, one category and only valid filters", async () => {
         const scatterPlot = createComponent();
 
-        const expectedBuckets: IBucketOfFun[] = [
-            {
-                localIdentifier: "measures",
-                items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items.slice(
-                    0,
-                    1,
-                ),
-            },
-            {
-                localIdentifier: "secondary_measures",
-                items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items.slice(
-                    1,
-                    2,
-                ),
-            },
-            {
-                localIdentifier: "attribute",
-                items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[1].items.slice(
-                    0,
-                    1,
-                ),
-            },
-        ];
-        const expectedFilters: IFilters = {
-            localIdentifier: "filters",
-            items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.filters.items.slice(0, 1),
-        };
-
         const extendedReferencePoint = await scatterPlot.getExtendedReferencePoint(
             referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
         );
 
-        expect(extendedReferencePoint).toEqual({
-            buckets: expectedBuckets,
-            filters: expectedFilters,
-            uiConfig: uiConfigMocks.scatterPlotUiConfig,
-            properties: {},
-        });
+        expect(extendedReferencePoint).toMatchSnapshot();
     });
 
     it("should return reference point with two measures and no attribute", async () => {
         const scatterPlot = createComponent();
 
-        const expectedBuckets: IBucketOfFun[] = [
-            {
-                localIdentifier: "measures",
-                items: referencePointMocks.multipleMetricsNoCategoriesReferencePoint.buckets[0].items.slice(
-                    0,
-                    1,
-                ),
-            },
-            {
-                localIdentifier: "secondary_measures",
-                items: referencePointMocks.multipleMetricsNoCategoriesReferencePoint.buckets[0].items.slice(
-                    1,
-                    2,
-                ),
-            },
-            {
-                localIdentifier: "attribute",
-                items: [],
-            },
-        ];
-        const expectedFilters: IFilters = {
-            localIdentifier: "filters",
-            items: [],
-        };
-
         const extendedReferencePoint = await scatterPlot.getExtendedReferencePoint(
             referencePointMocks.multipleMetricsNoCategoriesReferencePoint,
         );
 
-        expect(extendedReferencePoint).toEqual({
-            buckets: expectedBuckets,
-            filters: expectedFilters,
-            uiConfig: uiConfigMocks.scatterPlotUiConfig,
-            properties: {},
-        });
+        expect(extendedReferencePoint).toMatchSnapshot();
     });
 
     it("should return reference point with one secondary measure and one attribute", async () => {
         const scatterPlot = createComponent();
 
-        const expectedBuckets: IBucketOfFun[] = [
-            {
-                localIdentifier: "measures",
-                items: [],
-            },
-            {
-                localIdentifier: "secondary_measures",
-                items: referencePointMocks.secondaryMeasureReferencePoint.buckets[1].items.slice(0, 1),
-            },
-            {
-                localIdentifier: "attribute",
-                items: [],
-            },
-        ];
-        const expectedFilters: IFilters = {
-            localIdentifier: "filters",
-            items: [],
-        };
-
         const extendedReferencePoint = await scatterPlot.getExtendedReferencePoint(
             referencePointMocks.secondaryMeasureReferencePoint,
         );
 
-        expect(extendedReferencePoint).toEqual({
-            buckets: expectedBuckets,
-            filters: expectedFilters,
-            uiConfig: uiConfigMocks.scatterPlotUiConfig,
-            properties: {},
-        });
+        expect(extendedReferencePoint).toMatchSnapshot();
     });
 
     it("should return reference point with primary measure and one attribute", async () => {
         const scatterPlot = createComponent();
 
-        const expectedBuckets: IBucketOfFun[] = [
-            {
-                localIdentifier: "measures",
-                items: referencePointMocks.oneMetricAndManyCategoriesReferencePoint.buckets[0].items.slice(
-                    0,
-                    1,
-                ),
-            },
-            {
-                localIdentifier: "secondary_measures",
-                items: [],
-            },
-            {
-                localIdentifier: "attribute",
-                items: referencePointMocks.oneMetricAndManyCategoriesReferencePoint.buckets[1].items.slice(
-                    0,
-                    1,
-                ),
-            },
-        ];
-        const expectedFilters: IFilters = {
-            localIdentifier: "filters",
-            items: referencePointMocks.oneMetricAndManyCategoriesReferencePoint.filters.items.slice(0, 1),
-        };
-
         const extendedReferencePoint = await scatterPlot.getExtendedReferencePoint(
             referencePointMocks.oneMetricAndManyCategoriesReferencePoint,
         );
 
-        expect(extendedReferencePoint).toEqual({
-            buckets: expectedBuckets,
-            filters: expectedFilters,
-            uiConfig: uiConfigMocks.scatterPlotUiConfig,
-            properties: {},
-        });
+        expect(extendedReferencePoint).toMatchSnapshot();
     });
 
     it("should return reference point after switching from Geo Chart", async () => {
         const scatterPlot = createComponent();
 
-        const {
-            simpleGeoPushpinReferencePoint: { buckets: mockedBuckets, filters: mockedFilters },
-        } = referencePointMocks;
-        const expectedBuckets: IBucketOfFun[] = [
-            {
-                localIdentifier: "measures",
-                items: mockedBuckets[1].items.slice(0, 1),
-            },
-            {
-                localIdentifier: "secondary_measures",
-                items: mockedBuckets[2].items.slice(0, 1),
-            },
-            {
-                localIdentifier: "attribute",
-                items: mockedBuckets[0].items.slice(0, 1),
-            },
-        ];
-        const expectedFilters: IFilters = {
-            localIdentifier: "filters",
-            items: mockedFilters.items.slice(0, 1),
-        };
-
         const extendedReferencePoint = await scatterPlot.getExtendedReferencePoint(
             referencePointMocks.simpleGeoPushpinReferencePoint,
         );
 
-        expect(extendedReferencePoint).toEqual({
-            buckets: expectedBuckets,
-            filters: expectedFilters,
-            uiConfig: uiConfigMocks.scatterPlotUiConfig,
-            properties: {},
-        });
+        expect(extendedReferencePoint).toMatchSnapshot();
     });
 
     describe("Arithmetic measures", () => {

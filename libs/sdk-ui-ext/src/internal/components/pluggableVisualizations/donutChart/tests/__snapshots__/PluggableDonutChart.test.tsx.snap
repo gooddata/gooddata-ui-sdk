@@ -1,51 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PluggablePieChart Sort config should provide measure sort as default sort, measure sort as available sorts for 1M + 1 VB 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [
-    Object {
-      "attributeSort": Object {
-        "areaSortEnabled": false,
-        "normalSortEnabled": true,
-      },
-      "itemId": Object {
-        "localIdentifier": "a1",
-      },
-      "metricSorts": Array [
-        Object {
-          "locators": Array [
-            Object {
-              "measureLocatorItem": Object {
-                "measureIdentifier": "m1",
-              },
-            },
-          ],
-          "type": "measureSort",
-        },
-      ],
-    },
-  ],
-  "defaultSort": Array [
-    Object {
-      "measureSortItem": Object {
-        "direction": "desc",
-        "locators": Array [
-          Object {
-            "measureLocatorItem": Object {
-              "measureIdentifier": "m1",
-            },
-          },
-        ],
-      },
-    },
-  ],
-  "disabled": false,
-  "supported": true,
-}
-`;
-
-exports[`PluggablePieChart should return reference point with multiple metrics and no category 1`] = `
+exports[`PluggableDonutChart should return reference point with multiple metrics and no category 1`] = `
 Object {
   "buckets": Array [
     Object {
@@ -121,7 +76,7 @@ Object {
         "allowsSwapping": true,
         "canAddItems": true,
         "enabled": true,
-        "icon": "local:pie/bucket-title-measures.svg",
+        "icon": "local:donut/bucket-title-measures.svg",
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": true,
         "itemsLimit": 20,
@@ -136,7 +91,7 @@ Object {
         "allowsSwapping": true,
         "canAddItems": false,
         "enabled": true,
-        "icon": "local:pie/bucket-title-view.svg",
+        "icon": "local:donut/bucket-title-view.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 0,
         "itemsLimitByType": Object {
@@ -150,7 +105,7 @@ Object {
       "supported": true,
     },
     "openAsReport": Object {
-      "supported": true,
+      "supported": false,
     },
     "recommendations": Object {},
     "supportedOverTimeComparisonTypes": Array [],
@@ -158,7 +113,7 @@ Object {
 }
 `;
 
-exports[`PluggablePieChart should return reference point with one metric and no category 1`] = `
+exports[`PluggableDonutChart should return reference point with one metric and no category 1`] = `
 Object {
   "buckets": Array [
     Object {
@@ -210,7 +165,7 @@ Object {
         "allowsSwapping": true,
         "canAddItems": true,
         "enabled": true,
-        "icon": "local:pie/bucket-title-measures.svg",
+        "icon": "local:donut/bucket-title-measures.svg",
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": true,
         "itemsLimit": 20,
@@ -225,7 +180,7 @@ Object {
         "allowsSwapping": true,
         "canAddItems": true,
         "enabled": true,
-        "icon": "local:pie/bucket-title-view.svg",
+        "icon": "local:donut/bucket-title-view.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
         "itemsLimitByType": Object {
@@ -238,7 +193,7 @@ Object {
       "supported": true,
     },
     "openAsReport": Object {
-      "supported": true,
+      "supported": false,
     },
     "recommendations": Object {},
     "supportedOverTimeComparisonTypes": Array [],
@@ -246,104 +201,7 @@ Object {
 }
 `;
 
-exports[`PluggablePieChart should return reference point with one metric and one attribute from stack 1`] = `
-Object {
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "aggregation": null,
-          "attribute": "aazb6kroa3iC",
-          "localIdentifier": "m1",
-          "showInPercent": null,
-          "showOnSecondaryAxis": null,
-          "type": "metric",
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": "attr.owner.region",
-          "dfRef": Object {
-            "uri": "a3/df",
-          },
-          "localIdentifier": "a3",
-          "type": "attribute",
-        },
-      ],
-      "localIdentifier": "view",
-    },
-  ],
-  "filters": Object {
-    "items": Array [],
-    "localIdentifier": "filters",
-  },
-  "properties": Object {},
-  "uiConfig": Object {
-    "buckets": Object {
-      "filters": Object {
-        "accepts": Array [
-          "attribute",
-          "date",
-        ],
-        "allowsReordering": false,
-        "enabled": true,
-        "isShowInPercentEnabled": false,
-        "itemsLimit": 20,
-        "itemsLimitByType": Object {
-          "date": 1,
-        },
-      },
-      "measures": Object {
-        "accepts": Array [
-          "metric",
-          "fact",
-          "attribute",
-        ],
-        "allowsDuplicateItems": true,
-        "allowsReordering": false,
-        "allowsSwapping": true,
-        "canAddItems": true,
-        "enabled": true,
-        "icon": "local:pie/bucket-title-measures.svg",
-        "isShowInPercentEnabled": true,
-        "isShowInPercentVisible": true,
-        "itemsLimit": 1,
-        "title": "Measures",
-      },
-      "view": Object {
-        "accepts": Array [
-          "attribute",
-          "date",
-        ],
-        "allowsReordering": false,
-        "allowsSwapping": true,
-        "canAddItems": true,
-        "enabled": true,
-        "icon": "local:pie/bucket-title-view.svg",
-        "isShowInPercentEnabled": false,
-        "itemsLimit": 1,
-        "itemsLimitByType": Object {
-          "date": 1,
-        },
-        "title": "View by",
-      },
-    },
-    "exportConfig": Object {
-      "supported": true,
-    },
-    "openAsReport": Object {
-      "supported": true,
-    },
-    "recommendations": Object {},
-    "supportedOverTimeComparisonTypes": Array [],
-  },
-}
-`;
-
-exports[`PluggablePieChart should return reference point with only one metric and one category and only valid filters 1`] = `
+exports[`PluggableDonutChart should return reference point with only one metric and one category and only valid filters 1`] = `
 Object {
   "buckets": Array [
     Object {
@@ -428,7 +286,7 @@ Object {
         "allowsSwapping": true,
         "canAddItems": true,
         "enabled": true,
-        "icon": "local:pie/bucket-title-measures.svg",
+        "icon": "local:donut/bucket-title-measures.svg",
         "isShowInPercentEnabled": true,
         "isShowInPercentVisible": true,
         "itemsLimit": 1,
@@ -443,7 +301,7 @@ Object {
         "allowsSwapping": true,
         "canAddItems": true,
         "enabled": true,
-        "icon": "local:pie/bucket-title-view.svg",
+        "icon": "local:donut/bucket-title-view.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
         "itemsLimitByType": Object {
@@ -456,7 +314,7 @@ Object {
       "supported": true,
     },
     "openAsReport": Object {
-      "supported": true,
+      "supported": false,
     },
     "recommendations": Object {},
     "supportedOverTimeComparisonTypes": Array [],

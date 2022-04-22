@@ -1,276 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PluggableAreaChart Sort config should return expected sort config for 0 M + 0 VB 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [],
-  "defaultSort": Array [],
-  "disabled": true,
-  "disabledExplanation": "Sorting is not possible for this insight configuration.",
-  "supported": true,
-}
-`;
-
-exports[`PluggableAreaChart Sort config should return expected sort config for 0 M + 1 VB 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [],
-  "defaultSort": Array [],
-  "disabled": true,
-  "supported": true,
-}
-`;
-
-exports[`PluggableAreaChart Sort config should return expected sort config for 1 M + 0 VB 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [],
-  "defaultSort": Array [],
-  "disabled": true,
-  "disabledExplanation": "Sorting is not possible for this insight configuration.",
-  "supported": true,
-}
-`;
-
-exports[`PluggableAreaChart Sort config should return expected sort config for 1 M + 1 VB + 1 ST 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [
-    Object {
-      "attributeSort": Object {
-        "areaSortEnabled": true,
-        "normalSortEnabled": true,
-      },
-      "itemId": Object {
-        "localIdentifier": "a1",
-      },
-    },
-  ],
-  "defaultSort": Array [
-    Object {
-      "attributeSortItem": Object {
-        "attributeIdentifier": "a1",
-        "direction": "asc",
-      },
-    },
-  ],
-  "disabled": false,
-  "supported": true,
-}
-`;
-
-exports[`PluggableAreaChart Sort config should return expected sort config for 1 M + 1 VB 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [
-    Object {
-      "attributeSort": Object {
-        "areaSortEnabled": false,
-        "normalSortEnabled": true,
-      },
-      "itemId": Object {
-        "localIdentifier": "a1",
-      },
-      "metricSorts": Array [
-        Object {
-          "locators": Array [
-            Object {
-              "measureLocatorItem": Object {
-                "measureIdentifier": "m1",
-              },
-            },
-          ],
-          "type": "measureSort",
-        },
-      ],
-    },
-  ],
-  "defaultSort": Array [
-    Object {
-      "attributeSortItem": Object {
-        "attributeIdentifier": "a1",
-        "direction": "asc",
-      },
-    },
-  ],
-  "disabled": false,
-  "supported": true,
-}
-`;
-
-exports[`PluggableAreaChart Sort config should return expected sort config for 1 M + 2 VB 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [
-    Object {
-      "attributeSort": Object {
-        "areaSortEnabled": true,
-        "normalSortEnabled": true,
-      },
-      "itemId": Object {
-        "localIdentifier": "a1",
-      },
-    },
-  ],
-  "defaultSort": Array [
-    Object {
-      "attributeSortItem": Object {
-        "attributeIdentifier": "a1",
-        "direction": "asc",
-      },
-    },
-  ],
-  "disabled": false,
-  "supported": true,
-}
-`;
-
-exports[`PluggableAreaChart Sort config should return expected sort config for 2 M + 1 VB + 1 ST 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [
-    Object {
-      "attributeSort": Object {
-        "areaSortEnabled": true,
-        "normalSortEnabled": true,
-      },
-      "itemId": Object {
-        "localIdentifier": "a1",
-      },
-    },
-  ],
-  "defaultSort": Array [
-    Object {
-      "attributeSortItem": Object {
-        "attributeIdentifier": "a1",
-        "direction": "asc",
-      },
-    },
-  ],
-  "disabled": false,
-  "supported": true,
-}
-`;
-
-exports[`PluggableAreaChart Sort config should return expected sort config for 2 M + 1 VB 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [
-    Object {
-      "attributeSort": Object {
-        "areaSortEnabled": true,
-        "normalSortEnabled": true,
-      },
-      "itemId": Object {
-        "localIdentifier": "a1",
-      },
-      "metricSorts": Array [
-        Object {
-          "locators": Array [
-            Object {
-              "measureLocatorItem": Object {
-                "measureIdentifier": "m1",
-              },
-            },
-          ],
-          "type": "measureSort",
-        },
-        Object {
-          "locators": Array [
-            Object {
-              "measureLocatorItem": Object {
-                "measureIdentifier": "m2",
-              },
-            },
-          ],
-          "type": "measureSort",
-        },
-      ],
-    },
-  ],
-  "defaultSort": Array [
-    Object {
-      "attributeSortItem": Object {
-        "attributeIdentifier": "a1",
-        "direction": "asc",
-      },
-    },
-  ],
-  "disabled": false,
-  "supported": true,
-}
-`;
-
-exports[`PluggableAreaChart Sort config should return expected sort config for 2 M + 2 VB 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [],
-  "defaultSort": Array [],
-  "disabled": true,
-  "supported": true,
-}
-`;
-
-exports[`PluggableAreaChart Sort config should return expected sort config for 2 stacked M + 1 VB 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [
-    Object {
-      "attributeSort": Object {
-        "areaSortEnabled": true,
-        "normalSortEnabled": true,
-      },
-      "itemId": Object {
-        "localIdentifier": "a1",
-      },
-      "metricSorts": Array [
-        Object {
-          "locators": Array [
-            Object {
-              "measureLocatorItem": Object {
-                "measureIdentifier": "m1",
-              },
-            },
-          ],
-          "type": "measureSort",
-        },
-        Object {
-          "locators": Array [
-            Object {
-              "measureLocatorItem": Object {
-                "measureIdentifier": "m2",
-              },
-            },
-          ],
-          "type": "measureSort",
-        },
-      ],
-    },
-  ],
-  "defaultSort": Array [
-    Object {
-      "attributeSortItem": Object {
-        "attributeIdentifier": "a1",
-        "direction": "asc",
-      },
-    },
-  ],
-  "disabled": false,
-  "supported": true,
-}
-`;
-
-exports[`PluggableAreaChart Sort config should return expected sort config for 2 stacked M + 2 VB 1`] = `
-Object {
-  "appliedSort": Array [],
-  "availableSorts": Array [],
-  "defaultSort": Array [],
-  "disabled": true,
-  "supported": true,
-}
-`;
-
-exports[`PluggableAreaChart optional stacking should return reference point with Date in categories even it was as third item 1`] = `
+exports[`PluggableBaseChart should cut out measures tail when getting nM 0Vb 1Sb 1`] = `
 Object {
   "buckets": Array [
     Object {
@@ -287,17 +17,11 @@ Object {
       "localIdentifier": "measures",
     },
     Object {
+      "items": Array [],
+      "localIdentifier": "view",
+    },
+    Object {
       "items": Array [
-        Object {
-          "aggregation": null,
-          "attribute": "attr.datedataset",
-          "dateDatasetRef": Object {
-            "identifier": "ds1",
-          },
-          "localIdentifier": "a1",
-          "showInPercent": null,
-          "type": "date",
-        },
         Object {
           "aggregation": null,
           "attribute": "attr.owner.department",
@@ -308,10 +32,6 @@ Object {
           "type": "attribute",
         },
       ],
-      "localIdentifier": "view",
-    },
-    Object {
-      "items": Array [],
       "localIdentifier": "stack",
     },
   ],
@@ -346,12 +66,12 @@ Object {
         "allowsSwapping": true,
         "canAddItems": false,
         "enabled": true,
-        "icon": "local:area/bucket-title-measures.svg",
-        "isShowInPercentEnabled": true,
+        "icon": "local:column/bucket-title-measures.svg",
+        "isShowInPercentEnabled": false,
         "isShowInPercentVisible": true,
         "itemsLimit": 20,
         "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class=\\"attr-field-icon\\" /> or <span class=\\"date-field-icon\\" /> from <span class=\\"stack-by\\">view by</span>",
+        "warningMessage": "To add additional measure, remove <span class=\\"attr-field-icon\\" /> from <span class=\\"stack-by\\">stack by</span>",
       },
       "stack": Object {
         "accepts": Array [
@@ -359,26 +79,25 @@ Object {
         ],
         "allowsReordering": false,
         "allowsSwapping": true,
-        "canAddItems": false,
+        "canAddItems": true,
         "enabled": true,
-        "icon": "local:area/bucket-title-stack.svg",
+        "icon": "local:column/bucket-title-stack.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
         "title": "Stack by",
-        "warningMessage": "To stack by, an insight can have only one attribute in view by",
       },
       "view": Object {
         "accepts": Array [
           "attribute",
           "date",
         ],
-        "allowsReordering": true,
+        "allowsReordering": false,
         "allowsSwapping": true,
         "canAddItems": true,
         "enabled": true,
-        "icon": "local:area/bucket-title-view.svg",
+        "icon": "local:column/bucket-title-view.svg",
         "isShowInPercentEnabled": false,
-        "itemsLimit": 2,
+        "itemsLimit": 1,
         "itemsLimitByType": Object {
           "date": 1,
         },
@@ -391,17 +110,151 @@ Object {
     "openAsReport": Object {
       "supported": true,
     },
-    "optionalStacking": Object {
-      "stackMeasures": true,
-      "supported": true,
+    "recommendations": Object {
+      "comparison": true,
+      "overTimeComparison": false,
+      "percent": false,
+      "previousPeriod": false,
+      "trending": true,
     },
-    "recommendations": Object {},
     "supportedOverTimeComparisonTypes": Array [],
   },
 }
 `;
 
-exports[`PluggableAreaChart optional stacking should reuse all measures, only one category and no stacks 1`] = `
+exports[`PluggableBaseChart should handle wrong order of buckets in reference point 1`] = `
+Object {
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "attr.owner.department",
+          "dfRef": Object {
+            "uri": "a1/df",
+          },
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "attr.stage.iswon",
+          "dfRef": Object {
+            "uri": "a2/df",
+          },
+          "localIdentifier": "a2",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "filters": Object {
+    "items": Array [],
+    "localIdentifier": "filters",
+  },
+  "properties": Object {},
+  "uiConfig": Object {
+    "buckets": Object {
+      "filters": Object {
+        "accepts": Array [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": Object {
+          "date": 1,
+        },
+      },
+      "measures": Object {
+        "accepts": Array [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:column/bucket-title-measures.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": true,
+        "itemsLimit": 20,
+        "title": "Measures",
+        "warningMessage": "To add additional measure, remove <span class=\\"attr-field-icon\\" /> from <span class=\\"stack-by\\">stack by</span>",
+      },
+      "stack": Object {
+        "accepts": Array [
+          "attribute",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:column/bucket-title-stack.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "title": "Stack by",
+      },
+      "view": Object {
+        "accepts": Array [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:column/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "itemsLimitByType": Object {
+          "date": 1,
+        },
+        "title": "View by",
+      },
+    },
+    "exportConfig": Object {
+      "supported": true,
+    },
+    "openAsReport": Object {
+      "supported": true,
+    },
+    "recommendations": Object {
+      "comparison": false,
+      "overTimeComparison": false,
+      "percent": false,
+      "previousPeriod": false,
+      "trending": false,
+    },
+    "supportedOverTimeComparisonTypes": Array [],
+  },
+}
+`;
+
+exports[`PluggableBaseChart should return ref. point with multiple metrics and one category and filter for this category 1`] = `
 Object {
   "buckets": Array [
     Object {
@@ -514,7 +367,7 @@ Object {
         "allowsSwapping": true,
         "canAddItems": true,
         "enabled": true,
-        "icon": "local:area/bucket-title-measures.svg",
+        "icon": "local:column/bucket-title-measures.svg",
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": true,
         "itemsLimit": 20,
@@ -528,29 +381,28 @@ Object {
         "allowsSwapping": true,
         "canAddItems": false,
         "enabled": true,
-        "icon": "local:area/bucket-title-stack.svg",
+        "icon": "local:column/bucket-title-stack.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
         "title": "Stack by",
-        "warningMessage": "To stack by an attribute, an insight can have only one measure",
+        "warningMessage": "To stack by, an insight can have only one measure",
       },
       "view": Object {
         "accepts": Array [
           "attribute",
           "date",
         ],
-        "allowsReordering": true,
+        "allowsReordering": false,
         "allowsSwapping": true,
-        "canAddItems": false,
+        "canAddItems": true,
         "enabled": true,
-        "icon": "local:area/bucket-title-view.svg",
+        "icon": "local:column/bucket-title-view.svg",
         "isShowInPercentEnabled": false,
-        "itemsLimit": 2,
+        "itemsLimit": 1,
         "itemsLimitByType": Object {
           "date": 1,
         },
         "title": "View by",
-        "warningMessage": "To view by another attribute, an insight can have only one measure",
       },
     },
     "exportConfig": Object {
@@ -559,17 +411,19 @@ Object {
     "openAsReport": Object {
       "supported": true,
     },
-    "optionalStacking": Object {
-      "stackMeasures": true,
-      "supported": true,
+    "recommendations": Object {
+      "comparison": false,
+      "overTimeComparison": false,
+      "percent": false,
+      "previousPeriod": false,
+      "trending": false,
     },
-    "recommendations": Object {},
     "supportedOverTimeComparisonTypes": Array [],
   },
 }
 `;
 
-exports[`PluggableAreaChart optional stacking should reuse one measure, only one category and one category as stack 1`] = `
+exports[`PluggableBaseChart should return reference point with base recommendations enabled if visualization removed invalid derived measure 1`] = `
 Object {
   "buckets": Array [
     Object {
@@ -580,6 +434,133 @@ Object {
           "localIdentifier": "m1",
           "showInPercent": null,
           "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "stack",
+    },
+  ],
+  "filters": Object {
+    "items": Array [],
+    "localIdentifier": "filters",
+  },
+  "properties": Object {},
+  "uiConfig": Object {
+    "buckets": Object {
+      "filters": Object {
+        "accepts": Array [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": Object {
+          "date": 1,
+        },
+      },
+      "measures": Object {
+        "accepts": Array [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:column/bucket-title-measures.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": true,
+        "itemsLimit": 20,
+        "title": "Measures",
+      },
+      "stack": Object {
+        "accepts": Array [
+          "attribute",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:column/bucket-title-stack.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "title": "Stack by",
+      },
+      "view": Object {
+        "accepts": Array [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:column/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "itemsLimitByType": Object {
+          "date": 1,
+        },
+        "title": "View by",
+      },
+    },
+    "exportConfig": Object {
+      "supported": true,
+    },
+    "openAsReport": Object {
+      "supported": true,
+    },
+    "recommendations": Object {
+      "comparison": true,
+      "overTimeComparison": false,
+      "percent": false,
+      "previousPeriod": false,
+      "trending": true,
+    },
+    "supportedOverTimeComparisonTypes": Array [],
+  },
+}
+`;
+
+exports[`PluggableBaseChart should return reference point with multiple metrics from multiple metrics buckets 1`] = `
+Object {
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        Object {
+          "aggregation": null,
+          "attribute": "af2Ewj9Re2vK",
+          "localIdentifier": "m2",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        Object {
+          "aggregation": null,
+          "attribute": "dt.opportunitysnapshot.snapshotdate",
+          "localIdentifier": "m3",
+          "showInPercent": null,
+          "showOnSecondaryAxis": true,
           "type": "metric",
         },
       ],
@@ -600,16 +581,7 @@ Object {
       "localIdentifier": "view",
     },
     Object {
-      "items": Array [
-        Object {
-          "attribute": "attr.owner.region",
-          "dfRef": Object {
-            "uri": "a3/df",
-          },
-          "localIdentifier": "a3",
-          "type": "attribute",
-        },
-      ],
+      "items": Array [],
       "localIdentifier": "stack",
     },
   ],
@@ -635,22 +607,6 @@ Object {
           },
         ],
         "localIdentifier": "a1",
-        "type": "attribute",
-      },
-      Object {
-        "attribute": "attr.owner.region",
-        "filters": Array [
-          Object {
-            "attribute": "attr.owner.region",
-            "displayFormRef": Object {
-              "uri": "owner/attribute/df/uri",
-            },
-            "isInverted": true,
-            "selectedElements": Array [],
-            "totalElementsCount": 10,
-          },
-        ],
-        "localIdentifier": "a3",
         "type": "attribute",
       },
     ],
@@ -681,9 +637,142 @@ Object {
         "allowsDuplicateItems": true,
         "allowsReordering": true,
         "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:column/bucket-title-measures.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": true,
+        "itemsLimit": 20,
+        "title": "Measures",
+      },
+      "stack": Object {
+        "accepts": Array [
+          "attribute",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
         "canAddItems": false,
         "enabled": true,
-        "icon": "local:area/bucket-title-measures.svg",
+        "icon": "local:column/bucket-title-stack.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "title": "Stack by",
+        "warningMessage": "To stack by, an insight can have only one measure",
+      },
+      "view": Object {
+        "accepts": Array [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:column/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "itemsLimitByType": Object {
+          "date": 1,
+        },
+        "title": "View by",
+      },
+    },
+    "exportConfig": Object {
+      "supported": true,
+    },
+    "openAsReport": Object {
+      "supported": true,
+    },
+    "recommendations": Object {
+      "comparison": false,
+      "overTimeComparison": false,
+      "percent": false,
+      "previousPeriod": false,
+      "trending": false,
+    },
+    "supportedOverTimeComparisonTypes": Array [],
+  },
+}
+`;
+
+exports[`PluggableBaseChart should return reference point with one metric and date and attribute 1`] = `
+Object {
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "attr.datedataset",
+          "dateDatasetRef": Object {
+            "identifier": "ds1",
+          },
+          "localIdentifier": "a1",
+          "showInPercent": null,
+          "type": "date",
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "attr.stage.iswon",
+          "dfRef": Object {
+            "uri": "a2/df",
+          },
+          "localIdentifier": "a2",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "filters": Object {
+    "items": Array [],
+    "localIdentifier": "filters",
+  },
+  "properties": Object {},
+  "uiConfig": Object {
+    "buckets": Object {
+      "filters": Object {
+        "accepts": Array [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": Object {
+          "date": 1,
+        },
+      },
+      "measures": Object {
+        "accepts": Array [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:column/bucket-title-measures.svg",
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": true,
         "itemsLimit": 20,
@@ -698,7 +787,7 @@ Object {
         "allowsSwapping": true,
         "canAddItems": true,
         "enabled": true,
-        "icon": "local:area/bucket-title-stack.svg",
+        "icon": "local:column/bucket-title-stack.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
         "title": "Stack by",
@@ -708,18 +797,17 @@ Object {
           "attribute",
           "date",
         ],
-        "allowsReordering": true,
+        "allowsReordering": false,
         "allowsSwapping": true,
-        "canAddItems": false,
+        "canAddItems": true,
         "enabled": true,
-        "icon": "local:area/bucket-title-view.svg",
+        "icon": "local:column/bucket-title-view.svg",
         "isShowInPercentEnabled": false,
-        "itemsLimit": 2,
+        "itemsLimit": 1,
         "itemsLimitByType": Object {
           "date": 1,
         },
         "title": "View by",
-        "warningMessage": "To add additional attribute, remove <span class=\\"attr-field-icon\\" /> from <span class=\\"stack-by\\">stack by</span>",
       },
     },
     "exportConfig": Object {
@@ -728,17 +816,19 @@ Object {
     "openAsReport": Object {
       "supported": true,
     },
-    "optionalStacking": Object {
-      "stackMeasures": true,
-      "supported": true,
+    "recommendations": Object {
+      "comparison": false,
+      "overTimeComparison": false,
+      "percent": false,
+      "previousPeriod": false,
+      "trending": false,
     },
-    "recommendations": Object {},
     "supportedOverTimeComparisonTypes": Array [],
   },
 }
 `;
 
-exports[`PluggableAreaChart optional stacking should reuse one measure, two categories and no category as stack 1`] = `
+exports[`PluggableBaseChart should return reference point with one metric and only one category and stack 1`] = `
 Object {
   "buckets": Array [
     Object {
@@ -765,6 +855,11 @@ Object {
           "localIdentifier": "a1",
           "type": "attribute",
         },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
         Object {
           "aggregation": null,
           "attribute": "attr.stage.iswon",
@@ -775,10 +870,6 @@ Object {
           "type": "attribute",
         },
       ],
-      "localIdentifier": "view",
-    },
-    Object {
-      "items": Array [],
       "localIdentifier": "stack",
     },
   ],
@@ -858,12 +949,12 @@ Object {
         "allowsSwapping": true,
         "canAddItems": false,
         "enabled": true,
-        "icon": "local:area/bucket-title-measures.svg",
-        "isShowInPercentEnabled": true,
+        "icon": "local:column/bucket-title-measures.svg",
+        "isShowInPercentEnabled": false,
         "isShowInPercentVisible": true,
         "itemsLimit": 20,
         "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class=\\"attr-field-icon\\" /> from <span class=\\"stack-by\\">view by</span>",
+        "warningMessage": "To add additional measure, remove <span class=\\"attr-field-icon\\" /> from <span class=\\"stack-by\\">stack by</span>",
       },
       "stack": Object {
         "accepts": Array [
@@ -871,26 +962,25 @@ Object {
         ],
         "allowsReordering": false,
         "allowsSwapping": true,
-        "canAddItems": false,
+        "canAddItems": true,
         "enabled": true,
-        "icon": "local:area/bucket-title-stack.svg",
+        "icon": "local:column/bucket-title-stack.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
         "title": "Stack by",
-        "warningMessage": "To stack by, an insight can have only one attribute in view by",
       },
       "view": Object {
         "accepts": Array [
           "attribute",
           "date",
         ],
-        "allowsReordering": true,
+        "allowsReordering": false,
         "allowsSwapping": true,
         "canAddItems": true,
         "enabled": true,
-        "icon": "local:area/bucket-title-view.svg",
+        "icon": "local:column/bucket-title-view.svg",
         "isShowInPercentEnabled": false,
-        "itemsLimit": 2,
+        "itemsLimit": 1,
         "itemsLimitByType": Object {
           "date": 1,
         },
@@ -903,17 +993,19 @@ Object {
     "openAsReport": Object {
       "supported": true,
     },
-    "optionalStacking": Object {
-      "stackMeasures": true,
-      "supported": true,
+    "recommendations": Object {
+      "comparison": false,
+      "overTimeComparison": false,
+      "percent": false,
+      "previousPeriod": false,
+      "trending": false,
     },
-    "recommendations": Object {},
     "supportedOverTimeComparisonTypes": Array [],
   },
 }
 `;
 
-exports[`PluggableAreaChart should cut out measures tail when getting nM 0Vb 1Sb 1`] = `
+exports[`PluggableBaseChart should return reference point with one metric, one category, second category as stack, valid filters 1`] = `
 Object {
   "buckets": Array [
     Object {
@@ -930,8 +1022,181 @@ Object {
       "localIdentifier": "measures",
     },
     Object {
-      "items": Array [],
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "attr.owner.department",
+          "dfRef": Object {
+            "uri": "a1/df",
+          },
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+      ],
       "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "attr.stage.iswon",
+          "dfRef": Object {
+            "uri": "a2/df",
+          },
+          "localIdentifier": "a2",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "filters": Object {
+    "items": Array [
+      Object {
+        "aggregation": null,
+        "attribute": "attr.owner.department",
+        "filters": Array [
+          Object {
+            "attribute": "attr.owner.department",
+            "displayFormRef": Object {
+              "uri": "owner/attribute/df/uri",
+            },
+            "isInverted": false,
+            "selectedElements": Array [
+              Object {
+                "title": "string",
+                "uri": "string",
+              },
+            ],
+            "totalElementsCount": 10,
+          },
+        ],
+        "localIdentifier": "a1",
+        "type": "attribute",
+      },
+      Object {
+        "aggregation": null,
+        "attribute": "attr.stage.iswon",
+        "filters": Array [
+          Object {
+            "attribute": "attr.stage.iswon",
+            "displayFormRef": Object {
+              "uri": "iswon/attribute/df/uri",
+            },
+            "isInverted": true,
+            "selectedElements": Array [
+              Object {
+                "title": "string",
+                "uri": "string",
+              },
+            ],
+            "totalElementsCount": 10,
+          },
+        ],
+        "localIdentifier": "a2",
+        "type": "attribute",
+      },
+    ],
+    "localIdentifier": "filters",
+  },
+  "properties": Object {},
+  "uiConfig": Object {
+    "buckets": Object {
+      "filters": Object {
+        "accepts": Array [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": Object {
+          "date": 1,
+        },
+      },
+      "measures": Object {
+        "accepts": Array [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:column/bucket-title-measures.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": true,
+        "itemsLimit": 20,
+        "title": "Measures",
+        "warningMessage": "To add additional measure, remove <span class=\\"attr-field-icon\\" /> from <span class=\\"stack-by\\">stack by</span>",
+      },
+      "stack": Object {
+        "accepts": Array [
+          "attribute",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:column/bucket-title-stack.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "title": "Stack by",
+      },
+      "view": Object {
+        "accepts": Array [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:column/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "itemsLimitByType": Object {
+          "date": 1,
+        },
+        "title": "View by",
+      },
+    },
+    "exportConfig": Object {
+      "supported": true,
+    },
+    "openAsReport": Object {
+      "supported": true,
+    },
+    "recommendations": Object {
+      "comparison": false,
+      "overTimeComparison": false,
+      "percent": false,
+      "previousPeriod": false,
+      "trending": false,
+    },
+    "supportedOverTimeComparisonTypes": Array [],
+  },
+}
+`;
+
+exports[`PluggableBaseChart should return reference point without Date in stacks 1`] = `
+Object {
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
     },
     Object {
       "items": Array [
@@ -942,6 +1207,20 @@ Object {
             "uri": "a1/df",
           },
           "localIdentifier": "a1",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "attr.stage.iswon",
+          "dfRef": Object {
+            "uri": "a2/df",
+          },
+          "localIdentifier": "a2",
           "type": "attribute",
         },
       ],
@@ -979,7 +1258,7 @@ Object {
         "allowsSwapping": true,
         "canAddItems": false,
         "enabled": true,
-        "icon": "local:area/bucket-title-measures.svg",
+        "icon": "local:column/bucket-title-measures.svg",
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": true,
         "itemsLimit": 20,
@@ -994,7 +1273,7 @@ Object {
         "allowsSwapping": true,
         "canAddItems": true,
         "enabled": true,
-        "icon": "local:area/bucket-title-stack.svg",
+        "icon": "local:column/bucket-title-stack.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
         "title": "Stack by",
@@ -1004,13 +1283,13 @@ Object {
           "attribute",
           "date",
         ],
-        "allowsReordering": true,
+        "allowsReordering": false,
         "allowsSwapping": true,
         "canAddItems": true,
         "enabled": true,
-        "icon": "local:area/bucket-title-view.svg",
+        "icon": "local:column/bucket-title-view.svg",
         "isShowInPercentEnabled": false,
-        "itemsLimit": 2,
+        "itemsLimit": 1,
         "itemsLimitByType": Object {
           "date": 1,
         },
@@ -1023,17 +1302,19 @@ Object {
     "openAsReport": Object {
       "supported": true,
     },
-    "optionalStacking": Object {
-      "stackMeasures": true,
-      "supported": true,
+    "recommendations": Object {
+      "comparison": false,
+      "overTimeComparison": false,
+      "percent": false,
+      "previousPeriod": false,
+      "trending": false,
     },
-    "recommendations": Object {},
     "supportedOverTimeComparisonTypes": Array [],
   },
 }
 `;
 
-exports[`PluggableAreaChart should return reference point when no categories and only stacks 1`] = `
+exports[`PluggableBaseChart should use second non-date attribute when switching to chart with [attribute, date, attribute] 1`] = `
 Object {
   "buckets": Array [
     Object {
@@ -1050,10 +1331,6 @@ Object {
       "localIdentifier": "measures",
     },
     Object {
-      "items": Array [],
-      "localIdentifier": "view",
-    },
-    Object {
       "items": Array [
         Object {
           "aggregation": null,
@@ -1062,6 +1339,20 @@ Object {
             "uri": "a1/df",
           },
           "localIdentifier": "a1",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "attr.stage.iswon",
+          "dfRef": Object {
+            "uri": "a2/df",
+          },
+          "localIdentifier": "a2",
           "type": "attribute",
         },
       ],
@@ -1099,7 +1390,7 @@ Object {
         "allowsSwapping": true,
         "canAddItems": false,
         "enabled": true,
-        "icon": "local:area/bucket-title-measures.svg",
+        "icon": "local:column/bucket-title-measures.svg",
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": true,
         "itemsLimit": 20,
@@ -1114,7 +1405,7 @@ Object {
         "allowsSwapping": true,
         "canAddItems": true,
         "enabled": true,
-        "icon": "local:area/bucket-title-stack.svg",
+        "icon": "local:column/bucket-title-stack.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
         "title": "Stack by",
@@ -1124,13 +1415,13 @@ Object {
           "attribute",
           "date",
         ],
-        "allowsReordering": true,
+        "allowsReordering": false,
         "allowsSwapping": true,
         "canAddItems": true,
         "enabled": true,
-        "icon": "local:area/bucket-title-view.svg",
+        "icon": "local:column/bucket-title-view.svg",
         "isShowInPercentEnabled": false,
-        "itemsLimit": 2,
+        "itemsLimit": 1,
         "itemsLimitByType": Object {
           "date": 1,
         },
@@ -1143,11 +1434,13 @@ Object {
     "openAsReport": Object {
       "supported": true,
     },
-    "optionalStacking": Object {
-      "stackMeasures": true,
-      "supported": true,
+    "recommendations": Object {
+      "comparison": false,
+      "overTimeComparison": false,
+      "percent": false,
+      "previousPeriod": false,
+      "trending": false,
     },
-    "recommendations": Object {},
     "supportedOverTimeComparisonTypes": Array [],
   },
 }

@@ -1,0 +1,104 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PluggableGeoPushpinChart getExtendedReferencePoint should return a new reference point with geoPushpin UI config 1`] = `
+Object {
+  "buckets": Object {
+    "color": Object {
+      "accepts": Array [
+        "metric",
+        "fact",
+        "attribute",
+      ],
+      "allowsDuplicateItems": true,
+      "allowsReordering": false,
+      "allowsSwapping": true,
+      "canAddItems": true,
+      "enabled": true,
+      "icon": "local:geoPushpin/bucket-title-color-icon.svg",
+      "isShowInPercentEnabled": false,
+      "isShowInPercentVisible": false,
+      "itemsLimit": 1,
+      "subtitle": "Color",
+      "title": "Measure",
+    },
+    "filters": Object {
+      "accepts": Array [
+        "attribute",
+        "date",
+      ],
+      "allowsReordering": false,
+      "enabled": true,
+      "isShowInPercentEnabled": false,
+      "itemsLimit": 20,
+      "itemsLimitByType": Object {
+        "date": 1,
+      },
+    },
+    "location": Object {
+      "accepts": Array [
+        "attribute",
+        "geo_attribute",
+      ],
+      "allowsReordering": false,
+      "allowsSwapping": true,
+      "canAddItems": true,
+      "enabled": true,
+      "icon": "local:geoPushpin/bucket-title-location-icon.svg",
+      "isShowInPercentEnabled": false,
+      "itemsLimit": 1,
+      "itemsLimitByType": Object {
+        "date": 1,
+      },
+      "title": "Location",
+    },
+    "segment": Object {
+      "accepts": Array [
+        "attribute",
+      ],
+      "allowsReordering": false,
+      "allowsSwapping": true,
+      "canAddItems": true,
+      "enabled": true,
+      "icon": "local:geoPushpin/bucket-title-segment-icon.svg",
+      "isShowInPercentEnabled": false,
+      "itemsLimit": 1,
+      "itemsLimitByType": Object {
+        "date": 1,
+      },
+      "title": "Segment by",
+    },
+    "size": Object {
+      "accepts": Array [
+        "metric",
+        "fact",
+        "attribute",
+      ],
+      "allowsDuplicateItems": true,
+      "allowsReordering": false,
+      "allowsSwapping": true,
+      "canAddItems": true,
+      "enabled": true,
+      "icon": "local:geoPushpin/bucket-title-size-icon.svg",
+      "isShowInPercentEnabled": false,
+      "isShowInPercentVisible": false,
+      "itemsLimit": 1,
+      "subtitle": "Size",
+      "title": "Measure",
+    },
+  },
+  "exportConfig": Object {
+    "supported": true,
+  },
+  "noMetricAccepted": Object {
+    "supported": true,
+  },
+  "openAsReport": Object {
+    "supported": false,
+  },
+  "recommendations": Object {},
+  "supportedLocationIcon": Object {
+    "supported": true,
+  },
+  "supportedOverTimeComparisonTypes": Array [],
+}
+`;

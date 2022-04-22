@@ -15,8 +15,7 @@ import {
 import { PluggableHeatmap } from "../PluggableHeatmap";
 import { createDrillDefinition, createDrillEvent, insightDefinitionToInsight } from "../../tests/testHelpers";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
-import * as uiConfigMocks from "../../../../tests/mocks/uiConfigMocks";
-import { IBucketOfFun, IFilters, IReferencePoint } from "../../../../interfaces/Visualization";
+import { IBucketOfFun, IReferencePoint } from "../../../../interfaces/Visualization";
 
 describe("PluggableHeatmap", () => {
     const defaultProps = {
@@ -45,61 +44,21 @@ describe("PluggableHeatmap", () => {
     it("should return reference point with one metric, category, stack and valid filters", async () => {
         const heatmap = createComponent();
 
-        const expectedBuckets: IBucketOfFun[] = [
-            {
-                localIdentifier: "measures",
-                items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items.slice(
-                    0,
-                    1,
-                ),
-            },
-            {
-                localIdentifier: "view",
-                items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[1].items.slice(
-                    0,
-                    1,
-                ),
-            },
-            {
-                localIdentifier: "stack",
-                items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[1].items.slice(
-                    1,
-                    2,
-                ),
-            },
-        ];
-        const expectedProperties = {};
-        const expectedFilters: IFilters = {
-            localIdentifier: "filters",
-            items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.filters.items.slice(0, 2),
-        };
-
         const extendedReferencePoint = await heatmap.getExtendedReferencePoint(
             referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
         );
 
-        expect(extendedReferencePoint).toEqual({
-            buckets: expectedBuckets,
-            filters: expectedFilters,
-            uiConfig: uiConfigMocks.defaultHeatmapUiConfig,
-            properties: expectedProperties,
-        });
+        expect(extendedReferencePoint).toMatchSnapshot();
     });
 
     it("heatmap should allow date attribute in column bucket", async () => {
         const heatmap = createComponent();
-        const referencePoint = referencePointMocks.dateAttributeOnStackBucketReferencePoint;
 
         const extendedReferencePoint = await heatmap.getExtendedReferencePoint(
             referencePointMocks.dateAttributeOnStackBucketReferencePoint,
         );
 
-        expect(extendedReferencePoint).toEqual({
-            buckets: referencePoint.buckets,
-            filters: referencePoint.filters,
-            uiConfig: uiConfigMocks.defaultHeatmapUiConfig,
-            properties: {},
-        });
+        expect(extendedReferencePoint).toMatchSnapshot();
     });
 
     it("heatmap should not support showInpercent", async () => {
