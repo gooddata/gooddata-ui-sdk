@@ -47,6 +47,7 @@
     "kpi.noData": "Sem dados para configurações atuais do filtro. Tente alterar os filtros.",
     "kpiPop.change": "alterado",
     "dialogs.schedule.email.filters": "O dashboard contém alterações no filtro que serão salvas conforme o agendamento.",
+    "dialogs.schedule.email.filters.not.saved": "Filtros de dashboard salvos conforme o agendamento não serão afetados.",
     "dialogs.schedule.email.attachment.filter": "(com filtros definidos)",
     "dialogs.schedule.email.attachment.label": "Anexar:",
     "dialogs.schedule.email.attachments.label": "Anexos:",
