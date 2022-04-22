@@ -14,13 +14,7 @@
     "es2015": "esm/index.js",
     "browser": "dist/index.js",
     "typings": "esm/index.d.ts",
-    "sideEffects": [
-        "*.css",
-        "*.svg",
-        "*.ttf",
-        "*.woff",
-        "*.eot"
-    ],
+    "sideEffects": false,
     "files": [
         "dist/**/*.js",
         "dist/**/*.json",
