@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
 import { IntlShape } from "react-intl";
@@ -11,9 +11,12 @@ import { BUCKETS } from "../../constants/bucket";
 
 import { setBucketTitles } from "../bucketHelper";
 
-import heatmapMeasuresIcon from "../../assets/heatmap/bucket-title-measures.svg";
-import heatmapViewIcon from "../../assets/heatmap/bucket-title-view.svg";
-import heatmapStackIcon from "../../assets/heatmap/bucket-title-stack.svg";
+// If you need to edit these icons
+// reflect changes also in gdc-analytical-designer
+// https://github.com/gooddata/gdc-analytical-designer/blob/develop/app/components/buckets/BucketIcon.tsx
+const heatmapMeasuresIcon = "local:heatmap/bucket-title-measures.svg";
+const heatmapViewIcon = "local:heatmap/bucket-title-view.svg";
+const heatmapStackIcon = "local:heatmap/bucket-title-stack.svg";
 
 export function setHeatmapUiConfig(
     referencePoint: IExtendedReferencePoint,

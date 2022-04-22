@@ -14,8 +14,6 @@ import { defTotals } from "@gooddata/sdk-model";
 import { AgGridReact } from "@ag-grid-community/react";
 import React from "react";
 import { injectIntl } from "react-intl";
-
-import "../styles/css/pivotTable.css";
 import {
     createExportErrorFunction,
     DataViewFacade,

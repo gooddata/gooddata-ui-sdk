@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
 import forEach from "lodash/forEach";
@@ -14,10 +14,13 @@ import { hasMoreThanOneCategory, hasMoreThanOneMasterMeasure } from "./../bucket
 
 import { setBucketTitles } from "./../bucketHelper";
 import { getTranslation } from "./../translations";
-
-import pieMeasuresIcon from "../../assets/pie/bucket-title-measures.svg";
-import pieViewIcon from "../../assets/pie/bucket-title-view.svg";
 import { hasColorMapping } from "../propertiesHelper";
+
+// If you need to edit these icons
+// reflect changes also in gdc-analytical-designer
+// https://github.com/gooddata/gdc-analytical-designer/blob/develop/app/components/buckets/BucketIcon.tsx
+const pieMeasuresIcon = "local:pie/bucket-title-measures.svg";
+const pieViewIcon = "local:pie/bucket-title-view.svg";
 
 function setPieChartBucketWarningMessages(referencePoint: IExtendedReferencePoint, intl?: IntlShape) {
     const buckets = referencePoint?.buckets;

@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
 import forEach from "lodash/forEach";
@@ -14,11 +14,14 @@ import { hasMoreThanOneMasterMeasure, hasNoMeasures, hasOneCategory } from "../b
 
 import { getViewItems, setBucketTitles } from "../bucketHelper";
 import { getTranslation } from "../translations";
-
-import treemapMeasuresIcon from "../../assets/treemap/bucket-title-measures.svg";
-import treemapViewIcon from "../../assets/treemap/bucket-title-view.svg";
-import treemapSegmentIcon from "../../assets/treemap/bucket-title-segment.svg";
 import { getBucketItemsWarningMessage } from "./baseChartUiConfigHelper";
+
+// If you need to edit these icons
+// reflect changes also in gdc-analytical-designer
+// https://github.com/gooddata/gdc-analytical-designer/blob/develop/app/components/buckets/BucketIcon.tsx
+const treemapMeasuresIcon = "local:treemap/bucket-title-measures.svg";
+const treemapViewIcon = "local:treemap/bucket-title-view.svg";
+const treemapSegmentIcon = "local:treemap/bucket-title-segment.svg";
 
 function setTreemapBucketWarningMessages(referencePoint: IExtendedReferencePoint, intl?: IntlShape) {
     const buckets = referencePoint?.buckets || [];

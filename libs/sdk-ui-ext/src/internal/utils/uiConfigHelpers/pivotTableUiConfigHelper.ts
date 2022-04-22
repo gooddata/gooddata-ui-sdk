@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import set from "lodash/set";
 import { IntlShape } from "react-intl";
 
@@ -18,9 +18,12 @@ import { BUCKETS } from "../../constants/bucket";
 
 import { setBucketTitles } from "./../bucketHelper";
 
-import tableMeasuresIcon from "../../assets/table/bucket-title-measures.svg";
-import tableRowsIcon from "../../assets/table/bucket-title-rows.svg";
-import tableColumnsIcon from "../../assets/table/bucket-title-columns.svg";
+// If you need to edit these icons
+// reflect changes also in gdc-analytical-designer
+// https://github.com/gooddata/gdc-analytical-designer/blob/develop/app/components/buckets/BucketIcon.tsx
+const tableMeasuresIcon = "local:table/bucket-title-measures.svg";
+const tableRowsIcon = "local:table/bucket-title-rows.svg";
+const tableColumnsIcon = "local:table/bucket-title-columns.svg";
 
 export function setPivotTableUiConfig(
     referencePoint: IExtendedReferencePoint,

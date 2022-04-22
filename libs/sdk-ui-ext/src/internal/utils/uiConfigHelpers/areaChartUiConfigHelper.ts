@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
 import { IntlShape } from "react-intl";
@@ -18,11 +18,15 @@ import { getMasterMeasuresCount, hasNoStacksWithDate } from "../bucketRules";
 
 import { getItemsCount, getStackItems, getViewItems, setBucketTitles } from "../bucketHelper";
 
-import areaMeasuresIcon from "../../assets/area/bucket-title-measures.svg";
-import areaViewIcon from "../../assets/area/bucket-title-view.svg";
-import areaStackIcon from "../../assets/area/bucket-title-stack.svg";
 import { getBucketItemsWarningMessage } from "./baseChartUiConfigHelper";
 import { getTranslation } from "../translations";
+
+// If you need to edit these icons
+// reflect changes also in gdc-analytical-designer
+// https://github.com/gooddata/gdc-analytical-designer/blob/develop/app/components/buckets/BucketIcon.tsx
+const areaMeasuresIcon = "local:area/bucket-title-measures.svg";
+const areaViewIcon = "local:area/bucket-title-view.svg";
+const areaStackIcon = "local:area/bucket-title-stack.svg";
 
 function getWarningMessageForMeasuresBucket(
     intl: IntlShape,
