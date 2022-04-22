@@ -18,9 +18,14 @@ import globalImportUrl from "url";
 import globalImportQs from "qs";
 import { Configuration } from "./configuration";
 import globalAxios, { AxiosPromise, AxiosInstance } from "axios";
-// Some imports not used depending on template conditions
+// Some imports not used depending on template conditions, we also need prettier-ignore so that the import does not get split and ts-ignore still works
+// prettier-ignore
 // @ts-ignore
-import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from "./base";
+import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, toPathString, createRequestFunction } from './common';
+// Some imports not used depending on template conditions, we also need prettier-ignore so that the import does not get split and ts-ignore still works
+// prettier-ignore
+// @ts-ignore
+import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base';
 
 // utility function that adds support for nested objects in query
 const addFlattenedObjectTo = (object: any, target: any): void => {
@@ -2138,19 +2143,9 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
         ): RequestArgs {
             const { workspaceId, elementsRequest, offset, limit, skipCache } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling computeLabelElementsPost.",
-                );
-            }
+            assertParamExists("computeLabelElementsPost", "workspaceId", workspaceId);
             // verify required parameter 'elementsRequest' is not null or undefined
-            if (elementsRequest === null || elementsRequest === undefined) {
-                throw new RequiredError(
-                    "elementsRequest",
-                    "Required parameter elementsRequest was null or undefined when calling computeLabelElementsPost.",
-                );
-            }
+            assertParamExists("computeLabelElementsPost", "elementsRequest", elementsRequest);
             const localVarPath =
                 `/api/actions/workspaces/{workspaceId}/execution/collectLabelElements`.replace(
                     `{${"workspaceId"}}`,
@@ -2224,19 +2219,9 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
         ): RequestArgs {
             const { workspaceId, afmExecution, skipCache, timestamp } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling computeReport.",
-                );
-            }
+            assertParamExists("computeReport", "workspaceId", workspaceId);
             // verify required parameter 'afmExecution' is not null or undefined
-            if (afmExecution === null || afmExecution === undefined) {
-                throw new RequiredError(
-                    "afmExecution",
-                    "Required parameter afmExecution was null or undefined when calling computeReport.",
-                );
-            }
+            assertParamExists("computeReport", "afmExecution", afmExecution);
             const localVarPath = `/api/actions/workspaces/{workspaceId}/execution/afm/execute`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
@@ -2293,19 +2278,9 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
         ): RequestArgs {
             const { workspaceId, afmValidObjectsQuery } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling computeValidObjects.",
-                );
-            }
+            assertParamExists("computeValidObjects", "workspaceId", workspaceId);
             // verify required parameter 'afmValidObjectsQuery' is not null or undefined
-            if (afmValidObjectsQuery === null || afmValidObjectsQuery === undefined) {
-                throw new RequiredError(
-                    "afmValidObjectsQuery",
-                    "Required parameter afmValidObjectsQuery was null or undefined when calling computeValidObjects.",
-                );
-            }
+            assertParamExists("computeValidObjects", "afmValidObjectsQuery", afmValidObjectsQuery);
             const localVarPath =
                 `/api/actions/workspaces/{workspaceId}/execution/afm/computeValidObjects`.replace(
                     `{${"workspaceId"}}`,
@@ -2357,19 +2332,9 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
         ): RequestArgs {
             const { workspaceId, afmExecution, explainType } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling explainAFM.",
-                );
-            }
+            assertParamExists("explainAFM", "workspaceId", workspaceId);
             // verify required parameter 'afmExecution' is not null or undefined
-            if (afmExecution === null || afmExecution === undefined) {
-                throw new RequiredError(
-                    "afmExecution",
-                    "Required parameter afmExecution was null or undefined when calling explainAFM.",
-                );
-            }
+            assertParamExists("explainAFM", "afmExecution", afmExecution);
             const localVarPath = `/api/actions/workspaces/{workspaceId}/execution/afm/explain`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
@@ -2430,19 +2395,9 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
         ): RequestArgs {
             const { workspaceId, resultId, offset, limit } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling retrieveResult.",
-                );
-            }
+            assertParamExists("retrieveResult", "workspaceId", workspaceId);
             // verify required parameter 'resultId' is not null or undefined
-            if (resultId === null || resultId === undefined) {
-                throw new RequiredError(
-                    "resultId",
-                    "Required parameter resultId was null or undefined when calling retrieveResult.",
-                );
-            }
+            assertParamExists("retrieveResult", "resultId", resultId);
             const localVarPath =
                 `/api/actions/workspaces/{workspaceId}/execution/afm/execute/result/{resultId}`
                     .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))

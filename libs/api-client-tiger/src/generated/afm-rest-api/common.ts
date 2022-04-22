@@ -124,23 +124,6 @@ export const setSearchParams = function (url: URL, ...objects: any[]) {
  *
  * @export
  */
-export const serializeDataIfNeeded = function (
-    value: any,
-    requestOptions: any,
-    configuration?: Configuration,
-) {
-    const nonString = typeof value !== "string";
-    const needsSerialization =
-        nonString && configuration && configuration.isJsonMime
-            ? configuration.isJsonMime(requestOptions.headers["Content-Type"])
-            : nonString;
-    return needsSerialization ? JSON.stringify(value !== undefined ? value : {}) : value || "";
-};
-
-/**
- *
- * @export
- */
 export const toPathString = function (url: URL) {
     return url.pathname + url.search + url.hash;
 };

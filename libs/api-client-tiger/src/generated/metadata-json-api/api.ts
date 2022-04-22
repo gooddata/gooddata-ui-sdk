@@ -18,9 +18,14 @@ import globalImportUrl from "url";
 import globalImportQs from "qs";
 import { Configuration } from "./configuration";
 import globalAxios, { AxiosPromise, AxiosInstance } from "axios";
-// Some imports not used depending on template conditions
+// Some imports not used depending on template conditions, we also need prettier-ignore so that the import does not get split and ts-ignore still works
+// prettier-ignore
 // @ts-ignore
-import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from "./base";
+import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, toPathString, createRequestFunction } from './common';
+// Some imports not used depending on template conditions, we also need prettier-ignore so that the import does not get split and ts-ignore still works
+// prettier-ignore
+// @ts-ignore
+import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base';
 
 // utility function that adds support for nested objects in query
 const addFlattenedObjectTo = (object: any, target: any): void => {
@@ -7464,19 +7469,9 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
         ): RequestArgs {
             const { dataSourceId, generateLdmRequest } = params;
             // verify required parameter 'dataSourceId' is not null or undefined
-            if (dataSourceId === null || dataSourceId === undefined) {
-                throw new RequiredError(
-                    "dataSourceId",
-                    "Required parameter dataSourceId was null or undefined when calling generateLogicalModel.",
-                );
-            }
+            assertParamExists("generateLogicalModel", "dataSourceId", dataSourceId);
             // verify required parameter 'generateLdmRequest' is not null or undefined
-            if (generateLdmRequest === null || generateLdmRequest === undefined) {
-                throw new RequiredError(
-                    "generateLdmRequest",
-                    "Required parameter generateLdmRequest was null or undefined when calling generateLogicalModel.",
-                );
-            }
+            assertParamExists("generateLogicalModel", "generateLdmRequest", generateLdmRequest);
             const localVarPath = `/api/actions/dataSources/{dataSourceId}/generateLogicalModel`.replace(
                 `{${"dataSourceId"}}`,
                 encodeURIComponent(String(dataSourceId)),
@@ -7523,12 +7518,7 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
         ): RequestArgs {
             const { dataSourceId } = params;
             // verify required parameter 'dataSourceId' is not null or undefined
-            if (dataSourceId === null || dataSourceId === undefined) {
-                throw new RequiredError(
-                    "dataSourceId",
-                    "Required parameter dataSourceId was null or undefined when calling registerUploadNotification.",
-                );
-            }
+            assertParamExists("registerUploadNotification", "dataSourceId", dataSourceId);
             const localVarPath = `/api/actions/dataSources/{dataSourceId}/uploadNotification`.replace(
                 `{${"dataSourceId"}}`,
                 encodeURIComponent(String(dataSourceId)),
@@ -7783,22 +7773,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { workspaceId, jsonApiAnalyticalDashboardInDocument, include } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling createEntityAnalyticalDashboards.",
-                );
-            }
+            assertParamExists("createEntityAnalyticalDashboards", "workspaceId", workspaceId);
             // verify required parameter 'jsonApiAnalyticalDashboardInDocument' is not null or undefined
-            if (
-                jsonApiAnalyticalDashboardInDocument === null ||
-                jsonApiAnalyticalDashboardInDocument === undefined
-            ) {
-                throw new RequiredError(
-                    "jsonApiAnalyticalDashboardInDocument",
-                    "Required parameter jsonApiAnalyticalDashboardInDocument was null or undefined when calling createEntityAnalyticalDashboards.",
-                );
-            }
+            assertParamExists(
+                "createEntityAnalyticalDashboards",
+                "jsonApiAnalyticalDashboardInDocument",
+                jsonApiAnalyticalDashboardInDocument,
+            );
             const localVarPath = `/api/entities/workspaces/{workspaceId}/analyticalDashboards`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
@@ -7854,19 +7835,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { userId, jsonApiApiTokenInDocument } = params;
             // verify required parameter 'userId' is not null or undefined
-            if (userId === null || userId === undefined) {
-                throw new RequiredError(
-                    "userId",
-                    "Required parameter userId was null or undefined when calling createEntityApiTokens.",
-                );
-            }
+            assertParamExists("createEntityApiTokens", "userId", userId);
             // verify required parameter 'jsonApiApiTokenInDocument' is not null or undefined
-            if (jsonApiApiTokenInDocument === null || jsonApiApiTokenInDocument === undefined) {
-                throw new RequiredError(
-                    "jsonApiApiTokenInDocument",
-                    "Required parameter jsonApiApiTokenInDocument was null or undefined when calling createEntityApiTokens.",
-                );
-            }
+            assertParamExists(
+                "createEntityApiTokens",
+                "jsonApiApiTokenInDocument",
+                jsonApiApiTokenInDocument,
+            );
             const localVarPath = `/api/entities/users/{userId}/apiTokens`.replace(
                 `{${"userId"}}`,
                 encodeURIComponent(String(userId)),
@@ -7914,19 +7889,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { workspaceId, jsonApiDashboardPluginInDocument } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling createEntityDashboardPlugins.",
-                );
-            }
+            assertParamExists("createEntityDashboardPlugins", "workspaceId", workspaceId);
             // verify required parameter 'jsonApiDashboardPluginInDocument' is not null or undefined
-            if (jsonApiDashboardPluginInDocument === null || jsonApiDashboardPluginInDocument === undefined) {
-                throw new RequiredError(
-                    "jsonApiDashboardPluginInDocument",
-                    "Required parameter jsonApiDashboardPluginInDocument was null or undefined when calling createEntityDashboardPlugins.",
-                );
-            }
+            assertParamExists(
+                "createEntityDashboardPlugins",
+                "jsonApiDashboardPluginInDocument",
+                jsonApiDashboardPluginInDocument,
+            );
             const localVarPath = `/api/entities/workspaces/{workspaceId}/dashboardPlugins`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
@@ -7974,12 +7943,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { jsonApiDataSourceInDocument } = params;
             // verify required parameter 'jsonApiDataSourceInDocument' is not null or undefined
-            if (jsonApiDataSourceInDocument === null || jsonApiDataSourceInDocument === undefined) {
-                throw new RequiredError(
-                    "jsonApiDataSourceInDocument",
-                    "Required parameter jsonApiDataSourceInDocument was null or undefined when calling createEntityDataSources.",
-                );
-            }
+            assertParamExists(
+                "createEntityDataSources",
+                "jsonApiDataSourceInDocument",
+                jsonApiDataSourceInDocument,
+            );
             const localVarPath = `/api/entities/dataSources`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -8026,19 +7994,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { workspaceId, jsonApiFilterContextInDocument, include } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling createEntityFilterContexts.",
-                );
-            }
+            assertParamExists("createEntityFilterContexts", "workspaceId", workspaceId);
             // verify required parameter 'jsonApiFilterContextInDocument' is not null or undefined
-            if (jsonApiFilterContextInDocument === null || jsonApiFilterContextInDocument === undefined) {
-                throw new RequiredError(
-                    "jsonApiFilterContextInDocument",
-                    "Required parameter jsonApiFilterContextInDocument was null or undefined when calling createEntityFilterContexts.",
-                );
-            }
+            assertParamExists(
+                "createEntityFilterContexts",
+                "jsonApiFilterContextInDocument",
+                jsonApiFilterContextInDocument,
+            );
             const localVarPath = `/api/entities/workspaces/{workspaceId}/filterContexts`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
@@ -8094,19 +8056,9 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { workspaceId, jsonApiMetricInDocument, include } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling createEntityMetrics.",
-                );
-            }
+            assertParamExists("createEntityMetrics", "workspaceId", workspaceId);
             // verify required parameter 'jsonApiMetricInDocument' is not null or undefined
-            if (jsonApiMetricInDocument === null || jsonApiMetricInDocument === undefined) {
-                throw new RequiredError(
-                    "jsonApiMetricInDocument",
-                    "Required parameter jsonApiMetricInDocument was null or undefined when calling createEntityMetrics.",
-                );
-            }
+            assertParamExists("createEntityMetrics", "jsonApiMetricInDocument", jsonApiMetricInDocument);
             const localVarPath = `/api/entities/workspaces/{workspaceId}/metrics`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
@@ -8158,12 +8110,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { jsonApiUserGroupInDocument, include } = params;
             // verify required parameter 'jsonApiUserGroupInDocument' is not null or undefined
-            if (jsonApiUserGroupInDocument === null || jsonApiUserGroupInDocument === undefined) {
-                throw new RequiredError(
-                    "jsonApiUserGroupInDocument",
-                    "Required parameter jsonApiUserGroupInDocument was null or undefined when calling createEntityUserGroups.",
-                );
-            }
+            assertParamExists(
+                "createEntityUserGroups",
+                "jsonApiUserGroupInDocument",
+                jsonApiUserGroupInDocument,
+            );
             const localVarPath = `/api/entities/userGroups`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -8212,12 +8163,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { jsonApiUserInDocument, include } = params;
             // verify required parameter 'jsonApiUserInDocument' is not null or undefined
-            if (jsonApiUserInDocument === null || jsonApiUserInDocument === undefined) {
-                throw new RequiredError(
-                    "jsonApiUserInDocument",
-                    "Required parameter jsonApiUserInDocument was null or undefined when calling createEntityUsers.",
-                );
-            }
+            assertParamExists("createEntityUsers", "jsonApiUserInDocument", jsonApiUserInDocument);
             const localVarPath = `/api/entities/users`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -8268,22 +8214,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { workspaceId, jsonApiVisualizationObjectInDocument, include } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling createEntityVisualizationObjects.",
-                );
-            }
+            assertParamExists("createEntityVisualizationObjects", "workspaceId", workspaceId);
             // verify required parameter 'jsonApiVisualizationObjectInDocument' is not null or undefined
-            if (
-                jsonApiVisualizationObjectInDocument === null ||
-                jsonApiVisualizationObjectInDocument === undefined
-            ) {
-                throw new RequiredError(
-                    "jsonApiVisualizationObjectInDocument",
-                    "Required parameter jsonApiVisualizationObjectInDocument was null or undefined when calling createEntityVisualizationObjects.",
-                );
-            }
+            assertParamExists(
+                "createEntityVisualizationObjects",
+                "jsonApiVisualizationObjectInDocument",
+                jsonApiVisualizationObjectInDocument,
+            );
             const localVarPath = `/api/entities/workspaces/{workspaceId}/visualizationObjects`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
@@ -8341,22 +8278,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { workspaceId, jsonApiWorkspaceDataFilterInDocument, include } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling createEntityWorkspaceDataFilters.",
-                );
-            }
+            assertParamExists("createEntityWorkspaceDataFilters", "workspaceId", workspaceId);
             // verify required parameter 'jsonApiWorkspaceDataFilterInDocument' is not null or undefined
-            if (
-                jsonApiWorkspaceDataFilterInDocument === null ||
-                jsonApiWorkspaceDataFilterInDocument === undefined
-            ) {
-                throw new RequiredError(
-                    "jsonApiWorkspaceDataFilterInDocument",
-                    "Required parameter jsonApiWorkspaceDataFilterInDocument was null or undefined when calling createEntityWorkspaceDataFilters.",
-                );
-            }
+            assertParamExists(
+                "createEntityWorkspaceDataFilters",
+                "jsonApiWorkspaceDataFilterInDocument",
+                jsonApiWorkspaceDataFilterInDocument,
+            );
             const localVarPath = `/api/entities/workspaces/{workspaceId}/workspaceDataFilters`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
@@ -8412,12 +8340,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { jsonApiWorkspaceInDocument, include } = params;
             // verify required parameter 'jsonApiWorkspaceInDocument' is not null or undefined
-            if (jsonApiWorkspaceInDocument === null || jsonApiWorkspaceInDocument === undefined) {
-                throw new RequiredError(
-                    "jsonApiWorkspaceInDocument",
-                    "Required parameter jsonApiWorkspaceInDocument was null or undefined when calling createEntityWorkspaces.",
-                );
-            }
+            assertParamExists(
+                "createEntityWorkspaces",
+                "jsonApiWorkspaceInDocument",
+                jsonApiWorkspaceInDocument,
+            );
             const localVarPath = `/api/entities/workspaces`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -8470,19 +8397,9 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { workspaceId, objectId, predicate, filter } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling deleteEntityAnalyticalDashboards.",
-                );
-            }
+            assertParamExists("deleteEntityAnalyticalDashboards", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
-            if (objectId === null || objectId === undefined) {
-                throw new RequiredError(
-                    "objectId",
-                    "Required parameter objectId was null or undefined when calling deleteEntityAnalyticalDashboards.",
-                );
-            }
+            assertParamExists("deleteEntityAnalyticalDashboards", "objectId", objectId);
             const localVarPath = `/api/entities/workspaces/{workspaceId}/analyticalDashboards/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
@@ -8541,19 +8458,9 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { userId, id, predicate, filter } = params;
             // verify required parameter 'userId' is not null or undefined
-            if (userId === null || userId === undefined) {
-                throw new RequiredError(
-                    "userId",
-                    "Required parameter userId was null or undefined when calling deleteEntityApiTokens.",
-                );
-            }
+            assertParamExists("deleteEntityApiTokens", "userId", userId);
             // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling deleteEntityApiTokens.",
-                );
-            }
+            assertParamExists("deleteEntityApiTokens", "id", id);
             const localVarPath = `/api/entities/users/{userId}/apiTokens/{id}`
                 .replace(`{${"userId"}}`, encodeURIComponent(String(userId)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -8612,19 +8519,9 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { workspaceId, objectId, predicate, filter } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling deleteEntityDashboardPlugins.",
-                );
-            }
+            assertParamExists("deleteEntityDashboardPlugins", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
-            if (objectId === null || objectId === undefined) {
-                throw new RequiredError(
-                    "objectId",
-                    "Required parameter objectId was null or undefined when calling deleteEntityDashboardPlugins.",
-                );
-            }
+            assertParamExists("deleteEntityDashboardPlugins", "objectId", objectId);
             const localVarPath = `/api/entities/workspaces/{workspaceId}/dashboardPlugins/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
@@ -8681,12 +8578,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { id, predicate, filter } = params;
             // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling deleteEntityDataSources.",
-                );
-            }
+            assertParamExists("deleteEntityDataSources", "id", id);
             const localVarPath = `/api/entities/dataSources/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
@@ -8746,19 +8638,9 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { workspaceId, objectId, predicate, filter } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling deleteEntityFilterContexts.",
-                );
-            }
+            assertParamExists("deleteEntityFilterContexts", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
-            if (objectId === null || objectId === undefined) {
-                throw new RequiredError(
-                    "objectId",
-                    "Required parameter objectId was null or undefined when calling deleteEntityFilterContexts.",
-                );
-            }
+            assertParamExists("deleteEntityFilterContexts", "objectId", objectId);
             const localVarPath = `/api/entities/workspaces/{workspaceId}/filterContexts/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
@@ -8817,19 +8699,9 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { workspaceId, objectId, predicate, filter } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling deleteEntityMetrics.",
-                );
-            }
+            assertParamExists("deleteEntityMetrics", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
-            if (objectId === null || objectId === undefined) {
-                throw new RequiredError(
-                    "objectId",
-                    "Required parameter objectId was null or undefined when calling deleteEntityMetrics.",
-                );
-            }
+            assertParamExists("deleteEntityMetrics", "objectId", objectId);
             const localVarPath = `/api/entities/workspaces/{workspaceId}/metrics/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
@@ -8886,12 +8758,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { id, predicate, filter } = params;
             // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling deleteEntityUserGroups.",
-                );
-            }
+            assertParamExists("deleteEntityUserGroups", "id", id);
             const localVarPath = `/api/entities/userGroups/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
@@ -8949,12 +8816,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { id, predicate, filter } = params;
             // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling deleteEntityUsers.",
-                );
-            }
+            assertParamExists("deleteEntityUsers", "id", id);
             const localVarPath = `/api/entities/users/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
@@ -9014,19 +8876,9 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { workspaceId, objectId, predicate, filter } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling deleteEntityVisualizationObjects.",
-                );
-            }
+            assertParamExists("deleteEntityVisualizationObjects", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
-            if (objectId === null || objectId === undefined) {
-                throw new RequiredError(
-                    "objectId",
-                    "Required parameter objectId was null or undefined when calling deleteEntityVisualizationObjects.",
-                );
-            }
+            assertParamExists("deleteEntityVisualizationObjects", "objectId", objectId);
             const localVarPath = `/api/entities/workspaces/{workspaceId}/visualizationObjects/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
@@ -9085,19 +8937,9 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { workspaceId, objectId, predicate, filter } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling deleteEntityWorkspaceDataFilters.",
-                );
-            }
+            assertParamExists("deleteEntityWorkspaceDataFilters", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
-            if (objectId === null || objectId === undefined) {
-                throw new RequiredError(
-                    "objectId",
-                    "Required parameter objectId was null or undefined when calling deleteEntityWorkspaceDataFilters.",
-                );
-            }
+            assertParamExists("deleteEntityWorkspaceDataFilters", "objectId", objectId);
             const localVarPath = `/api/entities/workspaces/{workspaceId}/workspaceDataFilters/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
@@ -9154,12 +8996,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { id, predicate, filter } = params;
             // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling deleteEntityWorkspaces.",
-                );
-            }
+            assertParamExists("deleteEntityWorkspaces", "id", id);
             const localVarPath = `/api/entities/workspaces/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
@@ -9237,12 +9074,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const { workspaceId, predicate, filter, include, page, size, sort, xGDCVALIDATERELATIONS } =
                 params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling getAllEntitiesAnalyticalDashboards.",
-                );
-            }
+            assertParamExists("getAllEntitiesAnalyticalDashboards", "workspaceId", workspaceId);
             const localVarPath = `/api/entities/workspaces/{workspaceId}/analyticalDashboards`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
@@ -9336,12 +9168,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { userId, predicate, filter, page, size, sort } = params;
             // verify required parameter 'userId' is not null or undefined
-            if (userId === null || userId === undefined) {
-                throw new RequiredError(
-                    "userId",
-                    "Required parameter userId was null or undefined when calling getAllEntitiesApiTokens.",
-                );
-            }
+            assertParamExists("getAllEntitiesApiTokens", "userId", userId);
             const localVarPath = `/api/entities/users/{userId}/apiTokens`.replace(
                 `{${"userId"}}`,
                 encodeURIComponent(String(userId)),
@@ -9430,12 +9257,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const { workspaceId, predicate, filter, include, page, size, sort, xGDCVALIDATERELATIONS } =
                 params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling getAllEntitiesAttributes.",
-                );
-            }
+            assertParamExists("getAllEntitiesAttributes", "workspaceId", workspaceId);
             const localVarPath = `/api/entities/workspaces/{workspaceId}/attributes`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
@@ -9531,12 +9353,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { workspaceId, predicate, filter, page, size, sort, xGDCVALIDATERELATIONS } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling getAllEntitiesDashboardPlugins.",
-                );
-            }
+            assertParamExists("getAllEntitiesDashboardPlugins", "workspaceId", workspaceId);
             const localVarPath = `/api/entities/workspaces/{workspaceId}/dashboardPlugins`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
@@ -9709,12 +9526,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { dataSourceId, predicate, filter, page, size, sort } = params;
             // verify required parameter 'dataSourceId' is not null or undefined
-            if (dataSourceId === null || dataSourceId === undefined) {
-                throw new RequiredError(
-                    "dataSourceId",
-                    "Required parameter dataSourceId was null or undefined when calling getAllEntitiesDataSourceTables.",
-                );
-            }
+            assertParamExists("getAllEntitiesDataSourceTables", "dataSourceId", dataSourceId);
             const localVarPath = `/api/entities/dataSources/{dataSourceId}/dataSourceTables`.replace(
                 `{${"dataSourceId"}}`,
                 encodeURIComponent(String(dataSourceId)),
@@ -9886,12 +9698,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const { workspaceId, predicate, filter, include, page, size, sort, xGDCVALIDATERELATIONS } =
                 params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling getAllEntitiesDatasets.",
-                );
-            }
+            assertParamExists("getAllEntitiesDatasets", "workspaceId", workspaceId);
             const localVarPath = `/api/entities/workspaces/{workspaceId}/datasets`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
@@ -9990,12 +9797,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const { workspaceId, predicate, filter, include, page, size, sort, xGDCVALIDATERELATIONS } =
                 params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling getAllEntitiesFacts.",
-                );
-            }
+            assertParamExists("getAllEntitiesFacts", "workspaceId", workspaceId);
             const localVarPath = `/api/entities/workspaces/{workspaceId}/facts`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
@@ -10094,12 +9896,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const { workspaceId, predicate, filter, include, page, size, sort, xGDCVALIDATERELATIONS } =
                 params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling getAllEntitiesFilterContexts.",
-                );
-            }
+            assertParamExists("getAllEntitiesFilterContexts", "workspaceId", workspaceId);
             const localVarPath = `/api/entities/workspaces/{workspaceId}/filterContexts`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
@@ -10198,12 +9995,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const { workspaceId, predicate, filter, include, page, size, sort, xGDCVALIDATERELATIONS } =
                 params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling getAllEntitiesLabels.",
-                );
-            }
+            assertParamExists("getAllEntitiesLabels", "workspaceId", workspaceId);
             const localVarPath = `/api/entities/workspaces/{workspaceId}/labels`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
@@ -10302,12 +10094,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const { workspaceId, predicate, filter, include, page, size, sort, xGDCVALIDATERELATIONS } =
                 params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling getAllEntitiesMetrics.",
-                );
-            }
+            assertParamExists("getAllEntitiesMetrics", "workspaceId", workspaceId);
             const localVarPath = `/api/entities/workspaces/{workspaceId}/metrics`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
@@ -10572,12 +10359,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const { workspaceId, predicate, filter, include, page, size, sort, xGDCVALIDATERELATIONS } =
                 params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling getAllEntitiesVisualizationObjects.",
-                );
-            }
+            assertParamExists("getAllEntitiesVisualizationObjects", "workspaceId", workspaceId);
             const localVarPath = `/api/entities/workspaces/{workspaceId}/visualizationObjects`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
@@ -10676,12 +10458,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const { workspaceId, predicate, filter, include, page, size, sort, xGDCVALIDATERELATIONS } =
                 params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling getAllEntitiesWorkspaceDataFilterSettings.",
-                );
-            }
+            assertParamExists("getAllEntitiesWorkspaceDataFilterSettings", "workspaceId", workspaceId);
             const localVarPath = `/api/entities/workspaces/{workspaceId}/workspaceDataFilterSettings`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
@@ -10780,12 +10557,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const { workspaceId, predicate, filter, include, page, size, sort, xGDCVALIDATERELATIONS } =
                 params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling getAllEntitiesWorkspaceDataFilters.",
-                );
-            }
+            assertParamExists("getAllEntitiesWorkspaceDataFilters", "workspaceId", workspaceId);
             const localVarPath = `/api/entities/workspaces/{workspaceId}/workspaceDataFilters`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
@@ -11033,19 +10805,9 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { workspaceId, objectId, predicate, filter, include, xGDCVALIDATERELATIONS } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling getEntityAnalyticalDashboards.",
-                );
-            }
+            assertParamExists("getEntityAnalyticalDashboards", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
-            if (objectId === null || objectId === undefined) {
-                throw new RequiredError(
-                    "objectId",
-                    "Required parameter objectId was null or undefined when calling getEntityAnalyticalDashboards.",
-                );
-            }
+            assertParamExists("getEntityAnalyticalDashboards", "objectId", objectId);
             const localVarPath = `/api/entities/workspaces/{workspaceId}/analyticalDashboards/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
@@ -11114,19 +10876,9 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { userId, id, predicate, filter } = params;
             // verify required parameter 'userId' is not null or undefined
-            if (userId === null || userId === undefined) {
-                throw new RequiredError(
-                    "userId",
-                    "Required parameter userId was null or undefined when calling getEntityApiTokens.",
-                );
-            }
+            assertParamExists("getEntityApiTokens", "userId", userId);
             // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling getEntityApiTokens.",
-                );
-            }
+            assertParamExists("getEntityApiTokens", "id", id);
             const localVarPath = `/api/entities/users/{userId}/apiTokens/{id}`
                 .replace(`{${"userId"}}`, encodeURIComponent(String(userId)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -11189,19 +10941,9 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { workspaceId, objectId, predicate, filter, include, xGDCVALIDATERELATIONS } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling getEntityAttributes.",
-                );
-            }
+            assertParamExists("getEntityAttributes", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
-            if (objectId === null || objectId === undefined) {
-                throw new RequiredError(
-                    "objectId",
-                    "Required parameter objectId was null or undefined when calling getEntityAttributes.",
-                );
-            }
+            assertParamExists("getEntityAttributes", "objectId", objectId);
             const localVarPath = `/api/entities/workspaces/{workspaceId}/attributes/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
@@ -11268,12 +11010,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { id, predicate, filter } = params;
             // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling getEntityCookieSecurityConfigurations.",
-                );
-            }
+            assertParamExists("getEntityCookieSecurityConfigurations", "id", id);
             const localVarPath = `/api/entities/admin/cookieSecurityConfigurations/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
@@ -11335,19 +11072,9 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { workspaceId, objectId, predicate, filter, xGDCVALIDATERELATIONS } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling getEntityDashboardPlugins.",
-                );
-            }
+            assertParamExists("getEntityDashboardPlugins", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
-            if (objectId === null || objectId === undefined) {
-                throw new RequiredError(
-                    "objectId",
-                    "Required parameter objectId was null or undefined when calling getEntityDashboardPlugins.",
-                );
-            }
+            assertParamExists("getEntityDashboardPlugins", "objectId", objectId);
             const localVarPath = `/api/entities/workspaces/{workspaceId}/dashboardPlugins/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
@@ -11412,12 +11139,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { id, predicate, filter, metaInclude } = params;
             // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling getEntityDataSourceIdentifiers.",
-                );
-            }
+            assertParamExists("getEntityDataSourceIdentifiers", "id", id);
             const localVarPath = `/api/entities/dataSourceIdentifiers/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
@@ -11481,19 +11203,9 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { dataSourceId, id, predicate, filter } = params;
             // verify required parameter 'dataSourceId' is not null or undefined
-            if (dataSourceId === null || dataSourceId === undefined) {
-                throw new RequiredError(
-                    "dataSourceId",
-                    "Required parameter dataSourceId was null or undefined when calling getEntityDataSourceTables.",
-                );
-            }
+            assertParamExists("getEntityDataSourceTables", "dataSourceId", dataSourceId);
             // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling getEntityDataSourceTables.",
-                );
-            }
+            assertParamExists("getEntityDataSourceTables", "id", id);
             const localVarPath = `/api/entities/dataSources/{dataSourceId}/dataSourceTables/{id}`
                 .replace(`{${"dataSourceId"}}`, encodeURIComponent(String(dataSourceId)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -11552,12 +11264,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { id, predicate, filter, metaInclude } = params;
             // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling getEntityDataSources.",
-                );
-            }
+            assertParamExists("getEntityDataSources", "id", id);
             const localVarPath = `/api/entities/dataSources/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
@@ -11625,19 +11332,9 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { workspaceId, objectId, predicate, filter, include, xGDCVALIDATERELATIONS } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling getEntityDatasets.",
-                );
-            }
+            assertParamExists("getEntityDatasets", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
-            if (objectId === null || objectId === undefined) {
-                throw new RequiredError(
-                    "objectId",
-                    "Required parameter objectId was null or undefined when calling getEntityDatasets.",
-                );
-            }
+            assertParamExists("getEntityDatasets", "objectId", objectId);
             const localVarPath = `/api/entities/workspaces/{workspaceId}/datasets/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
@@ -11710,19 +11407,9 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { workspaceId, objectId, predicate, filter, include, xGDCVALIDATERELATIONS } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling getEntityFacts.",
-                );
-            }
+            assertParamExists("getEntityFacts", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
-            if (objectId === null || objectId === undefined) {
-                throw new RequiredError(
-                    "objectId",
-                    "Required parameter objectId was null or undefined when calling getEntityFacts.",
-                );
-            }
+            assertParamExists("getEntityFacts", "objectId", objectId);
             const localVarPath = `/api/entities/workspaces/{workspaceId}/facts/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
@@ -11795,19 +11482,9 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { workspaceId, objectId, predicate, filter, include, xGDCVALIDATERELATIONS } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling getEntityFilterContexts.",
-                );
-            }
+            assertParamExists("getEntityFilterContexts", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
-            if (objectId === null || objectId === undefined) {
-                throw new RequiredError(
-                    "objectId",
-                    "Required parameter objectId was null or undefined when calling getEntityFilterContexts.",
-                );
-            }
+            assertParamExists("getEntityFilterContexts", "objectId", objectId);
             const localVarPath = `/api/entities/workspaces/{workspaceId}/filterContexts/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
@@ -11880,19 +11557,9 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { workspaceId, objectId, predicate, filter, include, xGDCVALIDATERELATIONS } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling getEntityLabels.",
-                );
-            }
+            assertParamExists("getEntityLabels", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
-            if (objectId === null || objectId === undefined) {
-                throw new RequiredError(
-                    "objectId",
-                    "Required parameter objectId was null or undefined when calling getEntityLabels.",
-                );
-            }
+            assertParamExists("getEntityLabels", "objectId", objectId);
             const localVarPath = `/api/entities/workspaces/{workspaceId}/labels/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
@@ -11965,19 +11632,9 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { workspaceId, objectId, predicate, filter, include, xGDCVALIDATERELATIONS } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling getEntityMetrics.",
-                );
-            }
+            assertParamExists("getEntityMetrics", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
-            if (objectId === null || objectId === undefined) {
-                throw new RequiredError(
-                    "objectId",
-                    "Required parameter objectId was null or undefined when calling getEntityMetrics.",
-                );
-            }
+            assertParamExists("getEntityMetrics", "objectId", objectId);
             const localVarPath = `/api/entities/workspaces/{workspaceId}/metrics/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
@@ -12048,12 +11705,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { id, predicate, filter, include, metaInclude } = params;
             // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling getEntityOrganizations.",
-                );
-            }
+            assertParamExists("getEntityOrganizations", "id", id);
             const localVarPath = `/api/entities/admin/organizations/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
@@ -12121,12 +11773,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { id, predicate, filter, include } = params;
             // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling getEntityUserGroups.",
-                );
-            }
+            assertParamExists("getEntityUserGroups", "id", id);
             const localVarPath = `/api/entities/userGroups/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
@@ -12190,12 +11837,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { id, predicate, filter, include } = params;
             // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling getEntityUsers.",
-                );
-            }
+            assertParamExists("getEntityUsers", "id", id);
             const localVarPath = `/api/entities/users/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
@@ -12263,19 +11905,9 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { workspaceId, objectId, predicate, filter, include, xGDCVALIDATERELATIONS } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling getEntityVisualizationObjects.",
-                );
-            }
+            assertParamExists("getEntityVisualizationObjects", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
-            if (objectId === null || objectId === undefined) {
-                throw new RequiredError(
-                    "objectId",
-                    "Required parameter objectId was null or undefined when calling getEntityVisualizationObjects.",
-                );
-            }
+            assertParamExists("getEntityVisualizationObjects", "objectId", objectId);
             const localVarPath = `/api/entities/workspaces/{workspaceId}/visualizationObjects/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
@@ -12348,19 +11980,9 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { workspaceId, objectId, predicate, filter, include, xGDCVALIDATERELATIONS } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling getEntityWorkspaceDataFilterSettings.",
-                );
-            }
+            assertParamExists("getEntityWorkspaceDataFilterSettings", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
-            if (objectId === null || objectId === undefined) {
-                throw new RequiredError(
-                    "objectId",
-                    "Required parameter objectId was null or undefined when calling getEntityWorkspaceDataFilterSettings.",
-                );
-            }
+            assertParamExists("getEntityWorkspaceDataFilterSettings", "objectId", objectId);
             const localVarPath =
                 `/api/entities/workspaces/{workspaceId}/workspaceDataFilterSettings/{objectId}`
                     .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
@@ -12434,19 +12056,9 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { workspaceId, objectId, predicate, filter, include, xGDCVALIDATERELATIONS } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling getEntityWorkspaceDataFilters.",
-                );
-            }
+            assertParamExists("getEntityWorkspaceDataFilters", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
-            if (objectId === null || objectId === undefined) {
-                throw new RequiredError(
-                    "objectId",
-                    "Required parameter objectId was null or undefined when calling getEntityWorkspaceDataFilters.",
-                );
-            }
+            assertParamExists("getEntityWorkspaceDataFilters", "objectId", objectId);
             const localVarPath = `/api/entities/workspaces/{workspaceId}/workspaceDataFilters/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
@@ -12517,12 +12129,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { id, predicate, filter, include, metaInclude } = params;
             // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling getEntityWorkspaces.",
-                );
-            }
+            assertParamExists("getEntityWorkspaces", "id", id);
             const localVarPath = `/api/entities/workspaces/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
@@ -12648,29 +12255,15 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 include,
             } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling patchEntityAnalyticalDashboards.",
-                );
-            }
+            assertParamExists("patchEntityAnalyticalDashboards", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
-            if (objectId === null || objectId === undefined) {
-                throw new RequiredError(
-                    "objectId",
-                    "Required parameter objectId was null or undefined when calling patchEntityAnalyticalDashboards.",
-                );
-            }
+            assertParamExists("patchEntityAnalyticalDashboards", "objectId", objectId);
             // verify required parameter 'jsonApiAnalyticalDashboardPatchDocument' is not null or undefined
-            if (
-                jsonApiAnalyticalDashboardPatchDocument === null ||
-                jsonApiAnalyticalDashboardPatchDocument === undefined
-            ) {
-                throw new RequiredError(
-                    "jsonApiAnalyticalDashboardPatchDocument",
-                    "Required parameter jsonApiAnalyticalDashboardPatchDocument was null or undefined when calling patchEntityAnalyticalDashboards.",
-                );
-            }
+            assertParamExists(
+                "patchEntityAnalyticalDashboards",
+                "jsonApiAnalyticalDashboardPatchDocument",
+                jsonApiAnalyticalDashboardPatchDocument,
+            );
             const localVarPath = `/api/entities/workspaces/{workspaceId}/analyticalDashboards/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
@@ -12747,29 +12340,15 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { workspaceId, objectId, jsonApiDashboardPluginPatchDocument, predicate, filter } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling patchEntityDashboardPlugins.",
-                );
-            }
+            assertParamExists("patchEntityDashboardPlugins", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
-            if (objectId === null || objectId === undefined) {
-                throw new RequiredError(
-                    "objectId",
-                    "Required parameter objectId was null or undefined when calling patchEntityDashboardPlugins.",
-                );
-            }
+            assertParamExists("patchEntityDashboardPlugins", "objectId", objectId);
             // verify required parameter 'jsonApiDashboardPluginPatchDocument' is not null or undefined
-            if (
-                jsonApiDashboardPluginPatchDocument === null ||
-                jsonApiDashboardPluginPatchDocument === undefined
-            ) {
-                throw new RequiredError(
-                    "jsonApiDashboardPluginPatchDocument",
-                    "Required parameter jsonApiDashboardPluginPatchDocument was null or undefined when calling patchEntityDashboardPlugins.",
-                );
-            }
+            assertParamExists(
+                "patchEntityDashboardPlugins",
+                "jsonApiDashboardPluginPatchDocument",
+                jsonApiDashboardPluginPatchDocument,
+            );
             const localVarPath = `/api/entities/workspaces/{workspaceId}/dashboardPlugins/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
@@ -12840,19 +12419,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { id, jsonApiDataSourcePatchDocument, predicate, filter } = params;
             // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling patchEntityDataSources.",
-                );
-            }
+            assertParamExists("patchEntityDataSources", "id", id);
             // verify required parameter 'jsonApiDataSourcePatchDocument' is not null or undefined
-            if (jsonApiDataSourcePatchDocument === null || jsonApiDataSourcePatchDocument === undefined) {
-                throw new RequiredError(
-                    "jsonApiDataSourcePatchDocument",
-                    "Required parameter jsonApiDataSourcePatchDocument was null or undefined when calling patchEntityDataSources.",
-                );
-            }
+            assertParamExists(
+                "patchEntityDataSources",
+                "jsonApiDataSourcePatchDocument",
+                jsonApiDataSourcePatchDocument,
+            );
             const localVarPath = `/api/entities/dataSources/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
@@ -12927,29 +12500,15 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const { workspaceId, objectId, jsonApiFilterContextPatchDocument, predicate, filter, include } =
                 params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling patchEntityFilterContexts.",
-                );
-            }
+            assertParamExists("patchEntityFilterContexts", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
-            if (objectId === null || objectId === undefined) {
-                throw new RequiredError(
-                    "objectId",
-                    "Required parameter objectId was null or undefined when calling patchEntityFilterContexts.",
-                );
-            }
+            assertParamExists("patchEntityFilterContexts", "objectId", objectId);
             // verify required parameter 'jsonApiFilterContextPatchDocument' is not null or undefined
-            if (
-                jsonApiFilterContextPatchDocument === null ||
-                jsonApiFilterContextPatchDocument === undefined
-            ) {
-                throw new RequiredError(
-                    "jsonApiFilterContextPatchDocument",
-                    "Required parameter jsonApiFilterContextPatchDocument was null or undefined when calling patchEntityFilterContexts.",
-                );
-            }
+            assertParamExists(
+                "patchEntityFilterContexts",
+                "jsonApiFilterContextPatchDocument",
+                jsonApiFilterContextPatchDocument,
+            );
             const localVarPath = `/api/entities/workspaces/{workspaceId}/filterContexts/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
@@ -13028,26 +12587,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { workspaceId, objectId, jsonApiMetricPatchDocument, predicate, filter, include } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling patchEntityMetrics.",
-                );
-            }
+            assertParamExists("patchEntityMetrics", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
-            if (objectId === null || objectId === undefined) {
-                throw new RequiredError(
-                    "objectId",
-                    "Required parameter objectId was null or undefined when calling patchEntityMetrics.",
-                );
-            }
+            assertParamExists("patchEntityMetrics", "objectId", objectId);
             // verify required parameter 'jsonApiMetricPatchDocument' is not null or undefined
-            if (jsonApiMetricPatchDocument === null || jsonApiMetricPatchDocument === undefined) {
-                throw new RequiredError(
-                    "jsonApiMetricPatchDocument",
-                    "Required parameter jsonApiMetricPatchDocument was null or undefined when calling patchEntityMetrics.",
-                );
-            }
+            assertParamExists("patchEntityMetrics", "jsonApiMetricPatchDocument", jsonApiMetricPatchDocument);
             const localVarPath = `/api/entities/workspaces/{workspaceId}/metrics/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
@@ -13120,19 +12664,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { id, jsonApiUserGroupPatchDocument, predicate, filter, include } = params;
             // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling patchEntityUserGroups.",
-                );
-            }
+            assertParamExists("patchEntityUserGroups", "id", id);
             // verify required parameter 'jsonApiUserGroupPatchDocument' is not null or undefined
-            if (jsonApiUserGroupPatchDocument === null || jsonApiUserGroupPatchDocument === undefined) {
-                throw new RequiredError(
-                    "jsonApiUserGroupPatchDocument",
-                    "Required parameter jsonApiUserGroupPatchDocument was null or undefined when calling patchEntityUserGroups.",
-                );
-            }
+            assertParamExists(
+                "patchEntityUserGroups",
+                "jsonApiUserGroupPatchDocument",
+                jsonApiUserGroupPatchDocument,
+            );
             const localVarPath = `/api/entities/userGroups/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
@@ -13208,19 +12746,9 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { id, jsonApiUserPatchDocument, predicate, filter, include } = params;
             // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling patchEntityUsers.",
-                );
-            }
+            assertParamExists("patchEntityUsers", "id", id);
             // verify required parameter 'jsonApiUserPatchDocument' is not null or undefined
-            if (jsonApiUserPatchDocument === null || jsonApiUserPatchDocument === undefined) {
-                throw new RequiredError(
-                    "jsonApiUserPatchDocument",
-                    "Required parameter jsonApiUserPatchDocument was null or undefined when calling patchEntityUsers.",
-                );
-            }
+            assertParamExists("patchEntityUsers", "jsonApiUserPatchDocument", jsonApiUserPatchDocument);
             const localVarPath = `/api/entities/users/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
@@ -13303,29 +12831,15 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 include,
             } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling patchEntityVisualizationObjects.",
-                );
-            }
+            assertParamExists("patchEntityVisualizationObjects", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
-            if (objectId === null || objectId === undefined) {
-                throw new RequiredError(
-                    "objectId",
-                    "Required parameter objectId was null or undefined when calling patchEntityVisualizationObjects.",
-                );
-            }
+            assertParamExists("patchEntityVisualizationObjects", "objectId", objectId);
             // verify required parameter 'jsonApiVisualizationObjectPatchDocument' is not null or undefined
-            if (
-                jsonApiVisualizationObjectPatchDocument === null ||
-                jsonApiVisualizationObjectPatchDocument === undefined
-            ) {
-                throw new RequiredError(
-                    "jsonApiVisualizationObjectPatchDocument",
-                    "Required parameter jsonApiVisualizationObjectPatchDocument was null or undefined when calling patchEntityVisualizationObjects.",
-                );
-            }
+            assertParamExists(
+                "patchEntityVisualizationObjects",
+                "jsonApiVisualizationObjectPatchDocument",
+                jsonApiVisualizationObjectPatchDocument,
+            );
             const localVarPath = `/api/entities/workspaces/{workspaceId}/visualizationObjects/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
@@ -13411,29 +12925,15 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 include,
             } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling patchEntityWorkspaceDataFilters.",
-                );
-            }
+            assertParamExists("patchEntityWorkspaceDataFilters", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
-            if (objectId === null || objectId === undefined) {
-                throw new RequiredError(
-                    "objectId",
-                    "Required parameter objectId was null or undefined when calling patchEntityWorkspaceDataFilters.",
-                );
-            }
+            assertParamExists("patchEntityWorkspaceDataFilters", "objectId", objectId);
             // verify required parameter 'jsonApiWorkspaceDataFilterPatchDocument' is not null or undefined
-            if (
-                jsonApiWorkspaceDataFilterPatchDocument === null ||
-                jsonApiWorkspaceDataFilterPatchDocument === undefined
-            ) {
-                throw new RequiredError(
-                    "jsonApiWorkspaceDataFilterPatchDocument",
-                    "Required parameter jsonApiWorkspaceDataFilterPatchDocument was null or undefined when calling patchEntityWorkspaceDataFilters.",
-                );
-            }
+            assertParamExists(
+                "patchEntityWorkspaceDataFilters",
+                "jsonApiWorkspaceDataFilterPatchDocument",
+                jsonApiWorkspaceDataFilterPatchDocument,
+            );
             const localVarPath = `/api/entities/workspaces/{workspaceId}/workspaceDataFilters/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
@@ -13510,19 +13010,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { id, jsonApiWorkspacePatchDocument, predicate, filter, include } = params;
             // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling patchEntityWorkspaces.",
-                );
-            }
+            assertParamExists("patchEntityWorkspaces", "id", id);
             // verify required parameter 'jsonApiWorkspacePatchDocument' is not null or undefined
-            if (jsonApiWorkspacePatchDocument === null || jsonApiWorkspacePatchDocument === undefined) {
-                throw new RequiredError(
-                    "jsonApiWorkspacePatchDocument",
-                    "Required parameter jsonApiWorkspacePatchDocument was null or undefined when calling patchEntityWorkspaces.",
-                );
-            }
+            assertParamExists(
+                "patchEntityWorkspaces",
+                "jsonApiWorkspacePatchDocument",
+                jsonApiWorkspacePatchDocument,
+            );
             const localVarPath = `/api/entities/workspaces/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
@@ -13616,29 +13110,15 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 include,
             } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling updateEntityAnalyticalDashboards.",
-                );
-            }
+            assertParamExists("updateEntityAnalyticalDashboards", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
-            if (objectId === null || objectId === undefined) {
-                throw new RequiredError(
-                    "objectId",
-                    "Required parameter objectId was null or undefined when calling updateEntityAnalyticalDashboards.",
-                );
-            }
+            assertParamExists("updateEntityAnalyticalDashboards", "objectId", objectId);
             // verify required parameter 'jsonApiAnalyticalDashboardInDocument' is not null or undefined
-            if (
-                jsonApiAnalyticalDashboardInDocument === null ||
-                jsonApiAnalyticalDashboardInDocument === undefined
-            ) {
-                throw new RequiredError(
-                    "jsonApiAnalyticalDashboardInDocument",
-                    "Required parameter jsonApiAnalyticalDashboardInDocument was null or undefined when calling updateEntityAnalyticalDashboards.",
-                );
-            }
+            assertParamExists(
+                "updateEntityAnalyticalDashboards",
+                "jsonApiAnalyticalDashboardInDocument",
+                jsonApiAnalyticalDashboardInDocument,
+            );
             const localVarPath = `/api/entities/workspaces/{workspaceId}/analyticalDashboards/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
@@ -13713,22 +13193,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { id, jsonApiCookieSecurityConfigurationInDocument, predicate, filter } = params;
             // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling updateEntityCookieSecurityConfigurations.",
-                );
-            }
+            assertParamExists("updateEntityCookieSecurityConfigurations", "id", id);
             // verify required parameter 'jsonApiCookieSecurityConfigurationInDocument' is not null or undefined
-            if (
-                jsonApiCookieSecurityConfigurationInDocument === null ||
-                jsonApiCookieSecurityConfigurationInDocument === undefined
-            ) {
-                throw new RequiredError(
-                    "jsonApiCookieSecurityConfigurationInDocument",
-                    "Required parameter jsonApiCookieSecurityConfigurationInDocument was null or undefined when calling updateEntityCookieSecurityConfigurations.",
-                );
-            }
+            assertParamExists(
+                "updateEntityCookieSecurityConfigurations",
+                "jsonApiCookieSecurityConfigurationInDocument",
+                jsonApiCookieSecurityConfigurationInDocument,
+            );
             const localVarPath = `/api/entities/admin/cookieSecurityConfigurations/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
@@ -13802,26 +13273,15 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { workspaceId, objectId, jsonApiDashboardPluginInDocument, predicate, filter } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling updateEntityDashboardPlugins.",
-                );
-            }
+            assertParamExists("updateEntityDashboardPlugins", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
-            if (objectId === null || objectId === undefined) {
-                throw new RequiredError(
-                    "objectId",
-                    "Required parameter objectId was null or undefined when calling updateEntityDashboardPlugins.",
-                );
-            }
+            assertParamExists("updateEntityDashboardPlugins", "objectId", objectId);
             // verify required parameter 'jsonApiDashboardPluginInDocument' is not null or undefined
-            if (jsonApiDashboardPluginInDocument === null || jsonApiDashboardPluginInDocument === undefined) {
-                throw new RequiredError(
-                    "jsonApiDashboardPluginInDocument",
-                    "Required parameter jsonApiDashboardPluginInDocument was null or undefined when calling updateEntityDashboardPlugins.",
-                );
-            }
+            assertParamExists(
+                "updateEntityDashboardPlugins",
+                "jsonApiDashboardPluginInDocument",
+                jsonApiDashboardPluginInDocument,
+            );
             const localVarPath = `/api/entities/workspaces/{workspaceId}/dashboardPlugins/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
@@ -13890,19 +13350,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { id, jsonApiDataSourceInDocument, predicate, filter } = params;
             // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling updateEntityDataSources.",
-                );
-            }
+            assertParamExists("updateEntityDataSources", "id", id);
             // verify required parameter 'jsonApiDataSourceInDocument' is not null or undefined
-            if (jsonApiDataSourceInDocument === null || jsonApiDataSourceInDocument === undefined) {
-                throw new RequiredError(
-                    "jsonApiDataSourceInDocument",
-                    "Required parameter jsonApiDataSourceInDocument was null or undefined when calling updateEntityDataSources.",
-                );
-            }
+            assertParamExists(
+                "updateEntityDataSources",
+                "jsonApiDataSourceInDocument",
+                jsonApiDataSourceInDocument,
+            );
             const localVarPath = `/api/entities/dataSources/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
@@ -13975,26 +13429,15 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const { workspaceId, objectId, jsonApiFilterContextInDocument, predicate, filter, include } =
                 params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling updateEntityFilterContexts.",
-                );
-            }
+            assertParamExists("updateEntityFilterContexts", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
-            if (objectId === null || objectId === undefined) {
-                throw new RequiredError(
-                    "objectId",
-                    "Required parameter objectId was null or undefined when calling updateEntityFilterContexts.",
-                );
-            }
+            assertParamExists("updateEntityFilterContexts", "objectId", objectId);
             // verify required parameter 'jsonApiFilterContextInDocument' is not null or undefined
-            if (jsonApiFilterContextInDocument === null || jsonApiFilterContextInDocument === undefined) {
-                throw new RequiredError(
-                    "jsonApiFilterContextInDocument",
-                    "Required parameter jsonApiFilterContextInDocument was null or undefined when calling updateEntityFilterContexts.",
-                );
-            }
+            assertParamExists(
+                "updateEntityFilterContexts",
+                "jsonApiFilterContextInDocument",
+                jsonApiFilterContextInDocument,
+            );
             const localVarPath = `/api/entities/workspaces/{workspaceId}/filterContexts/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
@@ -14071,26 +13514,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { workspaceId, objectId, jsonApiMetricInDocument, predicate, filter, include } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling updateEntityMetrics.",
-                );
-            }
+            assertParamExists("updateEntityMetrics", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
-            if (objectId === null || objectId === undefined) {
-                throw new RequiredError(
-                    "objectId",
-                    "Required parameter objectId was null or undefined when calling updateEntityMetrics.",
-                );
-            }
+            assertParamExists("updateEntityMetrics", "objectId", objectId);
             // verify required parameter 'jsonApiMetricInDocument' is not null or undefined
-            if (jsonApiMetricInDocument === null || jsonApiMetricInDocument === undefined) {
-                throw new RequiredError(
-                    "jsonApiMetricInDocument",
-                    "Required parameter jsonApiMetricInDocument was null or undefined when calling updateEntityMetrics.",
-                );
-            }
+            assertParamExists("updateEntityMetrics", "jsonApiMetricInDocument", jsonApiMetricInDocument);
             const localVarPath = `/api/entities/workspaces/{workspaceId}/metrics/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
@@ -14163,19 +13591,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { id, jsonApiOrganizationInDocument, predicate, filter, include } = params;
             // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling updateEntityOrganizations.",
-                );
-            }
+            assertParamExists("updateEntityOrganizations", "id", id);
             // verify required parameter 'jsonApiOrganizationInDocument' is not null or undefined
-            if (jsonApiOrganizationInDocument === null || jsonApiOrganizationInDocument === undefined) {
-                throw new RequiredError(
-                    "jsonApiOrganizationInDocument",
-                    "Required parameter jsonApiOrganizationInDocument was null or undefined when calling updateEntityOrganizations.",
-                );
-            }
+            assertParamExists(
+                "updateEntityOrganizations",
+                "jsonApiOrganizationInDocument",
+                jsonApiOrganizationInDocument,
+            );
             const localVarPath = `/api/entities/admin/organizations/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
@@ -14251,19 +13673,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { id, jsonApiUserGroupInDocument, predicate, filter, include } = params;
             // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling updateEntityUserGroups.",
-                );
-            }
+            assertParamExists("updateEntityUserGroups", "id", id);
             // verify required parameter 'jsonApiUserGroupInDocument' is not null or undefined
-            if (jsonApiUserGroupInDocument === null || jsonApiUserGroupInDocument === undefined) {
-                throw new RequiredError(
-                    "jsonApiUserGroupInDocument",
-                    "Required parameter jsonApiUserGroupInDocument was null or undefined when calling updateEntityUserGroups.",
-                );
-            }
+            assertParamExists(
+                "updateEntityUserGroups",
+                "jsonApiUserGroupInDocument",
+                jsonApiUserGroupInDocument,
+            );
             const localVarPath = `/api/entities/userGroups/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
@@ -14337,19 +13753,9 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { id, jsonApiUserInDocument, predicate, filter, include } = params;
             // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling updateEntityUsers.",
-                );
-            }
+            assertParamExists("updateEntityUsers", "id", id);
             // verify required parameter 'jsonApiUserInDocument' is not null or undefined
-            if (jsonApiUserInDocument === null || jsonApiUserInDocument === undefined) {
-                throw new RequiredError(
-                    "jsonApiUserInDocument",
-                    "Required parameter jsonApiUserInDocument was null or undefined when calling updateEntityUsers.",
-                );
-            }
+            assertParamExists("updateEntityUsers", "jsonApiUserInDocument", jsonApiUserInDocument);
             const localVarPath = `/api/entities/users/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
@@ -14432,29 +13838,15 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 include,
             } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling updateEntityVisualizationObjects.",
-                );
-            }
+            assertParamExists("updateEntityVisualizationObjects", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
-            if (objectId === null || objectId === undefined) {
-                throw new RequiredError(
-                    "objectId",
-                    "Required parameter objectId was null or undefined when calling updateEntityVisualizationObjects.",
-                );
-            }
+            assertParamExists("updateEntityVisualizationObjects", "objectId", objectId);
             // verify required parameter 'jsonApiVisualizationObjectInDocument' is not null or undefined
-            if (
-                jsonApiVisualizationObjectInDocument === null ||
-                jsonApiVisualizationObjectInDocument === undefined
-            ) {
-                throw new RequiredError(
-                    "jsonApiVisualizationObjectInDocument",
-                    "Required parameter jsonApiVisualizationObjectInDocument was null or undefined when calling updateEntityVisualizationObjects.",
-                );
-            }
+            assertParamExists(
+                "updateEntityVisualizationObjects",
+                "jsonApiVisualizationObjectInDocument",
+                jsonApiVisualizationObjectInDocument,
+            );
             const localVarPath = `/api/entities/workspaces/{workspaceId}/visualizationObjects/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
@@ -14540,29 +13932,15 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 include,
             } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling updateEntityWorkspaceDataFilters.",
-                );
-            }
+            assertParamExists("updateEntityWorkspaceDataFilters", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
-            if (objectId === null || objectId === undefined) {
-                throw new RequiredError(
-                    "objectId",
-                    "Required parameter objectId was null or undefined when calling updateEntityWorkspaceDataFilters.",
-                );
-            }
+            assertParamExists("updateEntityWorkspaceDataFilters", "objectId", objectId);
             // verify required parameter 'jsonApiWorkspaceDataFilterInDocument' is not null or undefined
-            if (
-                jsonApiWorkspaceDataFilterInDocument === null ||
-                jsonApiWorkspaceDataFilterInDocument === undefined
-            ) {
-                throw new RequiredError(
-                    "jsonApiWorkspaceDataFilterInDocument",
-                    "Required parameter jsonApiWorkspaceDataFilterInDocument was null or undefined when calling updateEntityWorkspaceDataFilters.",
-                );
-            }
+            assertParamExists(
+                "updateEntityWorkspaceDataFilters",
+                "jsonApiWorkspaceDataFilterInDocument",
+                jsonApiWorkspaceDataFilterInDocument,
+            );
             const localVarPath = `/api/entities/workspaces/{workspaceId}/workspaceDataFilters/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
@@ -14639,19 +14017,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): RequestArgs {
             const { id, jsonApiWorkspaceInDocument, predicate, filter, include } = params;
             // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling updateEntityWorkspaces.",
-                );
-            }
+            assertParamExists("updateEntityWorkspaces", "id", id);
             // verify required parameter 'jsonApiWorkspaceInDocument' is not null or undefined
-            if (jsonApiWorkspaceInDocument === null || jsonApiWorkspaceInDocument === undefined) {
-                throw new RequiredError(
-                    "jsonApiWorkspaceInDocument",
-                    "Required parameter jsonApiWorkspaceInDocument was null or undefined when calling updateEntityWorkspaces.",
-                );
-            }
+            assertParamExists(
+                "updateEntityWorkspaces",
+                "jsonApiWorkspaceInDocument",
+                jsonApiWorkspaceInDocument,
+            );
             const localVarPath = `/api/entities/workspaces/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
@@ -23667,12 +23039,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
         ): RequestArgs {
             const { workspaceId } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling getAnalyticsModel.",
-                );
-            }
+            assertParamExists("getAnalyticsModel", "workspaceId", workspaceId);
             const localVarPath = `/api/layout/workspaces/{workspaceId}/analyticsModel`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
@@ -23739,12 +23106,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
         ): RequestArgs {
             const { workspaceId } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling getLogicalModel.",
-                );
-            }
+            assertParamExists("getLogicalModel", "workspaceId", workspaceId);
             const localVarPath = `/api/layout/workspaces/{workspaceId}/logicalModel`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
@@ -23811,12 +23173,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
         ): RequestArgs {
             const { dataSourceId } = params;
             // verify required parameter 'dataSourceId' is not null or undefined
-            if (dataSourceId === null || dataSourceId === undefined) {
-                throw new RequiredError(
-                    "dataSourceId",
-                    "Required parameter dataSourceId was null or undefined when calling getPdmLayout.",
-                );
-            }
+            assertParamExists("getPdmLayout", "dataSourceId", dataSourceId);
             const localVarPath = `/api/layout/dataSources/{dataSourceId}/physicalModel`.replace(
                 `{${"dataSourceId"}}`,
                 encodeURIComponent(String(dataSourceId)),
@@ -23967,12 +23324,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
         ): RequestArgs {
             const { workspaceId } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling getWorkspaceLayout.",
-                );
-            }
+            assertParamExists("getWorkspaceLayout", "workspaceId", workspaceId);
             const localVarPath = `/api/layout/workspaces/{workspaceId}`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
@@ -24013,19 +23365,13 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
         ): RequestArgs {
             const { workspaceId, declarativeWorkspacePermissions } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling getWorkspacePermissions.",
-                );
-            }
+            assertParamExists("getWorkspacePermissions", "workspaceId", workspaceId);
             // verify required parameter 'declarativeWorkspacePermissions' is not null or undefined
-            if (declarativeWorkspacePermissions === null || declarativeWorkspacePermissions === undefined) {
-                throw new RequiredError(
-                    "declarativeWorkspacePermissions",
-                    "Required parameter declarativeWorkspacePermissions was null or undefined when calling getWorkspacePermissions.",
-                );
-            }
+            assertParamExists(
+                "getWorkspacePermissions",
+                "declarativeWorkspacePermissions",
+                declarativeWorkspacePermissions,
+            );
             const localVarPath = `/api/layout/workspaces/{workspaceId}/permissions`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
@@ -24074,12 +23420,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
         ): RequestArgs {
             const { workspaceId } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling getWorkspacePermissions1.",
-                );
-            }
+            assertParamExists("getWorkspacePermissions1", "workspaceId", workspaceId);
             const localVarPath = `/api/layout/workspaces/{workspaceId}/permissions`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
@@ -24146,12 +23487,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
         ): RequestArgs {
             const { declarativeDataSources } = params;
             // verify required parameter 'declarativeDataSources' is not null or undefined
-            if (declarativeDataSources === null || declarativeDataSources === undefined) {
-                throw new RequiredError(
-                    "declarativeDataSources",
-                    "Required parameter declarativeDataSources was null or undefined when calling putDataSourcesLayout.",
-                );
-            }
+            assertParamExists("putDataSourcesLayout", "declarativeDataSources", declarativeDataSources);
             const localVarPath = `/api/layout/dataSources`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -24195,12 +23531,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
         ): RequestArgs {
             const { declarativeUserGroups } = params;
             // verify required parameter 'declarativeUserGroups' is not null or undefined
-            if (declarativeUserGroups === null || declarativeUserGroups === undefined) {
-                throw new RequiredError(
-                    "declarativeUserGroups",
-                    "Required parameter declarativeUserGroups was null or undefined when calling putUserGroupsLayout.",
-                );
-            }
+            assertParamExists("putUserGroupsLayout", "declarativeUserGroups", declarativeUserGroups);
             const localVarPath = `/api/layout/userGroups`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -24244,12 +23575,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
         ): RequestArgs {
             const { declarativeUsers } = params;
             // verify required parameter 'declarativeUsers' is not null or undefined
-            if (declarativeUsers === null || declarativeUsers === undefined) {
-                throw new RequiredError(
-                    "declarativeUsers",
-                    "Required parameter declarativeUsers was null or undefined when calling putUsersLayout.",
-                );
-            }
+            assertParamExists("putUsersLayout", "declarativeUsers", declarativeUsers);
             const localVarPath = `/api/layout/users`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -24293,12 +23619,11 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
         ): RequestArgs {
             const { declarativeUsersUserGroups } = params;
             // verify required parameter 'declarativeUsersUserGroups' is not null or undefined
-            if (declarativeUsersUserGroups === null || declarativeUsersUserGroups === undefined) {
-                throw new RequiredError(
-                    "declarativeUsersUserGroups",
-                    "Required parameter declarativeUsersUserGroups was null or undefined when calling putUsersUserGroupsLayout.",
-                );
-            }
+            assertParamExists(
+                "putUsersUserGroupsLayout",
+                "declarativeUsersUserGroups",
+                declarativeUsersUserGroups,
+            );
             const localVarPath = `/api/layout/usersAndUserGroups`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -24344,19 +23669,9 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
         ): RequestArgs {
             const { workspaceId, declarativeWorkspaceModel } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling putWorkspaceLayout.",
-                );
-            }
+            assertParamExists("putWorkspaceLayout", "workspaceId", workspaceId);
             // verify required parameter 'declarativeWorkspaceModel' is not null or undefined
-            if (declarativeWorkspaceModel === null || declarativeWorkspaceModel === undefined) {
-                throw new RequiredError(
-                    "declarativeWorkspaceModel",
-                    "Required parameter declarativeWorkspaceModel was null or undefined when calling putWorkspaceLayout.",
-                );
-            }
+            assertParamExists("putWorkspaceLayout", "declarativeWorkspaceModel", declarativeWorkspaceModel);
             const localVarPath = `/api/layout/workspaces/{workspaceId}`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
@@ -24405,19 +23720,9 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
         ): RequestArgs {
             const { workspaceId, declarativeAnalytics } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling setAnalyticsModel.",
-                );
-            }
+            assertParamExists("setAnalyticsModel", "workspaceId", workspaceId);
             // verify required parameter 'declarativeAnalytics' is not null or undefined
-            if (declarativeAnalytics === null || declarativeAnalytics === undefined) {
-                throw new RequiredError(
-                    "declarativeAnalytics",
-                    "Required parameter declarativeAnalytics was null or undefined when calling setAnalyticsModel.",
-                );
-            }
+            assertParamExists("setAnalyticsModel", "declarativeAnalytics", declarativeAnalytics);
             const localVarPath = `/api/layout/workspaces/{workspaceId}/analyticsModel`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
@@ -24466,19 +23771,9 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
         ): RequestArgs {
             const { workspaceId, declarativeModel } = params;
             // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling setLogicalModel.",
-                );
-            }
+            assertParamExists("setLogicalModel", "workspaceId", workspaceId);
             // verify required parameter 'declarativeModel' is not null or undefined
-            if (declarativeModel === null || declarativeModel === undefined) {
-                throw new RequiredError(
-                    "declarativeModel",
-                    "Required parameter declarativeModel was null or undefined when calling setLogicalModel.",
-                );
-            }
+            assertParamExists("setLogicalModel", "declarativeModel", declarativeModel);
             const localVarPath = `/api/layout/workspaces/{workspaceId}/logicalModel`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
@@ -24525,12 +23820,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
         ): RequestArgs {
             const { declarativeOrganization } = params;
             // verify required parameter 'declarativeOrganization' is not null or undefined
-            if (declarativeOrganization === null || declarativeOrganization === undefined) {
-                throw new RequiredError(
-                    "declarativeOrganization",
-                    "Required parameter declarativeOrganization was null or undefined when calling setOrganizationLayout.",
-                );
-            }
+            assertParamExists("setOrganizationLayout", "declarativeOrganization", declarativeOrganization);
             const localVarPath = `/api/layout/organization`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -24576,19 +23866,9 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
         ): RequestArgs {
             const { dataSourceId, declarativePdm } = params;
             // verify required parameter 'dataSourceId' is not null or undefined
-            if (dataSourceId === null || dataSourceId === undefined) {
-                throw new RequiredError(
-                    "dataSourceId",
-                    "Required parameter dataSourceId was null or undefined when calling setPdmLayout.",
-                );
-            }
+            assertParamExists("setPdmLayout", "dataSourceId", dataSourceId);
             // verify required parameter 'declarativePdm' is not null or undefined
-            if (declarativePdm === null || declarativePdm === undefined) {
-                throw new RequiredError(
-                    "declarativePdm",
-                    "Required parameter declarativePdm was null or undefined when calling setPdmLayout.",
-                );
-            }
+            assertParamExists("setPdmLayout", "declarativePdm", declarativePdm);
             const localVarPath = `/api/layout/dataSources/{dataSourceId}/physicalModel`.replace(
                 `{${"dataSourceId"}}`,
                 encodeURIComponent(String(dataSourceId)),
@@ -24635,12 +23915,11 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
         ): RequestArgs {
             const { declarativeWorkspaceDataFilters } = params;
             // verify required parameter 'declarativeWorkspaceDataFilters' is not null or undefined
-            if (declarativeWorkspaceDataFilters === null || declarativeWorkspaceDataFilters === undefined) {
-                throw new RequiredError(
-                    "declarativeWorkspaceDataFilters",
-                    "Required parameter declarativeWorkspaceDataFilters was null or undefined when calling setWorkspaceDataFiltersLayout.",
-                );
-            }
+            assertParamExists(
+                "setWorkspaceDataFiltersLayout",
+                "declarativeWorkspaceDataFilters",
+                declarativeWorkspaceDataFilters,
+            );
             const localVarPath = `/api/layout/workspaceDataFilters`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
@@ -24686,12 +23965,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
         ): RequestArgs {
             const { declarativeWorkspaces } = params;
             // verify required parameter 'declarativeWorkspaces' is not null or undefined
-            if (declarativeWorkspaces === null || declarativeWorkspaces === undefined) {
-                throw new RequiredError(
-                    "declarativeWorkspaces",
-                    "Required parameter declarativeWorkspaces was null or undefined when calling setWorkspacesLayout.",
-                );
-            }
+            assertParamExists("setWorkspacesLayout", "declarativeWorkspaces", declarativeWorkspaces);
             const localVarPath = `/api/layout/workspaces`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;

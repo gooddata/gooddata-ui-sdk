@@ -5,7 +5,12 @@
 import globalImportUrl from 'url';
 import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';
 import { Configuration } from '{{apiRelativeToRoot}}configuration';
-// Some imports not used depending on template conditions
+// Some imports not used depending on template conditions, we also need prettier-ignore so that the import does not get split and ts-ignore still works
+// prettier-ignore
+// @ts-ignore
+import { assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, toPathString, createRequestFunction } from '{{apiRelativeToRoot}}common';
+// Some imports not used depending on template conditions, we also need prettier-ignore so that the import does not get split and ts-ignore still works
+// prettier-ignore
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '{{apiRelativeToRoot}}base';
 
@@ -50,9 +55,7 @@ export const {{classname}}AxiosParamCreator = function (configuration?: Configur
     {{#allParams}}
     {{#required}}
             // verify required parameter '{{paramName}}' is not null or undefined
-            if ({{paramName}} === null || {{paramName}} === undefined) {
-                throw new RequiredError('{{paramName}}','Required parameter {{paramName}} was null or undefined when calling {{nickname}}.');
-            }
+            assertParamExists('{{nickname}}', '{{paramName}}', {{paramName}})
     {{/required}}
     {{/allParams}}
             const localVarPath = `{{{path}}}`{{#pathParams}}
