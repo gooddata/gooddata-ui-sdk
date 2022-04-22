@@ -5,14 +5,20 @@ import { useIntl } from "react-intl";
 import { CodeArea } from "./components/CodeArea";
 import { ConfirmDialogBase } from "../../ConfirmDialogBase";
 
-export interface IEmbedInsightDialogBase {
+/**
+ * @internal
+ */
+export interface IEmbedInsightDialogBaseProps {
     codeByReference: boolean;
     code: string;
     onClose: () => void;
     onCopyCode: () => void;
 }
 
-export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBase> = (props) => {
+/**
+ * @internal
+ */
+export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (props) => {
     const { code, codeByReference, onClose, onCopyCode } = props;
 
     const intl = useIntl();

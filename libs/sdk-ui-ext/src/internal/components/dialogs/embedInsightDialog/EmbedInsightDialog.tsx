@@ -1,14 +1,18 @@
 // (C) 2022 GoodData Corporation
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import React from "react";
-import { Overlay } from "../../Overlay";
-import { EmbedInsightDialogBase } from "./EmbedInsightDialogBase/EmbedInsightDialogBase";
+import { IInsight } from "@gooddata/sdk-model";
+import { EmbedInsightDialogBase, Overlay } from "@gooddata/sdk-ui-kit";
+
+// import { Overlay } from "../../Overlay";
+//import { EmbedInsightDialogBase } from "./EmbedInsightDialogBase/EmbedInsightDialogBase";
 
 /**
  * @internal
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IEmbedInsightDialogProps {
+    insight: IInsight;
+    // context?: IEmbeddingCodeContext;
     locale?: string;
     onClose: () => void;
     onCopyCode: () => void;

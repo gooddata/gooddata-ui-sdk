@@ -40,6 +40,9 @@ export function clearInsightViewCaches(): void;
 // @internal (undocumented)
 export const DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT_PX = 450;
 
+// @internal (undocumented)
+export const EmbedInsightDialog: React_2.VFC<IEmbedInsightDialogProps>;
+
 // @alpha (undocumented)
 export class EmptyAfmSdkError extends GoodDataSdkError {
     constructor(cause?: Error);
@@ -81,6 +84,18 @@ export interface IDrillDownDefinition {
     target: ObjRef;
     // (undocumented)
     type: "drillDown";
+}
+
+// @internal (undocumented)
+export interface IEmbedInsightDialogProps {
+    // (undocumented)
+    insight: IInsight;
+    // (undocumented)
+    locale?: string;
+    // (undocumented)
+    onClose: () => void;
+    // (undocumented)
+    onCopyCode: () => void;
 }
 
 // @alpha

@@ -56,3 +56,6 @@ export { addIntersectionFiltersToInsight } from "./components/pluggableVisualiza
 export * from "./components/pluggableVisualizations/constants";
 
 export * from "./FluidLayoutDescriptor";
+
+export { EmbedInsightDialog } from "./components/dialogs/embedInsightDialog/EmbedInsightDialog";
+export type { IEmbedInsightDialogProps } from "./components/dialogs/embedInsightDialog/EmbedInsightDialog";
