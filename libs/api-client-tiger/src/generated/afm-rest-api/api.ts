@@ -759,13 +759,19 @@ export interface ElementsRequest {
      */
     label: string;
     /**
+     * Excludes items from the result that differ only by primary label * ```false``` - return items with distinct primary label * ```true``` - return items with distinct requested label
+     * @type {boolean}
+     * @memberof ElementsRequest
+     */
+    excludePrimaryLabel?: boolean;
+    /**
      *
      * @type {FilterBy}
      * @memberof ElementsRequest
      */
     filterBy?: FilterBy;
     /**
-     * Sort order of returned items. Items are sorted by ```label``` title.
+     * Sort order of returned items. Items are sorted by ```label``` title. If no sort order is specified then attribute\'s ```sortDirection``` is used, which is ASC by default
      * @type {string}
      * @memberof ElementsRequest
      */
