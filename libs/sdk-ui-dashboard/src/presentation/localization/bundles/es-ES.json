@@ -47,6 +47,7 @@
     "kpi.noData": "No hay datos para la configuración actual de filtro. Intente cambiar los filtros.",
     "kpiPop.change": "cambio",
     "dialogs.schedule.email.filters": "El panel contiene cambios en los filtros que se guardarán en la programación.",
+    "dialogs.schedule.email.filters.not.saved": "Los filtros del panel guardados en la programación no se verán afectados.",
     "dialogs.schedule.email.attachment.filter": "(con los filtros establecidos actualmente)",
     "dialogs.schedule.email.attachment.label": "Adjunto:",
     "dialogs.schedule.email.attachments.label": "Adjuntos:",

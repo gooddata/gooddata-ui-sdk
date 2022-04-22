@@ -47,6 +47,7 @@
     "kpi.noData": "Aucune donnée pour les paramètres de filtre actuels. Essayez de modifier les filtres.",
     "kpiPop.change": "modifier",
     "dialogs.schedule.email.filters": "Le tableau de bord contient des modifications de filtres qui seront enregistrés dans la planification.",
+    "dialogs.schedule.email.filters.not.saved": "Les filtres de tableau de bord enregistrés dans la planification ne sont pas affectés.",
     "dialogs.schedule.email.attachment.filter": "(avec les filtres configurés actuellement)",
     "dialogs.schedule.email.attachment.label": "Pièce jointe :",
     "dialogs.schedule.email.attachments.label": "Pièces jointes :",

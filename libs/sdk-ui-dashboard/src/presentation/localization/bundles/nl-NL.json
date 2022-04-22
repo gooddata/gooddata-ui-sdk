@@ -47,6 +47,7 @@
     "kpi.noData": "Geen data voor de huidige filterinstellingen. Probeer om de filters te wijzigen.",
     "kpiPop.change": "Wijziging",
     "dialogs.schedule.email.filters": "Dasboard bevat filterwijzigingen die worden opgeslagen in het schema.",
+    "dialogs.schedule.email.filters.not.saved": "Geen gevolgen voor dashboardfilters die zijn opgeslagen in het schema.",
     "dialogs.schedule.email.attachment.filter": "(met momenteel ingestelde filters)",
     "dialogs.schedule.email.attachment.label": "Bijlage:",
     "dialogs.schedule.email.attachments.label": "Bijlagen:",

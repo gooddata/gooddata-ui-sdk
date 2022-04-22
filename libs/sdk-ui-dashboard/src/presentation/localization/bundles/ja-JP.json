@@ -47,6 +47,7 @@
     "kpi.noData": "現在のフィルター設定に対するデータがありません。フィルターを変更してみてください。",
     "kpiPop.change": "変更",
     "dialogs.schedule.email.filters": "ダッシュボードには、スケジュールに保存されるフィルターの変更が含まれています。",
+    "dialogs.schedule.email.filters.not.saved": "スケジュールに保存されたダッシュボードフィルターは影響を受けません。",
     "dialogs.schedule.email.attachment.filter": "（現在設定されているフィルターを使用）",
     "dialogs.schedule.email.attachment.label": "添付：",
     "dialogs.schedule.email.attachments.label": "添付：",

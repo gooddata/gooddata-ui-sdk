@@ -164,7 +164,6 @@
     "filters.granularity.years": "年次",
     "filters.from": "開始時点",
     "filters.to": "終了時点",
-
     "filters.setTime": "設定時間",
     "filters.floatingRange": "相対期間",
     "filters.floatingRange.tooltip": "日付の範囲は今日を基準に変化し、正確な時間に調整されます",
@@ -282,5 +281,6 @@
     "sorting.type.numerical.desc": "最大から最小の順",
     "sorting.by": "別",
     "sorting.sum.of.all.measure": "合計",
-    "sorting.default.tooltip": "属性で定義された順序を使用します。"
+    "sorting.default.tooltip": "属性で定義された順序を使用します。",
+    "attributeFilterDropdown.emptyValue": "空の値"
 }

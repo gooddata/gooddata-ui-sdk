@@ -47,6 +47,7 @@
     "kpi.noData": "Keine Daten für die aktuellen Filtereinstellungen. Versuchen Sie, die Filter zu ändern.",
     "kpiPop.change": "Veränderung",
     "dialogs.schedule.email.filters": "Das Dashboard enthält Filteränderungen, die im Zeitplan gespeichert werden.",
+    "dialogs.schedule.email.filters.not.saved": "Dashboard-Filter, die im Zeitplan gespeichert wurden, sind nicht davon betroffen.",
     "dialogs.schedule.email.attachment.filter": "(mit derzeit festgelegten Filtern)",
     "dialogs.schedule.email.attachment.label": "Anhang:",
     "dialogs.schedule.email.attachments.label": "Anhänge:",

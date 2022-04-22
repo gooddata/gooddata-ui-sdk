@@ -47,6 +47,7 @@
     "kpi.noData": "Нет данных для текущих настроек фильтра. Попробуйте изменить фильтры.",
     "kpiPop.change": "изменить",
     "dialogs.schedule.email.filters": "Информационная панель содержит изменения фильтра, которые будут сохранены в расписании.",
+    "dialogs.schedule.email.filters.not.saved": "Фильтры информационной панели, сохраненные в расписании, не будут затронуты.",
     "dialogs.schedule.email.attachment.filter": "(с текущими установленными фильтрами)",
     "dialogs.schedule.email.attachment.label": "Вложение:",
     "dialogs.schedule.email.attachments.label": "Вложения:",
