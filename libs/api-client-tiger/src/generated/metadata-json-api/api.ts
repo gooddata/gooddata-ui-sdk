@@ -57,8 +57,8 @@ export interface AssigneeIdentifier {
  * @enum {string}
  */
 export enum AssigneeIdentifierTypeEnum {
-    User = "user",
-    UserGroup = "userGroup",
+    USER = "user",
+    USER_GROUP = "userGroup",
 }
 
 /**
@@ -92,7 +92,7 @@ export interface DataSourceTableIdentifier {
  * @enum {string}
  */
 export enum DataSourceTableIdentifierTypeEnum {
-    DataSource = "dataSource",
+    DATA_SOURCE = "dataSource",
 }
 
 /**
@@ -120,7 +120,7 @@ export interface DatasetReferenceIdentifier {
  * @enum {string}
  */
 export enum DatasetReferenceIdentifierTypeEnum {
-    Dataset = "dataset",
+    DATASET = "dataset",
 }
 
 /**
@@ -619,14 +619,14 @@ export enum DeclarativeDateDatasetGranularitiesEnum {
     MONTH = "MONTH",
     QUARTER = "QUARTER",
     YEAR = "YEAR",
-    MINUTEOFHOUR = "MINUTE_OF_HOUR",
-    HOUROFDAY = "HOUR_OF_DAY",
-    DAYOFWEEK = "DAY_OF_WEEK",
-    DAYOFMONTH = "DAY_OF_MONTH",
-    DAYOFYEAR = "DAY_OF_YEAR",
-    WEEKOFYEAR = "WEEK_OF_YEAR",
-    MONTHOFYEAR = "MONTH_OF_YEAR",
-    QUARTEROFYEAR = "QUARTER_OF_YEAR",
+    MINUTE_OF_HOUR = "MINUTE_OF_HOUR",
+    HOUR_OF_DAY = "HOUR_OF_DAY",
+    DAY_OF_WEEK = "DAY_OF_WEEK",
+    DAY_OF_MONTH = "DAY_OF_MONTH",
+    DAY_OF_YEAR = "DAY_OF_YEAR",
+    WEEK_OF_YEAR = "WEEK_OF_YEAR",
+    MONTH_OF_YEAR = "MONTH_OF_YEAR",
+    QUARTER_OF_YEAR = "QUARTER_OF_YEAR",
 }
 
 /**
@@ -1529,8 +1529,8 @@ export interface GrainIdentifier {
  * @enum {string}
  */
 export enum GrainIdentifierTypeEnum {
-    Attribute = "attribute",
-    Dataset = "dataset",
+    ATTRIBUTE = "attribute",
+    DATASET = "dataset",
 }
 
 /**
@@ -1583,7 +1583,7 @@ export interface JsonApiAnalyticalDashboardIn {
  * @enum {string}
  */
 export enum JsonApiAnalyticalDashboardInTypeEnum {
-    AnalyticalDashboard = "analyticalDashboard",
+    ANALYTICAL_DASHBOARD = "analyticalDashboard",
 }
 
 /**
@@ -1624,7 +1624,7 @@ export interface JsonApiAnalyticalDashboardLinkage {
  * @enum {string}
  */
 export enum JsonApiAnalyticalDashboardLinkageTypeEnum {
-    AnalyticalDashboard = "analyticalDashboard",
+    ANALYTICAL_DASHBOARD = "analyticalDashboard",
 }
 
 /**
@@ -1664,7 +1664,7 @@ export interface JsonApiAnalyticalDashboardOut {
  * @enum {string}
  */
 export enum JsonApiAnalyticalDashboardOutTypeEnum {
-    AnalyticalDashboard = "analyticalDashboard",
+    ANALYTICAL_DASHBOARD = "analyticalDashboard",
 }
 
 /**
@@ -1949,7 +1949,7 @@ export interface JsonApiAnalyticalDashboardOutWithLinks {
  * @enum {string}
  */
 export enum JsonApiAnalyticalDashboardOutWithLinksTypeEnum {
-    AnalyticalDashboard = "analyticalDashboard",
+    ANALYTICAL_DASHBOARD = "analyticalDashboard",
 }
 
 /**
@@ -1983,7 +1983,7 @@ export interface JsonApiAnalyticalDashboardPatch {
  * @enum {string}
  */
 export enum JsonApiAnalyticalDashboardPatchTypeEnum {
-    AnalyticalDashboard = "analyticalDashboard",
+    ANALYTICAL_DASHBOARD = "analyticalDashboard",
 }
 
 /**
@@ -2024,7 +2024,7 @@ export interface JsonApiApiTokenIn {
  * @enum {string}
  */
 export enum JsonApiApiTokenInTypeEnum {
-    ApiToken = "apiToken",
+    API_TOKEN = "apiToken",
 }
 
 /**
@@ -2071,7 +2071,7 @@ export interface JsonApiApiTokenOut {
  * @enum {string}
  */
 export enum JsonApiApiTokenOutTypeEnum {
-    ApiToken = "apiToken",
+    API_TOKEN = "apiToken",
 }
 
 /**
@@ -2162,7 +2162,7 @@ export interface JsonApiApiTokenOutWithLinks {
  * @enum {string}
  */
 export enum JsonApiApiTokenOutWithLinksTypeEnum {
-    ApiToken = "apiToken",
+    API_TOKEN = "apiToken",
 }
 
 /**
@@ -2190,7 +2190,7 @@ export interface JsonApiAttributeLinkage {
  * @enum {string}
  */
 export enum JsonApiAttributeLinkageTypeEnum {
-    Attribute = "attribute",
+    ATTRIBUTE = "attribute",
 }
 
 /**
@@ -2230,7 +2230,7 @@ export interface JsonApiAttributeOut {
  * @enum {string}
  */
 export enum JsonApiAttributeOutTypeEnum {
-    Attribute = "attribute",
+    ATTRIBUTE = "attribute",
 }
 
 /**
@@ -2295,14 +2295,14 @@ export enum JsonApiAttributeOutAttributesGranularityEnum {
     MONTH = "MONTH",
     QUARTER = "QUARTER",
     YEAR = "YEAR",
-    MINUTEOFHOUR = "MINUTE_OF_HOUR",
-    HOUROFDAY = "HOUR_OF_DAY",
-    DAYOFWEEK = "DAY_OF_WEEK",
-    DAYOFMONTH = "DAY_OF_MONTH",
-    DAYOFYEAR = "DAY_OF_YEAR",
-    WEEKOFYEAR = "WEEK_OF_YEAR",
-    MONTHOFYEAR = "MONTH_OF_YEAR",
-    QUARTEROFYEAR = "QUARTER_OF_YEAR",
+    MINUTE_OF_HOUR = "MINUTE_OF_HOUR",
+    HOUR_OF_DAY = "HOUR_OF_DAY",
+    DAY_OF_WEEK = "DAY_OF_WEEK",
+    DAY_OF_MONTH = "DAY_OF_MONTH",
+    DAY_OF_YEAR = "DAY_OF_YEAR",
+    WEEK_OF_YEAR = "WEEK_OF_YEAR",
+    MONTH_OF_YEAR = "MONTH_OF_YEAR",
+    QUARTER_OF_YEAR = "QUARTER_OF_YEAR",
 }
 /**
  * @export
@@ -2462,7 +2462,7 @@ export interface JsonApiAttributeOutWithLinks {
  * @enum {string}
  */
 export enum JsonApiAttributeOutWithLinksTypeEnum {
-    Attribute = "attribute",
+    ATTRIBUTE = "attribute",
 }
 
 /**
@@ -2502,7 +2502,7 @@ export interface JsonApiCookieSecurityConfigurationIn {
  * @enum {string}
  */
 export enum JsonApiCookieSecurityConfigurationInTypeEnum {
-    CookieSecurityConfiguration = "cookieSecurityConfiguration",
+    COOKIE_SECURITY_CONFIGURATION = "cookieSecurityConfiguration",
 }
 
 /**
@@ -2568,7 +2568,7 @@ export interface JsonApiCookieSecurityConfigurationOut {
  * @enum {string}
  */
 export enum JsonApiCookieSecurityConfigurationOutTypeEnum {
-    CookieSecurityConfiguration = "cookieSecurityConfiguration",
+    COOKIE_SECURITY_CONFIGURATION = "cookieSecurityConfiguration",
 }
 
 /**
@@ -2621,7 +2621,7 @@ export interface JsonApiDashboardPluginIn {
  * @enum {string}
  */
 export enum JsonApiDashboardPluginInTypeEnum {
-    DashboardPlugin = "dashboardPlugin",
+    DASHBOARD_PLUGIN = "dashboardPlugin",
 }
 
 /**
@@ -2662,7 +2662,7 @@ export interface JsonApiDashboardPluginLinkage {
  * @enum {string}
  */
 export enum JsonApiDashboardPluginLinkageTypeEnum {
-    DashboardPlugin = "dashboardPlugin",
+    DASHBOARD_PLUGIN = "dashboardPlugin",
 }
 
 /**
@@ -2696,7 +2696,7 @@ export interface JsonApiDashboardPluginOut {
  * @enum {string}
  */
 export enum JsonApiDashboardPluginOutTypeEnum {
-    DashboardPlugin = "dashboardPlugin",
+    DASHBOARD_PLUGIN = "dashboardPlugin",
 }
 
 /**
@@ -2811,7 +2811,7 @@ export interface JsonApiDashboardPluginOutWithLinks {
  * @enum {string}
  */
 export enum JsonApiDashboardPluginOutWithLinksTypeEnum {
-    DashboardPlugin = "dashboardPlugin",
+    DASHBOARD_PLUGIN = "dashboardPlugin",
 }
 
 /**
@@ -2845,7 +2845,7 @@ export interface JsonApiDashboardPluginPatch {
  * @enum {string}
  */
 export enum JsonApiDashboardPluginPatchTypeEnum {
-    DashboardPlugin = "dashboardPlugin",
+    DASHBOARD_PLUGIN = "dashboardPlugin",
 }
 
 /**
@@ -2898,7 +2898,7 @@ export interface JsonApiDataSourceIdentifierOut {
  * @enum {string}
  */
 export enum JsonApiDataSourceIdentifierOutTypeEnum {
-    DataSourceIdentifier = "dataSourceIdentifier",
+    DATA_SOURCE_IDENTIFIER = "dataSourceIdentifier",
 }
 
 /**
@@ -3048,7 +3048,7 @@ export interface JsonApiDataSourceIdentifierOutWithLinks {
  * @enum {string}
  */
 export enum JsonApiDataSourceIdentifierOutWithLinksTypeEnum {
-    DataSourceIdentifier = "dataSourceIdentifier",
+    DATA_SOURCE_IDENTIFIER = "dataSourceIdentifier",
 }
 
 /**
@@ -3082,7 +3082,7 @@ export interface JsonApiDataSourceIn {
  * @enum {string}
  */
 export enum JsonApiDataSourceInTypeEnum {
-    DataSource = "dataSource",
+    DATA_SOURCE = "dataSource",
 }
 
 /**
@@ -3214,7 +3214,7 @@ export interface JsonApiDataSourceOut {
  * @enum {string}
  */
 export enum JsonApiDataSourceOutTypeEnum {
-    DataSource = "dataSource",
+    DATA_SOURCE = "dataSource",
 }
 
 /**
@@ -3365,7 +3365,7 @@ export interface JsonApiDataSourceOutWithLinks {
  * @enum {string}
  */
 export enum JsonApiDataSourceOutWithLinksTypeEnum {
-    DataSource = "dataSource",
+    DATA_SOURCE = "dataSource",
 }
 
 /**
@@ -3399,7 +3399,7 @@ export interface JsonApiDataSourcePatch {
  * @enum {string}
  */
 export enum JsonApiDataSourcePatchTypeEnum {
-    DataSource = "dataSource",
+    DATA_SOURCE = "dataSource",
 }
 
 /**
@@ -3525,7 +3525,7 @@ export interface JsonApiDataSourceTableOut {
  * @enum {string}
  */
 export enum JsonApiDataSourceTableOutTypeEnum {
-    DataSourceTable = "dataSourceTable",
+    DATA_SOURCE_TABLE = "dataSourceTable",
 }
 
 /**
@@ -3695,7 +3695,7 @@ export interface JsonApiDataSourceTableOutWithLinks {
  * @enum {string}
  */
 export enum JsonApiDataSourceTableOutWithLinksTypeEnum {
-    DataSourceTable = "dataSourceTable",
+    DATA_SOURCE_TABLE = "dataSourceTable",
 }
 
 /**
@@ -3723,7 +3723,7 @@ export interface JsonApiDatasetLinkage {
  * @enum {string}
  */
 export enum JsonApiDatasetLinkageTypeEnum {
-    Dataset = "dataset",
+    DATASET = "dataset",
 }
 
 /**
@@ -3763,7 +3763,7 @@ export interface JsonApiDatasetOut {
  * @enum {string}
  */
 export enum JsonApiDatasetOutTypeEnum {
-    Dataset = "dataset",
+    DATASET = "dataset",
 }
 
 /**
@@ -3856,8 +3856,8 @@ export interface JsonApiDatasetOutAttributesGrain {
  * @enum {string}
  */
 export enum JsonApiDatasetOutAttributesGrainTypeEnum {
-    Attribute = "attribute",
-    Dataset = "dataset",
+    ATTRIBUTE = "attribute",
+    DATASET = "dataset",
 }
 
 /**
@@ -4037,7 +4037,7 @@ export interface JsonApiDatasetOutWithLinks {
  * @enum {string}
  */
 export enum JsonApiDatasetOutWithLinksTypeEnum {
-    Dataset = "dataset",
+    DATASET = "dataset",
 }
 
 /**
@@ -4071,7 +4071,7 @@ export interface JsonApiFactLinkage {
  * @enum {string}
  */
 export enum JsonApiFactLinkageTypeEnum {
-    Fact = "fact",
+    FACT = "fact",
 }
 
 /**
@@ -4111,7 +4111,7 @@ export interface JsonApiFactOut {
  * @enum {string}
  */
 export enum JsonApiFactOutTypeEnum {
-    Fact = "fact",
+    FACT = "fact",
 }
 
 /**
@@ -4257,7 +4257,7 @@ export interface JsonApiFactOutWithLinks {
  * @enum {string}
  */
 export enum JsonApiFactOutWithLinksTypeEnum {
-    Fact = "fact",
+    FACT = "fact",
 }
 
 /**
@@ -4291,7 +4291,7 @@ export interface JsonApiFilterContextIn {
  * @enum {string}
  */
 export enum JsonApiFilterContextInTypeEnum {
-    FilterContext = "filterContext",
+    FILTER_CONTEXT = "filterContext",
 }
 
 /**
@@ -4332,7 +4332,7 @@ export interface JsonApiFilterContextLinkage {
  * @enum {string}
  */
 export enum JsonApiFilterContextLinkageTypeEnum {
-    FilterContext = "filterContext",
+    FILTER_CONTEXT = "filterContext",
 }
 
 /**
@@ -4372,7 +4372,7 @@ export interface JsonApiFilterContextOut {
  * @enum {string}
  */
 export enum JsonApiFilterContextOutTypeEnum {
-    FilterContext = "filterContext",
+    FILTER_CONTEXT = "filterContext",
 }
 
 /**
@@ -4501,7 +4501,7 @@ export interface JsonApiFilterContextOutWithLinks {
  * @enum {string}
  */
 export enum JsonApiFilterContextOutWithLinksTypeEnum {
-    FilterContext = "filterContext",
+    FILTER_CONTEXT = "filterContext",
 }
 
 /**
@@ -4535,7 +4535,7 @@ export interface JsonApiFilterContextPatch {
  * @enum {string}
  */
 export enum JsonApiFilterContextPatchTypeEnum {
-    FilterContext = "filterContext",
+    FILTER_CONTEXT = "filterContext",
 }
 
 /**
@@ -4576,7 +4576,7 @@ export interface JsonApiLabelLinkage {
  * @enum {string}
  */
 export enum JsonApiLabelLinkageTypeEnum {
-    Label = "label",
+    LABEL = "label",
 }
 
 /**
@@ -4616,7 +4616,7 @@ export interface JsonApiLabelOut {
  * @enum {string}
  */
 export enum JsonApiLabelOutTypeEnum {
-    Label = "label",
+    LABEL = "label",
 }
 
 /**
@@ -4798,7 +4798,7 @@ export interface JsonApiLabelOutWithLinks {
  * @enum {string}
  */
 export enum JsonApiLabelOutWithLinksTypeEnum {
-    Label = "label",
+    LABEL = "label",
 }
 
 /**
@@ -4838,7 +4838,7 @@ export interface JsonApiMetricIn {
  * @enum {string}
  */
 export enum JsonApiMetricInTypeEnum {
-    Metric = "metric",
+    METRIC = "metric",
 }
 
 /**
@@ -4879,7 +4879,7 @@ export interface JsonApiMetricLinkage {
  * @enum {string}
  */
 export enum JsonApiMetricLinkageTypeEnum {
-    Metric = "metric",
+    METRIC = "metric",
 }
 
 /**
@@ -4919,7 +4919,7 @@ export interface JsonApiMetricOut {
  * @enum {string}
  */
 export enum JsonApiMetricOutTypeEnum {
-    Metric = "metric",
+    METRIC = "metric",
 }
 
 /**
@@ -5111,7 +5111,7 @@ export interface JsonApiMetricOutWithLinks {
  * @enum {string}
  */
 export enum JsonApiMetricOutWithLinksTypeEnum {
-    Metric = "metric",
+    METRIC = "metric",
 }
 
 /**
@@ -5145,7 +5145,7 @@ export interface JsonApiMetricPatch {
  * @enum {string}
  */
 export enum JsonApiMetricPatchTypeEnum {
-    Metric = "metric",
+    METRIC = "metric",
 }
 
 /**
@@ -5229,7 +5229,7 @@ export interface JsonApiOrganizationIn {
  * @enum {string}
  */
 export enum JsonApiOrganizationInTypeEnum {
-    Organization = "organization",
+    ORGANIZATION = "organization",
 }
 
 /**
@@ -5331,7 +5331,7 @@ export interface JsonApiOrganizationOut {
  * @enum {string}
  */
 export enum JsonApiOrganizationOutTypeEnum {
-    Organization = "organization",
+    ORGANIZATION = "organization",
 }
 
 /**
@@ -5499,7 +5499,7 @@ export interface JsonApiUserGroupIn {
  * @enum {string}
  */
 export enum JsonApiUserGroupInTypeEnum {
-    UserGroup = "userGroup",
+    USER_GROUP = "userGroup",
 }
 
 /**
@@ -5540,7 +5540,7 @@ export interface JsonApiUserGroupLinkage {
  * @enum {string}
  */
 export enum JsonApiUserGroupLinkageTypeEnum {
-    UserGroup = "userGroup",
+    USER_GROUP = "userGroup",
 }
 
 /**
@@ -5574,7 +5574,7 @@ export interface JsonApiUserGroupOut {
  * @enum {string}
  */
 export enum JsonApiUserGroupOutTypeEnum {
-    UserGroup = "userGroup",
+    USER_GROUP = "userGroup",
 }
 
 /**
@@ -5690,7 +5690,7 @@ export interface JsonApiUserGroupOutWithLinks {
  * @enum {string}
  */
 export enum JsonApiUserGroupOutWithLinksTypeEnum {
-    UserGroup = "userGroup",
+    USER_GROUP = "userGroup",
 }
 
 /**
@@ -5724,7 +5724,7 @@ export interface JsonApiUserGroupPatch {
  * @enum {string}
  */
 export enum JsonApiUserGroupPatchTypeEnum {
-    UserGroup = "userGroup",
+    USER_GROUP = "userGroup",
 }
 
 /**
@@ -5783,7 +5783,7 @@ export interface JsonApiUserIn {
  * @enum {string}
  */
 export enum JsonApiUserInTypeEnum {
-    User = "user",
+    USER = "user",
 }
 
 /**
@@ -5824,7 +5824,7 @@ export interface JsonApiUserLinkage {
  * @enum {string}
  */
 export enum JsonApiUserLinkageTypeEnum {
-    User = "user",
+    USER = "user",
 }
 
 /**
@@ -5864,7 +5864,7 @@ export interface JsonApiUserOut {
  * @enum {string}
  */
 export enum JsonApiUserOutTypeEnum {
-    User = "user",
+    USER = "user",
 }
 
 /**
@@ -5986,7 +5986,7 @@ export interface JsonApiUserOutWithLinks {
  * @enum {string}
  */
 export enum JsonApiUserOutWithLinksTypeEnum {
-    User = "user",
+    USER = "user",
 }
 
 /**
@@ -6026,7 +6026,7 @@ export interface JsonApiUserPatch {
  * @enum {string}
  */
 export enum JsonApiUserPatchTypeEnum {
-    User = "user",
+    USER = "user",
 }
 
 /**
@@ -6079,7 +6079,7 @@ export interface JsonApiVisualizationObjectIn {
  * @enum {string}
  */
 export enum JsonApiVisualizationObjectInTypeEnum {
-    VisualizationObject = "visualizationObject",
+    VISUALIZATION_OBJECT = "visualizationObject",
 }
 
 /**
@@ -6120,7 +6120,7 @@ export interface JsonApiVisualizationObjectLinkage {
  * @enum {string}
  */
 export enum JsonApiVisualizationObjectLinkageTypeEnum {
-    VisualizationObject = "visualizationObject",
+    VISUALIZATION_OBJECT = "visualizationObject",
 }
 
 /**
@@ -6160,7 +6160,7 @@ export interface JsonApiVisualizationObjectOut {
  * @enum {string}
  */
 export enum JsonApiVisualizationObjectOutTypeEnum {
-    VisualizationObject = "visualizationObject",
+    VISUALIZATION_OBJECT = "visualizationObject",
 }
 
 /**
@@ -6303,7 +6303,7 @@ export interface JsonApiVisualizationObjectOutWithLinks {
  * @enum {string}
  */
 export enum JsonApiVisualizationObjectOutWithLinksTypeEnum {
-    VisualizationObject = "visualizationObject",
+    VISUALIZATION_OBJECT = "visualizationObject",
 }
 
 /**
@@ -6337,7 +6337,7 @@ export interface JsonApiVisualizationObjectPatch {
  * @enum {string}
  */
 export enum JsonApiVisualizationObjectPatchTypeEnum {
-    VisualizationObject = "visualizationObject",
+    VISUALIZATION_OBJECT = "visualizationObject",
 }
 
 /**
@@ -6390,7 +6390,7 @@ export interface JsonApiWorkspaceDataFilterIn {
  * @enum {string}
  */
 export enum JsonApiWorkspaceDataFilterInTypeEnum {
-    WorkspaceDataFilter = "workspaceDataFilter",
+    WORKSPACE_DATA_FILTER = "workspaceDataFilter",
 }
 
 /**
@@ -6431,7 +6431,7 @@ export interface JsonApiWorkspaceDataFilterLinkage {
  * @enum {string}
  */
 export enum JsonApiWorkspaceDataFilterLinkageTypeEnum {
-    WorkspaceDataFilter = "workspaceDataFilter",
+    WORKSPACE_DATA_FILTER = "workspaceDataFilter",
 }
 
 /**
@@ -6471,7 +6471,7 @@ export interface JsonApiWorkspaceDataFilterOut {
  * @enum {string}
  */
 export enum JsonApiWorkspaceDataFilterOutTypeEnum {
-    WorkspaceDataFilter = "workspaceDataFilter",
+    WORKSPACE_DATA_FILTER = "workspaceDataFilter",
 }
 
 /**
@@ -6618,7 +6618,7 @@ export interface JsonApiWorkspaceDataFilterOutWithLinks {
  * @enum {string}
  */
 export enum JsonApiWorkspaceDataFilterOutWithLinksTypeEnum {
-    WorkspaceDataFilter = "workspaceDataFilter",
+    WORKSPACE_DATA_FILTER = "workspaceDataFilter",
 }
 
 /**
@@ -6658,7 +6658,7 @@ export interface JsonApiWorkspaceDataFilterPatch {
  * @enum {string}
  */
 export enum JsonApiWorkspaceDataFilterPatchTypeEnum {
-    WorkspaceDataFilter = "workspaceDataFilter",
+    WORKSPACE_DATA_FILTER = "workspaceDataFilter",
 }
 
 /**
@@ -6699,7 +6699,7 @@ export interface JsonApiWorkspaceDataFilterSettingLinkage {
  * @enum {string}
  */
 export enum JsonApiWorkspaceDataFilterSettingLinkageTypeEnum {
-    WorkspaceDataFilterSetting = "workspaceDataFilterSetting",
+    WORKSPACE_DATA_FILTER_SETTING = "workspaceDataFilterSetting",
 }
 
 /**
@@ -6739,7 +6739,7 @@ export interface JsonApiWorkspaceDataFilterSettingOut {
  * @enum {string}
  */
 export enum JsonApiWorkspaceDataFilterSettingOutTypeEnum {
-    WorkspaceDataFilterSetting = "workspaceDataFilterSetting",
+    WORKSPACE_DATA_FILTER_SETTING = "workspaceDataFilterSetting",
 }
 
 /**
@@ -6886,7 +6886,7 @@ export interface JsonApiWorkspaceDataFilterSettingOutWithLinks {
  * @enum {string}
  */
 export enum JsonApiWorkspaceDataFilterSettingOutWithLinksTypeEnum {
-    WorkspaceDataFilterSetting = "workspaceDataFilterSetting",
+    WORKSPACE_DATA_FILTER_SETTING = "workspaceDataFilterSetting",
 }
 
 /**
@@ -6932,7 +6932,7 @@ export interface JsonApiWorkspaceIn {
  * @enum {string}
  */
 export enum JsonApiWorkspaceInTypeEnum {
-    Workspace = "workspace",
+    WORKSPACE = "workspace",
 }
 
 /**
@@ -6973,7 +6973,7 @@ export interface JsonApiWorkspaceLinkage {
  * @enum {string}
  */
 export enum JsonApiWorkspaceLinkageTypeEnum {
-    Workspace = "workspace",
+    WORKSPACE = "workspace",
 }
 
 /**
@@ -7019,7 +7019,7 @@ export interface JsonApiWorkspaceOut {
  * @enum {string}
  */
 export enum JsonApiWorkspaceOutTypeEnum {
-    Workspace = "workspace",
+    WORKSPACE = "workspace",
 }
 
 /**
@@ -7209,7 +7209,7 @@ export interface JsonApiWorkspaceOutWithLinks {
  * @enum {string}
  */
 export enum JsonApiWorkspaceOutWithLinksTypeEnum {
-    Workspace = "workspace",
+    WORKSPACE = "workspace",
 }
 
 /**
@@ -7249,7 +7249,7 @@ export interface JsonApiWorkspacePatch {
  * @enum {string}
  */
 export enum JsonApiWorkspacePatchTypeEnum {
-    Workspace = "workspace",
+    WORKSPACE = "workspace",
 }
 
 /**
@@ -7296,7 +7296,7 @@ export interface LabelIdentifier {
  * @enum {string}
  */
 export enum LabelIdentifierTypeEnum {
-    Label = "label",
+    LABEL = "label",
 }
 
 /**
@@ -7382,7 +7382,7 @@ export interface ReferenceIdentifier {
  * @enum {string}
  */
 export enum ReferenceIdentifierTypeEnum {
-    Dataset = "dataset",
+    DATASET = "dataset",
 }
 
 /**
@@ -7410,7 +7410,7 @@ export interface UserGroupIdentifier {
  * @enum {string}
  */
 export enum UserGroupIdentifierTypeEnum {
-    UserGroup = "userGroup",
+    USER_GROUP = "userGroup",
 }
 
 /**
@@ -7438,7 +7438,7 @@ export interface WorkspaceIdentifier {
  * @enum {string}
  */
 export enum WorkspaceIdentifierTypeEnum {
-    Workspace = "workspace",
+    WORKSPACE = "workspace",
 }
 
 /**
@@ -7812,8 +7812,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -8052,8 +8056,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -8120,8 +8128,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -8174,8 +8186,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -8228,8 +8244,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -8297,8 +8317,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -8370,8 +8394,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -8428,8 +8456,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -9272,8 +9304,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (page !== undefined) {
@@ -9292,8 +9328,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort) {
-                localVarQueryParameter["sort"] = sort;
+            if (sort !== undefined) {
+                if (typeof sort === "object") {
+                    addFlattenedObjectTo(sort, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["sort"] = sort;
+                }
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -9387,8 +9427,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort) {
-                localVarQueryParameter["sort"] = sort;
+            if (sort !== undefined) {
+                if (typeof sort === "object") {
+                    addFlattenedObjectTo(sort, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["sort"] = sort;
+                }
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
@@ -9465,8 +9509,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (page !== undefined) {
@@ -9485,8 +9533,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort) {
-                localVarQueryParameter["sort"] = sort;
+            if (sort !== undefined) {
+                if (typeof sort === "object") {
+                    addFlattenedObjectTo(sort, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["sort"] = sort;
+                }
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -9582,8 +9634,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort) {
-                localVarQueryParameter["sort"] = sort;
+            if (sort !== undefined) {
+                if (typeof sort === "object") {
+                    addFlattenedObjectTo(sort, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["sort"] = sort;
+                }
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -9667,12 +9723,20 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort) {
-                localVarQueryParameter["sort"] = sort;
+            if (sort !== undefined) {
+                if (typeof sort === "object") {
+                    addFlattenedObjectTo(sort, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["sort"] = sort;
+                }
             }
 
-            if (metaInclude) {
-                localVarQueryParameter["metaInclude"] = metaInclude.join(COLLECTION_FORMATS.csv);
+            if (metaInclude !== undefined) {
+                if (typeof metaInclude === "object") {
+                    addFlattenedObjectTo(metaInclude, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["metaInclude"] = metaInclude;
+                }
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
@@ -9760,8 +9824,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort) {
-                localVarQueryParameter["sort"] = sort;
+            if (sort !== undefined) {
+                if (typeof sort === "object") {
+                    addFlattenedObjectTo(sort, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["sort"] = sort;
+                }
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
@@ -9839,12 +9907,20 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort) {
-                localVarQueryParameter["sort"] = sort;
+            if (sort !== undefined) {
+                if (typeof sort === "object") {
+                    addFlattenedObjectTo(sort, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["sort"] = sort;
+                }
             }
 
-            if (metaInclude) {
-                localVarQueryParameter["metaInclude"] = metaInclude.join(COLLECTION_FORMATS.csv);
+            if (metaInclude !== undefined) {
+                if (typeof metaInclude === "object") {
+                    addFlattenedObjectTo(metaInclude, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["metaInclude"] = metaInclude;
+                }
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
@@ -9921,8 +9997,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (page !== undefined) {
@@ -9941,8 +10021,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort) {
-                localVarQueryParameter["sort"] = sort;
+            if (sort !== undefined) {
+                if (typeof sort === "object") {
+                    addFlattenedObjectTo(sort, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["sort"] = sort;
+                }
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -10025,8 +10109,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (page !== undefined) {
@@ -10045,8 +10133,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort) {
-                localVarQueryParameter["sort"] = sort;
+            if (sort !== undefined) {
+                if (typeof sort === "object") {
+                    addFlattenedObjectTo(sort, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["sort"] = sort;
+                }
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -10129,8 +10221,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (page !== undefined) {
@@ -10149,8 +10245,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort) {
-                localVarQueryParameter["sort"] = sort;
+            if (sort !== undefined) {
+                if (typeof sort === "object") {
+                    addFlattenedObjectTo(sort, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["sort"] = sort;
+                }
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -10233,8 +10333,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (page !== undefined) {
@@ -10253,8 +10357,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort) {
-                localVarQueryParameter["sort"] = sort;
+            if (sort !== undefined) {
+                if (typeof sort === "object") {
+                    addFlattenedObjectTo(sort, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["sort"] = sort;
+                }
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -10337,8 +10445,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (page !== undefined) {
@@ -10357,8 +10469,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort) {
-                localVarQueryParameter["sort"] = sort;
+            if (sort !== undefined) {
+                if (typeof sort === "object") {
+                    addFlattenedObjectTo(sort, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["sort"] = sort;
+                }
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -10426,8 +10542,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (page !== undefined) {
@@ -10446,8 +10566,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort) {
-                localVarQueryParameter["sort"] = sort;
+            if (sort !== undefined) {
+                if (typeof sort === "object") {
+                    addFlattenedObjectTo(sort, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["sort"] = sort;
+                }
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
@@ -10509,8 +10633,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (page !== undefined) {
@@ -10529,8 +10657,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort) {
-                localVarQueryParameter["sort"] = sort;
+            if (sort !== undefined) {
+                if (typeof sort === "object") {
+                    addFlattenedObjectTo(sort, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["sort"] = sort;
+                }
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
@@ -10607,8 +10739,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (page !== undefined) {
@@ -10627,8 +10763,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort) {
-                localVarQueryParameter["sort"] = sort;
+            if (sort !== undefined) {
+                if (typeof sort === "object") {
+                    addFlattenedObjectTo(sort, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["sort"] = sort;
+                }
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -10711,8 +10851,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (page !== undefined) {
@@ -10731,8 +10875,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort) {
-                localVarQueryParameter["sort"] = sort;
+            if (sort !== undefined) {
+                if (typeof sort === "object") {
+                    addFlattenedObjectTo(sort, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["sort"] = sort;
+                }
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -10815,8 +10963,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (page !== undefined) {
@@ -10835,8 +10987,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort) {
-                localVarQueryParameter["sort"] = sort;
+            if (sort !== undefined) {
+                if (typeof sort === "object") {
+                    addFlattenedObjectTo(sort, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["sort"] = sort;
+                }
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -10906,8 +11062,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (page !== undefined) {
@@ -10926,12 +11086,20 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (sort) {
-                localVarQueryParameter["sort"] = sort;
+            if (sort !== undefined) {
+                if (typeof sort === "object") {
+                    addFlattenedObjectTo(sort, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["sort"] = sort;
+                }
             }
 
-            if (metaInclude) {
-                localVarQueryParameter["metaInclude"] = metaInclude.join(COLLECTION_FORMATS.csv);
+            if (metaInclude !== undefined) {
+                if (typeof metaInclude === "object") {
+                    addFlattenedObjectTo(metaInclude, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["metaInclude"] = metaInclude;
+                }
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
@@ -11074,8 +11242,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -11230,8 +11402,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -11447,8 +11623,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (metaInclude) {
-                localVarQueryParameter["metaInclude"] = metaInclude.join(COLLECTION_FORMATS.csv);
+            if (metaInclude !== undefined) {
+                if (typeof metaInclude === "object") {
+                    addFlattenedObjectTo(metaInclude, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["metaInclude"] = metaInclude;
+                }
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
@@ -11587,8 +11767,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (metaInclude) {
-                localVarQueryParameter["metaInclude"] = metaInclude.join(COLLECTION_FORMATS.csv);
+            if (metaInclude !== undefined) {
+                if (typeof metaInclude === "object") {
+                    addFlattenedObjectTo(metaInclude, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["metaInclude"] = metaInclude;
+                }
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
@@ -11666,8 +11850,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -11751,8 +11939,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -11836,8 +12028,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -11921,8 +12117,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -12006,8 +12206,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -12083,12 +12287,20 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
-            if (metaInclude) {
-                localVarQueryParameter["metaInclude"] = metaInclude.join(COLLECTION_FORMATS.csv);
+            if (metaInclude !== undefined) {
+                if (typeof metaInclude === "object") {
+                    addFlattenedObjectTo(metaInclude, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["metaInclude"] = metaInclude;
+                }
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
@@ -12156,8 +12368,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
@@ -12225,8 +12441,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
@@ -12304,8 +12524,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -12390,8 +12614,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -12475,8 +12703,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -12552,12 +12784,20 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
-            if (metaInclude) {
-                localVarQueryParameter["metaInclude"] = metaInclude.join(COLLECTION_FORMATS.csv);
+            if (metaInclude !== undefined) {
+                if (typeof metaInclude === "object") {
+                    addFlattenedObjectTo(metaInclude, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["metaInclude"] = metaInclude;
+                }
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
@@ -12594,8 +12834,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (metaInclude) {
-                localVarQueryParameter["metaInclude"] = metaInclude.join(COLLECTION_FORMATS.csv);
+            if (metaInclude !== undefined) {
+                if (typeof metaInclude === "object") {
+                    addFlattenedObjectTo(metaInclude, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["metaInclude"] = metaInclude;
+                }
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
@@ -12699,8 +12943,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -12978,8 +13226,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -13076,8 +13328,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -13162,8 +13418,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -13250,8 +13510,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -13354,8 +13618,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -13462,8 +13730,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -13552,8 +13824,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -13667,8 +13943,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -14023,8 +14303,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -14119,8 +14403,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -14205,8 +14493,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -14293,8 +14585,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -14379,8 +14675,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -14483,8 +14783,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -14591,8 +14895,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -14681,8 +14989,12 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 }
             }
 
-            if (include) {
-                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";

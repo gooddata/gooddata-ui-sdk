@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import {
     ArithmeticMeasureDefinition,
     ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum,
@@ -85,7 +85,7 @@ function convertAggregation(
         return SimpleMeasureDefinitionMeasureAggregationEnum.COUNT;
     }
     if (aggregation === "approximate_count") {
-        return SimpleMeasureDefinitionMeasureAggregationEnum.APPROXIMATECOUNT;
+        return SimpleMeasureDefinitionMeasureAggregationEnum.APPROXIMATE_COUNT;
     }
     if (aggregation === "max") {
         return SimpleMeasureDefinitionMeasureAggregationEnum.MAX;

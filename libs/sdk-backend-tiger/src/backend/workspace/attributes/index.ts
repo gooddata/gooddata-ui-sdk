@@ -162,7 +162,7 @@ function loadAttributeDataset(
                 "server returned that attribute does not belong to any dataset",
             );
             const datasets = res.data.included.filter((include): include is JsonApiDatasetOutWithLinks => {
-                return include.type === JsonApiDatasetOutWithLinksTypeEnum.Dataset;
+                return include.type === JsonApiDatasetOutWithLinksTypeEnum.DATASET;
             });
 
             return convertDatasetWithLinks(datasets[0]);

@@ -34,9 +34,9 @@ import { InvariantError } from "ts-invariant";
 import { convertAfmFilters } from "../../../convertors/toBackend/afm/AfmFiltersConverter";
 
 const typesMatching: Partial<{ [T in CatalogItemType]: AfmValidObjectsQueryTypesEnum }> = {
-    attribute: AfmValidObjectsQueryTypesEnum.Attributes,
-    fact: AfmValidObjectsQueryTypesEnum.Facts,
-    measure: AfmValidObjectsQueryTypesEnum.Measures,
+    attribute: AfmValidObjectsQueryTypesEnum.ATTRIBUTES,
+    fact: AfmValidObjectsQueryTypesEnum.FACTS,
+    measure: AfmValidObjectsQueryTypesEnum.MEASURES,
     // dateDatasets are not supported by tiger in this context
 };
 

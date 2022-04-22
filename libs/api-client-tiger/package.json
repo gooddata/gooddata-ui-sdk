@@ -62,7 +62,7 @@
         "@gooddata/reference-workspace": "^8.10.0-alpha.71",
         "@microsoft/api-documenter": "^7.17.0",
         "@microsoft/api-extractor": "^7.20.0",
-        "@openapitools/openapi-generator-cli": "^1.0.10-4.2.3",
+        "@openapitools/openapi-generator-cli": "^2.4.26",
         "@types/jest": "^27.0.1",
         "@types/lodash": "^4.14.158",
         "@types/qs": "^6.5.1",

@@ -114,7 +114,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
                     jsonApiMetricInDocument: {
                         data: {
                             id: measure.id || uuidv4(),
-                            type: JsonApiMetricInTypeEnum.Metric,
+                            type: JsonApiMetricInTypeEnum.METRIC,
                             attributes: metricAttributes,
                         },
                     },
@@ -139,7 +139,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
                     jsonApiMetricInDocument: {
                         data: {
                             id: objectId,
-                            type: JsonApiMetricInTypeEnum.Metric,
+                            type: JsonApiMetricInTypeEnum.METRIC,
                             attributes: metricAttributes,
                         },
                     },

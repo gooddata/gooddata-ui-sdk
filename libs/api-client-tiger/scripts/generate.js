@@ -44,9 +44,15 @@ const generate = async (specMeta, outputDir, outputFile) => {
      *
      * you can add other reserved words into reserved-words-mappings
      * --reserved-words-mappings in=in,for=for
+     *
+     * force sets to be mapped to arrays, it is much easier to work with arrays for us (we do find, map, and filter) on them
+     * --type-mappings=set=Array
+     *
+     * force UPPERCASE enum naming to keep backwards compatibility with most of the existing values, and make the casing consistent
+     * --additional-properties=enumPropertyNaming=UPPERCASE
      */
     await exec(
-        `openapi-generator generate -i ${inputPath} -g typescript-axios -o ${outputPath} -t openapi-generator -p withInterfaces=true --reserved-words-mappings in=in,function=function`,
+        `openapi-generator-cli generate -i ${inputPath} -g typescript-axios -o ${outputPath} -t openapi-generator -p withInterfaces=true --reserved-words-mappings in=in,function=function --type-mappings=set=Array --additional-properties=enumPropertyNaming=UPPERCASE`,
     );
 };
 

@@ -170,7 +170,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                     jsonApiVisualizationObjectInDocument: {
                         data: {
                             id: uuidv4(),
-                            type: JsonApiVisualizationObjectInTypeEnum.VisualizationObject,
+                            type: JsonApiVisualizationObjectInTypeEnum.VISUALIZATION_OBJECT,
                             attributes: {
                                 description: insightTitle(insight),
                                 content: convertInsight(insight),
@@ -203,7 +203,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                     jsonApiVisualizationObjectInDocument: {
                         data: {
                             id: insightId(insight),
-                            type: JsonApiVisualizationObjectInTypeEnum.VisualizationObject,
+                            type: JsonApiVisualizationObjectInTypeEnum.VISUALIZATION_OBJECT,
                             attributes: {
                                 description: insightTitle(insight),
                                 content: convertInsight(insight),

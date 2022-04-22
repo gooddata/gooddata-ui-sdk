@@ -234,9 +234,9 @@ export interface AfmValidObjectsQuery {
  * @enum {string}
  */
 export enum AfmValidObjectsQueryTypesEnum {
-    Facts = "facts",
-    Attributes = "attributes",
-    Measures = "measures",
+    FACTS = "facts",
+    ATTRIBUTES = "attributes",
+    MEASURES = "measures",
     UNRECOGNIZED = "UNRECOGNIZED",
 }
 
@@ -405,14 +405,14 @@ export enum AttributeHeaderAttributeHeaderGranularityEnum {
     QUARTER = "QUARTER",
     MONTH = "MONTH",
     WEEK = "WEEK",
-    QUARTEROFYEAR = "QUARTER_OF_YEAR",
-    MONTHOFYEAR = "MONTH_OF_YEAR",
-    DAYOFYEAR = "DAY_OF_YEAR",
-    DAYOFWEEK = "DAY_OF_WEEK",
-    DAYOFMONTH = "DAY_OF_MONTH",
-    HOUROFDAY = "HOUR_OF_DAY",
-    MINUTEOFHOUR = "MINUTE_OF_HOUR",
-    WEEKOFYEAR = "WEEK_OF_YEAR",
+    QUARTER_OF_YEAR = "QUARTER_OF_YEAR",
+    MONTH_OF_YEAR = "MONTH_OF_YEAR",
+    DAY_OF_YEAR = "DAY_OF_YEAR",
+    DAY_OF_WEEK = "DAY_OF_WEEK",
+    DAY_OF_MONTH = "DAY_OF_MONTH",
+    HOUR_OF_DAY = "HOUR_OF_DAY",
+    MINUTE_OF_HOUR = "MINUTE_OF_HOUR",
+    WEEK_OF_YEAR = "WEEK_OF_YEAR",
 }
 
 /**
@@ -642,12 +642,12 @@ export interface ComparisonMeasureValueFilterBody {
  * @enum {string}
  */
 export enum ComparisonMeasureValueFilterBodyOperatorEnum {
-    GREATERTHAN = "GREATER_THAN",
-    GREATERTHANOREQUALTO = "GREATER_THAN_OR_EQUAL_TO",
-    LESSTHAN = "LESS_THAN",
-    LESSTHANOREQUALTO = "LESS_THAN_OR_EQUAL_TO",
-    EQUALTO = "EQUAL_TO",
-    NOTEQUALTO = "NOT_EQUAL_TO",
+    GREATER_THAN = "GREATER_THAN",
+    GREATER_THAN_OR_EQUAL_TO = "GREATER_THAN_OR_EQUAL_TO",
+    LESS_THAN = "LESS_THAN",
+    LESS_THAN_OR_EQUAL_TO = "LESS_THAN_OR_EQUAL_TO",
+    EQUAL_TO = "EQUAL_TO",
+    NOT_EQUAL_TO = "NOT_EQUAL_TO",
 }
 
 /**
@@ -675,12 +675,12 @@ export interface ComparisonMeasureValueFilterBodyAllOf {
  * @enum {string}
  */
 export enum ComparisonMeasureValueFilterBodyAllOfOperatorEnum {
-    GREATERTHAN = "GREATER_THAN",
-    GREATERTHANOREQUALTO = "GREATER_THAN_OR_EQUAL_TO",
-    LESSTHAN = "LESS_THAN",
-    LESSTHANOREQUALTO = "LESS_THAN_OR_EQUAL_TO",
-    EQUALTO = "EQUAL_TO",
-    NOTEQUALTO = "NOT_EQUAL_TO",
+    GREATER_THAN = "GREATER_THAN",
+    GREATER_THAN_OR_EQUAL_TO = "GREATER_THAN_OR_EQUAL_TO",
+    LESS_THAN = "LESS_THAN",
+    LESS_THAN_OR_EQUAL_TO = "LESS_THAN_OR_EQUAL_TO",
+    EQUAL_TO = "EQUAL_TO",
+    NOT_EQUAL_TO = "NOT_EQUAL_TO",
 }
 
 /**
@@ -1622,7 +1622,7 @@ export interface RangeMeasureValueFilterBody {
  */
 export enum RangeMeasureValueFilterBodyOperatorEnum {
     BETWEEN = "BETWEEN",
-    NOTBETWEEN = "NOT_BETWEEN",
+    NOT_BETWEEN = "NOT_BETWEEN",
 }
 
 /**
@@ -1657,7 +1657,7 @@ export interface RangeMeasureValueFilterBodyAllOf {
  */
 export enum RangeMeasureValueFilterBodyAllOfOperatorEnum {
     BETWEEN = "BETWEEN",
-    NOTBETWEEN = "NOT_BETWEEN",
+    NOT_BETWEEN = "NOT_BETWEEN",
 }
 
 /**
@@ -1818,14 +1818,14 @@ export enum RelativeDateFilterBodyGranularityEnum {
     MONTH = "MONTH",
     QUARTER = "QUARTER",
     YEAR = "YEAR",
-    MINUTEOFHOUR = "MINUTE_OF_HOUR",
-    HOUROFDAY = "HOUR_OF_DAY",
-    DAYOFWEEK = "DAY_OF_WEEK",
-    DAYOFMONTH = "DAY_OF_MONTH",
-    DAYOFYEAR = "DAY_OF_YEAR",
-    WEEKOFYEAR = "WEEK_OF_YEAR",
-    MONTHOFYEAR = "MONTH_OF_YEAR",
-    QUARTEROFYEAR = "QUARTER_OF_YEAR",
+    MINUTE_OF_HOUR = "MINUTE_OF_HOUR",
+    HOUR_OF_DAY = "HOUR_OF_DAY",
+    DAY_OF_WEEK = "DAY_OF_WEEK",
+    DAY_OF_MONTH = "DAY_OF_MONTH",
+    DAY_OF_YEAR = "DAY_OF_YEAR",
+    WEEK_OF_YEAR = "WEEK_OF_YEAR",
+    MONTH_OF_YEAR = "MONTH_OF_YEAR",
+    QUARTER_OF_YEAR = "QUARTER_OF_YEAR",
 }
 
 /**
@@ -1866,14 +1866,14 @@ export enum RelativeDateFilterBodyAllOfGranularityEnum {
     MONTH = "MONTH",
     QUARTER = "QUARTER",
     YEAR = "YEAR",
-    MINUTEOFHOUR = "MINUTE_OF_HOUR",
-    HOUROFDAY = "HOUR_OF_DAY",
-    DAYOFWEEK = "DAY_OF_WEEK",
-    DAYOFMONTH = "DAY_OF_MONTH",
-    DAYOFYEAR = "DAY_OF_YEAR",
-    WEEKOFYEAR = "WEEK_OF_YEAR",
-    MONTHOFYEAR = "MONTH_OF_YEAR",
-    QUARTEROFYEAR = "QUARTER_OF_YEAR",
+    MINUTE_OF_HOUR = "MINUTE_OF_HOUR",
+    HOUR_OF_DAY = "HOUR_OF_DAY",
+    DAY_OF_WEEK = "DAY_OF_WEEK",
+    DAY_OF_MONTH = "DAY_OF_MONTH",
+    DAY_OF_YEAR = "DAY_OF_YEAR",
+    WEEK_OF_YEAR = "WEEK_OF_YEAR",
+    MONTH_OF_YEAR = "MONTH_OF_YEAR",
+    QUARTER_OF_YEAR = "QUARTER_OF_YEAR",
 }
 
 /**
@@ -1979,7 +1979,7 @@ export interface SimpleMeasureDefinitionMeasure {
 export enum SimpleMeasureDefinitionMeasureAggregationEnum {
     SUM = "SUM",
     COUNT = "COUNT",
-    APPROXIMATECOUNT = "APPROXIMATE_COUNT",
+    APPROXIMATE_COUNT = "APPROXIMATE_COUNT",
     AVG = "AVG",
     MIN = "MIN",
     MAX = "MAX",
@@ -2456,12 +2456,20 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (offset) {
-                localVarQueryParameter["offset"] = offset.join(COLLECTION_FORMATS.csv);
+            if (offset !== undefined) {
+                if (typeof offset === "object") {
+                    addFlattenedObjectTo(offset, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["offset"] = offset;
+                }
             }
 
-            if (limit) {
-                localVarQueryParameter["limit"] = limit.join(COLLECTION_FORMATS.csv);
+            if (limit !== undefined) {
+                if (typeof limit === "object") {
+                    addFlattenedObjectTo(limit, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["limit"] = limit;
+                }
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };

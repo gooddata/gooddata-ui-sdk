@@ -294,11 +294,11 @@ export interface AfmValidObjectsQuery {
 // @public
 export enum AfmValidObjectsQueryTypesEnum {
     // (undocumented)
-    Attributes = "attributes",
+    ATTRIBUTES = "attributes",
     // (undocumented)
-    Facts = "facts",
+    FACTS = "facts",
     // (undocumented)
-    Measures = "measures",
+    MEASURES = "measures",
     // (undocumented)
     UNRECOGNIZED = "UNRECOGNIZED"
 }
@@ -414,9 +414,9 @@ export interface AssigneeIdentifier {
 // @public
 export enum AssigneeIdentifierTypeEnum {
     // (undocumented)
-    User = "user",
+    USER = "user",
     // (undocumented)
-    UserGroup = "userGroup"
+    USER_GROUP = "userGroup"
 }
 
 // @public
@@ -453,31 +453,31 @@ export enum AttributeHeaderAttributeHeaderGranularityEnum {
     // (undocumented)
     DAY = "DAY",
     // (undocumented)
-    DAYOFMONTH = "DAY_OF_MONTH",
+    DAY_OF_MONTH = "DAY_OF_MONTH",
     // (undocumented)
-    DAYOFWEEK = "DAY_OF_WEEK",
+    DAY_OF_WEEK = "DAY_OF_WEEK",
     // (undocumented)
-    DAYOFYEAR = "DAY_OF_YEAR",
+    DAY_OF_YEAR = "DAY_OF_YEAR",
     // (undocumented)
     HOUR = "HOUR",
     // (undocumented)
-    HOUROFDAY = "HOUR_OF_DAY",
+    HOUR_OF_DAY = "HOUR_OF_DAY",
     // (undocumented)
     MINUTE = "MINUTE",
     // (undocumented)
-    MINUTEOFHOUR = "MINUTE_OF_HOUR",
+    MINUTE_OF_HOUR = "MINUTE_OF_HOUR",
     // (undocumented)
     MONTH = "MONTH",
     // (undocumented)
-    MONTHOFYEAR = "MONTH_OF_YEAR",
+    MONTH_OF_YEAR = "MONTH_OF_YEAR",
     // (undocumented)
     QUARTER = "QUARTER",
     // (undocumented)
-    QUARTEROFYEAR = "QUARTER_OF_YEAR",
+    QUARTER_OF_YEAR = "QUARTER_OF_YEAR",
     // (undocumented)
     WEEK = "WEEK",
     // (undocumented)
-    WEEKOFYEAR = "WEEK_OF_YEAR",
+    WEEK_OF_YEAR = "WEEK_OF_YEAR",
     // (undocumented)
     YEAR = "YEAR"
 }
@@ -559,33 +559,33 @@ export interface ComparisonMeasureValueFilterBodyAllOf {
 // @public
 export enum ComparisonMeasureValueFilterBodyAllOfOperatorEnum {
     // (undocumented)
-    EQUALTO = "EQUAL_TO",
+    EQUAL_TO = "EQUAL_TO",
     // (undocumented)
-    GREATERTHAN = "GREATER_THAN",
+    GREATER_THAN = "GREATER_THAN",
     // (undocumented)
-    GREATERTHANOREQUALTO = "GREATER_THAN_OR_EQUAL_TO",
+    GREATER_THAN_OR_EQUAL_TO = "GREATER_THAN_OR_EQUAL_TO",
     // (undocumented)
-    LESSTHAN = "LESS_THAN",
+    LESS_THAN = "LESS_THAN",
     // (undocumented)
-    LESSTHANOREQUALTO = "LESS_THAN_OR_EQUAL_TO",
+    LESS_THAN_OR_EQUAL_TO = "LESS_THAN_OR_EQUAL_TO",
     // (undocumented)
-    NOTEQUALTO = "NOT_EQUAL_TO"
+    NOT_EQUAL_TO = "NOT_EQUAL_TO"
 }
 
 // @public
 export enum ComparisonMeasureValueFilterBodyOperatorEnum {
     // (undocumented)
-    EQUALTO = "EQUAL_TO",
+    EQUAL_TO = "EQUAL_TO",
     // (undocumented)
-    GREATERTHAN = "GREATER_THAN",
+    GREATER_THAN = "GREATER_THAN",
     // (undocumented)
-    GREATERTHANOREQUALTO = "GREATER_THAN_OR_EQUAL_TO",
+    GREATER_THAN_OR_EQUAL_TO = "GREATER_THAN_OR_EQUAL_TO",
     // (undocumented)
-    LESSTHAN = "LESS_THAN",
+    LESS_THAN = "LESS_THAN",
     // (undocumented)
-    LESSTHANOREQUALTO = "LESS_THAN_OR_EQUAL_TO",
+    LESS_THAN_OR_EQUAL_TO = "LESS_THAN_OR_EQUAL_TO",
     // (undocumented)
-    NOTEQUALTO = "NOT_EQUAL_TO"
+    NOT_EQUAL_TO = "NOT_EQUAL_TO"
 }
 
 // @public
@@ -597,7 +597,7 @@ export interface DatasetReferenceIdentifier {
 // @public
 export enum DatasetReferenceIdentifierTypeEnum {
     // (undocumented)
-    Dataset = "dataset"
+    DATASET = "dataset"
 }
 
 // @public
@@ -610,7 +610,7 @@ export interface DataSourceTableIdentifier {
 // @public
 export enum DataSourceTableIdentifierTypeEnum {
     // (undocumented)
-    DataSource = "dataSource"
+    DATA_SOURCE = "dataSource"
 }
 
 // @public
@@ -780,31 +780,31 @@ export enum DeclarativeDateDatasetGranularitiesEnum {
     // (undocumented)
     DAY = "DAY",
     // (undocumented)
-    DAYOFMONTH = "DAY_OF_MONTH",
+    DAY_OF_MONTH = "DAY_OF_MONTH",
     // (undocumented)
-    DAYOFWEEK = "DAY_OF_WEEK",
+    DAY_OF_WEEK = "DAY_OF_WEEK",
     // (undocumented)
-    DAYOFYEAR = "DAY_OF_YEAR",
+    DAY_OF_YEAR = "DAY_OF_YEAR",
     // (undocumented)
     HOUR = "HOUR",
     // (undocumented)
-    HOUROFDAY = "HOUR_OF_DAY",
+    HOUR_OF_DAY = "HOUR_OF_DAY",
     // (undocumented)
     MINUTE = "MINUTE",
     // (undocumented)
-    MINUTEOFHOUR = "MINUTE_OF_HOUR",
+    MINUTE_OF_HOUR = "MINUTE_OF_HOUR",
     // (undocumented)
     MONTH = "MONTH",
     // (undocumented)
-    MONTHOFYEAR = "MONTH_OF_YEAR",
+    MONTH_OF_YEAR = "MONTH_OF_YEAR",
     // (undocumented)
     QUARTER = "QUARTER",
     // (undocumented)
-    QUARTEROFYEAR = "QUARTER_OF_YEAR",
+    QUARTER_OF_YEAR = "QUARTER_OF_YEAR",
     // (undocumented)
     WEEK = "WEEK",
     // (undocumented)
-    WEEKOFYEAR = "WEEK_OF_YEAR",
+    WEEK_OF_YEAR = "WEEK_OF_YEAR",
     // (undocumented)
     YEAR = "YEAR"
 }
@@ -4998,9 +4998,9 @@ export interface GrainIdentifier {
 // @public
 export enum GrainIdentifierTypeEnum {
     // (undocumented)
-    Attribute = "attribute",
+    ATTRIBUTE = "attribute",
     // (undocumented)
-    Dataset = "dataset"
+    DATASET = "dataset"
 }
 
 // @public
@@ -5121,7 +5121,7 @@ export interface JsonApiAnalyticalDashboardInDocument {
 // @public
 export enum JsonApiAnalyticalDashboardInTypeEnum {
     // (undocumented)
-    AnalyticalDashboard = "analyticalDashboard"
+    ANALYTICAL_DASHBOARD = "analyticalDashboard"
 }
 
 // @public
@@ -5133,7 +5133,7 @@ export interface JsonApiAnalyticalDashboardLinkage {
 // @public
 export enum JsonApiAnalyticalDashboardLinkageTypeEnum {
     // (undocumented)
-    AnalyticalDashboard = "analyticalDashboard"
+    ANALYTICAL_DASHBOARD = "analyticalDashboard"
 }
 
 // @public
@@ -5219,7 +5219,7 @@ export interface JsonApiAnalyticalDashboardOutRelationshipsVisualizationObjects 
 // @public
 export enum JsonApiAnalyticalDashboardOutTypeEnum {
     // (undocumented)
-    AnalyticalDashboard = "analyticalDashboard"
+    ANALYTICAL_DASHBOARD = "analyticalDashboard"
 }
 
 // @public
@@ -5234,7 +5234,7 @@ export interface JsonApiAnalyticalDashboardOutWithLinks {
 // @public
 export enum JsonApiAnalyticalDashboardOutWithLinksTypeEnum {
     // (undocumented)
-    AnalyticalDashboard = "analyticalDashboard"
+    ANALYTICAL_DASHBOARD = "analyticalDashboard"
 }
 
 // @public
@@ -5252,7 +5252,7 @@ export interface JsonApiAnalyticalDashboardPatchDocument {
 // @public
 export enum JsonApiAnalyticalDashboardPatchTypeEnum {
     // (undocumented)
-    AnalyticalDashboard = "analyticalDashboard"
+    ANALYTICAL_DASHBOARD = "analyticalDashboard"
 }
 
 // @public
@@ -5269,7 +5269,7 @@ export interface JsonApiApiTokenInDocument {
 // @public
 export enum JsonApiApiTokenInTypeEnum {
     // (undocumented)
-    ApiToken = "apiToken"
+    API_TOKEN = "apiToken"
 }
 
 // @public
@@ -5299,7 +5299,7 @@ export interface JsonApiApiTokenOutList {
 // @public
 export enum JsonApiApiTokenOutTypeEnum {
     // (undocumented)
-    ApiToken = "apiToken"
+    API_TOKEN = "apiToken"
 }
 
 // @public
@@ -5313,7 +5313,7 @@ export interface JsonApiApiTokenOutWithLinks {
 // @public
 export enum JsonApiApiTokenOutWithLinksTypeEnum {
     // (undocumented)
-    ApiToken = "apiToken"
+    API_TOKEN = "apiToken"
 }
 
 // @public
@@ -5325,7 +5325,7 @@ export interface JsonApiAttributeLinkage {
 // @public
 export enum JsonApiAttributeLinkageTypeEnum {
     // (undocumented)
-    Attribute = "attribute"
+    ATTRIBUTE = "attribute"
 }
 
 // @public
@@ -5352,31 +5352,31 @@ export enum JsonApiAttributeOutAttributesGranularityEnum {
     // (undocumented)
     DAY = "DAY",
     // (undocumented)
-    DAYOFMONTH = "DAY_OF_MONTH",
+    DAY_OF_MONTH = "DAY_OF_MONTH",
     // (undocumented)
-    DAYOFWEEK = "DAY_OF_WEEK",
+    DAY_OF_WEEK = "DAY_OF_WEEK",
     // (undocumented)
-    DAYOFYEAR = "DAY_OF_YEAR",
+    DAY_OF_YEAR = "DAY_OF_YEAR",
     // (undocumented)
     HOUR = "HOUR",
     // (undocumented)
-    HOUROFDAY = "HOUR_OF_DAY",
+    HOUR_OF_DAY = "HOUR_OF_DAY",
     // (undocumented)
     MINUTE = "MINUTE",
     // (undocumented)
-    MINUTEOFHOUR = "MINUTE_OF_HOUR",
+    MINUTE_OF_HOUR = "MINUTE_OF_HOUR",
     // (undocumented)
     MONTH = "MONTH",
     // (undocumented)
-    MONTHOFYEAR = "MONTH_OF_YEAR",
+    MONTH_OF_YEAR = "MONTH_OF_YEAR",
     // (undocumented)
     QUARTER = "QUARTER",
     // (undocumented)
-    QUARTEROFYEAR = "QUARTER_OF_YEAR",
+    QUARTER_OF_YEAR = "QUARTER_OF_YEAR",
     // (undocumented)
     WEEK = "WEEK",
     // (undocumented)
-    WEEKOFYEAR = "WEEK_OF_YEAR",
+    WEEK_OF_YEAR = "WEEK_OF_YEAR",
     // (undocumented)
     YEAR = "YEAR"
 }
@@ -5426,7 +5426,7 @@ export interface JsonApiAttributeOutRelationshipsDefaultView {
 // @public
 export enum JsonApiAttributeOutTypeEnum {
     // (undocumented)
-    Attribute = "attribute"
+    ATTRIBUTE = "attribute"
 }
 
 // @public
@@ -5441,7 +5441,7 @@ export interface JsonApiAttributeOutWithLinks {
 // @public
 export enum JsonApiAttributeOutWithLinksTypeEnum {
     // (undocumented)
-    Attribute = "attribute"
+    ATTRIBUTE = "attribute"
 }
 
 // @public
@@ -5468,7 +5468,7 @@ export interface JsonApiCookieSecurityConfigurationInDocument {
 // @public
 export enum JsonApiCookieSecurityConfigurationInTypeEnum {
     // (undocumented)
-    CookieSecurityConfiguration = "cookieSecurityConfiguration"
+    COOKIE_SECURITY_CONFIGURATION = "cookieSecurityConfiguration"
 }
 
 // @public
@@ -5487,7 +5487,7 @@ export interface JsonApiCookieSecurityConfigurationOutDocument {
 // @public
 export enum JsonApiCookieSecurityConfigurationOutTypeEnum {
     // (undocumented)
-    CookieSecurityConfiguration = "cookieSecurityConfiguration"
+    COOKIE_SECURITY_CONFIGURATION = "cookieSecurityConfiguration"
 }
 
 // @public
@@ -5505,7 +5505,7 @@ export interface JsonApiDashboardPluginInDocument {
 // @public
 export enum JsonApiDashboardPluginInTypeEnum {
     // (undocumented)
-    DashboardPlugin = "dashboardPlugin"
+    DASHBOARD_PLUGIN = "dashboardPlugin"
 }
 
 // @public
@@ -5517,7 +5517,7 @@ export interface JsonApiDashboardPluginLinkage {
 // @public
 export enum JsonApiDashboardPluginLinkageTypeEnum {
     // (undocumented)
-    DashboardPlugin = "dashboardPlugin"
+    DASHBOARD_PLUGIN = "dashboardPlugin"
 }
 
 // @public
@@ -5551,7 +5551,7 @@ export interface JsonApiDashboardPluginOutList {
 // @public
 export enum JsonApiDashboardPluginOutTypeEnum {
     // (undocumented)
-    DashboardPlugin = "dashboardPlugin"
+    DASHBOARD_PLUGIN = "dashboardPlugin"
 }
 
 // @public
@@ -5565,7 +5565,7 @@ export interface JsonApiDashboardPluginOutWithLinks {
 // @public
 export enum JsonApiDashboardPluginOutWithLinksTypeEnum {
     // (undocumented)
-    DashboardPlugin = "dashboardPlugin"
+    DASHBOARD_PLUGIN = "dashboardPlugin"
 }
 
 // @public
@@ -5583,7 +5583,7 @@ export interface JsonApiDashboardPluginPatchDocument {
 // @public
 export enum JsonApiDashboardPluginPatchTypeEnum {
     // (undocumented)
-    DashboardPlugin = "dashboardPlugin"
+    DASHBOARD_PLUGIN = "dashboardPlugin"
 }
 
 // @public
@@ -5595,7 +5595,7 @@ export interface JsonApiDatasetLinkage {
 // @public
 export enum JsonApiDatasetLinkageTypeEnum {
     // (undocumented)
-    Dataset = "dataset"
+    DATASET = "dataset"
 }
 
 // @public
@@ -5627,9 +5627,9 @@ export interface JsonApiDatasetOutAttributesGrain {
 // @public
 export enum JsonApiDatasetOutAttributesGrainTypeEnum {
     // (undocumented)
-    Attribute = "attribute",
+    ATTRIBUTE = "attribute",
     // (undocumented)
-    Dataset = "dataset"
+    DATASET = "dataset"
 }
 
 // @public
@@ -5684,7 +5684,7 @@ export interface JsonApiDatasetOutRelationshipsFacts {
 // @public
 export enum JsonApiDatasetOutTypeEnum {
     // (undocumented)
-    Dataset = "dataset"
+    DATASET = "dataset"
 }
 
 // @public
@@ -5699,7 +5699,7 @@ export interface JsonApiDatasetOutWithLinks {
 // @public
 export enum JsonApiDatasetOutWithLinksTypeEnum {
     // (undocumented)
-    Dataset = "dataset"
+    DATASET = "dataset"
 }
 
 // @public
@@ -5772,7 +5772,7 @@ export enum JsonApiDataSourceIdentifierOutMetaPermissionsEnum {
 // @public
 export enum JsonApiDataSourceIdentifierOutTypeEnum {
     // (undocumented)
-    DataSourceIdentifier = "dataSourceIdentifier"
+    DATA_SOURCE_IDENTIFIER = "dataSourceIdentifier"
 }
 
 // @public
@@ -5787,7 +5787,7 @@ export interface JsonApiDataSourceIdentifierOutWithLinks {
 // @public
 export enum JsonApiDataSourceIdentifierOutWithLinksTypeEnum {
     // (undocumented)
-    DataSourceIdentifier = "dataSourceIdentifier"
+    DATA_SOURCE_IDENTIFIER = "dataSourceIdentifier"
 }
 
 // @public
@@ -5842,7 +5842,7 @@ export interface JsonApiDataSourceInDocument {
 // @public
 export enum JsonApiDataSourceInTypeEnum {
     // (undocumented)
-    DataSource = "dataSource"
+    DATA_SOURCE = "dataSource"
 }
 
 // @public
@@ -5903,7 +5903,7 @@ export interface JsonApiDataSourceOutList {
 // @public
 export enum JsonApiDataSourceOutTypeEnum {
     // (undocumented)
-    DataSource = "dataSource"
+    DATA_SOURCE = "dataSource"
 }
 
 // @public
@@ -5918,7 +5918,7 @@ export interface JsonApiDataSourceOutWithLinks {
 // @public
 export enum JsonApiDataSourceOutWithLinksTypeEnum {
     // (undocumented)
-    DataSource = "dataSource"
+    DATA_SOURCE = "dataSource"
 }
 
 // @public
@@ -5973,7 +5973,7 @@ export interface JsonApiDataSourcePatchDocument {
 // @public
 export enum JsonApiDataSourcePatchTypeEnum {
     // (undocumented)
-    DataSource = "dataSource"
+    DATA_SOURCE = "dataSource"
 }
 
 // @public
@@ -6039,7 +6039,7 @@ export interface JsonApiDataSourceTableOutList {
 // @public
 export enum JsonApiDataSourceTableOutTypeEnum {
     // (undocumented)
-    DataSourceTable = "dataSourceTable"
+    DATA_SOURCE_TABLE = "dataSourceTable"
 }
 
 // @public
@@ -6053,7 +6053,7 @@ export interface JsonApiDataSourceTableOutWithLinks {
 // @public
 export enum JsonApiDataSourceTableOutWithLinksTypeEnum {
     // (undocumented)
-    DataSourceTable = "dataSourceTable"
+    DATA_SOURCE_TABLE = "dataSourceTable"
 }
 
 // @public
@@ -6065,7 +6065,7 @@ export interface JsonApiFactLinkage {
 // @public
 export enum JsonApiFactLinkageTypeEnum {
     // (undocumented)
-    Fact = "fact"
+    FACT = "fact"
 }
 
 // @public
@@ -6107,7 +6107,7 @@ export interface JsonApiFactOutRelationships {
 // @public
 export enum JsonApiFactOutTypeEnum {
     // (undocumented)
-    Fact = "fact"
+    FACT = "fact"
 }
 
 // @public
@@ -6122,7 +6122,7 @@ export interface JsonApiFactOutWithLinks {
 // @public
 export enum JsonApiFactOutWithLinksTypeEnum {
     // (undocumented)
-    Fact = "fact"
+    FACT = "fact"
 }
 
 // @public
@@ -6140,7 +6140,7 @@ export interface JsonApiFilterContextInDocument {
 // @public
 export enum JsonApiFilterContextInTypeEnum {
     // (undocumented)
-    FilterContext = "filterContext"
+    FILTER_CONTEXT = "filterContext"
 }
 
 // @public
@@ -6152,7 +6152,7 @@ export interface JsonApiFilterContextLinkage {
 // @public
 export enum JsonApiFilterContextLinkageTypeEnum {
     // (undocumented)
-    FilterContext = "filterContext"
+    FILTER_CONTEXT = "filterContext"
 }
 
 // @public
@@ -6190,7 +6190,7 @@ export interface JsonApiFilterContextOutRelationships {
 // @public
 export enum JsonApiFilterContextOutTypeEnum {
     // (undocumented)
-    FilterContext = "filterContext"
+    FILTER_CONTEXT = "filterContext"
 }
 
 // @public
@@ -6205,7 +6205,7 @@ export interface JsonApiFilterContextOutWithLinks {
 // @public
 export enum JsonApiFilterContextOutWithLinksTypeEnum {
     // (undocumented)
-    FilterContext = "filterContext"
+    FILTER_CONTEXT = "filterContext"
 }
 
 // @public
@@ -6223,7 +6223,7 @@ export interface JsonApiFilterContextPatchDocument {
 // @public
 export enum JsonApiFilterContextPatchTypeEnum {
     // (undocumented)
-    FilterContext = "filterContext"
+    FILTER_CONTEXT = "filterContext"
 }
 
 // @public (undocumented)
@@ -6241,7 +6241,7 @@ export interface JsonApiLabelLinkage {
 // @public
 export enum JsonApiLabelLinkageTypeEnum {
     // (undocumented)
-    Label = "label"
+    LABEL = "label"
 }
 
 // @public
@@ -6300,7 +6300,7 @@ export interface JsonApiLabelOutRelationshipsAttribute {
 // @public
 export enum JsonApiLabelOutTypeEnum {
     // (undocumented)
-    Label = "label"
+    LABEL = "label"
 }
 
 // @public
@@ -6315,7 +6315,7 @@ export interface JsonApiLabelOutWithLinks {
 // @public
 export enum JsonApiLabelOutWithLinksTypeEnum {
     // (undocumented)
-    Label = "label"
+    LABEL = "label"
 }
 
 // @public
@@ -6336,7 +6336,7 @@ export interface JsonApiMetricInDocument {
 // @public
 export enum JsonApiMetricInTypeEnum {
     // (undocumented)
-    Metric = "metric"
+    METRIC = "metric"
 }
 
 // @public
@@ -6348,7 +6348,7 @@ export interface JsonApiMetricLinkage {
 // @public
 export enum JsonApiMetricLinkageTypeEnum {
     // (undocumented)
-    Metric = "metric"
+    METRIC = "metric"
 }
 
 // @public
@@ -6402,7 +6402,7 @@ export interface JsonApiMetricOutRelationships {
 // @public
 export enum JsonApiMetricOutTypeEnum {
     // (undocumented)
-    Metric = "metric"
+    METRIC = "metric"
 }
 
 // @public
@@ -6417,7 +6417,7 @@ export interface JsonApiMetricOutWithLinks {
 // @public
 export enum JsonApiMetricOutWithLinksTypeEnum {
     // (undocumented)
-    Metric = "metric"
+    METRIC = "metric"
 }
 
 // @public
@@ -6444,7 +6444,7 @@ export interface JsonApiMetricPatchDocument {
 // @public
 export enum JsonApiMetricPatchTypeEnum {
     // (undocumented)
-    Metric = "metric"
+    METRIC = "metric"
 }
 
 // @public
@@ -6472,7 +6472,7 @@ export interface JsonApiOrganizationInDocument {
 // @public
 export enum JsonApiOrganizationInTypeEnum {
     // (undocumented)
-    Organization = "organization"
+    ORGANIZATION = "organization"
 }
 
 // @public
@@ -6533,7 +6533,7 @@ export interface JsonApiOrganizationOutRelationshipsBootstrapUserGroup {
 // @public
 export enum JsonApiOrganizationOutTypeEnum {
     // (undocumented)
-    Organization = "organization"
+    ORGANIZATION = "organization"
 }
 
 // @public
@@ -6551,7 +6551,7 @@ export interface JsonApiUserGroupInDocument {
 // @public
 export enum JsonApiUserGroupInTypeEnum {
     // (undocumented)
-    UserGroup = "userGroup"
+    USER_GROUP = "userGroup"
 }
 
 // @public
@@ -6563,7 +6563,7 @@ export interface JsonApiUserGroupLinkage {
 // @public
 export enum JsonApiUserGroupLinkageTypeEnum {
     // (undocumented)
-    UserGroup = "userGroup"
+    USER_GROUP = "userGroup"
 }
 
 // @public
@@ -6600,7 +6600,7 @@ export interface JsonApiUserGroupOutRelationshipsParents {
 // @public
 export enum JsonApiUserGroupOutTypeEnum {
     // (undocumented)
-    UserGroup = "userGroup"
+    USER_GROUP = "userGroup"
 }
 
 // @public
@@ -6614,7 +6614,7 @@ export interface JsonApiUserGroupOutWithLinks {
 // @public
 export enum JsonApiUserGroupOutWithLinksTypeEnum {
     // (undocumented)
-    UserGroup = "userGroup"
+    USER_GROUP = "userGroup"
 }
 
 // @public
@@ -6632,7 +6632,7 @@ export interface JsonApiUserGroupPatchDocument {
 // @public
 export enum JsonApiUserGroupPatchTypeEnum {
     // (undocumented)
-    UserGroup = "userGroup"
+    USER_GROUP = "userGroup"
 }
 
 // @public
@@ -6654,7 +6654,7 @@ export interface JsonApiUserInDocument {
 // @public
 export enum JsonApiUserInTypeEnum {
     // (undocumented)
-    User = "user"
+    USER = "user"
 }
 
 // @public
@@ -6666,7 +6666,7 @@ export interface JsonApiUserLinkage {
 // @public
 export enum JsonApiUserLinkageTypeEnum {
     // (undocumented)
-    User = "user"
+    USER = "user"
 }
 
 // @public
@@ -6704,7 +6704,7 @@ export interface JsonApiUserOutRelationships {
 // @public
 export enum JsonApiUserOutTypeEnum {
     // (undocumented)
-    User = "user"
+    USER = "user"
 }
 
 // @public
@@ -6719,7 +6719,7 @@ export interface JsonApiUserOutWithLinks {
 // @public
 export enum JsonApiUserOutWithLinksTypeEnum {
     // (undocumented)
-    User = "user"
+    USER = "user"
 }
 
 // @public
@@ -6738,7 +6738,7 @@ export interface JsonApiUserPatchDocument {
 // @public
 export enum JsonApiUserPatchTypeEnum {
     // (undocumented)
-    User = "user"
+    USER = "user"
 }
 
 // @public
@@ -6759,7 +6759,7 @@ export interface JsonApiVisualizationObjectInDocument {
 // @public
 export enum JsonApiVisualizationObjectInTypeEnum {
     // (undocumented)
-    VisualizationObject = "visualizationObject"
+    VISUALIZATION_OBJECT = "visualizationObject"
 }
 
 // @public
@@ -6771,7 +6771,7 @@ export interface JsonApiVisualizationObjectLinkage {
 // @public
 export enum JsonApiVisualizationObjectLinkageTypeEnum {
     // (undocumented)
-    VisualizationObject = "visualizationObject"
+    VISUALIZATION_OBJECT = "visualizationObject"
 }
 
 // @public
@@ -6811,7 +6811,7 @@ export interface JsonApiVisualizationObjectOutRelationships {
 // @public
 export enum JsonApiVisualizationObjectOutTypeEnum {
     // (undocumented)
-    VisualizationObject = "visualizationObject"
+    VISUALIZATION_OBJECT = "visualizationObject"
 }
 
 // @public
@@ -6826,7 +6826,7 @@ export interface JsonApiVisualizationObjectOutWithLinks {
 // @public
 export enum JsonApiVisualizationObjectOutWithLinksTypeEnum {
     // (undocumented)
-    VisualizationObject = "visualizationObject"
+    VISUALIZATION_OBJECT = "visualizationObject"
 }
 
 // @public
@@ -6844,7 +6844,7 @@ export interface JsonApiVisualizationObjectPatchDocument {
 // @public
 export enum JsonApiVisualizationObjectPatchTypeEnum {
     // (undocumented)
-    VisualizationObject = "visualizationObject"
+    VISUALIZATION_OBJECT = "visualizationObject"
 }
 
 // @public
@@ -6863,7 +6863,7 @@ export interface JsonApiWorkspaceDataFilterInDocument {
 // @public
 export enum JsonApiWorkspaceDataFilterInTypeEnum {
     // (undocumented)
-    WorkspaceDataFilter = "workspaceDataFilter"
+    WORKSPACE_DATA_FILTER = "workspaceDataFilter"
 }
 
 // @public
@@ -6875,7 +6875,7 @@ export interface JsonApiWorkspaceDataFilterLinkage {
 // @public
 export enum JsonApiWorkspaceDataFilterLinkageTypeEnum {
     // (undocumented)
-    WorkspaceDataFilter = "workspaceDataFilter"
+    WORKSPACE_DATA_FILTER = "workspaceDataFilter"
 }
 
 // @public
@@ -6920,7 +6920,7 @@ export interface JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings {
 // @public
 export enum JsonApiWorkspaceDataFilterOutTypeEnum {
     // (undocumented)
-    WorkspaceDataFilter = "workspaceDataFilter"
+    WORKSPACE_DATA_FILTER = "workspaceDataFilter"
 }
 
 // @public
@@ -6935,7 +6935,7 @@ export interface JsonApiWorkspaceDataFilterOutWithLinks {
 // @public
 export enum JsonApiWorkspaceDataFilterOutWithLinksTypeEnum {
     // (undocumented)
-    WorkspaceDataFilter = "workspaceDataFilter"
+    WORKSPACE_DATA_FILTER = "workspaceDataFilter"
 }
 
 // @public
@@ -6954,7 +6954,7 @@ export interface JsonApiWorkspaceDataFilterPatchDocument {
 // @public
 export enum JsonApiWorkspaceDataFilterPatchTypeEnum {
     // (undocumented)
-    WorkspaceDataFilter = "workspaceDataFilter"
+    WORKSPACE_DATA_FILTER = "workspaceDataFilter"
 }
 
 // @public
@@ -6966,7 +6966,7 @@ export interface JsonApiWorkspaceDataFilterSettingLinkage {
 // @public
 export enum JsonApiWorkspaceDataFilterSettingLinkageTypeEnum {
     // (undocumented)
-    WorkspaceDataFilterSetting = "workspaceDataFilterSetting"
+    WORKSPACE_DATA_FILTER_SETTING = "workspaceDataFilterSetting"
 }
 
 // @public
@@ -7011,7 +7011,7 @@ export interface JsonApiWorkspaceDataFilterSettingOutRelationshipsWorkspaceDataF
 // @public
 export enum JsonApiWorkspaceDataFilterSettingOutTypeEnum {
     // (undocumented)
-    WorkspaceDataFilterSetting = "workspaceDataFilterSetting"
+    WORKSPACE_DATA_FILTER_SETTING = "workspaceDataFilterSetting"
 }
 
 // @public
@@ -7026,7 +7026,7 @@ export interface JsonApiWorkspaceDataFilterSettingOutWithLinks {
 // @public
 export enum JsonApiWorkspaceDataFilterSettingOutWithLinksTypeEnum {
     // (undocumented)
-    WorkspaceDataFilterSetting = "workspaceDataFilterSetting"
+    WORKSPACE_DATA_FILTER_SETTING = "workspaceDataFilterSetting"
 }
 
 // @public
@@ -7048,7 +7048,7 @@ export interface JsonApiWorkspaceInDocument {
 // @public
 export enum JsonApiWorkspaceInTypeEnum {
     // (undocumented)
-    Workspace = "workspace"
+    WORKSPACE = "workspace"
 }
 
 // @public
@@ -7060,7 +7060,7 @@ export interface JsonApiWorkspaceLinkage {
 // @public
 export enum JsonApiWorkspaceLinkageTypeEnum {
     // (undocumented)
-    Workspace = "workspace"
+    WORKSPACE = "workspace"
 }
 
 // @public
@@ -7126,7 +7126,7 @@ export interface JsonApiWorkspaceOutRelationshipsParent {
 // @public
 export enum JsonApiWorkspaceOutTypeEnum {
     // (undocumented)
-    Workspace = "workspace"
+    WORKSPACE = "workspace"
 }
 
 // @public
@@ -7142,7 +7142,7 @@ export interface JsonApiWorkspaceOutWithLinks {
 // @public
 export enum JsonApiWorkspaceOutWithLinksTypeEnum {
     // (undocumented)
-    Workspace = "workspace"
+    WORKSPACE = "workspace"
 }
 
 // @public
@@ -7161,7 +7161,7 @@ export interface JsonApiWorkspacePatchDocument {
 // @public
 export enum JsonApiWorkspacePatchTypeEnum {
     // (undocumented)
-    Workspace = "workspace"
+    WORKSPACE = "workspace"
 }
 
 // @public
@@ -7222,7 +7222,7 @@ export interface LabelIdentifier {
 // @public
 export enum LabelIdentifierTypeEnum {
     // (undocumented)
-    Label = "label"
+    LABEL = "label"
 }
 
 // @public
@@ -7855,7 +7855,7 @@ export enum RangeMeasureValueFilterBodyAllOfOperatorEnum {
     // (undocumented)
     BETWEEN = "BETWEEN",
     // (undocumented)
-    NOTBETWEEN = "NOT_BETWEEN"
+    NOT_BETWEEN = "NOT_BETWEEN"
 }
 
 // @public
@@ -7863,7 +7863,7 @@ export enum RangeMeasureValueFilterBodyOperatorEnum {
     // (undocumented)
     BETWEEN = "BETWEEN",
     // (undocumented)
-    NOTBETWEEN = "NOT_BETWEEN"
+    NOT_BETWEEN = "NOT_BETWEEN"
 }
 
 // @public
@@ -7912,7 +7912,7 @@ export interface ReferenceIdentifier {
 // @public
 export enum ReferenceIdentifierTypeEnum {
     // (undocumented)
-    Dataset = "dataset"
+    DATASET = "dataset"
 }
 
 // @public
@@ -7941,31 +7941,31 @@ export enum RelativeDateFilterBodyAllOfGranularityEnum {
     // (undocumented)
     DAY = "DAY",
     // (undocumented)
-    DAYOFMONTH = "DAY_OF_MONTH",
+    DAY_OF_MONTH = "DAY_OF_MONTH",
     // (undocumented)
-    DAYOFWEEK = "DAY_OF_WEEK",
+    DAY_OF_WEEK = "DAY_OF_WEEK",
     // (undocumented)
-    DAYOFYEAR = "DAY_OF_YEAR",
+    DAY_OF_YEAR = "DAY_OF_YEAR",
     // (undocumented)
     HOUR = "HOUR",
     // (undocumented)
-    HOUROFDAY = "HOUR_OF_DAY",
+    HOUR_OF_DAY = "HOUR_OF_DAY",
     // (undocumented)
     MINUTE = "MINUTE",
     // (undocumented)
-    MINUTEOFHOUR = "MINUTE_OF_HOUR",
+    MINUTE_OF_HOUR = "MINUTE_OF_HOUR",
     // (undocumented)
     MONTH = "MONTH",
     // (undocumented)
-    MONTHOFYEAR = "MONTH_OF_YEAR",
+    MONTH_OF_YEAR = "MONTH_OF_YEAR",
     // (undocumented)
     QUARTER = "QUARTER",
     // (undocumented)
-    QUARTEROFYEAR = "QUARTER_OF_YEAR",
+    QUARTER_OF_YEAR = "QUARTER_OF_YEAR",
     // (undocumented)
     WEEK = "WEEK",
     // (undocumented)
-    WEEKOFYEAR = "WEEK_OF_YEAR",
+    WEEK_OF_YEAR = "WEEK_OF_YEAR",
     // (undocumented)
     YEAR = "YEAR"
 }
@@ -7975,31 +7975,31 @@ export enum RelativeDateFilterBodyGranularityEnum {
     // (undocumented)
     DAY = "DAY",
     // (undocumented)
-    DAYOFMONTH = "DAY_OF_MONTH",
+    DAY_OF_MONTH = "DAY_OF_MONTH",
     // (undocumented)
-    DAYOFWEEK = "DAY_OF_WEEK",
+    DAY_OF_WEEK = "DAY_OF_WEEK",
     // (undocumented)
-    DAYOFYEAR = "DAY_OF_YEAR",
+    DAY_OF_YEAR = "DAY_OF_YEAR",
     // (undocumented)
     HOUR = "HOUR",
     // (undocumented)
-    HOUROFDAY = "HOUR_OF_DAY",
+    HOUR_OF_DAY = "HOUR_OF_DAY",
     // (undocumented)
     MINUTE = "MINUTE",
     // (undocumented)
-    MINUTEOFHOUR = "MINUTE_OF_HOUR",
+    MINUTE_OF_HOUR = "MINUTE_OF_HOUR",
     // (undocumented)
     MONTH = "MONTH",
     // (undocumented)
-    MONTHOFYEAR = "MONTH_OF_YEAR",
+    MONTH_OF_YEAR = "MONTH_OF_YEAR",
     // (undocumented)
     QUARTER = "QUARTER",
     // (undocumented)
-    QUARTEROFYEAR = "QUARTER_OF_YEAR",
+    QUARTER_OF_YEAR = "QUARTER_OF_YEAR",
     // (undocumented)
     WEEK = "WEEK",
     // (undocumented)
-    WEEKOFYEAR = "WEEK_OF_YEAR",
+    WEEK_OF_YEAR = "WEEK_OF_YEAR",
     // (undocumented)
     YEAR = "YEAR"
 }
@@ -8046,7 +8046,7 @@ export interface SimpleMeasureDefinitionMeasure {
 // @public
 export enum SimpleMeasureDefinitionMeasureAggregationEnum {
     // (undocumented)
-    APPROXIMATECOUNT = "APPROXIMATE_COUNT",
+    APPROXIMATE_COUNT = "APPROXIMATE_COUNT",
     // (undocumented)
     AVG = "AVG",
     // (undocumented)
@@ -8163,7 +8163,7 @@ export interface UserGroupIdentifier {
 // @public
 export enum UserGroupIdentifierTypeEnum {
     // (undocumented)
-    UserGroup = "userGroup"
+    USER_GROUP = "userGroup"
 }
 
 // @public (undocumented)
@@ -8265,7 +8265,7 @@ export interface WorkspaceIdentifier {
 // @public
 export enum WorkspaceIdentifierTypeEnum {
     // (undocumented)
-    Workspace = "workspace"
+    WORKSPACE = "workspace"
 }
 
 ```

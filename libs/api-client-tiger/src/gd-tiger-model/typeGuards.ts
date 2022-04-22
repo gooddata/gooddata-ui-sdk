@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import {
     AfmObjectIdentifier,
@@ -40,12 +40,12 @@ export function isVisualizationObjectsItem(
 ): visualizationObject is JsonApiVisualizationObjectOutWithLinks {
     return (
         (visualizationObject as JsonApiVisualizationObjectOutWithLinks).type ===
-        JsonApiVisualizationObjectOutWithLinksTypeEnum.VisualizationObject
+        JsonApiVisualizationObjectOutWithLinksTypeEnum.VISUALIZATION_OBJECT
     );
 }
 
 export function isFilterContextData(filterContext: unknown): filterContext is JsonApiFilterContextIn {
-    return (filterContext as JsonApiFilterContextIn).type === JsonApiFilterContextInTypeEnum.FilterContext;
+    return (filterContext as JsonApiFilterContextIn).type === JsonApiFilterContextInTypeEnum.FILTER_CONTEXT;
 }
 
 export function isDashboardPluginsItem(
@@ -53,6 +53,6 @@ export function isDashboardPluginsItem(
 ): dashboardPlugin is JsonApiDashboardPluginOutWithLinks {
     return (
         (dashboardPlugin as JsonApiDashboardPluginOutWithLinks).type ===
-        JsonApiDashboardPluginOutWithLinksTypeEnum.DashboardPlugin
+        JsonApiDashboardPluginOutWithLinksTypeEnum.DASHBOARD_PLUGIN
     );
 }
