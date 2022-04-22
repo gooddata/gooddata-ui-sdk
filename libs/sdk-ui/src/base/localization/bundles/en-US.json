@@ -1498,5 +1498,25 @@
         "value": "Embed insight as a copy of it's definition",
         "comment": "",
         "limit": 0
+    },
+    "embedInsightDialog.changesMessage.byReference": {
+        "value": "Future changes in this insight will be reflected in embedded version.",
+        "comment": "",
+        "limit": 0
+    },
+    "embedInsightDialog.changesMessage.byDefinition": {
+        "value": "No future changes in this insight will be reflected in embedded version.",
+        "comment": "",
+        "limit": 0
+    },
+    "embedInsightDialog.prepareEnvironmentMessage": {
+        "value": "<b>Note.</b> In order for this snippet to work, prepare your environment.",
+        "comment": "Do not translate html tags <b>, </b>",
+        "limit": 0
+    },
+    "embedInsightDialog.prepareEnvironmentMessage.link": {
+        "value": "Learn more",
+        "comment": "",
+        "limit": 0
     }
 }

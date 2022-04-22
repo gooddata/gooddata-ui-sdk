@@ -27,3 +27,13 @@
     font-family: menlo, monaco, consolas, "Courier New", monospace;
     color: var(--gd-palette-complementary-8, #464e56);
 }
+
+.embed-insight-dialog-prep-env-message {
+    width: 100%;
+    margin-top: 5px;
+    .gd-message-text {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+}

@@ -1,9 +1,11 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { CodeArea } from "./components/CodeArea";
 import { ConfirmDialogBase } from "../../ConfirmDialogBase";
+import { Typography } from "../../../Typography";
+import { PrepareEnvMessage } from "./components/PrepareEnvMessage";
 
 /**
  * @internal
@@ -33,6 +35,11 @@ export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (
             ? "embedInsightDialog.headLine.byDefinition"
             : "embedInsightDialog.headLine.byReference";
 
+    const changesMessageId =
+        codeType === "definition"
+            ? "embedInsightDialog.changesMessage.byDefinition"
+            : "embedInsightDialog.changesMessage.byReference";
+
     return (
         <ConfirmDialogBase
             isPositive={true}
@@ -44,6 +51,10 @@ export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (
             headline={intl.formatMessage({ id: dialogLabelId })}
             className={cx("embed-insight-dialog", "s-embed-insight-dialog")}
         >
+            <Typography tagName="p">
+                <FormattedMessage id={changesMessageId} />
+            </Typography>
+            <PrepareEnvMessage isTiger={true} />
             <div style={{ height: 260 }}>
                 <CodeArea code={code} />
             </div>
