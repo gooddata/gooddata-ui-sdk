@@ -47,6 +47,7 @@
     "kpi.noData": "当前筛选器设置无数据。请更改筛选器。",
     "kpiPop.change": "变化",
     "dialogs.schedule.email.filters": "控制面板包含将要保存在计划中的筛选器更改。",
+    "dialogs.schedule.email.filters.not.saved": "保存在计划中的控制面板筛选器不会受到影响。",
     "dialogs.schedule.email.attachment.filter": "（使用当前设置的筛选器）",
     "dialogs.schedule.email.attachment.label": "附件：",
     "dialogs.schedule.email.attachments.label": "附件：",

@@ -281,5 +281,6 @@
     "sorting.type.numerical.desc": "От большего к меньшему",
     "sorting.by": "по",
     "sorting.sum.of.all.measure": "Всего",
-    "sorting.default.tooltip": "Использовать порядок, определенный в атрибуте."
+    "sorting.default.tooltip": "Использовать порядок, определенный в атрибуте.",
+    "attributeFilterDropdown.emptyValue": "значение отсутствует"
 }
