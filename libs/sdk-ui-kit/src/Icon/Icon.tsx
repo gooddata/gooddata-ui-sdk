@@ -34,7 +34,6 @@ import { QuestionMark } from "./icons/QuestionMark";
 import { Minimize } from "./icons/Minimize";
 import { Dashboard } from "./icons/Dashboard";
 import { Many } from "./icons/Many";
-import { Widget } from "./icons/Widget";
 import { SettingsGear } from "./icons/SettingsGear";
 import { AttachmentClip } from "./icons/AttachmentClip";
 
@@ -93,7 +92,6 @@ export const Icon = {
     Minimize,
     Dashboard,
     Many,
-    Widget,
     SettingsGear,
     AttachmentClip,
     Table,

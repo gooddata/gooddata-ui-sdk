@@ -7,6 +7,7 @@ import { IScheduledMail } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { getAttachmentType, getFormatsLabel, getRecipientsLabel } from "./utils";
+import { gdColorDisabled } from "../../constants/colors";
 
 interface IScheduledEmailProps {
     onDelete: (scheduledEmail: IScheduledMail) => void;
@@ -58,7 +59,11 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
             </div>
             <div className="gd-scheduled-email-content" onClick={handleClick}>
                 <div className="gd-scheduled-email-icon">
-                    <AttachmentIcon color={theme?.palette?.complementary?.c5} width={18} height={16} />
+                    <AttachmentIcon
+                        color={theme?.palette?.complementary?.c5 ?? gdColorDisabled}
+                        width={18}
+                        height={16}
+                    />
                 </div>
                 <div className="gd-scheduled-email-text-content">
                     <div className="gd-scheduled-email-title">

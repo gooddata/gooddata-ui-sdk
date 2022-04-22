@@ -909,7 +909,6 @@ export const Icon: {
     Minimize: FC<IIconProps>;
     Dashboard: FC<IIconProps>;
     Many: FC<IIconProps>;
-    Widget: FC<IIconProps>;
     SettingsGear: FC<IIconProps>;
     AttachmentClip: FC<IIconProps>;
     Table: FC<IIconProps>;

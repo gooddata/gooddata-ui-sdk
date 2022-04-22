@@ -61,18 +61,18 @@ describe("Scheduled email management utils", () => {
             expect(result.AttachmentIcon).toEqual(Icon.Many);
         });
 
-        it("should return correct label describing number of insight attachments and 'Icon.Widget' component", () => {
+        it("should return correct label describing number of insight attachments and 'Icon.Insight' component", () => {
             const result = getAttachmentType(intl, [csvWidgetAttachment, xlsxWidgetAttachment]);
 
             expect(result.attachmentLabel).toEqual("2 insights");
-            expect(result.AttachmentIcon).toEqual(Icon.Widget);
+            expect(result.AttachmentIcon).toEqual(Icon.Insight);
         });
 
-        it("should return correct label describing insight attachment and 'Icon.Widget' component", () => {
+        it("should return correct label describing insight attachment and 'Icon.Insight' component", () => {
             const result = getAttachmentType(intl, [csvWidgetAttachment]);
 
             expect(result.attachmentLabel).toEqual("1 insight");
-            expect(result.AttachmentIcon).toEqual(Icon.Widget);
+            expect(result.AttachmentIcon).toEqual(Icon.Insight);
         });
 
         it("should return correct label describing dashboard attachment and 'Icon.Dashboard' component", () => {
