@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { DynamicSelect, IDynamicSelectProps } from "../DynamicSelect/DynamicSelect";
@@ -49,7 +49,7 @@ class RelativeRangePickerComponent extends React.Component<
                     )}
                     {...commonProps}
                 />
-                <span className="gd-relative-range-picker-dash">&mdash;</span>
+                <span className="gd-relative-range-picker-dash">&ndash;</span>
                 <DynamicSelect
                     value={selectedFilterOption.to}
                     onChange={handleToChange}
