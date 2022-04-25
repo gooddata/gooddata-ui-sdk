@@ -36,6 +36,7 @@ import {
 import { useCreateScheduledEmail } from "./useCreateScheduledEmail";
 import { invariant } from "ts-invariant";
 import { useSaveScheduledEmail } from "./useSaveScheduledEmail";
+import { stripLocalIdentifierFromFilters } from "./utils/stripLocalIdentifierFromFilters";
 
 export interface IInsightWidgetExtended extends IInsightWidget {
     visualizationUrl?: string;
@@ -213,7 +214,12 @@ export const useScheduledEmail = (props: UseScheduledEmailProps): UseScheduledEm
         onBeforeRun: onSubmit,
     });
 
-    const hasDefaultFilters = isEqual(originalFilters, filters);
+    // Compare filters without local identifiers as they are optional
+    // which might cause false negative comparison result.
+    const originalFiltersWithouLocalIdentifiers = stripLocalIdentifierFromFilters(originalFilters);
+    const filtersWithoutLocalIdentifiers = stripLocalIdentifierFromFilters(filters);
+    const hasDefaultFilters = isEqual(originalFiltersWithouLocalIdentifiers, filtersWithoutLocalIdentifiers);
+
     const handleCreateScheduledEmail = useCallback(
         (scheduledEmail: IScheduledMailDefinition, customFilters?: FilterContextItem[]) => {
             // If dashboard filters are not changed, do not save them to scheduled email filter context.
