@@ -4,45 +4,16 @@
 {{^withSeparateModelsAndApi}}
 // @ts-ignore
 import globalImportUrl from 'url';
-import globalImportQs from 'qs';
 import { Configuration } from './configuration';
 import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';
 // Some imports not used depending on template conditions, we also need prettier-ignore so that the import does not get split and ts-ignore still works
 // prettier-ignore
 // @ts-ignore
-import { assertParamExists } from './common';
+import { addFlattenedObjectTo, assertParamExists } from './common';
 // Some imports not used depending on template conditions, we also need prettier-ignore so that the import does not get split and ts-ignore still works
 // prettier-ignore
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base';
-
-// utility function that adds support for nested objects in query
-{{!
-    This converts objects like
-    {
-        filter: {
-            title: {
-                like: "foo"
-            }
-        }
-    }
-    to roughly
-    { "filter.title.like": "foo" }
-    and assigns it to a given target object.
-    So given the example object and localVarQueryParameter as target, it is equivalent to doing
-
-    localVarQueryParameter["filter.title.like"] = "foo";
-
-    This is needed because the url parser does not support nested objects.
-}}
-const addFlattenedObjectTo = (object: any, target: any): void => {
-    const flattened = globalImportQs.parse(globalImportQs.stringify(object, { allowDots: true }), {
-        depth: 0,
-    });
-    Object.keys(flattened).forEach((key) => {
-        target[key] = (flattened as any)[key];
-    });
-};
 
 {{#models}}
 {{#model}}{{#isEnum}}{{>modelEnum}}{{/isEnum}}{{#oneOf}}{{#-first}}{{>modelOneOf}}{{/-first}}{{/oneOf}}{{^isEnum}}{{^oneOf}}{{>modelGeneric}}{{/oneOf}}{{/isEnum}}{{/model}}

@@ -15,27 +15,16 @@
 
 // @ts-ignore
 import globalImportUrl from "url";
-import globalImportQs from "qs";
 import { Configuration } from "./configuration";
 import globalAxios, { AxiosPromise, AxiosInstance } from "axios";
 // Some imports not used depending on template conditions, we also need prettier-ignore so that the import does not get split and ts-ignore still works
 // prettier-ignore
 // @ts-ignore
-import { assertParamExists } from './common';
+import { addFlattenedObjectTo, assertParamExists } from './common';
 // Some imports not used depending on template conditions, we also need prettier-ignore so that the import does not get split and ts-ignore still works
 // prettier-ignore
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base';
-
-// utility function that adds support for nested objects in query
-const addFlattenedObjectTo = (object: any, target: any): void => {
-    const flattened = globalImportQs.parse(globalImportQs.stringify(object, { allowDots: true }), {
-        depth: 0,
-    });
-    Object.keys(flattened).forEach((key) => {
-        target[key] = (flattened as any)[key];
-    });
-};
 
 /**
  * Top level executable entity. Combination of [A]ttributes, [F]ilters & [M]etrics.

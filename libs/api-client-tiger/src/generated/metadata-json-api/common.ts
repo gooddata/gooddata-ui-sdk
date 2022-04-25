@@ -14,6 +14,7 @@
  * Do not edit the class manually.
  */
 
+import globalImportQs from "qs";
 import { RequiredError } from "./base";
 
 /**
@@ -28,4 +29,16 @@ export const assertParamExists = function (functionName: string, paramName: stri
             `Required parameter ${paramName} was null or undefined when calling ${functionName}.`,
         );
     }
+};
+
+/**
+ * Utility function that adds support for nested objects in query
+ */
+export const addFlattenedObjectTo = function (object: any, target: any): void {
+    const flattened = globalImportQs.parse(globalImportQs.stringify(object, { allowDots: true }), {
+        depth: 0,
+    });
+    Object.keys(flattened).forEach((key) => {
+        target[key] = (flattened as any)[key];
+    });
 };
