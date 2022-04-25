@@ -5145,10 +5145,12 @@ export class LabelElementsBaseApi {
 // @public (undocumented)
 export class LabelElementsConfiguration {
     constructor(param?: LabelElementsConfigurationParameters);
-    accessToken?: string | ((name?: string, scopes?: string[]) => string);
-    apiKey?: string | ((name: string) => string);
+    accessToken?: string | Promise<string> | ((name?: string, scopes?: string[]) => string) | ((name?: string, scopes?: string[]) => Promise<string>);
+    apiKey?: string | Promise<string> | ((name: string) => string) | ((name: string) => Promise<string>);
     baseOptions?: any;
     basePath?: string;
+    formDataCtor?: new () => any;
+    isJsonMime(mime: string): boolean;
     password?: string;
     username?: string;
 }
@@ -5156,13 +5158,15 @@ export class LabelElementsConfiguration {
 // @public
 export interface LabelElementsConfigurationParameters {
     // (undocumented)
-    accessToken?: string | ((name?: string, scopes?: string[]) => string);
+    accessToken?: string | Promise<string> | ((name?: string, scopes?: string[]) => string) | ((name?: string, scopes?: string[]) => Promise<string>);
     // (undocumented)
-    apiKey?: string | ((name: string) => string);
+    apiKey?: string | Promise<string> | ((name: string) => string) | ((name: string) => Promise<string>);
     // (undocumented)
     baseOptions?: any;
     // (undocumented)
     basePath?: string;
+    // (undocumented)
+    formDataCtor?: new () => any;
     // (undocumented)
     password?: string;
     // (undocumented)
@@ -5485,10 +5489,12 @@ export class MetadataBaseApi {
 // @public (undocumented)
 export class MetadataConfiguration {
     constructor(param?: MetadataConfigurationParameters);
-    accessToken?: string | ((name?: string, scopes?: string[]) => string);
-    apiKey?: string | ((name: string) => string);
+    accessToken?: string | Promise<string> | ((name?: string, scopes?: string[]) => string) | ((name?: string, scopes?: string[]) => Promise<string>);
+    apiKey?: string | Promise<string> | ((name: string) => string) | ((name: string) => Promise<string>);
     baseOptions?: any;
     basePath?: string;
+    formDataCtor?: new () => any;
+    isJsonMime(mime: string): boolean;
     password?: string;
     username?: string;
 }
@@ -5496,13 +5502,15 @@ export class MetadataConfiguration {
 // @public
 export interface MetadataConfigurationParameters {
     // (undocumented)
-    accessToken?: string | ((name?: string, scopes?: string[]) => string);
+    accessToken?: string | Promise<string> | ((name?: string, scopes?: string[]) => string) | ((name?: string, scopes?: string[]) => Promise<string>);
     // (undocumented)
-    apiKey?: string | ((name: string) => string);
+    apiKey?: string | Promise<string> | ((name: string) => string) | ((name: string) => Promise<string>);
     // (undocumented)
     baseOptions?: any;
     // (undocumented)
     basePath?: string;
+    // (undocumented)
+    formDataCtor?: new () => any;
     // (undocumented)
     password?: string;
     // (undocumented)

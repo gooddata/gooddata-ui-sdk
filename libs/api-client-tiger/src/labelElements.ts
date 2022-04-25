@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { AxiosInstance } from "axios";
 import {
     ActionsApi,
@@ -17,4 +17,4 @@ export {
 
 export const tigerLabelElementsClientFactory = (
     axios: AxiosInstance,
-): Pick<ActionsApiInterface, "computeLabelElementsPost"> => new ActionsApi({}, "", axios);
+): Pick<ActionsApiInterface, "computeLabelElementsPost"> => new ActionsApi(undefined, "", axios);
