@@ -14,7 +14,6 @@
  * Do not edit the class manually.
  */
 
-import globalImportQs from "qs";
 import { Configuration } from "./configuration";
 import { RequiredError, RequestArgs } from "./base";
 import { AxiosInstance, AxiosResponse } from "axios";
@@ -114,16 +113,4 @@ export const createRequestFunction = function (
         };
         return axios.request<T, R>(axiosRequestArgs);
     };
-};
-
-/**
- * Utility function that adds support for nested objects in query
- */
-export const addFlattenedObjectTo = function (object: any, target: any): void {
-    const flattened = globalImportQs.parse(globalImportQs.stringify(object, { allowDots: true }), {
-        depth: 0,
-    });
-    Object.keys(flattened).forEach((key) => {
-        target[key] = (flattened as any)[key];
-    });
 };

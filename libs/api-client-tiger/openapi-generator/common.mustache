@@ -2,7 +2,6 @@
 /* eslint-disable */
 {{>licenseInfo}}
 
-import globalImportQs from 'qs';
 import { Configuration } from "./configuration";
 import { RequiredError, RequestArgs } from "./base";
 import { AxiosInstance, AxiosResponse } from 'axios';
@@ -77,33 +76,3 @@ export const createRequestFunction = function (axiosArgs: RequestArgs, globalAxi
         return axios.request<T, R>(axiosRequestArgs);
     };
 }
-
-{{!
-    This converts objects like
-    {
-        filter: {
-            title: {
-                like: "foo"
-            }
-        }
-    }
-    to roughly
-    { "filter.title.like": "foo" }
-    and assigns it to a given target object.
-    So given the example object and localVarQueryParameter as target, it is equivalent to doing
-
-    localVarQueryParameter["filter.title.like"] = "foo";
-
-    This is needed because the url parser does not support nested objects.
-}}
-/**
- * Utility function that adds support for nested objects in query
- */
-export const addFlattenedObjectTo = function (object: any, target: any): void {
-    const flattened = globalImportQs.parse(globalImportQs.stringify(object, { allowDots: true }), {
-        depth: 0,
-    });
-    Object.keys(flattened).forEach((key) => {
-        target[key] = (flattened as any)[key];
-    });
-};

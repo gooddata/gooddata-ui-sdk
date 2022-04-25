@@ -20,7 +20,7 @@ import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from "ax
 // Some imports not used depending on template conditions, we also need prettier-ignore so that the import does not get split and ts-ignore still works
 // prettier-ignore
 // @ts-ignore
-import { addFlattenedObjectTo, assertParamExists, createRequestFunction, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject } from './common';
+import { assertParamExists, createRequestFunction, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject } from './common';
 // Some imports not used depending on template conditions, we also need prettier-ignore so that the import does not get split and ts-ignore still works
 // prettier-ignore
 // @ts-ignore
@@ -1552,10 +1552,10 @@ export interface JsonApiAnalyticalDashboardIn {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardPatchAttributes}
      * @memberof JsonApiAnalyticalDashboardIn
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
 }
 
 export const JsonApiAnalyticalDashboardInTypeEnum = {
@@ -1625,10 +1625,10 @@ export interface JsonApiAnalyticalDashboardOut {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardPatchAttributes}
      * @memberof JsonApiAnalyticalDashboardOut
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationships}
@@ -1644,43 +1644,6 @@ export const JsonApiAnalyticalDashboardOutTypeEnum = {
 export type JsonApiAnalyticalDashboardOutTypeEnum =
     typeof JsonApiAnalyticalDashboardOutTypeEnum[keyof typeof JsonApiAnalyticalDashboardOutTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiAnalyticalDashboardOutAttributes
- */
-export interface JsonApiAnalyticalDashboardOutAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiAnalyticalDashboardOutAttributes
-     */
-    title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiAnalyticalDashboardOutAttributes
-     */
-    description?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof JsonApiAnalyticalDashboardOutAttributes
-     */
-    tags?: Array<string>;
-    /**
-     *
-     * @type {boolean}
-     * @memberof JsonApiAnalyticalDashboardOutAttributes
-     */
-    areRelationsValid?: boolean;
-    /**
-     * Free-form JSON content.
-     * @type {object}
-     * @memberof JsonApiAnalyticalDashboardOutAttributes
-     */
-    content?: object;
-}
 /**
  *
  * @export
@@ -1904,10 +1867,10 @@ export interface JsonApiAnalyticalDashboardOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardPatchAttributes}
      * @memberof JsonApiAnalyticalDashboardOutWithLinks
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationships}
@@ -1949,10 +1912,10 @@ export interface JsonApiAnalyticalDashboardPatch {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardPatchAttributes}
      * @memberof JsonApiAnalyticalDashboardPatch
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
 }
 
 export const JsonApiAnalyticalDashboardPatchTypeEnum = {
@@ -1962,6 +1925,43 @@ export const JsonApiAnalyticalDashboardPatchTypeEnum = {
 export type JsonApiAnalyticalDashboardPatchTypeEnum =
     typeof JsonApiAnalyticalDashboardPatchTypeEnum[keyof typeof JsonApiAnalyticalDashboardPatchTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiAnalyticalDashboardPatchAttributes
+ */
+export interface JsonApiAnalyticalDashboardPatchAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiAnalyticalDashboardPatchAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiAnalyticalDashboardPatchAttributes
+     */
+    description?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof JsonApiAnalyticalDashboardPatchAttributes
+     */
+    tags?: Array<string>;
+    /**
+     *
+     * @type {boolean}
+     * @memberof JsonApiAnalyticalDashboardPatchAttributes
+     */
+    areRelationsValid?: boolean;
+    /**
+     * Free-form JSON content.
+     * @type {object}
+     * @memberof JsonApiAnalyticalDashboardPatchAttributes
+     */
+    content?: object;
+}
 /**
  *
  * @export
@@ -2461,10 +2461,10 @@ export interface JsonApiCookieSecurityConfigurationIn {
     id: string;
     /**
      *
-     * @type {JsonApiCookieSecurityConfigurationInAttributes}
+     * @type {JsonApiCookieSecurityConfigurationOutAttributes}
      * @memberof JsonApiCookieSecurityConfigurationIn
      */
-    attributes?: JsonApiCookieSecurityConfigurationInAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
 }
 
 export const JsonApiCookieSecurityConfigurationInTypeEnum = {
@@ -2474,25 +2474,6 @@ export const JsonApiCookieSecurityConfigurationInTypeEnum = {
 export type JsonApiCookieSecurityConfigurationInTypeEnum =
     typeof JsonApiCookieSecurityConfigurationInTypeEnum[keyof typeof JsonApiCookieSecurityConfigurationInTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiCookieSecurityConfigurationInAttributes
- */
-export interface JsonApiCookieSecurityConfigurationInAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiCookieSecurityConfigurationInAttributes
-     */
-    lastRotation?: string;
-    /**
-     * Length of interval between automatic rotations expressed in format of ISO 8601 duration
-     * @type {string}
-     * @memberof JsonApiCookieSecurityConfigurationInAttributes
-     */
-    rotationInterval?: string;
-}
 /**
  *
  * @export
@@ -2526,10 +2507,10 @@ export interface JsonApiCookieSecurityConfigurationOut {
     id: string;
     /**
      *
-     * @type {JsonApiCookieSecurityConfigurationInAttributes}
+     * @type {JsonApiCookieSecurityConfigurationOutAttributes}
      * @memberof JsonApiCookieSecurityConfigurationOut
      */
-    attributes?: JsonApiCookieSecurityConfigurationInAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
 }
 
 export const JsonApiCookieSecurityConfigurationOutTypeEnum = {
@@ -2539,6 +2520,25 @@ export const JsonApiCookieSecurityConfigurationOutTypeEnum = {
 export type JsonApiCookieSecurityConfigurationOutTypeEnum =
     typeof JsonApiCookieSecurityConfigurationOutTypeEnum[keyof typeof JsonApiCookieSecurityConfigurationOutTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiCookieSecurityConfigurationOutAttributes
+ */
+export interface JsonApiCookieSecurityConfigurationOutAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiCookieSecurityConfigurationOutAttributes
+     */
+    lastRotation?: string;
+    /**
+     * Length of interval between automatic rotations expressed in format of ISO 8601 duration
+     * @type {string}
+     * @memberof JsonApiCookieSecurityConfigurationOutAttributes
+     */
+    rotationInterval?: string;
+}
 /**
  *
  * @export
@@ -2578,10 +2578,10 @@ export interface JsonApiDashboardPluginIn {
     id: string;
     /**
      *
-     * @type {JsonApiDashboardPluginOutAttributes}
+     * @type {JsonApiDashboardPluginPatchAttributes}
      * @memberof JsonApiDashboardPluginIn
      */
-    attributes?: JsonApiDashboardPluginOutAttributes;
+    attributes?: JsonApiDashboardPluginPatchAttributes;
 }
 
 export const JsonApiDashboardPluginInTypeEnum = {
@@ -2651,10 +2651,10 @@ export interface JsonApiDashboardPluginOut {
     id: string;
     /**
      *
-     * @type {JsonApiDashboardPluginOutAttributes}
+     * @type {JsonApiDashboardPluginPatchAttributes}
      * @memberof JsonApiDashboardPluginOut
      */
-    attributes?: JsonApiDashboardPluginOutAttributes;
+    attributes?: JsonApiDashboardPluginPatchAttributes;
 }
 
 export const JsonApiDashboardPluginOutTypeEnum = {
@@ -2664,43 +2664,6 @@ export const JsonApiDashboardPluginOutTypeEnum = {
 export type JsonApiDashboardPluginOutTypeEnum =
     typeof JsonApiDashboardPluginOutTypeEnum[keyof typeof JsonApiDashboardPluginOutTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiDashboardPluginOutAttributes
- */
-export interface JsonApiDashboardPluginOutAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiDashboardPluginOutAttributes
-     */
-    title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiDashboardPluginOutAttributes
-     */
-    description?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof JsonApiDashboardPluginOutAttributes
-     */
-    tags?: Array<string>;
-    /**
-     *
-     * @type {boolean}
-     * @memberof JsonApiDashboardPluginOutAttributes
-     */
-    areRelationsValid?: boolean;
-    /**
-     * Free-form JSON content.
-     * @type {object}
-     * @memberof JsonApiDashboardPluginOutAttributes
-     */
-    content?: object;
-}
 /**
  *
  * @export
@@ -2759,10 +2722,10 @@ export interface JsonApiDashboardPluginOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiDashboardPluginOutAttributes}
+     * @type {JsonApiDashboardPluginPatchAttributes}
      * @memberof JsonApiDashboardPluginOutWithLinks
      */
-    attributes?: JsonApiDashboardPluginOutAttributes;
+    attributes?: JsonApiDashboardPluginPatchAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -2798,10 +2761,10 @@ export interface JsonApiDashboardPluginPatch {
     id: string;
     /**
      *
-     * @type {JsonApiDashboardPluginOutAttributes}
+     * @type {JsonApiDashboardPluginPatchAttributes}
      * @memberof JsonApiDashboardPluginPatch
      */
-    attributes?: JsonApiDashboardPluginOutAttributes;
+    attributes?: JsonApiDashboardPluginPatchAttributes;
 }
 
 export const JsonApiDashboardPluginPatchTypeEnum = {
@@ -2811,6 +2774,43 @@ export const JsonApiDashboardPluginPatchTypeEnum = {
 export type JsonApiDashboardPluginPatchTypeEnum =
     typeof JsonApiDashboardPluginPatchTypeEnum[keyof typeof JsonApiDashboardPluginPatchTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiDashboardPluginPatchAttributes
+ */
+export interface JsonApiDashboardPluginPatchAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiDashboardPluginPatchAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiDashboardPluginPatchAttributes
+     */
+    description?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof JsonApiDashboardPluginPatchAttributes
+     */
+    tags?: Array<string>;
+    /**
+     *
+     * @type {boolean}
+     * @memberof JsonApiDashboardPluginPatchAttributes
+     */
+    areRelationsValid?: boolean;
+    /**
+     * Free-form JSON content.
+     * @type {object}
+     * @memberof JsonApiDashboardPluginPatchAttributes
+     */
+    content?: object;
+}
 /**
  *
  * @export
@@ -2844,10 +2844,10 @@ export interface JsonApiDataSourceIdentifierOut {
     id: string;
     /**
      *
-     * @type {JsonApiDataSourceIdentifierOutMeta}
+     * @type {JsonApiDataSourceOutMeta}
      * @memberof JsonApiDataSourceIdentifierOut
      */
-    meta?: JsonApiDataSourceIdentifierOutMeta;
+    meta?: JsonApiDataSourceOutMeta;
     /**
      *
      * @type {JsonApiDataSourceIdentifierOutAttributes}
@@ -2946,28 +2946,6 @@ export interface JsonApiDataSourceIdentifierOutList {
 /**
  *
  * @export
- * @interface JsonApiDataSourceIdentifierOutMeta
- */
-export interface JsonApiDataSourceIdentifierOutMeta {
-    /**
-     * List of valid permissions for a logged user.
-     * @type {Array<string>}
-     * @memberof JsonApiDataSourceIdentifierOutMeta
-     */
-    permissions?: Array<JsonApiDataSourceIdentifierOutMetaPermissionsEnum>;
-}
-
-export const JsonApiDataSourceIdentifierOutMetaPermissionsEnum = {
-    MANAGE: "MANAGE",
-    USE: "USE",
-} as const;
-
-export type JsonApiDataSourceIdentifierOutMetaPermissionsEnum =
-    typeof JsonApiDataSourceIdentifierOutMetaPermissionsEnum[keyof typeof JsonApiDataSourceIdentifierOutMetaPermissionsEnum];
-
-/**
- *
- * @export
  * @interface JsonApiDataSourceIdentifierOutWithLinks
  */
 export interface JsonApiDataSourceIdentifierOutWithLinks {
@@ -2985,10 +2963,10 @@ export interface JsonApiDataSourceIdentifierOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiDataSourceIdentifierOutMeta}
+     * @type {JsonApiDataSourceOutMeta}
      * @memberof JsonApiDataSourceIdentifierOutWithLinks
      */
-    meta?: JsonApiDataSourceIdentifierOutMeta;
+    meta?: JsonApiDataSourceOutMeta;
     /**
      *
      * @type {JsonApiDataSourceIdentifierOutAttributes}
@@ -3154,10 +3132,10 @@ export interface JsonApiDataSourceOut {
     id: string;
     /**
      *
-     * @type {JsonApiDataSourceIdentifierOutMeta}
+     * @type {JsonApiDataSourceOutMeta}
      * @memberof JsonApiDataSourceOut
      */
-    meta?: JsonApiDataSourceIdentifierOutMeta;
+    meta?: JsonApiDataSourceOutMeta;
     /**
      *
      * @type {JsonApiDataSourceOutAttributes}
@@ -3280,6 +3258,28 @@ export interface JsonApiDataSourceOutList {
 /**
  *
  * @export
+ * @interface JsonApiDataSourceOutMeta
+ */
+export interface JsonApiDataSourceOutMeta {
+    /**
+     * List of valid permissions for a logged user.
+     * @type {Array<string>}
+     * @memberof JsonApiDataSourceOutMeta
+     */
+    permissions?: Array<JsonApiDataSourceOutMetaPermissionsEnum>;
+}
+
+export const JsonApiDataSourceOutMetaPermissionsEnum = {
+    MANAGE: "MANAGE",
+    USE: "USE",
+} as const;
+
+export type JsonApiDataSourceOutMetaPermissionsEnum =
+    typeof JsonApiDataSourceOutMetaPermissionsEnum[keyof typeof JsonApiDataSourceOutMetaPermissionsEnum];
+
+/**
+ *
+ * @export
  * @interface JsonApiDataSourceOutWithLinks
  */
 export interface JsonApiDataSourceOutWithLinks {
@@ -3297,10 +3297,10 @@ export interface JsonApiDataSourceOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiDataSourceIdentifierOutMeta}
+     * @type {JsonApiDataSourceOutMeta}
      * @memberof JsonApiDataSourceOutWithLinks
      */
-    meta?: JsonApiDataSourceIdentifierOutMeta;
+    meta?: JsonApiDataSourceOutMeta;
     /**
      *
      * @type {JsonApiDataSourceOutAttributes}
@@ -3896,48 +3896,22 @@ export interface JsonApiDatasetOutList {
 export interface JsonApiDatasetOutRelationships {
     /**
      *
-     * @type {JsonApiDatasetOutRelationshipsAttributes}
+     * @type {JsonApiFilterContextOutRelationshipsAttributes}
      * @memberof JsonApiDatasetOutRelationships
      */
-    attributes?: JsonApiDatasetOutRelationshipsAttributes;
+    attributes?: JsonApiFilterContextOutRelationshipsAttributes;
     /**
      *
-     * @type {JsonApiDatasetOutRelationshipsFacts}
+     * @type {JsonApiMetricOutRelationshipsFacts}
      * @memberof JsonApiDatasetOutRelationships
      */
-    facts?: JsonApiDatasetOutRelationshipsFacts;
+    facts?: JsonApiMetricOutRelationshipsFacts;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationshipsDatasets}
      * @memberof JsonApiDatasetOutRelationships
      */
     references?: JsonApiAnalyticalDashboardOutRelationshipsDatasets;
-}
-/**
- *
- * @export
- * @interface JsonApiDatasetOutRelationshipsAttributes
- */
-export interface JsonApiDatasetOutRelationshipsAttributes {
-    /**
-     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
-     * @type {Array<JsonApiAttributeLinkage>}
-     * @memberof JsonApiDatasetOutRelationshipsAttributes
-     */
-    data: Array<JsonApiAttributeLinkage>;
-}
-/**
- *
- * @export
- * @interface JsonApiDatasetOutRelationshipsFacts
- */
-export interface JsonApiDatasetOutRelationshipsFacts {
-    /**
-     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
-     * @type {Array<JsonApiFactLinkage>}
-     * @memberof JsonApiDatasetOutRelationshipsFacts
-     */
-    data: Array<JsonApiFactLinkage>;
 }
 /**
  *
@@ -4221,10 +4195,10 @@ export interface JsonApiFilterContextIn {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardPatchAttributes}
      * @memberof JsonApiFilterContextIn
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
 }
 
 export const JsonApiFilterContextInTypeEnum = {
@@ -4294,10 +4268,10 @@ export interface JsonApiFilterContextOut {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardPatchAttributes}
      * @memberof JsonApiFilterContextOut
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
     /**
      *
      * @type {JsonApiFilterContextOutRelationships}
@@ -4380,10 +4354,10 @@ export interface JsonApiFilterContextOutList {
 export interface JsonApiFilterContextOutRelationships {
     /**
      *
-     * @type {JsonApiDatasetOutRelationshipsAttributes}
+     * @type {JsonApiFilterContextOutRelationshipsAttributes}
      * @memberof JsonApiFilterContextOutRelationships
      */
-    attributes?: JsonApiDatasetOutRelationshipsAttributes;
+    attributes?: JsonApiFilterContextOutRelationshipsAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationshipsDatasets}
@@ -4396,6 +4370,19 @@ export interface JsonApiFilterContextOutRelationships {
      * @memberof JsonApiFilterContextOutRelationships
      */
     labels?: JsonApiAnalyticalDashboardOutRelationshipsLabels;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiFilterContextOutRelationshipsAttributes
+ */
+export interface JsonApiFilterContextOutRelationshipsAttributes {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     * @type {Array<JsonApiAttributeLinkage>}
+     * @memberof JsonApiFilterContextOutRelationshipsAttributes
+     */
+    data: Array<JsonApiAttributeLinkage>;
 }
 /**
  *
@@ -4417,10 +4404,10 @@ export interface JsonApiFilterContextOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardPatchAttributes}
      * @memberof JsonApiFilterContextOutWithLinks
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
     /**
      *
      * @type {JsonApiFilterContextOutRelationships}
@@ -4462,10 +4449,10 @@ export interface JsonApiFilterContextPatch {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardPatchAttributes}
      * @memberof JsonApiFilterContextPatch
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
 }
 
 export const JsonApiFilterContextPatchTypeEnum = {
@@ -4882,29 +4869,10 @@ export interface JsonApiMetricOutAttributes {
     areRelationsValid?: boolean;
     /**
      *
-     * @type {JsonApiMetricOutAttributesContent}
+     * @type {JsonApiMetricPatchAttributesContent}
      * @memberof JsonApiMetricOutAttributes
      */
-    content: JsonApiMetricOutAttributesContent;
-}
-/**
- *
- * @export
- * @interface JsonApiMetricOutAttributesContent
- */
-export interface JsonApiMetricOutAttributesContent {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiMetricOutAttributesContent
-     */
-    format?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiMetricOutAttributesContent
-     */
-    maql: string;
+    content: JsonApiMetricPatchAttributesContent;
 }
 /**
  *
@@ -4974,16 +4942,16 @@ export interface JsonApiMetricOutList {
 export interface JsonApiMetricOutRelationships {
     /**
      *
-     * @type {JsonApiDatasetOutRelationshipsFacts}
+     * @type {JsonApiMetricOutRelationshipsFacts}
      * @memberof JsonApiMetricOutRelationships
      */
-    facts?: JsonApiDatasetOutRelationshipsFacts;
+    facts?: JsonApiMetricOutRelationshipsFacts;
     /**
      *
-     * @type {JsonApiDatasetOutRelationshipsAttributes}
+     * @type {JsonApiFilterContextOutRelationshipsAttributes}
      * @memberof JsonApiMetricOutRelationships
      */
-    attributes?: JsonApiDatasetOutRelationshipsAttributes;
+    attributes?: JsonApiFilterContextOutRelationshipsAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationshipsLabels}
@@ -4996,6 +4964,19 @@ export interface JsonApiMetricOutRelationships {
      * @memberof JsonApiMetricOutRelationships
      */
     metrics?: JsonApiAnalyticalDashboardOutRelationshipsMetrics;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiMetricOutRelationshipsFacts
+ */
+export interface JsonApiMetricOutRelationshipsFacts {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     * @type {Array<JsonApiFactLinkage>}
+     * @memberof JsonApiMetricOutRelationshipsFacts
+     */
+    data: Array<JsonApiFactLinkage>;
 }
 /**
  *
@@ -5107,10 +5088,29 @@ export interface JsonApiMetricPatchAttributes {
     areRelationsValid?: boolean;
     /**
      *
-     * @type {JsonApiMetricOutAttributesContent}
+     * @type {JsonApiMetricPatchAttributesContent}
      * @memberof JsonApiMetricPatchAttributes
      */
-    content?: JsonApiMetricOutAttributesContent;
+    content?: JsonApiMetricPatchAttributesContent;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiMetricPatchAttributesContent
+ */
+export interface JsonApiMetricPatchAttributesContent {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiMetricPatchAttributesContent
+     */
+    format?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiMetricPatchAttributesContent
+     */
+    maql: string;
 }
 /**
  *
@@ -5413,10 +5413,10 @@ export interface JsonApiUserGroupIn {
     id: string;
     /**
      *
-     * @type {JsonApiUserGroupOutRelationships}
+     * @type {JsonApiUserGroupPatchRelationships}
      * @memberof JsonApiUserGroupIn
      */
-    relationships?: JsonApiUserGroupOutRelationships;
+    relationships?: JsonApiUserGroupPatchRelationships;
 }
 
 export const JsonApiUserGroupInTypeEnum = {
@@ -5486,10 +5486,10 @@ export interface JsonApiUserGroupOut {
     id: string;
     /**
      *
-     * @type {JsonApiUserGroupOutRelationships}
+     * @type {JsonApiUserGroupPatchRelationships}
      * @memberof JsonApiUserGroupOut
      */
-    relationships?: JsonApiUserGroupOutRelationships;
+    relationships?: JsonApiUserGroupPatchRelationships;
 }
 
 export const JsonApiUserGroupOutTypeEnum = {
@@ -5552,32 +5552,6 @@ export interface JsonApiUserGroupOutList {
 /**
  *
  * @export
- * @interface JsonApiUserGroupOutRelationships
- */
-export interface JsonApiUserGroupOutRelationships {
-    /**
-     *
-     * @type {JsonApiUserGroupOutRelationshipsParents}
-     * @memberof JsonApiUserGroupOutRelationships
-     */
-    parents?: JsonApiUserGroupOutRelationshipsParents;
-}
-/**
- *
- * @export
- * @interface JsonApiUserGroupOutRelationshipsParents
- */
-export interface JsonApiUserGroupOutRelationshipsParents {
-    /**
-     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
-     * @type {Array<JsonApiUserGroupLinkage>}
-     * @memberof JsonApiUserGroupOutRelationshipsParents
-     */
-    data: Array<JsonApiUserGroupLinkage>;
-}
-/**
- *
- * @export
  * @interface JsonApiUserGroupOutWithLinks
  */
 export interface JsonApiUserGroupOutWithLinks {
@@ -5595,10 +5569,10 @@ export interface JsonApiUserGroupOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiUserGroupOutRelationships}
+     * @type {JsonApiUserGroupPatchRelationships}
      * @memberof JsonApiUserGroupOutWithLinks
      */
-    relationships?: JsonApiUserGroupOutRelationships;
+    relationships?: JsonApiUserGroupPatchRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -5634,10 +5608,10 @@ export interface JsonApiUserGroupPatch {
     id: string;
     /**
      *
-     * @type {JsonApiUserGroupOutRelationships}
+     * @type {JsonApiUserGroupPatchRelationships}
      * @memberof JsonApiUserGroupPatch
      */
-    relationships?: JsonApiUserGroupOutRelationships;
+    relationships?: JsonApiUserGroupPatchRelationships;
 }
 
 export const JsonApiUserGroupPatchTypeEnum = {
@@ -5659,6 +5633,32 @@ export interface JsonApiUserGroupPatchDocument {
      * @memberof JsonApiUserGroupPatchDocument
      */
     data: JsonApiUserGroupPatch;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiUserGroupPatchRelationships
+ */
+export interface JsonApiUserGroupPatchRelationships {
+    /**
+     *
+     * @type {JsonApiUserGroupPatchRelationshipsParents}
+     * @memberof JsonApiUserGroupPatchRelationships
+     */
+    parents?: JsonApiUserGroupPatchRelationshipsParents;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiUserGroupPatchRelationshipsParents
+ */
+export interface JsonApiUserGroupPatchRelationshipsParents {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     * @type {Array<JsonApiUserGroupLinkage>}
+     * @memberof JsonApiUserGroupPatchRelationshipsParents
+     */
+    data: Array<JsonApiUserGroupLinkage>;
 }
 /**
  * @type JsonApiUserGroupToOneLinkage
@@ -5687,16 +5687,16 @@ export interface JsonApiUserIn {
     id: string;
     /**
      *
-     * @type {JsonApiUserOutAttributes}
+     * @type {JsonApiUserPatchAttributes}
      * @memberof JsonApiUserIn
      */
-    attributes?: JsonApiUserOutAttributes;
+    attributes?: JsonApiUserPatchAttributes;
     /**
      *
-     * @type {JsonApiUserOutRelationships}
+     * @type {JsonApiUserPatchRelationships}
      * @memberof JsonApiUserIn
      */
-    relationships?: JsonApiUserOutRelationships;
+    relationships?: JsonApiUserPatchRelationships;
 }
 
 export const JsonApiUserInTypeEnum = {
@@ -5765,16 +5765,16 @@ export interface JsonApiUserOut {
     id: string;
     /**
      *
-     * @type {JsonApiUserOutAttributes}
+     * @type {JsonApiUserPatchAttributes}
      * @memberof JsonApiUserOut
      */
-    attributes?: JsonApiUserOutAttributes;
+    attributes?: JsonApiUserPatchAttributes;
     /**
      *
-     * @type {JsonApiUserOutRelationships}
+     * @type {JsonApiUserPatchRelationships}
      * @memberof JsonApiUserOut
      */
-    relationships?: JsonApiUserOutRelationships;
+    relationships?: JsonApiUserPatchRelationships;
 }
 
 export const JsonApiUserOutTypeEnum = {
@@ -5783,19 +5783,6 @@ export const JsonApiUserOutTypeEnum = {
 
 export type JsonApiUserOutTypeEnum = typeof JsonApiUserOutTypeEnum[keyof typeof JsonApiUserOutTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiUserOutAttributes
- */
-export interface JsonApiUserOutAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiUserOutAttributes
-     */
-    authenticationId?: string;
-}
 /**
  *
  * @export
@@ -5849,19 +5836,6 @@ export interface JsonApiUserOutList {
 /**
  *
  * @export
- * @interface JsonApiUserOutRelationships
- */
-export interface JsonApiUserOutRelationships {
-    /**
-     *
-     * @type {JsonApiUserGroupOutRelationshipsParents}
-     * @memberof JsonApiUserOutRelationships
-     */
-    userGroups?: JsonApiUserGroupOutRelationshipsParents;
-}
-/**
- *
- * @export
  * @interface JsonApiUserOutWithLinks
  */
 export interface JsonApiUserOutWithLinks {
@@ -5879,16 +5853,16 @@ export interface JsonApiUserOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiUserOutAttributes}
+     * @type {JsonApiUserPatchAttributes}
      * @memberof JsonApiUserOutWithLinks
      */
-    attributes?: JsonApiUserOutAttributes;
+    attributes?: JsonApiUserPatchAttributes;
     /**
      *
-     * @type {JsonApiUserOutRelationships}
+     * @type {JsonApiUserPatchRelationships}
      * @memberof JsonApiUserOutWithLinks
      */
-    relationships?: JsonApiUserOutRelationships;
+    relationships?: JsonApiUserPatchRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -5924,16 +5898,16 @@ export interface JsonApiUserPatch {
     id: string;
     /**
      *
-     * @type {JsonApiUserOutAttributes}
+     * @type {JsonApiUserPatchAttributes}
      * @memberof JsonApiUserPatch
      */
-    attributes?: JsonApiUserOutAttributes;
+    attributes?: JsonApiUserPatchAttributes;
     /**
      *
-     * @type {JsonApiUserOutRelationships}
+     * @type {JsonApiUserPatchRelationships}
      * @memberof JsonApiUserPatch
      */
-    relationships?: JsonApiUserOutRelationships;
+    relationships?: JsonApiUserPatchRelationships;
 }
 
 export const JsonApiUserPatchTypeEnum = {
@@ -5942,6 +5916,19 @@ export const JsonApiUserPatchTypeEnum = {
 
 export type JsonApiUserPatchTypeEnum = typeof JsonApiUserPatchTypeEnum[keyof typeof JsonApiUserPatchTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiUserPatchAttributes
+ */
+export interface JsonApiUserPatchAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiUserPatchAttributes
+     */
+    authenticationId?: string;
+}
 /**
  *
  * @export
@@ -5954,6 +5941,19 @@ export interface JsonApiUserPatchDocument {
      * @memberof JsonApiUserPatchDocument
      */
     data: JsonApiUserPatch;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiUserPatchRelationships
+ */
+export interface JsonApiUserPatchRelationships {
+    /**
+     *
+     * @type {JsonApiUserGroupPatchRelationshipsParents}
+     * @memberof JsonApiUserPatchRelationships
+     */
+    userGroups?: JsonApiUserGroupPatchRelationshipsParents;
 }
 /**
  * @type JsonApiUserToOneLinkage
@@ -5982,10 +5982,10 @@ export interface JsonApiVisualizationObjectIn {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardPatchAttributes}
      * @memberof JsonApiVisualizationObjectIn
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
 }
 
 export const JsonApiVisualizationObjectInTypeEnum = {
@@ -6055,10 +6055,10 @@ export interface JsonApiVisualizationObjectOut {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardPatchAttributes}
      * @memberof JsonApiVisualizationObjectOut
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
     /**
      *
      * @type {JsonApiVisualizationObjectOutRelationships}
@@ -6143,16 +6143,16 @@ export interface JsonApiVisualizationObjectOutList {
 export interface JsonApiVisualizationObjectOutRelationships {
     /**
      *
-     * @type {JsonApiDatasetOutRelationshipsFacts}
+     * @type {JsonApiMetricOutRelationshipsFacts}
      * @memberof JsonApiVisualizationObjectOutRelationships
      */
-    facts?: JsonApiDatasetOutRelationshipsFacts;
+    facts?: JsonApiMetricOutRelationshipsFacts;
     /**
      *
-     * @type {JsonApiDatasetOutRelationshipsAttributes}
+     * @type {JsonApiFilterContextOutRelationshipsAttributes}
      * @memberof JsonApiVisualizationObjectOutRelationships
      */
-    attributes?: JsonApiDatasetOutRelationshipsAttributes;
+    attributes?: JsonApiFilterContextOutRelationshipsAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationshipsLabels}
@@ -6192,10 +6192,10 @@ export interface JsonApiVisualizationObjectOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardPatchAttributes}
      * @memberof JsonApiVisualizationObjectOutWithLinks
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
     /**
      *
      * @type {JsonApiVisualizationObjectOutRelationships}
@@ -6237,10 +6237,10 @@ export interface JsonApiVisualizationObjectPatch {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardPatchAttributes}
      * @memberof JsonApiVisualizationObjectPatch
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
 }
 
 export const JsonApiVisualizationObjectPatchTypeEnum = {
@@ -6283,16 +6283,16 @@ export interface JsonApiWorkspaceDataFilterIn {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterOutAttributes}
+     * @type {JsonApiWorkspaceDataFilterPatchAttributes}
      * @memberof JsonApiWorkspaceDataFilterIn
      */
-    attributes?: JsonApiWorkspaceDataFilterOutAttributes;
+    attributes?: JsonApiWorkspaceDataFilterPatchAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterOutRelationships}
+     * @type {JsonApiWorkspaceDataFilterPatchRelationships}
      * @memberof JsonApiWorkspaceDataFilterIn
      */
-    relationships?: JsonApiWorkspaceDataFilterOutRelationships;
+    relationships?: JsonApiWorkspaceDataFilterPatchRelationships;
 }
 
 export const JsonApiWorkspaceDataFilterInTypeEnum = {
@@ -6362,16 +6362,16 @@ export interface JsonApiWorkspaceDataFilterOut {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterOutAttributes}
+     * @type {JsonApiWorkspaceDataFilterPatchAttributes}
      * @memberof JsonApiWorkspaceDataFilterOut
      */
-    attributes?: JsonApiWorkspaceDataFilterOutAttributes;
+    attributes?: JsonApiWorkspaceDataFilterPatchAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterOutRelationships}
+     * @type {JsonApiWorkspaceDataFilterPatchRelationships}
      * @memberof JsonApiWorkspaceDataFilterOut
      */
-    relationships?: JsonApiWorkspaceDataFilterOutRelationships;
+    relationships?: JsonApiWorkspaceDataFilterPatchRelationships;
 }
 
 export const JsonApiWorkspaceDataFilterOutTypeEnum = {
@@ -6381,31 +6381,6 @@ export const JsonApiWorkspaceDataFilterOutTypeEnum = {
 export type JsonApiWorkspaceDataFilterOutTypeEnum =
     typeof JsonApiWorkspaceDataFilterOutTypeEnum[keyof typeof JsonApiWorkspaceDataFilterOutTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiWorkspaceDataFilterOutAttributes
- */
-export interface JsonApiWorkspaceDataFilterOutAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterOutAttributes
-     */
-    title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterOutAttributes
-     */
-    description?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterOutAttributes
-     */
-    columnName?: string;
-}
 /**
  *
  * @export
@@ -6459,32 +6434,6 @@ export interface JsonApiWorkspaceDataFilterOutList {
 /**
  *
  * @export
- * @interface JsonApiWorkspaceDataFilterOutRelationships
- */
-export interface JsonApiWorkspaceDataFilterOutRelationships {
-    /**
-     *
-     * @type {JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings}
-     * @memberof JsonApiWorkspaceDataFilterOutRelationships
-     */
-    filterSettings?: JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings;
-}
-/**
- *
- * @export
- * @interface JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings
- */
-export interface JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings {
-    /**
-     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
-     * @type {Array<JsonApiWorkspaceDataFilterSettingLinkage>}
-     * @memberof JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings
-     */
-    data: Array<JsonApiWorkspaceDataFilterSettingLinkage>;
-}
-/**
- *
- * @export
  * @interface JsonApiWorkspaceDataFilterOutWithLinks
  */
 export interface JsonApiWorkspaceDataFilterOutWithLinks {
@@ -6502,16 +6451,16 @@ export interface JsonApiWorkspaceDataFilterOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterOutAttributes}
+     * @type {JsonApiWorkspaceDataFilterPatchAttributes}
      * @memberof JsonApiWorkspaceDataFilterOutWithLinks
      */
-    attributes?: JsonApiWorkspaceDataFilterOutAttributes;
+    attributes?: JsonApiWorkspaceDataFilterPatchAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterOutRelationships}
+     * @type {JsonApiWorkspaceDataFilterPatchRelationships}
      * @memberof JsonApiWorkspaceDataFilterOutWithLinks
      */
-    relationships?: JsonApiWorkspaceDataFilterOutRelationships;
+    relationships?: JsonApiWorkspaceDataFilterPatchRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -6547,16 +6496,16 @@ export interface JsonApiWorkspaceDataFilterPatch {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterOutAttributes}
+     * @type {JsonApiWorkspaceDataFilterPatchAttributes}
      * @memberof JsonApiWorkspaceDataFilterPatch
      */
-    attributes?: JsonApiWorkspaceDataFilterOutAttributes;
+    attributes?: JsonApiWorkspaceDataFilterPatchAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterOutRelationships}
+     * @type {JsonApiWorkspaceDataFilterPatchRelationships}
      * @memberof JsonApiWorkspaceDataFilterPatch
      */
-    relationships?: JsonApiWorkspaceDataFilterOutRelationships;
+    relationships?: JsonApiWorkspaceDataFilterPatchRelationships;
 }
 
 export const JsonApiWorkspaceDataFilterPatchTypeEnum = {
@@ -6569,6 +6518,31 @@ export type JsonApiWorkspaceDataFilterPatchTypeEnum =
 /**
  *
  * @export
+ * @interface JsonApiWorkspaceDataFilterPatchAttributes
+ */
+export interface JsonApiWorkspaceDataFilterPatchAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceDataFilterPatchAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceDataFilterPatchAttributes
+     */
+    description?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceDataFilterPatchAttributes
+     */
+    columnName?: string;
+}
+/**
+ *
+ * @export
  * @interface JsonApiWorkspaceDataFilterPatchDocument
  */
 export interface JsonApiWorkspaceDataFilterPatchDocument {
@@ -6578,6 +6552,32 @@ export interface JsonApiWorkspaceDataFilterPatchDocument {
      * @memberof JsonApiWorkspaceDataFilterPatchDocument
      */
     data: JsonApiWorkspaceDataFilterPatch;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspaceDataFilterPatchRelationships
+ */
+export interface JsonApiWorkspaceDataFilterPatchRelationships {
+    /**
+     *
+     * @type {JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings}
+     * @memberof JsonApiWorkspaceDataFilterPatchRelationships
+     */
+    filterSettings?: JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings
+ */
+export interface JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     * @type {Array<JsonApiWorkspaceDataFilterSettingLinkage>}
+     * @memberof JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings
+     */
+    data: Array<JsonApiWorkspaceDataFilterSettingLinkage>;
 }
 /**
  * The \\\"type\\\" and \\\"id\\\" to non-empty members.
@@ -6818,16 +6818,16 @@ export interface JsonApiWorkspaceIn {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceOutAttributes}
+     * @type {JsonApiWorkspacePatchAttributes}
      * @memberof JsonApiWorkspaceIn
      */
-    attributes?: JsonApiWorkspaceOutAttributes;
+    attributes?: JsonApiWorkspacePatchAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceOutRelationships}
+     * @type {JsonApiWorkspacePatchRelationships}
      * @memberof JsonApiWorkspaceIn
      */
-    relationships?: JsonApiWorkspaceOutRelationships;
+    relationships?: JsonApiWorkspacePatchRelationships;
 }
 
 export const JsonApiWorkspaceInTypeEnum = {
@@ -6903,16 +6903,16 @@ export interface JsonApiWorkspaceOut {
     meta?: JsonApiWorkspaceOutMeta;
     /**
      *
-     * @type {JsonApiWorkspaceOutAttributes}
+     * @type {JsonApiWorkspacePatchAttributes}
      * @memberof JsonApiWorkspaceOut
      */
-    attributes?: JsonApiWorkspaceOutAttributes;
+    attributes?: JsonApiWorkspacePatchAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceOutRelationships}
+     * @type {JsonApiWorkspacePatchRelationships}
      * @memberof JsonApiWorkspaceOut
      */
-    relationships?: JsonApiWorkspaceOutRelationships;
+    relationships?: JsonApiWorkspacePatchRelationships;
 }
 
 export const JsonApiWorkspaceOutTypeEnum = {
@@ -6922,19 +6922,6 @@ export const JsonApiWorkspaceOutTypeEnum = {
 export type JsonApiWorkspaceOutTypeEnum =
     typeof JsonApiWorkspaceOutTypeEnum[keyof typeof JsonApiWorkspaceOutTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiWorkspaceOutAttributes
- */
-export interface JsonApiWorkspaceOutAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceOutAttributes
-     */
-    name?: string;
-}
 /**
  *
  * @export
@@ -7036,32 +7023,6 @@ export interface JsonApiWorkspaceOutMetaConfig {
 /**
  *
  * @export
- * @interface JsonApiWorkspaceOutRelationships
- */
-export interface JsonApiWorkspaceOutRelationships {
-    /**
-     *
-     * @type {JsonApiWorkspaceOutRelationshipsParent}
-     * @memberof JsonApiWorkspaceOutRelationships
-     */
-    parent?: JsonApiWorkspaceOutRelationshipsParent;
-}
-/**
- *
- * @export
- * @interface JsonApiWorkspaceOutRelationshipsParent
- */
-export interface JsonApiWorkspaceOutRelationshipsParent {
-    /**
-     *
-     * @type {JsonApiWorkspaceToOneLinkage}
-     * @memberof JsonApiWorkspaceOutRelationshipsParent
-     */
-    data: JsonApiWorkspaceToOneLinkage | null;
-}
-/**
- *
- * @export
  * @interface JsonApiWorkspaceOutWithLinks
  */
 export interface JsonApiWorkspaceOutWithLinks {
@@ -7085,16 +7046,16 @@ export interface JsonApiWorkspaceOutWithLinks {
     meta?: JsonApiWorkspaceOutMeta;
     /**
      *
-     * @type {JsonApiWorkspaceOutAttributes}
+     * @type {JsonApiWorkspacePatchAttributes}
      * @memberof JsonApiWorkspaceOutWithLinks
      */
-    attributes?: JsonApiWorkspaceOutAttributes;
+    attributes?: JsonApiWorkspacePatchAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceOutRelationships}
+     * @type {JsonApiWorkspacePatchRelationships}
      * @memberof JsonApiWorkspaceOutWithLinks
      */
-    relationships?: JsonApiWorkspaceOutRelationships;
+    relationships?: JsonApiWorkspacePatchRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -7130,16 +7091,16 @@ export interface JsonApiWorkspacePatch {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceOutAttributes}
+     * @type {JsonApiWorkspacePatchAttributes}
      * @memberof JsonApiWorkspacePatch
      */
-    attributes?: JsonApiWorkspaceOutAttributes;
+    attributes?: JsonApiWorkspacePatchAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceOutRelationships}
+     * @type {JsonApiWorkspacePatchRelationships}
      * @memberof JsonApiWorkspacePatch
      */
-    relationships?: JsonApiWorkspaceOutRelationships;
+    relationships?: JsonApiWorkspacePatchRelationships;
 }
 
 export const JsonApiWorkspacePatchTypeEnum = {
@@ -7152,6 +7113,19 @@ export type JsonApiWorkspacePatchTypeEnum =
 /**
  *
  * @export
+ * @interface JsonApiWorkspacePatchAttributes
+ */
+export interface JsonApiWorkspacePatchAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspacePatchAttributes
+     */
+    name?: string;
+}
+/**
+ *
+ * @export
  * @interface JsonApiWorkspacePatchDocument
  */
 export interface JsonApiWorkspacePatchDocument {
@@ -7161,6 +7135,32 @@ export interface JsonApiWorkspacePatchDocument {
      * @memberof JsonApiWorkspacePatchDocument
      */
     data: JsonApiWorkspacePatch;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspacePatchRelationships
+ */
+export interface JsonApiWorkspacePatchRelationships {
+    /**
+     *
+     * @type {JsonApiWorkspacePatchRelationshipsParent}
+     * @memberof JsonApiWorkspacePatchRelationships
+     */
+    parent?: JsonApiWorkspacePatchRelationshipsParent;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspacePatchRelationshipsParent
+ */
+export interface JsonApiWorkspacePatchRelationshipsParent {
+    /**
+     *
+     * @type {JsonApiWorkspaceToOneLinkage}
+     * @memberof JsonApiWorkspacePatchRelationshipsParent
+     */
+    data: JsonApiWorkspaceToOneLinkage | null;
 }
 /**
  * @type JsonApiWorkspaceToOneLinkage
@@ -8273,19 +8273,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
@@ -8331,19 +8323,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
@@ -8389,19 +8373,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
@@ -8444,19 +8420,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
@@ -8502,19 +8470,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
@@ -8560,19 +8520,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
@@ -8615,19 +8567,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
@@ -8670,19 +8614,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
@@ -8728,19 +8664,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
@@ -8786,19 +8714,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
@@ -8841,19 +8761,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
@@ -8915,19 +8827,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -8935,19 +8839,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             if (page !== undefined) {
-                if (typeof page === "object") {
-                    addFlattenedObjectTo(page, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["page"] = page;
-                }
+                localVarQueryParameter["page"] = page;
             }
 
             if (size !== undefined) {
-                if (typeof size === "object") {
-                    addFlattenedObjectTo(size, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["size"] = size;
-                }
+                localVarQueryParameter["size"] = size;
             }
 
             if (sort) {
@@ -9006,35 +8902,19 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (page !== undefined) {
-                if (typeof page === "object") {
-                    addFlattenedObjectTo(page, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["page"] = page;
-                }
+                localVarQueryParameter["page"] = page;
             }
 
             if (size !== undefined) {
-                if (typeof size === "object") {
-                    addFlattenedObjectTo(size, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["size"] = size;
-                }
+                localVarQueryParameter["size"] = size;
             }
 
             if (sort) {
@@ -9091,19 +8971,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -9111,19 +8983,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             if (page !== undefined) {
-                if (typeof page === "object") {
-                    addFlattenedObjectTo(page, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["page"] = page;
-                }
+                localVarQueryParameter["page"] = page;
             }
 
             if (size !== undefined) {
-                if (typeof size === "object") {
-                    addFlattenedObjectTo(size, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["size"] = size;
-                }
+                localVarQueryParameter["size"] = size;
             }
 
             if (sort) {
@@ -9184,35 +9048,19 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (page !== undefined) {
-                if (typeof page === "object") {
-                    addFlattenedObjectTo(page, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["page"] = page;
-                }
+                localVarQueryParameter["page"] = page;
             }
 
             if (size !== undefined) {
-                if (typeof size === "object") {
-                    addFlattenedObjectTo(size, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["size"] = size;
-                }
+                localVarQueryParameter["size"] = size;
             }
 
             if (sort) {
@@ -9266,35 +9114,19 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (page !== undefined) {
-                if (typeof page === "object") {
-                    addFlattenedObjectTo(page, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["page"] = page;
-                }
+                localVarQueryParameter["page"] = page;
             }
 
             if (size !== undefined) {
-                if (typeof size === "object") {
-                    addFlattenedObjectTo(size, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["size"] = size;
-                }
+                localVarQueryParameter["size"] = size;
             }
 
             if (sort) {
@@ -9302,7 +9134,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             if (metaInclude) {
-                localVarQueryParameter["metaInclude"] = metaInclude.join(COLLECTION_FORMATS.csv);
+                localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
@@ -9351,35 +9183,19 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (page !== undefined) {
-                if (typeof page === "object") {
-                    addFlattenedObjectTo(page, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["page"] = page;
-                }
+                localVarQueryParameter["page"] = page;
             }
 
             if (size !== undefined) {
-                if (typeof size === "object") {
-                    addFlattenedObjectTo(size, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["size"] = size;
-                }
+                localVarQueryParameter["size"] = size;
             }
 
             if (sort) {
@@ -9427,35 +9243,19 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (page !== undefined) {
-                if (typeof page === "object") {
-                    addFlattenedObjectTo(page, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["page"] = page;
-                }
+                localVarQueryParameter["page"] = page;
             }
 
             if (size !== undefined) {
-                if (typeof size === "object") {
-                    addFlattenedObjectTo(size, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["size"] = size;
-                }
+                localVarQueryParameter["size"] = size;
             }
 
             if (sort) {
@@ -9463,7 +9263,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             if (metaInclude) {
-                localVarQueryParameter["metaInclude"] = metaInclude.join(COLLECTION_FORMATS.csv);
+                localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
@@ -9516,19 +9316,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -9536,19 +9328,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             if (page !== undefined) {
-                if (typeof page === "object") {
-                    addFlattenedObjectTo(page, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["page"] = page;
-                }
+                localVarQueryParameter["page"] = page;
             }
 
             if (size !== undefined) {
-                if (typeof size === "object") {
-                    addFlattenedObjectTo(size, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["size"] = size;
-                }
+                localVarQueryParameter["size"] = size;
             }
 
             if (sort) {
@@ -9611,19 +9395,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -9631,19 +9407,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             if (page !== undefined) {
-                if (typeof page === "object") {
-                    addFlattenedObjectTo(page, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["page"] = page;
-                }
+                localVarQueryParameter["page"] = page;
             }
 
             if (size !== undefined) {
-                if (typeof size === "object") {
-                    addFlattenedObjectTo(size, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["size"] = size;
-                }
+                localVarQueryParameter["size"] = size;
             }
 
             if (sort) {
@@ -9706,19 +9474,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -9726,19 +9486,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             if (page !== undefined) {
-                if (typeof page === "object") {
-                    addFlattenedObjectTo(page, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["page"] = page;
-                }
+                localVarQueryParameter["page"] = page;
             }
 
             if (size !== undefined) {
-                if (typeof size === "object") {
-                    addFlattenedObjectTo(size, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["size"] = size;
-                }
+                localVarQueryParameter["size"] = size;
             }
 
             if (sort) {
@@ -9801,19 +9553,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -9821,19 +9565,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             if (page !== undefined) {
-                if (typeof page === "object") {
-                    addFlattenedObjectTo(page, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["page"] = page;
-                }
+                localVarQueryParameter["page"] = page;
             }
 
             if (size !== undefined) {
-                if (typeof size === "object") {
-                    addFlattenedObjectTo(size, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["size"] = size;
-                }
+                localVarQueryParameter["size"] = size;
             }
 
             if (sort) {
@@ -9896,19 +9632,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -9916,19 +9644,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             if (page !== undefined) {
-                if (typeof page === "object") {
-                    addFlattenedObjectTo(page, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["page"] = page;
-                }
+                localVarQueryParameter["page"] = page;
             }
 
             if (size !== undefined) {
-                if (typeof size === "object") {
-                    addFlattenedObjectTo(size, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["size"] = size;
-                }
+                localVarQueryParameter["size"] = size;
             }
 
             if (sort) {
@@ -9982,19 +9702,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -10002,19 +9714,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             if (page !== undefined) {
-                if (typeof page === "object") {
-                    addFlattenedObjectTo(page, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["page"] = page;
-                }
+                localVarQueryParameter["page"] = page;
             }
 
             if (size !== undefined) {
-                if (typeof size === "object") {
-                    addFlattenedObjectTo(size, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["size"] = size;
-                }
+                localVarQueryParameter["size"] = size;
             }
 
             if (sort) {
@@ -10062,19 +9766,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -10082,19 +9778,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             if (page !== undefined) {
-                if (typeof page === "object") {
-                    addFlattenedObjectTo(page, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["page"] = page;
-                }
+                localVarQueryParameter["page"] = page;
             }
 
             if (size !== undefined) {
-                if (typeof size === "object") {
-                    addFlattenedObjectTo(size, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["size"] = size;
-                }
+                localVarQueryParameter["size"] = size;
             }
 
             if (sort) {
@@ -10151,19 +9839,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -10171,19 +9851,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             if (page !== undefined) {
-                if (typeof page === "object") {
-                    addFlattenedObjectTo(page, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["page"] = page;
-                }
+                localVarQueryParameter["page"] = page;
             }
 
             if (size !== undefined) {
-                if (typeof size === "object") {
-                    addFlattenedObjectTo(size, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["size"] = size;
-                }
+                localVarQueryParameter["size"] = size;
             }
 
             if (sort) {
@@ -10246,19 +9918,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -10266,19 +9930,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             if (page !== undefined) {
-                if (typeof page === "object") {
-                    addFlattenedObjectTo(page, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["page"] = page;
-                }
+                localVarQueryParameter["page"] = page;
             }
 
             if (size !== undefined) {
-                if (typeof size === "object") {
-                    addFlattenedObjectTo(size, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["size"] = size;
-                }
+                localVarQueryParameter["size"] = size;
             }
 
             if (sort) {
@@ -10341,19 +9997,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -10361,19 +10009,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             if (page !== undefined) {
-                if (typeof page === "object") {
-                    addFlattenedObjectTo(page, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["page"] = page;
-                }
+                localVarQueryParameter["page"] = page;
             }
 
             if (size !== undefined) {
-                if (typeof size === "object") {
-                    addFlattenedObjectTo(size, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["size"] = size;
-                }
+                localVarQueryParameter["size"] = size;
             }
 
             if (sort) {
@@ -10429,19 +10069,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -10449,19 +10081,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             if (page !== undefined) {
-                if (typeof page === "object") {
-                    addFlattenedObjectTo(page, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["page"] = page;
-                }
+                localVarQueryParameter["page"] = page;
             }
 
             if (size !== undefined) {
-                if (typeof size === "object") {
-                    addFlattenedObjectTo(size, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["size"] = size;
-                }
+                localVarQueryParameter["size"] = size;
             }
 
             if (sort) {
@@ -10469,7 +10093,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             if (metaInclude) {
-                localVarQueryParameter["metaInclude"] = metaInclude.join(COLLECTION_FORMATS.csv);
+                localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
@@ -10582,19 +10206,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -10650,19 +10266,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
@@ -10712,19 +10320,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -10777,19 +10377,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
@@ -10837,19 +10429,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (xGDCVALIDATERELATIONS !== undefined && xGDCVALIDATERELATIONS !== null) {
@@ -10900,23 +10484,15 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (metaInclude) {
-                localVarQueryParameter["metaInclude"] = metaInclude.join(COLLECTION_FORMATS.csv);
+                localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
@@ -10962,19 +10538,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
@@ -11019,23 +10587,15 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (metaInclude) {
-                localVarQueryParameter["metaInclude"] = metaInclude.join(COLLECTION_FORMATS.csv);
+                localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
@@ -11085,19 +10645,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -11157,19 +10709,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -11229,19 +10773,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -11301,19 +10837,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -11373,19 +10901,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -11442,19 +10962,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -11462,7 +10974,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             if (metaInclude) {
-                localVarQueryParameter["metaInclude"] = metaInclude.join(COLLECTION_FORMATS.csv);
+                localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
@@ -11507,19 +11019,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -11568,19 +11072,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -11634,19 +11130,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -11707,19 +11195,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -11779,19 +11259,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -11848,19 +11320,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -11868,7 +11332,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             if (metaInclude) {
-                localVarQueryParameter["metaInclude"] = metaInclude.join(COLLECTION_FORMATS.csv);
+                localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
@@ -11903,7 +11367,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (metaInclude) {
-                localVarQueryParameter["metaInclude"] = metaInclude.join(COLLECTION_FORMATS.csv);
+                localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
@@ -11968,19 +11432,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -12050,19 +11506,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -12125,19 +11573,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -12203,19 +11643,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -12283,19 +11715,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -12360,19 +11784,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -12435,19 +11851,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -12515,19 +11923,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -12599,19 +11999,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -12680,19 +12072,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -12771,19 +12155,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -12850,19 +12226,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -12928,19 +12296,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -13001,19 +12361,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
@@ -13077,19 +12429,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -13155,19 +12499,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -13232,19 +12568,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -13311,19 +12639,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -13384,19 +12704,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -13464,19 +12776,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -13548,19 +12852,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {
@@ -13629,19 +12925,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarQueryParameter = {} as any;
 
             if (predicate !== undefined) {
-                if (typeof predicate === "object") {
-                    addFlattenedObjectTo(predicate, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["predicate"] = predicate;
-                }
+                localVarQueryParameter["predicate"] = predicate;
             }
 
             if (filter !== undefined) {
-                if (typeof filter === "object") {
-                    addFlattenedObjectTo(filter, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["filter"] = filter;
-                }
+                localVarQueryParameter["filter"] = filter;
             }
 
             if (include) {

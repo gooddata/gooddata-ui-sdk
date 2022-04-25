@@ -8,7 +8,7 @@ import { Configuration } from '{{apiRelativeToRoot}}configuration';
 // Some imports not used depending on template conditions, we also need prettier-ignore so that the import does not get split and ts-ignore still works
 // prettier-ignore
 // @ts-ignore
-import { addFlattenedObjectTo, assertParamExists, createRequestFunction, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject } from '{{apiRelativeToRoot}}common';
+import { assertParamExists, createRequestFunction, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject } from '{{apiRelativeToRoot}}common';
 // Some imports not used depending on template conditions, we also need prettier-ignore so that the import does not get split and ts-ignore still works
 // prettier-ignore
 // @ts-ignore
@@ -86,10 +86,20 @@ export const {{classname}}AxiosParamCreator = function (configuration?: Configur
             {{#isArray}}
             if ({{paramName}}) {
             {{#isCollectionFormatMulti}}
+                {{#uniqueItems}}
+                localVarQueryParameter['{{baseName}}'] = Array.from({{paramName}});
+                {{/uniqueItems}}
+                {{^uniqueItems}}
                 localVarQueryParameter['{{baseName}}'] = {{paramName}};
+                {{/uniqueItems}}
             {{/isCollectionFormatMulti}}
             {{^isCollectionFormatMulti}}
+                {{#uniqueItems}}
+                localVarQueryParameter['{{baseName}}'] = Array.from({{paramName}}).join(COLLECTION_FORMATS.{{collectionFormat}});
+                {{/uniqueItems}}
+                {{^uniqueItems}}
                 localVarQueryParameter['{{baseName}}'] = {{paramName}}.join(COLLECTION_FORMATS.{{collectionFormat}});
+                {{/uniqueItems}}
             {{/isCollectionFormatMulti}}
             }
             {{/isArray}}
@@ -107,11 +117,7 @@ export const {{classname}}AxiosParamCreator = function (configuration?: Configur
                     {{paramName}};
                 {{/isDate}}
                 {{^isDate}}
-                if (typeof {{paramName}} === 'object') {
-                    addFlattenedObjectTo({{paramName}}, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter['{{baseName}}'] = {{paramName}};
-                }
+                localVarQueryParameter['{{baseName}}'] = {{paramName}};
                 {{/isDate}}
                 {{/isDateTime}}
             }

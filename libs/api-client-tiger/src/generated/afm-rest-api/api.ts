@@ -20,7 +20,7 @@ import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from "ax
 // Some imports not used depending on template conditions, we also need prettier-ignore so that the import does not get split and ts-ignore still works
 // prettier-ignore
 // @ts-ignore
-import { addFlattenedObjectTo, assertParamExists, createRequestFunction, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject } from './common';
+import { assertParamExists, createRequestFunction, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject } from './common';
 // Some imports not used depending on template conditions, we also need prettier-ignore so that the import does not get split and ts-ignore still works
 // prettier-ignore
 // @ts-ignore
@@ -2152,19 +2152,11 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             const localVarQueryParameter = {} as any;
 
             if (offset !== undefined) {
-                if (typeof offset === "object") {
-                    addFlattenedObjectTo(offset, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["offset"] = offset;
-                }
+                localVarQueryParameter["offset"] = offset;
             }
 
             if (limit !== undefined) {
-                if (typeof limit === "object") {
-                    addFlattenedObjectTo(limit, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["limit"] = limit;
-                }
+                localVarQueryParameter["limit"] = limit;
             }
 
             if (skipCache !== undefined && skipCache !== null) {
@@ -2331,11 +2323,7 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             const localVarQueryParameter = {} as any;
 
             if (explainType !== undefined) {
-                if (typeof explainType === "object") {
-                    addFlattenedObjectTo(explainType, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["explainType"] = explainType;
-                }
+                localVarQueryParameter["explainType"] = explainType;
             }
 
             localVarHeaderParameter["Content-Type"] = "application/json";
