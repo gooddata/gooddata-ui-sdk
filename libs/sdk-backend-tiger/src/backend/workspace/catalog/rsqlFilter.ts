@@ -33,10 +33,10 @@ export function tagsToRsqlFilter({
     return rsqlFilterParts.join(";");
 }
 
-export function addRsqlFilterToParams(
-    params: MetadataGetEntitiesWorkspaceParams,
+export function addRsqlFilterToParams<T extends MetadataGetEntitiesWorkspaceParams>(
+    params: T,
     filter: string,
-): MetadataGetEntitiesWorkspaceParams {
+): T {
     if (isEmpty(filter)) {
         return params;
     }

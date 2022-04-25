@@ -1,6 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 
 import {
+    EntitiesApiGetAllEntitiesAttributesRequest,
     ITigerClient,
     JsonApiAttributeOutList,
     JsonApiAttributeOutWithLinks,
@@ -128,18 +129,19 @@ export async function loadAttributesAndDateDatasets(
     loadAttributes?: boolean,
     loadDateDatasets?: boolean,
 ): Promise<CatalogItem[]> {
-    type Include = Parameters<ITigerClient["entities"]["getAllEntitiesAttributes"]>[0]["include"];
-    const includeObjects: Include = ["labels", "defaultView"];
+    const includeObjects: EntitiesApiGetAllEntitiesAttributesRequest["include"] = ["labels", "defaultView"];
     if (loadDateDatasets) {
         includeObjects.push("dataset");
     }
-    const params = addRsqlFilterToParams({ workspaceId }, rsqlFilter);
+    const params = addRsqlFilterToParams<EntitiesApiGetAllEntitiesAttributesRequest>(
+        { workspaceId, include: includeObjects },
+        rsqlFilter,
+    );
 
     const attributes = await MetadataUtilities.getAllPagesOf(
         client,
         client.entities.getAllEntitiesAttributes,
         params,
-        { query: { include: includeObjects.join(",") } },
     ).then(MetadataUtilities.mergeEntitiesResults);
 
     const catalogItems: CatalogItem[] = [];

@@ -56,7 +56,7 @@ function createLabelMap(
     }
 
     const labels = included.filter((include): include is JsonApiLabelOutWithLinks => {
-        return include.type === JsonApiLabelOutWithLinksTypeEnum.Label;
+        return include.type === JsonApiLabelOutWithLinksTypeEnum.LABEL;
     });
 
     return keyBy(labels, (t) => t.id);

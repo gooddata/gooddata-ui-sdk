@@ -1517,13 +1517,17 @@
                         "type": "string",
                         "description": "Requested label."
                     },
+                    "excludePrimaryLabel": {
+                        "type": "boolean",
+                        "description": "Excludes items from the result that differ only by primary label\n* ```false``` - return items with distinct primary label\n* ```true``` - return items with distinct requested label",
+                        "default": false
+                    },
                     "filterBy": {
                         "$ref": "#/components/schemas/FilterBy"
                     },
                     "sortOrder": {
                         "type": "string",
-                        "description": "Sort order of returned items.\nItems are sorted by ```label``` title.",
-                        "default": "ASC",
+                        "description": "Sort order of returned items.\nItems are sorted by ```label``` title. If no sort order is specified then attribute's ```sortDirection``` is used, which is ASC by default",
                         "enum": ["ASC", "DESC"]
                     },
                     "complementFilter": {

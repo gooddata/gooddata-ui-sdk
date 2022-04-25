@@ -42,10 +42,10 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
                 {
                     objectId: ref.identifier,
                     workspaceId: this.workspace,
+                    include: ["facts", "metrics", "attributes", "labels"],
                 },
                 {
                     headers: jsonApiHeaders,
-                    query: { include: "facts,metrics,attributes,labels" },
                 },
             ),
         );
@@ -114,7 +114,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
                     jsonApiMetricInDocument: {
                         data: {
                             id: measure.id || uuidv4(),
-                            type: JsonApiMetricInTypeEnum.Metric,
+                            type: JsonApiMetricInTypeEnum.METRIC,
                             attributes: metricAttributes,
                         },
                     },
@@ -139,7 +139,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
                     jsonApiMetricInDocument: {
                         data: {
                             id: objectId,
-                            type: JsonApiMetricInTypeEnum.Metric,
+                            type: JsonApiMetricInTypeEnum.METRIC,
                             attributes: metricAttributes,
                         },
                     },
@@ -166,33 +166,24 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
 
     public getMeasureReferencingObjects = async (ref: ObjRef): Promise<IMeasureReferencing> => {
         const id = await objRefToIdentifier(ref, this.authCall);
-        const filterReferencingObj = {
-            filter: `metrics.id==${id}`, // RSQL format of querying data
-        };
 
         const insights = this.authCall((client) =>
-            MetadataUtilities.getAllPagesOf(
-                client,
-                client.entities.getAllEntitiesVisualizationObjects,
-                {
-                    workspaceId: this.workspace,
-                },
-                { query: filterReferencingObj as any }, // return only visualizationObjects that have a link to the given measure
-            )
+            MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesVisualizationObjects, {
+                workspaceId: this.workspace,
+                // return only visualizationObjects that have a link to the given measure
+                filter: `metrics.id==${id}`, // RSQL format of querying data
+            })
                 .then(MetadataUtilities.mergeEntitiesResults)
                 .then((insights) => insights.data.map(visualizationObjectsItemToInsight)),
         );
 
         const measures = this.authCall((client) =>
-            MetadataUtilities.getAllPagesOf(
-                client,
-                client.entities.getAllEntitiesMetrics,
-                {
-                    workspaceId: this.workspace,
-                    include: ["metrics"],
-                },
-                { query: filterReferencingObj as any }, // return only measures that have a link to the given  measure
-            )
+            MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesMetrics, {
+                workspaceId: this.workspace,
+                include: ["metrics"],
+                // return only measures that have a link to the given measure
+                filter: `metrics.id==${id}`, // RSQL format of querying data
+            })
                 .then(MetadataUtilities.mergeEntitiesResults)
                 .then((measures) => measures.data.map(convertMetricFromBackend)),
         );

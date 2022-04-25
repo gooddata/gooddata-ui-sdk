@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { AxiosInstance } from "axios";
 import { ActionsApi, ActionsApiInterface } from "./generated/afm-rest-api";
 
@@ -8,4 +8,4 @@ import { ActionsApi, ActionsApiInterface } from "./generated/afm-rest-api";
  */
 export const tigerExecutionClientFactory = (
     axios: AxiosInstance,
-): Pick<ActionsApiInterface, "computeReport"> => new ActionsApi({}, "", axios);
+): Pick<ActionsApiInterface, "computeReport"> => new ActionsApi(undefined, "", axios);

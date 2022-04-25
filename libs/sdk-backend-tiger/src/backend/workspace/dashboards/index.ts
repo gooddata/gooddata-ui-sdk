@@ -1,8 +1,8 @@
 // (C) 2020-2022 GoodData Corporation
 import {
+    EntitiesApiGetEntityAnalyticalDashboardsRequest,
     isDashboardPluginsItem,
     isVisualizationObjectsItem,
-    ITigerClient,
     JsonApiAnalyticalDashboardInTypeEnum,
     JsonApiAnalyticalDashboardOutDocument,
     JsonApiDashboardPluginInTypeEnum,
@@ -107,12 +107,10 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 {
                     workspaceId: this.workspace,
                     objectId: id,
+                    include: ["filterContexts"],
                 },
                 {
                     headers: jsonApiHeaders,
-                    params: {
-                        include: "filterContexts",
-                    },
                 },
             );
         });
@@ -181,8 +179,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         ref: ObjRef,
         types: SupportedDashboardReferenceTypes[],
     ): Promise<JsonApiAnalyticalDashboardOutDocument> => {
-        type Include = Parameters<ITigerClient["entities"]["getEntityAnalyticalDashboards"]>[0]["include"];
-        const include: Include = ["filterContexts"];
+        const include: EntitiesApiGetEntityAnalyticalDashboardsRequest["include"] = ["filterContexts"];
 
         if (includes(types, "insight")) {
             include.push("visualizationObjects");
@@ -199,12 +196,10 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 {
                     workspaceId: this.workspace,
                     objectId: id,
+                    include,
                 },
                 {
                     headers: jsonApiHeaders,
-                    params: {
-                        include: include.join(","),
-                    },
                 },
             );
         }).then((result) => result.data);
@@ -226,7 +221,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     jsonApiAnalyticalDashboardInDocument: {
                         data: {
                             id: uuidv4(),
-                            type: JsonApiAnalyticalDashboardInTypeEnum.AnalyticalDashboard,
+                            type: JsonApiAnalyticalDashboardInTypeEnum.ANALYTICAL_DASHBOARD,
                             attributes: {
                                 content: dashboardContent,
                                 title: dashboard.title,
@@ -274,7 +269,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     jsonApiAnalyticalDashboardInDocument: {
                         data: {
                             id: objectId,
-                            type: JsonApiAnalyticalDashboardInTypeEnum.AnalyticalDashboard,
+                            type: JsonApiAnalyticalDashboardInTypeEnum.ANALYTICAL_DASHBOARD,
                             attributes: {
                                 content: dashboardContent,
                                 title: updatedDashboard.title,
@@ -383,7 +378,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     jsonApiDashboardPluginInDocument: {
                         data: {
                             id: uuidv4(),
-                            type: JsonApiDashboardPluginInTypeEnum.DashboardPlugin,
+                            type: JsonApiDashboardPluginInTypeEnum.DASHBOARD_PLUGIN,
                             attributes: {
                                 content: pluginContent,
                                 title: plugin.name,
@@ -465,7 +460,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     jsonApiFilterContextInDocument: {
                         data: {
                             id: uuidv4(),
-                            type: JsonApiFilterContextInTypeEnum.FilterContext,
+                            type: JsonApiFilterContextInTypeEnum.FILTER_CONTEXT,
                             attributes: {
                                 content: tigerFilterContext,
                                 title: filterContext.title || "",
@@ -516,7 +511,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     jsonApiFilterContextInDocument: {
                         data: {
                             id: objectId,
-                            type: JsonApiFilterContextInTypeEnum.FilterContext,
+                            type: JsonApiFilterContextInTypeEnum.FILTER_CONTEXT,
                             attributes: {
                                 content: tigerFilterContext,
                                 title: filterContext.title || "",

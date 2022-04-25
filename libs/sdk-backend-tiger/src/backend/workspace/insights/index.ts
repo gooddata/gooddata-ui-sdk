@@ -30,7 +30,6 @@ import sortBy from "lodash/sortBy";
 import {
     jsonApiHeaders,
     MetadataUtilities,
-    MetadataGetEntitiesOptions,
     VisualizationObjectModelV1,
     VisualizationObjectModelV2,
     JsonApiVisualizationObjectInTypeEnum,
@@ -77,19 +76,13 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
 
         const orderBy = options?.orderBy;
         const usesOrderingByUpdated = !orderBy || orderBy === "updated";
-        const optionsToUse: MetadataGetEntitiesOptions = {
-            query: {
-                ...(usesOrderingByUpdated ? {} : { sort: orderBy }),
-            },
-            headers: ValidateRelationsHeader,
-        };
 
         const allInsights = await this.authCall((client) => {
             return MetadataUtilities.getAllPagesOf(
                 client,
                 client.entities.getAllEntitiesVisualizationObjects,
-                { workspaceId: this.workspace },
-                optionsToUse,
+                { workspaceId: this.workspace, ...(usesOrderingByUpdated ? {} : { sort: [orderBy!] }) },
+                { headers: ValidateRelationsHeader },
             )
                 .then(MetadataUtilities.mergeEntitiesResults)
                 .then(MetadataUtilities.filterValidEntities)
@@ -170,7 +163,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                     jsonApiVisualizationObjectInDocument: {
                         data: {
                             id: uuidv4(),
-                            type: JsonApiVisualizationObjectInTypeEnum.VisualizationObject,
+                            type: JsonApiVisualizationObjectInTypeEnum.VISUALIZATION_OBJECT,
                             attributes: {
                                 description: insightTitle(insight),
                                 content: convertInsight(insight),
@@ -203,7 +196,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                     jsonApiVisualizationObjectInDocument: {
                         data: {
                             id: insightId(insight),
-                            type: JsonApiVisualizationObjectInTypeEnum.VisualizationObject,
+                            type: JsonApiVisualizationObjectInTypeEnum.VISUALIZATION_OBJECT,
                             attributes: {
                                 description: insightTitle(insight),
                                 content: convertInsight(insight),
@@ -241,20 +234,14 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
 
     public getInsightReferencingObjects = async (ref: ObjRef): Promise<IInsightReferencing> => {
         const id = await objRefToIdentifier(ref, this.authCall);
-        const filterReferencingObj = {
-            filter: `visualizationObjects.id==${id}`, // RSQL format of querying data
-        };
 
         const dashboards = await this.authCall((client) =>
-            MetadataUtilities.getAllPagesOf(
-                client,
-                client.entities.getAllEntitiesAnalyticalDashboards,
-                {
-                    workspaceId: this.workspace,
-                    include: ["visualizationObjects"], // we must include the visualizationObjects so that we can do predicates on them
-                },
-                { query: filterReferencingObj as any }, // return only dashboards that have a link to the given id in their visualizationObjects
-            )
+            MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesAnalyticalDashboards, {
+                workspaceId: this.workspace,
+                include: ["visualizationObjects"], // we must include the visualizationObjects so that we can do predicates on them
+                // return only dashboards that have a link to the given id in their visualizationObjects
+                filter: `visualizationObjects.id==${id}`, // RSQL format of querying data
+            })
                 .then(MetadataUtilities.mergeEntitiesResults)
                 .then((result) => result.data ?? []),
         );
