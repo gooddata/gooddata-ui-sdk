@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
 import forEach from "lodash/forEach";
@@ -29,13 +29,15 @@ import { getStackItems, isDateBucketItem, setBucketTitles } from "./../bucketHel
 import { getTranslation } from "./../translations";
 import { hasColorMapping } from "./../propertiesHelper";
 
-import columnMeasuresIcon from "../../assets/column/bucket-title-measures.svg";
-import columnViewIcon from "../../assets/column/bucket-title-view.svg";
-import columnStackIcon from "../../assets/column/bucket-title-stack.svg";
-
-import barMeasuresIcon from "../../assets/bar/bucket-title-measures.svg";
-import barViewIcon from "../../assets/bar/bucket-title-view.svg";
-import barStackIcon from "../../assets/bar/bucket-title-stack.svg";
+// If you need to edit these icons
+// reflect changes also in gdc-analytical-designer
+// https://github.com/gooddata/gdc-analytical-designer/blob/develop/app/components/buckets/BucketIcon.tsx
+const columnMeasuresIcon = "local:column/bucket-title-measures.svg";
+const columnViewIcon = "local:column/bucket-title-view.svg";
+const columnStackIcon = "local:column/bucket-title-stack.svg";
+const barMeasuresIcon = "local:bar/bucket-title-measures.svg";
+const barViewIcon = "local:bar/bucket-title-view.svg";
+const barStackIcon = "local:bar/bucket-title-stack.svg";
 
 function setBaseChartBucketWarningMessages(
     referencePoint: IExtendedReferencePoint,

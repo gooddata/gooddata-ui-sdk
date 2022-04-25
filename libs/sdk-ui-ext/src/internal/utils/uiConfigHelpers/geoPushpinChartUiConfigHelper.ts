@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { IntlShape } from "react-intl";
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
@@ -8,10 +8,14 @@ import { UICONFIG, OPEN_AS_REPORT, SUPPORTED } from "../../constants/uiConfig";
 import { BUCKETS } from "../../constants/bucket";
 import { setBucketTitles } from "../bucketHelper";
 
-import geoPushPinBucketLocationIcon from "../../assets/geoPushpin/bucket-title-location-icon.svg";
-import geoPushPinBucketSizeIcon from "../../assets/geoPushpin/bucket-title-size-icon.svg";
-import geoPushPinBucketColorIcon from "../../assets/geoPushpin/bucket-title-color-icon.svg";
-import geoPushPinBucketSegmentIcon from "../../assets/geoPushpin/bucket-title-segment-icon.svg";
+// If you need to edit these icons
+// reflect changes also in gdc-analytical-designer
+// https://github.com/gooddata/gdc-analytical-designer/blob/develop/app/components/buckets/BucketIcon.tsx
+const geoPushPinBucketLocationIcon = "local:geoPushpin/bucket-title-location-icon.svg";
+const geoPushPinBucketSizeIcon = "local:geoPushpin/bucket-title-size-icon.svg";
+const geoPushPinBucketColorIcon = "local:geoPushpin/bucket-title-color-icon.svg";
+const geoPushPinBucketSegmentIcon = "local:geoPushpin/bucket-title-segment-icon.svg";
+
 import { BucketNames } from "@gooddata/sdk-ui";
 
 export function setGeoPushpinUiConfig(

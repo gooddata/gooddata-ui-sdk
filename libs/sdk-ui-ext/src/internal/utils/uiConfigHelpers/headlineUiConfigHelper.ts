@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
 import { IntlShape } from "react-intl";
@@ -13,8 +13,11 @@ import { hasNoMeasures, hasNoSecondaryMeasures } from "./../bucketRules";
 import { setBucketTitles, getItemsCount } from "./../bucketHelper";
 import { getTranslation } from "./../translations";
 
-import headlineMeasuresIcon from "../../assets/headline/bucket-title-measures.svg";
-import headlineSecondaryMeasuresIcon from "../../assets/headline/bucket-title-secondary-measures.svg";
+// If you need to edit these icons
+// reflect changes also in gdc-analytical-designer
+// https://github.com/gooddata/gdc-analytical-designer/blob/develop/app/components/buckets/BucketIcon.tsx
+const headlineMeasuresIcon = "local:headline/bucket-title-measures.svg";
+const headlineSecondaryMeasuresIcon = "local:headline/bucket-title-secondary-measures.svg";
 
 export function getDefaultHeadlineUiConfig(): IUiConfig {
     return cloneDeep(DEFAULT_HEADLINE_UICONFIG);

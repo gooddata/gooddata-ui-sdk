@@ -1,5 +1,341 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`PluggablePivotTable getExtendedReferencePoint given an empty reference point should return a new reference point with pivotTable UI config 1`] = `
+Object {
+  "buckets": Object {
+    "attribute": Object {
+      "accepts": Array [
+        "attribute",
+        "date",
+      ],
+      "allowsDuplicateDates": false,
+      "allowsReordering": true,
+      "allowsSwapping": true,
+      "canAddItems": true,
+      "enabled": true,
+      "icon": "local:table/bucket-title-rows.svg",
+      "isShowInPercentEnabled": false,
+      "itemsLimit": 20,
+      "itemsLimitByType": Object {
+        "date": 1,
+      },
+      "title": "Rows",
+    },
+    "columns": Object {
+      "accepts": Array [
+        "attribute",
+        "date",
+      ],
+      "allowsDuplicateDates": false,
+      "allowsReordering": true,
+      "allowsSwapping": true,
+      "canAddItems": true,
+      "enabled": true,
+      "icon": "local:table/bucket-title-columns.svg",
+      "isShowInPercentEnabled": false,
+      "itemsLimit": 20,
+      "itemsLimitByType": Object {
+        "date": 1,
+      },
+      "title": "Columns",
+    },
+    "filters": Object {
+      "accepts": Array [
+        "attribute",
+        "date",
+      ],
+      "allowsReordering": false,
+      "enabled": true,
+      "isShowInPercentEnabled": false,
+      "itemsLimit": 20,
+      "itemsLimitByType": Object {
+        "date": 1,
+      },
+    },
+    "measures": Object {
+      "accepts": Array [
+        "metric",
+        "fact",
+        "attribute",
+      ],
+      "allowsDuplicateItems": true,
+      "allowsReordering": true,
+      "allowsSwapping": true,
+      "canAddItems": true,
+      "enabled": true,
+      "icon": "local:table/bucket-title-measures.svg",
+      "isShowInPercentEnabled": false,
+      "isShowInPercentVisible": true,
+      "itemsLimit": 20,
+      "title": "Measures",
+    },
+  },
+  "exportConfig": Object {
+    "supported": true,
+  },
+  "openAsReport": Object {
+    "supported": false,
+  },
+  "recommendations": Object {},
+  "supportedOverTimeComparisonTypes": Array [
+    "same_period_previous_year",
+    "previous_period",
+  ],
+}
+`;
+
+exports[`PluggablePivotTable getExtendedReferencePoint given multipleMetricsAndCategoriesReferencePoint should return a new reference point with pivotTable UI config 1`] = `
+Object {
+  "buckets": Object {
+    "attribute": Object {
+      "accepts": Array [
+        "attribute",
+        "date",
+      ],
+      "allowsDuplicateDates": false,
+      "allowsReordering": true,
+      "allowsSwapping": true,
+      "canAddItems": true,
+      "enabled": true,
+      "icon": "local:table/bucket-title-rows.svg",
+      "isShowInPercentEnabled": false,
+      "itemsLimit": 20,
+      "itemsLimitByType": Object {
+        "date": 1,
+      },
+      "title": "Rows",
+    },
+    "columns": Object {
+      "accepts": Array [
+        "attribute",
+        "date",
+      ],
+      "allowsDuplicateDates": false,
+      "allowsReordering": true,
+      "allowsSwapping": true,
+      "canAddItems": true,
+      "enabled": true,
+      "icon": "local:table/bucket-title-columns.svg",
+      "isShowInPercentEnabled": false,
+      "itemsLimit": 20,
+      "itemsLimitByType": Object {
+        "date": 1,
+      },
+      "title": "Columns",
+    },
+    "filters": Object {
+      "accepts": Array [
+        "attribute",
+        "date",
+      ],
+      "allowsReordering": false,
+      "enabled": true,
+      "isShowInPercentEnabled": false,
+      "itemsLimit": 20,
+      "itemsLimitByType": Object {
+        "date": 1,
+      },
+    },
+    "measures": Object {
+      "accepts": Array [
+        "metric",
+        "fact",
+        "attribute",
+      ],
+      "allowsDuplicateItems": true,
+      "allowsReordering": true,
+      "allowsSwapping": true,
+      "canAddItems": true,
+      "enabled": true,
+      "icon": "local:table/bucket-title-measures.svg",
+      "isShowInPercentEnabled": false,
+      "isShowInPercentVisible": true,
+      "itemsLimit": 20,
+      "title": "Measures",
+    },
+  },
+  "exportConfig": Object {
+    "supported": true,
+  },
+  "openAsReport": Object {
+    "supported": false,
+  },
+  "recommendations": Object {},
+  "supportedOverTimeComparisonTypes": Array [
+    "same_period_previous_year",
+    "previous_period",
+  ],
+}
+`;
+
+exports[`PluggablePivotTable getExtendedReferencePoint given simpleStackedReferencePoint should return a new reference point with pivotTable UI config 1`] = `
+Object {
+  "buckets": Object {
+    "attribute": Object {
+      "accepts": Array [
+        "attribute",
+        "date",
+      ],
+      "allowsDuplicateDates": false,
+      "allowsReordering": true,
+      "allowsSwapping": true,
+      "canAddItems": true,
+      "enabled": true,
+      "icon": "local:table/bucket-title-rows.svg",
+      "isShowInPercentEnabled": false,
+      "itemsLimit": 20,
+      "itemsLimitByType": Object {
+        "date": 1,
+      },
+      "title": "Rows",
+    },
+    "columns": Object {
+      "accepts": Array [
+        "attribute",
+        "date",
+      ],
+      "allowsDuplicateDates": false,
+      "allowsReordering": true,
+      "allowsSwapping": true,
+      "canAddItems": true,
+      "enabled": true,
+      "icon": "local:table/bucket-title-columns.svg",
+      "isShowInPercentEnabled": false,
+      "itemsLimit": 20,
+      "itemsLimitByType": Object {
+        "date": 1,
+      },
+      "title": "Columns",
+    },
+    "filters": Object {
+      "accepts": Array [
+        "attribute",
+        "date",
+      ],
+      "allowsReordering": false,
+      "enabled": true,
+      "isShowInPercentEnabled": false,
+      "itemsLimit": 20,
+      "itemsLimitByType": Object {
+        "date": 1,
+      },
+    },
+    "measures": Object {
+      "accepts": Array [
+        "metric",
+        "fact",
+        "attribute",
+      ],
+      "allowsDuplicateItems": true,
+      "allowsReordering": true,
+      "allowsSwapping": true,
+      "canAddItems": true,
+      "enabled": true,
+      "icon": "local:table/bucket-title-measures.svg",
+      "isShowInPercentEnabled": true,
+      "isShowInPercentVisible": true,
+      "itemsLimit": 20,
+      "title": "Measures",
+    },
+  },
+  "exportConfig": Object {
+    "supported": true,
+  },
+  "openAsReport": Object {
+    "supported": false,
+  },
+  "recommendations": Object {},
+  "supportedOverTimeComparisonTypes": Array [
+    "same_period_previous_year",
+    "previous_period",
+  ],
+}
+`;
+
+exports[`PluggablePivotTable getExtendedReferencePoint should return a new reference point with ui config supporting mulple date dimensions when turned on 1`] = `
+Object {
+  "buckets": Object {
+    "attribute": Object {
+      "accepts": Array [
+        "attribute",
+        "date",
+      ],
+      "allowsDuplicateDates": true,
+      "allowsReordering": true,
+      "allowsSwapping": true,
+      "canAddItems": true,
+      "enabled": true,
+      "icon": "local:table/bucket-title-rows.svg",
+      "isShowInPercentEnabled": false,
+      "itemsLimit": 20,
+      "itemsLimitByType": Object {
+        "date": 20,
+      },
+      "title": "Rows",
+    },
+    "columns": Object {
+      "accepts": Array [
+        "attribute",
+        "date",
+      ],
+      "allowsDuplicateDates": true,
+      "allowsReordering": true,
+      "allowsSwapping": true,
+      "canAddItems": true,
+      "enabled": true,
+      "icon": "local:table/bucket-title-columns.svg",
+      "isShowInPercentEnabled": false,
+      "itemsLimit": 20,
+      "itemsLimitByType": Object {
+        "date": 20,
+      },
+      "title": "Columns",
+    },
+    "filters": Object {
+      "accepts": Array [
+        "attribute",
+        "date",
+      ],
+      "allowsReordering": false,
+      "enabled": true,
+      "isShowInPercentEnabled": false,
+      "itemsLimit": 20,
+      "itemsLimitByType": Object {
+        "date": 1,
+      },
+    },
+    "measures": Object {
+      "accepts": Array [
+        "metric",
+        "fact",
+        "attribute",
+      ],
+      "allowsDuplicateItems": true,
+      "allowsReordering": true,
+      "allowsSwapping": true,
+      "canAddItems": true,
+      "enabled": true,
+      "icon": "local:table/bucket-title-measures.svg",
+      "isShowInPercentEnabled": true,
+      "isShowInPercentVisible": true,
+      "itemsLimit": 20,
+      "title": "Measures",
+    },
+  },
+  "exportConfig": Object {
+    "supported": true,
+  },
+  "openAsReport": Object {
+    "supported": false,
+  },
+  "recommendations": Object {},
+  "supportedOverTimeComparisonTypes": Array [
+    "same_period_previous_year",
+    "previous_period",
+  ],
+}
+`;
+
 exports[`createPivotTableConfig should create valid config with auto-resize if feature flag on 1`] = `
 Object {
   "columnSizing": Object {

@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
 import { IntlShape } from "react-intl";
@@ -8,10 +8,13 @@ import { UICONFIG } from "../../constants/uiConfig";
 import { BUCKETS } from "../../constants/bucket";
 import { setBucketTitles } from "./../bucketHelper";
 
-import bubbleMeasuresXIcon from "../../assets/bubble/bucket-title-measures-x.svg";
-import bubbleMeasuresYIcon from "../../assets/bubble/bucket-title-measures-y.svg";
-import bubbleSizeIcon from "../../assets/bubble/bucket-title-size.svg";
-import bubbleViewByIcon from "../../assets/bubble/bucket-title-view-by.svg";
+// If you need to edit these icons
+// reflect changes also in gdc-analytical-designer
+// https://github.com/gooddata/gdc-analytical-designer/blob/develop/app/components/buckets/BucketIcon.tsx
+const bubbleMeasuresXIcon = "local:bubble/bucket-title-measures-x.svg";
+const bubbleMeasuresYIcon = "local:bubble/bucket-title-measures-y.svg";
+const bubbleSizeIcon = "local:bubble/bucket-title-size.svg";
+const bubbleViewByIcon = "local:bubble/bucket-title-view-by.svg";
 
 export function setBubbleChartUiConfig(
     referencePoint: IExtendedReferencePoint,

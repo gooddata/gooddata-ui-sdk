@@ -1,10 +1,8 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import noop from "lodash/noop";
 import { PluggableFunnelChart } from "../PluggableFunnelChart";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
-import * as uiConfigMocks from "../../../../tests/mocks/uiConfigMocks";
 
-import { IBucketOfFun, IFilters } from "../../../../interfaces/Visualization";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 describe("PluggableFunnelChart", () => {
@@ -38,38 +36,7 @@ describe("PluggableFunnelChart", () => {
             referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
         );
 
-        const expectedBuckets: IBucketOfFun[] = [
-            {
-                localIdentifier: "measures",
-                items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items.slice(
-                    0,
-                    1,
-                ),
-            },
-            {
-                localIdentifier: "view",
-                items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[1].items.slice(
-                    0,
-                    1,
-                ),
-            },
-        ];
-        const expectedFilters: IFilters = {
-            localIdentifier: "filters",
-            items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.filters.items.slice(0, 1),
-        };
-        const expectedProperties = {};
-        expect(extendedReferencePoint).toEqual({
-            buckets: expectedBuckets,
-            filters: expectedFilters,
-            uiConfig: {
-                ...uiConfigMocks.multipleMetricsAndCategoriesPieUiConfig,
-                openAsReport: {
-                    supported: false,
-                },
-            },
-            properties: expectedProperties,
-        });
+        expect(extendedReferencePoint).toMatchSnapshot();
     });
 
     it("should return reference point with multiple metrics and no category", async () => {
@@ -79,67 +46,16 @@ describe("PluggableFunnelChart", () => {
             referencePointMocks.multipleMetricsNoCategoriesReferencePoint,
         );
 
-        const expectedBuckets: IBucketOfFun[] = [
-            {
-                localIdentifier: "measures",
-                items: referencePointMocks.multipleMetricsNoCategoriesReferencePoint.buckets[0].items,
-            },
-            {
-                localIdentifier: "view",
-                items: [],
-            },
-        ];
-        const expectedFilters: IFilters = {
-            localIdentifier: "filters",
-            items: [],
-        };
-        const expectedProperties = {};
-        expect(extendedReferencePoint).toEqual({
-            buckets: expectedBuckets,
-            filters: expectedFilters,
-            uiConfig: {
-                ...uiConfigMocks.multipleMetricsNoCategoriesPieUiConfig,
-                openAsReport: {
-                    supported: false,
-                },
-            },
-            properties: expectedProperties,
-        });
+        expect(extendedReferencePoint).toMatchSnapshot();
     });
 
     it("should return reference point with one metric and no category", async () => {
         const funnelChart = createComponent();
-
-        const expectedBuckets: IBucketOfFun[] = [
-            {
-                localIdentifier: "measures",
-                items: referencePointMocks.oneMetricNoCategoriesReferencePoint.buckets[0].items,
-            },
-            {
-                localIdentifier: "view",
-                items: [],
-            },
-        ];
-        const expectedFilters: IFilters = {
-            localIdentifier: "filters",
-            items: referencePointMocks.oneMetricNoCategoriesReferencePoint.filters.items,
-        };
-
         const extendedReferencePoint = await funnelChart.getExtendedReferencePoint(
             referencePointMocks.oneMetricNoCategoriesReferencePoint,
         );
 
-        expect(extendedReferencePoint).toEqual({
-            buckets: expectedBuckets,
-            filters: expectedFilters,
-            properties: {},
-            uiConfig: {
-                ...uiConfigMocks.oneMetricNoCategoriesPieUiConfig,
-                openAsReport: {
-                    supported: false,
-                },
-            },
-        });
+        expect(extendedReferencePoint).toMatchSnapshot();
     });
 
     describe("Over Time Comparison", () => {

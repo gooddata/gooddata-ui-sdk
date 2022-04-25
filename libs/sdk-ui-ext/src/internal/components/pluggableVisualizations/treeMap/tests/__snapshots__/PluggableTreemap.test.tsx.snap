@@ -1,0 +1,845 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PluggableTreemap should return ref. point with 1 M, 1 Vb, 1 Sb and only valid filters for 1 M, 1 Vb, 1 Sb 1`] = `
+Object {
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "attr.owner.department",
+          "dfRef": Object {
+            "uri": "a1/df",
+          },
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "attr.stage.iswon",
+          "dfRef": Object {
+            "uri": "a2/df",
+          },
+          "localIdentifier": "a2",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+  ],
+  "filters": Object {
+    "items": Array [
+      Object {
+        "aggregation": null,
+        "attribute": "attr.owner.department",
+        "filters": Array [
+          Object {
+            "attribute": "attr.owner.department",
+            "displayFormRef": Object {
+              "uri": "owner/attribute/df/uri",
+            },
+            "isInverted": false,
+            "selectedElements": Array [
+              Object {
+                "title": "string",
+                "uri": "string",
+              },
+            ],
+            "totalElementsCount": 10,
+          },
+        ],
+        "localIdentifier": "a1",
+        "type": "attribute",
+      },
+      Object {
+        "aggregation": null,
+        "attribute": "attr.stage.iswon",
+        "filters": Array [
+          Object {
+            "attribute": "attr.stage.iswon",
+            "displayFormRef": Object {
+              "uri": "iswon/attribute/df/uri",
+            },
+            "isInverted": true,
+            "selectedElements": Array [
+              Object {
+                "title": "string",
+                "uri": "string",
+              },
+            ],
+            "totalElementsCount": 10,
+          },
+        ],
+        "localIdentifier": "a2",
+        "type": "attribute",
+      },
+    ],
+    "localIdentifier": "filters",
+  },
+  "properties": Object {},
+  "uiConfig": Object {
+    "buckets": Object {
+      "filters": Object {
+        "accepts": Array [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": Object {
+          "date": 1,
+        },
+      },
+      "measures": Object {
+        "accepts": Array [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-measures.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": true,
+        "itemsLimit": 1,
+        "title": "Measures",
+        "warningMessage": "To add additional measure, remove <span class=\\"attr-field-icon\\" /> from <span class=\\"stack-by\\">view by</span>",
+      },
+      "segment": Object {
+        "accepts": Array [
+          "attribute",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-segment.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "title": "Segment by",
+      },
+      "view": Object {
+        "accepts": Array [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "itemsLimitByType": Object {
+          "date": 1,
+        },
+        "title": "View by",
+      },
+    },
+    "exportConfig": Object {
+      "supported": true,
+    },
+    "openAsReport": Object {
+      "supported": false,
+    },
+    "recommendations": Object {},
+    "supportedOverTimeComparisonTypes": Array [],
+  },
+}
+`;
+
+exports[`PluggableTreemap should return ref. point with 1 M, 1 Vb, 1 Sb and only valid filters for n M, n Attrs 1`] = `
+Object {
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "attr.datedataset",
+          "dateDatasetRef": Object {
+            "identifier": "ds1",
+          },
+          "localIdentifier": "a1",
+          "showInPercent": null,
+          "type": "date",
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "attr.owner.department",
+          "dfRef": Object {
+            "uri": "a1/df",
+          },
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+  ],
+  "filters": Object {
+    "items": Array [],
+    "localIdentifier": "filters",
+  },
+  "properties": Object {},
+  "uiConfig": Object {
+    "buckets": Object {
+      "filters": Object {
+        "accepts": Array [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": Object {
+          "date": 1,
+        },
+      },
+      "measures": Object {
+        "accepts": Array [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-measures.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": true,
+        "itemsLimit": 1,
+        "title": "Measures",
+        "warningMessage": "To add additional measure, remove <span class=\\"date-field-icon\\" /> from <span class=\\"stack-by\\">view by</span>",
+      },
+      "segment": Object {
+        "accepts": Array [
+          "attribute",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-segment.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "title": "Segment by",
+      },
+      "view": Object {
+        "accepts": Array [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "itemsLimitByType": Object {
+          "date": 1,
+        },
+        "title": "View by",
+      },
+    },
+    "exportConfig": Object {
+      "supported": true,
+    },
+    "openAsReport": Object {
+      "supported": false,
+    },
+    "recommendations": Object {},
+    "supportedOverTimeComparisonTypes": Array [],
+  },
+}
+`;
+
+exports[`PluggableTreemap should return ref. point with 1 M, 1 Vb, 1 Sb and only valid filters for n M, n Vb, 0 Sb 1`] = `
+Object {
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "attr.owner.department",
+          "dfRef": Object {
+            "uri": "a1/df",
+          },
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "attr.stage.iswon",
+          "dfRef": Object {
+            "uri": "a2/df",
+          },
+          "localIdentifier": "a2",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+  ],
+  "filters": Object {
+    "items": Array [
+      Object {
+        "aggregation": null,
+        "attribute": "attr.owner.department",
+        "filters": Array [
+          Object {
+            "attribute": "attr.owner.department",
+            "displayFormRef": Object {
+              "uri": "owner/attribute/df/uri",
+            },
+            "isInverted": false,
+            "selectedElements": Array [
+              Object {
+                "title": "string",
+                "uri": "string",
+              },
+            ],
+            "totalElementsCount": 10,
+          },
+        ],
+        "localIdentifier": "a1",
+        "type": "attribute",
+      },
+      Object {
+        "aggregation": null,
+        "attribute": "attr.stage.iswon",
+        "filters": Array [
+          Object {
+            "attribute": "attr.stage.iswon",
+            "displayFormRef": Object {
+              "uri": "iswon/attribute/df/uri",
+            },
+            "isInverted": true,
+            "selectedElements": Array [
+              Object {
+                "title": "string",
+                "uri": "string",
+              },
+            ],
+            "totalElementsCount": 10,
+          },
+        ],
+        "localIdentifier": "a2",
+        "type": "attribute",
+      },
+    ],
+    "localIdentifier": "filters",
+  },
+  "properties": Object {},
+  "uiConfig": Object {
+    "buckets": Object {
+      "filters": Object {
+        "accepts": Array [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": Object {
+          "date": 1,
+        },
+      },
+      "measures": Object {
+        "accepts": Array [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-measures.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": true,
+        "itemsLimit": 1,
+        "title": "Measures",
+        "warningMessage": "To add additional measure, remove <span class=\\"attr-field-icon\\" /> from <span class=\\"stack-by\\">view by</span>",
+      },
+      "segment": Object {
+        "accepts": Array [
+          "attribute",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-segment.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "title": "Segment by",
+      },
+      "view": Object {
+        "accepts": Array [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "itemsLimitByType": Object {
+          "date": 1,
+        },
+        "title": "View by",
+      },
+    },
+    "exportConfig": Object {
+      "supported": true,
+    },
+    "openAsReport": Object {
+      "supported": false,
+    },
+    "recommendations": Object {},
+    "supportedOverTimeComparisonTypes": Array [],
+  },
+}
+`;
+
+exports[`PluggableTreemap should return ref. point with n M, 0 Vb, 0 Sb for n M, 0 Attr 1`] = `
+Object {
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        Object {
+          "aggregation": null,
+          "attribute": "af2Ewj9Re2vK",
+          "localIdentifier": "m2",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        Object {
+          "aggregation": null,
+          "attribute": "dt.opportunitysnapshot.snapshotdate",
+          "localIdentifier": "m3",
+          "showInPercent": null,
+          "showOnSecondaryAxis": true,
+          "type": "metric",
+        },
+        Object {
+          "aggregation": null,
+          "attribute": "acfWntEMcom0",
+          "localIdentifier": "m4",
+          "showInPercent": null,
+          "showOnSecondaryAxis": true,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "segment",
+    },
+  ],
+  "filters": Object {
+    "items": Array [],
+    "localIdentifier": "filters",
+  },
+  "properties": Object {},
+  "uiConfig": Object {
+    "buckets": Object {
+      "filters": Object {
+        "accepts": Array [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": Object {
+          "date": 1,
+        },
+      },
+      "measures": Object {
+        "accepts": Array [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-measures.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": true,
+        "itemsLimit": 20,
+        "title": "Measures",
+      },
+      "segment": Object {
+        "accepts": Array [
+          "attribute",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-segment.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "title": "Segment by",
+      },
+      "view": Object {
+        "accepts": Array [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 0,
+        "itemsLimitByType": Object {
+          "date": 1,
+        },
+        "title": "View by",
+        "warningMessage": "To view by, an insight can have only one measure",
+      },
+    },
+    "exportConfig": Object {
+      "supported": true,
+    },
+    "openAsReport": Object {
+      "supported": false,
+    },
+    "recommendations": Object {},
+    "supportedOverTimeComparisonTypes": Array [],
+  },
+}
+`;
+
+exports[`PluggableTreemap should return ref. point with n M, 0 Vb, 1 Sb for n M, 0 Vb, 1 Sb 1`] = `
+Object {
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        Object {
+          "aggregation": null,
+          "attribute": "af2Ewj9Re2vK",
+          "localIdentifier": "m2",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+        Object {
+          "aggregation": null,
+          "attribute": "dt.opportunitysnapshot.snapshotdate",
+          "localIdentifier": "m3",
+          "showInPercent": null,
+          "showOnSecondaryAxis": true,
+          "type": "metric",
+        },
+        Object {
+          "aggregation": null,
+          "attribute": "acfWntEMcom0",
+          "localIdentifier": "m4",
+          "showInPercent": null,
+          "showOnSecondaryAxis": true,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "attr.owner.department",
+          "dfRef": Object {
+            "uri": "a1/df",
+          },
+          "localIdentifier": "a1",
+          "type": "attribute",
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+  ],
+  "filters": Object {
+    "items": Array [],
+    "localIdentifier": "filters",
+  },
+  "properties": Object {},
+  "uiConfig": Object {
+    "buckets": Object {
+      "filters": Object {
+        "accepts": Array [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": Object {
+          "date": 1,
+        },
+      },
+      "measures": Object {
+        "accepts": Array [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-measures.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": true,
+        "itemsLimit": 20,
+        "title": "Measures",
+      },
+      "segment": Object {
+        "accepts": Array [
+          "attribute",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-segment.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "title": "Segment by",
+      },
+      "view": Object {
+        "accepts": Array [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": false,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 0,
+        "itemsLimitByType": Object {
+          "date": 1,
+        },
+        "title": "View by",
+        "warningMessage": "To view by, an insight can have only one measure",
+      },
+    },
+    "exportConfig": Object {
+      "supported": true,
+    },
+    "openAsReport": Object {
+      "supported": false,
+    },
+    "recommendations": Object {},
+    "supportedOverTimeComparisonTypes": Array [],
+  },
+}
+`;
+
+exports[`PluggableTreemap should return reference point with 1 M, 0 Vb, 0 Sb for 1 M, 0 Vb, 0 Sb 1`] = `
+Object {
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "aggregation": null,
+          "attribute": "aazb6kroa3iC",
+          "localIdentifier": "m1",
+          "showInPercent": null,
+          "showOnSecondaryAxis": null,
+          "type": "metric",
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "segment",
+    },
+  ],
+  "filters": Object {
+    "items": Array [],
+    "localIdentifier": "filters",
+  },
+  "properties": Object {},
+  "uiConfig": Object {
+    "buckets": Object {
+      "filters": Object {
+        "accepts": Array [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "enabled": true,
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 20,
+        "itemsLimitByType": Object {
+          "date": 1,
+        },
+      },
+      "measures": Object {
+        "accepts": Array [
+          "metric",
+          "fact",
+          "attribute",
+        ],
+        "allowsDuplicateItems": true,
+        "allowsReordering": true,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-measures.svg",
+        "isShowInPercentEnabled": false,
+        "isShowInPercentVisible": true,
+        "itemsLimit": 20,
+        "title": "Measures",
+      },
+      "segment": Object {
+        "accepts": Array [
+          "attribute",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-segment.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "title": "Segment by",
+      },
+      "view": Object {
+        "accepts": Array [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "canAddItems": true,
+        "enabled": true,
+        "icon": "local:treemap/bucket-title-view.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "itemsLimitByType": Object {
+          "date": 1,
+        },
+        "title": "View by",
+      },
+    },
+    "exportConfig": Object {
+      "supported": true,
+    },
+    "openAsReport": Object {
+      "supported": false,
+    },
+    "recommendations": Object {},
+    "supportedOverTimeComparisonTypes": Array [],
+  },
+}
+`;

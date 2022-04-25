@@ -2,14 +2,12 @@
 import noop from "lodash/noop";
 import {
     IBucketOfFun,
-    IFilters,
     IExtendedReferencePoint,
     IReferencePoint,
     IVisConstruct,
 } from "../../../../interfaces/Visualization";
 import { PluggableLineChart } from "../PluggableLineChart";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
-import * as uiConfigMocks from "../../../../tests/mocks/uiConfigMocks";
 import { AXIS } from "../../../../constants/axis";
 import { LINE_CHART_SUPPORTED_PROPERTIES } from "../../../../constants/supportedProperties";
 import { IDrillEventIntersectionElement, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
@@ -63,269 +61,71 @@ describe("PluggableLineChart", () => {
     it("should reuse all measures, only one category and no stacks", async () => {
         const lineChart = createComponent();
 
-        const expectedBuckets: IBucketOfFun[] = [
-            {
-                localIdentifier: "measures",
-                items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items,
-            },
-            {
-                localIdentifier: "trend",
-                items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[1].items.slice(
-                    0,
-                    1,
-                ),
-            },
-            {
-                localIdentifier: "segment",
-                items: [],
-            },
-        ];
-        const expectedFilters: IFilters = {
-            localIdentifier: "filters",
-            items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.filters.items.slice(0, 1),
-        };
-
-        const expectedProperties = {
-            controls: {
-                secondary_yaxis: {
-                    measures: ["m3", "m4"],
-                },
-            },
-        };
-
         const extendedReferencePoint = await lineChart.getExtendedReferencePoint(
             referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
         );
 
-        expect(extendedReferencePoint).toEqual({
-            buckets: expectedBuckets,
-            filters: expectedFilters,
-            uiConfig: {
-                ...uiConfigMocks.multipleMetricsAndCategoriesLineUiConfig,
-                axis: "dual",
-            },
-            properties: expectedProperties,
-        });
+        expect(extendedReferencePoint).toMatchSnapshot();
     });
 
     it("should reuse one measure, only one category and one category as stack", async () => {
         const lineChart = createComponent();
 
-        const expectedBuckets: IBucketOfFun[] = [
-            {
-                localIdentifier: "measures",
-                items: referencePointMocks.oneMetricAndManyCategoriesReferencePoint.buckets[0].items,
-            },
-            {
-                localIdentifier: "trend",
-                items: referencePointMocks.oneMetricAndManyCategoriesReferencePoint.buckets[1].items.slice(
-                    0,
-                    1,
-                ),
-            },
-            {
-                localIdentifier: "segment",
-                items: referencePointMocks.oneMetricAndManyCategoriesReferencePoint.buckets[1].items.slice(
-                    1,
-                    2,
-                ),
-            },
-        ];
-        const expectedFilters: IFilters = {
-            localIdentifier: "filters",
-            items: referencePointMocks.oneMetricAndManyCategoriesReferencePoint.filters.items.slice(0, 2),
-        };
-
         const extendedReferencePoint = await lineChart.getExtendedReferencePoint(
             referencePointMocks.oneMetricAndManyCategoriesReferencePoint,
         );
 
-        expect(extendedReferencePoint).toEqual({
-            buckets: expectedBuckets,
-            filters: expectedFilters,
-            uiConfig: uiConfigMocks.oneMetricAndManyCategoriesLineUiConfig,
-            properties: {},
-        });
+        expect(extendedReferencePoint).toMatchSnapshot();
     });
 
     it("should return reference point with Date in categories even it was as second item", async () => {
         const lineChart = createComponent();
 
-        const expectedBuckets: IBucketOfFun[] = [
-            {
-                localIdentifier: "measures",
-                items: referencePointMocks.dateAsSecondCategoryReferencePoint.buckets[0].items,
-            },
-            {
-                localIdentifier: "trend",
-                items: referencePointMocks.dateAsSecondCategoryReferencePoint.buckets[1].items.slice(0, 1),
-            },
-            {
-                localIdentifier: "segment",
-                items: referencePointMocks.dateAsSecondCategoryReferencePoint.buckets[1].items.slice(1, 2),
-            },
-        ];
-        const expectedFilters: IFilters = {
-            localIdentifier: "filters",
-            items: [],
-        };
-
         const extendedReferencePoint = await lineChart.getExtendedReferencePoint(
             referencePointMocks.dateAsSecondCategoryReferencePoint,
         );
 
-        expect(extendedReferencePoint).toEqual({
-            buckets: expectedBuckets,
-            filters: expectedFilters,
-            uiConfig: uiConfigMocks.dateAsSecondCategoryLineUiConfig,
-            properties: {},
-        });
+        expect(extendedReferencePoint).toMatchSnapshot();
     });
 
     it("should return reference point with one category and one stack", async () => {
         const lineChart = createComponent();
 
-        const expectedBuckets: IBucketOfFun[] = [
-            {
-                localIdentifier: "measures",
-                items: referencePointMocks.oneMetricAndCategoryAndStackReferencePoint.buckets[0].items,
-            },
-            {
-                localIdentifier: "trend",
-                items: referencePointMocks.oneMetricAndCategoryAndStackReferencePoint.buckets[1].items.slice(
-                    0,
-                    1,
-                ),
-            },
-            {
-                localIdentifier: "segment",
-                items: referencePointMocks.oneMetricAndCategoryAndStackReferencePoint.buckets[2].items.slice(
-                    0,
-                    1,
-                ),
-            },
-        ];
-        const expectedFilters: IFilters = {
-            localIdentifier: "filters",
-            items: [],
-        };
-
         const extendedReferencePoint = await lineChart.getExtendedReferencePoint(
             referencePointMocks.oneMetricAndCategoryAndStackReferencePoint,
         );
 
-        expect(extendedReferencePoint).toEqual({
-            buckets: expectedBuckets,
-            filters: expectedFilters,
-            uiConfig: uiConfigMocks.oneMetricAndCategoryAndStackLineUiConfig,
-            properties: {},
-        });
+        expect(extendedReferencePoint).toMatchSnapshot();
     });
 
     it("should return reference point when no categories and only stacks", async () => {
         const lineChart = createComponent();
 
-        const expectedBuckets: IBucketOfFun[] = [
-            {
-                localIdentifier: "measures",
-                items: referencePointMocks.oneStackAndNoCategoriesReferencePoint.buckets[0].items,
-            },
-            {
-                localIdentifier: "trend",
-                items: [],
-            },
-            {
-                localIdentifier: "segment",
-                items: referencePointMocks.oneStackAndNoCategoriesReferencePoint.buckets[2].items.slice(0, 1),
-            },
-        ];
-        const expectedFilters: IFilters = {
-            localIdentifier: "filters",
-            items: [],
-        };
-
         const extendedReferencePoint = await lineChart.getExtendedReferencePoint(
             referencePointMocks.oneStackAndNoCategoriesReferencePoint,
         );
 
-        expect(extendedReferencePoint).toEqual({
-            buckets: expectedBuckets,
-            filters: expectedFilters,
-            uiConfig: uiConfigMocks.oneStackAndNoCategoriesLineUiConfig,
-            properties: {},
-        });
+        expect(extendedReferencePoint).toMatchSnapshot();
     });
 
     it("should cut out measures tail when getting nM 0Vb 1Sb", async () => {
         const lineChart = createComponent();
 
-        const expectedBuckets: IBucketOfFun[] = [
-            {
-                localIdentifier: "measures",
-                items: referencePointMocks.multipleMetricsOneStackByReferencePoint.buckets[0].items.slice(
-                    0,
-                    1,
-                ),
-            },
-            {
-                localIdentifier: "trend",
-                items: [],
-            },
-            {
-                localIdentifier: "segment",
-                items: referencePointMocks.multipleMetricsOneStackByReferencePoint.buckets[2].items,
-            },
-        ];
-        const expectedFilters: IFilters = {
-            localIdentifier: "filters",
-            items: [],
-        };
-        const expectedProperties = {};
-
         const extendedReferencePoint = await lineChart.getExtendedReferencePoint(
             referencePointMocks.multipleMetricsOneStackByReferencePoint,
         );
 
-        expect(extendedReferencePoint).toEqual({
-            buckets: expectedBuckets,
-            filters: expectedFilters,
-            uiConfig: uiConfigMocks.oneStackAndNoCategoriesLineUiConfig,
-            properties: expectedProperties,
-        });
+        expect(extendedReferencePoint).toMatchSnapshot();
     });
 
     it("should handle wrong order of buckets in reference point", async () => {
         const lineChart = createComponent();
 
-        const expectedBuckets: IBucketOfFun[] = [
-            {
-                localIdentifier: "measures",
-                items: referencePointMocks.wrongBucketsOrderReferencePoint.buckets[0].items,
-            },
-            {
-                localIdentifier: "trend",
-                items: referencePointMocks.wrongBucketsOrderReferencePoint.buckets[2].items,
-            },
-            {
-                localIdentifier: "segment",
-                items: referencePointMocks.wrongBucketsOrderReferencePoint.buckets[1].items,
-            },
-        ];
-        const expectedFilters: IFilters = {
-            localIdentifier: "filters",
-            items: [],
-        };
-
         const extendedReferencePoint = await lineChart.getExtendedReferencePoint(
             referencePointMocks.wrongBucketsOrderInLineReferencePoint,
         );
 
-        expect(extendedReferencePoint).toEqual({
-            buckets: expectedBuckets,
-            filters: expectedFilters,
-            uiConfig: uiConfigMocks.oneMetricAndManyCategoriesLineUiConfig,
-            properties: {},
-        });
+        expect(extendedReferencePoint).toMatchSnapshot();
     });
 
     it(

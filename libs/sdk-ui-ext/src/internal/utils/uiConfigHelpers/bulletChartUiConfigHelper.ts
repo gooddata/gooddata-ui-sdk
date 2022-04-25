@@ -1,16 +1,19 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import { IntlShape } from "react-intl";
 import { IExtendedReferencePoint } from "../../interfaces/Visualization";
 import { UICONFIG } from "../../constants/uiConfig";
 import { setBucketTitles, getItemsCount } from "./../bucketHelper";
 import { getTranslation } from "../translations";
-
-import bulletPrimaryMeasureIcon from "../../assets/bullet/bucket-title-primary.svg";
-import bulletTargetMeasureIcon from "../../assets/bullet/bucket-title-target.svg";
-import bulletComparativeMeasureIcon from "../../assets/bullet/bucket-title-comparative.svg";
-import bulletViewByIcon from "../../assets/bullet/bucket-title-view-by.svg";
 import { BucketNames } from "@gooddata/sdk-ui";
+
+// If you need to edit these icons
+// reflect changes also in gdc-analytical-designer
+// https://github.com/gooddata/gdc-analytical-designer/blob/develop/app/components/buckets/BucketIcon.tsx
+const bulletPrimaryMeasureIcon = "local:bullet/bucket-title-primary.svg";
+const bulletTargetMeasureIcon = "local:bullet/bucket-title-target.svg";
+const bulletComparativeMeasureIcon = "local:bullet/bucket-title-comparative.svg";
+const bulletViewByIcon = "local:bullet/bucket-title-view-by.svg";
 
 export function getBulletChartUiConfig(
     referencePoint: IExtendedReferencePoint,

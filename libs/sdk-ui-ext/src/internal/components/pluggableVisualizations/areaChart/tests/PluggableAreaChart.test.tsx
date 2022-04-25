@@ -4,7 +4,6 @@ import cloneDeep from "lodash/cloneDeep";
 
 import {
     IBucketOfFun,
-    IFilters,
     IVisProps,
     IVisConstruct,
     IReferencePoint,
@@ -14,8 +13,6 @@ import { PluggableAreaChart } from "../PluggableAreaChart";
 
 import * as testMocks from "../../../../tests/mocks/testMocks";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
-import * as uiConfigMocks from "../../../../tests/mocks/uiConfigMocks";
-import { MAX_VIEW_COUNT } from "../../../../constants/uiConfig";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IAttribute, IInsight, IInsightDefinition, insightSetProperties } from "@gooddata/sdk-model";
 import { Department, Region } from "@gooddata/reference-workspace/dist/md/full";
@@ -54,72 +51,21 @@ describe("PluggableAreaChart", () => {
     it("should return reference point when no categories and only stacks", async () => {
         const areaChart = createComponent();
 
-        const expectedBuckets: IBucketOfFun[] = [
-            {
-                localIdentifier: "measures",
-                items: referencePointMocks.oneStackAndNoCategoriesReferencePoint.buckets[0].items,
-            },
-            {
-                localIdentifier: "view",
-                items: [],
-            },
-            {
-                localIdentifier: "stack",
-                items: referencePointMocks.oneStackAndNoCategoriesReferencePoint.buckets[2].items.slice(0, 1),
-            },
-        ];
-        const expectedFilters: IFilters = {
-            localIdentifier: "filters",
-            items: [],
-        };
-
         const extendedReferencePoint = await areaChart.getExtendedReferencePoint(
             referencePointMocks.oneStackAndNoCategoriesReferencePoint,
         );
 
-        expect(extendedReferencePoint).toEqual({
-            buckets: expectedBuckets,
-            filters: expectedFilters,
-            uiConfig: uiConfigMocks.oneStackAndNoCategoriesAreaUiConfig,
-            properties: {},
-        });
+        expect(extendedReferencePoint).toMatchSnapshot();
     });
 
     it("should cut out measures tail when getting nM 0Vb 1Sb", async () => {
         const baseChart = createComponent();
-        const expectedBuckets: IBucketOfFun[] = [
-            {
-                localIdentifier: "measures",
-                items: referencePointMocks.multipleMetricsOneStackByReferencePoint.buckets[0].items.slice(
-                    0,
-                    1,
-                ),
-            },
-            {
-                localIdentifier: "view",
-                items: [],
-            },
-            {
-                localIdentifier: "stack",
-                items: referencePointMocks.multipleMetricsOneStackByReferencePoint.buckets[2].items,
-            },
-        ];
-        const expectedFilters: IFilters = {
-            localIdentifier: "filters",
-            items: [],
-        };
-        const expectedProperties = {};
 
         const extendedReferencePoint = await baseChart.getExtendedReferencePoint(
             referencePointMocks.multipleMetricsOneStackByReferencePoint,
         );
 
-        expect(extendedReferencePoint).toEqual({
-            buckets: expectedBuckets,
-            filters: expectedFilters,
-            uiConfig: uiConfigMocks.oneMetricAndManyCategoriesAreaUiConfig,
-            properties: expectedProperties,
-        });
+        expect(extendedReferencePoint).toMatchSnapshot();
     });
 
     describe("handling date items", () => {
@@ -606,131 +552,36 @@ describe("PluggableAreaChart", () => {
             const areaChart = createComponent(defaultProps);
             const mockRefPoint = referencePointMocks.oneMetricAndManyCategoriesAndOneStackRefPoint;
 
-            const expectedBuckets: IBucketOfFun[] = [
-                {
-                    localIdentifier: "measures",
-                    items: mockRefPoint.buckets[0].items,
-                },
-                {
-                    localIdentifier: "view",
-                    items: mockRefPoint.buckets[1].items.slice(0, 1),
-                },
-                {
-                    localIdentifier: "stack",
-                    items: mockRefPoint.buckets[2].items,
-                },
-            ];
-            const expectedFilters: IFilters = {
-                localIdentifier: "filters",
-                items: [mockRefPoint.filters.items[0], mockRefPoint.filters.items[2]],
-            };
-
             const extendedReferencePoint = await areaChart.getExtendedReferencePoint(mockRefPoint);
-            expect(extendedReferencePoint).toEqual({
-                buckets: expectedBuckets,
-                filters: expectedFilters,
-                uiConfig: uiConfigMocks.oneMetricAndOneCategoryAndOneStackAreaUiConfig,
-                properties: {},
-            });
+
+            expect(extendedReferencePoint).toMatchSnapshot();
         });
 
         it("should reuse one measure, two categories and no category as stack", async () => {
             const areaChart = createComponent(defaultProps);
             const mockRefPoint = referencePointMocks.oneMetricAndManyCategoriesReferencePoint;
 
-            const expectedBuckets: IBucketOfFun[] = [
-                {
-                    localIdentifier: "measures",
-                    items: mockRefPoint.buckets[0].items,
-                },
-                {
-                    localIdentifier: "view",
-                    items: mockRefPoint.buckets[1].items.slice(0, MAX_VIEW_COUNT),
-                },
-                {
-                    localIdentifier: "stack",
-                    items: [],
-                },
-            ];
-            const expectedFilters: IFilters = {
-                localIdentifier: "filters",
-                items: mockRefPoint.filters.items.slice(0, MAX_VIEW_COUNT),
-            };
-
             const extendedReferencePoint = await areaChart.getExtendedReferencePoint(mockRefPoint);
-            expect(extendedReferencePoint).toEqual({
-                buckets: expectedBuckets,
-                filters: expectedFilters,
-                uiConfig: uiConfigMocks.oneMetricManyCategoriesAreaUiConfig,
-                properties: {},
-            });
+
+            expect(extendedReferencePoint).toMatchSnapshot();
         });
 
         it("should reuse all measures, only one category and no stacks", async () => {
             const areaChart = createComponent(defaultProps);
             const mockRefPoint = referencePointMocks.multipleMetricsAndCategoriesReferencePoint;
 
-            const expectedBuckets: IBucketOfFun[] = [
-                {
-                    localIdentifier: "measures",
-                    items: mockRefPoint.buckets[0].items,
-                },
-                {
-                    localIdentifier: "view",
-                    items: mockRefPoint.buckets[1].items.slice(0, 1),
-                },
-                {
-                    localIdentifier: "stack",
-                    items: [],
-                },
-            ];
-            const expectedFilters: IFilters = {
-                localIdentifier: "filters",
-                items: mockRefPoint.filters.items.slice(0, 1),
-            };
-
             const extendedReferencePoint = await areaChart.getExtendedReferencePoint(mockRefPoint);
-            expect(extendedReferencePoint).toEqual({
-                buckets: expectedBuckets,
-                filters: expectedFilters,
-                uiConfig: uiConfigMocks.multipleMesuresAndCategoriesAreaUiConfig,
-                properties: {},
-            });
+
+            expect(extendedReferencePoint).toMatchSnapshot();
         });
 
         it("should return reference point with Date in categories even it was as third item", async () => {
             const areaChart = createComponent(defaultProps);
             const mockRefPoint = referencePointMocks.dateAsThirdCategoryReferencePointWithoutStack;
-            const expectedBuckets: IBucketOfFun[] = [
-                {
-                    localIdentifier: "measures",
-                    items: mockRefPoint.buckets[0].items,
-                },
-                {
-                    localIdentifier: "view",
-                    items: [
-                        ...mockRefPoint.buckets[1].items.slice(-1),
-                        ...mockRefPoint.buckets[1].items.slice(0, 1),
-                    ],
-                },
-                {
-                    localIdentifier: "stack",
-                    items: [],
-                },
-            ];
-            const expectedFilters: IFilters = {
-                localIdentifier: "filters",
-                items: [],
-            };
 
             const extendedReferencePoint = await areaChart.getExtendedReferencePoint(mockRefPoint);
 
-            expect(extendedReferencePoint).toEqual({
-                buckets: expectedBuckets,
-                filters: expectedFilters,
-                uiConfig: uiConfigMocks.dateAsThirdCategoryAreaUiConfig,
-                properties: {},
-            });
+            expect(extendedReferencePoint).toMatchSnapshot();
         });
 
         it("stackMeasures should be selected when select stackMeasuresToPercent", async () => {

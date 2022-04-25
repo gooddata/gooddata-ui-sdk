@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
 import { IntlShape } from "react-intl";
@@ -8,11 +8,12 @@ import { IExtendedReferencePoint } from "../../interfaces/Visualization";
 import { BUCKETS } from "../../constants/bucket";
 import { setBucketTitles } from "../bucketHelper";
 
-import comboSecondaryMeasuresIcon from "../../assets/combo/bucket-title-secondary-measures.svg";
-
-import columnMeasureIcon from "../../assets/combo/bucket-title-measures-column.svg";
-
-import columnLineIcon from "../../assets/combo/bucket-title-view-column-line.svg";
+// If you need to edit these icons
+// reflect changes also in gdc-analytical-designer
+// https://github.com/gooddata/gdc-analytical-designer/blob/develop/app/components/buckets/BucketIcon.tsx
+const comboSecondaryMeasuresIcon = "local:combo/bucket-title-secondary-measures.svg";
+const columnMeasureIcon = "local:combo/bucket-title-measures-column.svg";
+const columnLineIcon = "local:combo/bucket-title-view-column-line.svg";
 
 import { UICONFIG } from "../../constants/uiConfig";
 

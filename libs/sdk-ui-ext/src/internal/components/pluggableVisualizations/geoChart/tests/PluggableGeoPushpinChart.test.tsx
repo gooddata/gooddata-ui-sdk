@@ -1,7 +1,6 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import noop from "lodash/noop";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
-import * as uiConfigMocks from "../../../../tests/mocks/uiConfigMocks";
 import { PluggableGeoPushpinChart } from "../PluggableGeoPushpinChart";
 import { IExtendedReferencePoint, IVisConstruct } from "../../../../interfaces/Visualization";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
@@ -44,7 +43,7 @@ describe("PluggableGeoPushpinChart", () => {
 
         it("should return a new reference point with geoPushpin UI config", () => {
             return extendedReferencePointPromise.then((extendedReferencePoint) => {
-                expect(extendedReferencePoint.uiConfig).toEqual(uiConfigMocks.defaultGeoPushpinUiConfig);
+                expect(extendedReferencePoint.uiConfig).toMatchSnapshot();
             });
         });
 

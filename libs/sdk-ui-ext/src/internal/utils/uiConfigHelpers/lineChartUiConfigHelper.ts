@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
 import forEach from "lodash/forEach";
@@ -14,12 +14,15 @@ import { hasNoMeasures, hasOneMeasure, hasSomeSegmentByItems, hasNoStacksWithDat
 
 import { getStackItems, setBucketTitles } from "./../bucketHelper";
 import { getTranslation } from "./../translations";
-
-import lineMeasuresIcon from "../../assets/line/bucket-title-measures.svg";
-import lineTrendIcon from "../../assets/line/bucket-title-trend.svg";
-import lineSegmentIcon from "../../assets/line/bucket-title-segment.svg";
 import { hasColorMapping } from "../propertiesHelper";
 import { getBucketItemsWarningMessage } from "./baseChartUiConfigHelper";
+
+// If you need to edit these icons
+// reflect changes also in gdc-analytical-designer
+// https://github.com/gooddata/gdc-analytical-designer/blob/develop/app/components/buckets/BucketIcon.tsx
+const lineMeasuresIcon = "local:line/bucket-title-measures.svg";
+const lineTrendIcon = "local:line/bucket-title-trend.svg";
+const lineSegmentIcon = "local:line/bucket-title-segment.svg";
 
 function setLineChartBucketWarningMessages(referencePoint: IExtendedReferencePoint, intl?: IntlShape) {
     const buckets = referencePoint?.buckets || [];

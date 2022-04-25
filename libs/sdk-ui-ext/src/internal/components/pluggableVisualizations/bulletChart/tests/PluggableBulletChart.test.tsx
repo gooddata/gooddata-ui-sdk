@@ -6,12 +6,10 @@ import * as referencePointMocks from "../../../../tests/mocks/referencePointMock
 import {
     IBucketOfFun,
     IExtendedReferencePoint,
-    IFilters,
     IReferencePoint,
     IVisConstruct,
 } from "../../../../interfaces/Visualization";
-import { DEFAULT_BULLET_CHART_CONFIG } from "../../../../constants/uiConfig";
-import { OverTimeComparisonTypes, BucketNames, IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
+import { OverTimeComparisonTypes, IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { IInsight, IInsightDefinition, IAttribute } from "@gooddata/sdk-model";
 import { Department, Region } from "@gooddata/reference-workspace/dist/md/full";
@@ -49,193 +47,27 @@ describe("PluggableBulletChart", () => {
     });
 
     it("should return reference point with three measures and one category and only valid filters", async () => {
-        const expectedBuckets: IBucketOfFun[] = [
-            {
-                localIdentifier: "measures",
-                items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items.slice(
-                    0,
-                    1,
-                ),
-            },
-            {
-                localIdentifier: "secondary_measures",
-                items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items.slice(
-                    1,
-                    2,
-                ),
-            },
-            {
-                localIdentifier: "tertiary_measures",
-                items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items.slice(
-                    2,
-                    3,
-                ),
-            },
-            {
-                localIdentifier: "view",
-                items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[1].items.slice(
-                    0,
-                    2,
-                ),
-            },
-        ];
-
-        const expectedFilters: IFilters = {
-            localIdentifier: "filters",
-            items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.filters.items.slice(0, 2),
-        };
-
         const extendedReferencePoint = await bulletChart.getExtendedReferencePoint(
             referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
         );
 
-        const expectedUiConfig = {
-            ...DEFAULT_BULLET_CHART_CONFIG,
-            buckets: {
-                [BucketNames.MEASURES]: {
-                    ...DEFAULT_BULLET_CHART_CONFIG.buckets[BucketNames.MEASURES],
-                    canAddItems: false,
-                },
-                [BucketNames.SECONDARY_MEASURES]: {
-                    ...DEFAULT_BULLET_CHART_CONFIG.buckets[BucketNames.MEASURES],
-                    canAddItems: false,
-                },
-                [BucketNames.TERTIARY_MEASURES]: {
-                    ...DEFAULT_BULLET_CHART_CONFIG.buckets[BucketNames.MEASURES],
-                    canAddItems: false,
-                },
-            },
-        };
-
-        expect(extendedReferencePoint).toMatchObject({
-            buckets: expectedBuckets,
-            filters: expectedFilters,
-            uiConfig: expectedUiConfig,
-            properties: {},
-        });
+        expect(extendedReferencePoint).toMatchSnapshot();
     });
 
     it("should return reference point with three measures and no attribute", async () => {
-        const expectedBuckets: IBucketOfFun[] = [
-            {
-                localIdentifier: "measures",
-                items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items.slice(
-                    0,
-                    1,
-                ),
-            },
-            {
-                localIdentifier: "secondary_measures",
-                items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items.slice(
-                    1,
-                    2,
-                ),
-            },
-            {
-                localIdentifier: "tertiary_measures",
-                items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items.slice(
-                    2,
-                    3,
-                ),
-            },
-            {
-                localIdentifier: "view",
-                items: [],
-            },
-        ];
-
-        const expectedFilters: IFilters = {
-            localIdentifier: "filters",
-            items: [],
-        };
-
         const extendedReferencePoint = await bulletChart.getExtendedReferencePoint(
             referencePointMocks.multipleMetricsNoCategoriesReferencePoint,
         );
 
-        const expectedUiConfig = {
-            ...DEFAULT_BULLET_CHART_CONFIG,
-            buckets: {
-                [BucketNames.MEASURES]: {
-                    ...DEFAULT_BULLET_CHART_CONFIG.buckets[BucketNames.MEASURES],
-                    canAddItems: false,
-                },
-                [BucketNames.SECONDARY_MEASURES]: {
-                    ...DEFAULT_BULLET_CHART_CONFIG.buckets[BucketNames.MEASURES],
-                    canAddItems: false,
-                },
-                [BucketNames.TERTIARY_MEASURES]: {
-                    ...DEFAULT_BULLET_CHART_CONFIG.buckets[BucketNames.MEASURES],
-                    canAddItems: false,
-                },
-            },
-        };
-
-        expect(extendedReferencePoint).toMatchObject({
-            buckets: expectedBuckets,
-            filters: expectedFilters,
-            uiConfig: expectedUiConfig,
-            properties: {},
-        });
+        expect(extendedReferencePoint).toMatchSnapshot();
     });
 
     it("should return reference point with target and comparative measures and one category", async () => {
-        const expectedBuckets: IBucketOfFun[] = [
-            {
-                localIdentifier: "measures",
-                items: [],
-            },
-            {
-                localIdentifier: "secondary_measures",
-                items: referencePointMocks.secondaryMeasuresAndAttributeReferencePoint.buckets[1].items.slice(
-                    0,
-                    1,
-                ),
-            },
-            {
-                localIdentifier: "tertiary_measures",
-                items: referencePointMocks.secondaryMeasuresAndAttributeReferencePoint.buckets[1].items.slice(
-                    1,
-                    2,
-                ),
-            },
-            {
-                localIdentifier: "view",
-                items: referencePointMocks.secondaryMeasuresAndAttributeReferencePoint.buckets[2].items.slice(
-                    0,
-                    2,
-                ),
-            },
-        ];
-        const expectedFilters: IFilters = {
-            localIdentifier: "filters",
-            items: referencePointMocks.secondaryMeasuresAndAttributeReferencePoint.filters.items.slice(0, 2),
-        };
-
         const extendedReferencePoint = await bulletChart.getExtendedReferencePoint(
             referencePointMocks.secondaryAndTertiaryMeasuresWithTwoAttributesReferencePoint,
         );
 
-        const expectedUiConfig = {
-            ...DEFAULT_BULLET_CHART_CONFIG,
-            buckets: {
-                [BucketNames.SECONDARY_MEASURES]: {
-                    ...DEFAULT_BULLET_CHART_CONFIG.buckets[BucketNames.MEASURES],
-                    canAddItems: false,
-                },
-                [BucketNames.TERTIARY_MEASURES]: {
-                    ...DEFAULT_BULLET_CHART_CONFIG.buckets[BucketNames.MEASURES],
-                    canAddItems: false,
-                },
-            },
-        };
-
-        expect(extendedReferencePoint).toMatchObject({
-            buckets: expectedBuckets,
-            filters: expectedFilters,
-            uiConfig: expectedUiConfig,
-            properties: {},
-        });
+        expect(extendedReferencePoint).toMatchSnapshot();
     });
 
     describe("handling date items", () => {

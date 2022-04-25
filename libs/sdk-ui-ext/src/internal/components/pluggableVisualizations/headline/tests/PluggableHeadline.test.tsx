@@ -1,15 +1,13 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import ReactDom from "react-dom";
 
 import { PluggableHeadline } from "../PluggableHeadline";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
-import * as uiConfigMocks from "../../../../tests/mocks/uiConfigMocks";
 import * as testMocks from "../../../../tests/mocks/testMocks";
 import {
     IBucketOfFun,
     IExtendedReferencePoint,
-    IFilters,
     IReferencePoint,
     IVisConstruct,
     IVisProps,
@@ -248,33 +246,8 @@ describe("PluggableHeadline", () => {
             const extendedReferencePoint = await createComponent().getExtendedReferencePoint(
                 referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
             );
-            const expectedBuckets: IBucketOfFun[] = [
-                {
-                    localIdentifier: "measures",
-                    items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items.slice(
-                        0,
-                        1,
-                    ),
-                },
-                {
-                    localIdentifier: "secondary_measures",
-                    items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items.slice(
-                        1,
-                        2,
-                    ),
-                },
-            ];
-            const expectedFilters: IFilters = {
-                localIdentifier: "filters",
-                items: [],
-            };
 
-            expect(extendedReferencePoint).toEqual({
-                buckets: expectedBuckets,
-                filters: expectedFilters,
-                properties: {},
-                uiConfig: uiConfigMocks.oneMetricHeadlineUiConfig,
-            });
+            expect(extendedReferencePoint).toMatchSnapshot();
         });
 
         it("should return extended reference point without any derived measures or arithmetic measures created from derived measures within measures bucket if there is no date filter", async () => {
@@ -342,35 +315,12 @@ describe("PluggableHeadline", () => {
 
         it("should correctly process empty reference point", async () => {
             const headline = createComponent();
+
             const extendedReferencePoint = await headline.getExtendedReferencePoint(
                 referencePointMocks.emptyReferencePoint,
             );
-            const expectedBuckets: IBucketOfFun[] = [
-                {
-                    localIdentifier: "measures",
-                    items: [],
-                },
-                {
-                    localIdentifier: "secondary_measures",
-                    items: [],
-                },
-            ];
 
-            const expectedFilters: IFilters = {
-                localIdentifier: "filters",
-                items: [],
-            };
-
-            const expectedUiConfig = { ...uiConfigMocks.oneMetricHeadlineUiConfig };
-            expectedUiConfig.buckets.measures.canAddItems = true;
-            expectedUiConfig.buckets.secondary_measures.canAddItems = true;
-
-            expect(extendedReferencePoint).toEqual({
-                buckets: expectedBuckets,
-                filters: expectedFilters,
-                properties: {},
-                uiConfig: expectedUiConfig,
-            });
+            expect(extendedReferencePoint).toMatchSnapshot();
         });
 
         describe("known buckets", () => {
