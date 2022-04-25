@@ -16,7 +16,7 @@
 // @ts-ignore
 import globalImportUrl from "url";
 import { Configuration } from "./configuration";
-import globalAxios, { AxiosPromise, AxiosInstance } from "axios";
+import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from "axios";
 // Some imports not used depending on template conditions, we also need prettier-ignore so that the import does not get split and ts-ignore still works
 // prettier-ignore
 // @ts-ignore
@@ -1552,10 +1552,10 @@ export interface JsonApiAnalyticalDashboardIn {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardPatchAttributes}
      * @memberof JsonApiAnalyticalDashboardIn
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
 }
 
 export const JsonApiAnalyticalDashboardInTypeEnum = {
@@ -1625,10 +1625,10 @@ export interface JsonApiAnalyticalDashboardOut {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardPatchAttributes}
      * @memberof JsonApiAnalyticalDashboardOut
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationships}
@@ -1644,43 +1644,6 @@ export const JsonApiAnalyticalDashboardOutTypeEnum = {
 export type JsonApiAnalyticalDashboardOutTypeEnum =
     typeof JsonApiAnalyticalDashboardOutTypeEnum[keyof typeof JsonApiAnalyticalDashboardOutTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiAnalyticalDashboardOutAttributes
- */
-export interface JsonApiAnalyticalDashboardOutAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiAnalyticalDashboardOutAttributes
-     */
-    title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiAnalyticalDashboardOutAttributes
-     */
-    description?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof JsonApiAnalyticalDashboardOutAttributes
-     */
-    tags?: Array<string>;
-    /**
-     *
-     * @type {boolean}
-     * @memberof JsonApiAnalyticalDashboardOutAttributes
-     */
-    areRelationsValid?: boolean;
-    /**
-     * Free-form JSON content.
-     * @type {object}
-     * @memberof JsonApiAnalyticalDashboardOutAttributes
-     */
-    content?: object;
-}
 /**
  *
  * @export
@@ -1904,10 +1867,10 @@ export interface JsonApiAnalyticalDashboardOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardPatchAttributes}
      * @memberof JsonApiAnalyticalDashboardOutWithLinks
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationships}
@@ -1949,10 +1912,10 @@ export interface JsonApiAnalyticalDashboardPatch {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardPatchAttributes}
      * @memberof JsonApiAnalyticalDashboardPatch
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
 }
 
 export const JsonApiAnalyticalDashboardPatchTypeEnum = {
@@ -1962,6 +1925,43 @@ export const JsonApiAnalyticalDashboardPatchTypeEnum = {
 export type JsonApiAnalyticalDashboardPatchTypeEnum =
     typeof JsonApiAnalyticalDashboardPatchTypeEnum[keyof typeof JsonApiAnalyticalDashboardPatchTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiAnalyticalDashboardPatchAttributes
+ */
+export interface JsonApiAnalyticalDashboardPatchAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiAnalyticalDashboardPatchAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiAnalyticalDashboardPatchAttributes
+     */
+    description?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof JsonApiAnalyticalDashboardPatchAttributes
+     */
+    tags?: Array<string>;
+    /**
+     *
+     * @type {boolean}
+     * @memberof JsonApiAnalyticalDashboardPatchAttributes
+     */
+    areRelationsValid?: boolean;
+    /**
+     * Free-form JSON content.
+     * @type {object}
+     * @memberof JsonApiAnalyticalDashboardPatchAttributes
+     */
+    content?: object;
+}
 /**
  *
  * @export
@@ -2461,10 +2461,10 @@ export interface JsonApiCookieSecurityConfigurationIn {
     id: string;
     /**
      *
-     * @type {JsonApiCookieSecurityConfigurationInAttributes}
+     * @type {JsonApiCookieSecurityConfigurationOutAttributes}
      * @memberof JsonApiCookieSecurityConfigurationIn
      */
-    attributes?: JsonApiCookieSecurityConfigurationInAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
 }
 
 export const JsonApiCookieSecurityConfigurationInTypeEnum = {
@@ -2474,25 +2474,6 @@ export const JsonApiCookieSecurityConfigurationInTypeEnum = {
 export type JsonApiCookieSecurityConfigurationInTypeEnum =
     typeof JsonApiCookieSecurityConfigurationInTypeEnum[keyof typeof JsonApiCookieSecurityConfigurationInTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiCookieSecurityConfigurationInAttributes
- */
-export interface JsonApiCookieSecurityConfigurationInAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiCookieSecurityConfigurationInAttributes
-     */
-    lastRotation?: string;
-    /**
-     * Length of interval between automatic rotations expressed in format of ISO 8601 duration
-     * @type {string}
-     * @memberof JsonApiCookieSecurityConfigurationInAttributes
-     */
-    rotationInterval?: string;
-}
 /**
  *
  * @export
@@ -2526,10 +2507,10 @@ export interface JsonApiCookieSecurityConfigurationOut {
     id: string;
     /**
      *
-     * @type {JsonApiCookieSecurityConfigurationInAttributes}
+     * @type {JsonApiCookieSecurityConfigurationOutAttributes}
      * @memberof JsonApiCookieSecurityConfigurationOut
      */
-    attributes?: JsonApiCookieSecurityConfigurationInAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
 }
 
 export const JsonApiCookieSecurityConfigurationOutTypeEnum = {
@@ -2539,6 +2520,25 @@ export const JsonApiCookieSecurityConfigurationOutTypeEnum = {
 export type JsonApiCookieSecurityConfigurationOutTypeEnum =
     typeof JsonApiCookieSecurityConfigurationOutTypeEnum[keyof typeof JsonApiCookieSecurityConfigurationOutTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiCookieSecurityConfigurationOutAttributes
+ */
+export interface JsonApiCookieSecurityConfigurationOutAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiCookieSecurityConfigurationOutAttributes
+     */
+    lastRotation?: string;
+    /**
+     * Length of interval between automatic rotations expressed in format of ISO 8601 duration
+     * @type {string}
+     * @memberof JsonApiCookieSecurityConfigurationOutAttributes
+     */
+    rotationInterval?: string;
+}
 /**
  *
  * @export
@@ -2578,10 +2578,10 @@ export interface JsonApiDashboardPluginIn {
     id: string;
     /**
      *
-     * @type {JsonApiDashboardPluginOutAttributes}
+     * @type {JsonApiDashboardPluginPatchAttributes}
      * @memberof JsonApiDashboardPluginIn
      */
-    attributes?: JsonApiDashboardPluginOutAttributes;
+    attributes?: JsonApiDashboardPluginPatchAttributes;
 }
 
 export const JsonApiDashboardPluginInTypeEnum = {
@@ -2651,10 +2651,10 @@ export interface JsonApiDashboardPluginOut {
     id: string;
     /**
      *
-     * @type {JsonApiDashboardPluginOutAttributes}
+     * @type {JsonApiDashboardPluginPatchAttributes}
      * @memberof JsonApiDashboardPluginOut
      */
-    attributes?: JsonApiDashboardPluginOutAttributes;
+    attributes?: JsonApiDashboardPluginPatchAttributes;
 }
 
 export const JsonApiDashboardPluginOutTypeEnum = {
@@ -2664,43 +2664,6 @@ export const JsonApiDashboardPluginOutTypeEnum = {
 export type JsonApiDashboardPluginOutTypeEnum =
     typeof JsonApiDashboardPluginOutTypeEnum[keyof typeof JsonApiDashboardPluginOutTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiDashboardPluginOutAttributes
- */
-export interface JsonApiDashboardPluginOutAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiDashboardPluginOutAttributes
-     */
-    title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiDashboardPluginOutAttributes
-     */
-    description?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof JsonApiDashboardPluginOutAttributes
-     */
-    tags?: Array<string>;
-    /**
-     *
-     * @type {boolean}
-     * @memberof JsonApiDashboardPluginOutAttributes
-     */
-    areRelationsValid?: boolean;
-    /**
-     * Free-form JSON content.
-     * @type {object}
-     * @memberof JsonApiDashboardPluginOutAttributes
-     */
-    content?: object;
-}
 /**
  *
  * @export
@@ -2759,10 +2722,10 @@ export interface JsonApiDashboardPluginOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiDashboardPluginOutAttributes}
+     * @type {JsonApiDashboardPluginPatchAttributes}
      * @memberof JsonApiDashboardPluginOutWithLinks
      */
-    attributes?: JsonApiDashboardPluginOutAttributes;
+    attributes?: JsonApiDashboardPluginPatchAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -2798,10 +2761,10 @@ export interface JsonApiDashboardPluginPatch {
     id: string;
     /**
      *
-     * @type {JsonApiDashboardPluginOutAttributes}
+     * @type {JsonApiDashboardPluginPatchAttributes}
      * @memberof JsonApiDashboardPluginPatch
      */
-    attributes?: JsonApiDashboardPluginOutAttributes;
+    attributes?: JsonApiDashboardPluginPatchAttributes;
 }
 
 export const JsonApiDashboardPluginPatchTypeEnum = {
@@ -2811,6 +2774,43 @@ export const JsonApiDashboardPluginPatchTypeEnum = {
 export type JsonApiDashboardPluginPatchTypeEnum =
     typeof JsonApiDashboardPluginPatchTypeEnum[keyof typeof JsonApiDashboardPluginPatchTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiDashboardPluginPatchAttributes
+ */
+export interface JsonApiDashboardPluginPatchAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiDashboardPluginPatchAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiDashboardPluginPatchAttributes
+     */
+    description?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof JsonApiDashboardPluginPatchAttributes
+     */
+    tags?: Array<string>;
+    /**
+     *
+     * @type {boolean}
+     * @memberof JsonApiDashboardPluginPatchAttributes
+     */
+    areRelationsValid?: boolean;
+    /**
+     * Free-form JSON content.
+     * @type {object}
+     * @memberof JsonApiDashboardPluginPatchAttributes
+     */
+    content?: object;
+}
 /**
  *
  * @export
@@ -2844,10 +2844,10 @@ export interface JsonApiDataSourceIdentifierOut {
     id: string;
     /**
      *
-     * @type {JsonApiDataSourceIdentifierOutMeta}
+     * @type {JsonApiDataSourceOutMeta}
      * @memberof JsonApiDataSourceIdentifierOut
      */
-    meta?: JsonApiDataSourceIdentifierOutMeta;
+    meta?: JsonApiDataSourceOutMeta;
     /**
      *
      * @type {JsonApiDataSourceIdentifierOutAttributes}
@@ -2946,28 +2946,6 @@ export interface JsonApiDataSourceIdentifierOutList {
 /**
  *
  * @export
- * @interface JsonApiDataSourceIdentifierOutMeta
- */
-export interface JsonApiDataSourceIdentifierOutMeta {
-    /**
-     * List of valid permissions for a logged user.
-     * @type {Array<string>}
-     * @memberof JsonApiDataSourceIdentifierOutMeta
-     */
-    permissions?: Array<JsonApiDataSourceIdentifierOutMetaPermissionsEnum>;
-}
-
-export const JsonApiDataSourceIdentifierOutMetaPermissionsEnum = {
-    MANAGE: "MANAGE",
-    USE: "USE",
-} as const;
-
-export type JsonApiDataSourceIdentifierOutMetaPermissionsEnum =
-    typeof JsonApiDataSourceIdentifierOutMetaPermissionsEnum[keyof typeof JsonApiDataSourceIdentifierOutMetaPermissionsEnum];
-
-/**
- *
- * @export
  * @interface JsonApiDataSourceIdentifierOutWithLinks
  */
 export interface JsonApiDataSourceIdentifierOutWithLinks {
@@ -2985,10 +2963,10 @@ export interface JsonApiDataSourceIdentifierOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiDataSourceIdentifierOutMeta}
+     * @type {JsonApiDataSourceOutMeta}
      * @memberof JsonApiDataSourceIdentifierOutWithLinks
      */
-    meta?: JsonApiDataSourceIdentifierOutMeta;
+    meta?: JsonApiDataSourceOutMeta;
     /**
      *
      * @type {JsonApiDataSourceIdentifierOutAttributes}
@@ -3154,10 +3132,10 @@ export interface JsonApiDataSourceOut {
     id: string;
     /**
      *
-     * @type {JsonApiDataSourceIdentifierOutMeta}
+     * @type {JsonApiDataSourceOutMeta}
      * @memberof JsonApiDataSourceOut
      */
-    meta?: JsonApiDataSourceIdentifierOutMeta;
+    meta?: JsonApiDataSourceOutMeta;
     /**
      *
      * @type {JsonApiDataSourceOutAttributes}
@@ -3280,6 +3258,28 @@ export interface JsonApiDataSourceOutList {
 /**
  *
  * @export
+ * @interface JsonApiDataSourceOutMeta
+ */
+export interface JsonApiDataSourceOutMeta {
+    /**
+     * List of valid permissions for a logged user.
+     * @type {Array<string>}
+     * @memberof JsonApiDataSourceOutMeta
+     */
+    permissions?: Array<JsonApiDataSourceOutMetaPermissionsEnum>;
+}
+
+export const JsonApiDataSourceOutMetaPermissionsEnum = {
+    MANAGE: "MANAGE",
+    USE: "USE",
+} as const;
+
+export type JsonApiDataSourceOutMetaPermissionsEnum =
+    typeof JsonApiDataSourceOutMetaPermissionsEnum[keyof typeof JsonApiDataSourceOutMetaPermissionsEnum];
+
+/**
+ *
+ * @export
  * @interface JsonApiDataSourceOutWithLinks
  */
 export interface JsonApiDataSourceOutWithLinks {
@@ -3297,10 +3297,10 @@ export interface JsonApiDataSourceOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiDataSourceIdentifierOutMeta}
+     * @type {JsonApiDataSourceOutMeta}
      * @memberof JsonApiDataSourceOutWithLinks
      */
-    meta?: JsonApiDataSourceIdentifierOutMeta;
+    meta?: JsonApiDataSourceOutMeta;
     /**
      *
      * @type {JsonApiDataSourceOutAttributes}
@@ -3896,48 +3896,22 @@ export interface JsonApiDatasetOutList {
 export interface JsonApiDatasetOutRelationships {
     /**
      *
-     * @type {JsonApiDatasetOutRelationshipsAttributes}
+     * @type {JsonApiFilterContextOutRelationshipsAttributes}
      * @memberof JsonApiDatasetOutRelationships
      */
-    attributes?: JsonApiDatasetOutRelationshipsAttributes;
+    attributes?: JsonApiFilterContextOutRelationshipsAttributes;
     /**
      *
-     * @type {JsonApiDatasetOutRelationshipsFacts}
+     * @type {JsonApiMetricOutRelationshipsFacts}
      * @memberof JsonApiDatasetOutRelationships
      */
-    facts?: JsonApiDatasetOutRelationshipsFacts;
+    facts?: JsonApiMetricOutRelationshipsFacts;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationshipsDatasets}
      * @memberof JsonApiDatasetOutRelationships
      */
     references?: JsonApiAnalyticalDashboardOutRelationshipsDatasets;
-}
-/**
- *
- * @export
- * @interface JsonApiDatasetOutRelationshipsAttributes
- */
-export interface JsonApiDatasetOutRelationshipsAttributes {
-    /**
-     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
-     * @type {Array<JsonApiAttributeLinkage>}
-     * @memberof JsonApiDatasetOutRelationshipsAttributes
-     */
-    data: Array<JsonApiAttributeLinkage>;
-}
-/**
- *
- * @export
- * @interface JsonApiDatasetOutRelationshipsFacts
- */
-export interface JsonApiDatasetOutRelationshipsFacts {
-    /**
-     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
-     * @type {Array<JsonApiFactLinkage>}
-     * @memberof JsonApiDatasetOutRelationshipsFacts
-     */
-    data: Array<JsonApiFactLinkage>;
 }
 /**
  *
@@ -4221,10 +4195,10 @@ export interface JsonApiFilterContextIn {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardPatchAttributes}
      * @memberof JsonApiFilterContextIn
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
 }
 
 export const JsonApiFilterContextInTypeEnum = {
@@ -4294,10 +4268,10 @@ export interface JsonApiFilterContextOut {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardPatchAttributes}
      * @memberof JsonApiFilterContextOut
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
     /**
      *
      * @type {JsonApiFilterContextOutRelationships}
@@ -4380,10 +4354,10 @@ export interface JsonApiFilterContextOutList {
 export interface JsonApiFilterContextOutRelationships {
     /**
      *
-     * @type {JsonApiDatasetOutRelationshipsAttributes}
+     * @type {JsonApiFilterContextOutRelationshipsAttributes}
      * @memberof JsonApiFilterContextOutRelationships
      */
-    attributes?: JsonApiDatasetOutRelationshipsAttributes;
+    attributes?: JsonApiFilterContextOutRelationshipsAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationshipsDatasets}
@@ -4396,6 +4370,19 @@ export interface JsonApiFilterContextOutRelationships {
      * @memberof JsonApiFilterContextOutRelationships
      */
     labels?: JsonApiAnalyticalDashboardOutRelationshipsLabels;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiFilterContextOutRelationshipsAttributes
+ */
+export interface JsonApiFilterContextOutRelationshipsAttributes {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     * @type {Array<JsonApiAttributeLinkage>}
+     * @memberof JsonApiFilterContextOutRelationshipsAttributes
+     */
+    data: Array<JsonApiAttributeLinkage>;
 }
 /**
  *
@@ -4417,10 +4404,10 @@ export interface JsonApiFilterContextOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardPatchAttributes}
      * @memberof JsonApiFilterContextOutWithLinks
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
     /**
      *
      * @type {JsonApiFilterContextOutRelationships}
@@ -4462,10 +4449,10 @@ export interface JsonApiFilterContextPatch {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardPatchAttributes}
      * @memberof JsonApiFilterContextPatch
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
 }
 
 export const JsonApiFilterContextPatchTypeEnum = {
@@ -4882,29 +4869,10 @@ export interface JsonApiMetricOutAttributes {
     areRelationsValid?: boolean;
     /**
      *
-     * @type {JsonApiMetricOutAttributesContent}
+     * @type {JsonApiMetricPatchAttributesContent}
      * @memberof JsonApiMetricOutAttributes
      */
-    content: JsonApiMetricOutAttributesContent;
-}
-/**
- *
- * @export
- * @interface JsonApiMetricOutAttributesContent
- */
-export interface JsonApiMetricOutAttributesContent {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiMetricOutAttributesContent
-     */
-    format?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiMetricOutAttributesContent
-     */
-    maql: string;
+    content: JsonApiMetricPatchAttributesContent;
 }
 /**
  *
@@ -4974,16 +4942,16 @@ export interface JsonApiMetricOutList {
 export interface JsonApiMetricOutRelationships {
     /**
      *
-     * @type {JsonApiDatasetOutRelationshipsFacts}
+     * @type {JsonApiMetricOutRelationshipsFacts}
      * @memberof JsonApiMetricOutRelationships
      */
-    facts?: JsonApiDatasetOutRelationshipsFacts;
+    facts?: JsonApiMetricOutRelationshipsFacts;
     /**
      *
-     * @type {JsonApiDatasetOutRelationshipsAttributes}
+     * @type {JsonApiFilterContextOutRelationshipsAttributes}
      * @memberof JsonApiMetricOutRelationships
      */
-    attributes?: JsonApiDatasetOutRelationshipsAttributes;
+    attributes?: JsonApiFilterContextOutRelationshipsAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationshipsLabels}
@@ -4996,6 +4964,19 @@ export interface JsonApiMetricOutRelationships {
      * @memberof JsonApiMetricOutRelationships
      */
     metrics?: JsonApiAnalyticalDashboardOutRelationshipsMetrics;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiMetricOutRelationshipsFacts
+ */
+export interface JsonApiMetricOutRelationshipsFacts {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     * @type {Array<JsonApiFactLinkage>}
+     * @memberof JsonApiMetricOutRelationshipsFacts
+     */
+    data: Array<JsonApiFactLinkage>;
 }
 /**
  *
@@ -5107,10 +5088,29 @@ export interface JsonApiMetricPatchAttributes {
     areRelationsValid?: boolean;
     /**
      *
-     * @type {JsonApiMetricOutAttributesContent}
+     * @type {JsonApiMetricPatchAttributesContent}
      * @memberof JsonApiMetricPatchAttributes
      */
-    content?: JsonApiMetricOutAttributesContent;
+    content?: JsonApiMetricPatchAttributesContent;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiMetricPatchAttributesContent
+ */
+export interface JsonApiMetricPatchAttributesContent {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiMetricPatchAttributesContent
+     */
+    format?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiMetricPatchAttributesContent
+     */
+    maql: string;
 }
 /**
  *
@@ -5413,10 +5413,10 @@ export interface JsonApiUserGroupIn {
     id: string;
     /**
      *
-     * @type {JsonApiUserGroupOutRelationships}
+     * @type {JsonApiUserGroupPatchRelationships}
      * @memberof JsonApiUserGroupIn
      */
-    relationships?: JsonApiUserGroupOutRelationships;
+    relationships?: JsonApiUserGroupPatchRelationships;
 }
 
 export const JsonApiUserGroupInTypeEnum = {
@@ -5486,10 +5486,10 @@ export interface JsonApiUserGroupOut {
     id: string;
     /**
      *
-     * @type {JsonApiUserGroupOutRelationships}
+     * @type {JsonApiUserGroupPatchRelationships}
      * @memberof JsonApiUserGroupOut
      */
-    relationships?: JsonApiUserGroupOutRelationships;
+    relationships?: JsonApiUserGroupPatchRelationships;
 }
 
 export const JsonApiUserGroupOutTypeEnum = {
@@ -5552,32 +5552,6 @@ export interface JsonApiUserGroupOutList {
 /**
  *
  * @export
- * @interface JsonApiUserGroupOutRelationships
- */
-export interface JsonApiUserGroupOutRelationships {
-    /**
-     *
-     * @type {JsonApiUserGroupOutRelationshipsParents}
-     * @memberof JsonApiUserGroupOutRelationships
-     */
-    parents?: JsonApiUserGroupOutRelationshipsParents;
-}
-/**
- *
- * @export
- * @interface JsonApiUserGroupOutRelationshipsParents
- */
-export interface JsonApiUserGroupOutRelationshipsParents {
-    /**
-     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
-     * @type {Array<JsonApiUserGroupLinkage>}
-     * @memberof JsonApiUserGroupOutRelationshipsParents
-     */
-    data: Array<JsonApiUserGroupLinkage>;
-}
-/**
- *
- * @export
  * @interface JsonApiUserGroupOutWithLinks
  */
 export interface JsonApiUserGroupOutWithLinks {
@@ -5595,10 +5569,10 @@ export interface JsonApiUserGroupOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiUserGroupOutRelationships}
+     * @type {JsonApiUserGroupPatchRelationships}
      * @memberof JsonApiUserGroupOutWithLinks
      */
-    relationships?: JsonApiUserGroupOutRelationships;
+    relationships?: JsonApiUserGroupPatchRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -5634,10 +5608,10 @@ export interface JsonApiUserGroupPatch {
     id: string;
     /**
      *
-     * @type {JsonApiUserGroupOutRelationships}
+     * @type {JsonApiUserGroupPatchRelationships}
      * @memberof JsonApiUserGroupPatch
      */
-    relationships?: JsonApiUserGroupOutRelationships;
+    relationships?: JsonApiUserGroupPatchRelationships;
 }
 
 export const JsonApiUserGroupPatchTypeEnum = {
@@ -5659,6 +5633,32 @@ export interface JsonApiUserGroupPatchDocument {
      * @memberof JsonApiUserGroupPatchDocument
      */
     data: JsonApiUserGroupPatch;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiUserGroupPatchRelationships
+ */
+export interface JsonApiUserGroupPatchRelationships {
+    /**
+     *
+     * @type {JsonApiUserGroupPatchRelationshipsParents}
+     * @memberof JsonApiUserGroupPatchRelationships
+     */
+    parents?: JsonApiUserGroupPatchRelationshipsParents;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiUserGroupPatchRelationshipsParents
+ */
+export interface JsonApiUserGroupPatchRelationshipsParents {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     * @type {Array<JsonApiUserGroupLinkage>}
+     * @memberof JsonApiUserGroupPatchRelationshipsParents
+     */
+    data: Array<JsonApiUserGroupLinkage>;
 }
 /**
  * @type JsonApiUserGroupToOneLinkage
@@ -5687,16 +5687,16 @@ export interface JsonApiUserIn {
     id: string;
     /**
      *
-     * @type {JsonApiUserOutAttributes}
+     * @type {JsonApiUserPatchAttributes}
      * @memberof JsonApiUserIn
      */
-    attributes?: JsonApiUserOutAttributes;
+    attributes?: JsonApiUserPatchAttributes;
     /**
      *
-     * @type {JsonApiUserOutRelationships}
+     * @type {JsonApiUserPatchRelationships}
      * @memberof JsonApiUserIn
      */
-    relationships?: JsonApiUserOutRelationships;
+    relationships?: JsonApiUserPatchRelationships;
 }
 
 export const JsonApiUserInTypeEnum = {
@@ -5765,16 +5765,16 @@ export interface JsonApiUserOut {
     id: string;
     /**
      *
-     * @type {JsonApiUserOutAttributes}
+     * @type {JsonApiUserPatchAttributes}
      * @memberof JsonApiUserOut
      */
-    attributes?: JsonApiUserOutAttributes;
+    attributes?: JsonApiUserPatchAttributes;
     /**
      *
-     * @type {JsonApiUserOutRelationships}
+     * @type {JsonApiUserPatchRelationships}
      * @memberof JsonApiUserOut
      */
-    relationships?: JsonApiUserOutRelationships;
+    relationships?: JsonApiUserPatchRelationships;
 }
 
 export const JsonApiUserOutTypeEnum = {
@@ -5783,19 +5783,6 @@ export const JsonApiUserOutTypeEnum = {
 
 export type JsonApiUserOutTypeEnum = typeof JsonApiUserOutTypeEnum[keyof typeof JsonApiUserOutTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiUserOutAttributes
- */
-export interface JsonApiUserOutAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiUserOutAttributes
-     */
-    authenticationId?: string;
-}
 /**
  *
  * @export
@@ -5849,19 +5836,6 @@ export interface JsonApiUserOutList {
 /**
  *
  * @export
- * @interface JsonApiUserOutRelationships
- */
-export interface JsonApiUserOutRelationships {
-    /**
-     *
-     * @type {JsonApiUserGroupOutRelationshipsParents}
-     * @memberof JsonApiUserOutRelationships
-     */
-    userGroups?: JsonApiUserGroupOutRelationshipsParents;
-}
-/**
- *
- * @export
  * @interface JsonApiUserOutWithLinks
  */
 export interface JsonApiUserOutWithLinks {
@@ -5879,16 +5853,16 @@ export interface JsonApiUserOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiUserOutAttributes}
+     * @type {JsonApiUserPatchAttributes}
      * @memberof JsonApiUserOutWithLinks
      */
-    attributes?: JsonApiUserOutAttributes;
+    attributes?: JsonApiUserPatchAttributes;
     /**
      *
-     * @type {JsonApiUserOutRelationships}
+     * @type {JsonApiUserPatchRelationships}
      * @memberof JsonApiUserOutWithLinks
      */
-    relationships?: JsonApiUserOutRelationships;
+    relationships?: JsonApiUserPatchRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -5924,16 +5898,16 @@ export interface JsonApiUserPatch {
     id: string;
     /**
      *
-     * @type {JsonApiUserOutAttributes}
+     * @type {JsonApiUserPatchAttributes}
      * @memberof JsonApiUserPatch
      */
-    attributes?: JsonApiUserOutAttributes;
+    attributes?: JsonApiUserPatchAttributes;
     /**
      *
-     * @type {JsonApiUserOutRelationships}
+     * @type {JsonApiUserPatchRelationships}
      * @memberof JsonApiUserPatch
      */
-    relationships?: JsonApiUserOutRelationships;
+    relationships?: JsonApiUserPatchRelationships;
 }
 
 export const JsonApiUserPatchTypeEnum = {
@@ -5942,6 +5916,19 @@ export const JsonApiUserPatchTypeEnum = {
 
 export type JsonApiUserPatchTypeEnum = typeof JsonApiUserPatchTypeEnum[keyof typeof JsonApiUserPatchTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiUserPatchAttributes
+ */
+export interface JsonApiUserPatchAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiUserPatchAttributes
+     */
+    authenticationId?: string;
+}
 /**
  *
  * @export
@@ -5954,6 +5941,19 @@ export interface JsonApiUserPatchDocument {
      * @memberof JsonApiUserPatchDocument
      */
     data: JsonApiUserPatch;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiUserPatchRelationships
+ */
+export interface JsonApiUserPatchRelationships {
+    /**
+     *
+     * @type {JsonApiUserGroupPatchRelationshipsParents}
+     * @memberof JsonApiUserPatchRelationships
+     */
+    userGroups?: JsonApiUserGroupPatchRelationshipsParents;
 }
 /**
  * @type JsonApiUserToOneLinkage
@@ -5982,10 +5982,10 @@ export interface JsonApiVisualizationObjectIn {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardPatchAttributes}
      * @memberof JsonApiVisualizationObjectIn
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
 }
 
 export const JsonApiVisualizationObjectInTypeEnum = {
@@ -6055,10 +6055,10 @@ export interface JsonApiVisualizationObjectOut {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardPatchAttributes}
      * @memberof JsonApiVisualizationObjectOut
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
     /**
      *
      * @type {JsonApiVisualizationObjectOutRelationships}
@@ -6143,16 +6143,16 @@ export interface JsonApiVisualizationObjectOutList {
 export interface JsonApiVisualizationObjectOutRelationships {
     /**
      *
-     * @type {JsonApiDatasetOutRelationshipsFacts}
+     * @type {JsonApiMetricOutRelationshipsFacts}
      * @memberof JsonApiVisualizationObjectOutRelationships
      */
-    facts?: JsonApiDatasetOutRelationshipsFacts;
+    facts?: JsonApiMetricOutRelationshipsFacts;
     /**
      *
-     * @type {JsonApiDatasetOutRelationshipsAttributes}
+     * @type {JsonApiFilterContextOutRelationshipsAttributes}
      * @memberof JsonApiVisualizationObjectOutRelationships
      */
-    attributes?: JsonApiDatasetOutRelationshipsAttributes;
+    attributes?: JsonApiFilterContextOutRelationshipsAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationshipsLabels}
@@ -6192,10 +6192,10 @@ export interface JsonApiVisualizationObjectOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardPatchAttributes}
      * @memberof JsonApiVisualizationObjectOutWithLinks
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
     /**
      *
      * @type {JsonApiVisualizationObjectOutRelationships}
@@ -6237,10 +6237,10 @@ export interface JsonApiVisualizationObjectPatch {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardOutAttributes}
+     * @type {JsonApiAnalyticalDashboardPatchAttributes}
      * @memberof JsonApiVisualizationObjectPatch
      */
-    attributes?: JsonApiAnalyticalDashboardOutAttributes;
+    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
 }
 
 export const JsonApiVisualizationObjectPatchTypeEnum = {
@@ -6283,16 +6283,16 @@ export interface JsonApiWorkspaceDataFilterIn {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterOutAttributes}
+     * @type {JsonApiWorkspaceDataFilterPatchAttributes}
      * @memberof JsonApiWorkspaceDataFilterIn
      */
-    attributes?: JsonApiWorkspaceDataFilterOutAttributes;
+    attributes?: JsonApiWorkspaceDataFilterPatchAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterOutRelationships}
+     * @type {JsonApiWorkspaceDataFilterPatchRelationships}
      * @memberof JsonApiWorkspaceDataFilterIn
      */
-    relationships?: JsonApiWorkspaceDataFilterOutRelationships;
+    relationships?: JsonApiWorkspaceDataFilterPatchRelationships;
 }
 
 export const JsonApiWorkspaceDataFilterInTypeEnum = {
@@ -6362,16 +6362,16 @@ export interface JsonApiWorkspaceDataFilterOut {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterOutAttributes}
+     * @type {JsonApiWorkspaceDataFilterPatchAttributes}
      * @memberof JsonApiWorkspaceDataFilterOut
      */
-    attributes?: JsonApiWorkspaceDataFilterOutAttributes;
+    attributes?: JsonApiWorkspaceDataFilterPatchAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterOutRelationships}
+     * @type {JsonApiWorkspaceDataFilterPatchRelationships}
      * @memberof JsonApiWorkspaceDataFilterOut
      */
-    relationships?: JsonApiWorkspaceDataFilterOutRelationships;
+    relationships?: JsonApiWorkspaceDataFilterPatchRelationships;
 }
 
 export const JsonApiWorkspaceDataFilterOutTypeEnum = {
@@ -6381,31 +6381,6 @@ export const JsonApiWorkspaceDataFilterOutTypeEnum = {
 export type JsonApiWorkspaceDataFilterOutTypeEnum =
     typeof JsonApiWorkspaceDataFilterOutTypeEnum[keyof typeof JsonApiWorkspaceDataFilterOutTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiWorkspaceDataFilterOutAttributes
- */
-export interface JsonApiWorkspaceDataFilterOutAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterOutAttributes
-     */
-    title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterOutAttributes
-     */
-    description?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterOutAttributes
-     */
-    columnName?: string;
-}
 /**
  *
  * @export
@@ -6459,32 +6434,6 @@ export interface JsonApiWorkspaceDataFilterOutList {
 /**
  *
  * @export
- * @interface JsonApiWorkspaceDataFilterOutRelationships
- */
-export interface JsonApiWorkspaceDataFilterOutRelationships {
-    /**
-     *
-     * @type {JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings}
-     * @memberof JsonApiWorkspaceDataFilterOutRelationships
-     */
-    filterSettings?: JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings;
-}
-/**
- *
- * @export
- * @interface JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings
- */
-export interface JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings {
-    /**
-     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
-     * @type {Array<JsonApiWorkspaceDataFilterSettingLinkage>}
-     * @memberof JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings
-     */
-    data: Array<JsonApiWorkspaceDataFilterSettingLinkage>;
-}
-/**
- *
- * @export
  * @interface JsonApiWorkspaceDataFilterOutWithLinks
  */
 export interface JsonApiWorkspaceDataFilterOutWithLinks {
@@ -6502,16 +6451,16 @@ export interface JsonApiWorkspaceDataFilterOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterOutAttributes}
+     * @type {JsonApiWorkspaceDataFilterPatchAttributes}
      * @memberof JsonApiWorkspaceDataFilterOutWithLinks
      */
-    attributes?: JsonApiWorkspaceDataFilterOutAttributes;
+    attributes?: JsonApiWorkspaceDataFilterPatchAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterOutRelationships}
+     * @type {JsonApiWorkspaceDataFilterPatchRelationships}
      * @memberof JsonApiWorkspaceDataFilterOutWithLinks
      */
-    relationships?: JsonApiWorkspaceDataFilterOutRelationships;
+    relationships?: JsonApiWorkspaceDataFilterPatchRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -6547,16 +6496,16 @@ export interface JsonApiWorkspaceDataFilterPatch {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterOutAttributes}
+     * @type {JsonApiWorkspaceDataFilterPatchAttributes}
      * @memberof JsonApiWorkspaceDataFilterPatch
      */
-    attributes?: JsonApiWorkspaceDataFilterOutAttributes;
+    attributes?: JsonApiWorkspaceDataFilterPatchAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterOutRelationships}
+     * @type {JsonApiWorkspaceDataFilterPatchRelationships}
      * @memberof JsonApiWorkspaceDataFilterPatch
      */
-    relationships?: JsonApiWorkspaceDataFilterOutRelationships;
+    relationships?: JsonApiWorkspaceDataFilterPatchRelationships;
 }
 
 export const JsonApiWorkspaceDataFilterPatchTypeEnum = {
@@ -6569,6 +6518,31 @@ export type JsonApiWorkspaceDataFilterPatchTypeEnum =
 /**
  *
  * @export
+ * @interface JsonApiWorkspaceDataFilterPatchAttributes
+ */
+export interface JsonApiWorkspaceDataFilterPatchAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceDataFilterPatchAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceDataFilterPatchAttributes
+     */
+    description?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceDataFilterPatchAttributes
+     */
+    columnName?: string;
+}
+/**
+ *
+ * @export
  * @interface JsonApiWorkspaceDataFilterPatchDocument
  */
 export interface JsonApiWorkspaceDataFilterPatchDocument {
@@ -6578,6 +6552,32 @@ export interface JsonApiWorkspaceDataFilterPatchDocument {
      * @memberof JsonApiWorkspaceDataFilterPatchDocument
      */
     data: JsonApiWorkspaceDataFilterPatch;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspaceDataFilterPatchRelationships
+ */
+export interface JsonApiWorkspaceDataFilterPatchRelationships {
+    /**
+     *
+     * @type {JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings}
+     * @memberof JsonApiWorkspaceDataFilterPatchRelationships
+     */
+    filterSettings?: JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings
+ */
+export interface JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     * @type {Array<JsonApiWorkspaceDataFilterSettingLinkage>}
+     * @memberof JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings
+     */
+    data: Array<JsonApiWorkspaceDataFilterSettingLinkage>;
 }
 /**
  * The \\\"type\\\" and \\\"id\\\" to non-empty members.
@@ -6818,16 +6818,16 @@ export interface JsonApiWorkspaceIn {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceOutAttributes}
+     * @type {JsonApiWorkspacePatchAttributes}
      * @memberof JsonApiWorkspaceIn
      */
-    attributes?: JsonApiWorkspaceOutAttributes;
+    attributes?: JsonApiWorkspacePatchAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceOutRelationships}
+     * @type {JsonApiWorkspacePatchRelationships}
      * @memberof JsonApiWorkspaceIn
      */
-    relationships?: JsonApiWorkspaceOutRelationships;
+    relationships?: JsonApiWorkspacePatchRelationships;
 }
 
 export const JsonApiWorkspaceInTypeEnum = {
@@ -6903,16 +6903,16 @@ export interface JsonApiWorkspaceOut {
     meta?: JsonApiWorkspaceOutMeta;
     /**
      *
-     * @type {JsonApiWorkspaceOutAttributes}
+     * @type {JsonApiWorkspacePatchAttributes}
      * @memberof JsonApiWorkspaceOut
      */
-    attributes?: JsonApiWorkspaceOutAttributes;
+    attributes?: JsonApiWorkspacePatchAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceOutRelationships}
+     * @type {JsonApiWorkspacePatchRelationships}
      * @memberof JsonApiWorkspaceOut
      */
-    relationships?: JsonApiWorkspaceOutRelationships;
+    relationships?: JsonApiWorkspacePatchRelationships;
 }
 
 export const JsonApiWorkspaceOutTypeEnum = {
@@ -6922,19 +6922,6 @@ export const JsonApiWorkspaceOutTypeEnum = {
 export type JsonApiWorkspaceOutTypeEnum =
     typeof JsonApiWorkspaceOutTypeEnum[keyof typeof JsonApiWorkspaceOutTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiWorkspaceOutAttributes
- */
-export interface JsonApiWorkspaceOutAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceOutAttributes
-     */
-    name?: string;
-}
 /**
  *
  * @export
@@ -7036,32 +7023,6 @@ export interface JsonApiWorkspaceOutMetaConfig {
 /**
  *
  * @export
- * @interface JsonApiWorkspaceOutRelationships
- */
-export interface JsonApiWorkspaceOutRelationships {
-    /**
-     *
-     * @type {JsonApiWorkspaceOutRelationshipsParent}
-     * @memberof JsonApiWorkspaceOutRelationships
-     */
-    parent?: JsonApiWorkspaceOutRelationshipsParent;
-}
-/**
- *
- * @export
- * @interface JsonApiWorkspaceOutRelationshipsParent
- */
-export interface JsonApiWorkspaceOutRelationshipsParent {
-    /**
-     *
-     * @type {JsonApiWorkspaceToOneLinkage}
-     * @memberof JsonApiWorkspaceOutRelationshipsParent
-     */
-    data: JsonApiWorkspaceToOneLinkage | null;
-}
-/**
- *
- * @export
  * @interface JsonApiWorkspaceOutWithLinks
  */
 export interface JsonApiWorkspaceOutWithLinks {
@@ -7085,16 +7046,16 @@ export interface JsonApiWorkspaceOutWithLinks {
     meta?: JsonApiWorkspaceOutMeta;
     /**
      *
-     * @type {JsonApiWorkspaceOutAttributes}
+     * @type {JsonApiWorkspacePatchAttributes}
      * @memberof JsonApiWorkspaceOutWithLinks
      */
-    attributes?: JsonApiWorkspaceOutAttributes;
+    attributes?: JsonApiWorkspacePatchAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceOutRelationships}
+     * @type {JsonApiWorkspacePatchRelationships}
      * @memberof JsonApiWorkspaceOutWithLinks
      */
-    relationships?: JsonApiWorkspaceOutRelationships;
+    relationships?: JsonApiWorkspacePatchRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -7130,16 +7091,16 @@ export interface JsonApiWorkspacePatch {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceOutAttributes}
+     * @type {JsonApiWorkspacePatchAttributes}
      * @memberof JsonApiWorkspacePatch
      */
-    attributes?: JsonApiWorkspaceOutAttributes;
+    attributes?: JsonApiWorkspacePatchAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceOutRelationships}
+     * @type {JsonApiWorkspacePatchRelationships}
      * @memberof JsonApiWorkspacePatch
      */
-    relationships?: JsonApiWorkspaceOutRelationships;
+    relationships?: JsonApiWorkspacePatchRelationships;
 }
 
 export const JsonApiWorkspacePatchTypeEnum = {
@@ -7152,6 +7113,19 @@ export type JsonApiWorkspacePatchTypeEnum =
 /**
  *
  * @export
+ * @interface JsonApiWorkspacePatchAttributes
+ */
+export interface JsonApiWorkspacePatchAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspacePatchAttributes
+     */
+    name?: string;
+}
+/**
+ *
+ * @export
  * @interface JsonApiWorkspacePatchDocument
  */
 export interface JsonApiWorkspacePatchDocument {
@@ -7161,6 +7135,32 @@ export interface JsonApiWorkspacePatchDocument {
      * @memberof JsonApiWorkspacePatchDocument
      */
     data: JsonApiWorkspacePatch;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspacePatchRelationships
+ */
+export interface JsonApiWorkspacePatchRelationships {
+    /**
+     *
+     * @type {JsonApiWorkspacePatchRelationshipsParent}
+     * @memberof JsonApiWorkspacePatchRelationships
+     */
+    parent?: JsonApiWorkspacePatchRelationshipsParent;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspacePatchRelationshipsParent
+ */
+export interface JsonApiWorkspacePatchRelationshipsParent {
+    /**
+     *
+     * @type {JsonApiWorkspaceToOneLinkage}
+     * @memberof JsonApiWorkspacePatchRelationshipsParent
+     */
+    data: JsonApiWorkspaceToOneLinkage | null;
 }
 /**
  * @type JsonApiWorkspaceToOneLinkage
@@ -7559,7 +7559,7 @@ export interface ActionsApiInterface {
             dataSourceId: string;
             generateLdmRequest: GenerateLdmRequest;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<DeclarativeModel>;
 
     /**
@@ -7574,7 +7574,7 @@ export interface ActionsApiInterface {
         params: {
             dataSourceId: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 }
 
@@ -7599,7 +7599,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
             dataSourceId: string;
             generateLdmRequest: GenerateLdmRequest;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return ActionsApiFp(this.configuration).generateLogicalModel(params, options)(
             this.axios,
@@ -7619,7 +7619,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
         params: {
             dataSourceId: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return ActionsApiFp(this.configuration).registerUploadNotification(params, options)(
             this.axios,
@@ -18733,7 +18733,7 @@ export interface EntitiesApiInterface {
                 | "ALL"
             >;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
 
     /**
@@ -18749,7 +18749,7 @@ export interface EntitiesApiInterface {
             userId: string;
             jsonApiApiTokenInDocument: JsonApiApiTokenInDocument;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiApiTokenOutDocument>;
 
     /**
@@ -18765,7 +18765,7 @@ export interface EntitiesApiInterface {
             workspaceId: string;
             jsonApiDashboardPluginInDocument: JsonApiDashboardPluginInDocument;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiDashboardPluginOutDocument>;
 
     /**
@@ -18779,7 +18779,7 @@ export interface EntitiesApiInterface {
         params: {
             jsonApiDataSourceInDocument: JsonApiDataSourceInDocument;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiDataSourceOutDocument>;
 
     /**
@@ -18797,7 +18797,7 @@ export interface EntitiesApiInterface {
             jsonApiFilterContextInDocument: JsonApiFilterContextInDocument;
             include?: Array<"attributes" | "datasets" | "labels" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiFilterContextOutDocument>;
 
     /**
@@ -18815,7 +18815,7 @@ export interface EntitiesApiInterface {
             jsonApiMetricInDocument: JsonApiMetricInDocument;
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiMetricOutDocument>;
 
     /**
@@ -18831,7 +18831,7 @@ export interface EntitiesApiInterface {
             jsonApiUserGroupInDocument: JsonApiUserGroupInDocument;
             include?: Array<"userGroups" | "parents" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiUserGroupOutDocument>;
 
     /**
@@ -18847,7 +18847,7 @@ export interface EntitiesApiInterface {
             jsonApiUserInDocument: JsonApiUserInDocument;
             include?: Array<"userGroups" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiUserOutDocument>;
 
     /**
@@ -18865,7 +18865,7 @@ export interface EntitiesApiInterface {
             jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument;
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
 
     /**
@@ -18883,7 +18883,7 @@ export interface EntitiesApiInterface {
             jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument;
             include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
 
     /**
@@ -18899,7 +18899,7 @@ export interface EntitiesApiInterface {
             jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument;
             include?: Array<"workspaces" | "parent" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiWorkspaceOutDocument>;
 
     /**
@@ -18919,7 +18919,7 @@ export interface EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
     /**
@@ -18939,7 +18939,7 @@ export interface EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
     /**
@@ -18959,7 +18959,7 @@ export interface EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
     /**
@@ -18977,7 +18977,7 @@ export interface EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
     /**
@@ -18997,7 +18997,7 @@ export interface EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
     /**
@@ -19017,7 +19017,7 @@ export interface EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
     /**
@@ -19035,7 +19035,7 @@ export interface EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
     /**
@@ -19053,7 +19053,7 @@ export interface EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
     /**
@@ -19073,7 +19073,7 @@ export interface EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
     /**
@@ -19093,7 +19093,7 @@ export interface EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
     /**
@@ -19111,7 +19111,7 @@ export interface EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
     /**
@@ -19148,7 +19148,7 @@ export interface EntitiesApiInterface {
             sort?: Array<string>;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiAnalyticalDashboardOutList>;
 
     /**
@@ -19172,7 +19172,7 @@ export interface EntitiesApiInterface {
             size?: number;
             sort?: Array<string>;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiApiTokenOutList>;
 
     /**
@@ -19200,7 +19200,7 @@ export interface EntitiesApiInterface {
             sort?: Array<string>;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiAttributeOutList>;
 
     /**
@@ -19226,7 +19226,7 @@ export interface EntitiesApiInterface {
             sort?: Array<string>;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiDashboardPluginOutList>;
 
     /**
@@ -19250,7 +19250,7 @@ export interface EntitiesApiInterface {
             sort?: Array<string>;
             metaInclude?: Array<"permissions" | "all" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiDataSourceIdentifierOutList>;
 
     /**
@@ -19274,7 +19274,7 @@ export interface EntitiesApiInterface {
             size?: number;
             sort?: Array<string>;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiDataSourceTableOutList>;
 
     /**
@@ -19298,7 +19298,7 @@ export interface EntitiesApiInterface {
             sort?: Array<string>;
             metaInclude?: Array<"permissions" | "all" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiDataSourceOutList>;
 
     /**
@@ -19326,7 +19326,7 @@ export interface EntitiesApiInterface {
             sort?: Array<string>;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiDatasetOutList>;
 
     /**
@@ -19354,7 +19354,7 @@ export interface EntitiesApiInterface {
             sort?: Array<string>;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiFactOutList>;
 
     /**
@@ -19382,7 +19382,7 @@ export interface EntitiesApiInterface {
             sort?: Array<string>;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiFilterContextOutList>;
 
     /**
@@ -19410,7 +19410,7 @@ export interface EntitiesApiInterface {
             sort?: Array<string>;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiLabelOutList>;
 
     /**
@@ -19438,7 +19438,7 @@ export interface EntitiesApiInterface {
             sort?: Array<string>;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiMetricOutList>;
 
     /**
@@ -19462,7 +19462,7 @@ export interface EntitiesApiInterface {
             size?: number;
             sort?: Array<string>;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiUserGroupOutList>;
 
     /**
@@ -19486,7 +19486,7 @@ export interface EntitiesApiInterface {
             size?: number;
             sort?: Array<string>;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiUserOutList>;
 
     /**
@@ -19514,7 +19514,7 @@ export interface EntitiesApiInterface {
             sort?: Array<string>;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiVisualizationObjectOutList>;
 
     /**
@@ -19542,7 +19542,7 @@ export interface EntitiesApiInterface {
             sort?: Array<string>;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutList>;
 
     /**
@@ -19570,7 +19570,7 @@ export interface EntitiesApiInterface {
             sort?: Array<string>;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiWorkspaceDataFilterOutList>;
 
     /**
@@ -19596,7 +19596,7 @@ export interface EntitiesApiInterface {
             sort?: Array<string>;
             metaInclude?: Array<"config" | "permissions" | "all" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiWorkspaceOutList>;
 
     /**
@@ -19606,7 +19606,7 @@ export interface EntitiesApiInterface {
      * @throws {RequiredError}
      * @memberof EntitiesApiInterface
      */
-    getAllOptions(params: {}, options?: any): AxiosPromise<void>;
+    getAllOptions(params: {}, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
      * Retrieves a list of all supported data sources along with information about the used drivers.
@@ -19615,7 +19615,7 @@ export interface EntitiesApiInterface {
      * @throws {RequiredError}
      * @memberof EntitiesApiInterface
      */
-    getDataSourceDrivers(params: {}, options?: any): AxiosPromise<void>;
+    getDataSourceDrivers(params: {}, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
      *
@@ -19647,7 +19647,7 @@ export interface EntitiesApiInterface {
             >;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
 
     /**
@@ -19667,7 +19667,7 @@ export interface EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiApiTokenOutDocument>;
 
     /**
@@ -19691,7 +19691,7 @@ export interface EntitiesApiInterface {
             include?: Array<"datasets" | "labels" | "dataset" | "defaultView" | "ALL">;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiAttributeOutDocument>;
 
     /**
@@ -19709,7 +19709,7 @@ export interface EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiCookieSecurityConfigurationOutDocument>;
 
     /**
@@ -19731,7 +19731,7 @@ export interface EntitiesApiInterface {
             filter?: string;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiDashboardPluginOutDocument>;
 
     /**
@@ -19751,7 +19751,7 @@ export interface EntitiesApiInterface {
             filter?: string;
             metaInclude?: Array<"permissions" | "all" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiDataSourceIdentifierOutDocument>;
 
     /**
@@ -19771,7 +19771,7 @@ export interface EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiDataSourceTableOutDocument>;
 
     /**
@@ -19791,7 +19791,7 @@ export interface EntitiesApiInterface {
             filter?: string;
             metaInclude?: Array<"permissions" | "all" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiDataSourceOutDocument>;
 
     /**
@@ -19815,7 +19815,7 @@ export interface EntitiesApiInterface {
             include?: Array<"attributes" | "facts" | "datasets" | "references" | "ALL">;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiDatasetOutDocument>;
 
     /**
@@ -19839,7 +19839,7 @@ export interface EntitiesApiInterface {
             include?: Array<"datasets" | "dataset" | "ALL">;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiFactOutDocument>;
 
     /**
@@ -19863,7 +19863,7 @@ export interface EntitiesApiInterface {
             include?: Array<"attributes" | "datasets" | "labels" | "ALL">;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiFilterContextOutDocument>;
 
     /**
@@ -19887,7 +19887,7 @@ export interface EntitiesApiInterface {
             include?: Array<"attributes" | "attribute" | "ALL">;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiLabelOutDocument>;
 
     /**
@@ -19911,7 +19911,7 @@ export interface EntitiesApiInterface {
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiMetricOutDocument>;
 
     /**
@@ -19933,7 +19933,7 @@ export interface EntitiesApiInterface {
             include?: Array<"users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup" | "ALL">;
             metaInclude?: Array<"permissions" | "all" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiOrganizationOutDocument>;
 
     /**
@@ -19953,7 +19953,7 @@ export interface EntitiesApiInterface {
             filter?: string;
             include?: Array<"userGroups" | "parents" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiUserGroupOutDocument>;
 
     /**
@@ -19973,7 +19973,7 @@ export interface EntitiesApiInterface {
             filter?: string;
             include?: Array<"userGroups" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiUserOutDocument>;
 
     /**
@@ -19997,7 +19997,7 @@ export interface EntitiesApiInterface {
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
 
     /**
@@ -20021,7 +20021,7 @@ export interface EntitiesApiInterface {
             include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiWorkspaceDataFilterSettingOutDocument>;
 
     /**
@@ -20045,7 +20045,7 @@ export interface EntitiesApiInterface {
             include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
 
     /**
@@ -20067,7 +20067,7 @@ export interface EntitiesApiInterface {
             include?: Array<"workspaces" | "parent" | "ALL">;
             metaInclude?: Array<"config" | "permissions" | "all" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiWorkspaceOutDocument>;
 
     /**
@@ -20082,7 +20082,7 @@ export interface EntitiesApiInterface {
         params: {
             metaInclude?: Array<"permissions" | "all">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
     /**
@@ -20115,7 +20115,7 @@ export interface EntitiesApiInterface {
                 | "ALL"
             >;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
 
     /**
@@ -20137,7 +20137,7 @@ export interface EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiDashboardPluginOutDocument>;
 
     /**
@@ -20157,7 +20157,7 @@ export interface EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiDataSourceOutDocument>;
 
     /**
@@ -20181,7 +20181,7 @@ export interface EntitiesApiInterface {
             filter?: string;
             include?: Array<"attributes" | "datasets" | "labels" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiFilterContextOutDocument>;
 
     /**
@@ -20205,7 +20205,7 @@ export interface EntitiesApiInterface {
             filter?: string;
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiMetricOutDocument>;
 
     /**
@@ -20227,7 +20227,7 @@ export interface EntitiesApiInterface {
             filter?: string;
             include?: Array<"userGroups" | "parents" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiUserGroupOutDocument>;
 
     /**
@@ -20249,7 +20249,7 @@ export interface EntitiesApiInterface {
             filter?: string;
             include?: Array<"userGroups" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiUserOutDocument>;
 
     /**
@@ -20273,7 +20273,7 @@ export interface EntitiesApiInterface {
             filter?: string;
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
 
     /**
@@ -20297,7 +20297,7 @@ export interface EntitiesApiInterface {
             filter?: string;
             include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
 
     /**
@@ -20319,7 +20319,7 @@ export interface EntitiesApiInterface {
             filter?: string;
             include?: Array<"workspaces" | "parent" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiWorkspaceOutDocument>;
 
     /**
@@ -20352,7 +20352,7 @@ export interface EntitiesApiInterface {
                 | "ALL"
             >;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
 
     /**
@@ -20372,7 +20372,7 @@ export interface EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiCookieSecurityConfigurationOutDocument>;
 
     /**
@@ -20394,7 +20394,7 @@ export interface EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiDashboardPluginOutDocument>;
 
     /**
@@ -20414,7 +20414,7 @@ export interface EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiDataSourceOutDocument>;
 
     /**
@@ -20438,7 +20438,7 @@ export interface EntitiesApiInterface {
             filter?: string;
             include?: Array<"attributes" | "datasets" | "labels" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiFilterContextOutDocument>;
 
     /**
@@ -20462,7 +20462,7 @@ export interface EntitiesApiInterface {
             filter?: string;
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiMetricOutDocument>;
 
     /**
@@ -20484,7 +20484,7 @@ export interface EntitiesApiInterface {
             filter?: string;
             include?: Array<"users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiOrganizationOutDocument>;
 
     /**
@@ -20506,7 +20506,7 @@ export interface EntitiesApiInterface {
             filter?: string;
             include?: Array<"userGroups" | "parents" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiUserGroupOutDocument>;
 
     /**
@@ -20528,7 +20528,7 @@ export interface EntitiesApiInterface {
             filter?: string;
             include?: Array<"userGroups" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiUserOutDocument>;
 
     /**
@@ -20552,7 +20552,7 @@ export interface EntitiesApiInterface {
             filter?: string;
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
 
     /**
@@ -20576,7 +20576,7 @@ export interface EntitiesApiInterface {
             filter?: string;
             include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiWorkspaceDataFilterOutDocument>;
 
     /**
@@ -20598,7 +20598,7 @@ export interface EntitiesApiInterface {
             filter?: string;
             include?: Array<"workspaces" | "parent" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiWorkspaceOutDocument>;
 }
 
@@ -20633,7 +20633,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 | "ALL"
             >;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).createEntityAnalyticalDashboards(params, options)(
             this.axios,
@@ -20654,7 +20654,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             userId: string;
             jsonApiApiTokenInDocument: JsonApiApiTokenInDocument;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).createEntityApiTokens(params, options)(
             this.axios,
@@ -20675,7 +20675,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             workspaceId: string;
             jsonApiDashboardPluginInDocument: JsonApiDashboardPluginInDocument;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).createEntityDashboardPlugins(params, options)(
             this.axios,
@@ -20694,7 +20694,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
         params: {
             jsonApiDataSourceInDocument: JsonApiDataSourceInDocument;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).createEntityDataSources(params, options)(
             this.axios,
@@ -20717,7 +20717,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             jsonApiFilterContextInDocument: JsonApiFilterContextInDocument;
             include?: Array<"attributes" | "datasets" | "labels" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).createEntityFilterContexts(params, options)(
             this.axios,
@@ -20740,7 +20740,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             jsonApiMetricInDocument: JsonApiMetricInDocument;
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).createEntityMetrics(params, options)(
             this.axios,
@@ -20761,7 +20761,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             jsonApiUserGroupInDocument: JsonApiUserGroupInDocument;
             include?: Array<"userGroups" | "parents" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).createEntityUserGroups(params, options)(
             this.axios,
@@ -20782,7 +20782,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             jsonApiUserInDocument: JsonApiUserInDocument;
             include?: Array<"userGroups" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).createEntityUsers(params, options)(
             this.axios,
@@ -20805,7 +20805,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument;
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).createEntityVisualizationObjects(params, options)(
             this.axios,
@@ -20828,7 +20828,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument;
             include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).createEntityWorkspaceDataFilters(params, options)(
             this.axios,
@@ -20849,7 +20849,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument;
             include?: Array<"workspaces" | "parent" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).createEntityWorkspaces(params, options)(
             this.axios,
@@ -20874,7 +20874,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).deleteEntityAnalyticalDashboards(params, options)(
             this.axios,
@@ -20899,7 +20899,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).deleteEntityApiTokens(params, options)(
             this.axios,
@@ -20924,7 +20924,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).deleteEntityDashboardPlugins(params, options)(
             this.axios,
@@ -20947,7 +20947,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).deleteEntityDataSources(params, options)(
             this.axios,
@@ -20972,7 +20972,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).deleteEntityFilterContexts(params, options)(
             this.axios,
@@ -20997,7 +20997,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).deleteEntityMetrics(params, options)(
             this.axios,
@@ -21020,7 +21020,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).deleteEntityUserGroups(params, options)(
             this.axios,
@@ -21043,7 +21043,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).deleteEntityUsers(params, options)(
             this.axios,
@@ -21068,7 +21068,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).deleteEntityVisualizationObjects(params, options)(
             this.axios,
@@ -21093,7 +21093,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).deleteEntityWorkspaceDataFilters(params, options)(
             this.axios,
@@ -21116,7 +21116,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).deleteEntityWorkspaces(params, options)(
             this.axios,
@@ -21158,7 +21158,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             sort?: Array<string>;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getAllEntitiesAnalyticalDashboards(params, options)(
             this.axios,
@@ -21187,7 +21187,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             size?: number;
             sort?: Array<string>;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getAllEntitiesApiTokens(params, options)(
             this.axios,
@@ -21220,7 +21220,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             sort?: Array<string>;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getAllEntitiesAttributes(params, options)(
             this.axios,
@@ -21251,7 +21251,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             sort?: Array<string>;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getAllEntitiesDashboardPlugins(params, options)(
             this.axios,
@@ -21280,7 +21280,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             sort?: Array<string>;
             metaInclude?: Array<"permissions" | "all" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getAllEntitiesDataSourceIdentifiers(params, options)(
             this.axios,
@@ -21309,7 +21309,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             size?: number;
             sort?: Array<string>;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getAllEntitiesDataSourceTables(params, options)(
             this.axios,
@@ -21338,7 +21338,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             sort?: Array<string>;
             metaInclude?: Array<"permissions" | "all" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getAllEntitiesDataSources(params, options)(
             this.axios,
@@ -21371,7 +21371,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             sort?: Array<string>;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getAllEntitiesDatasets(params, options)(
             this.axios,
@@ -21404,7 +21404,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             sort?: Array<string>;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getAllEntitiesFacts(params, options)(
             this.axios,
@@ -21437,7 +21437,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             sort?: Array<string>;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getAllEntitiesFilterContexts(params, options)(
             this.axios,
@@ -21470,7 +21470,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             sort?: Array<string>;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getAllEntitiesLabels(params, options)(
             this.axios,
@@ -21503,7 +21503,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             sort?: Array<string>;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getAllEntitiesMetrics(params, options)(
             this.axios,
@@ -21532,7 +21532,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             size?: number;
             sort?: Array<string>;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getAllEntitiesUserGroups(params, options)(
             this.axios,
@@ -21561,7 +21561,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             size?: number;
             sort?: Array<string>;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getAllEntitiesUsers(params, options)(
             this.axios,
@@ -21594,7 +21594,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             sort?: Array<string>;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getAllEntitiesVisualizationObjects(params, options)(
             this.axios,
@@ -21627,7 +21627,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             sort?: Array<string>;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getAllEntitiesWorkspaceDataFilterSettings(params, options)(
             this.axios,
@@ -21660,7 +21660,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             sort?: Array<string>;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getAllEntitiesWorkspaceDataFilters(params, options)(
             this.axios,
@@ -21691,7 +21691,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             sort?: Array<string>;
             metaInclude?: Array<"config" | "permissions" | "all" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getAllEntitiesWorkspaces(params, options)(
             this.axios,
@@ -21706,7 +21706,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
      * @throws {RequiredError}
      * @memberof EntitiesApi
      */
-    public getAllOptions(params: {}, options?: any) {
+    public getAllOptions(params: {}, options?: AxiosRequestConfig) {
         return EntitiesApiFp(this.configuration).getAllOptions(params, options)(this.axios, this.basePath);
     }
 
@@ -21717,7 +21717,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
      * @throws {RequiredError}
      * @memberof EntitiesApi
      */
-    public getDataSourceDrivers(params: {}, options?: any) {
+    public getDataSourceDrivers(params: {}, options?: AxiosRequestConfig) {
         return EntitiesApiFp(this.configuration).getDataSourceDrivers(params, options)(
             this.axios,
             this.basePath,
@@ -21754,7 +21754,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             >;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getEntityAnalyticalDashboards(params, options)(
             this.axios,
@@ -21779,7 +21779,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getEntityApiTokens(params, options)(
             this.axios,
@@ -21808,7 +21808,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             include?: Array<"datasets" | "labels" | "dataset" | "defaultView" | "ALL">;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getEntityAttributes(params, options)(
             this.axios,
@@ -21831,7 +21831,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getEntityCookieSecurityConfigurations(params, options)(
             this.axios,
@@ -21858,7 +21858,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             filter?: string;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getEntityDashboardPlugins(params, options)(
             this.axios,
@@ -21883,7 +21883,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             filter?: string;
             metaInclude?: Array<"permissions" | "all" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getEntityDataSourceIdentifiers(params, options)(
             this.axios,
@@ -21908,7 +21908,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getEntityDataSourceTables(params, options)(
             this.axios,
@@ -21933,7 +21933,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             filter?: string;
             metaInclude?: Array<"permissions" | "all" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getEntityDataSources(params, options)(
             this.axios,
@@ -21962,7 +21962,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             include?: Array<"attributes" | "facts" | "datasets" | "references" | "ALL">;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getEntityDatasets(params, options)(
             this.axios,
@@ -21991,7 +21991,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             include?: Array<"datasets" | "dataset" | "ALL">;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getEntityFacts(params, options)(this.axios, this.basePath);
     }
@@ -22017,7 +22017,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             include?: Array<"attributes" | "datasets" | "labels" | "ALL">;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getEntityFilterContexts(params, options)(
             this.axios,
@@ -22046,7 +22046,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             include?: Array<"attributes" | "attribute" | "ALL">;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getEntityLabels(params, options)(this.axios, this.basePath);
     }
@@ -22072,7 +22072,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getEntityMetrics(params, options)(this.axios, this.basePath);
     }
@@ -22096,7 +22096,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             include?: Array<"users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup" | "ALL">;
             metaInclude?: Array<"permissions" | "all" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getEntityOrganizations(params, options)(
             this.axios,
@@ -22121,7 +22121,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             filter?: string;
             include?: Array<"userGroups" | "parents" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getEntityUserGroups(params, options)(
             this.axios,
@@ -22146,7 +22146,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             filter?: string;
             include?: Array<"userGroups" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getEntityUsers(params, options)(this.axios, this.basePath);
     }
@@ -22172,7 +22172,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getEntityVisualizationObjects(params, options)(
             this.axios,
@@ -22201,7 +22201,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             include?: Array<"workspaceDataFilters" | "workspaceDataFilter" | "ALL">;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getEntityWorkspaceDataFilterSettings(params, options)(
             this.axios,
@@ -22230,7 +22230,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">;
             xGDCVALIDATERELATIONS?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getEntityWorkspaceDataFilters(params, options)(
             this.axios,
@@ -22257,7 +22257,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             include?: Array<"workspaces" | "parent" | "ALL">;
             metaInclude?: Array<"config" | "permissions" | "all" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getEntityWorkspaces(params, options)(
             this.axios,
@@ -22277,7 +22277,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
         params: {
             metaInclude?: Array<"permissions" | "all">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).getOrganization(params, options)(this.axios, this.basePath);
     }
@@ -22312,7 +22312,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 | "ALL"
             >;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).patchEntityAnalyticalDashboards(params, options)(
             this.axios,
@@ -22339,7 +22339,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).patchEntityDashboardPlugins(params, options)(
             this.axios,
@@ -22364,7 +22364,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).patchEntityDataSources(params, options)(
             this.axios,
@@ -22393,7 +22393,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             filter?: string;
             include?: Array<"attributes" | "datasets" | "labels" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).patchEntityFilterContexts(params, options)(
             this.axios,
@@ -22422,7 +22422,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             filter?: string;
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).patchEntityMetrics(params, options)(
             this.axios,
@@ -22449,7 +22449,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             filter?: string;
             include?: Array<"userGroups" | "parents" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).patchEntityUserGroups(params, options)(
             this.axios,
@@ -22476,7 +22476,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             filter?: string;
             include?: Array<"userGroups" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).patchEntityUsers(params, options)(this.axios, this.basePath);
     }
@@ -22502,7 +22502,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             filter?: string;
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).patchEntityVisualizationObjects(params, options)(
             this.axios,
@@ -22531,7 +22531,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             filter?: string;
             include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).patchEntityWorkspaceDataFilters(params, options)(
             this.axios,
@@ -22558,7 +22558,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             filter?: string;
             include?: Array<"workspaces" | "parent" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).patchEntityWorkspaces(params, options)(
             this.axios,
@@ -22596,7 +22596,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 | "ALL"
             >;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).updateEntityAnalyticalDashboards(params, options)(
             this.axios,
@@ -22621,7 +22621,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).updateEntityCookieSecurityConfigurations(params, options)(
             this.axios,
@@ -22648,7 +22648,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).updateEntityDashboardPlugins(params, options)(
             this.axios,
@@ -22673,7 +22673,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             predicate?: { [key: string]: object };
             filter?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).updateEntityDataSources(params, options)(
             this.axios,
@@ -22702,7 +22702,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             filter?: string;
             include?: Array<"attributes" | "datasets" | "labels" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).updateEntityFilterContexts(params, options)(
             this.axios,
@@ -22731,7 +22731,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             filter?: string;
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).updateEntityMetrics(params, options)(
             this.axios,
@@ -22758,7 +22758,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             filter?: string;
             include?: Array<"users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).updateEntityOrganizations(params, options)(
             this.axios,
@@ -22785,7 +22785,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             filter?: string;
             include?: Array<"userGroups" | "parents" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).updateEntityUserGroups(params, options)(
             this.axios,
@@ -22812,7 +22812,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             filter?: string;
             include?: Array<"userGroups" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).updateEntityUsers(params, options)(
             this.axios,
@@ -22841,7 +22841,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             filter?: string;
             include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).updateEntityVisualizationObjects(params, options)(
             this.axios,
@@ -22870,7 +22870,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             filter?: string;
             include?: Array<"workspaceDataFilterSettings" | "filterSettings" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).updateEntityWorkspaceDataFilters(params, options)(
             this.axios,
@@ -22897,7 +22897,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
             filter?: string;
             include?: Array<"workspaces" | "parent" | "ALL">;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return EntitiesApiFp(this.configuration).updateEntityWorkspaces(params, options)(
             this.axios,
@@ -24839,7 +24839,7 @@ export interface LayoutApiInterface {
         params: {
             workspaceId: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<DeclarativeAnalytics>;
 
     /**
@@ -24849,7 +24849,7 @@ export interface LayoutApiInterface {
      * @throws {RequiredError}
      * @memberof LayoutApiInterface
      */
-    getDataSourcesLayout(params: {}, options?: any): AxiosPromise<DeclarativeDataSources>;
+    getDataSourcesLayout(params: {}, options?: AxiosRequestConfig): AxiosPromise<DeclarativeDataSources>;
 
     /**
      * Retrieve current logical model of the workspace in declarative form.
@@ -24863,7 +24863,7 @@ export interface LayoutApiInterface {
         params: {
             workspaceId: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<DeclarativeModel>;
 
     /**
@@ -24873,7 +24873,7 @@ export interface LayoutApiInterface {
      * @throws {RequiredError}
      * @memberof LayoutApiInterface
      */
-    getOrganizationLayout(params: {}, options?: any): AxiosPromise<DeclarativeOrganization>;
+    getOrganizationLayout(params: {}, options?: AxiosRequestConfig): AxiosPromise<DeclarativeOrganization>;
 
     /**
      * Retrieve complete layout of tables with their columns
@@ -24887,7 +24887,7 @@ export interface LayoutApiInterface {
         params: {
             dataSourceId: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<DeclarativePdm>;
 
     /**
@@ -24897,7 +24897,7 @@ export interface LayoutApiInterface {
      * @throws {RequiredError}
      * @memberof LayoutApiInterface
      */
-    getUserGroupsLayout(params: {}, options?: any): AxiosPromise<DeclarativeUserGroups>;
+    getUserGroupsLayout(params: {}, options?: AxiosRequestConfig): AxiosPromise<DeclarativeUserGroups>;
 
     /**
      * Retrieve all users including authentication properties.
@@ -24906,7 +24906,7 @@ export interface LayoutApiInterface {
      * @throws {RequiredError}
      * @memberof LayoutApiInterface
      */
-    getUsersLayout(params: {}, options?: any): AxiosPromise<DeclarativeUsers>;
+    getUsersLayout(params: {}, options?: AxiosRequestConfig): AxiosPromise<DeclarativeUsers>;
 
     /**
      * Retrieve all users and user groups with theirs properties.
@@ -24915,7 +24915,10 @@ export interface LayoutApiInterface {
      * @throws {RequiredError}
      * @memberof LayoutApiInterface
      */
-    getUsersUserGroupsLayout(params: {}, options?: any): AxiosPromise<DeclarativeUsersUserGroups>;
+    getUsersUserGroupsLayout(
+        params: {},
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<DeclarativeUsersUserGroups>;
 
     /**
      * Retrieve all workspaces and related workspace data filters (and their settings / values).
@@ -24924,7 +24927,10 @@ export interface LayoutApiInterface {
      * @throws {RequiredError}
      * @memberof LayoutApiInterface
      */
-    getWorkspaceDataFiltersLayout(params: {}, options?: any): AxiosPromise<DeclarativeWorkspaceDataFilters>;
+    getWorkspaceDataFiltersLayout(
+        params: {},
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<DeclarativeWorkspaceDataFilters>;
 
     /**
      * Retrieve current model of the workspace in declarative form.
@@ -24938,7 +24944,7 @@ export interface LayoutApiInterface {
         params: {
             workspaceId: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<DeclarativeWorkspaceModel>;
 
     /**
@@ -24955,7 +24961,7 @@ export interface LayoutApiInterface {
             workspaceId: string;
             declarativeWorkspacePermissions: DeclarativeWorkspacePermissions;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
     /**
@@ -24970,7 +24976,7 @@ export interface LayoutApiInterface {
         params: {
             workspaceId: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<DeclarativeWorkspacePermissions>;
 
     /**
@@ -24980,7 +24986,7 @@ export interface LayoutApiInterface {
      * @throws {RequiredError}
      * @memberof LayoutApiInterface
      */
-    getWorkspacesLayout(params: {}, options?: any): AxiosPromise<DeclarativeWorkspaces>;
+    getWorkspacesLayout(params: {}, options?: AxiosRequestConfig): AxiosPromise<DeclarativeWorkspaces>;
 
     /**
      * Set all data sources including related physical model.
@@ -24994,7 +25000,7 @@ export interface LayoutApiInterface {
         params: {
             declarativeDataSources: DeclarativeDataSources;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
     /**
@@ -25009,7 +25015,7 @@ export interface LayoutApiInterface {
         params: {
             declarativeUserGroups: DeclarativeUserGroups;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
     /**
@@ -25024,7 +25030,7 @@ export interface LayoutApiInterface {
         params: {
             declarativeUsers: DeclarativeUsers;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
     /**
@@ -25039,7 +25045,7 @@ export interface LayoutApiInterface {
         params: {
             declarativeUsersUserGroups: DeclarativeUsersUserGroups;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
     /**
@@ -25056,7 +25062,7 @@ export interface LayoutApiInterface {
             workspaceId: string;
             declarativeWorkspaceModel: DeclarativeWorkspaceModel;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
     /**
@@ -25073,7 +25079,7 @@ export interface LayoutApiInterface {
             workspaceId: string;
             declarativeAnalytics: DeclarativeAnalytics;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
     /**
@@ -25090,7 +25096,7 @@ export interface LayoutApiInterface {
             workspaceId: string;
             declarativeModel: DeclarativeModel;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
     /**
@@ -25105,7 +25111,7 @@ export interface LayoutApiInterface {
         params: {
             declarativeOrganization: DeclarativeOrganization;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
     /**
@@ -25122,7 +25128,7 @@ export interface LayoutApiInterface {
             dataSourceId: string;
             declarativePdm: DeclarativePdm;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
     /**
@@ -25137,7 +25143,7 @@ export interface LayoutApiInterface {
         params: {
             declarativeWorkspaceDataFilters: DeclarativeWorkspaceDataFilters;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
     /**
@@ -25152,7 +25158,7 @@ export interface LayoutApiInterface {
         params: {
             declarativeWorkspaces: DeclarativeWorkspaces;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 }
 
@@ -25175,7 +25181,7 @@ export class LayoutApi extends BaseAPI implements LayoutApiInterface {
         params: {
             workspaceId: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return LayoutApiFp(this.configuration).getAnalyticsModel(params, options)(this.axios, this.basePath);
     }
@@ -25187,7 +25193,7 @@ export class LayoutApi extends BaseAPI implements LayoutApiInterface {
      * @throws {RequiredError}
      * @memberof LayoutApi
      */
-    public getDataSourcesLayout(params: {}, options?: any) {
+    public getDataSourcesLayout(params: {}, options?: AxiosRequestConfig) {
         return LayoutApiFp(this.configuration).getDataSourcesLayout(params, options)(
             this.axios,
             this.basePath,
@@ -25206,7 +25212,7 @@ export class LayoutApi extends BaseAPI implements LayoutApiInterface {
         params: {
             workspaceId: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return LayoutApiFp(this.configuration).getLogicalModel(params, options)(this.axios, this.basePath);
     }
@@ -25218,7 +25224,7 @@ export class LayoutApi extends BaseAPI implements LayoutApiInterface {
      * @throws {RequiredError}
      * @memberof LayoutApi
      */
-    public getOrganizationLayout(params: {}, options?: any) {
+    public getOrganizationLayout(params: {}, options?: AxiosRequestConfig) {
         return LayoutApiFp(this.configuration).getOrganizationLayout(params, options)(
             this.axios,
             this.basePath,
@@ -25237,7 +25243,7 @@ export class LayoutApi extends BaseAPI implements LayoutApiInterface {
         params: {
             dataSourceId: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return LayoutApiFp(this.configuration).getPdmLayout(params, options)(this.axios, this.basePath);
     }
@@ -25249,7 +25255,7 @@ export class LayoutApi extends BaseAPI implements LayoutApiInterface {
      * @throws {RequiredError}
      * @memberof LayoutApi
      */
-    public getUserGroupsLayout(params: {}, options?: any) {
+    public getUserGroupsLayout(params: {}, options?: AxiosRequestConfig) {
         return LayoutApiFp(this.configuration).getUserGroupsLayout(params, options)(
             this.axios,
             this.basePath,
@@ -25263,7 +25269,7 @@ export class LayoutApi extends BaseAPI implements LayoutApiInterface {
      * @throws {RequiredError}
      * @memberof LayoutApi
      */
-    public getUsersLayout(params: {}, options?: any) {
+    public getUsersLayout(params: {}, options?: AxiosRequestConfig) {
         return LayoutApiFp(this.configuration).getUsersLayout(params, options)(this.axios, this.basePath);
     }
 
@@ -25274,7 +25280,7 @@ export class LayoutApi extends BaseAPI implements LayoutApiInterface {
      * @throws {RequiredError}
      * @memberof LayoutApi
      */
-    public getUsersUserGroupsLayout(params: {}, options?: any) {
+    public getUsersUserGroupsLayout(params: {}, options?: AxiosRequestConfig) {
         return LayoutApiFp(this.configuration).getUsersUserGroupsLayout(params, options)(
             this.axios,
             this.basePath,
@@ -25288,7 +25294,7 @@ export class LayoutApi extends BaseAPI implements LayoutApiInterface {
      * @throws {RequiredError}
      * @memberof LayoutApi
      */
-    public getWorkspaceDataFiltersLayout(params: {}, options?: any) {
+    public getWorkspaceDataFiltersLayout(params: {}, options?: AxiosRequestConfig) {
         return LayoutApiFp(this.configuration).getWorkspaceDataFiltersLayout(params, options)(
             this.axios,
             this.basePath,
@@ -25307,7 +25313,7 @@ export class LayoutApi extends BaseAPI implements LayoutApiInterface {
         params: {
             workspaceId: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return LayoutApiFp(this.configuration).getWorkspaceLayout(params, options)(this.axios, this.basePath);
     }
@@ -25326,7 +25332,7 @@ export class LayoutApi extends BaseAPI implements LayoutApiInterface {
             workspaceId: string;
             declarativeWorkspacePermissions: DeclarativeWorkspacePermissions;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return LayoutApiFp(this.configuration).getWorkspacePermissions(params, options)(
             this.axios,
@@ -25346,7 +25352,7 @@ export class LayoutApi extends BaseAPI implements LayoutApiInterface {
         params: {
             workspaceId: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return LayoutApiFp(this.configuration).getWorkspacePermissions1(params, options)(
             this.axios,
@@ -25361,7 +25367,7 @@ export class LayoutApi extends BaseAPI implements LayoutApiInterface {
      * @throws {RequiredError}
      * @memberof LayoutApi
      */
-    public getWorkspacesLayout(params: {}, options?: any) {
+    public getWorkspacesLayout(params: {}, options?: AxiosRequestConfig) {
         return LayoutApiFp(this.configuration).getWorkspacesLayout(params, options)(
             this.axios,
             this.basePath,
@@ -25380,7 +25386,7 @@ export class LayoutApi extends BaseAPI implements LayoutApiInterface {
         params: {
             declarativeDataSources: DeclarativeDataSources;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return LayoutApiFp(this.configuration).putDataSourcesLayout(params, options)(
             this.axios,
@@ -25400,7 +25406,7 @@ export class LayoutApi extends BaseAPI implements LayoutApiInterface {
         params: {
             declarativeUserGroups: DeclarativeUserGroups;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return LayoutApiFp(this.configuration).putUserGroupsLayout(params, options)(
             this.axios,
@@ -25420,7 +25426,7 @@ export class LayoutApi extends BaseAPI implements LayoutApiInterface {
         params: {
             declarativeUsers: DeclarativeUsers;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return LayoutApiFp(this.configuration).putUsersLayout(params, options)(this.axios, this.basePath);
     }
@@ -25437,7 +25443,7 @@ export class LayoutApi extends BaseAPI implements LayoutApiInterface {
         params: {
             declarativeUsersUserGroups: DeclarativeUsersUserGroups;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return LayoutApiFp(this.configuration).putUsersUserGroupsLayout(params, options)(
             this.axios,
@@ -25459,7 +25465,7 @@ export class LayoutApi extends BaseAPI implements LayoutApiInterface {
             workspaceId: string;
             declarativeWorkspaceModel: DeclarativeWorkspaceModel;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return LayoutApiFp(this.configuration).putWorkspaceLayout(params, options)(this.axios, this.basePath);
     }
@@ -25478,7 +25484,7 @@ export class LayoutApi extends BaseAPI implements LayoutApiInterface {
             workspaceId: string;
             declarativeAnalytics: DeclarativeAnalytics;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return LayoutApiFp(this.configuration).setAnalyticsModel(params, options)(this.axios, this.basePath);
     }
@@ -25497,7 +25503,7 @@ export class LayoutApi extends BaseAPI implements LayoutApiInterface {
             workspaceId: string;
             declarativeModel: DeclarativeModel;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return LayoutApiFp(this.configuration).setLogicalModel(params, options)(this.axios, this.basePath);
     }
@@ -25514,7 +25520,7 @@ export class LayoutApi extends BaseAPI implements LayoutApiInterface {
         params: {
             declarativeOrganization: DeclarativeOrganization;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return LayoutApiFp(this.configuration).setOrganizationLayout(params, options)(
             this.axios,
@@ -25536,7 +25542,7 @@ export class LayoutApi extends BaseAPI implements LayoutApiInterface {
             dataSourceId: string;
             declarativePdm: DeclarativePdm;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return LayoutApiFp(this.configuration).setPdmLayout(params, options)(this.axios, this.basePath);
     }
@@ -25553,7 +25559,7 @@ export class LayoutApi extends BaseAPI implements LayoutApiInterface {
         params: {
             declarativeWorkspaceDataFilters: DeclarativeWorkspaceDataFilters;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return LayoutApiFp(this.configuration).setWorkspaceDataFiltersLayout(params, options)(
             this.axios,
@@ -25573,7 +25579,7 @@ export class LayoutApi extends BaseAPI implements LayoutApiInterface {
         params: {
             declarativeWorkspaces: DeclarativeWorkspaces;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return LayoutApiFp(this.configuration).setWorkspacesLayout(params, options)(
             this.axios,

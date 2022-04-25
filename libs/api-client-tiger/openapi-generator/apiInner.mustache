@@ -3,7 +3,7 @@
 {{>licenseInfo}}
 
 import globalImportUrl from 'url';
-import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';
+import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
 import { Configuration } from '{{apiRelativeToRoot}}configuration';
 // Some imports not used depending on template conditions, we also need prettier-ignore so that the import does not get split and ts-ignore still works
 // prettier-ignore
@@ -323,7 +323,7 @@ export interface {{classname}}Interface {
             {{paramName}}{{^required}}?{{/required}}: {{{dataType}}},
             {{/allParams}}
         {{=<% %>=}}}<%={{ }}=%>,
-        options?: any
+        options?: AxiosRequestConfig
     ): AxiosPromise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}>;
 
 {{/operation}}
@@ -362,7 +362,7 @@ export class {{classname}} extends BaseAPI {
             {{paramName}}{{^required}}?{{/required}}: {{{dataType}}},
             {{/allParams}}
         {{=<% %>=}}}<%={{ }}=%>,
-        options?: any
+        options?: AxiosRequestConfig
     ) {
         return {{classname}}Fp(this.configuration).{{nickname}}(params, options)(this.axios, this.basePath);
     }

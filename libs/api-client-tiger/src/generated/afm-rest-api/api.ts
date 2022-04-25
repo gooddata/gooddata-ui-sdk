@@ -16,7 +16,7 @@
 // @ts-ignore
 import globalImportUrl from "url";
 import { Configuration } from "./configuration";
-import globalAxios, { AxiosPromise, AxiosInstance } from "axios";
+import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from "axios";
 // Some imports not used depending on template conditions, we also need prettier-ignore so that the import does not get split and ts-ignore still works
 // prettier-ignore
 // @ts-ignore
@@ -2723,7 +2723,7 @@ export interface ActionsApiInterface {
             limit?: number;
             skipCache?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<ElementsResponse>;
 
     /**
@@ -2744,7 +2744,7 @@ export interface ActionsApiInterface {
             skipCache?: boolean;
             timestamp?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<AfmExecutionResponse>;
 
     /**
@@ -2761,7 +2761,7 @@ export interface ActionsApiInterface {
             workspaceId: string;
             afmValidObjectsQuery: AfmValidObjectsQuery;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<AfmValidObjectsResponse>;
 
     /**
@@ -2780,7 +2780,7 @@ export interface ActionsApiInterface {
             afmExecution: AfmExecution;
             explainType?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
     /**
@@ -2801,7 +2801,7 @@ export interface ActionsApiInterface {
             offset?: Array<number>;
             limit?: Array<number>;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ): AxiosPromise<ExecutionResult>;
 }
 
@@ -2832,7 +2832,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
             limit?: number;
             skipCache?: boolean;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return ActionsApiFp(this.configuration).computeLabelElementsPost(params, options)(
             this.axios,
@@ -2858,7 +2858,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
             skipCache?: boolean;
             timestamp?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return ActionsApiFp(this.configuration).computeReport(params, options)(this.axios, this.basePath);
     }
@@ -2877,7 +2877,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
             workspaceId: string;
             afmValidObjectsQuery: AfmValidObjectsQuery;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return ActionsApiFp(this.configuration).computeValidObjects(params, options)(
             this.axios,
@@ -2901,7 +2901,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
             afmExecution: AfmExecution;
             explainType?: string;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return ActionsApiFp(this.configuration).explainAFM(params, options)(this.axios, this.basePath);
     }
@@ -2924,7 +2924,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
             offset?: Array<number>;
             limit?: Array<number>;
         },
-        options?: any,
+        options?: AxiosRequestConfig,
     ) {
         return ActionsApiFp(this.configuration).retrieveResult(params, options)(this.axios, this.basePath);
     }

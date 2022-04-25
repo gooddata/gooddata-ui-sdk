@@ -42,10 +42,10 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
                 {
                     objectId: ref.identifier,
                     workspaceId: this.workspace,
+                    include: ["facts", "metrics", "attributes", "labels"],
                 },
                 {
                     headers: jsonApiHeaders,
-                    query: { include: "facts,metrics,attributes,labels" },
                 },
             ),
         );
