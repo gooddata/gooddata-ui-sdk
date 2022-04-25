@@ -17,4 +17,4 @@ export {
 };
 
 export const tigerEntitiesObjectsClientFactory = (axios: AxiosInstance): EntitiesApiInterface =>
-    EntitiesApiFactory({}, "", axios);
+    EntitiesApiFactory(undefined, "", axios);

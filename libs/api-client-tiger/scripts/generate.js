@@ -50,9 +50,12 @@ const generate = async (specMeta, outputDir, outputFile) => {
      *
      * force UPPERCASE enum naming to keep backwards compatibility with most of the existing values, and make the casing consistent
      * --additional-properties=enumPropertyNaming=UPPERCASE
+     *
+     * force use of a single request parameter for everything instead of using separate parameters (that would make the functions hard to use, they have many params).
+     * useSingleRequestParameter=true
      */
     await exec(
-        `openapi-generator-cli generate -i ${inputPath} -g typescript-axios -o ${outputPath} -t openapi-generator -p withInterfaces=true --reserved-words-mappings in=in,function=function --type-mappings=set=Array --additional-properties=enumPropertyNaming=UPPERCASE`,
+        `openapi-generator-cli generate -i ${inputPath} -g typescript-axios -o ${outputPath} -t openapi-generator -p withInterfaces=true --reserved-words-mappings in=in,function=function --type-mappings=set=Array --additional-properties=enumPropertyNaming=UPPERCASE,useSingleRequestParameter=true`,
     );
 };
 

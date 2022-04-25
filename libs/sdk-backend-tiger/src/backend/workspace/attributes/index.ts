@@ -90,12 +90,10 @@ function loadAttributeDisplayForm(
             {
                 workspaceId,
                 objectId: ref.identifier,
+                include: ["attributes"],
             },
             {
                 headers: jsonApiHeaders,
-                params: {
-                    include: "attributes",
-                },
             },
         )
         .then((res) => convertLabelWithSideloadedAttribute(res.data));
@@ -113,24 +111,20 @@ function loadAttribute(
             {
                 workspaceId,
                 objectId: ref.identifier,
+                include: ["labels"],
             },
             {
                 headers: jsonApiHeaders,
-                params: {
-                    include: "labels",
-                },
             },
         )
         .then((res) => convertAttributeWithSideloadedLabels(res.data));
 }
 
 function loadAttributes(client: ITigerClient, workspaceId: string): Promise<IAttributeMetadataObject[]> {
-    return MetadataUtilities.getAllPagesOf(
-        client,
-        client.entities.getAllEntitiesAttributes,
-        { workspaceId },
-        { query: { include: "labels" } },
-    )
+    return MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesAttributes, {
+        workspaceId,
+        include: ["labels"],
+    })
         .then(MetadataUtilities.mergeEntitiesResults)
         .then(convertAttributesWithSideloadedLabels);
 }
@@ -147,12 +141,10 @@ function loadAttributeDataset(
             {
                 workspaceId: workspace,
                 objectId: ref.identifier,
+                include: ["datasets"],
             },
             {
                 headers: jsonApiHeaders,
-                params: {
-                    include: "datasets",
-                },
             },
         )
         .then((res) => {

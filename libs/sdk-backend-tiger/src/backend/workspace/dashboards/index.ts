@@ -1,8 +1,8 @@
 // (C) 2020-2022 GoodData Corporation
 import {
+    EntitiesApiGetEntityAnalyticalDashboardsRequest,
     isDashboardPluginsItem,
     isVisualizationObjectsItem,
-    ITigerClient,
     JsonApiAnalyticalDashboardInTypeEnum,
     JsonApiAnalyticalDashboardOutDocument,
     JsonApiDashboardPluginInTypeEnum,
@@ -107,12 +107,10 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 {
                     workspaceId: this.workspace,
                     objectId: id,
+                    include: ["filterContexts"],
                 },
                 {
                     headers: jsonApiHeaders,
-                    params: {
-                        include: "filterContexts",
-                    },
                 },
             );
         });
@@ -181,8 +179,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         ref: ObjRef,
         types: SupportedDashboardReferenceTypes[],
     ): Promise<JsonApiAnalyticalDashboardOutDocument> => {
-        type Include = Parameters<ITigerClient["entities"]["getEntityAnalyticalDashboards"]>[0]["include"];
-        const include: Include = ["filterContexts"];
+        const include: EntitiesApiGetEntityAnalyticalDashboardsRequest["include"] = ["filterContexts"];
 
         if (includes(types, "insight")) {
             include.push("visualizationObjects");
@@ -199,12 +196,10 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 {
                     workspaceId: this.workspace,
                     objectId: id,
+                    include,
                 },
                 {
                     headers: jsonApiHeaders,
-                    params: {
-                        include: include.join(","),
-                    },
                 },
             );
         }).then((result) => result.data);

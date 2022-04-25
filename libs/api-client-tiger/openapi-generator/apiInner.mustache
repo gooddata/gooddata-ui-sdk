@@ -8,7 +8,7 @@ import { Configuration } from '{{apiRelativeToRoot}}configuration';
 // Some imports not used depending on template conditions, we also need prettier-ignore so that the import does not get split and ts-ignore still works
 // prettier-ignore
 // @ts-ignore
-import { addFlattenedObjectTo, assertParamExists } from '{{apiRelativeToRoot}}common';
+import { addFlattenedObjectTo, assertParamExists, createRequestFunction } from '{{apiRelativeToRoot}}common';
 // Some imports not used depending on template conditions, we also need prettier-ignore so that the import does not get split and ts-ignore still works
 // prettier-ignore
 // @ts-ignore
@@ -40,19 +40,7 @@ export const {{classname}}AxiosParamCreator = function (configuration?: Configur
          * @deprecated{{/isDeprecated}}
          * @throws {RequiredError}
          */
-        {{nickname}}(
-            params: {{=<% %>=}}{<%={{ }}=%>
-                {{#allParams}}
-                {{paramName}}{{^required}}?{{/required}}: {{{dataType}}},
-                {{/allParams}}
-            {{=<% %>=}}}<%={{ }}=%>,
-            options: any = {}
-        ): RequestArgs {
-        const {{=<% %>=}}{<%={{ }}=%>
-        {{#allParams}}
-            {{paramName}},
-        {{/allParams}}
-        {{=<% %>=}}}<%={{ }}=%> = params;
+        {{nickname}}: async ({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
     {{#allParams}}
     {{#required}}
             // verify required parameter '{{paramName}}' is not null or undefined
@@ -206,7 +194,7 @@ export const {{classname}}AxiosParamCreator = function (configuration?: Configur
             {{/consumes.0}}
 
     {{/bodyParam}}
-            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter, ...options.query};
+            localVarUrlObj.query = {...localVarUrlObj.query, ...localVarQueryParameter };
             // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...options.headers};
@@ -229,10 +217,11 @@ export const {{classname}}AxiosParamCreator = function (configuration?: Configur
 
 /**
  * {{classname}} - functional programming interface{{#description}}
- * {{{description}}}{{/description}}
+ * {{{.}}}{{/description}}
  * @export
  */
 export const {{classname}}Fp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = {{classname}}AxiosParamCreator(configuration)
     return {
     {{#operation}}
         /**
@@ -247,19 +236,9 @@ export const {{classname}}Fp = function(configuration?: Configuration) {
          * @deprecated{{/isDeprecated}}
          * @throws {RequiredError}
          */
-        {{nickname}}(
-            params: {{=<% %>=}}{<%={{ }}=%>
-                {{#allParams}}
-                {{paramName}}{{^required}}?{{/required}}: {{{dataType}}},
-                {{/allParams}}
-            {{=<% %>=}}}<%={{ }}=%>,
-            options: any = {}
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}> {
-            const localVarAxiosArgs = {{classname}}AxiosParamCreator(configuration).{{nickname}}(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
+        async {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{{{returnType}}}{{^returnType}}void{{/returnType}}>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.{{nickname}}({{#allParams}}{{paramName}}, {{/allParams}}options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     {{/operation}}
     }
@@ -271,6 +250,7 @@ export const {{classname}}Fp = function(configuration?: Configuration) {
  * @export
  */
 export const {{classname}}Factory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = {{classname}}Fp(configuration)
     return {
     {{#operation}}
         /**
@@ -278,23 +258,30 @@ export const {{classname}}Factory = function (configuration?: Configuration, bas
          {{#summary}}
          * @summary {{&summary}}
          {{/summary}}
+         {{#useSingleRequestParameter}}
+         {{#allParams.0}}
+         * @param {{=<% %>=}}{<%& classname %><%& operationIdCamelCase %>Request}<%={{ }}=%> requestParameters Request parameters.
+         {{/allParams.0}}
+         {{/useSingleRequestParameter}}
+         {{^useSingleRequestParameter}}
          {{#allParams}}
          * @param {{=<% %>=}}{<%&dataType%>}<%={{ }}=%> {{^required}}[{{/required}}{{paramName}}{{^required}}]{{/required}} {{description}}
          {{/allParams}}
+         {{/useSingleRequestParameter}}
          * @param {*} [options] Override http request option.{{#isDeprecated}}
          * @deprecated{{/isDeprecated}}
          * @throws {RequiredError}
          */
-        {{nickname}}(
-            params: {{=<% %>=}}{<%={{ }}=%>
-                {{#allParams}}
-                {{paramName}}{{^required}}?{{/required}}: {{{dataType}}},
-                {{/allParams}}
-            {{=<% %>=}}}<%={{ }}=%>,
-            options?: any
-        ): AxiosPromise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}> {
-            return {{classname}}Fp(configuration).{{nickname}}(params, options)(axios, basePath);
+        {{#useSingleRequestParameter}}
+        {{nickname}}({{#allParams.0}}requestParameters: {{classname}}{{operationIdCamelCase}}Request, {{/allParams.0}}options?: AxiosRequestConfig): AxiosPromise<{{{returnType}}}{{^returnType}}void{{/returnType}}> {
+            return localVarFp.{{nickname}}({{#allParams}}requestParameters.{{paramName}}, {{/allParams}}options).then((request) => request(axios, basePath));
         },
+        {{/useSingleRequestParameter}}
+        {{^useSingleRequestParameter}}
+        {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}options?: AxiosRequestConfig): AxiosPromise<{{{returnType}}}{{^returnType}}void{{/returnType}}> {
+            return localVarFp.{{nickname}}({{#allParams}}{{paramName}}, {{/allParams}}options).then((request) => request(axios, basePath));
+        },
+        {{/useSingleRequestParameter}}
     {{/operation}}
     };
 };
@@ -313,27 +300,57 @@ export interface {{classname}}Interface {
      {{#summary}}
      * @summary {{&summary}}
      {{/summary}}
+     {{#useSingleRequestParameter}}
+     {{#allParams.0}}
+     * @param {{=<% %>=}}{<%& classname %><%& operationIdCamelCase %>Request}<%={{ }}=%> requestParameters Request parameters.
+     {{/allParams.0}}
+     {{/useSingleRequestParameter}}
+     {{^useSingleRequestParameter}}
      {{#allParams}}
      * @param {{=<% %>=}}{<%&dataType%>}<%={{ }}=%> {{^required}}[{{/required}}{{paramName}}{{^required}}]{{/required}} {{description}}
      {{/allParams}}
+     {{/useSingleRequestParameter}}
      * @param {*} [options] Override http request option.{{#isDeprecated}}
      * @deprecated{{/isDeprecated}}
      * @throws {RequiredError}
      * @memberof {{classname}}Interface
      */
-    {{nickname}}(
-        params: {{=<% %>=}}{<%={{ }}=%>
-            {{#allParams}}
-            {{paramName}}{{^required}}?{{/required}}: {{{dataType}}},
-            {{/allParams}}
-        {{=<% %>=}}}<%={{ }}=%>,
-        options?: AxiosRequestConfig
-    ): AxiosPromise<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}}>;
+    {{#useSingleRequestParameter}}
+    {{nickname}}({{#allParams.0}}requestParameters: {{classname}}{{operationIdCamelCase}}Request, {{/allParams.0}}options?: AxiosRequestConfig): AxiosPromise<{{{returnType}}}{{^returnType}}void{{/returnType}}>;
+    {{/useSingleRequestParameter}}
+    {{^useSingleRequestParameter}}
+    {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}options?: AxiosRequestConfig): AxiosPromise<{{{returnType}}}{{^returnType}}void{{/returnType}}>;
+    {{/useSingleRequestParameter}}
 
 {{/operation}}
 }
 
 {{/withInterfaces}}
+{{#useSingleRequestParameter}}
+{{#operation}}
+{{#allParams.0}}
+/**
+ * Request parameters for {{nickname}} operation in {{classname}}.
+ * @export
+ * @interface {{classname}}{{operationIdCamelCase}}Request
+ */
+export interface {{classname}}{{operationIdCamelCase}}Request {
+    {{#allParams}}
+    /**
+     * {{description}}
+     * @type {{=<% %>=}}{<%&dataType%>}<%={{ }}=%>
+     * @memberof {{classname}}{{operationIdCamelCase}}
+     */
+    readonly {{paramName}}{{^required}}?{{/required}}: {{{dataType}}}
+    {{^-last}}
+
+    {{/-last}}
+    {{/allParams}}
+}
+
+{{/allParams.0}}
+{{/operation}}
+{{/useSingleRequestParameter}}
 /**
  * {{classname}} - object-oriented interface{{#description}}
  * {{{description}}}{{/description}}
@@ -353,25 +370,34 @@ export class {{classname}} extends BaseAPI {
      {{#summary}}
      * @summary {{&summary}}
      {{/summary}}
+     {{#useSingleRequestParameter}}
+     {{#allParams.0}}
+     * @param {{=<% %>=}}{<%& classname %><%& operationIdCamelCase %>Request}<%={{ }}=%> requestParameters Request parameters.
+     {{/allParams.0}}
+     {{/useSingleRequestParameter}}
+     {{^useSingleRequestParameter}}
      {{#allParams}}
      * @param {{=<% %>=}}{<%&dataType%>}<%={{ }}=%> {{^required}}[{{/required}}{{paramName}}{{^required}}]{{/required}} {{description}}
      {{/allParams}}
+     {{/useSingleRequestParameter}}
      * @param {*} [options] Override http request option.{{#isDeprecated}}
      * @deprecated{{/isDeprecated}}
      * @throws {RequiredError}
      * @memberof {{classname}}
      */
-    public {{nickname}}(
-        params: {{=<% %>=}}{<%={{ }}=%>
-            {{#allParams}}
-            {{paramName}}{{^required}}?{{/required}}: {{{dataType}}},
-            {{/allParams}}
-        {{=<% %>=}}}<%={{ }}=%>,
-        options?: AxiosRequestConfig
-    ) {
-        return {{classname}}Fp(this.configuration).{{nickname}}(params, options)(this.axios, this.basePath);
+    {{#useSingleRequestParameter}}
+    public {{nickname}}({{#allParams.0}}requestParameters: {{classname}}{{operationIdCamelCase}}Request{{^hasRequiredParams}} = {}{{/hasRequiredParams}}, {{/allParams.0}}options?: AxiosRequestConfig) {
+        return {{classname}}Fp(this.configuration).{{nickname}}({{#allParams.0}}{{#allParams}}requestParameters.{{paramName}}, {{/allParams}}{{/allParams.0}}options).then((request) => request(this.axios, this.basePath));
     }
+    {{/useSingleRequestParameter}}
+    {{^useSingleRequestParameter}}
+    public {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}options?: AxiosRequestConfig) {
+        return {{classname}}Fp(this.configuration).{{nickname}}({{#allParams}}{{paramName}}, {{/allParams}}options).then((request) => request(this.axios, this.basePath));
+    }
+    {{/useSingleRequestParameter}}
+    {{^-last}}
 
+    {{/-last}}
     {{/operation}}
 }
 {{/operations}}

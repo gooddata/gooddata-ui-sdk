@@ -22,13 +22,13 @@ import {
 const DefaultPageSize = 250;
 const DefaultOptions = {
     headers: jsonApiHeaders,
-    query: {
+    params: {
         size: DefaultPageSize,
     },
 };
 
 function createOptionsForPage(page: number, options: MetadataGetEntitiesOptions): MetadataGetEntitiesOptions {
-    return merge({}, DefaultOptions, options, { query: { page } });
+    return merge({}, DefaultOptions, options, { params: { page } });
 }
 
 /**
@@ -68,7 +68,7 @@ export type MetadataGetEntitiesParams = MetadataGetEntitiesWorkspaceParams | Met
  */
 export type MetadataGetEntitiesOptions = {
     headers?: object;
-    query?: {
+    params?: {
         page?: number;
         size?: number;
         include?: any;
@@ -136,7 +136,7 @@ export class MetadataUtilities {
     ): Promise<T[]> => {
         const boundGet = entitiesGet.bind(client.entities);
         const results: T[] = [];
-        const pageSize = options.query?.size ?? DefaultPageSize;
+        const pageSize = options.params?.size ?? DefaultPageSize;
         let reachedEnd = false;
         let nextPage: number = 0;
 

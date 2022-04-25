@@ -28,12 +28,10 @@ function loadFactDataset(
             {
                 workspaceId: workspace,
                 objectId: ref.identifier,
+                include: ["datasets"],
             },
             {
                 headers: jsonApiHeaders,
-                params: {
-                    include: "datasets",
-                },
             },
         )
         .then((res) => {

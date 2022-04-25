@@ -1,5 +1,5 @@
 {
-    "id": "0240a20c-005d-40d1-b920-97ff1fdde3e5",
+    "id": "73ce6879-b260-41b7-9ee6-da76104ca1a6",
     "name": "api_profile",
     "request": {
         "url": "/api/profile",
@@ -17,7 +17,7 @@
             "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
             "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' matomo.anywhere.gooddata.com connectors.tableau.com gdc-dev-dashboard-plugins.s3.amazonaws.com; img-src 'self' data: blob: www.gooddata.com gdc-dev-dashboard-plugins.s3.amazonaws.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com gdc-dev-dashboard-plugins.s3.amazonaws.com; font-src 'self' data: fonts.gstatic.com at.alicdn.com gdc-dev-dashboard-plugins.s3.amazonaws.com; frame-src 'self'; object-src 'none'; worker-src 'self' blob:; child-src blob:; connect-src 'self' *.tiles.mapbox.com api.mapbox.com events.mapbox.com matomo.anywhere.gooddata.com *.okta.com;",
             "Content-Type": "application/json",
-            "Date": "Thu, 14 Apr 2022 12:37:30 GMT",
+            "Date": "Mon, 25 Apr 2022 11:59:03 GMT",
             "Expires": "0",
             "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';",
             "Pragma": "no-cache",
@@ -31,11 +31,11 @@
                 "Access-Control-Request-Headers"
             ],
             "X-Content-Type-Options": "nosniff",
-            "X-GDC-TRACE-ID": "aae61472e107af6b",
+            "X-GDC-TRACE-ID": "7db0e5a07b21288f",
             "X-XSS-Protection": "1 ; mode=block"
         }
     },
-    "uuid": "0240a20c-005d-40d1-b920-97ff1fdde3e5",
+    "uuid": "73ce6879-b260-41b7-9ee6-da76104ca1a6",
     "persistent": true,
     "insertionIndex": 2
 }
