@@ -23,9 +23,11 @@ export const EmbedInsightDialogBaseExamples: React.VFC = () => {
 
                 <EmbedInsightDialogBase
                     code={code}
-                    codeByReference={true}
+                    codeType={"definition"}
+                    codeLanguage={"ts"}
                     onClose={action("onClose")}
                     onCopyCode={action("onCopyCode")}
+                    onCodeLanguageChange={action("onCodeLanguageChange")}
                 />
             </div>
         </InternalIntlWrapper>

@@ -1,7 +1,27 @@
 // (C) 2020-2021 GoodData Corporation
+@import "./Form/_mixins";
 
 .embed-insight-dialog {
     width: 600px;
+}
+
+.embed-insight-dialog-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.embed-insight-dialog-code {
+    display: flex;
+    flex-direction: row;
+}
+
+.embed-insight-dialog-code-wrapper {
+    flex-grow: 1;
+    height: 260px;
+}
+
+.embed-insight-dialog-code-settings {
+    min-width: 220px;
 }
 
 .embed-insight-dialog-code-content {
@@ -28,12 +48,59 @@
     color: var(--gd-palette-complementary-8, #464e56);
 }
 
+.embed-insight-dialog-message-changes {
+    margin-bottom: 20px;
+}
+
 .embed-insight-dialog-prep-env-message {
     width: 100%;
-    margin-top: 5px;
+    margin-bottom: 20px;
     .gd-message-text {
         display: flex;
         justify-content: space-between;
         width: 100%;
+    }
+}
+
+.embed-insight-dialog-lang-selector {
+    display: flex;
+    flex-direction: column;
+
+    .bottom-space-label {
+        margin-bottom: 15px;
+    }
+
+    .bottom-space {
+        margin-bottom: 10px;
+    }
+}
+
+.toggle-wrapper-revers-label {
+    .toggle-switch {
+        padding-right: 30px;
+    }
+    .toggle-switch-title {
+        margin-left: 10px;
+    }
+
+    .toggle-switch-icon {
+        margin: 0 5px;
+    }
+    .toggle-switch-icon::before {
+        vertical-align: middle;
+    }
+}
+
+.height-setting-component {
+    display: flex;
+    border-left: 2px dotted var(--gd-palette-complementary-3, #dde4eb);
+    padding-left: 10px;
+    margin-top: 10px;
+
+    .gd-input-field {
+        width: 60px;
+        margin-right: 10px;
+        text-align: end;
+        @include gd-input-small-base;
     }
 }

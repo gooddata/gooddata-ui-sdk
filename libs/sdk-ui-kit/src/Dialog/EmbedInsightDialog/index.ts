@@ -4,4 +4,7 @@ export { EmbedInsightDialogBase } from "./EmbedInsightDialogBase/EmbedInsightDia
 export type {
     IEmbedInsightDialogBaseProps,
     InsightCodeType,
+    CodeLanguageType,
 } from "./EmbedInsightDialogBase/EmbedInsightDialogBase";
+
+export type { IOptionsByDefinition } from "./EmbedInsightDialogBase/components/OptionsByDefinition";

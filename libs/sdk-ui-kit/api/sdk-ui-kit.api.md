@@ -244,6 +244,9 @@ export interface CheckboxProps {
     value: boolean;
 }
 
+// @internal (undocumented)
+export type CodeLanguageType = "js" | "ts";
+
 // @internal
 export type Color = string;
 
@@ -1276,9 +1279,17 @@ export interface IEmbedInsightDialogBaseProps {
     // (undocumented)
     code: string;
     // (undocumented)
+    codeLanguage: CodeLanguageType;
+    // (undocumented)
+    codeOption: IOptionsByDefinition;
+    // (undocumented)
     codeType: InsightCodeType;
     // (undocumented)
     onClose: () => void;
+    // (undocumented)
+    onCodeLanguageChange: (codeLanguage: CodeLanguageType) => void;
+    // (undocumented)
+    onCodeOptionChange: (codeOption: IOptionsByDefinition) => void;
     // (undocumented)
     onCopyCode: () => void;
 }
@@ -2550,6 +2561,16 @@ export interface IOptimalAlignment {
 // @internal
 export interface IOverlayControllerProviderProps {
     overlayController: OverlayController;
+}
+
+// @internal (undocumented)
+export interface IOptionsByDefinition {
+    // (undocumented)
+    customHeight: boolean;
+    // (undocumented)
+    height: number;
+    // (undocumented)
+    includeConfiguration: boolean;
 }
 
 // @internal (undocumented)
