@@ -20,6 +20,12 @@ import { AxiosInstance, AxiosResponse } from "axios";
 
 /**
  *
+ * @export
+ */
+export const DUMMY_BASE_URL = "https://example.com";
+
+/**
+ *
  * @throws {RequiredError}
  * @export
  */
@@ -91,6 +97,35 @@ export const setOAuthToObject = async function (
                 : await configuration.accessToken;
         object["Authorization"] = "Bearer " + localVarAccessTokenValue;
     }
+};
+
+/**
+ *
+ * @export
+ */
+export const setSearchParams = function (url: URL, ...objects: any[]) {
+    const searchParams = new URLSearchParams(url.search);
+    for (const object of objects) {
+        for (const key in object) {
+            if (Array.isArray(object[key])) {
+                searchParams.delete(key);
+                for (const item of object[key]) {
+                    searchParams.append(key, item);
+                }
+            } else {
+                searchParams.set(key, object[key]);
+            }
+        }
+    }
+    url.search = searchParams.toString();
+};
+
+/**
+ *
+ * @export
+ */
+export const toPathString = function (url: URL) {
+    return url.pathname + url.search + url.hash;
 };
 
 /**

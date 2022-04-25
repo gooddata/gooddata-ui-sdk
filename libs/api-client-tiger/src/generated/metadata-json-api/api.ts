@@ -20,7 +20,7 @@ import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from "ax
 // Some imports not used depending on template conditions, we also need prettier-ignore so that the import does not get split and ts-ignore still works
 // prettier-ignore
 // @ts-ignore
-import { assertParamExists, createRequestFunction, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject } from './common';
+import { DUMMY_BASE_URL, assertParamExists, createRequestFunction, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, toPathString } from './common';
 // Some imports not used depending on template conditions, we also need prettier-ignore so that the import does not get split and ts-ignore still works
 // prettier-ignore
 // @ts-ignore
@@ -7361,7 +7361,8 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
                 `{${"dataSourceId"}}`,
                 encodeURIComponent(String(dataSourceId)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -7372,10 +7373,13 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
 
             localVarHeaderParameter["Content-Type"] = "application/json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof generateLdmRequest !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -7384,7 +7388,7 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
                 : generateLdmRequest || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -7405,7 +7409,8 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
                 `{${"dataSourceId"}}`,
                 encodeURIComponent(String(dataSourceId)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -7414,13 +7419,16 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -7677,7 +7685,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -7692,10 +7701,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiAnalyticalDashboardInDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -7708,7 +7720,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiAnalyticalDashboardInDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -7736,7 +7748,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"userId"}}`,
                 encodeURIComponent(String(userId)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -7747,10 +7760,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiApiTokenInDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -7759,7 +7775,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiApiTokenInDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -7787,7 +7803,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -7798,10 +7815,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiDashboardPluginInDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -7812,7 +7832,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiDashboardPluginInDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -7833,7 +7853,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 jsonApiDataSourceInDocument,
             );
             const localVarPath = `/api/entities/dataSources`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -7844,10 +7865,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiDataSourceInDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -7856,7 +7880,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiDataSourceInDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -7886,7 +7910,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -7901,10 +7926,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiFilterContextInDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -7915,7 +7943,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiFilterContextInDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -7941,7 +7969,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -7956,10 +7985,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiMetricInDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -7968,7 +8000,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiMetricInDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -7991,7 +8023,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 jsonApiUserGroupInDocument,
             );
             const localVarPath = `/api/entities/userGroups`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -8006,10 +8039,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiUserGroupInDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -8018,7 +8054,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiUserGroupInDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -8037,7 +8073,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             // verify required parameter 'jsonApiUserInDocument' is not null or undefined
             assertParamExists("createEntityUsers", "jsonApiUserInDocument", jsonApiUserInDocument);
             const localVarPath = `/api/entities/users`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -8052,10 +8089,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiUserInDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -8064,7 +8104,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiUserInDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -8094,7 +8134,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -8109,10 +8150,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiVisualizationObjectInDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -8125,7 +8169,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiVisualizationObjectInDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -8155,7 +8199,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -8170,10 +8215,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiWorkspaceDataFilterInDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -8186,7 +8234,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiWorkspaceDataFilterInDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -8209,7 +8257,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 jsonApiWorkspaceInDocument,
             );
             const localVarPath = `/api/entities/workspaces`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -8224,10 +8273,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiWorkspaceInDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -8236,7 +8288,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiWorkspaceInDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -8263,7 +8315,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/api/entities/workspaces/{workspaceId}/analyticalDashboards/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -8280,13 +8333,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter["filter"] = filter;
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -8313,7 +8369,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/api/entities/users/{userId}/apiTokens/{id}`
                 .replace(`{${"userId"}}`, encodeURIComponent(String(userId)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -8330,13 +8387,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter["filter"] = filter;
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -8363,7 +8423,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/api/entities/workspaces/{workspaceId}/dashboardPlugins/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -8380,13 +8441,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter["filter"] = filter;
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -8410,7 +8474,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -8427,13 +8492,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter["filter"] = filter;
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -8460,7 +8528,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/api/entities/workspaces/{workspaceId}/filterContexts/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -8477,13 +8546,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter["filter"] = filter;
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -8510,7 +8582,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/api/entities/workspaces/{workspaceId}/metrics/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -8527,13 +8600,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter["filter"] = filter;
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -8557,7 +8633,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -8574,13 +8651,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter["filter"] = filter;
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -8604,7 +8684,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -8621,13 +8702,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter["filter"] = filter;
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -8654,7 +8738,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/api/entities/workspaces/{workspaceId}/visualizationObjects/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -8671,13 +8756,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter["filter"] = filter;
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -8704,7 +8792,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/api/entities/workspaces/{workspaceId}/workspaceDataFilters/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -8721,13 +8810,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter["filter"] = filter;
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -8751,7 +8843,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -8768,13 +8861,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter["filter"] = filter;
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -8817,7 +8913,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -8856,13 +8953,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 );
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -8892,7 +8992,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"userId"}}`,
                 encodeURIComponent(String(userId)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -8921,13 +9022,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter["sort"] = sort;
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -8961,7 +9065,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -9000,13 +9105,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 );
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -9038,7 +9146,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -9073,13 +9182,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 );
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -9104,7 +9216,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             const localVarPath = `/api/entities/dataSourceIdentifiers`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -9137,13 +9250,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -9173,7 +9289,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"dataSourceId"}}`,
                 encodeURIComponent(String(dataSourceId)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -9202,13 +9319,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter["sort"] = sort;
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -9233,7 +9353,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             const localVarPath = `/api/entities/dataSources`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -9266,13 +9387,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -9306,7 +9430,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -9345,13 +9470,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 );
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -9385,7 +9513,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -9424,13 +9553,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 );
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -9464,7 +9596,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -9503,13 +9636,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 );
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -9543,7 +9679,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -9582,13 +9719,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 );
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -9622,7 +9762,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -9661,13 +9802,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 );
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -9692,7 +9836,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             const localVarPath = `/api/entities/userGroups`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -9725,13 +9870,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter["sort"] = sort;
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -9756,7 +9904,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             const localVarPath = `/api/entities/users`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -9789,13 +9938,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter["sort"] = sort;
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -9829,7 +9981,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -9868,13 +10021,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 );
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -9908,7 +10064,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -9947,13 +10104,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 );
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -9987,7 +10147,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -10026,13 +10187,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 );
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -10059,7 +10223,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             const localVarPath = `/api/entities/workspaces`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -10096,13 +10261,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -10114,7 +10282,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          */
         getAllOptions: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/options`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -10123,13 +10292,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -10141,7 +10313,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          */
         getDataSourceDrivers: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/options/availableDrivers`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -10150,13 +10323,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -10196,7 +10372,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/api/entities/workspaces/{workspaceId}/analyticalDashboards/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -10223,13 +10400,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 );
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -10256,7 +10436,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/api/entities/users/{userId}/apiTokens/{id}`
                 .replace(`{${"userId"}}`, encodeURIComponent(String(userId)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -10273,13 +10454,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter["filter"] = filter;
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -10310,7 +10494,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/api/entities/workspaces/{workspaceId}/attributes/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -10337,13 +10522,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 );
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -10367,7 +10555,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -10384,13 +10573,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter["filter"] = filter;
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -10419,7 +10611,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/api/entities/workspaces/{workspaceId}/dashboardPlugins/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -10442,13 +10635,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 );
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -10474,7 +10670,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -10495,13 +10692,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -10528,7 +10728,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/api/entities/dataSources/{dataSourceId}/dataSourceTables/{id}`
                 .replace(`{${"dataSourceId"}}`, encodeURIComponent(String(dataSourceId)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -10545,13 +10746,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter["filter"] = filter;
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -10577,7 +10781,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -10598,13 +10803,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -10635,7 +10843,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/api/entities/workspaces/{workspaceId}/datasets/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -10662,13 +10871,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 );
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -10699,7 +10911,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/api/entities/workspaces/{workspaceId}/facts/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -10726,13 +10939,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 );
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -10763,7 +10979,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/api/entities/workspaces/{workspaceId}/filterContexts/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -10790,13 +11007,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 );
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -10827,7 +11047,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/api/entities/workspaces/{workspaceId}/labels/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -10854,13 +11075,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 );
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -10891,7 +11115,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/api/entities/workspaces/{workspaceId}/metrics/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -10918,13 +11143,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 );
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -10952,7 +11180,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -10977,13 +11206,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -11009,7 +11241,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -11030,13 +11263,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -11062,7 +11298,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -11083,13 +11320,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -11120,7 +11360,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/api/entities/workspaces/{workspaceId}/visualizationObjects/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -11147,13 +11388,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 );
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -11185,7 +11429,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `/api/entities/workspaces/{workspaceId}/workspaceDataFilterSettings/{objectId}`
                     .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                     .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -11212,13 +11457,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 );
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -11249,7 +11497,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/api/entities/workspaces/{workspaceId}/workspaceDataFilters/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -11276,13 +11525,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 );
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -11310,7 +11562,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -11335,13 +11588,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -11357,7 +11613,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             const localVarPath = `/api/entities/organization`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -11370,13 +11627,16 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter["metaInclude"] = Array.from(metaInclude).join(COLLECTION_FORMATS.csv);
             }
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -11422,7 +11682,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/api/entities/workspaces/{workspaceId}/analyticalDashboards/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -11445,10 +11706,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiAnalyticalDashboardPatchDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -11461,7 +11725,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiAnalyticalDashboardPatchDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -11496,7 +11760,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/api/entities/workspaces/{workspaceId}/dashboardPlugins/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -11515,10 +11780,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiDashboardPluginPatchDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -11531,7 +11799,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiDashboardPluginPatchDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -11563,7 +11831,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -11582,10 +11851,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiDataSourcePatchDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -11596,7 +11868,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiDataSourcePatchDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -11633,7 +11905,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/api/entities/workspaces/{workspaceId}/filterContexts/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -11656,10 +11929,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiFilterContextPatchDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -11672,7 +11948,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiFilterContextPatchDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -11705,7 +11981,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/api/entities/workspaces/{workspaceId}/metrics/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -11728,10 +12005,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiMetricPatchDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -11740,7 +12020,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiMetricPatchDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -11774,7 +12054,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -11797,10 +12078,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiUserGroupPatchDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -11811,7 +12095,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiUserGroupPatchDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -11841,7 +12125,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -11864,10 +12149,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiUserPatchDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -11876,7 +12164,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiUserPatchDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -11913,7 +12201,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/api/entities/workspaces/{workspaceId}/visualizationObjects/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -11936,10 +12225,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiVisualizationObjectPatchDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -11952,7 +12244,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiVisualizationObjectPatchDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -11989,7 +12281,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/api/entities/workspaces/{workspaceId}/workspaceDataFilters/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -12012,10 +12305,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiWorkspaceDataFilterPatchDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -12028,7 +12324,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiWorkspaceDataFilterPatchDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -12062,7 +12358,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -12085,10 +12382,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiWorkspacePatchDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -12099,7 +12399,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiWorkspacePatchDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -12145,7 +12445,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/api/entities/workspaces/{workspaceId}/analyticalDashboards/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -12168,10 +12469,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiAnalyticalDashboardInDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -12184,7 +12488,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiAnalyticalDashboardInDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -12216,7 +12520,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -12235,10 +12540,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiCookieSecurityConfigurationInDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -12251,7 +12559,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiCookieSecurityConfigurationInDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -12286,7 +12594,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/api/entities/workspaces/{workspaceId}/dashboardPlugins/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -12305,10 +12614,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiDashboardPluginInDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -12319,7 +12631,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiDashboardPluginInDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -12351,7 +12663,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -12370,10 +12683,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiDataSourceInDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -12382,7 +12698,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiDataSourceInDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -12419,7 +12735,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/api/entities/workspaces/{workspaceId}/filterContexts/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -12442,10 +12759,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiFilterContextInDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -12456,7 +12776,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiFilterContextInDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -12489,7 +12809,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/api/entities/workspaces/{workspaceId}/metrics/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -12512,10 +12833,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiMetricInDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -12524,7 +12848,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiMetricInDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -12558,7 +12882,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -12581,10 +12906,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiOrganizationInDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -12595,7 +12923,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiOrganizationInDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -12629,7 +12957,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -12652,10 +12981,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiUserGroupInDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -12664,7 +12996,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiUserGroupInDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -12694,7 +13026,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -12717,10 +13050,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiUserInDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -12729,7 +13065,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiUserInDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -12766,7 +13102,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/api/entities/workspaces/{workspaceId}/visualizationObjects/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -12789,10 +13126,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiVisualizationObjectInDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -12805,7 +13145,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiVisualizationObjectInDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -12842,7 +13182,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             const localVarPath = `/api/entities/workspaces/{workspaceId}/workspaceDataFilters/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -12865,10 +13206,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiWorkspaceDataFilterInDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -12881,7 +13225,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiWorkspaceDataFilterInDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -12915,7 +13259,8 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -12938,10 +13283,13 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
 
             localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof jsonApiWorkspaceInDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -12950,7 +13298,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 : jsonApiWorkspaceInDocument || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -23726,7 +24074,8 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -23735,13 +24084,16 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -23753,7 +24105,8 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
          */
         getDataSourcesLayout: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/layout/dataSources`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -23762,13 +24115,16 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -23789,7 +24145,8 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -23798,13 +24155,16 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -23816,7 +24176,8 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
          */
         getOrganizationLayout: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/layout/organization`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -23825,13 +24186,16 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -23852,7 +24216,8 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
                 `{${"dataSourceId"}}`,
                 encodeURIComponent(String(dataSourceId)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -23861,13 +24226,16 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -23879,7 +24247,8 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
          */
         getUserGroupsLayout: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/layout/userGroups`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -23888,13 +24257,16 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -23906,7 +24278,8 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
          */
         getUsersLayout: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/layout/users`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -23915,13 +24288,16 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -23933,7 +24309,8 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
          */
         getUsersUserGroupsLayout: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/layout/usersAndUserGroups`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -23942,13 +24319,16 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -23960,7 +24340,8 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
          */
         getWorkspaceDataFiltersLayout: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/layout/workspaceDataFilters`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -23969,13 +24350,16 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -23996,7 +24380,8 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -24005,13 +24390,16 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -24040,7 +24428,8 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -24051,10 +24440,13 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
 
             localVarHeaderParameter["Content-Type"] = "application/json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof declarativeWorkspacePermissions !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -24065,7 +24457,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
                 : declarativeWorkspacePermissions || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -24086,7 +24478,8 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -24095,13 +24488,16 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -24113,7 +24509,8 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
          */
         getWorkspacesLayout: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/layout/workspaces`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -24122,13 +24519,16 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -24146,7 +24546,8 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
             // verify required parameter 'declarativeDataSources' is not null or undefined
             assertParamExists("putDataSourcesLayout", "declarativeDataSources", declarativeDataSources);
             const localVarPath = `/api/layout/dataSources`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -24157,10 +24558,13 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
 
             localVarHeaderParameter["Content-Type"] = "application/json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof declarativeDataSources !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -24169,7 +24573,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
                 : declarativeDataSources || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -24187,7 +24591,8 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
             // verify required parameter 'declarativeUserGroups' is not null or undefined
             assertParamExists("putUserGroupsLayout", "declarativeUserGroups", declarativeUserGroups);
             const localVarPath = `/api/layout/userGroups`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -24198,10 +24603,13 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
 
             localVarHeaderParameter["Content-Type"] = "application/json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof declarativeUserGroups !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -24210,7 +24618,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
                 : declarativeUserGroups || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -24228,7 +24636,8 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
             // verify required parameter 'declarativeUsers' is not null or undefined
             assertParamExists("putUsersLayout", "declarativeUsers", declarativeUsers);
             const localVarPath = `/api/layout/users`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -24239,10 +24648,13 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
 
             localVarHeaderParameter["Content-Type"] = "application/json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof declarativeUsers !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -24251,7 +24663,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
                 : declarativeUsers || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -24273,7 +24685,8 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
                 declarativeUsersUserGroups,
             );
             const localVarPath = `/api/layout/usersAndUserGroups`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -24284,10 +24697,13 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
 
             localVarHeaderParameter["Content-Type"] = "application/json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof declarativeUsersUserGroups !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -24296,7 +24712,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
                 : declarativeUsersUserGroups || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -24321,7 +24737,8 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -24332,10 +24749,13 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
 
             localVarHeaderParameter["Content-Type"] = "application/json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof declarativeWorkspaceModel !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -24344,7 +24764,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
                 : declarativeWorkspaceModel || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -24369,7 +24789,8 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -24380,10 +24801,13 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
 
             localVarHeaderParameter["Content-Type"] = "application/json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof declarativeAnalytics !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -24392,7 +24816,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
                 : declarativeAnalytics || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -24417,7 +24841,8 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -24428,10 +24853,13 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
 
             localVarHeaderParameter["Content-Type"] = "application/json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof declarativeModel !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -24440,7 +24868,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
                 : declarativeModel || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -24458,7 +24886,8 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
             // verify required parameter 'declarativeOrganization' is not null or undefined
             assertParamExists("setOrganizationLayout", "declarativeOrganization", declarativeOrganization);
             const localVarPath = `/api/layout/organization`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -24469,10 +24898,13 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
 
             localVarHeaderParameter["Content-Type"] = "application/json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof declarativeOrganization !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -24481,7 +24913,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
                 : declarativeOrganization || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -24506,7 +24938,8 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
                 `{${"dataSourceId"}}`,
                 encodeURIComponent(String(dataSourceId)),
             );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -24517,10 +24950,13 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
 
             localVarHeaderParameter["Content-Type"] = "application/json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof declarativePdm !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -24529,7 +24965,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
                 : declarativePdm || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -24551,7 +24987,8 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
                 declarativeWorkspaceDataFilters,
             );
             const localVarPath = `/api/layout/workspaceDataFilters`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -24562,10 +24999,13 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
 
             localVarHeaderParameter["Content-Type"] = "application/json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof declarativeWorkspaceDataFilters !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -24576,7 +25016,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
                 : declarativeWorkspaceDataFilters || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -24594,7 +25034,8 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
             // verify required parameter 'declarativeWorkspaces' is not null or undefined
             assertParamExists("setWorkspacesLayout", "declarativeWorkspaces", declarativeWorkspaces);
             const localVarPath = `/api/layout/workspaces`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
@@ -24605,10 +25046,13 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
 
             localVarHeaderParameter["Content-Type"] = "application/json";
 
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             const needsSerialization =
                 typeof declarativeWorkspaces !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
@@ -24617,7 +25061,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
                 : declarativeWorkspaces || "";
 
             return {
-                url: globalImportUrl.format(localVarUrlObj),
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
