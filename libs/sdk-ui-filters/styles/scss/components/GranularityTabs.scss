@@ -3,7 +3,7 @@
 .gd-relative-filter-form-granularity-tabs {
     margin-bottom: 10px;
 
-    .gd-tab {
-        margin-right: 15px;
+    &.gd-tabs.small .gd-tab {
+        margin-right: 0;
     }
 }
