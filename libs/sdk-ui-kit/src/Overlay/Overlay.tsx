@@ -9,6 +9,7 @@ import isEqual from "lodash/isEqual";
 import findIndex from "lodash/findIndex";
 import debounce from "lodash/debounce";
 import noop from "lodash/noop";
+import { v4 as uuid } from "uuid";
 import "element-closest-polyfill";
 
 import { DEFAULT_ALIGN_POINTS, getOptimalAlignment } from "../utils/overlay";
@@ -16,6 +17,8 @@ import { elementRegion, isFixedPosition } from "../utils/domUtilities";
 import { ENUM_KEY_CODE } from "../typings/utilities";
 import { IOverlayProps, IOverlayState } from "./typings";
 import { Alignment, OverlayPositionType, SameAsTargetPosition } from "../typings/overlay";
+import { OverlayController } from "./OverlayController";
+import { OverlayContext } from "./OverlayContext";
 
 const events = [
     { name: "click", handler: "closeOnOutsideClick", target: document },
@@ -91,6 +94,8 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
     private portalNode: HTMLDivElement | null = null;
     private isComponentMounted: boolean;
     private clickedInside: boolean;
+    private id = uuid();
+    static contextType: React.Context<OverlayController> = OverlayContext;
 
     constructor(props: IOverlayProps<T>) {
         super(props);
@@ -121,6 +126,10 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         window.addEventListener("resize", this.resizeHandler);
 
         this.addListeners(this.props);
+
+        if (this.context) {
+            this.context.addOverlay(this.id);
+        }
 
         setTimeout(() => {
             this.align();
@@ -155,6 +164,10 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         this.removeListeners(this.props);
 
         this.removePortalNodeAfterAllTreeUnmount();
+
+        if (this.context) {
+            this.context.removeOverlay(this.id);
+        }
     }
 
     public render(): React.ReactNode {
@@ -234,7 +247,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
             position,
             left: alignment.left,
             top: alignment.top,
-            zIndex,
+            zIndex: this.context ? this.context.getZIndex(this.id) : zIndex,
             visibility: this.isAligned() ? undefined : "hidden",
         };
     };
@@ -396,8 +409,15 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
     };
 
     private renderMask = (): false | JSX.Element => {
+        const styles = {
+            zIndex: this.context ? this.context.getZIndex(this.id) : null,
+        };
         return this.props.isModal ? (
-            <div className="modalityPlugin-mask modalityPlugin-mask-visible" onClick={this.onMaskClick} />
+            <div
+                className="modalityPlugin-mask modalityPlugin-mask-visible"
+                onClick={this.onMaskClick}
+                style={styles}
+            />
         ) : (
             false
         );

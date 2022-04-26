@@ -2525,6 +2525,11 @@ export interface IOptimalAlignment {
     visiblePart?: number;
 }
 
+// @internal
+export interface IOverlayControllerProviderProps {
+    overlayController: OverlayController;
+}
+
 // @internal (undocumented)
 export interface IOverlayProps<T> {
     // (undocumented)
@@ -3183,6 +3188,8 @@ export class Overlay<T = HTMLElement> extends React_2.Component<IOverlayProps<T>
     // (undocumented)
     componentWillUnmount(): void;
     // (undocumented)
+    static contextType: React_2.Context<OverlayController>;
+    // (undocumented)
     static defaultProps: Partial<IOverlayProps<any>>;
     // (undocumented)
     protected getOverlayStyles: () => React_2.CSSProperties;
@@ -3195,6 +3202,21 @@ export class Overlay<T = HTMLElement> extends React_2.Component<IOverlayProps<T>
     // (undocumented)
     UNSAFE_componentWillReceiveProps(nextProps: IOverlayProps<T>): void;
 }
+
+// @internal (undocumented)
+export const OverlayContext: React_2.Context<OverlayController>;
+
+// @internal
+export class OverlayController {
+    addOverlay(uuid: string): void;
+    // (undocumented)
+    static getInstance(): OverlayController;
+    getZIndex(uuid: string): number;
+    removeOverlay(uuid: string): void;
+}
+
+// @internal
+export const OverlayControllerProvider: React_2.FC<IOverlayControllerProviderProps>;
 
 // @internal (undocumented)
 export type OverlayPositionType = "absolute" | "fixed" | SameAsTargetPosition;
@@ -3417,6 +3439,12 @@ export const unrelatedHeader: IDateDatasetHeader;
 
 // @internal
 export const useMediaQuery: (mediaQueryName: keyof IMediaQueries) => boolean;
+
+// @internal
+export const useOverlayController: () => OverlayController;
+
+// @internal
+export const useOverlayZIndex: (uuid: string) => number;
 
 // @internal
 export const useResponsiveContext: () => IResponsiveConfig;
