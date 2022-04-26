@@ -80,6 +80,11 @@ export interface IEmbeddingCodeConfig {
      * Defaults to "ts"
      */
     language?: "ts" | "js";
+
+    /**
+     * Optionally define chart properties that should be omitted
+     */
+    omitChartProps?: string[];
 }
 
 /**

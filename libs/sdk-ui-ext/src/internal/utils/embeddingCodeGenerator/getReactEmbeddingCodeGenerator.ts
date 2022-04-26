@@ -120,12 +120,16 @@ function walkProps<TProps>(
     propUsages: string[];
 } {
     const language = config?.language ?? "ts";
+    const propsToOmit = config?.omitChartProps ?? [];
     const importsUsed: IImportInfo[] = [];
 
     // we ignore functions as there is no bullet-proof way to serialize them
-    const propPairs = toPairs<PropWithMeta<any>>(props).filter(
+    const propPairsIgnoredFunctions = toPairs<PropWithMeta<any>>(props).filter(
         ([_, { value }]) => !isFunction(value) && !isEmpty(value),
     );
+
+    //omit chart configuration when define in config
+    const propPairs = propPairsIgnoredFunctions.filter(([key, _]) => !propsToOmit.includes(key));
 
     // get variable declaration for each prop to render outside of the component
     const propDeclarations = propPairs.map(([key, { value, meta }]) => {

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`getReactEmbeddingCodeGenerator should generate embedding code with height as number 1`] = `
+exports[`getReactEmbeddingCodeGenerator height test should generate embedding code with height as number 1`] = `
 "import React from \\"react\\";
 import { Type2 } from \\"some-package2\\";
 import { idRef, newAttribute } from \\"@gooddata/sdk-model\\";
@@ -25,7 +25,7 @@ export function MyComponent() {
 "
 `;
 
-exports[`getReactEmbeddingCodeGenerator should generate embedding code with height as string 1`] = `
+exports[`getReactEmbeddingCodeGenerator height test should generate embedding code with height as string 1`] = `
 "import React from \\"react\\";
 import { Type2 } from \\"some-package2\\";
 import { idRef, newAttribute } from \\"@gooddata/sdk-model\\";
@@ -50,7 +50,7 @@ export function MyComponent() {
 "
 `;
 
-exports[`getReactEmbeddingCodeGenerator should generate embedding code without height 1`] = `
+exports[`getReactEmbeddingCodeGenerator height test should generate embedding code without height 1`] = `
 "import React from \\"react\\";
 import { Type2 } from \\"some-package2\\";
 import { idRef, newAttribute } from \\"@gooddata/sdk-model\\";
@@ -67,6 +67,98 @@ export function MyComponent() {
         <div style={style}>
             <Foo
                 prop={prop}
+                another={another}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getReactEmbeddingCodeGenerator omitChartProps should generate embedding code no props to omit defined as undefined 1`] = `
+"import React from \\"react\\";
+import { Type2 } from \\"some-package2\\";
+import { idRef, newAttribute } from \\"@gooddata/sdk-model\\";
+import { Foo } from \\"@gooddata/foo\\";
+
+const prop = \\"string\\";
+const another: Type2[] = [
+    newAttribute(idRef(\\"label.account.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.account.id.name\\"))
+];
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <Foo
+                prop={prop}
+                another={another}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getReactEmbeddingCodeGenerator omitChartProps should generate embedding code no props to omit defined in empty array 1`] = `
+"import React from \\"react\\";
+import { Type2 } from \\"some-package2\\";
+import { idRef, newAttribute } from \\"@gooddata/sdk-model\\";
+import { Foo } from \\"@gooddata/foo\\";
+
+const prop = \\"string\\";
+const another: Type2[] = [
+    newAttribute(idRef(\\"label.account.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.account.id.name\\"))
+];
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <Foo
+                prop={prop}
+                another={another}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getReactEmbeddingCodeGenerator omitChartProps should generate embedding code omit all props 1`] = `
+"import React from \\"react\\";
+import { Foo } from \\"@gooddata/foo\\";
+
+
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <Foo
+                
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getReactEmbeddingCodeGenerator omitChartProps should generate embedding code omit one prop 1`] = `
+"import React from \\"react\\";
+import { Type2 } from \\"some-package2\\";
+import { idRef, newAttribute } from \\"@gooddata/sdk-model\\";
+import { Foo } from \\"@gooddata/foo\\";
+
+const another: Type2[] = [
+    newAttribute(idRef(\\"label.account.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.account.id.name\\"))
+];
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <Foo
                 another={another}
             />
         </div>

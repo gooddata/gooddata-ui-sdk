@@ -53,6 +53,7 @@ export const EmbedInsightDialog: React.VFC<IEmbedInsightDialogProps> = (props) =
             },
             language: codeLang,
             height: codeOption.customHeight ? codeOption.height : 400, //TODO Default from UI-Kit
+            omitChartProps: codeOption.includeConfiguration ? [] : ["config"],
         });
     }, [codeLang, codeOption]);
 
