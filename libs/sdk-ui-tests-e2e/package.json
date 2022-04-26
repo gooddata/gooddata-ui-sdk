@@ -14,7 +14,10 @@
     "module": "esm/index.js",
     "browser": "dist/index.js",
     "typings": "esm/index.d.ts",
-    "sideEffects": false,
+    "sideEffects": [
+        "*.css",
+        "*.svg"
+    ],
     "files": [
         "dist/**/*.js",
         "dist/**/*.json",
