@@ -17,7 +17,7 @@ const isTouchDevice = "ontouchstart" in window || navigator.msMaxTouchPoints;
 const HIGHCHART_PLOT_LIMITED_RANGE = 1e5;
 
 export const DEFAULT_SERIES_LIMIT = 1000;
-export const DEFAULT_CATEGORIES_LIMIT = 365;
+export const DEFAULT_CATEGORIES_LIMIT = 366;
 export const DEFAULT_DATA_POINTS_LIMIT = 2000;
 export const MAX_POINT_WIDTH = 100;
 export const HOVER_BRIGHTNESS = 0.1;
