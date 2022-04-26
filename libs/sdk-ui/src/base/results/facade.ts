@@ -21,10 +21,6 @@ import { newDataAccessMethods } from "./internal/dataAccessMethods";
  * The facade is part of the public API and we strongly recommend to use it whenever client code needs to work with
  * data view; ideally, single instance of data view facade
  *
- * Note: the facade is currently in alpha quality - mix-match of various functions we found useful so far; consolidation
- * and further enhancements will happen, the methods will be removed, renamed and added in the future. The public
- * API WILL break.
- *
  * @public
  */
 export class DataViewFacade {

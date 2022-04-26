@@ -14,7 +14,7 @@ import findIndex from "lodash/findIndex";
 /**
  * Methods to work with execution definition.
  *
- * @public
+ * @internal
  */
 export interface IExecutionDefinitionMethods {
     /**

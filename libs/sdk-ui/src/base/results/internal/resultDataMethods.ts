@@ -7,7 +7,7 @@ import isArray from "lodash/isArray";
 /**
  * Methods to access data and totals in a result.
  *
- * @public
+ * @internal
  */
 export interface IResultDataMethods {
     /**
