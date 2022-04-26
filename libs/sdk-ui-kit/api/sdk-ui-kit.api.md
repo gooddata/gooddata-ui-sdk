@@ -3212,7 +3212,6 @@ export class OverlayController {
     // (undocumented)
     static getInstance(): OverlayController;
     getZIndex(uuid: string): number;
-    // (undocumented)
     removeOverlay(uuid: string): void;
 }
 
