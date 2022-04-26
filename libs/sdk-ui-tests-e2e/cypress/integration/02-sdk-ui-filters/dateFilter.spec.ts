@@ -54,7 +54,7 @@ describe("DateFilter", () => {
             .openToRangePicker()
             .selectDateInNextMonth();
 
-        dateFilter.pressButton("apply").subtitleHasValue("03/15/2019–04/05/2019");
+        dateFilter.pressButton("apply").subtitleHasValue("03/15/2019 - 04/05/2019");
     });
 
     it("Select menu item can be switched with arrow keys and enter", () => {
