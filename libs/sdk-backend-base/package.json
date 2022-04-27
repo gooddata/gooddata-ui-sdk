@@ -48,7 +48,7 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@braintree/sanitize-url": "^5.0.2",
+        "@braintree/sanitize-url": "^6.0.0",
         "@gooddata/sdk-backend-spi": "^8.10.0-alpha.78",
         "@gooddata/sdk-model": "^8.10.0-alpha.78",
         "@gooddata/util": "^8.10.0-alpha.78",
