@@ -66,24 +66,33 @@ docker network create "${BACKSTOP_NET}" || { echo "Network creation failed" && e
 
     echo "Starting BackstopJS in dir ${BACKSTOP_DIR} with params: $@"
 
-    {
-        docker run --rm \
-            --env BACKSTOP_CAPTURE_LIMIT \
-            --env BACKSTOP_COMPARE_LIMIT \
-            --env BACKSTOP_DEBUG \
-            --user $UID:$GID \
-            --net ${BACKSTOP_NET} --net-alias backstop \
-            --volume ${BACKSTOP_DIR}:/src:Z,consistent \
-            backstopjs/backstopjs:5.1.0 --config=/src/backstop.config.js "$@"
+    docker run --rm \
+        --env BACKSTOP_CAPTURE_LIMIT \
+        --env BACKSTOP_COMPARE_LIMIT \
+        --env BACKSTOP_DEBUG \
+        --user $UID:$GID \
+        --net ${BACKSTOP_NET} --net-alias backstop \
+        --volume ${BACKSTOP_DIR}:/src:Z,consistent \
+        backstopjs/backstopjs:5.1.0 --config=/src/backstop.config.js "$@"
 
-        echo "BackstopJS finished. Killing nginx container ${NGINX_CONTAINER}"
-    }
+    if [[ $? -eq 0 ]]; then
+      echo "BackstopJS finished. Killing nginx container ${NGINX_CONTAINER}"
 
-    docker kill ${NGINX_CONTAINER}
+      docker kill ${NGINX_CONTAINER}
 
-    echo "Cleaning up docker network ${BACKSTOP_NET}"
+      echo "Cleaning up docker network ${BACKSTOP_NET}"
 
-    docker network rm "${BACKSTOP_NET}"
+      docker network rm "${BACKSTOP_NET}"
+      
+      exit 0
+    else
+      docker kill ${NGINX_CONTAINER}
+
+      echo "Error running backstop. Cleaning up network: ${BACKSTOP_NET}"
+
+      docker network rm "${BACKSTOP_NET}"
+      exit 1
+    fi
 } || {
   echo "Error running backstop. Cleaning up network: ${BACKSTOP_NET}"
 
