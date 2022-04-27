@@ -11,6 +11,7 @@ import { Action } from '@reduxjs/toolkit';
 import { AnyAction } from '@reduxjs/toolkit';
 import { CaseReducer } from '@reduxjs/toolkit';
 import { CaseReducerActions } from '@reduxjs/toolkit';
+import { ComponentPropsWithRef } from 'react';
 import { ComponentType } from 'react';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-model';
 import { DataViewFacade } from '@gooddata/sdk-ui';
@@ -246,6 +247,9 @@ export function applyDateFilter(filter: IDateFilter, correlationId?: string): Ch
 
 // @alpha (undocumented)
 export type AttributeFilterComponentProvider = (filter: IDashboardAttributeFilter) => CustomDashboardAttributeFilterComponent;
+
+// @internal
+export type AttributeFilterComponentSet = CustomComponentBase<IDashboardAttributeFilterProps> & DraggableComponent & CreatablePlaceholderComponent & CreatableByDragComponent;
 
 // @public
 export type AttributeFilterSelectionType = "IN" | "NOT_IN";
@@ -557,6 +561,27 @@ export interface ConfigState {
     config?: ResolvedDashboardConfig;
 }
 
+// @internal
+export type ConfigurableWidget = {
+    configuration: {
+        WidgetConfigPanelComponent: ComponentType<WidgetConfigPanelProps>;
+    };
+};
+
+// @internal
+export type CreatableByDragComponent = DraggableComponent & {
+    creating: {
+        DrawerItemComponent: ComponentType;
+    };
+};
+
+// @internal
+export type CreatablePlaceholderComponent = {
+    creating: {
+        CreatingPlaceholderComponent: ComponentType;
+    };
+};
+
 // @alpha
 export interface CreateAlert extends IDashboardCommand {
     // (undocumented)
@@ -592,6 +617,11 @@ export interface CreateScheduledEmailPayload {
 
 // @alpha (undocumented)
 export type CustomButtonBarComponent = ComponentType<IButtonBarProps>;
+
+// @internal (undocumented)
+export interface CustomComponentBase<TMainProps> {
+    MainComponent: ComponentType<TMainProps>;
+}
 
 // @alpha (undocumented)
 export type CustomDashboardAttributeFilterComponent = ComponentType<IDashboardAttributeFilterProps>;
@@ -643,6 +673,9 @@ export type CustomTitleComponent = ComponentType<ITitleProps>;
 
 // @alpha (undocumented)
 export type CustomTopBarComponent = ComponentType<ITopBarProps>;
+
+// @internal
+export type CustomWidgetComponentSet = CustomComponentBase<IDashboardWidgetProps> & DraggableComponent & Partial<ConfigurableWidget> & Partial<CreatableByDragComponent>;
 
 // @internal (undocumented)
 export const Dashboard: React_2.FC<IDashboardProps>;
@@ -2019,6 +2052,21 @@ export function disableKpiWidgetDateFilter(ref: ObjRef, correlationId?: string):
 // @alpha
 export function dispatchAndWaitFor<TCommand extends DashboardCommands, TResult>(dispatch: DashboardDispatch, command: TCommand): Promise<TResult>;
 
+// @internal
+export type DraggableComponent = {
+    dragging: {
+        DraggingComponent: ComponentType<DraggingComponentProps>;
+        type: DraggableItemType;
+    };
+};
+
+// @internal (undocumented)
+export type DraggableItemType = "attributeFilter" | "widget" | "custom";
+
+// @internal (undocumented)
+export interface DraggingComponentProps {
+}
+
 // @alpha (undocumented)
 export interface Drill extends IDashboardCommand {
     // (undocumented)
@@ -2171,6 +2219,17 @@ export function drillToLegacyDashboard(drillDefinition: IDrillToLegacyDashboard,
 export interface DrillToLegacyDashboardPayload {
     readonly drillDefinition: IDrillToLegacyDashboard;
     readonly drillEvent: IDashboardDrillEvent;
+}
+
+// @internal
+export type DropTarget = {
+    dropping: {
+        DropTargetComponent: ComponentType<DropTargetComponentProps>;
+    };
+};
+
+// @internal (undocumented)
+export interface DropTargetComponentProps {
 }
 
 // @alpha
@@ -3479,6 +3538,9 @@ export interface KpiWidgetComparison {
     comparisonType?: IKpiComparisonTypeComparison;
 }
 
+// @internal
+export type KpiWidgetComponentSet = CustomComponentBase<IDashboardKpiProps> & DraggableComponent & CreatableByDragComponent & CreatablePlaceholderComponent & ConfigurableWidget;
+
 // @alpha (undocumented)
 export type LayoutStash = Record<string, ExtendedDashboardItem[]>;
 
@@ -4033,6 +4095,11 @@ export interface RenameDashboardPayload {
 
 // @internal (undocumented)
 export type RenderMode = "view" | "edit";
+
+// @internal
+export function renderModeAware<T extends ComponentType<any>>(components: {
+    view: T;
+} & Partial<Record<RenderMode, T>>): ComponentType<ComponentPropsWithRef<T>>;
 
 // @alpha
 export function replaceInsightWidgetFilterSettings(ref: ObjRef, settings: Omit<FilterOpReplaceAll, "type">, correlationId?: string): ChangeInsightWidgetFilterSettings;
@@ -5373,6 +5440,10 @@ export function useWidgetFilters(widget: ExtendedDashboardWidget | undefined, in
 
 // @public (undocumented)
 export type WidgetComponentProvider = (widget: ExtendedDashboardWidget) => CustomDashboardWidgetComponent;
+
+// @internal (undocumented)
+export interface WidgetConfigPanelProps {
+}
 
 // @alpha
 export type WidgetFilterOperation = FilterOpEnableDateFilter | FilterOpDisableDateFilter | FilterOpReplaceAttributeIgnores | FilterOpIgnoreAttributeFilter | FilterOpUnignoreAttributeFilter | FilterOpReplaceAll;

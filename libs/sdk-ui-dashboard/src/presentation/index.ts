@@ -1,4 +1,6 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
+
+export * from "./componentDefinition";
 export * from "./dashboard";
 // only export the types for this, not the actual code
 export * from "./dashboardContexts/types";

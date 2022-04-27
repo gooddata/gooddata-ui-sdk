@@ -12,6 +12,13 @@ options = {
         // TODO: RAIL-3611
         // depCruiser.moduleWithDependencies("_staging", "src/_staging",["src/types.ts"]),
         depCruiser.moduleWithDependencies("converters", "src/converters", ["src/types.ts"]),
+        depCruiser.moduleWithDependencies("componentDefinition", "src/presentation/componentDefinition", [
+            "src/model",
+            "src/model/store/ui/uiSelectors.ts",
+            "src/presentation/filterBar",
+            "src/presentation/widget",
+            "src/types.ts",
+        ]),
         depCruiser.moduleWithDependencies(
             "dashboard",
             "src/presentation/dashboard/", // the trailing / is necessary here, otherwise dashboardContexts is matched as well
@@ -83,6 +90,7 @@ options = {
             "src/logUserInteraction",
             "src/model",
             "src/model/events/widget.ts",
+            "src/model/store/ui/uiSelectors.ts",
             "src/types.ts",
         ]),
         depCruiser.moduleWithDependencies("scheduledEmail", "src/presentation/scheduledEmail", [
