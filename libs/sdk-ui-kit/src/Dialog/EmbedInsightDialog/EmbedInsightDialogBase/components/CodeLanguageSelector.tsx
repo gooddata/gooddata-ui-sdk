@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 import React, { ChangeEvent, useCallback } from "react";
-import { CodeLanguageType } from "../EmbedInsightDialogBase";
+import { CodeLanguageType } from "../types";
 
 /**
  * @internal

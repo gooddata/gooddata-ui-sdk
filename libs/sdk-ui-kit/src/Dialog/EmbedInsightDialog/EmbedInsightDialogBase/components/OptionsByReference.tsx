@@ -1,42 +1,40 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
-import { IOptionsByDefinition } from "../types";
+import { IOptionsByReference } from "../types";
 import { HeightSetting } from "./HeightSetting";
 import { ToggleSwitch } from "./ToggleSwitch";
 
 /**
  * @internal
  */
-export interface IOptionsByDefinitionProps {
-    option: IOptionsByDefinition;
-    onChange: (opt: IOptionsByDefinition) => void;
+export interface IOptionsByReferenceProps {
+    option: IOptionsByReference;
+    onChange: (opt: IOptionsByReference) => void;
 }
 
 /**
  * @internal
  */
-export const OptionsByDefinition: React.VFC<IOptionsByDefinitionProps> = (props) => {
+export const OptionsByReference: React.VFC<IOptionsByReferenceProps> = (props) => {
     const { option, onChange } = props;
 
     return (
         <div className="embed-insight-dialog-lang-selector">
-            {/* // TODO text  */}
             <strong className="bottom-space">Other option</strong>
 
             <ToggleSwitch
                 id={"include-configuration"}
-                label={"Include configuration"} // TODO text
-                questionMarkMessage={"Bla bla"} // TODO text
-                checked={option.includeConfiguration}
+                label={"Display title"}
+                checked={option.displayTitle}
                 onChange={() => {
-                    const opt = { ...option, includeConfiguration: !option.includeConfiguration };
+                    const opt = { ...option, displayTitle: !option.displayTitle };
                     onChange(opt);
                 }}
             />
 
             <ToggleSwitch
                 id={"custom-height"}
-                label={"Custom height"} // TODO text
+                label={"Custom height"}
                 checked={option.customHeight}
                 onChange={() => {
                     const opt = { ...option, customHeight: !option.customHeight };

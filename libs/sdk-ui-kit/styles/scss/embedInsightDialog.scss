@@ -104,3 +104,8 @@
         @include gd-input-small-base;
     }
 }
+
+.gd-embed-input-numeric-invalid {
+    // override input focus
+    border-color: $gd-color-negative !important;
+}

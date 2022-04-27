@@ -1495,7 +1495,7 @@
         "limit": 0
     },
     "embedInsightDialog.headLine.byDefinition": {
-        "value": "Embed insight as a copy of it's definition",
+        "value": "Embed insight as a copy of its definition",
         "comment": "",
         "limit": 0
     },
@@ -1517,6 +1517,16 @@
     "embedInsightDialog.prepareEnvironmentMessage.link": {
         "value": "Learn more",
         "comment": "",
+        "limit": 0
+    },
+    "embed.dialog.numeric.input.validation": {
+        "value": "The value must be a number greater than 0",
+        "comment": "Validation of custom embedded dashboard height",
+        "limit": 0
+    },
+    "embed.dialog.numeric.input.warning": {
+        "value": "This input accepts only digits greater than 0",
+        "comment": "Validation of custom embedded dashboard height",
         "limit": 0
     }
 }

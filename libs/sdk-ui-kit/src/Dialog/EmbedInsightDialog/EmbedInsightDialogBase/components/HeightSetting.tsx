@@ -1,89 +1,81 @@
 // (C) 2022 GoodData Corporation
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback } from "react";
 import { SingleSelectListItem } from "../../../../List";
 import { Dropdown, DropdownButton, DropdownList } from "../../../../Dropdown";
+import { NumericInput } from "./NumericInput";
+import { UnitsType } from "../types";
 
-type UnitsType = "px";
+const UNITS: UnitsType[] = ["px", "%", "rem", "em"];
 
-const UNITS: UnitsType[] = ["px"];
+type UnitMap = {
+    [key in UnitsType]: string;
+};
 
-const DEFAULT_HEIGHT = 400;
+const DEFAULT_UNIT: UnitsType = "px";
+
+const DEFAULT_HEIGHT: UnitMap = {
+    px: "400",
+    "%": "50",
+    rem: "25",
+    em: "25",
+};
+
+const getDefaultValue = (unit: UnitsType): string => {
+    return DEFAULT_HEIGHT[unit];
+};
 
 /**
  * @internal
  */
 export interface IHeightSettingProps {
-    value: number;
-    onValueChange: (value: number) => void;
+    value?: string;
+    unit?: UnitsType;
+    onValueChange: (value: string, unit: UnitsType) => void;
 }
-
-const isNumeric = (num: any) =>
-    (typeof num === "number" || (typeof num === "string" && num.trim() !== "")) && !isNaN(num as number);
 
 /**
  * @internal
  */
 export const HeightSetting: React.VFC<IHeightSettingProps> = (props) => {
-    const { value, onValueChange } = props;
+    const { value, onValueChange, unit = DEFAULT_UNIT } = props;
 
-    const [inputValue, setInputValue] = useState<number | string>(value);
-
-    useEffect(() => {
-        setInputValue(value);
-    }, [value]);
-
-    const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        setInputValue(e.target.value);
-    }, []);
-
-    const onBlur = useCallback(
-        (e: React.FocusEvent<HTMLInputElement, Element>) => {
-            const val = e.target.value;
-            const replaceDecimal = val.replace(",", ".");
-
-            if (isNumeric(replaceDecimal)) {
-                onValueChange(Number(replaceDecimal));
-            } else {
-                setInputValue(DEFAULT_HEIGHT);
-                onValueChange(DEFAULT_HEIGHT);
+    const onChange = useCallback(
+        (val: string) => {
+            if (val != value) {
+                onValueChange(val, unit);
             }
+        },
+        [value, unit, onValueChange],
+    );
+
+    const onUnitChange = useCallback(
+        (unit: UnitsType) => {
+            onValueChange(getDefaultValue(unit), unit);
         },
         [onValueChange],
     );
 
     return (
         <div className="height-setting-component">
-            <input
-                className="gd-input-field"
-                maxLength={4}
-                onChange={onChange}
-                onBlur={onBlur}
-                value={inputValue}
-                onKeyPress={(e) => !/^[0-9]*[.,]?[0-9]*$/.test(e.key) && e.preventDefault()}
-            />
-            <UnitSelector selectedUnit={"px"} />
+            <NumericInput value={value ?? getDefaultValue(unit)} onValueChanged={onChange} />
+            <UnitSelector selectedUnit={unit} onSelectUnit={onUnitChange} />
         </div>
     );
 };
 
-/**
- * @internal
- */
-export interface IDropdownItem {
-    id: string;
+interface IDropdownItem {
+    id: UnitsType;
     title: string;
 }
 
 interface UnitSelectorProps {
     selectedUnit: UnitsType;
+    onSelectUnit: (unit: UnitsType) => void;
 }
 
-/**
- * @internal
- */
 const UnitSelector: React.VFC<UnitSelectorProps> = (props) => {
-    const { selectedUnit } = props;
-    const items = UNITS.map((u) => ({ id: u, title: u }));
+    const { selectedUnit, onSelectUnit } = props;
+    const items: IDropdownItem[] = UNITS.map((u) => ({ id: u, title: u }));
 
     return (
         <Dropdown
@@ -97,7 +89,7 @@ const UnitSelector: React.VFC<UnitSelectorProps> = (props) => {
                                 title={item.title}
                                 isSelected={item.id === selectedUnit}
                                 onClick={() => {
-                                    //  onSelect(item);
+                                    onSelectUnit(item.id);
                                     closeDropdown();
                                 }}
                             />
@@ -106,7 +98,7 @@ const UnitSelector: React.VFC<UnitSelectorProps> = (props) => {
                 />
             )}
             renderButton={({ openDropdown, isOpen }) => (
-                <DropdownButton value="px" isOpen={isOpen} onClick={openDropdown} />
+                <DropdownButton value={selectedUnit} isOpen={isOpen} onClick={openDropdown} />
             )}
         />
     );

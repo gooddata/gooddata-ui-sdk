@@ -18,16 +18,43 @@ export const EmbedInsightDialogBaseExamples: React.VFC = () => {
         <InternalIntlWrapper>
             <div className="screenshot-target" style={{ width: "100%", height: "100%" }}>
                 <div className="library-component">
-                    <h4>EmbedInsightDialogBase</h4>
+                    <h4>EmbedInsightDialogBase by definition</h4>
                 </div>
 
                 <EmbedInsightDialogBase
                     code={code}
                     codeType={"definition"}
                     codeLanguage={"ts"}
+                    codeOption={{
+                        type: "definition",
+                        includeConfiguration: true,
+                        customHeight: true,
+                        height: "300",
+                    }}
                     onClose={action("onClose")}
                     onCopyCode={action("onCopyCode")}
                     onCodeLanguageChange={action("onCodeLanguageChange")}
+                    onCodeOptionChange={action("onCodeOptionChange")}
+                />
+
+                <div className="library-component">
+                    <h4>EmbedInsightDialogBase by reference</h4>
+                </div>
+
+                <EmbedInsightDialogBase
+                    code={code}
+                    codeType={"reference"}
+                    codeLanguage={"ts"}
+                    codeOption={{
+                        type: "reference",
+                        displayTitle: true,
+                        customHeight: true,
+                        height: "300",
+                    }}
+                    onClose={action("onClose")}
+                    onCopyCode={action("onCopyCode")}
+                    onCodeLanguageChange={action("onCodeLanguageChange")}
+                    onCodeOptionChange={action("onCodeOptionChange")}
                 />
             </div>
         </InternalIntlWrapper>
