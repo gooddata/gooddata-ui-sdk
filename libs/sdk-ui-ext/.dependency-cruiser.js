@@ -14,6 +14,8 @@ const options = {
         depCruiser.moduleWithDependencies("insightView", "src/insightView", [
             "src/dataLoaders",
             "src/internal",
+            "src/internal/utils/embeddingCodeGenerator",
+            "src/internal/utils/embeddingCodeGenerator/types.ts",
         ]),
     ],
     options: depCruiser.DefaultOptions,

@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
 
 import { isIdentifierRef, isUriRef } from "@gooddata/sdk-model";
-import { IAdditionalFactoryDefinition } from "../utils/embeddingCodeGenerator/types";
+import { IAdditionalFactoryDefinition } from "../../internal/utils/embeddingCodeGenerator/types";
 
 interface IInsightViewAdditionTransformationOptions {
     uriRef: string;
