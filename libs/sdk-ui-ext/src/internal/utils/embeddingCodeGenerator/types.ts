@@ -44,7 +44,7 @@ export type PropMeta = {
     /**
      * Metadata of the property type import.
      */
-    typeImport: IImportInfo;
+    typeImport?: IImportInfo;
     /**
      * Type of the property, array or scalar.
      */
