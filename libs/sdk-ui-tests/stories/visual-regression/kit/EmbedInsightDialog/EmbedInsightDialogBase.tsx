@@ -5,9 +5,7 @@ import { storiesOf } from "../../../_infra/storyRepository";
 import { UiKit } from "../../../_infra/storyGroups";
 import { wrapWithTheme } from "../../themeWrapper";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
-
-// import { EmbedInsightDialogBase } from "@gooddata/sdk-ui-kit"; TODO FIX import
-import { EmbedInsightDialogBase } from "@gooddata/sdk-ui-kit/src/Dialog/EmbedInsightDialog/EmbedInsightDialogBase/EmbedInsightDialogBase";
+import { EmbedInsightDialogBase } from "@gooddata/sdk-ui-kit";
 import { code } from "./CodeMock";
 
 /**

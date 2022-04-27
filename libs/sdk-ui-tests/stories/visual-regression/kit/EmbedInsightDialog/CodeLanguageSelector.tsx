@@ -3,10 +3,8 @@ import React, { useState } from "react";
 import { storiesOf } from "../../../_infra/storyRepository";
 import { UiKit } from "../../../_infra/storyGroups";
 import { wrapWithTheme } from "../../themeWrapper";
-
-// import { CodeLanguageSelector } from "@gooddata/sdk-ui-kit"; TODO FIX import
-import { CodeLanguageSelector } from "@gooddata/sdk-ui-kit/src/Dialog/EmbedInsightDialog/EmbedInsightDialogBase/components/CodeLanguageSelector";
-import { CodeLanguageType } from "@gooddata/sdk-ui-kit/src/Dialog/EmbedInsightDialog/EmbedInsightDialogBase/EmbedInsightDialogBase";
+import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
+import { CodeLanguageSelector, CodeLanguageType } from "@gooddata/sdk-ui-kit";
 
 /**
  * @internal
@@ -19,11 +17,11 @@ export const CodeLanguageSelectorExamples: React.VFC = () => {
     };
 
     return (
-        <>
+        <InternalIntlWrapper>
             <div className="screenshot-target library-component">
                 <CodeLanguageSelector selectedLanguage={lang} onLanguageChanged={onLanguageChanged} />
             </div>
-        </>
+        </InternalIntlWrapper>
     );
 };
 

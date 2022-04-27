@@ -3,8 +3,7 @@ import React from "react";
 import { storiesOf } from "../../../_infra/storyRepository";
 import { UiKit } from "../../../_infra/storyGroups";
 import { wrapWithTheme } from "../../themeWrapper";
-// import { CodeArea } from "@gooddata/sdk-ui-kit"; TODO FIX import
-import { CodeArea } from "@gooddata/sdk-ui-kit/src/Dialog/EmbedInsightDialog/EmbedInsightDialogBase/components/CodeArea";
+import { CodeArea } from "@gooddata/sdk-ui-kit";
 import { code } from "./CodeMock";
 
 const AreaWrapper: React.FC = (props) => {

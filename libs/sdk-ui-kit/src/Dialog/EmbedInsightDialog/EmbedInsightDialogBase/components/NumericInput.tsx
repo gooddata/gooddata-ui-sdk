@@ -1,6 +1,6 @@
 // (C) 2020-2022 GoodData Corporation
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import cx from "classnames";
 import { isEmpty } from "lodash";
 import { FormattedMessage } from "react-intl";
@@ -31,11 +31,7 @@ export interface INumericInputProps {
 export const NumericInput: React.FC<INumericInputProps> = (props) => {
     const { value, onValueChanged } = props;
     const [validPressedButton, setValidPressedButton] = useState(true);
-    const [anchorId, setAnchorId] = useState<string>(null);
-
-    useEffect(() => {
-        setAnchorId(`numeric-input-id-${v4()}`);
-    }, []);
+    const [anchorId] = useState<string>(`numeric-input-id-${v4()}`);
 
     useEffect(() => {
         if (!validPressedButton) {
@@ -43,21 +39,32 @@ export const NumericInput: React.FC<INumericInputProps> = (props) => {
         }
     }, [validPressedButton]);
 
-    const handleHeightInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const val = e.target.value.replace(/,/, ".");
-        if (val.match(VALID_INPUT)) {
-            onValueChanged(val);
-        } else if (isEmpty(val)) {
-            onValueChanged("");
-        }
-    };
+    const handleHeightInputChange = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            const val = e.target.value.replace(/,/, ".");
+            if (val.match(VALID_INPUT)) {
+                onValueChanged(val);
+            } else if (isEmpty(val)) {
+                onValueChanged("");
+            }
+        },
+        [onValueChanged],
+    );
 
-    const correctKeyPressed = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const correctKeyPressed = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value.replace(/,/, ".");
         setValidPressedButton(
             (value.match(VALID_INPUT) || isEmpty(value)) && value.split(".").length <= 2 ? true : false,
         );
-    };
+    }, []);
+
+    const onChanged = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            correctKeyPressed(e);
+            handleHeightInputChange(e);
+        },
+        [handleHeightInputChange, correctKeyPressed],
+    );
 
     return (
         <label className="gd-input">
@@ -68,10 +75,7 @@ export const NumericInput: React.FC<INumericInputProps> = (props) => {
                     })}
                     type="text"
                     value={value}
-                    onChange={(e) => {
-                        correctKeyPressed(e);
-                        handleHeightInputChange(e);
-                    }}
+                    onChange={onChanged}
                 />
             </div>
             {!validHeight(value) && (

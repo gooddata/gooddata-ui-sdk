@@ -4,14 +4,14 @@ import React from "react";
 /**
  * @internal
  */
-export interface ICodeArea {
+export interface ICodeAreaProps {
     code: string;
 }
 
 /**
  * @internal
  */
-export const CodeArea: React.VFC<ICodeArea> = (props) => {
+export const CodeArea: React.VFC<ICodeAreaProps> = (props) => {
     const { code } = props;
 
     return (

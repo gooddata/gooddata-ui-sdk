@@ -4,10 +4,8 @@ import { storiesOf } from "../../../_infra/storyRepository";
 import { UiKit } from "../../../_infra/storyGroups";
 import { wrapWithTheme } from "../../themeWrapper";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
-
-// import { CodeLanguageSelector } from "@gooddata/sdk-ui-kit"; TODO FIX import
-import { NumericInput } from "@gooddata/sdk-ui-kit/src/Dialog/EmbedInsightDialog/EmbedInsightDialogBase/components/NumericInput";
 import { action } from "@storybook/addon-actions";
+import { NumericInput } from "@gooddata/sdk-ui-kit";
 
 /**
  * @internal

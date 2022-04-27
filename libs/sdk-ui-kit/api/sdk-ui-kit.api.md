@@ -245,7 +245,16 @@ export interface CheckboxProps {
 }
 
 // @internal (undocumented)
+export const CodeArea: React_2.VFC<ICodeAreaProps>;
+
+// @internal (undocumented)
+export const CodeLanguageSelector: React_2.VFC<ICodeLanguageSelectorProps>;
+
+// @internal (undocumented)
 export type CodeLanguageType = "js" | "ts";
+
+// @internal (undocumented)
+export const CodeOptions: React_2.VFC<ICodeOptionsProps>;
 
 // @internal (undocumented)
 export type CodeOptionType = IOptionsByDefinition | IOptionsByReference;
@@ -847,6 +856,28 @@ export interface IButtonProps {
     type?: string;
     // (undocumented)
     value?: ReactNode;
+}
+
+// @internal (undocumented)
+export interface ICodeAreaProps {
+    // (undocumented)
+    code: string;
+}
+
+// @internal (undocumented)
+export interface ICodeLanguageSelectorProps {
+    // (undocumented)
+    onLanguageChanged: (language: CodeLanguageType) => void;
+    // (undocumented)
+    selectedLanguage: CodeLanguageType;
+}
+
+// @internal (undocumented)
+export interface ICodeOptionsProps {
+    // (undocumented)
+    onChange: (opt: CodeOptionType) => void;
+    // (undocumented)
+    option: CodeOptionType;
 }
 
 // @internal (undocumented)
