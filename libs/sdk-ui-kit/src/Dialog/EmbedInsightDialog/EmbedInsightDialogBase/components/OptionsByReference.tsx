@@ -1,5 +1,6 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 import { IOptionsByReference } from "../types";
 import { HeightSetting } from "./HeightSetting";
 import { ToggleSwitch } from "./ToggleSwitch";
@@ -18,13 +19,19 @@ export interface IOptionsByReferenceProps {
 export const OptionsByReference: React.VFC<IOptionsByReferenceProps> = (props) => {
     const { option, onChange } = props;
 
+    const intl = useIntl();
+
     return (
         <div className="embed-insight-dialog-lang-selector">
-            <strong className="bottom-space">Other option</strong>
+            <strong className="bottom-space">
+                <FormattedMessage id="embedInsightDialog.code.options" />
+            </strong>
 
             <ToggleSwitch
-                id={"include-configuration"}
-                label={"Display title"}
+                id={"display-title"}
+                label={intl.formatMessage({
+                    id: "embedInsightDialog.code.options.display.title",
+                })}
                 checked={option.displayTitle}
                 onChange={() => {
                     const opt = { ...option, displayTitle: !option.displayTitle };
@@ -34,7 +41,9 @@ export const OptionsByReference: React.VFC<IOptionsByReferenceProps> = (props) =
 
             <ToggleSwitch
                 id={"custom-height"}
-                label={"Custom height"}
+                label={intl.formatMessage({
+                    id: "embedInsightDialog.code.options.custom.height",
+                })}
                 checked={option.customHeight}
                 onChange={() => {
                     const opt = { ...option, customHeight: !option.customHeight };

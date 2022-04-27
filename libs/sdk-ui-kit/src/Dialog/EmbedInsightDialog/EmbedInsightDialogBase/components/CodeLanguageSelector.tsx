@@ -1,5 +1,6 @@
 // (C) 2022 GoodData Corporation
 import React, { ChangeEvent, useCallback } from "react";
+import { FormattedMessage } from "react-intl";
 import { CodeLanguageType } from "../types";
 
 /**
@@ -26,7 +27,9 @@ export const CodeLanguageSelector: React.VFC<ICodeLanguageSelectorProps> = (prop
 
     return (
         <div className="embed-insight-dialog-lang-selector">
-            <strong className="bottom-space">Code as </strong>
+            <strong className="bottom-space">
+                <FormattedMessage id="embedInsightDialog.code.language.codeAs" />
+            </strong>
             <label className="input-radio-label bottom-space s-language-ts">
                 <input
                     type="radio"

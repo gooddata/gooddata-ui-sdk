@@ -1489,6 +1489,36 @@
         "comment": "",
         "limit": 0
     },
+    "embedInsightDialog.code.language.codeAs": {
+        "value": "Code as",
+        "comment": "",
+        "limit": 0
+    },
+    "embedInsightDialog.code.options": {
+        "value": "Other options",
+        "comment": "",
+        "limit": 0
+    },
+    "embedInsightDialog.code.options.include.config": {
+        "value": "Include configuration",
+        "comment": "",
+        "limit": 0
+    },
+    "embedInsightDialog.code.options.include.config.info": {
+        "value": "Bla bla text no ready yet",
+        "comment": "",
+        "limit": 0
+    },
+    "embedInsightDialog.code.options.custom.height": {
+        "value": "Custom height",
+        "comment": "",
+        "limit": 0
+    },
+    "embedInsightDialog.code.options.display.title": {
+        "value": "Display title",
+        "comment": "",
+        "limit": 0
+    },
     "embedInsightDialog.headLine.byReference": {
         "value": "Embed insight by reference",
         "comment": "",
