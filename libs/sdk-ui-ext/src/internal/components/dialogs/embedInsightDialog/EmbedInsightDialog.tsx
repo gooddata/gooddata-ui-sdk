@@ -1,13 +1,16 @@
 // (C) 2022 GoodData Corporation
 import { IntlWrapper } from "@gooddata/sdk-ui";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { IColorPalette, IInsight } from "@gooddata/sdk-model";
 import {
+    CodeOptionType,
     CodeLanguageType,
     EmbedInsightDialogBase,
     InsightCodeType,
     IOptionsByDefinition,
     Overlay,
+    getDefaultOptions,
+    getHeightWithUnits,
 } from "@gooddata/sdk-ui-kit";
 import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { FullVisualizationCatalog } from "../../VisualizationCatalog";
@@ -31,31 +34,25 @@ export interface IEmbedInsightDialogProps {
  * @internal
  */
 export const EmbedInsightDialog: React.VFC<IEmbedInsightDialogProps> = (props) => {
-    const { locale, insight, backend, settings, colorPalette, onClose, onCopyCode } = props;
+    const { locale, insight, backend, settings, colorPalette, codeType, onClose, onCopyCode } = props;
     const [codeLang, setCodeLang] = useState<CodeLanguageType>("ts");
-    const [codeOption, setCodeOption] = useState<IOptionsByDefinition>({
-        includeConfiguration: true,
-        customHeight: false,
-        height: 400,
-    });
+    const [codeOption, setCodeOption] = useState<CodeOptionType>(getDefaultOptions(codeType));
+
+    useEffect(() => {
+        setCodeOption(getDefaultOptions(codeType));
+    }, [codeType]);
 
     const onLanguageChange = useCallback((codeLanguage: CodeLanguageType) => {
         setCodeLang(codeLanguage);
     }, []);
 
     const code = useMemo(() => {
-        const descriptor = FullVisualizationCatalog.forInsight(insight);
-        return descriptor.getEmbeddingCode?.(insight, {
-            context: {
-                settings: settings, //TODO need setting locale from userSettings or from dialog?
-                backend: backend,
-                colorPalette: colorPalette,
-            },
-            language: codeLang,
-            height: codeOption.customHeight ? codeOption.height : 400, //TODO Default from UI-Kit
-            omitChartProps: codeOption.includeConfiguration ? [] : ["config"],
-        });
-    }, [codeLang, codeOption]);
+        if (codeOption.type === "definition") {
+            return generateCodeByDefinition(codeOption, insight, settings, backend, colorPalette, codeLang);
+        }
+
+        return "This is insightView code";
+    }, [codeOption, insight, settings, backend, colorPalette, codeLang, codeType]);
 
     const onCodeOptionChange = useCallback((codeOpt: IOptionsByDefinition) => {
         setCodeOption(codeOpt);
@@ -66,7 +63,6 @@ export const EmbedInsightDialog: React.VFC<IEmbedInsightDialogProps> = (props) =
             <ModalOverlay>
                 <EmbedInsightDialogBase
                     code={code}
-                    codeType={"definition"}
                     codeLanguage={codeLang}
                     codeOption={codeOption}
                     onClose={onClose}
@@ -77,6 +73,29 @@ export const EmbedInsightDialog: React.VFC<IEmbedInsightDialogProps> = (props) =
             </ModalOverlay>
         </IntlWrapper>
     );
+};
+
+const generateCodeByDefinition = (
+    codeOption: IOptionsByDefinition,
+    insight: IInsight,
+    settings: IUserWorkspaceSettings,
+    backend: IAnalyticalBackend,
+    colorPalette: IColorPalette,
+    codeLang: CodeLanguageType,
+) => {
+    const height = getHeightWithUnits(codeOption);
+
+    const descriptor = FullVisualizationCatalog.forInsight(insight);
+    return descriptor.getEmbeddingCode?.(insight, {
+        context: {
+            settings: settings,
+            backend: backend,
+            colorPalette: colorPalette,
+        },
+        language: codeLang,
+        height: height,
+        omitChartProps: codeOption.includeConfiguration ? [] : ["config"],
+    });
 };
 
 const ModalOverlay: React.FC = (props) => {

@@ -23,7 +23,6 @@ export const EmbedInsightDialogBaseExamples: React.VFC = () => {
 
                 <EmbedInsightDialogBase
                     code={code}
-                    codeType={"definition"}
                     codeLanguage={"ts"}
                     codeOption={{
                         type: "definition",
@@ -43,7 +42,6 @@ export const EmbedInsightDialogBaseExamples: React.VFC = () => {
 
                 <EmbedInsightDialogBase
                     code={code}
-                    codeType={"reference"}
                     codeLanguage={"ts"}
                     codeOption={{
                         type: "reference",

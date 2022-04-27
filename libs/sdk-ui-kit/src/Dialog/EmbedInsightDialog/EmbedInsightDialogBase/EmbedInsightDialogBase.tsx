@@ -6,62 +6,28 @@ import { CodeArea } from "./components/CodeArea";
 import { ConfirmDialogBase } from "../../ConfirmDialogBase";
 import { PrepareEnvMessage } from "./components/PrepareEnvMessage";
 import { CodeLanguageSelector } from "./components/CodeLanguageSelector";
-import {
-    CodeLanguageType,
-    CodeOptionType,
-    InsightCodeType,
-    IOptionsByDefinition,
-    IOptionsByReference,
-} from "./types";
+import { CodeLanguageType, CodeOptionType, InsightCodeType } from "./types";
 import { CodeOptions } from "./components/CodeOptions";
 
 /**
  * @internal
  */
-export interface IEmbedInsightBase {
+export type IEmbedInsightDialogBaseProps = {
+    codeOption: CodeOptionType;
     codeLanguage: CodeLanguageType;
     code: string;
     onClose: () => void;
     onCopyCode: () => void;
     onCodeLanguageChange: (codeLanguage: CodeLanguageType) => void;
     onCodeOptionChange: (codeOption: CodeOptionType) => void;
-}
-
-/**
- * @internal
- */
-export interface IBaseByReferenceProps extends IEmbedInsightBase {
-    codeType: "reference";
-    codeOption: IOptionsByReference;
-}
-
-/**
- * @internal
- */
-export interface IBaseByDefinitionProps extends IEmbedInsightBase {
-    codeType: "definition";
-    codeOption: IOptionsByDefinition;
-}
-
-/**
- * @internal
- */
-export type IEmbedInsightDialogBaseProps = IBaseByReferenceProps | IBaseByDefinitionProps;
+};
 
 /**
  * @internal
  */
 export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (props) => {
-    const {
-        code,
-        codeType,
-        codeLanguage,
-        codeOption,
-        onClose,
-        onCopyCode,
-        onCodeLanguageChange,
-        onCodeOptionChange,
-    } = props;
+    const { code, codeLanguage, codeOption, onClose, onCopyCode, onCodeLanguageChange, onCodeOptionChange } =
+        props;
 
     const intl = useIntl();
 
@@ -73,12 +39,12 @@ export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (
             onSubmit={onCopyCode}
             cancelButtonText={intl.formatMessage({ id: "embedInsightDialog.actions.close" })}
             submitButtonText={intl.formatMessage({ id: "embedInsightDialog.actions.copyCode" })}
-            headline={intl.formatMessage({ id: getDialogLabelId(codeType) })}
+            headline={intl.formatMessage({ id: getDialogLabelId(codeOption.type) })}
             className={cx("embed-insight-dialog", "s-embed-insight-dialog")}
         >
             <div className="embed-insight-dialog-content">
                 <span className="embed-insight-dialog-message-changes">
-                    <FormattedMessage id={getChangesLabelId(codeType)} />
+                    <FormattedMessage id={getChangesLabelId(codeOption.type)} />
                 </span>
                 <PrepareEnvMessage isTiger={true} />
                 <div className="embed-insight-dialog-code">
@@ -110,23 +76,4 @@ const getChangesLabelId = (codeType: InsightCodeType): string => {
         return "embedInsightDialog.changesMessage.byDefinition";
     }
     return "embedInsightDialog.changesMessage.byReference";
-};
-
-/**
- * @internal
- */
-export const getDefaultOptions = (codeType: InsightCodeType): CodeOptionType => {
-    if (codeType === "definition") {
-        return {
-            type: "definition",
-            includeConfiguration: true,
-            customHeight: true,
-        };
-    }
-
-    return {
-        type: "reference",
-        displayTitle: true,
-        customHeight: true,
-    };
 };

@@ -3,26 +3,8 @@ import React, { useCallback } from "react";
 import { SingleSelectListItem } from "../../../../List";
 import { Dropdown, DropdownButton, DropdownList } from "../../../../Dropdown";
 import { NumericInput } from "./NumericInput";
-import { UnitsType } from "../types";
-
-const UNITS: UnitsType[] = ["px", "%", "rem", "em"];
-
-type UnitMap = {
-    [key in UnitsType]: string;
-};
-
-const DEFAULT_UNIT: UnitsType = "px";
-
-const DEFAULT_HEIGHT: UnitMap = {
-    px: "400",
-    "%": "50",
-    rem: "25",
-    em: "25",
-};
-
-const getDefaultValue = (unit: UnitsType): string => {
-    return DEFAULT_HEIGHT[unit];
-};
+import { DEFAULT_UNIT, UNITS, UnitsType } from "../types";
+import { getDefaultHeightByUnit } from "../../utils";
 
 /**
  * @internal
@@ -50,14 +32,14 @@ export const HeightSetting: React.VFC<IHeightSettingProps> = (props) => {
 
     const onUnitChange = useCallback(
         (unit: UnitsType) => {
-            onValueChange(getDefaultValue(unit), unit);
+            onValueChange(getDefaultHeightByUnit(unit), unit);
         },
         [onValueChange],
     );
 
     return (
         <div className="height-setting-component">
-            <NumericInput value={value ?? getDefaultValue(unit)} onValueChanged={onChange} />
+            <NumericInput value={value ?? getDefaultHeightByUnit(unit)} onValueChanged={onChange} />
             <UnitSelector selectedUnit={unit} onSelectUnit={onUnitChange} />
         </div>
     );
