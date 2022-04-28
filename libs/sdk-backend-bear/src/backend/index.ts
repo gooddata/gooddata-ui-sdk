@@ -303,21 +303,16 @@ export class BearBackend implements IAnalyticalBackend {
         return new BearBackend(this.config, this.implConfig, this.telemetry, guardedAuthProvider);
     }
 
-    public isAuthenticated = (): Promise<IAuthenticatedPrincipal | null> => {
-        return new Promise((resolve, reject) => {
-            this.authProvider
-                .getCurrentPrincipal({ client: this.sdk, backend: this })
-                .then((res) => {
-                    resolve(res);
-                })
-                .catch((err) => {
-                    if (isNotAuthenticatedResponse(err)) {
-                        resolve(null);
-                    }
-
-                    reject(err);
-                });
-        });
+    public isAuthenticated = async (): Promise<IAuthenticatedPrincipal | null> => {
+        try {
+            // the return await is crucial here so that we also catch the async errors
+            return await this.authProvider.getCurrentPrincipal({ client: this.sdk, backend: this });
+        } catch (err) {
+            if (isNotAuthenticatedResponse(err)) {
+                return null;
+            }
+            throw err;
+        }
     };
 
     public authenticate = (force: boolean): Promise<IAuthenticatedPrincipal> => {
