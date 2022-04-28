@@ -64,19 +64,17 @@ export class UserModule {
      * every subsequent API call in a current session will be authenticated.
      */
     public login(username: string, password: string): Promise<any> {
-        return this.xhr
-            .post("/gdc/account/login", {
-                body: JSON.stringify({
-                    postUserLogin: {
-                        login: username,
-                        password,
-                        remember: 1,
-                        captcha: "",
-                        verifyCaptcha: "",
-                    },
-                }),
-            })
-            .then((r) => r.getData());
+        return this.xhr.postParsed("/gdc/account/login", {
+            body: JSON.stringify({
+                postUserLogin: {
+                    login: username,
+                    password,
+                    remember: 1,
+                    captcha: "",
+                    verifyCaptcha: "",
+                },
+            }),
+        });
     }
 
     /**
