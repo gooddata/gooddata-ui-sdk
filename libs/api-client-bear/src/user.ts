@@ -51,25 +51,11 @@ export class UserModule {
      *                   resolves with false if user logged in and project not available,
      *                   rejects if user not logged in
      */
-    public isLoggedInProject(projectId: string): Promise<boolean> {
-        return this.getCurrentProfile().then((profile) => {
-            return new Promise((resolve, reject) => {
-                const projectModule = new ProjectModule(this.xhr);
-
-                projectModule.getProjects(profile!.links!.self!.split("/")![4]).then(
-                    (projects) => {
-                        if (projects.find((p: any) => p.links.self === `/gdc/projects/${projectId}`)) {
-                            resolve(true);
-                        } else {
-                            resolve(false);
-                        }
-                    },
-                    (err: ApiResponseError) => {
-                        reject(err);
-                    },
-                );
-            });
-        });
+    public async isLoggedInProject(projectId: string): Promise<boolean> {
+        const profile = await this.getCurrentProfile();
+        const projectModule = new ProjectModule(this.xhr);
+        const projects = await projectModule.getProjects(profile!.links!.self!.split("/")![4]);
+        return projects.some((p) => p.links?.self === `/gdc/projects/${projectId}`);
     }
 
     /**
