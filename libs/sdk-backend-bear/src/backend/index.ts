@@ -19,6 +19,7 @@ import {
 import { IInsight } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import isEmpty from "lodash/isEmpty";
+import isError from "lodash/isError";
 import { convertApiError, isApiResponseError } from "../utils/errorHandling";
 import { BearWorkspace } from "./workspace";
 import { BearWorkspaceQueryFactory } from "./workspaces";
@@ -391,31 +392,39 @@ export class BearBackend implements IAnalyticalBackend {
 
     private getAuthenticationContext = (): IAuthenticationContext => ({ client: this.sdk, backend: this });
 
-    private triggerAuthentication = (reset = false): Promise<IAuthenticatedPrincipal> => {
+    private triggerAuthentication = async (reset = false): Promise<IAuthenticatedPrincipal> => {
         if (!this.authProvider) {
-            return Promise.reject(
-                new NotAuthenticated("Backend is not set up with authentication provider."),
-            );
+            throw new NotAuthenticated("Backend is not set up with authentication provider.");
         }
 
         if (reset) {
             this.authProvider.reset();
         }
 
-        return this.authProvider
-            .authenticate(this.getAuthenticationContext())
-            .catch((e) => {
-                throw convertApiError(e);
-            })
-            .catch(this.handleNotAuthenticated);
+        try {
+            // the return await is crucial here so that we also catch the async errors
+            return await this.authProvider.authenticate(this.getAuthenticationContext());
+        } catch (e: unknown) {
+            invariant(isError(e)); // if this bombs, the code in the try block threw something strange
+            throw this.handleNotAuthenticated2(convertApiError(e));
+        }
     };
 
-    private handleNotAuthenticated = (err: unknown): never => {
+    /**
+     * Triggers onNotAuthenticated handler of the the authProvider if the provided error is an instance of {@link @gooddata/sdk-backend-spi#NotAuthenticated}.
+     *
+     * @param err - error to observe and trigger handler for
+     * @returns the original error to facilitate re-throwing
+     */
+    private handleNotAuthenticated2 = <T>(err: T): T => {
         if (isNotAuthenticated(err)) {
             this.authProvider.onNotAuthenticated?.({ client: this.sdk, backend: this }, err);
         }
+        return err;
+    };
 
-        throw err;
+    private handleNotAuthenticated = (err: unknown): never => {
+        throw this.handleNotAuthenticated2(err);
     };
 
     private getAsyncCallContext = async (): Promise<IAuthenticatedAsyncCallContext> => {
