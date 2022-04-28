@@ -31,25 +31,16 @@ export class UserModule {
      *
      * @returns resolves with true if user logged in, false otherwise
      */
-    public isLoggedIn(): Promise<boolean> {
-        return new Promise((resolve, reject) => {
-            this.xhr.get("/gdc/account/token").then(
-                (r) => {
-                    if (r.response.ok) {
-                        resolve(true);
-                    }
-
-                    resolve(false);
-                },
-                (err: any) => {
-                    if (err?.response?.status === 401) {
-                        resolve(false);
-                    } else {
-                        reject(err);
-                    }
-                },
-            );
-        });
+    public async isLoggedIn(): Promise<boolean> {
+        try {
+            const result = await this.xhr.get("/gdc/account/token");
+            return !!result.response.ok;
+        } catch (err: any) {
+            if (err?.response?.status === 401) {
+                return false;
+            }
+            throw err;
+        }
     }
 
     /**
