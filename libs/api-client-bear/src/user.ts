@@ -1,5 +1,6 @@
 // (C) 2007-2022 GoodData Corporation
 import qs from "qs";
+import invariant from "ts-invariant";
 import { XhrModule, ApiResponseError, ApiResponse } from "./xhr";
 import { ProjectModule } from "./project";
 import { GdcUser } from "@gooddata/api-model-bear";
@@ -30,6 +31,22 @@ export class UserModule {
         private configStorage: IConfigStorage,
         private localStore: ILocalStorageModule,
     ) {}
+
+    /**
+     * Set the SST token to use while authenticating.
+     *
+     * @remarks
+     * This is only applicable if "verificationLevel" is set to "header".
+     *
+     * @param sst - the SST to set
+     */
+    public setSST(sst: string): void {
+        invariant(
+            this.configStorage.verificationLevel === "header",
+            `The setSST is not supported for verificationLevel other than "header". Currently set verificationLevel: "${this.configStorage.verificationLevel}"`,
+        );
+        this.localStore.storeSST(sst);
+    }
 
     /**
      * Find out whether a user is logged in
