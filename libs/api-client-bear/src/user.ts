@@ -1,6 +1,6 @@
 // (C) 2007-2022 GoodData Corporation
 import qs from "qs";
-import { XhrModule, ApiResponseError, ApiResponse } from "./xhr";
+import { XhrModule, ApiResponse } from "./xhr";
 import { ProjectModule } from "./project";
 import { GdcUser } from "@gooddata/api-model-bear";
 import { parseSettingItemValue } from "./util";
@@ -104,23 +104,16 @@ export class UserModule {
     /**
      * Logs out current user
      */
-    public logout(): Promise<ApiResponse | void> {
-        return this.isLoggedIn().then(
-            (loggedIn: boolean): Promise<ApiResponse | void> => {
-                if (loggedIn) {
-                    return this.xhr.get("/gdc/app/account/bootstrap").then((result: any) => {
-                        const data = result.getData();
-                        const userUri = data.bootstrapResource.accountSetting.links.self;
-                        const userId = userUri.match(/([^/]+)\/?$/)[1];
-
-                        return this.xhr.del(`/gdc/account/login/${userId}`);
-                    });
-                }
-
-                return Promise.resolve();
-            },
-            (err: ApiResponseError) => Promise.reject(err),
-        );
+    public async logout(): Promise<ApiResponse | void> {
+        const isLoggedIn = await this.isLoggedIn();
+        if (isLoggedIn) {
+            const { bootstrapResource } = await this.xhr.getParsed<GdcUser.IBootstrapResource>(
+                "/gdc/app/account/bootstrap",
+            );
+            const userUri = bootstrapResource.accountSetting.links!.self!;
+            const userId = userUri.match(/([^/]+)\/?$/)![1];
+            return this.xhr.del(`/gdc/account/login/${userId}`);
+        }
     }
 
     /**
