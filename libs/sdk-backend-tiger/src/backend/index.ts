@@ -19,6 +19,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { newAxios, tigerClientFactory, ITigerClient, jsonApiHeaders } from "@gooddata/api-client-tiger";
 import isEmpty from "lodash/isEmpty";
+import isError from "lodash/isError";
 import isString from "lodash/isString";
 import inRange from "lodash/inRange";
 import identity from "lodash/identity";
@@ -211,37 +212,34 @@ export class TigerBackend implements IAnalyticalBackend {
         return new TigerWorkspaceQueryFactory(this.authApiCall, this.dateFormatter);
     }
 
-    public isAuthenticated = (): Promise<IAuthenticatedPrincipal | null> => {
-        return new Promise((resolve, reject) => {
-            this.authProvider
-                .getCurrentPrincipal({ client: this.client, backend: this })
-                .then((res) => {
-                    resolve(res);
-                })
-                .catch((err) => {
-                    if (isNotAuthenticatedResponse(err) || isNotAuthenticated(err)) {
-                        resolve(null);
-                    }
-
-                    reject(err);
-                });
-        });
+    public isAuthenticated = async (): Promise<IAuthenticatedPrincipal | null> => {
+        try {
+            // the return await is crucial here so that we also catch the async errors
+            return await this.authProvider.getCurrentPrincipal({ client: this.client, backend: this });
+        } catch (err) {
+            if (isNotAuthenticatedResponse(err) || isNotAuthenticated(err)) {
+                return null;
+            }
+            throw err;
+        }
     };
 
-    public authenticate = (force: boolean): Promise<IAuthenticatedPrincipal> => {
+    public authenticate = async (force: boolean): Promise<IAuthenticatedPrincipal> => {
         if (!force) {
             return this.authApiCall(async (client) => {
                 const principal = await this.authProvider.getCurrentPrincipal({ client, backend: this });
                 invariant(principal, "Principal must be defined");
-                return principal!;
+                return principal;
             });
         }
 
-        return this.triggerAuthentication(true)
-            .catch((e) => {
-                throw convertApiError(e);
-            })
-            .catch(this.handleNotAuthenticated);
+        try {
+            // the return await is crucial here so that we also catch the async errors
+            return await this.triggerAuthentication(true);
+        } catch (err) {
+            invariant(isError(err)); // if this bombs, the code in the try block threw something strange
+            throw this.handleNotAuthenticated(convertApiError(err));
+        }
     };
 
     /**
@@ -256,31 +254,44 @@ export class TigerBackend implements IAnalyticalBackend {
         call: AuthenticatedAsyncCall<ITigerClient, T>,
         errorConverter: ErrorConverter = convertApiError,
     ): Promise<T> => {
-        return call(this.client, await this.getAsyncCallContext())
-            .catch((err) => {
-                if (!isNotAuthenticatedResponse(err)) {
-                    throw errorConverter(err);
-                }
+        try {
+            // the return await is crucial here so that we also catch the async errors
+            return await call(this.client, await this.getAsyncCallContext());
+        } catch (err) {
+            invariant(isError(err)); // if this bombs, the code in the try block threw something strange
 
-                return this.triggerAuthentication()
-                    .then(async (_) => {
-                        return call(this.client, await this.getAsyncCallContext()).catch((e) => {
-                            throw errorConverter(e);
-                        });
-                    })
-                    .catch((err2) => {
-                        throw errorConverter(err2);
-                    });
-            })
-            .catch(this.handleNotAuthenticated);
+            // if we receive some other error than missing auth, we fail fast: no need to try the auth
+            // one more time, since it was not the problem in the first place
+            if (!isNotAuthenticatedResponse(err)) {
+                throw this.handleNotAuthenticated(errorConverter(err));
+            }
+
+            // else we try to trigger the authentication once more and then we repeat the original call
+            // with the newly obtained async call context
+            try {
+                await this.triggerAuthentication();
+                // the return await is crucial here so that we also catch the async errors
+                return await call(this.client, await this.getAsyncCallContext());
+            } catch (err2) {
+                invariant(isError(err2)); // if this bombs, the code in the try block threw something strange
+                throw this.handleNotAuthenticated(errorConverter(err2));
+            }
+        }
     };
 
-    private handleNotAuthenticated = (err: unknown): never => {
+    /**
+     * Triggers onNotAuthenticated handler of the the authProvider if the provided error is an instance
+     * of {@link @gooddata/sdk-backend-spi#NotAuthenticated}.
+     *
+     * @param err - error to observe and trigger handler for
+     * @returns the original error to facilitate re-throwing
+     */
+    private handleNotAuthenticated = <T>(err: T): T => {
         if (isNotAuthenticated(err)) {
             this.authProvider.onNotAuthenticated?.({ client: this.client, backend: this }, err);
         }
 
-        throw err;
+        return err;
     };
 
     private getAuthenticationContext = (): IAuthenticationContext => {
@@ -297,11 +308,8 @@ export class TigerBackend implements IAnalyticalBackend {
                 client: this.client,
                 backend: this,
             });
-            if (principal) {
-                return principal;
-            }
 
-            return this.authProvider.authenticate(this.getAuthenticationContext());
+            return principal ?? this.authProvider.authenticate(this.getAuthenticationContext());
         };
 
         return {
