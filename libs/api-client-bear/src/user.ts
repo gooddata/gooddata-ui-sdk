@@ -156,7 +156,7 @@ export class UserModule {
     /**
      * Returns info about currently logged in user from bootstrap resource
      */
-    public getAccountInfo(): Promise<{
+    public async getAccountInfo(): Promise<{
         login: string;
         loginMD5: string;
         firstName: string;
@@ -164,17 +164,18 @@ export class UserModule {
         organizationName: string;
         profileUri: string;
     }> {
-        return this.xhr.get("/gdc/app/account/bootstrap").then((result: any) => {
-            const { bootstrapResource } = result.getData();
-            return {
-                login: bootstrapResource.accountSetting.login,
-                loginMD5: bootstrapResource.current.loginMD5,
-                firstName: bootstrapResource.accountSetting.firstName,
-                lastName: bootstrapResource.accountSetting.lastName,
-                organizationName: bootstrapResource.settings.organizationName,
-                profileUri: bootstrapResource.accountSetting.links.self,
-            };
-        });
+        const { bootstrapResource } = await this.xhr.getParsed<GdcUser.IBootstrapResource>(
+            "/gdc/app/account/bootstrap",
+        );
+
+        return {
+            login: bootstrapResource.accountSetting.login!,
+            loginMD5: bootstrapResource.current!.loginMD5!,
+            firstName: bootstrapResource.accountSetting.firstName,
+            lastName: bootstrapResource.accountSetting.lastName,
+            organizationName: bootstrapResource.settings!.organizationName,
+            profileUri: bootstrapResource.accountSetting.links!.self!,
+        };
     }
 
     /**
