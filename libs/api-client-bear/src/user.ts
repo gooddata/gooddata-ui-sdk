@@ -121,7 +121,9 @@ export class UserModule {
      * @returns Resolves with account setting object
      */
     public getCurrentProfile(): Promise<GdcUser.IAccountSetting> {
-        return this.xhr.get("/gdc/account/profile/current").then((r) => r.getData().accountSetting);
+        return this.xhr
+            .getParsed<GdcUser.IWrappedAccountSetting>("/gdc/account/profile/current")
+            .then((r) => r.accountSetting);
     }
 
     /**
