@@ -3,4 +3,5 @@ export { DefaultTitle } from "./DefaultTitle";
 export { EditableTitle } from "./EditableTitle";
 export { HiddenTitle } from "./HiddenTitle";
 export { Title } from "./Title";
+export { RenderModeAwareTitle } from "./RenderModeAwareTitle";
 export * from "./types";

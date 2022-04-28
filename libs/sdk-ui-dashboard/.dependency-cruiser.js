@@ -110,6 +110,7 @@ options = {
             "src/presentation/dashboardContexts",
             "src/presentation/localization",
             "src/presentation/constants/*",
+            "src/presentation/componentDefinition",
             "src/model",
             "src/types.ts",
         ]),

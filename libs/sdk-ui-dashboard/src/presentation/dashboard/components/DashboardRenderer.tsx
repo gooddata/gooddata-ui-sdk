@@ -21,7 +21,7 @@ import { DefaultDashboardLayout } from "../../layout";
 import { DefaultSaveAsDialog } from "../../saveAs";
 import { DefaultScheduledEmailDialog, DefaultScheduledEmailManagementDialog } from "../../scheduledEmail";
 import { DefaultShareDialog } from "../../shareDialog";
-import { DefaultButtonBar, DefaultMenuButton, DefaultTopBar, DefaultTitle } from "../../topBar";
+import { DefaultButtonBar, DefaultMenuButton, DefaultTopBar, RenderModeAwareTitle } from "../../topBar";
 import { defaultDashboardThemeModifier } from "../defaultDashboardThemeModifier";
 import { useDashboard } from "../hooks/useDashboard";
 import { IDashboardProps } from "../types";
@@ -78,7 +78,7 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                         ButtonBarComponent={props.ButtonBarComponent ?? DefaultButtonBar}
                                         MenuButtonComponent={props.MenuButtonComponent ?? DefaultMenuButton}
                                         TopBarComponent={props.TopBarComponent ?? DefaultTopBar}
-                                        TitleComponent={props.TitleComponent ?? DefaultTitle}
+                                        TitleComponent={props.TitleComponent ?? RenderModeAwareTitle}
                                         ScheduledEmailDialogComponent={
                                             props.ScheduledEmailDialogComponent ?? DefaultScheduledEmailDialog
                                         }
