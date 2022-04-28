@@ -218,11 +218,12 @@ export class UserModule {
     /**
      * Returns the feature flags valid for the currently logged in user.
      */
-    public getFeatureFlags(): Promise<GdcUser.IFeatureFlags> {
-        return this.xhr
-            .get("/gdc/app/account/bootstrap")
-            .then((r: any) => r.getData())
-            .then((result: any) => result.bootstrapResource.current.featureFlags);
+    public async getFeatureFlags(): Promise<GdcUser.IFeatureFlags> {
+        const { bootstrapResource } = await this.xhr.getParsed<GdcUser.IBootstrapResource>(
+            "/gdc/app/account/bootstrap",
+        );
+
+        return bootstrapResource.current!.featureFlags!;
     }
 
     /**
