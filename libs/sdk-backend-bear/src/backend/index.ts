@@ -366,23 +366,29 @@ export class BearBackend implements IAnalyticalBackend {
         call: AuthenticatedAsyncCall<SDK, T>,
         errorConverter: ErrorConverter = convertApiError,
     ): Promise<T> => {
-        return call(this.sdk, await this.getAsyncCallContext())
-            .catch((err) => {
-                if (!isNotAuthenticatedResponse(err)) {
-                    throw errorConverter(err);
-                }
+        try {
+            // the return await is crucial here so that we also catch the async errors
+            return await call(this.sdk, await this.getAsyncCallContext());
+        } catch (err) {
+            invariant(isError(err)); // if this bombs, the code in the try block threw something strange
 
-                return this.triggerAuthentication()
-                    .then(async (_) => {
-                        return call(this.sdk, await this.getAsyncCallContext()).catch((e) => {
-                            throw errorConverter(e);
-                        });
-                    })
-                    .catch((err2) => {
-                        throw errorConverter(err2);
-                    });
-            })
-            .catch(this.handleNotAuthenticated);
+            // if we receive some other error than missing auth, we fail fast: no need to try the auth
+            // one more time, since it was not the problem in the first place
+            if (!isNotAuthenticatedResponse(err)) {
+                throw this.handleNotAuthenticated(errorConverter(err));
+            }
+
+            // else we try to trigger the authentication once more and then we repeat the original call
+            // with the newly obtained async call context
+            try {
+                await this.triggerAuthentication();
+                // the return await is crucial here so that we also catch the async errors
+                return await call(this.sdk, await this.getAsyncCallContext());
+            } catch (err2) {
+                invariant(isError(err2)); // if this bombs, the code in the try block threw something strange
+                throw this.handleNotAuthenticated(errorConverter(err2));
+            }
+        }
     };
 
     private getAuthenticationContext = (): IAuthenticationContext => ({ client: this.sdk, backend: this });
@@ -401,7 +407,7 @@ export class BearBackend implements IAnalyticalBackend {
             return await this.authProvider.authenticate(this.getAuthenticationContext());
         } catch (e: unknown) {
             invariant(isError(e)); // if this bombs, the code in the try block threw something strange
-            throw this.handleNotAuthenticated2(convertApiError(e));
+            throw this.handleNotAuthenticated(convertApiError(e));
         }
     };
 
@@ -411,15 +417,11 @@ export class BearBackend implements IAnalyticalBackend {
      * @param err - error to observe and trigger handler for
      * @returns the original error to facilitate re-throwing
      */
-    private handleNotAuthenticated2 = <T>(err: T): T => {
+    private handleNotAuthenticated = <T>(err: T): T => {
         if (isNotAuthenticated(err)) {
             this.authProvider.onNotAuthenticated?.({ client: this.sdk, backend: this }, err);
         }
         return err;
-    };
-
-    private handleNotAuthenticated = (err: unknown): never => {
-        throw this.handleNotAuthenticated2(err);
     };
 
     private getAsyncCallContext = async (): Promise<IAuthenticatedAsyncCallContext> => {
