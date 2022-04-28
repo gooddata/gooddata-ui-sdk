@@ -320,7 +320,7 @@ export class BearBackend implements IAnalyticalBackend {
             return this.authApiCall(async (sdk) => {
                 const principal = await this.authProvider.getCurrentPrincipal({ client: sdk, backend: this });
                 invariant(principal, "Principal must be defined");
-                return principal!;
+                return principal;
             });
         }
 
@@ -412,7 +412,8 @@ export class BearBackend implements IAnalyticalBackend {
     };
 
     /**
-     * Triggers onNotAuthenticated handler of the the authProvider if the provided error is an instance of {@link @gooddata/sdk-backend-spi#NotAuthenticated}.
+     * Triggers onNotAuthenticated handler of the the authProvider if the provided error is an instance
+     * of {@link @gooddata/sdk-backend-spi#NotAuthenticated}.
      *
      * @param err - error to observe and trigger handler for
      * @returns the original error to facilitate re-throwing
@@ -434,11 +435,8 @@ export class BearBackend implements IAnalyticalBackend {
                 client: this.sdk,
                 backend: this,
             });
-            if (principal) {
-                return principal;
-            }
 
-            return this.authProvider.authenticate(this.getAuthenticationContext());
+            return principal ?? this.authProvider.authenticate(this.getAuthenticationContext());
         };
 
         return {
@@ -456,15 +454,15 @@ function isNotAuthenticatedResponse(err: any): boolean {
 }
 
 function configSanitize(config?: IAnalyticalBackendConfig): IAnalyticalBackendConfig {
-    return config ? config : {};
+    return config ?? {};
 }
 
 function bearConfigSanitize(implConfig?: BearBackendConfig): BearBackendConfig {
-    return implConfig ? implConfig : {};
+    return implConfig ?? {};
 }
 
 function telemetrySanitize(telemetry?: TelemetryData): TelemetryData {
-    return telemetry ? telemetry : {};
+    return telemetry ?? {};
 }
 
 function newSdkInstance(
