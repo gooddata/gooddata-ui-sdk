@@ -173,6 +173,7 @@ export function* resolveDashboardConfig(
         menuButtonItemsVisibility: config.menuButtonItemsVisibility ?? {},
         allowUnfinishedFeatures,
         initialRenderMode: config.initialRenderMode ?? "view",
+        hideSaveAsNewButton: config.hideSaveAsNewButton ?? false,
     };
 
     return resolvedConfig;

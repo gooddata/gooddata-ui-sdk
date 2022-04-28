@@ -13,7 +13,6 @@ import {
     renameDashboard,
     selectCanCreateAnalyticalDashboard,
     selectCanExportReport,
-    selectDashboardRef,
     selectDashboardShareInfo,
     selectDashboardTitle,
     selectEnableKPIDashboardExportPDF,
@@ -26,18 +25,30 @@ import {
     uiActions,
     useDashboardCommandProcessing,
     useDashboardDispatch,
-    useDashboardSelector,
     useDashboardScheduledEmails,
+    useDashboardSelector,
 } from "../../../model";
 
 import { ExportDialogProvider } from "../../dialogs";
 
 import { downloadFile } from "../../../_staging/fileUtils/downloadFile";
-import { DefaultButtonBar, DefaultMenuButton, DefaultTopBar, IMenuButtonItem, TopBar } from "../../topBar";
+import {
+    DefaultButtonBar,
+    DefaultMenuButton,
+    DefaultTopBar,
+    IMenuButtonItem,
+    TopBar,
+    useCancelButtonProps,
+    useEditButtonProps,
+    useSaveAsNewButtonProps,
+    useSaveButtonProps,
+    useShareButtonProps,
+} from "../../topBar";
 import { SaveAsDialog } from "../../saveAs";
 import { DefaultFilterBar, FilterBar } from "../../filterBar";
 import { ShareDialogDashboardHeader } from "./ShareDialogDashboardHeader";
 import { ScheduledEmailDialogProvider } from "./ScheduledEmailDialogProvider";
+import { selectIsNewDashboard } from "../../../model/store/meta/metaSelectors";
 
 const useFilterBar = (): {
     filters: FilterContextItem[];
@@ -82,6 +93,12 @@ const useTopBar = () => {
     const isReadOnly = useDashboardSelector(selectIsReadOnly);
     const shareInfo = useDashboardSelector(selectDashboardShareInfo);
 
+    const shareButtonProps = useShareButtonProps();
+    const editButtonProps = useEditButtonProps();
+    const cancelButtonProps = useCancelButtonProps();
+    const saveButtonProps = useSaveButtonProps();
+    const saveAsNewButtonProps = useSaveAsNewButtonProps();
+
     const onTitleChanged = useCallback(
         (title: string) => {
             dispatch(renameDashboard(title));
@@ -89,13 +106,17 @@ const useTopBar = () => {
         [dispatch],
     );
 
-    const onShareButtonClick = useCallback(() => dispatch(uiActions.openShareDialog()), [dispatch]);
-
     return {
         title,
         onTitleChanged: isReadOnly ? undefined : onTitleChanged,
-        onShareButtonClick,
         shareInfo,
+        buttonProps: {
+            shareButtonProps,
+            editButtonProps,
+            cancelButtonProps,
+            saveButtonProps,
+            saveAsNewButtonProps,
+        },
     };
 };
 
@@ -103,10 +124,10 @@ const useTopBar = () => {
 // (e.g. opening email dialog) do not re-render the dashboard body
 export const DashboardHeader = (): JSX.Element => {
     const intl = useIntl();
-    const dashboardRef = useDashboardSelector(selectDashboardRef);
+    const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
     const isEmptyLayout = useDashboardSelector(selectIsLayoutEmpty);
     const { filters, onAttributeFilterChanged, onDateFilterChanged } = useFilterBar();
-    const { title, onTitleChanged, onShareButtonClick, shareInfo } = useTopBar();
+    const { title, onTitleChanged, buttonProps, shareInfo } = useTopBar();
     const { addSuccess, addError, addProgress, removeMessage } = useToastMessage();
     const { isScheduledEmailingVisible, defaultOnScheduleEmailing } = useDashboardScheduledEmails();
 
@@ -149,20 +170,20 @@ export const DashboardHeader = (): JSX.Element => {
     });
 
     const defaultOnSaveAs = useCallback(() => {
-        if (!dashboardRef) {
+        if (isNewDashboard) {
             return;
         }
 
         openSaveAsDialog();
-    }, [dashboardRef]);
+    }, [isNewDashboard]);
 
     const defaultOnExportToPdf = useCallback(() => {
-        if (!dashboardRef) {
+        if (isNewDashboard) {
             return;
         }
 
         exportDashboard();
-    }, [exportDashboard, dashboardRef]);
+    }, [exportDashboard, isNewDashboard]);
 
     const isReadOnly = useDashboardSelector(selectIsReadOnly);
     const canCreateDashboard = useDashboardSelector(selectCanCreateAnalyticalDashboard);
@@ -173,12 +194,12 @@ export const DashboardHeader = (): JSX.Element => {
     const menuButtonItemsVisibility = useDashboardSelector(selectMenuButtonItemsVisibility);
 
     const defaultMenuItems = useMemo<IMenuButtonItem[]>(() => {
-        if (!dashboardRef) {
+        if (isNewDashboard) {
             return [];
         }
 
         const isSaveAsVisible = canCreateDashboard && (menuButtonItemsVisibility.saveAsNewButton ?? false);
-        const isSaveAsDisabled = isEmptyLayout || !dashboardRef || isReadOnly;
+        const isSaveAsDisabled = isEmptyLayout || isNewDashboard || isReadOnly;
 
         const isPdfExportVisible =
             canExportReport &&
@@ -217,7 +238,7 @@ export const DashboardHeader = (): JSX.Element => {
     }, [
         defaultOnScheduleEmailing,
         defaultOnExportToPdf,
-        dashboardRef,
+        isNewDashboard,
         isReadOnly,
         menuButtonItemsVisibility,
         canExportReport,
@@ -258,7 +279,11 @@ export const DashboardHeader = (): JSX.Element => {
                 menuButtonProps={{ menuItems: defaultMenuItems, DefaultMenuButton: DefaultMenuButton }}
                 titleProps={{ title, onTitleChanged }}
                 buttonBarProps={{
-                    shareButtonProps: { onShareButtonClick },
+                    cancelButtonProps: buttonProps.cancelButtonProps,
+                    editButtonProps: buttonProps.editButtonProps,
+                    saveAsNewButtonProps: buttonProps.saveAsNewButtonProps,
+                    saveButtonProps: buttonProps.saveButtonProps,
+                    shareButtonProps: buttonProps.shareButtonProps,
                     DefaultButtonBar: DefaultButtonBar,
                 }}
                 shareStatusProps={{

@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import { DashboardState } from "../types";
 import invariant from "ts-invariant";
@@ -18,3 +18,33 @@ export const selectBackendCapabilities = createSelector(selectSelf, (state) => {
 
     return state.backendCapabilities!;
 });
+
+/**
+ * Selector for {@link IBackendCapabilities.supportsKpiWidget}
+ *
+ * @internal
+ */
+export const selectSupportsKpiWidgetCapability = createSelector(
+    selectBackendCapabilities,
+    (capabilities) => capabilities.supportsKpiWidget ?? false,
+);
+
+/**
+ * Selector for {@link IBackendCapabilities.supportsAccessControl}
+ *
+ * @internal
+ */
+export const selectSupportsAccessControlCapability = createSelector(
+    selectBackendCapabilities,
+    (capabilities) => capabilities.supportsAccessControl ?? false,
+);
+
+/**
+ * Selector for {@link IBackendCapabilities.supportsHierarchicalWorkspaces}
+ *
+ * @internal
+ */
+export const selectSupportsHierarchicalWorkspacesCapability = createSelector(
+    selectBackendCapabilities,
+    (capabilities) => capabilities.supportsHierarchicalWorkspaces ?? false,
+);

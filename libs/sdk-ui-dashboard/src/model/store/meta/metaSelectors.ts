@@ -9,6 +9,7 @@ import {
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { DashboardState } from "../types";
+import isUndefined from "lodash/isUndefined";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -146,6 +147,23 @@ export const selectDashboardUriRef = createSelector(selectDashboardUri, (uri) =>
     return uri ? uriRef(uri) : undefined;
 });
 
+/**
+ * Selects a boolean indication if dashboard is new
+ *
+ * @internal
+ */
+export const selectIsNewDashboard = createSelector(selectDashboardRef, isUndefined);
+
+/**
+ * Selects a boolean indication if he dashboard has any changes compared to the persisted version (if any)
+ *
+ * @internal
+ */
+export const selectIsDashboardDirty = createSelector(selectPersistedDashboard, () => {
+    // will be implemented in RAIL-4108
+    return true;
+});
+
 //
 //
 //
@@ -187,12 +205,21 @@ export const selectDashboardShareStatus = createSelector(selectDashboardDescript
 });
 
 /**
+ * Returns whether dashboard is private.
+ *
+ * @alpha
+ */
+export const selectIsDashboardPrivate = createSelector(selectDashboardShareStatus, (status) => {
+    return status === "private";
+});
+
+/**
  * Selects dashboard lock status.
  *
  * @alpha
  */
 export const selectDashboardLockStatus = createSelector(selectDashboardDescriptor, (state) => {
-    return state.isLocked;
+    return state.isLocked || false;
 });
 
 /**

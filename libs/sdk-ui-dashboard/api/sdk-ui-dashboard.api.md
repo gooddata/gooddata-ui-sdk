@@ -114,6 +114,7 @@ import { IWidgetDefinition } from '@gooddata/sdk-model';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { LocalIdRef } from '@gooddata/sdk-model';
 import { MemoizedFunction } from 'lodash';
+import { MessageDescriptor } from 'react-intl';
 import { MouseEvent as MouseEvent_2 } from 'react';
 import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
@@ -140,8 +141,6 @@ import { UriRef } from '@gooddata/sdk-model';
 import { UseCancelablePromiseCallbacks } from '@gooddata/sdk-ui';
 import { UseCancelablePromiseState } from '@gooddata/sdk-ui';
 import { VisualizationProperties } from '@gooddata/sdk-model';
-import { WithIntlProps } from 'react-intl';
-import { WrappedComponentProps } from 'react-intl';
 
 // @alpha (undocumented)
 export type ActionFailedErrorReason = "USER_ERROR" | "INTERNAL_ERROR";
@@ -282,6 +281,9 @@ export type BrokenAlertType = "deleted" | "ignored";
 
 // @internal (undocumented)
 export const ButtonBar: (props: IButtonBarProps) => JSX.Element;
+
+// @internal (undocumented)
+export const CancelButton: (props: ICancelButtonProps) => JSX.Element;
 
 // @alpha (undocumented)
 export interface CatalogState {
@@ -516,12 +518,14 @@ export interface ChangeRenderMode extends IDashboardCommand {
 }
 
 // @internal
-export function changeRenderMode(renderMode: RenderMode, correlationId?: string): ChangeRenderMode;
+export function changeRenderMode(renderMode: RenderMode, renderModeChangeOptions?: RenderModeChangeOptions, correlationId?: string): ChangeRenderMode;
 
 // @internal
 export interface ChangeRenderModePayload {
     // (undocumented)
     readonly renderMode: RenderMode;
+    // (undocumented)
+    readonly renderModeChangeOptions: RenderModeChangeOptions;
 }
 
 // @alpha (undocumented)
@@ -621,6 +625,9 @@ export interface CreateScheduledEmailPayload {
 export type CustomButtonBarComponent = ComponentType<IButtonBarProps>;
 
 // @internal (undocumented)
+export type CustomCancelButtonComponent = ComponentType<ICancelButtonProps>;
+
+// @internal (undocumented)
 export interface CustomComponentBase<TMainProps> {
     MainComponent: ComponentType<TMainProps>;
 }
@@ -649,6 +656,9 @@ export type CustomDashboardLayoutComponent = ComponentType<IDashboardLayoutProps
 // @public (undocumented)
 export type CustomDashboardWidgetComponent = ComponentType<IDashboardWidgetProps>;
 
+// @internal (undocumented)
+export type CustomEditModeButtonComponent = ComponentType<IEditButtonProps>;
+
 // @alpha (undocumented)
 export type CustomFilterBarComponent = ComponentType<IFilterBarProps>;
 
@@ -657,6 +667,12 @@ export type CustomMenuButtonComponent = ComponentType<IMenuButtonProps>;
 
 // @alpha (undocumented)
 export type CustomSaveAsDialogComponent = ComponentType<ISaveAsDialogProps>;
+
+// @internal (undocumented)
+export type CustomSaveAsNewButtonComponent = ComponentType<ISaveAsNewButtonProps>;
+
+// @internal (undocumented)
+export type CustomSaveButtonComponent = ComponentType<ISaveButtonProps>;
 
 // @alpha (undocumented)
 export type CustomScheduledEmailDialogComponent = ComponentType<IScheduledEmailDialogProps>;
@@ -869,6 +885,8 @@ export interface DashboardConfig {
     dateFilterConfig?: IDateFilterConfig;
     disableDefaultDrills?: boolean;
     enableFilterValuesResolutionInDrillEvents?: boolean;
+    // @internal
+    hideSaveAsNewButton?: boolean;
     // @internal
     initialRenderMode?: RenderMode;
     isEmbedded?: boolean;
@@ -1974,6 +1992,9 @@ export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | Date
 // @alpha (undocumented)
 export const DefaultButtonBar: React_2.FC<PropsWithChildren<IButtonBarProps>>;
 
+// @internal (undocumented)
+export function DefaultCancelButton({ isVisible, onCancelClick }: ICancelButtonProps): JSX.Element | null;
+
 // @alpha
 export const DefaultDashboardAttributeFilter: (props: IDashboardAttributeFilterProps) => JSX.Element;
 
@@ -2001,6 +2022,9 @@ export const defaultDashboardThemeModifier: (theme: ITheme) => ITheme;
 // @internal (undocumented)
 export const DefaultDashboardWidget: (props: IDashboardWidgetProps) => JSX.Element;
 
+// @internal (undocumented)
+export function DefaultEditButton({ isVisible, isEnabled, onEditClick }: IEditButtonProps): JSX.Element | null;
+
 // @alpha (undocumented)
 export const DefaultFilterBar: (props: IFilterBarProps) => JSX.Element;
 
@@ -2013,6 +2037,12 @@ export const DefaultMenuButton: (props: IMenuButtonProps) => JSX.Element | null;
 // @alpha (undocumented)
 export const DefaultSaveAsDialog: (props: ISaveAsDialogProps) => JSX.Element | null;
 
+// @internal (undocumented)
+export function DefaultSaveAsNewButton({ isVisible, onSaveAsNewClick }: ISaveAsNewButtonProps): JSX.Element | null;
+
+// @internal (undocumented)
+export function DefaultSaveButton({ isVisible, isEnabled, isSaving, buttonTitle, buttonValue, onSaveClick, }: ISaveButtonProps): JSX.Element | null;
+
 // @alpha (undocumented)
 export const DefaultScheduledEmailDialog: (props: IScheduledEmailDialogProps) => JSX.Element | null;
 
@@ -2020,9 +2050,7 @@ export const DefaultScheduledEmailDialog: (props: IScheduledEmailDialogProps) =>
 export const DefaultScheduledEmailManagementDialog: React_2.FC<IScheduledEmailManagementDialogProps>;
 
 // @alpha (undocumented)
-export const DefaultShareButton: React_2.FC<WithIntlProps<IShareButtonProps & WrappedComponentProps<"intl">>> & {
-    WrappedComponent: React_2.ComponentType<IShareButtonProps & WrappedComponentProps<"intl">>;
-};
+export const DefaultShareButton: React_2.FC<IShareButtonProps>;
 
 // @alpha (undocumented)
 export const DefaultShareDialog: (props: IShareDialogProps) => JSX.Element | null;
@@ -2239,6 +2267,9 @@ export function eagerRemoveSectionItem(sectionIndex: number, itemIndex: number, 
 
 // @alpha (undocumented)
 export const EditableTitle: CustomTitleComponent;
+
+// @internal (undocumented)
+export const EditButton: (props: IEditButtonProps) => JSX.Element;
 
 // @alpha
 export function enableInsightWidgetDateFilter(ref: ObjRef, dateDataset: ObjRef, correlationId?: string): ChangeInsightWidgetFilterSettings;
@@ -2469,9 +2500,25 @@ export interface IButtonBarProps {
     // (undocumented)
     buttons?: React_2.ReactNode;
     // (undocumented)
+    cancelButtonProps: ICancelButtonProps;
+    // (undocumented)
     DefaultButtonBar: CustomButtonBarComponent;
     // (undocumented)
+    editButtonProps: IEditButtonProps;
+    // (undocumented)
+    saveAsNewButtonProps: ISaveAsNewButtonProps;
+    // (undocumented)
+    saveButtonProps: ISaveButtonProps;
+    // (undocumented)
     shareButtonProps: IShareButtonProps;
+}
+
+// @internal (undocumented)
+export interface ICancelButtonProps {
+    // (undocumented)
+    isVisible: boolean;
+    // (undocumented)
+    onCancelClick: () => void;
 }
 
 // @alpha (undocumented)
@@ -2910,6 +2957,16 @@ export interface IDrillToUrlPlaceholder {
     toBeEncoded: boolean;
 }
 
+// @internal (undocumented)
+export interface IEditButtonProps {
+    // (undocumented)
+    isEnabled: boolean;
+    // (undocumented)
+    isVisible: boolean;
+    // (undocumented)
+    onEditClick: () => void;
+}
+
 // @alpha (undocumented)
 export interface IExecutionResultEnvelope {
     // (undocumented)
@@ -3146,6 +3203,30 @@ export interface ISaveAsDialogProps {
     onError?: (error: GoodDataSdkError) => void;
     onSubmit?: (title: string, switchToCopy?: boolean) => void;
     onSuccess?: (dashboard: IDashboard) => void;
+}
+
+// @internal (undocumented)
+export interface ISaveAsNewButtonProps {
+    // (undocumented)
+    isVisible: boolean;
+    // (undocumented)
+    onSaveAsNewClick: () => void;
+}
+
+// @internal (undocumented)
+export interface ISaveButtonProps {
+    // (undocumented)
+    buttonTitle: MessageDescriptor;
+    // (undocumented)
+    buttonValue: MessageDescriptor;
+    // (undocumented)
+    isEnabled: boolean;
+    // (undocumented)
+    isSaving: boolean;
+    // (undocumented)
+    isVisible: boolean;
+    // (undocumented)
+    onSaveClick: () => void;
 }
 
 // @alpha
@@ -3432,6 +3513,8 @@ export const isDrillTargetsAdded: (obj: unknown) => obj is DrillTargetsAdded;
 
 // @alpha (undocumented)
 export interface IShareButtonProps {
+    // (undocumented)
+    isVisible: boolean;
     // (undocumented)
     onShareButtonClick: () => void;
 }
@@ -4106,6 +4189,12 @@ export function renderModeAware<T extends ComponentType<any>>(components: {
 // @internal (undocumented)
 export const RenderModeAwareTitle: ComponentType<PropsWithChildren<ITitleProps> | (ITitleProps & RefAttributes<Component<ITitleProps, any, any>>)>;
 
+// @internal (undocumented)
+export interface RenderModeChangeOptions {
+    // (undocumented)
+    readonly resetDashboard: boolean;
+}
+
 // @alpha
 export function replaceInsightWidgetFilterSettings(ref: ObjRef, settings: Omit<FilterOpReplaceAll, "type">, correlationId?: string): ChangeInsightWidgetFilterSettings;
 
@@ -4199,6 +4288,12 @@ export function revertLastLayoutChange(correlationId?: string): UndoLayoutChange
 
 // @internal (undocumented)
 export const SaveAsDialog: (props: ISaveAsDialogProps) => JSX.Element;
+
+// @internal (undocumented)
+export const SaveAsNewButton: (props: ISaveAsNewButtonProps) => JSX.Element;
+
+// @internal (undocumented)
+export const SaveButton: (props: ISaveButtonProps) => JSX.Element;
 
 // @alpha (undocumented)
 export interface SaveDashboard extends IDashboardCommand {
@@ -4402,7 +4497,7 @@ export const selectDashboardIdRef: OutputSelector<DashboardState, IdentifierRef 
 export const selectDashboardLoading: OutputSelector<DashboardState, LoadingState, (res: DashboardState) => LoadingState>;
 
 // @alpha
-export const selectDashboardLockStatus: OutputSelector<DashboardState, boolean | undefined, (res: DashboardDescriptor) => boolean | undefined>;
+export const selectDashboardLockStatus: OutputSelector<DashboardState, boolean, (res: DashboardDescriptor) => boolean>;
 
 // @public
 export const selectDashboardRef: OutputSelector<DashboardState, UriRef | IdentifierRef | undefined, (res: IDashboard<IDashboardWidget> | undefined) => UriRef | IdentifierRef | undefined>;
@@ -4598,6 +4693,9 @@ export const selectIsReadOnly: OutputSelector<DashboardState, boolean, (res: Res
 
 // @alpha (undocumented)
 export const selectIsSaveAsDialogOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
+
+// @internal (undocumented)
+export function selectIsSaveAsNewButtonVisible(state: DashboardState): boolean;
 
 // @alpha (undocumented)
 export const selectIsScheduleEmailDialogOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
@@ -4895,6 +4993,9 @@ export interface UpsertExecutionResult extends IDashboardCommand {
     // (undocumented)
     readonly type: "GDC.DASH/CMD.EXECUTION_RESULT.UPSERT";
 }
+
+// @internal (undocumented)
+export function useCancelButtonProps(): ICancelButtonProps;
 
 // @public
 export function useCustomWidgetExecutionDataView({ widget, execution, onCancel, onError, onLoading, onPending, onSuccess, }: IUseCustomWidgetExecutionDataViewConfig & UseCustomWidgetExecutionDataViewCallbacks): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
@@ -5400,6 +5501,9 @@ export interface UseDrillToLegacyDashboardProps {
     onSuccess?: (event: DashboardDrillToLegacyDashboardResolved) => void;
 }
 
+// @internal (undocumented)
+export function useEditButtonProps(): IEditButtonProps;
+
 // @public
 export function useInsightWidgetDataView(config: IUseInsightWidgetDataView & UseInsightWidgetInsightDataViewCallbacks): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
 
@@ -5431,6 +5535,15 @@ export interface UserState {
     // (undocumented)
     user?: IUser;
 }
+
+// @internal (undocumented)
+export function useSaveAsNewButtonProps(): ISaveAsNewButtonProps;
+
+// @internal (undocumented)
+export function useSaveButtonProps(): ISaveButtonProps;
+
+// @internal (undocumented)
+export function useShareButtonProps(): IShareButtonProps;
 
 // @internal
 export function useWidgetExecutionsHandler(widgetRef: ObjRef): {

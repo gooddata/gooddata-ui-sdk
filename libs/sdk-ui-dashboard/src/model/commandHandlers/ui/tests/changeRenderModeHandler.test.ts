@@ -5,6 +5,7 @@ import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboa
 import { selectRenderMode } from "../../../store/ui/uiSelectors";
 import { changeRenderMode, initializeDashboard } from "../../../commands";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
+import { cancelEditRenderMode, switchToEditRenderMode } from "../../../commands/ui";
 
 describe("changeRenderModeHandler", () => {
     let Tester: DashboardTester;
@@ -32,13 +33,35 @@ describe("changeRenderModeHandler", () => {
 
         it("should process render mode change", async () => {
             await Tester.dispatchAndWaitFor(
-                changeRenderMode("edit", TestCorrelation),
+                changeRenderMode("edit", { resetDashboard: true }, TestCorrelation),
                 "GDC.DASH/EVT.RENDER_MODE.CHANGED",
             );
             expect(Tester.emittedEventsDigest()).toMatchSnapshot();
 
             const renderMode = await Tester.select(selectRenderMode);
             expect(renderMode).toBe("edit");
+        });
+
+        it("should process switch to edit mode", async () => {
+            await Tester.dispatchAndWaitFor(
+                switchToEditRenderMode(TestCorrelation),
+                "GDC.DASH/EVT.RENDER_MODE.CHANGED",
+            );
+            expect(Tester.emittedEventsDigest()).toMatchSnapshot();
+
+            const renderMode = await Tester.select(selectRenderMode);
+            expect(renderMode).toBe("edit");
+        });
+
+        it("should process cancel edit mode", async () => {
+            await Tester.dispatchAndWaitFor(
+                cancelEditRenderMode(TestCorrelation),
+                "GDC.DASH/EVT.RENDER_MODE.CHANGED",
+            );
+            expect(Tester.emittedEventsDigest()).toMatchSnapshot();
+
+            const renderMode = await Tester.select(selectRenderMode);
+            expect(renderMode).toBe("view");
         });
     });
 
