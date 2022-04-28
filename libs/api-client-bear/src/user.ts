@@ -184,15 +184,12 @@ export class UserModule {
      * @param userId - A user identifier
      * @returns An array of user configs setting item
      */
-    public getUserConfigs(userId: string): Promise<IUserConfigsSettingItem[]> {
-        return this.xhr.get(`/gdc/account/profile/${userId}/config`).then((apiResponse: ApiResponse) => {
-            const userConfigs: IUserConfigsResponse = apiResponse.getData();
-            const {
-                settings: { items },
-            } = userConfigs;
+    public async getUserConfigs(userId: string): Promise<IUserConfigsSettingItem[]> {
+        const userConfig = await this.xhr.getParsed<IUserConfigsResponse>(
+            `/gdc/account/profile/${userId}/config`,
+        );
 
-            return items || [];
-        });
+        return userConfig.settings.items || [];
     }
 
     /**
