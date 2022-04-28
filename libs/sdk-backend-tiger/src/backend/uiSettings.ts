@@ -70,6 +70,9 @@ export const DefaultUiSettings: ISettings = {
     // enable the plugin-ready Dashboard component in gdc-dashboards
     dashboardComponentDevRollout: true,
 
+    // disable edit mode in gdc-dashboards during development
+    dashboardEditModeDevRollout: false,
+
     enableRenamingProjectToWorkspace: true,
     enableRenamingMeasureToMetric: true,
 

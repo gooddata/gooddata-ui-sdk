@@ -276,3 +276,12 @@ export const selectHideKpiDrillInEmbedded = createSelector(selectConfig, (state)
 export const selectEnableInsightExportScheduling = createSelector(selectConfig, (state) => {
     return state.settings?.enableInsightExportScheduling ?? false;
 });
+
+/**
+ * Returns whether insight export scheduling is enabled.
+ *
+ * @internal
+ */
+export const selectDashboardEditModeDevRollout = createSelector(selectConfig, (state) => {
+    return state.settings?.dashboardEditModeDevRollout ?? false;
+});
