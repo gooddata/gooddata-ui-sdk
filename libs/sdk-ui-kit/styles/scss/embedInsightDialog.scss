@@ -25,25 +25,25 @@
 }
 
 .embed-insight-dialog-code-content {
-    height: 100%;
     width: 100%;
+    height: 100%;
     background-color: #ccd8e226;
     border: 1px solid var(--gd-palette-complementary-3, #dde4eb);
 }
 
 .embed-insight-dialog-code-area {
-    height: 100%;
-    width: 100%;
     box-sizing: border-box;
+    width: 100%;
+    height: 100%;
     word-wrap: break-word;
     padding: 10px;
     border: none;
     background-color: transparent;
     resize: none;
+    outline: 0;
     line-height: 18px;
     font-size: 12px;
     letter-spacing: 0;
-    outline: 0;
     font-family: menlo, monaco, consolas, "Courier New", monospace;
     color: var(--gd-palette-complementary-8, #464e56);
 }
@@ -116,5 +116,6 @@
 
 .gd-embed-input-numeric-invalid {
     // override input focus
+    // stylelint-disable-next-line declaration-no-important
     border-color: $gd-color-negative !important;
 }
