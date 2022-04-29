@@ -1,6 +1,7 @@
 // (C) 2022 GoodData Corporation
-import React from "react";
+import React, { useCallback } from "react";
 import cx from "classnames";
+import copy from "copy-to-clipboard";
 import { FormattedMessage, useIntl } from "react-intl";
 import { CodeArea } from "./components/CodeArea";
 import { ConfirmDialogBase } from "../../ConfirmDialogBase";
@@ -41,12 +42,17 @@ export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (
 
     const intl = useIntl();
 
+    const onCopy = useCallback(() => {
+        copy(code);
+        onCopyCode();
+    }, [onCopyCode]);
+
     return (
         <ConfirmDialogBase
             isPositive={true}
             onClose={onClose}
             onCancel={onClose}
-            onSubmit={onCopyCode}
+            onSubmit={onCopy}
             cancelButtonText={intl.formatMessage({ id: "embedInsightDialog.actions.close" })}
             submitButtonText={intl.formatMessage({ id: "embedInsightDialog.actions.copyCode" })}
             headline={intl.formatMessage({ id: getDialogLabelId(codeOption.type) })}

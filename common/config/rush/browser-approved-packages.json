@@ -1065,6 +1065,10 @@
     {
       "name": "yup",
       "allowedCategories": [ "examples" ]
+    },
+    {
+      "name": "copy-to-clipboard",
+      "allowedCategories": [ "examples", "production", "tools" ]
     }
   ]
 }
