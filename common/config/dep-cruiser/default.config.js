@@ -266,7 +266,20 @@ const DontImportRootIndex = {
     },
 };
 
+const AvoidNonStandardImports = {
+    name: "non-standard-import",
+    comment:
+        "This module imports file with non-standard file extension." +
+        "Import static assets to TypeScript files is not allowed.",
+    severity: "error",
+    from: {},
+    to: {
+        pathNot: "^.*.(tsx?|jsx?|json)$",
+    },
+};
+
 const DefaultSdkRules = [DontImportRootIndex];
+const PublicLibraryRules = [AvoidNonStandardImports];
 
 /**
  * Creates dep cruiser rule which will ensure that code in particular directory does not import code from anywhere
@@ -354,6 +367,7 @@ module.exports = {
     DefaultRules,
     DefaultOptions,
     DefaultSdkRules,
+    PublicLibraryRules,
     isolatedSubmodule,
     moduleWithDependencies,
     noLodashGet,

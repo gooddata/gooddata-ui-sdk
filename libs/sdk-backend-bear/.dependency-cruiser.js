@@ -4,6 +4,7 @@ options = {
     forbidden: [
         ...depCruiser.DefaultRules,
         ...depCruiser.DefaultSdkRules,
+        ...depCruiser.PublicLibraryRules,
         depCruiser.moduleWithDependencies("convertors", "src/convertors", ["src/types/*"]),
     ],
     options: depCruiser.DefaultOptions,

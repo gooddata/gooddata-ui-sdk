@@ -4,6 +4,7 @@ options = {
     forbidden: [
         ...depCruiser.DefaultRules,
         ...depCruiser.DefaultSdkRules,
+        ...depCruiser.PublicLibraryRules,
         depCruiser.isolatedSubmodule("chart-interfaces", "src/interfaces"),
         depCruiser.moduleWithDependencies("highcharts", "src/highcharts", ["src/interfaces"]),
         depCruiser.moduleWithDependencies("charts", "src/charts", ["src/highcharts", "src/interfaces"]),
