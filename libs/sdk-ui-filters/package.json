@@ -66,9 +66,9 @@
         "@gooddata/sdk-ui-kit": "^8.10.0-alpha.79",
         "@gooddata/util": "^8.10.0-alpha.79",
         "classnames": "^2.3.1",
+        "date-fns": "^2.22.1",
         "downshift": "^3.4.7",
         "fixed-data-table-2": "^1.2.0",
-        "hoist-non-react-statics": "^3.3.0",
         "json-stable-stringify": "^1.0.1",
         "lodash": "^4.17.19",
         "moment": "^2.24.0",
@@ -76,9 +76,8 @@
         "react-intl": "^5.23.0",
         "react-responsive": "^8.2.0",
         "react-window": "^1.8.6",
-        "tslib": "^2.0.0",
-        "date-fns": "^2.22.1",
-        "ts-invariant": "^0.7.3"
+        "ts-invariant": "^0.7.3",
+        "tslib": "^2.0.0"
     },
     "peerDependencies": {
         "react": "^16.10.0 || ^17.0.0",
@@ -92,7 +91,6 @@
         "@microsoft/api-documenter": "^7.17.0",
         "@microsoft/api-extractor": "^7.20.0",
         "@types/enzyme": "^3.10.3",
-        "@types/hoist-non-react-statics": "^3.3.1",
         "@types/jest": "^27.0.1",
         "@types/json-stable-stringify": "^1.0.32",
         "@types/lodash": "^4.14.158",
