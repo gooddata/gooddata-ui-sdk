@@ -25,11 +25,12 @@ export class Button extends React.Component<IButtonProps> {
     public buttonNode: HTMLElement;
 
     public render(): React.ReactNode {
-        const { tagName, title, value, tabIndex, type, iconLeft, iconRight } = this.props;
+        const { id, tagName, title, value, tabIndex, type, iconLeft, iconRight } = this.props;
         const TagName = tagName as any;
 
         return (
             <TagName
+                id={id}
                 ref={(ref: HTMLElement) => {
                     this.buttonNode = ref;
                 }}

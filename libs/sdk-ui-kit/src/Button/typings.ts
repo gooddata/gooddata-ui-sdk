@@ -6,6 +6,7 @@ import { ReactNode } from "react";
  * @internal
  */
 export interface IButtonProps {
+    id?: string;
     className?: string;
     disabled?: boolean;
     tabIndex?: number;
