@@ -9,5 +9,8 @@ module.exports = {
         "plugin:sonarjs/recommended",
         "../../.eslintrc.js",
     ],
+    rules: {
+        "import/no-unassigned-import": ["error", { allow: ["isomorphic-fetch"] }],
+    },
     parserOptions: { tsconfigRootDir: __dirname },
 };

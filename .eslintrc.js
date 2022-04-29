@@ -29,6 +29,7 @@ module.exports = {
                 paths: [{ name: "lodash/get", message: "Please use the ?. and ?? operators instead." }],
             },
         ],
+        "import/no-unassigned-import": "error",
 
         // we don't mind duplicate string most of the time as they are often checked by TypeScript unions
         "sonarjs/no-duplicate-string": "off",
