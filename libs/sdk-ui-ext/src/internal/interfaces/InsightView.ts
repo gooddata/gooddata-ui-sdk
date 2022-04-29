@@ -13,7 +13,6 @@ import {
 import { IChartConfig } from "@gooddata/sdk-ui-charts";
 import { IGeoConfig } from "@gooddata/sdk-ui-geo";
 import { IPivotTableConfig } from "@gooddata/sdk-ui-pivot";
-import { IInsightTitleProps } from "./InsightTitle";
 
 /**
  * @public
@@ -121,4 +120,11 @@ export interface IInsightViewProps extends Partial<IVisualizationCallbacks> {
      * Component to render insight title.
      */
     TitleComponent?: React.ComponentType<IInsightTitleProps>;
+}
+
+/**
+ * @public
+ */
+export interface IInsightTitleProps {
+    title: string;
 }

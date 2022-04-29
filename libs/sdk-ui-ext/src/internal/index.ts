@@ -60,3 +60,5 @@ export * from "./FluidLayoutDescriptor";
 export { EmbedInsightDialog } from "./components/dialogs/embedInsightDialog/EmbedInsightDialog";
 export type { InsightCodeType, CodeLanguageType } from "@gooddata/sdk-ui-kit";
 export type { IEmbedInsightDialogProps } from "./components/dialogs/embedInsightDialog/EmbedInsightDialog";
+
+export type { IInsightTitleProps, IInsightViewProps } from "./interfaces/InsightView";

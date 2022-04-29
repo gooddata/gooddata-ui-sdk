@@ -15,7 +15,7 @@ import {
     ITheme,
 } from "@gooddata/sdk-model";
 
-import { IVisualization, IVisProps, FullVisualizationCatalog } from "../internal";
+import { IVisualization, IVisProps, FullVisualizationCatalog, IInsightViewProps } from "../internal";
 import {
     OnError,
     fillMissingTitles,
@@ -34,7 +34,6 @@ import {
     ExecutionFactoryWithFixedFilters,
 } from "@gooddata/sdk-backend-base";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
-import { IInsightViewProps } from "./types";
 
 /**
  * @internal

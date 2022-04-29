@@ -2,15 +2,9 @@
 import React from "react";
 import LinesEllipsis from "react-lines-ellipsis";
 import responsiveHOC from "react-lines-ellipsis/lib/responsiveHOC";
+import { IInsightTitleProps } from "../internal";
 
 const ResponsiveEllipsis = responsiveHOC()(LinesEllipsis);
-
-/**
- * @public
- */
-export interface IInsightTitleProps {
-    title: string;
-}
 
 /**
  * @public

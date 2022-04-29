@@ -1,8 +1,10 @@
 // (C) 2022 GoodData Corporation
 
 import { IInsight, insightRef, insightTitle } from "@gooddata/sdk-model";
-import { getReactEmbeddingCodeGenerator } from "../../internal/utils/embeddingCodeGenerator";
-import { IInsightViewProps } from "../types";
+import { IInsightViewProps } from "../../interfaces/InsightView";
+import { getReactEmbeddingCodeGenerator } from "../embeddingCodeGenerator";
+//import { getReactEmbeddingCodeGenerator } from "../../internal/utils/embeddingCodeGenerator";
+//import { IInsightViewProps } from "../types";
 import { insightViewAdditionalTransformations } from "./insightViewCodeGenUtils";
 
 /**
