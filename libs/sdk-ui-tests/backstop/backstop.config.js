@@ -2,8 +2,8 @@
 
 const scenarios = require("./scenarios.config");
 
-const asyncCaptureLimit = parseInt(process.env.BACKSTOP_CAPTURE_LIMIT) || 6;
-const asyncCompareLimit = parseInt(process.env.BACKSTOP_COMPARE_LIMIT) || 50;
+const asyncCaptureLimit = parseInt(process.env.BACKSTOP_CAPTURE_LIMIT) || 4;
+const asyncCompareLimit = parseInt(process.env.BACKSTOP_COMPARE_LIMIT) || 40;
 
 console.log(`Backstop concurrency settings = capture: ${asyncCaptureLimit}, compare: ${asyncCompareLimit} `);
 
@@ -16,6 +16,7 @@ const backstopConfig = {
             height: 768,
         },
     ],
+    delay: 1000,
     onReadyScript: "puppet/onReady.js",
     scenarios,
     paths: {
