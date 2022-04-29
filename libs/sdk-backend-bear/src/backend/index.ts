@@ -126,6 +126,7 @@ type BearLegacyFunctions = {
     getVisualizationObject?(workspace: string, uri: string): Promise<GdcVisualizationObject.IVisualization>;
     getUISettings?(): Promise<{ settings: GdcUser.IUISettings }>;
     isDomainAdmin?(domainUri: string): Promise<boolean>;
+    setSST?(sst: string): void;
 };
 
 /**
@@ -285,6 +286,10 @@ export class BearBackend implements IAnalyticalBackend {
                                 return true;
                             });
                     });
+                },
+
+                setSST: (sst: string): void => {
+                    this.sdk.user.setSST(sst);
                 },
             };
 
