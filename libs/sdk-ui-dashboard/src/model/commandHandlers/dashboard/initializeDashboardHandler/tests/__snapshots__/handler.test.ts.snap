@@ -191,7 +191,9 @@ Object {
     "decimal": ".",
     "thousand": ",",
   },
-  "settings": Object {},
+  "settings": Object {
+    "dashboardEditModeDevRollout": Any<Boolean>,
+  },
 }
 `;
 

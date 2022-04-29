@@ -1,10 +1,11 @@
 // (C) 2021-2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { put } from "redux-saga/effects";
+import { put, select } from "redux-saga/effects";
 import { DashboardContext } from "../../types/commonTypes";
 import { ChangeRenderMode } from "../../commands/ui";
 import { DashboardRenderModeChanged, renderModeChanged } from "../../events/ui";
 import { uiActions } from "../../store/ui";
+import { selectDashboardEditModeDevRollout } from "../../store/config/configSelectors";
 
 export function* changeRenderModeHandler(
     ctx: DashboardContext,
@@ -15,7 +16,12 @@ export function* changeRenderModeHandler(
         correlationId,
     } = cmd;
 
-    yield put(uiActions.setRenderMode(renderMode));
+    const editModeEnabled = yield select(selectDashboardEditModeDevRollout);
 
-    return renderModeChanged(ctx, renderMode, correlationId);
+    if (renderMode === "view" || editModeEnabled) {
+        yield put(uiActions.setRenderMode(renderMode));
+        return renderModeChanged(ctx, renderMode, correlationId);
+    } else {
+        return renderModeChanged(ctx, "view", correlationId);
+    }
 }

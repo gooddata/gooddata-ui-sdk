@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { initializeDashboard } from "../../../../commands";
 import { DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester";
 import { DashboardInitialized } from "../../../../events";
@@ -75,6 +75,9 @@ describe("initialize dashboard handler", () => {
                         from: expect.any(String),
                         to: expect.any(String),
                     },
+                },
+                settings: {
+                    dashboardEditModeDevRollout: expect.any(Boolean),
                 },
             });
         });

@@ -11,9 +11,18 @@ describe("changeRenderModeHandler", () => {
 
     describe("without initial config", () => {
         beforeEach(
-            preloadedTesterFactory(async (tester) => {
-                Tester = tester;
-            }, SimpleDashboardIdentifier),
+            preloadedTesterFactory(
+                async (tester) => {
+                    Tester = tester;
+                },
+                SimpleDashboardIdentifier,
+                {
+                    initCommand: initializeDashboard({
+                        allowUnfinishedFeatures: true,
+                        settings: { dashboardEditModeDevRollout: true },
+                    }),
+                },
+            ),
         );
 
         it("should be view if initialRenderMode is not specified on config", async () => {
