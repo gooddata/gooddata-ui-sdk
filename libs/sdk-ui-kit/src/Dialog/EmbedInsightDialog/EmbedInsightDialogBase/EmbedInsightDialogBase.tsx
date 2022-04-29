@@ -17,6 +17,7 @@ export type IEmbedInsightDialogBaseProps = {
     codeOption: CodeOptionType;
     codeLanguage: CodeLanguageType;
     code: string;
+    propertiesLink?: string;
     onClose: () => void;
     onCopyCode: () => void;
     onCodeLanguageChange: (codeLanguage: CodeLanguageType) => void;
@@ -27,8 +28,16 @@ export type IEmbedInsightDialogBaseProps = {
  * @internal
  */
 export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (props) => {
-    const { code, codeLanguage, codeOption, onClose, onCopyCode, onCodeLanguageChange, onCodeOptionChange } =
-        props;
+    const {
+        code,
+        codeLanguage,
+        codeOption,
+        propertiesLink,
+        onClose,
+        onCopyCode,
+        onCodeLanguageChange,
+        onCodeOptionChange,
+    } = props;
 
     const intl = useIntl();
 
@@ -42,13 +51,13 @@ export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (
             submitButtonText={intl.formatMessage({ id: "embedInsightDialog.actions.copyCode" })}
             headline={intl.formatMessage({ id: getDialogLabelId(codeOption.type) })}
             className={cx("embed-insight-dialog", "s-embed-insight-dialog")}
-            footerRightRenderer={() => {
-                return (
-                    <CompleteListPropsMessage
-                        documentationLink={"https://github.com/gooddata/gooddata-ui-sdk/pull/2481"}
-                    />
-                );
-            }}
+            footerRightRenderer={
+                propertiesLink
+                    ? () => {
+                          return <CompleteListPropsMessage documentationLink={propertiesLink} />;
+                      }
+                    : undefined
+            }
         >
             <div className="embed-insight-dialog-content">
                 <span className="embed-insight-dialog-message-changes">

@@ -15,6 +15,9 @@ import {
 import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { FullVisualizationCatalog } from "../../VisualizationCatalog";
 
+const InsightViewPropertiesLink =
+    "https://sdk.gooddata.com/gooddata-ui/docs/visualization_component.html#properties";
+
 /**
  * @internal
  */
@@ -52,11 +55,16 @@ export const EmbedInsightDialog: React.VFC<IEmbedInsightDialogProps> = (props) =
         }
 
         return "This is insightView code";
-    }, [codeOption, insight, settings, backend, colorPalette, codeLang, codeType]);
+    }, [codeOption, insight, settings, backend, colorPalette, codeLang]);
 
     const onCodeOptionChange = useCallback((codeOpt: IOptionsByDefinition) => {
         setCodeOption(codeOpt);
     }, []);
+
+    const documentationLink = useMemo(
+        () => getLinkToPropertiesDocumentation(codeType, insight),
+        [codeType, insight],
+    );
 
     return (
         <IntlWrapper locale={locale}>
@@ -65,6 +73,7 @@ export const EmbedInsightDialog: React.VFC<IEmbedInsightDialogProps> = (props) =
                     code={code}
                     codeLanguage={codeLang}
                     codeOption={codeOption}
+                    propertiesLink={documentationLink}
                     onClose={onClose}
                     onCopyCode={onCopyCode}
                     onCodeLanguageChange={onLanguageChange}
@@ -73,6 +82,15 @@ export const EmbedInsightDialog: React.VFC<IEmbedInsightDialogProps> = (props) =
             </ModalOverlay>
         </IntlWrapper>
     );
+};
+
+const getLinkToPropertiesDocumentation = (codeType: InsightCodeType, insight: IInsight) => {
+    if (codeType === "definition") {
+        const meta = FullVisualizationCatalog.forInsight(insight).getMeta();
+        return meta.documentationUrl;
+    }
+
+    return InsightViewPropertiesLink;
 };
 
 const generateCodeByDefinition = (

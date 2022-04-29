@@ -1321,6 +1321,7 @@ export type IEmbedInsightDialogBaseProps = {
     codeOption: CodeOptionType;
     codeLanguage: CodeLanguageType;
     code: string;
+    propertiesLink?: string;
     onClose: () => void;
     onCopyCode: () => void;
     onCodeLanguageChange: (codeLanguage: CodeLanguageType) => void;
@@ -2599,11 +2600,6 @@ export interface IOptimalAlignment {
     visiblePart?: number;
 }
 
-// @internal
-export interface IOverlayControllerProviderProps {
-    overlayController: OverlayController;
-}
-
 // @internal (undocumented)
 export interface IOptionsByDefinition {
     // (undocumented)
@@ -2630,6 +2626,11 @@ export interface IOptionsByReference {
     type: "reference";
     // (undocumented)
     unit?: UnitsType;
+}
+
+// @internal
+export interface IOverlayControllerProviderProps {
+    overlayController: OverlayController;
 }
 
 // @internal (undocumented)

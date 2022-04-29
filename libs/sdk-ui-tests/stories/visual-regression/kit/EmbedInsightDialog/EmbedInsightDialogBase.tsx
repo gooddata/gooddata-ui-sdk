@@ -28,6 +28,9 @@ export const EmbedInsightDialogBaseExamples: React.VFC = () => {
                         customHeight: true,
                         height: "300",
                     }}
+                    propertiesLink={
+                        "https://sdk.gooddata.com/gooddata-ui/docs/area_chart_component.html#properties"
+                    }
                     onClose={action("onClose")}
                     onCopyCode={action("onCopyCode")}
                     onCodeLanguageChange={action("onCodeLanguageChange")}
