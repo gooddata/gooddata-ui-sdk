@@ -12,6 +12,7 @@ module.exports = {
     ],
     rules: {
         "tsdoc/syntax": "off",
+        "import/no-unassigned-import": "off",
     },
     parserOptions: { tsconfigRootDir: __dirname },
 };

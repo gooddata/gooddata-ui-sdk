@@ -4,6 +4,7 @@ let options = {
     forbidden: [
         ...depCruiser.DefaultRules,
         ...depCruiser.DefaultSdkRules,
+        ...depCruiser.PublicLibraryRules,
         depCruiser.moduleWithDependencies("AttributeFilter", "src/AttributeFilter", ["src/constants"]),
         depCruiser.moduleWithDependencies("DateFilter", "src/DateFilter", ["src/constants"]),
         depCruiser.isolatedSubmodule("MeasureValueFilter", "src/MeasureValueFilter"),

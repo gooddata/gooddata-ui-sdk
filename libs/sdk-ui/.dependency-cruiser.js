@@ -4,6 +4,7 @@ const options = {
     forbidden: [
         ...depCruiser.DefaultRules,
         ...depCruiser.DefaultSdkRules,
+        ...depCruiser.PublicLibraryRules,
         depCruiser.isolatedSubmodule("base", "src/base"),
         depCruiser.moduleWithDependencies("executions", "src/execution", ["src/base"]),
     ],

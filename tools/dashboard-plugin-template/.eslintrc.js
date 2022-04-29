@@ -10,5 +10,8 @@ module.exports = {
         "plugin:sonarjs/recommended",
         "../../.eslintrc.react.js",
     ],
+    rules: {
+        "import/no-unassigned-import": "off",
+    },
     parserOptions: { tsconfigRootDir: __dirname },
 };

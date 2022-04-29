@@ -15,6 +15,7 @@ module.exports = {
         fixture: true,
     },
     rules: {
+        "import/no-unassigned-import": "off",
         "no-restricted-imports": [
             "error",
             {

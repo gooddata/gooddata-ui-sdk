@@ -10,6 +10,7 @@ import findIndex from "lodash/findIndex";
 import debounce from "lodash/debounce";
 import noop from "lodash/noop";
 import { v4 as uuid } from "uuid";
+// eslint-disable-next-line import/no-unassigned-import
 import "element-closest-polyfill";
 
 import { DEFAULT_ALIGN_POINTS, getOptimalAlignment } from "../utils/overlay";

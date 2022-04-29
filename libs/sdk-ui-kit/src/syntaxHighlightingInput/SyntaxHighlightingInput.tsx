@@ -3,8 +3,11 @@ import React from "react";
 import cx from "classnames";
 import { UnControlled as CodeMirrorInput, IDefineModeOptions } from "react-codemirror2";
 import CodeMirror from "codemirror";
+// eslint-disable-next-line import/no-unassigned-import
 import "codemirror/addon/mode/simple";
+// eslint-disable-next-line import/no-unassigned-import
 import "codemirror/addon/edit/matchbrackets";
+// eslint-disable-next-line import/no-unassigned-import
 import "codemirror/addon/display/placeholder";
 
 const CODE_MIRROR_EOL = "\n";

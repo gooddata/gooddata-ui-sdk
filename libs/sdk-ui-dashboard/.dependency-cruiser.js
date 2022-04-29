@@ -4,6 +4,7 @@ options = {
     forbidden: [
         ...depCruiser.DefaultRules,
         ...depCruiser.DefaultSdkRules,
+        ...depCruiser.PublicLibraryRules,
 
         depCruiser.isolatedSubmodule("constants", "src/presentation/constants"),
         depCruiser.isolatedSubmodule("localization", "src/presentation/localization"),

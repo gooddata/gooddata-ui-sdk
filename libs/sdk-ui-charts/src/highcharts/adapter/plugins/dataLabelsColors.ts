@@ -1,6 +1,7 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import flatMap from "lodash/flatMap";
 // TODO remove this when IE11 support is dropped
+// eslint-disable-next-line import/no-unassigned-import
 import "svg-classlist-polyfill";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import {
