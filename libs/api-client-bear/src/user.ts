@@ -1,6 +1,6 @@
 // (C) 2007-2022 GoodData Corporation
 import qs from "qs";
-import { XhrModule, ApiResponseError, ApiResponse } from "./xhr";
+import { XhrModule, ApiResponse } from "./xhr";
 import { ProjectModule } from "./project";
 import { GdcUser } from "@gooddata/api-model-bear";
 import { parseSettingItemValue } from "./util";
@@ -31,25 +31,16 @@ export class UserModule {
      *
      * @returns resolves with true if user logged in, false otherwise
      */
-    public isLoggedIn(): Promise<boolean> {
-        return new Promise((resolve, reject) => {
-            this.xhr.get("/gdc/account/token").then(
-                (r) => {
-                    if (r.response.ok) {
-                        resolve(true);
-                    }
-
-                    resolve(false);
-                },
-                (err: any) => {
-                    if (err?.response?.status === 401) {
-                        resolve(false);
-                    } else {
-                        reject(err);
-                    }
-                },
-            );
-        });
+    public async isLoggedIn(): Promise<boolean> {
+        try {
+            const result = await this.xhr.get("/gdc/account/token");
+            return !!result.response.ok;
+        } catch (err: any) {
+            if (err?.response?.status === 401) {
+                return false;
+            }
+            throw err;
+        }
     }
 
     /**
@@ -60,25 +51,11 @@ export class UserModule {
      *                   resolves with false if user logged in and project not available,
      *                   rejects if user not logged in
      */
-    public isLoggedInProject(projectId: string): Promise<boolean> {
-        return this.getCurrentProfile().then((profile) => {
-            return new Promise((resolve, reject) => {
-                const projectModule = new ProjectModule(this.xhr);
-
-                projectModule.getProjects(profile!.links!.self!.split("/")![4]).then(
-                    (projects) => {
-                        if (projects.find((p: any) => p.links.self === `/gdc/projects/${projectId}`)) {
-                            resolve(true);
-                        } else {
-                            resolve(false);
-                        }
-                    },
-                    (err: ApiResponseError) => {
-                        reject(err);
-                    },
-                );
-            });
-        });
+    public async isLoggedInProject(projectId: string): Promise<boolean> {
+        const profile = await this.getCurrentProfile();
+        const projectModule = new ProjectModule(this.xhr);
+        const projects = await projectModule.getProjects(profile!.links!.self!.split("/")![4]);
+        return projects.some((p) => p.links?.self === `/gdc/projects/${projectId}`);
     }
 
     /**
@@ -87,19 +64,17 @@ export class UserModule {
      * every subsequent API call in a current session will be authenticated.
      */
     public login(username: string, password: string): Promise<any> {
-        return this.xhr
-            .post("/gdc/account/login", {
-                body: JSON.stringify({
-                    postUserLogin: {
-                        login: username,
-                        password,
-                        remember: 1,
-                        captcha: "",
-                        verifyCaptcha: "",
-                    },
-                }),
-            })
-            .then((r) => r.getData());
+        return this.xhr.postParsed("/gdc/account/login", {
+            body: JSON.stringify({
+                postUserLogin: {
+                    login: username,
+                    password,
+                    remember: 1,
+                    captcha: "",
+                    verifyCaptcha: "",
+                },
+            }),
+        });
     }
 
     /**
@@ -129,23 +104,16 @@ export class UserModule {
     /**
      * Logs out current user
      */
-    public logout(): Promise<ApiResponse | void> {
-        return this.isLoggedIn().then(
-            (loggedIn: boolean): Promise<ApiResponse | void> => {
-                if (loggedIn) {
-                    return this.xhr.get("/gdc/app/account/bootstrap").then((result: any) => {
-                        const data = result.getData();
-                        const userUri = data.bootstrapResource.accountSetting.links.self;
-                        const userId = userUri.match(/([^/]+)\/?$/)[1];
-
-                        return this.xhr.del(`/gdc/account/login/${userId}`);
-                    });
-                }
-
-                return Promise.resolve();
-            },
-            (err: ApiResponseError) => Promise.reject(err),
-        );
+    public async logout(): Promise<ApiResponse | void> {
+        const isLoggedIn = await this.isLoggedIn();
+        if (isLoggedIn) {
+            const { bootstrapResource } = await this.xhr.getParsed<GdcUser.IBootstrapResource>(
+                "/gdc/app/account/bootstrap",
+            );
+            const userUri = bootstrapResource.accountSetting.links!.self!;
+            const userId = userUri.match(/([^/]+)\/?$/)![1];
+            return this.xhr.del(`/gdc/account/login/${userId}`);
+        }
     }
 
     /**
@@ -153,7 +121,9 @@ export class UserModule {
      * @returns Resolves with account setting object
      */
     public getCurrentProfile(): Promise<GdcUser.IAccountSetting> {
-        return this.xhr.get("/gdc/account/profile/current").then((r) => r.getData().accountSetting);
+        return this.xhr
+            .getParsed<GdcUser.IWrappedAccountSetting>("/gdc/account/profile/current")
+            .then((r) => r.accountSetting);
     }
 
     /**
@@ -188,7 +158,7 @@ export class UserModule {
     /**
      * Returns info about currently logged in user from bootstrap resource
      */
-    public getAccountInfo(): Promise<{
+    public async getAccountInfo(): Promise<{
         login: string;
         loginMD5: string;
         firstName: string;
@@ -196,17 +166,18 @@ export class UserModule {
         organizationName: string;
         profileUri: string;
     }> {
-        return this.xhr.get("/gdc/app/account/bootstrap").then((result: any) => {
-            const { bootstrapResource } = result.getData();
-            return {
-                login: bootstrapResource.accountSetting.login,
-                loginMD5: bootstrapResource.current.loginMD5,
-                firstName: bootstrapResource.accountSetting.firstName,
-                lastName: bootstrapResource.accountSetting.lastName,
-                organizationName: bootstrapResource.settings.organizationName,
-                profileUri: bootstrapResource.accountSetting.links.self,
-            };
-        });
+        const { bootstrapResource } = await this.xhr.getParsed<GdcUser.IBootstrapResource>(
+            "/gdc/app/account/bootstrap",
+        );
+
+        return {
+            login: bootstrapResource.accountSetting.login!,
+            loginMD5: bootstrapResource.current!.loginMD5!,
+            firstName: bootstrapResource.accountSetting.firstName,
+            lastName: bootstrapResource.accountSetting.lastName,
+            organizationName: bootstrapResource.settings!.organizationName,
+            profileUri: bootstrapResource.accountSetting.links!.self!,
+        };
     }
 
     /**
@@ -215,15 +186,12 @@ export class UserModule {
      * @param userId - A user identifier
      * @returns An array of user configs setting item
      */
-    public getUserConfigs(userId: string): Promise<IUserConfigsSettingItem[]> {
-        return this.xhr.get(`/gdc/account/profile/${userId}/config`).then((apiResponse: ApiResponse) => {
-            const userConfigs: IUserConfigsResponse = apiResponse.getData();
-            const {
-                settings: { items },
-            } = userConfigs;
+    public async getUserConfigs(userId: string): Promise<IUserConfigsSettingItem[]> {
+        const userConfig = await this.xhr.getParsed<IUserConfigsResponse>(
+            `/gdc/account/profile/${userId}/config`,
+        );
 
-            return items || [];
-        });
+        return userConfig.settings.items || [];
     }
 
     /**
@@ -252,11 +220,12 @@ export class UserModule {
     /**
      * Returns the feature flags valid for the currently logged in user.
      */
-    public getFeatureFlags(): Promise<GdcUser.IFeatureFlags> {
-        return this.xhr
-            .get("/gdc/app/account/bootstrap")
-            .then((r: any) => r.getData())
-            .then((result: any) => result.bootstrapResource.current.featureFlags);
+    public async getFeatureFlags(): Promise<GdcUser.IFeatureFlags> {
+        const { bootstrapResource } = await this.xhr.getParsed<GdcUser.IBootstrapResource>(
+            "/gdc/app/account/bootstrap",
+        );
+
+        return bootstrapResource.current!.featureFlags!;
     }
 
     /**
