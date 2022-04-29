@@ -78,4 +78,10 @@ export function getInsightWithAppliedDrillDown(
 export function getInsightVisualizationMeta(insight: IInsightDefinition): IVisualizationMeta {
     return FullVisualizationCatalog.forInsight(insight).getMeta();
 }
-//TODO zde support metoda
+
+/**
+ * @internal
+ */
+export function isGeneratingInsightCodeSupported(insight: IInsightDefinition): boolean {
+    return !!FullVisualizationCatalog.forInsight(insight).getEmbeddingCode;
+}

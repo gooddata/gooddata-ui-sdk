@@ -202,6 +202,9 @@ export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition
 // @alpha (undocumented)
 export function isEmptyAfm(obj: unknown): obj is EmptyAfmSdkError;
 
+// @internal (undocumented)
+export function isGeneratingInsightCodeSupported(insight: IInsightDefinition): boolean;
+
 // @alpha
 export interface ISizeInfo {
     // (undocumented)

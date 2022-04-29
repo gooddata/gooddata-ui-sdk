@@ -11,9 +11,11 @@ import {
     Overlay,
     getDefaultOptions,
     getHeightWithUnits,
+    IOptionsByReference,
 } from "@gooddata/sdk-ui-kit";
 import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { FullVisualizationCatalog } from "../../VisualizationCatalog";
+import { insightViewCodeGenerator } from "../../../../insightView/embedding/insightViewCodeGenerator";
 
 const InsightViewPropertiesLink =
     "https://sdk.gooddata.com/gooddata-ui/docs/visualization_component.html#properties";
@@ -54,7 +56,7 @@ export const EmbedInsightDialog: React.VFC<IEmbedInsightDialogProps> = (props) =
             return generateCodeByDefinition(codeOption, insight, settings, backend, colorPalette, codeLang);
         }
 
-        return "This is insightView code";
+        return generateCodeByReference(codeOption, insight, settings, backend, colorPalette, codeLang);
     }, [codeOption, insight, settings, backend, colorPalette, codeLang]);
 
     const onCodeOptionChange = useCallback((codeOpt: IOptionsByDefinition) => {
@@ -84,13 +86,39 @@ export const EmbedInsightDialog: React.VFC<IEmbedInsightDialogProps> = (props) =
     );
 };
 
-const getLinkToPropertiesDocumentation = (codeType: InsightCodeType, insight: IInsight) => {
+const getLinkToPropertiesDocumentation = (
+    codeType: InsightCodeType,
+    insight: IInsight,
+): string | undefined => {
     if (codeType === "definition") {
         const meta = FullVisualizationCatalog.forInsight(insight).getMeta();
-        return meta.documentationUrl;
+        if (meta?.documentationUrl) {
+            return `${meta?.documentationUrl}#properties`;
+        }
     }
 
     return InsightViewPropertiesLink;
+};
+
+const generateCodeByReference = (
+    codeOption: IOptionsByReference,
+    insight: IInsight,
+    settings: IUserWorkspaceSettings,
+    backend: IAnalyticalBackend,
+    colorPalette: IColorPalette,
+    codeLang: CodeLanguageType,
+) => {
+    const height = getHeightWithUnits(codeOption);
+    return insightViewCodeGenerator(insight, {
+        context: {
+            settings: settings,
+            backend: backend,
+            colorPalette: colorPalette,
+        },
+        language: codeLang,
+        height: height,
+        omitChartProps: codeOption.displayTitle ? [] : ["showTitle"],
+    });
 };
 
 const generateCodeByDefinition = (
