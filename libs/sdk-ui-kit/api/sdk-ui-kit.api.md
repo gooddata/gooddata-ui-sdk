@@ -819,6 +819,8 @@ export interface IButtonProps {
     // (undocumented)
     iconRight?: string;
     // (undocumented)
+    id?: string;
+    // (undocumented)
     onClick?(e: React.MouseEvent): void;
     // (undocumented)
     tabIndex?: number;
@@ -1099,6 +1101,8 @@ export interface IDropdownButtonProps {
     disabled?: boolean;
     // (undocumented)
     iconLeft?: string;
+    // (undocumented)
+    id?: string;
     // (undocumented)
     isOpen?: boolean;
     // (undocumented)

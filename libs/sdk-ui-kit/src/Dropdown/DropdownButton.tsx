@@ -7,6 +7,7 @@ import { Button } from "../Button/Button";
  * @internal
  */
 export interface IDropdownButtonProps {
+    id?: string;
     className?: string;
 
     value?: ReactNode;
@@ -24,6 +25,7 @@ export interface IDropdownButtonProps {
  * @internal
  */
 export const DropdownButton: React.FC<IDropdownButtonProps> = ({
+    id,
     className,
 
     value,
@@ -50,6 +52,7 @@ export const DropdownButton: React.FC<IDropdownButtonProps> = ({
 
     return (
         <Button
+            id={id}
             title={title && typeof title === "string" ? title : undefined}
             className={buttonClasses}
             value={value}
