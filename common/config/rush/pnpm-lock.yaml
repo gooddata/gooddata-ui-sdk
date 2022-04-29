@@ -23148,7 +23148,6 @@ packages:
       '@microsoft/api-documenter': 7.17.2
       '@microsoft/api-extractor': 7.20.1
       '@types/enzyme': 3.10.11
-      '@types/hoist-non-react-statics': 3.3.1
       '@types/jest': 27.4.1
       '@types/json-stable-stringify': 1.0.34
       '@types/lodash': 4.14.181
@@ -23179,7 +23178,6 @@ packages:
       fixed-data-table-2: 1.2.6_react-dom@17.0.2+react@17.0.2
       foundation-sites: 5.5.3
       full-icu: 1.4.0
-      hoist-non-react-statics: 3.3.2
       jest: 27.5.1_ts-node@10.7.0
       jest-enzyme: 7.1.2_4c874ea13312c50d8c9b996ca71028db
       jest-junit: 3.7.0
