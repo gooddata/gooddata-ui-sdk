@@ -53,7 +53,6 @@
         "@gooddata/sdk-model": "^8.10.0-alpha.78",
         "axios": "^0.21.4",
         "lodash": "^4.17.19",
-        "spark-md5": "^3.0.0",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
@@ -64,7 +63,6 @@
         "@openapitools/openapi-generator-cli": "^2.4.26",
         "@types/jest": "^27.0.1",
         "@types/lodash": "^4.14.158",
-        "@types/spark-md5": "^3.0.1",
         "@typescript-eslint/eslint-plugin": "^5.5.0",
         "@typescript-eslint/parser": "^5.5.0",
         "commander": "^8.1.0",
