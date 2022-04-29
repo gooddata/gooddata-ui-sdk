@@ -37,6 +37,7 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
             onSubmit,
             onCancel,
             headerLeftButtonRenderer,
+            footerRightRenderer,
         } = this.props;
         const dialogClasses = cx(
             {
@@ -66,32 +67,39 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
 
                     <div className="gd-dialog-content">{children}</div>
 
-                    <div className="gd-dialog-footer">
-                        {showProgressIndicator && <LoadingSpinner className="gd-dialog-spinner small" />}
+                    <div
+                        className={cx("gd-dialog-footer-wrapper", {
+                            "gd-dialog-footer-between": !!footerRightRenderer,
+                        })}
+                    >
+                        {footerRightRenderer?.()}
+                        <div className="gd-dialog-footer">
+                            {showProgressIndicator && <LoadingSpinner className="gd-dialog-spinner small" />}
 
-                        <Button
-                            onClick={onCancel}
-                            className="gd-button-secondary s-dialog-cancel-button"
-                            value={cancelButtonText}
-                        />
-
-                        <BubbleHoverTrigger className="gd-button" showDelay={0} hideDelay={0}>
                             <Button
-                                onClick={onSubmit}
-                                className={submitButtonClasses}
-                                value={submitButtonText}
-                                disabled={isSubmitDisabled}
+                                onClick={onCancel}
+                                className="gd-button-secondary s-dialog-cancel-button"
+                                value={cancelButtonText}
                             />
-                            {submitButtonTooltipText && (
-                                <Bubble
-                                    className="bubble-primary"
-                                    alignPoints={submitButtonTooltipAlignPoints || [{ align: "bc tc" }]}
-                                    arrowOffsets={submitButtonTooltipArrowOffsets || { "bc tc": [0, 15] }}
-                                >
-                                    {submitButtonTooltipText}
-                                </Bubble>
-                            )}
-                        </BubbleHoverTrigger>
+
+                            <BubbleHoverTrigger className="gd-button" showDelay={0} hideDelay={0}>
+                                <Button
+                                    onClick={onSubmit}
+                                    className={submitButtonClasses}
+                                    value={submitButtonText}
+                                    disabled={isSubmitDisabled}
+                                />
+                                {submitButtonTooltipText && (
+                                    <Bubble
+                                        className="bubble-primary"
+                                        alignPoints={submitButtonTooltipAlignPoints || [{ align: "bc tc" }]}
+                                        arrowOffsets={submitButtonTooltipArrowOffsets || { "bc tc": [0, 15] }}
+                                    >
+                                        {submitButtonTooltipText}
+                                    </Bubble>
+                                )}
+                            </BubbleHoverTrigger>
+                        </div>
                     </div>
                 </div>
             </div>

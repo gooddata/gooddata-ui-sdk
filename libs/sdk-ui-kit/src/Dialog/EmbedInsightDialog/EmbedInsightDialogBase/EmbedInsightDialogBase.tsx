@@ -8,6 +8,7 @@ import { PrepareEnvMessage } from "./components/PrepareEnvMessage";
 import { CodeLanguageSelector } from "./components/CodeLanguageSelector";
 import { CodeLanguageType, CodeOptionType, InsightCodeType } from "./types";
 import { CodeOptions } from "./components/CodeOptions";
+import { CompleteListPropsMessage } from "./components/CompleteListPropsMessage";
 
 /**
  * @internal
@@ -41,6 +42,13 @@ export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (
             submitButtonText={intl.formatMessage({ id: "embedInsightDialog.actions.copyCode" })}
             headline={intl.formatMessage({ id: getDialogLabelId(codeOption.type) })}
             className={cx("embed-insight-dialog", "s-embed-insight-dialog")}
+            footerRightRenderer={() => {
+                return (
+                    <CompleteListPropsMessage
+                        documentationLink={"https://github.com/gooddata/gooddata-ui-sdk/pull/2481"}
+                    />
+                );
+            }}
         >
             <div className="embed-insight-dialog-content">
                 <span className="embed-insight-dialog-message-changes">

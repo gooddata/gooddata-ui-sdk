@@ -981,6 +981,8 @@ export interface IConfirmDialogBaseProps extends IDialogBaseProps {
     // (undocumented)
     cancelButtonText?: string;
     // (undocumented)
+    footerRightRenderer?: () => JSX.Element;
+    // (undocumented)
     headerLeftButtonRenderer?: () => JSX.Element;
     // (undocumented)
     headline?: string;

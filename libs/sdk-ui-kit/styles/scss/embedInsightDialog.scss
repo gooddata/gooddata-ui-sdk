@@ -62,6 +62,15 @@
     }
 }
 
+.embed-insight-dialog-list-props-message {
+    display: flex;
+    align-items: center;
+
+    a {
+        text-decoration: underline;
+    }
+}
+
 .embed-insight-dialog-lang-selector {
     display: flex;
     flex-direction: column;
