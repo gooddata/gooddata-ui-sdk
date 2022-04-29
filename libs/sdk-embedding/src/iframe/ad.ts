@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import isObject from "lodash/isObject";
 import {
     CommandFailed,
@@ -118,6 +118,12 @@ export namespace EmbeddedAnalyticalDesigner {
          * The command to request cancellation
          */
         RequestCancellation = "requestCancellation",
+
+        /**
+         * Set auth data
+         * @internal
+         */
+        SetAuth = "setAuth",
     }
 
     /**
@@ -793,6 +799,23 @@ export namespace EmbeddedAnalyticalDesigner {
      */
     export function isRemoveFilterContextCommandData(obj: unknown): obj is RemoveFilterContextCommandData {
         return isObject(obj) && getEventType(obj) === GdcAdCommandType.RemoveFilterContext;
+    }
+
+    /**
+     * @internal
+     */
+    export type SetAuthCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.SetAuth, { auth: string }>;
+
+    /**
+     * @internal
+     */
+    export type SetAuthCommand = IGdcAdMessageEvent<GdcAdCommandType.RemoveFilterContext, { auth: string }>;
+
+    /**
+     * @internal
+     */
+    export function isSetAuthCommandData(obj: unknown): obj is SetAuthCommandData {
+        return isObject(obj) && getEventType(obj) === GdcAdCommandType.SetAuth;
     }
 
     //

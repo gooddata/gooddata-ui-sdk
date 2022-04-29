@@ -50,6 +50,8 @@ export namespace EmbeddedAnalyticalDesigner {
         RequestCancellation = "requestCancellation",
         Save = "saveInsight",
         SaveAs = "saveAsInsight",
+        // @internal
+        SetAuth = "setAuth",
         SetFilterContext = "setFilterContext",
         Undo = "undo"
     }
@@ -140,6 +142,8 @@ export namespace EmbeddedAnalyticalDesigner {
     export function isRequestCancellationCommandData(obj: unknown): obj is RequestCancellationCommandData;
     export function isSaveAsInsightCommandData(obj: unknown): obj is SaveAsInsightCommandData;
     export function isSaveInsightCommandData(obj: unknown): obj is SaveInsightCommandData;
+    // @internal (undocumented)
+    export function isSetAuthCommandData(obj: unknown): obj is SetAuthCommandData;
     export function isSetFilterContextCommandData(obj: unknown): obj is SetFilterContextCommandData;
     export function isUndoCommandData(obj: unknown): obj is UndoCommandData;
     export function isUndoFinishedData(obj: unknown): obj is UndoFinishedData;
@@ -162,6 +166,14 @@ export namespace EmbeddedAnalyticalDesigner {
     export type SaveAsInsightCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.SaveAs, ISaveAsInsightCommandBody>;
     export type SaveInsightCommand = IGdcAdMessageEvent<GdcAdCommandType.Save, ISaveCommandBody>;
     export type SaveInsightCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.Save, ISaveCommandBody>;
+    // @internal (undocumented)
+    export type SetAuthCommand = IGdcAdMessageEvent<GdcAdCommandType.RemoveFilterContext, {
+        auth: string;
+    }>;
+    // @internal (undocumented)
+    export type SetAuthCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.SetAuth, {
+        auth: string;
+    }>;
     export type SetFilterContextCommand = IGdcAdMessageEvent<GdcAdCommandType.SetFilterContext, EmbeddedGdc.IFilterContextContent>;
     export type SetFilterContextCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.SetFilterContext, EmbeddedGdc.IFilterContextContent>;
     export type SetFilterContextFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.SetFilterContextFinished, IAvailableCommands>;
