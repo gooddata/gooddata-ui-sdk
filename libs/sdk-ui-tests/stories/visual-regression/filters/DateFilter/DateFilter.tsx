@@ -208,4 +208,36 @@ storiesOf(`${FilterStories}/DateFilter`)
                 },
             },
         },
+    )
+    .add(
+        "dateformat with time",
+        () => {
+            const selectedFilterOption: IUiAbsoluteDateFilterForm = {
+                localIdentifier: "ABSOLUTE_FORM",
+                type: "absoluteForm",
+                from: "2019-01-01 1:00",
+                to: "2019-02-01 14:00",
+                name: "",
+                visible: true,
+            };
+            return (
+                <div style={wrapperStyle} className="screenshot-target">
+                    <DateFilter
+                        customFilterName="Selected date"
+                        excludeCurrentPeriod={false}
+                        selectedFilterOption={selectedFilterOption}
+                        filterOptions={filterOptions}
+                        dateFilterMode="active"
+                        dateFormat="yyyy/MM/dd"
+                        isTimeForAbsoluteRangeEnabled={true}
+                    />
+                </div>
+            );
+        },
+        {
+            screenshots: {
+                closed: {},
+                opened: { clickSelector: ".s-date-filter-button", postInteractionWait: 200 },
+            },
+        },
     );

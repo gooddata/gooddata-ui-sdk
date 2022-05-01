@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 
@@ -29,14 +29,14 @@ export class DateRangePickerInputFieldBody extends React.Component<
     public render(): React.ReactNode {
         const { className } = this.props;
         return (
-            <div className={cx("gd-date-range-picker-input-wrapper", className)}>
-                <span className="gd-date-range-picker-input-icon gd-icon-calendar" />
+            <span className={cx(className)}>
+                <span className="gd-icon-calendar" />
                 <input
                     {...this.props}
                     ref={this.inputRef}
-                    className="gd-date-range-picker-input-field input-text s-date-range-picker-input-field"
+                    className="input-text s-date-range-picker-input-field"
                 />
-            </div>
+            </span>
         );
     }
 }

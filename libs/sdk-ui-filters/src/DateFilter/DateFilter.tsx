@@ -39,6 +39,7 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     dateFilterMode: DashboardDateFilterConfigMode;
     dateFormat?: string;
     locale?: string;
+    isTimeForAbsoluteRangeEnabled?: boolean;
 }
 
 /**
@@ -80,6 +81,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
     public static defaultProps: Partial<IDateFilterProps> = {
         dateFormat: DEFAULT_DATE_FORMAT,
         isEditMode: false,
+        isTimeForAbsoluteRangeEnabled: false,
         locale: "en-US",
         onCancel: noop,
         onOpen: noop,
@@ -107,6 +109,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
             selectedFilterOption: props.selectedFilterOption,
             initExcludeCurrentPeriod: props.excludeCurrentPeriod,
             excludeCurrentPeriod: canExcludeCurrent ? props.excludeCurrentPeriod : false,
+            isTimeForAbsoluteRangeEnabled: props.isTimeForAbsoluteRangeEnabled,
             isExcludeCurrentPeriodEnabled: canExcludeCurrent,
         };
     }
@@ -162,6 +165,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
             availableGranularities,
             isEditMode,
             locale,
+            isTimeForAbsoluteRangeEnabled,
         } = this.props;
         const { excludeCurrentPeriod, selectedFilterOption, isExcludeCurrentPeriodEnabled } = this.state;
         return dateFilterMode === "hidden" ? null : (
@@ -173,6 +177,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
                 excludeCurrentPeriod={excludeCurrentPeriod}
                 originalExcludeCurrentPeriod={originalExcludeCurrentPeriod}
                 isExcludeCurrentPeriodEnabled={isExcludeCurrentPeriodEnabled}
+                isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled}
                 isEditMode={isEditMode}
                 filterOptions={filterOptions}
                 selectedFilterOption={selectedFilterOption}

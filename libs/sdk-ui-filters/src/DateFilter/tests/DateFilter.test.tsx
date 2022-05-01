@@ -12,14 +12,9 @@ import {
     isDateFilterBodyVisible,
     isDateFilterVisible,
     clickCancelButton,
-    openAbsoluteFormFilter,
-    writeToAbsoluteFormInputFrom,
     dateToAbsoluteInputFormat,
-    writeToAbsoluteFormInputTo,
-    getAbsoluteFormInputFromValue,
     getTodayDate,
     getMonthAgo,
-    getAbsoluteFormInputToValue,
     openRelativeFormFilter,
     getRelativeFormInputFromValue,
     getRelativeFormInputToValue,
@@ -33,14 +28,14 @@ import {
     isRelativeFormGranularitySelected,
     setRelativeFormInputs,
     clickAbsoluteFilter,
-    isAbsoluteFormVisible,
-    clickAbsoluteFormFilter,
-    isAbsoluteFormErrorVisible,
     isApplyButtonDisabled,
     isRelativeFormVisible,
     clickRelativeFormFilter,
     isRelativeFormSelectMenuVisible,
+    openAbsoluteFormFilter,
+    clickAbsoluteFormFilter,
 } from "./extendedDateFilters_helpers";
+import { AbsoluteForm } from "./AbsoluteForm";
 import { DEFAULT_DATE_FORMAT } from "../constants/Platform";
 import { verifyDateFormat } from "../DateFilterCore";
 
@@ -102,8 +97,10 @@ describe("DateFilter", () => {
         it("should reset absolute filter form contents", () => {
             const wrapper = createDateFilter();
             openAbsoluteFormFilter(wrapper);
-            writeToAbsoluteFormInputFrom(wrapper, dateToAbsoluteInputFormat("2017-01-01"));
-            writeToAbsoluteFormInputTo(wrapper, dateToAbsoluteInputFormat("2018-01-01"));
+
+            const absoluteForm = new AbsoluteForm(wrapper);
+            absoluteForm.setStartDate(dateToAbsoluteInputFormat("2017-01-01"));
+            absoluteForm.setEndDate(dateToAbsoluteInputFormat("2018-01-01"));
             clickCancelButton(wrapper);
 
             openAbsoluteFormFilter(wrapper);
@@ -111,8 +108,8 @@ describe("DateFilter", () => {
             const today = getTodayDate();
             const monthAgo = getMonthAgo();
 
-            expect(getAbsoluteFormInputFromValue(wrapper)).toEqual(dateToAbsoluteInputFormat(monthAgo));
-            expect(getAbsoluteFormInputToValue(wrapper)).toEqual(dateToAbsoluteInputFormat(today));
+            expect(absoluteForm.getStartDate()).toEqual(dateToAbsoluteInputFormat(monthAgo));
+            expect(absoluteForm.getEndDate()).toEqual(dateToAbsoluteInputFormat(today));
         });
 
         it("should reset relative filter contents", () => {
@@ -173,19 +170,21 @@ describe("DateFilter", () => {
             const wrapper = createDateFilter({ onApply });
 
             openAbsoluteFormFilter(wrapper);
-            writeToAbsoluteFormInputFrom(wrapper, fromInputValue);
-            writeToAbsoluteFormInputTo(wrapper, toInputValue);
+
+            const absoluteForm = new AbsoluteForm(wrapper);
+            absoluteForm.setStartDate(fromInputValue);
+            absoluteForm.setEndDate(toInputValue);
             clickApplyButton(wrapper);
 
             setPropsFromOnApply(wrapper, onApply, 0);
 
-            expect(getDateFilterButtonText(wrapper)).toEqual("01/01/2017 - 01/01/2018");
+            expect(getDateFilterButtonText(wrapper)).toEqual("01/01/2017 – 01/01/2018");
 
             clickDateFilterButton(wrapper);
 
             expect(getSelectedItemText(wrapper)).toEqual("Static period");
-            expect(getAbsoluteFormInputFromValue(wrapper)).toEqual(fromInputValue);
-            expect(getAbsoluteFormInputToValue(wrapper)).toEqual(toInputValue);
+            expect(absoluteForm.getStartDate()).toEqual(fromInputValue);
+            expect(absoluteForm.getEndDate()).toEqual(toInputValue);
         });
 
         it("should keep relative form selected and filled when reopening", () => {
@@ -417,13 +416,15 @@ describe("DateFilter", () => {
     describe("absolute form", () => {
         it("should open", () => {
             const wrapper = createDateFilter();
-            expect(isAbsoluteFormVisible(wrapper)).toBe(false);
+
+            const absoluteForm = new AbsoluteForm(wrapper);
+            expect(absoluteForm.isVisible()).toBe(false);
             clickDateFilterButton(wrapper);
-            expect(isAbsoluteFormVisible(wrapper)).toBe(false);
+            expect(absoluteForm.isVisible()).toBe(false);
             clickAbsoluteFormFilter(wrapper);
-            expect(isAbsoluteFormVisible(wrapper)).toBe(true);
+            expect(absoluteForm.isVisible()).toBe(true);
             clickAllTime(wrapper);
-            expect(isAbsoluteFormVisible(wrapper)).toBe(false);
+            expect(absoluteForm.isVisible()).toBe(false);
         });
 
         it("should set correct values into input", () => {
@@ -435,14 +436,15 @@ describe("DateFilter", () => {
             clickDateFilterButton(wrapper);
             clickAbsoluteFormFilter(wrapper);
 
-            writeToAbsoluteFormInputFrom(wrapper, dateToAbsoluteInputFormat(from));
-            writeToAbsoluteFormInputTo(wrapper, dateToAbsoluteInputFormat(to));
+            const absoluteForm = new AbsoluteForm(wrapper);
+            absoluteForm.setStartDate(dateToAbsoluteInputFormat(from));
+            absoluteForm.setEndDate(dateToAbsoluteInputFormat(to));
 
             clickApplyButton(wrapper);
 
             setPropsFromOnApply(wrapper, onApply, 0);
 
-            expect(getDateFilterButtonText(wrapper)).toEqual("10/15/2019 - 10/25/2019");
+            expect(getDateFilterButtonText(wrapper)).toEqual("10/15/2019 – 10/25/2019");
         });
 
         it("should set correct values with desired format", () => {
@@ -452,20 +454,21 @@ describe("DateFilter", () => {
                 dateFormat,
                 onApply,
             });
+            const absoluteForm = new AbsoluteForm(wrapper);
 
             const from = "2019-10-15";
             const to = "2019-10-25";
             clickDateFilterButton(wrapper);
             clickAbsoluteFormFilter(wrapper);
 
-            writeToAbsoluteFormInputFrom(wrapper, dateToAbsoluteInputFormat(from, dateFormat));
-            writeToAbsoluteFormInputTo(wrapper, dateToAbsoluteInputFormat(to, dateFormat));
+            absoluteForm.setStartDate(dateToAbsoluteInputFormat(from, dateFormat));
+            absoluteForm.setEndDate(dateToAbsoluteInputFormat(to, dateFormat));
 
             clickApplyButton(wrapper);
 
             setPropsFromOnApply(wrapper, onApply, 0);
 
-            expect(getDateFilterButtonText(wrapper)).toEqual("2019/10/15 - 2019/10/25");
+            expect(getDateFilterButtonText(wrapper)).toEqual("2019/10/15 – 2019/10/25");
         });
 
         it("should use the default date format MM/dd/yyyy if the input date format is invalid", () => {
@@ -476,9 +479,11 @@ describe("DateFilter", () => {
 
         it("should render Absolute date filter with no errors when it is opened", () => {
             const wrapper = createDateFilter();
+            const absoluteForm = new AbsoluteForm(wrapper);
+
             clickDateFilterButton(wrapper);
             clickAbsoluteFormFilter(wrapper);
-            expect(isAbsoluteFormErrorVisible(wrapper)).toBe(false);
+            expect(absoluteForm.isErrorVisible()).toBe(false);
             expect(isApplyButtonDisabled(wrapper)).toBe(false);
         });
 
@@ -490,10 +495,11 @@ describe("DateFilter", () => {
             ["long year", "12/01/2019999"],
         ])("should show error when %s is entered to fromInput", (_lablel: string, value: string) => {
             const wrapper = createDateFilter();
+            const absoluteForm = new AbsoluteForm(wrapper);
             clickDateFilterButton(wrapper);
             clickAbsoluteFormFilter(wrapper);
-            writeToAbsoluteFormInputFrom(wrapper, value);
-            expect(isAbsoluteFormErrorVisible(wrapper)).toBe(true);
+            absoluteForm.setStartDate(value);
+            expect(absoluteForm.isErrorVisible()).toBe(true);
         });
 
         it.each([
@@ -504,10 +510,11 @@ describe("DateFilter", () => {
             ["long year", "12/01/2019999"],
         ])("should show error when %s is entered to toInput", (_lablel: string, value: string) => {
             const wrapper = createDateFilter();
+            const absoluteForm = new AbsoluteForm(wrapper);
             clickDateFilterButton(wrapper);
             clickAbsoluteFormFilter(wrapper);
-            writeToAbsoluteFormInputTo(wrapper, value);
-            expect(isAbsoluteFormErrorVisible(wrapper)).toBe(true);
+            absoluteForm.setEndDate(value);
+            expect(absoluteForm.isErrorVisible()).toBe(true);
         });
 
         it("should show errors with more complex interaction", () => {
@@ -516,94 +523,99 @@ describe("DateFilter", () => {
 
             const onApply = jest.fn();
             const wrapper = createDateFilter({ onApply });
+            const absoluteForm = new AbsoluteForm(wrapper);
 
             clickDateFilterButton(wrapper);
             clickAbsoluteFormFilter(wrapper);
 
-            expect(isAbsoluteFormErrorVisible(wrapper)).toBe(false);
+            expect(absoluteForm.isErrorVisible()).toBe(false);
 
-            writeToAbsoluteFormInputFrom(wrapper, "xxx");
-            expect(isAbsoluteFormErrorVisible(wrapper)).toBe(true);
+            absoluteForm.setStartDate("xxx");
+            expect(absoluteForm.isErrorVisible()).toBe(true);
 
-            writeToAbsoluteFormInputFrom(wrapper, dateToAbsoluteInputFormat(from));
-            expect(isAbsoluteFormErrorVisible(wrapper)).toBe(false);
+            absoluteForm.setStartDate(dateToAbsoluteInputFormat(from));
+            expect(absoluteForm.isErrorVisible()).toBe(false);
 
-            writeToAbsoluteFormInputTo(wrapper, "10/10/2019");
-            expect(isAbsoluteFormErrorVisible(wrapper)).toBe(false);
+            absoluteForm.setEndDate("10/10/2019");
+            expect(absoluteForm.isErrorVisible()).toBe(false);
 
-            writeToAbsoluteFormInputTo(wrapper, "xxx");
-            expect(isAbsoluteFormErrorVisible(wrapper)).toBe(true);
+            absoluteForm.setEndDate("xxx");
+            expect(absoluteForm.isErrorVisible()).toBe(true);
 
-            writeToAbsoluteFormInputTo(wrapper, dateToAbsoluteInputFormat(to));
-            expect(isAbsoluteFormErrorVisible(wrapper)).toBe(false);
+            absoluteForm.setEndDate(dateToAbsoluteInputFormat(to));
+            expect(absoluteForm.isErrorVisible()).toBe(false);
 
             clickApplyButton(wrapper);
 
             setPropsFromOnApply(wrapper, onApply, 0);
-            expect(getDateFilterButtonText(wrapper)).toEqual("01/01/2019 - 12/31/2019");
+            expect(getDateFilterButtonText(wrapper)).toEqual("01/01/2019 – 12/31/2019");
         });
 
         it("should set default value from last month to current month", () => {
             const wrapper = createDateFilter();
+            const absoluteForm = new AbsoluteForm(wrapper);
             clickDateFilterButton(wrapper);
             clickAbsoluteFormFilter(wrapper);
 
             const expectedFrom = dateToAbsoluteInputFormat(getMonthAgo());
             const expectedTo = dateToAbsoluteInputFormat(getTodayDate());
-            expect(getAbsoluteFormInputFromValue(wrapper)).toEqual(expectedFrom);
-            expect(getAbsoluteFormInputToValue(wrapper)).toEqual(expectedTo);
+            expect(absoluteForm.getStartDate()).toEqual(expectedFrom);
+            expect(absoluteForm.getEndDate()).toEqual(expectedTo);
         });
 
         it("should not have errors with valid input", () => {
             const wrapper = createDateFilter();
+            const absoluteForm = new AbsoluteForm(wrapper);
             clickDateFilterButton(wrapper);
             clickAbsoluteFormFilter(wrapper);
 
-            writeToAbsoluteFormInputFrom(wrapper, dateToAbsoluteInputFormat("2019-01-01"));
-            writeToAbsoluteFormInputTo(wrapper, dateToAbsoluteInputFormat("2019-01-31"));
-
-            expect(isAbsoluteFormErrorVisible(wrapper)).toBe(false);
+            absoluteForm.setStartDate(dateToAbsoluteInputFormat("2019-01-01"));
+            absoluteForm.setEndDate(dateToAbsoluteInputFormat("2019-01-31"));
+            expect(absoluteForm.isErrorVisible()).toBe(false);
             expect(isApplyButtonDisabled(wrapper)).toBe(false);
         });
 
         it('should set "to" properly after setting "from" to a later value', () => {
             const wrapper = createDateFilter();
+            const absoluteForm = new AbsoluteForm(wrapper);
             clickDateFilterButton(wrapper);
             clickAbsoluteFormFilter(wrapper);
 
-            writeToAbsoluteFormInputFrom(wrapper, dateToAbsoluteInputFormat("2019-01-01"));
-            writeToAbsoluteFormInputTo(wrapper, dateToAbsoluteInputFormat("2019-01-31"));
-            writeToAbsoluteFormInputFrom(wrapper, dateToAbsoluteInputFormat("2019-05-01"));
+            absoluteForm.setStartDate(dateToAbsoluteInputFormat("2019-01-01"));
+            absoluteForm.setEndDate(dateToAbsoluteInputFormat("2019-01-31"));
+            absoluteForm.setStartDate(dateToAbsoluteInputFormat("2019-05-01"));
 
-            expect(getAbsoluteFormInputFromValue(wrapper)).toEqual("05/01/2019");
-            expect(getAbsoluteFormInputToValue(wrapper)).toEqual("05/01/2019");
-            expect(isAbsoluteFormErrorVisible(wrapper)).toBe(false);
+            expect(absoluteForm.getStartDate()).toEqual("05/01/2019");
+            expect(absoluteForm.getEndDate()).toEqual("05/01/2019");
+            expect(absoluteForm.isErrorVisible()).toBe(false);
             expect(isApplyButtonDisabled(wrapper)).toBe(false);
         });
 
         it('should set "from" properly after setting "to" a sooner value', () => {
             const wrapper = createDateFilter();
+            const absoluteForm = new AbsoluteForm(wrapper);
             clickDateFilterButton(wrapper);
             clickAbsoluteFormFilter(wrapper);
 
-            writeToAbsoluteFormInputFrom(wrapper, dateToAbsoluteInputFormat("2019-01-31"));
-            writeToAbsoluteFormInputTo(wrapper, dateToAbsoluteInputFormat("2019-01-01"));
+            absoluteForm.setStartDate(dateToAbsoluteInputFormat("2019-01-31"));
+            absoluteForm.setEndDate(dateToAbsoluteInputFormat("2019-01-01"));
 
-            expect(getAbsoluteFormInputFromValue(wrapper)).toEqual("01/01/2019");
-            expect(getAbsoluteFormInputToValue(wrapper)).toEqual("01/01/2019");
-            expect(isAbsoluteFormErrorVisible(wrapper)).toBe(false);
+            expect(absoluteForm.getStartDate()).toEqual("01/01/2019");
+            expect(absoluteForm.getEndDate()).toEqual("01/01/2019");
+            expect(absoluteForm.isErrorVisible()).toBe(false);
             expect(isApplyButtonDisabled(wrapper)).toBe(false);
         });
 
         it('should not have errors when "from" = "to"', () => {
             const wrapper = createDateFilter();
+            const absoluteForm = new AbsoluteForm(wrapper);
             clickDateFilterButton(wrapper);
             clickAbsoluteFormFilter(wrapper);
 
-            writeToAbsoluteFormInputFrom(wrapper, dateToAbsoluteInputFormat("2019-01-01"));
-            writeToAbsoluteFormInputTo(wrapper, dateToAbsoluteInputFormat("2019-01-01"));
+            absoluteForm.setStartDate(dateToAbsoluteInputFormat("2019-01-01"));
+            absoluteForm.setEndDate(dateToAbsoluteInputFormat("2019-01-01"));
 
-            expect(isAbsoluteFormErrorVisible(wrapper)).toBe(false);
+            expect(absoluteForm.isErrorVisible()).toBe(false);
             expect(isApplyButtonDisabled(wrapper)).toBe(false);
         });
     });
@@ -647,6 +659,47 @@ describe("DateFilter", () => {
             clickRelativeFormGranularity(wrapper, "year");
 
             expect(getRelativeFormInputFromValue(wrapper)).toEqual("");
+        });
+    });
+
+    describe("Absolute form with enabled time", () => {
+        it("should set correct values with desired format", () => {
+            const dateFormat = "yyyy/MM/dd";
+            const isTimeForAbsoluteRangeEnabled = true;
+            const onApply = jest.fn();
+            const wrapper = createDateFilter({
+                dateFormat,
+                onApply,
+                isTimeForAbsoluteRangeEnabled,
+            });
+            const absoluteForm = new AbsoluteForm(wrapper);
+
+            const fromInputValue = dateToAbsoluteInputFormat("2019-10-15", dateFormat);
+            const toInputValue = dateToAbsoluteInputFormat("2019-10-25", dateFormat);
+            const fromTime = "10:00";
+            const toTime = "14:00";
+
+            clickDateFilterButton(wrapper);
+            clickAbsoluteFormFilter(wrapper);
+
+            absoluteForm.setStartDate(fromInputValue);
+            absoluteForm.setEndDate(toInputValue);
+            absoluteForm.setStartTime(fromTime);
+            absoluteForm.setEndTime(toTime);
+
+            clickApplyButton(wrapper);
+
+            setPropsFromOnApply(wrapper, onApply, 0);
+
+            expect(getDateFilterButtonText(wrapper)).toEqual("2019/10/15, 10:00 – 2019/10/25, 14:00");
+
+            clickDateFilterButton(wrapper);
+
+            expect(getSelectedItemText(wrapper)).toEqual("Static period");
+            expect(absoluteForm.getStartDate()).toEqual(fromInputValue);
+            expect(absoluteForm.getEndDate()).toEqual(toInputValue);
+            expect(absoluteForm.getStartTime()).toEqual(fromTime);
+            expect(absoluteForm.getEndTime()).toEqual(toTime);
         });
     });
 });

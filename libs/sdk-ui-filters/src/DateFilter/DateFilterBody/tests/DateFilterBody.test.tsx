@@ -42,6 +42,7 @@ describe("ExtendedDateFilterBody", () => {
         availableGranularities: [],
         isEditMode: false,
         isMobile: false,
+        isTimeForAbsoluteRangeEnabled: true,
 
         onApplyClick: jest.fn(),
         onCancelClick: jest.fn(),

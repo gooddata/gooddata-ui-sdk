@@ -317,6 +317,10 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
     max-width: 200px;
 }
 
+.gd-extended-date-filter-body .gd-list-item.is-selected {
+    font-weight: bold;
+}
+
 .attributevalues-list {
     .loading-mask {
         flex: 1 0 auto;

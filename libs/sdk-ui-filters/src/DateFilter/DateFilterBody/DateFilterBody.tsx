@@ -46,6 +46,7 @@ export interface IDateFilterBodyProps {
     excludeCurrentPeriod: boolean;
     isExcludeCurrentPeriodEnabled: boolean;
     onExcludeCurrentPeriodChange: (isExcluded: boolean) => void;
+    isTimeForAbsoluteRangeEnabled: boolean;
 
     availableGranularities: DateFilterGranularity[];
 
@@ -194,6 +195,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
             filterOptions,
             selectedFilterOption,
             onSelectedFilterOptionChange,
+            isTimeForAbsoluteRangeEnabled,
             isMobile,
             errors,
         } = this.props;
@@ -238,6 +240,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                             onSelectedFilterOptionChange={onSelectedFilterOptionChange}
                             selectedFilterOption={selectedFilterOption as IUiAbsoluteDateFilterForm}
                             isMobile={isMobile}
+                            isTimeEnabled={isTimeForAbsoluteRangeEnabled}
                         />
                     </DateFilterFormWrapper>
                 )}

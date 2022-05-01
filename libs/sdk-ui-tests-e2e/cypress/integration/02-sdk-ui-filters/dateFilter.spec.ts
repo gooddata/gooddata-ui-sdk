@@ -54,7 +54,7 @@ describe("DateFilter", () => {
             .openToRangePicker()
             .selectDateInNextMonth();
 
-        dateFilter.pressButton("apply").subtitleHasValue("03/15/2019 - 04/05/2019");
+        dateFilter.pressButton("apply").subtitleHasValue("03/15/2019 – 04/05/2019");
     });
 
     it("Select menu item can be switched with arrow keys and enter", () => {
@@ -112,5 +112,35 @@ describe("DateFilter", () => {
             .typeIntoFromInput("xxx")
             .focusToRangePicker()
             .rangePickerFromHasValue("next month");
+    });
+
+    it("Enabled time dimension and set interval within a specific day", () => {
+        const dateFilter = new DateFilter();
+        dateFilter.toggleTimeSwitcher();
+
+        const dateFilterAbsoluteForm = new DateFilterAbsoluteForm();
+
+        dateFilter.openAndSelectOption(".s-absolute-form");
+
+        dateFilterAbsoluteForm
+            .typeIntoFromRangePickerInput("03/15/2019")
+            .typeIntoToRangePickerInput("03/15/2019");
+
+        dateFilter.pressButton("apply").subtitleHasValue("03/15/2019, 00:00 – 23:59");
+    });
+
+    it("Enabled time dimension and set interval within few days", () => {
+        const dateFilter = new DateFilter();
+        dateFilter.toggleTimeSwitcher();
+
+        const dateFilterAbsoluteForm = new DateFilterAbsoluteForm();
+
+        dateFilter.openAndSelectOption(".s-absolute-form");
+
+        dateFilterAbsoluteForm
+            .typeIntoFromRangePickerInput("03/15/2019")
+            .typeIntoToRangePickerInput("04/15/2019");
+
+        dateFilter.pressButton("apply").subtitleHasValue("03/15/2019, 00:00 – 04/15/2019, 23:59");
     });
 });

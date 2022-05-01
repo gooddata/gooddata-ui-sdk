@@ -1,7 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import format from "date-fns/format";
 import capitalize from "lodash/capitalize";
-import isEqual from "lodash/isEqual";
 import { ILocale, getIntl } from "@gooddata/sdk-ui";
 import { granularityIntlCodes } from "../../constants/i18n";
 import { IMessageTranslator, IDateAndMessageTranslator } from "./Translators";
@@ -17,25 +16,39 @@ import {
     isRelativeDateFilterPreset,
 } from "@gooddata/sdk-model";
 import { IUiAbsoluteDateFilterForm, IUiRelativeDateFilterForm, DateFilterOption } from "../../interfaces";
-import { DEFAULT_DATE_FORMAT } from "../../constants/Platform";
+import { DEFAULT_DATE_FORMAT, TIME_FORMAT, TIME_FORMAT_WITH_SEPARATOR } from "../../constants/Platform";
+import moment from "moment";
 
-export const formatAbsoluteDate = (date: Date, dateFormat: string): string => format(date, dateFormat);
+export const getTimeRange = (dateFrom: Date, dateTo: Date): string => {
+    const fromTime = format(dateFrom, TIME_FORMAT);
+    const toTime = format(dateTo, TIME_FORMAT);
+
+    return fromTime === toTime ? fromTime : `${fromTime} \u2013 ${toTime}`;
+};
 
 export const formatAbsoluteDateRange = (
     from: Date | string,
     to: Date | string,
     dateFormat: string,
 ): string => {
+    const isTimeEnabled = dateFormat.includes(TIME_FORMAT);
+    const dateFormatWithoutTime = dateFormat.replace(TIME_FORMAT_WITH_SEPARATOR, "");
+
     const fromDate = convertPlatformDateStringToDate(from);
     const toDate = convertPlatformDateStringToDate(to);
-    const fromTitle = formatAbsoluteDate(fromDate, dateFormat);
-    const toTitle = formatAbsoluteDate(toDate, dateFormat);
 
-    if (isEqual(fromTitle, toTitle)) {
-        return fromTitle;
+    if (moment(fromDate).isSame(toDate, "day")) {
+        if (isTimeEnabled) {
+            return `${format(fromDate, dateFormatWithoutTime)}, ${getTimeRange(fromDate, toDate)}`;
+        } else {
+            return format(fromDate, dateFormatWithoutTime);
+        }
     }
 
-    return `${fromTitle} - ${toTitle}`;
+    const fromTitle = format(fromDate, dateFormat);
+    const toTitle = format(toDate, dateFormat);
+
+    return `${fromTitle} \u2013 ${toTitle}`;
 };
 
 const relativeDateRangeFormatters: Array<{

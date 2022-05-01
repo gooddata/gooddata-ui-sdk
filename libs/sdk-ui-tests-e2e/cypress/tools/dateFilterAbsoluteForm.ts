@@ -14,7 +14,7 @@ export class DateFilterAbsoluteForm {
     typeIntoFromRangePickerInput(value: string): this {
         this.getElement(".s-date-range-picker-from")
             .find(".s-date-range-picker-input-field")
-            .clear()
+            .clear({ force: true })
             .type(value);
         return this;
     }
@@ -22,18 +22,22 @@ export class DateFilterAbsoluteForm {
     typeIntoToRangePickerInput(value: string): this {
         this.getElement(".s-date-range-picker-to")
             .find(".s-date-range-picker-input-field")
-            .clear()
+            .clear({ force: true })
             .type(value);
         return this;
     }
 
     fromCalendarOpen(isOpen = true): this {
-        this.getCalendarElement(".s-date-range-calendar-from").should(isOpen ? "exist" : "not.exist");
+        this.getCalendarElement(".s-date-range-picker-from .s-date-range-calendar").should(
+            isOpen ? "exist" : "not.exist",
+        );
         return this;
     }
 
     toCalendarOpen(isOpen = true): this {
-        this.getCalendarElement(".s-date-range-calendar-to").should(isOpen ? "exist" : "not.exist");
+        this.getCalendarElement(".s-date-range-picker-to .s-date-range-calendar").should(
+            isOpen ? "exist" : "not.exist",
+        );
         return this;
     }
 
