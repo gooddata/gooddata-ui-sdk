@@ -11,6 +11,7 @@ import { Action } from '@reduxjs/toolkit';
 import { AnyAction } from '@reduxjs/toolkit';
 import { CaseReducer } from '@reduxjs/toolkit';
 import { CaseReducerActions } from '@reduxjs/toolkit';
+import { Component } from 'react';
 import { ComponentPropsWithRef } from 'react';
 import { ComponentType } from 'react';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-model';
@@ -129,6 +130,7 @@ import { PropsWithChildren } from 'react';
 import { default as React_2 } from 'react';
 import { ReactReduxContextValue } from 'react-redux';
 import { Reducer } from '@reduxjs/toolkit';
+import { RefAttributes } from 'react';
 import { SagaIterator } from 'redux-saga';
 import { ScreenSize } from '@gooddata/sdk-model';
 import { Selector } from '@reduxjs/toolkit';
@@ -4100,6 +4102,9 @@ export type RenderMode = "view" | "edit";
 export function renderModeAware<T extends ComponentType<any>>(components: {
     view: T;
 } & Partial<Record<RenderMode, T>>): ComponentType<ComponentPropsWithRef<T>>;
+
+// @internal (undocumented)
+export const RenderModeAwareTitle: ComponentType<PropsWithChildren<ITitleProps> | (ITitleProps & RefAttributes<Component<ITitleProps, any, any>>)>;
 
 // @alpha
 export function replaceInsightWidgetFilterSettings(ref: ObjRef, settings: Omit<FilterOpReplaceAll, "type">, correlationId?: string): ChangeInsightWidgetFilterSettings;
