@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 
-import { AxiosPromise } from "axios";
+import { AxiosPromise, AxiosRequestConfig } from "axios";
 import flatMap from "lodash/flatMap";
 import merge from "lodash/merge";
 import uniqBy from "lodash/uniqBy";
@@ -10,37 +10,18 @@ import {
     JsonApiUserOutList,
     JsonApiUserGroupOutList,
     JsonApiWorkspaceOutList,
+    EntitiesApiGetAllEntitiesWorkspacesRequest,
+    EntitiesApiGetAllEntitiesAttributesRequest,
+    EntitiesApiGetAllEntitiesFactsRequest,
+    EntitiesApiGetAllEntitiesMetricsRequest,
+    EntitiesApiGetAllEntitiesDashboardPluginsRequest,
+    EntitiesApiGetAllEntitiesVisualizationObjectsRequest,
+    EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest,
 } from "./generated/metadata-json-api";
 
 const DefaultPageSize = 250;
 const DefaultOptions = {
     headers: jsonApiHeaders,
-    query: {
-        size: DefaultPageSize,
-    },
-};
-
-function createOptionsForPage(
-    page: number,
-    options: OrganizationGetEntitiesOptions,
-): OrganizationGetEntitiesOptions {
-    return merge({}, DefaultOptions, options, { query: { page } });
-}
-
-/**
- * Common parameters for all API client getEntities* parameters.
- *
- * @internal
- */
-export type OrganizationGetEntitiesOptions = {
-    headers?: object;
-    query?: {
-        page?: number;
-        size?: number;
-        include?: any;
-        sort?: any;
-        tags?: any;
-    };
 };
 
 /**
@@ -54,14 +35,28 @@ export type OrganizationGetEntitiesResult =
     | JsonApiWorkspaceOutList;
 
 /**
+ * All possible params of API client getEntities* functions.
+ *
+ * @internal
+ */
+export type OrganizationGetEntitiesParams =
+    | EntitiesApiGetAllEntitiesAttributesRequest
+    | EntitiesApiGetAllEntitiesFactsRequest
+    | EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest
+    | EntitiesApiGetAllEntitiesDashboardPluginsRequest
+    | EntitiesApiGetAllEntitiesVisualizationObjectsRequest
+    | EntitiesApiGetAllEntitiesMetricsRequest
+    | EntitiesApiGetAllEntitiesWorkspacesRequest;
+
+/**
  * All API client getEntities* functions follow this signature.
  *
  * @internal
  */
-export type OrganizationGetEntitiesFn<T extends OrganizationGetEntitiesResult, P> = (
-    params: P,
-    options: OrganizationGetEntitiesOptions,
-) => AxiosPromise<T>;
+export type OrganizationGetEntitiesFn<
+    T extends OrganizationGetEntitiesResult,
+    P extends OrganizationGetEntitiesParams,
+> = (params: P, options: AxiosRequestConfig) => AxiosPromise<T>;
 
 /**
  * Tiger organization utility functions
@@ -84,21 +79,26 @@ export class OrganizationUtilities {
      * @param options - options accepted by the function
      * @internal
      */
-    public static getAllPagesOf = async <T extends OrganizationGetEntitiesResult, P>(
+    public static getAllPagesOf = async <
+        T extends OrganizationGetEntitiesResult,
+        P extends OrganizationGetEntitiesParams,
+    >(
         client: ITigerClient,
         entitiesGet: OrganizationGetEntitiesFn<T, P>,
         params: P,
-        options: OrganizationGetEntitiesOptions = {},
+        options: AxiosRequestConfig = {},
     ): Promise<T[]> => {
         const boundGet = entitiesGet.bind(client.entities);
         const results: T[] = [];
-        const pageSize = options.query?.size ?? DefaultPageSize;
+        const pageSize = params?.size ?? DefaultPageSize;
         let reachedEnd = false;
         let nextPage: number = 0;
 
         while (!reachedEnd) {
-            const optionsToUse = createOptionsForPage(nextPage, options);
-            const result = await boundGet(params, optionsToUse);
+            const result = await boundGet(
+                { ...params, page: nextPage, size: pageSize },
+                merge({}, DefaultOptions, options),
+            );
 
             results.push(result.data);
 
