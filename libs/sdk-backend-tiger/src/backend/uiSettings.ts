@@ -78,7 +78,7 @@ export const DefaultUiSettings: ISettings = {
 
     enableAxisLabelFormat: true,
 
-    enableChartsSorting: false,
+    enableChartsSorting: true,
     enableAxisNameViewByTwoAttributes: true,
     enableAxisNameConfiguration: true,
     enableDataSourceManagement: false,
