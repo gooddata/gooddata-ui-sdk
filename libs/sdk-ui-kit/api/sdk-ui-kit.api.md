@@ -248,7 +248,7 @@ export interface CheckboxProps {
 export const CodeArea: React_2.VFC<ICodeAreaProps>;
 
 // @internal (undocumented)
-export const CodeLanguageSelector: React_2.VFC<ICodeLanguageSelectorProps>;
+export const CodeLanguageSelect: React_2.VFC<ICodeLanguageSelectProps>;
 
 // @internal (undocumented)
 export type CodeLanguageType = "js" | "ts";
@@ -507,13 +507,13 @@ export function generateSupportUrl(projectId?: string, sessionId?: string, userE
 export function getDateTimeConfig(date: string, options?: IDateTimeConfigOptions): IInsightListItemDateConfig;
 
 // @internal (undocumented)
-export const getDefaultOptions: (codeType: InsightCodeType) => CodeOptionType;
+export const getDefaultEmbedCodeOptions: (codeType: InsightCodeType) => CodeOptionType;
 
 // @internal (undocumented)
 export const getGranteeItemTestId: (grantee: GranteeItem, prefix?: "option") => string;
 
 // @internal (undocumented)
-export const getHeightWithUnits: (codeOption: CodeOptionType) => string | number;
+export const getHeightWithUnitsForEmbedCode: (codeOption: CodeOptionType) => string | number;
 
 // @internal (undocumented)
 export type GetOptimalAlignment = {
@@ -865,7 +865,7 @@ export interface ICodeAreaProps {
 }
 
 // @internal (undocumented)
-export interface ICodeLanguageSelectorProps {
+export interface ICodeLanguageSelectProps {
     // (undocumented)
     onLanguageChanged: (language: CodeLanguageType) => void;
     // (undocumented)
@@ -981,7 +981,7 @@ export interface IConfirmDialogBaseProps extends IDialogBaseProps {
     // (undocumented)
     cancelButtonText?: string;
     // (undocumented)
-    footerRightRenderer?: () => JSX.Element;
+    footerLeftRenderer?: () => JSX.Element;
     // (undocumented)
     headerLeftButtonRenderer?: () => JSX.Element;
     // (undocumented)
@@ -1322,8 +1322,9 @@ export type IEmbedInsightDialogBaseProps = {
     codeLanguage: CodeLanguageType;
     code: string;
     propertiesLink?: string;
+    integrationDocLink?: string;
     onClose: () => void;
-    onCopyCode: () => void;
+    onCopyCode: (code: string) => void;
     onCodeLanguageChange: (codeLanguage: CodeLanguageType) => void;
     onCodeOptionChange: (codeOption: CodeOptionType) => void;
 };

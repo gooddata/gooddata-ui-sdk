@@ -5,7 +5,7 @@ import { CodeOptionType, DEFAULT_HEIGHT, InsightCodeType, UnitsType } from "./Em
 /**
  * @internal
  */
-export const getDefaultOptions = (codeType: InsightCodeType): CodeOptionType => {
+export const getDefaultEmbedCodeOptions = (codeType: InsightCodeType): CodeOptionType => {
     if (codeType === "definition") {
         return {
             type: "definition",
@@ -24,11 +24,13 @@ export const getDefaultOptions = (codeType: InsightCodeType): CodeOptionType => 
 /**
  * @internal
  */
-export const getHeightWithUnits = (codeOption: CodeOptionType): string | number => {
+export const getHeightWithUnitsForEmbedCode = (codeOption: CodeOptionType): string | number => {
     const unit = codeOption.unit ? codeOption.unit : "px";
 
-    const customHeightValue = codeOption.height ? codeOption.height : getDefaultHeightByUnit(unit);
-    const height = codeOption.customHeight ? customHeightValue : getDefaultHeightByUnit(unit);
+    const customHeightValue = codeOption.height
+        ? codeOption.height
+        : getDefaultHeightForEmbedCodeByUnit(unit);
+    const height = codeOption.customHeight ? customHeightValue : getDefaultHeightForEmbedCodeByUnit(unit);
 
     if (unit === "px") {
         return Number(height);
@@ -40,6 +42,6 @@ export const getHeightWithUnits = (codeOption: CodeOptionType): string | number 
 /**
  * @internal
  */
-export const getDefaultHeightByUnit = (unit: UnitsType): string => {
+export const getDefaultHeightForEmbedCodeByUnit = (unit: UnitsType): string => {
     return DEFAULT_HEIGHT[unit];
 };

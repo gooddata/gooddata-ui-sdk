@@ -4,28 +4,27 @@ import { FormattedMessage } from "react-intl";
 import { Message } from "../../../../Messages";
 
 export interface IPrepareEnvMessageProps {
-    isTiger: boolean;
+    integrationDocLink: string;
 }
 
-const bearLink = "https://sdk.gooddata.com/gooddata-ui/docs/platform_integration.html";
-const tigerLink = "https://sdk.gooddata.com/gooddata-ui/docs/cloudnative_integration.html";
-
 export const PrepareEnvMessage: React.VFC<IPrepareEnvMessageProps> = (props) => {
-    const { isTiger } = props;
+    const { integrationDocLink } = props;
 
-    const link = isTiger ? tigerLink : bearLink;
+    if (integrationDocLink) {
+        return (
+            <Message type="progress" className="embed-insight-dialog-prep-env-message">
+                <span>
+                    <FormattedMessage
+                        id="embedInsightDialog.prepareEnvironmentMessage"
+                        values={{ b: (chunks: string) => <strong>{chunks}</strong> }}
+                    />
+                </span>
+                <a href={integrationDocLink} target="_blank" rel="noreferrer">
+                    <FormattedMessage id="embedInsightDialog.prepareEnvironmentMessage.link" />
+                </a>
+            </Message>
+        );
+    }
 
-    return (
-        <Message type="progress" className="embed-insight-dialog-prep-env-message">
-            <span>
-                <FormattedMessage
-                    id="embedInsightDialog.prepareEnvironmentMessage"
-                    values={{ b: (chunks: string) => <strong>{chunks}</strong> }}
-                />
-            </span>
-            <a href={link} target="_blank" rel="noreferrer">
-                <FormattedMessage id="embedInsightDialog.prepareEnvironmentMessage.link" />
-            </a>
-        </Message>
-    );
+    return null;
 };

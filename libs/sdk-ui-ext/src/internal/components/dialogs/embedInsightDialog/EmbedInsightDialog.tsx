@@ -9,15 +9,15 @@ import {
     InsightCodeType,
     IOptionsByDefinition,
     Overlay,
-    getDefaultOptions,
-    getHeightWithUnits,
+    getDefaultEmbedCodeOptions,
+    getHeightWithUnitsForEmbedCode,
     IOptionsByReference,
 } from "@gooddata/sdk-ui-kit";
 import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { FullVisualizationCatalog } from "../../VisualizationCatalog";
 import { insightViewCodeGenerator } from "../../../utils/embeddingInsightViewCodeGenerator/insightViewCodeGenerator";
 
-const InsightViewPropertiesLink =
+const INSIGHT_VIEW_PROPERTIES_LINK =
     "https://sdk.gooddata.com/gooddata-ui/docs/visualization_component.html#properties";
 
 /**
@@ -28,6 +28,7 @@ export interface IEmbedInsightDialogProps {
     insight: IInsight;
     locale?: string;
     backend?: IAnalyticalBackend;
+    integrationDocLink?: string;
     settings?: IUserWorkspaceSettings;
     colorPalette?: IColorPalette;
 
@@ -39,12 +40,22 @@ export interface IEmbedInsightDialogProps {
  * @internal
  */
 export const EmbedInsightDialog: React.VFC<IEmbedInsightDialogProps> = (props) => {
-    const { locale, insight, backend, settings, colorPalette, codeType, onClose, onCopyCode } = props;
+    const {
+        locale,
+        insight,
+        backend,
+        settings,
+        colorPalette,
+        codeType,
+        integrationDocLink,
+        onClose,
+        onCopyCode,
+    } = props;
     const [codeLang, setCodeLang] = useState<CodeLanguageType>("ts");
-    const [codeOption, setCodeOption] = useState<CodeOptionType>(getDefaultOptions(codeType));
+    const [codeOption, setCodeOption] = useState<CodeOptionType>(getDefaultEmbedCodeOptions(codeType));
 
     useEffect(() => {
-        setCodeOption(getDefaultOptions(codeType));
+        setCodeOption(getDefaultEmbedCodeOptions(codeType));
     }, [codeType]);
 
     const onLanguageChange = useCallback((codeLanguage: CodeLanguageType) => {
@@ -76,6 +87,7 @@ export const EmbedInsightDialog: React.VFC<IEmbedInsightDialogProps> = (props) =
                     codeLanguage={codeLang}
                     codeOption={codeOption}
                     propertiesLink={documentationLink}
+                    integrationDocLink={integrationDocLink}
                     onClose={onClose}
                     onCopyCode={onCopyCode}
                     onCodeLanguageChange={onLanguageChange}
@@ -97,7 +109,7 @@ const getLinkToPropertiesDocumentation = (
         }
     }
 
-    return InsightViewPropertiesLink;
+    return INSIGHT_VIEW_PROPERTIES_LINK;
 };
 
 const generateCodeByReference = (
@@ -108,7 +120,7 @@ const generateCodeByReference = (
     colorPalette: IColorPalette,
     codeLang: CodeLanguageType,
 ) => {
-    const height = getHeightWithUnits(codeOption);
+    const height = getHeightWithUnitsForEmbedCode(codeOption);
     return insightViewCodeGenerator(insight, {
         context: {
             settings: settings,
@@ -129,7 +141,7 @@ const generateCodeByDefinition = (
     colorPalette: IColorPalette,
     codeLang: CodeLanguageType,
 ) => {
-    const height = getHeightWithUnits(codeOption);
+    const height = getHeightWithUnitsForEmbedCode(codeOption);
 
     const descriptor = FullVisualizationCatalog.forInsight(insight);
     return descriptor.getEmbeddingCode?.(insight, {

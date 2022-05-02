@@ -6,7 +6,7 @@ import { CodeLanguageType } from "../types";
 /**
  * @internal
  */
-export interface ICodeLanguageSelectorProps {
+export interface ICodeLanguageSelectProps {
     selectedLanguage: CodeLanguageType;
     onLanguageChanged: (language: CodeLanguageType) => void;
 }
@@ -14,7 +14,7 @@ export interface ICodeLanguageSelectorProps {
 /**
  * @internal
  */
-export const CodeLanguageSelector: React.VFC<ICodeLanguageSelectorProps> = (props) => {
+export const CodeLanguageSelect: React.VFC<ICodeLanguageSelectProps> = (props) => {
     const { selectedLanguage, onLanguageChanged } = props;
 
     const onCheck = useCallback(

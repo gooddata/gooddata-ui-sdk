@@ -98,6 +98,8 @@ export interface IEmbedInsightDialogProps {
     // (undocumented)
     insight: IInsight;
     // (undocumented)
+    integrationDocLink?: string;
+    // (undocumented)
     locale?: string;
     // (undocumented)
     onClose: () => void;

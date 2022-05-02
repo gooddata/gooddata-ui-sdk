@@ -4,7 +4,7 @@ import { storiesOf } from "../../../_infra/storyRepository";
 import { UiKit } from "../../../_infra/storyGroups";
 import { wrapWithTheme } from "../../themeWrapper";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
-import { CodeLanguageSelector, CodeLanguageType } from "@gooddata/sdk-ui-kit";
+import { CodeLanguageSelect, CodeLanguageType } from "@gooddata/sdk-ui-kit";
 
 /**
  * @internal
@@ -19,12 +19,12 @@ export const CodeLanguageSelectorExamples: React.VFC = () => {
     return (
         <InternalIntlWrapper>
             <div className="screenshot-target library-component">
-                <CodeLanguageSelector selectedLanguage={lang} onLanguageChanged={onLanguageChanged} />
+                <CodeLanguageSelect selectedLanguage={lang} onLanguageChanged={onLanguageChanged} />
             </div>
         </InternalIntlWrapper>
     );
 };
 
-storiesOf(`${UiKit}/EmbedInsightDialog/CodeLanguageSelector`)
+storiesOf(`${UiKit}/EmbedInsightDialog/CodeLanguageSelect`)
     .add("full-featured", () => <CodeLanguageSelectorExamples />, { screenshot: true })
     .add("themed", () => wrapWithTheme(<CodeLanguageSelectorExamples />), { screenshot: true });

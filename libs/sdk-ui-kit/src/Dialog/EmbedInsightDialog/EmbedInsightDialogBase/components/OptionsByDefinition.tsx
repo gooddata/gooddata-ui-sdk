@@ -27,7 +27,7 @@ export const OptionsByDefinition: React.VFC<IOptionsByDefinitionProps> = (props)
             </strong>
 
             <ToggleSwitch
-                id={"include-configuration"}
+                id="include-configuration"
                 label={intl.formatMessage({
                     id: "embedInsightDialog.code.options.include.config",
                 })}
@@ -42,7 +42,7 @@ export const OptionsByDefinition: React.VFC<IOptionsByDefinitionProps> = (props)
             />
 
             <ToggleSwitch
-                id={"custom-height"}
+                id="custom-height"
                 label={intl.formatMessage({
                     id: "embedInsightDialog.code.options.custom.height",
                 })}

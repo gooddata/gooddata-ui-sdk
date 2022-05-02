@@ -4,7 +4,7 @@ import { SingleSelectListItem } from "../../../../List";
 import { Dropdown, DropdownButton, DropdownList } from "../../../../Dropdown";
 import { NumericInput } from "./NumericInput";
 import { DEFAULT_UNIT, UNITS, UnitsType } from "../types";
-import { getDefaultHeightByUnit } from "../../utils";
+import { getDefaultHeightForEmbedCodeByUnit } from "../../utils";
 
 /**
  * @internal
@@ -32,15 +32,18 @@ export const HeightSetting: React.VFC<IHeightSettingProps> = (props) => {
 
     const onUnitChange = useCallback(
         (unit: UnitsType) => {
-            onValueChange(getDefaultHeightByUnit(unit), unit);
+            onValueChange(getDefaultHeightForEmbedCodeByUnit(unit), unit);
         },
         [onValueChange],
     );
 
     return (
         <div className="height-setting-component">
-            <NumericInput value={value ?? getDefaultHeightByUnit(unit)} onValueChanged={onChange} />
-            <UnitSelector selectedUnit={unit} onSelectUnit={onUnitChange} />
+            <NumericInput
+                value={value ?? getDefaultHeightForEmbedCodeByUnit(unit)}
+                onValueChanged={onChange}
+            />
+            <UnitSelect selectedUnit={unit} onSelectUnit={onUnitChange} />
         </div>
     );
 };
@@ -50,14 +53,15 @@ interface IDropdownItem {
     title: string;
 }
 
-interface UnitSelectorProps {
+interface UnitSelectProps {
     selectedUnit: UnitsType;
     onSelectUnit: (unit: UnitsType) => void;
 }
 
-const UnitSelector: React.VFC<UnitSelectorProps> = (props) => {
+const items: IDropdownItem[] = UNITS.map((u) => ({ id: u, title: u }));
+
+const UnitSelect: React.VFC<UnitSelectProps> = (props) => {
     const { selectedUnit, onSelectUnit } = props;
-    const items: IDropdownItem[] = UNITS.map((u) => ({ id: u, title: u }));
 
     return (
         <Dropdown

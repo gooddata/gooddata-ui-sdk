@@ -3,8 +3,6 @@
 import { IInsight, insightRef, insightTitle } from "@gooddata/sdk-model";
 import { IInsightViewProps } from "../../interfaces/InsightView";
 import { getReactEmbeddingCodeGenerator } from "../embeddingCodeGenerator";
-//import { getReactEmbeddingCodeGenerator } from "../../internal/utils/embeddingCodeGenerator";
-//import { IInsightViewProps } from "../types";
 import { insightViewAdditionalTransformations } from "./insightViewCodeGenUtils";
 
 /**

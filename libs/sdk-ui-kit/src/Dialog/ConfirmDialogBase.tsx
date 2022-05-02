@@ -66,7 +66,6 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
                     {!!warning && <div className="gd-dialog-warning">{warning}</div>}
 
                     <div className="gd-dialog-content">{children}</div>
-
                     <div className="gd-dialog-footer-wrapper">
                         <div className="gd-dialog-footer-left-content">{footerLeftRenderer?.()}</div>
                         <div className="gd-dialog-footer">

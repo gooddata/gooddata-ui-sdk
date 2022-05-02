@@ -6,7 +6,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { CodeArea } from "./components/CodeArea";
 import { ConfirmDialogBase } from "../../ConfirmDialogBase";
 import { PrepareEnvMessage } from "./components/PrepareEnvMessage";
-import { CodeLanguageSelector } from "./components/CodeLanguageSelector";
+import { CodeLanguageSelect } from "./components/CodeLanguageSelect";
 import { CodeLanguageType, CodeOptionType, InsightCodeType } from "./types";
 import { CodeOptions } from "./components/CodeOptions";
 import { CompleteListPropsMessage } from "./components/CompleteListPropsMessage";
@@ -19,8 +19,9 @@ export type IEmbedInsightDialogBaseProps = {
     codeLanguage: CodeLanguageType;
     code: string;
     propertiesLink?: string;
+    integrationDocLink?: string;
     onClose: () => void;
-    onCopyCode: () => void;
+    onCopyCode: (code: string) => void;
     onCodeLanguageChange: (codeLanguage: CodeLanguageType) => void;
     onCodeOptionChange: (codeOption: CodeOptionType) => void;
 };
@@ -34,6 +35,7 @@ export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (
         codeLanguage,
         codeOption,
         propertiesLink,
+        integrationDocLink,
         onClose,
         onCopyCode,
         onCodeLanguageChange,
@@ -44,8 +46,8 @@ export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (
 
     const onCopy = useCallback(() => {
         copy(code);
-        onCopyCode();
-    }, [onCopyCode]);
+        onCopyCode(code);
+    }, [code, onCopyCode]);
 
     return (
         <ConfirmDialogBase
@@ -57,7 +59,7 @@ export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (
             submitButtonText={intl.formatMessage({ id: "embedInsightDialog.actions.copyCode" })}
             headline={intl.formatMessage({ id: getDialogLabelId(codeOption.type) })}
             className={cx("embed-insight-dialog", "s-embed-insight-dialog")}
-            footerRightRenderer={
+            footerLeftRenderer={
                 propertiesLink
                     ? () => {
                           return <CompleteListPropsMessage documentationLink={propertiesLink} />;
@@ -69,10 +71,10 @@ export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (
                 <span className="embed-insight-dialog-message-changes">
                     <FormattedMessage id={getChangesLabelId(codeOption.type)} />
                 </span>
-                <PrepareEnvMessage isTiger={true} />
+                <PrepareEnvMessage integrationDocLink={integrationDocLink} />
                 <div className="embed-insight-dialog-code">
                     <div className="embed-insight-dialog-code-settings">
-                        <CodeLanguageSelector
+                        <CodeLanguageSelect
                             selectedLanguage={codeLanguage}
                             onLanguageChanged={onCodeLanguageChange}
                         />
@@ -87,16 +89,20 @@ export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (
     );
 };
 
+const dialogHeadlineLabels = {
+    definition: "embedInsightDialog.headLine.byDefinition",
+    reference: "embedInsightDialog.headLine.byReference",
+};
+
 const getDialogLabelId = (codeType: InsightCodeType): string => {
-    if (codeType === "definition") {
-        return "embedInsightDialog.headLine.byDefinition";
-    }
-    return "embedInsightDialog.headLine.byReference";
+    return dialogHeadlineLabels[codeType];
+};
+
+const dialogChangeMessageLabels = {
+    definition: "embedInsightDialog.changesMessage.byDefinition",
+    reference: "embedInsightDialog.changesMessage.byReference",
 };
 
 const getChangesLabelId = (codeType: InsightCodeType): string => {
-    if (codeType === "definition") {
-        return "embedInsightDialog.changesMessage.byDefinition";
-    }
-    return "embedInsightDialog.changesMessage.byReference";
+    return dialogChangeMessageLabels[codeType];
 };
