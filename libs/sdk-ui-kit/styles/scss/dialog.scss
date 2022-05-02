@@ -82,12 +82,8 @@
 
 .gd-dialog-footer-wrapper {
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
     align-items: baseline;
-
-    &.gd-dialog-footer-between {
-        justify-content: space-between;
-    }
 }
 
 .gd-dialog-header {
