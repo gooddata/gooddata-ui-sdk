@@ -5604,26 +5604,17 @@ export interface ObjectLinksContainer {
 }
 
 // @internal
-export type OrganizationGetEntitiesFn<T extends OrganizationGetEntitiesResult, P> = (params: P, options: OrganizationGetEntitiesOptions) => AxiosPromise<T>;
+export type OrganizationGetEntitiesFn<T extends OrganizationGetEntitiesResult, P extends OrganizationGetEntitiesParams> = (params: P, options: AxiosRequestConfig) => AxiosPromise<T>;
 
 // @internal
-export type OrganizationGetEntitiesOptions = {
-    headers?: object;
-    query?: {
-        page?: number;
-        size?: number;
-        include?: any;
-        sort?: any;
-        tags?: any;
-    };
-};
+export type OrganizationGetEntitiesParams = EntitiesApiGetAllEntitiesAttributesRequest | EntitiesApiGetAllEntitiesFactsRequest | EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest | EntitiesApiGetAllEntitiesDashboardPluginsRequest | EntitiesApiGetAllEntitiesVisualizationObjectsRequest | EntitiesApiGetAllEntitiesMetricsRequest | EntitiesApiGetAllEntitiesWorkspacesRequest;
 
 // @internal
 export type OrganizationGetEntitiesResult = JsonApiUserOutList | JsonApiUserGroupOutList | JsonApiWorkspaceOutList;
 
 // @internal
 export class OrganizationUtilities {
-    static getAllPagesOf: <T extends OrganizationGetEntitiesResult, P>(client: ITigerClient, entitiesGet: OrganizationGetEntitiesFn<T, P>, params: P, options?: OrganizationGetEntitiesOptions) => Promise<T[]>;
+    static getAllPagesOf: <T extends OrganizationGetEntitiesResult, P extends OrganizationGetEntitiesParams>(client: ITigerClient, entitiesGet: OrganizationGetEntitiesFn<T, P>, params: P, options?: AxiosRequestConfig) => Promise<T[]>;
     static mergeEntitiesResults<T extends OrganizationGetEntitiesResult>(pages: T[]): T;
 }
 

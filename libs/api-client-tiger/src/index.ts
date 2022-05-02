@@ -180,7 +180,7 @@ export {
     OrganizationUtilities,
     OrganizationGetEntitiesResult,
     OrganizationGetEntitiesFn,
-    OrganizationGetEntitiesOptions,
+    OrganizationGetEntitiesParams,
 } from "./organizationUtilities";
 
 const defaultTigerClient: ITigerClient = tigerClientFactory(defaultAxios);
