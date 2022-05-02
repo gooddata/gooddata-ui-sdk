@@ -31,6 +31,7 @@ export const EmbedInsightDialogBaseExamples: React.VFC = () => {
                     propertiesLink={
                         "https://sdk.gooddata.com/gooddata-ui/docs/area_chart_component.html#properties"
                     }
+                    integrationDocLink={"https://sdk.gooddata.com/gooddata-ui/docs/platform_integration.html"}
                     onClose={action("onClose")}
                     onCopyCode={action("onCopyCode")}
                     onCodeLanguageChange={action("onCodeLanguageChange")}

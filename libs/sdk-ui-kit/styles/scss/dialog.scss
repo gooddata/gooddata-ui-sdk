@@ -80,12 +80,6 @@
     display: flex;
 }
 
-.gd-dialog-footer-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-}
-
 .gd-dialog-header {
     @include text-overflow();
 
@@ -182,8 +176,15 @@
 }
 
 .gd-dialog-footer {
+    display: flex;
+    justify-content: space-between;
     margin-top: 20px;
     text-align: right;
+}
+
+.gd-dialog-footer-left-content {
+    display: flex;
+    justify-content: center;
 }
 
 .gd-dialog-spinner {
