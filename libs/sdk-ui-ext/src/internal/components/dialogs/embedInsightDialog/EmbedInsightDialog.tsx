@@ -12,6 +12,7 @@ import {
     getDefaultEmbedCodeOptions,
     getHeightWithUnitsForEmbedCode,
     IOptionsByReference,
+    IAlignPoint,
 } from "@gooddata/sdk-ui-kit";
 import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { FullVisualizationCatalog } from "../../VisualizationCatalog";
@@ -33,7 +34,7 @@ export interface IEmbedInsightDialogProps {
     colorPalette?: IColorPalette;
 
     onClose: () => void;
-    onCopyCode: () => void;
+    onCopyCode: (code: string) => void;
 }
 
 /**
@@ -156,18 +157,12 @@ const generateCodeByDefinition = (
     });
 };
 
+const BUBBLE_ALIGN_POINTS: IAlignPoint[] = [{ align: "bc tc" }];
+
 const ModalOverlay: React.FC = (props) => {
     const { children } = props;
     return (
-        <Overlay
-            alignPoints={[
-                {
-                    align: "cc cc",
-                },
-            ]}
-            isModal
-            positionType="fixed"
-        >
+        <Overlay alignPoints={BUBBLE_ALIGN_POINTS} isModal positionType="fixed">
             {children}
         </Overlay>
     );

@@ -23,7 +23,7 @@ export const HeightSetting: React.VFC<IHeightSettingProps> = (props) => {
 
     const onChange = useCallback(
         (val: string) => {
-            if (val != value) {
+            if (val !== value) {
                 onValueChange(val, unit);
             }
         },

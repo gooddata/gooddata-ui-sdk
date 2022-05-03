@@ -104,7 +104,7 @@ export interface IEmbedInsightDialogProps {
     // (undocumented)
     onClose: () => void;
     // (undocumented)
-    onCopyCode: () => void;
+    onCopyCode: (code: string) => void;
     // (undocumented)
     settings?: IUserWorkspaceSettings;
 }
@@ -203,9 +203,6 @@ export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition
 
 // @alpha (undocumented)
 export function isEmptyAfm(obj: unknown): obj is EmptyAfmSdkError;
-
-// @internal (undocumented)
-export function isGeneratingInsightCodeSupported(insight: IInsightDefinition): boolean;
 
 // @alpha
 export interface ISizeInfo {

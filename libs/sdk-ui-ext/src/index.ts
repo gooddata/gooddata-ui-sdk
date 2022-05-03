@@ -78,10 +78,3 @@ export function getInsightWithAppliedDrillDown(
 export function getInsightVisualizationMeta(insight: IInsightDefinition): IVisualizationMeta {
     return FullVisualizationCatalog.forInsight(insight).getMeta();
 }
-
-/**
- * @internal
- */
-export function isGeneratingInsightCodeSupported(insight: IInsightDefinition): boolean {
-    return !!FullVisualizationCatalog.forInsight(insight).getEmbeddingCode;
-}
