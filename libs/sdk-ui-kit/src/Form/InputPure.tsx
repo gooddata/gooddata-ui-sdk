@@ -6,7 +6,7 @@ import noop from "lodash/noop";
 
 import { ENUM_KEY_CODE } from "../typings/utilities";
 import { IDomNative, IDomNativeProps } from "../typings/domNative";
-import tryFocus from "./focus";
+import { runAutofocus } from "./focus";
 
 /**
  * @internal
@@ -33,15 +33,13 @@ export interface InputPureProps extends IDomNativeProps {
     label: string;
     labelPositionTop: boolean;
     value: string | number;
-    nativeLikeAutofocus?: boolean;
 }
 /**
  * @internal
  */
 export class InputPure extends React.PureComponent<InputPureProps> implements IDomNative {
     public inputNodeRef: HTMLInputElement;
-    private focusTimer: number = -1;
-    private focusInterval: number = -1;
+    private autofocusDispatcher: () => void = noop;
 
     static defaultProps = {
         autofocus: false,
@@ -68,20 +66,19 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
     };
 
     componentDidMount(): void {
-        const { autofocus, nativeLikeAutofocus } = this.props;
-
-        if (autofocus && !nativeLikeAutofocus) {
-            // https://github.com/facebook/react/issues/1791
-            this.focusTimer = window.setTimeout(() => this.inputNodeRef?.focus(), 100);
-        }
-        if (autofocus && nativeLikeAutofocus) {
-            this.focusInterval = tryFocus(() => this.inputNodeRef);
-        }
+        const { autofocus } = this.props;
+        this.autofocusDispatcher = runAutofocus(this.inputNodeRef, autofocus);
     }
 
     componentWillUnmount(): void {
-        window.clearTimeout(this.focusTimer);
-        window.clearInterval(this.focusInterval);
+        this.autofocusDispatcher();
+    }
+
+    componentDidUpdate(prevProps: Readonly<InputPureProps>) {
+        if (prevProps.autofocus !== this.props.autofocus) {
+            this.autofocusDispatcher();
+            this.autofocusDispatcher = runAutofocus(this.inputNodeRef, this.props.autofocus);
+        }
     }
 
     onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
