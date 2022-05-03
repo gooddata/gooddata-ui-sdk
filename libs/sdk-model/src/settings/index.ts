@@ -130,6 +130,11 @@ export interface ISettings {
     enableEmbedButtonInKD?: boolean;
 
     /**
+     * Indicates whether the Embed button/dialog is available in AD.
+     */
+    enableEmbedButtonInAD?: boolean;
+
+    /**
      * Indicates whether the approximate variant of count is available in AD.
      */
     enableApproxCount?: boolean;
