@@ -1,24 +1,24 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
-export default function tryFocus(handler: () => HTMLElement | null): number {
-    return createInterval(
-        () => isVisible(handler()),
-        () => handler().focus(),
-    );
+import invariant from "ts-invariant";
+
+type AutofocusData = {
+    frame: number;
+    start: number;
+    element: HTMLElement | null;
+};
+
+export function runAutofocus(element: HTMLElement | null, autofocus: boolean): () => void {
+    const data: AutofocusData = { frame: -1, element, start: new Date().getTime() };
+
+    if (autofocus) {
+        startAutofocus(data);
+    }
+
+    return () => cancelAutofocus(data);
 }
 
-function createInterval(check: () => boolean, done: () => void) {
-    const timer = window.setInterval(() => {
-        if (check()) {
-            done();
-            window.clearInterval(timer);
-        }
-    }, 25);
-
-    return timer;
-}
-
-function isVisible(element: HTMLElement | null): boolean {
+function isVisible(element: HTMLElement | null) {
     if (element) {
         const style = window.getComputedStyle(element);
         const notHidden = style.visibility !== "hidden";
@@ -26,6 +26,35 @@ function isVisible(element: HTMLElement | null): boolean {
         const hasSize = element.offsetHeight > 0;
 
         return notHidden && notNone && hasSize;
+    }
+    return false;
+}
+
+function startAutofocus(data: AutofocusData) {
+    if (reportWarning(data)) {
+        return;
+    }
+    cancelAutofocus(data);
+    data.frame = window.requestAnimationFrame(() => {
+        if (isVisible(data.element)) {
+            data.element.focus();
+        } else {
+            startAutofocus(data);
+        }
+    });
+}
+
+function cancelAutofocus(data: AutofocusData) {
+    window.cancelAnimationFrame(data.frame);
+}
+
+function reportWarning(data: AutofocusData) {
+    const current = new Date().getTime();
+    const long = current - data.start > 10000;
+
+    if (long) {
+        invariant.warn(`Can not autofocus provided dom element: `, data.element);
+        return true;
     }
     return false;
 }

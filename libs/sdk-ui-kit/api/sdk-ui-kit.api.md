@@ -2381,6 +2381,8 @@ export class InputPure extends React_2.PureComponent<InputPureProps> implements 
     // (undocumented)
     componentDidMount(): void;
     // (undocumented)
+    componentDidUpdate(prevProps: Readonly<InputPureProps>): void;
+    // (undocumented)
     componentWillUnmount(): void;
     // (undocumented)
     static defaultProps: {
@@ -2458,8 +2460,6 @@ export interface InputPureProps extends IDomNativeProps {
     labelPositionTop: boolean;
     // (undocumented)
     maxlength: number;
-    // (undocumented)
-    nativeLikeAutofocus?: boolean;
     // (undocumented)
     onBlur: (e: React_2.FocusEvent<HTMLInputElement>) => void;
     // (undocumented)
