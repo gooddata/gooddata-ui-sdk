@@ -1478,5 +1478,90 @@
         "value": "empty value",
         "comment": "",
         "limit": 0
+    },
+    "embedInsightDialog.actions.close": {
+        "value": "Close",
+        "comment": "",
+        "limit": 0
+    },
+    "embedInsightDialog.actions.copyCode": {
+        "value": "Copy code",
+        "comment": "",
+        "limit": 0
+    },
+    "embedInsightDialog.code.language.codeAs": {
+        "value": "Code as",
+        "comment": "",
+        "limit": 0
+    },
+    "embedInsightDialog.code.options": {
+        "value": "Other options",
+        "comment": "",
+        "limit": 0
+    },
+    "embedInsightDialog.code.options.include.config": {
+        "value": "Include configuration",
+        "comment": "",
+        "limit": 0
+    },
+    "embedInsightDialog.code.options.include.config.info": {
+        "value": "Include the insight configuration of colors, axes, legend, and canvas if available.",
+        "comment": "",
+        "limit": 0
+    },
+    "embedInsightDialog.code.options.custom.height": {
+        "value": "Custom height",
+        "comment": "",
+        "limit": 0
+    },
+    "embedInsightDialog.code.options.display.title": {
+        "value": "Display title",
+        "comment": "",
+        "limit": 0
+    },
+    "embedInsightDialog.headLine.byReference": {
+        "value": "Embed insight by reference",
+        "comment": "",
+        "limit": 0
+    },
+    "embedInsightDialog.headLine.byDefinition": {
+        "value": "Embed insight as a copy of its definition",
+        "comment": "",
+        "limit": 0
+    },
+    "embedInsightDialog.changesMessage.byReference": {
+        "value": "Future changes in this insight will be reflected in embedded version.",
+        "comment": "",
+        "limit": 0
+    },
+    "embedInsightDialog.changesMessage.byDefinition": {
+        "value": "No future changes in this insight will be reflected in embedded version.",
+        "comment": "",
+        "limit": 0
+    },
+    "embedInsightDialog.prepareEnvironmentMessage": {
+        "value": "<b>Note.</b> In order for this snippet to work, prepare your environment.",
+        "comment": "Do not translate html tags <b>, </b>",
+        "limit": 0
+    },
+    "embedInsightDialog.prepareEnvironmentMessage.link": {
+        "value": "Learn more",
+        "comment": "",
+        "limit": 0
+    },
+    "embed.dialog.numeric.input.validation": {
+        "value": "The value must be a number greater than 0",
+        "comment": "Validation of custom embedded dashboard height",
+        "limit": 0
+    },
+    "embed.dialog.numeric.input.warning": {
+        "value": "This input accepts only digits greater than 0",
+        "comment": "Validation of custom embedded dashboard height",
+        "limit": 0
+    },
+    "embedInsightDialog.complete.list.props.message": {
+        "value": "Complete list of embedding properties",
+        "comment": "",
+        "limit": 0
     }
 }

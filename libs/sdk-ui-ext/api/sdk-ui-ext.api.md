@@ -19,6 +19,7 @@ import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { ILoadingProps } from '@gooddata/sdk-ui';
 import { ILocale } from '@gooddata/sdk-ui';
+import { InsightCodeType } from '@gooddata/sdk-ui-kit';
 import { IPivotTableConfig } from '@gooddata/sdk-ui-pivot';
 import { ISettings } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
@@ -39,6 +40,9 @@ export function clearInsightViewCaches(): void;
 
 // @internal (undocumented)
 export const DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT_PX = 450;
+
+// @internal (undocumented)
+export const EmbedInsightDialog: React_2.VFC<IEmbedInsightDialogProps>;
 
 // @alpha (undocumented)
 export class EmptyAfmSdkError extends GoodDataSdkError {
@@ -81,6 +85,28 @@ export interface IDrillDownDefinition {
     target: ObjRef;
     // (undocumented)
     type: "drillDown";
+}
+
+// @internal (undocumented)
+export interface IEmbedInsightDialogProps {
+    // (undocumented)
+    backend?: IAnalyticalBackend;
+    // (undocumented)
+    codeType: InsightCodeType;
+    // (undocumented)
+    colorPalette?: IColorPalette;
+    // (undocumented)
+    insight: IInsight;
+    // (undocumented)
+    integrationDocLink?: string;
+    // (undocumented)
+    locale?: string;
+    // (undocumented)
+    onClose: () => void;
+    // (undocumented)
+    onCopyCode: (code: string) => void;
+    // (undocumented)
+    settings?: IUserWorkspaceSettings;
 }
 
 // @alpha

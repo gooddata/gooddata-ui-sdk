@@ -523,6 +523,10 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
+      "name": "copy-to-clipboard",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "core-js",
       "allowedCategories": [ "production" ]
     },

@@ -46,6 +46,8 @@ export {
     KPI_WIDGET_SIZE_INFO_DEFAULT,
     KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY,
     INSIGHT_WIDGET_SIZE_INFO_DEFAULT,
+    EmbedInsightDialog,
+    IEmbedInsightDialogProps,
 } from "./internal";
 
 // below functions are exported only for sdk-ui-dashboard use to avoid exporting the whole FullVisualizationCatalog

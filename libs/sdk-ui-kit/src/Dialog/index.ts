@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 export * from "./typings";
 export { ConfirmDialog } from "./ConfirmDialog";
 export { ConfirmDialogBase } from "./ConfirmDialogBase";
@@ -14,3 +14,5 @@ export {
 } from "./HubspotConversionTouchPointDialogBase";
 
 export * from "./ShareDialog";
+
+export * from "./EmbedInsightDialog";

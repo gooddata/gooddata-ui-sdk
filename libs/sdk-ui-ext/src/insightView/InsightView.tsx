@@ -23,7 +23,7 @@ import {
     useCancelablePromise,
     convertError,
 } from "@gooddata/sdk-ui";
-import { IInsightViewProps } from "./types";
+
 import InsightTitle from "./InsightTitle";
 import { InsightRenderer } from "./InsightRenderer";
 import { InsightError } from "./InsightError";
@@ -32,6 +32,7 @@ import {
     insightDataLoaderFactory,
     userWorkspaceSettingsDataLoaderFactory,
 } from "../dataLoaders";
+import { IInsightViewProps } from "../internal";
 
 interface IInsightViewCoreState {
     isVisualizationLoading: boolean;

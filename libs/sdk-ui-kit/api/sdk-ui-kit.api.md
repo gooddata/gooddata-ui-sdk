@@ -244,6 +244,21 @@ export interface CheckboxProps {
     value: boolean;
 }
 
+// @internal (undocumented)
+export const CodeArea: React_2.VFC<ICodeAreaProps>;
+
+// @internal (undocumented)
+export const CodeLanguageSelect: React_2.VFC<ICodeLanguageSelectProps>;
+
+// @internal (undocumented)
+export type CodeLanguageType = "js" | "ts";
+
+// @internal (undocumented)
+export const CodeOptions: React_2.VFC<ICodeOptionsProps>;
+
+// @internal (undocumented)
+export type CodeOptionType = IOptionsByDefinition | IOptionsByReference;
+
 // @internal
 export type Color = string;
 
@@ -401,6 +416,9 @@ export class EditableLabelInner extends Component<IEditableLabelInnerProps, IEdi
 }
 
 // @internal (undocumented)
+export const EmbedInsightDialogBase: React_2.VFC<IEmbedInsightDialogBaseProps>;
+
+// @internal (undocumented)
 export enum ENUM_KEY_CODE {
     // (undocumented)
     KEY_CODE_ENTER = 13,
@@ -489,7 +507,13 @@ export function generateSupportUrl(projectId?: string, sessionId?: string, userE
 export function getDateTimeConfig(date: string, options?: IDateTimeConfigOptions): IInsightListItemDateConfig;
 
 // @internal (undocumented)
+export const getDefaultEmbedCodeOptions: (codeType: InsightCodeType) => CodeOptionType;
+
+// @internal (undocumented)
 export const getGranteeItemTestId: (grantee: GranteeItem, prefix?: "option") => string;
+
+// @internal (undocumented)
+export const getHeightWithUnitsForEmbedCode: (codeOption: CodeOptionType) => string | number;
 
 // @internal (undocumented)
 export type GetOptimalAlignment = {
@@ -835,6 +859,28 @@ export interface IButtonProps {
 }
 
 // @internal (undocumented)
+export interface ICodeAreaProps {
+    // (undocumented)
+    code: string;
+}
+
+// @internal (undocumented)
+export interface ICodeLanguageSelectProps {
+    // (undocumented)
+    onLanguageChanged: (language: CodeLanguageType) => void;
+    // (undocumented)
+    selectedLanguage: CodeLanguageType;
+}
+
+// @internal (undocumented)
+export interface ICodeOptionsProps {
+    // (undocumented)
+    onChange: (opt: CodeOptionType) => void;
+    // (undocumented)
+    option: CodeOptionType;
+}
+
+// @internal (undocumented)
 export interface IColorPickerProps {
     // (undocumented)
     initialRgbColor: ColorFormats.RGB;
@@ -934,6 +980,8 @@ export const Icon: {
 export interface IConfirmDialogBaseProps extends IDialogBaseProps {
     // (undocumented)
     cancelButtonText?: string;
+    // (undocumented)
+    footerLeftRenderer?: () => JSX.Element;
     // (undocumented)
     headerLeftButtonRenderer?: () => JSX.Element;
     // (undocumented)
@@ -1267,6 +1315,19 @@ export interface IEditableLabelState {
     // (undocumented)
     value: string;
 }
+
+// @internal (undocumented)
+export type IEmbedInsightDialogBaseProps = {
+    codeOption: CodeOptionType;
+    codeLanguage: CodeLanguageType;
+    code: string;
+    propertiesLink?: string;
+    integrationDocLink?: string;
+    onClose: () => void;
+    onCopyCode: (code: string) => void;
+    onCodeLanguageChange: (codeLanguage: CodeLanguageType) => void;
+    onCodeOptionChange: (codeOption: CodeOptionType) => void;
+};
 
 // @internal (undocumented)
 export interface IExportDialogBaseProps extends IDialogBaseProps {
@@ -2490,6 +2551,9 @@ export interface InputWithNumberFormatState {
 }
 
 // @internal (undocumented)
+export type InsightCodeType = "definition" | "reference";
+
+// @internal (undocumented)
 export const InsightIcon: React_2.FC<IInsightIconProps>;
 
 // @internal (undocumented)
@@ -2499,6 +2563,14 @@ export const InsightListItem: React_2.FC<WithIntlProps<IInsightListItemProps & W
 
 // @internal (undocumented)
 export const InsightListItemDate: React_2.FC<IInsightListItemDateProps>;
+
+// @internal (undocumented)
+export interface INumericInputProps {
+    // (undocumented)
+    onValueChanged: (height: string) => void;
+    // (undocumented)
+    value: string;
+}
 
 // @internal (undocumented)
 export const InvertableList: React_2.FC<WithIntlProps<IInvertableListProps<unknown>>> & {
@@ -2527,6 +2599,34 @@ export interface IOptimalAlignment {
     alignment: Alignment;
     // (undocumented)
     visiblePart?: number;
+}
+
+// @internal (undocumented)
+export interface IOptionsByDefinition {
+    // (undocumented)
+    customHeight: boolean;
+    // (undocumented)
+    height?: string;
+    // (undocumented)
+    includeConfiguration: boolean;
+    // (undocumented)
+    type: "definition";
+    // (undocumented)
+    unit?: UnitsType;
+}
+
+// @internal (undocumented)
+export interface IOptionsByReference {
+    // (undocumented)
+    customHeight: boolean;
+    // (undocumented)
+    displayTitle: boolean;
+    // (undocumented)
+    height?: string;
+    // (undocumented)
+    type: "reference";
+    // (undocumented)
+    unit?: UnitsType;
 }
 
 // @internal
@@ -3164,6 +3264,9 @@ export const NoData: React_2.FC<INoDataProps>;
 export function normalizeTime(time: Date): Date;
 
 // @internal (undocumented)
+export const NumericInput: React_2.FC<INumericInputProps>;
+
+// @internal (undocumented)
 export type OnOpenedChange = (params: IOnOpenedChangeParams) => void;
 
 // @internal (undocumented)
@@ -3437,6 +3540,9 @@ export function transform2Dropdown<T extends IDateDataset>(dateDatasets: T[]): A
 
 // @internal (undocumented)
 export const Typography: React_2.FC<ITypographyProps>;
+
+// @internal (undocumented)
+export type UnitsType = "px" | "%" | "rem" | "em";
 
 // @internal (undocumented)
 export const unrelatedHeader: IDateDatasetHeader;
