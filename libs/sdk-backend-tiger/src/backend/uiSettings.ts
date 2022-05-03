@@ -35,6 +35,7 @@ export const DefaultUiSettings: ISettings = {
     enableSectionHeaders: true,
     enableKPIDashboardSaveAsNew: true,
     enableEmbedButtonInKD: true,
+    enableEmbedButtonInAD: false,
     enableHidingOfWidgetTitle: true,
 
     // pivot table specific

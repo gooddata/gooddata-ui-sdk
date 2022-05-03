@@ -2029,6 +2029,7 @@ export interface ISettings {
     enableDataSampling?: boolean;
     enableDataSourceManagement?: boolean;
     enableDrilledInsightExport?: boolean;
+    enableEmbedButtonInAD?: boolean;
     enableEmbedButtonInKD?: boolean;
     enableHidingOfDataPoints?: boolean;
     enableHidingOfWidgetTitle?: boolean;
