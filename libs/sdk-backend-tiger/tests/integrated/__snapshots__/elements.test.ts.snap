@@ -8,12 +8,16 @@ ServerPaging {
   "goTo": [Function],
   "items": Array [
     Object {
-      "title": "224",
-      "uri": "224",
-    },
-    Object {
       "title": "38",
       "uri": "38",
+    },
+    Object {
+      "title": "78",
+      "uri": "78",
+    },
+    Object {
+      "title": "224",
+      "uri": "224",
     },
     Object {
       "title": "545",
@@ -22,10 +26,6 @@ ServerPaging {
     Object {
       "title": "552",
       "uri": "552",
-    },
-    Object {
-      "title": "78",
-      "uri": "78",
     },
     Object {
       "title": "955129",
@@ -173,12 +173,12 @@ ServerPaging {
   "goTo": [Function],
   "items": Array [
     Object {
-      "title": "1-800 We Answer",
-      "uri": "1-800 We Answer",
-    },
-    Object {
       "title": "1-888-OhioComp",
       "uri": "1-888-OhioComp",
+    },
+    Object {
+      "title": "1 Source Consulting",
+      "uri": "1 Source Consulting",
     },
   ],
   "limit": 2,
