@@ -157,7 +157,7 @@ const generateCodeByDefinition = (
     });
 };
 
-const BUBBLE_ALIGN_POINTS: IAlignPoint[] = [{ align: "bc tc" }];
+const BUBBLE_ALIGN_POINTS: IAlignPoint[] = [{ align: "cc cc" }];
 
 const ModalOverlay: React.FC = (props) => {
     const { children } = props;
