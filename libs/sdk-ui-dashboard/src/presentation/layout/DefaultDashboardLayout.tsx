@@ -38,6 +38,7 @@ import {
     IDashboardLayoutWidgetRenderer,
     validateDashboardLayoutWidgetSize,
 } from "./DefaultDashboardLayoutRenderer";
+import { RenderModeAwareDashboardLayoutSectionHeaderRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionHeaderRenderer";
 
 /**
  * Get dashboard layout for exports.
@@ -150,6 +151,7 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
             itemKeyGetter={itemKeyGetter}
             widgetRenderer={widgetRenderer}
             enableCustomHeight={settings.enableKDWidgetCustomHeight}
+            sectionHeaderRenderer={RenderModeAwareDashboardLayoutSectionHeaderRenderer}
         />
     );
 };

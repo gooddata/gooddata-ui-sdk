@@ -4933,10 +4933,16 @@ setRenderMode: CaseReducer<UiState, {
 payload: RenderMode;
 type: string;
 }>;
+setActiveHeaderIndex: CaseReducer<UiState, {
+payload: number | null;
+type: string;
+}>;
 }>;
 
 // @alpha (undocumented)
 export interface UiState {
+    // (undocumented)
+    activeHeaderIndex: number | null;
     // (undocumented)
     deleteDialog: {
         open: boolean;

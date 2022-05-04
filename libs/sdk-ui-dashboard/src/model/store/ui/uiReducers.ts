@@ -85,6 +85,10 @@ const setRenderMode: UiReducer<PayloadAction<RenderMode>> = (state, action) => {
     state.renderMode = action.payload;
 };
 
+const setActiveHeaderIndex: UiReducer<PayloadAction<number | null>> = (state, action) => {
+    state.activeHeaderIndex = action.payload;
+};
+
 export const uiReducers = {
     openScheduleEmailDialog,
     closeScheduleEmailDialog,
@@ -105,4 +109,5 @@ export const uiReducers = {
     closeDeleteDialog,
     setMenuButtonItemsVisibility,
     setRenderMode,
+    setActiveHeaderIndex,
 };

@@ -79,6 +79,7 @@ options = {
             "src/presentation/localization",
             "src/presentation/presentationComponents",
             "src/presentation/widget",
+            "src/presentation/componentDefinition",
             "src/types.ts",
         ]),
         depCruiser.moduleWithDependencies("logUserInteraction", "src/logUserInteraction", ["src/model"]),

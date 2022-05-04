@@ -110,7 +110,7 @@ export interface IDashboardLayoutSectionHeaderRenderProps<TWidget = IDashboardWi
 }
 
 /**
- * Dashboard layout section heder renderer.
+ * Dashboard layout section header renderer.
  * Represents a component for rendering the section header.
  *
  * @alpha
