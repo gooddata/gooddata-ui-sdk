@@ -12,6 +12,7 @@ class DialogExamples extends PureComponent {
     state = {
         dialogOpen: false,
         confirmDialogOpen: false,
+        confirmDialogWithNoSubmitButtonOpen: false,
         confirmDialogWithWarningOpen: false,
         confirmDialogWithProgress: false,
         exportDialogOpen: false,
@@ -63,6 +64,21 @@ class DialogExamples extends PureComponent {
                 submitButtonText="Discard changes"
             >
                 <p>All your unsaved changes will be lost. Is this OK?</p>
+            </ConfirmDialog>
+        );
+    }
+
+    public renderConfirmDialogWithNoSubmitButtonContent(): JSX.Element {
+        return (
+            <ConfirmDialog
+                onCancel={() => {
+                    this.setState({ confirmDialogWithNoSubmitButtonOpen: false });
+                }}
+                isPositive={false}
+                headline="Click cancel button please"
+                cancelButtonText="Cancel"
+            >
+                <p>This dialog does nothing</p>
             </ConfirmDialog>
         );
     }
@@ -183,6 +199,25 @@ class DialogExamples extends PureComponent {
         );
     }
 
+    public renderConfirmDialogWithNoSubmitButtonExample(): JSX.Element {
+        return (
+            <div id="confirm-dialog-with-no-submit-button-example">
+                <Button
+                    value="Open confirm dialog with no submit button"
+                    className="gd-button-positive s-confirm-dialog-with-no-submit-button"
+                    onClick={() => {
+                        this.setState({
+                            confirmDialogWithNoSubmitButtonOpen:
+                                !this.state.confirmDialogWithNoSubmitButtonOpen,
+                        });
+                    }}
+                />
+                {this.state.confirmDialogWithNoSubmitButtonOpen &&
+                    this.renderConfirmDialogWithNoSubmitButtonContent()}
+            </div>
+        );
+    }
+
     public renderConfirmDialogWithWithProgressExample(): JSX.Element {
         return (
             <div id="confirm-dialog-with-progress-example">
@@ -256,6 +291,9 @@ class DialogExamples extends PureComponent {
                 <h4>Confirm dialog</h4>
                 {this.renderConfirmDialogExample()}
 
+                <h4>Confirm dialog with no submit button</h4>
+                {this.renderConfirmDialogWithNoSubmitButtonExample()}
+
                 <h4>Confirm dialog with warning</h4>
                 {this.renderConfirmDialogWithWarningExample()}
 
@@ -299,6 +337,10 @@ const screenshotProps = {
     },
     "confirm-dialog": {
         clickSelector: "#confirm-dialog-example button",
+        postInteractionWait: 200,
+    },
+    "confirm-dialog-with-no-submit-button": {
+        clickSelector: "#confirm-dialog-with-no-submit-button-example button",
         postInteractionWait: 200,
     },
     "confirm-dialog-with-warning": confirmDialogWithWarningProps,

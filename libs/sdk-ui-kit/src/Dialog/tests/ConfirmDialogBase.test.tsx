@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { shallow } from "enzyme";
 import { ConfirmDialogBase } from "../ConfirmDialogBase";
@@ -35,7 +35,9 @@ describe("ConfirmDialogBase", () => {
     it("should call submit handler", () => {
         const submitSpy = jest.fn();
         const wrapper = shallow(
-            <ConfirmDialogBase onSubmit={submitSpy}>ConfirmDialogBase content</ConfirmDialogBase>,
+            <ConfirmDialogBase onSubmit={submitSpy} submitButtonText="Submit">
+                ConfirmDialogBase content
+            </ConfirmDialogBase>,
         );
 
         wrapper.find(".s-dialog-submit-button").first().simulate("click");
