@@ -78,23 +78,29 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
                                 value={cancelButtonText}
                             />
 
-                            <BubbleHoverTrigger className="gd-button" showDelay={0} hideDelay={0}>
-                                <Button
-                                    onClick={onSubmit}
-                                    className={submitButtonClasses}
-                                    value={submitButtonText}
-                                    disabled={isSubmitDisabled}
-                                />
-                                {submitButtonTooltipText && (
-                                    <Bubble
-                                        className="bubble-primary"
-                                        alignPoints={submitButtonTooltipAlignPoints || [{ align: "bc tc" }]}
-                                        arrowOffsets={submitButtonTooltipArrowOffsets || { "bc tc": [0, 15] }}
-                                    >
-                                        {submitButtonTooltipText}
-                                    </Bubble>
-                                )}
-                            </BubbleHoverTrigger>
+                            {submitButtonText && (
+                                <BubbleHoverTrigger className="gd-button" showDelay={0} hideDelay={0}>
+                                    <Button
+                                        onClick={onSubmit}
+                                        className={submitButtonClasses}
+                                        value={submitButtonText}
+                                        disabled={isSubmitDisabled}
+                                    />
+                                    {submitButtonTooltipText && (
+                                        <Bubble
+                                            className="bubble-primary"
+                                            alignPoints={
+                                                submitButtonTooltipAlignPoints || [{ align: "bc tc" }]
+                                            }
+                                            arrowOffsets={
+                                                submitButtonTooltipArrowOffsets || { "bc tc": [0, 15] }
+                                            }
+                                        >
+                                            {submitButtonTooltipText}
+                                        </Bubble>
+                                    )}
+                                </BubbleHoverTrigger>
+                            )}
                         </div>
                     </div>
                 </div>
