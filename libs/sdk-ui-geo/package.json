@@ -60,7 +60,7 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run stylelint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/numberjs": "^4.0.1",
+        "@gooddata/numberjs": "^4.0.2",
         "@gooddata/sdk-backend-spi": "^8.10.0-alpha.83",
         "@gooddata/sdk-model": "^8.10.0-alpha.83",
         "@gooddata/sdk-ui": "^8.10.0-alpha.83",
