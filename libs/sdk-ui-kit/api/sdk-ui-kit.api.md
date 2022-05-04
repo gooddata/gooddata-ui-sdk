@@ -974,6 +974,7 @@ export const Icon: {
     HeatMap: FC<IIconProps>;
     Bullet: FC<IIconProps>;
     Geo: FC<IIconProps>;
+    EmbedCodeIcon: FC<IIconProps>;
 };
 
 // @internal (undocumented)

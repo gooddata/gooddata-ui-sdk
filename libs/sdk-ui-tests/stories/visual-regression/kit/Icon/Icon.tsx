@@ -182,6 +182,9 @@ const IconTest: React.FC = () => {
             <IconWrapper name="SettingsGear">
                 <Icon.SettingsGear color="#f00" />
             </IconWrapper>
+            <IconWrapper name="EmbedCodeIcon">
+                <Icon.EmbedCodeIcon color="#f00" />
+            </IconWrapper>
         </div>
     );
 };

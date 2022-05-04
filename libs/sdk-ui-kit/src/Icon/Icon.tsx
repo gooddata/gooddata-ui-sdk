@@ -52,6 +52,7 @@ import { TreeMap } from "./icons/InsightIcons/TreeMap";
 import { HeatMap } from "./icons/InsightIcons/HeatMap";
 import { Bullet } from "./icons/InsightIcons/Bullet";
 import { Geo } from "./icons/InsightIcons/Geo";
+import { EmbedCodeIcon } from "./icons/EmbedCodeIcon";
 
 /**
  * @internal
@@ -109,6 +110,7 @@ export const Icon = {
     HeatMap,
     Bullet,
     Geo,
+    EmbedCodeIcon,
 };
 
 export { IRowsIconProps };
