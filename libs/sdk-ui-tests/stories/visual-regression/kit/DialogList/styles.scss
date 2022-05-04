@@ -1,0 +1,36 @@
+$dialog-max-height: 600px;
+$dialog-width: 460px;
+$dialog-header-height: 43px;
+$dialog-footer-height: 52px;
+$dialog-vertical-padding: 40px;
+
+.gd-management-dialog {
+    box-sizing: border-box;
+    width: $dialog-width;
+    max-height: $dialog-max-height;
+
+    .gd-dialog-header {
+        h3 {
+            font-weight: bold;
+        }
+    }
+
+    .gd-dialog-content {
+        max-height: calc(
+            #{$dialog-max-height} - #{$dialog-header-height} - #{$dialog-footer-height} - #{$dialog-vertical-padding}
+        );
+        display: flex;
+        flex-direction: column;
+    }
+
+    // @media #{$small-only}
+    @media only screen and (max-width: 640px) {
+        width: calc(100vw - 20px);
+
+        .gd-dialog-content {
+            height: calc(
+                100vh - #{$dialog-header-height} - #{$dialog-footer-height} - #{$dialog-vertical-padding}
+            );
+        }
+    }
+}
