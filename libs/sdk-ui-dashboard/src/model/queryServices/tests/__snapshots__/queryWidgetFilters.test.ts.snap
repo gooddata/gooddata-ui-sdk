@@ -229,6 +229,7 @@ Object {
         "canCalculateSubTotals": true,
         "canCalculateTotals": true,
         "supportsCsvUploader": true,
+        "supportsHierarchicalWorkspaces": false,
         "supportsKpiWidget": true,
         "supportsOwners": true,
         "supportsWidgetEntity": true,

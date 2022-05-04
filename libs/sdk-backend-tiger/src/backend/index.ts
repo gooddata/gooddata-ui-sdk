@@ -70,6 +70,7 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsOwners: false,
     allowsInconsistentRelations: true,
     supportsTimeGranularities: true,
+    supportsHierarchicalWorkspaces: true,
 };
 
 /**

@@ -178,6 +178,7 @@ Object {
     "selectedOption": "THIS_MONTH",
   },
   "disableDefaultDrills": false,
+  "disableSaveAsNewButton": false,
   "enableFilterValuesResolutionInDrillEvents": false,
   "initialRenderMode": "view",
   "isEmbedded": false,

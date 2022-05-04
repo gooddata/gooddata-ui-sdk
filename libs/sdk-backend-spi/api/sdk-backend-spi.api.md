@@ -358,6 +358,7 @@ export interface IBackendCapabilities {
     supportsElementUris?: boolean;
     supportsExplain?: boolean;
     supportsGenericDateAttributeElements?: boolean;
+    supportsHierarchicalWorkspaces?: boolean;
     supportsHyperlinkAttributeLabels?: boolean;
     supportsKpiWidget?: boolean;
     supportsObjectUris?: boolean;
