@@ -146,6 +146,9 @@ const IconTest: React.FC = () => {
             <IconWrapper name="Dashboard">
                 <Icon.Dashboard color="#f00" width={16} height={16} />
             </IconWrapper>
+            <IconWrapper name="Dataset">
+                <Icon.Dataset color="#f00" />
+            </IconWrapper>
             <IconWrapper name="Expand">
                 <Icon.Expand color="#f00" />
             </IconWrapper>
