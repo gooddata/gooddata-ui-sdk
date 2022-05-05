@@ -66,8 +66,13 @@
     display: flex;
     align-items: center;
 
-    a {
+    a,
+    a:hover {
         text-decoration: underline;
+    }
+
+    .question-mark-icon::before {
+        vertical-align: middle;
     }
 }
 
@@ -118,4 +123,13 @@
     // override input focus
     // stylelint-disable-next-line declaration-no-important
     border-color: $gd-color-negative !important;
+}
+
+.embed-insight-dialog-left-footer-renderer {
+    position: absolute;
+    left: 0;
+    display: inline-block;
+    margin-left: 20px;
+    margin-top: 5px;
+    vertical-align: middle;
 }

@@ -37,6 +37,7 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
             onSubmit,
             onCancel,
             headerLeftButtonRenderer,
+            footerLeftRenderer,
         } = this.props;
         const dialogClasses = cx(
             {
@@ -67,6 +68,7 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
                     <div className="gd-dialog-content">{children}</div>
 
                     <div className="gd-dialog-footer">
+                        {footerLeftRenderer?.()}
                         {showProgressIndicator && <LoadingSpinner className="gd-dialog-spinner small" />}
 
                         <Button
