@@ -45,6 +45,44 @@ storiesOf(`${FilterStories}/AttributeFilterButton`)
         },
     )
     .add(
+        "not fit into content",
+        () => {
+            return (
+                <div style={wrapperStyle} className="screenshot-target">
+                    <div
+                        style={{
+                            display: "grid",
+                            gridTemplateColumns: "repeat(auto-fit, 60px)",
+                            height: 200,
+                            width: 120,
+                        }}
+                    >
+                        <AttributeFilterButton
+                            backend={backend}
+                            workspace={ReferenceWorkspaceId}
+                            filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
+                            onApply={action("on-apply")}
+                        />
+                        <div style={{ padding: 4 }}>Second</div>
+                    </div>
+                </div>
+            );
+        },
+        {
+            screenshots: {
+                closed: {},
+                opened: {
+                    clickSelector: ".s-attribute-filter",
+                    postInteractionWait: LongPostInteractionTimeout,
+                },
+                "select-all": {
+                    clickSelectors: [".s-attribute-filter", ".s-select_all"],
+                    postInteractionWait: LongPostInteractionTimeout,
+                },
+            },
+        },
+    )
+    .add(
         "themed",
         () => {
             return wrapWithTheme(

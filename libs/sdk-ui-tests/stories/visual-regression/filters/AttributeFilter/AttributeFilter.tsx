@@ -49,6 +49,41 @@ storiesOf(`${FilterStories}/AttributeFilter`)
         },
     )
     .add(
+        "not fit into content",
+        () => {
+            return (
+                <div style={wrapperStyle} className="screenshot-target">
+                    <div
+                        style={{
+                            display: "grid",
+                            gridTemplateColumns: "repeat(auto-fit, 80px)",
+                            height: 200,
+                            width: 160,
+                        }}
+                    >
+                        <AttributeFilter
+                            backend={backend}
+                            workspace={ReferenceWorkspaceId}
+                            filter={newPositiveAttributeFilter(ReferenceMd.Product.Name, [])}
+                            onApply={action("on-apply")}
+                        />
+                        <div style={{ padding: 4 }}>Second</div>
+                    </div>
+                </div>
+            );
+        },
+        {
+            screenshots: {
+                closed: {},
+                opened: { clickSelector: ".s-product", postInteractionWait: LongPostInteractionTimeout },
+                "select-all": {
+                    clickSelectors: [".s-product", ".s-select_all"],
+                    postInteractionWait: LongPostInteractionTimeout,
+                },
+            },
+        },
+    )
+    .add(
         "empty default selection - localized",
         () => {
             return (
