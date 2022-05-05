@@ -46,6 +46,10 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
         text-align: right;
         margin-top: 8px;
     }
+
+    .button-dropdown {
+        max-width: 100%;
+    }
 }
 
 .attribute-filter-button {
