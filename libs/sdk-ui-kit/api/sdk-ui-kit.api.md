@@ -946,6 +946,7 @@ export const Icon: {
     ArrowUp: FC<IIconProps>;
     Attribute: FC<IIconProps>;
     Close: FC<IIconProps>;
+    Dataset: FC<IIconProps>;
     Expand: FC<IIconProps>;
     Fact: FC<IIconProps>;
     Function: FC<IIconProps>;
