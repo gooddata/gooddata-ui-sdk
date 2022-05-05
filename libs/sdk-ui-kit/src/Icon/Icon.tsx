@@ -23,6 +23,7 @@ import { ArrowDown } from "./icons/ArrowDown";
 import { ArrowUp } from "./icons/ArrowUp";
 import { Attribute } from "./icons/Attribute";
 import { Close } from "./icons/Close";
+import { Dataset } from "./icons/Dataset";
 import { Expand } from "./icons/Expand";
 import { Fact } from "./icons/Fact";
 import { Function } from "./icons/Function";
@@ -82,6 +83,7 @@ export const Icon = {
     ArrowUp,
     Attribute,
     Close,
+    Dataset,
     Expand,
     Fact,
     Function,
