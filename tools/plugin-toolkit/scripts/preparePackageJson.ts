@@ -51,7 +51,6 @@ function removeGdStuff(packageJson: Record<string, any>) {
     packageJson.description = "";
 
     delete packageJson.repository;
-    delete packageJson.config;
 
     const { scripts, devDependencies } = packageJson;
 
