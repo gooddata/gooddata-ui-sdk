@@ -37,6 +37,10 @@ import { Dashboard } from "./icons/Dashboard";
 import { Many } from "./icons/Many";
 import { SettingsGear } from "./icons/SettingsGear";
 import { AttachmentClip } from "./icons/AttachmentClip";
+import { Error } from "./icons/Error";
+import { Aborted } from "./icons/Aborted";
+import { Progress } from "./icons/Progress";
+import { Success } from "./icons/Success";
 
 import { Table } from "./icons/InsightIcons/Table";
 import { Column } from "./icons/InsightIcons/Column";
@@ -113,6 +117,10 @@ export const Icon = {
     Bullet,
     Geo,
     EmbedCodeIcon,
+    Error,
+    Aborted,
+    Progress,
+    Success,
 };
 
 export { IRowsIconProps };

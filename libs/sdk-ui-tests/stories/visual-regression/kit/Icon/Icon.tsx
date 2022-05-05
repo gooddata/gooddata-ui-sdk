@@ -185,6 +185,18 @@ const IconTest: React.FC = () => {
             <IconWrapper name="EmbedCodeIcon">
                 <Icon.EmbedCodeIcon color="#f00" />
             </IconWrapper>
+            <IconWrapper name="Error">
+                <Icon.Error color="#f00" />
+            </IconWrapper>
+            <IconWrapper name="Aborted">
+                <Icon.Aborted />
+            </IconWrapper>
+            <IconWrapper name="Progress">
+                <Icon.Progress />
+            </IconWrapper>
+            <IconWrapper name="Success">
+                <Icon.Success />
+            </IconWrapper>
         </div>
     );
 };

@@ -976,6 +976,10 @@ export const Icon: {
     Bullet: FC<IIconProps>;
     Geo: FC<IIconProps>;
     EmbedCodeIcon: FC<IIconProps>;
+    Error: FC<IIconProps>;
+    Aborted: FC<IIconProps>;
+    Progress: FC<IIconProps>;
+    Success: FC<IIconProps>;
 };
 
 // @internal (undocumented)
