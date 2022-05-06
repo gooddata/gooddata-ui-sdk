@@ -8,7 +8,6 @@ import {
     JsonApiDatasetOutWithLinks,
     JsonApiFactOutWithLinks,
     JsonApiLabelLinkage,
-    JsonApiLabelOutDocument,
     JsonApiLabelOutWithLinks,
     JsonApiLabelOutWithLinksTypeEnum,
     JsonApiMetricOutWithLinks,
@@ -28,7 +27,6 @@ import {
     IDataSetMetadataObject,
     IDashboardMetadataObject,
 } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
 import { convertLabelType } from "./LabelTypeConverter";
 
 export type MetadataObjectFromApi =
@@ -70,6 +68,7 @@ function convertAttributeLabels(
     labelsMap: Record<string, JsonApiLabelOutWithLinks>,
 ): IAttributeDisplayFormMetadataObject[] {
     const labelsRefs = attribute.relationships?.labels?.data as JsonApiLabelLinkage[];
+    const defaultView = attribute.relationships?.defaultView?.data;
 
     return labelsRefs
         .map((ref) => {
@@ -79,7 +78,9 @@ function convertAttributeLabels(
                 return undefined;
             }
 
-            return convertLabelWithLinks(label, attribute.id);
+            const isDefault = defaultView ? defaultView.id === label.id : !!label.attributes?.primary;
+
+            return convertLabelWithLinks(label, attribute.id, isDefault);
         })
         .filter((df): df is IAttributeDisplayFormMetadataObject => df !== undefined);
 }
@@ -118,12 +119,13 @@ function convertAttributeDocument(
 }
 
 /**
- * Converts label when its side-loaded. attributeId must be passed by context because sideloaded label does not
- * contain relationships
+ * Converts label when its side-loaded. attributeId and isDefault must be passed by context because sideloaded
+ * label does not contain relationships
  */
 function convertLabelWithLinks(
     label: JsonApiLabelOutWithLinks,
     attributeId: string,
+    isDefault: boolean,
 ): IAttributeDisplayFormMetadataObject {
     return newAttributeDisplayFormMetadataObject(idRef(label.id, "displayForm"), (m) =>
         m
@@ -132,49 +134,14 @@ function convertLabelWithLinks(
             .description(label.attributes?.description || "")
             .uri(label.links!.self)
             .attribute(idRef(attributeId, "attribute"))
-            .isDefault(label.attributes!.primary)
+            .isDefault(isDefault)
             .displayFormType(convertLabelType(label.attributes?.valueType)),
     );
 }
 
-/**
- * Converts label when its top-level
- */
-function convertLabelDocument(labelDoc: JsonApiLabelOutDocument): IAttributeDisplayFormMetadataObject {
-    const label = labelDoc.data;
-    const attributes = label.attributes;
-
-    invariant(attributes);
-
-    return newAttributeDisplayFormMetadataObject(idRef(label.id, "displayForm"), (m) =>
-        m
-            .id(label.id)
-            .title(attributes.title || "")
-            .description(attributes.description || "")
-            .uri(labelDoc.links!.self)
-            .isDefault(attributes.primary)
-            .attribute(idRef(label.relationships!.attribute!.data!.id, "attribute"))
-            .displayFormType(convertLabelType(attributes.valueType)),
-    );
-}
-
 //
 //
 //
-
-/**
- * Converts result of a single label query with included attribute into a {@link IAttributeDisplayFormMetadataObject};
- *
- * Note: the attribute must be sideloaded otherwise the label won't contain attribute relationship and it would not be possible
- * to set attribute ref on the display form.
- *
- * @param labelDoc - response from backend
- */
-export function convertLabelWithSideloadedAttribute(
-    labelDoc: JsonApiLabelOutDocument,
-): IAttributeDisplayFormMetadataObject {
-    return convertLabelDocument(labelDoc);
-}
 
 /**
  * Converts result of a single attribute query with included labels into a {@link IAttributeMetadataObject}.

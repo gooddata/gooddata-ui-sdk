@@ -4,6 +4,7 @@ import {
     IMetadataObject,
     IWorkspaceAttributesService,
     NotSupported,
+    UnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
 import {
     IAttributeDisplayFormMetadataObject,
@@ -26,7 +27,6 @@ import { invariant } from "ts-invariant";
 import {
     convertAttributesWithSideloadedLabels,
     convertAttributeWithSideloadedLabels,
-    convertLabelWithSideloadedAttribute,
     convertDatasetWithLinks,
 } from "../../../convertors/fromBackend/MetadataConverter";
 
@@ -78,25 +78,42 @@ export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
     }
 }
 
-function loadAttributeDisplayForm(
+async function loadAttributeDisplayForm(
     client: ITigerClient,
     workspaceId: string,
     ref: ObjRef,
 ): Promise<IAttributeDisplayFormMetadataObject> {
     invariant(isIdentifierRef(ref), "tiger backend only supports referencing by identifier");
 
-    return client.entities
-        .getEntityLabels(
-            {
-                workspaceId,
-                objectId: ref.identifier,
-                include: ["attributes"],
-            },
-            {
-                headers: jsonApiHeaders,
-            },
-        )
-        .then((res) => convertLabelWithSideloadedAttribute(res.data));
+    // to be able to get the defaultView value, we need to load the attribute itself and then find the appropriate label inside of it
+    // otherwise, we would have to load the label first and then load its attribute to see the defaultView relation thus needing
+    // an extra network request
+    const attributeRes = await client.entities.getAllEntitiesAttributes(
+        {
+            workspaceId,
+            include: ["labels", "defaultView"],
+            filter: `labels.id==${ref.identifier}`, // use RSQL to load the appropriate attribute
+        },
+        {
+            headers: jsonApiHeaders,
+        },
+    );
+
+    if (!attributeRes.data.data.length) {
+        throw new UnexpectedResponseError(
+            `The displayForm with id ${ref.identifier} was not found`,
+            404,
+            attributeRes,
+        );
+    }
+
+    const [attribute] = convertAttributesWithSideloadedLabels(attributeRes.data);
+
+    const matchingLabel = attribute.displayForms.find((df) => areObjRefsEqual(df.ref, ref));
+
+    invariant(matchingLabel, "inconsistent server response, RSQL matched but ref matching did not");
+
+    return matchingLabel;
 }
 
 function loadAttribute(
@@ -111,7 +128,7 @@ function loadAttribute(
             {
                 workspaceId,
                 objectId: ref.identifier,
-                include: ["labels"],
+                include: ["labels", "defaultView"],
             },
             {
                 headers: jsonApiHeaders,
