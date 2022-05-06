@@ -1,7 +1,7 @@
 # Analytical Backend SPI - infrastructure and foundations
 
 This package contains foundational, reusable code useful for building new or decorating existing
-Analytical Backend implementations. This is lower-level, infrastructural code which may be useful
+[Analytical Backend](https://www.npmjs.com/package/@gooddata/sdk-backend-spi) implementations. This is lower-level, infrastructural code which may be useful
 when building larger, more complex applications.
 
 The notable contents of this package are documented below.
@@ -99,6 +99,6 @@ cache hits for applications that dynamically change view-only properties of LDM 
 
 ## License
 
-(C) 2017-2021 GoodData Corporation
+(C) 2017-2022 GoodData Corporation
 
 This project is under MIT License. See [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-backend-base/LICENSE).

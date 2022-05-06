@@ -62,12 +62,8 @@ The rules for recording entries are as follows:
 Once you create this, run `npm run refresh-md` script. This will invoke the mock handling tool to obtain the
 data from the live reference workspace.
 
-#### Valid elements
-
-TBD
-
 ## License
 
-(C) 2017-2021 GoodData Corporation
+(C) 2017-2022 GoodData Corporation
 
 This project is under MIT License. See [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/tools/reference-workspace/LICENSE).

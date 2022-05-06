@@ -1,6 +1,6 @@
 # GoodData.UI SDK - Charts
 
-This package provides a set of React-based chart visualizations that you can use to visualize your data.
+This package provides a set of React-based [chart visualizations](https://sdk.gooddata.com/gooddata-ui/docs/start_with_visual_components.html) that you can use to visualize your data.
 
 These include bar charts, pie charts, line charts, and more.
 
@@ -10,6 +10,6 @@ For map-based charts, see the [`@gooddata/sdk-ui-geo package`](https://www.npmjs
 
 ## License
 
-(C) 2017-2021 GoodData Corporation
+(C) 2017-2022 GoodData Corporation
 
 This project is under commercial license. See [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-charts/LICENSE).

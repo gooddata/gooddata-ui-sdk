@@ -1,38 +1,18 @@
 # GoodData Platform REST API request and response models
 
-This package contains TypeScript definitions for GoodData Platform REST API request and response types and functions
+This package contains TypeScript definitions for [GoodData Platform](https://sdk.gooddata.com/gooddata-ui/docs/platform_intro.html) (codename `bear`) REST API request and response types and functions
 which operate directly on top of the different request and response objects.
 
-This is a companion package of the [api-client-bear](../api-client-bear) which implements the actual client and uses
+This is a companion package of the [`@gooddata/api-client-bear`](https://www.npmjs.com/package/@gooddata/sdk-backend-bear) which implements the actual client and uses
 types and functions implemented herein.
 
 ## Migration guide
 
-This package was created from `@gooddata/typings`. See [migration guide](https://sdk.gooddata.com/gooddata-ui/docs/about_gooddataui.html)
+This package was created from `@gooddata/typings`. See [migration guide](https://sdk.gooddata.com/gooddata-ui/docs/migration_guide_8.html)
 for more information about the changes in the package.
-
-## Getting started
-
-### Usage
-
-With [npm](https://npmjs.com) installed, go to your project directory and run
-
-```
-$ npm install --save @gooddata/api-model-bear
-```
-
-If you prefer [yarn](https://yarnpkg.com) run
-
-```
-$ yarn add @gooddata/api-model-bear
-```
-
-## Documentation
-
-[Documentation](https://sdk.gooddata.com/gooddata-ui/)
 
 ## License
 
-(C) 2017-2021 GoodData Corporation
+(C) 2017-2022 GoodData Corporation
 
 This project is under MIT License. See [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/api-model-bear/LICENSE).

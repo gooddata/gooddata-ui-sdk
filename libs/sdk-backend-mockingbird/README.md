@@ -1,6 +1,6 @@
 # Static / Mock implementation of Analytical Backend SPI
 
-This package contains test support and mock implementations of various concepts in the sdk-backend-spi.
+This package contains test support and mock implementations of various concepts in the [Analytical Backend](https://www.npmjs.com/package/@gooddata/sdk-backend-spi).
 
 ## Dummy Backend
 
@@ -46,6 +46,6 @@ workspace into the respective component.
 
 ## License
 
-(C) 2017-2021 GoodData Corporation
+(C) 2017-2022 GoodData Corporation
 
 This project is under MIT License. See [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-backend-mockingbird/LICENSE).
