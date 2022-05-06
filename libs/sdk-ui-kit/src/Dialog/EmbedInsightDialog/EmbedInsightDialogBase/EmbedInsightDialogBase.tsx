@@ -7,7 +7,7 @@ import { CodeArea } from "./components/CodeArea";
 import { ConfirmDialogBase } from "../../ConfirmDialogBase";
 import { PrepareEnvMessage } from "./components/PrepareEnvMessage";
 import { CodeLanguageSelect } from "./components/CodeLanguageSelect";
-import { CodeLanguageType, CodeOptionType, InsightCodeType } from "./types";
+import { CodeLanguageType, CodeOptionType, CopyCodeOriginType, InsightCodeType } from "./types";
 import { CodeOptions } from "./components/CodeOptions";
 import { CompleteListPropsMessage } from "./components/CompleteListPropsMessage";
 
@@ -21,7 +21,7 @@ export type IEmbedInsightDialogBaseProps = {
     propertiesLink?: string;
     integrationDocLink?: string;
     onClose: () => void;
-    onCopyCode: (code: string) => void;
+    onCopyCode: (code: string, type: CopyCodeOriginType) => void;
     onCodeLanguageChange: (codeLanguage: CodeLanguageType) => void;
     onCodeOptionChange: (codeOption: CodeOptionType) => void;
 };
@@ -44,9 +44,14 @@ export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (
 
     const intl = useIntl();
 
-    const onCopy = useCallback(() => {
+    const onCopyButtonClick = useCallback(() => {
         copy(code);
-        onCopyCode(code);
+        onCopyCode(code, "button");
+    }, [code, onCopyCode]);
+
+    const onAreaCopy = useCallback(() => {
+        copy(code);
+        onCopyCode(code, "keyboard");
     }, [code, onCopyCode]);
 
     return (
@@ -54,7 +59,7 @@ export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (
             isPositive={true}
             onClose={onClose}
             onCancel={onClose}
-            onSubmit={onCopy}
+            onSubmit={onCopyButtonClick}
             cancelButtonText={intl.formatMessage({ id: "embedInsightDialog.actions.close" })}
             submitButtonText={intl.formatMessage({ id: "embedInsightDialog.actions.copyCode" })}
             headline={intl.formatMessage({ id: getDialogLabelId(codeOption.type) })}
@@ -85,7 +90,7 @@ export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (
                         <CodeOptions option={codeOption} onChange={onCodeOptionChange} />
                     </div>
                     <div className="embed-insight-dialog-code-wrapper">
-                        <CodeArea code={code} />
+                        <CodeArea code={code} onCopyCode={onAreaCopy} />
                     </div>
                 </div>
             </div>

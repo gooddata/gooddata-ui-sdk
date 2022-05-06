@@ -4,6 +4,7 @@
 
 ```ts
 
+import { CopyCodeOriginType } from '@gooddata/sdk-ui-kit';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
@@ -104,7 +105,7 @@ export interface IEmbedInsightDialogProps {
     // (undocumented)
     onClose: () => void;
     // (undocumented)
-    onCopyCode: (code: string) => void;
+    onCopyCode: (code: string, type: CopyCodeOriginType) => void;
     // (undocumented)
     settings?: IUserWorkspaceSettings;
 }

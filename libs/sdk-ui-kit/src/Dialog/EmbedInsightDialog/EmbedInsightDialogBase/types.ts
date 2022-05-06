@@ -68,3 +68,8 @@ export interface IOptionsByReference {
  * @internal
  */
 export type CodeOptionType = IOptionsByDefinition | IOptionsByReference;
+
+/**
+ * @internal
+ */
+export type CopyCodeOriginType = "keyboard" | "button";
