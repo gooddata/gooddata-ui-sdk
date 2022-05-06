@@ -291,6 +291,9 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
 }
 
 // @internal (undocumented)
+export const ContentDivider: React_2.VFC;
+
+// @internal (undocumented)
 export type CopyCodeOriginType = "keyboard" | "button";
 
 // @internal (undocumented)
@@ -330,6 +333,18 @@ export class DialogBase<P extends IDialogBaseProps> extends PureComponent<P> {
     // (undocumented)
     protected renderCloseButton(): JSX.Element;
 }
+
+// @internal (undocumented)
+export const DialogList: React_2.VFC<IDialogListProps>;
+
+// @internal (undocumented)
+export const DialogListHeader: React_2.VFC<IDialogListHeaderProps>;
+
+// @internal (undocumented)
+export const DialogListItemBasic: React_2.VFC<IDialogListItemComponentProps>;
+
+// @internal (undocumented)
+export type DialogListItemComponent<T extends IDialogListItem = IDialogListItem> = React.FunctionComponent<IDialogListItemComponentProps<T>>;
 
 // @internal (undocumented)
 export type DialogModeType = "ShareGrantee" | "AddGrantee";
@@ -1116,6 +1131,80 @@ export interface IDialogBaseProps {
     onSubmit?: (data?: any) => void;
     // (undocumented)
     submitOnEnterKey?: boolean;
+}
+
+// @internal (undocumented)
+export interface IDialogListHeaderProps {
+    // (undocumented)
+    buttonDisabled?: boolean;
+    // (undocumented)
+    buttonTitle?: string;
+    // (undocumented)
+    buttonTooltipText?: string;
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    gdIconName?: string;
+    // (undocumented)
+    onButtonClick?: () => void;
+    // (undocumented)
+    title?: string;
+}
+
+// @internal (undocumented)
+export interface IDialogListItem extends IDialogListItemBase {
+    // (undocumented)
+    deleteTooltipText?: string;
+    // (undocumented)
+    icon?: JSX.Element;
+    // (undocumented)
+    isClickable?: boolean;
+    // (undocumented)
+    isDeletable?: boolean;
+    // (undocumented)
+    isDisabled?: boolean;
+    // (undocumented)
+    subtitle?: string;
+}
+
+// @internal (undocumented)
+export interface IDialogListItemBase {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    title: string;
+}
+
+// @internal (undocumented)
+export interface IDialogListItemComponentProps<T extends IDialogListItem = IDialogListItem> {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    item: T;
+    // (undocumented)
+    onClick?: (item: T) => void;
+    // (undocumented)
+    onDelete?: (item: T) => void;
+}
+
+// @internal (undocumented)
+export interface IDialogListProps<T extends IDialogListItem = IDialogListItem> {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    emptyMessageElement?: JSX.Element;
+    // (undocumented)
+    isLoading?: boolean;
+    // (undocumented)
+    itemClassName?: string;
+    // (undocumented)
+    itemComponent?: DialogListItemComponent<T>;
+    // (undocumented)
+    items: Array<T>;
+    // (undocumented)
+    onItemClick?: (item: T) => void;
+    // (undocumented)
+    onItemDelete?: (item: T) => void;
 }
 
 // @internal (undocumented)
