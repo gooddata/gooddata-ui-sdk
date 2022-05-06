@@ -291,6 +291,9 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
 }
 
 // @internal (undocumented)
+export type CopyCodeOriginType = "keyboard" | "button";
+
+// @internal (undocumented)
 export const CustomizableCheckmark: React_2.FC<ICustomizableCheckmarkProps>;
 
 // @internal (undocumented)
@@ -862,6 +865,8 @@ export interface IButtonProps {
 export interface ICodeAreaProps {
     // (undocumented)
     code: string;
+    // (undocumented)
+    onCopyCode: (code: string) => void;
 }
 
 // @internal (undocumented)
@@ -1330,7 +1335,7 @@ export type IEmbedInsightDialogBaseProps = {
     propertiesLink?: string;
     integrationDocLink?: string;
     onClose: () => void;
-    onCopyCode: (code: string) => void;
+    onCopyCode: (code: string, type: CopyCodeOriginType) => void;
     onCodeLanguageChange: (codeLanguage: CodeLanguageType) => void;
     onCodeOptionChange: (codeOption: CodeOptionType) => void;
 };

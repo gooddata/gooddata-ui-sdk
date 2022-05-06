@@ -7,6 +7,7 @@ export type {
     CodeOptionType,
     IOptionsByReference,
     UnitsType,
+    CopyCodeOriginType,
 } from "./EmbedInsightDialogBase/types";
 
 export { getDefaultEmbedCodeOptions, getHeightWithUnitsForEmbedCode } from "./utils";

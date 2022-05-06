@@ -5,6 +5,7 @@ import { UiKit } from "../../../_infra/storyGroups";
 import { wrapWithTheme } from "../../themeWrapper";
 import { CodeArea } from "@gooddata/sdk-ui-kit";
 import { code } from "./CodeMock";
+import { action } from "@storybook/addon-actions";
 
 const AreaWrapper: React.FC = (props) => {
     const { children } = props;
@@ -22,7 +23,7 @@ export const CodeAreaExamples: React.VFC = () => {
                     <h4>Code area</h4>
                 </div>
                 <AreaWrapper>
-                    <CodeArea code={code} />
+                    <CodeArea code={code} onCopyCode={action("onCopyCode")} />
                 </AreaWrapper>
             </div>
             <div className="screenshot-target">
@@ -30,7 +31,7 @@ export const CodeAreaExamples: React.VFC = () => {
                     <h4>Scrollable code area</h4>
                 </div>
                 <AreaWrapper>
-                    <CodeArea code={code + code + code} />
+                    <CodeArea code={code + code + code} onCopyCode={action("onCopyCode")} />
                 </AreaWrapper>
             </div>
             <div className="screenshot-target">
@@ -38,7 +39,7 @@ export const CodeAreaExamples: React.VFC = () => {
                     <h4>Empty code area</h4>
                 </div>
                 <AreaWrapper>
-                    <CodeArea code={""} />
+                    <CodeArea code={""} onCopyCode={action("onCopyCode")} />
                 </AreaWrapper>
             </div>
         </>

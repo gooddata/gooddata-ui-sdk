@@ -13,6 +13,7 @@ import {
     getHeightWithUnitsForEmbedCode,
     IOptionsByReference,
     IAlignPoint,
+    CopyCodeOriginType,
 } from "@gooddata/sdk-ui-kit";
 import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { FullVisualizationCatalog } from "../../VisualizationCatalog";
@@ -34,7 +35,7 @@ export interface IEmbedInsightDialogProps {
     colorPalette?: IColorPalette;
 
     onClose: () => void;
-    onCopyCode: (code: string) => void;
+    onCopyCode: (code: string, type: CopyCodeOriginType) => void;
 }
 
 /**
