@@ -1052,5 +1052,50 @@
         "value": "Error",
         "comment": "",
         "limit": 0
+    },
+    "controlButtons.edit.value": {
+        "value": "Edit",
+        "comment": "",
+        "limit": 0
+    },
+    "controlButtons.saveAndPublish.value": {
+        "value": "Save & Publish",
+        "comment": "",
+        "limit": 0
+    },
+    "controlButtons.save.value": {
+        "value": "Save",
+        "comment": "",
+        "limit": 0
+    },
+    "controlButtons.saveAndPublish.title": {
+        "value": "All changes will be immediately visible to everyone who can access this dashboard.",
+        "comment": "",
+        "limit": 0
+    },
+    "controlButtons.saveAsPrivate.title": {
+        "value": "All changes will be saved.",
+        "comment": "",
+        "limit": 0
+    },
+    "controlButtons.saveAndPublish.disable.empty.title": {
+        "value": "Empty dashboard cannot be saved",
+        "comment": "",
+        "limit": 0
+    },
+    "controlButtons.saveAndPublish.disable.noChanges.title": {
+        "value": "There are no changes to save",
+        "comment": "",
+        "limit": 0
+    },
+    "controlButtons.saving.value": {
+        "value": "Saving…",
+        "comment": "Use '…' as one character, not 3 dots ('...').",
+        "limit": 0
+    },
+    "save.as.new": {
+        "value": "Save as new",
+        "comment": "",
+        "limit": 0
     }
 }

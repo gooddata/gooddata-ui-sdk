@@ -164,6 +164,12 @@ export interface DashboardConfig {
      * If you do not specify initialRenderMode, the dashboard component will be display in view mode.
      */
     initialRenderMode?: RenderMode;
+
+    /**
+     * @internal
+     * Hide "Save as new" button in ButtonBar and MenuButton
+     */
+    hideSaveAsNewButton?: boolean;
 }
 
 /**

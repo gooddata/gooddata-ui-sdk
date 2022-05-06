@@ -82,6 +82,7 @@ export const defaultRecordedBackendCapabilities: IBackendCapabilities = {
     supportsWidgetEntity: true,
     supportsOwners: true,
     allowsInconsistentRelations: false,
+    supportsHierarchicalWorkspaces: false,
 };
 
 /**

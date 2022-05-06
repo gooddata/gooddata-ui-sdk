@@ -147,6 +147,15 @@ export const selectEnableFilterValuesResolutionInDrillEvents = createSelector(se
     return state.enableFilterValuesResolutionInDrillEvents ?? false;
 });
 
+/**
+ * Returns whether the save as new button is hidden.
+ *
+ * @internal
+ */
+export const selectIsSaveAsNewButtonHidden = createSelector(selectConfig, (state) => {
+    return state.hideSaveAsNewButton ?? false;
+});
+
 //
 // FEATURE FLAGS
 //
@@ -278,10 +287,19 @@ export const selectEnableInsightExportScheduling = createSelector(selectConfig, 
 });
 
 /**
- * Returns whether insight export scheduling is enabled.
+ * Returns whether dashboard edit mode is enabled.
  *
  * @internal
  */
 export const selectDashboardEditModeDevRollout = createSelector(selectConfig, (state) => {
-    return state.settings?.dashboardEditModeDevRollout ?? false;
+    return !!state.settings?.dashboardEditModeDevRollout;
+});
+
+/**
+ * Returns whether analytical dashboard permissions are enabled
+ *
+ * @internal
+ */
+export const selectEnableAnalyticalDashboardPermissions = createSelector(selectConfig, (state) => {
+    return state.settings?.enableAnalyticalDashboardPermissions ?? false;
 });

@@ -1,10 +1,11 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { ComponentType } from "react";
 
 /**
  * @alpha
  */
 export interface IShareButtonProps {
+    isVisible: boolean;
     onShareButtonClick: () => void;
 }
 

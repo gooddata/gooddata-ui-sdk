@@ -152,6 +152,11 @@ export interface IBackendCapabilities {
     supportsTimeGranularities?: boolean;
 
     /**
+     * Indicates whether backend supports hierarchical workspaces
+     */
+    supportsHierarchicalWorkspaces?: boolean;
+
+    /**
      * Catchall for additional capabilities
      */
     [key: string]: undefined | boolean | number | string;

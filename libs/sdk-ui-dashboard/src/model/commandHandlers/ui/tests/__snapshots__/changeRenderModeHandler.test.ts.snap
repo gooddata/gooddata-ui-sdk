@@ -1,6 +1,34 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`changeRenderModeHandler without initial config should process cancel edit mode 1`] = `
+Array [
+  Object {
+    "commandType": "GDC.DASH/CMD.CHANGE_RENDER_MODE",
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  Object {
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.RENDER_MODE.CHANGED",
+  },
+]
+`;
+
 exports[`changeRenderModeHandler without initial config should process render mode change 1`] = `
+Array [
+  Object {
+    "commandType": "GDC.DASH/CMD.CHANGE_RENDER_MODE",
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  Object {
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.RENDER_MODE.CHANGED",
+  },
+]
+`;
+
+exports[`changeRenderModeHandler without initial config should process switch to edit mode 1`] = `
 Array [
   Object {
     "commandType": "GDC.DASH/CMD.CHANGE_RENDER_MODE",

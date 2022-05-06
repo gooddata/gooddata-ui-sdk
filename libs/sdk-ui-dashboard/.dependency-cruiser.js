@@ -26,6 +26,8 @@ options = {
             [
                 "src/_staging/*",
                 "src/model",
+                "src/model/store/([^/]+)/.+Selectors.ts",
+                "src/presentation/constants",
                 "src/presentation/dashboardContexts",
                 "src/presentation/dialogs",
                 "src/presentation/filterBar",
@@ -34,7 +36,6 @@ options = {
                 "src/presentation/scheduledEmail",
                 "src/presentation/shareDialog",
                 "src/presentation/saveAs",
-                "src/presentation/constants",
                 "src/presentation/topBar",
                 "src/presentation/widget",
                 "src/types.ts",
@@ -90,8 +91,9 @@ options = {
             "src/converters",
             "src/logUserInteraction",
             "src/model",
+            "src/model/commands/ui.ts",
             "src/model/events/widget.ts",
-            "src/model/store/ui/uiSelectors.ts",
+            "src/model/store/([^/]+)/.+Selectors.ts",
             "src/types.ts",
         ]),
         depCruiser.moduleWithDependencies("scheduledEmail", "src/presentation/scheduledEmail", [
@@ -113,6 +115,8 @@ options = {
             "src/presentation/constants/*",
             "src/presentation/componentDefinition",
             "src/model",
+            "src/model/store/([^/]+)/.+Selectors.ts",
+            "src/model/commands/ui.ts",
             "src/types.ts",
         ]),
         depCruiser.moduleWithDependencies("widget", "src/presentation/widget", [

@@ -276,7 +276,7 @@ export {
     resolveAsyncRender,
 } from "./render";
 
-export { changeRenderMode, ChangeRenderMode, ChangeRenderModePayload } from "./ui";
+export { changeRenderMode, ChangeRenderMode, ChangeRenderModePayload, RenderModeChangeOptions } from "./ui";
 
 export { AddDrillTargets, AddDrillTargetsPayload, addDrillTargets } from "./drillTargets";
 
