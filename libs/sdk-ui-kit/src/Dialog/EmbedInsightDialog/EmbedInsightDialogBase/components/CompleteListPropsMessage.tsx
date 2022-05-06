@@ -11,7 +11,7 @@ export const CompleteListPropsMessage: React.VFC<ICompleteListPropsMessageProps>
 
     return (
         <div className="embed-insight-dialog-list-props-message">
-            <span className="gd-icon-circle-question s-circle_question toggle-switch-icon" />
+            <span className="gd-icon-circle-question s-circle_question question-mark-icon" />
             <a href={documentationLink} className="gd-button-link-dimmed" target="_blank" rel="noreferrer">
                 <FormattedMessage id="embedInsightDialog.complete.list.props.message" />
             </a>

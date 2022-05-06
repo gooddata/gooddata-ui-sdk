@@ -62,7 +62,11 @@ export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (
             footerLeftRenderer={
                 propertiesLink
                     ? () => {
-                          return <CompleteListPropsMessage documentationLink={propertiesLink} />;
+                          return (
+                              <div className="embed-insight-dialog-left-footer-renderer">
+                                  <CompleteListPropsMessage documentationLink={propertiesLink} />
+                              </div>
+                          );
                       }
                     : undefined
             }
