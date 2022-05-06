@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { GdcExecuteAFM, GdcExport } from "@gooddata/api-model-bear";
 import compact from "lodash/compact";
 import isEmpty from "lodash/isEmpty";
@@ -87,10 +87,12 @@ export class ReportModule {
             error.response.status === 400 &&
             error.responseBody.indexOf(ERROR_RESTRICTED_CODE) !== -1
         ) {
-            return Promise.reject({
-                ...error,
-                message: ERROR_RESTRICTED_MESSAGE,
-            });
+            const updatedError = new ApiResponseError(
+                ERROR_RESTRICTED_MESSAGE,
+                error.response,
+                error.responseBody,
+            );
+            return Promise.reject(updatedError);
         }
         return Promise.reject(error);
     };
