@@ -1000,6 +1000,8 @@ export const Icon: {
     Aborted: FC<IIconProps>;
     Progress: FC<IIconProps>;
     Success: FC<IIconProps>;
+    Token: FC<IIconProps>;
+    Origin: FC<IIconProps>;
 };
 
 // @internal (undocumented)
