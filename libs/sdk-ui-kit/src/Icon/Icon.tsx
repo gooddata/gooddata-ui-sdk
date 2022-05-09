@@ -41,7 +41,6 @@ import { Error } from "./icons/Error";
 import { Aborted } from "./icons/Aborted";
 import { Progress } from "./icons/Progress";
 import { Success } from "./icons/Success";
-
 import { Table } from "./icons/InsightIcons/Table";
 import { Column } from "./icons/InsightIcons/Column";
 import { Bar } from "./icons/InsightIcons/Bar";
@@ -58,6 +57,8 @@ import { HeatMap } from "./icons/InsightIcons/HeatMap";
 import { Bullet } from "./icons/InsightIcons/Bullet";
 import { Geo } from "./icons/InsightIcons/Geo";
 import { EmbedCodeIcon } from "./icons/EmbedCodeIcon";
+import { Origin } from "./icons/Origin";
+import { Token } from "./icons/Token";
 
 /**
  * @internal
@@ -121,6 +122,8 @@ export const Icon = {
     Aborted,
     Progress,
     Success,
+    Token,
+    Origin,
 };
 
 export { IRowsIconProps };

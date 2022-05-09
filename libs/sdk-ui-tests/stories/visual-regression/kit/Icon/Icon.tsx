@@ -20,10 +20,17 @@ const IconWrapper: React.FC<IIconWrapperProps> = ({ name, children }) => {
     );
 };
 
-const IconTest: React.FC = () => {
+const RowWrapper: React.FC = ({ children }) => {
+    return <div style={{ display: "flex", flexDirection: "row" }}>{children}</div>;
+};
+
+const ColumnWrapper: React.FC = ({ children }) => {
+    return <div style={{ display: "flex", flexDirection: "column", paddingRight: "10px" }}>{children}</div>;
+};
+
+const InsightIconsTest: React.FC = () => {
     return (
         <div className="library-component screenshot-target">
-            <strong>Visualizations</strong>
             <IconWrapper name="ScatterPlot">
                 <Icon.ScatterPlot color="#000" width={15} height={15} />
             </IconWrapper>
@@ -69,139 +76,159 @@ const IconTest: React.FC = () => {
             <IconWrapper name="Pie">
                 <Icon.Pie color="#000" width={15} height={15} />
             </IconWrapper>
-            <br />
-            <strong>Other</strong>
-            <IconWrapper name="Refresh">
-                <Icon.Refresh color="#f00" />
-            </IconWrapper>
-            <IconWrapper name="DrillDown">
-                <Icon.DrillDown color="#0f0" />
-            </IconWrapper>
-            <IconWrapper name="DrillToDashboard">
-                <Icon.DrillToDashboard color="#00f" />
-            </IconWrapper>
-            <IconWrapper name="DrillToInsight">
-                <Icon.DrillToInsight color="#f00" />
-            </IconWrapper>
-            <IconWrapper name="Date">
-                <Icon.Date color="#0f0" />
-            </IconWrapper>
-            <IconWrapper name="Explore">
-                <Icon.Explore color="#00f" />
-            </IconWrapper>
-            <IconWrapper name="Logout">
-                <Icon.Logout color="#f00" />
-            </IconWrapper>
-            <IconWrapper name="Pdf">
-                <Icon.Pdf color="#0f0" />
-            </IconWrapper>
-            <IconWrapper name="ExternalLink">
-                <Icon.ExternalLink color="#00f" />
-            </IconWrapper>
-            <IconWrapper name="Hyperlink">
-                <Icon.Hyperlink color="#f00" />
-            </IconWrapper>
-            <IconWrapper name="Undo">
-                <Icon.Undo color="#0f0" />
-            </IconWrapper>
-            <IconWrapper name="Home">
-                <Icon.Home color="#00f" />
-            </IconWrapper>
-            <IconWrapper name="DragHandle">
-                <Icon.DragHandle color="#f00" />
-            </IconWrapper>
-            <IconWrapper name="AttributeFilter">
-                <Icon.AttributeFilter color="#0f0" />
-            </IconWrapper>
-            <IconWrapper name="Interaction">
-                <Icon.Interaction color="#00f" />
-            </IconWrapper>
-            <IconWrapper name="Book">
-                <Icon.Book color="#f00" />
-            </IconWrapper>
-            <IconWrapper name="Lock">
-                <Icon.Lock color="#0f0" />
-            </IconWrapper>
-            <IconWrapper name="Rows">
-                <Icon.Rows colorPalette={{ odd: "#f00", even: "#0f0" }} />
-            </IconWrapper>
-            <IconWrapper name="ArrowDown">
-                <Icon.ArrowDown color="#f00" />
-            </IconWrapper>
-            <IconWrapper name="ArrowUp">
-                <Icon.ArrowUp color="#f00" />
-            </IconWrapper>
-            <IconWrapper name="AttachmentClip">
-                <Icon.AttachmentClip color="#0f0" />
-            </IconWrapper>
-            <IconWrapper name="Attribute">
-                <Icon.Attribute color="#00f" />
-            </IconWrapper>
-            <IconWrapper name="BurgerMenu">
-                <Icon.BurgerMenu color="#0f0" />
-            </IconWrapper>
-            <IconWrapper name="Close">
-                <Icon.Close color="#00f" />
-            </IconWrapper>
-            <IconWrapper name="Dashboard">
-                <Icon.Dashboard color="#f00" width={16} height={16} />
-            </IconWrapper>
-            <IconWrapper name="Dataset">
-                <Icon.Dataset color="#f00" />
-            </IconWrapper>
-            <IconWrapper name="Expand">
-                <Icon.Expand color="#f00" />
-            </IconWrapper>
-            <IconWrapper name="Fact">
-                <Icon.Fact color="#00f" />
-            </IconWrapper>
-            <IconWrapper name="Function">
-                <Icon.Function color="#00f" />
-            </IconWrapper>
-            <IconWrapper name="Insight">
-                <Icon.Insight color="#0f0" />
-            </IconWrapper>
-            <IconWrapper name="Keyword">
-                <Icon.Keyword color="#f00" />
-            </IconWrapper>
-            <IconWrapper name="Label">
-                <Icon.Label color="#f00" />
-            </IconWrapper>
-            <IconWrapper name="LegendMenu">
-                <Icon.LegendMenu color="#00f" />
-            </IconWrapper>
-            <IconWrapper name="Many">
-                <Icon.Many color="#00f" width={16} height={16} />
-            </IconWrapper>
-            <IconWrapper name="Metric">
-                <Icon.Metric color="#f00" />
-            </IconWrapper>
-            <IconWrapper name="Minimize">
-                <Icon.Minimize color="#0f0" />
-            </IconWrapper>
-            <IconWrapper name="QuestionMark">
-                <Icon.QuestionMark color="#00f" />
-            </IconWrapper>
-            <IconWrapper name="SettingsGear">
-                <Icon.SettingsGear color="#f00" />
-            </IconWrapper>
-            <IconWrapper name="EmbedCodeIcon">
-                <Icon.EmbedCodeIcon color="#f00" />
-            </IconWrapper>
-            <IconWrapper name="Error">
-                <Icon.Error color="#f00" />
-            </IconWrapper>
-            <IconWrapper name="Aborted">
-                <Icon.Aborted />
-            </IconWrapper>
-            <IconWrapper name="Progress">
-                <Icon.Progress />
-            </IconWrapper>
-            <IconWrapper name="Success">
-                <Icon.Success />
-            </IconWrapper>
         </div>
     );
 };
 
-storiesOf(`${UiKit}/Icon`).add("icons-list", () => <IconTest />, { screenshot: true });
+const IconsTest: React.FC = () => {
+    return (
+        <div className="library-component screenshot-target">
+            <RowWrapper>
+                <ColumnWrapper>
+                    <IconWrapper name="Refresh">
+                        <Icon.Refresh color="#f00" />
+                    </IconWrapper>
+                    <IconWrapper name="DrillDown">
+                        <Icon.DrillDown color="#0f0" />
+                    </IconWrapper>
+                    <IconWrapper name="DrillToDashboard">
+                        <Icon.DrillToDashboard color="#00f" />
+                    </IconWrapper>
+                    <IconWrapper name="DrillToInsight">
+                        <Icon.DrillToInsight color="#f00" />
+                    </IconWrapper>
+                    <IconWrapper name="Date">
+                        <Icon.Date color="#0f0" />
+                    </IconWrapper>
+                    <IconWrapper name="Explore">
+                        <Icon.Explore color="#00f" />
+                    </IconWrapper>
+                    <IconWrapper name="Logout">
+                        <Icon.Logout color="#f00" />
+                    </IconWrapper>
+                    <IconWrapper name="Pdf">
+                        <Icon.Pdf color="#0f0" />
+                    </IconWrapper>
+                    <IconWrapper name="ExternalLink">
+                        <Icon.ExternalLink color="#00f" />
+                    </IconWrapper>
+                    <IconWrapper name="Hyperlink">
+                        <Icon.Hyperlink color="#f00" />
+                    </IconWrapper>
+                    <IconWrapper name="Undo">
+                        <Icon.Undo color="#0f0" />
+                    </IconWrapper>
+                    <IconWrapper name="Home">
+                        <Icon.Home color="#00f" />
+                    </IconWrapper>
+                    <IconWrapper name="DragHandle">
+                        <Icon.DragHandle color="#f00" />
+                    </IconWrapper>
+                    <IconWrapper name="AttributeFilter">
+                        <Icon.AttributeFilter color="#0f0" />
+                    </IconWrapper>
+                    <IconWrapper name="Interaction">
+                        <Icon.Interaction color="#00f" />
+                    </IconWrapper>
+                    <IconWrapper name="Book">
+                        <Icon.Book color="#f00" />
+                    </IconWrapper>
+                    <IconWrapper name="Lock">
+                        <Icon.Lock color="#0f0" />
+                    </IconWrapper>
+                    <IconWrapper name="Rows">
+                        <Icon.Rows colorPalette={{ odd: "#f00", even: "#0f0" }} />
+                    </IconWrapper>
+                    <IconWrapper name="ArrowDown">
+                        <Icon.ArrowDown color="#f00" />
+                    </IconWrapper>
+                    <IconWrapper name="ArrowUp">
+                        <Icon.ArrowUp color="#f00" />
+                    </IconWrapper>
+                </ColumnWrapper>
+                <ColumnWrapper>
+                    <IconWrapper name="AttachmentClip">
+                        <Icon.AttachmentClip color="#0f0" />
+                    </IconWrapper>
+                    <IconWrapper name="Attribute">
+                        <Icon.Attribute color="#00f" />
+                    </IconWrapper>
+                    <IconWrapper name="BurgerMenu">
+                        <Icon.BurgerMenu color="#0f0" />
+                    </IconWrapper>
+                    <IconWrapper name="Close">
+                        <Icon.Close color="#00f" />
+                    </IconWrapper>
+                    <IconWrapper name="Dashboard">
+                        <Icon.Dashboard color="#f00" width={16} height={16} />
+                    </IconWrapper>
+                    <IconWrapper name="Dataset">
+                        <Icon.Dataset color="#f00" />
+                    </IconWrapper>
+                    <IconWrapper name="Expand">
+                        <Icon.Expand color="#f00" />
+                    </IconWrapper>
+                    <IconWrapper name="Fact">
+                        <Icon.Fact color="#00f" />
+                    </IconWrapper>
+                    <IconWrapper name="Function">
+                        <Icon.Function color="#00f" />
+                    </IconWrapper>
+                    <IconWrapper name="Insight">
+                        <Icon.Insight color="#0f0" />
+                    </IconWrapper>
+                    <IconWrapper name="Keyword">
+                        <Icon.Keyword color="#f00" />
+                    </IconWrapper>
+                    <IconWrapper name="Label">
+                        <Icon.Label color="#f00" />
+                    </IconWrapper>
+                    <IconWrapper name="LegendMenu">
+                        <Icon.LegendMenu color="#00f" />
+                    </IconWrapper>
+                    <IconWrapper name="Many">
+                        <Icon.Many color="#00f" width={16} height={16} />
+                    </IconWrapper>
+                    <IconWrapper name="Metric">
+                        <Icon.Metric color="#f00" />
+                    </IconWrapper>
+                    <IconWrapper name="Minimize">
+                        <Icon.Minimize color="#0f0" />
+                    </IconWrapper>
+                    <IconWrapper name="QuestionMark">
+                        <Icon.QuestionMark color="#00f" />
+                    </IconWrapper>
+                    <IconWrapper name="SettingsGear">
+                        <Icon.SettingsGear color="#f00" />
+                    </IconWrapper>
+                    <IconWrapper name="EmbedCodeIcon">
+                        <Icon.EmbedCodeIcon color="#f00" />
+                    </IconWrapper>
+                    <IconWrapper name="Error">
+                        <Icon.Error color="#f00" />
+                    </IconWrapper>
+                </ColumnWrapper>
+                <ColumnWrapper>
+                    <IconWrapper name="Aborted">
+                        <Icon.Aborted color="#0f0" />
+                    </IconWrapper>
+                    <IconWrapper name="Progress">
+                        <Icon.Progress color="#00f" />
+                    </IconWrapper>
+                    <IconWrapper name="Success">
+                        <Icon.Success color="#00f" />
+                    </IconWrapper>
+                    <IconWrapper name="Origin">
+                        <Icon.Origin color="#f00" />
+                    </IconWrapper>
+                    <IconWrapper name="Token">
+                        <Icon.Token color="#0f0" />
+                    </IconWrapper>
+                </ColumnWrapper>
+            </RowWrapper>
+        </div>
+    );
+};
+
+storiesOf(`${UiKit}/Icon`).add("insight icons", () => <InsightIconsTest />, { screenshot: true });
+storiesOf(`${UiKit}/Icon`).add("icons", () => <IconsTest />, { screenshot: true });
