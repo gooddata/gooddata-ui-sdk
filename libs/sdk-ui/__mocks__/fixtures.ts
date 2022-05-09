@@ -636,3 +636,77 @@ export const insightWithMultipleMeasureBuckets: IInsight = {
         properties: {},
     },
 };
+
+export const insightWithMultipleMeasureBucketsAndFormats: IInsight = {
+    insight: {
+        identifier: "multipleMeasureBucketsInsight",
+        uri: "/some/uri/multipleMeasureBucketsInsight",
+        ref: uriRef("/some/uri/multipleMeasureBucketsInsight"),
+        visualizationUrl: "local:test",
+        buckets: [
+            {
+                localIdentifier: "measures",
+                items: [
+                    {
+                        measure: {
+                            localIdentifier: "count_format",
+                            format: "#0x",
+                            title: "Count with format",
+                            definition: {
+                                measureDefinition: {
+                                    aggregation: "sum",
+                                    item: {
+                                        uri: "/gdc/md/yrungi0zwpoud7h1kmh6ldhp0vgkpi41/obj/15428",
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                localIdentifier: "measures",
+                items: [
+                    {
+                        measure: {
+                            localIdentifier: "count_relative",
+                            title: "Count relative",
+                            definition: {
+                                measureDefinition: {
+                                    computeRatio: true,
+                                    aggregation: "sum",
+                                    item: {
+                                        uri: "/gdc/md/yrungi0zwpoud7h1kmh6ldhp0vgkpi41/obj/15428",
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                localIdentifier: "measures",
+                items: [
+                    {
+                        measure: {
+                            localIdentifier: "count",
+                            title: "Count",
+                            definition: {
+                                measureDefinition: {
+                                    aggregation: "sum",
+                                    item: {
+                                        uri: "/gdc/md/yrungi0zwpoud7h1kmh6ldhp0vgkpi41/obj/15428",
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        ],
+        filters: [],
+        title: "Multiple measure buckets",
+        sorts: [],
+        properties: {},
+    },
+};

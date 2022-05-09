@@ -19,6 +19,7 @@ import { IVisualization, IVisProps, FullVisualizationCatalog, IInsightViewProps 
 import {
     OnError,
     fillMissingTitles,
+    fillMissingFormats,
     ignoreTitlesForSimpleMeasures,
     ILocale,
     withContexts,
@@ -120,12 +121,10 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
             theme: this.props.theme,
         };
 
-        this.visualization.update(
-            visProps,
+        const insight = fillMissingFormats(
             ignoreTitlesForSimpleMeasures(fillMissingTitles(this.props.insight, this.props.locale)),
-            {},
-            this.getExecutionFactory(),
         );
+        this.visualization.update(visProps, insight, {}, this.getExecutionFactory());
     };
 
     private setupVisualization = async () => {

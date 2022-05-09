@@ -1,7 +1,6 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import {
     IInsightDefinition,
-    IBucket,
     IAttributeOrMeasure,
     isMeasure,
     IMeasure,
@@ -16,8 +15,8 @@ import {
     measureTitle,
     measureArithmeticOperands,
     measureArithmeticOperator,
-    insightBuckets,
-    bucketItems,
+    insightModifyItems,
+    modifyMeasure,
 } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
 
@@ -201,40 +200,18 @@ function updateBucketItemTitle(
         const measureTitleProp = findMeasureTitleItem(measureTitleProps, localId);
         if (measureTitleProp !== null) {
             const { title, alias } = measureTitleProp;
-
-            return {
-                ...bucketItem,
-                measure: {
-                    ...bucketItem.measure,
-                    title,
-                    alias,
-                },
-            };
+            return modifyMeasure(bucketItem, (measure) => measure.title(title).alias(alias));
         }
     }
 
     return bucketItem;
 }
 
-function updateBucketTitles(bucket: IBucket, measureTitleProps: IMeasureTitleProps[]): IBucket {
-    const items = bucketItems(bucket);
-    return {
-        ...bucket,
-        items: items.map((bucketItem) => updateBucketItemTitle(bucketItem, measureTitleProps)),
-    };
-}
-
 function updateVisualizationObjectTitles<T extends IInsightDefinition>(
     insight: T,
     measureTitleProps: IMeasureTitleProps[],
 ): T {
-    const buckets = insightBuckets(insight);
-    return {
-        insight: {
-            ...insight.insight,
-            buckets: buckets.map((bucket) => updateBucketTitles(bucket, measureTitleProps)),
-        },
-    } as T;
+    return insightModifyItems(insight, (item) => updateBucketItemTitle(item, measureTitleProps));
 }
 
 /**

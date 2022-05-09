@@ -231,6 +231,13 @@ export { ignoreTitlesForSimpleMeasures } from "./measureTitles/ignoreTitlesForSi
 export { IArithmeticMeasureTitleProps, IMeasureTitleProps } from "./measureTitles/MeasureTitle";
 
 /*
+ * Derived measure format generation
+ */
+
+export { fillMissingFormats } from "./measureFormats/fillMissingFormats";
+export { fillMissingFormat } from "./measureFormats/fillMissingFormat";
+
+/*
  *
  */
 
