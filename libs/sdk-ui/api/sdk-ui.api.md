@@ -409,6 +409,12 @@ export const ExecuteInsight: React_2.ComponentType<IExecuteInsightProps>;
 export type ExplicitDrill = IDrillableItem | IHeaderPredicate;
 
 // @internal
+export function fillMissingFormat(item: IAttributeOrMeasure): IAttributeOrMeasure;
+
+// @internal
+export function fillMissingFormats<T extends IInsightDefinition>(insight: T): T;
+
+// @internal
 export function fillMissingTitles<T extends IInsightDefinition>(insight: T, locale: ILocale, maxArithmeticMeasureTitleLength?: number): T;
 
 // @public (undocumented)
