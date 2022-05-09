@@ -1,5 +1,7 @@
 # GoodData.UI SDK - Live Examples
 
+This package contains code for [live examples gallery](https://gdui-examples.herokuapp.com/).
+
 ## Getting Started
 
 You can start the live examples locally in development mode using the `npm run examples` or `yarn examples` commands. This
@@ -43,6 +45,6 @@ TypeScript code behind the example:
 
 ## License
 
-(C) 2017-2021 GoodData Corporation
+(C) 2017-2022 GoodData Corporation
 
 This project is under commercial license. See [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/examples/sdk-examples/LICENSE).

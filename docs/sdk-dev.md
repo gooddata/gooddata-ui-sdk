@@ -90,7 +90,10 @@ coupled with particular platform; however it IS tightly coupled with BI modeling
 requires interfacing with backend, then the interface MUST be defined here and must be implemented in any SPI
 realizations that support that feature.
 
-**Backend capabilities**: TBD
+**Backend capabilities**:
+If you need to enable / disable specific feature, but only for the particular backend implementation,
+you should not check in the code what is the currently running backend implementation (eg bear / tiger).
+Use `IBackendCapabilities` so your code will stay backend agnostic.
 
 ##### @gooddata/sdk-backend-bear
 
@@ -243,7 +246,6 @@ is to provide fluent API with solid abstractions; the main benefits of this extr
 Here are couple of ground rules for this package:
 
 -   Backend SPI MUST NOT expose platform-specific types; e.g. stuff defined in client packages
--   ...
 
 ### Testing and testing guidelines
 
