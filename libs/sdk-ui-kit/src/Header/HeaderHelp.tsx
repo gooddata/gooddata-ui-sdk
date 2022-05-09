@@ -5,6 +5,7 @@ import cx from "classnames";
 import isEmpty from "lodash/isEmpty";
 
 import { Overlay } from "../Overlay";
+import { HelpMenuDropdownAlignPoints } from "../typings/positioning";
 
 interface IHelpItem {
     key: string;
@@ -12,12 +13,14 @@ interface IHelpItem {
     isActive?: boolean;
     className?: string;
     target?: string;
+    iconName?: string;
     onClick?: (obj: any) => void;
 }
 
 interface IHeaderHelpProps {
     intl: IntlShape;
     className: string;
+    helpMenuDropdownAlignPoints?: HelpMenuDropdownAlignPoints;
     items: IHelpItem[];
     onMenuItemClick?: (...args: any[]) => void;
     disableDropdown?: boolean;
@@ -28,6 +31,7 @@ interface IHeaderHelpProps {
 export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
     className,
     items,
+    helpMenuDropdownAlignPoints,
     onMenuItemClick,
     disableDropdown,
     onHelpClicked,
@@ -53,9 +57,12 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
                 onClick={() => {
                     menuItemClicked(item);
                 }}
-                className={`gd-list-item ${item.className}`}
+                className={`gd-list-item gd-list-help-menu-item ${item.className}`}
             >
-                <FormattedMessage id={item.key} />
+                {item.iconName && <i className={cx(item.iconName, "gd-icon")} />}
+                <span>
+                    <FormattedMessage id={item.key} />
+                </span>
             </a>
         );
     });
@@ -76,7 +83,7 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
                 alignTo=".gd-header-help"
                 alignPoints={[
                     {
-                        align: "br tr",
+                        align: helpMenuDropdownAlignPoints || "br tr",
                     },
                 ]}
                 closeOnOutsideClick

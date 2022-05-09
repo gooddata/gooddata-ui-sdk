@@ -141,7 +141,8 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
 .gd-header-menu-vertical {
     li a {
         position: relative;
-        display: block;
+        display: flex;
+        align-items: center;
         height: 43px;
         padding: 0 15px;
         line-height: 43px;
@@ -244,6 +245,30 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
     padding: 0 0 15px;
     border-top: 1px solid
         var(--gd-palette-complementary-4, transparentize($default-gd-color-state-blank, 0.8));
+}
+
+.gd-list-help-menu-item {
+    .gd-icon {
+        width: 16px;
+        height: 16px;
+        margin-right: 10px;
+    }
+
+    .gd-icon-slack {
+        background: url("~@gooddata/sdk-ui-kit/esm/assets/slack.svg") no-repeat;
+    }
+
+    .gd-icon-documentation {
+        background: url("~@gooddata/sdk-ui-kit/esm/assets/documentation.svg") no-repeat;
+    }
+
+    .gd-icon-university {
+        background: url("~@gooddata/sdk-ui-kit/esm/assets/university.svg") no-repeat;
+    }
+
+    .gd-icon-community {
+        background: url("~@gooddata/sdk-ui-kit/esm/assets/community.svg") no-repeat;
+    }
 }
 
 .gd-header-menu-item {

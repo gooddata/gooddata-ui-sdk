@@ -2,6 +2,7 @@
 
 import React from "react";
 import { ITheme } from "@gooddata/sdk-model";
+import { HelpMenuDropdownAlignPoints } from "../typings/positioning";
 
 /**
  * @internal
@@ -12,6 +13,7 @@ export interface IHeaderMenuItem {
     isActive?: boolean;
     className?: string;
     target?: string;
+    iconName?: string;
     onClick?: (obj: any) => void;
 }
 
@@ -46,6 +48,8 @@ export interface IAppHeaderProps {
 
     disableHelpDropdown?: boolean;
     onHelpClick?: (isOpen: boolean) => void;
+    helpMenuDropdownAlignPoints?: HelpMenuDropdownAlignPoints;
+    showStaticHelpMenu?: boolean;
 
     helpRedirectUrl?: string;
     theme?: ITheme;
@@ -97,3 +101,14 @@ export interface IHeaderMenuProps {
 export interface IHeaderUpsellButtonProps {
     onUpsellButtonClick?: (e: React.MouseEvent) => void;
 }
+
+/**
+ * @internal
+ */
+export type TUTMContent =
+    | "main_menu_help_documentation"
+    | "main_menu_help_university"
+    | "main_menu_help_community"
+    | "main_menu_help_support"
+    | "main_menu_help_ticket"
+    | "main_menu_help_slack";
