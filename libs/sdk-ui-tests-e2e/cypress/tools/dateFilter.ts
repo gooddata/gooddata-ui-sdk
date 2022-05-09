@@ -43,4 +43,12 @@ export class DateFilter {
     private getElement(selector: string): Cypress.Chainable {
         return this.getDropdownElement().find(selector);
     }
+
+    toggleTimeSwitcher(): void {
+        cy.get(".time-switcher").click();
+    }
+
+    timeSwitcherHasValue(value: string): Cypress.Chainable {
+        return cy.get(".time-switcher").should("have.text", value);
+    }
 }

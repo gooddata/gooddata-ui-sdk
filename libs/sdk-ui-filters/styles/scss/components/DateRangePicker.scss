@@ -9,28 +9,71 @@ $gd-color-warning-text: #888;
 
 $gd-day-picker-width: 268px;
 
-.gd-date-range-picker {
-    position: relative;
+.gd-flex-row {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+}
+
+.gd-date-range-picker {
+    & .gd-input-field,
+    & .input-text {
+        font-size: 12px;
+    }
+
+    &-from,
+    &-to {
+        position: relative;
+    }
 
     &-dash {
         margin: 0 5px;
         color: $gd-color-state-blank;
     }
 
+    &-dash + &-to .gd-date-range-picker-picker {
+        left: -143px;
+    }
+
+    label {
+        font-size: 9pt;
+        display: block;
+        text-transform: capitalize;
+
+        &:nth-of-type(2) {
+            padding-top: 10px;
+        }
+    }
+
+    &.datetime {
+        input {
+            @media #{$medium-up} {
+                width: 130px;
+            }
+        }
+    }
+
+    input[type="time"] {
+        @media #{$medium-up} {
+            &::-webkit-calendar-picker-indicator {
+                display: none;
+            }
+        }
+    }
+
     &-input {
-        &-wrapper {
+        &-time {
             position: relative;
+            margin-left: 10px;
         }
 
-        & &-field {
-            padding-left: 36px;
+        & input {
+            height: 30px;
+            padding: 0 0 0 40px;
 
             @media #{$medium-up} {
-                width: 120px;
+                width: 126px;
             }
         }
 
@@ -56,9 +99,10 @@ $gd-day-picker-width: 268px;
             }
         }
 
-        &-icon {
+        .gd-icon-clock,
+        .gd-icon-calendar {
             position: absolute;
-            top: -1px;
+            top: 0;
             left: 12px;
             display: flex;
             align-items: center;
@@ -68,7 +112,7 @@ $gd-day-picker-width: 268px;
             pointer-events: none;
         }
 
-        &-error &-field {
+        &-error input {
             &,
             &:hover,
             &:focus {
@@ -253,6 +297,7 @@ $gd-day-picker-width: 268px;
     }
 
     &-error-message {
+        width: 270px;
         margin-top: 5px;
         padding: 2px 10px;
         border-radius: 3px;

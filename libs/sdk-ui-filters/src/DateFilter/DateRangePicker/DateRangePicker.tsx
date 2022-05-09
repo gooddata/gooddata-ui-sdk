@@ -6,12 +6,10 @@ import MomentLocaleUtils from "react-day-picker/moment";
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { translationUtils } from "@gooddata/util";
-import { convertDateToPlatformDateString, convertPlatformDateStringToDate } from "../utils/DateConversions";
-import { DateRangePickerInputField } from "./DateRangePickerInputField";
 import { mergeDayPickerProps, areRangeBoundsCrossed } from "./utils";
 import { DateRangePickerError } from "./DateRangePickerError";
 import { IExtendedDateFilterErrors } from "../interfaces";
-import { DateRangePickerInputFieldBody } from "./DateRangePickerInputFieldBody";
+import { DateTimePicker } from "./DateTimePicker";
 
 export interface IDateRange {
     from: Date;
@@ -25,6 +23,7 @@ interface IDateRangePickerProps {
     dateFormat?: string;
     dayPickerProps?: DayPickerProps;
     isMobile: boolean;
+    isTimeEnabled: boolean;
 }
 
 class DateRangePickerComponent extends React.Component<IDateRangePickerProps & WrappedComponentProps> {
@@ -39,6 +38,7 @@ class DateRangePickerComponent extends React.Component<IDateRangePickerProps & W
             intl,
             isMobile,
             errors: { from: errorFrom, to: errorTo } = { from: undefined, to: undefined },
+            isTimeEnabled,
         } = this.props;
 
         const defaultDayPickerProps: Partial<DayPickerProps> = {
@@ -51,74 +51,57 @@ class DateRangePickerComponent extends React.Component<IDateRangePickerProps & W
 
         const dayPickerPropsWithDefaults = mergeDayPickerProps(defaultDayPickerProps, dayPickerProps);
 
-        const FromField = isMobile ? (
-            <DateRangePickerInputFieldBody
-                type="date"
-                className={cx(
-                    "s-date-range-picker-from",
-                    "gd-date-range-picker-input",
-                    "gd-date-range-picker-input-native",
-                    errorFrom && "gd-date-range-picker-input-error",
-                )}
-                placeholder={intl.formatMessage({ id: "filters.from" })}
-                onChange={(event) =>
-                    this.handleFromChange(convertPlatformDateStringToDate(event.target.value))
-                }
-                value={convertDateToPlatformDateString(from)}
-            />
-        ) : (
-            <DateRangePickerInputField
-                className={cx("s-date-range-picker-from", errorFrom && "gd-date-range-picker-input-error")}
-                classNameCalendar="s-date-range-calendar-from"
+        const FromField = (
+            <DateTimePicker
+                placeholderDate={intl.formatMessage({ id: "filters.from" })}
+                onChange={this.handleFromChange}
+                value={from}
+                dateFormat={dateFormat}
+                isMobile={isMobile}
+                locale={translationUtils.sanitizeLocaleForMoment(intl.locale)}
+                dayPickerPropsWithDefaults={dayPickerPropsWithDefaults}
+                handleDayClick={this.handleFromDayClick}
                 ref={this.fromInputRef}
-                onDayChange={this.handleFromChange}
-                value={from || ""}
-                format={dateFormat}
-                placeholder={intl.formatMessage({ id: "filters.from" })}
-                dayPickerProps={{
-                    ...dayPickerPropsWithDefaults,
-                    onDayClick: this.handleFromDayClick,
-                }}
-                // showOverlay={true} // Always shows the calendar, useful for CSS debugging
+                isTimeEnabled={isTimeEnabled}
+                className={cx("s-date-range-picker-from", "gd-date-range-picker-from")}
+                error={typeof errorFrom !== "undefined"}
             />
         );
 
-        const ToField = isMobile ? (
-            <DateRangePickerInputFieldBody
-                type="date"
-                className={cx(
-                    "s-date-range-picker-to",
-                    "gd-date-range-picker-input",
-                    "gd-date-range-picker-input-native",
-                    errorTo && "gd-date-range-picker-input-error",
-                )}
-                placeholder={intl.formatMessage({ id: "filters.to" })}
-                onChange={(event) => this.handleToChange(convertPlatformDateStringToDate(event.target.value))}
-                value={convertDateToPlatformDateString(to)}
-            />
-        ) : (
-            <DateRangePickerInputField
-                className={cx("s-date-range-picker-to", errorTo && "gd-date-range-picker-input-error")}
-                classNameCalendar="s-date-range-calendar-to"
+        const ToField = (
+            <DateTimePicker
+                placeholderDate={intl.formatMessage({ id: "filters.to" })}
+                onChange={this.handleToChange}
+                value={to}
+                dateFormat={dateFormat}
+                isMobile={isMobile}
+                locale={translationUtils.sanitizeLocaleForMoment(intl.locale)}
+                dayPickerPropsWithDefaults={dayPickerPropsWithDefaults}
+                handleDayClick={this.handleToDayClick}
                 ref={this.toInputRef}
-                onDayChange={this.handleToChange}
-                value={to || ""}
-                format={dateFormat}
-                placeholder={intl.formatMessage({ id: "filters.to" })}
-                dayPickerProps={{
-                    ...dayPickerPropsWithDefaults,
-                    onDayClick: this.handleToDayClick,
-                }}
+                isTimeEnabled={isTimeEnabled}
+                className={cx("s-date-range-picker-to", "gd-date-range-picker-to")}
+                defaultTime="23:59"
+                error={typeof errorTo !== "undefined"}
             />
         );
 
         return (
             <>
-                <div className="gd-date-range-picker s-date-range-picker">
-                    {FromField}
-                    <span className="gd-date-range-picker-dash">&mdash;</span>
-                    {ToField}
-                </div>
+                {isTimeEnabled ? (
+                    <div className="gd-date-range-picker datetime s-date-range-picker">
+                        <label>{intl.formatMessage({ id: "filters.from" })}</label>
+                        {FromField}
+                        <label>{intl.formatMessage({ id: "filters.to" })}</label>
+                        {ToField}
+                    </div>
+                ) : (
+                    <div className="gd-date-range-picker gd-flex-row s-date-range-picker">
+                        {FromField}
+                        <span className="gd-date-range-picker-dash">&ndash;</span>
+                        {ToField}
+                    </div>
+                )}
                 {(errorFrom || errorTo) && (
                     <DateRangePickerError
                         dateFormat={dateFormat}
@@ -132,15 +115,6 @@ class DateRangePickerComponent extends React.Component<IDateRangePickerProps & W
         );
     }
 
-    private focusField = (inputRef: any) => {
-        if (inputRef.current) {
-            // Focus needs to happen on the next tick otherwise the day picker is not updated
-            setTimeout(() => {
-                inputRef.current.getInput().focus();
-            }, 0);
-        }
-    };
-
     private blurField = (inputRef: any) => {
         if (inputRef.current) {
             inputRef.current.getInput().blur();
@@ -152,16 +126,11 @@ class DateRangePickerComponent extends React.Component<IDateRangePickerProps & W
     };
 
     private handleFromDayClick = () => {
-        this.focusField(this.toInputRef);
+        this.blurField(this.fromInputRef);
     };
 
-    private handleToDayClick = (to: Date) => {
-        const rangeBoundsCrossed = areRangeBoundsCrossed(this.props.range.from, to);
-        if (to && !rangeBoundsCrossed) {
-            this.blurField(this.toInputRef);
-        } else if (rangeBoundsCrossed) {
-            this.focusField(this.fromInputRef);
-        }
+    private handleToDayClick = () => {
+        this.blurField(this.toInputRef);
     };
 
     private getSanitizedInputValue = (inputRef: React.RefObject<DayPickerInput>, date: Date) => {

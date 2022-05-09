@@ -11,9 +11,9 @@ import { MediaQueries } from "../constants";
 import { DateFilterButtonLocalized } from "./DateFilterButtonLocalized/DateFilterButtonLocalized";
 import { DateFilterBody } from "./DateFilterBody/DateFilterBody";
 import { applyExcludeCurrentPeriod } from "./utils/PeriodExclusion";
-import { formatAbsoluteDate } from "./utils/Translations/DateFilterTitle";
-import { DEFAULT_DATE_FORMAT } from "./constants/Platform";
+import { DEFAULT_DATE_FORMAT, TIME_FORMAT_WITH_SEPARATOR } from "./constants/Platform";
 import { filterVisibleDateFilterOptions, sanitizePresetIntervals } from "./utils/OptionUtils";
+import format from "date-fns/format";
 
 export interface IDateFilterCoreProps {
     dateFormat: string;
@@ -32,6 +32,7 @@ export interface IDateFilterCoreProps {
     originalExcludeCurrentPeriod: boolean;
     isExcludeCurrentPeriodEnabled: boolean;
     onExcludeCurrentPeriodChange: (isExcluded: boolean) => void;
+    isTimeForAbsoluteRangeEnabled: boolean;
 
     availableGranularities: DateFilterGranularity[];
 
@@ -51,7 +52,7 @@ export interface IDateFilterCoreProps {
 export const verifyDateFormat = (dateFormat: string): string => {
     try {
         // Try to format the current date to verify if dateFormat is a valid format.
-        formatAbsoluteDate(new Date(), dateFormat);
+        format(new Date(), dateFormat);
         return dateFormat;
     } catch {
         // If an error occurs, then dateFormat is invalid and the default format should be used instead. Also, a warning is written in the console.
@@ -63,6 +64,9 @@ export const verifyDateFormat = (dateFormat: string): string => {
     }
 };
 
+const adjustDateFormatForDisplay = (dateFormat: string, isTimeForAbsoluteRangeEnabled: boolean = false) =>
+    isTimeForAbsoluteRangeEnabled ? dateFormat + TIME_FORMAT_WITH_SEPARATOR : dateFormat;
+
 export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
     originalSelectedFilterOption,
     originalExcludeCurrentPeriod,
@@ -72,6 +76,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
     disabled,
     locale,
     filterOptions,
+    isTimeForAbsoluteRangeEnabled,
     ...dropdownBodyProps
 }) => {
     const verifiedDateFormat = verifyDateFormat(dateFormat);
@@ -91,7 +96,10 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
                                 originalSelectedFilterOption,
                                 originalExcludeCurrentPeriod,
                             )}
-                            dateFormat={verifiedDateFormat}
+                            dateFormat={adjustDateFormatForDisplay(
+                                verifiedDateFormat,
+                                isTimeForAbsoluteRangeEnabled,
+                            )}
                             customFilterName={customFilterName}
                         />
                     );
@@ -128,6 +136,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
                                     closeDropdown={closeDropdown}
                                     dateFilterButton={dateFilterButton()}
                                     dateFormat={verifiedDateFormat}
+                                    isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled}
                                 />
                             )}
                         />

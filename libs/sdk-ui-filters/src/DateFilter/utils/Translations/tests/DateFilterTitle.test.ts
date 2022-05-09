@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import { DEFAULT_DATE_FORMAT } from "../../../constants/Platform";
+import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_FORMAT_WITH_TIME } from "../../../constants/Platform";
 import {
     getDateFilterRepresentation,
     getDateFilterTitleUsingTranslator,
@@ -12,6 +12,8 @@ import {
     absoluteFormFilterOneDay,
     absolutePresetFilter,
     relativePresetFilter,
+    absoluteFormFilterWithTime,
+    absoluteFormFilterWithTimeInOneDay,
 } from "./fixtures";
 import { DateFilterGranularity } from "@gooddata/sdk-model";
 import { IUiRelativeDateFilterForm } from "../../../interfaces";
@@ -32,22 +34,44 @@ describe("getDateFilterTitleUsingTranslator", () => {
         expect(actual).toEqual(expected);
     });
 
-    it("should return the correct translation for absolute form filter", () => {
-        const actual = getDateFilterTitleUsingTranslator(
-            absoluteFormFilter,
-            serializingTranslator,
-            DEFAULT_DATE_FORMAT,
-        );
-        expect(actual).toEqual("01/01/2019 - 02/01/2019");
+    describe("with disabled time", () => {
+        it("should return the correct translation for absolute form filter", () => {
+            const actual = getDateFilterTitleUsingTranslator(
+                absoluteFormFilter,
+                serializingTranslator,
+                DEFAULT_DATE_FORMAT,
+            );
+            expect(actual).toEqual("01/01/2019 – 02/01/2019");
+        });
+
+        it("should return the correct translation for absolute form filter for one day", () => {
+            const actual = getDateFilterTitleUsingTranslator(
+                absoluteFormFilterOneDay,
+                serializingTranslator,
+                DEFAULT_DATE_FORMAT,
+            );
+            expect(actual).toEqual("01/01/2019");
+        });
     });
 
-    it("should return the correct translation for absolute form filter for one day", () => {
-        const actual = getDateFilterTitleUsingTranslator(
-            absoluteFormFilterOneDay,
-            serializingTranslator,
-            DEFAULT_DATE_FORMAT,
-        );
-        expect(actual).toEqual("01/01/2019");
+    describe("with enabled time", () => {
+        it("should return the correct translation for absolute form filter", () => {
+            const actual = getDateFilterTitleUsingTranslator(
+                absoluteFormFilterWithTime,
+                serializingTranslator,
+                DEFAULT_DATE_FORMAT_WITH_TIME,
+            );
+            expect(actual).toEqual("01/01/2019, 01:00 – 02/01/2019, 16:55");
+        });
+
+        it("should return the correct translation for absolute form filter for one day", () => {
+            const actual = getDateFilterTitleUsingTranslator(
+                absoluteFormFilterWithTimeInOneDay,
+                serializingTranslator,
+                DEFAULT_DATE_FORMAT_WITH_TIME,
+            );
+            expect(actual).toEqual("01/01/2019, 00:00 – 23:59");
+        });
     });
 
     it("should return the correct translation for absolute preset filter", () => {
@@ -172,19 +196,41 @@ describe("getDateFilterTitle", () => {
         expect(actual).toEqual(expected);
     });
 
-    it("should return title with desired format", () => {
-        const filter = { ...absoluteFormFilter };
-        const expected = "01/01/2019 - 02/01/2019";
-        const actual = getDateFilterTitle(filter, "en-US", DEFAULT_DATE_FORMAT);
-        expect(actual).toEqual(expected);
+    describe("with disabled time", () => {
+        it("should return title with desired format", () => {
+            const filter = { ...absoluteFormFilter };
+            const expected = "01/01/2019 – 02/01/2019";
+            const actual = getDateFilterTitle(filter, "en-US", DEFAULT_DATE_FORMAT);
+            expect(actual).toEqual(expected);
+        });
+    });
+
+    describe("with enabled time", () => {
+        it("should return title containing time with desired format", () => {
+            const filter = { ...absoluteFormFilterWithTime };
+            const expected = "01/01/2019, 01:00 – 02/01/2019, 16:55";
+            const actual = getDateFilterTitle(filter, "en-US", DEFAULT_DATE_FORMAT_WITH_TIME);
+            expect(actual).toEqual(expected);
+        });
     });
 });
 
 describe("getDateFilterRepresentation", () => {
-    it("should return title with desired format", () => {
-        const filter = { ...absoluteFormFilter };
-        const expected = "01/01/2019 - 02/01/2019";
-        const actual = getDateFilterRepresentation(filter, "en-US", DEFAULT_DATE_FORMAT);
-        expect(actual).toEqual(expected);
+    describe("with disabled time", () => {
+        it("should return title with desired format", () => {
+            const filter = { ...absoluteFormFilter };
+            const expected = "01/01/2019 – 02/01/2019";
+            const actual = getDateFilterRepresentation(filter, "en-US", DEFAULT_DATE_FORMAT);
+            expect(actual).toEqual(expected);
+        });
+    });
+
+    describe("with enabled time", () => {
+        it("should return title containing time with desired format", () => {
+            const filter = { ...absoluteFormFilterWithTime };
+            const expected = "01/01/2019, 01:00 – 02/01/2019, 16:55";
+            const actual = getDateFilterRepresentation(filter, "en-US", DEFAULT_DATE_FORMAT_WITH_TIME);
+            expect(actual).toEqual(expected);
+        });
     });
 });

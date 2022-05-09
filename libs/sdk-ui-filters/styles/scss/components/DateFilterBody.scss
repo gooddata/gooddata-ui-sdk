@@ -49,10 +49,6 @@
         max-height: 100vh;
         width: 100%;
         padding: 10px 0 0;
-
-        @media #{$medium-up} {
-            min-width: 335px;
-        }
     }
 
     &-body-mobile &-body-wrapper {
@@ -67,7 +63,8 @@
     }
 
     &-actions {
-        padding: 10px;
+        margin: 0 10px;
+        padding: 10px 0;
         border-top: 1px solid $gd-border-color;
 
         &-buttons {
@@ -102,9 +99,10 @@
     }
 
     &-exclude-current {
-        padding: 5px 10px;
-        margin-top: 5px;
+        margin: 6px 10px 0 10px;
+        padding: 5px 0;
         font-size: 12px;
+        border-top: 1px solid $gd-border-color;
 
         .input-checkbox-label {
             margin-left: -3px;

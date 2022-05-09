@@ -1,4 +1,5 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
+// import moment from "moment";
 import { convertDateToPlatformDateString, convertPlatformDateStringToDate } from "../DateConversions";
 
 describe("convertDateToPlatformDate", () => {
@@ -30,12 +31,12 @@ describe("convertPlatformDateStringToDate", () => {
     });
 
     it("should convert platform date string to Date object", () => {
-        const getTime = jest.spyOn(Date.prototype, "getTime").mockReturnValue(1575158400000);
+        const dateNow = jest.spyOn(Date, "now").mockReturnValue(1575158400000);
         const getTimezoneOffset = jest.spyOn(Date.prototype, "getTimezoneOffset").mockReturnValue(270);
         const date = convertPlatformDateStringToDate("2019-12-01");
-
         expect(date.toISOString()).toBe(new Date(1575174600000).toISOString());
-        getTime.mockRestore();
+
         getTimezoneOffset.mockRestore();
+        dateNow.mockRestore();
     });
 });

@@ -202,10 +202,6 @@ const excludeCurrentPeriodCheckbox = ".s-exclude-current-period input";
 const allTimeButton = "button.s-all-time";
 
 const absoluteFormButton = "button.s-absolute-form";
-const absoluteFormPicker = ".s-date-range-picker";
-const absoluteFormInputFrom = ".s-date-range-picker-from .s-date-range-picker-input-field";
-const absoluteFormInputTo = ".s-date-range-picker-to .s-date-range-picker-input-field";
-const absoluteFormError = ".s-absolute-range-error";
 
 const relativeFormButton = "button.s-relative-form";
 const relativeFormPicker = ".s-relative-range-picker";
@@ -224,7 +220,7 @@ export const createDateFilter = (customProps: Partial<IDateFilterProps> = {}) =>
 
 // common wrapper methods
 
-type WrapperType = ReactWrapper<any, Readonly<unknown>, React.Component<unknown, unknown, any>>;
+export type WrapperType = ReactWrapper<any, Readonly<unknown>, React.Component<unknown, unknown, any>>;
 
 export const clickDateFilterButton = (wrapper: WrapperType) => {
     wrapper.find(dateFilterButton).simulate("click");
@@ -333,34 +329,8 @@ export const openAbsoluteFormFilter = (wrapper: WrapperType) => {
     clickDateFilterButton(wrapper);
     clickAbsoluteFormFilter(wrapper);
 };
-
-export const isAbsoluteFormVisible = (wrapper: WrapperType) => {
-    const picker = wrapper.find(absoluteFormPicker);
-    return picker.exists();
-};
-
 export const dateToAbsoluteInputFormat = (dateString: string, dateFormat: string = defaultDateFormat) => {
     return formatDate(new Date(dateString), dateFormat);
-};
-
-export const getAbsoluteFormInputFromValue = (wrapper: WrapperType) => {
-    const input = wrapper.find(absoluteFormInputFrom);
-    return input.prop("value");
-};
-
-export const writeToAbsoluteFormInputFrom = (wrapper: WrapperType, value: string) => {
-    const input = wrapper.find(absoluteFormInputFrom);
-    input.simulate("change", { target: { value } });
-};
-
-export const getAbsoluteFormInputToValue = (wrapper: WrapperType) => {
-    const input = wrapper.find(absoluteFormInputTo);
-    return input.prop("value");
-};
-
-export const writeToAbsoluteFormInputTo = (wrapper: WrapperType, value: string) => {
-    const input = wrapper.find(absoluteFormInputTo);
-    input.simulate("change", { target: { value } });
 };
 
 export const getTodayDate = (dateFormat: string = defaultDateFormat) => {
@@ -374,10 +344,6 @@ export const getMonthAgo = (dateFormat: string = defaultDateFormat) => {
         }),
         dateFormat,
     );
-};
-
-export const isAbsoluteFormErrorVisible = (wrapper: WrapperType) => {
-    return wrapper.find(absoluteFormError).exists();
 };
 
 // Relative filter form

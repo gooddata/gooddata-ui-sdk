@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React, { useCallback, useMemo, useState } from "react";
 import { DateFilter, IDateFilterProps } from "@gooddata/sdk-ui-filters";
 
@@ -6,7 +6,12 @@ import { dateFilterOptionToDashboardDateFilter } from "../../../_staging/dashboa
 import { matchDateFilterToDateFilterOptionWithPreference } from "../../../_staging/dateFilterConfig/dateFilterOptionMapping";
 
 import { IDashboardDateFilterProps } from "./types";
-import { selectLocale, selectSettings, useDashboardSelector } from "../../../model";
+import {
+    selectBackendCapabilities,
+    selectLocale,
+    selectSettings,
+    useDashboardSelector,
+} from "../../../model";
 
 /**
  * Default implementation of the attribute filter to use on the dashboard's filter bar.
@@ -17,6 +22,7 @@ import { selectLocale, selectSettings, useDashboardSelector } from "../../../mod
  */
 export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JSX.Element => {
     const settings = useDashboardSelector(selectSettings);
+    const capabilities = useDashboardSelector(selectBackendCapabilities);
     const locale = useDashboardSelector(selectLocale);
     const { filter, onFilterChanged, config, readonly } = props;
     const [lastSelectedOptionId, setLastSelectedOptionId] = useState("");
@@ -48,6 +54,7 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
             onApply={onApply}
             dateFormat={settings.responsiveUiDateFormat}
             locale={locale}
+            isTimeForAbsoluteRangeEnabled={!!capabilities.supportsTimeGranularities}
         />
     );
 };

@@ -17,6 +17,7 @@ export interface IAbsoluteDateFilterFormProps {
     isMobile: boolean;
     errors: IExtendedDateFilterErrors["absoluteForm"];
     onSelectedFilterOptionChange: (option: DateFilterOption) => void;
+    isTimeEnabled: boolean;
 }
 
 const dayPickerProps = {
@@ -28,22 +29,24 @@ const dayPickerProps = {
  */
 export class AbsoluteDateFilterForm extends React.Component<IAbsoluteDateFilterFormProps> {
     public render(): React.ReactNode {
-        const { dateFormat, isMobile, selectedFilterOption, errors } = this.props;
+        const { dateFormat, isMobile, selectedFilterOption, errors, isTimeEnabled } = this.props;
         return (
             <DateRangePicker
                 dateFormat={dateFormat}
                 onRangeChange={this.handleRangeChange}
-                range={dateFilterValueToDateRange(selectedFilterOption)}
+                range={dateFilterValueToDateRange(selectedFilterOption, isTimeEnabled)}
                 errors={errors}
                 isMobile={isMobile}
                 dayPickerProps={dayPickerProps}
+                isTimeEnabled={isTimeEnabled}
             />
         );
     }
 
     private handleRangeChange = (range: IDateRange): void => {
+        const { selectedFilterOption, isTimeEnabled } = this.props;
         this.props.onSelectedFilterOptionChange(
-            dateRangeToDateFilterValue(range, this.props.selectedFilterOption.localIdentifier),
+            dateRangeToDateFilterValue(range, selectedFilterOption.localIdentifier, isTimeEnabled),
         );
     };
 }
