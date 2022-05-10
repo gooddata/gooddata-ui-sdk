@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import isObject from "lodash/isObject";
 import {
     IGdcMessageEvent,
@@ -7,8 +7,10 @@ import {
     IGdcMessageEnvelope,
     IDrillableItemsCommandBody,
     EmbeddedGdc,
+    IObjectMeta,
 } from "./common";
 import { ObjRef } from "@gooddata/sdk-model";
+import { GdcVisualizationObject } from "@gooddata/api-model-bear";
 
 /**
  * All interface, types, type-guard related to embedded KPI Dashboards
@@ -257,6 +259,11 @@ export namespace EmbeddedKpiDashboard {
          * Type represent that the delete dashboard dialog is opened
          */
         DeleteDashboardDialogOpened = "deleteDashboardDialogOpened",
+
+        /**
+         * Type represent that the insight was saved.
+         */
+        InsightSaved = "visualizationSaved",
     }
 
     /**
@@ -1294,6 +1301,22 @@ export namespace EmbeddedKpiDashboard {
         GdcKdEventType.SetFilterParentsFailed,
         ISetFilterParentsFailedDataBody
     >;
+
+    /**
+     * Type that represents `InsightSaved` data.
+     *
+     * @public
+     */
+    export type IInsightSavedBody = GdcVisualizationObject.IVisualization & {
+        insight: IObjectMeta;
+    };
+
+    /**
+     * Type that represents `InsightSaved` event data. For more information look at `InsightSaved`.
+     *
+     * @public
+     */
+    export type InsightSavedData = IGdcKdMessageEnvelope<GdcKdEventType.InsightSaved, IInsightSavedBody>;
 
     /**
      * Open delete dashboard dialog, user will be able to delete currently existing dashboard

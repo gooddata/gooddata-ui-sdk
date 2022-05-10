@@ -430,6 +430,7 @@ export namespace EmbeddedKpiDashboard {
         ExportedToPdf = "exportedToPdf",
         FilterAdded = "filterAdded",
         FilterContextChanged = "filterContextChanged",
+        InsightSaved = "visualizationSaved",
         ListeningForDrillableItems = "listeningForDrillableItems",
         LoadingStarted = "loadingStarted",
         NoPermissions = "noPermissions",
@@ -491,6 +492,9 @@ export namespace EmbeddedKpiDashboard {
         // (undocumented)
         identifier: string;
     }
+    export type IInsightSavedBody = GdcVisualizationObject.IVisualization & {
+        insight: IObjectMeta;
+    };
     // (undocumented)
     export interface IInsightWidget {
         // (undocumented)
@@ -524,6 +528,7 @@ export namespace EmbeddedKpiDashboard {
     export interface INoPermissionsBody {
         reason: string;
     }
+    export type InsightSavedData = IGdcKdMessageEnvelope<GdcKdEventType.InsightSaved, IInsightSavedBody>;
     // @deprecated (undocumented)
     export type IPlaformBody = IPlatformBody;
     // (undocumented)
