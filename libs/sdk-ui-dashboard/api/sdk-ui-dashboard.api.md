@@ -721,6 +721,9 @@ export type CustomShareButtonComponent = ComponentType<IShareButtonProps>;
 export type CustomShareDialogComponent = ComponentType<IShareDialogProps>;
 
 // @alpha (undocumented)
+export type CustomSidebarComponent = ComponentType<ISidebarProps>;
+
+// @alpha (undocumented)
 export type CustomTitleComponent = ComponentType<ITitleProps>;
 
 // @alpha (undocumented)
@@ -2658,6 +2661,8 @@ export interface IDashboardCustomComponentProps {
     // @alpha
     ShareDialogComponent?: CustomShareDialogComponent;
     // @alpha
+    SidebarComponent?: CustomSidebarComponent;
+    // @alpha
     TitleComponent?: CustomTitleComponent;
     // @alpha
     TopBarComponent?: CustomTopBarComponent;
@@ -3628,6 +3633,11 @@ export interface ISharingProperties {
     isLocked: boolean;
     isUnderStrictControl: boolean;
     shareStatus: ShareStatus;
+}
+
+// @alpha (undocumented)
+export interface ISidebarProps {
+    DefaultSidebar: ComponentType<ISidebarProps>;
 }
 
 // @alpha (undocumented)
