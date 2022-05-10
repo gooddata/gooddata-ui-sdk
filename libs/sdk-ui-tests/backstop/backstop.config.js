@@ -16,7 +16,6 @@ const backstopConfig = {
             height: 768,
         },
     ],
-    delay: 1000,
     onReadyScript: "puppet/onReady.js",
     scenarios,
     paths: {
@@ -55,6 +54,7 @@ const backstopConfig = {
             "--no-sandbox",
             "--disable-software-rasterizer",
             "--disable-gpu",
+            "--disable-setuid-sandbox",
         ],
     },
     report: ["CI"],
