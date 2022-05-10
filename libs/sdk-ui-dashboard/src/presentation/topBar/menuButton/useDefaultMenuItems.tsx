@@ -21,9 +21,12 @@ import { useCallback, useMemo, useRef } from "react";
 import { downloadFile } from "../../../_staging/fileUtils/downloadFile";
 import { isProtectedDataError } from "@gooddata/sdk-backend-spi";
 import { selectIsInEditMode, selectIsInViewMode } from "../../../model/store/ui/uiSelectors";
-import { IMenuButtonItem } from "../../topBar";
+import { IMenuButtonItem } from "../../topBar/types";
 import { selectIsSaveAsNewButtonHidden } from "../../../model/store/config/configSelectors";
 
+/**
+ * @internal
+ */
 export const useDefaultMenuItems = function (): IMenuButtonItem[] {
     const intl = useIntl();
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);

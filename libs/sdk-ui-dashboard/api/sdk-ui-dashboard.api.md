@@ -2026,7 +2026,7 @@ export const DefaultDashboardWidget: (props: IDashboardWidgetProps) => JSX.Eleme
 export function DefaultEditButton({ isVisible, isEnabled, onEditClick }: IEditButtonProps): JSX.Element | null;
 
 // @alpha (undocumented)
-export const DefaultFilterBar: (props: IFilterBarProps) => JSX.Element;
+export function DefaultFilterBar(props: IFilterBarProps): JSX.Element;
 
 // @alpha (undocumented)
 export const DefaultLockedStatus: React_2.FC<ILockedStatusProps>;
@@ -2062,7 +2062,7 @@ export const DefaultShareStatus: React_2.FC<IShareStatusProps>;
 export const DefaultTitle: CustomTitleComponent;
 
 // @alpha (undocumented)
-export const DefaultTopBar: (props: ITopBarProps) => JSX.Element;
+export function DefaultTopBar(props: ITopBarProps): JSX.Element;
 
 // @alpha (undocumented)
 export interface DeleteDashboard extends IDashboardCommand {
@@ -3062,11 +3062,9 @@ export interface IMenuButtonConfiguration {
 export type IMenuButtonItem = IMenuButtonItemButton | IMenuButtonItemSeparator | IMenuButtonItemHeader;
 
 // @alpha (undocumented)
-export interface IMenuButtonItemButton {
+export interface IMenuButtonItemButton extends IMenuItemCommonProps {
     // (undocumented)
     disabled?: boolean;
-    // (undocumented)
-    itemId: string;
     // (undocumented)
     itemName: string;
     // (undocumented)
@@ -3074,14 +3072,10 @@ export interface IMenuButtonItemButton {
     tooltip?: string;
     // (undocumented)
     type: "button";
-    // (undocumented)
-    visible?: boolean;
 }
 
 // @alpha (undocumented)
-export interface IMenuButtonItemHeader {
-    // (undocumented)
-    itemId: string;
+export interface IMenuButtonItemHeader extends IMenuItemCommonProps {
     // (undocumented)
     itemName: string;
     // (undocumented)
@@ -3089,15 +3083,14 @@ export interface IMenuButtonItemHeader {
 }
 
 // @alpha (undocumented)
-export interface IMenuButtonItemSeparator {
-    // (undocumented)
-    itemId: string;
+export interface IMenuButtonItemSeparator extends IMenuItemCommonProps {
     // (undocumented)
     type: "separator";
 }
 
 // @alpha (undocumented)
 export interface IMenuButtonItemsVisibility {
+    deleteButton?: boolean;
     pdfExportButton?: boolean;
     saveAsNewButton?: boolean;
     scheduleEmailButton?: boolean;
@@ -3108,6 +3101,16 @@ export interface IMenuButtonProps {
     // (undocumented)
     DefaultMenuButton: CustomMenuButtonComponent;
     menuItems: ReadonlyArray<IMenuButtonItem>;
+}
+
+// @internal (undocumented)
+export interface IMenuItemCommonProps {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    itemId: string;
+    // (undocumented)
+    visible?: boolean;
 }
 
 // @public
@@ -4605,7 +4608,7 @@ export const selectEnableKPIDashboardSaveAsNew: OutputSelector<DashboardState, b
 export const selectEnableKPIDashboardSchedule: OutputSelector<DashboardState, boolean | undefined, (res: ResolvedDashboardConfig) => boolean | undefined>;
 
 // @public
-export const selectEnableKPIDashboardScheduleRecipients: OutputSelector<DashboardState, boolean | undefined, (res: ResolvedDashboardConfig) => boolean | undefined>;
+export const selectEnableKPIDashboardScheduleRecipients: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @alpha (undocumented)
 export const selectExecutionResult: (state: DashboardState, id: string | number) => IExecutionResultEnvelope | undefined;
@@ -4882,6 +4885,8 @@ type: string;
 }>;
 openShareDialog: CaseReducer<UiState, AnyAction>;
 closeShareDialog: CaseReducer<UiState, AnyAction>;
+openDeleteDialog: CaseReducer<UiState, AnyAction>;
+closeDeleteDialog: CaseReducer<UiState, AnyAction>;
 setMenuButtonItemsVisibility: CaseReducer<UiState, {
 payload: IMenuButtonItemsVisibility;
 type: string;
@@ -4894,6 +4899,10 @@ type: string;
 
 // @alpha (undocumented)
 export interface UiState {
+    // (undocumented)
+    deleteDialog: {
+        open: boolean;
+    };
     // (undocumented)
     filterBar: {
         height: number;
@@ -5386,6 +5395,9 @@ export const useDashboardUserInteraction: () => {
     kpiAlertDialogOpened: (alreadyHasAlert: boolean) => void;
 };
 
+// @internal (undocumented)
+export const useDefaultMenuItems: () => IMenuButtonItem[];
+
 // @public
 export const useDispatchDashboardCommand: <TCommand extends DashboardCommands, TArgs extends any[]>(commandCreator: (...args: TArgs) => TCommand) => (...args: TArgs) => void;
 
@@ -5504,6 +5516,9 @@ export interface UseDrillToLegacyDashboardProps {
 // @internal (undocumented)
 export function useEditButtonProps(): IEditButtonProps;
 
+// @alpha (undocumented)
+export const useFilterBarProps: () => IFilterBarProps;
+
 // @public
 export function useInsightWidgetDataView(config: IUseInsightWidgetDataView & UseInsightWidgetInsightDataViewCallbacks): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
 
@@ -5537,6 +5552,9 @@ export interface UserState {
 }
 
 // @internal (undocumented)
+export function useSaveAsDialogProps(): ISaveAsDialogProps;
+
+// @internal (undocumented)
 export function useSaveAsNewButtonProps(): ISaveAsNewButtonProps;
 
 // @internal (undocumented)
@@ -5544,6 +5562,9 @@ export function useSaveButtonProps(): ISaveButtonProps;
 
 // @internal (undocumented)
 export function useShareButtonProps(): IShareButtonProps;
+
+// @alpha (undocumented)
+export const useTopBarProps: () => ITopBarProps;
 
 // @internal
 export function useWidgetExecutionsHandler(widgetRef: ObjRef): {

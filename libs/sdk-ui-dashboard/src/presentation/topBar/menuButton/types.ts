@@ -1,6 +1,9 @@
 // (C) 2021-2022 GoodData Corporation
 import { ComponentType } from "react";
 
+/**
+ * @internal
+ */
 export interface IMenuItemCommonProps {
     itemId: string;
     visible?: boolean;
