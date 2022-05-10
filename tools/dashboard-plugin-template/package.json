@@ -63,6 +63,8 @@
         "@gooddata/sdk-ui": "^8.10.0-alpha.88",
         "@gooddata/sdk-ui-charts": "^8.10.0-alpha.88",
         "@gooddata/sdk-ui-ext": "^8.10.0-alpha.88",
+        "@gooddata/sdk-ui-geo": "^8.10.0-alpha.88",
+        "@gooddata/sdk-ui-pivot": "^8.10.0-alpha.88",
         "react": "^16.10.0 || ^17.0.0",
         "react-dom": "^16.10.0 || ^17.0.0"
     },
