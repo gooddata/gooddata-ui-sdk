@@ -1,14 +1,24 @@
 // (C) 2021-2022 GoodData Corporation
-import React from "react";
+import React, { useCallback } from "react";
 import partition from "lodash/partition";
-import { objRefToString, isDashboardDateFilter } from "@gooddata/sdk-model";
+import {
+    objRefToString,
+    isDashboardDateFilter,
+    IDashboardAttributeFilter,
+    IDashboardDateFilter,
+} from "@gooddata/sdk-model";
 
 import {
+    changeAttributeFilterSelection,
+    changeDateFilterSelection,
+    clearDateFilterSelection,
     selectEffectiveDateFilterAvailableGranularities,
     selectEffectiveDateFilterMode,
     selectEffectiveDateFilterOptions,
     selectEffectiveDateFilterTitle,
+    selectFilterContextFilters,
     selectIsExport,
+    useDashboardDispatch,
     useDashboardSelector,
 } from "../../../model";
 import { useDashboardComponentsContext } from "../../dashboardContexts";
@@ -21,7 +31,43 @@ import { HiddenFilterBar } from "./HiddenFilterBar";
 /**
  * @alpha
  */
-export const DefaultFilterBar = (props: IFilterBarProps): JSX.Element => {
+export const useFilterBarProps = (): IFilterBarProps => {
+    const filters = useDashboardSelector(selectFilterContextFilters);
+    const dispatch = useDashboardDispatch();
+    const onAttributeFilterChanged = useCallback(
+        (filter: IDashboardAttributeFilter) => {
+            const { attributeElements, negativeSelection, localIdentifier } = filter.attributeFilter;
+            dispatch(
+                changeAttributeFilterSelection(
+                    localIdentifier!,
+                    attributeElements,
+                    negativeSelection ? "NOT_IN" : "IN",
+                ),
+            );
+        },
+        [dispatch],
+    );
+
+    const onDateFilterChanged = useCallback(
+        (filter: IDashboardDateFilter | undefined, dateFilterOptionLocalId?: string) => {
+            if (!filter) {
+                // all time filter
+                dispatch(clearDateFilterSelection());
+            } else {
+                const { type, granularity, from, to } = filter.dateFilter;
+                dispatch(changeDateFilterSelection(type, granularity, from, to, dateFilterOptionLocalId));
+            }
+        },
+        [dispatch],
+    );
+
+    return { filters, onAttributeFilterChanged, onDateFilterChanged, DefaultFilterBar };
+};
+
+/**
+ * @alpha
+ */
+export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
     const { filters, onAttributeFilterChanged, onDateFilterChanged } = props;
     const customFilterName = useDashboardSelector(selectEffectiveDateFilterTitle);
     const availableGranularities = useDashboardSelector(selectEffectiveDateFilterAvailableGranularities);
@@ -70,4 +116,4 @@ export const DefaultFilterBar = (props: IFilterBarProps): JSX.Element => {
             })}
         </DefaultFilterBarContainer>
     );
-};
+}

@@ -179,6 +179,10 @@ export interface IMenuButtonItemsVisibility {
      * If set to true, the Schedule emailing button will be visible. Defaults to true.
      */
     scheduleEmailButton?: boolean;
+    /**
+     * If set to true, the Delete button will be visible. Defaults to true.
+     */
+    deleteButton?: boolean;
 }
 
 /**

@@ -51,10 +51,10 @@ export const selectCanEditLockedDashboard = createSelector(
  */
 export const selectCanEnterEditMode = createSelector(
     selectIsEditModeEnable,
+    selectCanManageAnalyticalDashboard,
     selectDashboardLockStatus,
     selectCanEditLockedDashboard,
-    selectCanManageAnalyticalDashboard,
-    (isEditModeEnable, isLocked, canManageAnalyticalDashboard, canEditLockedDashboard) =>
+    (isEditModeEnable, canManageAnalyticalDashboard, isLocked, canEditLockedDashboard) =>
         isEditModeEnable && canManageAnalyticalDashboard && (!isLocked || canEditLockedDashboard),
 );
 

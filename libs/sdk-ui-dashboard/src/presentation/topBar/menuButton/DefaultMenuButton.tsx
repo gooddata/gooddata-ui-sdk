@@ -2,13 +2,13 @@
 import React, { useCallback, useMemo, useState } from "react";
 import cx from "classnames";
 import {
+    Bubble,
+    BubbleHoverTrigger,
     Button,
-    SingleSelectListItem,
+    IAlignPoint,
     ItemsWrapper,
     Overlay,
-    BubbleHoverTrigger,
-    Bubble,
-    IAlignPoint,
+    SingleSelectListItem,
 } from "@gooddata/sdk-ui-kit";
 
 import { IMenuButtonProps } from "./types";
@@ -27,10 +27,7 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
         setIsOpen((prevIsOpen) => !prevIsOpen);
     }, []);
 
-    const visibleMenuItems = useMemo(
-        () => menuItems.filter((item) => item.type !== "button" || item.visible !== false),
-        [menuItems],
-    );
+    const visibleMenuItems = useMemo(() => menuItems.filter((item) => item.visible !== false), [menuItems]);
 
     if (!visibleMenuItems.length) {
         if (!menuItems.length) {
@@ -58,7 +55,13 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
                 <ItemsWrapper smallItemsSpacing>
                     {visibleMenuItems.map((menuItem) => {
                         if (menuItem.type === "separator") {
-                            return <SingleSelectListItem key={menuItem.itemId} type={menuItem.type} />;
+                            return (
+                                <SingleSelectListItem
+                                    key={menuItem.itemId}
+                                    type={menuItem.type}
+                                    className={menuItem.className}
+                                />
+                            );
                         }
 
                         if (menuItem.type === "header") {
@@ -67,6 +70,7 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
                                     key={menuItem.itemId}
                                     type={menuItem.type}
                                     title={menuItem.itemName}
+                                    className={menuItem.className}
                                 />
                             );
                         }
@@ -74,7 +78,7 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
                         const selectorClassName = `gd-menu-item-${menuItem.itemId}`;
                         const body = (
                             <SingleSelectListItem
-                                className={cx("gd-menu-item", `s-${menuItem.itemId}`, {
+                                className={cx("gd-menu-item", menuItem.className, `s-${menuItem.itemId}`, {
                                     [selectorClassName]: menuItem.tooltip,
                                     "is-disabled": menuItem.disabled,
                                 })}

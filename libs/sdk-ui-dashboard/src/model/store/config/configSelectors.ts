@@ -184,7 +184,7 @@ export const selectEnableKPIDashboardSchedule = createSelector(selectConfig, (st
  * @public
  */
 export const selectEnableKPIDashboardScheduleRecipients = createSelector(selectConfig, (state) => {
-    return state.settings?.enableKPIDashboardScheduleRecipients;
+    return state.settings?.enableKPIDashboardScheduleRecipients ?? false;
 });
 
 /**

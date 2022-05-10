@@ -1,8 +1,48 @@
-// (C) 2019-2020 GoodData Corporation
-import React from "react";
+// (C) 2019-2022 GoodData Corporation
+import React, { useCallback } from "react";
 import { ISaveAsDialogProps } from "../types";
 import { useSaveAs } from "./useSaveAs";
 import { SaveAsDialogRenderer } from "./SaveAsDialogRenderer";
+import { useToastMessage } from "@gooddata/sdk-ui-kit";
+import {
+    selectIsSaveAsDialogOpen,
+    uiActions,
+    useDashboardDispatch,
+    useDashboardSelector,
+} from "../../../model";
+
+/**
+ * @internal
+ */
+export function useSaveAsDialogProps(): ISaveAsDialogProps {
+    const { addSuccess, addError } = useToastMessage();
+
+    const dispatch = useDashboardDispatch();
+    const closeSaveAsDialog = useCallback(() => dispatch(uiActions.closeSaveAsDialog()), [dispatch]);
+
+    const isSaveAsDialogOpen = useDashboardSelector(selectIsSaveAsDialogOpen);
+
+    const onSaveAsError = useCallback(() => {
+        closeSaveAsDialog();
+        addError({ id: "messages.dashboardSaveFailed" });
+    }, []);
+
+    const onSaveAsSuccess = useCallback(() => {
+        closeSaveAsDialog();
+        addSuccess({ id: "messages.dashboardSaveSuccess" });
+    }, []);
+
+    const onSaveAsCancel = useCallback(() => {
+        closeSaveAsDialog();
+    }, []);
+
+    return {
+        isVisible: isSaveAsDialogOpen,
+        onCancel: onSaveAsCancel,
+        onError: onSaveAsError,
+        onSuccess: onSaveAsSuccess,
+    };
+}
 
 /**
  * @alpha
