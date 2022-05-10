@@ -6,6 +6,7 @@ ROOT_DIR=$(echo $(cd $(dirname $0)/.. && pwd -P))
 STORYBOOK_ASSETS="${ROOT_DIR}/dist-storybook"
 STORYBOOK_CONF="${ROOT_DIR}/stories/storybook.conf"
 BACKSTOP_DIR="${ROOT_DIR}/backstop"
+OUTPUT_REPORT="${ROOT_DIR}/backstop/output/html-report/index.html"
 
 # randomize network just in case two jobs run on the same machine
 BACKSTOP_NET="backstop-sdk-ui-${RANDOM}"
@@ -66,36 +67,35 @@ docker network create "${BACKSTOP_NET}" || { echo "Network creation failed" && e
 
     echo "Starting BackstopJS in dir ${BACKSTOP_DIR} with params: $@"
 
-    docker run --rm \
-        --env BACKSTOP_CAPTURE_LIMIT \
-        --env BACKSTOP_COMPARE_LIMIT \
-        --env BACKSTOP_DEBUG \
-        --user $UID:$GID \
-        --net ${BACKSTOP_NET} --net-alias backstop \
-        --volume ${BACKSTOP_DIR}:/src:Z,consistent \
-        backstopjs/backstopjs:5.1.0 --config=/src/backstop.config.js "$@"
+    {
+        docker run --rm \
+            --env BACKSTOP_CAPTURE_LIMIT \
+            --env BACKSTOP_COMPARE_LIMIT \
+            --env BACKSTOP_DEBUG \
+            --user $UID:$GID \
+            --net ${BACKSTOP_NET} --net-alias backstop \
+            --volume ${BACKSTOP_DIR}:/src:Z,consistent \
+            backstopjs/backstopjs:5.1.0 --config=/src/backstop.config.js "$@"
 
-    if [[ $? -eq 0 ]]; then
-      echo "BackstopJS finished. Killing nginx container ${NGINX_CONTAINER}"
+        echo "BackstopJS finished. Killing nginx container ${NGINX_CONTAINER}"
+    }
 
-      docker kill ${NGINX_CONTAINER}
+    docker kill ${NGINX_CONTAINER}
 
-      echo "Cleaning up docker network ${BACKSTOP_NET}"
+    echo "Cleaning up docker network ${BACKSTOP_NET}"
 
-      docker network rm "${BACKSTOP_NET}"
-      
-      exit 0
-    else
-      docker kill ${NGINX_CONTAINER}
+    docker network rm "${BACKSTOP_NET}"
 
-      echo "Error running backstop. Cleaning up network: ${BACKSTOP_NET}"
-
-      docker network rm "${BACKSTOP_NET}"
-      exit 1
+    # Check if the test report exists - if not, it means that the test
+    # failed with "cannot open the browser" error.
+    # Then return exit status 1 explicitly to the CI pipeline,
+    # or it will be marked as a "success".
+    if [ ! -f "${OUTPUT_REPORT}" ]
+    then
+      exit 1;
     fi
 } || {
   echo "Error running backstop. Cleaning up network: ${BACKSTOP_NET}"
 
   docker network rm "${BACKSTOP_NET}"
 }
-
