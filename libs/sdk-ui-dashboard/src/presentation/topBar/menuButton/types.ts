@@ -1,12 +1,17 @@
 // (C) 2021-2022 GoodData Corporation
 import { ComponentType } from "react";
 
+export interface IMenuItemCommonProps {
+    itemId: string;
+    visible?: boolean;
+    className?: string;
+}
+
 /**
  * @alpha
  */
-export interface IMenuButtonItemButton {
+export interface IMenuButtonItemButton extends IMenuItemCommonProps {
     type: "button";
-    itemId: string;
     itemName: string;
     onClick?: () => void;
     /**
@@ -14,23 +19,20 @@ export interface IMenuButtonItemButton {
      */
     tooltip?: string;
     disabled?: boolean;
-    visible?: boolean;
 }
 
 /**
  * @alpha
  */
-export interface IMenuButtonItemSeparator {
+export interface IMenuButtonItemSeparator extends IMenuItemCommonProps {
     type: "separator";
-    itemId: string;
 }
 
 /**
  * @alpha
  */
-export interface IMenuButtonItemHeader {
+export interface IMenuButtonItemHeader extends IMenuItemCommonProps {
     type: "header";
-    itemId: string;
     itemName: string;
 }
 

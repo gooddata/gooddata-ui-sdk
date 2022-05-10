@@ -149,6 +149,7 @@ export const useDefaultMenuItems = function (): IMenuButtonItem[] {
                 itemName: intl.formatMessage({ id: "options.menu.delete" }),
                 onClick: openDeleteDialog,
                 visible: isDeleteVisible,
+                className: "delete-button",
             },
         ];
     }, [

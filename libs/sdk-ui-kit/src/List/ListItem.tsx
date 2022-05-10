@@ -134,11 +134,24 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
     };
 
     private renderSeparatorItem = () => {
-        return <div className="gd-list-item gd-list-item-separator s-list-separator" />;
+        return (
+            <div
+                className={cx(
+                    "gd-list-item",
+                    "gd-list-item-separator",
+                    "s-list-separator",
+                    this.props.className,
+                )}
+            />
+        );
     };
 
     private renderHeaderItem = () => {
-        return <div className="gd-list-item gd-list-item-header s-list-header">{this.props.title}</div>;
+        return (
+            <div className={cx("gd-list-item", "gd-list-item-header", "s-list-header", this.props.className)}>
+                {this.props.title}
+            </div>
+        );
     };
 
     private renderInfo = () => {
