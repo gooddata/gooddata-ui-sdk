@@ -10,6 +10,7 @@ import {
     IObjectMeta,
 } from "./common";
 import { ObjRef } from "@gooddata/sdk-model";
+import { GdcVisualizationObject } from "@gooddata/api-model-bear";
 
 /**
  * All interface, types, type-guard related to embedded KPI Dashboards
@@ -1306,9 +1307,9 @@ export namespace EmbeddedKpiDashboard {
      *
      * @public
      */
-    export interface IInsightSavedBody {
+    export type IInsightSavedBody = GdcVisualizationObject.IVisualization & {
         insight: IObjectMeta;
-    }
+    };
 
     /**
      * Type that represents `InsightSaved` event data. For more information look at `InsightSaved`.

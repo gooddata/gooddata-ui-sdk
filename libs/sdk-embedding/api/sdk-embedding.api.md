@@ -492,10 +492,9 @@ export namespace EmbeddedKpiDashboard {
         // (undocumented)
         identifier: string;
     }
-    export interface IInsightSavedBody {
-        // (undocumented)
+    export type IInsightSavedBody = GdcVisualizationObject.IVisualization & {
         insight: IObjectMeta;
-    }
+    };
     // (undocumented)
     export interface IInsightWidget {
         // (undocumented)
