@@ -15,6 +15,7 @@ import {
     uiActions,
 } from "../store";
 import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider";
+import { selectIsInViewMode } from "../store/ui/uiSelectors";
 
 /**
  * Hook that handles schedule emailing dialogs.
@@ -31,6 +32,7 @@ export const useDashboardScheduledEmails = () => {
     const dashboardRef = useDashboardSelector(selectDashboardRef);
     const enableInsightExportScheduling = useDashboardSelector(selectEnableInsightExportScheduling);
     const isReadOnly = useDashboardSelector(selectIsReadOnly);
+    const isInViewMode = useDashboardSelector(selectIsInViewMode);
     const canCreateScheduledMail = useDashboardSelector(selectCanCreateScheduledMail);
     const isScheduledEmailingEnabled = !!useDashboardSelector(selectEnableKPIDashboardSchedule);
     const menuButtonItemsVisibility = useDashboardSelector(selectMenuButtonItemsVisibility);
@@ -49,6 +51,7 @@ export const useDashboardScheduledEmails = () => {
     const [scheduledEmailToEdit, setScheduledEmailToEdit] = useState<IScheduledMail>();
 
     const isScheduledEmailingVisible =
+        isInViewMode &&
         !isReadOnly &&
         canCreateScheduledMail &&
         isScheduledEmailingEnabled &&

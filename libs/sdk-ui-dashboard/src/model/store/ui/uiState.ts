@@ -20,6 +20,9 @@ export interface UiState {
     shareDialog: {
         open: boolean;
     };
+    deleteDialog: {
+        open: boolean;
+    };
     filterBar: {
         height: number;
         expanded: boolean;
@@ -46,6 +49,9 @@ export const uiInitialState: UiState = {
         open: false,
     },
     shareDialog: {
+        open: false,
+    },
+    deleteDialog: {
         open: false,
     },
     filterBar: {

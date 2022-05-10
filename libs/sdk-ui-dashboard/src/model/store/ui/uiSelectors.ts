@@ -48,6 +48,11 @@ export const selectIsShareDialogOpen = createSelector(selectSelf, (state) => sta
 /**
  * @internal
  */
+export const selectIsDeleteDialogOpen = createSelector(selectSelf, (state) => state.deleteDialog.open);
+
+/**
+ * @internal
+ */
 export const selectFilterBarHeight = createSelector(selectSelf, (state) => state.filterBar.height);
 
 /**

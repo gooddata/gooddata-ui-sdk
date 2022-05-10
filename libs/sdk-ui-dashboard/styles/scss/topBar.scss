@@ -124,3 +124,10 @@
 .overlay-wrapper {
     z-index: 5001;
 }
+
+.gd-list-item.s-delete {
+    &:hover {
+        background-color: var(--gd-palette-error-lightest, #fff2f1);
+        color: $gd-palette-error-base;
+    }
+}

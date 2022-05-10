@@ -1,7 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import React, { useCallback, useMemo, useRef } from "react";
-import { useIntl } from "react-intl";
-import { isProtectedDataError } from "@gooddata/sdk-backend-spi";
+import React, { useCallback } from "react";
 import { FilterContextItem, IDashboardAttributeFilter, IDashboardDateFilter } from "@gooddata/sdk-model";
 import { ToastMessages, useToastMessage } from "@gooddata/sdk-ui-kit";
 
@@ -9,34 +7,23 @@ import {
     changeAttributeFilterSelection,
     changeDateFilterSelection,
     clearDateFilterSelection,
-    exportDashboardToPdf,
     renameDashboard,
-    selectCanCreateAnalyticalDashboard,
-    selectCanExportReport,
     selectDashboardShareInfo,
     selectDashboardTitle,
-    selectEnableKPIDashboardExportPDF,
     selectFilterContextFilters,
-    selectIsLayoutEmpty,
     selectIsReadOnly,
     selectIsSaveAsDialogOpen,
-    selectMenuButtonItemsVisibility,
     selectPersistedDashboard,
     uiActions,
-    useDashboardCommandProcessing,
     useDashboardDispatch,
-    useDashboardScheduledEmails,
     useDashboardSelector,
 } from "../../../model";
 
 import { ExportDialogProvider } from "../../dialogs";
-
-import { downloadFile } from "../../../_staging/fileUtils/downloadFile";
 import {
     DefaultButtonBar,
     DefaultMenuButton,
     DefaultTopBar,
-    IMenuButtonItem,
     TopBar,
     useCancelButtonProps,
     useEditButtonProps,
@@ -48,7 +35,8 @@ import { SaveAsDialog } from "../../saveAs";
 import { DefaultFilterBar, FilterBar } from "../../filterBar";
 import { ShareDialogDashboardHeader } from "./ShareDialogDashboardHeader";
 import { ScheduledEmailDialogProvider } from "./ScheduledEmailDialogProvider";
-import { selectIsNewDashboard } from "../../../model/store/meta/metaSelectors";
+import { DeleteDialog, useDeleteDialogProps } from "../../deleteDialog";
+import { useDefaultMenuItems } from "../../topBar/menuButton/useDefaultMenuItems";
 
 const useFilterBar = (): {
     filters: FilterContextItem[];
@@ -123,128 +111,18 @@ const useTopBar = () => {
 // split the header parts of the dashboard so that changes to their state
 // (e.g. opening email dialog) do not re-render the dashboard body
 export const DashboardHeader = (): JSX.Element => {
-    const intl = useIntl();
-    const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
-    const isEmptyLayout = useDashboardSelector(selectIsLayoutEmpty);
     const { filters, onAttributeFilterChanged, onDateFilterChanged } = useFilterBar();
     const { title, onTitleChanged, buttonProps, shareInfo } = useTopBar();
-    const { addSuccess, addError, addProgress, removeMessage } = useToastMessage();
-    const { isScheduledEmailingVisible, defaultOnScheduleEmailing } = useDashboardScheduledEmails();
+    const { addSuccess, addError } = useToastMessage();
 
     const dispatch = useDashboardDispatch();
     const isSaveAsDialogOpen = useDashboardSelector(selectIsSaveAsDialogOpen);
-    const openSaveAsDialog = () => dispatch(uiActions.openSaveAsDialog());
     const closeSaveAsDialog = () => dispatch(uiActions.closeSaveAsDialog());
     const persistedDashboard = useDashboardSelector(selectPersistedDashboard);
 
-    const lastExportMessageId = useRef("");
-    const { run: exportDashboard } = useDashboardCommandProcessing({
-        commandCreator: exportDashboardToPdf,
-        successEvent: "GDC.DASH/EVT.EXPORT.PDF.RESOLVED",
-        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
-        onBeforeRun: () => {
-            lastExportMessageId.current = addProgress(
-                { id: "messages.exportResultStart" },
-                // make sure the message stays there until removed by either success or error
-                { duration: 0 },
-            );
-        },
-        onSuccess: (e) => {
-            if (lastExportMessageId.current) {
-                removeMessage(lastExportMessageId.current);
-            }
-            addSuccess({ id: "messages.exportResultSuccess" });
-            downloadFile(e.payload.resultUri);
-        },
-        onError: (err) => {
-            if (lastExportMessageId.current) {
-                removeMessage(lastExportMessageId.current);
-            }
+    const deleteDialogProps = useDeleteDialogProps();
 
-            if (isProtectedDataError(err)) {
-                addError({ id: "messages.exportResultRestrictedError" });
-            } else {
-                addError({ id: "messages.exportResultError" });
-            }
-        },
-    });
-
-    const defaultOnSaveAs = useCallback(() => {
-        if (isNewDashboard) {
-            return;
-        }
-
-        openSaveAsDialog();
-    }, [isNewDashboard]);
-
-    const defaultOnExportToPdf = useCallback(() => {
-        if (isNewDashboard) {
-            return;
-        }
-
-        exportDashboard();
-    }, [exportDashboard, isNewDashboard]);
-
-    const isReadOnly = useDashboardSelector(selectIsReadOnly);
-    const canCreateDashboard = useDashboardSelector(selectCanCreateAnalyticalDashboard);
-
-    const canExportReport = useDashboardSelector(selectCanExportReport);
-    const isKPIDashboardExportPDFEnabled = !!useDashboardSelector(selectEnableKPIDashboardExportPDF);
-
-    const menuButtonItemsVisibility = useDashboardSelector(selectMenuButtonItemsVisibility);
-
-    const defaultMenuItems = useMemo<IMenuButtonItem[]>(() => {
-        if (isNewDashboard) {
-            return [];
-        }
-
-        const isSaveAsVisible = canCreateDashboard && (menuButtonItemsVisibility.saveAsNewButton ?? false);
-        const isSaveAsDisabled = isEmptyLayout || isNewDashboard || isReadOnly;
-
-        const isPdfExportVisible =
-            canExportReport &&
-            isKPIDashboardExportPDFEnabled &&
-            (menuButtonItemsVisibility.pdfExportButton ?? true);
-
-        return [
-            {
-                type: "button",
-                itemId: "save_as_menu_item", // careful, also a s- class selector, do not change
-                disabled: isSaveAsDisabled,
-                visible: !!isSaveAsVisible,
-                itemName: intl.formatMessage({ id: "options.menu.save.as" }),
-                tooltip:
-                    // the tooltip is only relevant to non-read only states
-                    !isReadOnly && isSaveAsDisabled
-                        ? intl.formatMessage({ id: "options.menu.save.as.tooltip" })
-                        : undefined,
-                onClick: defaultOnSaveAs,
-            },
-            {
-                type: "button",
-                itemId: "pdf-export-item", // careful, this is also used as a selector in tests, do not change
-                itemName: intl.formatMessage({ id: "options.menu.export.PDF" }),
-                onClick: defaultOnExportToPdf,
-                visible: isPdfExportVisible,
-            },
-            {
-                type: "button",
-                itemId: "schedule-email-item", // careful, this is also used as a selector in tests, do not change
-                itemName: intl.formatMessage({ id: "options.menu.schedule.email" }),
-                onClick: defaultOnScheduleEmailing,
-                visible: isScheduledEmailingVisible,
-            },
-        ];
-    }, [
-        defaultOnScheduleEmailing,
-        defaultOnExportToPdf,
-        isNewDashboard,
-        isReadOnly,
-        menuButtonItemsVisibility,
-        canExportReport,
-        isKPIDashboardExportPDFEnabled,
-        isScheduledEmailingVisible,
-    ]);
+    const defaultMenuItems = useDefaultMenuItems();
 
     const onSaveAsError = useCallback(() => {
         closeSaveAsDialog();
@@ -266,6 +144,7 @@ export const DashboardHeader = (): JSX.Element => {
             <ExportDialogProvider />
             <ScheduledEmailDialogProvider />
             <ShareDialogDashboardHeader />
+            <DeleteDialog {...deleteDialogProps} />
             {isSaveAsDialogOpen && (
                 <SaveAsDialog
                     isVisible={isSaveAsDialogOpen}

@@ -44,6 +44,11 @@
         "comment": "Translate as imperative. Schedule emailing whole KPI dashboard",
         "limit": 0
     },
+    "options.menu.delete": {
+        "value": "Delete",
+        "comment": "Delete Dashboard",
+        "limit": 0
+    },
     "dialogs.export.cells": {
         "value": "CELLS",
         "comment": "Cells of the table that is going to be exported to file",
@@ -132,6 +137,36 @@
     },
     "dialogs.save.as.new.emailsMessage": {
         "value": "Email schedules will not be duplicated",
+        "comment": "",
+        "limit": 0
+    },
+    "deleteDashboardDialog.headline": {
+        "value": "Delete dashboard?",
+        "comment": "",
+        "limit": 0
+    },
+    "deleteDashboardDialog.submitButtonText": {
+        "value": "Delete",
+        "comment": "",
+        "limit": 0
+    },
+    "deleteDashboardDialog.alertsAndEmailsMessage": {
+        "value": "All alerts and scheduled emails set up for this dashboard will also be deleted.",
+        "comment": "",
+        "limit": 0
+    },
+    "deleteDashboardDialog.alertsMessage": {
+        "value": "All alerts set up for this dashboard will also be deleted.",
+        "comment": "",
+        "limit": 0
+    },
+    "deleteDashboardDialog.emailsMessage": {
+        "value": "All scheduled emails set up for this dashboard will also be deleted.",
+        "comment": "",
+        "limit": 0
+    },
+    "deleteDashboardDialog.drillMessage": {
+        "value": "All drilling into this dashboard from other dashboards will be removed.",
         "comment": "",
         "limit": 0
     },

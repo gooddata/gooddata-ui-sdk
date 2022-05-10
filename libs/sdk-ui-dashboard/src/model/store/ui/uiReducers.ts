@@ -46,6 +46,14 @@ const closeShareDialog: UiReducer = (state) => {
     state.shareDialog.open = false;
 };
 
+const openDeleteDialog: UiReducer = (state) => {
+    state.deleteDialog.open = true;
+};
+
+const closeDeleteDialog: UiReducer = (state) => {
+    state.deleteDialog.open = false;
+};
+
 const setFilterBarHeight: UiReducer<PayloadAction<number>> = (state, action) => {
     state.filterBar.height = action.payload;
 };
@@ -93,6 +101,8 @@ export const uiReducers = {
     highlightKpiAlert,
     openShareDialog,
     closeShareDialog,
+    openDeleteDialog,
+    closeDeleteDialog,
     setMenuButtonItemsVisibility,
     setRenderMode,
 };
