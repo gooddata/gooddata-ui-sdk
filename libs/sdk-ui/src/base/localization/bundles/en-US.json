@@ -1419,10 +1419,16 @@
         "comment": "Text of the tooltip shown above button that removes user or group from unsaved selection of newly added grantees that will gain access right to the dashboard after changes in share dialog are saved.",
         "limit": 0
     },
-    "sorting.dropdown.header": {
+    "sorting.dropdown.header|insight": {
         "value": "Sort insight",
         "comment": "The title of sorting dropdown where you can choose which sort options you want to use. For example sort by attribute A1.",
         "limit": 0
+    },
+    "sorting.dropdown.header|report": {
+        "value": "Sort report",
+        "comment": "The title of sorting dropdown where you can choose which sort options you want to use. For example sort by attribute A1.",
+        "limit": 0,
+        "translate": false
     },
     "sorting.type.alphabetical.asc": {
         "value": "A to Z",
@@ -1504,10 +1510,16 @@
         "comment": "",
         "limit": 0
     },
-    "embedInsightDialog.code.options.include.config.info": {
+    "embedInsightDialog.code.options.include.config.info|insight": {
         "value": "Include the insight configuration of colors, axes, legend, and canvas if available.",
         "comment": "",
         "limit": 0
+    },
+    "embedInsightDialog.code.options.include.config.info|report": {
+        "value": "Include the report configuration of colors, axes, legend, and canvas if available.",
+        "comment": "",
+        "limit": 0,
+        "translate": false
     },
     "embedInsightDialog.code.options.custom.height": {
         "value": "Custom height",
@@ -1519,25 +1531,49 @@
         "comment": "",
         "limit": 0
     },
-    "embedInsightDialog.headLine.byReference": {
+    "embedInsightDialog.headLine.byReference|insight": {
         "value": "Embed insight by reference",
         "comment": "",
         "limit": 0
     },
-    "embedInsightDialog.headLine.byDefinition": {
+    "embedInsightDialog.headLine.byReference|report": {
+        "value": "Embed report by reference",
+        "comment": "",
+        "limit": 0,
+        "translate": false
+    },
+    "embedInsightDialog.headLine.byDefinition|insight": {
         "value": "Embed insight as a copy of its definition",
         "comment": "",
         "limit": 0
     },
-    "embedInsightDialog.changesMessage.byReference": {
+    "embedInsightDialog.headLine.byDefinition|report": {
+        "value": "Embed report as a copy of its definition",
+        "comment": "",
+        "limit": 0,
+        "translate": false
+    },
+    "embedInsightDialog.changesMessage.byReference|insight": {
         "value": "Future changes in this insight will be reflected in embedded version.",
         "comment": "",
         "limit": 0
     },
-    "embedInsightDialog.changesMessage.byDefinition": {
+    "embedInsightDialog.changesMessage.byReference|report": {
+        "value": "Future changes in this report will be reflected in embedded version.",
+        "comment": "",
+        "limit": 0,
+        "translate": false
+    },
+    "embedInsightDialog.changesMessage.byDefinition|insight": {
         "value": "No future changes in this insight will be reflected in embedded version.",
         "comment": "",
         "limit": 0
+    },
+    "embedInsightDialog.changesMessage.byDefinition|report": {
+        "value": "No future changes in this report will be reflected in embedded version.",
+        "comment": "",
+        "limit": 0,
+        "translate": false
     },
     "embedInsightDialog.prepareEnvironmentMessage": {
         "value": "<b>Note.</b> In order for this snippet to work, prepare your environment.",
