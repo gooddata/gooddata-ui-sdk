@@ -52,7 +52,7 @@ export type Alignment = {
 };
 
 // @internal (undocumented)
-export const AppHeader: React_2.ComponentType<Pick<WithIntlProps<IAppHeaderProps & WrappedComponentProps<"intl">>, "className" | "forwardedRef" | "onMenuItemClick" | "helpRedirectUrl" | "userName" | "onUpsellButtonClick" | "logoHref" | "accountMenuItems" | "helpMenuItems" | "menuItemsGroups" | "onLogoClick" | "badges" | "logoUrl" | "logoTitle" | "documentationUrl" | "workspacePicker" | "headerColor" | "headerTextColor" | "activeColor" | "disableHelpDropdown" | "onHelpClick" | "showUpsellButton">>;
+export const AppHeader: React_2.ComponentType<Pick<WithIntlProps<IAppHeaderProps & WrappedComponentProps<"intl">>, "className" | "forwardedRef" | "helpMenuDropdownAlignPoints" | "onMenuItemClick" | "helpRedirectUrl" | "userName" | "onUpsellButtonClick" | "logoHref" | "accountMenuItems" | "helpMenuItems" | "menuItemsGroups" | "onLogoClick" | "badges" | "logoUrl" | "logoTitle" | "documentationUrl" | "workspacePicker" | "headerColor" | "headerTextColor" | "activeColor" | "disableHelpDropdown" | "onHelpClick" | "showStaticHelpMenu" | "showUpsellButton">>;
 
 // @internal (undocumented)
 export type ArrowDirections = Record<string, string>;
@@ -519,6 +519,9 @@ export function generateHeaderHelpMenuItems(documentationUrl?: string, supportFo
 export function generateHeaderMenuItemsGroups(featureFlags: ISettings, workspacePermissions: IWorkspacePermissions, hasAnalyticalDashboards?: boolean, workspaceId?: string, dashboardId?: string, tabId?: string, hasNoDataSet?: boolean, backendSupportsDataItem?: boolean, backendSupportsCsvUploader?: boolean, hasMeasures?: boolean, hasManage?: boolean): IHeaderMenuItem[][];
 
 // @internal (undocumented)
+export function generateHeaderStaticHelpMenuItems(): IHeaderMenuItem[];
+
+// @internal (undocumented)
 export function generateSupportUrl(projectId?: string, sessionId?: string, userEmail?: string, url?: string): string;
 
 // @internal
@@ -622,6 +625,9 @@ export const HeaderWorkspacePicker: React_2.FC<WithIntlProps<IHeaderWorkspacePic
     WrappedComponent: React_2.ComponentType<IHeaderWorkspacePickerProps>;
 };
 
+// @internal (undocumented)
+export type HelpMenuDropdownAlignPoints = "br tr" | "bl tl";
+
 // @public (undocumented)
 export const HubspotConversionTouchPointDialog: React_2.FC<IHubspotConversionTouchPointDialogBaseProps>;
 
@@ -692,6 +698,8 @@ export interface IAppHeaderProps {
     // (undocumented)
     headerTextColor?: string;
     // (undocumented)
+    helpMenuDropdownAlignPoints?: HelpMenuDropdownAlignPoints;
+    // (undocumented)
     helpMenuItems?: IHeaderMenuItem[];
     // (undocumented)
     helpRedirectUrl?: string;
@@ -711,6 +719,8 @@ export interface IAppHeaderProps {
     onMenuItemClick?: (menuItem: IHeaderMenuItem, e?: React_2.MouseEvent) => void;
     // (undocumented)
     onUpsellButtonClick?: (e: React_2.MouseEvent) => void;
+    // (undocumented)
+    showStaticHelpMenu?: boolean;
     // (undocumented)
     showUpsellButton?: boolean;
     // (undocumented)
@@ -1663,6 +1673,8 @@ export interface IHeaderMenuItem {
     className?: string;
     // (undocumented)
     href?: string;
+    // (undocumented)
+    iconName?: string;
     // (undocumented)
     isActive?: boolean;
     // (undocumented)
@@ -3639,6 +3651,9 @@ export const ToastMessages: React_2.FC;
 
 // @internal (undocumented)
 export function transform2Dropdown<T extends IDateDataset>(dateDatasets: T[]): Array<T | IDateDatasetHeader>;
+
+// @internal (undocumented)
+export type TUTMContent = "main_menu_help_documentation" | "main_menu_help_university" | "main_menu_help_community" | "main_menu_help_support" | "main_menu_help_ticket" | "main_menu_help_slack";
 
 // @internal (undocumented)
 export const Typography: React_2.FC<ITypographyProps>;

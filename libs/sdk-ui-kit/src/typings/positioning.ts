@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 
 /**
  * @internal
@@ -46,3 +46,8 @@ export interface IAlignPoint {
     align: string;
     offset?: IOffset;
 }
+
+/**
+ * @internal
+ */
+export type HelpMenuDropdownAlignPoints = "br tr" | "bl tl";

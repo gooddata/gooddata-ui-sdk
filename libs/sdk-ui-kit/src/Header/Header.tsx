@@ -43,9 +43,10 @@ function getWidthOfChildren(element: HTMLDivElement, selector = "> *") {
 class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, IAppHeaderState> {
     public static defaultProps: Pick<
         IAppHeaderProps,
-        "logoHref" | "accountMenuItems" | "helpMenuItems" | "menuItemsGroups"
+        "logoHref" | "accountMenuItems" | "helpMenuItems" | "menuItemsGroups" | "helpMenuDropdownAlignPoints"
     > = {
         logoHref: "/",
+        helpMenuDropdownAlignPoints: "br tr",
         accountMenuItems: [],
         helpMenuItems: [],
         menuItemsGroups: [],
@@ -266,7 +267,9 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
         const { badges } = this.props;
 
         const menuItemsGroups = !this.state.isHelpMenuOpen
-            ? this.addHelpItemGroup(this.props.menuItemsGroups)
+            ? this.props.showStaticHelpMenu
+                ? [[this.getHelpMenuLink()]]
+                : this.addHelpItemGroup(this.props.menuItemsGroups)
             : this.getHelpMenu();
 
         return (
@@ -316,7 +319,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
     };
 
     private renderStandardNav = () => {
-        const { badges } = this.props;
+        const { badges, helpMenuDropdownAlignPoints } = this.props;
 
         return (
             <div className="gd-header-stretch gd-header-menu-wrapper">
@@ -334,6 +337,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                     <HeaderHelp
                         onMenuItemClick={this.props.onMenuItemClick}
                         className="gd-header-measure"
+                        helpMenuDropdownAlignPoints={helpMenuDropdownAlignPoints}
                         items={this.props.helpMenuItems}
                         disableDropdown={this.props.disableHelpDropdown}
                         onHelpClicked={this.props.onHelpClick}

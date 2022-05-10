@@ -24,7 +24,7 @@ class WrappedHeaderMenu extends PureComponent<IHeaderMenuProps & WrappedComponen
                 ? item.onClick
                 : (event: React.MouseEvent) => this.props.onMenuItemClick(item, event);
 
-            const classNames = cx("gd-header-menu-item", {
+            const classNames = cx("gd-header-menu-item gd-list-help-menu-item", {
                 active: item.isActive,
             });
 
@@ -37,6 +37,7 @@ class WrappedHeaderMenu extends PureComponent<IHeaderMenuProps & WrappedComponen
                         target={item.target}
                         rel={item.target === "_blank" ? "noreferrer noopener" : undefined}
                     >
+                        {item.iconName && <i className={cx(item.iconName, "gd-icon")} />}
                         <span className={item.className}>
                             <FormattedMessage id={item.key} />
                         </span>

@@ -2,14 +2,7 @@
 import { ISettings } from "@gooddata/sdk-model";
 
 import { generateSupportUrl } from "../utils/featureFlags";
-import { IHeaderMenuItem } from "./typings";
-
-type TUTMContent =
-    | "main_menu_help_documentation"
-    | "main_menu_help_university"
-    | "main_menu_help_community"
-    | "main_menu_help_support"
-    | "main_menu_help_ticket";
+import { IHeaderMenuItem, TUTMContent } from "./typings";
 
 /**
  * @internal
