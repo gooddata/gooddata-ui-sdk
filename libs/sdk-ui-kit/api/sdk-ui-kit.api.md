@@ -558,6 +558,7 @@ export type GetOptimalAlignmentForRegion = {
 export type GetPositionedSelfRegion = {
     targetRegion: IRegion;
     selfRegion: IRegion;
+    bodyRegion: IRegion;
     alignPoint: IAlignPoint;
 };
 

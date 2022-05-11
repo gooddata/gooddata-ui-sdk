@@ -13,7 +13,7 @@ import { v4 as uuid } from "uuid";
 // eslint-disable-next-line import/no-unassigned-import
 import "element-closest-polyfill";
 
-import { DEFAULT_ALIGN_POINTS, getOptimalAlignment } from "../utils/overlay";
+import { DEFAULT_ALIGN_POINTS, getOptimalAlignment, getOverlayStyles } from "../utils/overlay";
 import { elementRegion, isFixedPosition } from "../utils/domUtilities";
 import { ENUM_KEY_CODE } from "../typings/utilities";
 import { IOverlayProps, IOverlayState } from "./typings";
@@ -39,6 +39,7 @@ const ALIGN_TIMEOUT_MS = 10;
 const INIT_STATE_ALIGN = -500;
 
 export const POSITION_SAME_AS_TARGET = "sameAsTarget";
+const OVERLAY_CONTENT_CLASS = "gd-overlay-content";
 
 function exceedsThreshold(firstNumber: number, secondNumber: number) {
     return Math.abs(firstNumber - secondNumber) > 2;
@@ -123,6 +124,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
 
     public componentDidMount(): void {
         this.isComponentMounted = true;
+        afterOverlayOpened();
 
         window.addEventListener("resize", this.resizeHandler);
 
@@ -169,6 +171,8 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         if (this.context) {
             this.context.removeOverlay(this.id);
         }
+
+        afterOverlayClosed();
     }
 
     public render(): React.ReactNode {
@@ -179,7 +183,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
                 <Portal node={this.portalNode}>
                     {/* Do not prevent onScroll events - see ONE-4189 for details */}
                     <div
-                        className={this.props.containerClassName}
+                        className={cx(this.props.containerClassName, OVERLAY_CONTENT_CLASS)}
                         onClick={this.props.onClick}
                         onMouseOver={this.props.onMouseOver}
                         onMouseUp={this.props.onMouseUp}
@@ -423,4 +427,34 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
             false
         );
     };
+}
+
+const overlayState = {
+    opened: 0,
+    body: {},
+    html: {},
+};
+function afterOverlayOpened() {
+    if (overlayState.opened === 0) {
+        const styles = getOverlayStyles();
+        overlayState.html = applyStyles(document.documentElement, styles.html);
+        overlayState.body = applyStyles(document.body, styles.body);
+    }
+    overlayState.opened++;
+}
+
+function afterOverlayClosed() {
+    overlayState.opened--;
+    if (overlayState.opened === 0) {
+        applyStyles(document.documentElement, overlayState.html);
+        applyStyles(document.body, overlayState.body);
+    }
+}
+
+function applyStyles(el: HTMLElement, newStyles: Record<string, any>) {
+    return Object.keys(newStyles).reduce((prev, key) => {
+        const oldValue = el.style[key];
+        el.style[key] = newStyles[key];
+        return { ...prev, [key]: oldValue };
+    }, {});
 }

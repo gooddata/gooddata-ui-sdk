@@ -1,6 +1,6 @@
-// (C) 2020 GoodData Corporation
-import { IAlignPoint } from "../typings/positioning";
-import { IRegion } from "../typings/domUtilities";
+// (C) 2020-2022 GoodData Corporation
+import { IAlignPoint } from "./positioning";
+import { IRegion } from "./domUtilities";
 
 /**
  * @internal
@@ -22,6 +22,7 @@ export type GetOptimalAlignment = {
 export type GetPositionedSelfRegion = {
     targetRegion: IRegion;
     selfRegion: IRegion;
+    bodyRegion: IRegion;
     alignPoint: IAlignPoint;
 };
 

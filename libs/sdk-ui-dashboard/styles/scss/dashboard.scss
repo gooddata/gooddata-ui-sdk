@@ -1,4 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
+@import "~@gooddata/sdk-ui-kit/styles/scss/mixins";
+
 @import "./variables";
 @import "./layout";
 @import "./kpi";
@@ -10,7 +12,7 @@
 // this must be used on the body element in gdc-dashboards
 .gd-dashboards-root {
     background: $gd-dashboards-content-backgroundColor;
-    font-family: $gd-font-primary;
+    @include default-styles();
 }
 
 .dash-item {
