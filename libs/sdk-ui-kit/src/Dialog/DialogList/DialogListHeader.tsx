@@ -42,7 +42,7 @@ export const DialogListHeader: React.VFC<IDialogListHeaderProps> = (props) => {
         disabled: buttonDisabled,
     });
 
-    const onClick = useCallback(() => !buttonDisabled && onButtonClick(), [buttonDisabled]);
+    const onClick = useCallback(() => !buttonDisabled && onButtonClick?.(), [buttonDisabled]);
 
     return (
         <div className={headerClassNames}>

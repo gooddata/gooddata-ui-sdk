@@ -56,13 +56,22 @@
     }
 }
 
+.gd-dialog-list-wrapper {
+    box-sizing: inherit;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+    margin-left: -20px;
+    width: calc(100% + 40px);
+    padding-left: 20px;
+}
+
 .gd-dialog-list {
     flex: 1;
-    overflow-x: hidden;
-    margin-right: -20px;
     padding-right: 20px;
     min-height: 50px;
-    overflow-y: auto;
+    overflow: auto;
 }
 
 .gd-dialog-list-item-basic {
@@ -83,7 +92,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 30px;
+            flex-basis: 30px;
             height: 30px;
             margin: auto 0;
             background-color: $is-focused-background;
@@ -126,7 +135,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 36px;
+        flex-basis: 36px;
         height: 100%;
         cursor: pointer;
         flex-shrink: 0;

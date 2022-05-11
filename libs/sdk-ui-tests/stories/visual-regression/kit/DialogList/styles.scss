@@ -1,11 +1,11 @@
 $dialog-max-height: 600px;
 $dialog-width: 460px;
-$dialog-header-height: 43px;
-$dialog-footer-height: 52px;
-$dialog-vertical-padding: 40px;
+$empty-space: 20px;
 
 .gd-management-dialog {
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
     width: $dialog-width;
     max-height: $dialog-max-height;
 
@@ -16,21 +16,23 @@ $dialog-vertical-padding: 40px;
     }
 
     .gd-dialog-content {
-        max-height: calc(
-            #{$dialog-max-height} - #{$dialog-header-height} - #{$dialog-footer-height} - #{$dialog-vertical-padding}
-        );
+        box-sizing: inherit;
         display: flex;
         flex-direction: column;
+        overflow: hidden;
+        width: calc(100% + 40px);
+        padding: 0 20px;
+        margin-left: -20px;
     }
 
     // @media #{$small-only}
     @media only screen and (max-width: 640px) {
-        width: calc(100vw - 20px);
+        width: calc(100vw - #{$empty-space});
+        height: calc(100vh);
+        max-height: inherit;
 
         .gd-dialog-content {
-            height: calc(
-                100vh - #{$dialog-header-height} - #{$dialog-footer-height} - #{$dialog-vertical-padding}
-            );
+            flex: 1;
         }
     }
 }
