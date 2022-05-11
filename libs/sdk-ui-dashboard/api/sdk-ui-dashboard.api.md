@@ -2717,9 +2717,11 @@ export type IDashboardFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPosi
 
 // @public
 export interface IDashboardInsightCustomizer {
-    withCustomDecorator(providerFactory: (next: InsightComponentProvider) => OptionalInsightComponentProvider): IDashboardInsightCustomizer;
-    withCustomProvider(provider: OptionalInsightComponentProvider): IDashboardInsightCustomizer;
-    withTag(tag: string, component: CustomDashboardInsightComponent): IDashboardInsightCustomizer;
+    withCustomDecorator(providerFactory: (next: InsightComponentProvider) => OptionalInsightComponentProvider): this;
+    // @alpha
+    withCustomInsightRenderer(provider: OptionalInsightRendererProvider): this;
+    withCustomProvider(provider: OptionalInsightComponentProvider): this;
+    withTag(tag: string, component: CustomDashboardInsightComponent): this;
 }
 
 // @alpha (undocumented)

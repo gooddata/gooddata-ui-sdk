@@ -5,6 +5,7 @@ import {
     InsightComponentProvider,
     KpiComponentProvider,
     OptionalInsightComponentProvider,
+    OptionalInsightRendererProvider,
     OptionalKpiComponentProvider,
 } from "../presentation";
 import {
@@ -61,6 +62,26 @@ export interface IDashboardInsightCustomizer {
      * @returns self, for call chaining sakes
      */
     withCustomProvider(provider: OptionalInsightComponentProvider): IDashboardInsightCustomizer;
+
+    /**
+     * Register a provider for React components to render insights inside of the {@link DefaultDashboardInsight}.
+     *
+     * @remarks
+     * A provider takes the insight and widget that it is part of as input and is expected to return
+     * a React component that should be used to render that insight.
+     *
+     * If the provider returns `undefined` then:
+     *
+     * -  if there are other providers registered, they will be called to see if they can provide
+     *    a component to render the insight
+     * -  if there are no other providers registered, the default, built-in component will be used.
+     *
+     * You may register multiple providers. They will be evaluated in the order you register them.
+     * @param provider - provider to register
+     * @returns self, for call chaining sakes
+     * @alpha
+     */
+    withCustomInsightRenderer(provider: OptionalInsightRendererProvider): IDashboardInsightCustomizer;
 
     /**
      * Register a factory for insight decorator providers.

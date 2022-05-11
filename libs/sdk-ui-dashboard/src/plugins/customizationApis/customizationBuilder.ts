@@ -81,6 +81,7 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
 
         const props: IDashboardExtensionProps = {
             InsightComponentProvider: this.insightCustomizer.getInsightProvider(),
+            InsightRendererProvider: this.insightCustomizer.getInsightRendererProvider(),
             KpiComponentProvider: this.kpiCustomizer.getKpiProvider(),
             WidgetComponentProvider: this.widgetCustomizer.getWidgetComponentProvider(),
             customizationFns: {
