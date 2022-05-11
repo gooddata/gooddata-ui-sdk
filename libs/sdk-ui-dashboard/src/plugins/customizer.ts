@@ -5,7 +5,7 @@ import {
     InsightComponentProvider,
     KpiComponentProvider,
     OptionalInsightComponentProvider,
-    OptionalInsightRendererProvider,
+    OptionalInsightBodyComponentProvider,
     OptionalKpiComponentProvider,
 } from "../presentation";
 import {
@@ -64,7 +64,7 @@ export interface IDashboardInsightCustomizer {
     withCustomProvider(provider: OptionalInsightComponentProvider): IDashboardInsightCustomizer;
 
     /**
-     * Register a provider for React components to render insights inside of the {@link DefaultDashboardInsight}.
+     * Register a provider for React components to render insight body inside of the {@link DefaultDashboardInsight}.
      *
      * @remarks
      * A provider takes the insight and widget that it is part of as input and is expected to return
@@ -81,7 +81,9 @@ export interface IDashboardInsightCustomizer {
      * @returns self, for call chaining sakes
      * @alpha
      */
-    withCustomInsightRenderer(provider: OptionalInsightRendererProvider): IDashboardInsightCustomizer;
+    withCustomInsightBodyProvider(
+        provider: OptionalInsightBodyComponentProvider,
+    ): IDashboardInsightCustomizer;
 
     /**
      * Register a factory for insight decorator providers.

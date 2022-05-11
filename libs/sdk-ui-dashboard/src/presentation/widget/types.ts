@@ -2,8 +2,8 @@
 export {
     IDashboardInsightProps,
     CustomDashboardInsightComponent,
-    IInsightRendererProps,
-    CustomInsightRenderer,
+    IInsightBodyProps,
+    CustomInsightBodyComponent,
 } from "./insight/types";
 export {
     CustomDashboardInsightMenuButtonComponent,

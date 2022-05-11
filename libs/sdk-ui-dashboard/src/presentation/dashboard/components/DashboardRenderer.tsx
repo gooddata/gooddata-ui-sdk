@@ -39,7 +39,7 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
         attributeFilterProvider,
         widgetProvider,
         insightProvider,
-        insightRendererProvider,
+        insightBodyProvider,
         insightMenuButtonProvider,
         insightMenuProvider,
         kpiProvider,
@@ -72,7 +72,7 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                         LoadingComponent={props.LoadingComponent ?? DefaultLoading}
                                         LayoutComponent={props.LayoutComponent ?? DefaultDashboardLayout}
                                         InsightComponentProvider={insightProvider}
-                                        InsightRendererProvider={insightRendererProvider}
+                                        InsightBodyComponentProvider={insightBodyProvider}
                                         InsightMenuButtonComponentProvider={insightMenuButtonProvider}
                                         InsightMenuComponentProvider={insightMenuProvider}
                                         KpiComponentProvider={kpiProvider}

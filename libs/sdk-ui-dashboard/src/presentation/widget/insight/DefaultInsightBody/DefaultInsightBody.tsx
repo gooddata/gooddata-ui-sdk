@@ -2,13 +2,13 @@
 import React from "react";
 import { InsightRenderer } from "@gooddata/sdk-ui-ext";
 
-import { CustomInsightRenderer } from "../types";
+import { CustomInsightBodyComponent } from "../types";
 
 /**
- * Default implementation of the Insight Renderer.
+ * Default implementation of the InsightBody.
  *
  * @alpha
  */
-export const DefaultInsightRenderer: CustomInsightRenderer = (props) => {
+export const DefaultInsightBody: CustomInsightBodyComponent = (props) => {
     return <InsightRenderer {...props} />;
 };

@@ -12,7 +12,7 @@ import {
     DefaultDashboardInsightMenu,
     LegacyDashboardInsightMenu,
     DefaultDashboardKpi,
-    DefaultInsightRenderer,
+    DefaultInsightBody,
 } from "../../widget";
 import { IDashboardProps } from "../types";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -20,10 +20,10 @@ import {
     AttributeFilterComponentProvider,
     WidgetComponentProvider,
     InsightComponentProvider,
+    InsightBodyComponentProvider,
     InsightMenuButtonComponentProvider,
     InsightMenuComponentProvider,
     KpiComponentProvider,
-    InsightRendererProvider,
 } from "../../dashboardContexts";
 
 interface IUseDashboardResult {
@@ -34,7 +34,7 @@ interface IUseDashboardResult {
     attributeFilterProvider: AttributeFilterComponentProvider;
     widgetProvider: WidgetComponentProvider;
     insightProvider: InsightComponentProvider;
-    insightRendererProvider: InsightRendererProvider;
+    insightBodyProvider: InsightBodyComponentProvider;
     insightMenuButtonProvider: InsightMenuButtonComponentProvider;
     insightMenuProvider: InsightMenuComponentProvider;
     kpiProvider: KpiComponentProvider;
@@ -46,7 +46,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         DashboardAttributeFilterComponentProvider,
         WidgetComponentProvider,
         InsightComponentProvider,
-        InsightRendererProvider,
+        InsightBodyComponentProvider,
         InsightMenuButtonComponentProvider,
         insightMenuItemsProvider,
         InsightMenuComponentProvider,
@@ -80,12 +80,12 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         [InsightComponentProvider],
     );
 
-    const insightRendererProvider = useCallback<InsightRendererProvider>(
+    const insightBodyProvider = useCallback<InsightBodyComponentProvider>(
         (insight, widget) => {
-            const userSpecified = InsightRendererProvider?.(insight, widget);
-            return userSpecified ?? DefaultInsightRenderer;
+            const userSpecified = InsightBodyComponentProvider?.(insight, widget);
+            return userSpecified ?? DefaultInsightBody;
         },
-        [InsightRendererProvider],
+        [InsightBodyComponentProvider],
     );
 
     const insightMenuButtonProvider = useCallback<InsightMenuButtonComponentProvider>(
@@ -135,7 +135,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         attributeFilterProvider,
         widgetProvider,
         insightProvider,
-        insightRendererProvider,
+        insightBodyProvider,
         insightMenuButtonProvider,
         insightMenuProvider,
         kpiProvider,

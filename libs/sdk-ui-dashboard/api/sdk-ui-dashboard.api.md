@@ -665,7 +665,7 @@ export type CustomEditModeButtonComponent = ComponentType<IEditButtonProps>;
 export type CustomFilterBarComponent = ComponentType<IFilterBarProps>;
 
 // @alpha (undocumented)
-export type CustomInsightRenderer = ComponentType<IInsightRendererProps>;
+export type CustomInsightBodyComponent = ComponentType<IInsightBodyProps>;
 
 // @alpha (undocumented)
 export type CustomMenuButtonComponent = ComponentType<IMenuButtonProps>;
@@ -2034,7 +2034,7 @@ export function DefaultEditButton({ isVisible, isEnabled, onEditClick }: IEditBu
 export const DefaultFilterBar: (props: IFilterBarProps) => JSX.Element;
 
 // @alpha
-export const DefaultInsightRenderer: CustomInsightRenderer;
+export const DefaultInsightBody: CustomInsightBodyComponent;
 
 // @alpha (undocumented)
 export const DefaultLockedStatus: React_2.FC<ILockedStatusProps>;
@@ -2596,13 +2596,13 @@ export interface IDashboardCustomComponentProps {
     ErrorComponent?: ComponentType<IErrorProps>;
     // @alpha
     FilterBarComponent?: CustomFilterBarComponent;
+    // @alpha
+    InsightBodyComponentProvider?: OptionalInsightBodyComponentProvider;
     InsightComponentProvider?: OptionalInsightComponentProvider;
     // @alpha
     InsightMenuButtonComponentProvider?: OptionalInsightMenuButtonComponentProvider;
     // @alpha
     InsightMenuComponentProvider?: OptionalInsightMenuComponentProvider;
-    // @alpha
-    InsightRendererProvider?: OptionalInsightRendererProvider;
     KpiComponentProvider?: OptionalKpiComponentProvider;
     // @alpha
     LayoutComponent?: CustomDashboardLayoutComponent;
@@ -2717,11 +2717,11 @@ export type IDashboardFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPosi
 
 // @public
 export interface IDashboardInsightCustomizer {
-    withCustomDecorator(providerFactory: (next: InsightComponentProvider) => OptionalInsightComponentProvider): this;
+    withCustomDecorator(providerFactory: (next: InsightComponentProvider) => OptionalInsightComponentProvider): IDashboardInsightCustomizer;
     // @alpha
-    withCustomInsightRenderer(provider: OptionalInsightRendererProvider): this;
-    withCustomProvider(provider: OptionalInsightComponentProvider): this;
-    withTag(tag: string, component: CustomDashboardInsightComponent): this;
+    withCustomInsightBodyProvider(provider: OptionalInsightBodyComponentProvider): IDashboardInsightCustomizer;
+    withCustomProvider(provider: OptionalInsightComponentProvider): IDashboardInsightCustomizer;
+    withTag(tag: string, component: CustomDashboardInsightComponent): IDashboardInsightCustomizer;
 }
 
 // @alpha (undocumented)
@@ -3027,6 +3027,26 @@ export interface IImplicitDrillWithPredicates {
     predicates: IHeaderPredicate[];
 }
 
+// @alpha
+export interface IInsightBodyProps extends Partial<IVisualizationCallbacks> {
+    backend: IAnalyticalBackend;
+    colorPalette: IColorPalette | undefined;
+    config: {
+        mapboxToken?: string;
+        separators?: ISeparators;
+        forceDisableDrillOnAxes?: boolean;
+        isExportMode?: boolean;
+    };
+    drillableItems: ExplicitDrill[] | undefined;
+    ErrorComponent: React.ComponentType<IErrorProps> | undefined;
+    insight: IInsight;
+    LoadingComponent: React.ComponentType<ILoadingProps> | undefined;
+    locale: ILocale;
+    settings: IUserWorkspaceSettings | undefined;
+    widget: IInsightWidget;
+    workspace: string;
+}
+
 // @alpha (undocumented)
 export type IInsightMenuItem = IInsightMenuItemButton | IInsightMenuItemSeparator;
 
@@ -3054,26 +3074,6 @@ export interface IInsightMenuItemSeparator {
     itemId: string;
     // (undocumented)
     type: "separator";
-}
-
-// @alpha
-export interface IInsightRendererProps extends Partial<IVisualizationCallbacks> {
-    backend: IAnalyticalBackend;
-    colorPalette: IColorPalette | undefined;
-    config: {
-        mapboxToken?: string;
-        separators?: ISeparators;
-        forceDisableDrillOnAxes?: boolean;
-        isExportMode?: boolean;
-    };
-    drillableItems: ExplicitDrill[] | undefined;
-    ErrorComponent: React.ComponentType<IErrorProps> | undefined;
-    insight: IInsight;
-    LoadingComponent: React.ComponentType<ILoadingProps> | undefined;
-    locale: ILocale;
-    settings: IUserWorkspaceSettings | undefined;
-    widget: IInsightWidget;
-    workspace: string;
 }
 
 // @alpha (undocumented)
@@ -3171,6 +3171,9 @@ export interface InsightAttributesMeta {
     usage: InsightDisplayFormUsage;
 }
 
+// @alpha (undocumented)
+export type InsightBodyComponentProvider = (insight: IInsight, widget: IInsightWidget) => CustomInsightBodyComponent;
+
 // @public (undocumented)
 export type InsightComponentProvider = (insight: IInsight, widget: IInsightWidget) => CustomDashboardInsightComponent;
 
@@ -3200,9 +3203,6 @@ export interface InsightPlaceholderWidget extends ICustomWidgetBase {
     // (undocumented)
     readonly customType: "insightPlaceholder";
 }
-
-// @alpha (undocumented)
-export type InsightRendererProvider = (insight: IInsight, widget: IInsightWidget) => CustomInsightRenderer;
 
 // @alpha
 export function insightSelectDateDataset(queryResult: InsightDateDatasets): ICatalogDateDataset | undefined;
@@ -3898,6 +3898,9 @@ export type OnWidgetDrill = (drillEvent: IDashboardDrillEvent, drillContext: Das
 // @alpha (undocumented)
 export type OptionalAttributeFilterComponentProvider = OptionalProvider<AttributeFilterComponentProvider>;
 
+// @alpha (undocumented)
+export type OptionalInsightBodyComponentProvider = OptionalProvider<InsightBodyComponentProvider>;
+
 // @public (undocumented)
 export type OptionalInsightComponentProvider = OptionalProvider<InsightComponentProvider>;
 
@@ -3906,9 +3909,6 @@ export type OptionalInsightMenuButtonComponentProvider = OptionalProvider<Insigh
 
 // @alpha (undocumented)
 export type OptionalInsightMenuComponentProvider = OptionalProvider<InsightMenuComponentProvider>;
-
-// @alpha (undocumented)
-export type OptionalInsightRendererProvider = OptionalProvider<InsightRendererProvider>;
 
 // @public (undocumented)
 export type OptionalKpiComponentProvider = OptionalProvider<KpiComponentProvider>;

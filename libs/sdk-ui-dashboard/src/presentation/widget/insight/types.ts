@@ -156,11 +156,11 @@ export interface IDashboardInsightProps {
 }
 
 /**
- * Insight renderer props.
+ * Insight body props.
  *
  * @alpha
  */
-export interface IInsightRendererProps extends Partial<IVisualizationCallbacks> {
+export interface IInsightBodyProps extends Partial<IVisualizationCallbacks> {
     /**
      * Backend to work with.
      */
@@ -235,6 +235,11 @@ export interface IInsightRendererProps extends Partial<IVisualizationCallbacks> 
 export type CustomDashboardInsightComponent = ComponentType<IDashboardInsightProps>;
 
 /**
+ * @remarks
+ * When implementing this using GoodData-provided components, make sure that you pass as many of the props
+ * as possible to the component (especially the drill-related props and members of the {@link @gooddata/sdk-ui#IVisualizationCallbacks}).
+ * This will ensure the integration with the rest of the widget is as complete as possible.
+ *
  * @alpha
  */
-export type CustomInsightRenderer = ComponentType<IInsightRendererProps>;
+export type CustomInsightBodyComponent = ComponentType<IInsightBodyProps>;

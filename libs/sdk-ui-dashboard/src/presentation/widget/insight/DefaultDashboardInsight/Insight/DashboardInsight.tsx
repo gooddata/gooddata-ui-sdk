@@ -40,7 +40,7 @@ import { useDashboardInsightDrills } from "./useDashboardInsightDrills";
 import { CustomError } from "../CustomError/CustomError";
 import { DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH } from "../../../../constants";
 import { IntlWrapper } from "../../../../localization";
-import { InsightRenderer } from "../../InsightRenderer";
+import { InsightBody } from "../../InsightBody";
 
 const selectCommonDashboardInsightProps = createSelector(
     [selectLocale, selectSettings, selectColorPalette],
@@ -217,7 +217,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
                     )}
                     {filtersStatus === "success" && (
                         <div className="insight-view-visualization" style={insightWrapperStyle}>
-                            <InsightRenderer
+                            <InsightBody
                                 widget={widget}
                                 insight={insightWithAddedWidgetProperties}
                                 backend={effectiveBackend}
