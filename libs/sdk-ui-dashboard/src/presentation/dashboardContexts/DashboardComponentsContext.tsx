@@ -27,6 +27,7 @@ import {
     InsightComponentProvider,
     InsightMenuButtonComponentProvider,
     InsightMenuComponentProvider,
+    InsightRendererProvider,
     KpiComponentProvider,
     WidgetComponentProvider,
 } from "./types";
@@ -40,6 +41,7 @@ interface IDashboardComponentsContext {
     LayoutComponent: CustomDashboardLayoutComponent;
     WidgetComponentProvider: WidgetComponentProvider;
     InsightComponentProvider: InsightComponentProvider;
+    InsightRendererProvider: InsightRendererProvider;
     InsightMenuButtonComponentProvider: InsightMenuButtonComponentProvider;
     InsightMenuComponentProvider: InsightMenuComponentProvider;
     KpiComponentProvider: KpiComponentProvider;
@@ -70,6 +72,7 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     LoadingComponent: LoadingComponent,
     LayoutComponent: ThrowMissingComponentError("LayoutComponent"),
     InsightComponentProvider: ThrowMissingComponentError("InsightComponent"),
+    InsightRendererProvider: ThrowMissingComponentError("InsightRenderer"),
     InsightMenuButtonComponentProvider: ThrowMissingComponentError("InsightMenuButtonComponent"),
     InsightMenuComponentProvider: ThrowMissingComponentError("InsightMenuComponent"),
     KpiComponentProvider: ThrowMissingComponentError("KpiComponent"),

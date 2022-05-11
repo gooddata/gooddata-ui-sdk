@@ -5,6 +5,7 @@ import {
     CustomDashboardInsightMenuComponent,
     CustomDashboardKpiComponent,
     CustomDashboardWidgetComponent,
+    CustomInsightRenderer,
     IInsightMenuItem,
 } from "../widget/types";
 import { ExtendedDashboardWidget } from "../../model";
@@ -40,6 +41,16 @@ export type InsightComponentProvider = (
  * @public
  */
 export type OptionalInsightComponentProvider = OptionalProvider<InsightComponentProvider>;
+
+/**
+ * @alpha
+ */
+export type InsightRendererProvider = (insight: IInsight, widget: IInsightWidget) => CustomInsightRenderer;
+
+/**
+ * @alpha
+ */
+export type OptionalInsightRendererProvider = OptionalProvider<InsightRendererProvider>;
 
 /**
  * @alpha

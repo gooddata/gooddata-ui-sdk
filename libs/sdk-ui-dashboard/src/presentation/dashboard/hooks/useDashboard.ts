@@ -27,6 +27,8 @@ import {
     LegacyDashboardInsightMenu,
     CustomDashboardKpiComponent,
     DefaultDashboardKpi,
+    CustomInsightRenderer,
+    DefaultInsightRenderer,
 } from "../../widget";
 import { IDashboardProps } from "../types";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -37,6 +39,7 @@ import {
     InsightMenuButtonComponentProvider,
     InsightMenuComponentProvider,
     KpiComponentProvider,
+    InsightRendererProvider,
 } from "../../dashboardContexts";
 
 interface IUseDashboardResult {
@@ -47,6 +50,7 @@ interface IUseDashboardResult {
     attributeFilterProvider: AttributeFilterComponentProvider;
     widgetProvider: WidgetComponentProvider;
     insightProvider: InsightComponentProvider;
+    insightRendererProvider: InsightRendererProvider;
     insightMenuButtonProvider: InsightMenuButtonComponentProvider;
     insightMenuProvider: InsightMenuComponentProvider;
     kpiProvider: KpiComponentProvider;
@@ -58,6 +62,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         DashboardAttributeFilterComponentProvider,
         WidgetComponentProvider,
         InsightComponentProvider,
+        InsightRendererProvider,
         InsightMenuButtonComponentProvider,
         insightMenuItemsProvider,
         InsightMenuComponentProvider,
@@ -89,6 +94,14 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
             return userSpecified ?? DefaultDashboardInsight;
         },
         [InsightComponentProvider],
+    );
+
+    const insightRendererProvider = useCallback(
+        (insight: IInsight, widget: IInsightWidget): CustomInsightRenderer => {
+            const userSpecified = InsightRendererProvider?.(insight, widget);
+            return userSpecified ?? DefaultInsightRenderer;
+        },
+        [InsightRendererProvider],
     );
 
     const insightMenuButtonProvider = useCallback(
@@ -138,6 +151,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         attributeFilterProvider,
         widgetProvider,
         insightProvider,
+        insightRendererProvider,
         insightMenuButtonProvider,
         insightMenuProvider,
         kpiProvider,

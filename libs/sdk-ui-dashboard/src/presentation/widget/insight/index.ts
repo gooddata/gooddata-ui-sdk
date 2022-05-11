@@ -1,4 +1,10 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 export * from "./DefaultDashboardInsight";
+export * from "./DefaultInsightRenderer";
 export { DashboardInsight } from "./DashboardInsight";
-export { IDashboardInsightProps, CustomDashboardInsightComponent } from "./types";
+export {
+    IDashboardInsightProps,
+    CustomDashboardInsightComponent,
+    IInsightRendererProps,
+    CustomInsightRenderer,
+} from "./types";

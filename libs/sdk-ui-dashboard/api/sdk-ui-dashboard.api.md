@@ -107,6 +107,8 @@ import { ITempFilterContext } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import { ITranslations } from '@gooddata/sdk-ui';
 import { IUser } from '@gooddata/sdk-model';
+import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
+import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IWidget } from '@gooddata/sdk-model';
 import { IWidgetAlert } from '@gooddata/sdk-model';
 import { IWidgetAlertDefinition } from '@gooddata/sdk-model';
@@ -661,6 +663,9 @@ export type CustomEditModeButtonComponent = ComponentType<IEditButtonProps>;
 
 // @alpha (undocumented)
 export type CustomFilterBarComponent = ComponentType<IFilterBarProps>;
+
+// @alpha (undocumented)
+export type CustomInsightRenderer = ComponentType<IInsightRendererProps>;
 
 // @alpha (undocumented)
 export type CustomMenuButtonComponent = ComponentType<IMenuButtonProps>;
@@ -2028,6 +2033,9 @@ export function DefaultEditButton({ isVisible, isEnabled, onEditClick }: IEditBu
 // @alpha (undocumented)
 export const DefaultFilterBar: (props: IFilterBarProps) => JSX.Element;
 
+// @alpha
+export const DefaultInsightRenderer: CustomInsightRenderer;
+
 // @alpha (undocumented)
 export const DefaultLockedStatus: React_2.FC<ILockedStatusProps>;
 
@@ -2593,6 +2601,8 @@ export interface IDashboardCustomComponentProps {
     InsightMenuButtonComponentProvider?: OptionalInsightMenuButtonComponentProvider;
     // @alpha
     InsightMenuComponentProvider?: OptionalInsightMenuComponentProvider;
+    // @alpha
+    InsightRendererProvider?: OptionalInsightRendererProvider;
     KpiComponentProvider?: OptionalKpiComponentProvider;
     // @alpha
     LayoutComponent?: CustomDashboardLayoutComponent;
@@ -3044,6 +3054,26 @@ export interface IInsightMenuItemSeparator {
     type: "separator";
 }
 
+// @alpha
+export interface IInsightRendererProps extends Partial<IVisualizationCallbacks> {
+    backend: IAnalyticalBackend;
+    colorPalette: IColorPalette | undefined;
+    config: {
+        mapboxToken?: string;
+        separators?: ISeparators;
+        forceDisableDrillOnAxes?: boolean;
+        isExportMode?: boolean;
+    };
+    drillableItems: ExplicitDrill[] | undefined;
+    ErrorComponent: React.ComponentType<IErrorProps> | undefined;
+    insight: IInsight;
+    LoadingComponent: React.ComponentType<ILoadingProps> | undefined;
+    locale: ILocale;
+    settings: IUserWorkspaceSettings | undefined;
+    widget: IInsightWidget;
+    workspace: string;
+}
+
 // @alpha (undocumented)
 export interface ILockedStatusProps {
     // (undocumented)
@@ -3168,6 +3198,9 @@ export interface InsightPlaceholderWidget extends ICustomWidgetBase {
     // (undocumented)
     readonly customType: "insightPlaceholder";
 }
+
+// @alpha (undocumented)
+export type InsightRendererProvider = (insight: IInsight, widget: IInsightWidget) => CustomInsightRenderer;
 
 // @alpha
 export function insightSelectDateDataset(queryResult: InsightDateDatasets): ICatalogDateDataset | undefined;
@@ -3871,6 +3904,9 @@ export type OptionalInsightMenuButtonComponentProvider = OptionalProvider<Insigh
 
 // @alpha (undocumented)
 export type OptionalInsightMenuComponentProvider = OptionalProvider<InsightMenuComponentProvider>;
+
+// @alpha (undocumented)
+export type OptionalInsightRendererProvider = OptionalProvider<InsightRendererProvider>;
 
 // @public (undocumented)
 export type OptionalKpiComponentProvider = OptionalProvider<KpiComponentProvider>;
