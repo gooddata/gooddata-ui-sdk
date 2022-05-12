@@ -28,12 +28,12 @@ export class AbsoluteForm {
 
     public setStartTime = (value: string) => {
         const input = this.wrapper.find(startTimeInput);
-        input.simulate("change", { target: { value } });
+        input.simulate("change", { target: { value } }).simulate("blur");
     };
 
     public setEndTime = (value: string) => {
         const input = this.wrapper.find(endTimeInput);
-        input.simulate("change", { target: { value } });
+        input.simulate("change", { target: { value } }).simulate("blur");
     };
 
     public getStartDate = (): string => {

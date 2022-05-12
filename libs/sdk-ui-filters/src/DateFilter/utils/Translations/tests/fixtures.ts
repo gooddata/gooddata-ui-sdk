@@ -50,6 +50,15 @@ export const absoluteFormFilterWithTimeInOneDay: IUiAbsoluteDateFilterForm = {
     visible: true,
 };
 
+export const absoluteFormFilterWithTimeWithinMoreDays: IUiAbsoluteDateFilterForm = {
+    localIdentifier: "ABSOLUTE_FORM",
+    type: "absoluteForm",
+    from: "2019-01-01 00:00",
+    to: "2019-01-04 23:59",
+    name: "Static range",
+    visible: true,
+};
+
 export const absolutePresetFilter: IAbsoluteDateFilterPreset = {
     localIdentifier: "ABSOLUTE_PRESET_FOO",
     type: "absolutePreset",

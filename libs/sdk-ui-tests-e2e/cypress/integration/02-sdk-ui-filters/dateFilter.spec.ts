@@ -126,7 +126,7 @@ describe("DateFilter", () => {
             .typeIntoFromRangePickerInput("03/15/2019")
             .typeIntoToRangePickerInput("03/15/2019");
 
-        dateFilter.pressButton("apply").subtitleHasValue("03/15/2019, 00:00 – 23:59");
+        dateFilter.pressButton("apply").subtitleHasValue("03/15/2019");
     });
 
     it("Enabled time dimension and set interval within few days", () => {
@@ -141,6 +141,6 @@ describe("DateFilter", () => {
             .typeIntoFromRangePickerInput("03/15/2019")
             .typeIntoToRangePickerInput("04/15/2019");
 
-        dateFilter.pressButton("apply").subtitleHasValue("03/15/2019, 00:00 – 04/15/2019, 23:59");
+        dateFilter.pressButton("apply").subtitleHasValue("03/15/2019 – 04/15/2019");
     });
 });

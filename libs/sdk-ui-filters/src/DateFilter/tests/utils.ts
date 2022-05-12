@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { CommonWrapper, ShallowWrapper, ReactWrapper } from "enzyme";
 
@@ -12,3 +12,6 @@ export const pressButtonOn = (keyCode: number, component: CommonWrapper) =>
 
 export const writeTo = (value: string, component: CommonWrapper) =>
     component.simulate("change", { target: { value } });
+
+export const writeToWithBlur = (value: string, component: CommonWrapper) =>
+    component.simulate("change", { target: { value } }).simulate("blur");

@@ -14,6 +14,7 @@ import {
     relativePresetFilter,
     absoluteFormFilterWithTime,
     absoluteFormFilterWithTimeInOneDay,
+    absoluteFormFilterWithTimeWithinMoreDays,
 } from "./fixtures";
 import { DateFilterGranularity } from "@gooddata/sdk-model";
 import { IUiRelativeDateFilterForm } from "../../../interfaces";
@@ -70,7 +71,16 @@ describe("getDateFilterTitleUsingTranslator", () => {
                 serializingTranslator,
                 DEFAULT_DATE_FORMAT_WITH_TIME,
             );
-            expect(actual).toEqual("01/01/2019, 00:00 – 23:59");
+            expect(actual).toEqual("01/01/2019");
+        });
+
+        it("should return the correct translation for absolute form filter for more days with default time", () => {
+            const actual = getDateFilterTitleUsingTranslator(
+                absoluteFormFilterWithTimeWithinMoreDays,
+                serializingTranslator,
+                DEFAULT_DATE_FORMAT_WITH_TIME,
+            );
+            expect(actual).toEqual("01/01/2019 – 01/04/2019");
         });
     });
 

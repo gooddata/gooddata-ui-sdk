@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import React from "react";
+import React, { useEffect, useState } from "react";
 import cx from "classnames";
 import { DateRangePickerInputField } from "./DateRangePickerInputField";
 import { injectIntl, WrappedComponentProps } from "react-intl";
@@ -8,7 +8,7 @@ import DayPickerInput from "react-day-picker/DayPickerInput";
 import moment from "moment";
 import { DateRangePickerInputFieldBody } from "./DateRangePickerInputFieldBody";
 import { convertPlatformDateStringToDate } from "../utils/DateConversions";
-import { TIME_FORMAT } from "../constants/Platform";
+import { DAY_START_TIME, TIME_FORMAT } from "../constants/Platform";
 import { DayPickerProps } from "react-day-picker";
 
 interface IDateTimePickerOwnProps {
@@ -40,7 +40,7 @@ const DateTimePickerComponent = React.forwardRef<DayPickerInput, DateTimePickerC
             isMobile,
             isTimeEnabled,
             className,
-            defaultTime = "00:00",
+            defaultTime = DAY_START_TIME,
             error = false,
         } = props;
 
@@ -54,6 +54,13 @@ const DateTimePickerComponent = React.forwardRef<DayPickerInput, DateTimePickerC
             }
             return moment(null).format(TIME_FORMAT);
         };
+
+        // keeping local copy to enable time update onBlur
+        const [pickerTime, setPickerTime] = useState<string>(getTime());
+
+        useEffect(() => {
+            setPickerTime(getTime());
+        }, [value]);
 
         // make sure it contains appropriate time if enabled
         const adjustDate = (selectedDate: Date) => {
@@ -139,10 +146,11 @@ const DateTimePickerComponent = React.forwardRef<DayPickerInput, DateTimePickerC
                         <input
                             type="time"
                             className="input-text"
-                            onChange={(event) => {
-                                onTimeChange(event.target.value);
+                            onChange={(event) => setPickerTime(event.target.value)}
+                            onBlur={() => {
+                                onTimeChange(pickerTime);
                             }}
-                            value={getTime()}
+                            value={pickerTime}
                         />
                     </span>
                 )}

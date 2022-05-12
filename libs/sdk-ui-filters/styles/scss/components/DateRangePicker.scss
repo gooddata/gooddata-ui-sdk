@@ -19,7 +19,7 @@ $gd-day-picker-width: 268px;
 .gd-date-range-picker {
     & .gd-input-field,
     & .input-text {
-        font-size: 12px;
+        font-size: 13px;
     }
 
     &-from,
@@ -70,7 +70,7 @@ $gd-day-picker-width: 268px;
 
         & input {
             height: 30px;
-            padding: 0 0 0 40px;
+            padding: 0 0 0 34px;
 
             @media #{$medium-up} {
                 width: 126px;
@@ -103,7 +103,7 @@ $gd-day-picker-width: 268px;
         .gd-icon-calendar {
             position: absolute;
             top: 0;
-            left: 12px;
+            left: 10px;
             display: flex;
             align-items: center;
             height: 100%;

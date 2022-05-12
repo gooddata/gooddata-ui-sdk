@@ -8,6 +8,9 @@ export const platformDateTimeFormat = "YYYY-MM-DD HH:mm";
 export const TIME_FORMAT = "HH:mm";
 export const TIME_FORMAT_WITH_SEPARATOR = ", HH:mm";
 
+export const DAY_START_TIME = "00:00";
+export const DAY_END_TIME = "23:59";
+
 // default date format used on client
 export const DEFAULT_DATE_FORMAT = "MM/dd/yyyy";
 
