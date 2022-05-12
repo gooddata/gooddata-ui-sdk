@@ -33,6 +33,7 @@ import {
     OptionalInsightComponentProvider,
     OptionalInsightMenuButtonComponentProvider,
     OptionalInsightMenuComponentProvider,
+    OptionalInsightBodyComponentProvider,
     OptionalKpiComponentProvider,
     OptionalWidgetComponentProvider,
 } from "../dashboardContexts";
@@ -120,6 +121,19 @@ export interface IDashboardCustomComponentProps {
      * @public
      */
     InsightComponentProvider?: OptionalInsightComponentProvider;
+
+    /**
+     * Specify function to obtain custom component to use for rendering an insight body (i.e. the insight itself) in the {@link DefaultDashboardInsight}.
+     *
+     * @remarks
+     * -  If not provided, the default implementation {@link DefaultInsightBody} will be used.
+     * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultInsightBody} will be used.
+     *    This is useful if you want to customize just one particular insight and keep default rendering for
+     *    the other insights.
+     *
+     * @alpha
+     */
+    InsightBodyComponentProvider?: OptionalInsightBodyComponentProvider;
 
     /**
      * Specify function to obtain custom component to use for rendering an insight menu button.

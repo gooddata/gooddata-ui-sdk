@@ -107,6 +107,8 @@ import { ITempFilterContext } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import { ITranslations } from '@gooddata/sdk-ui';
 import { IUser } from '@gooddata/sdk-model';
+import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
+import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IWidget } from '@gooddata/sdk-model';
 import { IWidgetAlert } from '@gooddata/sdk-model';
 import { IWidgetAlertDefinition } from '@gooddata/sdk-model';
@@ -661,6 +663,9 @@ export type CustomEditModeButtonComponent = ComponentType<IEditButtonProps>;
 
 // @alpha (undocumented)
 export type CustomFilterBarComponent = ComponentType<IFilterBarProps>;
+
+// @alpha (undocumented)
+export type CustomInsightBodyComponent = ComponentType<IInsightBodyProps>;
 
 // @alpha (undocumented)
 export type CustomMenuButtonComponent = ComponentType<IMenuButtonProps>;
@@ -2028,6 +2033,9 @@ export function DefaultEditButton({ isVisible, isEnabled, onEditClick }: IEditBu
 // @alpha (undocumented)
 export function DefaultFilterBar(props: IFilterBarProps): JSX.Element;
 
+// @alpha
+export const DefaultInsightBody: CustomInsightBodyComponent;
+
 // @alpha (undocumented)
 export const DefaultLockedStatus: React_2.FC<ILockedStatusProps>;
 
@@ -2588,6 +2596,8 @@ export interface IDashboardCustomComponentProps {
     ErrorComponent?: ComponentType<IErrorProps>;
     // @alpha
     FilterBarComponent?: CustomFilterBarComponent;
+    // @alpha
+    InsightBodyComponentProvider?: OptionalInsightBodyComponentProvider;
     InsightComponentProvider?: OptionalInsightComponentProvider;
     // @alpha
     InsightMenuButtonComponentProvider?: OptionalInsightMenuButtonComponentProvider;
@@ -2708,6 +2718,8 @@ export type IDashboardFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPosi
 // @public
 export interface IDashboardInsightCustomizer {
     withCustomDecorator(providerFactory: (next: InsightComponentProvider) => OptionalInsightComponentProvider): IDashboardInsightCustomizer;
+    // @alpha
+    withCustomInsightBodyProvider(provider: OptionalInsightBodyComponentProvider): IDashboardInsightCustomizer;
     withCustomProvider(provider: OptionalInsightComponentProvider): IDashboardInsightCustomizer;
     withTag(tag: string, component: CustomDashboardInsightComponent): IDashboardInsightCustomizer;
 }
@@ -3015,6 +3027,26 @@ export interface IImplicitDrillWithPredicates {
     predicates: IHeaderPredicate[];
 }
 
+// @alpha
+export interface IInsightBodyProps extends Partial<IVisualizationCallbacks> {
+    backend: IAnalyticalBackend;
+    colorPalette: IColorPalette | undefined;
+    config: {
+        mapboxToken?: string;
+        separators?: ISeparators;
+        forceDisableDrillOnAxes?: boolean;
+        isExportMode?: boolean;
+    };
+    drillableItems: ExplicitDrill[] | undefined;
+    ErrorComponent: React.ComponentType<IErrorProps> | undefined;
+    insight: IInsight;
+    LoadingComponent: React.ComponentType<ILoadingProps> | undefined;
+    locale: ILocale;
+    settings: IUserWorkspaceSettings | undefined;
+    widget: IInsightWidget;
+    workspace: string;
+}
+
 // @alpha (undocumented)
 export type IInsightMenuItem = IInsightMenuItemButton | IInsightMenuItemSeparator;
 
@@ -3141,6 +3173,9 @@ export interface InsightAttributesMeta {
     displayForms: ReadonlyArray<IAttributeDisplayFormMetadataObject>;
     usage: InsightDisplayFormUsage;
 }
+
+// @alpha (undocumented)
+export type InsightBodyComponentProvider = (insight: IInsight, widget: IInsightWidget) => CustomInsightBodyComponent;
 
 // @public (undocumented)
 export type InsightComponentProvider = (insight: IInsight, widget: IInsightWidget) => CustomDashboardInsightComponent;
@@ -3865,6 +3900,9 @@ export type OnWidgetDrill = (drillEvent: IDashboardDrillEvent, drillContext: Das
 
 // @alpha (undocumented)
 export type OptionalAttributeFilterComponentProvider = OptionalProvider<AttributeFilterComponentProvider>;
+
+// @alpha (undocumented)
+export type OptionalInsightBodyComponentProvider = OptionalProvider<InsightBodyComponentProvider>;
 
 // @public (undocumented)
 export type OptionalInsightComponentProvider = OptionalProvider<InsightComponentProvider>;

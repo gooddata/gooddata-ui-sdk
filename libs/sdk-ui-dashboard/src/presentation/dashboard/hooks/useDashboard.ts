@@ -1,32 +1,18 @@
 // (C) 2022 GoodData Corporation
 import { useCallback, useMemo } from "react";
-import {
-    IDashboardAttributeFilter,
-    IInsight,
-    IInsightWidget,
-    IKpi,
-    IKpiWidget,
-    idRef,
-    IdentifierRef,
-    UriRef,
-} from "@gooddata/sdk-model";
+import { idRef, IdentifierRef, UriRef } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { useThemeIsLoading } from "@gooddata/sdk-ui-theme-provider";
-import { ExtendedDashboardWidget } from "../../../model";
-import { CustomDashboardAttributeFilterComponent, DefaultDashboardAttributeFilter } from "../../filterBar";
+import { DefaultDashboardAttributeFilter } from "../../filterBar";
 import {
-    CustomDashboardWidgetComponent,
     DefaultDashboardWidget,
-    CustomDashboardInsightComponent,
     DefaultDashboardInsight,
-    CustomDashboardInsightMenuButtonComponent,
     DefaultDashboardInsightMenuButton,
     LegacyDashboardInsightMenuButton,
-    CustomDashboardInsightMenuComponent,
     DefaultDashboardInsightMenu,
     LegacyDashboardInsightMenu,
-    CustomDashboardKpiComponent,
     DefaultDashboardKpi,
+    DefaultInsightBody,
 } from "../../widget";
 import { IDashboardProps } from "../types";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -34,6 +20,7 @@ import {
     AttributeFilterComponentProvider,
     WidgetComponentProvider,
     InsightComponentProvider,
+    InsightBodyComponentProvider,
     InsightMenuButtonComponentProvider,
     InsightMenuComponentProvider,
     KpiComponentProvider,
@@ -47,6 +34,7 @@ interface IUseDashboardResult {
     attributeFilterProvider: AttributeFilterComponentProvider;
     widgetProvider: WidgetComponentProvider;
     insightProvider: InsightComponentProvider;
+    insightBodyProvider: InsightBodyComponentProvider;
     insightMenuButtonProvider: InsightMenuButtonComponentProvider;
     insightMenuProvider: InsightMenuComponentProvider;
     kpiProvider: KpiComponentProvider;
@@ -58,6 +46,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         DashboardAttributeFilterComponentProvider,
         WidgetComponentProvider,
         InsightComponentProvider,
+        InsightBodyComponentProvider,
         InsightMenuButtonComponentProvider,
         insightMenuItemsProvider,
         InsightMenuComponentProvider,
@@ -67,32 +56,40 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
     const backend = useBackendStrict(props.backend);
     const workspace = useWorkspaceStrict(props.workspace);
 
-    const attributeFilterProvider = useCallback(
-        (filter: IDashboardAttributeFilter): CustomDashboardAttributeFilterComponent => {
+    const attributeFilterProvider = useCallback<AttributeFilterComponentProvider>(
+        (filter) => {
             const userSpecified = DashboardAttributeFilterComponentProvider?.(filter);
             return userSpecified ?? DefaultDashboardAttributeFilter;
         },
         [DashboardAttributeFilterComponentProvider],
     );
 
-    const widgetProvider = useCallback(
-        (widget: ExtendedDashboardWidget): CustomDashboardWidgetComponent => {
+    const widgetProvider = useCallback<WidgetComponentProvider>(
+        (widget) => {
             const userSpecified = WidgetComponentProvider?.(widget);
             return userSpecified ?? DefaultDashboardWidget;
         },
         [WidgetComponentProvider],
     );
 
-    const insightProvider = useCallback(
-        (insight: IInsight, widget: IInsightWidget): CustomDashboardInsightComponent => {
+    const insightProvider = useCallback<InsightComponentProvider>(
+        (insight, widget) => {
             const userSpecified = InsightComponentProvider?.(insight, widget);
             return userSpecified ?? DefaultDashboardInsight;
         },
         [InsightComponentProvider],
     );
 
-    const insightMenuButtonProvider = useCallback(
-        (insight: IInsight, widget: IInsightWidget): CustomDashboardInsightMenuButtonComponent => {
+    const insightBodyProvider = useCallback<InsightBodyComponentProvider>(
+        (insight, widget) => {
+            const userSpecified = InsightBodyComponentProvider?.(insight, widget);
+            return userSpecified ?? DefaultInsightBody;
+        },
+        [InsightBodyComponentProvider],
+    );
+
+    const insightMenuButtonProvider = useCallback<InsightMenuButtonComponentProvider>(
+        (insight, widget) => {
             const userSpecified = InsightMenuButtonComponentProvider?.(insight, widget);
             // if user customizes the items, always use the "new" default menu button
             const FallbackDashboardInsightMenuButtonInner = insightMenuItemsProvider
@@ -103,8 +100,8 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         [InsightMenuButtonComponentProvider],
     );
 
-    const insightMenuProvider = useCallback(
-        (insight: IInsight, widget: IInsightWidget): CustomDashboardInsightMenuComponent => {
+    const insightMenuProvider = useCallback<InsightMenuComponentProvider>(
+        (insight, widget) => {
             const userSpecified = InsightMenuComponentProvider?.(insight, widget);
             // if user customizes the items, always use the "new" default menu
             const FallbackDashboardInsightMenuInner = insightMenuItemsProvider
@@ -115,8 +112,8 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         [InsightMenuComponentProvider],
     );
 
-    const kpiProvider = useCallback(
-        (kpi: IKpi, widget: IKpiWidget): CustomDashboardKpiComponent => {
+    const kpiProvider = useCallback<KpiComponentProvider>(
+        (kpi, widget) => {
             const userSpecified = KpiComponentProvider?.(kpi, widget);
             return userSpecified ?? DefaultDashboardKpi;
         },
@@ -138,6 +135,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         attributeFilterProvider,
         widgetProvider,
         insightProvider,
+        insightBodyProvider,
         insightMenuButtonProvider,
         insightMenuProvider,
         kpiProvider,

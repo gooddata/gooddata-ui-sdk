@@ -24,6 +24,7 @@ import { CustomSaveAsDialogComponent } from "../saveAs/types";
 import { CustomShareDialogComponent } from "../shareDialog/types";
 import {
     AttributeFilterComponentProvider,
+    InsightBodyComponentProvider,
     InsightComponentProvider,
     InsightMenuButtonComponentProvider,
     InsightMenuComponentProvider,
@@ -40,6 +41,7 @@ interface IDashboardComponentsContext {
     LayoutComponent: CustomDashboardLayoutComponent;
     WidgetComponentProvider: WidgetComponentProvider;
     InsightComponentProvider: InsightComponentProvider;
+    InsightBodyComponentProvider: InsightBodyComponentProvider;
     InsightMenuButtonComponentProvider: InsightMenuButtonComponentProvider;
     InsightMenuComponentProvider: InsightMenuComponentProvider;
     KpiComponentProvider: KpiComponentProvider;
@@ -70,6 +72,7 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     LoadingComponent: LoadingComponent,
     LayoutComponent: ThrowMissingComponentError("LayoutComponent"),
     InsightComponentProvider: ThrowMissingComponentError("InsightComponent"),
+    InsightBodyComponentProvider: ThrowMissingComponentError("InsightBodyComponent"),
     InsightMenuButtonComponentProvider: ThrowMissingComponentError("InsightMenuButtonComponent"),
     InsightMenuComponentProvider: ThrowMissingComponentError("InsightMenuComponent"),
     KpiComponentProvider: ThrowMissingComponentError("KpiComponent"),

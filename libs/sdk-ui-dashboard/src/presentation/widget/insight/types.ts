@@ -1,11 +1,14 @@
 // (C) 2020-2022 GoodData Corporation
 import { ComponentType } from "react";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
+import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import { IColorPalette, IInsight, IInsightWidget, ISeparators } from "@gooddata/sdk-model";
 import {
+    ExplicitDrill,
     IErrorProps,
     ILoadingProps,
+    ILocale,
     IPushData,
+    IVisualizationCallbacks,
     OnError,
     OnExportReady,
     OnLoadingChanged,
@@ -152,6 +155,76 @@ export interface IDashboardInsightProps {
     pushData?: (data: IPushData) => void;
 }
 
+/**
+ * Insight body props.
+ *
+ * @alpha
+ */
+export interface IInsightBodyProps extends Partial<IVisualizationCallbacks> {
+    /**
+     * Backend to work with.
+     */
+    backend: IAnalyticalBackend;
+
+    /**
+     * Workspace where the insight exists.
+     */
+    workspace: string;
+
+    /**
+     * The insight to render.
+     */
+    insight: IInsight;
+
+    /**
+     * Definition of insight widget to render.
+     */
+    widget: IInsightWidget;
+
+    /**
+     * Configure chart drillability; e.g. which parts of the charts can be clicked.
+     */
+    drillableItems: ExplicitDrill[] | undefined;
+
+    /**
+     * Configure color palette to use for the chart. If you do not specify this, then the palette will be
+     * obtained from style settings stored on the backend.
+     */
+    colorPalette: IColorPalette | undefined;
+
+    /**
+     * Additional config that should be passed to the underlying visualization.
+     */
+    config: {
+        mapboxToken?: string;
+        separators?: ISeparators;
+        forceDisableDrillOnAxes?: boolean;
+        isExportMode?: boolean;
+    };
+
+    /**
+     * Locale to use for localization of texts appearing in the chart.
+     *
+     * Note: text values coming from the data itself are not localized.
+     */
+    locale: ILocale;
+
+    /**
+     * Component to render if embedding fails.
+     */
+    ErrorComponent: React.ComponentType<IErrorProps> | undefined;
+
+    /**
+     * Component to render while the insight is loading.
+     */
+    LoadingComponent: React.ComponentType<ILoadingProps> | undefined;
+
+    /**
+     * The current user settings.
+     */
+    settings: IUserWorkspaceSettings | undefined;
+}
+
 ///
 /// Custom component types
 ///
@@ -160,3 +233,13 @@ export interface IDashboardInsightProps {
  * @public
  */
 export type CustomDashboardInsightComponent = ComponentType<IDashboardInsightProps>;
+
+/**
+ * @remarks
+ * When implementing this using GoodData-provided components, make sure that you pass as many of the props
+ * as possible to the component (especially the drill-related props and members of the {@link @gooddata/sdk-ui#IVisualizationCallbacks}).
+ * This will ensure the integration with the rest of the widget is as complete as possible.
+ *
+ * @alpha
+ */
+export type CustomInsightBodyComponent = ComponentType<IInsightBodyProps>;

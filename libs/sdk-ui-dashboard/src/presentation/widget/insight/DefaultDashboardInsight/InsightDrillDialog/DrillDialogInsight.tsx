@@ -11,7 +11,6 @@ import {
     useBackendStrict,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
-import { InsightRenderer } from "@gooddata/sdk-ui-ext";
 
 import {
     useDashboardSelector,
@@ -29,6 +28,7 @@ import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsi
 import { useDrillDialogInsightDrills } from "./useDrillDialogInsightDrills";
 import { CustomError } from "../CustomError/CustomError";
 import { IntlWrapper } from "../../../../localization";
+import { InsightBody } from "../../InsightBody";
 
 const insightStyle: CSSProperties = { width: "100%", height: "100%", position: "relative", flex: "1 1 auto" };
 
@@ -157,7 +157,8 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
                             className="insight-view-visualization"
                             style={isVisualizationLoading || effectiveError ? { height: 0 } : undefined}
                         >
-                            <InsightRenderer
+                            <InsightBody
+                                widget={widget}
                                 insight={insightWithAddedWidgetProperties}
                                 backend={effectiveBackend}
                                 workspace={effectiveWorkspace}

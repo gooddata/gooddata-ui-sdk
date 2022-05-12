@@ -3,22 +3,31 @@ import { IDashboardInsightCustomizer } from "../customizer";
 import {
     CustomDashboardInsightComponent,
     DefaultDashboardInsight,
+    DefaultInsightBody,
     InsightComponentProvider,
+    InsightBodyComponentProvider,
     OptionalInsightComponentProvider,
+    OptionalInsightBodyComponentProvider,
 } from "../../presentation";
 import { InvariantError } from "ts-invariant";
 import includes from "lodash/includes";
 import { insightTags } from "@gooddata/sdk-model";
 import { IDashboardCustomizationLogger } from "./customizationLogging";
 
-const DefaultInsightRendererProvider: InsightComponentProvider = () => {
+const DefaultDashboardInsightComponentProvider: InsightComponentProvider = () => {
     return DefaultDashboardInsight;
+};
+
+const DefaultInsightBodyComponentProvider: InsightBodyComponentProvider = () => {
+    return DefaultInsightBody;
 };
 
 interface IInsightCustomizerState {
     addTagProvider(tag: string, provider: OptionalInsightComponentProvider): void;
     addCustomProvider(provider: OptionalInsightComponentProvider): void;
+    addInsightBodyProvider(provider: OptionalInsightBodyComponentProvider): void;
     getRootProvider(): InsightComponentProvider;
+    getInsightBodyComponentProvider(): InsightBodyComponentProvider;
     switchRootProvider(provider: InsightComponentProvider): void;
 }
 
@@ -28,11 +37,22 @@ class DefaultInsightCustomizerState implements IInsightCustomizerState {
      * returns a Component, then that component will be used for rendering. If provider returns undefined,
      * the evaluation continues to next provider in the chain.
      *
-     * Note: the chain is 'primed' with a provider that always returns the default insight renderer. This is
+     * Note: the chain is 'primed' with a provider that always returns the default insight component. This is
      * essential to allow the decorations to work - purely because decorations can only work if there is
      * something to decorate. See constructor.
      */
     private readonly coreProviderChain: InsightComponentProvider[];
+
+    /*
+     * Chain of Insight Body providers. Providers are evaluated from last to first. As soon as some provider
+     * returns a Component, then that component will be used for rendering. If provider returns undefined,
+     * the evaluation continues to next provider in the chain.
+     *
+     * Note: the chain is 'primed' with a provider that always returns the default insight renderer. This is
+     * essential to allow the decorations to work - purely because decorations can only work if there is
+     * something to decorate. See constructor.
+     */
+    private readonly insightBodyProviderChain: InsightBodyComponentProvider[];
 
     /*
      * Maintains index between tag and the position within coreProviderChain where the provider
@@ -61,6 +81,25 @@ class DefaultInsightCustomizerState implements IInsightCustomizerState {
     };
 
     /*
+     * Insight Renderer provider encapsulates resolution using the chain of Insight Renderer providers.
+     */
+    private readonly insightRendererProvider: InsightBodyComponentProvider = (insight, widget) => {
+        const providerStack = [...this.insightBodyProviderChain].reverse();
+
+        for (const provider of providerStack) {
+            const Component = provider(insight, widget);
+
+            if (Component) {
+                return Component;
+            }
+        }
+
+        // if this happens then the provider chain got messed up. by default the chain contains the default
+        // provider which never returns undefined
+        throw new InvariantError();
+    };
+
+    /*
      * Root provider is THE provider that should be used in the dashboard extension properties. The
      * provider function included here will reflect the setup where there may be N registered decorators
      * sitting on top of a chain of core providers.
@@ -72,9 +111,14 @@ class DefaultInsightCustomizerState implements IInsightCustomizerState {
 
     private logger: IDashboardCustomizationLogger;
 
-    constructor(logger: IDashboardCustomizationLogger, defaultProvider: InsightComponentProvider) {
+    constructor(
+        logger: IDashboardCustomizationLogger,
+        defaultCoreProvider: InsightComponentProvider,
+        defaultInsightBodyProvider: InsightBodyComponentProvider,
+    ) {
         this.logger = logger;
-        this.coreProviderChain = [defaultProvider];
+        this.coreProviderChain = [defaultCoreProvider];
+        this.insightBodyProviderChain = [defaultInsightBodyProvider];
     }
 
     addTagProvider(tag: string, provider: InsightComponentProvider): void {
@@ -98,8 +142,16 @@ class DefaultInsightCustomizerState implements IInsightCustomizerState {
         this.coreProviderChain.push(provider);
     }
 
+    addInsightBodyProvider(provider: InsightBodyComponentProvider): void {
+        this.insightBodyProviderChain.push(provider);
+    }
+
     getRootProvider(): InsightComponentProvider {
         return this.rootProvider;
+    }
+
+    getInsightBodyComponentProvider(): InsightBodyComponentProvider {
+        return this.insightRendererProvider;
     }
 
     switchRootProvider(provider: InsightComponentProvider): void {
@@ -122,7 +174,7 @@ class SealedInsightCustomizerState implements IInsightCustomizerState {
         private readonly state: IInsightCustomizerState,
     ) {}
 
-    public addCustomProvider = (_provider: InsightComponentProvider): void => {
+    public addCustomProvider = (): void => {
         // eslint-disable-next-line no-console
         this.logger.warn(
             `Attempting to customize insight rendering outside of plugin registration. Ignoring.`,
@@ -130,7 +182,7 @@ class SealedInsightCustomizerState implements IInsightCustomizerState {
     };
 
     // eslint-disable-next-line sonarjs/no-identical-functions
-    public addTagProvider = (_tag: string, _provider: InsightComponentProvider): void => {
+    public addInsightBodyProvider = (): void => {
         // eslint-disable-next-line no-console
         this.logger.warn(
             `Attempting to customize insight rendering outside of plugin registration. Ignoring.`,
@@ -138,7 +190,15 @@ class SealedInsightCustomizerState implements IInsightCustomizerState {
     };
 
     // eslint-disable-next-line sonarjs/no-identical-functions
-    public switchRootProvider = (_provider: InsightComponentProvider): void => {
+    public addTagProvider = (_tag: string): void => {
+        // eslint-disable-next-line no-console
+        this.logger.warn(
+            `Attempting to customize insight rendering outside of plugin registration. Ignoring.`,
+        );
+    };
+
+    // eslint-disable-next-line sonarjs/no-identical-functions
+    public switchRootProvider = (): void => {
         // eslint-disable-next-line no-console
         this.logger.warn(
             `Attempting to customize insight rendering outside of plugin registration. Ignoring.`,
@@ -147,6 +207,10 @@ class SealedInsightCustomizerState implements IInsightCustomizerState {
 
     public getRootProvider = (): InsightComponentProvider => {
         return this.state.getRootProvider();
+    };
+
+    public getInsightBodyComponentProvider = (): InsightBodyComponentProvider => {
+        return this.state.getInsightBodyComponentProvider();
     };
 }
 
@@ -167,10 +231,15 @@ export class DefaultInsightCustomizer implements IDashboardInsightCustomizer {
 
     constructor(
         logger: IDashboardCustomizationLogger,
-        defaultProvider: InsightComponentProvider = DefaultInsightRendererProvider,
+        defaultCoreProvider: InsightComponentProvider = DefaultDashboardInsightComponentProvider,
+        defaultInsightBodyProvider: InsightBodyComponentProvider = DefaultInsightBodyComponentProvider,
     ) {
         this.logger = logger;
-        this.state = new DefaultInsightCustomizerState(logger, defaultProvider);
+        this.state = new DefaultInsightCustomizerState(
+            logger,
+            defaultCoreProvider,
+            defaultInsightBodyProvider,
+        );
     }
 
     public withTag = (tag: string, component: CustomDashboardInsightComponent): this => {
@@ -197,6 +266,12 @@ export class DefaultInsightCustomizer implements IDashboardInsightCustomizer {
 
         return this;
     };
+
+    withCustomInsightBodyProvider(provider: OptionalInsightBodyComponentProvider): this {
+        this.state.addInsightBodyProvider(provider);
+
+        return this;
+    }
 
     public withCustomDecorator = (
         providerFactory: (next: InsightComponentProvider) => OptionalInsightComponentProvider,
@@ -227,6 +302,10 @@ export class DefaultInsightCustomizer implements IDashboardInsightCustomizer {
 
     public getInsightProvider = (): InsightComponentProvider => {
         return this.state.getRootProvider();
+    };
+
+    public getInsightBodyComponentProvider = (): InsightBodyComponentProvider => {
+        return this.state.getInsightBodyComponentProvider();
     };
 
     public sealCustomizer = (): void => {
