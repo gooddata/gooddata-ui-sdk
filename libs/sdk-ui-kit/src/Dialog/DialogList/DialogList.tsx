@@ -32,19 +32,21 @@ export const DialogList: React.VFC<IDialogListProps> = (props) => {
     }
 
     const ListItemComponent = itemComponent ?? DialogListItemBasic;
-    const classNames = cx("gd-dialog-list s-dialog-list", className);
+    const classNames = cx("gd-dialog-list-wrapper s-dialog-list-wrapper", className);
 
     return (
         <div className={classNames}>
-            {items.map((item) => (
-                <ListItemComponent
-                    key={item.id}
-                    className={itemClassName}
-                    item={item}
-                    onClick={onItemClick}
-                    onDelete={onItemDelete}
-                />
-            ))}
+            <div className="gd-dialog-list">
+                {items.map((item) => (
+                    <ListItemComponent
+                        key={item.id}
+                        className={itemClassName}
+                        item={item}
+                        onClick={onItemClick}
+                        onDelete={onItemDelete}
+                    />
+                ))}
+            </div>
         </div>
     );
 };
