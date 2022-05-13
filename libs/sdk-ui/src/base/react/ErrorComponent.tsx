@@ -54,7 +54,7 @@ export interface IErrorProps {
  * Component that renders a default error message.
  *
  * @remarks
- * See {@link http://sdk.gooddata.com/gooddata-ui/docs/error_component.html | ErrorComponent}
+ * See {@link https://sdk.gooddata.com/gooddata-ui/docs/error_component.html | ErrorComponent}
  *
  * @public
  */

@@ -124,7 +124,7 @@ const WrappedColumnChart = withChart(columnChartDefinition)(CoreColumnChart);
  * divided by either attribute values or by a single measure stacked by attribute values.
  *
  * See {@link IColumnChartProps} to learn how to configure the ColumnChart and the
- * {@link http://sdk.gooddata.com/gooddata-ui/docs/column_chart_component.html | column chart documentation} for more information.
+ * {@link https://sdk.gooddata.com/gooddata-ui/docs/column_chart_component.html | column chart documentation} for more information.
  *
  * @public
  */
