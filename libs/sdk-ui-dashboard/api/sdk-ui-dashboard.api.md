@@ -3038,9 +3038,9 @@ export interface IInsightBodyProps extends Partial<IVisualizationCallbacks> {
         isExportMode?: boolean;
     };
     drillableItems: ExplicitDrill[] | undefined;
-    ErrorComponent: React.ComponentType<IErrorProps> | undefined;
+    ErrorComponent: React.ComponentType<IErrorProps>;
     insight: IInsight;
-    LoadingComponent: React.ComponentType<ILoadingProps> | undefined;
+    LoadingComponent: React.ComponentType<ILoadingProps>;
     locale: ILocale;
     settings: IUserWorkspaceSettings | undefined;
     widget: IInsightWidget;
