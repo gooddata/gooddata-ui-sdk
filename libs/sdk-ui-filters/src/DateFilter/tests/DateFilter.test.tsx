@@ -663,9 +663,12 @@ describe("DateFilter", () => {
     });
 
     describe("Absolute form with enabled time", () => {
+        const dateFormat = "yyyy/MM/dd";
+        const fromInputValue = dateToAbsoluteInputFormat("2019-10-15", dateFormat);
+        const toInputValue = dateToAbsoluteInputFormat("2019-10-25", dateFormat);
+        const isTimeForAbsoluteRangeEnabled = true;
+
         it("should set correct values with desired format", () => {
-            const dateFormat = "yyyy/MM/dd";
-            const isTimeForAbsoluteRangeEnabled = true;
             const onApply = jest.fn();
             const wrapper = createDateFilter({
                 dateFormat,
@@ -674,8 +677,6 @@ describe("DateFilter", () => {
             });
             const absoluteForm = new AbsoluteForm(wrapper);
 
-            const fromInputValue = dateToAbsoluteInputFormat("2019-10-15", dateFormat);
-            const toInputValue = dateToAbsoluteInputFormat("2019-10-25", dateFormat);
             const fromTime = "10:00";
             const toTime = "14:00";
 
@@ -700,6 +701,36 @@ describe("DateFilter", () => {
             expect(absoluteForm.getEndDate()).toEqual(toInputValue);
             expect(absoluteForm.getStartTime()).toEqual(fromTime);
             expect(absoluteForm.getEndTime()).toEqual(toTime);
+        });
+
+        it("should get default time values if not configured", () => {
+            const onApply = jest.fn();
+            const wrapper = createDateFilter({
+                dateFormat,
+                onApply,
+                isTimeForAbsoluteRangeEnabled,
+            });
+            const absoluteForm = new AbsoluteForm(wrapper);
+
+            clickDateFilterButton(wrapper);
+            clickAbsoluteFormFilter(wrapper);
+
+            absoluteForm.setStartDate(fromInputValue);
+            absoluteForm.setEndDate(toInputValue);
+
+            clickApplyButton(wrapper);
+
+            setPropsFromOnApply(wrapper, onApply, 0);
+
+            expect(getDateFilterButtonText(wrapper)).toEqual("2019/10/15 – 2019/10/25");
+
+            clickDateFilterButton(wrapper);
+
+            expect(getSelectedItemText(wrapper)).toEqual("Static period");
+            expect(absoluteForm.getStartDate()).toEqual(fromInputValue);
+            expect(absoluteForm.getEndDate()).toEqual(toInputValue);
+            expect(absoluteForm.getStartTime()).toEqual("00:00");
+            expect(absoluteForm.getEndTime()).toEqual("23:59");
         });
     });
 });

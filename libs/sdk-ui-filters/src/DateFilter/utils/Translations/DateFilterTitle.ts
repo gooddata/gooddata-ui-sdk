@@ -26,6 +26,12 @@ export const getTimeRange = (dateFrom: Date, dateTo: Date): string => {
     return fromTime === toTime ? fromTime : `${fromTime} \u2013 ${toTime}`;
 };
 
+const isTimeForWholeDay = (dateFrom: Date, dateTo: Date) =>
+    dateFrom.getHours() === 0 &&
+    dateFrom.getMinutes() === 0 &&
+    dateTo.getHours() === 23 &&
+    dateTo.getMinutes() === 59;
+
 export const formatAbsoluteDateRange = (
     from: Date | string,
     to: Date | string,
@@ -36,17 +42,21 @@ export const formatAbsoluteDateRange = (
 
     const fromDate = convertPlatformDateStringToDate(from);
     const toDate = convertPlatformDateStringToDate(to);
+    const coversWholeDay = isTimeForWholeDay(fromDate, toDate);
 
     if (moment(fromDate).isSame(toDate, "day")) {
-        if (isTimeEnabled) {
+        if (isTimeEnabled && !coversWholeDay) {
             return `${format(fromDate, dateFormatWithoutTime)}, ${getTimeRange(fromDate, toDate)}`;
         } else {
             return format(fromDate, dateFormatWithoutTime);
         }
     }
 
-    const fromTitle = format(fromDate, dateFormat);
-    const toTitle = format(toDate, dateFormat);
+    // do not show time in case of whole day coverage
+    const displayDateFormat = coversWholeDay ? dateFormatWithoutTime : dateFormat;
+
+    const fromTitle = format(fromDate, displayDateFormat);
+    const toTitle = format(toDate, displayDateFormat);
 
     return `${fromTitle} \u2013 ${toTitle}`;
 };

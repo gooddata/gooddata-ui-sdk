@@ -3,7 +3,7 @@ import React from "react";
 import { mount } from "enzyme";
 
 import { DateRangePicker, IDateRange } from "../DateRangePicker";
-import { childGetter, writeTo, clickOn } from "../../tests/utils";
+import { childGetter, writeTo, clickOn, writeToWithBlur } from "../../tests/utils";
 import { IntlDecorator } from "./IntlDecorators";
 
 const getFromInput = childGetter(".s-date-range-picker-from .s-date-range-picker-input-field");
@@ -86,7 +86,7 @@ describe("DateRangePicker", () => {
         );
 
         it("should call the appropriate callback when FROM time configured to 11", () => {
-            writeTo("1100", getFromTimeInput(rendered));
+            writeToWithBlur("1100", getFromTimeInput(rendered));
             expect(onChange).toHaveBeenCalledWith({ ...defaultRange, from: new Date(2019, 4, 5, 11, 0) });
         });
 
@@ -99,7 +99,7 @@ describe("DateRangePicker", () => {
         it.each(toScenarios)(
             "should call the appropriate callback when %s",
             (_desc, value, expectedResult) => {
-                writeTo(value, getToTimeInput(rendered));
+                writeToWithBlur(value, getToTimeInput(rendered));
                 expect(onChange).toHaveBeenCalledWith({ ...defaultRange, to: expectedResult });
             },
         );

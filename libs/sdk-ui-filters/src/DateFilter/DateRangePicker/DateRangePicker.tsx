@@ -10,6 +10,7 @@ import { mergeDayPickerProps, areRangeBoundsCrossed } from "./utils";
 import { DateRangePickerError } from "./DateRangePickerError";
 import { IExtendedDateFilterErrors } from "../interfaces";
 import { DateTimePicker } from "./DateTimePicker";
+import { DAY_END_TIME } from "../constants/Platform";
 
 export interface IDateRange {
     from: Date;
@@ -81,7 +82,7 @@ class DateRangePickerComponent extends React.Component<IDateRangePickerProps & W
                 ref={this.toInputRef}
                 isTimeEnabled={isTimeEnabled}
                 className={cx("s-date-range-picker-to", "gd-date-range-picker-to")}
-                defaultTime="23:59"
+                defaultTime={DAY_END_TIME}
                 error={typeof errorTo !== "undefined"}
             />
         );
