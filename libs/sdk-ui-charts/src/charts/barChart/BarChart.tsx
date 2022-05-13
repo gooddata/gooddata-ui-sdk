@@ -124,7 +124,7 @@ const WrappedBarChart = withChart(barChartDefinition)(CoreBarChart);
  * attribute values or a single measure stacked by attribute values.
  *
  * See {@link IBarChartProps} to learn how to configure the BarChart and the
- *  {@link http://sdk.gooddata.com/gooddata-ui/docs/bar_chart_component.html | bar chart documentation} for more information.
+ *  {@link https://sdk.gooddata.com/gooddata-ui/docs/bar_chart_component.html | bar chart documentation} for more information.
  *
  * @public
  */
