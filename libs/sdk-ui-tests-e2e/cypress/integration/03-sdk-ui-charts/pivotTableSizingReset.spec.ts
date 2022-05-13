@@ -70,10 +70,7 @@ export const getMeasureColumnWidthItemByLocator = (
 
 export const getAllMeasureColumnWidth = (data: any) => {
     return data.find((item: any) => {
-        if (item.measureColumnWidthItem && !item.measureColumnWidthItem.locators) {
-            return true;
-        }
-        return false;
+        return !!(item.measureColumnWidthItem && !item.measureColumnWidthItem.locators);
     });
 };
 

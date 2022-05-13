@@ -157,6 +157,8 @@ export function addDefaultSort(
             return false;
         }
         // asc sort on row that was first until now is considered default as well
+        // disabling the eslint rule to maintain readability
+        // eslint-disable-next-line sonarjs/prefer-single-boolean-return
         if (
             previousFirstRow &&
             sortItem.attributeSortItem.attributeIdentifier === previousFirstRow.localIdentifier &&

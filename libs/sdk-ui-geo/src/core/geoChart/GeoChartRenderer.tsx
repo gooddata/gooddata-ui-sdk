@@ -199,20 +199,13 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
     private shouldResetMap = (prevConfig: IGeoConfig, prevColorStrategy: IColorStrategy): boolean => {
         const { colorStrategy, config } = this.props;
 
-        if (isPointsConfigChanged(prevConfig.points, config.points)) {
-            return true;
-        }
-
-        if (
+        return (
+            isPointsConfigChanged(prevConfig.points, config.points) ||
             isColorAssignmentItemChanged(
                 prevColorStrategy.getColorAssignment(),
                 colorStrategy.getColorAssignment(),
             )
-        ) {
-            return true;
-        }
-
-        return false;
+        );
     };
 
     private isViewportFrozen = (): boolean => {

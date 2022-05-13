@@ -69,21 +69,11 @@ export const getChartType = (chart: Highcharts.Chart): string | undefined => cha
 export const isStacked = (chart: Highcharts.Chart): boolean => {
     const chartType = getChartType(chart);
 
-    if (
-        chart.userOptions?.plotOptions?.[chartType]?.stacking &&
-        chart.axes.some((axis: any) => !isEmpty(axis?.stacking?.stacks))
-    ) {
-        return true;
-    }
+    const isStackedByChartType = !!chart.userOptions?.plotOptions?.[chartType]?.stacking;
+    const isStackedBySeries = !!chart.userOptions?.plotOptions?.series?.stacking;
+    const hasStackedAxis = chart.axes.some((axis: any) => !isEmpty(axis?.stacking?.stacks));
 
-    if (
-        chart.userOptions?.plotOptions?.series?.stacking &&
-        chart.axes.some((axis: any) => !isEmpty(axis?.stacking?.stacks))
-    ) {
-        return true;
-    }
-
-    return false;
+    return (isStackedByChartType || isStackedBySeries) && hasStackedAxis;
 };
 
 export function getChartProperties(config: IChartConfig, type: VisType): any {
@@ -329,12 +319,7 @@ export function shouldStartOnTick(
         ? getStackedMinValue(series)
         : getNonStackedMinValue(series);
 
-    const hasIncorrectMax = !isNaN(max) && max <= minDataValue;
-    if (hasIncorrectMax) {
-        return true;
-    }
-
-    return false;
+    return !isNaN(max) && max <= minDataValue;
 }
 export function shouldEndOnTick(
     chartOptions: IChartOptions,
@@ -356,12 +341,7 @@ export function shouldEndOnTick(
         ? getStackedMaxValue(series)
         : getNonStackedMaxValue(series);
 
-    const hasIncorrectMin = !isNaN(min) && min >= maxDataValue;
-    if (hasIncorrectMin) {
-        return true;
-    }
-
-    return false;
+    return !isNaN(min) && min >= maxDataValue;
 }
 
 export function shouldXAxisStartOnTickOnBubbleScatter(chartOptions: IChartOptions): boolean {
