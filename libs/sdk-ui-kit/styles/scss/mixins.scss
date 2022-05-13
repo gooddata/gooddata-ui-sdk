@@ -207,3 +207,26 @@
     background-image: -ms-linear-gradient(top, $topColor, $bottomColor); /* IE10 */
     background-image: linear-gradient(to top, $topColor, $bottomColor);
 }
+@mixin default-styles() {
+    font-family: $gd-font-primary;
+    line-height: 1.5;
+
+    button,
+    input,
+    optgroup,
+    select,
+    textarea {
+        outline: 0;
+    }
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    // NOTE: Not sure why this is here, is not used in sdk
+    .invisible {
+        visibility: hidden;
+    }
+}

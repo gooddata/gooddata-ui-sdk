@@ -26,3 +26,7 @@
         border-radius: 0;
     }
 }
+
+.gd-overlay-content {
+    @include default-styles();
+}

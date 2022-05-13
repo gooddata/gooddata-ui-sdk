@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import mapValues from "lodash/mapValues";
 import merge from "lodash/merge";
 import { elementRegion } from "./domUtilities";
@@ -105,6 +105,12 @@ function addOffset(position: IOffset, offset: IOffset) {
         y: position.y + offset.y,
     };
 }
+function subtractOffset(position: IOffset, offset: IOffset) {
+    return {
+        x: position.x - offset.x,
+        y: position.y - offset.y,
+    };
+}
 
 function getGlobalOffset(target: IRegion) {
     return {
@@ -117,7 +123,12 @@ function getGlobalOffset(target: IRegion) {
  * Get left-top coordinates of a child summing up offsets of a child,
  * align points and left-top coordinates of target region
  */
-function getGlobalPosition(targetRegion: IRegion, selfRegion: IRegion, alignPoint: IAlignPoint) {
+function getGlobalPosition(
+    bodyRegion: IRegion,
+    targetRegion: IRegion,
+    selfRegion: IRegion,
+    alignPoint: IAlignPoint,
+) {
     const alignRatio = getAlignPointRatios(alignPoint.align);
 
     const targetRegionOffset = getRegionOffset(targetRegion, alignRatio.target);
@@ -126,8 +137,9 @@ function getGlobalPosition(targetRegion: IRegion, selfRegion: IRegion, alignPoin
     const cumulativeOffset = addOffset(alignPointOffset, addOffset(targetRegionOffset, selfRegionOffset));
 
     const globalOffset = getGlobalOffset(targetRegion);
+    const finalOffset = addOffset(globalOffset, cumulativeOffset);
 
-    return addOffset(globalOffset, cumulativeOffset);
+    return subtractOffset(finalOffset, getGlobalOffset(bodyRegion));
 }
 
 /**
@@ -146,8 +158,13 @@ function moveRegionToPosition(region: IRegion, anchorPoint: IOffset) {
 /**
  * Move self region to new position using its left-top coordinates
  */
-function getPositionedSelfRegion({ targetRegion, selfRegion, alignPoint }: GetPositionedSelfRegion) {
-    const globalPosition = getGlobalPosition(targetRegion, selfRegion, alignPoint);
+function getPositionedSelfRegion({
+    targetRegion,
+    selfRegion,
+    bodyRegion,
+    alignPoint,
+}: GetPositionedSelfRegion) {
+    const globalPosition = getGlobalPosition(bodyRegion, targetRegion, selfRegion, alignPoint);
 
     return moveRegionToPosition(selfRegion, globalPosition);
 }
@@ -196,6 +213,7 @@ export function getOptimalAlignmentForRegion({
     selfRegion,
     alignPoints,
 }: GetOptimalAlignmentForRegion): IOptimalAlignment {
+    const bodyRegion: IRegion = elementRegion(document.body);
     let mostVisibleAlignment = FULLY_HIDDEN_ALIGNMENT;
 
     for (let i = 0; i < alignPoints.length; i += 1) {
@@ -203,6 +221,7 @@ export function getOptimalAlignmentForRegion({
             alignPoint: alignPoints[i],
             targetRegion,
             selfRegion,
+            bodyRegion,
         });
 
         const visiblePart = getRatioOfVisibleRegion(boundaryRegion, positionedSelfRegion);
@@ -262,4 +281,28 @@ export function getOptimalAlignment({
     }
 
     return optimalAlign;
+}
+
+export function getOverlayStyles() {
+    const styles = window.getComputedStyle(document.body);
+    const marginTop = parseFloat(styles.marginTop) || 0;
+    const marginBottom = parseFloat(styles.marginBottom) || 0;
+
+    const html = {
+        position: "relative",
+        height: "100%",
+    };
+    const body = {
+        position: "relative",
+        height: "100%",
+    };
+
+    if (marginTop || marginBottom) {
+        body.height = `calc(100% - ${marginTop + marginBottom}px)`;
+    }
+
+    return {
+        html,
+        body,
+    };
 }
