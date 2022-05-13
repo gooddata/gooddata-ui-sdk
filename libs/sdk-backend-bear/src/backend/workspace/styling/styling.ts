@@ -40,11 +40,7 @@ export class BearWorkspaceStyling implements IWorkspaceStylingService {
             return false;
         }
 
-        if (!identifier) {
-            return false;
-        }
-
-        return true;
+        return !!identifier;
     }
 
     public getColorPalette = async (): Promise<IColorPaletteItem[]> => {

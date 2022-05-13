@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { combineGuards } from "../typesUtils";
 
@@ -9,18 +9,15 @@ type Dog = { beTheBest: () => "dogdogdog" };
 type Animal = Bird | Insect | Dog;
 
 const isBird = (animal: Animal): animal is Bird => {
-    if ("fly" in animal) return true;
-    return false;
+    return "fly" in animal;
 };
 
 const isInsect = (animal: Animal): animal is Insect => {
-    if ("annoy" in animal) return true;
-    return false;
+    return "annoy" in animal;
 };
 
 const isDog = (animal: Animal): animal is Dog => {
-    if ("beTheBest" in animal) return true;
-    return false;
+    return "beTheBest" in animal;
 };
 
 const dog: Dog = {

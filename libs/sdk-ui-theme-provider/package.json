@@ -87,7 +87,7 @@
         "eslint-plugin-prettier": "^4.0.0",
         "eslint-plugin-react-hooks": "^4.0.8",
         "eslint-plugin-react": "^7.20.5",
-        "eslint-plugin-sonarjs": "^0.11.0",
+        "eslint-plugin-sonarjs": "^0.13.0",
         "eslint-plugin-tsdoc": "^0.2.14",
         "jest": "^27.5.1",
         "jest-enzyme": "^7.1.2",

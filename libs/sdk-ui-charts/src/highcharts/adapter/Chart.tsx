@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import isEqual from "lodash/isEqual";
 import noop from "lodash/noop";
 import React from "react";
@@ -48,11 +48,7 @@ export class Chart extends React.Component<IChartProps> {
     }
 
     public shouldComponentUpdate(nextProps: IChartProps): boolean {
-        if (isEqual(this.props.config, nextProps.config)) {
-            return false;
-        }
-
-        return true;
+        return !isEqual(this.props.config, nextProps.config);
     }
 
     public componentDidUpdate(): void {
