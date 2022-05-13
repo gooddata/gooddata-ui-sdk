@@ -1,5 +1,4 @@
 {
-    "_note": "This file is only for IDE. For build use tsconfig.[dev/build].json (dev mode is less strict)",
     "compilerOptions": {
         "declaration": true,
         "declarationMap": true,
@@ -20,5 +19,5 @@
         "resolveJsonModule": true
     },
     "compileOnSave": false,
-    "exclude": ["**/node_modules", "dist", "esm", "**/__mocks__/**/*"]
+    "exclude": ["**/node_modules", "dist", "**/__mocks__/**/*"]
 }
