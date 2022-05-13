@@ -1,5 +1,6 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
+import cx from "classnames";
 import { Bubble, BubbleHoverTrigger } from "../../../../Bubble";
 
 const alignPoints = [{ align: "cr cl" }];
@@ -16,8 +17,10 @@ export interface IToggleSwitchProps {
 export const ToggleSwitch: React.VFC<IToggleSwitchProps> = (props) => {
     const { id, label, checked, questionMarkMessage, className, onChange } = props;
 
+    const css = cx("toggle-wrapper-revers-label", className);
+
     return (
-        <div className="toggle-wrapper-revers-label">
+        <div className={css}>
             <label className="input-checkbox-toggle s-checkbox-toggle-label">
                 <input
                     type="checkbox"

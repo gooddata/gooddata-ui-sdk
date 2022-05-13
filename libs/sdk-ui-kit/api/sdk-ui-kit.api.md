@@ -1020,6 +1020,8 @@ export interface IConfirmDialogBaseProps extends IDialogBaseProps {
     // (undocumented)
     cancelButtonText?: string;
     // (undocumented)
+    dialogHeaderClassName?: string;
+    // (undocumented)
     footerLeftRenderer?: () => JSX.Element;
     // (undocumented)
     headerLeftButtonRenderer?: () => JSX.Element;
@@ -1039,6 +1041,8 @@ export interface IConfirmDialogBaseProps extends IDialogBaseProps {
     submitButtonTooltipArrowOffsets?: ArrowOffsets;
     // (undocumented)
     submitButtonTooltipText?: string;
+    // (undocumented)
+    titleRightIconRenderer?: () => JSX.Element;
     // (undocumented)
     warning?: string | React_2.ReactElement;
 }
