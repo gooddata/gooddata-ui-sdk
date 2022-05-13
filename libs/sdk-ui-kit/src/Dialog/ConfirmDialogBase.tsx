@@ -39,6 +39,7 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
             headerLeftButtonRenderer,
             footerLeftRenderer,
             titleRightIconRenderer,
+            dialogHeaderClassName,
         } = this.props;
         const dialogClasses = cx(
             {
@@ -53,6 +54,8 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
             "gd-button-negative": !isPositive,
         });
 
+        const headerClassNames = cx("gd-dialog-header", dialogHeaderClassName);
+
         return (
             <div tabIndex={0} onKeyDown={this.onKeyDown}>
                 <div className={dialogClasses}>
@@ -60,8 +63,8 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
 
                     <div className="gd-dialog-header-wrapper">
                         {headerLeftButtonRenderer?.()}
-                        <div className="gd-dialog-header">
-                            <h3>{headline}</h3>
+                        <div className={headerClassNames}>
+                            <h3 className="gd-dialog-header-title">{headline}</h3>
                             {titleRightIconRenderer?.()}
                         </div>
                     </div>

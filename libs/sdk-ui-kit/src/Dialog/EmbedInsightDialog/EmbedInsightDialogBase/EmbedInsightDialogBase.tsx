@@ -65,6 +65,7 @@ export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (
             submitButtonText={intl.formatMessage({ id: "embedInsightDialog.actions.copyCode" })}
             headline={intl.formatMessage({ id: getDialogLabelId(codeOption.type) })}
             className={cx("embed-insight-dialog", "s-embed-insight-dialog")}
+            dialogHeaderClassName={"embed-insight-dialog-header"}
             footerLeftRenderer={
                 propertiesLink
                     ? () => {
@@ -78,7 +79,7 @@ export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (
             }
             titleRightIconRenderer={() => (
                 <BubbleHoverTrigger className="gd-button" showDelay={0} hideDelay={0}>
-                    <span className="gd-icon-circle-question s-circle_question-dialog-title question-mark-icon" />
+                    <span className="gd-icon-circle-question s-circle_question-dialog-title question-mark-icon embed-insight-dialog-header-icon" />
                     <Bubble className="bubble-primary" alignPoints={[{ align: "bc tl" }]}>
                         <FormattedMessage id={getChangesLabelId(codeOption.type)} />
                     </Bubble>

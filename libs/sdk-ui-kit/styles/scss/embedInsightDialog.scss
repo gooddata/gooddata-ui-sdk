@@ -4,19 +4,19 @@
 
 .embed-insight-dialog {
     width: 600px;
+}
 
-    .gd-dialog-header {
-        h3 {
-            display: inline-block;
-            max-width: 100%;
-        }
-
-        .gd-icon-circle-question {
-            vertical-align: super;
-            margin-left: 10px;
-            color: $default-gd-color-state-blank;
-        }
+.embed-insight-dialog-header {
+    .gd-dialog-header-title {
+        display: inline-block;
+        max-width: 100%;
     }
+}
+
+.embed-insight-dialog-header-icon {
+    vertical-align: super;
+    margin-left: 10px;
+    color: $default-gd-color-state-blank;
 }
 
 .embed-insight-dialog-content {
