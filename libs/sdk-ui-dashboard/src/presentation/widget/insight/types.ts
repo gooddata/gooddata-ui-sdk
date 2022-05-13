@@ -212,12 +212,12 @@ export interface IInsightBodyProps extends Partial<IVisualizationCallbacks> {
     /**
      * Component to render if embedding fails.
      */
-    ErrorComponent: React.ComponentType<IErrorProps> | undefined;
+    ErrorComponent: React.ComponentType<IErrorProps>;
 
     /**
      * Component to render while the insight is loading.
      */
-    LoadingComponent: React.ComponentType<ILoadingProps> | undefined;
+    LoadingComponent: React.ComponentType<ILoadingProps>;
 
     /**
      * The current user settings.
