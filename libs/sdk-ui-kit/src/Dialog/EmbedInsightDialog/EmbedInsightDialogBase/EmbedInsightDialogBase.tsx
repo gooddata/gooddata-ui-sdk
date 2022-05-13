@@ -10,6 +10,7 @@ import { CodeLanguageSelect } from "./components/CodeLanguageSelect";
 import { CodeLanguageType, CodeOptionType, CopyCodeOriginType, InsightCodeType } from "./types";
 import { CodeOptions } from "./components/CodeOptions";
 import { CompleteListPropsMessage } from "./components/CompleteListPropsMessage";
+import { Bubble, BubbleHoverTrigger } from "../../../Bubble";
 
 /**
  * @internal
@@ -75,11 +76,16 @@ export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (
                       }
                     : undefined
             }
+            titleRightIconRenderer={() => (
+                <BubbleHoverTrigger className="gd-button" showDelay={0} hideDelay={0}>
+                    <span className="gd-icon-circle-question s-circle_question-dialog-title question-mark-icon" />
+                    <Bubble className="bubble-primary" alignPoints={[{ align: "bc tl" }]}>
+                        <FormattedMessage id={getChangesLabelId(codeOption.type)} />
+                    </Bubble>
+                </BubbleHoverTrigger>
+            )}
         >
             <div className="embed-insight-dialog-content">
-                <span className="embed-insight-dialog-message-changes">
-                    <FormattedMessage id={getChangesLabelId(codeOption.type)} />
-                </span>
                 <PrepareEnvMessage integrationDocLink={integrationDocLink} />
                 <div className="embed-insight-dialog-code">
                     <div className="embed-insight-dialog-code-settings">
@@ -108,8 +114,8 @@ const getDialogLabelId = (codeType: InsightCodeType): string => {
 };
 
 const dialogChangeMessageLabels = {
-    definition: "embedInsightDialog.changesMessage.byDefinition",
-    reference: "embedInsightDialog.changesMessage.byReference",
+    definition: "embedInsightDialog.headLine.byDefinition.tooltip",
+    reference: "embedInsightDialog.headLine.byReference.tooltip",
 };
 
 const getChangesLabelId = (codeType: InsightCodeType): string => {

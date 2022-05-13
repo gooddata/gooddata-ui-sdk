@@ -38,6 +38,7 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
             onCancel,
             headerLeftButtonRenderer,
             footerLeftRenderer,
+            titleRightIconRenderer,
         } = this.props;
         const dialogClasses = cx(
             {
@@ -61,6 +62,7 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
                         {headerLeftButtonRenderer?.()}
                         <div className="gd-dialog-header">
                             <h3>{headline}</h3>
+                            {titleRightIconRenderer?.()}
                         </div>
                     </div>
                     {!!warning && <div className="gd-dialog-warning">{warning}</div>}

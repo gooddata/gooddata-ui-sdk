@@ -40,6 +40,7 @@ export interface IConfirmDialogBaseProps extends IDialogBaseProps {
     showProgressIndicator?: boolean;
     headerLeftButtonRenderer?: () => JSX.Element;
     footerLeftRenderer?: () => JSX.Element;
+    titleRightIconRenderer?: () => JSX.Element;
 }
 
 /**

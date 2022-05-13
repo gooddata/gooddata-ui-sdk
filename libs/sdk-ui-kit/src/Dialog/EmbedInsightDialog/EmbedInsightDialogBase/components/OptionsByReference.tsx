@@ -23,12 +23,13 @@ export const OptionsByReference: React.VFC<IOptionsByReferenceProps> = (props) =
 
     return (
         <div className="embed-insight-dialog-lang-selector">
-            <strong className="bottom-space">
+            <strong className="bottom-space top-space">
                 <FormattedMessage id="embedInsightDialog.code.options" />
             </strong>
 
             <ToggleSwitch
                 id={"display-title"}
+                className="bottom-space top-space"
                 label={intl.formatMessage({
                     id: "embedInsightDialog.code.options.display.title",
                 })}

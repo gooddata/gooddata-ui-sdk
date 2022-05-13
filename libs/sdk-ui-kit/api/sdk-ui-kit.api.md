@@ -1040,6 +1040,8 @@ export interface IConfirmDialogBaseProps extends IDialogBaseProps {
     // (undocumented)
     submitButtonTooltipText?: string;
     // (undocumented)
+    titleRightIconRenderer?: () => JSX.Element;
+    // (undocumented)
     warning?: string | React_2.ReactElement;
 }
 

@@ -22,12 +22,13 @@ export const OptionsByDefinition: React.VFC<IOptionsByDefinitionProps> = (props)
 
     return (
         <div className="embed-insight-dialog-lang-selector">
-            <strong className="bottom-space">
+            <strong className="bottom-space top-space">
                 <FormattedMessage id="embedInsightDialog.code.options" />
             </strong>
 
             <ToggleSwitch
                 id="include-configuration"
+                className="bottom-space"
                 label={intl.formatMessage({
                     id: "embedInsightDialog.code.options.include.config",
                 })}
