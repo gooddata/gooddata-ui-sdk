@@ -70,7 +70,7 @@ $gd-day-picker-width: 268px;
 
         & input {
             height: 30px;
-            padding: 0 0 0 34px;
+            padding-left: 34px;
 
             @media #{$medium-up} {
                 width: 126px;
