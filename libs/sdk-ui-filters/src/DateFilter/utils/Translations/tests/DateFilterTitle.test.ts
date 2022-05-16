@@ -82,6 +82,15 @@ describe("getDateFilterTitleUsingTranslator", () => {
             );
             expect(actual).toEqual("01/01/2019 – 01/04/2019");
         });
+
+        it("should return the correct translation for absolute form filter for more days with no time within from/to", () => {
+            const actual = getDateFilterTitleUsingTranslator(
+                absoluteFormFilter,
+                serializingTranslator,
+                DEFAULT_DATE_FORMAT_WITH_TIME,
+            );
+            expect(actual).toEqual("01/01/2019 – 02/01/2019");
+        });
     });
 
     it("should return the correct translation for absolute preset filter", () => {
