@@ -82,7 +82,7 @@ export const DefaultUiSettings: ISettings = {
     enableChartsSorting: true,
     enableAxisNameViewByTwoAttributes: true,
     enableAxisNameConfiguration: true,
-    enableDataSourceManagement: false,
+    enableDataSourceManagement: true,
     enableAdFloatingDateRangeFilter: true,
 };
 
