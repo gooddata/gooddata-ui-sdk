@@ -8,7 +8,6 @@ import {
     selectCanManageWorkspace,
     selectDashboardLockStatus,
     selectDashboardRef,
-    selectIsExport,
     selectIsLayoutEmpty,
     selectIsReadOnly,
     selectListedDashboardsMap,
@@ -65,15 +64,6 @@ export const selectCanEnterEditModeAndIsLoaded = createSelector(
     selectIsDashboardLoading,
     selectCanEnterEditMode,
     (isLoading, canEnterEditMode) => !isLoading && canEnterEditMode,
-);
-
-/**
- * @internal
- */
-export const selectShouldHideControlButtons = createSelector(
-    selectCanEnterEditModeAndIsLoaded,
-    selectIsExport,
-    (canEnterEditModeAndIsLoaded, isExport) => !canEnterEditModeAndIsLoaded || isExport,
 );
 
 /**

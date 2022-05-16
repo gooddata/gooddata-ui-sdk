@@ -4736,7 +4736,7 @@ export const selectIsReadOnly: OutputSelector<DashboardState, boolean, (res: Res
 export const selectIsSaveAsDialogOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
 
 // @internal (undocumented)
-export function selectIsSaveAsNewButtonVisible(state: DashboardState): boolean;
+export const selectIsSaveAsNewButtonVisible: OutputSelector<DashboardState, boolean, (res1: boolean, res2: boolean, res3: boolean, res4: boolean, res5: boolean, res6: boolean) => boolean>;
 
 // @alpha (undocumented)
 export const selectIsScheduleEmailDialogOpen: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;

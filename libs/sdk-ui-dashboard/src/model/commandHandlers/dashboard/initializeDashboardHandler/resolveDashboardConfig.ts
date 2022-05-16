@@ -3,7 +3,7 @@ import { SagaIterator } from "redux-saga";
 import { all, call } from "redux-saga/effects";
 import { IDateFilterConfigsQueryResult, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { ILocale } from "@gooddata/sdk-ui";
-import { IColorPalette, ISettings, ISeparators } from "@gooddata/sdk-model";
+import { IColorPalette, ISeparators, ISettings } from "@gooddata/sdk-model";
 
 import { defaultDateFilterConfig } from "../../../../_staging/dateFilterConfig/defaultConfig";
 import { getValidDateFilterConfig } from "../../../../_staging/dateFilterConfig/validation";
@@ -119,10 +119,10 @@ export function* resolveDashboardConfig(
          * Config coming in props is fully specified. There is nothing to do. Bail out immediately.
          */
         if (config.allowUnfinishedFeatures || !config.settings) {
-            return config;
+            return applyConfigDefaults(config);
         }
         return {
-            ...config,
+            ...applyConfigDefaults(config),
             settings: sanitizeUnfinishedFeatureSettings(config.settings),
         };
     }
@@ -153,28 +153,36 @@ export function* resolveDashboardConfig(
     if (configValidation !== "Valid") {
         yield dispatchDashboardEvent(dateFilterValidationFailed(ctx, configValidation, cmd.correlationId));
     }
-    const allowUnfinishedFeatures = config.allowUnfinishedFeatures ?? false;
+
+    const configWithDefaults = applyConfigDefaults(config);
 
     const resolvedConfig: ResolvedDashboardConfig = {
+        ...configWithDefaults,
         locale: settings.locale as ILocale,
         separators: settings.separators,
         dateFilterConfig: validDateFilterConfig,
-        settings: allowUnfinishedFeatures
+        settings: configWithDefaults.allowUnfinishedFeatures
             ? settings.settings
             : sanitizeUnfinishedFeatureSettings(settings.settings),
         colorPalette,
-        objectAvailability: config.objectAvailability ?? {},
         mapboxToken: config.mapboxToken,
+    };
+
+    return resolvedConfig;
+}
+
+function applyConfigDefaults<T extends DashboardConfig>(config: T) {
+    return {
+        ...config,
+        objectAvailability: config.objectAvailability ?? {},
         isReadOnly: config.isReadOnly ?? false,
         isEmbedded: config.isEmbedded ?? false,
         isExport: config.isExport ?? false,
         disableDefaultDrills: config.disableDefaultDrills ?? false,
         enableFilterValuesResolutionInDrillEvents: config.enableFilterValuesResolutionInDrillEvents ?? false,
         menuButtonItemsVisibility: config.menuButtonItemsVisibility ?? {},
-        allowUnfinishedFeatures,
+        allowUnfinishedFeatures: config.allowUnfinishedFeatures ?? false,
         initialRenderMode: config.initialRenderMode ?? "view",
         hideSaveAsNewButton: config.hideSaveAsNewButton ?? false,
     };
-
-    return resolvedConfig;
 }
