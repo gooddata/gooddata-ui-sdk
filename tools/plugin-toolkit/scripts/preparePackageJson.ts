@@ -23,16 +23,7 @@ import { keys } from "lodash";
  * this script to clean things up programatically.
  */
 
-const GdScripts = [
-    "test-ci",
-    "eslint-ci",
-    "prettier-check",
-    "prettier-write",
-    "dep-cruiser",
-    "dep-cruiser-ci",
-    "validate",
-    "validate-ci",
-];
+const GdScriptsRemove = ["test-ci", "eslint-ci", "dep-cruiser", "dep-cruiser-ci", "validate", "validate-ci"];
 
 const UnnecessaryDevDependencies = ["@gooddata/eslint-config", "dependency-cruiser", "eslint-plugin-sonarjs"];
 
@@ -50,17 +41,17 @@ function removeGdStuff(packageJson: Record<string, any>) {
     packageJson.author = "";
     packageJson.description = "";
 
-    delete packageJson.repository;
-
     const { scripts, devDependencies } = packageJson;
 
-    GdScripts.forEach((script) => {
+    GdScriptsRemove.forEach((script) => {
         delete scripts[script];
     });
 
     UnnecessaryDevDependencies.forEach((dep) => {
         delete devDependencies[dep];
     });
+
+    delete packageJson.repository;
 }
 
 function removeTs(packageJson: Record<string, any>) {
