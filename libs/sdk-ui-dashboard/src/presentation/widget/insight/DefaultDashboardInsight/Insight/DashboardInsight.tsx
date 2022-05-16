@@ -167,6 +167,18 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         clientWidth < DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH &&
         !enableKDWidgetCustomHeight;
 
+    // Error handling
+    const handleError = useCallback<OnError>(
+        (error) => {
+            setVisualizationError(error);
+            onError?.(error);
+            executionsHandler.onError(error);
+        },
+        [onError, executionsHandler.onError],
+    );
+
+    const effectiveError = filtersError ?? visualizationError;
+
     // CSS
     const insightPositionStyle: CSSProperties = useMemo(() => {
         return {
@@ -181,20 +193,8 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
     }, [isPositionRelative]);
 
     const insightWrapperStyle: CSSProperties | undefined = useMemo(() => {
-        return isVisualizationLoading ? { height: 0 } : undefined;
-    }, [isVisualizationLoading]);
-
-    // Error handling
-    const handleError = useCallback<OnError>(
-        (error) => {
-            setVisualizationError(error);
-            onError?.(error);
-            executionsHandler.onError(error);
-        },
-        [onError, executionsHandler.onError],
-    );
-
-    const effectiveError = filtersError ?? visualizationError;
+        return isVisualizationLoading || effectiveError ? { height: 0 } : undefined;
+    }, [isVisualizationLoading, effectiveError]);
 
     const visualizationProperties = insightProperties(insightWithAddedWidgetProperties);
     const isZoomable = visualizationProperties?.controls.zoomInsight;

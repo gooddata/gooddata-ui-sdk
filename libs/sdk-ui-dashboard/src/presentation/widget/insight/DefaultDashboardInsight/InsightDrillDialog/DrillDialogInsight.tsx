@@ -140,6 +140,10 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
     );
     const effectiveError = filtersError ?? visualizationError;
 
+    const insightWrapperStyle: CSSProperties | undefined = useMemo(() => {
+        return isVisualizationLoading || effectiveError ? { height: 0 } : undefined;
+    }, [isVisualizationLoading, effectiveError]);
+
     return (
         <div style={insightStyle}>
             <div style={insightPositionStyle}>
@@ -153,10 +157,7 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
                         />
                     )}
                     {filtersStatus === "success" && (
-                        <div
-                            className="insight-view-visualization"
-                            style={isVisualizationLoading || effectiveError ? { height: 0 } : undefined}
-                        >
+                        <div className="insight-view-visualization" style={insightWrapperStyle}>
                             <InsightBody
                                 widget={widget}
                                 insight={insightWithAddedWidgetProperties}
