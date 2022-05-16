@@ -1,5 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import format from "date-fns/format";
+import isString from "lodash/isString";
 import capitalize from "lodash/capitalize";
 import { ILocale, getIntl } from "@gooddata/sdk-ui";
 import { granularityIntlCodes } from "../../constants/i18n";
@@ -16,7 +17,13 @@ import {
     isRelativeDateFilterPreset,
 } from "@gooddata/sdk-model";
 import { IUiAbsoluteDateFilterForm, IUiRelativeDateFilterForm, DateFilterOption } from "../../interfaces";
-import { DEFAULT_DATE_FORMAT, TIME_FORMAT, TIME_FORMAT_WITH_SEPARATOR } from "../../constants/Platform";
+import {
+    DAY_END_TIME,
+    DAY_START_TIME,
+    DEFAULT_DATE_FORMAT,
+    TIME_FORMAT,
+    TIME_FORMAT_WITH_SEPARATOR,
+} from "../../constants/Platform";
 import moment from "moment";
 
 export const getTimeRange = (dateFrom: Date, dateTo: Date): string => {
@@ -32,6 +39,18 @@ const isTimeForWholeDay = (dateFrom: Date, dateTo: Date) =>
     dateTo.getHours() === 23 &&
     dateTo.getMinutes() === 59;
 
+const adjustDatetime = (date: string | Date, isTimeEnabled: boolean, defaultTime = DAY_START_TIME) => {
+    if (!isString(date)) {
+        return date;
+    }
+
+    if (isTimeEnabled && date.split(" ").length === 1) {
+        return `${date} ${defaultTime}`;
+    }
+
+    return date;
+};
+
 export const formatAbsoluteDateRange = (
     from: Date | string,
     to: Date | string,
@@ -40,8 +59,12 @@ export const formatAbsoluteDateRange = (
     const isTimeEnabled = dateFormat.includes(TIME_FORMAT);
     const dateFormatWithoutTime = dateFormat.replace(TIME_FORMAT_WITH_SEPARATOR, "");
 
-    const fromDate = convertPlatformDateStringToDate(from);
-    const toDate = convertPlatformDateStringToDate(to);
+    // append start and end times if necessary
+    const adjustedFrom = adjustDatetime(from, isTimeEnabled, DAY_START_TIME);
+    const adjustedTo = adjustDatetime(to, isTimeEnabled, DAY_END_TIME);
+
+    const fromDate = convertPlatformDateStringToDate(adjustedFrom);
+    const toDate = convertPlatformDateStringToDate(adjustedTo);
     const coversWholeDay = isTimeForWholeDay(fromDate, toDate);
 
     if (moment(fromDate).isSame(toDate, "day")) {
