@@ -6,7 +6,7 @@ import MomentLocaleUtils from "react-day-picker/moment";
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { translationUtils } from "@gooddata/util";
-import { mergeDayPickerProps, areRangeBoundsCrossed } from "./utils";
+import { mergeDayPickerProps } from "./utils";
 import { DateRangePickerError } from "./DateRangePickerError";
 import { IExtendedDateFilterErrors } from "../interfaces";
 import { DateTimePicker } from "./DateTimePicker";
@@ -140,19 +140,13 @@ class DateRangePickerComponent extends React.Component<IDateRangePickerProps & W
     };
 
     private handleFromChange = (from: Date) => {
-        const useFrom = from && this.props.range.to && areRangeBoundsCrossed(from, this.props.range.to);
-        const to = useFrom ? from : this.props.range.to;
         const sanitizedFrom = this.getSanitizedInputValue(this.fromInputRef, from);
-
-        this.updateRange(sanitizedFrom, to);
+        this.updateRange(sanitizedFrom, this.props.range.to);
     };
 
     private handleToChange = (to: Date) => {
-        const useTo = to && this.props.range.from && areRangeBoundsCrossed(this.props.range.from, to);
-        const from = useTo ? to : this.props.range.from;
         const sanitizedTo = this.getSanitizedInputValue(this.toInputRef, to);
-
-        this.updateRange(from, sanitizedTo);
+        this.updateRange(this.props.range.from, sanitizedTo);
     };
 }
 export const DateRangePicker = injectIntl(DateRangePickerComponent);

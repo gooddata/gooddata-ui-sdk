@@ -1,6 +1,7 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import moment from "moment";
 import { DayPickerProps, Modifiers } from "react-day-picker";
+import { platformDateFormat, TIME_FORMAT } from "../constants/Platform";
 
 const mergeModifiers = (
     defaultModifiers: Partial<Modifiers> | undefined,
@@ -24,3 +25,7 @@ export const mergeDayPickerProps = (
 
 export const areRangeBoundsCrossed = (from: Date, to: Date): boolean =>
     from && to ? moment(from).isAfter(moment(to)) : false;
+
+export const getPlatformStringFromDate = (value: Date) => moment(value).format(platformDateFormat);
+
+export const getTimeStringFromDate = (value: Date | undefined) => moment(value).format(TIME_FORMAT);

@@ -1091,6 +1091,11 @@
         "comment": "Placeholder '{format}' is used for showing date format. Example 'The date must be in the MM/dd/yyyy format'. Don't translate placeholder '{format}'.",
         "limit": 0
     },
+    "filters.staticPeriod.endDateBeforeStartDate": {
+        "value": "End time must be later than start time",
+        "comment": "This error is displayed once there is a datetime range and End time is before To time",
+        "limit": 0
+    },
     "mvf.operator.all": {
         "value": "all",
         "comment": "Covers all the operators like 'Greater than', 'Less than', etc.",
