@@ -75,7 +75,9 @@ const addStringBuilderSegment =
     (identifier: string, helperName = identifier) =>
     (objToConvert: any) =>
     (value: string) =>
-        objToConvert[identifier] ? `${value}.${helperName}("${objToConvert[identifier]}")` : value;
+        objToConvert[identifier]
+            ? `${value}.${helperName}("${objToConvert[identifier].split("\n").join("\\n")}")`
+            : value;
 
 const addAggregation = addStringBuilderSegment("aggregation");
 const addAlias = addStringBuilderSegment("alias");

@@ -154,6 +154,23 @@ describe("factoryNotationFor", () => {
             const actual = factoryNotationFor(input);
             testModelNotation(actual, input);
         });
+        it("should handle measure with multiline format (RAIL-4241)", () => {
+            const input: IMeasure = {
+                measure: {
+                    definition: {
+                        measureDefinition: {
+                            item: {
+                                identifier: "foo",
+                            },
+                        },
+                    },
+                    format: "[<0](#,##0.0);\n#,##0.0",
+                    localIdentifier: "bar",
+                },
+            };
+            const actual = factoryNotationFor(input);
+            testModelNotation(actual, input);
+        });
         it("should handle measure with title", () => {
             const input: IMeasure = {
                 measure: {
