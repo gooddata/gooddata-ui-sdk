@@ -14,8 +14,11 @@ import {
     insightSorts,
     insightTotals,
     ISortItem,
+    isRelativeDateFilter,
     ITotal,
+    relativeDateFilterValues,
 } from "@gooddata/sdk-model";
+import isNil from "lodash/isNil";
 
 import { PropMeta } from "../types";
 import { bucketConversion, IInsightToPropConversion, insightConversion } from "./convertor";
@@ -122,7 +125,17 @@ export function multipleAttributesOrMeasuresBucketConversion<
 export function filtersInsightConversion<TProps extends object, TPropKey extends keyof TProps>(
     propName: TPropKey,
 ): IInsightToPropConversion<TProps, TPropKey, IFilter[]> {
-    return insightConversion(propName, sdkModelPropMetas.Filter.Multiple, insightFilters);
+    return insightConversion(propName, sdkModelPropMetas.Filter.Multiple, (insight) => {
+        const filters = insightFilters(insight) ?? [];
+        return filters.filter((f) => {
+            // get rid of the filters AD creates as All time: relative filter without boundaries
+            if (isRelativeDateFilter(f)) {
+                const { from, to } = relativeDateFilterValues(f);
+                return !(isNil(from) || isNil(to));
+            }
+            return true;
+        });
+    });
 }
 
 /**
