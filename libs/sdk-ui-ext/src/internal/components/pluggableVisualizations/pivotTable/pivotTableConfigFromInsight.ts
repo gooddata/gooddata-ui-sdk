@@ -11,7 +11,9 @@ export function pivotTableConfigFromInsight(
 ): IPivotTableConfig {
     const properties = insightProperties(insight);
     const controls = properties?.controls;
+
     const columnSizing = controls && getColumnSizingFromControls(controls, ctx);
+    const columnSizingProp = !isEmpty(columnSizing) ? { columnSizing } : {};
 
     const menuConfig = ctx?.backend && pivotTableMenuForCapabilities(ctx.backend.capabilities);
     const menuProp = !isEmpty(menuConfig) ? { menu: menuConfig } : {};
@@ -20,7 +22,7 @@ export function pivotTableConfigFromInsight(
     const separatorsProp = !isEmpty(separatorsConfig) ? { separators: separatorsConfig } : {};
 
     return {
-        columnSizing,
+        ...columnSizingProp,
         ...menuProp,
         ...separatorsProp,
         // the user can fill the rest on their own later
