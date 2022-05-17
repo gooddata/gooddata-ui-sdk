@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import cx from "classnames";
 import { DateRangePickerInputField } from "./DateRangePickerInputField";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { IntlWrapper } from "@gooddata/sdk-ui";
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import moment from "moment";
 import { DateRangePickerInputFieldBody } from "./DateRangePickerInputFieldBody";
@@ -163,9 +162,7 @@ DateTimePickerComponent.displayName = "DateTimePickerComponent";
 const DateTimePickerWithInt = injectIntl(DateTimePickerComponent, { forwardRef: true });
 
 const DateTimePicker = React.forwardRef<DayPickerInput, IDateTimePickerOwnProps>((props, ref) => (
-    <IntlWrapper locale={props.locale}>
-        <DateTimePickerWithInt {...props} ref={ref} />
-    </IntlWrapper>
+    <DateTimePickerWithInt {...props} ref={ref} />
 ));
 DateTimePicker.displayName = "DateTimePicker";
 
