@@ -86,7 +86,9 @@ const addTitle = addStringBuilderSegment("title");
 const addFilters =
     ({ filters }: { filters?: IFilter[] }) =>
     (value: string) =>
-        filters ? `${value}.filters(${filters.map((f) => factoryNotationFor(f)).join(ARRAY_JOINER)})` : value;
+        filters?.length
+            ? `${value}.filters(${filters.map((f) => factoryNotationFor(f)).join(ARRAY_JOINER)})`
+            : value;
 
 const addRatio =
     ({ computeRatio }: { computeRatio?: boolean }) =>
