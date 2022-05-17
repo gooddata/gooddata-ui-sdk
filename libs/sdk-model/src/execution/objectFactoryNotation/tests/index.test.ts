@@ -433,6 +433,20 @@ describe("factoryNotationFor", () => {
             const actual = factoryNotationFor(input);
             testModelNotation(actual, input);
         });
+        it("should handle relative date filter with zeroes (RAIL-4234)", () => {
+            const input: IRelativeDateFilter = {
+                relativeDateFilter: {
+                    dataSet: {
+                        identifier: "foo",
+                    },
+                    granularity: "GDC.time.year",
+                    from: -42,
+                    to: 42,
+                },
+            };
+            const actual = factoryNotationFor(input);
+            testModelNotation(actual, input);
+        });
 
         describe("measure value filter", () => {
             it("should handle measure value filter with comparison", () => {
