@@ -124,7 +124,7 @@ export class PivotTableDescriptor extends BaseChartDescriptor implements IVisual
 function factoryNotationForAttributeColumnWidthItem(obj: IAttributeColumnWidthItem): string {
     const { attributeIdentifier, width } = obj.attributeColumnWidthItem;
     const { value: widthValue, allowGrowToFit } = width;
-    // must be isNil to keep 0 values in
+    // cannot use lodash compact, that would remove 0 values which we want to keep here
     const params = [`"${attributeIdentifier}"`, `${widthValue}`, allowGrowToFit && "true"].filter(
         (item) => !isNil(item),
     );

@@ -195,7 +195,7 @@ const convertAbsoluteDateFilter: Converter<IAbsoluteDateFilter> = ({
 const convertRelativeDateFilter: Converter<IRelativeDateFilter> = ({
     relativeDateFilter: { dataSet, granularity, from, to },
 }) => {
-    // must not be compact, that would evict also 0 which is a legitimate value here
+    // cannot use lodash compact, that would remove 0 values which we want to keep here
     const restArgs = [granularity, from, to].filter((item) => !isNil(item)).map(stringify);
     return `newRelativeDateFilter(${[stringifyObjRef(dataSet), ...restArgs].join(ARRAY_JOINER)})`;
 };
