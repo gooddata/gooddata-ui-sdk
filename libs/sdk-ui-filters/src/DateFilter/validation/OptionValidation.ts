@@ -6,6 +6,7 @@ import {
     IUiRelativeDateFilterForm,
 } from "../interfaces";
 import { isAbsoluteDateFilterForm, isRelativeDateFilterForm } from "@gooddata/sdk-model";
+import { convertPlatformDateStringToDate } from "../utils/DateConversions";
 
 const validateVisibility = (filterOption: DateFilterOption): IExtendedDateFilterErrors => {
     const errors: IExtendedDateFilterErrors = {};
@@ -29,6 +30,16 @@ const validateAbsoluteForm = (filterOption: IUiAbsoluteDateFilterForm): IExtende
             }
         }
     });
+
+    if (!errors.absoluteForm) {
+        const start = convertPlatformDateStringToDate(filterOption.from);
+        const end = convertPlatformDateStringToDate(filterOption.to);
+
+        if (start > end) {
+            errors.absoluteForm = { to: "filters.staticPeriod.endDateBeforeStartDate" };
+        }
+    }
+
     return errors.absoluteForm ? errors : {};
 };
 

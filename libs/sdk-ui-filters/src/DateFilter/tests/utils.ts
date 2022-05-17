@@ -12,6 +12,3 @@ export const pressButtonOn = (keyCode: number, component: CommonWrapper) =>
 
 export const writeTo = (value: string, component: CommonWrapper) =>
     component.simulate("change", { target: { value } });
-
-export const writeToWithBlur = (value: string, component: CommonWrapper) =>
-    component.simulate("change", { target: { value } }).simulate("blur");

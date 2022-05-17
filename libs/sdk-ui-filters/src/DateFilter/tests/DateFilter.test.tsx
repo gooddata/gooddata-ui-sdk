@@ -575,7 +575,7 @@ describe("DateFilter", () => {
             expect(isApplyButtonDisabled(wrapper)).toBe(false);
         });
 
-        it('should set "to" properly after setting "from" to a later value', () => {
+        it('should display error message when "Start" is later than "End" value and start is set twice', () => {
             const wrapper = createDateFilter();
             const absoluteForm = new AbsoluteForm(wrapper);
             clickDateFilterButton(wrapper);
@@ -586,12 +586,12 @@ describe("DateFilter", () => {
             absoluteForm.setStartDate(dateToAbsoluteInputFormat("2019-05-01"));
 
             expect(absoluteForm.getStartDate()).toEqual("05/01/2019");
-            expect(absoluteForm.getEndDate()).toEqual("05/01/2019");
-            expect(absoluteForm.isErrorVisible()).toBe(false);
-            expect(isApplyButtonDisabled(wrapper)).toBe(false);
+            expect(absoluteForm.getEndDate()).toEqual("01/31/2019");
+            expect(absoluteForm.isErrorVisible()).toBe(true);
+            expect(isApplyButtonDisabled(wrapper)).toBe(true);
         });
 
-        it('should set "from" properly after setting "to" a sooner value', () => {
+        it('should display error message when "Start" is later than "End" value', () => {
             const wrapper = createDateFilter();
             const absoluteForm = new AbsoluteForm(wrapper);
             clickDateFilterButton(wrapper);
@@ -600,10 +600,10 @@ describe("DateFilter", () => {
             absoluteForm.setStartDate(dateToAbsoluteInputFormat("2019-01-31"));
             absoluteForm.setEndDate(dateToAbsoluteInputFormat("2019-01-01"));
 
-            expect(absoluteForm.getStartDate()).toEqual("01/01/2019");
+            expect(absoluteForm.getStartDate()).toEqual("01/31/2019");
             expect(absoluteForm.getEndDate()).toEqual("01/01/2019");
-            expect(absoluteForm.isErrorVisible()).toBe(false);
-            expect(isApplyButtonDisabled(wrapper)).toBe(false);
+            expect(absoluteForm.isErrorVisible()).toBe(true);
+            expect(isApplyButtonDisabled(wrapper)).toBe(true);
         });
 
         it('should not have errors when "from" = "to"', () => {

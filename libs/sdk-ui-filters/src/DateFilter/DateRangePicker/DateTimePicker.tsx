@@ -9,6 +9,8 @@ import { DateRangePickerInputFieldBody } from "./DateRangePickerInputFieldBody";
 import { convertPlatformDateStringToDate } from "../utils/DateConversions";
 import { DAY_START_TIME, TIME_FORMAT } from "../constants/Platform";
 import { DayPickerProps } from "react-day-picker";
+import isValid from "date-fns/isValid";
+import { getPlatformStringFromDate, getTimeStringFromDate } from "./utils";
 
 interface IDateTimePickerOwnProps {
     placeholderDate: string;
@@ -43,40 +45,22 @@ const DateTimePickerComponent = React.forwardRef<DayPickerInput, DateTimePickerC
             error = false,
         } = props;
 
-        const getDate = () => {
-            return moment(value).format("YYYY-MM-DD");
-        };
-
-        const getTime = () => {
-            if (typeof value !== ("undefined" || null)) {
-                return moment(value).format(TIME_FORMAT);
-            }
-            return moment(null).format(TIME_FORMAT);
-        };
-
         // keeping local copy to enable time update onBlur
-        const [pickerTime, setPickerTime] = useState<string>(getTime());
+        const [pickerTime, setPickerTime] = useState<string>(defaultTime);
 
         useEffect(() => {
-            setPickerTime(getTime());
+            if (isValid(value)) {
+                setPickerTime(getTimeStringFromDate(value));
+            }
         }, [value]);
 
         // make sure it contains appropriate time if enabled
         const adjustDate = (selectedDate: Date) => {
             if (isTimeEnabled && selectedDate) {
-                const previousDate = value ?? moment(defaultTime).toDate();
+                const previousDate = value ?? moment(pickerTime, TIME_FORMAT).toDate();
 
-                const updatedDatetime = moment(selectedDate)
-                    .hours(previousDate.getHours())
-                    .minutes(previousDate.getMinutes());
-
-                // set default time if necessary && configured
-                if (updatedDatetime.isSame(selectedDate)) {
-                    const time = moment(defaultTime, TIME_FORMAT).toDate();
-                    updatedDatetime.hours(time.getHours()).minutes(time.getMinutes());
-                }
-
-                return updatedDatetime.toDate();
+                selectedDate.setHours(previousDate.getHours());
+                selectedDate.setMinutes(previousDate.getMinutes());
             }
 
             return selectedDate;
@@ -112,7 +96,7 @@ const DateTimePickerComponent = React.forwardRef<DayPickerInput, DateTimePickerC
                         onChange={(event) =>
                             onDateChange(convertPlatformDateStringToDate(event.target.value))
                         }
-                        value={getDate()}
+                        value={getPlatformStringFromDate(value)}
                     />
                 ) : (
                     <DateRangePickerInputField
@@ -139,16 +123,14 @@ const DateTimePickerComponent = React.forwardRef<DayPickerInput, DateTimePickerC
                             "gd-date-range-picker-input",
                             "gd-date-range-picker-input-time",
                             "s-date-range-picker-input-time",
+                            error && "gd-date-range-picker-input-error",
                         )}
                     >
                         <span className="gd-icon-clock" />
                         <input
                             type="time"
                             className="input-text"
-                            onChange={(event) => setPickerTime(event.target.value)}
-                            onBlur={() => {
-                                onTimeChange(pickerTime);
-                            }}
+                            onChange={(event) => onTimeChange(event.target.value)}
                             value={pickerTime}
                         />
                     </span>
