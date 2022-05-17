@@ -1,32 +1,28 @@
-// (C) 2021 GoodData Corporation
+// (C) 2022 GoodData Corporation
+import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import React from "react";
-import { ArrowOffsets, Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
-import { FormattedMessage } from "react-intl";
-import { stringUtils } from "@gooddata/util/dist";
 import cx from "classnames";
 
-interface IDisabledConfigurationParentItemProps {
+import { stringUtils } from "@gooddata/util";
+import { FormattedMessage } from "react-intl";
+
+interface IParentFiltersDisabledItemProps {
     attributeFilterTitle: string;
     itemTitle: string;
     hasConnectingAttributes: boolean;
 }
 
-const bubbleAlignPoints: IAlignPoint[] = [{ align: "bc tl" }, { align: "tc bl" }];
-const bubbleArrowOffsets: ArrowOffsets = { "bc tl": [-100, 10], "tc bl": [-100, -10] };
+export const ParentFiltersDisabledItem: React.FC<IParentFiltersDisabledItemProps> = (props) => {
+    const { itemTitle, attributeFilterTitle, hasConnectingAttributes } = props;
 
-export const DisabledConfigurationParentItem: React.FC<IDisabledConfigurationParentItemProps> = ({
-    attributeFilterTitle,
-    itemTitle,
-    hasConnectingAttributes,
-}) => {
-    const itemClassNames = cx(
+    const itemClasses = cx(
         "gd-list-item attribute-filter-item s-attribute-filter-dropdown-configuration-item",
         `s-${stringUtils.simplifyText(itemTitle)}`,
     );
 
     return (
         <BubbleHoverTrigger hideDelay={0}>
-            <div className={itemClassNames}>
+            <div className={itemClasses}>
                 <label className="input-checkbox-label configuration-item-title">
                     <input
                         type="checkbox"
@@ -40,17 +36,18 @@ export const DisabledConfigurationParentItem: React.FC<IDisabledConfigurationPar
             </div>
             <Bubble
                 className="bubble-primary gd-attribute-filter-dropdown-bubble s-attribute-filter-dropdown-bubble"
-                alignPoints={bubbleAlignPoints}
-                arrowOffsets={bubbleArrowOffsets}
+                alignPoints={[{ align: "bc tl" }, { align: "tc bl" }]}
+                arrowOffsets={{ "bc tl": [-100, 10], "tc bl": [-100, -10] }}
             >
                 {hasConnectingAttributes ? (
                     <div>
                         <FormattedMessage
                             id="attributesDropdown.filterConfiguredMessage"
                             values={{
-                                strong: (chunks: string) => <strong>{chunks}</strong>,
                                 childTitle: attributeFilterTitle,
                                 parentTitle: itemTitle,
+                                // eslint-disable-next-line react/display-name
+                                strong: (chunks: string) => <strong>{chunks}</strong>,
                             }}
                         />
                     </div>
@@ -59,9 +56,10 @@ export const DisabledConfigurationParentItem: React.FC<IDisabledConfigurationPar
                         <FormattedMessage
                             id="attributesDropdown.noConnectionMessage"
                             values={{
-                                strong: (chunks: string) => <strong>{chunks}</strong>,
                                 childTitle: attributeFilterTitle,
                                 parentTitle: itemTitle,
+                                // eslint-disable-next-line react/display-name
+                                strong: (chunks: string) => <strong>{chunks}</strong>,
                             }}
                         />
                     </div>

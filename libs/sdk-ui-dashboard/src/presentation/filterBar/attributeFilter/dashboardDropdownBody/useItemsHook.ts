@@ -1,7 +1,7 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { useState } from "react";
 import { ObjRef } from "@gooddata/sdk-model";
-import { IConfigurationParentItem } from "./configuration/ConfigurationParentItem";
+import { IConfigurationParentItem } from "./configuration/parentFilters/ParentFiltersListItem";
 
 export interface IParentItem {
     title: string;

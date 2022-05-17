@@ -28,6 +28,7 @@ import {
 import { IAttributeElement } from "@gooddata/sdk-model";
 import AttributeDropdownListItem from "./AttributeDropdownListItem";
 import { selectLocale, useDashboardSelector } from "../../../../model";
+import { ConfigurationPanel } from "./configuration/ConfigurationPanel";
 
 const MAX_SELECTION_SIZE = 500;
 const MAX_LIST_HEIGHT = 392;
@@ -158,7 +159,7 @@ const AttributeFilterBodyCore: React.FC<IAttributeDropdownBodyExtendedProps> = (
                 //     closeHandler={() => setIsConfigurationOpen(false)}
                 //     onChange={onConfigurationChange}
                 // />
-                <div>Configuration</div>
+                <ConfigurationPanel />
             ) : (
                 <>
                     {isLoaded ? list : <LoadingMask height={LOADING_HEIGHT} />}
@@ -167,7 +168,7 @@ const AttributeFilterBodyCore: React.FC<IAttributeDropdownBodyExtendedProps> = (
                             {showItemsFilteredMessage && (
                                 <ItemsFilteredMessage parentFilterTitles={parentFilterTitles!} />
                             )}
-                            {showConfigurationButton && (
+                            {(showConfigurationButton || true) && (
                                 <ConfigurationButton setIsConfigurationOpen={setIsConfigurationOpen} />
                             )}
                             {!hasNoData && (
