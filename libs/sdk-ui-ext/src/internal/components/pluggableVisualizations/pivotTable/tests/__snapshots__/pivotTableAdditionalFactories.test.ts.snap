@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pivotTableAdditionalFactories factoryNotationForAllMeasureColumnWidthItem should handle item with grow to fit 1`] = `"newWidthForAllMeasureColumns(123, true)"`;
+
+exports[`pivotTableAdditionalFactories factoryNotationForAllMeasureColumnWidthItem should handle item without grow to fit 1`] = `"newWidthForAllMeasureColumns(123)"`;
+
+exports[`pivotTableAdditionalFactories factoryNotationForAttributeColumnLocator should handle item with element 1`] = `"newAttributeColumnLocator(\\"some-id\\", \\"some-element\\")"`;
+
+exports[`pivotTableAdditionalFactories factoryNotationForAttributeColumnLocator should handle item without element 1`] = `"newAttributeColumnLocator(\\"some-id\\")"`;
+
+exports[`pivotTableAdditionalFactories factoryNotationForAttributeColumnWidthItem should handle item with grow to fit 1`] = `"newWidthForAttributeColumn(\\"some-id\\", 123, true)"`;
+
+exports[`pivotTableAdditionalFactories factoryNotationForAttributeColumnWidthItem should handle item without grow to fit 1`] = `"newWidthForAttributeColumn(\\"some-id\\", 123)"`;
+
+exports[`pivotTableAdditionalFactories factoryNotationForMeasureColumnWidthItem with numeric width value should handle item with grow to fit 1`] = `"newWidthForSelectedColumns(\\"some-id\\", [newAttributeColumnLocator(\\"attr-id\\")], 123, true)"`;
+
+exports[`pivotTableAdditionalFactories factoryNotationForMeasureColumnWidthItem with numeric width value should handle item without grow to fit 1`] = `"newWidthForSelectedColumns(\\"some-id\\", [newAttributeColumnLocator(\\"attr-id\\")], 123)"`;
+
+exports[`pivotTableAdditionalFactories factoryNotationForMeasureColumnWidthItem with string width value should handle item with grow to fit 1`] = `"newWidthForSelectedColumns(\\"some-id\\", [newAttributeColumnLocator(\\"attr-id\\")], \\"auto\\")"`;
+
+exports[`pivotTableAdditionalFactories factoryNotationForMeasureColumnWidthItem with string width value should handle item without grow to fit 1`] = `"newWidthForSelectedColumns(\\"some-id\\", [newAttributeColumnLocator(\\"attr-id\\")], \\"auto\\")"`;
+
+exports[`pivotTableAdditionalFactories factoryNotationForWeakMeasureColumnWidthItem should handle item with grow to fit 1`] = `"newWidthForAllColumnsForMeasure(\\"some-id\\", 123, true)"`;
+
+exports[`pivotTableAdditionalFactories factoryNotationForWeakMeasureColumnWidthItem should handle item without grow to fit 1`] = `"newWidthForAllColumnsForMeasure(\\"some-id\\", 123)"`;
