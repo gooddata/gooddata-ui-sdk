@@ -33260,7 +33260,7 @@ const rows: IAttribute[] = [
 const config: IPivotTableConfig = {
     columnSizing: {
         columnWidths: [
-            newWidthForAttributeColumn(a_label.product.id.name, 400),
+            newWidthForAttributeColumn(\\"a_label.product.id.name\\", 400),
             {
                 measureColumnWidthItem: {
                     locators: [
@@ -33306,7 +33306,7 @@ const rows: IAttribute[] = [
 const config: IPivotTableConfig = {
     columnSizing: {
         columnWidths: [
-            newWidthForAttributeColumn(a_label.product.id.name, 400),
+            newWidthForAttributeColumn(\\"a_label.product.id.name\\", 400),
             {
                 measureColumnWidthItem: {
                     locators: [
@@ -33352,7 +33352,7 @@ const rows: IAttribute[] = [
 const config: IPivotTableConfig = {
     columnSizing: {
         columnWidths: [
-            newWidthForAttributeColumn(a_label.product.id.name, 400),
+            newWidthForAttributeColumn(\\"a_label.product.id.name\\", 400),
             {
                 measureColumnWidthItem: {
                     locators: [
@@ -33398,7 +33398,7 @@ const rows: IAttribute[] = [
 const config: IPivotTableConfig = {
     columnSizing: {
         columnWidths: [
-            newWidthForAttributeColumn(a_label.product.id.name, 400),
+            newWidthForAttributeColumn(\\"a_label.product.id.name\\", 400),
             {
                 measureColumnWidthItem: {
                     locators: [
@@ -33444,7 +33444,7 @@ const rows: IAttribute[] = [
 const config: IPivotTableConfig = {
     columnSizing: {
         columnWidths: [
-            newWidthForAttributeColumn(a_label.product.id.name, 400)
+            newWidthForAttributeColumn(\\"a_label.product.id.name\\", 400)
         ]
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -33480,7 +33480,7 @@ const rows: IAttribute[] = [
 const config: IPivotTableConfig = {
     columnSizing: {
         columnWidths: [
-            newWidthForAttributeColumn(a_label.product.id.name, 400)
+            newWidthForAttributeColumn(\\"a_label.product.id.name\\", 400)
         ]
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -33516,7 +33516,7 @@ const rows: IAttribute[] = [
 const config: IPivotTableConfig = {
     columnSizing: {
         columnWidths: [
-            newWidthForAttributeColumn(a_label.product.id.name, 400)
+            newWidthForAttributeColumn(\\"a_label.product.id.name\\", 400)
         ]
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -33552,7 +33552,7 @@ const rows: IAttribute[] = [
 const config: IPivotTableConfig = {
     columnSizing: {
         columnWidths: [
-            newWidthForAttributeColumn(a_label.product.id.name, 400)
+            newWidthForAttributeColumn(\\"a_label.product.id.name\\", 400)
         ]
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
