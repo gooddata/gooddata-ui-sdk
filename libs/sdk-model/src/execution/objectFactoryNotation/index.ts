@@ -75,7 +75,9 @@ const addStringBuilderSegment =
     (identifier: string, helperName = identifier) =>
     (objToConvert: any) =>
     (value: string) =>
-        objToConvert[identifier] ? `${value}.${helperName}("${objToConvert[identifier]}")` : value;
+        objToConvert[identifier]
+            ? `${value}.${helperName}("${objToConvert[identifier].split("\n").join("\\n")}")`
+            : value;
 
 const addAggregation = addStringBuilderSegment("aggregation");
 const addAlias = addStringBuilderSegment("alias");
@@ -86,7 +88,9 @@ const addTitle = addStringBuilderSegment("title");
 const addFilters =
     ({ filters }: { filters?: IFilter[] }) =>
     (value: string) =>
-        filters ? `${value}.filters(${filters.map((f) => factoryNotationFor(f)).join(ARRAY_JOINER)})` : value;
+        filters?.length
+            ? `${value}.filters(${filters.map((f) => factoryNotationFor(f)).join(ARRAY_JOINER)})`
+            : value;
 
 const addRatio =
     ({ computeRatio }: { computeRatio?: boolean }) =>
@@ -191,7 +195,8 @@ const convertAbsoluteDateFilter: Converter<IAbsoluteDateFilter> = ({
 const convertRelativeDateFilter: Converter<IRelativeDateFilter> = ({
     relativeDateFilter: { dataSet, granularity, from, to },
 }) => {
-    const restArgs = compact([granularity, from, to]).map(stringify);
+    // cannot use lodash compact, that would remove 0 values which we want to keep here
+    const restArgs = [granularity, from, to].filter((item) => !isNil(item)).map(stringify);
     return `newRelativeDateFilter(${[stringifyObjRef(dataSet), ...restArgs].join(ARRAY_JOINER)})`;
 };
 

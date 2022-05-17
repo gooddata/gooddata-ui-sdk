@@ -1,4 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
+import isNil from "lodash/isNil";
 import { IInsight, IInsightDefinition, insightSanitize, ISettings } from "@gooddata/sdk-model";
 import {
     IAttributeColumnWidthItem,
@@ -123,7 +124,9 @@ export class PivotTableDescriptor extends BaseChartDescriptor implements IVisual
 function factoryNotationForAttributeColumnWidthItem(obj: IAttributeColumnWidthItem): string {
     const { attributeIdentifier, width } = obj.attributeColumnWidthItem;
     const { value: widthValue, allowGrowToFit } = width;
-    return allowGrowToFit
-        ? `newWidthForAttributeColumn(${attributeIdentifier}, ${widthValue}, true)`
-        : `newWidthForAttributeColumn(${attributeIdentifier}, ${widthValue})`;
+    // cannot use lodash compact, that would remove 0 values which we want to keep here
+    const params = [`"${attributeIdentifier}"`, `${widthValue}`, allowGrowToFit && "true"].filter(
+        (item) => !isNil(item),
+    );
+    return `newWidthForAttributeColumn(${params.join(", ")})`;
 }

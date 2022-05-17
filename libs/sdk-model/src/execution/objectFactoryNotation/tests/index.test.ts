@@ -154,6 +154,23 @@ describe("factoryNotationFor", () => {
             const actual = factoryNotationFor(input);
             testModelNotation(actual, input);
         });
+        it("should handle measure with multiline format (RAIL-4241)", () => {
+            const input: IMeasure = {
+                measure: {
+                    definition: {
+                        measureDefinition: {
+                            item: {
+                                identifier: "foo",
+                            },
+                        },
+                    },
+                    format: "[<0](#,##0.0);\n#,##0.0",
+                    localIdentifier: "bar",
+                },
+            };
+            const actual = factoryNotationFor(input);
+            testModelNotation(actual, input);
+        });
         it("should handle measure with title", () => {
             const input: IMeasure = {
                 measure: {
@@ -420,6 +437,20 @@ describe("factoryNotationFor", () => {
             testModelNotation(actual, input);
         });
         it("should handle basic relative date filter", () => {
+            const input: IRelativeDateFilter = {
+                relativeDateFilter: {
+                    dataSet: {
+                        identifier: "foo",
+                    },
+                    granularity: "GDC.time.year",
+                    from: -42,
+                    to: 42,
+                },
+            };
+            const actual = factoryNotationFor(input);
+            testModelNotation(actual, input);
+        });
+        it("should handle relative date filter with zeroes (RAIL-4234)", () => {
             const input: IRelativeDateFilter = {
                 relativeDateFilter: {
                     dataSet: {

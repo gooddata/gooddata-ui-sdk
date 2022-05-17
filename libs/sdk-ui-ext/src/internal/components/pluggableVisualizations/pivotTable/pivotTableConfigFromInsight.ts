@@ -11,7 +11,15 @@ export function pivotTableConfigFromInsight(
 ): IPivotTableConfig {
     const properties = insightProperties(insight);
     const controls = properties?.controls;
-    const columnSizing = controls && getColumnSizingFromControls(controls, ctx);
+
+    const columnSizingFromControls = controls && getColumnSizingFromControls(controls, ctx);
+    const autoResizeAllSizing: IColumnSizing = { defaultWidth: "autoresizeAll" };
+
+    // use sizing from controls if specified, otherwise use autosize if the relevant FF is on
+    const columnSizing =
+        columnSizingFromControls || (ctx.settings?.enableTableColumnsAutoResizing && autoResizeAllSizing);
+
+    const columnSizingProp = !isEmpty(columnSizing) ? { columnSizing } : {};
 
     const menuConfig = ctx?.backend && pivotTableMenuForCapabilities(ctx.backend.capabilities);
     const menuProp = !isEmpty(menuConfig) ? { menu: menuConfig } : {};
@@ -20,7 +28,7 @@ export function pivotTableConfigFromInsight(
     const separatorsProp = !isEmpty(separatorsConfig) ? { separators: separatorsConfig } : {};
 
     return {
-        columnSizing,
+        ...columnSizingProp,
         ...menuProp,
         ...separatorsProp,
         // the user can fill the rest on their own later
