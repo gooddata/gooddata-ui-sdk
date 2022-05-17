@@ -103,9 +103,11 @@ export interface IDashboardInsightCustomizer {
      *             return undefined;
      *         }
      *
-     *         function MyCustomDecorator(props) {
-     *              const Decorated = next(insight, widget);
+     *         // Make sure you call this outside the component render function,
+     *         // otherwise a new instance of the decorated component is created on each re-render.
+     *         const Decorated = next(insight, widget);
      *
+     *         function MyCustomDecorator(props) {
      *              return (
      *                  <div>
      *                      <p>My Custom Decoration</p>
