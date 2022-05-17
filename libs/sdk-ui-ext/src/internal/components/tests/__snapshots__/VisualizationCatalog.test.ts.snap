@@ -33221,7 +33221,7 @@ export function MyComponent() {
 exports[`getEmbeddingCode functionality should generate code for PivotTable - simple table with attribute and metric column size 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
-import { IPivotTableConfig, newWidthForAttributeColumn, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+import { IPivotTableConfig, newWidthForAttributeColumn, newWidthForSelectedColumns, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
 
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
@@ -33234,16 +33234,7 @@ const config: IPivotTableConfig = {
     columnSizing: {
         columnWidths: [
             newWidthForAttributeColumn(\\"a_label.product.id.name\\", 400),
-            {
-                measureColumnWidthItem: {
-                    locators: [
-                        {
-                            measureLocatorItem: {measureIdentifier: \\"m_aangOxLSeztu\\"}
-                        }
-                    ],
-                    width: {value: 60}
-                }
-            }
+            newWidthForSelectedColumns(\\"m_aangOxLSeztu\\", [], 60)
         ]
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -33267,7 +33258,7 @@ export function MyComponent() {
 exports[`getEmbeddingCode functionality should generate code for PivotTable - simple table with attribute and metric column size 2`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
-import { IPivotTableConfig, newWidthForAttributeColumn, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+import { IPivotTableConfig, newWidthForAttributeColumn, newWidthForSelectedColumns, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
 
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
@@ -33280,16 +33271,7 @@ const config: IPivotTableConfig = {
     columnSizing: {
         columnWidths: [
             newWidthForAttributeColumn(\\"a_label.product.id.name\\", 400),
-            {
-                measureColumnWidthItem: {
-                    locators: [
-                        {
-                            measureLocatorItem: {measureIdentifier: \\"m_aangOxLSeztu\\"}
-                        }
-                    ],
-                    width: {value: 60}
-                }
-            }
+            newWidthForSelectedColumns(\\"m_aangOxLSeztu\\", [], 60)
         ]
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -33313,7 +33295,7 @@ export function MyComponent() {
 exports[`getEmbeddingCode functionality should generate code for PivotTable - simple table with attribute and metric column size 3`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
-import { IPivotTableConfig, newWidthForAttributeColumn, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+import { IPivotTableConfig, newWidthForAttributeColumn, newWidthForSelectedColumns, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
 
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
@@ -33326,16 +33308,7 @@ const config: IPivotTableConfig = {
     columnSizing: {
         columnWidths: [
             newWidthForAttributeColumn(\\"a_label.product.id.name\\", 400),
-            {
-                measureColumnWidthItem: {
-                    locators: [
-                        {
-                            measureLocatorItem: {measureIdentifier: \\"m_aangOxLSeztu\\"}
-                        }
-                    ],
-                    width: {value: 60}
-                }
-            }
+            newWidthForSelectedColumns(\\"m_aangOxLSeztu\\", [], 60)
         ]
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -33359,7 +33332,7 @@ export function MyComponent() {
 exports[`getEmbeddingCode functionality should generate code for PivotTable - simple table with attribute and metric column size 4`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
-import { IPivotTableConfig, newWidthForAttributeColumn, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+import { IPivotTableConfig, newWidthForAttributeColumn, newWidthForSelectedColumns, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
 
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
@@ -33372,16 +33345,7 @@ const config: IPivotTableConfig = {
     columnSizing: {
         columnWidths: [
             newWidthForAttributeColumn(\\"a_label.product.id.name\\", 400),
-            {
-                measureColumnWidthItem: {
-                    locators: [
-                        {
-                            measureLocatorItem: {measureIdentifier: \\"m_aangOxLSeztu\\"}
-                        }
-                    ],
-                    width: {value: 60}
-                }
-            }
+            newWidthForSelectedColumns(\\"m_aangOxLSeztu\\", [], 60)
         ]
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -33549,7 +33513,7 @@ export function MyComponent() {
 exports[`getEmbeddingCode functionality should generate code for PivotTable - simple table with custom metric column size 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
-import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+import { IPivotTableConfig, newWidthForSelectedColumns, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
 
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
@@ -33561,16 +33525,7 @@ const rows: IAttribute[] = [
 const config: IPivotTableConfig = {
     columnSizing: {
         columnWidths: [
-            {
-                measureColumnWidthItem: {
-                    locators: [
-                        {
-                            measureLocatorItem: {measureIdentifier: \\"m_aangOxLSeztu\\"}
-                        }
-                    ],
-                    width: {value: 60}
-                }
-            }
+            newWidthForSelectedColumns(\\"m_aangOxLSeztu\\", [], 60)
         ]
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -33594,7 +33549,7 @@ export function MyComponent() {
 exports[`getEmbeddingCode functionality should generate code for PivotTable - simple table with custom metric column size 2`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
-import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+import { IPivotTableConfig, newWidthForSelectedColumns, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
 
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
@@ -33606,16 +33561,7 @@ const rows: IAttribute[] = [
 const config: IPivotTableConfig = {
     columnSizing: {
         columnWidths: [
-            {
-                measureColumnWidthItem: {
-                    locators: [
-                        {
-                            measureLocatorItem: {measureIdentifier: \\"m_aangOxLSeztu\\"}
-                        }
-                    ],
-                    width: {value: 60}
-                }
-            }
+            newWidthForSelectedColumns(\\"m_aangOxLSeztu\\", [], 60)
         ]
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -33639,7 +33585,7 @@ export function MyComponent() {
 exports[`getEmbeddingCode functionality should generate code for PivotTable - simple table with custom metric column size 3`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
-import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+import { IPivotTableConfig, newWidthForSelectedColumns, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
 
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
@@ -33651,16 +33597,7 @@ const rows: IAttribute[] = [
 const config: IPivotTableConfig = {
     columnSizing: {
         columnWidths: [
-            {
-                measureColumnWidthItem: {
-                    locators: [
-                        {
-                            measureLocatorItem: {measureIdentifier: \\"m_aangOxLSeztu\\"}
-                        }
-                    ],
-                    width: {value: 60}
-                }
-            }
+            newWidthForSelectedColumns(\\"m_aangOxLSeztu\\", [], 60)
         ]
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -33684,7 +33621,7 @@ export function MyComponent() {
 exports[`getEmbeddingCode functionality should generate code for PivotTable - simple table with custom metric column size 4`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
-import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+import { IPivotTableConfig, newWidthForSelectedColumns, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
 
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
@@ -33696,16 +33633,7 @@ const rows: IAttribute[] = [
 const config: IPivotTableConfig = {
     columnSizing: {
         columnWidths: [
-            {
-                measureColumnWidthItem: {
-                    locators: [
-                        {
-                            measureLocatorItem: {measureIdentifier: \\"m_aangOxLSeztu\\"}
-                        }
-                    ],
-                    width: {value: 60}
-                }
-            }
+            newWidthForSelectedColumns(\\"m_aangOxLSeztu\\", [], 60)
         ]
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -34208,7 +34136,7 @@ export function MyComponent() {
 exports[`getEmbeddingCode functionality should generate code for PivotTable - table with multiple measure columns and weak measure size 1`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
-import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
 
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
@@ -34224,14 +34152,7 @@ const columns: IAttribute[] = [
 const config: IPivotTableConfig = {
     columnSizing: {
         columnWidths: [
-            {
-                measureColumnWidthItem: {
-                    locator: {
-                        measureLocatorItem: {measureIdentifier: \\"m_aangOxLSeztu\\"}
-                    },
-                    width: {value: 60}
-                }
-            }
+            newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 60)
         ]
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -34256,7 +34177,7 @@ export function MyComponent() {
 exports[`getEmbeddingCode functionality should generate code for PivotTable - table with multiple measure columns and weak measure size 2`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
-import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
 
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
@@ -34272,14 +34193,7 @@ const columns: IAttribute[] = [
 const config: IPivotTableConfig = {
     columnSizing: {
         columnWidths: [
-            {
-                measureColumnWidthItem: {
-                    locator: {
-                        measureLocatorItem: {measureIdentifier: \\"m_aangOxLSeztu\\"}
-                    },
-                    width: {value: 60}
-                }
-            }
+            newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 60)
         ]
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -34304,7 +34218,7 @@ export function MyComponent() {
 exports[`getEmbeddingCode functionality should generate code for PivotTable - table with multiple measure columns and weak measure size 3`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
-import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
 
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
@@ -34320,14 +34234,7 @@ const columns: IAttribute[] = [
 const config: IPivotTableConfig = {
     columnSizing: {
         columnWidths: [
-            {
-                measureColumnWidthItem: {
-                    locator: {
-                        measureLocatorItem: {measureIdentifier: \\"m_aangOxLSeztu\\"}
-                    },
-                    width: {value: 60}
-                }
-            }
+            newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 60)
         ]
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}
@@ -34352,7 +34259,7 @@ export function MyComponent() {
 exports[`getEmbeddingCode functionality should generate code for PivotTable - table with multiple measure columns and weak measure size 4`] = `
 "import React from \\"react\\";
 import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
-import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
+import { IPivotTableConfig, newWidthForAllColumnsForMeasure, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
 
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
@@ -34368,14 +34275,7 @@ const columns: IAttribute[] = [
 const config: IPivotTableConfig = {
     columnSizing: {
         columnWidths: [
-            {
-                measureColumnWidthItem: {
-                    locator: {
-                        measureLocatorItem: {measureIdentifier: \\"m_aangOxLSeztu\\"}
-                    },
-                    width: {value: 60}
-                }
-            }
+            newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 60)
         ]
     },
     separators: {decimal: \\".\\", thousand: \\",\\"}

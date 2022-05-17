@@ -1,11 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
-import isNil from "lodash/isNil";
 import { IInsight, IInsightDefinition, insightSanitize, ISettings } from "@gooddata/sdk-model";
-import {
-    IAttributeColumnWidthItem,
-    IPivotTableProps,
-    isAttributeColumnWidthItem,
-} from "@gooddata/sdk-ui-pivot";
+import { IPivotTableProps } from "@gooddata/sdk-ui-pivot";
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import {
@@ -34,6 +29,7 @@ import {
     totalsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator";
 import { pivotTableConfigFromInsight } from "./pivotTableConfigFromInsight";
+import { pivotTableAdditionalFactories } from "./pivotTableAdditionalFactories";
 
 export class PivotTableDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
@@ -97,20 +93,7 @@ export class PivotTableDescriptor extends BaseChartDescriptor implements IVisual
                 pivotTableConfigFromInsight,
             ),
         }),
-        additionalFactories: [
-            {
-                importInfo: {
-                    name: "newWidthForAttributeColumn",
-                    package: "@gooddata/sdk-ui-pivot",
-                    importType: "named",
-                },
-                transformation: (obj) => {
-                    return isAttributeColumnWidthItem(obj)
-                        ? factoryNotationForAttributeColumnWidthItem(obj)
-                        : undefined;
-                },
-            },
-        ],
+        additionalFactories: pivotTableAdditionalFactories,
     });
 
     public getMeta(): IVisualizationMeta {
@@ -119,14 +102,4 @@ export class PivotTableDescriptor extends BaseChartDescriptor implements IVisual
             supportsExport: true,
         };
     }
-}
-
-function factoryNotationForAttributeColumnWidthItem(obj: IAttributeColumnWidthItem): string {
-    const { attributeIdentifier, width } = obj.attributeColumnWidthItem;
-    const { value: widthValue, allowGrowToFit } = width;
-    // cannot use lodash compact, that would remove 0 values which we want to keep here
-    const params = [`"${attributeIdentifier}"`, `${widthValue}`, allowGrowToFit && "true"].filter(
-        (item) => !isNil(item),
-    );
-    return `newWidthForAttributeColumn(${params.join(", ")})`;
 }
