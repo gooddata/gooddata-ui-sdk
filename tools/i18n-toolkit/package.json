@@ -16,6 +16,7 @@
     "typings": "esm/index.d.ts",
     "sideEffects": false,
     "files": [
+        "index.js",
         "dist/**/*.js",
         "dist/**/*.json",
         "dist/**/*.d.ts",
@@ -81,6 +82,6 @@
         "eslint-plugin-tsdoc": "^0.2.14"
     },
     "bin": {
-        "i18n-toolkit": "dist/index.js"
+        "i18n-toolkit": "index.js"
     }
 }
