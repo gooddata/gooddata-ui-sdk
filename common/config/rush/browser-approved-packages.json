@@ -99,6 +99,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@gooddata/i18n-toolkit",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@gooddata/live-examples-workspace",
       "allowedCategories": [ "production" ]
     },

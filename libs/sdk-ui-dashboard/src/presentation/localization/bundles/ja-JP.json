@@ -69,7 +69,7 @@
     "dialogs.schedule.email.repeats.frequencies.week": "{n, plural, one {週} other {週}}",
     "dialogs.schedule.email.repeats.types.custom": "カスタム",
     "dialogs.schedule.email.repeats.types.daily": "日次",
-    "dialogs.schedule.email.repeats.types.monthly": "毎月 {week, select, {初週の} {番目の} {第三の} {第四の} other {最後の}} {day}",
+    "dialogs.schedule.email.repeats.types.monthly": "毎月 {week, select, 1 {初週の} 2 {番目の} 3 {第三の} 4 {第四の} other {最後の}} {day}",
     "dialogs.schedule.email.repeats.types.weekly": "毎週 {day}",
     "dialogs.schedule.email.subject.label": "件名:",
     "dialogs.schedule.email.time.label": "開始日時：",
