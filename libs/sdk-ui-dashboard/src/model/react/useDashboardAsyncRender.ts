@@ -30,10 +30,10 @@ export interface UseDashboardAsyncRender {
  * - You must request async rendering for at least 1 component within 2 seconds of the {@link DashboardInitialized} event.
  *   (If you do not register any asynchronous rendering, after 2 seconds the dashboard will announce that it is rendered by dispatching {@link DashboardRenderResolved} event.)
  * - You can request async rendering for any number of components. Requests are valid if the first rule is met
- *   and not all asynchronous renderings have been resolved and the maximum timeout (60s by default) has not elapsed.
+ *   and not all asynchronous renderings have been resolved and the maximum timeout (20min by default) has not elapsed.
  * - The component may again request asynchronous rendering within 2 seconds of resolution. Maximum 3x.
  *   (this is necessary to cover possible re-renders caused by data received from the components themselves, after they are rendered)
- * - Maximum rendering time of the dashboard is 60s - if some asynchronous renderings are not yet resolved at this time, {@link DashboardRenderResolved} event is dispatched anyway.
+ * - Maximum rendering time of the dashboard is 20min - if some asynchronous renderings are not yet resolved at this time, {@link DashboardRenderResolved} event is dispatched anyway.
  *
  * Request async rendering of the component by calling onRequestAsyncRender() callback.
  * Resolve async rendering of the component by calling onResolveAsyncRender() callback.
