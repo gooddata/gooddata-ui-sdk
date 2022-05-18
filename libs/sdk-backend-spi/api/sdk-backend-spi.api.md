@@ -201,6 +201,9 @@ export type DrillTransition = m.DrillTransition;
 export type DrillType = m.DrillType;
 
 // @public
+export type ElementsQueryOptionsElementsSpecification = IElementsQueryOptionsElementsByValue | IElementsQueryOptionsElementsByPrimaryDisplayFormValue | IElementsQueryOptionsElementsByUri;
+
+// @public
 export type ErrorConverter = (e: Error) => AnalyticalBackendError;
 
 // @internal
@@ -677,7 +680,7 @@ export interface IElementsQueryFactory {
 // @public
 export interface IElementsQueryOptions {
     complement?: boolean;
-    elements?: IElementsQueryOptionsElementsByValue | IElementsQueryOptionsElementsByPrimaryDisplayFormValue | IElementsQueryOptionsElementsByUri;
+    elements?: ElementsQueryOptionsElementsSpecification;
     excludePrimaryLabel?: boolean;
     filter?: string;
     includeTotalCountWithoutFilters?: boolean;

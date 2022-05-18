@@ -86,6 +86,16 @@ export interface IElementsQueryOptionsElementsByUri {
 }
 
 /**
+ * Specification of particular elements to load in {@link IElementsQueryOptions}.
+ *
+ * @public
+ */
+export type ElementsQueryOptionsElementsSpecification =
+    | IElementsQueryOptionsElementsByValue
+    | IElementsQueryOptionsElementsByPrimaryDisplayFormValue
+    | IElementsQueryOptionsElementsByUri;
+
+/**
  * Configuration options for querying attribute elements
  *
  * @public
@@ -134,10 +144,7 @@ export interface IElementsQueryOptions {
      * @remarks
      * This is commonly used to preload selected elements in the attribute filter.
      */
-    elements?:
-        | IElementsQueryOptionsElementsByValue
-        | IElementsQueryOptionsElementsByPrimaryDisplayFormValue
-        | IElementsQueryOptionsElementsByUri;
+    elements?: ElementsQueryOptionsElementsSpecification;
 
     /**
      * Decides whether result will include also the primary label elements or only requested label ones.
