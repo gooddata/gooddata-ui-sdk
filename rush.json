@@ -563,6 +563,12 @@
             "projectFolder": "examples/sdk-examples",
             "reviewCategory": "examples",
             "shouldPublish": false
+        },
+        {
+            "packageName": "@gooddata/i18n-toolkit",
+            "projectFolder": "tools/i18n-toolkit",
+            "reviewCategory": "tools",
+            "shouldPublish": true
         }
         // {
         //   /**

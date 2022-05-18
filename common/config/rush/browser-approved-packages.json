@@ -683,6 +683,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "html-validate",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "html-webpack-plugin",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -696,6 +700,10 @@
     },
     {
       "name": "inquirer",
+      "allowedCategories": [ "tools" ]
+    },
+    {
+      "name": "intl-messageformat-parser",
       "allowedCategories": [ "tools" ]
     },
     {
@@ -731,6 +739,10 @@
       "allowedCategories": [ "tools" ]
     },
     {
+      "name": "jsonschema",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "kefir",
       "allowedCategories": [ "production" ]
     },
@@ -752,7 +764,7 @@
     },
     {
       "name": "mkdirp",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "moment",
