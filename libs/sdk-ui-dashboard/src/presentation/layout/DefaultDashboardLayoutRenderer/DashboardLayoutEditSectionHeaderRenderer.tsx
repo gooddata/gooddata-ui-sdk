@@ -3,9 +3,10 @@ import * as React from "react";
 import { DashboardLayoutItemRenderer } from "./DashboardLayoutItemRenderer";
 import { DashboardLayoutSectionHeader } from "./DashboardLayoutSectionHeader";
 import { IDashboardLayoutSectionHeaderRenderProps } from "./interfaces";
+import { SectionHeaderEditable } from "./EditableHeader/SectionHeaderEditable";
 import { emptyItemFacadeWithFullSize } from "./utils/emptyFacade";
 
-export function DashboardLayoutSectionHeaderRenderer(
+export function DashboardLayoutEditSectionHeaderRenderer(
     props: IDashboardLayoutSectionHeaderRenderProps<any>,
 ): JSX.Element | null {
     const { section, screen } = props;
@@ -20,6 +21,13 @@ export function DashboardLayoutSectionHeaderRenderer(
             <DashboardLayoutSectionHeader
                 title={sectionHeader.title}
                 description={sectionHeader.description}
+                renderHeader={
+                    <SectionHeaderEditable
+                        title={sectionHeader.title || ""}
+                        description={sectionHeader.description || ""}
+                        index={section.index()}
+                    />
+                }
             />
         </DashboardLayoutItemRenderer>
     ) : null;

@@ -2,6 +2,7 @@
 @import "~@gooddata/sdk-ui-kit/styles/scss/variables";
 @import "~@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
 @import "~@gooddata/sdk-ui-kit/styles/scss/typo";
+@import "./variables";
 
 $gd-dashboards-section-title-color: var(--gd-dashboards-section-title-color, $gd-color-text);
 $gd-dashboards-section-title-lineColor: var(--gd-dashboards-section-title-lineColor, $gd-border-color);
@@ -216,6 +217,49 @@ $gd-dashboards-section-description-color: var(
 
     .underline {
         text-decoration: underline;
+    }
+
+    .gd-editable-label-container {
+        font-size: 0;
+    }
+
+    .gd-editable-label {
+        display: inline-block;
+        overflow: hidden;
+        width: auto;
+        max-height: inherit;
+        padding: $item-headline-padding-vertical 4px 0;
+
+        @include active-states {
+            border-color: $editable-label-border;
+        }
+
+        &.is-editing {
+            width: 100%;
+            border-color: $editable-label-border;
+        }
+
+        &.title {
+            min-width: 0;
+        }
+
+        &.description {
+            margin-top: 2px;
+            font-size: 14px;
+
+            @media #{$medium-up} {
+                max-width: 95%;
+            }
+        }
+
+        .description.gd-paragraph {
+            height: 21px;
+            padding-top: 1px;
+        }
+
+        &.placeholder {
+            color: $gd-color-state-blank;
+        }
     }
 }
 

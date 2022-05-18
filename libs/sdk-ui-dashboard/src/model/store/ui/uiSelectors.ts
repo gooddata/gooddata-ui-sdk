@@ -143,3 +143,8 @@ export const selectIsInViewMode = createSelector(selectSelf, (state) => state.re
  * @internal
  */
 export const selectIsInEditMode = createSelector(selectSelf, (state) => state.renderMode === "edit");
+
+/**
+ * @internal
+ */
+export const selectActiveHeaderIndex = createSelector(selectSelf, (state) => state.activeHeaderIndex);

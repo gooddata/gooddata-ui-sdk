@@ -1083,6 +1083,21 @@
         "comment": "Tooltip text of button for deleting filter",
         "limit": 0
     },
+    "layout.header.characters.left": {
+        "value": "{currentCharactersCount} / {maximumCharactersCount} characters left",
+        "comment": "Number of characters that can be written e.g. : 4 /20 characters left",
+        "limit": 0
+    },
+    "layout.header.add.title.placeholder": {
+        "value": "Add Title here...",
+        "comment": "Add title component placeholder text",
+        "limit": 0
+    },
+    "layout.header.add.description.placeholder": {
+        "value": "Add Description here...",
+        "comment": "Add description component placeholder text",
+        "limit": 0
+    },
     "error": {
         "value": "Error",
         "comment": "",

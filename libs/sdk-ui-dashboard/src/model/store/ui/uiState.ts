@@ -35,6 +35,7 @@ export interface UiState {
         itemsVisibility: IMenuButtonItemsVisibility;
     };
     renderMode: RenderMode;
+    activeHeaderIndex: number | null;
 }
 
 export const uiInitialState: UiState = {
@@ -66,4 +67,5 @@ export const uiInitialState: UiState = {
         itemsVisibility: {},
     },
     renderMode: "view",
+    activeHeaderIndex: null,
 };
