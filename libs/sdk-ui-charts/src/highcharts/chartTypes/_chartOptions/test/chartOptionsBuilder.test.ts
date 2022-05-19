@@ -292,7 +292,8 @@ describe("chartOptionsBuilder", () => {
 
             const testData = [
                 ["false", "less", 3, { dataTooLarge: false, hasNegativeValue: false }],
-                ["true", "greater", 31, { dataTooLarge: true, hasNegativeValue: false }],
+                ["false", "greater", 31, { dataTooLarge: false, hasNegativeValue: false }],
+                ["true", "greater", 100, { dataTooLarge: true, hasNegativeValue: false }],
             ];
 
             it.each(testData)(
@@ -305,6 +306,9 @@ describe("chartOptionsBuilder", () => {
                             categories: Array(31),
                         }),
                     };
+
+                    // validation for number of categories has to satisfy
+                    // (categoriesNum * 31) < LIMIT of default categories(currently set to 3000)
                     const validationResult = validateData(undefined, { ...chartOptions, data });
                     expect(validationResult).toEqual(expected);
                 },
