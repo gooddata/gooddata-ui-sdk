@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import cx from "classnames";
 import { DateRangePickerInputField } from "./DateRangePickerInputField";
 import { injectIntl, WrappedComponentProps } from "react-intl";
@@ -7,9 +7,8 @@ import DayPickerInput from "react-day-picker/DayPickerInput";
 import moment from "moment";
 import { DateRangePickerInputFieldBody } from "./DateRangePickerInputFieldBody";
 import { convertPlatformDateStringToDate } from "../utils/DateConversions";
-import { DAY_START_TIME, TIME_FORMAT } from "../constants/Platform";
+import { TIME_FORMAT } from "../constants/Platform";
 import { DayPickerProps } from "react-day-picker";
-import isValid from "date-fns/isValid";
 import { getPlatformStringFromDate, getTimeStringFromDate } from "./utils";
 
 interface IDateTimePickerOwnProps {
@@ -41,18 +40,11 @@ const DateTimePickerComponent = React.forwardRef<DayPickerInput, DateTimePickerC
             isMobile,
             isTimeEnabled,
             className,
-            defaultTime = DAY_START_TIME,
             error = false,
         } = props;
 
         // keeping local copy to enable time update onBlur
-        const [pickerTime, setPickerTime] = useState<string>(defaultTime);
-
-        useEffect(() => {
-            if (isValid(value)) {
-                setPickerTime(getTimeStringFromDate(value));
-            }
-        }, [value]);
+        const [pickerTime, setPickerTime] = useState<string>(getTimeStringFromDate(value));
 
         // make sure it contains appropriate time if enabled
         const adjustDate = (selectedDate: Date) => {
@@ -76,6 +68,7 @@ const DateTimePickerComponent = React.forwardRef<DayPickerInput, DateTimePickerC
             if (time.isValid()) {
                 date.setHours(time.hours());
                 date.setMinutes(time.minutes());
+                setPickerTime(input);
             }
 
             onChange(date);
