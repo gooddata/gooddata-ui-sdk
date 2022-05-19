@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { Task, SagaIterator } from "redux-saga";
 import { put, delay, take, join, race, call, all, spawn, cancel, actionChannel } from "redux-saga/effects";
 import { v4 as uuidv4 } from "uuid";
@@ -29,8 +29,12 @@ const isAsyncRenderRequestedEvent = (id?: string) =>
 export interface RenderingWorkerConfiguration {
     /**
      * Maximum time limit for rendering the dashboard.
+     * Somehow in sync with limits of exporter
+     * https://github.com/gooddata/gdc-exporters-microservices/blob/master/microservices/visual-exporter-service/src/main/kotlin/com/gooddata/exporters/visual/config/TabSessionConfig.kt
      *
-     * Default: 60000 (60s).
+     * Default: 20*60000 (20min).
+     * @privateRemarks
+     * If changing this value update it also in documentation of {@link requestAsyncRender} command creator and {@link useDashboardAsyncRender} hook.
      */
     maxTimeout: number;
 
@@ -61,7 +65,7 @@ export function newRenderingWorker(
     config: RenderingWorkerConfiguration = {
         asyncRenderRequestedTimeout: 2000,
         asyncRenderResolvedTimeout: 2000,
-        maxTimeout: 60000,
+        maxTimeout: 20 * 60000,
         correlationIdGenerator: uuidv4,
     },
 ) {
@@ -129,7 +133,7 @@ function* waitForAsyncRenderTasksResolution(
     const timeout: Task = yield spawn(wait, config.maxTimeout - config.asyncRenderRequestedTimeout);
     const renderRequestedChannel = yield actionChannel(isAsyncRenderRequestedEvent());
     while (true) {
-        // Now, wait for resolution of all the requested async renders, or max 60 seconds.
+        // Now, wait for resolution of all the requested async renders, or max `config.maxTimeout` milliseconds.
         // Accept also new async render requests, but only in case that all tasks are not already resolved.
         const asyncRenderTasksList = Array.from(asyncRenderTasks, ([, task]) => task);
 
