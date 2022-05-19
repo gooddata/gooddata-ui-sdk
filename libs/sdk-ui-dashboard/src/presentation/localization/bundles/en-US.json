@@ -1143,6 +1143,65 @@
         "comment": "Use '…' as one character, not 3 dots ('...').",
         "limit": 0
     },
+    "gs.visualizationsList.tabs.all": {
+        "value": "all",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.visualizationsList.tabs.my": {
+        "value": "created by me",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.visualizationsList.loading": {
+        "value": "Loading…",
+        "comment": "Use '…' as one character, not 3 dots ('...').",
+        "limit": 0
+    },
+    "visualizationsList.noInsights|insight": {
+        "value": "This workspace contains no insights.",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationsList.noInsights|report": {
+        "value": "This workspace contains no reports.",
+        "comment": "",
+        "limit": 0,
+        "translate": false
+    },
+    "visualizationsList.noUserInsights|insight": {
+        "value": "No insights created.",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationsList.noUserInsights|report": {
+        "value": "No reports created.",
+        "comment": "",
+        "limit": 0,
+        "translate": false
+    },
+    "visualizationsList.noVisualizationsFound|insight": {
+        "value": "No insight matched.",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationsList.noVisualizationsFound|report": {
+        "value": "No report matched.",
+        "comment": "",
+        "limit": 0,
+        "translate": false
+    },
+    "search_insights|insight": {
+        "value": "Search all insights…",
+        "comment": "Use '…' as one character, not 3 dots ('...').",
+        "limit": 0
+    },
+    "search_insights|report": {
+        "value": "Search all reports…",
+        "comment": "Use '…' as one character, not 3 dots ('...').",
+        "limit": 0,
+        "translate": false
+    },
     "save.as.new": {
         "value": "Save as new",
         "comment": "",
