@@ -102,6 +102,7 @@ export type TigerBackendConfig = {
  */
 type TigerSpecificFunctions = {
     isCommunityEdition?: () => Promise<boolean>;
+    isOrganizationAdmin?: () => Promise<boolean>;
 };
 
 /**
@@ -156,6 +157,23 @@ export class TigerBackend implements IAnalyticalBackend {
                             // the header name are all lowercase in this object
                             return response.headers["gooddata-deployment"] === "aio";
                         });
+                    } catch {
+                        return false;
+                    }
+                },
+                isOrganizationAdmin: async () => {
+                    try {
+                        const orgPermissions = await this.authApiCall(async (sdk) => {
+                            const { organizationId } = await this.organizations().getCurrentOrganization();
+                            const response = await sdk.entities.getEntityOrganizations({
+                                id: organizationId,
+                                metaInclude: ["permissions"],
+                            });
+                            return response.data.data.meta?.permissions || [];
+                        });
+                        const isOrganizationManage = (permissions: string[]): boolean =>
+                            permissions.includes("MANAGE");
+                        return isOrganizationManage(orgPermissions);
                     } catch {
                         return false;
                     }
