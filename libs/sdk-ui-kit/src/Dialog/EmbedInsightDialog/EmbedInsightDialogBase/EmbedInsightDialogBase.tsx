@@ -12,6 +12,9 @@ import { CodeOptions } from "./components/CodeOptions";
 import { CompleteListPropsMessage } from "./components/CompleteListPropsMessage";
 import { Bubble, BubbleHoverTrigger } from "../../../Bubble";
 
+const HEADER_TOOLTIP_ALIGN_POINTS = [{ align: "bc tl" }];
+const HEADER_TOOLTIP_ARROW_OFFSETS = { "bc tl": [-7, 0] };
+
 /**
  * @internal
  */
@@ -80,7 +83,11 @@ export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (
             titleRightIconRenderer={() => (
                 <BubbleHoverTrigger className="gd-button" showDelay={0} hideDelay={0}>
                     <span className="gd-icon-circle-question s-circle_question-dialog-title question-mark-icon embed-insight-dialog-header-icon" />
-                    <Bubble className="bubble-primary" alignPoints={[{ align: "bc tl" }]}>
+                    <Bubble
+                        className="bubble-primary"
+                        alignPoints={HEADER_TOOLTIP_ALIGN_POINTS}
+                        arrowOffsets={HEADER_TOOLTIP_ARROW_OFFSETS}
+                    >
                         <FormattedMessage id={getChangesLabelId(codeOption.type)} />
                     </Bubble>
                 </BubbleHoverTrigger>
