@@ -10,32 +10,24 @@
     },
     "license": "MIT",
     "main": "dist/index.js",
-    "module": "esm/index.js",
-    "es2015": "esm/index.js",
-    "browser": "dist/index.js",
-    "typings": "esm/index.d.ts",
+    "typings": "dist/index.d.ts",
     "sideEffects": false,
     "files": [
         "index.js",
         "dist/**/*.js",
         "dist/**/*.json",
         "dist/**/*.d.ts",
-        "dist/**/*.map",
-        "esm/**/*.js",
-        "esm/**/*.json",
-        "esm/**/*.d.ts",
-        "esm/**/*.map"
+        "dist/**/*.map"
     ],
     "config": {
         "eslint": "-c .eslintrc.js --ext ts src/"
     },
     "scripts": {
         "run": "node ./dist/index.js --path ./src/fixtures/ --structure --intl --html --insightToReport",
-        "clean": "rm -rf ci dist esm coverage *.log && jest --clearCache",
+        "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
         "dev": "tsc -p tsconfig.dev.json --watch",
-        "build": "concurrently \"npm run build-cjs\" \"npm run build-esm\"",
+        "build": "concurrently \"npm run build-cjs\"",
         "build-cjs": "tsc -p tsconfig.build.json",
-        "build-esm": "tsc -p tsconfig.build.esm.json",
         "test": "jest --watch",
         "test-once": "jest --maxWorkers=${JEST_MAX_WORKERS:-'45%'}",
         "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --ci --config jest.ci.js",
@@ -49,6 +41,7 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
+        "lodash": "^4.17.19",
         "chalk": "^4.1.1",
         "commander": "^8.1.0",
         "html-validate": "^6.0.0",
@@ -61,6 +54,7 @@
         "@gooddata/eslint-config": "^2.1.0",
         "@types/jest": "^27.0.1",
         "@types/node": "^16.11.11",
+        "@types/lodash": "^4.14.158",
         "@typescript-eslint/eslint-plugin": "^5.5.0",
         "@typescript-eslint/parser": "^5.5.0",
         "concurrently": "^6.0.2",

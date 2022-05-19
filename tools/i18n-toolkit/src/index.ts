@@ -12,7 +12,7 @@ program
     .option("-s, --structure", "enable structure check")
     .option("-i, --intl", "enable intl check")
     .option("-h, --html", "enable html check")
-    .option("-ir, --insightToReport", "enable insightToReport check")
+    .option("-r, --insightToReport", "enable insightToReport check")
     .option("-d, --debug", "enable debug mode")
     .action((opts: ToolkitOptions) => {
         validate(opts)

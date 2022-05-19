@@ -568,6 +568,7 @@
             "packageName": "@gooddata/i18n-toolkit",
             "projectFolder": "tools/i18n-toolkit",
             "reviewCategory": "tools",
+            "versionPolicyName": "sdk",
             "shouldPublish": true
         }
         // {

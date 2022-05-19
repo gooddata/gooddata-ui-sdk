@@ -1,8 +1,9 @@
 // (C) 2021-2022 GoodData Corporation
 
 import * as path from "path";
+import flatten from "lodash/flatten";
 
-import { readDir, readFile, flatten } from "./utils";
+import { readDir, readFile } from "./utils";
 import { LocalesItem, LocalesStructure } from "./schema/localization";
 
 export async function getLocalizationFiles(localizationPath: string): Promise<Buffer[]> {
