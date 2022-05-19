@@ -1,0 +1,81 @@
+{
+    "name": "@gooddata/i18n-toolkit",
+    "version": "8.10.0-alpha.101",
+    "author": "GoodData",
+    "description": "Localization validator to validate localization complexity and intl and html format.",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
+        "directory": "tools/i18n-toolkit"
+    },
+    "license": "MIT",
+    "main": "dist/index.js",
+    "typings": "dist/index.d.ts",
+    "sideEffects": false,
+    "files": [
+        "index.js",
+        "dist/**/*.js",
+        "dist/**/*.json",
+        "dist/**/*.d.ts",
+        "dist/**/*.map"
+    ],
+    "config": {
+        "eslint": "-c .eslintrc.js --ext ts src/"
+    },
+    "scripts": {
+        "run": "node ./dist/index.js --path ./src/fixtures/ --structure --intl --html --insightToReport",
+        "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
+        "dev": "tsc -p tsconfig.dev.json --watch",
+        "build": "concurrently \"npm run build-cjs\"",
+        "build-cjs": "tsc -p tsconfig.build.json",
+        "test": "jest --watch",
+        "test-once": "jest --maxWorkers=${JEST_MAX_WORKERS:-'45%'}",
+        "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --ci --config jest.ci.js",
+        "eslint": "eslint $npm_package_config_eslint",
+        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml $npm_package_config_eslint",
+        "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
+        "dep-cruiser": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
+        "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
+        "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check",
+        "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
+    },
+    "dependencies": {
+        "lodash": "^4.17.19",
+        "chalk": "^4.1.1",
+        "commander": "^8.1.0",
+        "html-validate": "^6.0.0",
+        "intl-messageformat-parser": "3.6.4",
+        "jsonschema": "^1.2.6",
+        "util": "^0.12.3",
+        "tslib": "^2.0.0"
+    },
+    "devDependencies": {
+        "@gooddata/eslint-config": "^2.1.0",
+        "@types/jest": "^27.0.1",
+        "@types/node": "^16.11.11",
+        "@types/lodash": "^4.14.158",
+        "@typescript-eslint/eslint-plugin": "^5.5.0",
+        "@typescript-eslint/parser": "^5.5.0",
+        "concurrently": "^6.0.2",
+        "dependency-cruiser": "^10.1.1",
+        "dotenv": "^10.0.0",
+        "eslint": "^8.3.0",
+        "eslint-plugin-header": "^3.0.0",
+        "eslint-plugin-import": "^2.22.0",
+        "eslint-plugin-jest": "^25.3.0",
+        "eslint-plugin-no-only-tests": "^2.4.0",
+        "eslint-plugin-prettier": "^4.0.0",
+        "eslint-plugin-sonarjs": "^0.13.0",
+        "jest-junit": "^3.0.0",
+        "jest": "^27.5.1",
+        "mkdirp": "^1.0.4",
+        "prettier": "~2.5.0",
+        "ts-jest": "^27.0.5",
+        "typescript": "4.0.2",
+        "eslint-plugin-tsdoc": "^0.2.14"
+    },
+    "bin": {
+        "i18n-toolkit": "index.js"
+    }
+}
