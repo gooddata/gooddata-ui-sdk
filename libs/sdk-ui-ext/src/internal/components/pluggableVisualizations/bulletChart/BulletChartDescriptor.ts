@@ -17,6 +17,7 @@ import {
     filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
+    localeInsightConversion,
     multipleAttributesBucketConversion,
     singleAttributeOrMeasureBucketConversion,
     sortsInsightConversion,
@@ -57,6 +58,7 @@ export class BulletChartDescriptor extends BaseChartDescriptor implements IVisua
             filters: filtersInsightConversion("filters"),
             sortBy: sortsInsightConversion("sortBy"),
             config: chartConfigInsightConversion("config"),
+            locale: localeInsightConversion("locale"),
         }),
         additionalFactories: chartAdditionalFactories(),
     });

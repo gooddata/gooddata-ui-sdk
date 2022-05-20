@@ -27,24 +27,25 @@ const supportedChartConfigProperties = new Set<keyof IChartConfig>([
     "dataLabels",
     "dataPoints",
     "dualAxis",
+    "enableChartSorting",
     "enableJoinedAttributeAxisName",
     "grid",
     "legend",
     "legendLayout",
     "limits",
     "primaryChartType",
-    "secondaryChartType",
     "secondary_xaxis",
     "secondary_yaxis",
+    "secondaryChartType",
     "separators",
     "stackMeasures",
     "stackMeasuresToPercent",
+    "xaxis",
     "xFormat",
     "xLabel",
-    "xaxis",
+    "yaxis",
     "yFormat",
     "yLabel",
-    "yaxis",
 ]);
 
 export function chartConfigFromInsight(
@@ -57,7 +58,8 @@ export function chartConfigFromInsight(
         ...controls,
         ...(ctx?.colorPalette ? { colorPalette: ctx?.colorPalette } : {}),
         ...(ctx?.settings?.separators ? { separators: ctx?.settings?.separators } : {}),
-        ...(ctx?.settings?.locale ? { locale: ctx?.settings?.locale } : {}),
+        ...(ctx?.settings?.enableChartsSorting ? { enableChartSorting: true } : {}),
+        ...(ctx?.settings?.enableAxisNameViewByTwoAttributes ? { enableJoinedAttributeAxisName: true } : {}),
     };
 
     return flow(

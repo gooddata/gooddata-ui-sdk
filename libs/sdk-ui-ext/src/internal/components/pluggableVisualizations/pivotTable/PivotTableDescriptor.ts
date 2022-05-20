@@ -23,6 +23,7 @@ import {
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
     insightConversion,
+    localeInsightConversion,
     multipleAttributesBucketConversion,
     multipleAttributesOrMeasuresBucketConversion,
     sortsInsightConversion,
@@ -92,6 +93,7 @@ export class PivotTableDescriptor extends BaseChartDescriptor implements IVisual
                 },
                 pivotTableConfigFromInsight,
             ),
+            locale: localeInsightConversion("locale"),
         }),
         additionalFactories: pivotTableAdditionalFactories,
     });

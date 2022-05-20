@@ -12,6 +12,7 @@ import {
     filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
+    localeInsightConversion,
     singleAttributeBucketConversion,
     singleMeasureBucketConversion,
     sortsInsightConversion,
@@ -36,6 +37,7 @@ export class ScatterPlotDescriptor extends BigChartDescriptor {
             filters: filtersInsightConversion("filters"),
             sortBy: sortsInsightConversion("sortBy"),
             config: chartConfigInsightConversion("config"),
+            locale: localeInsightConversion("locale"),
         }),
         additionalFactories: chartAdditionalFactories(),
     });

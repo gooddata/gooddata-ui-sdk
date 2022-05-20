@@ -29,9 +29,14 @@ export function geoConfigFromInsight(insight: IInsightDefinition, ctx?: IEmbeddi
         ...(ctx?.settings?.separators ? { separators: ctx?.settings?.separators } : {}),
     };
 
-    return flow(
+    const configFromProperties = flow(
         toPairs,
         filter(([key, value]) => supportedGeoConfigProperties.has(key as any) && !isNil(value)),
         fromPairs,
     )(withValuesFromContext) as IGeoConfig;
+
+    return {
+        ...configFromProperties,
+        mapboxToken: "<fill your Mapbox token here>",
+    };
 }

@@ -16,6 +16,7 @@ import {
     filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
+    localeInsightConversion,
     singleAttributeBucketConversion,
     singleMeasureBucketConversion,
 } from "../../../utils/embeddingCodeGenerator";
@@ -79,6 +80,7 @@ export class XirrDescriptor implements IVisualizationDescriptor {
             measure: singleMeasureBucketConversion("measure", BucketNames.MEASURES),
             attribute: singleAttributeBucketConversion("attribute", BucketNames.ATTRIBUTE),
             filters: filtersInsightConversion("filters"),
+            locale: localeInsightConversion("locale"),
         }),
     });
 

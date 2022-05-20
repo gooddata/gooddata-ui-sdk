@@ -17,6 +17,7 @@ import {
     filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
+    localeInsightConversion,
     singleMeasureBucketConversion,
 } from "../../../utils/embeddingCodeGenerator";
 
@@ -85,6 +86,7 @@ export class HeadlineDescriptor implements IVisualizationDescriptor {
                 BucketNames.SECONDARY_MEASURES,
             ),
             filters: filtersInsightConversion("filters"),
+            locale: localeInsightConversion("locale"),
         }),
     });
 

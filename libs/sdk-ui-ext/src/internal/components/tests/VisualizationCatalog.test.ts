@@ -69,11 +69,21 @@ describe("getEmbeddingCode functionality", () => {
                     settings: {
                         enableAxisNameConfiguration: true,
                         enableHidingOfDataPoints: true,
+                        enableTableColumnsManualResizing: true,
+                        enableTableColumnsAutoResizing: true,
                         locale: "en-US",
                         separators: { decimal: ".", thousand: "," },
                         userId: "user",
                         workspace: "workspace",
                     },
+                    backend: {
+                        capabilities: {
+                            canCalculateGrandTotals: true,
+                            canCalculateNativeTotals: true,
+                            canCalculateSubTotals: true,
+                            canCalculateTotals: true,
+                        },
+                    } as any,
                 },
                 language: "ts",
             }),

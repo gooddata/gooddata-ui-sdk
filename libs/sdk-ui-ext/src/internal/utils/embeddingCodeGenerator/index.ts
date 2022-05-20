@@ -14,5 +14,6 @@ export {
     sortsInsightConversion,
     totalsInsightConversion,
     IInsightToPropConversion,
+    localeInsightConversion,
 } from "./insightToPropsConverter";
 export * from "./types";

@@ -13,6 +13,7 @@ import {
     filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
+    localeInsightConversion,
     multipleAttributesOrMeasuresBucketConversion,
     singleAttributeBucketConversion,
     sortsInsightConversion,
@@ -36,6 +37,7 @@ export class FunnelChartDescriptor extends BaseChartDescriptor implements IVisua
             filters: filtersInsightConversion("filters"),
             sortBy: sortsInsightConversion("sortBy"),
             config: chartConfigInsightConversion("config"),
+            locale: localeInsightConversion("locale"),
         }),
         additionalFactories: chartAdditionalFactories(),
     });
