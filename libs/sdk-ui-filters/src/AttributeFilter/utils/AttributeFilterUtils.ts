@@ -130,6 +130,7 @@ export const getElementTotalCount = async (
     searchString: string,
     parentFilters: IElementsQueryAttributeFilter[],
 ): Promise<number> => {
+    const excludePrimaryLabel = backend.capabilities.supportsElementUris ? {} : { excludePrimaryLabel: true };
     let elementsLoader = backend
         .workspace(workspace)
         .attributes()
@@ -137,6 +138,7 @@ export const getElementTotalCount = async (
         .forDisplayForm(objRef)
         .withOptions({
             ...(searchString ? { filter: searchString } : {}),
+            ...excludePrimaryLabel,
         });
 
     // only set the parent filters if needed to avoid errors on backends that do not support this feature

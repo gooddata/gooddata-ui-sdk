@@ -43,6 +43,7 @@ const prepareElementsQuery = (
     limit: number,
     searchQuery: string,
 ) => {
+    const excludePrimaryLabel = backend.capabilities.supportsElementUris ? {} : { excludePrimaryLabel: true };
     const preparedElementQuery = backend
         .workspace(workspace)
         .attributes()
@@ -50,6 +51,7 @@ const prepareElementsQuery = (
         .forDisplayForm(filterObjRef)
         .withOptions({
             ...(!isEmpty(searchQuery) ? { filter: searchQuery } : {}),
+            ...excludePrimaryLabel,
         })
         .withOffset(offset)
         .withLimit(limit);
