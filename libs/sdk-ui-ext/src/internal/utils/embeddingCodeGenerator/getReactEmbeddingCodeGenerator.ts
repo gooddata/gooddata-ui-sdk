@@ -95,12 +95,14 @@ const renderImports: (imports: IImportInfo[]) => string = flow(
 
         return compact([
             "import",
-            defaultImport?.name,
-            namedImports.length &&
-                `{ ${sortBy(
-                    namedImports.map((i) => i.name),
-                    (i) => i.toLowerCase(), // sort by lower case, otherwise "Z" would be before "a"
-                ).join(", ")} }`,
+            compact([
+                defaultImport?.name,
+                namedImports.length &&
+                    `{ ${sortBy(
+                        namedImports.map((i) => i.name),
+                        (i) => i.toLowerCase(), // sort by lower case, otherwise "Z" would be before "a"
+                    ).join(", ")} }`,
+            ]).join(", "),
             "from",
             `"${pkg}";`,
         ]).join(" ");
