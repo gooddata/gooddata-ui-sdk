@@ -32933,7 +32933,11 @@ const measures: IAttributeOrMeasure[] = [
 const rows: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -32966,7 +32970,11 @@ const columns: IAttribute[] = [
     newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\")),
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -33000,7 +33008,11 @@ const columns: IAttribute[] = [
     newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\")),
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -33034,7 +33046,11 @@ const columns: IAttribute[] = [
     newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\")),
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -33068,7 +33084,11 @@ const columns: IAttribute[] = [
     newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\")),
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -33102,7 +33122,11 @@ const columns: IAttribute[] = [
     newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\")),
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -33136,7 +33160,11 @@ const columns: IAttribute[] = [
     newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\")),
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -33170,7 +33198,11 @@ const columns: IAttribute[] = [
     newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\")),
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -33201,7 +33233,11 @@ const rows: IAttribute[] = [
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\")),
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name_1\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -33232,11 +33268,13 @@ const rows: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
         columnWidths: [
             newWidthForAttributeColumn(\\"a_label.product.id.name\\", 400),
             newWidthForSelectedColumns(\\"m_aangOxLSeztu\\", [], 60)
         ]
     },
+    menu: {aggregations: true, aggregationsSubMenu: true},
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -33269,11 +33307,13 @@ const rows: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
         columnWidths: [
             newWidthForAttributeColumn(\\"a_label.product.id.name\\", 400),
             newWidthForSelectedColumns(\\"m_aangOxLSeztu\\", [], 60)
         ]
     },
+    menu: {aggregations: true, aggregationsSubMenu: true},
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -33306,11 +33346,13 @@ const rows: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
         columnWidths: [
             newWidthForAttributeColumn(\\"a_label.product.id.name\\", 400),
             newWidthForSelectedColumns(\\"m_aangOxLSeztu\\", [], 60)
         ]
     },
+    menu: {aggregations: true, aggregationsSubMenu: true},
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -33343,11 +33385,13 @@ const rows: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
         columnWidths: [
             newWidthForAttributeColumn(\\"a_label.product.id.name\\", 400),
             newWidthForSelectedColumns(\\"m_aangOxLSeztu\\", [], 60)
         ]
     },
+    menu: {aggregations: true, aggregationsSubMenu: true},
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -33380,10 +33424,12 @@ const rows: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
         columnWidths: [
             newWidthForAttributeColumn(\\"a_label.product.id.name\\", 400)
         ]
     },
+    menu: {aggregations: true, aggregationsSubMenu: true},
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -33416,10 +33462,12 @@ const rows: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
         columnWidths: [
             newWidthForAttributeColumn(\\"a_label.product.id.name\\", 400)
         ]
     },
+    menu: {aggregations: true, aggregationsSubMenu: true},
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -33452,10 +33500,12 @@ const rows: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
         columnWidths: [
             newWidthForAttributeColumn(\\"a_label.product.id.name\\", 400)
         ]
     },
+    menu: {aggregations: true, aggregationsSubMenu: true},
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -33488,10 +33538,12 @@ const rows: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
         columnWidths: [
             newWidthForAttributeColumn(\\"a_label.product.id.name\\", 400)
         ]
     },
+    menu: {aggregations: true, aggregationsSubMenu: true},
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -33524,10 +33576,12 @@ const rows: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
         columnWidths: [
             newWidthForSelectedColumns(\\"m_aangOxLSeztu\\", [], 60)
         ]
     },
+    menu: {aggregations: true, aggregationsSubMenu: true},
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -33560,10 +33614,12 @@ const rows: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
         columnWidths: [
             newWidthForSelectedColumns(\\"m_aangOxLSeztu\\", [], 60)
         ]
     },
+    menu: {aggregations: true, aggregationsSubMenu: true},
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -33596,10 +33652,12 @@ const rows: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
         columnWidths: [
             newWidthForSelectedColumns(\\"m_aangOxLSeztu\\", [], 60)
         ]
     },
+    menu: {aggregations: true, aggregationsSubMenu: true},
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -33632,10 +33690,12 @@ const rows: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
         columnWidths: [
             newWidthForSelectedColumns(\\"m_aangOxLSeztu\\", [], 60)
         ]
     },
+    menu: {aggregations: true, aggregationsSubMenu: true},
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -33662,7 +33722,11 @@ import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
 const rows: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -33686,7 +33750,11 @@ import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
 const columns: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -33710,7 +33778,11 @@ import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -33748,7 +33820,11 @@ const totals: ITotal[] = [
     newTotal(\\"max\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\"),
     newTotal(\\"nat\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\")
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -33786,7 +33862,11 @@ const columns: IAttribute[] = [
 const totals: ITotal[] = [
     newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\")
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -33824,7 +33904,11 @@ const columns: IAttribute[] = [
 const sortBy: ISortItem[] = [
     newAttributeSort(\\"a_label.product.id.name\\", \\"desc\\")
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -33862,7 +33946,11 @@ const columns: IAttribute[] = [
 const sortBy: ISortItem[] = [
     newAttributeSort(\\"a_label.owner.department\\", \\"desc\\")
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -33896,7 +33984,11 @@ const rows: IAttribute[] = [
 const sortBy: ISortItem[] = [
     newAttributeSort(\\"a_label.owner.department\\", \\"desc\\")
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -33927,7 +34019,11 @@ const rows: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
 const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\", [])];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -33960,7 +34056,11 @@ const rows: IAttribute[] = [
 const sortBy: ISortItem[] = [
     newAttributeSort(\\"a_label.product.id.name\\", \\"desc\\")
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -33989,7 +34089,11 @@ const measures: IAttributeOrMeasure[] = [
 const columns: IAttribute[] = [
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -34020,7 +34124,11 @@ const rows: IAttribute[] = [
 const columns: IAttribute[] = [
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -34049,7 +34157,11 @@ const measures: IAttributeOrMeasure[] = [
 const rows: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -34081,7 +34193,11 @@ const rows: IAttribute[] = [
 const columns: IAttribute[] = [
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -34115,7 +34231,11 @@ const columns: IAttribute[] = [
     newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\")),
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -34151,10 +34271,12 @@ const columns: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
         columnWidths: [
             newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 60)
         ]
     },
+    menu: {aggregations: true, aggregationsSubMenu: true},
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -34192,10 +34314,12 @@ const columns: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
         columnWidths: [
             newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 60)
         ]
     },
+    menu: {aggregations: true, aggregationsSubMenu: true},
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -34233,10 +34357,12 @@ const columns: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
         columnWidths: [
             newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 60)
         ]
     },
+    menu: {aggregations: true, aggregationsSubMenu: true},
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -34274,10 +34400,12 @@ const columns: IAttribute[] = [
 ];
 const config: IPivotTableConfig = {
     columnSizing: {
+        defaultWidth: \\"autoresizeAll\\",
         columnWidths: [
             newWidthForAllColumnsForMeasure(\\"m_aangOxLSeztu\\", 60)
         ]
     },
+    menu: {aggregations: true, aggregationsSubMenu: true},
     separators: {decimal: \\".\\", thousand: \\",\\"}
 };
 const style = {height: 400};
@@ -34313,7 +34441,11 @@ const columns: IAttribute[] = [
     newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\")),
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -34352,7 +34484,11 @@ const totals: ITotal[] = [
     newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\"),
     newTotal(\\"sum\\", \\"m_acugFHNJgsBy\\", \\"a_label.product.id.name\\")
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -34392,7 +34528,11 @@ const totals: ITotal[] = [
     newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\"),
     newTotal(\\"sum\\", \\"m_acugFHNJgsBy\\", \\"a_label.product.id.name\\")
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -34430,7 +34570,11 @@ const columns: IAttribute[] = [
 const totals: ITotal[] = [
     newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\")
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -34458,7 +34602,11 @@ const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\")),
     newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -34501,7 +34649,11 @@ const totals: ITotal[] = [
     newTotal(\\"med\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.department\\"),
     newTotal(\\"nat\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.department\\")
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -34543,7 +34695,11 @@ const totals: ITotal[] = [
     newTotal(\\"max\\", \\"m_acugFHNJgsBy\\", \\"a_label.product.id.name\\"),
     newTotal(\\"nat\\", \\"m_acugFHNJgsBy\\", \\"a_label.product.id.name\\")
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -34585,7 +34741,11 @@ const totals: ITotal[] = [
     newTotal(\\"med\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.department\\"),
     newTotal(\\"nat\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.department\\")
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -34624,7 +34784,11 @@ const columns: IAttribute[] = [
 const totals: ITotal[] = [
     newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.owner.department\\")
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -34664,7 +34828,11 @@ const totals: ITotal[] = [
     newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\"),
     newTotal(\\"sum\\", \\"m_acugFHNJgsBy\\", \\"a_label.product.id.name\\")
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -34703,7 +34871,11 @@ const columns: IAttribute[] = [
 const totals: ITotal[] = [
     newTotal(\\"sum\\", \\"m_aangOxLSeztu\\", \\"a_label.product.id.name\\")
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -34734,7 +34906,11 @@ const measures: IAttributeOrMeasure[] = [
 const columns: IAttribute[] = [
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -34766,7 +34942,11 @@ const rows: IAttribute[] = [
 const columns: IAttribute[] = [
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -34796,7 +34976,11 @@ const measures: IAttributeOrMeasure[] = [
 const rows: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -34826,7 +35010,11 @@ const rows: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
 const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\", [])];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -34857,7 +35045,11 @@ const rows: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
 const sortBy: ISortItem[] = [newMeasureSort(\\"m_acugFHNJgsBy\\", \\"desc\\", [])];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -34893,7 +35085,11 @@ const columns: IAttribute[] = [
     newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\")),
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -34927,7 +35123,11 @@ const rows: IAttribute[] = [
 const columns: IAttribute[] = [
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -34962,7 +35162,11 @@ const columns: IAttribute[] = [
     newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\")),
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -34992,7 +35196,11 @@ const rows: IAttribute[] = [
 const columns: IAttribute[] = [
     newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -35017,7 +35225,11 @@ import { IPivotTableConfig, PivotTable } from \\"@gooddata/sdk-ui-pivot\\";
 const columns: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -35053,7 +35265,11 @@ const columns: IAttribute[] = [
 const filters: IFilter[] = [
     newAbsoluteDateFilter(idRef(\\"activity.dataset.dt\\", \\"dataSet\\"), \\"2021-01-01\\", \\"2021-02-01\\")
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -35090,7 +35306,11 @@ const columns: IAttribute[] = [
     newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\")),
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -35126,7 +35346,11 @@ const columns: IAttribute[] = [
     newAttribute(idRef(\\"label.opportunitysnapshot.forecastcategory\\", \\"displayForm\\"), a => a.localId(\\"a_label.opportunitysnapshot.forecastcategory\\")),
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -35160,7 +35384,11 @@ const columns: IAttribute[] = [
     newAttribute(idRef(\\"label.stage.name.stagename\\", \\"displayForm\\"), a => a.localId(\\"a_label.stage.name.stagename\\")),
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -35190,7 +35418,11 @@ const measures: IAttributeOrMeasure[] = [
 const rows: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -35219,7 +35451,11 @@ const measures: IAttributeOrMeasure[] = [
 const rows: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -35263,7 +35499,11 @@ const totals: ITotal[] = [
     newTotal(\\"med\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.department\\"),
     newTotal(\\"nat\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.department\\")
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -35309,7 +35549,11 @@ const totals: ITotal[] = [
     newTotal(\\"med\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.department\\"),
     newTotal(\\"nat\\", \\"m_acugFHNJgsBy\\", \\"a_label.owner.department\\")
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
@@ -35337,7 +35581,11 @@ const rows: IAttribute[] = [
     newAttribute(idRef(\\"created.aag81lMifn6q\\", \\"displayForm\\"), a => a.localId(\\"a_created.aag81lMifn6q\\")),
     newAttribute(idRef(\\"created.aag81lMifn6q\\", \\"displayForm\\"), a => a.localId(\\"a_created.aag81lMifn6q_1\\"))
 ];
-const config: IPivotTableConfig = {separators: {decimal: \\".\\", thousand: \\",\\"}};
+const config: IPivotTableConfig = {
+    columnSizing: {defaultWidth: \\"autoresizeAll\\"},
+    menu: {aggregations: true, aggregationsSubMenu: true},
+    separators: {decimal: \\".\\", thousand: \\",\\"}
+};
 const style = {height: 400};
 
 export function MyComponent() {
