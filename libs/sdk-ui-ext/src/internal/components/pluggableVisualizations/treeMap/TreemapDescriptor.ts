@@ -19,6 +19,7 @@ import {
     filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
+    localeInsightConversion,
     multipleAttributesOrMeasuresBucketConversion,
     singleAttributeBucketConversion,
 } from "../../../utils/embeddingCodeGenerator";
@@ -46,6 +47,7 @@ export class TreemapDescriptor extends BigChartDescriptor {
             segmentBy: singleAttributeBucketConversion("segmentBy", BucketNames.SEGMENT),
             filters: filtersInsightConversion("filters"),
             config: chartConfigInsightConversion("config"),
+            locale: localeInsightConversion("locale"),
         }),
         additionalFactories: chartAdditionalFactories(),
     });

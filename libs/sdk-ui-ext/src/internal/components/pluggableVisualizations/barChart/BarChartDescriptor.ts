@@ -23,6 +23,7 @@ import {
     filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
+    localeInsightConversion,
     multipleAttributesBucketConversion,
     multipleAttributesOrMeasuresBucketConversion,
     singleAttributeBucketConversion,
@@ -57,6 +58,7 @@ export class BarChartDescriptor extends BaseChartDescriptor implements IVisualiz
             filters: filtersInsightConversion("filters"),
             sortBy: sortsInsightConversion("sortBy"),
             config: chartConfigInsightConversion("config"),
+            locale: localeInsightConversion("locale"),
         }),
         additionalFactories: chartAdditionalFactories(),
     });

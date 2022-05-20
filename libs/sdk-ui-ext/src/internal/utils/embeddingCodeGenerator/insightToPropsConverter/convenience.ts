@@ -18,6 +18,7 @@ import {
     ITotal,
     relativeDateFilterValues,
 } from "@gooddata/sdk-model";
+import { DefaultLocale } from "@gooddata/sdk-ui";
 import isNil from "lodash/isNil";
 
 import { PropMeta } from "../types";
@@ -154,4 +155,22 @@ export function totalsInsightConversion<TProps extends object, TPropKey extends 
     propName: TPropKey,
 ): IInsightToPropConversion<TProps, TPropKey, ITotal[]> {
     return insightConversion(propName, sdkModelPropMetas.Total.Multiple, insightTotals);
+}
+
+/**
+ * Utility function for creating insight conversion for single {@link @gooddata/sdk-ui#ILocale} item.
+ */
+export function localeInsightConversion<TProps extends object, TPropKey extends keyof TProps>(
+    propName: TPropKey,
+): IInsightToPropConversion<TProps, TPropKey, string | undefined> {
+    return insightConversion(
+        propName,
+        {
+            cardinality: "scalar",
+        },
+        (_, ctx) => {
+            const val = ctx?.settings?.locale;
+            return val && val !== DefaultLocale ? val : undefined;
+        },
+    );
 }

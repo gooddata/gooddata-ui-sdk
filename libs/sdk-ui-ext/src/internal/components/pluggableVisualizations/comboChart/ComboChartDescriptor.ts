@@ -16,6 +16,7 @@ import {
     sortsInsightConversion,
     multipleMeasuresBucketConversion,
     multipleAttributesBucketConversion,
+    localeInsightConversion,
 } from "../../../utils/embeddingCodeGenerator";
 import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils";
 
@@ -40,6 +41,7 @@ export class ComboChartDescriptor extends BigChartDescriptor implements IVisuali
             filters: filtersInsightConversion("filters"),
             sortBy: sortsInsightConversion("sortBy"),
             config: chartConfigInsightConversion("config"),
+            locale: localeInsightConversion("locale"),
         }),
         additionalFactories: chartAdditionalFactories(),
     });

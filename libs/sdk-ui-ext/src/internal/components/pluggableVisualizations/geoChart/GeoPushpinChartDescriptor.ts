@@ -18,6 +18,7 @@ import {
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
     insightConversion,
+    localeInsightConversion,
     singleAttributeBucketConversion,
     singleAttributeOrMeasureBucketConversion,
     sortsInsightConversion,
@@ -74,6 +75,7 @@ export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IV
                 },
                 geoConfigFromInsight,
             ),
+            locale: localeInsightConversion("locale"),
         }),
         additionalFactories: chartAdditionalFactories({
             getColorMappingPredicatePackage: "@gooddata/sdk-ui-geo",

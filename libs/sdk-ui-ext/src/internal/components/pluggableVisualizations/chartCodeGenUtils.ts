@@ -58,7 +58,6 @@ export function chartConfigFromInsight(
         ...controls,
         ...(ctx?.colorPalette ? { colorPalette: ctx?.colorPalette } : {}),
         ...(ctx?.settings?.separators ? { separators: ctx?.settings?.separators } : {}),
-        ...(ctx?.settings?.locale ? { locale: ctx?.settings?.locale } : {}),
         ...(ctx?.settings?.enableChartsSorting ? { enableChartSorting: true } : {}),
         ...(ctx?.settings?.enableAxisNameViewByTwoAttributes ? { enableJoinedAttributeAxisName: true } : {}),
     };
