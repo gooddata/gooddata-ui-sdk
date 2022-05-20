@@ -399,7 +399,7 @@ export class AttributeDropdownCore extends React.PureComponent<
                 isInverted={isInverted}
                 onRangeChange={this.onRangeChange}
                 selectedItems={selectedItems}
-                totalCount={validElements?.items.length ?? LIMIT}
+                totalCount={validElements?.totalCount ?? LIMIT}
                 applyDisabled={shouldDisableApplyButton}
                 onSearch={this.onSearch}
                 searchString={searchString}
