@@ -253,6 +253,12 @@ export interface DeclarativeAttribute {
      * @memberof DeclarativeAttribute
      */
     defaultView?: LabelIdentifier;
+    /**
+     * A name of the source column that is the primary label
+     * @type {string}
+     * @memberof DeclarativeAttribute
+     */
+    sourceColumn: string;
 }
 
 export const DeclarativeAttributeSortDirectionEnum = {
@@ -712,12 +718,6 @@ export interface DeclarativeLabel {
      */
     description?: string;
     /**
-     * A flag indicating whether the label should be treated as a primary one.
-     * @type {boolean}
-     * @memberof DeclarativeLabel
-     */
-    primary: boolean;
-    /**
      * A name of the source column in the table.
      * @type {string}
      * @memberof DeclarativeLabel
@@ -906,6 +906,12 @@ export interface DeclarativeOrganizationInfo {
      * @memberof DeclarativeOrganizationInfo
      */
     permissions: Array<DeclarativeOrganizationPermission>;
+    /**
+     * Early access defined on level Organization
+     * @type {string}
+     * @memberof DeclarativeOrganizationInfo
+     */
+    earlyAccess?: string;
 }
 /**
  * Definition of a permission assigned to a user/user-group.
@@ -1219,6 +1225,12 @@ export interface DeclarativeWorkspace {
      * @memberof DeclarativeWorkspace
      */
     hierarchyPermissions?: Array<DeclarativeWorkspaceHierarchyPermission>;
+    /**
+     * Early access defined on level Workspace
+     * @type {string}
+     * @memberof DeclarativeWorkspace
+     */
+    earlyAccess?: string;
 }
 /**
  * Workspace Data Filters serving the filtering of what data users can see in workspaces.
@@ -1550,10 +1562,10 @@ export interface JsonApiAnalyticalDashboardIn {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiAnalyticalDashboardIn
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
 }
 
 export const JsonApiAnalyticalDashboardInTypeEnum = {
@@ -1623,10 +1635,10 @@ export interface JsonApiAnalyticalDashboardOut {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiAnalyticalDashboardOut
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationships}
@@ -1642,6 +1654,43 @@ export const JsonApiAnalyticalDashboardOutTypeEnum = {
 export type JsonApiAnalyticalDashboardOutTypeEnum =
     typeof JsonApiAnalyticalDashboardOutTypeEnum[keyof typeof JsonApiAnalyticalDashboardOutTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiAnalyticalDashboardOutAttributes
+ */
+export interface JsonApiAnalyticalDashboardOutAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiAnalyticalDashboardOutAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiAnalyticalDashboardOutAttributes
+     */
+    description?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof JsonApiAnalyticalDashboardOutAttributes
+     */
+    tags?: Array<string>;
+    /**
+     *
+     * @type {boolean}
+     * @memberof JsonApiAnalyticalDashboardOutAttributes
+     */
+    areRelationsValid?: boolean;
+    /**
+     * Free-form JSON content.
+     * @type {object}
+     * @memberof JsonApiAnalyticalDashboardOutAttributes
+     */
+    content?: object;
+}
 /**
  *
  * @export
@@ -1865,10 +1914,10 @@ export interface JsonApiAnalyticalDashboardOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiAnalyticalDashboardOutWithLinks
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationships}
@@ -1910,10 +1959,10 @@ export interface JsonApiAnalyticalDashboardPatch {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiAnalyticalDashboardPatch
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
 }
 
 export const JsonApiAnalyticalDashboardPatchTypeEnum = {
@@ -1923,43 +1972,6 @@ export const JsonApiAnalyticalDashboardPatchTypeEnum = {
 export type JsonApiAnalyticalDashboardPatchTypeEnum =
     typeof JsonApiAnalyticalDashboardPatchTypeEnum[keyof typeof JsonApiAnalyticalDashboardPatchTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiAnalyticalDashboardPatchAttributes
- */
-export interface JsonApiAnalyticalDashboardPatchAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiAnalyticalDashboardPatchAttributes
-     */
-    title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiAnalyticalDashboardPatchAttributes
-     */
-    description?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof JsonApiAnalyticalDashboardPatchAttributes
-     */
-    tags?: Array<string>;
-    /**
-     *
-     * @type {boolean}
-     * @memberof JsonApiAnalyticalDashboardPatchAttributes
-     */
-    areRelationsValid?: boolean;
-    /**
-     * Free-form JSON content.
-     * @type {object}
-     * @memberof JsonApiAnalyticalDashboardPatchAttributes
-     */
-    content?: object;
-}
 /**
  *
  * @export
@@ -2250,6 +2262,12 @@ export interface JsonApiAttributeOutAttributes {
      * @memberof JsonApiAttributeOutAttributes
      */
     sortDirection?: JsonApiAttributeOutAttributesSortDirectionEnum;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiAttributeOutAttributes
+     */
+    sourceColumn?: string;
 }
 
 export const JsonApiAttributeOutAttributesGranularityEnum = {
@@ -2557,6 +2575,52 @@ export interface JsonApiCookieSecurityConfigurationOutDocument {
     links?: ObjectLinks;
 }
 /**
+ * JSON:API representation of patching cookieSecurityConfiguration entity.
+ * @export
+ * @interface JsonApiCookieSecurityConfigurationPatch
+ */
+export interface JsonApiCookieSecurityConfigurationPatch {
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiCookieSecurityConfigurationPatch
+     */
+    type: JsonApiCookieSecurityConfigurationPatchTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiCookieSecurityConfigurationPatch
+     */
+    id: string;
+    /**
+     *
+     * @type {JsonApiCookieSecurityConfigurationOutAttributes}
+     * @memberof JsonApiCookieSecurityConfigurationPatch
+     */
+    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
+}
+
+export const JsonApiCookieSecurityConfigurationPatchTypeEnum = {
+    COOKIE_SECURITY_CONFIGURATION: "cookieSecurityConfiguration",
+} as const;
+
+export type JsonApiCookieSecurityConfigurationPatchTypeEnum =
+    typeof JsonApiCookieSecurityConfigurationPatchTypeEnum[keyof typeof JsonApiCookieSecurityConfigurationPatchTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface JsonApiCookieSecurityConfigurationPatchDocument
+ */
+export interface JsonApiCookieSecurityConfigurationPatchDocument {
+    /**
+     *
+     * @type {JsonApiCookieSecurityConfigurationPatch}
+     * @memberof JsonApiCookieSecurityConfigurationPatchDocument
+     */
+    data: JsonApiCookieSecurityConfigurationPatch;
+}
+/**
  * JSON:API representation of dashboardPlugin entity.
  * @export
  * @interface JsonApiDashboardPluginIn
@@ -2576,10 +2640,10 @@ export interface JsonApiDashboardPluginIn {
     id: string;
     /**
      *
-     * @type {JsonApiDashboardPluginPatchAttributes}
+     * @type {JsonApiDashboardPluginOutAttributes}
      * @memberof JsonApiDashboardPluginIn
      */
-    attributes?: JsonApiDashboardPluginPatchAttributes;
+    attributes?: JsonApiDashboardPluginOutAttributes;
 }
 
 export const JsonApiDashboardPluginInTypeEnum = {
@@ -2649,10 +2713,10 @@ export interface JsonApiDashboardPluginOut {
     id: string;
     /**
      *
-     * @type {JsonApiDashboardPluginPatchAttributes}
+     * @type {JsonApiDashboardPluginOutAttributes}
      * @memberof JsonApiDashboardPluginOut
      */
-    attributes?: JsonApiDashboardPluginPatchAttributes;
+    attributes?: JsonApiDashboardPluginOutAttributes;
 }
 
 export const JsonApiDashboardPluginOutTypeEnum = {
@@ -2662,6 +2726,43 @@ export const JsonApiDashboardPluginOutTypeEnum = {
 export type JsonApiDashboardPluginOutTypeEnum =
     typeof JsonApiDashboardPluginOutTypeEnum[keyof typeof JsonApiDashboardPluginOutTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiDashboardPluginOutAttributes
+ */
+export interface JsonApiDashboardPluginOutAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiDashboardPluginOutAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiDashboardPluginOutAttributes
+     */
+    description?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof JsonApiDashboardPluginOutAttributes
+     */
+    tags?: Array<string>;
+    /**
+     *
+     * @type {boolean}
+     * @memberof JsonApiDashboardPluginOutAttributes
+     */
+    areRelationsValid?: boolean;
+    /**
+     * Free-form JSON content.
+     * @type {object}
+     * @memberof JsonApiDashboardPluginOutAttributes
+     */
+    content?: object;
+}
 /**
  *
  * @export
@@ -2720,10 +2821,10 @@ export interface JsonApiDashboardPluginOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiDashboardPluginPatchAttributes}
+     * @type {JsonApiDashboardPluginOutAttributes}
      * @memberof JsonApiDashboardPluginOutWithLinks
      */
-    attributes?: JsonApiDashboardPluginPatchAttributes;
+    attributes?: JsonApiDashboardPluginOutAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -2759,10 +2860,10 @@ export interface JsonApiDashboardPluginPatch {
     id: string;
     /**
      *
-     * @type {JsonApiDashboardPluginPatchAttributes}
+     * @type {JsonApiDashboardPluginOutAttributes}
      * @memberof JsonApiDashboardPluginPatch
      */
-    attributes?: JsonApiDashboardPluginPatchAttributes;
+    attributes?: JsonApiDashboardPluginOutAttributes;
 }
 
 export const JsonApiDashboardPluginPatchTypeEnum = {
@@ -2772,43 +2873,6 @@ export const JsonApiDashboardPluginPatchTypeEnum = {
 export type JsonApiDashboardPluginPatchTypeEnum =
     typeof JsonApiDashboardPluginPatchTypeEnum[keyof typeof JsonApiDashboardPluginPatchTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiDashboardPluginPatchAttributes
- */
-export interface JsonApiDashboardPluginPatchAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiDashboardPluginPatchAttributes
-     */
-    title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiDashboardPluginPatchAttributes
-     */
-    description?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof JsonApiDashboardPluginPatchAttributes
-     */
-    tags?: Array<string>;
-    /**
-     *
-     * @type {boolean}
-     * @memberof JsonApiDashboardPluginPatchAttributes
-     */
-    areRelationsValid?: boolean;
-    /**
-     * Free-form JSON content.
-     * @type {object}
-     * @memberof JsonApiDashboardPluginPatchAttributes
-     */
-    content?: object;
-}
 /**
  *
  * @export
@@ -3894,22 +3958,48 @@ export interface JsonApiDatasetOutList {
 export interface JsonApiDatasetOutRelationships {
     /**
      *
-     * @type {JsonApiFilterContextOutRelationshipsAttributes}
+     * @type {JsonApiDatasetOutRelationshipsAttributes}
      * @memberof JsonApiDatasetOutRelationships
      */
-    attributes?: JsonApiFilterContextOutRelationshipsAttributes;
+    attributes?: JsonApiDatasetOutRelationshipsAttributes;
     /**
      *
-     * @type {JsonApiMetricOutRelationshipsFacts}
+     * @type {JsonApiDatasetOutRelationshipsFacts}
      * @memberof JsonApiDatasetOutRelationships
      */
-    facts?: JsonApiMetricOutRelationshipsFacts;
+    facts?: JsonApiDatasetOutRelationshipsFacts;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationshipsDatasets}
      * @memberof JsonApiDatasetOutRelationships
      */
     references?: JsonApiAnalyticalDashboardOutRelationshipsDatasets;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiDatasetOutRelationshipsAttributes
+ */
+export interface JsonApiDatasetOutRelationshipsAttributes {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     * @type {Array<JsonApiAttributeLinkage>}
+     * @memberof JsonApiDatasetOutRelationshipsAttributes
+     */
+    data: Array<JsonApiAttributeLinkage>;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiDatasetOutRelationshipsFacts
+ */
+export interface JsonApiDatasetOutRelationshipsFacts {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     * @type {Array<JsonApiFactLinkage>}
+     * @memberof JsonApiDatasetOutRelationshipsFacts
+     */
+    data: Array<JsonApiFactLinkage>;
 }
 /**
  *
@@ -3962,6 +4052,135 @@ export type JsonApiDatasetOutWithLinksTypeEnum =
  * @export
  */
 export type JsonApiDatasetToOneLinkage = JsonApiDatasetLinkage;
+
+/**
+ * JSON:API representation of entitlement entity.
+ * @export
+ * @interface JsonApiEntitlementOut
+ */
+export interface JsonApiEntitlementOut {
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiEntitlementOut
+     */
+    type: JsonApiEntitlementOutTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiEntitlementOut
+     */
+    id: string;
+    /**
+     *
+     * @type {JsonApiEntitlementOutAttributes}
+     * @memberof JsonApiEntitlementOut
+     */
+    attributes?: JsonApiEntitlementOutAttributes;
+}
+
+export const JsonApiEntitlementOutTypeEnum = {
+    ENTITLEMENT: "entitlement",
+} as const;
+
+export type JsonApiEntitlementOutTypeEnum =
+    typeof JsonApiEntitlementOutTypeEnum[keyof typeof JsonApiEntitlementOutTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface JsonApiEntitlementOutAttributes
+ */
+export interface JsonApiEntitlementOutAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiEntitlementOutAttributes
+     */
+    value?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiEntitlementOutAttributes
+     */
+    expiry?: string;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiEntitlementOutDocument
+ */
+export interface JsonApiEntitlementOutDocument {
+    /**
+     *
+     * @type {JsonApiEntitlementOut}
+     * @memberof JsonApiEntitlementOutDocument
+     */
+    data: JsonApiEntitlementOut;
+    /**
+     *
+     * @type {ObjectLinks}
+     * @memberof JsonApiEntitlementOutDocument
+     */
+    links?: ObjectLinks;
+}
+/**
+ * A JSON:API document with a list of resources
+ * @export
+ * @interface JsonApiEntitlementOutList
+ */
+export interface JsonApiEntitlementOutList {
+    /**
+     *
+     * @type {Array<JsonApiEntitlementOutWithLinks>}
+     * @memberof JsonApiEntitlementOutList
+     */
+    data: Array<JsonApiEntitlementOutWithLinks>;
+    /**
+     *
+     * @type {ListLinks}
+     * @memberof JsonApiEntitlementOutList
+     */
+    links?: ListLinks;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiEntitlementOutWithLinks
+ */
+export interface JsonApiEntitlementOutWithLinks {
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiEntitlementOutWithLinks
+     */
+    type: JsonApiEntitlementOutWithLinksTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiEntitlementOutWithLinks
+     */
+    id: string;
+    /**
+     *
+     * @type {JsonApiEntitlementOutAttributes}
+     * @memberof JsonApiEntitlementOutWithLinks
+     */
+    attributes?: JsonApiEntitlementOutAttributes;
+    /**
+     *
+     * @type {ObjectLinks}
+     * @memberof JsonApiEntitlementOutWithLinks
+     */
+    links?: ObjectLinks;
+}
+
+export const JsonApiEntitlementOutWithLinksTypeEnum = {
+    ENTITLEMENT: "entitlement",
+} as const;
+
+export type JsonApiEntitlementOutWithLinksTypeEnum =
+    typeof JsonApiEntitlementOutWithLinksTypeEnum[keyof typeof JsonApiEntitlementOutWithLinksTypeEnum];
 
 /**
  * The \\\"type\\\" and \\\"id\\\" to non-empty members.
@@ -4193,10 +4412,10 @@ export interface JsonApiFilterContextIn {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiFilterContextIn
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
 }
 
 export const JsonApiFilterContextInTypeEnum = {
@@ -4266,10 +4485,10 @@ export interface JsonApiFilterContextOut {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiFilterContextOut
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
     /**
      *
      * @type {JsonApiFilterContextOutRelationships}
@@ -4352,10 +4571,10 @@ export interface JsonApiFilterContextOutList {
 export interface JsonApiFilterContextOutRelationships {
     /**
      *
-     * @type {JsonApiFilterContextOutRelationshipsAttributes}
+     * @type {JsonApiDatasetOutRelationshipsAttributes}
      * @memberof JsonApiFilterContextOutRelationships
      */
-    attributes?: JsonApiFilterContextOutRelationshipsAttributes;
+    attributes?: JsonApiDatasetOutRelationshipsAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationshipsDatasets}
@@ -4368,19 +4587,6 @@ export interface JsonApiFilterContextOutRelationships {
      * @memberof JsonApiFilterContextOutRelationships
      */
     labels?: JsonApiAnalyticalDashboardOutRelationshipsLabels;
-}
-/**
- *
- * @export
- * @interface JsonApiFilterContextOutRelationshipsAttributes
- */
-export interface JsonApiFilterContextOutRelationshipsAttributes {
-    /**
-     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
-     * @type {Array<JsonApiAttributeLinkage>}
-     * @memberof JsonApiFilterContextOutRelationshipsAttributes
-     */
-    data: Array<JsonApiAttributeLinkage>;
 }
 /**
  *
@@ -4402,10 +4608,10 @@ export interface JsonApiFilterContextOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiFilterContextOutWithLinks
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
     /**
      *
      * @type {JsonApiFilterContextOutRelationships}
@@ -4447,10 +4653,10 @@ export interface JsonApiFilterContextPatch {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiFilterContextPatch
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
 }
 
 export const JsonApiFilterContextPatchTypeEnum = {
@@ -4867,10 +5073,29 @@ export interface JsonApiMetricOutAttributes {
     areRelationsValid?: boolean;
     /**
      *
-     * @type {JsonApiMetricPatchAttributesContent}
+     * @type {JsonApiMetricOutAttributesContent}
      * @memberof JsonApiMetricOutAttributes
      */
-    content: JsonApiMetricPatchAttributesContent;
+    content: JsonApiMetricOutAttributesContent;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiMetricOutAttributesContent
+ */
+export interface JsonApiMetricOutAttributesContent {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiMetricOutAttributesContent
+     */
+    format?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiMetricOutAttributesContent
+     */
+    maql: string;
 }
 /**
  *
@@ -4940,16 +5165,16 @@ export interface JsonApiMetricOutList {
 export interface JsonApiMetricOutRelationships {
     /**
      *
-     * @type {JsonApiMetricOutRelationshipsFacts}
+     * @type {JsonApiDatasetOutRelationshipsFacts}
      * @memberof JsonApiMetricOutRelationships
      */
-    facts?: JsonApiMetricOutRelationshipsFacts;
+    facts?: JsonApiDatasetOutRelationshipsFacts;
     /**
      *
-     * @type {JsonApiFilterContextOutRelationshipsAttributes}
+     * @type {JsonApiDatasetOutRelationshipsAttributes}
      * @memberof JsonApiMetricOutRelationships
      */
-    attributes?: JsonApiFilterContextOutRelationshipsAttributes;
+    attributes?: JsonApiDatasetOutRelationshipsAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationshipsLabels}
@@ -4962,19 +5187,6 @@ export interface JsonApiMetricOutRelationships {
      * @memberof JsonApiMetricOutRelationships
      */
     metrics?: JsonApiAnalyticalDashboardOutRelationshipsMetrics;
-}
-/**
- *
- * @export
- * @interface JsonApiMetricOutRelationshipsFacts
- */
-export interface JsonApiMetricOutRelationshipsFacts {
-    /**
-     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
-     * @type {Array<JsonApiFactLinkage>}
-     * @memberof JsonApiMetricOutRelationshipsFacts
-     */
-    data: Array<JsonApiFactLinkage>;
 }
 /**
  *
@@ -5086,29 +5298,10 @@ export interface JsonApiMetricPatchAttributes {
     areRelationsValid?: boolean;
     /**
      *
-     * @type {JsonApiMetricPatchAttributesContent}
+     * @type {JsonApiMetricOutAttributesContent}
      * @memberof JsonApiMetricPatchAttributes
      */
-    content?: JsonApiMetricPatchAttributesContent;
-}
-/**
- *
- * @export
- * @interface JsonApiMetricPatchAttributesContent
- */
-export interface JsonApiMetricPatchAttributesContent {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiMetricPatchAttributesContent
-     */
-    format?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiMetricPatchAttributesContent
-     */
-    maql: string;
+    content?: JsonApiMetricOutAttributesContent;
 }
 /**
  *
@@ -5198,6 +5391,12 @@ export interface JsonApiOrganizationInAttributes {
      * @memberof JsonApiOrganizationInAttributes
      */
     oauthClientSecret?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationInAttributes
+     */
+    earlyAccess?: string;
 }
 /**
  *
@@ -5293,6 +5492,12 @@ export interface JsonApiOrganizationOutAttributes {
      * @memberof JsonApiOrganizationOutAttributes
      */
     oauthClientId?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationOutAttributes
+     */
+    earlyAccess?: string;
 }
 /**
  *
@@ -5392,6 +5597,52 @@ export interface JsonApiOrganizationOutRelationshipsBootstrapUserGroup {
     data: JsonApiUserGroupToOneLinkage | null;
 }
 /**
+ * JSON:API representation of patching organization entity.
+ * @export
+ * @interface JsonApiOrganizationPatch
+ */
+export interface JsonApiOrganizationPatch {
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiOrganizationPatch
+     */
+    type: JsonApiOrganizationPatchTypeEnum;
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiOrganizationPatch
+     */
+    id: string;
+    /**
+     *
+     * @type {JsonApiOrganizationInAttributes}
+     * @memberof JsonApiOrganizationPatch
+     */
+    attributes?: JsonApiOrganizationInAttributes;
+}
+
+export const JsonApiOrganizationPatchTypeEnum = {
+    ORGANIZATION: "organization",
+} as const;
+
+export type JsonApiOrganizationPatchTypeEnum =
+    typeof JsonApiOrganizationPatchTypeEnum[keyof typeof JsonApiOrganizationPatchTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface JsonApiOrganizationPatchDocument
+ */
+export interface JsonApiOrganizationPatchDocument {
+    /**
+     *
+     * @type {JsonApiOrganizationPatch}
+     * @memberof JsonApiOrganizationPatchDocument
+     */
+    data: JsonApiOrganizationPatch;
+}
+/**
  * JSON:API representation of userGroup entity.
  * @export
  * @interface JsonApiUserGroupIn
@@ -5411,10 +5662,10 @@ export interface JsonApiUserGroupIn {
     id: string;
     /**
      *
-     * @type {JsonApiUserGroupPatchRelationships}
+     * @type {JsonApiUserGroupInRelationships}
      * @memberof JsonApiUserGroupIn
      */
-    relationships?: JsonApiUserGroupPatchRelationships;
+    relationships?: JsonApiUserGroupInRelationships;
 }
 
 export const JsonApiUserGroupInTypeEnum = {
@@ -5436,6 +5687,32 @@ export interface JsonApiUserGroupInDocument {
      * @memberof JsonApiUserGroupInDocument
      */
     data: JsonApiUserGroupIn;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiUserGroupInRelationships
+ */
+export interface JsonApiUserGroupInRelationships {
+    /**
+     *
+     * @type {JsonApiUserGroupInRelationshipsParents}
+     * @memberof JsonApiUserGroupInRelationships
+     */
+    parents?: JsonApiUserGroupInRelationshipsParents;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiUserGroupInRelationshipsParents
+ */
+export interface JsonApiUserGroupInRelationshipsParents {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     * @type {Array<JsonApiUserGroupLinkage>}
+     * @memberof JsonApiUserGroupInRelationshipsParents
+     */
+    data: Array<JsonApiUserGroupLinkage>;
 }
 /**
  * The \\\"type\\\" and \\\"id\\\" to non-empty members.
@@ -5484,10 +5761,10 @@ export interface JsonApiUserGroupOut {
     id: string;
     /**
      *
-     * @type {JsonApiUserGroupPatchRelationships}
+     * @type {JsonApiUserGroupInRelationships}
      * @memberof JsonApiUserGroupOut
      */
-    relationships?: JsonApiUserGroupPatchRelationships;
+    relationships?: JsonApiUserGroupInRelationships;
 }
 
 export const JsonApiUserGroupOutTypeEnum = {
@@ -5567,10 +5844,10 @@ export interface JsonApiUserGroupOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiUserGroupPatchRelationships}
+     * @type {JsonApiUserGroupInRelationships}
      * @memberof JsonApiUserGroupOutWithLinks
      */
-    relationships?: JsonApiUserGroupPatchRelationships;
+    relationships?: JsonApiUserGroupInRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -5606,10 +5883,10 @@ export interface JsonApiUserGroupPatch {
     id: string;
     /**
      *
-     * @type {JsonApiUserGroupPatchRelationships}
+     * @type {JsonApiUserGroupInRelationships}
      * @memberof JsonApiUserGroupPatch
      */
-    relationships?: JsonApiUserGroupPatchRelationships;
+    relationships?: JsonApiUserGroupInRelationships;
 }
 
 export const JsonApiUserGroupPatchTypeEnum = {
@@ -5631,32 +5908,6 @@ export interface JsonApiUserGroupPatchDocument {
      * @memberof JsonApiUserGroupPatchDocument
      */
     data: JsonApiUserGroupPatch;
-}
-/**
- *
- * @export
- * @interface JsonApiUserGroupPatchRelationships
- */
-export interface JsonApiUserGroupPatchRelationships {
-    /**
-     *
-     * @type {JsonApiUserGroupPatchRelationshipsParents}
-     * @memberof JsonApiUserGroupPatchRelationships
-     */
-    parents?: JsonApiUserGroupPatchRelationshipsParents;
-}
-/**
- *
- * @export
- * @interface JsonApiUserGroupPatchRelationshipsParents
- */
-export interface JsonApiUserGroupPatchRelationshipsParents {
-    /**
-     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
-     * @type {Array<JsonApiUserGroupLinkage>}
-     * @memberof JsonApiUserGroupPatchRelationshipsParents
-     */
-    data: Array<JsonApiUserGroupLinkage>;
 }
 /**
  * @type JsonApiUserGroupToOneLinkage
@@ -5685,16 +5936,16 @@ export interface JsonApiUserIn {
     id: string;
     /**
      *
-     * @type {JsonApiUserPatchAttributes}
+     * @type {JsonApiUserInAttributes}
      * @memberof JsonApiUserIn
      */
-    attributes?: JsonApiUserPatchAttributes;
+    attributes?: JsonApiUserInAttributes;
     /**
      *
-     * @type {JsonApiUserPatchRelationships}
+     * @type {JsonApiUserInRelationships}
      * @memberof JsonApiUserIn
      */
-    relationships?: JsonApiUserPatchRelationships;
+    relationships?: JsonApiUserInRelationships;
 }
 
 export const JsonApiUserInTypeEnum = {
@@ -5703,6 +5954,19 @@ export const JsonApiUserInTypeEnum = {
 
 export type JsonApiUserInTypeEnum = typeof JsonApiUserInTypeEnum[keyof typeof JsonApiUserInTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiUserInAttributes
+ */
+export interface JsonApiUserInAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiUserInAttributes
+     */
+    authenticationId?: string;
+}
 /**
  *
  * @export
@@ -5715,6 +5979,19 @@ export interface JsonApiUserInDocument {
      * @memberof JsonApiUserInDocument
      */
     data: JsonApiUserIn;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiUserInRelationships
+ */
+export interface JsonApiUserInRelationships {
+    /**
+     *
+     * @type {JsonApiUserGroupInRelationshipsParents}
+     * @memberof JsonApiUserInRelationships
+     */
+    userGroups?: JsonApiUserGroupInRelationshipsParents;
 }
 /**
  * The \\\"type\\\" and \\\"id\\\" to non-empty members.
@@ -5763,16 +6040,16 @@ export interface JsonApiUserOut {
     id: string;
     /**
      *
-     * @type {JsonApiUserPatchAttributes}
+     * @type {JsonApiUserInAttributes}
      * @memberof JsonApiUserOut
      */
-    attributes?: JsonApiUserPatchAttributes;
+    attributes?: JsonApiUserInAttributes;
     /**
      *
-     * @type {JsonApiUserPatchRelationships}
+     * @type {JsonApiUserInRelationships}
      * @memberof JsonApiUserOut
      */
-    relationships?: JsonApiUserPatchRelationships;
+    relationships?: JsonApiUserInRelationships;
 }
 
 export const JsonApiUserOutTypeEnum = {
@@ -5851,16 +6128,16 @@ export interface JsonApiUserOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiUserPatchAttributes}
+     * @type {JsonApiUserInAttributes}
      * @memberof JsonApiUserOutWithLinks
      */
-    attributes?: JsonApiUserPatchAttributes;
+    attributes?: JsonApiUserInAttributes;
     /**
      *
-     * @type {JsonApiUserPatchRelationships}
+     * @type {JsonApiUserInRelationships}
      * @memberof JsonApiUserOutWithLinks
      */
-    relationships?: JsonApiUserPatchRelationships;
+    relationships?: JsonApiUserInRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -5896,16 +6173,16 @@ export interface JsonApiUserPatch {
     id: string;
     /**
      *
-     * @type {JsonApiUserPatchAttributes}
+     * @type {JsonApiUserInAttributes}
      * @memberof JsonApiUserPatch
      */
-    attributes?: JsonApiUserPatchAttributes;
+    attributes?: JsonApiUserInAttributes;
     /**
      *
-     * @type {JsonApiUserPatchRelationships}
+     * @type {JsonApiUserInRelationships}
      * @memberof JsonApiUserPatch
      */
-    relationships?: JsonApiUserPatchRelationships;
+    relationships?: JsonApiUserInRelationships;
 }
 
 export const JsonApiUserPatchTypeEnum = {
@@ -5914,19 +6191,6 @@ export const JsonApiUserPatchTypeEnum = {
 
 export type JsonApiUserPatchTypeEnum = typeof JsonApiUserPatchTypeEnum[keyof typeof JsonApiUserPatchTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiUserPatchAttributes
- */
-export interface JsonApiUserPatchAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiUserPatchAttributes
-     */
-    authenticationId?: string;
-}
 /**
  *
  * @export
@@ -5939,19 +6203,6 @@ export interface JsonApiUserPatchDocument {
      * @memberof JsonApiUserPatchDocument
      */
     data: JsonApiUserPatch;
-}
-/**
- *
- * @export
- * @interface JsonApiUserPatchRelationships
- */
-export interface JsonApiUserPatchRelationships {
-    /**
-     *
-     * @type {JsonApiUserGroupPatchRelationshipsParents}
-     * @memberof JsonApiUserPatchRelationships
-     */
-    userGroups?: JsonApiUserGroupPatchRelationshipsParents;
 }
 /**
  * @type JsonApiUserToOneLinkage
@@ -5980,10 +6231,10 @@ export interface JsonApiVisualizationObjectIn {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiVisualizationObjectIn
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
 }
 
 export const JsonApiVisualizationObjectInTypeEnum = {
@@ -6053,10 +6304,10 @@ export interface JsonApiVisualizationObjectOut {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiVisualizationObjectOut
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
     /**
      *
      * @type {JsonApiVisualizationObjectOutRelationships}
@@ -6141,16 +6392,16 @@ export interface JsonApiVisualizationObjectOutList {
 export interface JsonApiVisualizationObjectOutRelationships {
     /**
      *
-     * @type {JsonApiMetricOutRelationshipsFacts}
+     * @type {JsonApiDatasetOutRelationshipsFacts}
      * @memberof JsonApiVisualizationObjectOutRelationships
      */
-    facts?: JsonApiMetricOutRelationshipsFacts;
+    facts?: JsonApiDatasetOutRelationshipsFacts;
     /**
      *
-     * @type {JsonApiFilterContextOutRelationshipsAttributes}
+     * @type {JsonApiDatasetOutRelationshipsAttributes}
      * @memberof JsonApiVisualizationObjectOutRelationships
      */
-    attributes?: JsonApiFilterContextOutRelationshipsAttributes;
+    attributes?: JsonApiDatasetOutRelationshipsAttributes;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationshipsLabels}
@@ -6190,10 +6441,10 @@ export interface JsonApiVisualizationObjectOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiVisualizationObjectOutWithLinks
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
     /**
      *
      * @type {JsonApiVisualizationObjectOutRelationships}
@@ -6235,10 +6486,10 @@ export interface JsonApiVisualizationObjectPatch {
     id: string;
     /**
      *
-     * @type {JsonApiAnalyticalDashboardPatchAttributes}
+     * @type {JsonApiAnalyticalDashboardOutAttributes}
      * @memberof JsonApiVisualizationObjectPatch
      */
-    attributes?: JsonApiAnalyticalDashboardPatchAttributes;
+    attributes?: JsonApiAnalyticalDashboardOutAttributes;
 }
 
 export const JsonApiVisualizationObjectPatchTypeEnum = {
@@ -6281,16 +6532,16 @@ export interface JsonApiWorkspaceDataFilterIn {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterPatchAttributes}
+     * @type {JsonApiWorkspaceDataFilterOutAttributes}
      * @memberof JsonApiWorkspaceDataFilterIn
      */
-    attributes?: JsonApiWorkspaceDataFilterPatchAttributes;
+    attributes?: JsonApiWorkspaceDataFilterOutAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterPatchRelationships}
+     * @type {JsonApiWorkspaceDataFilterOutRelationships}
      * @memberof JsonApiWorkspaceDataFilterIn
      */
-    relationships?: JsonApiWorkspaceDataFilterPatchRelationships;
+    relationships?: JsonApiWorkspaceDataFilterOutRelationships;
 }
 
 export const JsonApiWorkspaceDataFilterInTypeEnum = {
@@ -6360,16 +6611,16 @@ export interface JsonApiWorkspaceDataFilterOut {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterPatchAttributes}
+     * @type {JsonApiWorkspaceDataFilterOutAttributes}
      * @memberof JsonApiWorkspaceDataFilterOut
      */
-    attributes?: JsonApiWorkspaceDataFilterPatchAttributes;
+    attributes?: JsonApiWorkspaceDataFilterOutAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterPatchRelationships}
+     * @type {JsonApiWorkspaceDataFilterOutRelationships}
      * @memberof JsonApiWorkspaceDataFilterOut
      */
-    relationships?: JsonApiWorkspaceDataFilterPatchRelationships;
+    relationships?: JsonApiWorkspaceDataFilterOutRelationships;
 }
 
 export const JsonApiWorkspaceDataFilterOutTypeEnum = {
@@ -6379,6 +6630,31 @@ export const JsonApiWorkspaceDataFilterOutTypeEnum = {
 export type JsonApiWorkspaceDataFilterOutTypeEnum =
     typeof JsonApiWorkspaceDataFilterOutTypeEnum[keyof typeof JsonApiWorkspaceDataFilterOutTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspaceDataFilterOutAttributes
+ */
+export interface JsonApiWorkspaceDataFilterOutAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceDataFilterOutAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceDataFilterOutAttributes
+     */
+    description?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceDataFilterOutAttributes
+     */
+    columnName?: string;
+}
 /**
  *
  * @export
@@ -6432,6 +6708,32 @@ export interface JsonApiWorkspaceDataFilterOutList {
 /**
  *
  * @export
+ * @interface JsonApiWorkspaceDataFilterOutRelationships
+ */
+export interface JsonApiWorkspaceDataFilterOutRelationships {
+    /**
+     *
+     * @type {JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings}
+     * @memberof JsonApiWorkspaceDataFilterOutRelationships
+     */
+    filterSettings?: JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings
+ */
+export interface JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     * @type {Array<JsonApiWorkspaceDataFilterSettingLinkage>}
+     * @memberof JsonApiWorkspaceDataFilterOutRelationshipsFilterSettings
+     */
+    data: Array<JsonApiWorkspaceDataFilterSettingLinkage>;
+}
+/**
+ *
+ * @export
  * @interface JsonApiWorkspaceDataFilterOutWithLinks
  */
 export interface JsonApiWorkspaceDataFilterOutWithLinks {
@@ -6449,16 +6751,16 @@ export interface JsonApiWorkspaceDataFilterOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterPatchAttributes}
+     * @type {JsonApiWorkspaceDataFilterOutAttributes}
      * @memberof JsonApiWorkspaceDataFilterOutWithLinks
      */
-    attributes?: JsonApiWorkspaceDataFilterPatchAttributes;
+    attributes?: JsonApiWorkspaceDataFilterOutAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterPatchRelationships}
+     * @type {JsonApiWorkspaceDataFilterOutRelationships}
      * @memberof JsonApiWorkspaceDataFilterOutWithLinks
      */
-    relationships?: JsonApiWorkspaceDataFilterPatchRelationships;
+    relationships?: JsonApiWorkspaceDataFilterOutRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -6494,16 +6796,16 @@ export interface JsonApiWorkspaceDataFilterPatch {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterPatchAttributes}
+     * @type {JsonApiWorkspaceDataFilterOutAttributes}
      * @memberof JsonApiWorkspaceDataFilterPatch
      */
-    attributes?: JsonApiWorkspaceDataFilterPatchAttributes;
+    attributes?: JsonApiWorkspaceDataFilterOutAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceDataFilterPatchRelationships}
+     * @type {JsonApiWorkspaceDataFilterOutRelationships}
      * @memberof JsonApiWorkspaceDataFilterPatch
      */
-    relationships?: JsonApiWorkspaceDataFilterPatchRelationships;
+    relationships?: JsonApiWorkspaceDataFilterOutRelationships;
 }
 
 export const JsonApiWorkspaceDataFilterPatchTypeEnum = {
@@ -6516,31 +6818,6 @@ export type JsonApiWorkspaceDataFilterPatchTypeEnum =
 /**
  *
  * @export
- * @interface JsonApiWorkspaceDataFilterPatchAttributes
- */
-export interface JsonApiWorkspaceDataFilterPatchAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterPatchAttributes
-     */
-    title?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterPatchAttributes
-     */
-    description?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceDataFilterPatchAttributes
-     */
-    columnName?: string;
-}
-/**
- *
- * @export
  * @interface JsonApiWorkspaceDataFilterPatchDocument
  */
 export interface JsonApiWorkspaceDataFilterPatchDocument {
@@ -6550,32 +6827,6 @@ export interface JsonApiWorkspaceDataFilterPatchDocument {
      * @memberof JsonApiWorkspaceDataFilterPatchDocument
      */
     data: JsonApiWorkspaceDataFilterPatch;
-}
-/**
- *
- * @export
- * @interface JsonApiWorkspaceDataFilterPatchRelationships
- */
-export interface JsonApiWorkspaceDataFilterPatchRelationships {
-    /**
-     *
-     * @type {JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings}
-     * @memberof JsonApiWorkspaceDataFilterPatchRelationships
-     */
-    filterSettings?: JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings;
-}
-/**
- *
- * @export
- * @interface JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings
- */
-export interface JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings {
-    /**
-     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
-     * @type {Array<JsonApiWorkspaceDataFilterSettingLinkage>}
-     * @memberof JsonApiWorkspaceDataFilterPatchRelationshipsFilterSettings
-     */
-    data: Array<JsonApiWorkspaceDataFilterSettingLinkage>;
 }
 /**
  * The \\\"type\\\" and \\\"id\\\" to non-empty members.
@@ -6816,16 +7067,16 @@ export interface JsonApiWorkspaceIn {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspacePatchAttributes}
+     * @type {JsonApiWorkspaceInAttributes}
      * @memberof JsonApiWorkspaceIn
      */
-    attributes?: JsonApiWorkspacePatchAttributes;
+    attributes?: JsonApiWorkspaceInAttributes;
     /**
      *
-     * @type {JsonApiWorkspacePatchRelationships}
+     * @type {JsonApiWorkspaceInRelationships}
      * @memberof JsonApiWorkspaceIn
      */
-    relationships?: JsonApiWorkspacePatchRelationships;
+    relationships?: JsonApiWorkspaceInRelationships;
 }
 
 export const JsonApiWorkspaceInTypeEnum = {
@@ -6838,6 +7089,25 @@ export type JsonApiWorkspaceInTypeEnum =
 /**
  *
  * @export
+ * @interface JsonApiWorkspaceInAttributes
+ */
+export interface JsonApiWorkspaceInAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceInAttributes
+     */
+    name?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspaceInAttributes
+     */
+    earlyAccess?: string;
+}
+/**
+ *
+ * @export
  * @interface JsonApiWorkspaceInDocument
  */
 export interface JsonApiWorkspaceInDocument {
@@ -6847,6 +7117,32 @@ export interface JsonApiWorkspaceInDocument {
      * @memberof JsonApiWorkspaceInDocument
      */
     data: JsonApiWorkspaceIn;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspaceInRelationships
+ */
+export interface JsonApiWorkspaceInRelationships {
+    /**
+     *
+     * @type {JsonApiWorkspaceInRelationshipsParent}
+     * @memberof JsonApiWorkspaceInRelationships
+     */
+    parent?: JsonApiWorkspaceInRelationshipsParent;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspaceInRelationshipsParent
+ */
+export interface JsonApiWorkspaceInRelationshipsParent {
+    /**
+     *
+     * @type {JsonApiWorkspaceToOneLinkage}
+     * @memberof JsonApiWorkspaceInRelationshipsParent
+     */
+    data: JsonApiWorkspaceToOneLinkage | null;
 }
 /**
  * The \\\"type\\\" and \\\"id\\\" to non-empty members.
@@ -6901,16 +7197,16 @@ export interface JsonApiWorkspaceOut {
     meta?: JsonApiWorkspaceOutMeta;
     /**
      *
-     * @type {JsonApiWorkspacePatchAttributes}
+     * @type {JsonApiWorkspaceInAttributes}
      * @memberof JsonApiWorkspaceOut
      */
-    attributes?: JsonApiWorkspacePatchAttributes;
+    attributes?: JsonApiWorkspaceInAttributes;
     /**
      *
-     * @type {JsonApiWorkspacePatchRelationships}
+     * @type {JsonApiWorkspaceInRelationships}
      * @memberof JsonApiWorkspaceOut
      */
-    relationships?: JsonApiWorkspacePatchRelationships;
+    relationships?: JsonApiWorkspaceInRelationships;
 }
 
 export const JsonApiWorkspaceOutTypeEnum = {
@@ -7044,16 +7340,16 @@ export interface JsonApiWorkspaceOutWithLinks {
     meta?: JsonApiWorkspaceOutMeta;
     /**
      *
-     * @type {JsonApiWorkspacePatchAttributes}
+     * @type {JsonApiWorkspaceInAttributes}
      * @memberof JsonApiWorkspaceOutWithLinks
      */
-    attributes?: JsonApiWorkspacePatchAttributes;
+    attributes?: JsonApiWorkspaceInAttributes;
     /**
      *
-     * @type {JsonApiWorkspacePatchRelationships}
+     * @type {JsonApiWorkspaceInRelationships}
      * @memberof JsonApiWorkspaceOutWithLinks
      */
-    relationships?: JsonApiWorkspacePatchRelationships;
+    relationships?: JsonApiWorkspaceInRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -7089,16 +7385,16 @@ export interface JsonApiWorkspacePatch {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspacePatchAttributes}
+     * @type {JsonApiWorkspaceInAttributes}
      * @memberof JsonApiWorkspacePatch
      */
-    attributes?: JsonApiWorkspacePatchAttributes;
+    attributes?: JsonApiWorkspaceInAttributes;
     /**
      *
-     * @type {JsonApiWorkspacePatchRelationships}
+     * @type {JsonApiWorkspaceInRelationships}
      * @memberof JsonApiWorkspacePatch
      */
-    relationships?: JsonApiWorkspacePatchRelationships;
+    relationships?: JsonApiWorkspaceInRelationships;
 }
 
 export const JsonApiWorkspacePatchTypeEnum = {
@@ -7111,19 +7407,6 @@ export type JsonApiWorkspacePatchTypeEnum =
 /**
  *
  * @export
- * @interface JsonApiWorkspacePatchAttributes
- */
-export interface JsonApiWorkspacePatchAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspacePatchAttributes
-     */
-    name?: string;
-}
-/**
- *
- * @export
  * @interface JsonApiWorkspacePatchDocument
  */
 export interface JsonApiWorkspacePatchDocument {
@@ -7133,32 +7416,6 @@ export interface JsonApiWorkspacePatchDocument {
      * @memberof JsonApiWorkspacePatchDocument
      */
     data: JsonApiWorkspacePatch;
-}
-/**
- *
- * @export
- * @interface JsonApiWorkspacePatchRelationships
- */
-export interface JsonApiWorkspacePatchRelationships {
-    /**
-     *
-     * @type {JsonApiWorkspacePatchRelationshipsParent}
-     * @memberof JsonApiWorkspacePatchRelationships
-     */
-    parent?: JsonApiWorkspacePatchRelationshipsParent;
-}
-/**
- *
- * @export
- * @interface JsonApiWorkspacePatchRelationshipsParent
- */
-export interface JsonApiWorkspacePatchRelationshipsParent {
-    /**
-     *
-     * @type {JsonApiWorkspaceToOneLinkage}
-     * @memberof JsonApiWorkspacePatchRelationshipsParent
-     */
-    data: JsonApiWorkspaceToOneLinkage | null;
 }
 /**
  * @type JsonApiWorkspaceToOneLinkage
@@ -7339,8 +7596,8 @@ export type WorkspaceIdentifierTypeEnum =
 export const ActionsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Generate LDM from PDM stored in data source.
-         * @summary Generate LDM from PDM
+         * Generate logical data model (LDM) from physical data model (PDM) stored in data source.
+         * @summary Generate logical data model (LDM) from physical data model (PDM)
          * @param {string} dataSourceId
          * @param {GenerateLdmRequest} generateLdmRequest
          * @param {*} [options] Override http request option.
@@ -7355,7 +7612,7 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             assertParamExists("generateLogicalModel", "dataSourceId", dataSourceId);
             // verify required parameter 'generateLdmRequest' is not null or undefined
             assertParamExists("generateLogicalModel", "generateLdmRequest", generateLdmRequest);
-            const localVarPath = `/api/actions/dataSources/{dataSourceId}/generateLogicalModel`.replace(
+            const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/generateLogicalModel`.replace(
                 `{${"dataSourceId"}}`,
                 encodeURIComponent(String(dataSourceId)),
             );
@@ -7403,7 +7660,7 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
         ): Promise<RequestArgs> => {
             // verify required parameter 'dataSourceId' is not null or undefined
             assertParamExists("registerUploadNotification", "dataSourceId", dataSourceId);
-            const localVarPath = `/api/actions/dataSources/{dataSourceId}/uploadNotification`.replace(
+            const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/uploadNotification`.replace(
                 `{${"dataSourceId"}}`,
                 encodeURIComponent(String(dataSourceId)),
             );
@@ -7441,8 +7698,8 @@ export const ActionsApiFp = function (configuration?: Configuration) {
     const localVarAxiosParamCreator = ActionsApiAxiosParamCreator(configuration);
     return {
         /**
-         * Generate LDM from PDM stored in data source.
-         * @summary Generate LDM from PDM
+         * Generate logical data model (LDM) from physical data model (PDM) stored in data source.
+         * @summary Generate logical data model (LDM) from physical data model (PDM)
          * @param {string} dataSourceId
          * @param {GenerateLdmRequest} generateLdmRequest
          * @param {*} [options] Override http request option.
@@ -7492,8 +7749,8 @@ export const ActionsApiFactory = function (
     const localVarFp = ActionsApiFp(configuration);
     return {
         /**
-         * Generate LDM from PDM stored in data source.
-         * @summary Generate LDM from PDM
+         * Generate logical data model (LDM) from physical data model (PDM) stored in data source.
+         * @summary Generate logical data model (LDM) from physical data model (PDM)
          * @param {ActionsApiGenerateLogicalModelRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -7535,8 +7792,8 @@ export const ActionsApiFactory = function (
  */
 export interface ActionsApiInterface {
     /**
-     * Generate LDM from PDM stored in data source.
-     * @summary Generate LDM from PDM
+     * Generate logical data model (LDM) from physical data model (PDM) stored in data source.
+     * @summary Generate logical data model (LDM) from physical data model (PDM)
      * @param {ActionsApiGenerateLogicalModelRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -7604,8 +7861,8 @@ export interface ActionsApiRegisterUploadNotificationRequest {
  */
 export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     /**
-     * Generate LDM from PDM stored in data source.
-     * @summary Generate LDM from PDM
+     * Generate logical data model (LDM) from physical data model (PDM) stored in data source.
+     * @summary Generate logical data model (LDM) from physical data model (PDM)
      * @param {ActionsApiGenerateLogicalModelRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -7679,7 +7936,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 "jsonApiAnalyticalDashboardInDocument",
                 jsonApiAnalyticalDashboardInDocument,
             );
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/analyticalDashboards`.replace(
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/analyticalDashboards`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
@@ -7742,7 +7999,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 "jsonApiApiTokenInDocument",
                 jsonApiApiTokenInDocument,
             );
-            const localVarPath = `/api/entities/users/{userId}/apiTokens`.replace(
+            const localVarPath = `/api/v1/entities/users/{userId}/apiTokens`.replace(
                 `{${"userId"}}`,
                 encodeURIComponent(String(userId)),
             );
@@ -7797,7 +8054,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 "jsonApiDashboardPluginInDocument",
                 jsonApiDashboardPluginInDocument,
             );
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/dashboardPlugins`.replace(
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/dashboardPlugins`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
@@ -7850,7 +8107,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 "jsonApiDataSourceInDocument",
                 jsonApiDataSourceInDocument,
             );
-            const localVarPath = `/api/entities/dataSources`;
+            const localVarPath = `/api/v1/entities/dataSources`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -7904,7 +8161,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 "jsonApiFilterContextInDocument",
                 jsonApiFilterContextInDocument,
             );
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/filterContexts`.replace(
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/filterContexts`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
@@ -7963,7 +8220,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists("createEntityMetrics", "workspaceId", workspaceId);
             // verify required parameter 'jsonApiMetricInDocument' is not null or undefined
             assertParamExists("createEntityMetrics", "jsonApiMetricInDocument", jsonApiMetricInDocument);
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/metrics`.replace(
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/metrics`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
@@ -8020,7 +8277,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 "jsonApiUserGroupInDocument",
                 jsonApiUserGroupInDocument,
             );
-            const localVarPath = `/api/entities/userGroups`;
+            const localVarPath = `/api/v1/entities/userGroups`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -8070,7 +8327,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): Promise<RequestArgs> => {
             // verify required parameter 'jsonApiUserInDocument' is not null or undefined
             assertParamExists("createEntityUsers", "jsonApiUserInDocument", jsonApiUserInDocument);
-            const localVarPath = `/api/entities/users`;
+            const localVarPath = `/api/v1/entities/users`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -8128,7 +8385,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 "jsonApiVisualizationObjectInDocument",
                 jsonApiVisualizationObjectInDocument,
             );
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/visualizationObjects`.replace(
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/visualizationObjects`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
@@ -8193,7 +8450,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 "jsonApiWorkspaceDataFilterInDocument",
                 jsonApiWorkspaceDataFilterInDocument,
             );
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/workspaceDataFilters`.replace(
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/workspaceDataFilters`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
@@ -8254,7 +8511,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 "jsonApiWorkspaceInDocument",
                 jsonApiWorkspaceInDocument,
             );
-            const localVarPath = `/api/entities/workspaces`;
+            const localVarPath = `/api/v1/entities/workspaces`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -8310,7 +8567,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists("deleteEntityAnalyticalDashboards", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
             assertParamExists("deleteEntityAnalyticalDashboards", "objectId", objectId);
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/analyticalDashboards/{objectId}`
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/analyticalDashboards/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -8364,7 +8621,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists("deleteEntityApiTokens", "userId", userId);
             // verify required parameter 'id' is not null or undefined
             assertParamExists("deleteEntityApiTokens", "id", id);
-            const localVarPath = `/api/entities/users/{userId}/apiTokens/{id}`
+            const localVarPath = `/api/v1/entities/users/{userId}/apiTokens/{id}`
                 .replace(`{${"userId"}}`, encodeURIComponent(String(userId)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -8418,7 +8675,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists("deleteEntityDashboardPlugins", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
             assertParamExists("deleteEntityDashboardPlugins", "objectId", objectId);
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/dashboardPlugins/{objectId}`
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/dashboardPlugins/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -8468,7 +8725,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists("deleteEntityDataSources", "id", id);
-            const localVarPath = `/api/entities/dataSources/{id}`.replace(
+            const localVarPath = `/api/v1/entities/dataSources/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
@@ -8523,7 +8780,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists("deleteEntityFilterContexts", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
             assertParamExists("deleteEntityFilterContexts", "objectId", objectId);
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/filterContexts/{objectId}`
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/filterContexts/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -8577,7 +8834,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists("deleteEntityMetrics", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
             assertParamExists("deleteEntityMetrics", "objectId", objectId);
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/metrics/{objectId}`
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/metrics/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -8627,7 +8884,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists("deleteEntityUserGroups", "id", id);
-            const localVarPath = `/api/entities/userGroups/{id}`.replace(
+            const localVarPath = `/api/v1/entities/userGroups/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
@@ -8678,7 +8935,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists("deleteEntityUsers", "id", id);
-            const localVarPath = `/api/entities/users/{id}`.replace(
+            const localVarPath = `/api/v1/entities/users/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
@@ -8733,7 +8990,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists("deleteEntityVisualizationObjects", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
             assertParamExists("deleteEntityVisualizationObjects", "objectId", objectId);
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/visualizationObjects/{objectId}`
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/visualizationObjects/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -8787,7 +9044,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists("deleteEntityWorkspaceDataFilters", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
             assertParamExists("deleteEntityWorkspaceDataFilters", "objectId", objectId);
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/workspaceDataFilters/{objectId}`
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/workspaceDataFilters/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -8837,7 +9094,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists("deleteEntityWorkspaces", "id", id);
-            const localVarPath = `/api/entities/workspaces/{id}`.replace(
+            const localVarPath = `/api/v1/entities/workspaces/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
@@ -8907,7 +9164,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
             assertParamExists("getAllEntitiesAnalyticalDashboards", "workspaceId", workspaceId);
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/analyticalDashboards`.replace(
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/analyticalDashboards`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
@@ -8986,7 +9243,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): Promise<RequestArgs> => {
             // verify required parameter 'userId' is not null or undefined
             assertParamExists("getAllEntitiesApiTokens", "userId", userId);
-            const localVarPath = `/api/entities/users/{userId}/apiTokens`.replace(
+            const localVarPath = `/api/v1/entities/users/{userId}/apiTokens`.replace(
                 `{${"userId"}}`,
                 encodeURIComponent(String(userId)),
             );
@@ -9059,7 +9316,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
             assertParamExists("getAllEntitiesAttributes", "workspaceId", workspaceId);
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/attributes`.replace(
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/attributes`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
@@ -9140,7 +9397,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
             assertParamExists("getAllEntitiesDashboardPlugins", "workspaceId", workspaceId);
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/dashboardPlugins`.replace(
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/dashboardPlugins`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
@@ -9213,7 +9470,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             metaInclude?: Array<"permissions" | "all" | "ALL">,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
-            const localVarPath = `/api/entities/dataSourceIdentifiers`;
+            const localVarPath = `/api/v1/entities/dataSourceIdentifiers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -9283,7 +9540,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): Promise<RequestArgs> => {
             // verify required parameter 'dataSourceId' is not null or undefined
             assertParamExists("getAllEntitiesDataSourceTables", "dataSourceId", dataSourceId);
-            const localVarPath = `/api/entities/dataSources/{dataSourceId}/dataSourceTables`.replace(
+            const localVarPath = `/api/v1/entities/dataSources/{dataSourceId}/dataSourceTables`.replace(
                 `{${"dataSourceId"}}`,
                 encodeURIComponent(String(dataSourceId)),
             );
@@ -9350,7 +9607,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             metaInclude?: Array<"permissions" | "all" | "ALL">,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
-            const localVarPath = `/api/entities/dataSources`;
+            const localVarPath = `/api/v1/entities/dataSources`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -9424,7 +9681,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
             assertParamExists("getAllEntitiesDatasets", "workspaceId", workspaceId);
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/datasets`.replace(
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/datasets`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
@@ -9483,6 +9740,68 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          *
+         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {number} [page] Zero-based page index (0..N)
+         * @param {number} [size] The size of the page to be returned
+         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllEntitiesEntitlements: async (
+            predicate?: { [key: string]: object },
+            filter?: string,
+            page?: number,
+            size?: number,
+            sort?: Array<string>,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/entities/entitlements`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (predicate !== undefined) {
+                localVarQueryParameter["predicate"] = predicate;
+            }
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter["page"] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter["size"] = size;
+            }
+
+            if (sort) {
+                localVarQueryParameter["sort"] = sort;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
          * @param {string} workspaceId
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -9507,7 +9826,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
             assertParamExists("getAllEntitiesFacts", "workspaceId", workspaceId);
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/facts`.replace(
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/facts`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
@@ -9590,7 +9909,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
             assertParamExists("getAllEntitiesFilterContexts", "workspaceId", workspaceId);
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/filterContexts`.replace(
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/filterContexts`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
@@ -9673,7 +9992,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
             assertParamExists("getAllEntitiesLabels", "workspaceId", workspaceId);
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/labels`.replace(
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/labels`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
@@ -9756,7 +10075,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
             assertParamExists("getAllEntitiesMetrics", "workspaceId", workspaceId);
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/metrics`.replace(
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/metrics`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
@@ -9833,7 +10152,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             sort?: Array<string>,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
-            const localVarPath = `/api/entities/userGroups`;
+            const localVarPath = `/api/v1/entities/userGroups`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -9901,7 +10220,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             sort?: Array<string>,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
-            const localVarPath = `/api/entities/users`;
+            const localVarPath = `/api/v1/entities/users`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -9975,7 +10294,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
             assertParamExists("getAllEntitiesVisualizationObjects", "workspaceId", workspaceId);
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/visualizationObjects`.replace(
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/visualizationObjects`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
@@ -10058,10 +10377,11 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
             assertParamExists("getAllEntitiesWorkspaceDataFilterSettings", "workspaceId", workspaceId);
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/workspaceDataFilterSettings`.replace(
-                `{${"workspaceId"}}`,
-                encodeURIComponent(String(workspaceId)),
-            );
+            const localVarPath =
+                `/api/v1/entities/workspaces/{workspaceId}/workspaceDataFilterSettings`.replace(
+                    `{${"workspaceId"}}`,
+                    encodeURIComponent(String(workspaceId)),
+                );
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -10141,7 +10461,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
             assertParamExists("getAllEntitiesWorkspaceDataFilters", "workspaceId", workspaceId);
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/workspaceDataFilters`.replace(
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/workspaceDataFilters`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
@@ -10220,7 +10540,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             metaInclude?: Array<"config" | "permissions" | "all" | "ALL">,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
-            const localVarPath = `/api/entities/workspaces`;
+            const localVarPath = `/api/v1/entities/workspaces`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -10279,7 +10599,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @throws {RequiredError}
          */
         getAllOptions: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/options`;
+            const localVarPath = `/api/v1/options`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -10310,7 +10630,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @throws {RequiredError}
          */
         getDataSourceDrivers: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/options/availableDrivers`;
+            const localVarPath = `/api/v1/options/availableDrivers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -10367,7 +10687,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists("getEntityAnalyticalDashboards", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
             assertParamExists("getEntityAnalyticalDashboards", "objectId", objectId);
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/analyticalDashboards/{objectId}`
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/analyticalDashboards/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -10431,7 +10751,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists("getEntityApiTokens", "userId", userId);
             // verify required parameter 'id' is not null or undefined
             assertParamExists("getEntityApiTokens", "id", id);
-            const localVarPath = `/api/entities/users/{userId}/apiTokens/{id}`
+            const localVarPath = `/api/v1/entities/users/{userId}/apiTokens/{id}`
                 .replace(`{${"userId"}}`, encodeURIComponent(String(userId)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -10489,7 +10809,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists("getEntityAttributes", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
             assertParamExists("getEntityAttributes", "objectId", objectId);
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/attributes/{objectId}`
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/attributes/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -10549,7 +10869,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists("getEntityCookieSecurityConfigurations", "id", id);
-            const localVarPath = `/api/entities/admin/cookieSecurityConfigurations/{id}`.replace(
+            const localVarPath = `/api/v1/entities/admin/cookieSecurityConfigurations/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
@@ -10606,7 +10926,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists("getEntityDashboardPlugins", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
             assertParamExists("getEntityDashboardPlugins", "objectId", objectId);
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/dashboardPlugins/{objectId}`
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/dashboardPlugins/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -10664,7 +10984,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists("getEntityDataSourceIdentifiers", "id", id);
-            const localVarPath = `/api/entities/dataSourceIdentifiers/{id}`.replace(
+            const localVarPath = `/api/v1/entities/dataSourceIdentifiers/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
@@ -10723,7 +11043,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists("getEntityDataSourceTables", "dataSourceId", dataSourceId);
             // verify required parameter 'id' is not null or undefined
             assertParamExists("getEntityDataSourceTables", "id", id);
-            const localVarPath = `/api/entities/dataSources/{dataSourceId}/dataSourceTables/{id}`
+            const localVarPath = `/api/v1/entities/dataSources/{dataSourceId}/dataSourceTables/{id}`
                 .replace(`{${"dataSourceId"}}`, encodeURIComponent(String(dataSourceId)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -10775,7 +11095,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists("getEntityDataSources", "id", id);
-            const localVarPath = `/api/entities/dataSources/{id}`.replace(
+            const localVarPath = `/api/v1/entities/dataSources/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
@@ -10838,7 +11158,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists("getEntityDatasets", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
             assertParamExists("getEntityDatasets", "objectId", objectId);
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/datasets/{objectId}`
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/datasets/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -10884,6 +11204,57 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          *
+         * @param {string} id
+         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEntityEntitlements: async (
+            id: string,
+            predicate?: { [key: string]: object },
+            filter?: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists("getEntityEntitlements", "id", id);
+            const localVarPath = `/api/v1/entities/entitlements/{id}`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (predicate !== undefined) {
+                localVarQueryParameter["predicate"] = predicate;
+            }
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
@@ -10906,7 +11277,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists("getEntityFacts", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
             assertParamExists("getEntityFacts", "objectId", objectId);
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/facts/{objectId}`
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/facts/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -10974,7 +11345,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists("getEntityFilterContexts", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
             assertParamExists("getEntityFilterContexts", "objectId", objectId);
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/filterContexts/{objectId}`
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/filterContexts/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -11042,7 +11413,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists("getEntityLabels", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
             assertParamExists("getEntityLabels", "objectId", objectId);
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/labels/{objectId}`
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/labels/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -11110,7 +11481,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists("getEntityMetrics", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
             assertParamExists("getEntityMetrics", "objectId", objectId);
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/metrics/{objectId}`
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/metrics/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -11174,7 +11545,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists("getEntityOrganizations", "id", id);
-            const localVarPath = `/api/entities/admin/organizations/{id}`.replace(
+            const localVarPath = `/api/v1/entities/admin/organizations/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
@@ -11235,7 +11606,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists("getEntityUserGroups", "id", id);
-            const localVarPath = `/api/entities/userGroups/{id}`.replace(
+            const localVarPath = `/api/v1/entities/userGroups/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
@@ -11292,7 +11663,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists("getEntityUsers", "id", id);
-            const localVarPath = `/api/entities/users/{id}`.replace(
+            const localVarPath = `/api/v1/entities/users/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
@@ -11355,7 +11726,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists("getEntityVisualizationObjects", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
             assertParamExists("getEntityVisualizationObjects", "objectId", objectId);
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/visualizationObjects/{objectId}`
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/visualizationObjects/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -11424,7 +11795,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             // verify required parameter 'objectId' is not null or undefined
             assertParamExists("getEntityWorkspaceDataFilterSettings", "objectId", objectId);
             const localVarPath =
-                `/api/entities/workspaces/{workspaceId}/workspaceDataFilterSettings/{objectId}`
+                `/api/v1/entities/workspaces/{workspaceId}/workspaceDataFilterSettings/{objectId}`
                     .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                     .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -11492,7 +11863,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists("getEntityWorkspaceDataFilters", "workspaceId", workspaceId);
             // verify required parameter 'objectId' is not null or undefined
             assertParamExists("getEntityWorkspaceDataFilters", "objectId", objectId);
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/workspaceDataFilters/{objectId}`
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/workspaceDataFilters/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -11556,7 +11927,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         ): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists("getEntityWorkspaces", "id", id);
-            const localVarPath = `/api/entities/workspaces/{id}`.replace(
+            const localVarPath = `/api/v1/entities/workspaces/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
@@ -11610,7 +11981,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             metaInclude?: Array<"permissions" | "all">,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
-            const localVarPath = `/api/entities/organization`;
+            const localVarPath = `/api/v1/entities/organization`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -11677,7 +12048,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 "jsonApiAnalyticalDashboardPatchDocument",
                 jsonApiAnalyticalDashboardPatchDocument,
             );
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/analyticalDashboards/{objectId}`
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/analyticalDashboards/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -11729,6 +12100,77 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          *
+         * @param {string} id
+         * @param {JsonApiCookieSecurityConfigurationPatchDocument} jsonApiCookieSecurityConfigurationPatchDocument
+         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchEntityCookieSecurityConfigurations: async (
+            id: string,
+            jsonApiCookieSecurityConfigurationPatchDocument: JsonApiCookieSecurityConfigurationPatchDocument,
+            predicate?: { [key: string]: object },
+            filter?: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists("patchEntityCookieSecurityConfigurations", "id", id);
+            // verify required parameter 'jsonApiCookieSecurityConfigurationPatchDocument' is not null or undefined
+            assertParamExists(
+                "patchEntityCookieSecurityConfigurations",
+                "jsonApiCookieSecurityConfigurationPatchDocument",
+                jsonApiCookieSecurityConfigurationPatchDocument,
+            );
+            const localVarPath = `/api/v1/entities/admin/cookieSecurityConfigurations/{id}`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (predicate !== undefined) {
+                localVarQueryParameter["predicate"] = predicate;
+            }
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof jsonApiCookieSecurityConfigurationPatchDocument !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      jsonApiCookieSecurityConfigurationPatchDocument !== undefined
+                          ? jsonApiCookieSecurityConfigurationPatchDocument
+                          : {},
+                  )
+                : jsonApiCookieSecurityConfigurationPatchDocument || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {JsonApiDashboardPluginPatchDocument} jsonApiDashboardPluginPatchDocument
@@ -11755,7 +12197,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 "jsonApiDashboardPluginPatchDocument",
                 jsonApiDashboardPluginPatchDocument,
             );
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/dashboardPlugins/{objectId}`
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/dashboardPlugins/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -11825,7 +12267,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 "jsonApiDataSourcePatchDocument",
                 jsonApiDataSourcePatchDocument,
             );
-            const localVarPath = `/api/entities/dataSources/{id}`.replace(
+            const localVarPath = `/api/v1/entities/dataSources/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
@@ -11900,7 +12342,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 "jsonApiFilterContextPatchDocument",
                 jsonApiFilterContextPatchDocument,
             );
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/filterContexts/{objectId}`
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/filterContexts/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -11976,7 +12418,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists("patchEntityMetrics", "objectId", objectId);
             // verify required parameter 'jsonApiMetricPatchDocument' is not null or undefined
             assertParamExists("patchEntityMetrics", "jsonApiMetricPatchDocument", jsonApiMetricPatchDocument);
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/metrics/{objectId}`
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/metrics/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -12025,6 +12467,81 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
         /**
          *
          * @param {string} id
+         * @param {JsonApiOrganizationPatchDocument} jsonApiOrganizationPatchDocument
+         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {Array<'users' | 'userGroups' | 'bootstrapUser' | 'bootstrapUserGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchEntityOrganizations: async (
+            id: string,
+            jsonApiOrganizationPatchDocument: JsonApiOrganizationPatchDocument,
+            predicate?: { [key: string]: object },
+            filter?: string,
+            include?: Array<"users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup" | "ALL">,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists("patchEntityOrganizations", "id", id);
+            // verify required parameter 'jsonApiOrganizationPatchDocument' is not null or undefined
+            assertParamExists(
+                "patchEntityOrganizations",
+                "jsonApiOrganizationPatchDocument",
+                jsonApiOrganizationPatchDocument,
+            );
+            const localVarPath = `/api/v1/entities/admin/organizations/{id}`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PATCH", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (predicate !== undefined) {
+                localVarQueryParameter["predicate"] = predicate;
+            }
+
+            if (filter !== undefined) {
+                localVarQueryParameter["filter"] = filter;
+            }
+
+            if (include) {
+                localVarQueryParameter["include"] = include.join(COLLECTION_FORMATS.csv);
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof jsonApiOrganizationPatchDocument !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      jsonApiOrganizationPatchDocument !== undefined ? jsonApiOrganizationPatchDocument : {},
+                  )
+                : jsonApiOrganizationPatchDocument || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} id
          * @param {JsonApiUserGroupPatchDocument} jsonApiUserGroupPatchDocument
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -12048,7 +12565,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 "jsonApiUserGroupPatchDocument",
                 jsonApiUserGroupPatchDocument,
             );
-            const localVarPath = `/api/entities/userGroups/{id}`.replace(
+            const localVarPath = `/api/v1/entities/userGroups/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
@@ -12119,7 +12636,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists("patchEntityUsers", "id", id);
             // verify required parameter 'jsonApiUserPatchDocument' is not null or undefined
             assertParamExists("patchEntityUsers", "jsonApiUserPatchDocument", jsonApiUserPatchDocument);
-            const localVarPath = `/api/entities/users/{id}`.replace(
+            const localVarPath = `/api/v1/entities/users/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
@@ -12196,7 +12713,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 "jsonApiVisualizationObjectPatchDocument",
                 jsonApiVisualizationObjectPatchDocument,
             );
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/visualizationObjects/{objectId}`
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/visualizationObjects/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -12276,7 +12793,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 "jsonApiWorkspaceDataFilterPatchDocument",
                 jsonApiWorkspaceDataFilterPatchDocument,
             );
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/workspaceDataFilters/{objectId}`
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/workspaceDataFilters/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -12352,7 +12869,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 "jsonApiWorkspacePatchDocument",
                 jsonApiWorkspacePatchDocument,
             );
-            const localVarPath = `/api/entities/workspaces/{id}`.replace(
+            const localVarPath = `/api/v1/entities/workspaces/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
@@ -12440,7 +12957,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 "jsonApiAnalyticalDashboardInDocument",
                 jsonApiAnalyticalDashboardInDocument,
             );
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/analyticalDashboards/{objectId}`
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/analyticalDashboards/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -12514,7 +13031,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 "jsonApiCookieSecurityConfigurationInDocument",
                 jsonApiCookieSecurityConfigurationInDocument,
             );
-            const localVarPath = `/api/entities/admin/cookieSecurityConfigurations/{id}`.replace(
+            const localVarPath = `/api/v1/entities/admin/cookieSecurityConfigurations/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
@@ -12589,7 +13106,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 "jsonApiDashboardPluginInDocument",
                 jsonApiDashboardPluginInDocument,
             );
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/dashboardPlugins/{objectId}`
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/dashboardPlugins/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -12657,7 +13174,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 "jsonApiDataSourceInDocument",
                 jsonApiDataSourceInDocument,
             );
-            const localVarPath = `/api/entities/dataSources/{id}`.replace(
+            const localVarPath = `/api/v1/entities/dataSources/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
@@ -12730,7 +13247,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 "jsonApiFilterContextInDocument",
                 jsonApiFilterContextInDocument,
             );
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/filterContexts/{objectId}`
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/filterContexts/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -12804,7 +13321,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists("updateEntityMetrics", "objectId", objectId);
             // verify required parameter 'jsonApiMetricInDocument' is not null or undefined
             assertParamExists("updateEntityMetrics", "jsonApiMetricInDocument", jsonApiMetricInDocument);
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/metrics/{objectId}`
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/metrics/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -12876,7 +13393,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 "jsonApiOrganizationInDocument",
                 jsonApiOrganizationInDocument,
             );
-            const localVarPath = `/api/entities/admin/organizations/{id}`.replace(
+            const localVarPath = `/api/v1/entities/admin/organizations/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
@@ -12951,7 +13468,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 "jsonApiUserGroupInDocument",
                 jsonApiUserGroupInDocument,
             );
-            const localVarPath = `/api/entities/userGroups/{id}`.replace(
+            const localVarPath = `/api/v1/entities/userGroups/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
@@ -13020,7 +13537,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             assertParamExists("updateEntityUsers", "id", id);
             // verify required parameter 'jsonApiUserInDocument' is not null or undefined
             assertParamExists("updateEntityUsers", "jsonApiUserInDocument", jsonApiUserInDocument);
-            const localVarPath = `/api/entities/users/{id}`.replace(
+            const localVarPath = `/api/v1/entities/users/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
@@ -13097,7 +13614,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 "jsonApiVisualizationObjectInDocument",
                 jsonApiVisualizationObjectInDocument,
             );
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/visualizationObjects/{objectId}`
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/visualizationObjects/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -13177,7 +13694,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 "jsonApiWorkspaceDataFilterInDocument",
                 jsonApiWorkspaceDataFilterInDocument,
             );
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/workspaceDataFilters/{objectId}`
+            const localVarPath = `/api/v1/entities/workspaces/{workspaceId}/workspaceDataFilters/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -13253,7 +13770,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
                 "jsonApiWorkspaceInDocument",
                 jsonApiWorkspaceInDocument,
             );
-            const localVarPath = `/api/entities/workspaces/{id}`.replace(
+            const localVarPath = `/api/v1/entities/workspaces/{id}`.replace(
                 `{${"id"}}`,
                 encodeURIComponent(String(id)),
             );
@@ -14101,6 +14618,34 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         },
         /**
          *
+         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {number} [page] Zero-based page index (0..N)
+         * @param {number} [size] The size of the page to be returned
+         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAllEntitiesEntitlements(
+            predicate?: { [key: string]: object },
+            filter?: string,
+            page?: number,
+            size?: number,
+            sort?: Array<string>,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiEntitlementOutList>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllEntitiesEntitlements(
+                predicate,
+                filter,
+                page,
+                size,
+                sort,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
          * @param {string} workspaceId
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
@@ -14755,6 +15300,30 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         },
         /**
          *
+         * @param {string} id
+         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getEntityEntitlements(
+            id: string,
+            predicate?: { [key: string]: object },
+            filter?: string,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiEntitlementOutDocument>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getEntityEntitlements(
+                id,
+                predicate,
+                filter,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
@@ -15147,6 +15716,36 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
         },
         /**
          *
+         * @param {string} id
+         * @param {JsonApiCookieSecurityConfigurationPatchDocument} jsonApiCookieSecurityConfigurationPatchDocument
+         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async patchEntityCookieSecurityConfigurations(
+            id: string,
+            jsonApiCookieSecurityConfigurationPatchDocument: JsonApiCookieSecurityConfigurationPatchDocument,
+            predicate?: { [key: string]: object },
+            filter?: string,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (
+                axios?: AxiosInstance,
+                basePath?: string,
+            ) => AxiosPromise<JsonApiCookieSecurityConfigurationOutDocument>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchEntityCookieSecurityConfigurations(
+                id,
+                jsonApiCookieSecurityConfigurationPatchDocument,
+                predicate,
+                filter,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {JsonApiDashboardPluginPatchDocument} jsonApiDashboardPluginPatchDocument
@@ -15257,6 +15856,36 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
                 workspaceId,
                 objectId,
                 jsonApiMetricPatchDocument,
+                predicate,
+                filter,
+                include,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         *
+         * @param {string} id
+         * @param {JsonApiOrganizationPatchDocument} jsonApiOrganizationPatchDocument
+         * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
+         * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+         * @param {Array<'users' | 'userGroups' | 'bootstrapUser' | 'bootstrapUserGroup' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async patchEntityOrganizations(
+            id: string,
+            jsonApiOrganizationPatchDocument: JsonApiOrganizationPatchDocument,
+            predicate?: { [key: string]: object },
+            filter?: string,
+            include?: Array<"users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup" | "ALL">,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiOrganizationOutDocument>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.patchEntityOrganizations(
+                id,
+                jsonApiOrganizationPatchDocument,
                 predicate,
                 filter,
                 include,
@@ -16400,6 +17029,27 @@ export const EntitiesApiFactory = function (
         },
         /**
          *
+         * @param {EntitiesApiGetAllEntitiesEntitlementsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllEntitiesEntitlements(
+            requestParameters: EntitiesApiGetAllEntitiesEntitlementsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiEntitlementOutList> {
+            return localVarFp
+                .getAllEntitiesEntitlements(
+                    requestParameters.predicate,
+                    requestParameters.filter,
+                    requestParameters.page,
+                    requestParameters.size,
+                    requestParameters.sort,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
          * @param {EntitiesApiGetAllEntitiesFactsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -16839,6 +17489,25 @@ export const EntitiesApiFactory = function (
         },
         /**
          *
+         * @param {EntitiesApiGetEntityEntitlementsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEntityEntitlements(
+            requestParameters: EntitiesApiGetEntityEntitlementsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiEntitlementOutDocument> {
+            return localVarFp
+                .getEntityEntitlements(
+                    requestParameters.id,
+                    requestParameters.predicate,
+                    requestParameters.filter,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
          * @param {EntitiesApiGetEntityFactsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -17112,6 +17781,26 @@ export const EntitiesApiFactory = function (
         },
         /**
          *
+         * @param {EntitiesApiPatchEntityCookieSecurityConfigurationsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchEntityCookieSecurityConfigurations(
+            requestParameters: EntitiesApiPatchEntityCookieSecurityConfigurationsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiCookieSecurityConfigurationOutDocument> {
+            return localVarFp
+                .patchEntityCookieSecurityConfigurations(
+                    requestParameters.id,
+                    requestParameters.jsonApiCookieSecurityConfigurationPatchDocument,
+                    requestParameters.predicate,
+                    requestParameters.filter,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
          * @param {EntitiesApiPatchEntityDashboardPluginsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -17188,6 +17877,27 @@ export const EntitiesApiFactory = function (
                     requestParameters.workspaceId,
                     requestParameters.objectId,
                     requestParameters.jsonApiMetricPatchDocument,
+                    requestParameters.predicate,
+                    requestParameters.filter,
+                    requestParameters.include,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         *
+         * @param {EntitiesApiPatchEntityOrganizationsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchEntityOrganizations(
+            requestParameters: EntitiesApiPatchEntityOrganizationsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<JsonApiOrganizationOutDocument> {
+            return localVarFp
+                .patchEntityOrganizations(
+                    requestParameters.id,
+                    requestParameters.jsonApiOrganizationPatchDocument,
                     requestParameters.predicate,
                     requestParameters.filter,
                     requestParameters.include,
@@ -17928,6 +18638,18 @@ export interface EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiGetAllEntitiesEntitlementsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    getAllEntitiesEntitlements(
+        requestParameters: EntitiesApiGetAllEntitiesEntitlementsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiEntitlementOutList>;
+
+    /**
+     *
      * @param {EntitiesApiGetAllEntitiesFactsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -18174,6 +18896,18 @@ export interface EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiGetEntityEntitlementsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    getEntityEntitlements(
+        requestParameters: EntitiesApiGetEntityEntitlementsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiEntitlementOutDocument>;
+
+    /**
+     *
      * @param {EntitiesApiGetEntityFactsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -18331,6 +19065,18 @@ export interface EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiPatchEntityCookieSecurityConfigurationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    patchEntityCookieSecurityConfigurations(
+        requestParameters: EntitiesApiPatchEntityCookieSecurityConfigurationsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiCookieSecurityConfigurationOutDocument>;
+
+    /**
+     *
      * @param {EntitiesApiPatchEntityDashboardPluginsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -18376,6 +19122,18 @@ export interface EntitiesApiInterface {
         requestParameters: EntitiesApiPatchEntityMetricsRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<JsonApiMetricOutDocument>;
+
+    /**
+     *
+     * @param {EntitiesApiPatchEntityOrganizationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApiInterface
+     */
+    patchEntityOrganizations(
+        requestParameters: EntitiesApiPatchEntityOrganizationsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<JsonApiOrganizationOutDocument>;
 
     /**
      *
@@ -19658,6 +20416,48 @@ export interface EntitiesApiGetAllEntitiesDatasetsRequest {
 }
 
 /**
+ * Request parameters for getAllEntitiesEntitlements operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiGetAllEntitiesEntitlementsRequest
+ */
+export interface EntitiesApiGetAllEntitiesEntitlementsRequest {
+    /**
+     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
+     * @type {{ [key: string]: object; }}
+     * @memberof EntitiesApiGetAllEntitiesEntitlements
+     */
+    readonly predicate?: { [key: string]: object };
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiGetAllEntitiesEntitlements
+     */
+    readonly filter?: string;
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof EntitiesApiGetAllEntitiesEntitlements
+     */
+    readonly page?: number;
+
+    /**
+     * The size of the page to be returned
+     * @type {number}
+     * @memberof EntitiesApiGetAllEntitiesEntitlements
+     */
+    readonly size?: number;
+
+    /**
+     * Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @type {Array<string>}
+     * @memberof EntitiesApiGetAllEntitiesEntitlements
+     */
+    readonly sort?: Array<string>;
+}
+
+/**
  * Request parameters for getAllEntitiesFacts operation in EntitiesApi.
  * @export
  * @interface EntitiesApiGetAllEntitiesFactsRequest
@@ -20619,6 +21419,34 @@ export interface EntitiesApiGetEntityDatasetsRequest {
 }
 
 /**
+ * Request parameters for getEntityEntitlements operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiGetEntityEntitlementsRequest
+ */
+export interface EntitiesApiGetEntityEntitlementsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiGetEntityEntitlements
+     */
+    readonly id: string;
+
+    /**
+     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
+     * @type {{ [key: string]: object; }}
+     * @memberof EntitiesApiGetEntityEntitlements
+     */
+    readonly predicate?: { [key: string]: object };
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiGetEntityEntitlements
+     */
+    readonly filter?: string;
+}
+
+/**
  * Request parameters for getEntityFacts operation in EntitiesApi.
  * @export
  * @interface EntitiesApiGetEntityFactsRequest
@@ -21188,6 +22016,41 @@ export interface EntitiesApiPatchEntityAnalyticalDashboardsRequest {
 }
 
 /**
+ * Request parameters for patchEntityCookieSecurityConfigurations operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiPatchEntityCookieSecurityConfigurationsRequest
+ */
+export interface EntitiesApiPatchEntityCookieSecurityConfigurationsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityCookieSecurityConfigurations
+     */
+    readonly id: string;
+
+    /**
+     *
+     * @type {JsonApiCookieSecurityConfigurationPatchDocument}
+     * @memberof EntitiesApiPatchEntityCookieSecurityConfigurations
+     */
+    readonly jsonApiCookieSecurityConfigurationPatchDocument: JsonApiCookieSecurityConfigurationPatchDocument;
+
+    /**
+     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
+     * @type {{ [key: string]: object; }}
+     * @memberof EntitiesApiPatchEntityCookieSecurityConfigurations
+     */
+    readonly predicate?: { [key: string]: object };
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityCookieSecurityConfigurations
+     */
+    readonly filter?: string;
+}
+
+/**
  * Request parameters for patchEntityDashboardPlugins operation in EntitiesApi.
  * @export
  * @interface EntitiesApiPatchEntityDashboardPluginsRequest
@@ -21360,6 +22223,48 @@ export interface EntitiesApiPatchEntityMetricsRequest {
      * @memberof EntitiesApiPatchEntityMetrics
      */
     readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">;
+}
+
+/**
+ * Request parameters for patchEntityOrganizations operation in EntitiesApi.
+ * @export
+ * @interface EntitiesApiPatchEntityOrganizationsRequest
+ */
+export interface EntitiesApiPatchEntityOrganizationsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityOrganizations
+     */
+    readonly id: string;
+
+    /**
+     *
+     * @type {JsonApiOrganizationPatchDocument}
+     * @memberof EntitiesApiPatchEntityOrganizations
+     */
+    readonly jsonApiOrganizationPatchDocument: JsonApiOrganizationPatchDocument;
+
+    /**
+     * Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
+     * @type {{ [key: string]: object; }}
+     * @memberof EntitiesApiPatchEntityOrganizations
+     */
+    readonly predicate?: { [key: string]: object };
+
+    /**
+     * Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
+     * @type {string}
+     * @memberof EntitiesApiPatchEntityOrganizations
+     */
+    readonly filter?: string;
+
+    /**
+     * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+     * @type {Array<'users' | 'userGroups' | 'bootstrapUser' | 'bootstrapUserGroup' | 'ALL'>}
+     * @memberof EntitiesApiPatchEntityOrganizations
+     */
+    readonly include?: Array<"users" | "userGroups" | "bootstrapUser" | "bootstrapUserGroup" | "ALL">;
 }
 
 /**
@@ -22783,6 +23688,29 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiGetAllEntitiesEntitlementsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public getAllEntitiesEntitlements(
+        requestParameters: EntitiesApiGetAllEntitiesEntitlementsRequest = {},
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .getAllEntitiesEntitlements(
+                requestParameters.predicate,
+                requestParameters.filter,
+                requestParameters.page,
+                requestParameters.size,
+                requestParameters.sort,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
      * @param {EntitiesApiGetAllEntitiesFactsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -23268,6 +24196,27 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiGetEntityEntitlementsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public getEntityEntitlements(
+        requestParameters: EntitiesApiGetEntityEntitlementsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .getEntityEntitlements(
+                requestParameters.id,
+                requestParameters.predicate,
+                requestParameters.filter,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
      * @param {EntitiesApiGetEntityFactsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -23561,6 +24510,28 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      *
+     * @param {EntitiesApiPatchEntityCookieSecurityConfigurationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public patchEntityCookieSecurityConfigurations(
+        requestParameters: EntitiesApiPatchEntityCookieSecurityConfigurationsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .patchEntityCookieSecurityConfigurations(
+                requestParameters.id,
+                requestParameters.jsonApiCookieSecurityConfigurationPatchDocument,
+                requestParameters.predicate,
+                requestParameters.filter,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
      * @param {EntitiesApiPatchEntityDashboardPluginsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -23644,6 +24615,29 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
                 requestParameters.workspaceId,
                 requestParameters.objectId,
                 requestParameters.jsonApiMetricPatchDocument,
+                requestParameters.predicate,
+                requestParameters.filter,
+                requestParameters.include,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     *
+     * @param {EntitiesApiPatchEntityOrganizationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EntitiesApi
+     */
+    public patchEntityOrganizations(
+        requestParameters: EntitiesApiPatchEntityOrganizationsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return EntitiesApiFp(this.configuration)
+            .patchEntityOrganizations(
+                requestParameters.id,
+                requestParameters.jsonApiOrganizationPatchDocument,
                 requestParameters.predicate,
                 requestParameters.filter,
                 requestParameters.include,
@@ -24068,7 +25062,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
             assertParamExists("getAnalyticsModel", "workspaceId", workspaceId);
-            const localVarPath = `/api/layout/workspaces/{workspaceId}/analyticsModel`.replace(
+            const localVarPath = `/api/v1/layout/workspaces/{workspaceId}/analyticsModel`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
@@ -24102,7 +25096,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
          * @throws {RequiredError}
          */
         getDataSourcesLayout: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/layout/dataSources`;
+            const localVarPath = `/api/v1/layout/dataSources`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -24130,16 +25124,18 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
          * Retrieve current logical model of the workspace in declarative form.
          * @summary Get logical model
          * @param {string} workspaceId
+         * @param {boolean} [includeParents]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getLogicalModel: async (
             workspaceId: string,
+            includeParents?: boolean,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
             assertParamExists("getLogicalModel", "workspaceId", workspaceId);
-            const localVarPath = `/api/layout/workspaces/{workspaceId}/logicalModel`.replace(
+            const localVarPath = `/api/v1/layout/workspaces/{workspaceId}/logicalModel`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
@@ -24152,6 +25148,10 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (includeParents !== undefined) {
+                localVarQueryParameter["includeParents"] = includeParents;
+            }
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -24173,7 +25173,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
          * @throws {RequiredError}
          */
         getOrganizationLayout: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/layout/organization`;
+            const localVarPath = `/api/v1/layout/organization`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -24210,7 +25210,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
         ): Promise<RequestArgs> => {
             // verify required parameter 'dataSourceId' is not null or undefined
             assertParamExists("getPdmLayout", "dataSourceId", dataSourceId);
-            const localVarPath = `/api/layout/dataSources/{dataSourceId}/physicalModel`.replace(
+            const localVarPath = `/api/v1/layout/dataSources/{dataSourceId}/physicalModel`.replace(
                 `{${"dataSourceId"}}`,
                 encodeURIComponent(String(dataSourceId)),
             );
@@ -24244,7 +25244,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
          * @throws {RequiredError}
          */
         getUserGroupsLayout: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/layout/userGroups`;
+            const localVarPath = `/api/v1/layout/userGroups`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -24275,7 +25275,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
          * @throws {RequiredError}
          */
         getUsersLayout: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/layout/users`;
+            const localVarPath = `/api/v1/layout/users`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -24306,7 +25306,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
          * @throws {RequiredError}
          */
         getUsersUserGroupsLayout: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/layout/usersAndUserGroups`;
+            const localVarPath = `/api/v1/layout/usersAndUserGroups`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -24337,7 +25337,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
          * @throws {RequiredError}
          */
         getWorkspaceDataFiltersLayout: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/layout/workspaceDataFilters`;
+            const localVarPath = `/api/v1/layout/workspaceDataFilters`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -24374,7 +25374,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
             assertParamExists("getWorkspaceLayout", "workspaceId", workspaceId);
-            const localVarPath = `/api/layout/workspaces/{workspaceId}`.replace(
+            const localVarPath = `/api/v1/layout/workspaces/{workspaceId}`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
@@ -24422,7 +25422,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
                 "declarativeWorkspacePermissions",
                 declarativeWorkspacePermissions,
             );
-            const localVarPath = `/api/layout/workspaces/{workspaceId}/permissions`.replace(
+            const localVarPath = `/api/v1/layout/workspaces/{workspaceId}/permissions`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
@@ -24472,7 +25472,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
             assertParamExists("getWorkspacePermissions1", "workspaceId", workspaceId);
-            const localVarPath = `/api/layout/workspaces/{workspaceId}/permissions`.replace(
+            const localVarPath = `/api/v1/layout/workspaces/{workspaceId}/permissions`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
@@ -24506,7 +25506,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
          * @throws {RequiredError}
          */
         getWorkspacesLayout: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/layout/workspaces`;
+            const localVarPath = `/api/v1/layout/workspaces`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -24543,7 +25543,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
         ): Promise<RequestArgs> => {
             // verify required parameter 'declarativeDataSources' is not null or undefined
             assertParamExists("putDataSourcesLayout", "declarativeDataSources", declarativeDataSources);
-            const localVarPath = `/api/layout/dataSources`;
+            const localVarPath = `/api/v1/layout/dataSources`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -24588,7 +25588,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
         ): Promise<RequestArgs> => {
             // verify required parameter 'declarativeUserGroups' is not null or undefined
             assertParamExists("putUserGroupsLayout", "declarativeUserGroups", declarativeUserGroups);
-            const localVarPath = `/api/layout/userGroups`;
+            const localVarPath = `/api/v1/layout/userGroups`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -24633,7 +25633,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
         ): Promise<RequestArgs> => {
             // verify required parameter 'declarativeUsers' is not null or undefined
             assertParamExists("putUsersLayout", "declarativeUsers", declarativeUsers);
-            const localVarPath = `/api/layout/users`;
+            const localVarPath = `/api/v1/layout/users`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -24682,7 +25682,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
                 "declarativeUsersUserGroups",
                 declarativeUsersUserGroups,
             );
-            const localVarPath = `/api/layout/usersAndUserGroups`;
+            const localVarPath = `/api/v1/layout/usersAndUserGroups`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -24731,7 +25731,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
             assertParamExists("putWorkspaceLayout", "workspaceId", workspaceId);
             // verify required parameter 'declarativeWorkspaceModel' is not null or undefined
             assertParamExists("putWorkspaceLayout", "declarativeWorkspaceModel", declarativeWorkspaceModel);
-            const localVarPath = `/api/layout/workspaces/{workspaceId}`.replace(
+            const localVarPath = `/api/v1/layout/workspaces/{workspaceId}`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
@@ -24783,7 +25783,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
             assertParamExists("setAnalyticsModel", "workspaceId", workspaceId);
             // verify required parameter 'declarativeAnalytics' is not null or undefined
             assertParamExists("setAnalyticsModel", "declarativeAnalytics", declarativeAnalytics);
-            const localVarPath = `/api/layout/workspaces/{workspaceId}/analyticsModel`.replace(
+            const localVarPath = `/api/v1/layout/workspaces/{workspaceId}/analyticsModel`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
@@ -24835,7 +25835,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
             assertParamExists("setLogicalModel", "workspaceId", workspaceId);
             // verify required parameter 'declarativeModel' is not null or undefined
             assertParamExists("setLogicalModel", "declarativeModel", declarativeModel);
-            const localVarPath = `/api/layout/workspaces/{workspaceId}/logicalModel`.replace(
+            const localVarPath = `/api/v1/layout/workspaces/{workspaceId}/logicalModel`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
@@ -24883,7 +25883,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
         ): Promise<RequestArgs> => {
             // verify required parameter 'declarativeOrganization' is not null or undefined
             assertParamExists("setOrganizationLayout", "declarativeOrganization", declarativeOrganization);
-            const localVarPath = `/api/layout/organization`;
+            const localVarPath = `/api/v1/layout/organization`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -24932,7 +25932,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
             assertParamExists("setPdmLayout", "dataSourceId", dataSourceId);
             // verify required parameter 'declarativePdm' is not null or undefined
             assertParamExists("setPdmLayout", "declarativePdm", declarativePdm);
-            const localVarPath = `/api/layout/dataSources/{dataSourceId}/physicalModel`.replace(
+            const localVarPath = `/api/v1/layout/dataSources/{dataSourceId}/physicalModel`.replace(
                 `{${"dataSourceId"}}`,
                 encodeURIComponent(String(dataSourceId)),
             );
@@ -24984,7 +25984,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
                 "declarativeWorkspaceDataFilters",
                 declarativeWorkspaceDataFilters,
             );
-            const localVarPath = `/api/layout/workspaceDataFilters`;
+            const localVarPath = `/api/v1/layout/workspaceDataFilters`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -25031,7 +26031,7 @@ export const LayoutApiAxiosParamCreator = function (configuration?: Configuratio
         ): Promise<RequestArgs> => {
             // verify required parameter 'declarativeWorkspaces' is not null or undefined
             assertParamExists("setWorkspacesLayout", "declarativeWorkspaces", declarativeWorkspaces);
-            const localVarPath = `/api/layout/workspaces`;
+            const localVarPath = `/api/v1/layout/workspaces`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -25103,14 +26103,20 @@ export const LayoutApiFp = function (configuration?: Configuration) {
          * Retrieve current logical model of the workspace in declarative form.
          * @summary Get logical model
          * @param {string} workspaceId
+         * @param {boolean} [includeParents]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async getLogicalModel(
             workspaceId: string,
+            includeParents?: boolean,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeclarativeModel>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getLogicalModel(workspaceId, options);
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getLogicalModel(
+                workspaceId,
+                includeParents,
+                options,
+            );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -25506,7 +26512,7 @@ export const LayoutApiFactory = function (
             options?: AxiosRequestConfig,
         ): AxiosPromise<DeclarativeModel> {
             return localVarFp
-                .getLogicalModel(requestParameters.workspaceId, options)
+                .getLogicalModel(requestParameters.workspaceId, requestParameters.includeParents, options)
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -26126,6 +27132,13 @@ export interface LayoutApiGetLogicalModelRequest {
      * @memberof LayoutApiGetLogicalModel
      */
     readonly workspaceId: string;
+
+    /**
+     *
+     * @type {boolean}
+     * @memberof LayoutApiGetLogicalModel
+     */
+    readonly includeParents?: boolean;
 }
 
 /**
@@ -26420,7 +27433,7 @@ export class LayoutApi extends BaseAPI implements LayoutApiInterface {
      */
     public getLogicalModel(requestParameters: LayoutApiGetLogicalModelRequest, options?: AxiosRequestConfig) {
         return LayoutApiFp(this.configuration)
-            .getLogicalModel(requestParameters.workspaceId, options)
+            .getLogicalModel(requestParameters.workspaceId, requestParameters.includeParents, options)
             .then((request) => request(this.axios, this.basePath));
     }
 

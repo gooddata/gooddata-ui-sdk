@@ -9,7 +9,7 @@
             },
             "id": "fact.f_activity.activitydate",
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/fact.f_activity.activitydate"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/fact.f_activity.activitydate"
             },
             "type": "fact"
         },
@@ -22,7 +22,7 @@
             },
             "id": "fact.f_opportunity.oppcreateddate",
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/fact.f_opportunity.oppcreateddate"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/fact.f_opportunity.oppcreateddate"
             },
             "type": "fact"
         },
@@ -35,7 +35,7 @@
             },
             "id": "f_opportunitysnapshot.f_amount",
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/f_opportunitysnapshot.f_amount"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/f_opportunitysnapshot.f_amount"
             },
             "type": "fact"
         },
@@ -48,7 +48,7 @@
             },
             "id": "f_opportunitysnapshot.f_daystoclose",
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/f_opportunitysnapshot.f_daystoclose"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/f_opportunitysnapshot.f_daystoclose"
             },
             "type": "fact"
         },
@@ -61,7 +61,7 @@
             },
             "id": "f_opportunitysnapshot.f_probability",
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/f_opportunitysnapshot.f_probability"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/f_opportunitysnapshot.f_probability"
             },
             "type": "fact"
         },
@@ -74,7 +74,7 @@
             },
             "id": "fact.f_opportunitysnapshot.oppclosedate",
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/fact.f_opportunitysnapshot.oppclosedate"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/fact.f_opportunitysnapshot.oppclosedate"
             },
             "type": "fact"
         },
@@ -87,7 +87,7 @@
             },
             "id": "fact.f_opportunitysnapshot.oppsnapshotdate",
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/fact.f_opportunitysnapshot.oppsnapshotdate"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/fact.f_opportunitysnapshot.oppsnapshotdate"
             },
             "type": "fact"
         },
@@ -100,7 +100,7 @@
             },
             "id": "f_stagehistory.f_duration",
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/f_stagehistory.f_duration"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/f_stagehistory.f_duration"
             },
             "type": "fact"
         },
@@ -113,7 +113,7 @@
             },
             "id": "f_stagehistory.f_velocity",
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/f_stagehistory.f_velocity"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/f_stagehistory.f_velocity"
             },
             "type": "fact"
         },
@@ -126,13 +126,13 @@
             },
             "id": "fact.f_timeline.timelinedate",
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/fact.f_timeline.timelinedate"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts/fact.f_timeline.timelinedate"
             },
             "type": "fact"
         }
     ],
     "links": {
-        "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts?page=0&size=250",
-        "next": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts?page=1&size=250"
+        "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts?page=0&size=250",
+        "next": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/facts?page=1&size=250"
     }
 }

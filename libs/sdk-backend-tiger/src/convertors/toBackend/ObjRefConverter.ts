@@ -1,5 +1,13 @@
-// (C) 2007-2021 GoodData Corporation
-import { AfmObjectIdentifier, LocalIdentifier } from "@gooddata/api-client-tiger";
+// (C) 2007-2022 GoodData Corporation
+import {
+    AfmObjectIdentifier,
+    AfmLocalIdentifier,
+    AfmIdentifier,
+    AfmObjectIdentifierLabel,
+    AfmObjectIdentifierDataset,
+    AfmObjectIdentifierAttribute,
+    AfmObjectIdentifierCore,
+} from "@gooddata/api-client-tiger";
 import { NotSupported, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import { isIdentifierRef, isLocalIdRef, isUriRef, ObjRef, ObjRefInScope } from "@gooddata/sdk-model";
 import { TigerAfmType, TigerObjectType } from "../../types";
@@ -45,28 +53,35 @@ export function toObjQualifier(ref: ObjRef, defaultValue?: TigerAfmType): AfmObj
 /**
  * @internal
  */
-export function toFactQualifier(ref: ObjRef): AfmObjectIdentifier {
-    return toObjQualifier(ref, "fact");
+export function toFactQualifier(ref: ObjRef): AfmObjectIdentifierCore {
+    return toObjQualifier(ref, "fact") as AfmObjectIdentifierCore;
 }
 
 /**
  * @internal
  */
-export function toLabelQualifier(ref: ObjRef): AfmObjectIdentifier {
-    return toObjQualifier(ref, "label");
+export function toLabelQualifier(ref: ObjRef): AfmObjectIdentifierLabel {
+    return toObjQualifier(ref, "label") as AfmObjectIdentifierLabel;
 }
 
 /**
  * @internal
  */
-export function toDateDataSetQualifier(ref: ObjRef): AfmObjectIdentifier {
-    return toObjQualifier(ref, "dataset");
+export function toAttributeQualifier(ref: ObjRef): AfmObjectIdentifierAttribute {
+    return toObjQualifier(ref, "attribute") as AfmObjectIdentifierAttribute;
 }
 
 /**
  * @internal
  */
-export function toLocalIdentifier(localIdentifier: string): LocalIdentifier {
+export function toDateDataSetQualifier(ref: ObjRef): AfmObjectIdentifierDataset {
+    return toObjQualifier(ref, "dataset") as AfmObjectIdentifierDataset;
+}
+
+/**
+ * @internal
+ */
+export function toLocalIdentifier(localIdentifier: string): AfmLocalIdentifier {
     return {
         localIdentifier,
     };
@@ -75,7 +90,7 @@ export function toLocalIdentifier(localIdentifier: string): LocalIdentifier {
 /**
  * @internal
  */
-export function toAfmIdentifier(ref: ObjRefInScope): LocalIdentifier | AfmObjectIdentifier {
+export function toAfmIdentifier(ref: ObjRefInScope): AfmIdentifier {
     if (isLocalIdRef(ref)) {
         return toLocalIdentifier(ref.localIdentifier);
     } else if (isIdentifierRef(ref)) {

@@ -1,15 +1,12 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import {
     AbsoluteDateFilter,
     AttributeFilter,
-    ComparisonMeasureValueFilterBodyOperatorEnum,
     FilterDefinition,
     MeasureValueFilter,
     NegativeAttributeFilter,
     PositiveAttributeFilter,
-    RangeMeasureValueFilterBodyOperatorEnum,
     RankingFilter,
-    RankingFilterBodyOperatorEnum,
     RelativeDateFilter,
 } from "@gooddata/api-client-tiger";
 import {
@@ -35,7 +32,7 @@ import {
     isRelativeDateFilter,
 } from "@gooddata/sdk-model";
 import { toTigerGranularity } from "../../fromBackend/dateGranularityConversions";
-import { toDateDataSetQualifier, toLabelQualifier, toAfmIdentifier } from "../ObjRefConverter";
+import { toLabelQualifier, toAfmIdentifier, toDateDataSetQualifier } from "../ObjRefConverter";
 
 /**
  * Tiger specific wrapper for IFilter, adding 'applyOnResult' property influencing the place of filter application.
@@ -181,7 +178,7 @@ function convertMeasureValueFilter(
             comparisonMeasureValueFilter: {
                 measure: toAfmIdentifier(measureValueFilter.measure),
                 // Operator has same values, we only need type assertion
-                operator: operator as ComparisonMeasureValueFilterBodyOperatorEnum,
+                operator,
                 value,
                 treatNullValuesAs,
                 ...applyOnResultProp,
@@ -195,7 +192,7 @@ function convertMeasureValueFilter(
             rangeMeasureValueFilter: {
                 measure: toAfmIdentifier(measureValueFilter.measure),
                 // Operator has same values, we only need type assertion
-                operator: operator as RangeMeasureValueFilterBodyOperatorEnum,
+                operator,
                 // make sure the boundaries are always from <= to, because tiger backend cannot handle from > to in a user friendly way
                 // this is effectively the same behavior as in bear
                 from: Math.min(originalFrom, originalTo),
@@ -216,7 +213,7 @@ function convertRankingFilter(filter: IRankingFilter, applyOnResultProp: ApplyOn
         rankingFilter: {
             measures: [toAfmIdentifier(measure)],
             ...dimensionalityProp,
-            operator: operator as RankingFilterBodyOperatorEnum,
+            operator,
             value,
             ...applyOnResultProp,
         },

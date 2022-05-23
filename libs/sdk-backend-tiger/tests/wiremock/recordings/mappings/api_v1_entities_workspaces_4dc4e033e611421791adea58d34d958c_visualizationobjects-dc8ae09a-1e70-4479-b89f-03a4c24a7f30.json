@@ -1,0 +1,40 @@
+{
+    "id": "dc8ae09a-1e70-4479-b89f-03a4c24a7f30",
+    "name": "api_v1_entities_workspaces_4dc4e033e611421791adea58d34d958c_visualizationobjects",
+    "request": {
+        "url": "/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/visualizationObjects?size=250&page=0",
+        "method": "GET",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/vnd.gooddata.api+json"
+            },
+            "Content-Type": {
+                "equalTo": "application/vnd.gooddata.api+json",
+                "caseInsensitive": true
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"data\":[{\"attributes\":{\"title\":\"Insight Activities\",\"description\":\"Insight Activities\",\"areRelationsValid\":true,\"content\":{\"buckets\":[{\"items\":[{\"measure\":{\"localIdentifier\":\"e7ffd6fe32b04f2eb28eac903f3df8eb\",\"definition\":{\"measureDefinition\":{\"item\":{\"identifier\":{\"id\":\"bb512c36-4627-4dd8-8b92-3ef5d364e8f5\",\"type\":\"metric\"}},\"filters\":[]}},\"title\":\"# of Activities\"}}],\"localIdentifier\":\"measures\"}],\"filters\":[],\"sorts\":[],\"properties\":{},\"visualizationUrl\":\"local:column\",\"version\":\"2\"}},\"id\":\"2ec4862e-4559-42d9-a628-fd4e80c16d59\",\"links\":{\"self\":\"https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/visualizationObjects/2ec4862e-4559-42d9-a628-fd4e80c16d59\"},\"type\":\"visualizationObject\"}],\"links\":{\"self\":\"https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/visualizationObjects?page=0&size=250\",\"next\":\"https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/visualizationObjects?page=1&size=250\"}}",
+        "headers": {
+            "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+            "Content-Security-Policy": "default-src 'self' *.wistia.com *.wistia.net; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.wistia.com *.wistia.net src.litix.io matomo.anywhere.gooddata.com connectors.tableau.com gdc-dev-dashboard-plugins.s3.amazonaws.com; img-src 'self' data: blob: *.wistia.com *.wistia.net embedwistia-a.akamaihd.net privacy-policy.truste.com www.gooddata.com gdc-dev-dashboard-plugins.s3.amazonaws.com; media-src 'self' blob: data: *.wistia.com *.wistia.net embedwistia-a.akamaihd.net; style-src 'self' 'unsafe-inline' fonts.googleapis.com gdc-dev-dashboard-plugins.s3.amazonaws.com; font-src 'self' data: *.wistia.com fonts.gstatic.com at.alicdn.com gdc-dev-dashboard-plugins.s3.amazonaws.com; frame-src 'self'; object-src 'none'; worker-src 'self' blob:; child-src blob:; connect-src 'self' *.litix.io *.wistia.com embedwistia-a.akamaihd.net *.tiles.mapbox.com api.mapbox.com events.mapbox.com matomo.anywhere.gooddata.com *.okta.com;",
+            "Content-Type": "application/vnd.gooddata.api+json",
+            "Date": "Mon, 30 May 2022 12:03:20 GMT",
+            "Expires": "0",
+            "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';",
+            "Pragma": "no-cache",
+            "Set-Cookie": "SPRING_SEC_SECURITY_CONTEXT=; Max-Age=0; Expires=Thu, 01-Jan-1970 00:00:10 GMT; Path=/; Secure; HttpOnly",
+            "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+            "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+            "X-Content-Type-Options": "nosniff",
+            "X-Frame-Options": "DENY",
+            "X-GDC-TRACE-ID": "63cdd2267121e210",
+            "X-XSS-Protection": "1; mode=block"
+        }
+    },
+    "uuid": "dc8ae09a-1e70-4479-b89f-03a4c24a7f30",
+    "persistent": true,
+    "insertionIndex": 14
+}

@@ -21,8 +21,8 @@ program
     .parse(process.argv);
 
 const specs = [
-    { path: "/api/schemas/metadata", name: "metadata-json-api" },
-    { path: "/api/schemas/afm", name: "afm-rest-api" },
+    { path: "/api/v1/schemas/metadata", name: "metadata-json-api" },
+    { path: "/api/v1/schemas/afm", name: "afm-rest-api" },
 ];
 
 const downloadSpec = async (specMeta, outputDir, outputFile) => {
@@ -67,8 +67,7 @@ const downloadAndGenerate = async (specMeta, outputDir, outputFile) => {
 const main = async () => {
     const {
         baseUrl = process.env.BASE_URL,
-        username = process.env.GD_USER,
-        password = process.env.GD_PASSWORD,
+        token = process.env.TOKEN,
         outputDir = process.env.OUTPUT_DIR || DEFAULT_OUTPUT_DIR,
         outputFile = process.env.OUTPUT_FILE || DEFAULT_OUTPUT_FILE,
     } = program.opts();
@@ -81,11 +80,10 @@ const main = async () => {
     try {
         console.error(`Getting specs from ${baseUrl}`);
 
-        axios.defaults.auth = {
-            username,
-            password,
-        };
         axios.defaults.baseURL = baseUrl;
+        if (token) {
+            axios.defaults.headers["Authorization"] = `Bearer ${token}`;
+        }
 
         await Promise.all(specs.map((spec) => downloadAndGenerate(spec, outputDir, outputFile)));
 

@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import {
     IExecutionFactory,
@@ -56,7 +56,7 @@ export class TigerPreparedExecution implements IPreparedExecution {
         });
     }
 
-    public async explain(explainType: ExplainConfig): Promise<void> {
+    public async explain({ explainType }: ExplainConfig): Promise<void> {
         if (this.definition) {
             this.authCall((client) =>
                 client.explain
@@ -64,7 +64,7 @@ export class TigerPreparedExecution implements IPreparedExecution {
                         {
                             workspaceId: this.definition.workspace,
                             afmExecution: toAfmExecution(this.definition),
-                            explainType: explainType as string,
+                            explainType,
                         },
                         {
                             responseType: "blob",

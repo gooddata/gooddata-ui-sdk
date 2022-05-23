@@ -1,9 +1,9 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import { IBucket, IFilter, ISortItem, VisualizationProperties } from "@gooddata/sdk-model";
 import {
     AfmObjectIdentifier,
-    LocalIdentifier,
+    AfmLocalIdentifier,
     MeasureDefinition,
     SortKeyAttribute,
     SortKeyValue,
@@ -67,9 +67,9 @@ export namespace VisualizationObjectModelV1 {
      * @deprecated use {@link GrandTotal} instead
      */
     export interface ITotalItem {
-        measureIdentifier: LocalIdentifier;
+        measureIdentifier: AfmLocalIdentifier;
         type: TotalType;
-        attributeIdentifier: LocalIdentifier;
+        attributeIdentifier: AfmLocalIdentifier;
     }
 
     type SortKey = SortKeyAttribute | SortKeyValue;

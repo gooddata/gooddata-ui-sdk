@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import {
     IDimension,
     IExecutionDefinition,
@@ -9,7 +9,7 @@ import {
 import groupBy from "lodash/groupBy";
 import flatMap from "lodash/flatMap";
 import isEmpty from "lodash/isEmpty";
-import { GrandTotal, TotalFunction } from "@gooddata/api-client-tiger";
+import { GrandTotal, GrandTotalFunctionEnum } from "@gooddata/api-client-tiger";
 
 /**
  * Extracts total definitions from execution definition dimensions and converts them into total specifications for
@@ -96,21 +96,21 @@ function containsMeasureGroup(dim: IDimension): boolean {
     return dim.itemIdentifiers.includes(MeasureGroupIdentifier);
 }
 
-function convertTotalType(type: TotalType): TotalFunction {
+function convertTotalType(type: TotalType): GrandTotalFunctionEnum {
     if (type === "sum") {
-        return TotalFunction.SUM;
+        return GrandTotalFunctionEnum.SUM;
     }
     if (type === "max") {
-        return TotalFunction.MAX;
+        return GrandTotalFunctionEnum.MAX;
     }
     if (type === "min") {
-        return TotalFunction.MIN;
+        return GrandTotalFunctionEnum.MIN;
     }
     if (type === "avg") {
-        return TotalFunction.AVG;
+        return GrandTotalFunctionEnum.AVG;
     }
     if (type === "med") {
-        return TotalFunction.MED;
+        return GrandTotalFunctionEnum.MED;
     }
     // type === "nat"
     throw new Error("Tiger backend does not support native totals.");
