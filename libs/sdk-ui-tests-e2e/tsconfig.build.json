@@ -5,6 +5,8 @@
         "noImplicitAny": true,
         "incremental": true,
         "baseUrl": null,
-        "paths": null
+        "paths": null,
+        "declaration": true,
+        "declarationMap": true
     }
 }

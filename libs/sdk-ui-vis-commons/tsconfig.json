@@ -1,8 +1,6 @@
 {
     "_note": "This file is only for IDE. For build use tsconfig.[dev/build].json (dev mode is less strict)",
     "compilerOptions": {
-        "declaration": true,
-        "declarationMap": true,
         "jsx": "react",
         "lib": ["es7", "dom"],
         "module": "commonjs",

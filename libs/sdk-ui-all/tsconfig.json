@@ -4,8 +4,6 @@
         "target": "es5",
         "module": "commonjs",
         "lib": ["es6", "dom", "ES2017.Intl", "ES2018.Intl", "ES2020.Intl", "ESNext.Intl"],
-        "declaration": true,
-        "declarationMap": true,
         "sourceMap": true,
         "importHelpers": true,
         "outDir": "./dist",

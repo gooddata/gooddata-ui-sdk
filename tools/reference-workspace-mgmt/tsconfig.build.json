@@ -1,5 +1,5 @@
 {
     "extends": "./tsconfig.json",
     "include": ["src/index.ts"],
-    "compilerOptions": { "incremental": true }
+    "compilerOptions": { "incremental": true, "declaration": true, "declarationMap": true }
 }

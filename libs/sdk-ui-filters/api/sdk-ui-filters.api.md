@@ -46,6 +46,16 @@ export const AttributeFilter: React_2.ComponentType<IAttributeFilterProps>;
 // @public (undocumented)
 export const AttributeFilterButton: React_2.FC<IAttributeFilterButtonOwnProps>;
 
+// @alpha (undocumented)
+export class AttributeFilterLoader {
+    // (undocumented)
+    static for(backend: IAnalyticalBackend, workspace: string, attributeFilter: IAttributeFilter): AttributeFilterLoader;
+    // (undocumented)
+    init(): void;
+    // (undocumented)
+    reset(): void;
+}
+
 // @public (undocumented)
 export type AttributeListItem = IAttributeElement | EmptyListItem;
 
