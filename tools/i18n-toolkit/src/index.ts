@@ -3,30 +3,54 @@
 
 import { program } from "commander";
 
-import { ToolkitOptions } from "./data";
+import { DefaultConfigName, ToolkitOptions, ToolkitConfigFile } from "./data";
 import { validate } from "./validate";
+import { configure } from "./config";
 import { done, fail, error, hr } from "./utils/console";
 
+async function loadConfig(cwd: string, opts: ToolkitOptions) {
+    const { debug } = opts;
+
+    try {
+        return await configure(cwd, opts);
+    } catch (err: any) {
+        hr(debug);
+        fail("Can not process localisation config file!", true);
+        error(err, debug);
+        process.exit(1);
+    }
+}
+
+async function runValidation(cwd: string, config: ToolkitConfigFile) {
+    const { debug } = config;
+
+    try {
+        await validate(cwd, config);
+        hr(debug);
+        done("Localizations are valid!", true);
+        process.exit(0);
+    } catch (err: any) {
+        hr(debug);
+        fail("Localizations are invalid!", true);
+        error(err, debug);
+        process.exit(1);
+    }
+}
+
 program
-    .option("-p, --path <type>", "path to translations")
+    .option("-w, --cwd <type>", `path to current working directory, default is "${process.cwd()}"`)
+    .option("-p, --paths <type...>", "paths to more translations separated by space")
+    .option("-c, --config <type>", `path to config file, default is "${DefaultConfigName}"`)
     .option("-s, --structure", "enable structure check")
     .option("-i, --intl", "enable intl check")
     .option("-h, --html", "enable html check")
     .option("-r, --insightToReport", "enable insightToReport check")
+    .option("-u, --usage", "enable usage of messages check")
     .option("-d, --debug", "enable debug mode")
-    .action((opts: ToolkitOptions) => {
-        validate(opts)
-            .then(() => {
-                hr(opts.debug);
-                done("Localizations are valid!", true);
-                process.exit(0);
-            })
-            .catch((err: Error) => {
-                hr(opts.debug);
-                fail("Localizations are invalid!", true);
-                error(err, opts.debug);
-                process.exit(1);
-            });
+    .action(async (opts: ToolkitOptions) => {
+        const cwd = opts.cwd || process.cwd();
+        const config = await loadConfig(cwd, opts);
+        await runValidation(cwd, config);
     });
 
 program.parse(process.argv);

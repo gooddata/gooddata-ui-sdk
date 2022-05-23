@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 import { parse } from "intl-messageformat-parser";
-import { skipped, error, done, message } from "../utils/console";
+import { skipped, done, message, fail } from "../utils/console";
 
 export async function getIntlMessageFormatCheck(
     localizations: Array<string>,
@@ -18,7 +18,7 @@ export async function getIntlMessageFormatCheck(
         try {
             parse(localization);
         } catch (err) {
-            error(`Intl message check ends with error.`, true);
+            fail(`Intl message check ends with error.`, true);
             throw new Error(
                 `Intl format of localization is not correct, see: ${JSON.stringify(localization)}`,
             );

@@ -4,10 +4,10 @@ import { Validator, ValidationError } from "jsonschema";
 import flatten from "lodash/flatten";
 
 import { LocalizationSchema, LocalesStructure } from "../schema/localization";
-import { done, skipped, error, message } from "../utils/console";
+import { done, skipped, message, fail } from "../utils/console";
 
 export async function getStructureCheck(
-    localizations: Array<LocalesStructure>,
+    localizations: Array<[string, LocalesStructure]>,
     run: boolean = true,
     debug: boolean = false,
 ) {
@@ -20,14 +20,14 @@ export async function getStructureCheck(
 
     const validator = new Validator();
     const errors = localizations.map(
-        (localization) => validator.validate(localization, LocalizationSchema).errors,
+        ([, localization]) => validator.validate(localization, LocalizationSchema).errors,
     );
     const mergedErrors = flatten(errors);
 
     if (mergedErrors.length) {
         const instancesOfErrors = mergedErrors.map((err: ValidationError) => err.instance);
 
-        error(`Structure check ends with ${mergedErrors.length} errors.`, true);
+        fail(`Structure check ends with ${mergedErrors.length} errors.`, true);
         throw new Error(
             `Structure of localizations is not correct, see: ${JSON.stringify(instancesOfErrors)}`,
         );
