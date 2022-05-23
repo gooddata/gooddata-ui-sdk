@@ -1,11 +1,8 @@
 // (C) 2021-2022 GoodData Corporation
 
-import * as path from "path";
-
 import { DefaultLocale } from "../data";
-import * as utils from "../utils";
-import { error, done, skipped, message } from "../utils/console";
-import { LocalesItem } from "../schema/localization";
+import { done, skipped, message, fail } from "../utils/console";
+import { LocalesItem, LocalesStructure } from "../schema/localization";
 
 const CheckInsightPipe = "|insight";
 const CheckReportPipe = "|report";
@@ -19,7 +16,7 @@ const CheckReportPipe = "|report";
  * Also if there are keys with suffix |insight, there should be the same amount of keys with suffix |report.
  */
 export async function getInsightToReportCheck(
-    localizationPath: string,
+    localizations: Array<[string, LocalesStructure]>,
     run: boolean = true,
     debug: boolean = false,
 ) {
@@ -30,17 +27,84 @@ export async function getInsightToReportCheck(
 
     message("Insight to report check is starting ...", debug);
 
-    const { values, keys } = await loadDefaultLocale(localizationPath, debug);
+    const localizationsDefaults = localizations.filter(([pth]) => pth.includes(DefaultLocale));
+    await Promise.all(
+        localizationsDefaults.map(async ([path, content]) => {
+            message(` ┗ Processing locales directory "${path}"`, debug);
+
+            const {
+                missingInsightReportSwitch,
+                missingInsightKeys,
+                missingReportKeys,
+                reportsKeyWithTranslate,
+            } = await getValidationData(path, content);
+
+            if (missingInsightReportSwitch.length > 0) {
+                fail(`Insight to report check ends with error.`, true);
+                throw new Error(
+                    `Localization keys does not contain "${CheckInsightPipe}" suffix, see: ${JSON.stringify(
+                        missingInsightReportSwitch,
+                    )}`,
+                );
+            }
+
+            if (missingReportKeys.length > 0 || missingInsightKeys.length > 0) {
+                fail(`Insight to report check ends with error.`, true);
+                throw new Error(
+                    `Some keys missing in localisation file, missing keys: ${JSON.stringify([
+                        ...missingInsightKeys,
+                        ...missingReportKeys,
+                    ])}`,
+                );
+            }
+
+            if (reportsKeyWithTranslate.length > 0) {
+                fail(`Insight to report check ends with error.`, true);
+                throw new Error(
+                    `Translation is enable for report keys, use translate=false, invalid keys: ${JSON.stringify(
+                        reportsKeyWithTranslate,
+                    )}`,
+                );
+            }
+        }),
+    );
+
+    done("Done", debug);
+}
+
+async function loadDefaultLocale(
+    path: string,
+    localesStructure: LocalesStructure,
+): Promise<{ values: Array<LocalesItem>; keys: Array<string> }> {
+    const keys = Object.keys(localesStructure);
+
+    const allValues = Object.values(localesStructure) as Array<LocalesItem | string>;
+    const values = allValues.filter((value) => typeof value === "object") as Array<LocalesItem>;
+
+    if (allValues.length !== values.length) {
+        const invalidKeys = keys.filter((key) => typeof localesStructure[key] === "string") as Array<string>;
+        throw new Error(
+            `File "${path}" is not valid because contains string messages instead of objects, see: ${JSON.stringify(
+                invalidKeys,
+            )}`,
+        );
+    }
+
+    return { values, keys };
+}
+
+async function getValidationData(path: string, localesStructure: LocalesStructure) {
+    const { values, keys } = await loadDefaultLocale(path, localesStructure);
 
     const insightIndexes = values
         .map((value, index) => (value.value.toLowerCase().includes("insight") ? index : null))
         .filter((item) => item !== null);
 
+    const missingInsightReportSwitch: string[] = [];
     insightIndexes.forEach((index) => {
         const key = keys[index];
         if (!key.includes(CheckInsightPipe)) {
-            error(`⨯ Insight to report check ends with error.`, true);
-            throw new Error(`Localization key "${key}" does not contain "${CheckInsightPipe}" suffix`);
+            missingInsightReportSwitch.push(key);
         }
     });
 
@@ -61,16 +125,6 @@ export async function getInsightToReportCheck(
         })
         .filter((item) => item !== null);
 
-    if (missingReportKeys.length > 0 || missingInsightKeys.length > 0) {
-        error(`Insight to report check ends with error.`, true);
-        throw new Error(
-            `Some keys missing in localisation file, missing keys: ${JSON.stringify([
-                ...missingInsightKeys,
-                ...missingReportKeys,
-            ])}`,
-        );
-    }
-
     const reportsKeyWithTranslate = allReportsKeys
         .map((key) => {
             const item = values[keys.indexOf(key)];
@@ -79,45 +133,10 @@ export async function getInsightToReportCheck(
         })
         .filter((item) => item !== null);
 
-    if (reportsKeyWithTranslate.length > 0) {
-        error(`Insight to report check ends with error.`, true);
-        throw new Error(
-            `Translation is enable for report keys, use translate=false, invalid keys: ${JSON.stringify(
-                reportsKeyWithTranslate,
-            )}`,
-        );
-    }
-
-    done("Done", debug);
-}
-
-async function loadDefaultLocale(
-    localizationPath: string,
-    debug = false,
-): Promise<{ values: Array<LocalesItem>; keys: Array<string> }> {
-    let enUS;
-
-    try {
-        enUS = await utils.readFile(path.join(localizationPath, DefaultLocale));
-    } catch (err) {
-        error(err, debug);
-        throw err;
-    }
-
-    const parsed = JSON.parse(enUS.toString());
-    const keys = Object.keys(parsed);
-
-    const allValues = Object.values(parsed) as Array<LocalesItem | string>;
-    const values = allValues.filter((value) => typeof value === "object") as Array<LocalesItem>;
-
-    if (allValues.length !== values.length) {
-        const invalidKeys = keys.filter((key) => typeof parsed[key] === "string") as Array<string>;
-        throw new Error(
-            `File ${DefaultLocale} is not valid because contains string messages instead of objects, see: ${JSON.stringify(
-                invalidKeys,
-            )}`,
-        );
-    }
-
-    return { values, keys };
+    return {
+        missingInsightReportSwitch,
+        missingReportKeys,
+        missingInsightKeys,
+        reportsKeyWithTranslate,
+    };
 }

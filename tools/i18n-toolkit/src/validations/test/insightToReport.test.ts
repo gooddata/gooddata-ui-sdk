@@ -24,7 +24,7 @@ describe("validate insight to report", () => {
             {
                 "message.id": "Test",
             },
-            `File en-US.json is not valid because contains string messages instead of objects, see: ["message.id"]`,
+            `File "en-US.json" is not valid because contains string messages instead of objects, see: ["message.id"]`,
         ],
         [
             "invalid localisation with insight inside value",
@@ -35,7 +35,7 @@ describe("validate insight to report", () => {
                     limit: 0,
                 },
             },
-            `Localization key "message.id" does not contain "|insight" suffix`,
+            `Localization keys does not contain "|insight" suffix, see: ["message.id"]`,
         ],
         [
             "invalid localisation with insight inside value and valid pipe, missing report pipe",
@@ -97,9 +97,9 @@ describe("validate insight to report", () => {
     it.each(scenarios)("validate %s", async (_, locales, err) => {
         returnValue = locales;
         if (err) {
-            await expect(getInsightToReportCheck("/")).rejects.toThrowError(err);
+            await expect(getInsightToReportCheck([["en-US.json", locales]])).rejects.toThrowError(err);
         } else {
-            await expect(getInsightToReportCheck("/")).resolves.not.toThrow();
+            await expect(getInsightToReportCheck([["en-US.json", locales]])).resolves.not.toThrow();
         }
     });
 });

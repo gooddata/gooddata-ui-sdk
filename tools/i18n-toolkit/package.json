@@ -23,7 +23,7 @@
         "eslint": "-c .eslintrc.js --ext ts src/"
     },
     "scripts": {
-        "run": "node ./dist/index.js --path ./src/fixtures/ --structure --intl --html --insightToReport",
+        "run": "node ./dist/index.js",
         "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
         "dev": "tsc -p tsconfig.dev.json --watch",
         "build": "concurrently \"npm run build-cjs\"",
@@ -41,7 +41,10 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
+        "fast-glob": "^3.2.7",
+        "cliff": "^0.1.10",
         "lodash": "^4.17.19",
+        "@formatjs/cli": "^4.7.1",
         "chalk": "^4.1.1",
         "commander": "^8.1.0",
         "html-validate": "^6.0.0",
@@ -55,6 +58,7 @@
         "@types/jest": "^27.0.1",
         "@types/node": "^16.11.11",
         "@types/lodash": "^4.14.158",
+        "@types/cliff": "^0.1.6",
         "@typescript-eslint/eslint-plugin": "^5.5.0",
         "@typescript-eslint/parser": "^5.5.0",
         "concurrently": "^6.0.2",

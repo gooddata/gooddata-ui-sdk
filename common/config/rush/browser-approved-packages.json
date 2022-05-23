@@ -71,6 +71,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@formatjs/cli",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "@formatjs/intl-pluralrules",
       "allowedCategories": [ "production" ]
     },
@@ -240,6 +244,10 @@
     },
     {
       "name": "@types/blessed",
+      "allowedCategories": [ "tools" ]
+    },
+    {
+      "name": "@types/cliff",
       "allowedCategories": [ "tools" ]
     },
     {
@@ -505,6 +513,10 @@
     {
       "name": "clean-webpack-plugin",
       "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "cliff",
+      "allowedCategories": [ "tools" ]
     },
     {
       "name": "codemirror",

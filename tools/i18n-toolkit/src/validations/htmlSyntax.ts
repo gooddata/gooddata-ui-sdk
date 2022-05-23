@@ -3,7 +3,7 @@
 import { HtmlValidate } from "html-validate";
 import flatten from "lodash/flatten";
 
-import { error, done, message, skipped } from "../utils/console";
+import { done, message, skipped, fail } from "../utils/console";
 
 export async function getHtmlSyntaxCheck(
     localizations: Array<string>,
@@ -32,7 +32,7 @@ export async function getHtmlSyntaxCheck(
 
                 const count = flatten(validationResults).length;
                 if (count) {
-                    error(`Html message check ends with ${count} errors.`, true);
+                    fail(`Html message check ends with ${count} errors.`, true);
                     throw new Error(
                         `Html format of localization is not correct, see: ${JSON.stringify(localization)}`,
                     );

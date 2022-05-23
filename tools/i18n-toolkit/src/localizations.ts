@@ -1,27 +1,36 @@
 // (C) 2021-2022 GoodData Corporation
 
 import * as path from "path";
+import glob from "fast-glob";
 import flatten from "lodash/flatten";
 
-import { readDir, readFile } from "./utils";
+import { readFile } from "./utils";
 import { LocalesItem, LocalesStructure } from "./schema/localization";
 
-export async function getLocalizationFiles(localizationPath: string): Promise<Buffer[]> {
-    const localizationFileNames = await readDir(localizationPath);
-    const localizations = localizationFileNames.map((localizationFileName) =>
-        readFile(path.join(localizationPath, localizationFileName)),
+export async function getLocalizationFiles(localizationPaths: string[]): Promise<[string, Buffer][]> {
+    const results = await Promise.all(
+        localizationPaths.map(async (pth) => {
+            return await glob(path.join(pth, "*.json"));
+        }),
     );
 
-    return Promise.all(localizations);
+    const localizationFileNames = flatten(results);
+    const buffers = await Promise.all(
+        localizationFileNames.map((localizationFileName) => readFile(localizationFileName)),
+    );
+
+    return localizationFileNames.map((fileName, i) => [fileName, buffers[i]]);
 }
 
-export function getParsedLocalizations(localizations: Array<Buffer>): Array<LocalesStructure> {
-    return localizations.map((localization) => JSON.parse(localization.toString()));
+export function getParsedLocalizations(
+    localizations: Array<[string, Buffer]>,
+): Array<[string, LocalesStructure]> {
+    return localizations.map(([filename, localization]) => [filename, JSON.parse(localization.toString())]);
 }
 
-export function getLocalizationValues(localizations: Array<LocalesStructure>): Array<string> {
+export function getLocalizationValues(localizations: Array<[string, LocalesStructure]>): Array<string> {
     const mergedLocalizationValues: Array<LocalesItem | string> = flatten(
-        localizations.map((localization) => Object.values(localization)),
+        localizations.map(([, localization]) => Object.values(localization)),
     );
 
     return mergedLocalizationValues.reduce((prev, current) => {
