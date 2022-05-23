@@ -5,7 +5,6 @@
         "module": "commonjs",
         "lib": ["es6", "dom"],
         "moduleResolution": "node",
-        "declaration": true,
         "sourceMap": true,
         "outDir": "./dist",
         "importHelpers": true,

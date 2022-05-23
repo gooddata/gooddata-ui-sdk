@@ -1,8 +1,6 @@
 {
     "compilerOptions": {
         "esModuleInterop": true,
-        "declaration": true,
-        "declarationMap": true,
         "lib": ["es6", "dom"],
         "module": "commonjs",
         "importHelpers": true,

@@ -6,8 +6,6 @@
         "moduleResolution": "node",
         "importHelpers": true,
         "lib": ["es6", "ES2016.Array.Include"],
-        "declaration": true,
-        "declarationMap": true,
         "sourceMap": true,
         "outDir": "./dist",
         "strict": true,
