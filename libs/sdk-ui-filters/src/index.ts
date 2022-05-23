@@ -76,3 +76,4 @@ export {
     IAttributeDropdownItem,
     ICustomGranularitySelection,
 } from "./RankingFilter/types";
+export { AttributeFilterLoader } from "./AttributeFilterLoader";
