@@ -14,6 +14,7 @@ import { PluggableGeoPushpinChart } from "./PluggableGeoPushpinChart";
 import { DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT, MIDDLE_VISUALIZATION_HEIGHT } from "../constants";
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
 import {
+    executionConfigInsightConversion,
     filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
@@ -76,6 +77,7 @@ export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IV
                 geoConfigFromInsight,
             ),
             locale: localeInsightConversion("locale"),
+            execConfig: executionConfigInsightConversion("execConfig"),
         }),
         additionalFactories: chartAdditionalFactories({
             getColorMappingPredicatePackage: "@gooddata/sdk-ui-geo",

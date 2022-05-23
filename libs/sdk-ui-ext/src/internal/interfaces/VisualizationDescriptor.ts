@@ -1,6 +1,12 @@
 // (C) 2021-2022 GoodData Corporation
 import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { IColorPalette, IInsight, IInsightDefinition, ISettings } from "@gooddata/sdk-model";
+import {
+    IColorPalette,
+    IExecutionConfig,
+    IInsight,
+    IInsightDefinition,
+    ISettings,
+} from "@gooddata/sdk-model";
 import { IFluidLayoutDescriptor } from "./LayoutDescriptor";
 import { IDrillDownContext, IVisConstruct, IVisualization } from "./Visualization";
 
@@ -57,6 +63,11 @@ export interface IEmbeddingCodeContext {
      * If not provided, the default color palette will be used.
      */
     colorPalette?: IColorPalette;
+
+    /**
+     * The execution config to use for the component. If not specified, no explicit execution config will be used.
+     */
+    executionConfig?: IExecutionConfig;
 }
 
 /**

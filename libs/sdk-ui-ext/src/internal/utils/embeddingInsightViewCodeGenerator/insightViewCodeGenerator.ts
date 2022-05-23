@@ -3,6 +3,7 @@
 import { IInsight, insightRef, insightTitle } from "@gooddata/sdk-model";
 import { IInsightViewProps } from "../../interfaces/InsightView";
 import { getReactEmbeddingCodeGenerator } from "../embeddingCodeGenerator";
+import { removeUseless } from "../removeUseless";
 import { insightViewAdditionalTransformations } from "./insightViewCodeGenUtils";
 
 /**
@@ -16,7 +17,7 @@ export const insightViewCodeGenerator = getReactEmbeddingCodeGenerator<IInsightV
         name: "InsightView",
         package: "@gooddata/sdk-ui-ext",
     },
-    insightToProps: (insightDefinition, _context) => {
+    insightToProps: (insightDefinition, ctx) => {
         return {
             insight: {
                 value: insightRef(insightDefinition as IInsight),
@@ -33,6 +34,17 @@ export const insightViewCodeGenerator = getReactEmbeddingCodeGenerator<IInsightV
                 value: insightTitle(insightDefinition),
                 meta: {
                     cardinality: "scalar",
+                },
+            },
+            execConfig: {
+                value: ctx?.executionConfig && removeUseless(ctx.executionConfig),
+                meta: {
+                    cardinality: "scalar",
+                    typeImport: {
+                        importType: "named",
+                        name: "IExecutionConfig",
+                        package: "@gooddata/sdk-model",
+                    },
                 },
             },
         };

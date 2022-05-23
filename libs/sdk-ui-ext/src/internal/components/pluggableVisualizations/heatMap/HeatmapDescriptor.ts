@@ -14,6 +14,7 @@ import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Vis
 import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper";
 import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil";
 import {
+    executionConfigInsightConversion,
     filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
@@ -52,6 +53,7 @@ export class HeatmapDescriptor extends BigChartDescriptor implements IVisualizat
             sortBy: sortsInsightConversion("sortBy"),
             config: chartConfigInsightConversion("config"),
             locale: localeInsightConversion("locale"),
+            execConfig: executionConfigInsightConversion("execConfig"),
         }),
         additionalFactories: chartAdditionalFactories(),
     });

@@ -16,6 +16,7 @@ import {
 } from "../drillDownUtil";
 import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization";
 import {
+    executionConfigInsightConversion,
     filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
@@ -48,6 +49,7 @@ export class TreemapDescriptor extends BigChartDescriptor {
             filters: filtersInsightConversion("filters"),
             config: chartConfigInsightConversion("config"),
             locale: localeInsightConversion("locale"),
+            execConfig: executionConfigInsightConversion("execConfig"),
         }),
         additionalFactories: chartAdditionalFactories(),
     });

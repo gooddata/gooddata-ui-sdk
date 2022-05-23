@@ -10,6 +10,7 @@ import {
 import { PluggablePieChart } from "./PluggablePieChart";
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
 import {
+    executionConfigInsightConversion,
     filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
@@ -38,6 +39,7 @@ export class PieChartDescriptor extends BaseChartDescriptor implements IVisualiz
             sortBy: sortsInsightConversion("sortBy"),
             config: chartConfigInsightConversion("config"),
             locale: localeInsightConversion("locale"),
+            execConfig: executionConfigInsightConversion("execConfig"),
         }),
         additionalFactories: chartAdditionalFactories(),
     });

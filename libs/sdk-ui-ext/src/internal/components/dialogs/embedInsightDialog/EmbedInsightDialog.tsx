@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { IColorPalette, IInsight } from "@gooddata/sdk-model";
+import { IColorPalette, IExecutionConfig, IInsight } from "@gooddata/sdk-model";
 import {
     CodeOptionType,
     CodeLanguageType,
@@ -33,6 +33,7 @@ export interface IEmbedInsightDialogProps {
     integrationDocLink?: string;
     settings?: IUserWorkspaceSettings;
     colorPalette?: IColorPalette;
+    executionConfig?: IExecutionConfig;
 
     onClose: () => void;
     onCopyCode: (code: string, type: CopyCodeOriginType) => void;
@@ -48,6 +49,7 @@ export const EmbedInsightDialog: React.VFC<IEmbedInsightDialogProps> = (props) =
         backend,
         settings,
         colorPalette,
+        executionConfig,
         codeType,
         integrationDocLink,
         onClose,
@@ -65,12 +67,25 @@ export const EmbedInsightDialog: React.VFC<IEmbedInsightDialogProps> = (props) =
     }, []);
 
     const code = useMemo(() => {
-        if (codeOption.type === "definition") {
-            return generateCodeByDefinition(codeOption, insight, settings, backend, colorPalette, codeLang);
-        }
+        const inputBase = {
+            insight,
+            settings,
+            backend,
+            colorPalette,
+            executionConfig,
+            codeLang,
+        };
 
-        return generateCodeByReference(codeOption, insight, settings, backend, colorPalette, codeLang);
-    }, [codeOption, insight, settings, backend, colorPalette, codeLang]);
+        return codeOption.type === "definition"
+            ? generateCodeByDefinition({
+                  ...inputBase,
+                  codeOption,
+              })
+            : generateCodeByReference({
+                  ...inputBase,
+                  codeOption,
+              });
+    }, [codeOption, insight, settings, backend, colorPalette, executionConfig, codeLang]);
 
     const onCodeOptionChange = useCallback((codeOpt: IOptionsByDefinition) => {
         setCodeOption(codeOpt);
@@ -114,46 +129,45 @@ const getLinkToPropertiesDocumentation = (
     return INSIGHT_VIEW_PROPERTIES_LINK;
 };
 
-const generateCodeByReference = (
-    codeOption: IOptionsByReference,
-    insight: IInsight,
-    settings: IUserWorkspaceSettings,
-    backend: IAnalyticalBackend,
-    colorPalette: IColorPalette,
-    codeLang: CodeLanguageType,
-) => {
+interface ICodeGenInput<TOptions extends CodeOptionType> {
+    codeOption: TOptions;
+    insight: IInsight;
+    settings: IUserWorkspaceSettings;
+    backend: IAnalyticalBackend;
+    colorPalette: IColorPalette;
+    executionConfig: IExecutionConfig | undefined;
+    codeLang: CodeLanguageType;
+}
+
+const generateCodeByReference = (input: ICodeGenInput<IOptionsByReference>) => {
+    const { backend, codeLang, codeOption, colorPalette, executionConfig, insight, settings } = input;
     const height = getHeightWithUnitsForEmbedCode(codeOption);
     return insightViewCodeGenerator(insight, {
         context: {
-            settings: settings,
-            backend: backend,
-            colorPalette: colorPalette,
+            settings,
+            backend,
+            colorPalette,
+            executionConfig,
         },
         language: codeLang,
-        height: height,
+        height,
         omitChartProps: codeOption.displayTitle ? [] : ["showTitle"],
     });
 };
 
-const generateCodeByDefinition = (
-    codeOption: IOptionsByDefinition,
-    insight: IInsight,
-    settings: IUserWorkspaceSettings,
-    backend: IAnalyticalBackend,
-    colorPalette: IColorPalette,
-    codeLang: CodeLanguageType,
-) => {
+const generateCodeByDefinition = (input: ICodeGenInput<IOptionsByDefinition>) => {
+    const { backend, codeLang, codeOption, colorPalette, executionConfig, insight, settings } = input;
     const height = getHeightWithUnitsForEmbedCode(codeOption);
-
     const descriptor = FullVisualizationCatalog.forInsight(insight);
     return descriptor.getEmbeddingCode?.(insight, {
         context: {
-            settings: settings,
-            backend: backend,
-            colorPalette: colorPalette,
+            settings,
+            backend,
+            colorPalette,
+            executionConfig,
         },
         language: codeLang,
-        height: height,
+        height,
         omitChartProps: codeOption.includeConfiguration ? [] : ["config"],
     });
 };

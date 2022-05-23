@@ -14,6 +14,7 @@ import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor";
 import { PluggableHeadline } from "./PluggableHeadline";
 import { DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT, MAX_VISUALIZATION_HEIGHT } from "../constants";
 import {
+    executionConfigInsightConversion,
     filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
@@ -87,6 +88,7 @@ export class HeadlineDescriptor implements IVisualizationDescriptor {
             ),
             filters: filtersInsightConversion("filters"),
             locale: localeInsightConversion("locale"),
+            execConfig: executionConfigInsightConversion("execConfig"),
         }),
     });
 

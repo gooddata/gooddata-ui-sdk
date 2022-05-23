@@ -20,6 +20,7 @@ import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } 
 import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper";
 import { IDrillDownContext, IDrillDownDefinition } from "../../../interfaces/Visualization";
 import {
+    executionConfigInsightConversion,
     filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
@@ -59,6 +60,7 @@ export class BarChartDescriptor extends BaseChartDescriptor implements IVisualiz
             sortBy: sortsInsightConversion("sortBy"),
             config: chartConfigInsightConversion("config"),
             locale: localeInsightConversion("locale"),
+            execConfig: executionConfigInsightConversion("execConfig"),
         }),
         additionalFactories: chartAdditionalFactories(),
     });

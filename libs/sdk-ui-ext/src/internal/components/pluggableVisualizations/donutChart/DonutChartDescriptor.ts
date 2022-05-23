@@ -10,6 +10,7 @@ import {
 import { PluggableDonutChart } from "./PluggableDonutChart";
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
 import {
+    executionConfigInsightConversion,
     filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
@@ -38,6 +39,7 @@ export class DonutChartDescriptor extends BaseChartDescriptor implements IVisual
             sortBy: sortsInsightConversion("sortBy"),
             config: chartConfigInsightConversion("config"),
             locale: localeInsightConversion("locale"),
+            execConfig: executionConfigInsightConversion("execConfig"),
         }),
         additionalFactories: chartAdditionalFactories(),
     });

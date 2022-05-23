@@ -10,6 +10,7 @@ import {
 import { PluggableFunnelChart } from "./PluggableFunnelChart";
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor";
 import {
+    executionConfigInsightConversion,
     filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
@@ -38,6 +39,7 @@ export class FunnelChartDescriptor extends BaseChartDescriptor implements IVisua
             sortBy: sortsInsightConversion("sortBy"),
             config: chartConfigInsightConversion("config"),
             locale: localeInsightConversion("locale"),
+            execConfig: executionConfigInsightConversion("execConfig"),
         }),
         additionalFactories: chartAdditionalFactories(),
     });

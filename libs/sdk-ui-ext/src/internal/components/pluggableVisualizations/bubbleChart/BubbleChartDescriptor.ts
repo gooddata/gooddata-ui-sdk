@@ -10,6 +10,7 @@ import {
 import { PluggableBubbleChart } from "./PluggableBubbleChart";
 import { BigChartDescriptor } from "../BigChartDescriptor";
 import {
+    executionConfigInsightConversion,
     filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
@@ -40,6 +41,7 @@ export class BubbleChartDescriptor extends BigChartDescriptor implements IVisual
             sortBy: sortsInsightConversion("sortBy"),
             config: chartConfigInsightConversion("config"),
             locale: localeInsightConversion("locale"),
+            execConfig: executionConfigInsightConversion("execConfig"),
         }),
         additionalFactories: chartAdditionalFactories(),
     });

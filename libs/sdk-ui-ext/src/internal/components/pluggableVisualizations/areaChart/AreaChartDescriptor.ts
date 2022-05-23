@@ -25,6 +25,7 @@ import {
     singleAttributeBucketConversion,
     sortsInsightConversion,
     localeInsightConversion,
+    executionConfigInsightConversion,
 } from "../../../utils/embeddingCodeGenerator";
 import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils";
 
@@ -56,6 +57,7 @@ export class AreaChartDescriptor extends BigChartDescriptor implements IVisualiz
             sortBy: sortsInsightConversion("sortBy"),
             config: chartConfigInsightConversion("config"),
             locale: localeInsightConversion("locale"),
+            execConfig: executionConfigInsightConversion("execConfig"),
         }),
         additionalFactories: chartAdditionalFactories(),
     });

@@ -19,6 +19,7 @@ import {
     sanitizeTableProperties,
 } from "../drillDownUtil";
 import {
+    executionConfigInsightConversion,
     filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
@@ -94,6 +95,7 @@ export class PivotTableDescriptor extends BaseChartDescriptor implements IVisual
                 pivotTableConfigFromInsight,
             ),
             locale: localeInsightConversion("locale"),
+            execConfig: executionConfigInsightConversion("execConfig"),
         }),
         additionalFactories: pivotTableAdditionalFactories,
     });
