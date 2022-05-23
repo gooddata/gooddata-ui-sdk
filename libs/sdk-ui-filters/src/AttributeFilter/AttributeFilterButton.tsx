@@ -1,5 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import React, { useEffect, useMemo } from "react";
+import React, { ReactNode, useEffect, useMemo } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
@@ -156,6 +156,14 @@ export interface IAttributeFilterButtonOwnProps {
      * Customize attribute filter body with a component to be rendered instead of default filter body.
      */
     renderBody?: (props: IAttributeDropdownBodyExtendedProps) => React.ReactNode;
+
+    /**
+     * Specify className or startAdornment passed directly to button component
+     */
+    buttonProps?: {
+        className?: string;
+        startAdornment?: ReactNode;
+    };
 }
 
 /**
@@ -465,6 +473,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
             hasNoData={hasNoData}
             getDropdownBodyProps={getDropdownBodyProps}
             renderBody={props.renderBody}
+            buttonProps={props.buttonProps}
         />
     );
 };

@@ -1,0 +1,87 @@
+// (C) 2022 GoodData Corporation
+@import "variables";
+
+.attribute-filter-button {
+    &.is-draggable,
+    &.is-dragging {
+        cursor: grab;
+
+        &::after {
+            left: -10px;
+        }
+    }
+
+    &.is-dragging {
+        display: inline-block;
+        padding: 0 10px;
+
+        &::after {
+            border-color: $gd-border-color;
+            background: var(--gd-palette-complementary-0, transparentize($default-gd-color-white, 0.05));
+        }
+    }
+
+    &:hover,
+    &.is-dragging {
+        .drag-handle-icon {
+            opacity: 1;
+        }
+    }
+
+    .drag-handle-icon {
+        content: "";
+        position: absolute;
+        z-index: 1;
+        top: 8px;
+        left: -4px;
+        width: 7px;
+        height: 26px;
+        opacity: 0;
+        transition: all $transition-length;
+    }
+}
+
+.attr-filter-dropzone {
+    position: absolute;
+    z-index: 99;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    .drop-hint {
+        width: 0;
+        height: 100%;
+        border-left: 2px dashed $gd-palette-primary-base;
+    }
+
+    &.next,
+    &.outside {
+        right: 0;
+        margin-right: 0;
+
+        .drop-hint {
+            float: right;
+            margin-left: 2px;
+        }
+    }
+
+    &.prev {
+        left: 0;
+        margin-left: 0;
+
+        .drop-hint {
+            float: left;
+            margin-left: -2px;
+        }
+    }
+
+    &.hidden {
+        display: none;
+    }
+
+    &.outside {
+        width: 100%;
+    }
+}

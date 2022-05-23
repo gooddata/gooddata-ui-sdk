@@ -867,6 +867,14 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "react-dnd",
+      "allowedCategories": [ "production", "tools" ]
+    },
+    {
+      "name": "react-dnd-html5-backend",
+      "allowedCategories": [ "production", "tools" ]
+    },
+    {
       "name": "react-dom",
       "allowedCategories": [ "examples", "production", "tools" ]
     },

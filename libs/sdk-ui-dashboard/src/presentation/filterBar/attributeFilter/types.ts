@@ -18,6 +18,11 @@ export interface IDashboardAttributeFilterProps {
      * @param filter - new attribute filter value.
      */
     onFilterChanged: (filter: IDashboardAttributeFilter) => void;
+
+    /**
+     * Specify whether dragging handle and grab cursor should be displayed on hover
+     */
+    isDraggable?: boolean;
 }
 
 /**

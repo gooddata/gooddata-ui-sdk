@@ -81,6 +81,8 @@
         "json-stable-stringify": "^1.0.1",
         "lodash": "^4.17.19",
         "normalize.css": "^8.0.1",
+        "react-dnd": "^14.0.5",
+        "react-dnd-html5-backend": "^14.1.0",
         "react-grid-system": "^7.1.1",
         "react-intl": "^5.23.0",
         "react-lines-ellipsis": "^0.15.0",

@@ -1,7 +1,9 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
 import { MediaQueries } from "../../../constants";
-import AttributeFilterButtonDropdownButton from "./AttributeFilterButtonDropdownButton";
+import AttributeFilterButtonDropdownButton, {
+    IAttributeFilterButtonDropdownButtonProps,
+} from "./AttributeFilterButtonDropdownButton";
 import { Dropdown } from "@gooddata/sdk-ui-kit";
 import MediaQuery from "react-responsive";
 import { IAttributeElement } from "@gooddata/sdk-model";
@@ -12,7 +14,7 @@ import {
 } from "../../AttributeDropdown/AttributeDropdownBody";
 import noop from "lodash/noop";
 
-interface IAttributeFilterButtonDropdownProps {
+export interface IAttributeFilterButtonDropdownProps {
     isFiltering: boolean;
     isDropdownOpen: boolean;
 
@@ -37,6 +39,11 @@ interface IAttributeFilterButtonDropdownProps {
         isMobile?: boolean,
     ) => IAttributeDropdownBodyProps;
 
+    buttonProps: {
+        className?: IAttributeFilterButtonDropdownButtonProps["className"];
+        startAdornment?: IAttributeFilterButtonDropdownButtonProps["startAdornment"];
+    };
+
     renderBody?: (props: IAttributeDropdownBodyExtendedProps) => React.ReactNode;
 }
 
@@ -55,6 +62,7 @@ const AttributeFilterButtonDropdown: React.FC<IAttributeFilterButtonDropdownProp
         onApplyButtonClicked,
         getDropdownBodyProps,
         renderBody,
+        buttonProps = {},
     } = props;
 
     return (
@@ -75,6 +83,7 @@ const AttributeFilterButtonDropdown: React.FC<IAttributeFilterButtonDropdownProp
                     {(isMobile) => (
                         <span onClick={toggleDropdown}>
                             <AttributeFilterButtonDropdownButton
+                                className={buttonProps.className}
                                 isFiltering={isFiltering}
                                 isOpen={isDropdownOpen}
                                 isMobile={isMobile}
@@ -82,6 +91,7 @@ const AttributeFilterButtonDropdown: React.FC<IAttributeFilterButtonDropdownProp
                                 subtitleText={subtitle}
                                 subtitleItemCount={selectedFilterOptions.length}
                                 isLoaded={!isOriginalTotalCountLoading}
+                                startAdornment={buttonProps.startAdornment}
                             />
                         </span>
                     )}

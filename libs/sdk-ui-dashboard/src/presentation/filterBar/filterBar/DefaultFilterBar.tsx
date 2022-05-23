@@ -2,10 +2,10 @@
 import React, { useCallback } from "react";
 import partition from "lodash/partition";
 import {
-    objRefToString,
-    isDashboardDateFilter,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
+    isDashboardDateFilter,
+    objRefToString,
 } from "@gooddata/sdk-model";
 
 import {
@@ -27,6 +27,7 @@ import { IDashboardDateFilterConfig, IFilterBarProps } from "../types";
 
 import { DefaultFilterBarContainer } from "./DefaultFilterBarContainer";
 import { HiddenFilterBar } from "./HiddenFilterBar";
+import { AttributeFilterDropZoneHint, DraggableAttributeFilter } from "../../dragAndDrop";
 
 /**
  * @alpha
@@ -94,24 +95,28 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                 {dateFilterMode === "hidden" ? (
                     <HiddenDashboardDateFilter />
                 ) : (
-                    <DashboardDateFilter
-                        filter={dateFilter}
-                        onFilterChanged={onDateFilterChanged}
-                        config={dateFilterComponentConfig}
-                        readonly={dateFilterMode === "readonly"}
-                    />
+                    <>
+                        <DashboardDateFilter
+                            filter={dateFilter}
+                            onFilterChanged={onDateFilterChanged}
+                            config={dateFilterComponentConfig}
+                            readonly={dateFilterMode === "readonly"}
+                        />
+                        <AttributeFilterDropZoneHint placement="outside" targetIndex={0} />
+                    </>
                 )}
             </div>
-            {attributeFilters.map((filter) => {
-                const AttributeFilter = DashboardAttributeFilterComponentProvider(filter);
+            {attributeFilters.map((filter, filterIndex) => {
+                const CustomAttributeFilterComponent = DashboardAttributeFilterComponentProvider(filter);
 
                 return (
-                    <div
-                        className="dash-filters-notdate dash-filters-attribute"
+                    <DraggableAttributeFilter
                         key={objRefToString(filter.attributeFilter.displayForm)}
-                    >
-                        <AttributeFilter filter={filter} onFilterChanged={onAttributeFilterChanged} />
-                    </div>
+                        filter={filter}
+                        filterIndex={filterIndex}
+                        FilterComponent={CustomAttributeFilterComponent}
+                        onAttributeFilterChanged={onAttributeFilterChanged}
+                    />
                 );
             })}
         </DefaultFilterBarContainer>
