@@ -26,14 +26,16 @@ import {
     IMeasureSortItem,
     sortDirection,
     areObjRefsEqual,
+    ISettings,
 } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { getTranslation } from "./translations";
 
 import { SORT_DIR_DESC } from "../constants/sort";
-import { IBucketItem, IExtendedReferencePoint } from "../interfaces/Visualization";
+import { IBucketItem, IExtendedReferencePoint, IVisualizationProperties } from "../interfaces/Visualization";
 import { IAvailableSortsGroup } from "../interfaces/SortConfig";
+import { IAxisConfig } from "@gooddata/sdk-ui-charts";
 
 export function getAttributeSortItem(
     identifier: string,
@@ -151,8 +153,8 @@ function getDefaultPieDonutSort(insight: IInsightDefinition): ISortItem[] {
 export function createSorts(
     type: string,
     insight: IInsightDefinition,
-    canSortStackTotalValue: boolean = false,
-    enableChartsSorting?: boolean,
+    supportedControls: IVisualizationProperties,
+    featureFlags: ISettings,
 ): ISortItem[] {
     if (insight.insight.sorts?.length > 0) {
         return insight.insight.sorts;
@@ -162,18 +164,35 @@ export function createSorts(
         case VisualizationTypes.LINE:
             return [];
         case VisualizationTypes.BAR:
-            return getDefaultBarChartSort(insight, canSortStackTotalValue);
+            return getDefaultBarChartSort(insight, canSortStackTotalValue(insight, supportedControls));
         case VisualizationTypes.TREEMAP:
             return getDefaultTreemapSort(insight);
         case VisualizationTypes.HEATMAP:
             return getDefaultHeatmapSort(insight);
         case VisualizationTypes.PIE:
         case VisualizationTypes.DONUT:
-            if (enableChartsSorting) {
+            if (featureFlags.enableChartsSorting) {
                 return getDefaultPieDonutSort(insight);
             }
     }
     return [];
+}
+
+function areAllMeasuresOnSingleAxis(insight: IInsightDefinition, secondaryYAxis: IAxisConfig): boolean {
+    const measureCount = insightMeasures(insight).length;
+    const numberOfMeasureOnSecondaryAxis = secondaryYAxis.measures?.length ?? 0;
+    return numberOfMeasureOnSecondaryAxis === 0 || measureCount === numberOfMeasureOnSecondaryAxis;
+}
+
+function canSortStackTotalValue(
+    insight: IInsightDefinition,
+    supportedControls: IVisualizationProperties,
+): boolean {
+    const stackMeasures = supportedControls?.stackMeasures ?? false;
+    const secondaryAxis: IAxisConfig = supportedControls?.secondary_yaxis ?? { measures: [] };
+    const allMeasuresOnSingleAxis = areAllMeasuresOnSingleAxis(insight, secondaryAxis);
+
+    return stackMeasures && allMeasuresOnSingleAxis;
 }
 
 export function getBucketItemIdentifiers(referencePoint: IExtendedReferencePoint): string[] {
