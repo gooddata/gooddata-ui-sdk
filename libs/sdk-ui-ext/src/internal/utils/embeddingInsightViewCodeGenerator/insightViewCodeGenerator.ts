@@ -1,10 +1,9 @@
 // (C) 2022 GoodData Corporation
 
-import { IInsight, insightRef, insightTitle } from "@gooddata/sdk-model";
+import { IInsight, insightId, insightTitle } from "@gooddata/sdk-model";
 import { IInsightViewProps } from "../../interfaces/InsightView";
 import { getReactEmbeddingCodeGenerator } from "../embeddingCodeGenerator";
 import { removeUseless } from "../removeUseless";
-import { insightViewAdditionalTransformations } from "./insightViewCodeGenUtils";
 
 /**
  * DO NOT USE THIS INSIGHTVIEW CODE GENERATOR, IT'S FOR INTERNAL PURPOSE ONLY.
@@ -20,13 +19,8 @@ export const insightViewCodeGenerator = getReactEmbeddingCodeGenerator<IInsightV
     insightToProps: (insightDefinition, ctx) => {
         return {
             insight: {
-                value: insightRef(insightDefinition as IInsight),
+                value: insightId(insightDefinition as IInsight),
                 meta: {
-                    typeImport: {
-                        name: "ObjRef",
-                        importType: "named",
-                        package: "@gooddata/sdk-model",
-                    },
                     cardinality: "scalar",
                 },
             },
@@ -49,5 +43,4 @@ export const insightViewCodeGenerator = getReactEmbeddingCodeGenerator<IInsightV
             },
         };
     },
-    additionalFactories: insightViewAdditionalTransformations(),
 });
