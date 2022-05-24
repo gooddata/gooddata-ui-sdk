@@ -2,10 +2,9 @@
 
 exports[`insightViewCodeGenerator tests should generate code for insight 1`] = `
 "import React from \\"react\\";
-import { ObjRef, uriRef } from \\"@gooddata/sdk-model\\";
 import { InsightView } from \\"@gooddata/sdk-ui-ext\\";
 
-const insight: ObjRef = uriRef(\\"AreaChart.0229f24b92f336871eeb04e1e16c4e68\\");
+const insight = \\"AreaChart.0229f24b92f336871eeb04e1e16c4e68\\";
 const showTitle = \\"AreaChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend on top\\";
 const style = {height: 400};
 
