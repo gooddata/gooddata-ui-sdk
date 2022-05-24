@@ -17,6 +17,7 @@ options = {
             "src/model",
             "src/model/store/ui/uiSelectors.ts",
             "src/presentation/filterBar",
+            "src/presentation/filterBar/types.ts",
             "src/presentation/widget",
             "src/types.ts",
         ]),
@@ -30,6 +31,7 @@ options = {
                 "src/presentation/constants",
                 "src/presentation/dashboardContexts",
                 "src/presentation/dialogs",
+                "src/presentation/dragAndDrop",
                 "src/presentation/filterBar",
                 "src/presentation/layout",
                 "src/presentation/localization",
@@ -69,6 +71,7 @@ options = {
             "src/model",
             "src/presentation/constants",
             "src/presentation/dashboardContexts",
+            "src/presentation/dragAndDrop",
             "src/presentation/localization",
         ]),
         depCruiser.moduleWithDependencies("layout", "src/presentation/layout", [

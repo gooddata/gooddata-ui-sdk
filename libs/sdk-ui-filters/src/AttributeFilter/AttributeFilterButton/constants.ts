@@ -2,7 +2,7 @@
 
 import { MAX_SELECTION_SIZE } from "../AttributeDropdown/AttributeDropdownList";
 
-export const ATTRIBUTE_FILTER_BITTON_TOOLTIP_ALIGN_POINT = [
+export const ATTRIBUTE_FILTER_BUTTON_TOOLTIP_ALIGN_POINT = [
     { align: "tc bc", offset: { x: 0, y: -2 } },
     { align: "cc tc", offset: { x: 0, y: 10 } },
     { align: "bl tr", offset: { x: -2, y: -8 } },

@@ -6,6 +6,7 @@ import { IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
 
 import { convertDateFilterConfigToDateFilterOptions } from "../../../_staging/dateFilterConfig/dateFilterConfigConverters";
 import { DashboardState } from "../types";
+import { selectIsInEditMode } from "../ui/uiSelectors";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -116,8 +117,13 @@ export const selectEffectiveDateFilterTitle = createSelector(
  * @alpha
  */
 export const selectEffectiveDateFilterMode = createSelector(
+    selectIsInEditMode,
     selectDateFilterConfigOverrides,
-    (dashboardOverrides): DashboardDateFilterConfigMode => {
+    (isInEditMode, dashboardOverrides): DashboardDateFilterConfigMode => {
+        if (isInEditMode) {
+            return "active";
+        }
+
         return dashboardOverrides?.mode ?? "active";
     },
 );

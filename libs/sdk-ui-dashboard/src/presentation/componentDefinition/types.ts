@@ -1,7 +1,8 @@
 // (C) 2022 GoodData Corporation
 import { ComponentType } from "react";
-import { IDashboardAttributeFilterProps } from "../filterBar";
+import { IDashboardAttributeFilterProps } from "../filterBar/types";
 import { IDashboardKpiProps, IDashboardWidgetProps } from "../widget";
+import { IDashboardAttributeFilter } from "@gooddata/sdk-model";
 
 /**
  * @internal
@@ -35,21 +36,68 @@ export interface DropTargetComponentProps {
 export type DraggableItemType = "attributeFilter" | "widget" | "custom";
 
 /**
+ * @internal
+ */
+export type AttributeFilterDraggableItem = {
+    filter: IDashboardAttributeFilter;
+    filterIndex: number;
+};
+
+/**
+ * @internal
+ */
+export type CustomDraggableItem = {
+    [key: string]: any;
+};
+
+/**
+ * @internal
+ */
+export type IAttributeFilterDraggingComponentProps = {
+    itemType: "attributeFilter";
+    item: AttributeFilterDraggableItem;
+};
+
+/**
+ * @internal
+ */
+export type ICustomDraggingComponentProps = {
+    itemType: "custom";
+    item: CustomDraggableItem;
+};
+
+/**
+ * @internal
+ */
+export type AttributeFilterDraggingComponent = ComponentType<IAttributeFilterDraggingComponentProps>;
+
+/**
+ * @internal
+ */
+export type CustomDraggingComponent = ComponentType<ICustomDraggingComponentProps>;
+
+/**
+ * @internal
+ */
+export type AttributeFilterDraggableComponent = {
+    DraggingComponent: AttributeFilterDraggingComponent;
+    type: "attributeFilter";
+};
+
+/**
+ * @internal
+ */
+export type CustomDraggableComponent = {
+    DraggingComponent: CustomDraggingComponent;
+    type: "custom";
+};
+
+/**
  * Capability saying the component can be dragged somewhere.
  * @internal
  */
 export type DraggableComponent = {
-    dragging: {
-        /**
-         * Component shown when it is being dragged somewhere.
-         */
-        DraggingComponent: ComponentType<DraggingComponentProps>;
-
-        /**
-         * type of dragged item
-         */
-        type: DraggableItemType;
-    };
+    dragging: AttributeFilterDraggableComponent | CustomDraggableComponent;
 };
 
 /**

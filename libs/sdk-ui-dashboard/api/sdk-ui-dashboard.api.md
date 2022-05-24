@@ -254,6 +254,21 @@ export type AttributeFilterComponentProvider = (filter: IDashboardAttributeFilte
 // @internal
 export type AttributeFilterComponentSet = CustomComponentBase<IDashboardAttributeFilterProps> & DraggableComponent & CreatablePlaceholderComponent & CreatableByDragComponent;
 
+// @internal (undocumented)
+export type AttributeFilterDraggableComponent = {
+    DraggingComponent: AttributeFilterDraggingComponent;
+    type: "attributeFilter";
+};
+
+// @internal (undocumented)
+export type AttributeFilterDraggableItem = {
+    filter: IDashboardAttributeFilter;
+    filterIndex: number;
+};
+
+// @internal (undocumented)
+export type AttributeFilterDraggingComponent = ComponentType<IAttributeFilterDraggingComponentProps>;
+
 // @public
 export type AttributeFilterSelectionType = "IN" | "NOT_IN";
 
@@ -657,6 +672,20 @@ export type CustomDashboardLayoutComponent = ComponentType<IDashboardLayoutProps
 
 // @public (undocumented)
 export type CustomDashboardWidgetComponent = ComponentType<IDashboardWidgetProps>;
+
+// @internal (undocumented)
+export type CustomDraggableComponent = {
+    DraggingComponent: CustomDraggingComponent;
+    type: "custom";
+};
+
+// @internal (undocumented)
+export type CustomDraggableItem = {
+    [key: string]: any;
+};
+
+// @internal (undocumented)
+export type CustomDraggingComponent = ComponentType<ICustomDraggingComponentProps>;
 
 // @internal (undocumented)
 export type CustomEditModeButtonComponent = ComponentType<IEditButtonProps>;
@@ -2092,10 +2121,7 @@ export function dispatchAndWaitFor<TCommand extends DashboardCommands, TResult>(
 
 // @internal
 export type DraggableComponent = {
-    dragging: {
-        DraggingComponent: ComponentType<DraggingComponentProps>;
-        type: DraggableItemType;
-    };
+    dragging: AttributeFilterDraggableComponent | CustomDraggableComponent;
 };
 
 // @internal (undocumented)
@@ -2495,6 +2521,12 @@ export const HiddenTitle: () => JSX.Element | null;
 // @alpha
 export const HiddenTopBar: (_props: ITopBarProps) => JSX.Element | null;
 
+// @internal (undocumented)
+export type IAttributeFilterDraggingComponentProps = {
+    itemType: "attributeFilter";
+    item: AttributeFilterDraggableItem;
+};
+
 // @alpha
 export interface IBrokenAlertFilterBasicInfo<TFilter extends FilterContextItem = FilterContextItem> {
     // (undocumented)
@@ -2545,6 +2577,12 @@ export interface ICustomDashboardEvent<TPayload = any> {
     readonly type: string;
 }
 
+// @internal (undocumented)
+export type ICustomDraggingComponentProps = {
+    itemType: "custom";
+    item: CustomDraggableItem;
+};
+
 // @public
 export interface ICustomWidget extends ICustomWidgetBase, IDashboardObjectIdentity, Partial<IFilterableWidget> {
 }
@@ -2564,6 +2602,7 @@ export interface ICustomWidgetDefinition extends ICustomWidgetBase, Partial<IDas
 // @alpha (undocumented)
 export interface IDashboardAttributeFilterProps {
     filter: IDashboardAttributeFilter;
+    isDraggable?: boolean;
     onFilterChanged: (filter: IDashboardAttributeFilter) => void;
 }
 
@@ -4604,7 +4643,7 @@ export const selectEffectiveDateFilterAvailableGranularities: OutputSelector<Das
 export const selectEffectiveDateFilterConfig: OutputSelector<DashboardState, IDateFilterConfig, (res: DateFilterConfigState) => IDateFilterConfig>;
 
 // @alpha
-export const selectEffectiveDateFilterMode: OutputSelector<DashboardState, DashboardDateFilterConfigMode, (res: IDashboardDateFilterConfig_2 | undefined) => DashboardDateFilterConfigMode>;
+export const selectEffectiveDateFilterMode: OutputSelector<DashboardState, DashboardDateFilterConfigMode, (res1: boolean, res2: IDashboardDateFilterConfig_2 | undefined) => DashboardDateFilterConfigMode>;
 
 // @alpha
 export const selectEffectiveDateFilterOptions: OutputSelector<DashboardState, IDateFilterOptionsByType, (res: IDateFilterConfig) => IDateFilterOptionsByType>;

@@ -26,6 +26,9 @@ import { defaultDashboardThemeModifier } from "../defaultDashboardThemeModifier"
 import { useDashboard } from "../hooks/useDashboard";
 import { IDashboardProps } from "../types";
 import { DashboardLoading } from "./DashboardLoading";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { DragLayerComponent } from "../../dragAndDrop";
 
 /**
  * @internal
@@ -101,7 +104,10 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                         FilterBarComponent={props.FilterBarComponent ?? DefaultFilterBar}
                                     >
                                         <DashboardConfigProvider menuButtonConfig={props.menuButtonConfig}>
-                                            <DashboardLoading {...props} />
+                                            <DndProvider backend={HTML5Backend}>
+                                                <DragLayerComponent />
+                                                <DashboardLoading {...props} />
+                                            </DndProvider>
                                         </DashboardConfigProvider>
                                     </DashboardComponentsProvider>
                                 </DashboardCustomizationsProvider>

@@ -31,6 +31,7 @@ import { ObjRef } from '@gooddata/sdk-model';
 import { ObjRefInScope } from '@gooddata/sdk-model';
 import { OnError } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
+import { ReactNode } from 'react';
 import { RelativeDateFilterGranularityOffset } from '@gooddata/sdk-model';
 import { WrappedComponentProps } from 'react-intl';
 
@@ -234,6 +235,10 @@ export interface IAttributeElementsProps {
 // @public (undocumented)
 export interface IAttributeFilterButtonOwnProps {
     backend?: IAnalyticalBackend;
+    buttonProps?: {
+        className?: string;
+        startAdornment?: ReactNode;
+    };
     connectToPlaceholder?: IPlaceholder<IAttributeFilter>;
     filter?: IAttributeFilter;
     FilterError?: React_2.ComponentType<{

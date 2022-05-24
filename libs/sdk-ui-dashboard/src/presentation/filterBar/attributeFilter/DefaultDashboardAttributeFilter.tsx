@@ -1,6 +1,8 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React, { useMemo } from "react";
 import { AttributeFilterButton, IAttributeDropdownBodyExtendedProps } from "@gooddata/sdk-ui-filters";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+import { Icon } from "@gooddata/sdk-ui-kit";
 
 import {
     attributeFilterToDashboardAttributeFilter,
@@ -20,10 +22,11 @@ import { selectLocale, useDashboardSelector } from "../../../model";
  * @alpha
  */
 export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilterProps): JSX.Element => {
-    const { filter, onFilterChanged } = props;
+    const { filter, onFilterChanged, isDraggable } = props;
     const { parentFilters, parentFilterOverAttribute } = useParentFilters(filter);
     const locale = useDashboardSelector(selectLocale);
     const attributeFilter = useMemo(() => dashboardAttributeFilterToAttributeFilter(filter), [filter]);
+    const theme = useTheme();
 
     return (
         <AttributeFilterButton
@@ -42,6 +45,21 @@ export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilter
             parentFilters={parentFilters}
             parentFilterOverAttribute={parentFilterOverAttribute}
             locale={locale}
+            buttonProps={
+                isDraggable
+                    ? {
+                          className: "is-draggable",
+                          startAdornment: (
+                              <Icon.DragHandle
+                                  width={7}
+                                  height={26}
+                                  className="drag-handle-icon"
+                                  color={theme?.palette?.complementary?.c5}
+                              />
+                          ),
+                      }
+                    : undefined
+            }
         />
     );
 };

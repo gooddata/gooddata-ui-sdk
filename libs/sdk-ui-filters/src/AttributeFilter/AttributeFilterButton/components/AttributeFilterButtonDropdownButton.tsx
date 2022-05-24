@@ -1,12 +1,14 @@
 // (C) 2022 GoodData Corporation
-import React, { useEffect, useRef, useState } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
+import { ShortenedText } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
+
 import isEmpty from "lodash/isEmpty";
 import cx from "classnames";
-import { ShortenedText } from "@gooddata/sdk-ui-kit";
-import { ATTRIBUTE_FILTER_BITTON_TOOLTIP_ALIGN_POINT } from "../constants";
+import { ATTRIBUTE_FILTER_BUTTON_TOOLTIP_ALIGN_POINT } from "../constants";
 
 export interface IAttributeFilterButtonDropdownButtonProps {
+    className?: string;
     isMobile?: boolean;
     isOpen?: boolean;
     title: string;
@@ -14,10 +16,21 @@ export interface IAttributeFilterButtonDropdownButtonProps {
     subtitleItemCount: number;
     isFiltering?: boolean;
     isLoaded?: boolean;
+    startAdornment?: ReactNode;
 }
 
 const AttributeFilterButtonDropdownButton: React.FC<IAttributeFilterButtonDropdownButtonProps> = (props) => {
-    const { isMobile, isOpen, title, subtitleItemCount, subtitleText, isFiltering, isLoaded } = props;
+    const {
+        className,
+        isMobile,
+        isOpen,
+        title,
+        subtitleItemCount,
+        subtitleText,
+        isFiltering,
+        isLoaded,
+        startAdornment = null,
+    } = props;
 
     const subtitleSelectedItemsRef = useRef(null);
     const [displayItemCount, setDisplayItemCount] = useState(false);
@@ -46,6 +59,7 @@ const AttributeFilterButtonDropdownButton: React.FC<IAttributeFilterButtonDropdo
         <div
             className={cx(
                 "attribute-filter-button",
+                className,
                 "s-attribute-filter",
                 `s-${stringUtils.simplifyText(title)}`,
                 {
@@ -56,10 +70,11 @@ const AttributeFilterButtonDropdownButton: React.FC<IAttributeFilterButtonDropdo
                 },
             )}
         >
+            {startAdornment}
             <div className="button-content">
                 <div className="button-title">
                     <ShortenedText
-                        tooltipAlignPoints={ATTRIBUTE_FILTER_BITTON_TOOLTIP_ALIGN_POINT}
+                        tooltipAlignPoints={ATTRIBUTE_FILTER_BUTTON_TOOLTIP_ALIGN_POINT}
                         className={"s-attribute-filter-button-title"}
                     >
                         {title}
