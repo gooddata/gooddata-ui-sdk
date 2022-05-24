@@ -337,6 +337,35 @@ Object {
 }
 `;
 
+exports[`createExecution should create correct definition for unscoped series only with only attributes (RAIL-4265) 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [],
+  "postProcessing": Object {},
+  "sortBy": Array [],
+  "workspace": "testWorkspace",
+}
+`;
+
 exports[`createExecution should create correct definition for unscoped series with slicing 1`] = `
 Object {
   "attributes": Array [

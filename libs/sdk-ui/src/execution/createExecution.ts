@@ -5,6 +5,7 @@ import {
     IDimension,
     INullableFilter,
     isAttribute,
+    isMeasure,
     ISortItem,
     ITotal,
     MeasureGroupIdentifier,
@@ -12,6 +13,7 @@ import {
     newTwoDimensional,
 } from "@gooddata/sdk-model";
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import compact from "lodash/compact";
 import isEmpty from "lodash/isEmpty";
 import invariant from "ts-invariant";
 
@@ -78,7 +80,15 @@ export type CreateExecutionOptions = {
  * When caller desires just data series and no slicing, create a single-dim result.
  */
 function seriesOnlyDim(seriesBy: IAttributeOrMeasure[]): IDimension[] {
-    return [newDimension([...seriesBy.filter(isAttribute), MeasureGroupIdentifier])];
+    return [
+        newDimension(
+            compact([
+                ...seriesBy.filter(isAttribute),
+                // only include MeasureGroupIdentifier if there are some measures, otherwise the execution will always fail on the backend
+                seriesBy.some(isMeasure) && MeasureGroupIdentifier,
+            ]),
+        ),
+    ];
 }
 
 /**
@@ -95,7 +105,11 @@ function seriesAndSlicesDim(
 ): IDimension[] {
     return newTwoDimensional(
         [...slices, ...totals],
-        [...seriesBy.filter(isAttribute), MeasureGroupIdentifier],
+        compact([
+            ...seriesBy.filter(isAttribute),
+            // only include MeasureGroupIdentifier if there are some measures, otherwise the execution will always fail on the backend
+            seriesBy.some(isMeasure) && MeasureGroupIdentifier,
+        ]),
     );
 }
 
