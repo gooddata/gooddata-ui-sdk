@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { mount } from "enzyme";
 import { dummyBackend, dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
@@ -254,6 +254,7 @@ describe("createExecution", () => {
                 totals: [newTotal("sum", ReferenceMd.Amount, ReferenceMd.Product.Name)],
             },
         ],
+        ["unscoped series only with only attributes (RAIL-4265)", { seriesBy: [ReferenceMd.Product.Name] }],
     ];
 
     it.each(Scenarios)("should create correct definition for %s", (_desc, props) => {
