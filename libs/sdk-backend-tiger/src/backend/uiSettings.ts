@@ -64,7 +64,7 @@ export const DefaultUiSettings: ISettings = {
     ADCatalogGroupsExpanded: true,
     enableCustomColorPicker: true,
     enableAdAdditionalDateAttributes: true,
-    enableAlternativeDisplayFormSelection: false,
+    enableAlternativeDisplayFormSelection: true,
     enableNewAnalyticalDashboardsNavigation: true,
     enableAnalyticalDashboardPermissions: false,
 

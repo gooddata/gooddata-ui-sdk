@@ -138,6 +138,24 @@ export interface IElementsQueryOptions {
         | IElementsQueryOptionsElementsByValue
         | IElementsQueryOptionsElementsByPrimaryDisplayFormValue
         | IElementsQueryOptionsElementsByUri;
+
+    /**
+     * Decides whether result will include also the primary label elements or only requested label ones.
+     * It changes also the cardinality of result.
+     *
+     * If true, returned label values are in cardinality of primary label, i.e., result could contain
+     * duplicated values.
+     *
+     * If false, returned label values are unique values and smaller amount of label values can be returned
+     * than the number of primary label values.
+     *
+     * @remarks
+     * This is used mainly in filters to not display duplicate values where each of them filter out the same
+     * records from an insight when text value attribute filters are used.
+     *
+     * The value is applied only on backends without the supportsElementUris capability.
+     */
+    excludePrimaryLabel?: boolean;
 }
 
 /**

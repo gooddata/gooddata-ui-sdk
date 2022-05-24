@@ -678,6 +678,7 @@ export interface IElementsQueryFactory {
 export interface IElementsQueryOptions {
     complement?: boolean;
     elements?: IElementsQueryOptionsElementsByValue | IElementsQueryOptionsElementsByPrimaryDisplayFormValue | IElementsQueryOptionsElementsByUri;
+    excludePrimaryLabel?: boolean;
     filter?: string;
     includeTotalCountWithoutFilters?: boolean;
     order?: SortDirection;

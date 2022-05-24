@@ -144,6 +144,9 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
                         ...(options?.complement && { complementFilter: options.complement }),
                         ...(options?.filter && { patternFilter: options.filter }),
                         ...this.getExactFilterSpec(options ?? {}),
+                        ...(options?.excludePrimaryLabel && {
+                            excludePrimaryLabel: options.excludePrimaryLabel,
+                        }),
                         ...(options?.order && {
                             sortOrder:
                                 options.order === "asc"
@@ -170,7 +173,7 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
                     items: elements.map(
                         (element): IAttributeElement => ({
                             title: element.title,
-                            uri: element.primaryTitle,
+                            uri: element.primaryTitle ?? element.title,
                         }),
                     ),
                     totalCount: paging.total,
