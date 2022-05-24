@@ -12,8 +12,9 @@ import {
     IFilter,
     IMeasure,
     insightFilters,
-    insightSorts,
+    insightProperties,
     insightTotals,
+    insightVisualizationUrl,
     ISortItem,
     isRelativeDateFilter,
     ITotal,
@@ -21,7 +22,9 @@ import {
 } from "@gooddata/sdk-model";
 import { DefaultLocale } from "@gooddata/sdk-ui";
 import isNil from "lodash/isNil";
+
 import { removeUseless } from "../../removeUseless";
+import { createSorts } from "../../sort";
 
 import { PropMeta } from "../types";
 import { bucketConversion, IInsightToPropConversion, insightConversion } from "./convertor";
@@ -147,7 +150,10 @@ export function filtersInsightConversion<TProps extends object, TPropKey extends
 export function sortsInsightConversion<TProps extends object, TPropKey extends keyof TProps>(
     propName: TPropKey,
 ): IInsightToPropConversion<TProps, TPropKey, ISortItem[]> {
-    return insightConversion(propName, sdkModelPropMetas.SortItem.Multiple, insightSorts);
+    return insightConversion(propName, sdkModelPropMetas.SortItem.Multiple, (insight, ctx) => {
+        const type = insightVisualizationUrl(insight).split(":")[1];
+        return createSorts(type, insight, insightProperties(insight)?.controls ?? {}, ctx.settings ?? {});
+    });
 }
 
 /**
@@ -165,16 +171,10 @@ export function totalsInsightConversion<TProps extends object, TPropKey extends 
 export function localeInsightConversion<TProps extends object, TPropKey extends keyof TProps>(
     propName: TPropKey,
 ): IInsightToPropConversion<TProps, TPropKey, string | undefined> {
-    return insightConversion(
-        propName,
-        {
-            cardinality: "scalar",
-        },
-        (_, ctx) => {
-            const val = ctx?.settings?.locale;
-            return val && val !== DefaultLocale ? val : undefined;
-        },
-    );
+    return insightConversion(propName, { cardinality: "scalar" }, (_, ctx) => {
+        const val = ctx?.settings?.locale;
+        return val && val !== DefaultLocale ? val : undefined;
+    });
 }
 
 /**

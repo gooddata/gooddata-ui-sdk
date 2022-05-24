@@ -180,9 +180,13 @@ const convertMeasureSortItem: Converter<IMeasureSortItem> = ({ measureSortItem }
     const measureLocator = locators.find((l) => isMeasureLocator(l)) as IMeasureLocatorItem;
     const attributeLocators = locators.filter((l) => !isMeasureLocator(l)) as IAttributeLocatorItem[];
 
-    return `newMeasureSort("${measureLocator.measureLocatorItem.measureIdentifier}", "${
-        measureSortItem.direction
-    }", ${stringify(attributeLocators)})`;
+    const params = compact([
+        `"${measureLocator.measureLocatorItem.measureIdentifier}"`,
+        `"${measureSortItem.direction}"`,
+        attributeLocators?.length > 0 && stringify(attributeLocators),
+    ]);
+
+    return `newMeasureSort(${params.join(ARRAY_JOINER)})`;
 };
 
 const convertAbsoluteDateFilter: Converter<IAbsoluteDateFilter> = ({

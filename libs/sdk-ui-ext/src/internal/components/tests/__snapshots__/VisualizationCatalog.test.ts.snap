@@ -3163,7 +3163,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
-const sortBy: ISortItem[] = [newMeasureSort(\\"m_acugFHNJgsBy\\", \\"asc\\", [])];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_acugFHNJgsBy\\", \\"asc\\")];
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
@@ -3255,7 +3255,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - 100x70 - without x axis, without y axis (very small container) 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -3265,6 +3265,9 @@ const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
 const stackBy: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
+const sortBy: ISortItem[] = [
+    newAttributeAreaSort(\\"a_label.product.id.name\\", \\"desc\\", \\"sum\\")
+];
 const config: IChartConfig = {
     legend: {enabled: false, position: \\"right\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -3279,6 +3282,7 @@ export function MyComponent() {
                 measures={measures}
                 viewBy={viewBy}
                 stackBy={stackBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -3289,7 +3293,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - 120x354 - without y axis labels 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -3299,6 +3303,9 @@ const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
 const stackBy: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
+const sortBy: ISortItem[] = [
+    newAttributeAreaSort(\\"a_label.product.id.name\\", \\"desc\\", \\"sum\\")
+];
 const config: IChartConfig = {
     legend: {enabled: false, position: \\"right\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -3313,6 +3320,7 @@ export function MyComponent() {
                 measures={measures}
                 viewBy={viewBy}
                 stackBy={stackBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -3323,7 +3331,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - 165x354 - without y axis title 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -3333,6 +3341,9 @@ const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
 const stackBy: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
+const sortBy: ISortItem[] = [
+    newAttributeAreaSort(\\"a_label.product.id.name\\", \\"desc\\", \\"sum\\")
+];
 const config: IChartConfig = {
     legend: {enabled: false, position: \\"right\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -3347,6 +3358,7 @@ export function MyComponent() {
                 measures={measures}
                 viewBy={viewBy}
                 stackBy={stackBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -6262,7 +6274,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - 650x90 - without x axis labels 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -6272,6 +6284,9 @@ const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
 const stackBy: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
+const sortBy: ISortItem[] = [
+    newAttributeAreaSort(\\"a_label.product.id.name\\", \\"desc\\", \\"sum\\")
+];
 const config: IChartConfig = {
     legend: {enabled: false, position: \\"right\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -6286,6 +6301,7 @@ export function MyComponent() {
                 measures={measures}
                 viewBy={viewBy}
                 stackBy={stackBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -6296,7 +6312,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - 650x120 - without x axis title 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -6306,6 +6322,9 @@ const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
 const stackBy: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
+const sortBy: ISortItem[] = [
+    newAttributeAreaSort(\\"a_label.product.id.name\\", \\"desc\\", \\"sum\\")
+];
 const config: IChartConfig = {
     legend: {enabled: false, position: \\"right\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -6320,6 +6339,7 @@ export function MyComponent() {
                 measures={measures}
                 viewBy={viewBy}
                 stackBy={stackBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -6745,7 +6765,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - X axis min/max configuration 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -6755,6 +6775,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     xaxis: {max: \\"25000000\\", min: \\"5000000\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -6769,6 +6790,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -6779,7 +6801,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - X axis on top 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -6789,6 +6811,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     secondary_xaxis: {measures: [\\"m_aangOxLSeztu\\", \\"m_acugFHNJgsBy\\"]},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -6803,6 +6826,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -6813,7 +6837,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - X axis on top with two viewBy attributes 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -6823,6 +6847,10 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const sortBy: ISortItem[] = [
+    newAttributeAreaSort(\\"a_label.product.id.name\\", \\"desc\\", \\"sum\\"),
+    newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")
 ];
 const config: IChartConfig = {
     secondary_xaxis: {measures: [\\"m_aangOxLSeztu\\", \\"m_acugFHNJgsBy\\"]},
@@ -6838,6 +6866,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -6848,7 +6877,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - Y axis invisible 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -6858,6 +6887,10 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const sortBy: ISortItem[] = [
+    newAttributeAreaSort(\\"a_label.product.id.name\\", \\"desc\\", \\"sum\\"),
+    newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")
 ];
 const config: IChartConfig = {
     yaxis: {visible: false},
@@ -6873,6 +6906,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -6883,7 +6917,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - Y axis rotation 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -6893,6 +6927,10 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const sortBy: ISortItem[] = [
+    newAttributeAreaSort(\\"a_label.product.id.name\\", \\"desc\\", \\"sum\\"),
+    newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")
 ];
 const config: IChartConfig = {
     yaxis: {rotation: \\"45\\"},
@@ -6908,6 +6946,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -6918,7 +6957,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - arithmetic measures 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newArithmeticMeasure, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newArithmeticMeasure, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -6933,6 +6972,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
@@ -6946,6 +6986,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -6956,7 +6997,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - assign color to attribute element stack 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure } from \\"@gooddata/sdk-model\\";
 import { BarChart, getColorMappingPredicate, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -6966,6 +7007,9 @@ const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
 const stackBy: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
+const sortBy: ISortItem[] = [
+    newAttributeAreaSort(\\"a_label.product.id.name\\", \\"desc\\", \\"sum\\")
+];
 const config: IChartConfig = {
     colorMapping: [
         {predicate: getColorMappingPredicate(\\"/gdc/md/referenceworkspace/obj/1086/elements?id=460488\\"), color: {type: \\"rgb\\", value: {b: 0, g: 0, r: 0}}},
@@ -6984,6 +7028,7 @@ export function MyComponent() {
                 measures={measures}
                 viewBy={viewBy}
                 stackBy={stackBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -6994,7 +7039,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - assign color to master measure impacts derived PoP 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure, newPopMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort, newPopMeasure } from \\"@gooddata/sdk-model\\";
 import { BarChart, getColorMappingPredicate, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -7005,6 +7050,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"closed.aag81lMifn6q\\", \\"displayForm\\"), a => a.localId(\\"a_closed.aag81lMifn6q\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     colorMapping: [
         {predicate: getColorMappingPredicate(\\"m_acugFHNJgsBy\\"), color: {type: \\"rgb\\", value: {b: 0, g: 0, r: 0}}}
@@ -7021,6 +7067,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -7031,7 +7078,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - assign color to measures 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, getColorMappingPredicate, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -7041,6 +7088,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     colorMapping: [
         {predicate: getColorMappingPredicate(\\"m_aangOxLSeztu\\"), color: {type: \\"rgb\\", value: {b: 0, g: 0, r: 0}}},
@@ -7058,6 +7106,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -7068,7 +7117,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - coloring - custom palette 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -7078,6 +7127,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
@@ -7091,6 +7141,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -7101,7 +7152,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - data labels - auto visibility 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -7111,6 +7162,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     dataLabels: {visible: \\"auto\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -7125,6 +7177,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -7135,7 +7188,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - data labels - default 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -7145,6 +7198,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
@@ -7158,6 +7212,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -7168,7 +7223,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - data labels - forced hidden 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -7178,6 +7233,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     dataLabels: {visible: false},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -7192,6 +7248,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -7202,7 +7259,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - data labels - forced visible 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -7212,6 +7269,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     dataLabels: {visible: true},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -7226,6 +7284,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -7236,7 +7295,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - data labels - forced visible and german separators 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -7246,6 +7305,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     dataLabels: {visible: true},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -7260,6 +7320,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -7270,7 +7331,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - dual axis label rotation - 60 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newArithmeticMeasure, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newArithmeticMeasure, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -7285,6 +7346,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     secondary_xaxis: {
         measures: [\\"m_68d94d71b9317a58cd6c5b9a3f71f488\\"],
@@ -7303,6 +7365,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -7313,7 +7376,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - dual axis label rotation - 90 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newArithmeticMeasure, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newArithmeticMeasure, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -7328,6 +7391,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     secondary_xaxis: {
         measures: [\\"m_68d94d71b9317a58cd6c5b9a3f71f488\\"],
@@ -7346,6 +7410,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -7356,7 +7421,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - dual axis label rotation - minus60 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newArithmeticMeasure, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newArithmeticMeasure, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -7371,6 +7436,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     secondary_xaxis: {
         measures: [\\"m_68d94d71b9317a58cd6c5b9a3f71f488\\"],
@@ -7389,6 +7455,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -7399,7 +7466,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - dual axis label rotation - minus90 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newArithmeticMeasure, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newArithmeticMeasure, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -7414,6 +7481,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     secondary_xaxis: {
         measures: [\\"m_68d94d71b9317a58cd6c5b9a3f71f488\\"],
@@ -7432,6 +7500,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -7442,7 +7511,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - dual axis name customization - high 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -7452,6 +7521,10 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const sortBy: ISortItem[] = [
+    newAttributeAreaSort(\\"a_label.product.id.name\\", \\"desc\\", \\"sum\\"),
+    newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")
 ];
 const config: IChartConfig = {
     secondary_xaxis: {
@@ -7473,6 +7546,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -7483,7 +7557,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - dual axis name customization - invisible 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -7493,6 +7567,10 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const sortBy: ISortItem[] = [
+    newAttributeAreaSort(\\"a_label.product.id.name\\", \\"desc\\", \\"sum\\"),
+    newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")
 ];
 const config: IChartConfig = {
     secondary_xaxis: {
@@ -7514,6 +7592,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -7524,7 +7603,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - dual axis name customization - low 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -7534,6 +7613,10 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const sortBy: ISortItem[] = [
+    newAttributeAreaSort(\\"a_label.product.id.name\\", \\"desc\\", \\"sum\\"),
+    newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")
 ];
 const config: IChartConfig = {
     secondary_xaxis: {
@@ -7555,6 +7638,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -7565,7 +7649,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - dual axis name customization - middle 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -7575,6 +7659,10 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const sortBy: ISortItem[] = [
+    newAttributeAreaSort(\\"a_label.product.id.name\\", \\"desc\\", \\"sum\\"),
+    newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")
 ];
 const config: IChartConfig = {
     secondary_xaxis: {
@@ -7596,6 +7684,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -7606,7 +7695,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - dual axis when two viewBy attributes 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -7616,6 +7705,10 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const sortBy: ISortItem[] = [
+    newAttributeAreaSort(\\"a_label.product.id.name\\", \\"desc\\", \\"sum\\"),
+    newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")
 ];
 const config: IChartConfig = {
     secondary_xaxis: {measures: [\\"m_acugFHNJgsBy\\"]},
@@ -7631,6 +7724,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -7641,7 +7735,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - dual axis with one top measure and three bottom 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newArithmeticMeasure, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newArithmeticMeasure, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -7656,6 +7750,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     secondary_xaxis: {measures: [\\"m_68d94d71b9317a58cd6c5b9a3f71f488\\"]},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -7670,6 +7765,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -7680,7 +7776,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - font 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -7690,6 +7786,9 @@ const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
 const stackBy: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
+const sortBy: ISortItem[] = [
+    newAttributeAreaSort(\\"a_label.product.id.name\\", \\"desc\\", \\"sum\\")
+];
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"right\\"},
@@ -7704,6 +7803,7 @@ export function MyComponent() {
                 measures={measures}
                 viewBy={viewBy}
                 stackBy={stackBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -7714,7 +7814,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - four measures and PoP 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newArithmeticMeasure, newAttribute, newMeasure, newPopMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newArithmeticMeasure, newAttribute, newMeasure, newMeasureSort, newPopMeasure } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -7730,6 +7830,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"closed.aag81lMifn6q\\", \\"displayForm\\"), a => a.localId(\\"a_closed.aag81lMifn6q\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
@@ -7743,6 +7844,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -7753,7 +7855,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - legend position - auto legend 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -7763,6 +7865,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     legend: {position: \\"auto\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -7776,6 +7879,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -7786,7 +7890,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - legend position - disabled 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -7796,6 +7900,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     legend: {enabled: false, position: \\"auto\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -7809,6 +7914,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -7819,7 +7925,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - legend position - legend at bottom 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -7829,6 +7935,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     legend: {position: \\"bottom\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -7842,6 +7949,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -7852,7 +7960,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - legend position - legend on left 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -7862,6 +7970,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     legend: {position: \\"left\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -7875,6 +7984,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -7885,7 +7995,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - legend position - legend on right 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -7895,6 +8005,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     legend: {position: \\"right\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -7908,6 +8019,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -7918,7 +8030,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - legend position - legend on top 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -7928,6 +8040,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     legend: {position: \\"top\\"},
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -7941,6 +8054,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -7951,7 +8065,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - single axis name customization - high 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -7961,6 +8075,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     secondary_xaxis: {name: {position: \\"high\\"}},
     secondary_yaxis: {name: {position: \\"high\\"}},
@@ -7978,6 +8093,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -7988,7 +8104,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - single axis name customization - invisible 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -7998,6 +8114,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     secondary_xaxis: {name: {position: \\"middle\\"}},
     secondary_yaxis: {name: {position: \\"middle\\"}},
@@ -8015,6 +8132,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -8025,7 +8143,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - single axis name customization - low 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -8035,6 +8153,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     secondary_xaxis: {name: {position: \\"low\\"}},
     secondary_yaxis: {name: {position: \\"low\\"}},
@@ -8052,6 +8171,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -8062,7 +8182,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - single axis name customization - middle 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -8072,6 +8192,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     secondary_xaxis: {name: {position: \\"middle\\"}},
     secondary_yaxis: {name: {position: \\"middle\\"}},
@@ -8089,6 +8210,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -8099,12 +8221,13 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - single measure 1`] = `
 "import React from \\"react\\";
-import { IAttributeOrMeasure, idRef, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttributeOrMeasure, idRef, ISortItem, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"aangOxLSeztu\\", \\"measure\\"), m => m.localId(\\"m_aangOxLSeztu\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
@@ -8117,6 +8240,7 @@ export function MyComponent() {
         <div style={style}>
             <BarChart
                 measures={measures}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -8127,7 +8251,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - single measure ignores stack measures 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -8135,6 +8259,9 @@ const measures: IAttributeOrMeasure[] = [
 ];
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
+];
+const sortBy: ISortItem[] = [
+    newAttributeAreaSort(\\"a_label.product.id.name\\", \\"desc\\", \\"sum\\")
 ];
 const config: IChartConfig = {
     stackMeasures: true,
@@ -8150,6 +8277,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -8160,7 +8288,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - single measure with stack to 100% 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -8169,6 +8297,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     stackMeasuresToPercent: true,
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -8183,6 +8312,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -8193,7 +8323,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - single measure with two viewBy and stack 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -8204,6 +8334,10 @@ const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
 ];
 const stackBy: IAttribute = newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\"));
+const sortBy: ISortItem[] = [
+    newAttributeAreaSort(\\"a_label.product.id.name\\", \\"desc\\", \\"sum\\"),
+    newAttributeAreaSort(\\"a_label.owner.region\\", \\"desc\\", \\"sum\\")
+];
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"right\\"},
@@ -8218,6 +8352,7 @@ export function MyComponent() {
                 measures={measures}
                 viewBy={viewBy}
                 stackBy={stackBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -8228,7 +8363,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - single measure with viewBy 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -8237,6 +8372,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
@@ -8250,6 +8386,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -8260,7 +8397,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - single measure with viewBy and stackBy 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -8270,6 +8407,9 @@ const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
 const stackBy: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
+const sortBy: ISortItem[] = [
+    newAttributeAreaSort(\\"a_label.product.id.name\\", \\"desc\\", \\"sum\\")
+];
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"right\\"},
@@ -8284,6 +8424,7 @@ export function MyComponent() {
                 measures={measures}
                 viewBy={viewBy}
                 stackBy={stackBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -8294,7 +8435,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - stack measures and dual axis 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newArithmeticMeasure, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newArithmeticMeasure, newAttribute, newAttributeAreaSort, newMeasure } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -8308,6 +8449,9 @@ const measures: IAttributeOrMeasure[] = [
 ];
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
+];
+const sortBy: ISortItem[] = [
+    newAttributeAreaSort(\\"a_label.product.id.name\\", \\"desc\\", \\"sum\\")
 ];
 const config: IChartConfig = {
     secondary_xaxis: {measures: [\\"m_68d94d71b9317a58cd6c5b9a3f71f488\\"]},
@@ -8324,6 +8468,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -8334,7 +8479,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - stack measures to 100% and dual axis 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newArithmeticMeasure, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newArithmeticMeasure, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -8349,6 +8494,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     secondary_xaxis: {measures: [\\"m_68d94d71b9317a58cd6c5b9a3f71f488\\"]},
     stackMeasuresToPercent: true,
@@ -8364,6 +8510,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -8374,7 +8521,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - stack measures to 100% with dual axis and axis min/max 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newArithmeticMeasure, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newArithmeticMeasure, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -8389,6 +8536,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     secondary_xaxis: {
         max: \\"2\\",
@@ -8409,6 +8557,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -8451,7 +8600,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - themed 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -8461,6 +8610,9 @@ const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
 const stackBy: IAttribute = newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"));
+const sortBy: ISortItem[] = [
+    newAttributeAreaSort(\\"a_label.product.id.name\\", \\"desc\\", \\"sum\\")
+];
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"right\\"},
@@ -8475,6 +8627,7 @@ export function MyComponent() {
                 measures={measures}
                 viewBy={viewBy}
                 stackBy={stackBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -8485,7 +8638,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - two measures and two viewBy with stackMeasures 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -8495,6 +8648,10 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const sortBy: ISortItem[] = [
+    newAttributeAreaSort(\\"a_label.product.id.name\\", \\"desc\\", \\"sum\\"),
+    newAttributeAreaSort(\\"a_label.owner.region\\", \\"desc\\", \\"sum\\")
 ];
 const config: IChartConfig = {
     stackMeasures: true,
@@ -8510,6 +8667,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -8520,7 +8678,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - two measures and two viewBy with stackMeasuresToPercent 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -8530,6 +8688,10 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const sortBy: ISortItem[] = [
+    newAttributeAreaSort(\\"a_label.product.id.name\\", \\"desc\\", \\"sum\\"),
+    newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")
 ];
 const config: IChartConfig = {
     stackMeasuresToPercent: true,
@@ -8545,6 +8707,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -8555,7 +8718,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - two measures and two viewBy with top axis and stackMeasuresToPercent 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -8565,6 +8728,10 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const sortBy: ISortItem[] = [
+    newAttributeAreaSort(\\"a_label.product.id.name\\", \\"desc\\", \\"sum\\"),
+    newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")
 ];
 const config: IChartConfig = {
     secondary_xaxis: {measures: [\\"m_aangOxLSeztu\\", \\"m_acugFHNJgsBy\\"]},
@@ -8581,6 +8748,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -8591,7 +8759,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - two measures with dual axis and stack measures to 100% 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -8601,6 +8769,10 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const sortBy: ISortItem[] = [
+    newAttributeAreaSort(\\"a_label.product.id.name\\", \\"desc\\", \\"sum\\"),
+    newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")
 ];
 const config: IChartConfig = {
     secondary_xaxis: {measures: [\\"m_aangOxLSeztu\\"]},
@@ -8617,6 +8789,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -8627,7 +8800,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - two measures with dual axis ignores stack measures 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -8637,6 +8810,10 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const sortBy: ISortItem[] = [
+    newAttributeAreaSort(\\"a_label.product.id.name\\", \\"desc\\", \\"sum\\"),
+    newAttributeAreaSort(\\"a_label.owner.region\\", \\"desc\\", \\"sum\\")
 ];
 const config: IChartConfig = {
     secondary_xaxis: {measures: [\\"m_aangOxLSeztu\\"]},
@@ -8653,6 +8830,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -8663,7 +8841,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - two measures with two viewBy 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -8673,6 +8851,10 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\")),
     newAttribute(idRef(\\"label.owner.region\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.region\\"))
+];
+const sortBy: ISortItem[] = [
+    newAttributeAreaSort(\\"a_label.product.id.name\\", \\"desc\\", \\"sum\\"),
+    newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")
 ];
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -8687,6 +8869,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -8697,7 +8880,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - two measures with two viewBy, filtered to single value 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, ISortItem, newAttribute, newAttributeAreaSort, newMeasure, newMeasureSort, newPositiveAttributeFilter } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -8711,6 +8894,10 @@ const viewBy: IAttribute[] = [
 const filters: IFilter[] = [
     newPositiveAttributeFilter(idRef(\\"label.product.id.name\\", \\"displayForm\\"), {values: [\\"WonderKid\\"]}),
     newPositiveAttributeFilter(idRef(\\"label.owner.region\\", \\"displayForm\\"), {values: [\\"East Coast\\"]})
+];
+const sortBy: ISortItem[] = [
+    newAttributeAreaSort(\\"a_label.product.id.name\\", \\"desc\\", \\"sum\\"),
+    newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")
 ];
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
@@ -8726,6 +8913,7 @@ export function MyComponent() {
                 measures={measures}
                 viewBy={viewBy}
                 filters={filters}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -8736,7 +8924,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - two measures with viewBy 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -8746,6 +8934,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
@@ -8759,6 +8948,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -8816,7 +9006,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
-const sortBy: ISortItem[] = [newMeasureSort(\\"m_acugFHNJgsBy\\", \\"asc\\", [])];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_acugFHNJgsBy\\", \\"asc\\")];
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
@@ -8841,7 +9031,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - viewBy date and PoP measure 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure, newPopMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newMeasure, newMeasureSort, newPopMeasure } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -8852,6 +9042,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"closed.aag81lMifn6q\\", \\"displayForm\\"), a => a.localId(\\"a_closed.aag81lMifn6q\\"))
 ];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
@@ -8865,6 +9056,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -8875,7 +9067,7 @@ export function MyComponent() {
 
 exports[`getEmbeddingCode functionality should generate code for BarChart - viewBy with two dates 1`] = `
 "import React from \\"react\\";
-import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure, newPopMeasure } from \\"@gooddata/sdk-model\\";
+import { IAttribute, IAttributeOrMeasure, idRef, ISortItem, newAttribute, newAttributeAreaSort, newMeasure, newMeasureSort, newPopMeasure } from \\"@gooddata/sdk-model\\";
 import { BarChart, IChartConfig } from \\"@gooddata/sdk-ui-charts\\";
 
 const measures: IAttributeOrMeasure[] = [
@@ -8887,6 +9079,10 @@ const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"closed.aag81lMifn6q\\", \\"displayForm\\"), a => a.localId(\\"a_closed.aag81lMifn6q\\")),
     newAttribute(idRef(\\"closed.aag81lMifn6q\\", \\"displayForm\\"), a => a.localId(\\"a_closed.aag81lMifn6q_1\\"))
 ];
+const sortBy: ISortItem[] = [
+    newAttributeAreaSort(\\"a_closed.aag81lMifn6q\\", \\"desc\\", \\"sum\\"),
+    newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")
+];
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
@@ -8900,6 +9096,7 @@ export function MyComponent() {
             <BarChart
                 measures={measures}
                 viewBy={viewBy}
+                sortBy={sortBy}
                 config={config}
             />
         </div>
@@ -18145,7 +18342,7 @@ const measures: IAttributeOrMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
-const sortBy: ISortItem[] = [newMeasureSort(\\"m_acugFHNJgsBy\\", \\"asc\\", [])];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_acugFHNJgsBy\\", \\"asc\\")];
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
@@ -22873,7 +23070,7 @@ const secondaryMeasures: IMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
-const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\", [])];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
@@ -22911,7 +23108,7 @@ const secondaryMeasures: IMeasure[] = [
 const viewBy: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
-const sortBy: ISortItem[] = [newMeasureSort(\\"m_acugFHNJgsBy\\", \\"desc\\", [])];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_acugFHNJgsBy\\", \\"desc\\")];
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
@@ -30543,7 +30740,7 @@ const measures: IAttributeOrMeasure[] = [
     newMeasure(idRef(\\"acugFHNJgsBy\\", \\"measure\\"), m => m.localId(\\"m_acugFHNJgsBy\\"))
 ];
 const trendBy: IAttribute = newAttribute(idRef(\\"created.aci81lMifn6q\\", \\"displayForm\\"), a => a.localId(\\"a_created.aci81lMifn6q\\"));
-const sortBy: ISortItem[] = [newMeasureSort(\\"m_acugFHNJgsBy\\", \\"asc\\", [])];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_acugFHNJgsBy\\", \\"asc\\")];
 const config: IChartConfig = {
     separators: {decimal: \\".\\", thousand: \\",\\"},
     legend: {position: \\"auto\\"},
@@ -34018,7 +34215,7 @@ const rows: IAttribute[] = [
     newAttribute(idRef(\\"label.owner.department\\", \\"displayForm\\"), a => a.localId(\\"a_label.owner.department\\")),
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
-const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\", [])];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {aggregations: true, aggregationsSubMenu: true},
@@ -35009,7 +35206,7 @@ const measures: IAttributeOrMeasure[] = [
 const rows: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
-const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\", [])];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_aangOxLSeztu\\", \\"desc\\")];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {aggregations: true, aggregationsSubMenu: true},
@@ -35044,7 +35241,7 @@ const measures: IAttributeOrMeasure[] = [
 const rows: IAttribute[] = [
     newAttribute(idRef(\\"label.product.id.name\\", \\"displayForm\\"), a => a.localId(\\"a_label.product.id.name\\"))
 ];
-const sortBy: ISortItem[] = [newMeasureSort(\\"m_acugFHNJgsBy\\", \\"desc\\", [])];
+const sortBy: ISortItem[] = [newMeasureSort(\\"m_acugFHNJgsBy\\", \\"desc\\")];
 const config: IPivotTableConfig = {
     columnSizing: {defaultWidth: \\"autoresizeAll\\"},
     menu: {aggregations: true, aggregationsSubMenu: true},

@@ -6,7 +6,6 @@ import {
     IInsight,
     IInsightDefinition,
     insightHasMeasures,
-    insightMeasures,
     ISortItem,
     ISettings,
 } from "@gooddata/sdk-model";
@@ -14,7 +13,6 @@ import { BucketNames, ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
     BaseChart,
     ColorUtils,
-    IAxisConfig,
     IChartConfig,
     IColorMapping,
     updateConfigWithSettings,
@@ -176,14 +174,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         return executionFactory
             .forInsight(insight)
             .withDimensions(...this.getDimensions(insight))
-            .withSorting(
-                ...createSorts(
-                    this.type,
-                    insight,
-                    canSortStackTotalValue(insight, supportedControls),
-                    this.featureFlags.enableChartsSorting,
-                ),
-            )
+            .withSorting(...createSorts(this.type, insight, supportedControls, this.featureFlags))
             .withDateFormat(dateFormat)
             .withExecConfig(executionConfig);
     }
@@ -451,21 +442,4 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         const previousSort = properties?.sortItems;
         return validateCurrentSort(previousAvailableSorts, previousSort, availableSorts, defaultSort);
     }
-}
-
-function areAllMeasuresOnSingleAxis(insight: IInsightDefinition, secondaryYAxis: IAxisConfig): boolean {
-    const measureCount = insightMeasures(insight).length;
-    const numberOfMeasureOnSecondaryAxis = secondaryYAxis.measures?.length ?? 0;
-    return numberOfMeasureOnSecondaryAxis === 0 || measureCount === numberOfMeasureOnSecondaryAxis;
-}
-
-function canSortStackTotalValue(
-    insight: IInsightDefinition,
-    supportedControls: IVisualizationProperties,
-): boolean {
-    const stackMeasures = supportedControls?.stackMeasures ?? false;
-    const secondaryAxis: IAxisConfig = supportedControls?.secondary_yaxis ?? { measures: [] };
-    const allMeasuresOnSingleAxis = areAllMeasuresOnSingleAxis(insight, secondaryAxis);
-
-    return stackMeasures && allMeasuresOnSingleAxis;
 }

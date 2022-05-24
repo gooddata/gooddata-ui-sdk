@@ -85,7 +85,7 @@ describe("createSorts", () => {
                         },
                     },
                 ];
-                expect(createSorts("bar", insightWithSingleMeasureAndViewBy)).toEqual(expectedSort);
+                expect(createSorts("bar", insightWithSingleMeasureAndViewBy, {}, {})).toEqual(expectedSort);
             });
             it("should sort by group for bar chart with 1 measure and 2 viewBy", () => {
                 const expectedSort: ISortItem[] = [
@@ -105,7 +105,9 @@ describe("createSorts", () => {
                     },
                 ];
 
-                expect(createSorts("bar", insightWithSingleMeasureAndTwoViewBy)).toEqual(expectedSort);
+                expect(createSorts("bar", insightWithSingleMeasureAndTwoViewBy, {}, {})).toEqual(
+                    expectedSort,
+                );
             });
 
             it("should sort by group for bar chart with 2 measure and 2 viewBy", () => {
@@ -131,7 +133,7 @@ describe("createSorts", () => {
                     },
                 ];
 
-                expect(createSorts("bar", insightWithTwoMeasuresAndTwoViewBy)).toEqual(expectedSort);
+                expect(createSorts("bar", insightWithTwoMeasuresAndTwoViewBy, {}, {})).toEqual(expectedSort);
             });
 
             it("should sort by group for bar chart with 2 measure and 2 viewBy and canSortStackTotalValue is true", () => {
@@ -152,34 +154,45 @@ describe("createSorts", () => {
                     },
                 ];
 
-                expect(createSorts("bar", insightWithTwoMeasuresAndTwoViewBy, true)).toEqual(expectedSort);
+                expect(
+                    createSorts("bar", insightWithTwoMeasuresAndTwoViewBy, { stackMeasures: true }, {}),
+                ).toEqual(expectedSort);
             });
 
             it("should return no sort for stacked bar chart with only measure", () => {
                 const expectedSort: ISortItem[] = [];
-                expect(createSorts("bar", insightWithSingleMeasureAndStack)).toEqual(expectedSort);
+                expect(createSorts("bar", insightWithSingleMeasureAndStack, {}, {})).toEqual(expectedSort);
             });
         });
 
         describe("column", () => {
             it("should return empty array", () => {
-                expect(createSorts("column", insightWithSingleMeasureAndViewByAndStack)).toEqual([]);
+                expect(createSorts("column", insightWithSingleMeasureAndViewByAndStack, {}, {})).toEqual([]);
             });
         });
 
         describe("line", () => {
             it("should return empty array", () => {
-                expect(createSorts("line", insightWithSingleMeasureAndViewByAndStack)).toEqual([]);
+                expect(createSorts("line", insightWithSingleMeasureAndViewByAndStack, {}, {})).toEqual([]);
             });
         });
 
         describe("pie/donut", () => {
             it("should return empty array", () => {
-                expect(createSorts("pie", insightWithSingleMeasureAndViewByAndStack)).toEqual([]);
+                expect(createSorts("pie", insightWithSingleMeasureAndViewByAndStack, {}, {})).toEqual([]);
             });
 
             it("should sort by measure when enableChartsSorting is set to true", () => {
-                expect(createSorts("pie", insightWithSingleMeasureAndViewByAndStack, false, true)).toEqual([
+                expect(
+                    createSorts(
+                        "pie",
+                        insightWithSingleMeasureAndViewByAndStack,
+                        {},
+                        {
+                            enableChartsSorting: true,
+                        },
+                    ),
+                ).toEqual([
                     {
                         measureSortItem: {
                             direction: "desc",
@@ -198,7 +211,7 @@ describe("createSorts", () => {
 
         describe("table", () => {
             it("should return empty array", () => {
-                expect(createSorts("table", insightWithSingleMeasureAndViewByAndStack)).toEqual([]);
+                expect(createSorts("table", insightWithSingleMeasureAndViewByAndStack, {}, {})).toEqual([]);
             });
         });
     });
