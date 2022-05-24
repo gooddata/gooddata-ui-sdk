@@ -28,9 +28,9 @@ export const EmbedInsightDialogBaseExamples: React.VFC = () => {
                         customHeight: true,
                         height: "300",
                     }}
-                    propertiesLink={
+                    /* propertiesLink={
                         "https://sdk.gooddata.com/gooddata-ui/docs/area_chart_component.html#properties"
-                    }
+                    }*/
                     integrationDocLink={"https://sdk.gooddata.com/gooddata-ui/docs/platform_integration.html"}
                     onClose={action("onClose")}
                     onCopyCode={action("onCopyCode")}
@@ -64,3 +64,38 @@ export const EmbedInsightDialogBaseExamples: React.VFC = () => {
 storiesOf(`${UiKit}/EmbedInsightDialog/EmbedInsightDialogBase`)
     .add("full-featured", () => <EmbedInsightDialogBaseExamples />, { screenshot: true })
     .add("themed", () => wrapWithTheme(<EmbedInsightDialogBaseExamples />), { screenshot: true });
+
+export const TEST: React.VFC = () => {
+    return (
+        <InternalIntlWrapper>
+            <div className="screenshot-target">
+                <div className="library-component">
+                    <h4>EmbedInsightDialogBase by definition</h4>
+                </div>
+
+                <EmbedInsightDialogBase
+                    code={code}
+                    codeLanguage={"ts"}
+                    codeOption={{
+                        type: "definition",
+                        includeConfiguration: true,
+                        customHeight: true,
+                        height: "300",
+                    }}
+                    /* propertiesLink={
+                        "https://sdk.gooddata.com/gooddata-ui/docs/area_chart_component.html#properties"
+                    }*/
+                    integrationDocLink={"https://sdk.gooddata.com/gooddata-ui/docs/platform_integration.html"}
+                    onClose={action("onClose")}
+                    onCopyCode={action("onCopyCode")}
+                    onCodeLanguageChange={action("onCodeLanguageChange")}
+                    onCodeOptionChange={action("onCodeOptionChange")}
+                />
+            </div>
+        </InternalIntlWrapper>
+    );
+};
+
+storiesOf(`${UiKit}/EmbedInsightDialog/EmbedInsightDialogBase/test`)
+    .add("full-featured", () => <TEST />, { screenshot: true })
+    .add("themed", () => wrapWithTheme(<TEST />), { screenshot: true });
