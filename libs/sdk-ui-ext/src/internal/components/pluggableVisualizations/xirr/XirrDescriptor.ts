@@ -13,6 +13,7 @@ import { IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor";
 import { PluggableXirr } from "./PluggableXirr";
 import { DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT, MAX_VISUALIZATION_HEIGHT } from "../constants";
 import {
+    executionConfigInsightConversion,
     filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
@@ -81,6 +82,7 @@ export class XirrDescriptor implements IVisualizationDescriptor {
             attribute: singleAttributeBucketConversion("attribute", BucketNames.ATTRIBUTE),
             filters: filtersInsightConversion("filters"),
             locale: localeInsightConversion("locale"),
+            execConfig: executionConfigInsightConversion("execConfig"),
         }),
     });
 

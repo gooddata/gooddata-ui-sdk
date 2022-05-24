@@ -8,6 +8,7 @@ import {
     IAttribute,
     IAttributeOrMeasure,
     IBucket,
+    IExecutionConfig,
     IFilter,
     IMeasure,
     insightFilters,
@@ -20,6 +21,7 @@ import {
 } from "@gooddata/sdk-model";
 import { DefaultLocale } from "@gooddata/sdk-ui";
 import isNil from "lodash/isNil";
+import { removeUseless } from "../../removeUseless";
 
 import { PropMeta } from "../types";
 import { bucketConversion, IInsightToPropConversion, insightConversion } from "./convertor";
@@ -171,6 +173,28 @@ export function localeInsightConversion<TProps extends object, TPropKey extends 
         (_, ctx) => {
             const val = ctx?.settings?.locale;
             return val && val !== DefaultLocale ? val : undefined;
+        },
+    );
+}
+
+/**
+ * Utility function for creating insight conversion for single {@link @gooddata/sdk-ui#IExecutionConfig} item.
+ */
+export function executionConfigInsightConversion<TProps extends object, TPropKey extends keyof TProps>(
+    propName: TPropKey,
+): IInsightToPropConversion<TProps, TPropKey, IExecutionConfig | undefined> {
+    return insightConversion(
+        propName,
+        {
+            cardinality: "scalar",
+            typeImport: {
+                importType: "named",
+                name: "IExecutionConfig",
+                package: "@gooddata/sdk-model",
+            },
+        },
+        (_, ctx) => {
+            return ctx?.executionConfig && removeUseless(ctx.executionConfig);
         },
     );
 }

@@ -15,5 +15,6 @@ export {
     totalsInsightConversion,
     IInsightToPropConversion,
     localeInsightConversion,
+    executionConfigInsightConversion,
 } from "./insightToPropsConverter";
 export * from "./types";

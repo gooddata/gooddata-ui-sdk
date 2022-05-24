@@ -97,6 +97,8 @@ export interface IEmbedInsightDialogProps {
     // (undocumented)
     colorPalette?: IColorPalette;
     // (undocumented)
+    executionConfig?: IExecutionConfig;
+    // (undocumented)
     insight: IInsight;
     // (undocumented)
     integrationDocLink?: string;

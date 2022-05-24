@@ -17,6 +17,7 @@ import {
     reverseAndTrimIntersection,
 } from "../drillDownUtil";
 import {
+    executionConfigInsightConversion,
     filtersInsightConversion,
     getInsightToPropsConverter,
     getReactEmbeddingCodeGenerator,
@@ -51,6 +52,7 @@ export class LineChartDescriptor extends BaseChartDescriptor implements IVisuali
             sortBy: sortsInsightConversion("sortBy"),
             config: chartConfigInsightConversion("config"),
             locale: localeInsightConversion("locale"),
+            execConfig: executionConfigInsightConversion("execConfig"),
         }),
         additionalFactories: chartAdditionalFactories(),
     });
