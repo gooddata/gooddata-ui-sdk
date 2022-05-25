@@ -46,10 +46,12 @@ export interface IAppHeaderProps {
 
     userName: string;
 
+    expiredDate: Date;
     disableHelpDropdown?: boolean;
     onHelpClick?: (isOpen: boolean) => void;
     helpMenuDropdownAlignPoints?: HelpMenuDropdownAlignPoints;
     showStaticHelpMenu?: boolean;
+    showCountdown?: boolean;
 
     helpRedirectUrl?: string;
     theme?: ITheme;

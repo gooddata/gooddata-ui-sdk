@@ -308,6 +308,16 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
     }
 }
 
+.gd-header-countdown {
+    display: flex;
+    align-items: center;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+    color: inherit;
+    opacity: 0.8;
+}
+
 .gd-header-project-wrapper {
     display: flex;
     flex: 1 1 $gd-header-project-width;
@@ -835,7 +845,7 @@ button.gd-button-primary.gd-upsell-button {
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
-    margin: auto 7px;
+    margin: auto 7px auto 10px;
     padding: 0;
     border: 1px solid transparent;
     line-height: 14px;

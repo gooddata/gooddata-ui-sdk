@@ -4,6 +4,8 @@ import { WrappedComponentProps, injectIntl, FormattedMessage } from "react-intl"
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import cx from "classnames";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
+import differenceInDays from "date-fns/differenceInDays";
+import differenceInMonths from "date-fns/differenceInMonths";
 
 import { v4 as uuid } from "uuid";
 import debounce from "lodash/debounce";
@@ -210,6 +212,29 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
         onClick: this.state.responsiveMode && this.props.helpMenuItems ? this.toggleHelpMenu : undefined,
     });
 
+    private getTrialCountdown = (expiredDate: Date) => {
+        const trialDaysLeft = differenceInDays(expiredDate, new Date());
+        if (trialDaysLeft >= 30 && trialDaysLeft <= 90) {
+            const twoMonthsDistance = differenceInMonths(new Date(expiredDate), new Date());
+            return (
+                <FormattedMessage
+                    id="gs.header.countdown.numberOfMonthsLeft"
+                    values={{ number: twoMonthsDistance }}
+                />
+            );
+        } else if (trialDaysLeft < 30 && trialDaysLeft > 0) {
+            return (
+                <FormattedMessage
+                    id="gs.header.countdown.numberOfDaysLeft"
+                    values={{ number: trialDaysLeft }}
+                />
+            );
+        } else if (trialDaysLeft === 0) {
+            return <FormattedMessage id="gs.header.countdown.lastDay" />;
+        }
+        return "";
+    };
+
     private renderNav = () => {
         return this.state.responsiveMode ? this.renderMobileNav() : this.renderStandardNav();
     };
@@ -328,6 +353,12 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                     sections={this.props.menuItemsGroups}
                     className="gd-header-menu-horizontal"
                 />
+
+                {this.props.showCountdown && (
+                    <div className="gd-header-countdown">
+                        {this.getTrialCountdown(this.props.expiredDate)}
+                    </div>
+                )}
 
                 {this.props.showUpsellButton && (
                     <HeaderUpsellButton onUpsellButtonClick={this.props.onUpsellButtonClick} />
