@@ -46,6 +46,7 @@ export interface IAppHeaderProps {
 
     userName: string;
 
+    expiredDate?: string;
     disableHelpDropdown?: boolean;
     onHelpClick?: (isOpen: boolean) => void;
     helpMenuDropdownAlignPoints?: HelpMenuDropdownAlignPoints;

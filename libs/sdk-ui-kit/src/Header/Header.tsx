@@ -3,6 +3,9 @@ import React, { Component, createRef } from "react";
 import { WrappedComponentProps, injectIntl, FormattedMessage } from "react-intl";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import cx from "classnames";
+import differenceInMonths from "date-fns/differenceInMonths";
+import differenceInCalendarDays from "date-fns/differenceInCalendarDays";
+import format from "date-fns/format";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { v4 as uuid } from "uuid";
@@ -210,6 +213,38 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
         onClick: this.state.responsiveMode && this.props.helpMenuItems ? this.toggleHelpMenu : undefined,
     });
 
+    private getTrialCountdown = (expiredDate: string) => {
+        const trialDaysLeft = differenceInCalendarDays(new Date(expiredDate), new Date()) + 1; // include expired date.
+        if (trialDaysLeft === 1) {
+            return <FormattedMessage id="gs.header.countdown.lastDay" />;
+        }
+        if (trialDaysLeft === 30) {
+            return <FormattedMessage id="gs.header.countdown.oneMonthLeft" />;
+        }
+        if (trialDaysLeft > 1 && trialDaysLeft < 30) {
+            return (
+                <FormattedMessage
+                    id="gs.header.countdown.numberOfDaysLeft"
+                    values={{ number: trialDaysLeft }}
+                />
+            );
+        }
+        if (trialDaysLeft > 30 && trialDaysLeft < 90) {
+            const currentDateWithoutTime = format(new Date(), "yyyy-MM-dd");
+            const trialMonthsLeft = differenceInMonths(
+                new Date(expiredDate),
+                new Date(currentDateWithoutTime),
+            );
+            return (
+                <FormattedMessage
+                    id="gs.header.countdown.numberOfMonthsLeft"
+                    values={{ number: trialMonthsLeft + 1 }}
+                />
+            );
+        }
+        return "";
+    };
+
     private renderNav = () => {
         return this.state.responsiveMode ? this.renderMobileNav() : this.renderStandardNav();
     };
@@ -328,6 +363,12 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                     sections={this.props.menuItemsGroups}
                     className="gd-header-menu-horizontal"
                 />
+
+                {this.props.expiredDate && (
+                    <div className="gd-header-expiration-date">
+                        {this.getTrialCountdown(this.props.expiredDate)}
+                    </div>
+                )}
 
                 {this.props.showUpsellButton && (
                     <HeaderUpsellButton onUpsellButtonClick={this.props.onUpsellButtonClick} />
