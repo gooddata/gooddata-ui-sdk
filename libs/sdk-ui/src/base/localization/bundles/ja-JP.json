@@ -255,7 +255,7 @@
     "attributesDropdown.noData": "このアトリビュートには値がありません。",
     "shareDialog.share.grantee.title": "ユーザやグループと共有",
     "shareDialog.share.grantee.share": "共有する",
-    "shareDialog.share.grantee.list.title": "シェア相手",
+    "shareDialog.share.grantee.list.title": "共有先",
     "shareDialog.share.grantee.add": "追加",
     "shareDialog.share.grantee.add.empty.selection": "ユーザーやグループが選択されていません。",
     "shareDialog.share.grantee.add.info": "ユーザーまたはグループを追加",
