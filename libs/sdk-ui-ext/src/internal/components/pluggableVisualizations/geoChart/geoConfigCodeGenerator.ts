@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import { IInsightDefinition, insightProperties } from "@gooddata/sdk-model";
+import { IInsightDefinition, insightProperties, insightVisualizationUrl } from "@gooddata/sdk-model";
 import { IGeoConfig } from "@gooddata/sdk-ui-geo";
 import filter from "lodash/fp/filter";
 import flow from "lodash/fp/flow";
@@ -7,6 +7,7 @@ import fromPairs from "lodash/fromPairs";
 import isNil from "lodash/isNil";
 import toPairs from "lodash/toPairs";
 import { IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor";
+import { PropWithMeta } from "../../../utils/embeddingCodeGenerator";
 
 const supportedGeoConfigProperties = new Set<keyof IGeoConfig>([
     "center",
@@ -37,6 +38,32 @@ export function geoConfigFromInsight(insight: IInsightDefinition, ctx?: IEmbeddi
 
     return {
         ...configFromProperties,
+        ...mapBoxTokenPlaceholder(),
+    };
+}
+
+export function mapBoxTokenPlaceholder(): IGeoConfig {
+    return {
         mapboxToken: "<fill your Mapbox token here>",
+    };
+}
+
+export function isGeoChart(insightDefinition: IInsightDefinition): boolean {
+    const type = insightVisualizationUrl(insightDefinition).split(":")[1];
+
+    return type === "pushpin";
+}
+
+export function geoConfigForInsightViewComponent(): PropWithMeta<IGeoConfig> | undefined {
+    return {
+        value: mapBoxTokenPlaceholder(),
+        meta: {
+            cardinality: "scalar",
+            typeImport: {
+                importType: "named",
+                name: "IGeoConfig",
+                package: "@gooddata/sdk-ui-geo",
+            },
+        },
     };
 }

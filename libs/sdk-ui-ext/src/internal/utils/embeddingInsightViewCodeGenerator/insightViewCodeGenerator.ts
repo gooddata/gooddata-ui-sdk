@@ -4,6 +4,7 @@ import { IInsight, insightId, insightTitle } from "@gooddata/sdk-model";
 import { IInsightViewProps } from "../../interfaces/InsightView";
 import { getReactEmbeddingCodeGenerator } from "../embeddingCodeGenerator";
 import { removeUseless } from "../removeUseless";
+import { configForInsightView, localeForInsightView } from "./insightViewConfig";
 
 /**
  * DO NOT USE THIS INSIGHTVIEW CODE GENERATOR, IT'S FOR INTERNAL PURPOSE ONLY.
@@ -41,6 +42,8 @@ export const insightViewCodeGenerator = getReactEmbeddingCodeGenerator<IInsightV
                     },
                 },
             },
+            config: configForInsightView(insightDefinition),
+            locale: localeForInsightView(ctx),
         };
     },
 });
