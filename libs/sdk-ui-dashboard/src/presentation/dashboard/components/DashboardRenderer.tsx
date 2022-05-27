@@ -29,6 +29,7 @@ import { DashboardLoading } from "./DashboardLoading";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DragLayerComponent } from "../../dragAndDrop";
+import { RenderModeAwareDashboardLayoutSectionHeaderRenderer } from "../DashboardSidebar/RenderModeAwareDashboardSidebar";
 
 /**
  * @internal
@@ -102,6 +103,10 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                             props.DashboardDateFilterComponent ?? DefaultDashboardDateFilter
                                         }
                                         FilterBarComponent={props.FilterBarComponent ?? DefaultFilterBar}
+                                        SidebarComponent={
+                                            props.SidebarComponent ??
+                                            RenderModeAwareDashboardLayoutSectionHeaderRenderer
+                                        }
                                     >
                                         <DashboardConfigProvider menuButtonConfig={props.menuButtonConfig}>
                                             <DndProvider backend={HTML5Backend}>

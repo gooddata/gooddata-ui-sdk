@@ -41,6 +41,7 @@ options = {
                 "src/presentation/saveAs",
                 "src/presentation/topBar",
                 "src/presentation/widget",
+                "src/presentation/componentDefinition",
                 "src/types.ts",
             ],
         ),
@@ -52,6 +53,7 @@ options = {
             "src/presentation/saveAs/types.ts",
             "src/presentation/topBar/types.ts",
             "src/presentation/widget/types.ts",
+            "src/presentation/dashboard/DashboardSidebar/types.ts",
             "src/model",
         ]),
         depCruiser.moduleWithDependencies("dialogs", "src/presentation/dialogs", [

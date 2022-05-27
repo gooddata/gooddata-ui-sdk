@@ -37,6 +37,7 @@ import {
     OptionalKpiComponentProvider,
     OptionalWidgetComponentProvider,
 } from "../dashboardContexts";
+import { CustomSidebarComponent } from "./DashboardSidebar/types";
 
 /**
  * These props allow you to specify custom components or custom component providers that the Dashboard
@@ -279,6 +280,13 @@ export interface IDashboardCustomComponentProps {
      * @alpha
      */
     FilterBarComponent?: CustomFilterBarComponent;
+
+    /**
+     * Specify component to use for rendering the sidebar.
+     *
+     * @alpha
+     */
+    SidebarComponent?: CustomSidebarComponent;
 }
 
 /**

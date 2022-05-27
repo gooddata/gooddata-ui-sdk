@@ -31,6 +31,7 @@ import {
     KpiComponentProvider,
     WidgetComponentProvider,
 } from "./types";
+import { CustomSidebarComponent } from "../dashboard/DashboardSidebar/types";
 
 /**
  * @internal
@@ -56,6 +57,7 @@ interface IDashboardComponentsContext {
     DashboardAttributeFilterComponentProvider: AttributeFilterComponentProvider;
     DashboardDateFilterComponent: CustomDashboardDateFilterComponent;
     FilterBarComponent: CustomFilterBarComponent;
+    SidebarComponent: CustomSidebarComponent;
 }
 
 const ThrowMissingComponentError = (componentName: string) => () => {
@@ -92,6 +94,7 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     ),
     DashboardDateFilterComponent: ThrowMissingComponentError("DashboardDateFilterComponent"),
     FilterBarComponent: ThrowMissingComponentError("FilterBarComponent"),
+    SidebarComponent: ThrowMissingComponentError("SidebarComponent"),
 });
 DashboardComponentsContext.displayName = "DashboardComponentsContext";
 
