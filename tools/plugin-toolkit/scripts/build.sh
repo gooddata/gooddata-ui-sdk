@@ -10,8 +10,10 @@ TSNODE_BIN="${PACKAGE_DIR}/node_modules/.bin/ts-node"
 PREPARE_PACKAGE_JSON="${TSNODE_BIN} ${PACKAGE_DIR}/scripts/preparePackageJson.ts"
 
 DASHBOARD_PLUGIN_TEMPLATE_DIR="${PACKAGE_DIR}/../dashboard-plugin-template"
-JS_CONFIG_TEMPLATES="${DASHBOARD_PLUGIN_TEMPLATE_DIR}/configTemplates/js/.[^.]*"
-TS_CONFIG_TEMPLATES="${DASHBOARD_PLUGIN_TEMPLATE_DIR}/configTemplates/ts/.[^.]*"
+JS_CONFIG_TEMPLATES="${DASHBOARD_PLUGIN_TEMPLATE_DIR}/configTemplates/js/*"
+JS_CONFIG_TEMPLATES_DOT="${DASHBOARD_PLUGIN_TEMPLATE_DIR}/configTemplates/js/.[^.]*"
+TS_CONFIG_TEMPLATES="${DASHBOARD_PLUGIN_TEMPLATE_DIR}/configTemplates/ts/*"
+TS_CONFIG_TEMPLATES_DOT="${DASHBOARD_PLUGIN_TEMPLATE_DIR}/configTemplates/ts/.[^.]*"
 BUILD_DIR="${PACKAGE_DIR}/build"
 JS_BUILD_DIR="${BUILD_DIR}/dashboard-plugin-template.js"
 TS_BUILD_DIR="${BUILD_DIR}/dashboard-plugin-template.ts"
@@ -51,6 +53,7 @@ cp -R "${TS_BUILD_DIR}" "${JS_BUILD_DIR}"
 
 # copy over the eslint, prettier and jest config files for the TypeScript project
 cp ${TS_CONFIG_TEMPLATES} "${TS_BUILD_DIR}"
+cp ${TS_CONFIG_TEMPLATES_DOT} "${TS_BUILD_DIR}"
 
 # create archive with TypeScript template
 tar -czf "${TS_TAR}" -C "${TS_BUILD_DIR}" .
@@ -61,8 +64,9 @@ tar -czf "${TS_TAR}" -C "${TS_BUILD_DIR}" .
 
 $PREPARE_PACKAGE_JSON remove-ts "${JS_BUILD_DIR}"
 
-# copy over the eslint, prettier and jest config files for the TypeScript project
+# copy over the eslint, prettier and jest config files for the JavaScript project
 cp ${JS_CONFIG_TEMPLATES} "${JS_BUILD_DIR}"
+cp ${JS_CONFIG_TEMPLATES_DOT} "${JS_BUILD_DIR}"
 
 # transpile TypeScript files to JavaScript
 $BABEL_BIN --no-babelrc \
