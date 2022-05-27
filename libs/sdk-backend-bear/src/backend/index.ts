@@ -72,6 +72,7 @@ const CAPABILITIES: IBackendCapabilities = {
     allowsInconsistentRelations: false,
     supportsTimeGranularities: false,
     supportsHierarchicalWorkspaces: false,
+    supportsCustomColorPalettes: true,
 };
 
 /**

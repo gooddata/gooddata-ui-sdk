@@ -83,6 +83,7 @@ export const defaultRecordedBackendCapabilities: IBackendCapabilities = {
     supportsOwners: true,
     allowsInconsistentRelations: false,
     supportsHierarchicalWorkspaces: false,
+    supportsCustomColorPalettes: true,
 };
 
 /**

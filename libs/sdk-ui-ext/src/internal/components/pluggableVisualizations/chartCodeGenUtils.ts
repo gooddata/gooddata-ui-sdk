@@ -54,10 +54,11 @@ export function chartConfigFromInsight(
 ): IChartConfig {
     const properties = insightProperties(insight);
     const controls = properties?.controls ?? {};
+    const includeColorPalette = ctx?.backend?.capabilities.supportsCustomColorPalettes ?? false;
     const withValuesFromContext = {
         ...controls,
-        ...(ctx?.colorPalette ? { colorPalette: ctx?.colorPalette } : {}),
-        ...(ctx?.settings?.separators ? { separators: ctx?.settings?.separators } : {}),
+        ...(ctx?.colorPalette && includeColorPalette ? { colorPalette: ctx.colorPalette } : {}),
+        ...(ctx?.settings?.separators ? { separators: ctx.settings.separators } : {}),
         ...(ctx?.settings?.enableChartsSorting ? { enableChartSorting: true } : {}),
         ...(ctx?.settings?.enableAxisNameViewByTwoAttributes ? { enableJoinedAttributeAxisName: true } : {}),
     };

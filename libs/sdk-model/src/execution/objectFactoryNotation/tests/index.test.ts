@@ -457,8 +457,8 @@ describe("factoryNotationFor", () => {
                         identifier: "foo",
                     },
                     granularity: "GDC.time.year",
-                    from: -42,
-                    to: 42,
+                    from: 0,
+                    to: 0,
                 },
             };
             const actual = factoryNotationFor(input);
