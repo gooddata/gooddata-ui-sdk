@@ -59,6 +59,7 @@ export {
     IElementsQueryOptionsElementsByUri,
     IElementsQueryOptionsElementsByValue,
     IElementsQueryOptionsElementsByPrimaryDisplayFormValue,
+    ElementsQueryOptionsElementsSpecification,
     isElementsQueryOptionsElementsByValue,
     isElementsQueryOptionsElementsByPrimaryDisplayFormValue,
     isValueBasedElementsQueryOptionsElements,
