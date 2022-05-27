@@ -125,9 +125,9 @@ function walkProps<TProps>(
     const propsToOmit = config?.omitChartProps ?? [];
     const importsUsed: IImportInfo[] = [];
 
-    // we ignore functions as there is no bullet-proof way to serialize them
+    // we ignore undefined values and functions as there is no bullet-proof way to serialize them
     const propPairsIgnoredFunctions = toPairs<PropWithMeta<any>>(props).filter(
-        ([_, { value }]) => !isFunction(value) && !isEmpty(value),
+        ([_, meta]) => meta !== undefined && !isFunction(meta.value) && !isEmpty(meta.value),
     );
 
     //omit chart configuration when define in config

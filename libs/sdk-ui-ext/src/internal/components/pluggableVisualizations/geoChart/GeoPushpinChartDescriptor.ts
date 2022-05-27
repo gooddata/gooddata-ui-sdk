@@ -24,7 +24,7 @@ import {
     singleAttributeOrMeasureBucketConversion,
     sortsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator";
-import { geoConfigFromInsight } from "./geoConfigFromInsight";
+import { geoConfigFromInsight } from "./geoConfigCodeGenerator";
 import { chartAdditionalFactories } from "../chartCodeGenUtils";
 
 export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
