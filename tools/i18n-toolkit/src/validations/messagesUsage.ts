@@ -15,9 +15,11 @@ export async function getUsageMessagesCheck(
     {
         source = "src/**/*.{ts,js,tsx,jsx}",
         rules = [],
+        insightToReport,
     }: {
         source: string;
         rules: ToolkitConfigFile["rules"];
+        insightToReport: boolean;
     },
     debug: boolean = false,
 ) {
@@ -38,7 +40,9 @@ export async function getUsageMessagesCheck(
     const defaultLocalizations = localizations.filter(([pth]) => pth.includes(DefaultLocale));
     const extracted = await extractMessages(cwd, source, debug);
 
-    const { results, uncontrolled } = checkTranslations(defaultLocalizations, rules, extracted);
+    const { results, uncontrolled } = checkTranslations(defaultLocalizations, rules, extracted, {
+        insightToReport,
+    });
     resultsInfo(cwd, results, uncontrolled, debug);
 
     const determinedError = errorBasedOnResults(results, uncontrolled);

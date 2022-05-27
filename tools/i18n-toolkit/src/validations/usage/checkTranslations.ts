@@ -3,7 +3,16 @@ import groupBy from "lodash/groupBy";
 import difference from "lodash/difference";
 import flatten from "lodash/flatten";
 
-import { ToolkitConfigFile, ToolkitTranslationRule, Uncontrolled, UsageResult } from "../../data";
+import {
+    ToolkitConfigFile,
+    ToolkitTranslationRule,
+    UsageResult,
+    Uncontrolled,
+    CheckInsightPipe,
+    CheckReportPipe,
+    CheckMeasureSuffix,
+    CheckMetricSuffix,
+} from "../../data";
 import { LocalesStructure } from "../../schema/localization";
 
 type ToolkitTranslationRuleData = ToolkitTranslationRule & {
@@ -16,9 +25,10 @@ export function checkTranslations(
     localizations: Array<[string, LocalesStructure]>,
     rules: ToolkitConfigFile["rules"],
     extracted: Record<string, any>,
+    { insightToReport }: { insightToReport?: boolean },
 ) {
     const { groups, translationDefinition } = getGroupedRules(rules, extracted);
-    const keysInFiles = getTranslationKeysFromFiles(localizations);
+    const keysInFiles = getTranslationKeysFromFiles(localizations, insightToReport);
 
     const results = translationDefinition.map((translation): UsageResult => {
         const extractedMessages = groups[translation.identifier] || [];
@@ -89,9 +99,22 @@ function patternsAsFunction(pattern: RegExp | RegExp[] | undefined) {
 
 function getTranslationKeysFromFiles(
     localizations: Array<[string, LocalesStructure]>,
+    insightToReport = false,
 ): Array<[string, string[]]> {
     return localizations.map(([fileName, content]) => {
-        return [fileName, Object.keys(content)];
+        let keys = Object.keys(content);
+
+        //is insight to report is enabled, remove piped locales keys
+        if (insightToReport) {
+            keys = keys.map((key) => {
+                return key.replace(CheckInsightPipe, "").replace(CheckReportPipe, "");
+            });
+        }
+        //remove metric and measure suffix
+        keys = keys.map((key) => {
+            return key.replace(CheckMeasureSuffix, "").replace(CheckMetricSuffix, "");
+        });
+        return [fileName, keys];
     });
 }
 

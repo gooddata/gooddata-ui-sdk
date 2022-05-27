@@ -11,7 +11,8 @@ import { getInsightToReportCheck } from "./validations/insightToReport";
 import { getUsageMessagesCheck } from "./validations/messagesUsage";
 
 export async function validate(cwd: string, opts: ToolkitConfigFile) {
-    const localizationPaths = (opts.paths || []).map((pth) => path.join(cwd, pth));
+    const { paths = [], insightToReport } = opts;
+    const localizationPaths = paths.map((pth) => path.join(cwd, pth));
 
     const localizations = getParsedLocalizations(await getLocalizationFiles(localizationPaths));
     const localizationValues = getLocalizationValues(localizations);
@@ -23,5 +24,11 @@ export async function validate(cwd: string, opts: ToolkitConfigFile) {
     await getInsightToReportCheck(localizations, opts.insightToReport || false, opts.debug);
 
     const { rules, source } = opts;
-    await getUsageMessagesCheck(cwd, localizations, opts.usage || false, { source, rules }, opts.debug);
+    await getUsageMessagesCheck(
+        cwd,
+        localizations,
+        opts.usage || false,
+        { source, rules, insightToReport },
+        opts.debug,
+    );
 }
