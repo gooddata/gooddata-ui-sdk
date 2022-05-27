@@ -357,6 +357,7 @@ export interface IBackendCapabilities {
     maxDimensions?: number;
     supportsAccessControl?: boolean;
     supportsCsvUploader?: boolean;
+    supportsCustomColorPalettes?: boolean;
     supportsElementsQueryParentFiltering?: boolean;
     supportsElementUris?: boolean;
     supportsExplain?: boolean;
