@@ -20,6 +20,7 @@ import {
     IAttributeElements,
     IMeasure,
     IRelativeDateFilter,
+    isPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 
 /**
@@ -306,6 +307,17 @@ export interface IAttributeElementsSelectionHandler {
 }
 
 /**
+ * Handles simple selection of at most one item
+ * @internal
+ */
+export interface ISingleAttributeElementSelectionHandler {
+    // manipulators
+    changeSelection(selection: string | undefined): void;
+    // selectors
+    getSelection(): string | undefined;
+}
+
+/**
  * Handles selection of items with stages: working and committed.
  * @internal
  */
@@ -329,22 +341,62 @@ export interface IStagedAttributeElementsSelectionHandler
 }
 
 /**
+ * Handles selection of items with stages: working and committed.
+ * @internal
+ */
+export interface IStagedSingleAttributeElementSelectionHandler
+    extends Omit<ISingleAttributeElementSelectionHandler, "getSelection"> {
+    // manipulators
+    /**
+     * Commit the current working selection making it the new committed selection.
+     */
+    commitSelection(): void;
+    /**
+     * Revert the current working selection by resetting it to the committed selection.
+     */
+    revertSelection(): void;
+    // selectors
+    getWorkingSelection(): string | undefined;
+    getCommittedSelection(): string | undefined;
+    // callbacks
+    onSelectionChanged: CallbackRegistration<{ selection: string | undefined }>;
+    onSelectionCommitted: CallbackRegistration<{ selection: string | undefined }>;
+}
+
+/**
  * Handles the whole attribute filter experience
  * @internal
  */
-export interface IAttributeFilterHandler
-    extends IAttributeDisplayFormLoader,
-        IAttributeElementLoader,
-        IStagedAttributeElementsSelectionHandler {
+export interface IAttributeFilterHandlerBase extends IAttributeDisplayFormLoader, IAttributeElementLoader {
+    // selectors
+    /**
+     * Get the effective filter (using the committed selection).
+     */
+    getFilter(): IAttributeFilter;
+}
+
+/**
+ * Handles the whole attribute filter experience
+ * @internal
+ */
+export interface ISingleSelectAttributeFilterHandler extends IAttributeFilterHandlerBase {
+    // selectors
+    /**
+     * Get the currently selected attribute element (using the working selection).
+     */
+    getSelectedItem(): IAttributeElement | undefined;
+}
+
+/**
+ * Handles the whole attribute filter experience
+ * @internal
+ */
+export interface IMultiSelectAttributeFilterHandler extends IAttributeFilterHandlerBase {
     // selectors
     /**
      * Get the currently selected attribute elements (using the working selection).
      */
     getSelectedItems(): AttributeElementSelectionFull;
-    /**
-     * Get the effective filter (using the committed selection).
-     */
-    getFilter(): IAttributeFilter;
 }
 
 //
@@ -757,7 +809,7 @@ export interface IAttributeFilterHandlerConfig {
 /**
  * @internal
  */
-export class AttributeFilterHandler implements IAttributeFilterHandler {
+export class AttributeFilterHandlerBase implements IAttributeFilterHandlerBase {
     protected displayFormLoader: IAttributeDisplayFormLoader;
     protected elementLoader: IAttributeElementLoader;
     protected stagedSelectionHandler: IStagedAttributeElementsSelectionHandler;
@@ -807,26 +859,6 @@ export class AttributeFilterHandler implements IAttributeFilterHandler {
     };
 
     // manipulators
-    clearSelection = (): void => {
-        return this.stagedSelectionHandler.clearSelection();
-    };
-
-    revertSelection = (): void => {
-        return this.stagedSelectionHandler.revertSelection();
-    };
-
-    changeSelection = (selection: AttributeElementSelection): void => {
-        return this.stagedSelectionHandler.changeSelection(selection);
-    };
-
-    invertSelection = (): void => {
-        return this.stagedSelectionHandler.invertSelection();
-    };
-
-    commitSelection = (): void => {
-        return this.stagedSelectionHandler.commitSelection();
-    };
-
     loadDisplayFormInfo = (correlation: Correlation = uuid()): void => {
         return this.displayFormLoader.loadDisplayFormInfo(correlation);
     };
@@ -871,21 +903,13 @@ export class AttributeFilterHandler implements IAttributeFilterHandler {
     };
 
     // selectors
-    getWorkingSelection = (): AttributeElementSelection => {
-        return this.stagedSelectionHandler.getWorkingSelection();
-    };
-
-    getCommittedSelection = (): AttributeElementSelection => {
-        return this.stagedSelectionHandler.getCommittedSelection();
-    };
-
-    getSelectedItems = (): AttributeElementSelectionFull => {
-        const selection = this.getWorkingSelection();
+    protected getSelectedItemsBase(): AttributeElementSelectionFull {
+        const selection = this.stagedSelectionHandler.getWorkingSelection();
         return {
             isInverted: selection.isInverted,
             elements: this.getItemsByKey(selection.items),
         };
-    };
+    }
 
     getSearch = (): string => {
         return this.elementLoader.getSearch();
@@ -912,7 +936,7 @@ export class AttributeFilterHandler implements IAttributeFilterHandler {
     };
 
     getFilter = (): IAttributeFilter => {
-        const committedSelection = this.getCommittedSelection();
+        const committedSelection = this.stagedSelectionHandler.getCommittedSelection();
         const elements: IAttributeElements = this.isElementsByRef
             ? { uris: committedSelection.items }
             : { values: committedSelection.items };
@@ -942,14 +966,6 @@ export class AttributeFilterHandler implements IAttributeFilterHandler {
         return this.elementLoader.onElementsRangeLoadCancel(cb);
     };
 
-    onSelectionChanged: CallbackRegistration<{ selection: AttributeElementSelection }> = (cb) => {
-        return this.stagedSelectionHandler.onSelectionChanged(cb);
-    };
-
-    onSelectionCommitted: CallbackRegistration<{ selection: AttributeElementSelection }> = (cb) => {
-        return this.stagedSelectionHandler.onSelectionCommitted(cb);
-    };
-
     onDisplayFormLoadSuccess: CallbackRegistration<{ displayForm: IAttributeDisplayFormMetadataObject }> = (
         cb,
     ) => {
@@ -966,5 +982,123 @@ export class AttributeFilterHandler implements IAttributeFilterHandler {
 
     onDisplayFormLoadCancel: CallbackRegistration = (cb) => {
         return this.displayFormLoader.onDisplayFormLoadCancel(cb);
+    };
+}
+
+/**
+ * @internal
+ */
+export class StagedSingleSelectionAttributeFilterHandler
+    extends AttributeFilterHandlerBase
+    implements ISingleSelectAttributeFilterHandler, IStagedSingleAttributeElementSelectionHandler
+{
+    private static sanitizeConfig(config: IAttributeFilterHandlerConfig): IAttributeFilterHandlerConfig {
+        const elements = filterAttributeElements(config.filter);
+        const items = isAttributeElementsByRef(elements) ? elements.uris : elements.values;
+        const firstItem = items[0];
+        const sanitizedItems = isAttributeElementsByRef(elements)
+            ? { uris: [firstItem] }
+            : { values: [firstItem] };
+        return {
+            ...config,
+            filter: isPositiveAttributeFilter(config.filter)
+                ? newPositiveAttributeFilter(filterObjRef(config.filter), sanitizedItems)
+                : newNegativeAttributeFilter(filterObjRef(config.filter), sanitizedItems),
+        };
+    }
+
+    constructor(config: IAttributeFilterHandlerConfig) {
+        super(StagedSingleSelectionAttributeFilterHandler.sanitizeConfig(config));
+    }
+
+    changeSelection = (selection: string | undefined): void => {
+        return this.stagedSelectionHandler.changeSelection({
+            isInverted: false,
+            items: selection ? [selection] : [],
+        });
+    };
+
+    revertSelection = (): void => {
+        return this.stagedSelectionHandler.revertSelection();
+    };
+
+    commitSelection = (): void => {
+        return this.stagedSelectionHandler.commitSelection();
+    };
+
+    getWorkingSelection = (): string | undefined => {
+        return this.stagedSelectionHandler.getWorkingSelection().items[0];
+    };
+
+    getCommittedSelection = (): string | undefined => {
+        return this.stagedSelectionHandler.getCommittedSelection().items[0];
+    };
+
+    onSelectionChanged: CallbackRegistration<{ selection: string | undefined }> = (cb) => {
+        return this.stagedSelectionHandler.onSelectionChanged((selection) => {
+            cb({ selection: selection.selection.items[0] });
+        });
+    };
+
+    getSelectedItem = (): IAttributeElement | undefined => {
+        return this.getSelectedItemsBase().elements[0];
+    };
+
+    onSelectionCommitted: CallbackRegistration<{ selection: string | undefined }> = (cb) => {
+        return this.stagedSelectionHandler.onSelectionCommitted((selection) => {
+            cb({ selection: selection.selection.items[0] });
+        });
+    };
+}
+
+/**
+ * @internal
+ */
+export class StagedMultiSelectionAttributeFilterHandler
+    extends AttributeFilterHandlerBase
+    implements IMultiSelectAttributeFilterHandler, IStagedAttributeElementsSelectionHandler
+{
+    constructor(config: IAttributeFilterHandlerConfig) {
+        super(config);
+    }
+
+    changeSelection = (selection: AttributeElementSelection): void => {
+        return this.stagedSelectionHandler.changeSelection(selection);
+    };
+
+    revertSelection = (): void => {
+        return this.stagedSelectionHandler.revertSelection();
+    };
+
+    commitSelection = (): void => {
+        return this.stagedSelectionHandler.commitSelection();
+    };
+
+    invertSelection = (): void => {
+        return this.stagedSelectionHandler.invertSelection();
+    };
+
+    clearSelection = (): void => {
+        return this.stagedSelectionHandler.clearSelection();
+    };
+
+    getWorkingSelection = (): AttributeElementSelection => {
+        return this.stagedSelectionHandler.getWorkingSelection();
+    };
+
+    getSelectedItems = (): AttributeElementSelectionFull => {
+        return this.getSelectedItemsBase();
+    };
+
+    getCommittedSelection = (): AttributeElementSelection => {
+        return this.stagedSelectionHandler.getCommittedSelection();
+    };
+
+    onSelectionChanged: CallbackRegistration<{ selection: AttributeElementSelection }> = (cb) => {
+        return this.stagedSelectionHandler.onSelectionChanged(cb);
+    };
+
+    onSelectionCommitted: CallbackRegistration<{ selection: AttributeElementSelection }> = (cb) => {
+        return this.stagedSelectionHandler.onSelectionCommitted(cb);
     };
 }
