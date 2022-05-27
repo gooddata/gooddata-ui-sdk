@@ -9,7 +9,15 @@ $_RUSH build -t sdk-ui-tests
 $_RUSHX libs/sdk-ui-tests build-storybook
 
 LAST_COMMIT_HASH=$(git log -n1 --format="%h")
-IMAGE_ID=harbor.intgdc.com/gooddata-ui-sdk/gooddata-ui-sdk-storybook
+HARBOR_IMAGE_ID=harbor.intgdc.com/frontend/gooddata-ui-sdk-storybook
+ECR_IMAGE_ID=020413372491.dkr.ecr.us-east-1.amazonaws.com/frontend/gooddata-ui-sdk-storybook
 
-docker build --file ./libs/sdk-ui-tests/Dockerfile -t "${IMAGE_ID}:latest" -t "${IMAGE_ID}:${LAST_COMMIT_HASH}" ./libs/sdk-ui-tests || exit 1
-docker push --all-tags "${IMAGE_ID}"
+docker build --file ./libs/sdk-ui-tests/Dockerfile \
+  -t "${HARBOR_IMAGE_ID}:latest" \
+  -t "${HARBOR_IMAGE_ID}:${LAST_COMMIT_HASH}" \
+  -t "${ECR_IMAGE_ID}:latest" \
+  -t "${ECR_IMAGE_ID}:${LAST_COMMIT_HASH}" \
+  ./libs/sdk-ui-tests || exit 1
+
+docker push --all-tags "${HARBOR_IMAGE_ID}"
+docker push --all-tags "${ECR_IMAGE_ID}"
