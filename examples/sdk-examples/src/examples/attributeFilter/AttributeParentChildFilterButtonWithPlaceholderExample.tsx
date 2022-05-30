@@ -67,7 +67,7 @@ const AttributeParentChildFilterButtonWithPlaceholder: React.FC = () => {
                 uris: [],
             }),
         );
-    }, [parentFilter]);
+    }, [parentFilter, setChildFilter]);
 
     return (
         <div className="s-attribute-filter">

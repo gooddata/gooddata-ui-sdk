@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { ICellRendererParams } from "@ag-grid-community/all-modules";
 import { LoadingComponent } from "@gooddata/sdk-ui";
 import React from "react";
@@ -19,6 +19,9 @@ export function createLoadingRenderer(
     _props: Readonly<ICorePivotTableProps>,
 ): (params: ICellRendererParams) => JSX.Element {
     return function LoadingRenderer(params: ICellRendererParams): JSX.Element {
+        const theme = useTheme();
+        const color = theme?.table?.loadingIconColor ?? theme?.palette?.complementary?.c6 ?? undefined;
+
         if (params.node.rowPinned === "top") {
             return <span className={"gd-sticky-header-value"}>{params.formatValue!(params.value)}</span>;
         }
@@ -32,9 +35,6 @@ export function createLoadingRenderer(
                 <span className={`${VALUE_CLASS} s-loading-done`}>{params.formatValue!(params.value)}</span>
             );
         }
-
-        const theme = useTheme();
-        const color = theme?.table?.loadingIconColor ?? theme?.palette?.complementary?.c6 ?? undefined;
 
         return <LoadingComponent color={color} width={36} imageHeight={8} height={26} speed={2} />;
     };

@@ -13,23 +13,16 @@ const isDemoProjectAssignedToUser = (projects: any[]) =>
         return uriToId(project.links.metadata) === workspace;
     });
 
-const initialState = {
+const initialState: IDemoProjectState = {
     authStatus: DemoProjectAuthStatus.AUTHORIZING,
 };
 
-export const useDemoProjectAuth = (): {
+const useDemoProjectAuthCore = (): {
     authStatus: DemoProjectAuthStatus;
     error: string | undefined;
 } => {
-    if (ANONYMOUS_ACCESS) {
-        return {
-            authStatus: DemoProjectAuthStatus.AUTHORIZED,
-            error: undefined,
-        };
-    }
-
     const { authStatus: userAuthStatus } = useAuth();
-    const [{ authStatus, profileUri, projects, error }, setState] = useState<IDemoProjectState>(initialState);
+    const [{ authStatus, profileUri, projects, error }, setState] = useState(initialState);
     const hasUserDemoProjectAssigned = projects && isDemoProjectAssignedToUser(projects);
 
     const setProfileUri = (profileUri: string) => setState((state) => ({ ...state, profileUri }));
@@ -90,10 +83,22 @@ export const useDemoProjectAuth = (): {
         } else if (projects && hasUserDemoProjectAssigned) {
             setAuthStatus(DemoProjectAuthStatus.AUTHORIZED);
         }
-    }, [projects, hasUserDemoProjectAssigned]);
+    }, [projects, hasUserDemoProjectAssigned, profileUri]);
 
     return {
         authStatus,
         error,
     };
 };
+
+export const useDemoProjectAuth: () => {
+    authStatus: DemoProjectAuthStatus;
+    error: string | undefined;
+} = ANONYMOUS_ACCESS
+    ? () => {
+          return {
+              authStatus: DemoProjectAuthStatus.AUTHORIZED,
+              error: undefined,
+          };
+      }
+    : useDemoProjectAuthCore;

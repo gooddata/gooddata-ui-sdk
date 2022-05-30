@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React, { useMemo } from "react";
 import { IntlProvider, IntlShape, createIntl } from "react-intl";
 import {
@@ -46,12 +46,9 @@ export const InternalIntlWrapper: React.FC<IInternalIntlWrapperProps> = ({
      */
     const settings = window.gdSettings as IWorkspaceSettings;
 
-    if (settings) {
-        const messages = useMemo(
-            () => pickCorrectWording(translations[locale], settings),
-            [locale, settings, translations],
-        );
+    const messages = useMemo(() => pickCorrectWording(translations[locale], settings), [locale, settings]);
 
+    if (settings) {
         return (
             <IntlProvider locale={locale} messages={messages}>
                 {children}

@@ -43,6 +43,7 @@ export function newPlaceholder<T>(defaultValue?: T, options: IPlaceholderOptions
         id: id ?? uuidv4(),
         defaultValue,
         validate,
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         use: () => usePlaceholder(placeholder),
     };
 
@@ -72,6 +73,7 @@ export function newComposedPlaceholder<
         type: "IComposedPlaceholder",
         placeholders,
         computeValue,
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         use: (resolutionContext: TContext) => useComposedPlaceholder(placeholder, resolutionContext),
     };
 

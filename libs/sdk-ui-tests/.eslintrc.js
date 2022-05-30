@@ -8,6 +8,7 @@ module.exports = {
         "plugin:import/errors",
         "plugin:import/typescript",
         "plugin:sonarjs/recommended",
+        "plugin:react-hooks/recommended",
         "../../.eslintrc.react.js",
     ],
     parserOptions: { tsconfigRootDir: __dirname },
