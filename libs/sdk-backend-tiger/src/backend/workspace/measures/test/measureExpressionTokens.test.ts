@@ -116,4 +116,14 @@ describe("tokenizeExpression", () => {
             { type: "comment", value: "# WHERE SUM({fact/sum}) > 5" },
         ]);
     });
+
+    it("parses MAQL with dataset", () => {
+        const tokens = tokenizeExpression("SELECT COUNT({dataset/campaign_channels})");
+        expect(tokens).toEqual([
+            { type: "text", value: "SELECT COUNT" },
+            { type: "bracket", value: "(" },
+            { type: "dataset", value: "dataset/campaign_channels" },
+            { type: "bracket", value: ")" },
+        ]);
+    });
 });
