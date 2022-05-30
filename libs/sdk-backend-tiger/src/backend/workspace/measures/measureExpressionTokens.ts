@@ -8,6 +8,7 @@ export type ExpressionTokenType =
     | "metric"
     | "attribute"
     | "label"
+    | "dataset"
     | "comment";
 
 export interface IExpressionToken {
@@ -25,6 +26,7 @@ const TOKEN_TYPE_REGEXP_PAIRS: Array<[ExpressionTokenType, RegExp]> = [
     ["metric", /^\{metric\/[^}]*\}/],
     ["label", /^\{label\/[^}]*\}/],
     ["attribute", /^\{attribute\/[^}]*\}/],
+    ["dataset", /^\{dataset\/[^}]*\}/],
     ["comment", /#[^\n]*/],
 ];
 
