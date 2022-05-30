@@ -12,7 +12,7 @@
             },
             "id": "1327700d-6708-4fce-8615-bd737c0efffd",
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/1327700d-6708-4fce-8615-bd737c0efffd"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/1327700d-6708-4fce-8615-bd737c0efffd"
             },
             "type": "metric"
         },
@@ -28,7 +28,7 @@
             },
             "id": "58b9cb35-f532-4da2-a895-fc012454f7e7",
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/58b9cb35-f532-4da2-a895-fc012454f7e7"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/58b9cb35-f532-4da2-a895-fc012454f7e7"
             },
             "type": "metric"
         },
@@ -44,7 +44,7 @@
             },
             "id": "6b1411d5-e253-418e-8fd3-137a9f56ea92",
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/6b1411d5-e253-418e-8fd3-137a9f56ea92"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/6b1411d5-e253-418e-8fd3-137a9f56ea92"
             },
             "type": "metric"
         },
@@ -60,7 +60,7 @@
             },
             "id": "768414e1-4bbe-4f01-b125-0cdc6305dc76",
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/768414e1-4bbe-4f01-b125-0cdc6305dc76"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/768414e1-4bbe-4f01-b125-0cdc6305dc76"
             },
             "type": "metric"
         },
@@ -76,7 +76,7 @@
             },
             "id": "87a053b0-3947-49f3-b0c5-de53fd01f050",
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/87a053b0-3947-49f3-b0c5-de53fd01f050"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/87a053b0-3947-49f3-b0c5-de53fd01f050"
             },
             "type": "metric"
         },
@@ -92,7 +92,7 @@
             },
             "id": "8d33a0b1-cfdf-4074-a26a-4c4357774967",
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/8d33a0b1-cfdf-4074-a26a-4c4357774967"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/8d33a0b1-cfdf-4074-a26a-4c4357774967"
             },
             "type": "metric"
         },
@@ -108,7 +108,7 @@
             },
             "id": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/973a14c4-acb1-45fb-ba52-5d96fa02f7ba"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/973a14c4-acb1-45fb-ba52-5d96fa02f7ba"
             },
             "type": "metric"
         },
@@ -124,7 +124,7 @@
             },
             "id": "b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa",
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa"
             },
             "type": "metric"
         },
@@ -140,7 +140,7 @@
             },
             "id": "c5ee7836-126c-41aa-bd69-1873d379a065",
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/c5ee7836-126c-41aa-bd69-1873d379a065"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/c5ee7836-126c-41aa-bd69-1873d379a065"
             },
             "type": "metric"
         },
@@ -156,7 +156,7 @@
             },
             "id": "1179c888-3d63-452c-bd1a-0a2a0a5caa06",
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/1179c888-3d63-452c-bd1a-0a2a0a5caa06"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/1179c888-3d63-452c-bd1a-0a2a0a5caa06"
             },
             "type": "metric"
         },
@@ -172,7 +172,7 @@
             },
             "id": "325d8a8e-d6f2-4151-b49e-d6e6e81563d0",
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/325d8a8e-d6f2-4151-b49e-d6e6e81563d0"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/325d8a8e-d6f2-4151-b49e-d6e6e81563d0"
             },
             "type": "metric"
         },
@@ -188,7 +188,7 @@
             },
             "id": "6d7de3ba-3747-11ec-8d3d-0242ac130003",
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/6d7de3ba-3747-11ec-8d3d-0242ac130003"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/6d7de3ba-3747-11ec-8d3d-0242ac130003"
             },
             "type": "metric"
         },
@@ -201,7 +201,7 @@
             },
             "id": "bb512c36-4627-4dd8-8b92-3ef5d364e8f5",
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/bb512c36-4627-4dd8-8b92-3ef5d364e8f5"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/bb512c36-4627-4dd8-8b92-3ef5d364e8f5"
             },
             "type": "metric"
         },
@@ -217,7 +217,7 @@
             },
             "id": "number_of_lost_opps",
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/number_of_lost_opps"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/number_of_lost_opps"
             },
             "type": "metric"
         },
@@ -233,7 +233,7 @@
             },
             "id": "timeline_bop",
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/timeline_bop"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/timeline_bop"
             },
             "type": "metric"
         },
@@ -249,7 +249,7 @@
             },
             "id": "snapshot_bop",
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/snapshot_bop"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/snapshot_bop"
             },
             "type": "metric"
         },
@@ -265,7 +265,7 @@
             },
             "id": "amount_bop",
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/amount_bop"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/amount_bop"
             },
             "type": "metric"
         },
@@ -281,7 +281,7 @@
             },
             "id": "best_case",
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/best_case"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/best_case"
             },
             "type": "metric"
         },
@@ -297,7 +297,7 @@
             },
             "id": "opp._first_snapshot",
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/opp._first_snapshot"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/opp._first_snapshot"
             },
             "type": "metric"
         },
@@ -313,7 +313,7 @@
             },
             "id": "avg_amount",
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/avg_amount"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/avg_amount"
             },
             "type": "metric"
         },
@@ -329,13 +329,13 @@
             },
             "id": "of_won_opps",
             "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/of_won_opps"
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics/of_won_opps"
             },
             "type": "metric"
         }
     ],
     "links": {
-        "self": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics?page=0&size=250",
-        "next": "https://staging.anywhere.gooddata.com/api/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics?page=1&size=250"
+        "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics?page=0&size=250",
+        "next": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics?page=1&size=250"
     }
 }

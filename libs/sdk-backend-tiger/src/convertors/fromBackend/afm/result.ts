@@ -4,6 +4,7 @@ import {
     ExecutionResult,
     ExecutionResultGrandTotal,
     isResultAttributeHeader,
+    isResultMeasureHeader,
     JsonApiAttributeOutAttributesGranularityEnum,
 } from "@gooddata/api-client-tiger";
 import {
@@ -95,19 +96,24 @@ function transformHeaderItems(
                     };
                 }
 
-                /*
-                 * Funny stuff #1 - Tiger sends just the measure index in the measure headers. This is the index of the
-                 * measure descriptor within the measure group. The code looks up the measure descriptor so that
-                 * it can then fill in the `name` to the one in the descriptor
-                 */
-                const measureIndex = header.measureHeader.measureIndex;
+                if (isResultMeasureHeader(header)) {
+                    /*
+                     * Funny stuff #1 - Tiger sends just the measure index in the measure headers. This is the index of the
+                     * measure descriptor within the measure group. The code looks up the measure descriptor so that
+                     * it can then fill in the `name` to the one in the descriptor
+                     */
+                    const measureIndex = header.measureHeader.measureIndex;
 
-                return {
-                    measureHeaderItem: {
-                        name: measureDescriptors[measureIndex]?.measureHeaderItem.name,
-                        order: measureIndex,
-                    },
-                };
+                    return {
+                        measureHeaderItem: {
+                            name: measureDescriptors[measureIndex]?.measureHeaderItem.name,
+                            order: measureIndex,
+                        },
+                    };
+                }
+
+                //NOTE: TotalExecutionResultHeader are not implemented yet, throw for now because we need to also turn it on in tiger FF
+                throw new Error("TotalExecutionResultHeader are not yet implemented on client.");
             });
         });
     });

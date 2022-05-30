@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 
 import { ObjectType } from "@gooddata/sdk-model";
 import invert from "lodash/invert";
@@ -16,7 +16,7 @@ export const tigerIdTypeToObjectType: {
     label: "displayForm",
     dataset: "dataSet",
     fact: "fact",
-    variable: "variable",
+    prompt: "variable",
     analyticalDashboard: "analyticalDashboard",
     visualizationObject: "insight",
     filterContext: "filterContext",

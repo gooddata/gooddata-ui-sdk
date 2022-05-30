@@ -1,7 +1,7 @@
 // (C) 2019-2022 GoodData Corporation
 import {
     JsonApiAttributeOutAttributesGranularityEnum,
-    RelativeDateFilterBodyGranularityEnum,
+    RelativeDateFilterRelativeDateFilterGranularityEnum,
 } from "@gooddata/api-client-tiger";
 import { DateAttributeGranularity } from "@gooddata/sdk-model";
 import { NotSupported } from "@gooddata/sdk-backend-spi";
@@ -11,7 +11,7 @@ type TigerToSdk = {
 };
 
 type SdkToTiger = {
-    [key in DateAttributeGranularity]: RelativeDateFilterBodyGranularityEnum | undefined;
+    [key in DateAttributeGranularity]: RelativeDateFilterRelativeDateFilterGranularityEnum | undefined;
 };
 
 /*
@@ -64,23 +64,23 @@ export function toSdkGranularity(
 }
 
 const SdkToTigerGranularityMap: SdkToTiger = {
-    "GDC.time.year": RelativeDateFilterBodyGranularityEnum.YEAR,
-    "GDC.time.quarter": RelativeDateFilterBodyGranularityEnum.QUARTER,
-    "GDC.time.month": RelativeDateFilterBodyGranularityEnum.MONTH,
-    "GDC.time.week_us": RelativeDateFilterBodyGranularityEnum.WEEK,
-    "GDC.time.week": RelativeDateFilterBodyGranularityEnum.WEEK,
-    "GDC.time.date": RelativeDateFilterBodyGranularityEnum.DAY,
-    "GDC.time.hour": RelativeDateFilterBodyGranularityEnum.HOUR,
-    "GDC.time.minute": RelativeDateFilterBodyGranularityEnum.MINUTE,
+    "GDC.time.year": RelativeDateFilterRelativeDateFilterGranularityEnum.YEAR,
+    "GDC.time.quarter": RelativeDateFilterRelativeDateFilterGranularityEnum.QUARTER,
+    "GDC.time.month": RelativeDateFilterRelativeDateFilterGranularityEnum.MONTH,
+    "GDC.time.week_us": RelativeDateFilterRelativeDateFilterGranularityEnum.WEEK,
+    "GDC.time.week": RelativeDateFilterRelativeDateFilterGranularityEnum.WEEK,
+    "GDC.time.date": RelativeDateFilterRelativeDateFilterGranularityEnum.DAY,
+    "GDC.time.hour": RelativeDateFilterRelativeDateFilterGranularityEnum.HOUR,
+    "GDC.time.minute": RelativeDateFilterRelativeDateFilterGranularityEnum.MINUTE,
 
-    "GDC.time.quarter_in_year": RelativeDateFilterBodyGranularityEnum.QUARTER_OF_YEAR,
-    "GDC.time.month_in_year": RelativeDateFilterBodyGranularityEnum.MONTH_OF_YEAR,
-    "GDC.time.week_in_year": RelativeDateFilterBodyGranularityEnum.WEEK_OF_YEAR,
-    "GDC.time.day_in_year": RelativeDateFilterBodyGranularityEnum.DAY_OF_YEAR,
-    "GDC.time.day_in_month": RelativeDateFilterBodyGranularityEnum.DAY_OF_MONTH,
-    "GDC.time.day_in_week": RelativeDateFilterBodyGranularityEnum.DAY_OF_WEEK,
-    "GDC.time.hour_in_day": RelativeDateFilterBodyGranularityEnum.HOUR_OF_DAY,
-    "GDC.time.minute_in_hour": RelativeDateFilterBodyGranularityEnum.MINUTE_OF_HOUR,
+    "GDC.time.quarter_in_year": RelativeDateFilterRelativeDateFilterGranularityEnum.QUARTER_OF_YEAR,
+    "GDC.time.month_in_year": RelativeDateFilterRelativeDateFilterGranularityEnum.MONTH_OF_YEAR,
+    "GDC.time.week_in_year": RelativeDateFilterRelativeDateFilterGranularityEnum.WEEK_OF_YEAR,
+    "GDC.time.day_in_year": RelativeDateFilterRelativeDateFilterGranularityEnum.DAY_OF_YEAR,
+    "GDC.time.day_in_month": RelativeDateFilterRelativeDateFilterGranularityEnum.DAY_OF_MONTH,
+    "GDC.time.day_in_week": RelativeDateFilterRelativeDateFilterGranularityEnum.DAY_OF_WEEK,
+    "GDC.time.hour_in_day": RelativeDateFilterRelativeDateFilterGranularityEnum.HOUR_OF_DAY,
+    "GDC.time.minute_in_hour": RelativeDateFilterRelativeDateFilterGranularityEnum.MINUTE_OF_HOUR,
 
     "GDC.time.day_in_euweek": undefined,
     "GDC.time.day_in_quarter": undefined,
@@ -98,7 +98,7 @@ const SdkToTigerGranularityMap: SdkToTiger = {
  */
 export function toTigerGranularity(
     granularity: DateAttributeGranularity,
-): RelativeDateFilterBodyGranularityEnum {
+): RelativeDateFilterRelativeDateFilterGranularityEnum {
     const tigerGranularity = SdkToTigerGranularityMap[granularity];
 
     if (!tigerGranularity) {

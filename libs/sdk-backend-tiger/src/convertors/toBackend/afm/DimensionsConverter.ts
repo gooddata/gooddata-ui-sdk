@@ -1,10 +1,10 @@
 // (C) 2007-2022 GoodData Corporation
 import {
     Dimension,
-    SortDirection as TigerSortDirection,
+    SortKeyAttributeAttributeDirectionEnum,
+    SortKeyAttributeAttributeSortTypeEnum,
     SortKeyAttribute,
     SortKeyValue,
-    SortType,
 } from "@gooddata/api-client-tiger";
 import {
     IExecutionDefinition,
@@ -34,12 +34,12 @@ function merge(dims: Dimension[], sorting: SortKey[][]): Dimension[] {
     });
 }
 
-function convertSortDirection(direction: SortDirection): TigerSortDirection {
+function convertSortDirection(direction: SortDirection): SortKeyAttributeAttributeDirectionEnum {
     if (direction === "asc") {
-        return TigerSortDirection.ASC;
+        return SortKeyAttributeAttributeDirectionEnum.ASC;
     }
 
-    return TigerSortDirection.DESC;
+    return SortKeyAttributeAttributeDirectionEnum.DESC;
 }
 
 /**
@@ -51,8 +51,10 @@ function convertSortDirection(direction: SortDirection): TigerSortDirection {
  *
  * For area sort it just uses SortType.AREA to use this sort by numerical sum in execution.
  */
-function convertAttributeSortType(sortItem: ISortItem): SortType {
-    return isAttributeAreaSort(sortItem) ? SortType.AREA : SortType.DEFAULT;
+function convertAttributeSortType(sortItem: ISortItem): SortKeyAttributeAttributeSortTypeEnum {
+    return isAttributeAreaSort(sortItem)
+        ? SortKeyAttributeAttributeSortTypeEnum.AREA
+        : SortKeyAttributeAttributeSortTypeEnum.DEFAULT;
 }
 
 /**
@@ -132,7 +134,7 @@ function dimensionsWithSorts(dims: Dimension[], sorts: ISortItem[]): Dimension[]
                 attribute: {
                     attributeIdentifier,
                     // ASC direction is default for Tiger backend. Dont send it to execution to prevent override of possible default sort label direction. It has the same meaning as TigerSortDirection.DEFAULT which does not exist.
-                    ...(direction !== TigerSortDirection.ASC ? { direction } : {}),
+                    ...(direction !== SortKeyAttributeAttributeDirectionEnum.ASC ? { direction } : {}),
                     sortType: convertAttributeSortType(sortItem),
                 },
             };

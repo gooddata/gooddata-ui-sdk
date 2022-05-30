@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { TigerObjectType } from "../../types";
 import { TigerCompatibleObjectType } from "../../types/refTypeMapping";
 import { toObjectType } from "../fromBackend/ObjRefConverter";
@@ -10,7 +10,7 @@ const mapping: [TigerCompatibleObjectType, TigerObjectType][] = [
     ["displayForm", "label"],
     ["dataSet", "dataset"],
     ["fact", "fact"],
-    ["variable", "variable"],
+    ["variable", "prompt"],
     ["insight", "visualizationObject"],
     ["filterContext", "filterContext"],
 ];
