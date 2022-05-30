@@ -11,6 +11,7 @@ import { IAgGridPage, IGridRow, IGridTotalsRow } from "./resultTypes";
 import { getSubtotalStyles } from "./dataSourceUtils";
 import fill from "lodash/fill";
 import findIndex from "lodash/findIndex";
+import { messages } from "../../locales";
 
 function getSubtotalLabelCellIndex(resultHeaderItems: IResultHeader[][], rowIndex: number): number {
     return findIndex(resultHeaderItems, (headerItem) => isResultTotalHeader(headerItem[rowIndex]));
@@ -63,7 +64,7 @@ function getCell(
             isSubtotal: true,
             value:
                 getSubtotalLabelCellIndex(rowHeaderData, rowIndex) === rowHeaderIndex
-                    ? intl.formatMessage({ id: `visualizations.totals.dropdown.title.${totalName}` })
+                    ? intl.formatMessage(messages[totalName])
                     : null,
         };
     }

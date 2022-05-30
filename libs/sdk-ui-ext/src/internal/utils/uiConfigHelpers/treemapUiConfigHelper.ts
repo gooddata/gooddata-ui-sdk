@@ -15,6 +15,7 @@ import { hasMoreThanOneMasterMeasure, hasNoMeasures, hasOneCategory } from "../b
 import { getViewItems, setBucketTitles } from "../bucketHelper";
 import { getTranslation } from "../translations";
 import { getBucketItemsWarningMessage } from "./baseChartUiConfigHelper";
+import { messages } from "../../../locales";
 
 // If you need to edit these icons
 // reflect changes also in gdc-analytical-designer
@@ -40,19 +41,15 @@ function setTreemapBucketWarningMessages(referencePoint: IExtendedReferencePoint
         if (!bucketUiConfig?.canAddItems) {
             let warningMessage;
             if (bucket.localIdentifier === BucketNames.MEASURES) {
-                warningMessage = getBucketItemsWarningMessage(
-                    "dashboard.bucket.metric_view_by_warning",
-                    intl,
-                    viewItems,
-                );
+                warningMessage = getBucketItemsWarningMessage(messages.metricView.id, intl, viewItems);
             }
 
             if (bucket.localIdentifier === BucketNames.VIEW) {
-                warningMessage = getTranslation("dashboard.bucket.category_category_by_warning", intl);
+                warningMessage = getTranslation(messages.category.id, intl);
             }
 
             if (bucket.localIdentifier === BucketNames.SEGMENT) {
-                warningMessage = getTranslation("dashboard.bucket.category_segment_by_warning", intl);
+                warningMessage = getTranslation(messages.categorySegment.id, intl);
             }
 
             if (warningMessage) {

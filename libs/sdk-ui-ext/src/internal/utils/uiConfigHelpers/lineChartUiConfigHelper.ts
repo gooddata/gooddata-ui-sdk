@@ -16,6 +16,7 @@ import { getStackItems, setBucketTitles } from "./../bucketHelper";
 import { getTranslation } from "./../translations";
 import { hasColorMapping } from "../propertiesHelper";
 import { getBucketItemsWarningMessage } from "./baseChartUiConfigHelper";
+import { messages } from "../../../locales";
 
 // If you need to edit these icons
 // reflect changes also in gdc-analytical-designer
@@ -41,13 +42,9 @@ function setLineChartBucketWarningMessages(referencePoint: IExtendedReferencePoi
         if (!bucketUiConfig?.canAddItems) {
             let warningMessage;
             if (bucket.localIdentifier === BucketNames.MEASURES) {
-                warningMessage = getBucketItemsWarningMessage(
-                    "dashboard.bucket.metric_segment_by_warning",
-                    intl,
-                    stackItems,
-                );
+                warningMessage = getBucketItemsWarningMessage(messages.metricSegment.id, intl, stackItems);
             } else if (bucket.localIdentifier === BucketNames.SEGMENT) {
-                warningMessage = getTranslation("dashboard.bucket.category_segment_by_warning", intl);
+                warningMessage = getTranslation(messages.categorySegment.id, intl);
             }
 
             if (warningMessage) {

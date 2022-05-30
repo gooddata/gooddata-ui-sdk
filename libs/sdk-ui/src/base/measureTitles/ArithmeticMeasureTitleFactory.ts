@@ -1,7 +1,8 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { getTranslation } from "../localization/IntlStore";
 import { IArithmeticMeasureTitleProps, IMeasureTitleProps } from "./MeasureTitle";
 import { ILocale } from "../localization/Locale";
+import { messages } from "../../locales";
 
 /**
  * Factory that builds formatted localized titles of arithmetic measures.
@@ -45,22 +46,12 @@ export class ArithmeticMeasureTitleFactory {
     }
 
     private getTitleLocalizationKey(arithmeticMeasureOperator: string): string {
-        switch (arithmeticMeasureOperator) {
-            case "sum":
-                return "visualizations.measure.arithmetic.sum.title";
-            case "difference":
-                return "visualizations.measure.arithmetic.difference.title";
-            case "multiplication":
-                return "visualizations.measure.arithmetic.multiplication.title";
-            case "ratio":
-                return "visualizations.measure.arithmetic.ratio.title";
-            case "change":
-                return "visualizations.measure.arithmetic.change.title";
-            default:
-                throw Error(
-                    `The arithmetic measure operator '${arithmeticMeasureOperator}' is not supported!`,
-                );
+        const msg = messages[arithmeticMeasureOperator];
+
+        if (!msg) {
+            throw Error(`The arithmetic measure operator '${arithmeticMeasureOperator}' is not supported!`);
         }
+        return msg;
     }
 
     private getMasterMeasureTitles(

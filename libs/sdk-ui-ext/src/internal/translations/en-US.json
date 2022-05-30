@@ -550,11 +550,6 @@
         "limit": 0,
         "translate": false
     },
-    "previous_year": {
-        "value": "previous year",
-        "comment": "",
-        "limit": 0
-    },
     "dashboard.bucket.measures_title.table._measure": {
         "value": "Measures",
         "comment": "",
@@ -632,32 +627,6 @@
     "dashboard.xirr.error.invalid_buckets.text._metric": {
         "value": "Make sure you have selected one metric and one date attribute",
         "comment": "The user should be instructed to review that they have added one metric and one date attribute to the insight",
-        "limit": 0
-    },
-    "dashboard.error.empty.heading": {
-        "value": "This dashboard is empty",
-        "comment": "The user has a dashboard that contains no widgets.",
-        "limit": 0
-    },
-    "dashboard.error.empty.text|insight": {
-        "value": "All insights were removed.",
-        "comment": "The user has a dashboard that contains no widgets.",
-        "limit": 0
-    },
-    "dashboard.error.empty.text|report": {
-        "value": "All reports were removed.",
-        "comment": "The user has a dashboard that contains no widgets.",
-        "limit": 0,
-        "translate": false
-    },
-    "dashboard.embedded.error.empty.heading": {
-        "value": "No widgets in the dashboard",
-        "comment": "The user embedded a dashboard that contains no widgets.",
-        "limit": 0
-    },
-    "dashboard.embedded.error.empty.text": {
-        "value": "Make sure the dashboard you are embedding is correct.",
-        "comment": "The user embedded a dashboard that contains no widgets.",
         "limit": 0
     },
     "properties.unsupported": {
@@ -1039,36 +1008,6 @@
         "comment": "",
         "limit": 0
     },
-    "gs.color-picker.inputPlaceholder": {
-        "value": "#color",
-        "comment": "Character '#' means user should input color code as hexadecimal value, e.g. #C0D6E4",
-        "limit": 0
-    },
-    "gs.color-picker.currentColor": {
-        "value": "current",
-        "comment": "",
-        "limit": 0
-    },
-    "gs.color-picker.newColor": {
-        "value": "new",
-        "comment": "",
-        "limit": 0
-    },
-    "gs.color-picker.cancelButton": {
-        "value": "Cancel",
-        "comment": "",
-        "limit": 0
-    },
-    "gs.color-picker.okButton": {
-        "value": "OK",
-        "comment": "",
-        "limit": 0
-    },
-    "gs.color-picker.hex": {
-        "value": "hex",
-        "comment": "label that inidicates that user should enter hexadecimal color value, e.g. #C0D6E4",
-        "limit": 0
-    },
     "gs.color-dropdown.custom-color": {
         "value": "Custom color",
         "comment": "",
@@ -1081,16 +1020,6 @@
     },
     "properties.colors": {
         "value": "Colors",
-        "comment": "",
-        "limit": 0
-    },
-    "gs.noData.noMatchingData": {
-        "value": "No matching data",
-        "comment": "",
-        "limit": 0
-    },
-    "gs.noData.noDataAvailable": {
-        "value": "No matching data",
         "comment": "",
         "limit": 0
     },
@@ -1161,401 +1090,6 @@
         "comment": "Comparative measures of a bullet chart",
         "limit": 0
     },
-    "filters.allTime.previousPeriod": {
-        "value": "prev. period",
-        "comment": "",
-        "limit": 0
-    },
-    "filters.allTime.lastYear": {
-        "value": "prev. year",
-        "comment": "",
-        "limit": 0
-    },
-    "filters.day.previousPeriod": {
-        "value": "prev. {n, plural, one {day} other {#d}}",
-        "comment": "In '{n, plural, one {DAY} other {#D}}' translate only uppercase words. Keep number placeholder '#' as is. Do not put dot character after period abbreviation (correct '{#d}', wrong '{#d.}').",
-        "limit": 0
-    },
-    "filters.week.previousPeriod": {
-        "value": "prev. {n, plural, one {week} other {#w}}",
-        "comment": "In '{n, plural, one {WEEK} other {#W}}' translate only uppercase words. Keep number placeholder '#' as is. Do not put dot character after period abbreviation (correct '{#w}', wrong '{#w.}').",
-        "limit": 0
-    },
-    "filters.month.previousPeriod": {
-        "value": "prev. {n, plural, one {month} other {#m}}",
-        "comment": "In '{n, plural, one {MONTH} other {#M}}' translate only uppercase words. Keep number placeholder '#' as is. Do not put dot character after period abbreviation (correct '{#m}', wrong '{#m.}').",
-        "limit": 0
-    },
-    "filters.quarter.previousPeriod": {
-        "value": "prev. {n, plural, one {quarter} other {#q}}",
-        "comment": "In '{n, plural, one {QUARTER} other {#Q}}' translate only uppercase words. Keep number placeholder '#' as is. Do not put dot character after period abbreviation (correct '{#q}', wrong '{#q.}').",
-        "limit": 0
-    },
-    "filters.year.previousPeriod": {
-        "value": "prev. {n, plural, one {year} other {#y}}",
-        "comment": "In '{n, plural, one {YEAR} other {#Y}}' translate only uppercase words. Keep number placeholder '#' as is. Do not put dot character after period abbreviation (correct '{#y}', wrong '{#y.}').",
-        "limit": 0
-    },
-    "filters.alertMessage.relativePreset": {
-        "value": "in {calendarIcon} {range}",
-        "comment": "Don't translate placeholders '{calendarIcon}', '{range}'.",
-        "limit": 0
-    },
-    "filters.alertMessage.relativePreset.inPeriod": {
-        "value": "in period {calendarIcon} {range}",
-        "comment": "Don't translate placeholders '{calendarIcon}', '{range}'. Example text: 'in period (calendar) from 2 months ago to 2 months ahead'",
-        "limit": 0
-    },
-    "filters.alertMessage.relativePreset.range.day": {
-        "value": "{n, plural, =0 {this day} =1 {last day} other {last # days}}",
-        "comment": "In '{n, plural, =0 {THIS DAY} =1 {LAST DAY} other {LAST # DAYS}}' translate only uppercase words. Keep number placeholder '#' as is.",
-        "limit": 0
-    },
-    "filters.alertMessage.relativePreset.range.week": {
-        "value": "{n, plural, =0 {this week} =1 {last week} other {last # weeks}}",
-        "comment": "In '{n, plural, =0 {THIS WEEK} =1 {LAST WEEK} other {LAST # WEEKS}}' translate only uppercase words. Keep number placeholder '#' as is.",
-        "limit": 0
-    },
-    "filters.alertMessage.relativePreset.range.month": {
-        "value": "{n, plural, =0 {this month} =1 {last month} other {last # months}}",
-        "comment": "In '{n, plural, =0 {THIS MONTH} =1 {LAST MONTH} other {LAST # MONTHS}}' translate only uppercase words. Keep number placeholder '#' as is.",
-        "limit": 0
-    },
-    "filters.alertMessage.relativePreset.range.quarter": {
-        "value": "{n, plural, =0 {this quarter} =1 {last quarter} other {last # quarters}}",
-        "comment": "In '{n, plural, =0 {THIS QUARTER} =1 {LAST QUARTER} other {LAST # QUARTERS}}' translate only uppercase words. Keep number placeholder '#' as is.",
-        "limit": 0
-    },
-    "filters.alertMessage.relativePreset.range.year": {
-        "value": "{n, plural, =0 {this year} =1 {last year} other {last # years}}",
-        "comment": "In '{n, plural, =0 {THIS YEAR} =1 {LAST YEAR} other {LAST # YEARS}}' translate only uppercase words. Keep number placeholder '#' as is.",
-        "limit": 0
-    },
-    "kpi.noData": {
-        "value": "No data for current filter settings. Try changing the filters.",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiPop.change": {
-        "value": "change",
-        "comment": "",
-        "limit": 0
-    },
-    "dialogs.schedule.email.attachment.filter": {
-        "value": "(with currently set filters)",
-        "comment": "Keep the parentheses. Attachment with filters included.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.attachment.label": {
-        "value": "Attachment:",
-        "comment": "Attachment of the scheduled email.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.headline": {
-        "value": "Schedule email delivery",
-        "comment": "Translate as imperative. Schedule emailing whole KPI dashboard.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.message.label": {
-        "value": "Message:",
-        "comment": "Message of the scheduled email.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.repeats.label": {
-        "value": "Repeats:",
-        "comment": "Count of repeats of the scheduled email.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.repeats.execute.on.dayOfMonth": {
-        "value": "on day {date}",
-        "comment": "Example 'on day 2 of January'. Placeholder '{date}' refers to ordinal number of day of the month. Don't translate placeholder '{date}'.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.repeats.execute.on.dayOfWeek": {
-        "value": "on the {week, select, 1 {first} 2 {second} 3 {third} 4 {fourth} other {last}} {day}",
-        "comment": "Example: 'on the first Friday'. Translate only uppercase in 'ON THE {week, select, 1 {FIRST} 2 {SECOND} 3 {THIRD} 4 {FOURTH} other {LAST}} {day}'",
-        "limit": 0
-    },
-    "dialogs.schedule.email.repeats.every": {
-        "value": "every",
-        "comment": "Example 'every 1 month'. FIXME: This needs to be split into variants 'every day', 'every week', ... since some languages uses different gramatical gender for the 'every' based on the subject.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.repeats.frequencies.day": {
-        "value": "{n, plural, one {day} other {days}}",
-        "comment": "Translate only uppercase in '{n, plural, one {DAY} other {DAYS}}'.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.repeats.frequencies.month": {
-        "value": "{n, plural, one {month} other {months}}",
-        "comment": "Translate only uppercase in '{n, plural, one {MONTH} other {MONTHS}}'.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.repeats.frequencies.week": {
-        "value": "{n, plural, one {week} other {weeks}}",
-        "comment": "Translate only uppercase in '{n, plural, one {WEEK} other {WEEKS}}'.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.repeats.types.custom": {
-        "value": "Custom",
-        "comment": "Repeats the schedule email using custom rules defined by the user.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.repeats.types.daily": {
-        "value": "Daily",
-        "comment": "Repeats the schedule email daily.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.repeats.types.monthly": {
-        "value": "Monthly on the {week, select, 1 {first} 2 {second} 3 {third} 4 {fourth} other {last}} {day}",
-        "comment": "Example: 'Monthly on the first Friday'. Translate only uppercase in 'MONTHLY ON THE {week, select, 1 {FIRST} 2 {SECOND} 3 {THIRD} 4 {FOURTH} other {LAST}} {day}'",
-        "limit": 0
-    },
-    "dialogs.schedule.email.repeats.types.weekly": {
-        "value": "Weekly on {day}",
-        "comment": "Example: 'Weekly on Friday'. Placeholder '{day}' refers to a day of a week. Don't translate placeholder '{day}'.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.subject.label": {
-        "value": "Subject:",
-        "comment": "Subject of the schedule email.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.time.label": {
-        "value": "First occurrence:",
-        "comment": "Translate as imperative. Date time of the schedule email.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.to.label": {
-        "value": "To:",
-        "comment": "Emails of the schedule email.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.message.placeholder": {
-        "value": "Hello,\n\nYour scheduled email is ready. You can download the dashboard in attachments.",
-        "comment": "Don't translate '\n\n' which adds 2 new lines to the text.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.submit": {
-        "value": "Schedule",
-        "comment": "Translate as imperative. Submit the schedule config form.",
-        "limit": 0
-    },
-    "options.menu.schedule.email.recipient.invalid": {
-        "value": "This is not a valid email address.",
-        "comment": "Translate as imperative. Error message for recipient email address",
-        "limit": 0
-    },
-    "options.menu.schedule.email.recipient.warning.existed": {
-        "value": "You have already added this recipient.",
-        "comment": "Translate as imperative. Warning email has been existed on recipient field in schedule email dialog",
-        "limit": 0
-    },
-    "options.menu.schedule.email.recipient.warning.belong.workspace": {
-        "value": "This email address does not belong to the workspace. Recipient may receive sensitive data.",
-        "comment": "Translate as imperative. Warning email on recipient field in schedule email dialog",
-        "limit": 0
-    },
-    "cancel": {
-        "value": "Cancel",
-        "comment": "",
-        "limit": 0
-    },
-    "gs.date.at": {
-        "value": "at",
-        "comment": "",
-        "limit": 0
-    },
-    "kpi.alertBox.title": {
-        "value": "Set an alert on KPI change",
-        "comment": "",
-        "limit": 0
-    },
-    "kpi.alertBox.example": {
-        "value": "e.g.",
-        "comment": "",
-        "limit": 0
-    },
-    "kpi.alertBox.unverifiedEmail": {
-        "value": "Sorry, you can't set an alert. Make sure your email is verified. If that doesn't help, ask your administrator to update your permissions.",
-        "comment": "",
-        "limit": 0
-    },
-    "kpi.alertBox.disabledInReadOnly": {
-        "value": "Alerting is disabled in the read-only mode",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.delete": {
-        "value": "Delete",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.deleting": {
-        "value": "Deleting…",
-        "comment": "Use '…' as one character, not 3 dots ('...').",
-        "limit": 0
-    },
-    "kpiAlertDialog.emailMe": {
-        "value": "Email me",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.emailMeWhen": {
-        "value": "{emailMe} when this KPI is",
-        "comment": "Don't translate placeholder '{emailMe}'.",
-        "limit": 0
-    },
-    "kpiAlertDialog.emailInfo": {
-        "value": "Email will be sent to {userEmail}",
-        "comment": "Don't translate placeholder '{userEmail}'.",
-        "limit": 0
-    },
-    "kpiAlertDialog.invalidNumber": {
-        "value": "<strong>This number is not valid.</strong>{br}Double-check it and try again.",
-        "comment": "Do not translate HTML markup enclosed in <>.",
-        "limit": 0
-    },
-    "kpiAlertDialog.filtersDiffer": {
-        "value": "KPI is now filtered differently than when the alert was set up.",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.filtersApply": {
-        "value": "Apply alert filters to dashboard",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.savingFailed": {
-        "value": "Saving alert failed. Please try again.",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.deleteingFailed": {
-        "value": "Deleting alert failed. Please try again.",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.brokenAlert": {
-        "value": "Broken alert",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.brokenAlertAppeal": {
-        "value": "To see correct KPI value, update the filters in this alert. You can also remove the alert.",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.brokenAlertDefaultDateLabel": {
-        "value": "Date",
-        "comment": "Label used in broken alert dialog in case no other date label is found.",
-        "limit": 0
-    },
-    "kpiAlertDialog.removedFilters": {
-        "value": "Filters removed from dashboard",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.ignoredFilters": {
-        "value": "Filters ignored for this kpi",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.updateTitle": {
-        "value": "Update",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.updateBrokenTitle": {
-        "value": "Update filters",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.updatingTitle": {
-        "value": "Updating…",
-        "comment": "Use '…' as one character, not 3 dots ('...').",
-        "limit": 0
-    },
-    "kpiAlertDialog.updateBrokenFailed": {
-        "value": "Updating filters failed. Please try again.",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.setTitle": {
-        "value": "Set alert",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.settingTitle": {
-        "value": "Setting…",
-        "comment": "Use '…' as one character, not 3 dots ('...').",
-        "limit": 0
-    },
-    "kpiAlertDialog.threshold.above": {
-        "value": "above",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.threshold.below": {
-        "value": "below",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.withAttributeFilters": {
-        "value": "{numFilters} more {numFilters, select, 1 {filter} other {filters}} applied",
-        "comment": "Don't translate placeholder '{numFilters}'. In '{numFilters, select, 1 {FILTER} other {FILTERS}}' translate only uppercase words.",
-        "limit": 0
-    },
-    "kpiAlertDialog.unsaved.changes.headline": {
-        "value": "Leave the KPI dashboard?",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.unsaved.changes.message": {
-        "value": "There are unpublished changes that will be lost.",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.unsaved.changes.leave.anyway": {
-        "value": "Leave anyway",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.unsaved.changes.stay": {
-        "value": "Stay",
-        "comment": "",
-        "limit": 0
-    },
-    "sorting.tooltip.sum._measure": {
-        "value": "The insight is sliced by two attributes. The first attribute is always sorted by the sum of all measure values.",
-        "comment": "Tooltip that is shown in Sort dropdown when Sum of all measures (total) option is selected.",
-        "limit": 0
-    },
-    "sorting.tooltip.sum._metric": {
-        "value": "The insight is sliced by two attributes. The first attribute is always sorted by the sum of all metric values.",
-        "comment": "Tooltip that is shown in Sort dropdown when Sum of all metrics (total) option is selected.",
-        "limit": 0
-    },
-    "sorting.tooltip.measure._measure": {
-        "value": "You can sort only by measures already used on the insight.",
-        "comment": "Tooltip that is shown in Sort dropdown when a measure is selected.",
-        "limit": 0
-    },
-    "sorting.tooltip.measure._metric": {
-        "value": "You can sort only by metrics already used on the insight.",
-        "comment": "Tooltip that is shown in Sort dropdown when a metric is selected.",
-        "limit": 0
-    },
-    "geochart.scroll.zoom.blocker": {
-        "value": "Use {button} + scroll to zoom the map",
-        "comment": "This message will appear when map zooming on GeoChart is disabled and available only, while the button is pressed.",
-        "limit": 0
-    },
-    "geochart.touch.pan.blocker": {
-        "value": "Use two fingers to move the map",
-        "comment": "This message will appear when moving map on GeoChart is disabled by one finger and available only with two.",
-        "limit": 0
-    },
     "sorting.disabled.explanation.attribute|insight": {
         "value": "Sorting is not possible for this insight configuration.",
         "comment": "Explains why sort button is disabled. Shown as tooltip",
@@ -1564,7 +1098,8 @@
     "sorting.disabled.explanation.attribute|report": {
         "value": "Sorting is not possible for this report configuration.",
         "comment": "Explains why sort button is disabled. Shown as tooltip",
-        "limit": 0
+        "limit": 0,
+        "translate": false
     },
     "sorting.disabled.explanation.measure._measure|insight": {
         "value": "You must add at least one attribute to sort the insight. You can also adjust the position of items in the Measures section to change their position in the insight.",
@@ -1574,7 +1109,8 @@
     "sorting.disabled.explanation.measure._measure|report": {
         "value": "You must add at least one attribute to sort the report. You can also adjust the position of items in the Measures section to change their position in the report.",
         "comment": "Explains why sort button is disabled. Shown as tooltip",
-        "limit": 0
+        "limit": 0,
+        "translate": false
     },
     "sorting.disabled.explanation.measure._metric|insight": {
         "value": "You must add at least one attribute to sort the insight. You can also adjust the position of items in the Metrics section to change their position in the insight.",
@@ -1584,6 +1120,7 @@
     "sorting.disabled.explanation.measure._metric|report": {
         "value": "You must add at least one attribute to sort the report. You can also adjust the position of items in the Metrics section to change their position in the report.",
         "comment": "Explains why sort button is disabled. Shown as tooltip",
-        "limit": 0
+        "limit": 0,
+        "translate": false
     }
 }

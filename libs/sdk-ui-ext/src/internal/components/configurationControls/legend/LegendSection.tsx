@@ -1,8 +1,9 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import ConfigSection from "../ConfigSection";
 import LegendPositionControl from "./LegendPositionControl";
 import { IVisualizationProperties } from "../../../interfaces/Visualization";
+import { messages } from "../../../../locales";
 
 export interface ILegendSection {
     controlsDisabled: boolean;
@@ -27,7 +28,7 @@ class LegendSection extends React.PureComponent<ILegendSection> {
             <ConfigSection
                 id="legend_section"
                 valuePath="legend.enabled"
-                title="properties.legend.title"
+                title={messages.title.id}
                 propertiesMeta={this.props.propertiesMeta}
                 properties={properties}
                 canBeToggled={true}

@@ -1,10 +1,11 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import ConfigSubsection from "../../configurationControls/ConfigSubsection";
 import { AxisType } from "../../../interfaces/AxisType";
 import LabelRotationControl from "./LabelRotationControl";
 import { IVisualizationProperties } from "../../../interfaces/Visualization";
+import { messages } from "../../../../locales";
 
 import { LabelFormatControl } from "./LabelFormatControl";
 
@@ -23,7 +24,7 @@ class LabelSubsection extends React.PureComponent<ILabelSubsection & WrappedComp
 
         return (
             <ConfigSubsection
-                title="properties.axis.labels"
+                title={messages.axisLabels.id}
                 valuePath={`${this.props.axis}.labelsEnabled`}
                 properties={this.props.properties}
                 pushData={this.props.pushData}

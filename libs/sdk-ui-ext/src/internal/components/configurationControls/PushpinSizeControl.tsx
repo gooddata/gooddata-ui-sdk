@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
@@ -7,6 +7,7 @@ import ConfigSubsection from "./ConfigSubsection";
 import DropdownControl from "./DropdownControl";
 import { getTranslatedDropdownItems } from "../../utils/translations";
 import { pushpinSizeDropdownItems } from "../../constants/dropdowns";
+import { messages } from "../../../locales";
 
 export interface IPushpinSizeControl {
     disabled: boolean;
@@ -27,11 +28,11 @@ function PushpinSizeControl(props: IPushpinSizeControl & WrappedComponentProps):
     const { disabled, properties, pushData, intl } = props;
     const items = getTranslatedDropdownItems(pushpinSizeDropdownItems, intl);
     return (
-        <ConfigSubsection title="properties.points.size.title">
+        <ConfigSubsection title={messages.pointsSizeTitle.id}>
             <DropdownControl
                 value={minSize}
                 valuePath="points.minSize"
-                labelText="properties.points.size.min.title"
+                labelText={messages.pointsSizeMinTitle.id}
                 disabled={disabled}
                 showDisabledMessage={disabled}
                 properties={properties}
@@ -41,7 +42,7 @@ function PushpinSizeControl(props: IPushpinSizeControl & WrappedComponentProps):
             <DropdownControl
                 value={maxSize}
                 valuePath="points.maxSize"
-                labelText="properties.points.size.max.title"
+                labelText={messages.pointsSizeMaxTitle.id}
                 disabled={disabled}
                 showDisabledMessage={disabled}
                 properties={properties}

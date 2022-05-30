@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { Component } from "react";
 import isEqual from "lodash/isEqual";
 import { injectIntl, WrappedComponentProps } from "react-intl";
@@ -48,7 +48,7 @@ class WrappedColorPicker extends Component<IColorPickerProps & WrappedComponentP
 
     render() {
         const currentHslColor = getHslFromRgbColor(this.props.initialRgbColor);
-        const t = this.props.intl.formatMessage;
+        const { intl } = this.props;
 
         return (
             <div className="color-picker-container">
@@ -61,23 +61,23 @@ class WrappedColorPicker extends Component<IColorPickerProps & WrappedComponentP
                     <HexColorInput
                         initColor={this.state.draftHslColor}
                         onInputChanged={this.onHexInputColorSelected}
-                        placeholder={t({ id: "gs.color-picker.inputPlaceholder" })}
-                        label={t({ id: "gs.color-picker.hex" })}
+                        placeholder={intl.formatMessage({ id: "gs.color-picker.inputPlaceholder" })}
+                        label={intl.formatMessage({ id: "gs.color-picker.hex" })}
                     />
                     <ColorsPreview
                         currentHslColor={currentHslColor}
                         draftHslColor={this.state.draftHslColor}
-                        currentTextLabel={t({ id: "gs.color-picker.currentColor" })}
-                        draftTextLabel={t({ id: "gs.color-picker.newColor" })}
+                        currentTextLabel={intl.formatMessage({ id: "gs.color-picker.currentColor" })}
+                        draftTextLabel={intl.formatMessage({ id: "gs.color-picker.newColor" })}
                     />
                     <div className="color-picker-buttons-wrapper">
                         <Button
-                            value={t({ id: "gs.color-picker.cancelButton" })}
+                            value={intl.formatMessage({ id: "gs.color-picker.cancelButton" })}
                             className="gd-button-secondary gd-button color-picker-button"
                             onClick={this.props.onCancel}
                         />
                         <Button
-                            value={t({ id: "gs.color-picker.okButton" })}
+                            value={intl.formatMessage({ id: "gs.color-picker.okButton" })}
                             disabled={isEqual(
                                 this.props.initialRgbColor,
                                 getRgbFromHslColor(this.state.draftHslColor),

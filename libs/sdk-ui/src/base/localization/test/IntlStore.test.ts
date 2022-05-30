@@ -44,7 +44,7 @@ describe("IntlStore", () => {
 
             it("should return message in en-US", () => {
                 localizations.forEach((locale) => {
-                    const result = getTranslation("visualizations.more", locale);
+                    const result = getTranslation("visualizations.of", locale);
                     expect(result).toBeTruthy();
                 });
             });

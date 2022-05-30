@@ -467,7 +467,9 @@ export function getMappingHeaderName(header: IMappingHeader): string | undefined
 export function getMappingHeaderUri(header: IMappingHeader): string | undefined;
 
 // @internal
-export function getTranslation(translationId: string, locale: ILocale, values?: {}): string;
+export function getTranslation(translationId: string | {
+    id: string;
+}, locale: ILocale, values?: {}): string;
 
 // @internal (undocumented)
 export function getVisualizationType(type: ChartType): ChartType;

@@ -1,8 +1,9 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { Button } from "@gooddata/sdk-ui-kit";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { getTranslation } from "../../../../utils/translations";
+import { messages } from "../../../../../locales";
 
 export interface ICustomColorButtonProps {
     onClick: () => void;
@@ -13,7 +14,7 @@ class CustomColorButton extends React.PureComponent<ICustomColorButtonProps & Wr
         return (
             <div className="gd-color-drop-down-custom-section">
                 <Button
-                    value={getTranslation("gs.color-dropdown.custom-color", this.props.intl)}
+                    value={getTranslation(messages.customColor.id, this.props.intl)}
                     className="gd-button-link gd-color-drop-down-custom-section-button s-custom-section-button"
                     onClick={this.onClick}
                 />

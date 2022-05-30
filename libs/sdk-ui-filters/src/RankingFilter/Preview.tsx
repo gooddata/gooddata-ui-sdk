@@ -1,9 +1,10 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { RankingFilterOperator } from "@gooddata/sdk-model";
 import { FormattedMessage } from "react-intl";
 
 import { IMeasureDropdownItem, IAttributeDropdownItem } from "./types";
+import { messages } from "../locales";
 
 interface IPreviewProps {
     measure: IMeasureDropdownItem;
@@ -15,13 +16,9 @@ interface IPreviewProps {
 const getPreviewTemplate = (operator: RankingFilterOperator, attribute?: IAttributeDropdownItem) => {
     switch (operator) {
         case "TOP":
-            return attribute
-                ? "rankingFilter.preview.top_with_attribute"
-                : "rankingFilter.preview.top_without_attribute";
+            return attribute ? messages.topWithAttr.id : messages.topWithoutAttr.id;
         case "BOTTOM":
-            return attribute
-                ? "rankingFilter.preview.bottom_with_attribute"
-                : "rankingFilter.preview.bottom_without_attribute";
+            return attribute ? messages.bottomWithAttr.id : messages.bottomWithoutAttr.id;
         default:
             throw new Error(`Operator '${operator}' is not supported!`);
     }

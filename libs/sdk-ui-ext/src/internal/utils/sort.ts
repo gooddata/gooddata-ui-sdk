@@ -36,6 +36,7 @@ import { SORT_DIR_DESC } from "../constants/sort";
 import { IBucketItem, IExtendedReferencePoint, IVisualizationProperties } from "../interfaces/Visualization";
 import { IAvailableSortsGroup } from "../interfaces/SortConfig";
 import { IAxisConfig } from "@gooddata/sdk-ui-charts";
+import { messages } from "../../locales";
 
 export function getAttributeSortItem(
     identifier: string,
@@ -368,10 +369,10 @@ export function getCustomSortDisabledExplanation(
     intl: IntlShape,
 ): string {
     if (relevantAttributes.length === 0 && relevantMeasures.length >= 2) {
-        return getTranslation("sorting.disabled.explanation.measure", intl);
+        return getTranslation(messages.explanationMeasure.id, intl);
     }
 
     if (relevantAttributes.length === 0) {
-        return getTranslation("sorting.disabled.explanation.attribute", intl);
+        return getTranslation(messages.explanationAttribute.id, intl);
     }
 }

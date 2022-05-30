@@ -32,6 +32,7 @@ import { IColumnTotal } from "./aggregationsMenuTypes";
 import { TableDescriptor } from "../tableDescriptor";
 import { isScopeCol, isSeriesCol, isRootCol, isSliceCol } from "../tableDescriptorTypes";
 import { IMenuAggregationClickConfig } from "../../privateTypes";
+import { messages } from "../../../locales";
 
 /*
  * TODO: same thing is in sdk-ui-ext .. but pivot must not depend on it. we may be in need of some lower-level
@@ -154,9 +155,7 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
                     onClick={onClickHandler}
                     className="gd-aggregation-menu-item-inner s-menu-aggregation-inner"
                 >
-                    {intl.formatMessage({
-                        id: `visualizations.totals.dropdown.title.${totalType}`,
-                    })}
+                    {intl.formatMessage(messages[totalType])}
                 </div>
             </Item>
         );
@@ -217,10 +216,8 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
             const itemClassNames = this.getItemClassNames(totalType);
 
             const disabled = totalType === "nat" && (isFilteredByMeasureValue || isFilteredByRankingFilter);
-            const cause = isFilteredByMeasureValue ? "mvf" : "ranking";
-            const tooltipMessage = disabled
-                ? intl.formatMessage({ id: `visualizations.totals.dropdown.tooltip.nat.disabled.${cause}` })
-                : undefined;
+            const cause = isFilteredByMeasureValue ? messages[`disabled.mvf`] : messages[`disabled.ranking`];
+            const tooltipMessage = disabled ? intl.formatMessage(cause) : undefined;
 
             const renderSubmenu = !disabled && showSubmenu && rowAttributeDescriptors.length > 0;
             const toggler = this.renderMenuItemContent(

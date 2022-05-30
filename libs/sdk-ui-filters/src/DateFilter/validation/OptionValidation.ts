@@ -7,6 +7,7 @@ import {
 } from "../interfaces";
 import { isAbsoluteDateFilterForm, isRelativeDateFilterForm } from "@gooddata/sdk-model";
 import { convertPlatformDateStringToDate } from "../utils/DateConversions";
+import { messages } from "../../locales";
 
 const validateVisibility = (filterOption: DateFilterOption): IExtendedDateFilterErrors => {
     const errors: IExtendedDateFilterErrors = {};
@@ -26,7 +27,7 @@ const validateAbsoluteForm = (filterOption: IUiAbsoluteDateFilterForm): IExtende
             // null means empty, undefined means invalid
             // this is dictated by react-day-picker that returns undefined on invalid values
             if (filterOption[field] === undefined) {
-                errors.absoluteForm[field] = "filters.staticPeriod.incorrectFormat";
+                errors.absoluteForm[field] = messages.incorrectFormat.id;
             }
         }
     });
@@ -36,7 +37,7 @@ const validateAbsoluteForm = (filterOption: IUiAbsoluteDateFilterForm): IExtende
         const end = convertPlatformDateStringToDate(filterOption.to);
 
         if (start > end) {
-            errors.absoluteForm = { to: "filters.staticPeriod.endDateBeforeStartDate" };
+            errors.absoluteForm = { to: messages.endDateBeforeStartDate.id };
         }
     }
 

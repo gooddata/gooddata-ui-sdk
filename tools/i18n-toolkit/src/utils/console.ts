@@ -2,7 +2,6 @@
 /* eslint-disable no-console */
 
 import chalk from "chalk";
-import cliff from "cliff";
 import flatten from "lodash/flatten";
 
 import { UsageResult } from "../data";
@@ -46,11 +45,11 @@ export function hr(debug = false) {
 
 export function resultsInfo(cwd: string, results: UsageResult[], uncontrolled: Array<string>, debug = false) {
     message(" ┣ Usage check results:", true);
-    console.log(cliff.stringifyRows(resultsToRows(cwd, results, uncontrolled)));
+    table(resultsToRows(cwd, results, uncontrolled));
 
     if (debug) {
         message(" ┣ Detailed info:", debug);
-        console.log(cliff.stringifyRows(resultToDetails(cwd, results, uncontrolled)));
+        table(resultToDetails(cwd, results, uncontrolled));
     }
     message(" ┗━━━━━━━━━━━ End of results.", true);
 }
@@ -133,4 +132,29 @@ function resultToDetail(cwd: string, { identifier, files, data }: UsageResult) {
             chalk.blueBright(item),
         ]),
     ];
+}
+
+function table(data: string[][]) {
+    const max = data.reduce((prev, columns) => {
+        columns.map((colum, i) => {
+            prev[i] = Math.max(prev[i], realLength(colum));
+        });
+        return prev;
+    }, data[0].map(() => 0) as number[]);
+
+    const padded = data.map((row) => {
+        return row.map((item, i) => {
+            const add = max[i] + 2 - realLength(item);
+            return item + "".padEnd(add, " ");
+        });
+    });
+
+    padded.forEach((row) => {
+        console.log(row.join(""));
+    });
+}
+
+function realLength(str: string) {
+    // eslint-disable-next-line no-control-regex
+    return ("" + str).replace(/\u001b\[\d+m/g, "").length;
 }

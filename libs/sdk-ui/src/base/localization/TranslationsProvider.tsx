@@ -1,6 +1,7 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { injectIntl, WrappedComponentProps, IntlShape } from "react-intl";
+import { messages } from "../../locales";
 
 /**
  * @internal
@@ -19,14 +20,9 @@ export interface ITranslationsComponentProps {
 }
 
 const getNumericSymbols = (intl: IntlShape): string[] => {
-    return [
-        "visualization.numericValues.k",
-        "visualization.numericValues.m",
-        "visualization.numericValues.g",
-        "visualization.numericValues.t",
-        "visualization.numericValues.p",
-        "visualization.numericValues.e",
-    ].map((id: string) => intl.formatMessage({ id }));
+    return [messages.k, messages.m, messages.g, messages.t, messages.p, messages.e].map((desc) =>
+        intl.formatMessage(desc),
+    );
 };
 
 /**

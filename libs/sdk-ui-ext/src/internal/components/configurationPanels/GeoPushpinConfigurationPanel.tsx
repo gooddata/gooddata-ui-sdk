@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
@@ -20,6 +20,7 @@ import PushpinSizeControl from "../configurationControls/PushpinSizeControl";
 import PushpinViewportControl from "../configurationControls/PushpinViewportControl";
 import LegendSection from "../configurationControls/legend/LegendSection";
 import ColorsSection from "../configurationControls/colors/ColorsSection";
+import { messages } from "../../../locales";
 
 export default class GeoPushpinConfigurationPanel extends ConfigurationPanelContent {
     protected getControlProperties(): { groupNearbyPoints: boolean } {
@@ -51,7 +52,7 @@ export default class GeoPushpinConfigurationPanel extends ConfigurationPanelCont
         return (
             <ConfigSection
                 id="map_section"
-                title="properties.map.title"
+                title={messages.pointsMapTitle.id}
                 propertiesMeta={propertiesMeta}
                 properties={properties}
                 pushData={pushData}
@@ -76,14 +77,14 @@ export default class GeoPushpinConfigurationPanel extends ConfigurationPanelCont
         return (
             <ConfigSection
                 id="points_section"
-                title="properties.points.title"
+                title={messages.pointsTitle.id}
                 propertiesMeta={propertiesMeta}
                 properties={properties}
                 pushData={pushData}
             >
                 <CheckboxControl
                     valuePath="points.groupNearbyPoints"
-                    labelText="properties.points.groupNearbyPoints"
+                    labelText={messages.pointsGroupNearbyPoints.id}
                     properties={properties}
                     checked={groupNearbyPoints}
                     disabled={isClusteringDisabled}

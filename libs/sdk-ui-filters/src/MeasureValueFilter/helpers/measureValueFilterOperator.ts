@@ -1,22 +1,9 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { MeasureValueFilterOperator } from "../types";
+import { messages } from "../../locales";
 
 export const getOperatorTranslationKey = (operator: MeasureValueFilterOperator): string => {
-    const translationKeysDictionary: {
-        [K in MeasureValueFilterOperator]: string;
-    } = {
-        ALL: "all",
-        GREATER_THAN: "greaterThan",
-        GREATER_THAN_OR_EQUAL_TO: "greaterThanOrEqualTo",
-        LESS_THAN: "lessThan",
-        LESS_THAN_OR_EQUAL_TO: "lessThanOrEqualTo",
-        EQUAL_TO: "equalTo",
-        NOT_EQUAL_TO: "notEqualTo",
-        BETWEEN: "between",
-        NOT_BETWEEN: "notBetween",
-    };
-
-    return `mvf.operator.${translationKeysDictionary[operator]}`;
+    return messages[operator].id;
 };
 
 export const getOperatorIcon = (operator: MeasureValueFilterOperator): string => {

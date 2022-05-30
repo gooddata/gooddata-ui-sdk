@@ -21,6 +21,7 @@ import {
 import { bucketsIsEmpty, IInsightDefinition, insightBuckets } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { IChartConfig } from "@gooddata/sdk-ui-charts";
+import { messages } from "../../../locales";
 
 export default class BubbleChartConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): React.ReactNode {
@@ -44,7 +45,7 @@ export default class BubbleChartConfigurationPanel extends ConfigurationPanelCon
                     {this.renderColorSection()}
                     <ConfigSection
                         id="xaxis_section"
-                        title="properties.xaxis.title"
+                        title={messages.xaxisTitle.id}
                         valuePath="xaxis.visible"
                         canBeToggled={true}
                         toggledOn={xAxisVisible}
@@ -75,7 +76,7 @@ export default class BubbleChartConfigurationPanel extends ConfigurationPanelCon
                     </ConfigSection>
                     <ConfigSection
                         id="yaxis_section"
-                        title="properties.yaxis.title"
+                        title={messages.yaxisTitle.id}
                         valuePath="yaxis.visible"
                         canBeToggled={true}
                         toggledOn={yAxisVisible}
@@ -107,7 +108,7 @@ export default class BubbleChartConfigurationPanel extends ConfigurationPanelCon
                     {this.renderLegendSection()}
                     <ConfigSection
                         id="canvas_section"
-                        title="properties.canvas.title"
+                        title={messages.canvasTitle.id}
                         propertiesMeta={propertiesMeta}
                         properties={properties}
                         pushData={pushData}
@@ -121,7 +122,7 @@ export default class BubbleChartConfigurationPanel extends ConfigurationPanelCon
                         />
                         <CheckboxControl
                             valuePath="grid.enabled"
-                            labelText="properties.canvas.gridline"
+                            labelText={messages.canvasGridLine.id}
                             properties={properties}
                             checked={gridEnabled}
                             disabled={controlsDisabled}

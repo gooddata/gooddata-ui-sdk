@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
 import { BucketNames, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
@@ -10,6 +10,7 @@ import { BUCKETS } from "../../constants/bucket";
 import { getMeasureItems } from "../bucketHelper";
 import { IntlShape } from "react-intl";
 import { getTranslation } from "../translations";
+import { messages } from "../../../locales";
 
 export function setColumnBarChartUiConfig(
     referencePoint: IExtendedReferencePoint,
@@ -27,7 +28,7 @@ export function setColumnBarChartUiConfig(
     const measures = getMeasureItems(buckets);
 
     if (measures.length > 1) {
-        const warningMessage = getTranslation("dashboard.bucket.measure_stack_by_warning", intl);
+        const warningMessage = getTranslation(messages.measureStack.id, intl);
 
         set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.STACK, "canAddItems"], false);
         set(

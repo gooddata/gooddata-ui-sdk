@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
@@ -18,6 +18,7 @@ import LabelSubsection from "../configurationControls/axis/LabelSubsection";
 import { AxisType } from "../../interfaces/AxisType";
 import { noRowsAndHasOneMeasure, noColumnsAndHasOneMeasure } from "../../utils/bucketHelper";
 import { IInsightDefinition, insightBuckets } from "@gooddata/sdk-model";
+import { messages } from "../../../locales";
 
 export default class HeatMapConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): React.ReactNode {
@@ -35,7 +36,7 @@ export default class HeatMapConfigurationPanel extends ConfigurationPanelContent
                     {this.renderColorSection()}
                     <ConfigSection
                         id="xaxis_section"
-                        title="properties.xaxis.title"
+                        title={messages.xaxisTitle.id}
                         valuePath="xaxis.visible"
                         canBeToggled={true}
                         toggledOn={xAxisVisible}
@@ -65,7 +66,7 @@ export default class HeatMapConfigurationPanel extends ConfigurationPanelContent
                     </ConfigSection>
                     <ConfigSection
                         id="yaxis_section"
-                        title="properties.yaxis.title"
+                        title={messages.yaxisTitle.id}
                         valuePath="yaxis.visible"
                         canBeToggled={true}
                         toggledOn={yAxisVisible}
@@ -96,7 +97,7 @@ export default class HeatMapConfigurationPanel extends ConfigurationPanelContent
                     {this.renderLegendSection()}
                     <ConfigSection
                         id="canvas_section"
-                        title="properties.canvas.title"
+                        title={messages.canvasTitle.id}
                         propertiesMeta={propertiesMeta}
                         properties={properties}
                         pushData={pushData}
