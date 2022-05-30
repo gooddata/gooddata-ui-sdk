@@ -6,6 +6,11 @@ import memoize from "lodash/memoize";
 
 const preventDefault = (e: Event) => e.preventDefault();
 
+// it configures max number of records due to
+// inefficiency with virtual memory allocation
+// that causes application crash (TNT-787)
+const MAX_NUMBER_OF_ROWS = 1000000;
+
 function isTouchDevice() {
     return "ontouchstart" in document.documentElement;
 }
@@ -121,7 +126,7 @@ export class List<T> extends Component<IListProps<T>> {
                     headerHeight={0}
                     rowHeight={itemHeight}
                     rowHeightGetter={itemHeightGetter}
-                    rowsCount={itemsCount}
+                    rowsCount={Math.min(itemsCount, MAX_NUMBER_OF_ROWS)}
                     onScrollStart={(_x: number, y: number) => {
                         if (onScrollStart) {
                             const [startIndex, endIndex] = getScrollRange(y);

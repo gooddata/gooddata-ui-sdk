@@ -7,6 +7,11 @@ import noop from "lodash/noop";
 
 const BORDER_HEIGHT = 1;
 
+// it configures max number of records due to
+// inefficiency with virtual memory allocation
+// that causes application crash (TNT-787)
+const MAX_NUMBER_OF_ROWS = 1000000;
+
 const preventDefault = (e: Event) => e.preventDefault();
 
 function isTouchDevice() {
@@ -168,7 +173,7 @@ export class LegacyList extends Component<ILegacyListProps, ILegacyListState> {
                     rowHeight={itemHeight}
                     rowHeightGetter={itemHeightGetter}
                     headerHeight={0}
-                    rowsCount={dataSource.rowsCount}
+                    rowsCount={Math.min(dataSource.rowsCount, MAX_NUMBER_OF_ROWS)}
                     onRowClick={this.onSelect}
                     onScrollStart={this.onScrollStart}
                     onScrollEnd={this.onScrollEnd}
