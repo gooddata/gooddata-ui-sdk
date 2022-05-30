@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 
@@ -7,6 +7,7 @@ import { IVisualizationProperties } from "../../interfaces/Visualization";
 import { getTranslatedDropdownItems } from "../../utils/translations";
 import { pushpinViewportDropdownItems } from "../../constants/dropdowns";
 import { IGeoConfigViewport } from "@gooddata/sdk-ui-geo";
+import { messages } from "../../../locales";
 
 export interface IPushpinViewportControl {
     disabled: boolean;
@@ -26,7 +27,7 @@ function PushpinViewportControl(props: IPushpinViewportControl & WrappedComponen
             <DropdownControl
                 value={area}
                 valuePath="viewport.area"
-                labelText="properties.viewport.area.title"
+                labelText={messages.viewportAreaTitle.id}
                 disabled={disabled}
                 showDisabledMessage={disabled}
                 properties={properties}

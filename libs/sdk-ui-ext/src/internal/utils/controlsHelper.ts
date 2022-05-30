@@ -1,9 +1,10 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import set from "lodash/set";
 import { WrappedComponentProps } from "react-intl";
 import { getTranslation } from "./translations";
 import { IMinMaxControlState, IMinMaxControlProps } from "../interfaces/MinMaxControl";
 import { IPushData } from "@gooddata/sdk-ui";
+import { messages } from "../../locales";
 
 function fixEmptyMaxValue(value: string): number {
     return value === "" ? Number.MAX_SAFE_INTEGER : Number(value);
@@ -55,7 +56,7 @@ export function maxInputValidateAndPushData(
             maxScale: {
                 hasWarning: true,
                 // no error message for dash
-                warningMessage: maxIsMinus ? "" : getTranslation("properties.axis.max.warning", props.intl),
+                warningMessage: maxIsMinus ? "" : getTranslation(messages.axisMaxWarning.id, props.intl),
                 incorrectValue: maxValue,
             },
         });
@@ -113,7 +114,7 @@ export function minInputValidateAndPushData(
             minScale: {
                 hasWarning: true,
                 // no error message for dash
-                warningMessage: minIsDash ? "" : getTranslation("properties.axis.min.warning", props.intl),
+                warningMessage: minIsDash ? "" : getTranslation(messages.axisMinWarning.id, props.intl),
                 incorrectValue: minValue,
             },
         });

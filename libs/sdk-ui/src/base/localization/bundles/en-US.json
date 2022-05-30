@@ -1,37 +1,107 @@
 {
-    "visualizations.more": {
-        "value": "Show more",
+    "empty_value": {
+        "value": "empty value",
         "comment": "",
         "limit": 0
     },
-    "visualizations.less": {
-        "value": "Show less",
+    "gs.date.at": {
+        "value": "at",
         "comment": "",
         "limit": 0
     },
-    "visualizations.sorting": {
-        "value": "Column sorting",
+    "gs.header.help": {
+        "value": "Help",
         "comment": "",
         "limit": 0
     },
-    "visualizations.asc": {
-        "value": "Ascending",
+    "gs.header.logout": {
+        "value": "Logout",
         "comment": "",
         "limit": 0
     },
-    "visualizations.desc": {
-        "value": "Descending",
+    "gs.list.all": {
+        "value": "All",
         "comment": "",
+        "limit": 0
+    },
+    "gs.list.except": {
+        "value": "except",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.list.is": {
+        "value": "is",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.list.notAvailableAbbreviation": {
+        "value": "N/A",
+        "comment": "Stands for 'Not Available",
+        "limit": 0
+    },
+    "gs.list.searchResults": {
+        "value": "search results",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.visualizationsList.loading": {
+        "value": "Loading…",
+        "comment": "Use '…' as one character, not 3 dots ('...').",
+        "limit": 0
+    },
+    "gs.color-picker.inputPlaceholder": {
+        "value": "#color",
+        "comment": "Character '#' means user should input color code as hexadecimal value, e.g. #C0D6E4",
+        "limit": 0
+    },
+    "gs.color-picker.currentColor": {
+        "value": "current",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.color-picker.newColor": {
+        "value": "new",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.color-picker.cancelButton": {
+        "value": "Cancel",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.color-picker.okButton": {
+        "value": "OK",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.color-picker.hex": {
+        "value": "hex",
+        "comment": "label that inidicates that user should enter hexadecimal color value, e.g. #C0D6E4",
+        "limit": 0
+    },
+    "gs.noData.noMatchingData": {
+        "value": "No matching data",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.noData.noDataAvailable": {
+        "value": "No matching data",
+        "comment": "",
+        "limit": 0
+    },
+    "geochart.scroll.zoom.blocker": {
+        "value": "Use {button} + scroll to zoom the map",
+        "comment": "This message will appear when map zooming on GeoChart is disabled and available only, while the button is pressed.",
+        "limit": 0
+    },
+    "geochart.touch.pan.blocker": {
+        "value": "Use two fingers to move the map",
+        "comment": "This message will appear when moving map on GeoChart is disabled by one finger and available only with two.",
         "limit": 0
     },
     "visualizations.of": {
         "value": "{page} of {pagesCount}",
         "comment": "Don't translate placeholders '{page}', '{pagesCount}'",
-        "limit": 0
-    },
-    "visualizations.totals.dropdown.heading": {
-        "value": "Add a new row",
-        "comment": "",
         "limit": 0
     },
     "visualizations.totals.dropdown.title.sum": {
@@ -95,36 +165,6 @@
     "visualizations.totals.dropdown.title.med": {
         "value": "Median",
         "comment": "Total of type 'Median'. Showed in menu before adding to table.",
-        "limit": 0
-    },
-    "visualizations.totals.row.title.sum": {
-        "value": "Sum",
-        "comment": "Total of type 'Sum'. Showed in table after adding total.",
-        "limit": 0
-    },
-    "visualizations.totals.row.title.avg": {
-        "value": "Avg",
-        "comment": "Total of type 'Avg'. Showed in table after adding total.",
-        "limit": 0
-    },
-    "visualizations.totals.row.title.min": {
-        "value": "Min",
-        "comment": "Total of type 'Min'. Showed in table after adding total.",
-        "limit": 0
-    },
-    "visualizations.totals.row.title.max": {
-        "value": "Max",
-        "comment": "Total of type 'Max'. Showed in table after adding total.",
-        "limit": 0
-    },
-    "visualizations.totals.row.title.nat": {
-        "value": "Total",
-        "comment": "Total of type 'Rollup', but synonym 'Total' is used here since users are used to this more than 'Rollup'. Showed in table after adding total.",
-        "limit": 0
-    },
-    "visualizations.totals.row.title.med": {
-        "value": "Median",
-        "comment": "Total of type 'Median'. Showed in table after adding total.",
         "limit": 0
     },
     "visualizations.headline.tertiary.title": {
@@ -279,11 +319,6 @@
     "gs.filter.error": {
         "value": "Error loading filter",
         "comment": "",
-        "limit": 0
-    },
-    "gs.list.loading": {
-        "value": "Loading list…",
-        "comment": "Use '…' as one character, not 3 dots ('...').",
         "limit": 0
     },
     "gs.list.clear": {
@@ -457,11 +492,6 @@
         "limit": 0
     },
     "dateFilterDropdown.title": {
-        "value": "Date range",
-        "comment": "",
-        "limit": 0
-    },
-    "dateFilterDropdown.buttonTitle": {
         "value": "Date range",
         "comment": "",
         "limit": 0
@@ -866,11 +896,6 @@
         "comment": "Displayed as placeholder in static period inputs where user enters date",
         "limit": 0
     },
-    "filters.setTime": {
-        "value": "set time",
-        "comment": "Displayed as label of checkbox that opens panel where user can specify time to a date",
-        "limit": 0
-    },
     "filters.floatingRange": {
         "value": "Relative period",
         "comment": "",
@@ -1204,6 +1229,11 @@
     "measureNumberCustomFormatDialog.preview": {
         "value": "Preview",
         "comment": "Header of a preview section",
+        "limit": 0
+    },
+    "properties.legend.title": {
+        "value": "Legend",
+        "comment": "",
         "limit": 0
     },
     "attrf.all": {

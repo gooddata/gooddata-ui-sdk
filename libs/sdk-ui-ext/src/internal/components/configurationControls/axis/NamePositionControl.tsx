@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
@@ -7,6 +7,7 @@ import { getTranslatedDropdownItems } from "../../../utils/translations";
 import { xAxisPositionDropdownItems, yAxisPositionDropdownItems } from "../../../constants/dropdowns";
 import { IConfigItemSubsection } from "../../../interfaces/ConfigurationPanel";
 import { IVisualizationProperties } from "../../../interfaces/Visualization";
+import { messages } from "../../../../locales";
 
 class NamePositionControl extends React.PureComponent<IConfigItemSubsection & WrappedComponentProps> {
     public render(): React.ReactNode {
@@ -22,7 +23,7 @@ class NamePositionControl extends React.PureComponent<IConfigItemSubsection & Wr
             <DropdownControl
                 value={namePosition}
                 valuePath={`${axis}.name.position`}
-                labelText="properties.axis.name.position"
+                labelText={messages.axisNamePosition.id}
                 disabled={isDisabled}
                 showDisabledMessage={!configPanelDisabled && isDisabled}
                 properties={properties}

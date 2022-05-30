@@ -1,11 +1,12 @@
 // (C) 2019-2022 GoodData Corporation
+import { BucketNames } from "@gooddata/sdk-ui";
 import cloneDeep from "lodash/cloneDeep";
 import { IntlShape } from "react-intl";
 import { IExtendedReferencePoint } from "../../interfaces/Visualization";
 import { UICONFIG } from "../../constants/uiConfig";
 import { setBucketTitles, getItemsCount } from "./../bucketHelper";
 import { getTranslation } from "../translations";
-import { BucketNames } from "@gooddata/sdk-ui";
+import { messages } from "../../../locales";
 
 // If you need to edit these icons
 // reflect changes also in gdc-analytical-designer
@@ -55,8 +56,8 @@ export function getBulletChartUiConfig(
 
     if (primaryMeasuresCount === 0 && (secondaryMeasuresCount !== 0 || tertiaryMeasuresCount !== 0)) {
         referencePointConfigured[UICONFIG].customError = {
-            heading: getTranslation("dashboard.error.missing_primary_bucket_item.heading", intl),
-            text: getTranslation("dashboard.error.missing_primary_bucket_item.text", intl),
+            heading: getTranslation(messages.heading.id, intl),
+            text: getTranslation(messages.text.id, intl),
         };
     }
 

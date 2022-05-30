@@ -1,8 +1,8 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { getTranslation } from "../localization/IntlStore";
 import { OverTimeComparisonType, OverTimeComparisonTypes } from "../interfaces/OverTimeComparison";
 import { ILocale } from "../localization/Locale";
-
+import { messages } from "../../locales";
 /**
  * Factory that builds formatted localized suffix string for derived measure based on the over time comparison type.
  * The suffix is used during AFM execution and for bucket item titles.
@@ -33,18 +33,18 @@ export class DerivedMeasureTitleSuffixFactory {
         return localizationKey === null ? "" : ` - ${this.translateKey(localizationKey)}`;
     }
 
-    private getSuffixLocalizationKey(overTimeComparisonType: OverTimeComparisonType): string | null {
+    private getSuffixLocalizationKey(overTimeComparisonType: OverTimeComparisonType): { id: string } | null {
         switch (overTimeComparisonType) {
             case OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR:
-                return "measure.title.suffix.same_period_year_ago";
+                return messages.samePeriodYearAgo;
             case OverTimeComparisonTypes.PREVIOUS_PERIOD:
-                return "measure.title.suffix.previous_period";
+                return messages.previousPeriod;
             default:
                 return null;
         }
     }
 
-    private translateKey(localizationKey: string): string {
+    private translateKey(localizationKey: { id: string }): string {
         return getTranslation(localizationKey, this.locale);
     }
 }

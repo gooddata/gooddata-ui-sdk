@@ -1,9 +1,10 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import cx from "classnames";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import { getTranslation } from "../utils/translations";
+import { messages } from "../../locales";
 
 export interface IBubbleMessageOwnProps {
     showDisabledMessage: boolean;
@@ -19,7 +20,7 @@ export class DisabledBubbleMessage extends React.PureComponent<IBubbleMessagePro
             <BubbleHoverTrigger className={className}>
                 {children}
                 <Bubble className={this.getBubbleClassNames()} alignPoints={[{ align: "cr cl" }]}>
-                    {getTranslation("properties.not_applicable", intl)}
+                    {getTranslation(messages.notApplicable.id, intl)}
                 </Bubble>
             </BubbleHoverTrigger>
         );

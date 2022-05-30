@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
 import { IBucket } from "@gooddata/sdk-model";
@@ -188,7 +188,7 @@ describe("sanitizeFilters", () => {
 
 describe("Bucket title", () => {
     it("should generate title by keyName and visualizationType", () => {
-        expect(generateBucketTitleId("metrics", "table")).toEqual("dashboard.bucket.metrics_title.table");
+        expect(generateBucketTitleId("measures", "table")).toEqual("dashboard.bucket.measures_title.table");
     });
 
     it("should set translated bucket titles for all buckets except filters when intl provided", () => {

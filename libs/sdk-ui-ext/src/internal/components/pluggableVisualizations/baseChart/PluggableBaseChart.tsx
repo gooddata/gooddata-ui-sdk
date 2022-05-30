@@ -80,6 +80,7 @@ import isEmpty from "lodash/isEmpty";
 import set from "lodash/set";
 import tail from "lodash/tail";
 import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil";
+import { messages } from "../../../../locales";
 
 export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected projectId: string;
@@ -391,7 +392,9 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         const hasMapping = hasColorMapping(properties);
         const isSupported = this.isOpenAsReportSupported();
 
-        const warningMessage = hasMapping ? getTranslation("export_unsupported.colors", this.intl) : "";
+        const warningMessage = hasMapping
+            ? getTranslation(messages.exportUnsupportedColors.id, this.intl)
+            : "";
 
         return {
             supported: isSupported && !hasMapping,

@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
@@ -8,6 +8,7 @@ import { getTranslatedDropdownItems } from "../../../utils/translations";
 import { formatDropdownItems } from "../../../constants/dropdowns";
 import { AxisType } from "../../../interfaces/AxisType";
 import { IVisualizationProperties } from "../../../interfaces/Visualization";
+import { messages } from "../../../../locales";
 
 export interface ILabelFormatControl {
     disabled: boolean;
@@ -43,7 +44,7 @@ const LabelFormatControlComponent: React.FC<ILabelFormatControl & WrappedCompone
         <DropdownControl
             value={axisFormat}
             valuePath={`${axis}.format`}
-            labelText="properties.axis.format"
+            labelText={messages.axisFormat.id}
             disabled={isDisabled}
             showDisabledMessage={!configPanelDisabled && isDisabled}
             properties={properties}

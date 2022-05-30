@@ -11,6 +11,7 @@ import { CodeLanguageType, CodeOptionType, CopyCodeOriginType, InsightCodeType }
 import { CodeOptions } from "./components/CodeOptions";
 import { CompleteListPropsMessage } from "./components/CompleteListPropsMessage";
 import { Bubble, BubbleHoverTrigger } from "../../../Bubble";
+import { dialogHeadlineLabels, dialogChangeMessageLabels } from "../../../locales";
 
 const HEADER_TOOLTIP_ALIGN_POINTS = [{ align: "bc tl" }];
 const HEADER_TOOLTIP_ARROW_OFFSETS = { "bc tl": [-7, 0] };
@@ -112,20 +113,10 @@ export const EmbedInsightDialogBase: React.VFC<IEmbedInsightDialogBaseProps> = (
     );
 };
 
-const dialogHeadlineLabels = {
-    definition: "embedInsightDialog.headLine.byDefinition",
-    reference: "embedInsightDialog.headLine.byReference",
-};
-
 const getDialogLabelId = (codeType: InsightCodeType): string => {
-    return dialogHeadlineLabels[codeType];
-};
-
-const dialogChangeMessageLabels = {
-    definition: "embedInsightDialog.headLine.byDefinition.tooltip",
-    reference: "embedInsightDialog.headLine.byReference.tooltip",
+    return dialogHeadlineLabels[codeType].id;
 };
 
 const getChangesLabelId = (codeType: InsightCodeType): string => {
-    return dialogChangeMessageLabels[codeType];
+    return dialogChangeMessageLabels[codeType].id;
 };

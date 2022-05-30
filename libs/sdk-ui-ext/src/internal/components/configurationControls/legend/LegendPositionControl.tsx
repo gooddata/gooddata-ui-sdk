@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 
@@ -6,6 +6,7 @@ import DropdownControl from "../DropdownControl";
 import { legendPositionDropdownItems } from "../../../constants/dropdowns";
 import { getTranslatedDropdownItems } from "../../../utils/translations";
 import { IVisualizationProperties } from "../../../interfaces/Visualization";
+import { messages } from "../../../../locales";
 
 export interface ILegendPositionControl {
     disabled: boolean;
@@ -21,7 +22,7 @@ class LegendPositionControl extends React.PureComponent<ILegendPositionControl &
             <DropdownControl
                 value={this.props.value}
                 valuePath="legend.position"
-                labelText="properties.legend.position"
+                labelText={messages.position.id}
                 disabled={this.props.disabled}
                 properties={this.props.properties}
                 pushData={this.props.pushData}

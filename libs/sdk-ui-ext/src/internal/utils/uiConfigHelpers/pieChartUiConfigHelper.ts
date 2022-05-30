@@ -15,6 +15,7 @@ import { hasMoreThanOneCategory, hasMoreThanOneMasterMeasure } from "./../bucket
 import { setBucketTitles } from "./../bucketHelper";
 import { getTranslation } from "./../translations";
 import { hasColorMapping } from "../propertiesHelper";
+import { messages } from "../../../locales";
 
 // If you need to edit these icons
 // reflect changes also in gdc-analytical-designer
@@ -38,7 +39,7 @@ function setPieChartBucketWarningMessages(referencePoint: IExtendedReferencePoin
         if (!bucketUiConfig?.canAddItems) {
             let warningMessageId;
             if (bucket.localIdentifier === BucketNames.VIEW) {
-                warningMessageId = "dashboard.bucket.category_category_by_warning";
+                warningMessageId = messages.category.id;
             }
 
             if (warningMessageId) {

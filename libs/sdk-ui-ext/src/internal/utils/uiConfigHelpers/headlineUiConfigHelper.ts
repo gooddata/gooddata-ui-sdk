@@ -12,6 +12,7 @@ import { hasNoMeasures, hasNoSecondaryMeasures } from "./../bucketRules";
 
 import { setBucketTitles, getItemsCount } from "./../bucketHelper";
 import { getTranslation } from "./../translations";
+import { messages } from "../../../locales";
 
 // If you need to edit these icons
 // reflect changes also in gdc-analytical-designer
@@ -50,8 +51,8 @@ export function getHeadlineUiConfig(referencePoint: IReferencePoint, intl: IntlS
 
     if (primaryMeasuresCount === 0 && secondaryMeasuresCount !== 0) {
         uiConfig.customError = {
-            heading: getTranslation("dashboard.error.missing_primary_bucket_item.heading", intl),
-            text: getTranslation("dashboard.error.missing_primary_bucket_item.text", intl),
+            heading: getTranslation(messages.heading.id, intl),
+            text: getTranslation(messages.text.id, intl),
         };
     }
 

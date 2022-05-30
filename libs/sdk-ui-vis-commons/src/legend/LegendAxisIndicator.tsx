@@ -1,6 +1,7 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
+import { messages } from "../locales";
 
 export interface ILegendAxisIndicatorProps {
     labelKey: string;
@@ -16,7 +17,7 @@ export class LegendAxisIndicatorClass extends React.PureComponent<
         const style = width ? { width: `${width}px` } : {};
         const values = (data || []).reduce(
             (result: { [index: number]: string }, key: string, index: number) => {
-                result[index] = intl.formatMessage({ id: `visualizations.legend.text.${key}` });
+                result[index] = intl.formatMessage(messages[key]);
                 return result;
             },
             {},
@@ -25,8 +26,8 @@ export class LegendAxisIndicatorClass extends React.PureComponent<
         return (
             <div style={style} className="series-axis-indicator">
                 <div className="series-text">
-                    {intl.formatMessage({ id: `visualizations.legend.text.${labelKey}` }, values)}
-                    {intl.formatMessage({ id: "visualizations.legend.text.colon" })}
+                    {intl.formatMessage(messages[labelKey], values)}
+                    {intl.formatMessage(messages["colon"])}
                 </div>
             </div>
         );

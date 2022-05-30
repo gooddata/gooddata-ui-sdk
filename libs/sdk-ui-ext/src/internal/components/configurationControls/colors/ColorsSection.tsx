@@ -13,6 +13,7 @@ import { getTranslation } from "../../../utils/translations";
 import { IReferences, IVisualizationProperties } from "../../../interfaces/Visualization";
 import { IColoredItem, IColorConfiguration } from "../../../interfaces/Colors";
 import { getColoredInputItems, getProperties } from "../../../utils/colors";
+import { messages } from "../../../../locales";
 
 export interface IColorsSectionProps {
     controlsDisabled: boolean;
@@ -34,7 +35,7 @@ class ColorsSection extends React.Component<IColorsSectionProps & WrappedCompone
 
         return (
             <ConfigSection
-                title="properties.colors"
+                title={messages.colors.id}
                 pushData={pushData}
                 propertiesMeta={propertiesMeta}
                 id="colors_section"
@@ -75,7 +76,7 @@ class ColorsSection extends React.Component<IColorsSectionProps & WrappedCompone
         return (
             <div className={classes}>
                 <Button
-                    value={getTranslation("properties.colors.reset-colors", this.props.intl)}
+                    value={getTranslation(messages.resetColors.id, this.props.intl)}
                     className="gd-button-link s-reset-colors-button"
                     onClick={this.onResetColors}
                     disabled={isDisabled}
@@ -128,7 +129,7 @@ class ColorsSection extends React.Component<IColorsSectionProps & WrappedCompone
     private renderUnsupportedColoredList() {
         return (
             <div className="gd-color-unsupported">
-                {getTranslation("properties.colors.unsupported", this.props.intl)}
+                {getTranslation(messages.unsupportedColors.id, this.props.intl)}
             </div>
         );
     }

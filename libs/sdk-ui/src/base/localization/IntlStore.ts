@@ -61,7 +61,11 @@ export function getIntl(locale: ILocale = DefaultLocale): IntlShape {
  *
  * @internal
  */
-export function getTranslation(translationId: string, locale: ILocale, values = {}): string {
+export function getTranslation(translationId: string | { id: string }, locale: ILocale, values = {}): string {
     const intl = getIntl(locale);
-    return intl.formatMessage({ id: translationId, defaultMessage: translationId }, values);
+    const desc =
+        typeof translationId === "object"
+            ? { ...translationId, defaultMessage: translationId.id }
+            : { id: translationId, defaultMessage: translationId };
+    return intl.formatMessage(desc, values);
 }

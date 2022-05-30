@@ -14,6 +14,7 @@ import {
 
 import { UICONFIG, RECOMMENDATIONS, OPEN_AS_REPORT, SUPPORTED } from "../../constants/uiConfig";
 import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket";
+import { messages } from "../../../locales";
 
 import {
     comparisonAndTrendingRecommendationEnabled,
@@ -59,13 +60,9 @@ function setBaseChartBucketWarningMessages(
         if (!bucketUiConfig?.canAddItems) {
             let warningMessage;
             if (bucket.localIdentifier === BucketNames.MEASURES) {
-                warningMessage = getBucketItemsWarningMessage(
-                    "dashboard.bucket.metric_stack_by_warning",
-                    intl,
-                    stackItems,
-                );
+                warningMessage = getBucketItemsWarningMessage(messages.metricStack.id, intl, stackItems);
             } else if (bucket.localIdentifier === BucketNames.STACK) {
-                warningMessage = getTranslation("dashboard.bucket.category_stack_by_warning", intl);
+                warningMessage = getTranslation(messages.categoryStack.id, intl);
             }
 
             if (warningMessage) {
@@ -171,7 +168,7 @@ export function setBaseChartUiConfigRecommendations(
 function getBucketItemsIcons(bucket: IBucketItem[], intl: IntlShape): string {
     const attributeUsed = bucket.find((x) => !isDateBucketItem(x));
     const dateUsed = bucket.find((x) => isDateBucketItem(x));
-    const orString = intl.formatMessage({ id: "or" });
+    const orString = intl.formatMessage(messages.or);
 
     if (attributeUsed && dateUsed) {
         return `<span class="attr-field-icon" /> ${orString} <span class="date-field-icon" />`;

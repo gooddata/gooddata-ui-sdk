@@ -57,8 +57,9 @@
         "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
         "stylelint": "stylelint '**/*.scss'",
         "stylelint-ci": "stylelint '**/*.scss' --custom-formatter=node_modules/stylelint-checkstyle-formatter > ./ci/results/stylelint-results.xml",
-        "validate": "npm run dep-cruiser && npm run eslint && npm run stylelint && npm run prettier-check",
-        "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run stylelint-ci && npm run prettier-check"
+        "validate": "npm run dep-cruiser && npm run eslint && npm run stylelint && npm run validate-locales && npm run prettier-check",
+        "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run stylelint-ci && npm run validate-locales && npm run prettier-check",
+        "validate-locales": "i18n-toolkit"
     },
     "dependencies": {
         "@formatjs/intl-pluralrules": "~1.3.7",
@@ -95,6 +96,7 @@
         "react-dom": "^16.10.0 || ^17.0.0"
     },
     "devDependencies": {
+        "@gooddata/i18n-toolkit": "^8.10.0-alpha.116",
         "@gooddata/eslint-config": "^2.1.0",
         "@gooddata/live-examples-workspace": "^8.10.0-alpha.116",
         "@gooddata/reference-workspace": "^8.10.0-alpha.116",

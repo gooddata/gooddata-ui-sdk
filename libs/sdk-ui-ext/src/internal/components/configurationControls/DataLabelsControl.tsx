@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import DropdownControl from "./DropdownControl";
@@ -6,6 +6,7 @@ import DropdownControl from "./DropdownControl";
 import { dataLabelsDropdownItems } from "../../constants/dropdowns";
 import { getTranslatedDropdownItems } from "../../utils/translations";
 import { IVisualizationProperties } from "../../interfaces/Visualization";
+import { messages } from "../../../locales";
 
 export interface IDataLabelsControlProps {
     pushData: (data: any) => any;
@@ -29,7 +30,7 @@ class DataLabelsControl extends React.Component<IDataLabelsControlProps & Wrappe
                 <DropdownControl
                     value={dataLabels}
                     valuePath="dataLabels.visible"
-                    labelText="properties.canvas.dataLabels"
+                    labelText={messages.dataLabels.id}
                     disabled={isDisabled}
                     properties={properties}
                     pushData={pushData}

@@ -289,13 +289,13 @@ const PublicLibraryRules = [AvoidNonStandardImports];
 function isolatedSubmodule(module, dir) {
     return {
         name: `${module}-isolated`,
-        comment: `${module} in ${dir} should be isolated - it must only import code from its own directory subtree or external packages.`,
+        comment: `${module} in ${dir} should be isolated - it must only import code from its own directory subtree, external packages or from "locales.ts" file.`,
         severity: "error",
         from: {
             path: dir,
         },
         to: {
-            pathNot: `^(${dir})`,
+            pathNot: `^(${dir})|(src/locales.ts)`,
             dependencyTypes: ["local"],
         },
     };
@@ -332,13 +332,13 @@ function moduleWithDependencies(module, dir, deps) {
         name: `${module}-dependencies`,
         comment: `${module} in ${dir} must only depend on itself, code in ${deps.join(
             ", ",
-        )} (through their index) and external packages..`,
+        )} (through their index), external packages and "locales.ts" file.`,
         severity: "error",
         from: {
             path: dir,
         },
         to: {
-            pathNot: `^(${allowedDeps.join("|")})`,
+            pathNot: `^(${allowedDeps.join("|")})|(src/locales.ts)`,
             dependencyTypes: ["local"],
         },
     };

@@ -24,6 +24,7 @@ import {
     TIME_FORMAT,
     TIME_FORMAT_WITH_SEPARATOR,
 } from "../../constants/Platform";
+import { messages } from "../../../locales";
 import moment from "moment";
 
 export const getTimeRange = (dateFrom: Date, dateTo: Date): string => {
@@ -97,91 +98,78 @@ const relativeDateRangeFormatters: Array<{
         // Today, This month
         predicate: (from, to) => from === 0 && to === 0,
         formatter: (_from, _to, intlGranularity, translator) =>
-            translator.formatMessage({ id: `filters.this${capitalize(intlGranularity)}.title` }),
+            translator.formatMessage(messages[`this${capitalize(intlGranularity)}`]),
     },
     {
         // Tomorrow, Next month
         predicate: (from, to) => from === 1 && to === 1,
         formatter: (_from, _to, intlGranularity, translator) =>
-            translator.formatMessage({ id: `filters.next${capitalize(intlGranularity)}.title` }),
+            translator.formatMessage(messages[`next${capitalize(intlGranularity)}`]),
     },
     {
         // Yesterday, Last month
         predicate: (from, to) => from === -1 && to === -1,
         formatter: (_from, _to, intlGranularity, translator) =>
-            translator.formatMessage({ id: `filters.last${capitalize(intlGranularity)}.title` }),
+            translator.formatMessage(messages[`last${capitalize(intlGranularity)}`]),
     },
     {
         // Next N days (months)
         predicate: (from) => from === 0,
         formatter: (_from, to, intlGranularity, translator) =>
-            translator.formatMessage(
-                { id: `filters.nextN${capitalize(intlGranularity)}s` },
-                { n: Math.abs(to) + 1 },
-            ),
+            translator.formatMessage(messages[`nextN${capitalize(intlGranularity)}s`], {
+                n: Math.abs(to) + 1,
+            }),
     },
     {
         // Last N days (months)
         predicate: (_from, to) => to === 0,
         formatter: (from, _to, intlGranularity, translator) =>
-            translator.formatMessage(
-                { id: `filters.lastN${capitalize(intlGranularity)}s` },
-                { n: Math.abs(from) + 1 },
-            ),
+            translator.formatMessage(messages[`lastN${capitalize(intlGranularity)}s`], {
+                n: Math.abs(from) + 1,
+            }),
     },
     {
         // From N days ago to N days ago
         predicate: (from, to) => from < 0 && from === to,
         formatter: (from, _to, intlGranularity, translator) =>
-            translator.formatMessage(
-                { id: `filters.interval.${intlGranularity}s.past.sameValue` },
-                { value: Math.abs(from) },
-            ),
+            translator.formatMessage(messages[`${intlGranularity}s.past.sameValue`], {
+                value: Math.abs(from),
+            }),
     },
     {
         // From N days ago to N days ahead
         predicate: (from, to) => from > 0 && from === to,
         formatter: (from, _to, intlGranularity, translator) =>
-            translator.formatMessage(
-                { id: `filters.interval.${intlGranularity}s.future.sameValue` },
-                { value: Math.abs(from) },
-            ),
+            translator.formatMessage(messages[`${intlGranularity}s.future.sameValue`], {
+                value: Math.abs(from),
+            }),
     },
     {
         // From N days ago to M days ago
         predicate: (from, to) => from < 0 && to < 0,
         formatter: (from, to, intlGranularity, translator) =>
-            translator.formatMessage(
-                { id: `filters.interval.${intlGranularity}s.past` },
-                {
-                    from: Math.abs(from),
-                    to: Math.abs(to),
-                },
-            ),
+            translator.formatMessage(messages[`${intlGranularity}s.past`], {
+                from: Math.abs(from),
+                to: Math.abs(to),
+            }),
     },
     {
         // From N days ahead to M days ahead
         predicate: (from, to) => from > 0 && to > 0,
         formatter: (from, to, intlGranularity, translator) =>
-            translator.formatMessage(
-                { id: `filters.interval.${intlGranularity}s.future` },
-                {
-                    from: Math.abs(from),
-                    to: Math.abs(to),
-                },
-            ),
+            translator.formatMessage(messages[`${intlGranularity}s.future`], {
+                from: Math.abs(from),
+                to: Math.abs(to),
+            }),
     },
     {
         // From N days ago to M days ahead
         predicate: () => true,
         formatter: (from, to, intlGranularity, translator) =>
-            translator.formatMessage(
-                { id: `filters.interval.${intlGranularity}s.mixed` },
-                {
-                    from: Math.abs(from),
-                    to: Math.abs(to),
-                },
-            ),
+            translator.formatMessage(messages[`${intlGranularity}s.mixed`], {
+                from: Math.abs(from),
+                to: Math.abs(to),
+            }),
     },
 ];
 

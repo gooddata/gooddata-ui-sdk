@@ -23,6 +23,7 @@ import { AXIS, BASE_CHART_AXIS_CONFIG, DUAL_AXES_SUPPORTED_CHARTS } from "../../
 import { bucketsIsEmpty, insightBuckets } from "@gooddata/sdk-model";
 import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection";
 import NameSubsection from "../configurationControls/axis/NameSubsection";
+import { messages } from "../../../locales";
 
 export default class BaseChartConfigurationPanel<
     T extends IConfigurationPanelContentProps = IConfigurationPanelContentProps,
@@ -35,7 +36,7 @@ export default class BaseChartConfigurationPanel<
         return (
             <ConfigSection
                 id="canvas_section"
-                title="properties.canvas.title"
+                title={messages.canvasTitle.id}
                 propertiesMeta={propertiesMeta}
                 properties={properties}
                 pushData={pushData}
@@ -47,7 +48,7 @@ export default class BaseChartConfigurationPanel<
                 />
                 <CheckboxControl
                     valuePath="grid.enabled"
-                    labelText="properties.canvas.gridline"
+                    labelText={messages.canvasGridLine.id}
                     properties={properties}
                     checked={gridEnabled}
                     disabled={controlsDisabled}

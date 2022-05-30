@@ -1,10 +1,11 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import ConfigSubsection from "../../configurationControls/ConfigSubsection";
 import NamePositionControl from "./NamePositionControl";
 import { IConfigItemSubsection } from "../../../interfaces/ConfigurationPanel";
 import { IVisualizationProperties } from "../../../interfaces/Visualization";
+import { messages } from "../../../../locales";
 
 class NameSubsection extends React.PureComponent<IConfigItemSubsection & WrappedComponentProps> {
     public render(): React.ReactNode {
@@ -13,7 +14,7 @@ class NameSubsection extends React.PureComponent<IConfigItemSubsection & Wrapped
 
         return (
             <ConfigSubsection
-                title="properties.axis.name"
+                title={messages.axisName.id}
                 valuePath={`${axis}.name.visible`}
                 properties={properties}
                 pushData={pushData}

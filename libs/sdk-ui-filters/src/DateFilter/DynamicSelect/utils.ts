@@ -2,10 +2,10 @@
 import range from "lodash/range";
 import { IMessageTranslator } from "../utils/Translations/Translators";
 import { granularityIntlCodes } from "../constants/i18n";
-
 import { getSelectableItems } from "../Select/utils";
 import { DynamicSelectItem, DynamicSelectOption } from "./types";
 import { DateFilterGranularity } from "@gooddata/sdk-model";
+import { messages } from "../../locales";
 
 export const MINUTE: DateFilterGranularity = "GDC.time.minute";
 export const HOUR: DateFilterGranularity = "GDC.time.hour";
@@ -102,10 +102,7 @@ const getOption = (
     return {
         type: "option",
         value: offset,
-        label: intl.formatMessage(
-            { id: `filters.floatingRange.option.${dateCode}.offset.${offsetCode}` },
-            { offset, n: Math.abs(offset) },
-        ),
+        label: intl.formatMessage(messages[`${dateCode}_${offsetCode}`], { offset, n: Math.abs(offset) }),
     };
 };
 

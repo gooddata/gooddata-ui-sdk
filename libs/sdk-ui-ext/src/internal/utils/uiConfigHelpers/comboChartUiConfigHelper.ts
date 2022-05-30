@@ -9,6 +9,8 @@ import { IBucketOfFun, IExtendedReferencePoint, IUiConfig } from "../../interfac
 import { BUCKETS } from "../../constants/bucket";
 import { getTranslation } from "../translations";
 import { getBucketsByNames, setBucketTitles } from "../bucketHelper";
+import { UICONFIG } from "../../constants/uiConfig";
+import { messages } from "../../../locales";
 
 // If you need to edit these icons
 // reflect changes also in gdc-analytical-designer
@@ -22,8 +24,6 @@ const lineAreaIcon = "local:combo/bucket-title-view-line-area.svg";
 const columnViewIcon = "local:column/bucket-title-view.svg";
 const lineViewIcon = "local:combo/bucket-title-view-line-line.svg";
 const areaViewIcon = "local:area/bucket-title-view.svg";
-
-import { UICONFIG } from "../../constants/uiConfig";
 
 const { COLUMN, LINE, AREA } = VisualizationTypes;
 
@@ -75,7 +75,7 @@ export function setComboChartUiConfig(
     measureBuckets.forEach((bucket: IBucketOfFun, index: number) => {
         const type = chartTypes[index];
         const localIdentifier = bucket?.localIdentifier ?? "";
-        const subtitle = getTranslation(`dashboard.bucket.combo.subtitle.${type}`, intl);
+        const subtitle = getTranslation(messages[type].id, intl);
 
         set(updatedUiConfig, [BUCKETS, localIdentifier, "subtitle"], subtitle);
         set(updatedUiConfig, [BUCKETS, localIdentifier, "icon"], MEASURE_BUCKET_ICONS[type]);

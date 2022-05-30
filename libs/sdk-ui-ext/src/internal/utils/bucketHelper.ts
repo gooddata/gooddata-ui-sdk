@@ -50,6 +50,7 @@ import {
 } from "../interfaces/Visualization";
 import { ATTRIBUTE, BUCKETS, DATE, METRIC, SHOW_ON_SECONDARY_AXIS } from "../constants/bucket";
 import { getTranslation } from "./translations";
+import { titles, subtitles } from "../../locales";
 
 export function isDateFilter(filter: IBucketFilter): filter is IDateFilter {
     return !!filter && (filter as IDateFilter).attribute === DATE_DATASET_ATTRIBUTE;
@@ -350,11 +351,11 @@ export function setBucketTitles(
 }
 
 export function generateBucketTitleId(localIdentifier: string, visualizationType: string): string {
-    return `dashboard.bucket.${localIdentifier}_title.${visualizationType}`;
+    return titles[`${localIdentifier}_${visualizationType}`].id;
 }
 
 function generateBucketSubtitleId(localIdentifier: string, visualizationType: string): string {
-    return `dashboard.bucket.${localIdentifier}_subtitle.${visualizationType}`;
+    return subtitles[`${localIdentifier}_${visualizationType}`].id;
 }
 
 export function getItemsCount(buckets: IBucketOfFun[], localIdentifier: string): number {

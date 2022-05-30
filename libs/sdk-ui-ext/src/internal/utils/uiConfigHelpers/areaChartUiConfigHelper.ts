@@ -20,6 +20,7 @@ import { getItemsCount, getStackItems, getViewItems, setBucketTitles } from "../
 
 import { getBucketItemsWarningMessage } from "./baseChartUiConfigHelper";
 import { getTranslation } from "../translations";
+import { messages } from "../../../locales";
 
 // If you need to edit these icons
 // reflect changes also in gdc-analytical-designer
@@ -35,20 +36,20 @@ function getWarningMessageForMeasuresBucket(
     viewItems: IBucketItem[],
 ) {
     return categoriesCount > 1
-        ? getBucketItemsWarningMessage("dashboard.bucket.metric_view_by_warning", intl, viewItems)
-        : getBucketItemsWarningMessage("dashboard.bucket.metric_stack_by_warning", intl, stackItems);
+        ? getBucketItemsWarningMessage(messages.metricView.id, intl, viewItems)
+        : getBucketItemsWarningMessage(messages.metricStack.id, intl, stackItems);
 }
 
 function getWarningMessageForViewByBucket(intl: IntlShape, measuresCount: number, stackItems: IBucketItem[]) {
     return measuresCount > 1
-        ? getTranslation("dashboard.bucket.category_view_by_warning", intl)
-        : getBucketItemsWarningMessage("dashboard.bucket.view_stack_by_warning", intl, stackItems);
+        ? getTranslation(messages.categoryView.id, intl)
+        : getBucketItemsWarningMessage(messages.viewStack.id, intl, stackItems);
 }
 
 function getWarningMessageForStackByBucket(intl: IntlShape, categoriesCount: number) {
     return categoriesCount > 1
-        ? getTranslation("dashboard.bucket.stack_view_by_warning", intl)
-        : getTranslation("dashboard.bucket.measure_stack_by_warning", intl);
+        ? getTranslation(messages.stackView.id, intl)
+        : getTranslation(messages.measureStack.id, intl);
 }
 
 function setAreaChartBucketWarningMessages(

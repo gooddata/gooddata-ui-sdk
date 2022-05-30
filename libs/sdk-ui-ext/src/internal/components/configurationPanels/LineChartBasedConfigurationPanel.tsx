@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
@@ -14,6 +14,7 @@ import {
 } from "../../constants/bubble";
 import BaseChartConfigurationPanel from "./BaseChartConfigurationPanel";
 import { IConfigurationPanelContentProps } from "./ConfigurationPanelContent";
+import { messages } from "../../../locales";
 
 export interface ILineChartBasedConfigurationPanel extends IConfigurationPanelContentProps {
     dataLabelDefaultValue?: string | boolean;
@@ -44,7 +45,7 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
                     <ConfigSection
                         id="canvas_section"
                         className="gd-canvas-section"
-                        title="properties.canvas.title"
+                        title={messages.canvasTitle.id}
                         propertiesMeta={propertiesMeta}
                         properties={properties}
                         pushData={pushData}
@@ -67,7 +68,7 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
 
                         <CheckboxControl
                             valuePath="grid.enabled"
-                            labelText="properties.canvas.gridline"
+                            labelText={messages.canvasGridLine.id}
                             properties={properties}
                             checked={gridEnabled}
                             disabled={controlsDisabled}

@@ -6,6 +6,7 @@ import sortBy from "lodash/sortBy";
 
 import { TabsWrapper, Tab } from "../Tabs/Tabs";
 import { granularityIntlCodes } from "../constants/i18n";
+import { messages } from "../../locales";
 
 const granularityOrders: { [G in DateFilterGranularity]: number } = {
     "GDC.time.year": 0,
@@ -41,7 +42,7 @@ export const GranularityTabs: React.FC<IGranularityTabsProps> = ({
                     onClick={() => onSelectedGranularityChange(granularity)}
                     className={`s-granularity-${intlGranularity}`}
                 >
-                    <FormattedMessage id={`filters.granularity.${intlGranularity}s`} />
+                    <FormattedMessage id={messages[intlGranularity].id} />
                 </Tab>
             );
         })}

@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 
 import { WrappedComponentProps, injectIntl } from "react-intl";
@@ -10,6 +10,7 @@ import InputControl from "../configurationControls/InputControl";
 
 import { IMinMaxControlProps, IMinMaxControlState } from "../../interfaces/MinMaxControl";
 import { minInputValidateAndPushData, maxInputValidateAndPushData } from "../../utils/controlsHelper";
+import { messages } from "../../../locales";
 
 const defaultMinMaxControlState = {
     minScale: {
@@ -54,11 +55,11 @@ class MinMaxControl extends React.Component<
         const axisVisible = basePathPropertiesControls?.visible ?? true;
 
         return (
-            <ConfigSubsection title="properties.axis.scale">
+            <ConfigSubsection title={messages.axisScale.id}>
                 <InputControl
                     valuePath={`${basePath}.min`}
-                    labelText="properties.axis.min"
-                    placeholder="properties.auto_placeholder"
+                    labelText={messages.axisMin.id}
+                    placeholder={messages.autoPlaceholder.id}
                     type="number"
                     hasWarning={this.minScaleHasWarning()}
                     value={
@@ -72,8 +73,8 @@ class MinMaxControl extends React.Component<
 
                 <InputControl
                     valuePath={`${basePath}.max`}
-                    labelText="properties.axis.max"
-                    placeholder="properties.auto_placeholder"
+                    labelText={messages.axisMax.id}
+                    placeholder={messages.autoPlaceholder.id}
                     type="number"
                     hasWarning={this.maxScaleHasWarning()}
                     value={

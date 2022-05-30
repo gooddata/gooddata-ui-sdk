@@ -20,6 +20,7 @@ import {
 import { insightHasAttributes } from "@gooddata/sdk-model";
 import NameSubsection from "../configurationControls/axis/NameSubsection";
 import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection";
+import { messages } from "../../../locales";
 
 export default class ScatterPlotConfigurationPanel extends ConfigurationPanelContent {
     protected isControlDisabled(): boolean {
@@ -46,7 +47,7 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
                     {this.renderColorSection()}
                     <ConfigSection
                         id="xaxis_section"
-                        title="properties.xaxis.title"
+                        title={messages.xaxisTitle.id}
                         valuePath="xaxis.visible"
                         canBeToggled={true}
                         toggledOn={xAxisVisible}
@@ -77,7 +78,7 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
                     </ConfigSection>
                     <ConfigSection
                         id="yaxis_section"
-                        title="properties.yaxis.title"
+                        title={messages.yaxisTitle.id}
                         valuePath="yaxis.visible"
                         canBeToggled={true}
                         toggledOn={yAxisVisible}
@@ -108,7 +109,7 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
                     </ConfigSection>
                     <ConfigSection
                         id="canvas_section"
-                        title="properties.canvas.title"
+                        title={messages.canvasTitle.id}
                         propertiesMeta={propertiesMeta}
                         properties={properties}
                         pushData={pushData}
@@ -122,7 +123,7 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
                         />
                         <CheckboxControl
                             valuePath="grid.enabled"
-                            labelText="properties.canvas.gridline"
+                            labelText={messages.canvasGridLine.id}
                             properties={properties}
                             checked={gridEnabled}
                             disabled={controlsDisabled}

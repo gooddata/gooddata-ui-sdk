@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React, { useState } from "react";
 import { Button } from "@gooddata/sdk-ui-kit";
 import { RankingFilterOperator } from "@gooddata/sdk-model";
@@ -6,10 +6,11 @@ import cx from "classnames";
 import { IOperatorDropdownItem } from "../types";
 import { OperatorDropdownBody } from "./OperatorDropdownBody";
 import { WrappedComponentProps, injectIntl } from "react-intl";
+import { messages } from "../../locales";
 
 const operatorItems = [
-    { value: "TOP", translationId: "rankingFilter.top" },
-    { value: "BOTTOM", translationId: "rankingFilter.bottom" },
+    { value: "TOP", translationId: messages.top.id },
+    { value: "BOTTOM", translationId: messages.bottom.id },
 ] as IOperatorDropdownItem[];
 
 const getOperatorItemTranslation = (operator: RankingFilterOperator) => {

@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -13,6 +13,7 @@ import {
     BUBBLE_ARROW_OFFSET_X,
     BUBBLE_ARROW_OFFSET_Y,
 } from "../../constants/bubble";
+import { messages } from "../../../locales";
 
 export default class PieChartConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): React.ReactNode {
@@ -26,7 +27,7 @@ export default class PieChartConfigurationPanel extends ConfigurationPanelConten
                     {this.renderLegendSection()}
                     <ConfigSection
                         id="canvas_section"
-                        title="properties.canvas.title"
+                        title={messages.canvasTitle.id}
                         propertiesMeta={propertiesMeta}
                         properties={properties}
                         pushData={pushData}

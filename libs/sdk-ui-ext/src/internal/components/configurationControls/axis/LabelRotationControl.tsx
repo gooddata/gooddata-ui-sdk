@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
@@ -7,6 +7,7 @@ import { getTranslatedDropdownItems } from "../../../utils/translations";
 import { rotationDropdownItems } from "../../../constants/dropdowns";
 import { AxisType } from "../../../interfaces/AxisType";
 import { IVisualizationProperties } from "../../../interfaces/Visualization";
+import { messages } from "../../../../locales";
 
 export interface ILabelRotationControl {
     disabled: boolean;
@@ -25,7 +26,7 @@ class LabelRotationControl extends React.PureComponent<ILabelRotationControl & W
             <DropdownControl
                 value={axisRotation}
                 valuePath={`${this.props.axis}.rotation`}
-                labelText="properties.axis.rotation"
+                labelText={messages.axisRotation.id}
                 disabled={isDisabled}
                 showDisabledMessage={!this.props.configPanelDisabled && isDisabled}
                 properties={this.props.properties}

@@ -515,10 +515,6 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
-      "name": "cliff",
-      "allowedCategories": [ "tools" ]
-    },
-    {
       "name": "codemirror",
       "allowedCategories": [ "production" ]
     },
