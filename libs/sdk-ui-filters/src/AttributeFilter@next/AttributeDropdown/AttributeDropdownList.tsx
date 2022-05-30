@@ -49,14 +49,14 @@ export const AttributeDropdownList: React.FC<IAttributeDropdownListProps> = ({
     searchString,
     isMobile,
 }) => {
-    if (error) {
-        return <ListError />;
-    }
-
     const getItemKey = useCallback((i: AttributeListItem) => {
         const isSelectionByUri = !!selectedItems[0]?.uri;
         return isNonEmptyListItem(i) ? (isSelectionByUri ? i.uri : i.title) : "empty";
     }, []);
+
+    if (error) {
+        return <ListError />;
+    }
 
     const itemHeight = isMobile ? MOBILE_LIST_ITEM_HEIGHT : ITEM_HEIGHT;
 

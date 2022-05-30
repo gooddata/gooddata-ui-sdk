@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import React, { createContext, useContext, useEffect } from "react";
 import bearFactory from "@gooddata/sdk-backend-bear";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -95,7 +95,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         };
 
         auth();
-    }, []);
+    }, [onLoginSuccess, onLogoutSuccess]);
 
     return (
         <AuthContext.Provider
