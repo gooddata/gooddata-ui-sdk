@@ -10,7 +10,7 @@ export type AttributeFilterDropZonePlacement = "next" | "prev" | "outside";
 
 function getIgnoreIndexes(type: AttributeFilterDropZonePlacement, targetIndex: number) {
     if (type === "outside") {
-        return [];
+        return [targetIndex];
     }
 
     if (type === "next") {
@@ -51,7 +51,7 @@ export function AttributeFilterDropZoneHint({ placement, targetIndex }: Attribut
     const isHidden = !canDrop;
 
     const className = cx("attr-filter-dropzone", placement, {
-        hidden: isHidden && placement !== "outside",
+        hidden: isHidden,
     });
 
     const debugStyle = DEBUG_SHOW_DROP_ZONES && isOver ? { backgroundColor: "rgba(0, 255, 0, 0.4)" } : {};
