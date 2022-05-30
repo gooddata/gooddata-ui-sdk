@@ -10,6 +10,7 @@ import { IDashboardLayoutSectionHeader } from "@gooddata/sdk-model";
 import merge from "lodash/merge";
 import { layoutActions } from "../../store/layout";
 import { DashboardLayoutSectionHeaderChanged, layoutSectionHeaderChanged } from "../../events/layout";
+import { sanitizeHeader } from "./utils";
 
 export function* changeLayoutSectionHeaderHandler(
     ctx: DashboardContext,
@@ -28,16 +29,17 @@ export function* changeLayoutSectionHeaderHandler(
 
     const existingHeader: IDashboardLayoutSectionHeader = layout.sections[index]!.header ?? {};
     const newHeader = mergeHeaders ? merge({}, existingHeader, header) : header;
+    const sanitizedHeader = sanitizeHeader(newHeader);
 
     yield put(
         layoutActions.changeSectionHeader({
             index,
-            header: newHeader,
+            header: sanitizedHeader,
             undo: {
                 cmd,
             },
         }),
     );
 
-    return layoutSectionHeaderChanged(ctx, newHeader, index, cmd.correlationId);
+    return layoutSectionHeaderChanged(ctx, sanitizedHeader, index, cmd.correlationId);
 }

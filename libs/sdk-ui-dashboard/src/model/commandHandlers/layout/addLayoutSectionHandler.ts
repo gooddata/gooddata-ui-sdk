@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes";
@@ -21,6 +21,7 @@ import {
     validateAndResolveItemFilterSettings,
 } from "./validation/itemValidation";
 import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils";
+import { sanitizeHeader } from "./utils";
 
 type AddLayoutSectionContext = {
     readonly ctx: DashboardContext;
@@ -103,7 +104,7 @@ export function* addLayoutSectionHandler(
 
     const section: ExtendedDashboardLayoutSection = {
         type: "IDashboardLayoutSection",
-        header: initialHeader,
+        header: sanitizeHeader(initialHeader),
         items: itemsToAdd,
     };
 
