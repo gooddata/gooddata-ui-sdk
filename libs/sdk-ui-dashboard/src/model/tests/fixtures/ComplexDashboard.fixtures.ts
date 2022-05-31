@@ -8,6 +8,7 @@ import {
     IKpiWidget,
     IInsightWidget,
     IListedDashboard,
+    IFilterContext,
 } from "@gooddata/sdk-model";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
@@ -22,7 +23,8 @@ import { ReferenceRecordings } from "@gooddata/reference-workspace";
 export const ComplexDashboardIdentifier = "aeis6NlXcL7X";
 export const ComplexDashboardWithReferences = ReferenceRecordings.Recordings.metadata.dashboards
     .dash_aeis6NlXcL7X.obj as IDashboardWithReferences;
-export const ComplexDashboardFilterContext = ComplexDashboardWithReferences.dashboard.filterContext!;
+export const ComplexDashboardFilterContext = ComplexDashboardWithReferences.dashboard
+    .filterContext! as IFilterContext;
 
 /**
  * Contains breakdown of the complex dashboard's filters context. There is date filter and
@@ -35,6 +37,7 @@ export const ComplexDashboardFilters = {
         filter: ComplexDashboardFilterContext.filters[1] as IDashboardAttributeFilter,
         uriRef: uriRef("/gdc/md/referenceworkspace/obj/1087"),
         idRef: idRef("label.owner.region"),
+        sampleElementUri: "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086/elements?id=460489",
     },
     SecondAttribute: {
         filter: ComplexDashboardFilterContext.filters[2] as IDashboardAttributeFilter,

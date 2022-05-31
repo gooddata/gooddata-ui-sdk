@@ -4252,6 +4252,9 @@ export interface RemoveSectionItem extends IDashboardCommand {
 }
 
 // @alpha
+export function removeSectionItem(sectionIndex: number, itemIndex: number, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): RemoveSectionItem;
+
+// @alpha
 export interface RemoveSectionItemPayload {
     readonly eager?: boolean;
     readonly itemIndex: RelativeIndex;
