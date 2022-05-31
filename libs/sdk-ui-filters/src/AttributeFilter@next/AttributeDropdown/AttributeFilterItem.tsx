@@ -1,59 +1,36 @@
 // (C) 2007-2022 GoodData Corporation
-import React from "react";
+import React, { useCallback } from "react";
 import cx from "classnames";
 import camelCase from "lodash/camelCase";
-export interface ISource {
-    title?: string;
-    uri?: string;
-    empty?: boolean;
-}
+import { IInvertableListRenderItemProps } from "@gooddata/sdk-ui-kit";
+import { AttributeListItem, isEmptyListItem } from "./types";
 
-export interface IAttributeElement {
-    selected?: boolean;
-    source: ISource;
-    onSelect?: (source: ISource) => void;
-}
+export type IAttributeFilterItemProps = IInvertableListRenderItemProps<AttributeListItem>;
 
-export interface IAttributeFilterItemProps {
-    item?: IAttributeElement;
-}
+export const AttributeFilterItem: React.VFC<IAttributeFilterItemProps> = (props) => {
+    const { item, isSelected, onSelect } = props;
 
-export class AttributeFilterItem extends React.PureComponent<IAttributeFilterItemProps> {
-    public render(): React.ReactNode {
-        const { item } = this.props;
+    const onItemClick = useCallback(() => {
+        onSelect(item);
+    }, [onSelect]);
 
-        if (!item || item.source.empty) {
-            return this.renderLoadingItem();
-        }
-
-        const classes = cx(
-            "gd-list-item",
-            "s-attribute-filter-list-item",
-            `s-attribute-filter-list-item-${camelCase(item.source.title)}`,
-            {
-                "s-attribute-filter-list-item-selected": item.selected,
-            },
-        );
-        return (
-            <div className={classes} onClick={this.handleSelect}>
-                <input
-                    type="checkbox"
-                    className="gd-input-checkbox"
-                    readOnly={true}
-                    checked={item.selected}
-                />
-                <span>{item.source.title}</span>
-            </div>
-        );
+    if (!item || isEmptyListItem(item)) {
+        return <div className="gd-list-item gd-list-item-not-loaded"> loading ...</div>;
     }
 
-    private renderLoadingItem() {
-        return <div className="gd-list-item gd-list-item-not-loaded" />;
-    }
+    const classes = cx(
+        "gd-list-item",
+        "s-attribute-filter-list-item",
+        `s-attribute-filter-list-item-${camelCase(item.title)}`,
+        {
+            "s-attribute-filter-list-item-selected": isSelected,
+        },
+    );
 
-    private handleSelect = () => {
-        const { item } = this.props;
-
-        item.onSelect(item.source);
-    };
-}
+    return (
+        <div className={classes} onClick={onItemClick}>
+            <input type="checkbox" className="gd-input-checkbox" readOnly={true} checked={isSelected} />
+            <span>{item.title}</span>
+        </div>
+    );
+};

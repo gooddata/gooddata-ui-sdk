@@ -1921,6 +1921,12 @@ export interface IInvertableListRenderItemProps<T> {
 }
 
 // @internal (undocumented)
+export interface IInvertableListState {
+    // (undocumented)
+    notifyLimitHit: boolean;
+}
+
+// @internal (undocumented)
 export interface IItemProps {
     // (undocumented)
     checked?: boolean;
@@ -2414,6 +2420,8 @@ export interface IMultiSelectListProps<T> {
     // (undocumented)
     itemsCount?: number;
     // (undocumented)
+    listClassNames?: string;
+    // (undocumented)
     maxSelectionSize?: number;
     // (undocumented)
     onScrollEnd?: (visibleRowsStartIndex: number, visibleRowsEndIndex: number) => void;
@@ -2692,9 +2700,13 @@ export interface INumericInputProps {
 }
 
 // @internal (undocumented)
-export const InvertableList: React_2.FC<WithIntlProps<IInvertableListProps<unknown>>> & {
-    WrappedComponent: React_2.ComponentType<IInvertableListProps<unknown>>;
-};
+export class InvertableList<T> extends Component<IInvertableListProps<T>, IInvertableListState> {
+    constructor(props: IInvertableListProps<T>);
+    // (undocumented)
+    static defaultProps: Partial<IInvertableListProps<any>>;
+    // (undocumented)
+    render(): JSX.Element;
+}
 
 // @internal (undocumented)
 export interface IOffset {

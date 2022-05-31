@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 
 export {
     Item,
@@ -21,8 +21,9 @@ export {
     getDateTimeConfig,
 } from "./InsightListItemDate";
 export {
-    default as InvertableList,
+    InvertableList,
     IInvertableListProps,
+    IInvertableListState,
     IInvertableListRenderItemProps,
 } from "./InvertableList";
 export { List, IListProps, ScrollCallback, IRenderItemProps } from "./List";

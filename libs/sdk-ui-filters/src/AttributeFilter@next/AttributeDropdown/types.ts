@@ -18,13 +18,13 @@ export type AttributeListItem = IAttributeElement | EmptyListItem;
 /**
  * @internal
  */
-export const isEmptyListItem = (item: Partial<AttributeListItem>): item is EmptyListItem =>
+export const isEmptyListItem = (item: unknown): item is EmptyListItem =>
     item && (item as EmptyListItem).empty;
 
 /**
  * @internal
  */
-export const isNonEmptyListItem = (item: Partial<AttributeListItem>): item is IAttributeElement =>
+export const isNonEmptyListItem = (item: unknown): item is IAttributeElement =>
     item && !(item as EmptyListItem).empty;
 
 export type IElementQueryResultWithEmptyItems = IPagedResource<AttributeListItem>;
