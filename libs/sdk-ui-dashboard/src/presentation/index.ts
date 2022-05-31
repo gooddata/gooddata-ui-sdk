@@ -4,6 +4,7 @@ export * from "./componentDefinition";
 export * from "./dashboard";
 // only export the types for this, not the actual code
 export * from "./dashboardContexts/types";
+export * from "./dragAndDrop/types";
 export * from "./drill";
 export * from "./filterBar";
 export * from "./layout";

@@ -1,8 +1,8 @@
 // (C) 2022 GoodData Corporation
 import React, { CSSProperties, FC, useMemo } from "react";
 import { useDragLayer, XYCoord } from "react-dnd";
-import { DraggableItemType } from "../componentDefinition";
 import { DefaultAttributeFilterDraggingComponent } from "./draggableAttributeFilter";
+import { DraggableItemType } from "./types";
 
 const layerStyles: CSSProperties = {
     position: "fixed",

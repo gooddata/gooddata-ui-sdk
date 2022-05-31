@@ -2131,6 +2131,13 @@ export type DraggableComponent = {
 export type DraggableItemType = "attributeFilter" | "widget" | "custom";
 
 // @internal (undocumented)
+export type DraggableItemTypeMapping = {
+    attributeFilter: AttributeFilterDraggableItem;
+    custom: CustomDraggableItem;
+    widget: WidgetDraggableItem;
+};
+
+// @internal (undocumented)
 export interface DraggingComponentProps {
 }
 
@@ -5676,6 +5683,11 @@ export type WidgetComponentProvider = (widget: ExtendedDashboardWidget) => Custo
 // @internal (undocumented)
 export interface WidgetConfigPanelProps {
 }
+
+// @internal (undocumented)
+export type WidgetDraggableItem = {
+    widget: never;
+};
 
 // @alpha
 export type WidgetFilterOperation = FilterOpEnableDateFilter | FilterOpDisableDateFilter | FilterOpReplaceAttributeIgnores | FilterOpIgnoreAttributeFilter | FilterOpUnignoreAttributeFilter | FilterOpReplaceAll;

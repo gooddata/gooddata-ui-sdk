@@ -2,7 +2,7 @@
 import { ComponentType } from "react";
 import { IDashboardAttributeFilterProps } from "../filterBar/types";
 import { IDashboardKpiProps, IDashboardWidgetProps } from "../widget";
-import { IDashboardAttributeFilter } from "@gooddata/sdk-model";
+import { AttributeFilterDraggableItem, CustomDraggableItem } from "../dragAndDrop/types";
 
 /**
  * @internal
@@ -29,26 +29,6 @@ export interface DraggingComponentProps {
 export interface DropTargetComponentProps {
     // TODO define when dragging will be implemented
 }
-
-/**
- * @internal
- */
-export type DraggableItemType = "attributeFilter" | "widget" | "custom";
-
-/**
- * @internal
- */
-export type AttributeFilterDraggableItem = {
-    filter: IDashboardAttributeFilter;
-    filterIndex: number;
-};
-
-/**
- * @internal
- */
-export type CustomDraggableItem = {
-    [key: string]: any;
-};
 
 /**
  * @internal

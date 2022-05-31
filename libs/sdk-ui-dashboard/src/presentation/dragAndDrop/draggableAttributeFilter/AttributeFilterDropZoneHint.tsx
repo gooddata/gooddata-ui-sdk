@@ -1,10 +1,9 @@
 // (C) 2022 GoodData Corporation
-import React from "react";
 import cx from "classnames";
-import { useDrop } from "react-dnd";
+import React from "react";
 import { moveAttributeFilter, useDashboardDispatch } from "../../../model";
-import { AttributeFilterDraggableItem } from "../../componentDefinition";
 import { DEBUG_SHOW_DROP_ZONES } from "../config";
+import { useDashboardDrop } from "../useDashboardDrop";
 
 export type AttributeFilterDropZonePlacement = "next" | "prev" | "outside";
 
@@ -29,21 +28,17 @@ export function AttributeFilterDropZoneHint({ placement, targetIndex }: Attribut
     const dispatch = useDashboardDispatch();
     const inactiveIndexes = getIgnoreIndexes(placement, targetIndex);
 
-    const [{ canDrop, isOver }, drop] = useDrop(
-        () => ({
-            accept: ["attributeFilter"],
-            drop: (item: AttributeFilterDraggableItem) => {
-                const identifier = item.filter.attributeFilter.localIdentifier!;
+    const [{ canDrop, isOver }, dropRef] = useDashboardDrop(
+        "attributeFilter",
+        {
+            canDrop: ({ filterIndex }) => {
+                return !inactiveIndexes.includes(filterIndex);
+            },
+            drop: ({ filter }) => {
+                const identifier = filter.attributeFilter.localIdentifier!;
                 dispatch(moveAttributeFilter(identifier, targetIndex));
             },
-            canDrop: (item: AttributeFilterDraggableItem) => {
-                return !inactiveIndexes.includes(item.filterIndex);
-            },
-            collect: (monitor) => ({
-                isOver: monitor.isOver(),
-                canDrop: monitor.canDrop(),
-            }),
-        }),
+        },
         [inactiveIndexes, targetIndex],
     );
 
@@ -57,7 +52,7 @@ export function AttributeFilterDropZoneHint({ placement, targetIndex }: Attribut
     const debugStyle = DEBUG_SHOW_DROP_ZONES && isOver ? { backgroundColor: "rgba(0, 255, 0, 0.4)" } : {};
 
     return (
-        <div className={className} style={debugStyle} ref={drop}>
+        <div className={className} style={debugStyle} ref={dropRef}>
             {isActive && <div className="drop-hint" />}
         </div>
     );
