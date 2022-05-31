@@ -530,7 +530,6 @@ export interface RemoveDrillsForInsightWidget extends IDashboardCommand {
  * Creates the RemoveDrillsForInsightWidget command. Dispatching the created command will remove insight widget's
  * drill definition for the provided measure.
  *
- *
  * @param ref - reference of insight widget whose drill should be removed
  * @param origins - measure or attribute localIdentifiers whose drill definitions should be removed
  * @param correlationId - specify correlation id to use for this command. this will be included in all

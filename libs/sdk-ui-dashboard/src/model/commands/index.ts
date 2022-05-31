@@ -145,6 +145,7 @@ export {
     moveSectionItem,
     RemoveSectionItem,
     RemoveSectionItemPayload,
+    removeSectionItem,
     eagerRemoveSectionItem,
     UndoLayoutChanges,
     UndoLayoutChangesPayload,
