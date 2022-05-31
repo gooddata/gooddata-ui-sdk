@@ -18,6 +18,7 @@ options = {
             "src/model/store/ui/uiSelectors.ts",
             "src/presentation/filterBar",
             "src/presentation/filterBar/types.ts",
+            "src/presentation/dragAndDrop/types.ts",
             "src/presentation/widget",
             "src/types.ts",
         ]),
@@ -60,6 +61,13 @@ options = {
             "src/_staging/*",
             "src/presentation/dashboardContexts",
             "src/types.ts",
+        ]),
+        depCruiser.moduleWithDependencies("dragAndDrop", "src/presentation/dragAndDrop", [
+            "src/model",
+            "src/model/store/([^/]+)/.+Selectors.ts",
+            "src/presentation/componentDefinition",
+            "src/presentation/filterBar",
+            "src/presentation/filterBar/types.ts",
         ]),
         depCruiser.moduleWithDependencies("drill", "src/presentation/drill", [
             "src/_staging/*",

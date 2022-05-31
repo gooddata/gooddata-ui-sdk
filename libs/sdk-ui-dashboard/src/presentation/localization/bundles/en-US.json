@@ -1147,5 +1147,10 @@
         "value": "Save as new",
         "comment": "",
         "limit": 0
+    },
+    "addPanel.deleteItem": {
+        "value": "Drop to remove",
+        "comment": "",
+        "limit": 0
     }
 }
