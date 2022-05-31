@@ -11,7 +11,7 @@ function mockSensitiveData(accountSetting) {
     }
     if (modifiedAccountSetting.links && modifiedAccountSetting.links.user) {
         modifiedAccountSetting.links.user =
-            "https://staging.anywhere.gooddata.com/api/entities/users/first.last";
+            "https://staging.anywhere.gooddata.com/api/v1/entities/users/first.last";
     }
     return modifiedAccountSetting;
 }

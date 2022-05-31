@@ -3096,9 +3096,28 @@ export interface ITigerClient {
     explain: ReturnType<typeof tigerAfmExplainClientFactory>;
     // (undocumented)
     labelElements: ReturnType<typeof tigerLabelElementsClientFactory>;
+    // (undocumented)
+    profile: ReturnType<typeof tigerProfileClientFactory>;
     setApiToken: (token: string | undefined) => void;
     // (undocumented)
     validObjects: ReturnType<typeof tigerValidObjectsClientFactory>;
+}
+
+// @public (undocumented)
+export interface IUserProfile {
+    // (undocumented)
+    links: {
+        user: string;
+        organization: string;
+    };
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    organizationId: string;
+    // (undocumented)
+    organizationName: string;
+    // (undocumented)
+    userId: string;
 }
 
 // @public (undocumented)
@@ -5911,6 +5930,12 @@ export interface Problem {
     type: string;
 }
 
+// @public (undocumented)
+export interface ProfileApiInterface {
+    // (undocumented)
+    getCurrent: () => Promise<IUserProfile>;
+}
+
 // @public
 export interface RangeMeasureValueFilter {
     rangeMeasureValueFilter: RangeMeasureValueFilterRangeMeasureValueFilter;
@@ -6142,6 +6167,9 @@ export const tigerLabelElementsClientFactory: (axios: AxiosInstance) => Pick<Afm
 
 // @public (undocumented)
 export const tigerLayoutClientFactory: (axios: AxiosInstance) => LayoutApiInterface;
+
+// @public (undocumented)
+export const tigerProfileClientFactory: (axios: AxiosInstance) => ProfileApiInterface;
 
 // @public (undocumented)
 export const tigerValidObjectsClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "computeValidObjects">;

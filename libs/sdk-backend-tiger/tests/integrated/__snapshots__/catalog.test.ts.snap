@@ -3245,6 +3245,610 @@ TigerWorkspaceCatalogWithAvailableItems {
     Object {
       "dataSet": Object {
         "description": "",
+        "id": "dt_closedate_timestamp",
+        "production": true,
+        "ref": Object {
+          "identifier": "dt_closedate_timestamp",
+          "type": "dataSet",
+        },
+        "title": "Closed",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/datasets/dt_closedate_timestamp",
+      },
+      "dateAttributes": Array [
+        Object {
+          "attribute": Object {
+            "description": "Minute",
+            "displayForms": Array [
+              Object {
+                "description": "Minute",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.minute",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.minute",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Minute",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.minute",
+              },
+            ],
+            "id": "dt_closedate_timestamp.minute",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.minute",
+              "type": "attribute",
+            },
+            "title": "Closed - Minute",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.minute",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Minute",
+            "id": "dt_closedate_timestamp.minute",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.minute",
+              "type": "displayForm",
+            },
+            "title": "Closed - Minute",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.minute",
+          },
+          "granularity": "GDC.time.minute",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Hour",
+            "displayForms": Array [
+              Object {
+                "description": "Hour",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.hour",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.hour",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Hour",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.hour",
+              },
+            ],
+            "id": "dt_closedate_timestamp.hour",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.hour",
+              "type": "attribute",
+            },
+            "title": "Closed - Hour",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.hour",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Hour",
+            "id": "dt_closedate_timestamp.hour",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.hour",
+              "type": "displayForm",
+            },
+            "title": "Closed - Hour",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.hour",
+          },
+          "granularity": "GDC.time.hour",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Date",
+            "displayForms": Array [
+              Object {
+                "description": "Date",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.day",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.day",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Date",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.day",
+              },
+            ],
+            "id": "dt_closedate_timestamp.day",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.day",
+              "type": "attribute",
+            },
+            "title": "Closed - Date",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.day",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Date",
+            "id": "dt_closedate_timestamp.day",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.day",
+              "type": "displayForm",
+            },
+            "title": "Closed - Date",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.day",
+          },
+          "granularity": "GDC.time.date",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Week and Year (W52/2020)",
+            "displayForms": Array [
+              Object {
+                "description": "Week and Year (W52/2020)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.week",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.week",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Week/Year",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.week",
+              },
+            ],
+            "id": "dt_closedate_timestamp.week",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.week",
+              "type": "attribute",
+            },
+            "title": "Closed - Week/Year",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.week",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Week and Year (W52/2020)",
+            "id": "dt_closedate_timestamp.week",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.week",
+              "type": "displayForm",
+            },
+            "title": "Closed - Week/Year",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.week",
+          },
+          "granularity": "GDC.time.week_us",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Month and Year (12/2020)",
+            "displayForms": Array [
+              Object {
+                "description": "Month and Year (12/2020)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.month",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.month",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Month/Year",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.month",
+              },
+            ],
+            "id": "dt_closedate_timestamp.month",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.month",
+              "type": "attribute",
+            },
+            "title": "Closed - Month/Year",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.month",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Month and Year (12/2020)",
+            "id": "dt_closedate_timestamp.month",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.month",
+              "type": "displayForm",
+            },
+            "title": "Closed - Month/Year",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.month",
+          },
+          "granularity": "GDC.time.month",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Quarter and Year (Q1/2020)",
+            "displayForms": Array [
+              Object {
+                "description": "Quarter and Year (Q1/2020)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.quarter",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.quarter",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Quarter/Year",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.quarter",
+              },
+            ],
+            "id": "dt_closedate_timestamp.quarter",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.quarter",
+              "type": "attribute",
+            },
+            "title": "Closed - Quarter/Year",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.quarter",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Quarter and Year (Q1/2020)",
+            "id": "dt_closedate_timestamp.quarter",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.quarter",
+              "type": "displayForm",
+            },
+            "title": "Closed - Quarter/Year",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.quarter",
+          },
+          "granularity": "GDC.time.quarter",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Year",
+            "displayForms": Array [
+              Object {
+                "description": "Year",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.year",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.year",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Year",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.year",
+              },
+            ],
+            "id": "dt_closedate_timestamp.year",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.year",
+              "type": "attribute",
+            },
+            "title": "Closed - Year",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.year",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Year",
+            "id": "dt_closedate_timestamp.year",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.year",
+              "type": "displayForm",
+            },
+            "title": "Closed - Year",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.year",
+          },
+          "granularity": "GDC.time.year",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Generic Minute of the Hour(MI1-MI60)",
+            "displayForms": Array [
+              Object {
+                "description": "Generic Minute of the Hour(MI1-MI60)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.minuteOfHour",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.minuteOfHour",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Minute of Hour",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.minuteOfHour",
+              },
+            ],
+            "id": "dt_closedate_timestamp.minuteOfHour",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.minuteOfHour",
+              "type": "attribute",
+            },
+            "title": "Closed - Minute of Hour",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.minuteOfHour",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Generic Minute of the Hour(MI1-MI60)",
+            "id": "dt_closedate_timestamp.minuteOfHour",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.minuteOfHour",
+              "type": "displayForm",
+            },
+            "title": "Closed - Minute of Hour",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.minuteOfHour",
+          },
+          "granularity": "GDC.time.minute_in_hour",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Generic Hour of the Day(H1-H24)",
+            "displayForms": Array [
+              Object {
+                "description": "Generic Hour of the Day(H1-H24)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.hourOfDay",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.hourOfDay",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Hour of Day",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.hourOfDay",
+              },
+            ],
+            "id": "dt_closedate_timestamp.hourOfDay",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.hourOfDay",
+              "type": "attribute",
+            },
+            "title": "Closed - Hour of Day",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.hourOfDay",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Generic Hour of the Day(H1-H24)",
+            "id": "dt_closedate_timestamp.hourOfDay",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.hourOfDay",
+              "type": "displayForm",
+            },
+            "title": "Closed - Hour of Day",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.hourOfDay",
+          },
+          "granularity": "GDC.time.hour_in_day",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Generic Day of the Week (D1-D7)",
+            "displayForms": Array [
+              Object {
+                "description": "Generic Day of the Week (D1-D7)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.dayOfWeek",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.dayOfWeek",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Day of Week",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfWeek",
+              },
+            ],
+            "id": "dt_closedate_timestamp.dayOfWeek",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.dayOfWeek",
+              "type": "attribute",
+            },
+            "title": "Closed - Day of Week",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.dayOfWeek",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Generic Day of the Week (D1-D7)",
+            "id": "dt_closedate_timestamp.dayOfWeek",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.dayOfWeek",
+              "type": "displayForm",
+            },
+            "title": "Closed - Day of Week",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfWeek",
+          },
+          "granularity": "GDC.time.day_in_week",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Generic Day of the Month (D1-D31)",
+            "displayForms": Array [
+              Object {
+                "description": "Generic Day of the Month (D1-D31)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.dayOfMonth",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.dayOfMonth",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Day of Month",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfMonth",
+              },
+            ],
+            "id": "dt_closedate_timestamp.dayOfMonth",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.dayOfMonth",
+              "type": "attribute",
+            },
+            "title": "Closed - Day of Month",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.dayOfMonth",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Generic Day of the Month (D1-D31)",
+            "id": "dt_closedate_timestamp.dayOfMonth",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.dayOfMonth",
+              "type": "displayForm",
+            },
+            "title": "Closed - Day of Month",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfMonth",
+          },
+          "granularity": "GDC.time.day_in_month",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Generic Day of the Year (D1-D366)",
+            "displayForms": Array [
+              Object {
+                "description": "Generic Day of the Year (D1-D366)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.dayOfYear",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.dayOfYear",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Day of Year",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfYear",
+              },
+            ],
+            "id": "dt_closedate_timestamp.dayOfYear",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.dayOfYear",
+              "type": "attribute",
+            },
+            "title": "Closed - Day of Year",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.dayOfYear",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Generic Day of the Year (D1-D366)",
+            "id": "dt_closedate_timestamp.dayOfYear",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.dayOfYear",
+              "type": "displayForm",
+            },
+            "title": "Closed - Day of Year",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfYear",
+          },
+          "granularity": "GDC.time.day_in_year",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Generic Week (W1-W53)",
+            "displayForms": Array [
+              Object {
+                "description": "Generic Week (W1-W53)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.weekOfYear",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.weekOfYear",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Week of Year",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.weekOfYear",
+              },
+            ],
+            "id": "dt_closedate_timestamp.weekOfYear",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.weekOfYear",
+              "type": "attribute",
+            },
+            "title": "Closed - Week of Year",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.weekOfYear",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Generic Week (W1-W53)",
+            "id": "dt_closedate_timestamp.weekOfYear",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.weekOfYear",
+              "type": "displayForm",
+            },
+            "title": "Closed - Week of Year",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.weekOfYear",
+          },
+          "granularity": "GDC.time.week_in_year",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Generic Month (M1-M12)",
+            "displayForms": Array [
+              Object {
+                "description": "Generic Month (M1-M12)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.monthOfYear",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.monthOfYear",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Month of Year",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.monthOfYear",
+              },
+            ],
+            "id": "dt_closedate_timestamp.monthOfYear",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.monthOfYear",
+              "type": "attribute",
+            },
+            "title": "Closed - Month of Year",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.monthOfYear",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Generic Month (M1-M12)",
+            "id": "dt_closedate_timestamp.monthOfYear",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.monthOfYear",
+              "type": "displayForm",
+            },
+            "title": "Closed - Month of Year",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.monthOfYear",
+          },
+          "granularity": "GDC.time.month_in_year",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Generic Quarter (Q1-Q4)",
+            "displayForms": Array [
+              Object {
+                "description": "Generic Quarter (Q1-Q4)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.quarterOfYear",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.quarterOfYear",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Quarter of Year",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.quarterOfYear",
+              },
+            ],
+            "id": "dt_closedate_timestamp.quarterOfYear",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.quarterOfYear",
+              "type": "attribute",
+            },
+            "title": "Closed - Quarter of Year",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.quarterOfYear",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Generic Quarter (Q1-Q4)",
+            "id": "dt_closedate_timestamp.quarterOfYear",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.quarterOfYear",
+              "type": "displayForm",
+            },
+            "title": "Closed - Quarter of Year",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.quarterOfYear",
+          },
+          "granularity": "GDC.time.quarter_in_year",
+        },
+      ],
+      "relevance": 0,
+      "type": "dateDataset",
+    },
+    Object {
+      "dataSet": Object {
+        "description": "",
         "id": "dt_oppcreated_timestamp",
         "production": true,
         "ref": Object {
@@ -5047,610 +5651,6 @@ TigerWorkspaceCatalogWithAvailableItems {
             "title": "Timeline - Quarter of Year",
             "type": "displayForm",
             "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_timeline_timestamp.quarterOfYear",
-          },
-          "granularity": "GDC.time.quarter_in_year",
-        },
-      ],
-      "relevance": 0,
-      "type": "dateDataset",
-    },
-    Object {
-      "dataSet": Object {
-        "description": "",
-        "id": "dt_closedate_timestamp",
-        "production": true,
-        "ref": Object {
-          "identifier": "dt_closedate_timestamp",
-          "type": "dataSet",
-        },
-        "title": "Closed",
-        "type": "dataSet",
-        "unlisted": false,
-        "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/datasets/dt_closedate_timestamp",
-      },
-      "dateAttributes": Array [
-        Object {
-          "attribute": Object {
-            "description": "Minute",
-            "displayForms": Array [
-              Object {
-                "description": "Minute",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.minute",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.minute",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Minute",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.minute",
-              },
-            ],
-            "id": "dt_closedate_timestamp.minute",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.minute",
-              "type": "attribute",
-            },
-            "title": "Closed - Minute",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.minute",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Minute",
-            "id": "dt_closedate_timestamp.minute",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.minute",
-              "type": "displayForm",
-            },
-            "title": "Closed - Minute",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.minute",
-          },
-          "granularity": "GDC.time.minute",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Hour",
-            "displayForms": Array [
-              Object {
-                "description": "Hour",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.hour",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.hour",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Hour",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.hour",
-              },
-            ],
-            "id": "dt_closedate_timestamp.hour",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.hour",
-              "type": "attribute",
-            },
-            "title": "Closed - Hour",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.hour",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Hour",
-            "id": "dt_closedate_timestamp.hour",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.hour",
-              "type": "displayForm",
-            },
-            "title": "Closed - Hour",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.hour",
-          },
-          "granularity": "GDC.time.hour",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Date",
-            "displayForms": Array [
-              Object {
-                "description": "Date",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.day",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.day",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Date",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.day",
-              },
-            ],
-            "id": "dt_closedate_timestamp.day",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.day",
-              "type": "attribute",
-            },
-            "title": "Closed - Date",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.day",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Date",
-            "id": "dt_closedate_timestamp.day",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.day",
-              "type": "displayForm",
-            },
-            "title": "Closed - Date",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.day",
-          },
-          "granularity": "GDC.time.date",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Week and Year (W52/2020)",
-            "displayForms": Array [
-              Object {
-                "description": "Week and Year (W52/2020)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.week",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.week",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Week/Year",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.week",
-              },
-            ],
-            "id": "dt_closedate_timestamp.week",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.week",
-              "type": "attribute",
-            },
-            "title": "Closed - Week/Year",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.week",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Week and Year (W52/2020)",
-            "id": "dt_closedate_timestamp.week",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.week",
-              "type": "displayForm",
-            },
-            "title": "Closed - Week/Year",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.week",
-          },
-          "granularity": "GDC.time.week_us",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Month and Year (12/2020)",
-            "displayForms": Array [
-              Object {
-                "description": "Month and Year (12/2020)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.month",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.month",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Month/Year",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.month",
-              },
-            ],
-            "id": "dt_closedate_timestamp.month",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.month",
-              "type": "attribute",
-            },
-            "title": "Closed - Month/Year",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.month",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Month and Year (12/2020)",
-            "id": "dt_closedate_timestamp.month",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.month",
-              "type": "displayForm",
-            },
-            "title": "Closed - Month/Year",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.month",
-          },
-          "granularity": "GDC.time.month",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Quarter and Year (Q1/2020)",
-            "displayForms": Array [
-              Object {
-                "description": "Quarter and Year (Q1/2020)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.quarter",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.quarter",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Quarter/Year",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.quarter",
-              },
-            ],
-            "id": "dt_closedate_timestamp.quarter",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.quarter",
-              "type": "attribute",
-            },
-            "title": "Closed - Quarter/Year",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.quarter",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Quarter and Year (Q1/2020)",
-            "id": "dt_closedate_timestamp.quarter",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.quarter",
-              "type": "displayForm",
-            },
-            "title": "Closed - Quarter/Year",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.quarter",
-          },
-          "granularity": "GDC.time.quarter",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Year",
-            "displayForms": Array [
-              Object {
-                "description": "Year",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.year",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.year",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Year",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.year",
-              },
-            ],
-            "id": "dt_closedate_timestamp.year",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.year",
-              "type": "attribute",
-            },
-            "title": "Closed - Year",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.year",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Year",
-            "id": "dt_closedate_timestamp.year",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.year",
-              "type": "displayForm",
-            },
-            "title": "Closed - Year",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.year",
-          },
-          "granularity": "GDC.time.year",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Generic Minute of the Hour(MI1-MI60)",
-            "displayForms": Array [
-              Object {
-                "description": "Generic Minute of the Hour(MI1-MI60)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.minuteOfHour",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.minuteOfHour",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Minute of Hour",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.minuteOfHour",
-              },
-            ],
-            "id": "dt_closedate_timestamp.minuteOfHour",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.minuteOfHour",
-              "type": "attribute",
-            },
-            "title": "Closed - Minute of Hour",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.minuteOfHour",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Generic Minute of the Hour(MI1-MI60)",
-            "id": "dt_closedate_timestamp.minuteOfHour",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.minuteOfHour",
-              "type": "displayForm",
-            },
-            "title": "Closed - Minute of Hour",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.minuteOfHour",
-          },
-          "granularity": "GDC.time.minute_in_hour",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Generic Hour of the Day(H1-H24)",
-            "displayForms": Array [
-              Object {
-                "description": "Generic Hour of the Day(H1-H24)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.hourOfDay",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.hourOfDay",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Hour of Day",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.hourOfDay",
-              },
-            ],
-            "id": "dt_closedate_timestamp.hourOfDay",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.hourOfDay",
-              "type": "attribute",
-            },
-            "title": "Closed - Hour of Day",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.hourOfDay",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Generic Hour of the Day(H1-H24)",
-            "id": "dt_closedate_timestamp.hourOfDay",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.hourOfDay",
-              "type": "displayForm",
-            },
-            "title": "Closed - Hour of Day",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.hourOfDay",
-          },
-          "granularity": "GDC.time.hour_in_day",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Generic Day of the Week (D1-D7)",
-            "displayForms": Array [
-              Object {
-                "description": "Generic Day of the Week (D1-D7)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.dayOfWeek",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.dayOfWeek",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Day of Week",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfWeek",
-              },
-            ],
-            "id": "dt_closedate_timestamp.dayOfWeek",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.dayOfWeek",
-              "type": "attribute",
-            },
-            "title": "Closed - Day of Week",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.dayOfWeek",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Generic Day of the Week (D1-D7)",
-            "id": "dt_closedate_timestamp.dayOfWeek",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.dayOfWeek",
-              "type": "displayForm",
-            },
-            "title": "Closed - Day of Week",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfWeek",
-          },
-          "granularity": "GDC.time.day_in_week",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Generic Day of the Month (D1-D31)",
-            "displayForms": Array [
-              Object {
-                "description": "Generic Day of the Month (D1-D31)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.dayOfMonth",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.dayOfMonth",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Day of Month",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfMonth",
-              },
-            ],
-            "id": "dt_closedate_timestamp.dayOfMonth",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.dayOfMonth",
-              "type": "attribute",
-            },
-            "title": "Closed - Day of Month",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.dayOfMonth",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Generic Day of the Month (D1-D31)",
-            "id": "dt_closedate_timestamp.dayOfMonth",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.dayOfMonth",
-              "type": "displayForm",
-            },
-            "title": "Closed - Day of Month",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfMonth",
-          },
-          "granularity": "GDC.time.day_in_month",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Generic Day of the Year (D1-D366)",
-            "displayForms": Array [
-              Object {
-                "description": "Generic Day of the Year (D1-D366)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.dayOfYear",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.dayOfYear",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Day of Year",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfYear",
-              },
-            ],
-            "id": "dt_closedate_timestamp.dayOfYear",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.dayOfYear",
-              "type": "attribute",
-            },
-            "title": "Closed - Day of Year",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.dayOfYear",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Generic Day of the Year (D1-D366)",
-            "id": "dt_closedate_timestamp.dayOfYear",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.dayOfYear",
-              "type": "displayForm",
-            },
-            "title": "Closed - Day of Year",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfYear",
-          },
-          "granularity": "GDC.time.day_in_year",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Generic Week (W1-W53)",
-            "displayForms": Array [
-              Object {
-                "description": "Generic Week (W1-W53)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.weekOfYear",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.weekOfYear",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Week of Year",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.weekOfYear",
-              },
-            ],
-            "id": "dt_closedate_timestamp.weekOfYear",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.weekOfYear",
-              "type": "attribute",
-            },
-            "title": "Closed - Week of Year",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.weekOfYear",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Generic Week (W1-W53)",
-            "id": "dt_closedate_timestamp.weekOfYear",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.weekOfYear",
-              "type": "displayForm",
-            },
-            "title": "Closed - Week of Year",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.weekOfYear",
-          },
-          "granularity": "GDC.time.week_in_year",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Generic Month (M1-M12)",
-            "displayForms": Array [
-              Object {
-                "description": "Generic Month (M1-M12)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.monthOfYear",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.monthOfYear",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Month of Year",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.monthOfYear",
-              },
-            ],
-            "id": "dt_closedate_timestamp.monthOfYear",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.monthOfYear",
-              "type": "attribute",
-            },
-            "title": "Closed - Month of Year",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.monthOfYear",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Generic Month (M1-M12)",
-            "id": "dt_closedate_timestamp.monthOfYear",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.monthOfYear",
-              "type": "displayForm",
-            },
-            "title": "Closed - Month of Year",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.monthOfYear",
-          },
-          "granularity": "GDC.time.month_in_year",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Generic Quarter (Q1-Q4)",
-            "displayForms": Array [
-              Object {
-                "description": "Generic Quarter (Q1-Q4)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.quarterOfYear",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.quarterOfYear",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Quarter of Year",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.quarterOfYear",
-              },
-            ],
-            "id": "dt_closedate_timestamp.quarterOfYear",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.quarterOfYear",
-              "type": "attribute",
-            },
-            "title": "Closed - Quarter of Year",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.quarterOfYear",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Generic Quarter (Q1-Q4)",
-            "id": "dt_closedate_timestamp.quarterOfYear",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.quarterOfYear",
-              "type": "displayForm",
-            },
-            "title": "Closed - Quarter of Year",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.quarterOfYear",
           },
           "granularity": "GDC.time.quarter_in_year",
         },
@@ -8346,6 +8346,610 @@ TigerWorkspaceCatalog {
     Object {
       "dataSet": Object {
         "description": "",
+        "id": "dt_closedate_timestamp",
+        "production": true,
+        "ref": Object {
+          "identifier": "dt_closedate_timestamp",
+          "type": "dataSet",
+        },
+        "title": "Closed",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/datasets/dt_closedate_timestamp",
+      },
+      "dateAttributes": Array [
+        Object {
+          "attribute": Object {
+            "description": "Minute",
+            "displayForms": Array [
+              Object {
+                "description": "Minute",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.minute",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.minute",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Minute",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.minute",
+              },
+            ],
+            "id": "dt_closedate_timestamp.minute",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.minute",
+              "type": "attribute",
+            },
+            "title": "Closed - Minute",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.minute",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Minute",
+            "id": "dt_closedate_timestamp.minute",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.minute",
+              "type": "displayForm",
+            },
+            "title": "Closed - Minute",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.minute",
+          },
+          "granularity": "GDC.time.minute",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Hour",
+            "displayForms": Array [
+              Object {
+                "description": "Hour",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.hour",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.hour",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Hour",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.hour",
+              },
+            ],
+            "id": "dt_closedate_timestamp.hour",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.hour",
+              "type": "attribute",
+            },
+            "title": "Closed - Hour",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.hour",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Hour",
+            "id": "dt_closedate_timestamp.hour",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.hour",
+              "type": "displayForm",
+            },
+            "title": "Closed - Hour",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.hour",
+          },
+          "granularity": "GDC.time.hour",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Date",
+            "displayForms": Array [
+              Object {
+                "description": "Date",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.day",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.day",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Date",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.day",
+              },
+            ],
+            "id": "dt_closedate_timestamp.day",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.day",
+              "type": "attribute",
+            },
+            "title": "Closed - Date",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.day",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Date",
+            "id": "dt_closedate_timestamp.day",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.day",
+              "type": "displayForm",
+            },
+            "title": "Closed - Date",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.day",
+          },
+          "granularity": "GDC.time.date",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Week and Year (W52/2020)",
+            "displayForms": Array [
+              Object {
+                "description": "Week and Year (W52/2020)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.week",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.week",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Week/Year",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.week",
+              },
+            ],
+            "id": "dt_closedate_timestamp.week",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.week",
+              "type": "attribute",
+            },
+            "title": "Closed - Week/Year",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.week",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Week and Year (W52/2020)",
+            "id": "dt_closedate_timestamp.week",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.week",
+              "type": "displayForm",
+            },
+            "title": "Closed - Week/Year",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.week",
+          },
+          "granularity": "GDC.time.week_us",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Month and Year (12/2020)",
+            "displayForms": Array [
+              Object {
+                "description": "Month and Year (12/2020)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.month",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.month",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Month/Year",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.month",
+              },
+            ],
+            "id": "dt_closedate_timestamp.month",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.month",
+              "type": "attribute",
+            },
+            "title": "Closed - Month/Year",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.month",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Month and Year (12/2020)",
+            "id": "dt_closedate_timestamp.month",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.month",
+              "type": "displayForm",
+            },
+            "title": "Closed - Month/Year",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.month",
+          },
+          "granularity": "GDC.time.month",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Quarter and Year (Q1/2020)",
+            "displayForms": Array [
+              Object {
+                "description": "Quarter and Year (Q1/2020)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.quarter",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.quarter",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Quarter/Year",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.quarter",
+              },
+            ],
+            "id": "dt_closedate_timestamp.quarter",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.quarter",
+              "type": "attribute",
+            },
+            "title": "Closed - Quarter/Year",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.quarter",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Quarter and Year (Q1/2020)",
+            "id": "dt_closedate_timestamp.quarter",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.quarter",
+              "type": "displayForm",
+            },
+            "title": "Closed - Quarter/Year",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.quarter",
+          },
+          "granularity": "GDC.time.quarter",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Year",
+            "displayForms": Array [
+              Object {
+                "description": "Year",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.year",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.year",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Year",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.year",
+              },
+            ],
+            "id": "dt_closedate_timestamp.year",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.year",
+              "type": "attribute",
+            },
+            "title": "Closed - Year",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.year",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Year",
+            "id": "dt_closedate_timestamp.year",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.year",
+              "type": "displayForm",
+            },
+            "title": "Closed - Year",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.year",
+          },
+          "granularity": "GDC.time.year",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Generic Minute of the Hour(MI1-MI60)",
+            "displayForms": Array [
+              Object {
+                "description": "Generic Minute of the Hour(MI1-MI60)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.minuteOfHour",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.minuteOfHour",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Minute of Hour",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.minuteOfHour",
+              },
+            ],
+            "id": "dt_closedate_timestamp.minuteOfHour",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.minuteOfHour",
+              "type": "attribute",
+            },
+            "title": "Closed - Minute of Hour",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.minuteOfHour",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Generic Minute of the Hour(MI1-MI60)",
+            "id": "dt_closedate_timestamp.minuteOfHour",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.minuteOfHour",
+              "type": "displayForm",
+            },
+            "title": "Closed - Minute of Hour",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.minuteOfHour",
+          },
+          "granularity": "GDC.time.minute_in_hour",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Generic Hour of the Day(H1-H24)",
+            "displayForms": Array [
+              Object {
+                "description": "Generic Hour of the Day(H1-H24)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.hourOfDay",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.hourOfDay",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Hour of Day",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.hourOfDay",
+              },
+            ],
+            "id": "dt_closedate_timestamp.hourOfDay",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.hourOfDay",
+              "type": "attribute",
+            },
+            "title": "Closed - Hour of Day",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.hourOfDay",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Generic Hour of the Day(H1-H24)",
+            "id": "dt_closedate_timestamp.hourOfDay",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.hourOfDay",
+              "type": "displayForm",
+            },
+            "title": "Closed - Hour of Day",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.hourOfDay",
+          },
+          "granularity": "GDC.time.hour_in_day",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Generic Day of the Week (D1-D7)",
+            "displayForms": Array [
+              Object {
+                "description": "Generic Day of the Week (D1-D7)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.dayOfWeek",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.dayOfWeek",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Day of Week",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfWeek",
+              },
+            ],
+            "id": "dt_closedate_timestamp.dayOfWeek",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.dayOfWeek",
+              "type": "attribute",
+            },
+            "title": "Closed - Day of Week",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.dayOfWeek",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Generic Day of the Week (D1-D7)",
+            "id": "dt_closedate_timestamp.dayOfWeek",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.dayOfWeek",
+              "type": "displayForm",
+            },
+            "title": "Closed - Day of Week",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfWeek",
+          },
+          "granularity": "GDC.time.day_in_week",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Generic Day of the Month (D1-D31)",
+            "displayForms": Array [
+              Object {
+                "description": "Generic Day of the Month (D1-D31)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.dayOfMonth",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.dayOfMonth",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Day of Month",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfMonth",
+              },
+            ],
+            "id": "dt_closedate_timestamp.dayOfMonth",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.dayOfMonth",
+              "type": "attribute",
+            },
+            "title": "Closed - Day of Month",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.dayOfMonth",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Generic Day of the Month (D1-D31)",
+            "id": "dt_closedate_timestamp.dayOfMonth",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.dayOfMonth",
+              "type": "displayForm",
+            },
+            "title": "Closed - Day of Month",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfMonth",
+          },
+          "granularity": "GDC.time.day_in_month",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Generic Day of the Year (D1-D366)",
+            "displayForms": Array [
+              Object {
+                "description": "Generic Day of the Year (D1-D366)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.dayOfYear",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.dayOfYear",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Day of Year",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfYear",
+              },
+            ],
+            "id": "dt_closedate_timestamp.dayOfYear",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.dayOfYear",
+              "type": "attribute",
+            },
+            "title": "Closed - Day of Year",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.dayOfYear",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Generic Day of the Year (D1-D366)",
+            "id": "dt_closedate_timestamp.dayOfYear",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.dayOfYear",
+              "type": "displayForm",
+            },
+            "title": "Closed - Day of Year",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfYear",
+          },
+          "granularity": "GDC.time.day_in_year",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Generic Week (W1-W53)",
+            "displayForms": Array [
+              Object {
+                "description": "Generic Week (W1-W53)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.weekOfYear",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.weekOfYear",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Week of Year",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.weekOfYear",
+              },
+            ],
+            "id": "dt_closedate_timestamp.weekOfYear",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.weekOfYear",
+              "type": "attribute",
+            },
+            "title": "Closed - Week of Year",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.weekOfYear",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Generic Week (W1-W53)",
+            "id": "dt_closedate_timestamp.weekOfYear",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.weekOfYear",
+              "type": "displayForm",
+            },
+            "title": "Closed - Week of Year",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.weekOfYear",
+          },
+          "granularity": "GDC.time.week_in_year",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Generic Month (M1-M12)",
+            "displayForms": Array [
+              Object {
+                "description": "Generic Month (M1-M12)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.monthOfYear",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.monthOfYear",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Month of Year",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.monthOfYear",
+              },
+            ],
+            "id": "dt_closedate_timestamp.monthOfYear",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.monthOfYear",
+              "type": "attribute",
+            },
+            "title": "Closed - Month of Year",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.monthOfYear",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Generic Month (M1-M12)",
+            "id": "dt_closedate_timestamp.monthOfYear",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.monthOfYear",
+              "type": "displayForm",
+            },
+            "title": "Closed - Month of Year",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.monthOfYear",
+          },
+          "granularity": "GDC.time.month_in_year",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Generic Quarter (Q1-Q4)",
+            "displayForms": Array [
+              Object {
+                "description": "Generic Quarter (Q1-Q4)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.quarterOfYear",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.quarterOfYear",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Quarter of Year",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.quarterOfYear",
+              },
+            ],
+            "id": "dt_closedate_timestamp.quarterOfYear",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.quarterOfYear",
+              "type": "attribute",
+            },
+            "title": "Closed - Quarter of Year",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.quarterOfYear",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Generic Quarter (Q1-Q4)",
+            "id": "dt_closedate_timestamp.quarterOfYear",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.quarterOfYear",
+              "type": "displayForm",
+            },
+            "title": "Closed - Quarter of Year",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.quarterOfYear",
+          },
+          "granularity": "GDC.time.quarter_in_year",
+        },
+      ],
+      "relevance": 0,
+      "type": "dateDataset",
+    },
+    Object {
+      "dataSet": Object {
+        "description": "",
         "id": "dt_oppcreated_timestamp",
         "production": true,
         "ref": Object {
@@ -10148,610 +10752,6 @@ TigerWorkspaceCatalog {
             "title": "Timeline - Quarter of Year",
             "type": "displayForm",
             "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_timeline_timestamp.quarterOfYear",
-          },
-          "granularity": "GDC.time.quarter_in_year",
-        },
-      ],
-      "relevance": 0,
-      "type": "dateDataset",
-    },
-    Object {
-      "dataSet": Object {
-        "description": "",
-        "id": "dt_closedate_timestamp",
-        "production": true,
-        "ref": Object {
-          "identifier": "dt_closedate_timestamp",
-          "type": "dataSet",
-        },
-        "title": "Closed",
-        "type": "dataSet",
-        "unlisted": false,
-        "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/datasets/dt_closedate_timestamp",
-      },
-      "dateAttributes": Array [
-        Object {
-          "attribute": Object {
-            "description": "Minute",
-            "displayForms": Array [
-              Object {
-                "description": "Minute",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.minute",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.minute",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Minute",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.minute",
-              },
-            ],
-            "id": "dt_closedate_timestamp.minute",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.minute",
-              "type": "attribute",
-            },
-            "title": "Closed - Minute",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.minute",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Minute",
-            "id": "dt_closedate_timestamp.minute",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.minute",
-              "type": "displayForm",
-            },
-            "title": "Closed - Minute",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.minute",
-          },
-          "granularity": "GDC.time.minute",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Hour",
-            "displayForms": Array [
-              Object {
-                "description": "Hour",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.hour",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.hour",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Hour",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.hour",
-              },
-            ],
-            "id": "dt_closedate_timestamp.hour",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.hour",
-              "type": "attribute",
-            },
-            "title": "Closed - Hour",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.hour",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Hour",
-            "id": "dt_closedate_timestamp.hour",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.hour",
-              "type": "displayForm",
-            },
-            "title": "Closed - Hour",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.hour",
-          },
-          "granularity": "GDC.time.hour",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Date",
-            "displayForms": Array [
-              Object {
-                "description": "Date",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.day",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.day",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Date",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.day",
-              },
-            ],
-            "id": "dt_closedate_timestamp.day",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.day",
-              "type": "attribute",
-            },
-            "title": "Closed - Date",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.day",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Date",
-            "id": "dt_closedate_timestamp.day",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.day",
-              "type": "displayForm",
-            },
-            "title": "Closed - Date",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.day",
-          },
-          "granularity": "GDC.time.date",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Week and Year (W52/2020)",
-            "displayForms": Array [
-              Object {
-                "description": "Week and Year (W52/2020)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.week",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.week",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Week/Year",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.week",
-              },
-            ],
-            "id": "dt_closedate_timestamp.week",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.week",
-              "type": "attribute",
-            },
-            "title": "Closed - Week/Year",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.week",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Week and Year (W52/2020)",
-            "id": "dt_closedate_timestamp.week",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.week",
-              "type": "displayForm",
-            },
-            "title": "Closed - Week/Year",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.week",
-          },
-          "granularity": "GDC.time.week_us",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Month and Year (12/2020)",
-            "displayForms": Array [
-              Object {
-                "description": "Month and Year (12/2020)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.month",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.month",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Month/Year",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.month",
-              },
-            ],
-            "id": "dt_closedate_timestamp.month",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.month",
-              "type": "attribute",
-            },
-            "title": "Closed - Month/Year",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.month",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Month and Year (12/2020)",
-            "id": "dt_closedate_timestamp.month",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.month",
-              "type": "displayForm",
-            },
-            "title": "Closed - Month/Year",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.month",
-          },
-          "granularity": "GDC.time.month",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Quarter and Year (Q1/2020)",
-            "displayForms": Array [
-              Object {
-                "description": "Quarter and Year (Q1/2020)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.quarter",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.quarter",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Quarter/Year",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.quarter",
-              },
-            ],
-            "id": "dt_closedate_timestamp.quarter",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.quarter",
-              "type": "attribute",
-            },
-            "title": "Closed - Quarter/Year",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.quarter",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Quarter and Year (Q1/2020)",
-            "id": "dt_closedate_timestamp.quarter",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.quarter",
-              "type": "displayForm",
-            },
-            "title": "Closed - Quarter/Year",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.quarter",
-          },
-          "granularity": "GDC.time.quarter",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Year",
-            "displayForms": Array [
-              Object {
-                "description": "Year",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.year",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.year",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Year",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.year",
-              },
-            ],
-            "id": "dt_closedate_timestamp.year",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.year",
-              "type": "attribute",
-            },
-            "title": "Closed - Year",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.year",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Year",
-            "id": "dt_closedate_timestamp.year",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.year",
-              "type": "displayForm",
-            },
-            "title": "Closed - Year",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.year",
-          },
-          "granularity": "GDC.time.year",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Generic Minute of the Hour(MI1-MI60)",
-            "displayForms": Array [
-              Object {
-                "description": "Generic Minute of the Hour(MI1-MI60)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.minuteOfHour",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.minuteOfHour",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Minute of Hour",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.minuteOfHour",
-              },
-            ],
-            "id": "dt_closedate_timestamp.minuteOfHour",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.minuteOfHour",
-              "type": "attribute",
-            },
-            "title": "Closed - Minute of Hour",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.minuteOfHour",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Generic Minute of the Hour(MI1-MI60)",
-            "id": "dt_closedate_timestamp.minuteOfHour",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.minuteOfHour",
-              "type": "displayForm",
-            },
-            "title": "Closed - Minute of Hour",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.minuteOfHour",
-          },
-          "granularity": "GDC.time.minute_in_hour",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Generic Hour of the Day(H1-H24)",
-            "displayForms": Array [
-              Object {
-                "description": "Generic Hour of the Day(H1-H24)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.hourOfDay",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.hourOfDay",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Hour of Day",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.hourOfDay",
-              },
-            ],
-            "id": "dt_closedate_timestamp.hourOfDay",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.hourOfDay",
-              "type": "attribute",
-            },
-            "title": "Closed - Hour of Day",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.hourOfDay",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Generic Hour of the Day(H1-H24)",
-            "id": "dt_closedate_timestamp.hourOfDay",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.hourOfDay",
-              "type": "displayForm",
-            },
-            "title": "Closed - Hour of Day",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.hourOfDay",
-          },
-          "granularity": "GDC.time.hour_in_day",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Generic Day of the Week (D1-D7)",
-            "displayForms": Array [
-              Object {
-                "description": "Generic Day of the Week (D1-D7)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.dayOfWeek",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.dayOfWeek",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Day of Week",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfWeek",
-              },
-            ],
-            "id": "dt_closedate_timestamp.dayOfWeek",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.dayOfWeek",
-              "type": "attribute",
-            },
-            "title": "Closed - Day of Week",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.dayOfWeek",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Generic Day of the Week (D1-D7)",
-            "id": "dt_closedate_timestamp.dayOfWeek",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.dayOfWeek",
-              "type": "displayForm",
-            },
-            "title": "Closed - Day of Week",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfWeek",
-          },
-          "granularity": "GDC.time.day_in_week",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Generic Day of the Month (D1-D31)",
-            "displayForms": Array [
-              Object {
-                "description": "Generic Day of the Month (D1-D31)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.dayOfMonth",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.dayOfMonth",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Day of Month",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfMonth",
-              },
-            ],
-            "id": "dt_closedate_timestamp.dayOfMonth",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.dayOfMonth",
-              "type": "attribute",
-            },
-            "title": "Closed - Day of Month",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.dayOfMonth",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Generic Day of the Month (D1-D31)",
-            "id": "dt_closedate_timestamp.dayOfMonth",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.dayOfMonth",
-              "type": "displayForm",
-            },
-            "title": "Closed - Day of Month",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfMonth",
-          },
-          "granularity": "GDC.time.day_in_month",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Generic Day of the Year (D1-D366)",
-            "displayForms": Array [
-              Object {
-                "description": "Generic Day of the Year (D1-D366)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.dayOfYear",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.dayOfYear",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Day of Year",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfYear",
-              },
-            ],
-            "id": "dt_closedate_timestamp.dayOfYear",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.dayOfYear",
-              "type": "attribute",
-            },
-            "title": "Closed - Day of Year",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.dayOfYear",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Generic Day of the Year (D1-D366)",
-            "id": "dt_closedate_timestamp.dayOfYear",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.dayOfYear",
-              "type": "displayForm",
-            },
-            "title": "Closed - Day of Year",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfYear",
-          },
-          "granularity": "GDC.time.day_in_year",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Generic Week (W1-W53)",
-            "displayForms": Array [
-              Object {
-                "description": "Generic Week (W1-W53)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.weekOfYear",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.weekOfYear",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Week of Year",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.weekOfYear",
-              },
-            ],
-            "id": "dt_closedate_timestamp.weekOfYear",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.weekOfYear",
-              "type": "attribute",
-            },
-            "title": "Closed - Week of Year",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.weekOfYear",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Generic Week (W1-W53)",
-            "id": "dt_closedate_timestamp.weekOfYear",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.weekOfYear",
-              "type": "displayForm",
-            },
-            "title": "Closed - Week of Year",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.weekOfYear",
-          },
-          "granularity": "GDC.time.week_in_year",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Generic Month (M1-M12)",
-            "displayForms": Array [
-              Object {
-                "description": "Generic Month (M1-M12)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.monthOfYear",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.monthOfYear",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Month of Year",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.monthOfYear",
-              },
-            ],
-            "id": "dt_closedate_timestamp.monthOfYear",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.monthOfYear",
-              "type": "attribute",
-            },
-            "title": "Closed - Month of Year",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.monthOfYear",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Generic Month (M1-M12)",
-            "id": "dt_closedate_timestamp.monthOfYear",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.monthOfYear",
-              "type": "displayForm",
-            },
-            "title": "Closed - Month of Year",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.monthOfYear",
-          },
-          "granularity": "GDC.time.month_in_year",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Generic Quarter (Q1-Q4)",
-            "displayForms": Array [
-              Object {
-                "description": "Generic Quarter (Q1-Q4)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.quarterOfYear",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.quarterOfYear",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Quarter of Year",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.quarterOfYear",
-              },
-            ],
-            "id": "dt_closedate_timestamp.quarterOfYear",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.quarterOfYear",
-              "type": "attribute",
-            },
-            "title": "Closed - Quarter of Year",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.quarterOfYear",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Generic Quarter (Q1-Q4)",
-            "id": "dt_closedate_timestamp.quarterOfYear",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.quarterOfYear",
-              "type": "displayForm",
-            },
-            "title": "Closed - Quarter of Year",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.quarterOfYear",
           },
           "granularity": "GDC.time.quarter_in_year",
         },
@@ -11386,6 +11386,610 @@ TigerWorkspaceCatalog {
     Object {
       "dataSet": Object {
         "description": "",
+        "id": "dt_closedate_timestamp",
+        "production": true,
+        "ref": Object {
+          "identifier": "dt_closedate_timestamp",
+          "type": "dataSet",
+        },
+        "title": "Closed",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/datasets/dt_closedate_timestamp",
+      },
+      "dateAttributes": Array [
+        Object {
+          "attribute": Object {
+            "description": "Minute",
+            "displayForms": Array [
+              Object {
+                "description": "Minute",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.minute",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.minute",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Minute",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.minute",
+              },
+            ],
+            "id": "dt_closedate_timestamp.minute",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.minute",
+              "type": "attribute",
+            },
+            "title": "Closed - Minute",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.minute",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Minute",
+            "id": "dt_closedate_timestamp.minute",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.minute",
+              "type": "displayForm",
+            },
+            "title": "Closed - Minute",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.minute",
+          },
+          "granularity": "GDC.time.minute",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Hour",
+            "displayForms": Array [
+              Object {
+                "description": "Hour",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.hour",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.hour",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Hour",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.hour",
+              },
+            ],
+            "id": "dt_closedate_timestamp.hour",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.hour",
+              "type": "attribute",
+            },
+            "title": "Closed - Hour",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.hour",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Hour",
+            "id": "dt_closedate_timestamp.hour",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.hour",
+              "type": "displayForm",
+            },
+            "title": "Closed - Hour",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.hour",
+          },
+          "granularity": "GDC.time.hour",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Date",
+            "displayForms": Array [
+              Object {
+                "description": "Date",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.day",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.day",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Date",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.day",
+              },
+            ],
+            "id": "dt_closedate_timestamp.day",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.day",
+              "type": "attribute",
+            },
+            "title": "Closed - Date",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.day",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Date",
+            "id": "dt_closedate_timestamp.day",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.day",
+              "type": "displayForm",
+            },
+            "title": "Closed - Date",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.day",
+          },
+          "granularity": "GDC.time.date",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Week and Year (W52/2020)",
+            "displayForms": Array [
+              Object {
+                "description": "Week and Year (W52/2020)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.week",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.week",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Week/Year",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.week",
+              },
+            ],
+            "id": "dt_closedate_timestamp.week",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.week",
+              "type": "attribute",
+            },
+            "title": "Closed - Week/Year",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.week",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Week and Year (W52/2020)",
+            "id": "dt_closedate_timestamp.week",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.week",
+              "type": "displayForm",
+            },
+            "title": "Closed - Week/Year",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.week",
+          },
+          "granularity": "GDC.time.week_us",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Month and Year (12/2020)",
+            "displayForms": Array [
+              Object {
+                "description": "Month and Year (12/2020)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.month",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.month",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Month/Year",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.month",
+              },
+            ],
+            "id": "dt_closedate_timestamp.month",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.month",
+              "type": "attribute",
+            },
+            "title": "Closed - Month/Year",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.month",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Month and Year (12/2020)",
+            "id": "dt_closedate_timestamp.month",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.month",
+              "type": "displayForm",
+            },
+            "title": "Closed - Month/Year",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.month",
+          },
+          "granularity": "GDC.time.month",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Quarter and Year (Q1/2020)",
+            "displayForms": Array [
+              Object {
+                "description": "Quarter and Year (Q1/2020)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.quarter",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.quarter",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Quarter/Year",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.quarter",
+              },
+            ],
+            "id": "dt_closedate_timestamp.quarter",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.quarter",
+              "type": "attribute",
+            },
+            "title": "Closed - Quarter/Year",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.quarter",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Quarter and Year (Q1/2020)",
+            "id": "dt_closedate_timestamp.quarter",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.quarter",
+              "type": "displayForm",
+            },
+            "title": "Closed - Quarter/Year",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.quarter",
+          },
+          "granularity": "GDC.time.quarter",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Year",
+            "displayForms": Array [
+              Object {
+                "description": "Year",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.year",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.year",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Year",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.year",
+              },
+            ],
+            "id": "dt_closedate_timestamp.year",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.year",
+              "type": "attribute",
+            },
+            "title": "Closed - Year",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.year",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Year",
+            "id": "dt_closedate_timestamp.year",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.year",
+              "type": "displayForm",
+            },
+            "title": "Closed - Year",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.year",
+          },
+          "granularity": "GDC.time.year",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Generic Minute of the Hour(MI1-MI60)",
+            "displayForms": Array [
+              Object {
+                "description": "Generic Minute of the Hour(MI1-MI60)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.minuteOfHour",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.minuteOfHour",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Minute of Hour",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.minuteOfHour",
+              },
+            ],
+            "id": "dt_closedate_timestamp.minuteOfHour",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.minuteOfHour",
+              "type": "attribute",
+            },
+            "title": "Closed - Minute of Hour",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.minuteOfHour",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Generic Minute of the Hour(MI1-MI60)",
+            "id": "dt_closedate_timestamp.minuteOfHour",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.minuteOfHour",
+              "type": "displayForm",
+            },
+            "title": "Closed - Minute of Hour",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.minuteOfHour",
+          },
+          "granularity": "GDC.time.minute_in_hour",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Generic Hour of the Day(H1-H24)",
+            "displayForms": Array [
+              Object {
+                "description": "Generic Hour of the Day(H1-H24)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.hourOfDay",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.hourOfDay",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Hour of Day",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.hourOfDay",
+              },
+            ],
+            "id": "dt_closedate_timestamp.hourOfDay",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.hourOfDay",
+              "type": "attribute",
+            },
+            "title": "Closed - Hour of Day",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.hourOfDay",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Generic Hour of the Day(H1-H24)",
+            "id": "dt_closedate_timestamp.hourOfDay",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.hourOfDay",
+              "type": "displayForm",
+            },
+            "title": "Closed - Hour of Day",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.hourOfDay",
+          },
+          "granularity": "GDC.time.hour_in_day",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Generic Day of the Week (D1-D7)",
+            "displayForms": Array [
+              Object {
+                "description": "Generic Day of the Week (D1-D7)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.dayOfWeek",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.dayOfWeek",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Day of Week",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfWeek",
+              },
+            ],
+            "id": "dt_closedate_timestamp.dayOfWeek",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.dayOfWeek",
+              "type": "attribute",
+            },
+            "title": "Closed - Day of Week",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.dayOfWeek",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Generic Day of the Week (D1-D7)",
+            "id": "dt_closedate_timestamp.dayOfWeek",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.dayOfWeek",
+              "type": "displayForm",
+            },
+            "title": "Closed - Day of Week",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfWeek",
+          },
+          "granularity": "GDC.time.day_in_week",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Generic Day of the Month (D1-D31)",
+            "displayForms": Array [
+              Object {
+                "description": "Generic Day of the Month (D1-D31)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.dayOfMonth",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.dayOfMonth",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Day of Month",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfMonth",
+              },
+            ],
+            "id": "dt_closedate_timestamp.dayOfMonth",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.dayOfMonth",
+              "type": "attribute",
+            },
+            "title": "Closed - Day of Month",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.dayOfMonth",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Generic Day of the Month (D1-D31)",
+            "id": "dt_closedate_timestamp.dayOfMonth",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.dayOfMonth",
+              "type": "displayForm",
+            },
+            "title": "Closed - Day of Month",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfMonth",
+          },
+          "granularity": "GDC.time.day_in_month",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Generic Day of the Year (D1-D366)",
+            "displayForms": Array [
+              Object {
+                "description": "Generic Day of the Year (D1-D366)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.dayOfYear",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.dayOfYear",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Day of Year",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfYear",
+              },
+            ],
+            "id": "dt_closedate_timestamp.dayOfYear",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.dayOfYear",
+              "type": "attribute",
+            },
+            "title": "Closed - Day of Year",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.dayOfYear",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Generic Day of the Year (D1-D366)",
+            "id": "dt_closedate_timestamp.dayOfYear",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.dayOfYear",
+              "type": "displayForm",
+            },
+            "title": "Closed - Day of Year",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfYear",
+          },
+          "granularity": "GDC.time.day_in_year",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Generic Week (W1-W53)",
+            "displayForms": Array [
+              Object {
+                "description": "Generic Week (W1-W53)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.weekOfYear",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.weekOfYear",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Week of Year",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.weekOfYear",
+              },
+            ],
+            "id": "dt_closedate_timestamp.weekOfYear",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.weekOfYear",
+              "type": "attribute",
+            },
+            "title": "Closed - Week of Year",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.weekOfYear",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Generic Week (W1-W53)",
+            "id": "dt_closedate_timestamp.weekOfYear",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.weekOfYear",
+              "type": "displayForm",
+            },
+            "title": "Closed - Week of Year",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.weekOfYear",
+          },
+          "granularity": "GDC.time.week_in_year",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Generic Month (M1-M12)",
+            "displayForms": Array [
+              Object {
+                "description": "Generic Month (M1-M12)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.monthOfYear",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.monthOfYear",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Month of Year",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.monthOfYear",
+              },
+            ],
+            "id": "dt_closedate_timestamp.monthOfYear",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.monthOfYear",
+              "type": "attribute",
+            },
+            "title": "Closed - Month of Year",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.monthOfYear",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Generic Month (M1-M12)",
+            "id": "dt_closedate_timestamp.monthOfYear",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.monthOfYear",
+              "type": "displayForm",
+            },
+            "title": "Closed - Month of Year",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.monthOfYear",
+          },
+          "granularity": "GDC.time.month_in_year",
+        },
+        Object {
+          "attribute": Object {
+            "description": "Generic Quarter (Q1-Q4)",
+            "displayForms": Array [
+              Object {
+                "description": "Generic Quarter (Q1-Q4)",
+                "displayFormType": undefined,
+                "id": "dt_closedate_timestamp.quarterOfYear",
+                "ref": Object {
+                  "identifier": "dt_closedate_timestamp.quarterOfYear",
+                  "type": "displayForm",
+                },
+                "title": "Closed - Quarter of Year",
+                "type": "displayForm",
+                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.quarterOfYear",
+              },
+            ],
+            "id": "dt_closedate_timestamp.quarterOfYear",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.quarterOfYear",
+              "type": "attribute",
+            },
+            "title": "Closed - Quarter of Year",
+            "type": "attribute",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.quarterOfYear",
+          },
+          "defaultDisplayForm": Object {
+            "description": "Generic Quarter (Q1-Q4)",
+            "id": "dt_closedate_timestamp.quarterOfYear",
+            "ref": Object {
+              "identifier": "dt_closedate_timestamp.quarterOfYear",
+              "type": "displayForm",
+            },
+            "title": "Closed - Quarter of Year",
+            "type": "displayForm",
+            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.quarterOfYear",
+          },
+          "granularity": "GDC.time.quarter_in_year",
+        },
+      ],
+      "relevance": 0,
+      "type": "dateDataset",
+    },
+    Object {
+      "dataSet": Object {
+        "description": "",
         "id": "dt_oppcreated_timestamp",
         "production": true,
         "ref": Object {
@@ -13188,610 +13792,6 @@ TigerWorkspaceCatalog {
             "title": "Timeline - Quarter of Year",
             "type": "displayForm",
             "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_timeline_timestamp.quarterOfYear",
-          },
-          "granularity": "GDC.time.quarter_in_year",
-        },
-      ],
-      "relevance": 0,
-      "type": "dateDataset",
-    },
-    Object {
-      "dataSet": Object {
-        "description": "",
-        "id": "dt_closedate_timestamp",
-        "production": true,
-        "ref": Object {
-          "identifier": "dt_closedate_timestamp",
-          "type": "dataSet",
-        },
-        "title": "Closed",
-        "type": "dataSet",
-        "unlisted": false,
-        "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/datasets/dt_closedate_timestamp",
-      },
-      "dateAttributes": Array [
-        Object {
-          "attribute": Object {
-            "description": "Minute",
-            "displayForms": Array [
-              Object {
-                "description": "Minute",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.minute",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.minute",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Minute",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.minute",
-              },
-            ],
-            "id": "dt_closedate_timestamp.minute",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.minute",
-              "type": "attribute",
-            },
-            "title": "Closed - Minute",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.minute",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Minute",
-            "id": "dt_closedate_timestamp.minute",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.minute",
-              "type": "displayForm",
-            },
-            "title": "Closed - Minute",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.minute",
-          },
-          "granularity": "GDC.time.minute",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Hour",
-            "displayForms": Array [
-              Object {
-                "description": "Hour",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.hour",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.hour",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Hour",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.hour",
-              },
-            ],
-            "id": "dt_closedate_timestamp.hour",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.hour",
-              "type": "attribute",
-            },
-            "title": "Closed - Hour",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.hour",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Hour",
-            "id": "dt_closedate_timestamp.hour",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.hour",
-              "type": "displayForm",
-            },
-            "title": "Closed - Hour",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.hour",
-          },
-          "granularity": "GDC.time.hour",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Date",
-            "displayForms": Array [
-              Object {
-                "description": "Date",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.day",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.day",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Date",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.day",
-              },
-            ],
-            "id": "dt_closedate_timestamp.day",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.day",
-              "type": "attribute",
-            },
-            "title": "Closed - Date",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.day",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Date",
-            "id": "dt_closedate_timestamp.day",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.day",
-              "type": "displayForm",
-            },
-            "title": "Closed - Date",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.day",
-          },
-          "granularity": "GDC.time.date",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Week and Year (W52/2020)",
-            "displayForms": Array [
-              Object {
-                "description": "Week and Year (W52/2020)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.week",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.week",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Week/Year",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.week",
-              },
-            ],
-            "id": "dt_closedate_timestamp.week",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.week",
-              "type": "attribute",
-            },
-            "title": "Closed - Week/Year",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.week",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Week and Year (W52/2020)",
-            "id": "dt_closedate_timestamp.week",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.week",
-              "type": "displayForm",
-            },
-            "title": "Closed - Week/Year",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.week",
-          },
-          "granularity": "GDC.time.week_us",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Month and Year (12/2020)",
-            "displayForms": Array [
-              Object {
-                "description": "Month and Year (12/2020)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.month",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.month",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Month/Year",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.month",
-              },
-            ],
-            "id": "dt_closedate_timestamp.month",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.month",
-              "type": "attribute",
-            },
-            "title": "Closed - Month/Year",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.month",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Month and Year (12/2020)",
-            "id": "dt_closedate_timestamp.month",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.month",
-              "type": "displayForm",
-            },
-            "title": "Closed - Month/Year",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.month",
-          },
-          "granularity": "GDC.time.month",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Quarter and Year (Q1/2020)",
-            "displayForms": Array [
-              Object {
-                "description": "Quarter and Year (Q1/2020)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.quarter",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.quarter",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Quarter/Year",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.quarter",
-              },
-            ],
-            "id": "dt_closedate_timestamp.quarter",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.quarter",
-              "type": "attribute",
-            },
-            "title": "Closed - Quarter/Year",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.quarter",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Quarter and Year (Q1/2020)",
-            "id": "dt_closedate_timestamp.quarter",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.quarter",
-              "type": "displayForm",
-            },
-            "title": "Closed - Quarter/Year",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.quarter",
-          },
-          "granularity": "GDC.time.quarter",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Year",
-            "displayForms": Array [
-              Object {
-                "description": "Year",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.year",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.year",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Year",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.year",
-              },
-            ],
-            "id": "dt_closedate_timestamp.year",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.year",
-              "type": "attribute",
-            },
-            "title": "Closed - Year",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.year",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Year",
-            "id": "dt_closedate_timestamp.year",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.year",
-              "type": "displayForm",
-            },
-            "title": "Closed - Year",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.year",
-          },
-          "granularity": "GDC.time.year",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Generic Minute of the Hour(MI1-MI60)",
-            "displayForms": Array [
-              Object {
-                "description": "Generic Minute of the Hour(MI1-MI60)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.minuteOfHour",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.minuteOfHour",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Minute of Hour",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.minuteOfHour",
-              },
-            ],
-            "id": "dt_closedate_timestamp.minuteOfHour",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.minuteOfHour",
-              "type": "attribute",
-            },
-            "title": "Closed - Minute of Hour",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.minuteOfHour",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Generic Minute of the Hour(MI1-MI60)",
-            "id": "dt_closedate_timestamp.minuteOfHour",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.minuteOfHour",
-              "type": "displayForm",
-            },
-            "title": "Closed - Minute of Hour",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.minuteOfHour",
-          },
-          "granularity": "GDC.time.minute_in_hour",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Generic Hour of the Day(H1-H24)",
-            "displayForms": Array [
-              Object {
-                "description": "Generic Hour of the Day(H1-H24)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.hourOfDay",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.hourOfDay",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Hour of Day",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.hourOfDay",
-              },
-            ],
-            "id": "dt_closedate_timestamp.hourOfDay",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.hourOfDay",
-              "type": "attribute",
-            },
-            "title": "Closed - Hour of Day",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.hourOfDay",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Generic Hour of the Day(H1-H24)",
-            "id": "dt_closedate_timestamp.hourOfDay",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.hourOfDay",
-              "type": "displayForm",
-            },
-            "title": "Closed - Hour of Day",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.hourOfDay",
-          },
-          "granularity": "GDC.time.hour_in_day",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Generic Day of the Week (D1-D7)",
-            "displayForms": Array [
-              Object {
-                "description": "Generic Day of the Week (D1-D7)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.dayOfWeek",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.dayOfWeek",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Day of Week",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfWeek",
-              },
-            ],
-            "id": "dt_closedate_timestamp.dayOfWeek",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.dayOfWeek",
-              "type": "attribute",
-            },
-            "title": "Closed - Day of Week",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.dayOfWeek",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Generic Day of the Week (D1-D7)",
-            "id": "dt_closedate_timestamp.dayOfWeek",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.dayOfWeek",
-              "type": "displayForm",
-            },
-            "title": "Closed - Day of Week",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfWeek",
-          },
-          "granularity": "GDC.time.day_in_week",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Generic Day of the Month (D1-D31)",
-            "displayForms": Array [
-              Object {
-                "description": "Generic Day of the Month (D1-D31)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.dayOfMonth",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.dayOfMonth",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Day of Month",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfMonth",
-              },
-            ],
-            "id": "dt_closedate_timestamp.dayOfMonth",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.dayOfMonth",
-              "type": "attribute",
-            },
-            "title": "Closed - Day of Month",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.dayOfMonth",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Generic Day of the Month (D1-D31)",
-            "id": "dt_closedate_timestamp.dayOfMonth",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.dayOfMonth",
-              "type": "displayForm",
-            },
-            "title": "Closed - Day of Month",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfMonth",
-          },
-          "granularity": "GDC.time.day_in_month",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Generic Day of the Year (D1-D366)",
-            "displayForms": Array [
-              Object {
-                "description": "Generic Day of the Year (D1-D366)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.dayOfYear",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.dayOfYear",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Day of Year",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfYear",
-              },
-            ],
-            "id": "dt_closedate_timestamp.dayOfYear",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.dayOfYear",
-              "type": "attribute",
-            },
-            "title": "Closed - Day of Year",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.dayOfYear",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Generic Day of the Year (D1-D366)",
-            "id": "dt_closedate_timestamp.dayOfYear",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.dayOfYear",
-              "type": "displayForm",
-            },
-            "title": "Closed - Day of Year",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.dayOfYear",
-          },
-          "granularity": "GDC.time.day_in_year",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Generic Week (W1-W53)",
-            "displayForms": Array [
-              Object {
-                "description": "Generic Week (W1-W53)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.weekOfYear",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.weekOfYear",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Week of Year",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.weekOfYear",
-              },
-            ],
-            "id": "dt_closedate_timestamp.weekOfYear",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.weekOfYear",
-              "type": "attribute",
-            },
-            "title": "Closed - Week of Year",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.weekOfYear",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Generic Week (W1-W53)",
-            "id": "dt_closedate_timestamp.weekOfYear",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.weekOfYear",
-              "type": "displayForm",
-            },
-            "title": "Closed - Week of Year",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.weekOfYear",
-          },
-          "granularity": "GDC.time.week_in_year",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Generic Month (M1-M12)",
-            "displayForms": Array [
-              Object {
-                "description": "Generic Month (M1-M12)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.monthOfYear",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.monthOfYear",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Month of Year",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.monthOfYear",
-              },
-            ],
-            "id": "dt_closedate_timestamp.monthOfYear",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.monthOfYear",
-              "type": "attribute",
-            },
-            "title": "Closed - Month of Year",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.monthOfYear",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Generic Month (M1-M12)",
-            "id": "dt_closedate_timestamp.monthOfYear",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.monthOfYear",
-              "type": "displayForm",
-            },
-            "title": "Closed - Month of Year",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.monthOfYear",
-          },
-          "granularity": "GDC.time.month_in_year",
-        },
-        Object {
-          "attribute": Object {
-            "description": "Generic Quarter (Q1-Q4)",
-            "displayForms": Array [
-              Object {
-                "description": "Generic Quarter (Q1-Q4)",
-                "displayFormType": undefined,
-                "id": "dt_closedate_timestamp.quarterOfYear",
-                "ref": Object {
-                  "identifier": "dt_closedate_timestamp.quarterOfYear",
-                  "type": "displayForm",
-                },
-                "title": "Closed - Quarter of Year",
-                "type": "displayForm",
-                "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.quarterOfYear",
-              },
-            ],
-            "id": "dt_closedate_timestamp.quarterOfYear",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.quarterOfYear",
-              "type": "attribute",
-            },
-            "title": "Closed - Quarter of Year",
-            "type": "attribute",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.quarterOfYear",
-          },
-          "defaultDisplayForm": Object {
-            "description": "Generic Quarter (Q1-Q4)",
-            "id": "dt_closedate_timestamp.quarterOfYear",
-            "ref": Object {
-              "identifier": "dt_closedate_timestamp.quarterOfYear",
-              "type": "displayForm",
-            },
-            "title": "Closed - Quarter of Year",
-            "type": "displayForm",
-            "uri": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/labels/dt_closedate_timestamp.quarterOfYear",
           },
           "granularity": "GDC.time.quarter_in_year",
         },

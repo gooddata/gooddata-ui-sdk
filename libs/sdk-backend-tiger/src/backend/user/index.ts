@@ -1,8 +1,8 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import { IUser, IUserService, IUserSettingsService } from "@gooddata/sdk-backend-spi";
 import { TigerUserSettingsService } from "./settings";
 import { TigerAuthenticatedCallGuard } from "../../types";
-import { convertUser, IUserProfile } from "../../convertors/fromBackend/UsersConverter";
+import { convertUser } from "../../convertors/fromBackend/UsersConverter";
 
 export class TigerUserService implements IUserService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard) {}
@@ -12,10 +12,8 @@ export class TigerUserService implements IUserService {
     }
 
     public async getUser(): Promise<IUser> {
-        // TODO: replace with direct call of TigerClient (once methods are generated from OpenAPI)
         return this.authCall(async (client) => {
-            const profile = await client.axios.get<IUserProfile>("/api/profile");
-            return convertUser(profile.data);
+            return convertUser(await client.profile.getCurrent());
         });
     }
 }

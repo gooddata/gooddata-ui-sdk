@@ -1,52 +1,40 @@
 {
-    "id": "2e65c1eb-bbad-4fc3-bb47-33f531d06bfd",
-    "name": "api_v1_actions_workspaces_4dc4e033e611421791adea58d34d958c_execution_collectlabelelements",
+    "id": "0c4fa7e0-69e3-4516-b571-d0137bf213a0",
+    "name": "api_v1_entities_workspaces_4dc4e033e611421791adea58d34d958c_metrics",
     "request": {
-        "url": "/api/v1/actions/workspaces/4dc4e033e611421791adea58d34d958c/execution/collectLabelElements?offset=0&limit=100",
-        "method": "POST",
+        "url": "/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/metrics?size=250&page=0",
+        "method": "GET",
         "headers": {
             "Accept": {
-                "equalTo": "application/json, text/plain, */*"
+                "equalTo": "application/vnd.gooddata.api+json"
             },
             "Content-Type": {
-                "equalTo": "application/json",
+                "equalTo": "application/vnd.gooddata.api+json",
                 "caseInsensitive": true
             }
-        },
-        "bodyPatterns": [
-            {
-                "equalToJson": "{\"label\":\"label.f_account.account.accountid\"}",
-                "ignoreArrayOrder": false,
-                "ignoreExtraElements": false
-            }
-        ]
+        }
     },
     "response": {
         "status": 200,
-        "bodyFileName": "api_v1_actions_workspaces_4dc4e033e611421791adea58d34d958c_execution_collectlabelelements-2e65c1eb-bbad-4fc3-bb47-33f531d06bfd.json",
+        "bodyFileName": "api_v1_entities_workspaces_4dc4e033e611421791adea58d34d958c_metrics-0c4fa7e0-69e3-4516-b571-d0137bf213a0.json",
         "headers": {
             "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
             "Content-Security-Policy": "default-src 'self' *.wistia.com *.wistia.net; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.wistia.com *.wistia.net src.litix.io matomo.anywhere.gooddata.com connectors.tableau.com gdc-dev-dashboard-plugins.s3.amazonaws.com; img-src 'self' data: blob: *.wistia.com *.wistia.net embedwistia-a.akamaihd.net privacy-policy.truste.com www.gooddata.com gdc-dev-dashboard-plugins.s3.amazonaws.com; media-src 'self' blob: data: *.wistia.com *.wistia.net embedwistia-a.akamaihd.net; style-src 'self' 'unsafe-inline' fonts.googleapis.com gdc-dev-dashboard-plugins.s3.amazonaws.com; font-src 'self' data: *.wistia.com fonts.gstatic.com at.alicdn.com gdc-dev-dashboard-plugins.s3.amazonaws.com; frame-src 'self'; object-src 'none'; worker-src 'self' blob:; child-src blob:; connect-src 'self' *.litix.io *.wistia.com embedwistia-a.akamaihd.net *.tiles.mapbox.com api.mapbox.com events.mapbox.com matomo.anywhere.gooddata.com *.okta.com;",
-            "Content-Type": "application/json",
-            "Date": "Mon, 30 May 2022 12:03:18 GMT",
+            "Content-Type": "application/vnd.gooddata.api+json",
+            "Date": "Tue, 31 May 2022 07:43:55 GMT",
             "Expires": "0",
             "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';",
             "Pragma": "no-cache",
-            "Referrer-Policy": "no-referrer",
-            "Set-Cookie": "SPRING_REDIRECT_URI=; Path=/; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Secure; HttpOnly; SameSite=None",
+            "Set-Cookie": "SPRING_SEC_SECURITY_CONTEXT=; Max-Age=0; Expires=Thu, 01-Jan-1970 00:00:10 GMT; Path=/; Secure; HttpOnly",
             "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-            "Vary": [
-                "Accept-Encoding",
-                "Origin",
-                "Access-Control-Request-Method",
-                "Access-Control-Request-Headers"
-            ],
+            "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
             "X-Content-Type-Options": "nosniff",
-            "X-GDC-TRACE-ID": "766bb80f6b462a76",
-            "X-XSS-Protection": "1 ; mode=block"
+            "X-Frame-Options": "DENY",
+            "X-GDC-TRACE-ID": "f83b41123ff7ddc5",
+            "X-XSS-Protection": "1; mode=block"
         }
     },
-    "uuid": "2e65c1eb-bbad-4fc3-bb47-33f531d06bfd",
+    "uuid": "0c4fa7e0-69e3-4516-b571-d0137bf213a0",
     "persistent": true,
-    "insertionIndex": 11
+    "insertionIndex": 12
 }

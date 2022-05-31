@@ -797,6 +797,276 @@
         },
         {
             "attributes": {
+                "title": "Closed - Minute",
+                "description": "Minute",
+                "tags": ["Closed"],
+                "granularity": "MINUTE",
+                "sourceColumn": ""
+            },
+            "id": "dt_closedate_timestamp.minute",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.minute"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_closedate_timestamp.minute", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Hour",
+                "description": "Hour",
+                "tags": ["Closed"],
+                "granularity": "HOUR",
+                "sourceColumn": ""
+            },
+            "id": "dt_closedate_timestamp.hour",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.hour"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_closedate_timestamp.hour", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Date",
+                "description": "Date",
+                "tags": ["Closed"],
+                "granularity": "DAY",
+                "sourceColumn": ""
+            },
+            "id": "dt_closedate_timestamp.day",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.day"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_closedate_timestamp.day", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Week/Year",
+                "description": "Week and Year (W52/2020)",
+                "tags": ["Closed"],
+                "granularity": "WEEK",
+                "sourceColumn": ""
+            },
+            "id": "dt_closedate_timestamp.week",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.week"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_closedate_timestamp.week", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Month/Year",
+                "description": "Month and Year (12/2020)",
+                "tags": ["Closed"],
+                "granularity": "MONTH",
+                "sourceColumn": ""
+            },
+            "id": "dt_closedate_timestamp.month",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.month"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_closedate_timestamp.month", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Quarter/Year",
+                "description": "Quarter and Year (Q1/2020)",
+                "tags": ["Closed"],
+                "granularity": "QUARTER",
+                "sourceColumn": ""
+            },
+            "id": "dt_closedate_timestamp.quarter",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.quarter"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_closedate_timestamp.quarter", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Year",
+                "description": "Year",
+                "tags": ["Closed"],
+                "granularity": "YEAR",
+                "sourceColumn": ""
+            },
+            "id": "dt_closedate_timestamp.year",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.year"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_closedate_timestamp.year", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Minute of Hour",
+                "description": "Generic Minute of the Hour(MI1-MI60)",
+                "tags": ["Closed"],
+                "granularity": "MINUTE_OF_HOUR",
+                "sourceColumn": ""
+            },
+            "id": "dt_closedate_timestamp.minuteOfHour",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.minuteOfHour"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_closedate_timestamp.minuteOfHour", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Hour of Day",
+                "description": "Generic Hour of the Day(H1-H24)",
+                "tags": ["Closed"],
+                "granularity": "HOUR_OF_DAY",
+                "sourceColumn": ""
+            },
+            "id": "dt_closedate_timestamp.hourOfDay",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.hourOfDay"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_closedate_timestamp.hourOfDay", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Day of Week",
+                "description": "Generic Day of the Week (D1-D7)",
+                "tags": ["Closed"],
+                "granularity": "DAY_OF_WEEK",
+                "sourceColumn": ""
+            },
+            "id": "dt_closedate_timestamp.dayOfWeek",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.dayOfWeek"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_closedate_timestamp.dayOfWeek", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Day of Month",
+                "description": "Generic Day of the Month (D1-D31)",
+                "tags": ["Closed"],
+                "granularity": "DAY_OF_MONTH",
+                "sourceColumn": ""
+            },
+            "id": "dt_closedate_timestamp.dayOfMonth",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.dayOfMonth"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_closedate_timestamp.dayOfMonth", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Day of Year",
+                "description": "Generic Day of the Year (D1-D366)",
+                "tags": ["Closed"],
+                "granularity": "DAY_OF_YEAR",
+                "sourceColumn": ""
+            },
+            "id": "dt_closedate_timestamp.dayOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.dayOfYear"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_closedate_timestamp.dayOfYear", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Week of Year",
+                "description": "Generic Week (W1-W53)",
+                "tags": ["Closed"],
+                "granularity": "WEEK_OF_YEAR",
+                "sourceColumn": ""
+            },
+            "id": "dt_closedate_timestamp.weekOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.weekOfYear"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_closedate_timestamp.weekOfYear", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Month of Year",
+                "description": "Generic Month (M1-M12)",
+                "tags": ["Closed"],
+                "granularity": "MONTH_OF_YEAR",
+                "sourceColumn": ""
+            },
+            "id": "dt_closedate_timestamp.monthOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.monthOfYear"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_closedate_timestamp.monthOfYear", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
+                "title": "Closed - Quarter of Year",
+                "description": "Generic Quarter (Q1-Q4)",
+                "tags": ["Closed"],
+                "granularity": "QUARTER_OF_YEAR",
+                "sourceColumn": ""
+            },
+            "id": "dt_closedate_timestamp.quarterOfYear",
+            "links": {
+                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.quarterOfYear"
+            },
+            "relationships": {
+                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
+                "labels": { "data": [{ "id": "dt_closedate_timestamp.quarterOfYear", "type": "label" }] }
+            },
+            "type": "attribute"
+        },
+        {
+            "attributes": {
                 "title": "Created - Minute",
                 "description": "Minute",
                 "tags": ["Created"],
@@ -1535,276 +1805,6 @@
         },
         {
             "attributes": {
-                "title": "Closed - Minute",
-                "description": "Minute",
-                "tags": ["Closed"],
-                "granularity": "MINUTE",
-                "sourceColumn": ""
-            },
-            "id": "dt_closedate_timestamp.minute",
-            "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.minute"
-            },
-            "relationships": {
-                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
-                "labels": { "data": [{ "id": "dt_closedate_timestamp.minute", "type": "label" }] }
-            },
-            "type": "attribute"
-        },
-        {
-            "attributes": {
-                "title": "Closed - Hour",
-                "description": "Hour",
-                "tags": ["Closed"],
-                "granularity": "HOUR",
-                "sourceColumn": ""
-            },
-            "id": "dt_closedate_timestamp.hour",
-            "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.hour"
-            },
-            "relationships": {
-                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
-                "labels": { "data": [{ "id": "dt_closedate_timestamp.hour", "type": "label" }] }
-            },
-            "type": "attribute"
-        },
-        {
-            "attributes": {
-                "title": "Closed - Date",
-                "description": "Date",
-                "tags": ["Closed"],
-                "granularity": "DAY",
-                "sourceColumn": ""
-            },
-            "id": "dt_closedate_timestamp.day",
-            "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.day"
-            },
-            "relationships": {
-                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
-                "labels": { "data": [{ "id": "dt_closedate_timestamp.day", "type": "label" }] }
-            },
-            "type": "attribute"
-        },
-        {
-            "attributes": {
-                "title": "Closed - Week/Year",
-                "description": "Week and Year (W52/2020)",
-                "tags": ["Closed"],
-                "granularity": "WEEK",
-                "sourceColumn": ""
-            },
-            "id": "dt_closedate_timestamp.week",
-            "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.week"
-            },
-            "relationships": {
-                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
-                "labels": { "data": [{ "id": "dt_closedate_timestamp.week", "type": "label" }] }
-            },
-            "type": "attribute"
-        },
-        {
-            "attributes": {
-                "title": "Closed - Month/Year",
-                "description": "Month and Year (12/2020)",
-                "tags": ["Closed"],
-                "granularity": "MONTH",
-                "sourceColumn": ""
-            },
-            "id": "dt_closedate_timestamp.month",
-            "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.month"
-            },
-            "relationships": {
-                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
-                "labels": { "data": [{ "id": "dt_closedate_timestamp.month", "type": "label" }] }
-            },
-            "type": "attribute"
-        },
-        {
-            "attributes": {
-                "title": "Closed - Quarter/Year",
-                "description": "Quarter and Year (Q1/2020)",
-                "tags": ["Closed"],
-                "granularity": "QUARTER",
-                "sourceColumn": ""
-            },
-            "id": "dt_closedate_timestamp.quarter",
-            "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.quarter"
-            },
-            "relationships": {
-                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
-                "labels": { "data": [{ "id": "dt_closedate_timestamp.quarter", "type": "label" }] }
-            },
-            "type": "attribute"
-        },
-        {
-            "attributes": {
-                "title": "Closed - Year",
-                "description": "Year",
-                "tags": ["Closed"],
-                "granularity": "YEAR",
-                "sourceColumn": ""
-            },
-            "id": "dt_closedate_timestamp.year",
-            "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.year"
-            },
-            "relationships": {
-                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
-                "labels": { "data": [{ "id": "dt_closedate_timestamp.year", "type": "label" }] }
-            },
-            "type": "attribute"
-        },
-        {
-            "attributes": {
-                "title": "Closed - Minute of Hour",
-                "description": "Generic Minute of the Hour(MI1-MI60)",
-                "tags": ["Closed"],
-                "granularity": "MINUTE_OF_HOUR",
-                "sourceColumn": ""
-            },
-            "id": "dt_closedate_timestamp.minuteOfHour",
-            "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.minuteOfHour"
-            },
-            "relationships": {
-                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
-                "labels": { "data": [{ "id": "dt_closedate_timestamp.minuteOfHour", "type": "label" }] }
-            },
-            "type": "attribute"
-        },
-        {
-            "attributes": {
-                "title": "Closed - Hour of Day",
-                "description": "Generic Hour of the Day(H1-H24)",
-                "tags": ["Closed"],
-                "granularity": "HOUR_OF_DAY",
-                "sourceColumn": ""
-            },
-            "id": "dt_closedate_timestamp.hourOfDay",
-            "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.hourOfDay"
-            },
-            "relationships": {
-                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
-                "labels": { "data": [{ "id": "dt_closedate_timestamp.hourOfDay", "type": "label" }] }
-            },
-            "type": "attribute"
-        },
-        {
-            "attributes": {
-                "title": "Closed - Day of Week",
-                "description": "Generic Day of the Week (D1-D7)",
-                "tags": ["Closed"],
-                "granularity": "DAY_OF_WEEK",
-                "sourceColumn": ""
-            },
-            "id": "dt_closedate_timestamp.dayOfWeek",
-            "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.dayOfWeek"
-            },
-            "relationships": {
-                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
-                "labels": { "data": [{ "id": "dt_closedate_timestamp.dayOfWeek", "type": "label" }] }
-            },
-            "type": "attribute"
-        },
-        {
-            "attributes": {
-                "title": "Closed - Day of Month",
-                "description": "Generic Day of the Month (D1-D31)",
-                "tags": ["Closed"],
-                "granularity": "DAY_OF_MONTH",
-                "sourceColumn": ""
-            },
-            "id": "dt_closedate_timestamp.dayOfMonth",
-            "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.dayOfMonth"
-            },
-            "relationships": {
-                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
-                "labels": { "data": [{ "id": "dt_closedate_timestamp.dayOfMonth", "type": "label" }] }
-            },
-            "type": "attribute"
-        },
-        {
-            "attributes": {
-                "title": "Closed - Day of Year",
-                "description": "Generic Day of the Year (D1-D366)",
-                "tags": ["Closed"],
-                "granularity": "DAY_OF_YEAR",
-                "sourceColumn": ""
-            },
-            "id": "dt_closedate_timestamp.dayOfYear",
-            "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.dayOfYear"
-            },
-            "relationships": {
-                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
-                "labels": { "data": [{ "id": "dt_closedate_timestamp.dayOfYear", "type": "label" }] }
-            },
-            "type": "attribute"
-        },
-        {
-            "attributes": {
-                "title": "Closed - Week of Year",
-                "description": "Generic Week (W1-W53)",
-                "tags": ["Closed"],
-                "granularity": "WEEK_OF_YEAR",
-                "sourceColumn": ""
-            },
-            "id": "dt_closedate_timestamp.weekOfYear",
-            "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.weekOfYear"
-            },
-            "relationships": {
-                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
-                "labels": { "data": [{ "id": "dt_closedate_timestamp.weekOfYear", "type": "label" }] }
-            },
-            "type": "attribute"
-        },
-        {
-            "attributes": {
-                "title": "Closed - Month of Year",
-                "description": "Generic Month (M1-M12)",
-                "tags": ["Closed"],
-                "granularity": "MONTH_OF_YEAR",
-                "sourceColumn": ""
-            },
-            "id": "dt_closedate_timestamp.monthOfYear",
-            "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.monthOfYear"
-            },
-            "relationships": {
-                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
-                "labels": { "data": [{ "id": "dt_closedate_timestamp.monthOfYear", "type": "label" }] }
-            },
-            "type": "attribute"
-        },
-        {
-            "attributes": {
-                "title": "Closed - Quarter of Year",
-                "description": "Generic Quarter (Q1-Q4)",
-                "tags": ["Closed"],
-                "granularity": "QUARTER_OF_YEAR",
-                "sourceColumn": ""
-            },
-            "id": "dt_closedate_timestamp.quarterOfYear",
-            "links": {
-                "self": "https://staging.anywhere.gooddata.com/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes/dt_closedate_timestamp.quarterOfYear"
-            },
-            "relationships": {
-                "dataset": { "data": { "id": "dt_closedate_timestamp", "type": "dataset" } },
-                "labels": { "data": [{ "id": "dt_closedate_timestamp.quarterOfYear", "type": "label" }] }
-            },
-            "type": "attribute"
-        },
-        {
-            "attributes": {
                 "title": "Timeline - Day of Year",
                 "description": "Generic Day of the Year (D1-D366)",
                 "tags": ["Timeline"],
@@ -1885,24 +1885,24 @@
                 "grain": [{ "id": "f_activity.id", "type": "attribute" }],
                 "referenceProperties": [
                     {
-                        "identifier": { "id": "f_account", "type": "dataset" },
-                        "multivalue": false,
-                        "sourceColumns": ["accountid_id"]
-                    },
-                    {
                         "identifier": { "id": "f_opportunity", "type": "dataset" },
                         "multivalue": false,
                         "sourceColumns": ["opportunityid_id"]
                     },
                     {
-                        "identifier": { "id": "dt_activity_timestamp", "type": "dataset" },
-                        "multivalue": false,
-                        "sourceColumns": ["dt_activity_timestamp"]
-                    },
-                    {
                         "identifier": { "id": "f_owner", "type": "dataset" },
                         "multivalue": false,
                         "sourceColumns": ["ownerid_id"]
+                    },
+                    {
+                        "identifier": { "id": "f_account", "type": "dataset" },
+                        "multivalue": false,
+                        "sourceColumns": ["accountid_id"]
+                    },
+                    {
+                        "identifier": { "id": "dt_activity_timestamp", "type": "dataset" },
+                        "multivalue": false,
+                        "sourceColumns": ["dt_activity_timestamp"]
                     }
                 ],
                 "dataSourceTableId": "pg_staging-goodsales:f_activity",
@@ -3413,14 +3413,14 @@
                         "sourceColumns": ["stage_id"]
                     },
                     {
-                        "identifier": { "id": "f_owner", "type": "dataset" },
-                        "multivalue": false,
-                        "sourceColumns": ["ownerid_id"]
-                    },
-                    {
                         "identifier": { "id": "f_opportunity", "type": "dataset" },
                         "multivalue": false,
                         "sourceColumns": ["opportunityid_id"]
+                    },
+                    {
+                        "identifier": { "id": "f_owner", "type": "dataset" },
+                        "multivalue": false,
+                        "sourceColumns": ["ownerid_id"]
                     }
                 ],
                 "dataSourceTableId": "pg_staging-goodsales:f_opportunitysnapshot",
@@ -3504,11 +3504,6 @@
                 "grain": [{ "id": "f_stagehistory.id", "type": "attribute" }],
                 "referenceProperties": [
                     {
-                        "identifier": { "id": "f_account", "type": "dataset" },
-                        "multivalue": false,
-                        "sourceColumns": ["accountid_id"]
-                    },
-                    {
                         "identifier": { "id": "f_product", "type": "dataset" },
                         "multivalue": false,
                         "sourceColumns": ["productid_id"]
@@ -3522,6 +3517,11 @@
                         "identifier": { "id": "f_opportunity", "type": "dataset" },
                         "multivalue": false,
                         "sourceColumns": ["opportunityid_id"]
+                    },
+                    {
+                        "identifier": { "id": "f_account", "type": "dataset" },
+                        "multivalue": false,
+                        "sourceColumns": ["accountid_id"]
                     }
                 ],
                 "dataSourceTableId": "pg_staging-goodsales:f_stagehistory",

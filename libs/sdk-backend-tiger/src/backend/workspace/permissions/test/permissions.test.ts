@@ -11,22 +11,22 @@ describe("TigerWorkspacePermissionsFactory", () => {
         permissions: Array<TigerPermissionType>,
     ): [TigerWorkspacePermissionsFactory, ReturnType<typeof jest.fn>] {
         const authCall = jest.fn();
-        const getCall = jest.fn();
+        const getEntityWorkspacesCall = jest.fn();
 
         authCall.mockImplementation((handler) => {
-            return handler({ axios: { get: getCall } });
+            return handler({ entities: { getEntityWorkspaces: getEntityWorkspacesCall } });
         });
-        getCall.mockImplementation(() => {
+        getEntityWorkspacesCall.mockImplementation(() => {
             return Promise.resolve({ data: { data: { meta: { permissions } } } });
         });
-        return [new TigerWorkspacePermissionsFactory(authCall, workspaceId), getCall];
+        return [new TigerWorkspacePermissionsFactory(authCall, workspaceId), getEntityWorkspacesCall];
     }
 
     it("test VIEW permissions", async () => {
         const [client, get] = getWithDefinedPermissions(["VIEW"]);
         const permissions = await client.getPermissionsForCurrentUser();
 
-        expect(get).toHaveBeenCalledWith("/api/entities/workspaces/workspaceId?metaInclude=permissions");
+        expect(get).toHaveBeenCalledWith({ id: "workspaceId", metaInclude: ["permissions"] });
         expect(permissions).toEqual({
             canAccessWorkbench: true,
             canCreateAnalyticalDashboard: false,
@@ -54,7 +54,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
         const [client, get] = getWithDefinedPermissions(["ANALYZE", "VIEW"]);
         const permissions = await client.getPermissionsForCurrentUser();
 
-        expect(get).toHaveBeenCalledWith("/api/entities/workspaces/workspaceId?metaInclude=permissions");
+        expect(get).toHaveBeenCalledWith({ id: "workspaceId", metaInclude: ["permissions"] });
         expect(permissions).toEqual({
             canAccessWorkbench: true,
             canCreateAnalyticalDashboard: true,
@@ -82,7 +82,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
         const [client, get] = getWithDefinedPermissions(["MANAGE", "ANALYZE", "VIEW"]);
         const permissions = await client.getPermissionsForCurrentUser();
 
-        expect(get).toHaveBeenCalledWith("/api/entities/workspaces/workspaceId?metaInclude=permissions");
+        expect(get).toHaveBeenCalledWith({ id: "workspaceId", metaInclude: ["permissions"] });
         expect(permissions).toEqual({
             canAccessWorkbench: true,
             canCreateAnalyticalDashboard: true,
