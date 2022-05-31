@@ -23,7 +23,7 @@ export class TigerOrganization implements IOrganization {
         }
 
         // TODO: replace with direct call of TigerClient (once methods are generated from OpenAPI)
-        const response = await this.authCall((client) => client.axios.get("/api/profile"));
+        const response = await this.authCall((client) => client.axios.get("/api/v1/profile"));
         const organizationData: { organizationName: string; organizationId: string } = response.data;
         return {
             id: organizationData.organizationId,
@@ -41,7 +41,7 @@ export class TigerOrganizations implements IOrganizations {
 
     public async getCurrentOrganization(): Promise<IOrganization> {
         // TODO: replace with direct call of TigerClient (once methods are generated from OpenAPI)
-        const response = await this.authCall((client) => client.axios.get("/api/profile"));
+        const response = await this.authCall((client) => client.axios.get("/api/v1/profile"));
         const organizationData: { organizationName: string; organizationId: string } = response.data;
 
         const organizationId = organizationData.organizationId;

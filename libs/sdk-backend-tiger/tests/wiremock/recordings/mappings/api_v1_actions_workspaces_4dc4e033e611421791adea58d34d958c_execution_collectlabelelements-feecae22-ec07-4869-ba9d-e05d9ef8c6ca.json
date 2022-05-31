@@ -1,8 +1,8 @@
 {
-    "id": "d663232e-18bf-414b-a769-0018ce85e0e9",
+    "id": "feecae22-ec07-4869-ba9d-e05d9ef8c6ca",
     "name": "api_v1_actions_workspaces_4dc4e033e611421791adea58d34d958c_execution_collectlabelelements",
     "request": {
-        "url": "/api/v1/actions/workspaces/4dc4e033e611421791adea58d34d958c/execution/collectLabelElements?offset=0&limit=20",
+        "url": "/api/v1/actions/workspaces/4dc4e033e611421791adea58d34d958c/execution/collectLabelElements?offset=0&limit=100",
         "method": "POST",
         "headers": {
             "Accept": {
@@ -15,7 +15,7 @@
         },
         "bodyPatterns": [
             {
-                "equalToJson": "{\"label\":\"f_account.id\"}",
+                "equalToJson": "{\"label\":\"label.f_account.account.accountid\"}",
                 "ignoreArrayOrder": false,
                 "ignoreExtraElements": false
             }
@@ -23,12 +23,12 @@
     },
     "response": {
         "status": 200,
-        "body": "{\"primaryLabel\":{\"id\":\"f_account.id\",\"type\":\"label\"},\"elements\":[{\"title\":\"38\",\"primaryTitle\":\"38\"},{\"title\":\"78\",\"primaryTitle\":\"78\"},{\"title\":\"224\",\"primaryTitle\":\"224\"},{\"title\":\"545\",\"primaryTitle\":\"545\"},{\"title\":\"552\",\"primaryTitle\":\"552\"},{\"title\":\"955129\",\"primaryTitle\":\"955129\"},{\"title\":\"955131\",\"primaryTitle\":\"955131\"},{\"title\":\"955133\",\"primaryTitle\":\"955133\"},{\"title\":\"955139\",\"primaryTitle\":\"955139\"},{\"title\":\"955141\",\"primaryTitle\":\"955141\"},{\"title\":\"955143\",\"primaryTitle\":\"955143\"},{\"title\":\"955145\",\"primaryTitle\":\"955145\"},{\"title\":\"955147\",\"primaryTitle\":\"955147\"},{\"title\":\"955153\",\"primaryTitle\":\"955153\"},{\"title\":\"955155\",\"primaryTitle\":\"955155\"},{\"title\":\"955157\",\"primaryTitle\":\"955157\"},{\"title\":\"955159\",\"primaryTitle\":\"955159\"},{\"title\":\"955163\",\"primaryTitle\":\"955163\"},{\"title\":\"955165\",\"primaryTitle\":\"955165\"},{\"title\":\"955167\",\"primaryTitle\":\"955167\"}],\"paging\":{\"total\":4846,\"count\":20,\"offset\":0,\"next\":\"https://staging.anywhere.gooddata.com/api/v1/actions/workspaces/4dc4e033e611421791adea58d34d958c/execution/collectLabelElements?limit=20&offset=20\"}}",
+        "bodyFileName": "api_v1_actions_workspaces_4dc4e033e611421791adea58d34d958c_execution_collectlabelelements-feecae22-ec07-4869-ba9d-e05d9ef8c6ca.json",
         "headers": {
             "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
             "Content-Security-Policy": "default-src 'self' *.wistia.com *.wistia.net; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.wistia.com *.wistia.net src.litix.io matomo.anywhere.gooddata.com connectors.tableau.com gdc-dev-dashboard-plugins.s3.amazonaws.com; img-src 'self' data: blob: *.wistia.com *.wistia.net embedwistia-a.akamaihd.net privacy-policy.truste.com www.gooddata.com gdc-dev-dashboard-plugins.s3.amazonaws.com; media-src 'self' blob: data: *.wistia.com *.wistia.net embedwistia-a.akamaihd.net; style-src 'self' 'unsafe-inline' fonts.googleapis.com gdc-dev-dashboard-plugins.s3.amazonaws.com; font-src 'self' data: *.wistia.com fonts.gstatic.com at.alicdn.com gdc-dev-dashboard-plugins.s3.amazonaws.com; frame-src 'self'; object-src 'none'; worker-src 'self' blob:; child-src blob:; connect-src 'self' *.litix.io *.wistia.com embedwistia-a.akamaihd.net *.tiles.mapbox.com api.mapbox.com events.mapbox.com matomo.anywhere.gooddata.com *.okta.com;",
             "Content-Type": "application/json",
-            "Date": "Mon, 30 May 2022 12:03:17 GMT",
+            "Date": "Tue, 31 May 2022 07:43:53 GMT",
             "Expires": "0",
             "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';",
             "Pragma": "no-cache",
@@ -42,11 +42,11 @@
                 "Access-Control-Request-Headers"
             ],
             "X-Content-Type-Options": "nosniff",
-            "X-GDC-TRACE-ID": "a52b56202635084e",
+            "X-GDC-TRACE-ID": "e2548755ff5280af",
             "X-XSS-Protection": "1 ; mode=block"
         }
     },
-    "uuid": "d663232e-18bf-414b-a769-0018ce85e0e9",
+    "uuid": "feecae22-ec07-4869-ba9d-e05d9ef8c6ca",
     "persistent": true,
     "insertionIndex": 7
 }

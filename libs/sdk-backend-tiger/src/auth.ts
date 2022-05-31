@@ -58,7 +58,7 @@ export abstract class TigerAuthProviderBase implements IAuthenticationProvider {
         const client = context.client as ITigerClient;
 
         try {
-            return (await client.axios.get<TigerUserProfile>("/api/profile")).data;
+            return (await client.axios.get<TigerUserProfile>("/api/v1/profile")).data;
         } catch (err) {
             throw convertApiError(err);
         }

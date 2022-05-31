@@ -1,41 +1,40 @@
 {
-    "id": "90962d88-3744-48ea-91db-a276e8d4fdd6",
-    "name": "api_profile",
+    "id": "de062fd6-1492-4de2-98d2-0b533369c896",
+    "name": "api_v1_entities_workspaces_4dc4e033e611421791adea58d34d958c_attributes",
     "request": {
-        "url": "/api/profile",
+        "url": "/api/v1/entities/workspaces/4dc4e033e611421791adea58d34d958c/attributes?include=labels%2CdefaultView%2Cdataset&size=250&page=0",
         "method": "GET",
         "headers": {
             "Accept": {
-                "equalTo": "application/json, text/plain, */*"
+                "equalTo": "application/vnd.gooddata.api+json"
+            },
+            "Content-Type": {
+                "equalTo": "application/vnd.gooddata.api+json",
+                "caseInsensitive": true
             }
         }
     },
     "response": {
         "status": 200,
-        "body": "{\"organizationId\":\"staging\",\"organizationName\":\"Anywhere Staging\",\"userId\":\"first.last\",\"telemetry\":{\"host\":\"https://matomo.anywhere.gooddata.com/matomo.php\",\"siteId\":2,\"deploymentId\":\"deploymentId\",\"organizationHash\":\"d9390b2c40115621a794999e812abc00bf9e5c7b\",\"userHash\":\"35fc7016022ae6140d4dbe0edfb2bc867267d793\"},\"links\":{\"self\":\"https://staging.anywhere.gooddata.com/api/v1/profile\",\"organization\":\"https://staging.anywhere.gooddata.com/api/v1/entities/admin/organizations/staging\",\"user\":\"https://staging.anywhere.gooddata.com/api/entities/users/first.last\"},\"features\":{\"static\":{\"context\":{\"earlyAccess\":\"\"},\"items\":{}}}}",
+        "bodyFileName": "api_v1_entities_workspaces_4dc4e033e611421791adea58d34d958c_attributes-de062fd6-1492-4de2-98d2-0b533369c896.json",
         "headers": {
             "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
             "Content-Security-Policy": "default-src 'self' *.wistia.com *.wistia.net; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.wistia.com *.wistia.net src.litix.io matomo.anywhere.gooddata.com connectors.tableau.com gdc-dev-dashboard-plugins.s3.amazonaws.com; img-src 'self' data: blob: *.wistia.com *.wistia.net embedwistia-a.akamaihd.net privacy-policy.truste.com www.gooddata.com gdc-dev-dashboard-plugins.s3.amazonaws.com; media-src 'self' blob: data: *.wistia.com *.wistia.net embedwistia-a.akamaihd.net; style-src 'self' 'unsafe-inline' fonts.googleapis.com gdc-dev-dashboard-plugins.s3.amazonaws.com; font-src 'self' data: *.wistia.com fonts.gstatic.com at.alicdn.com gdc-dev-dashboard-plugins.s3.amazonaws.com; frame-src 'self'; object-src 'none'; worker-src 'self' blob:; child-src blob:; connect-src 'self' *.litix.io *.wistia.com embedwistia-a.akamaihd.net *.tiles.mapbox.com api.mapbox.com events.mapbox.com matomo.anywhere.gooddata.com *.okta.com;",
-            "Content-Type": "application/json",
-            "Date": "Mon, 30 May 2022 12:03:14 GMT",
+            "Content-Type": "application/vnd.gooddata.api+json",
+            "Date": "Tue, 31 May 2022 07:43:55 GMT",
             "Expires": "0",
             "Permission-Policy": "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'none'; payment 'none';",
             "Pragma": "no-cache",
-            "Referrer-Policy": "no-referrer",
-            "Set-Cookie": "SPRING_REDIRECT_URI=; Path=/; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Secure; HttpOnly; SameSite=None",
+            "Set-Cookie": "SPRING_SEC_SECURITY_CONTEXT=; Max-Age=0; Expires=Thu, 01-Jan-1970 00:00:10 GMT; Path=/; Secure; HttpOnly",
             "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-            "Vary": [
-                "Accept-Encoding",
-                "Origin",
-                "Access-Control-Request-Method",
-                "Access-Control-Request-Headers"
-            ],
+            "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
             "X-Content-Type-Options": "nosniff",
-            "X-GDC-TRACE-ID": "a09d0753128823ef",
-            "X-XSS-Protection": "1 ; mode=block"
+            "X-Frame-Options": "DENY",
+            "X-GDC-TRACE-ID": "f74d4d30ddd20ca0",
+            "X-XSS-Protection": "1; mode=block"
         }
     },
-    "uuid": "90962d88-3744-48ea-91db-a276e8d4fdd6",
+    "uuid": "de062fd6-1492-4de2-98d2-0b533369c896",
     "persistent": true,
-    "insertionIndex": 2
+    "insertionIndex": 11
 }
