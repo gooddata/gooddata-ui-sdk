@@ -36,6 +36,7 @@ export {
     selectEnableKPIDashboardDrillToURL,
     selectEnableKPIDashboardImplicitDrillDown,
     selectHideKpiDrillInEmbedded,
+    selectEnableWidgetCustomHeight,
 } from "./config/configSelectors";
 export { PermissionsState } from "./permissions/permissionsState";
 export {

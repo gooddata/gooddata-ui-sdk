@@ -15,13 +15,13 @@ import {
 } from "@gooddata/sdk-model";
 
 import {
-    selectSettings,
     useDashboardSelector,
     selectIsExport,
     selectIsLayoutEmpty,
     selectLayout,
     ExtendedDashboardWidget,
     selectInsightsMap,
+    selectEnableWidgetCustomHeight,
 } from "../../model";
 import { useDashboardComponentsContext } from "../dashboardContexts";
 
@@ -97,11 +97,12 @@ const itemKeyGetter: IDashboardLayoutItemKeyGetter<ExtendedDashboardWidget> = (k
 export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Element => {
     const { onFiltersChange, onDrill, onError, ErrorComponent: CustomError } = props;
 
+    const { ErrorComponent } = useDashboardComponentsContext({ ErrorComponent: CustomError });
+
     const layout = useDashboardSelector(selectLayout);
     const isLayoutEmpty = useDashboardSelector(selectIsLayoutEmpty);
-    const settings = useDashboardSelector(selectSettings);
+    const enableWidgetCustomHeight = useDashboardSelector(selectEnableWidgetCustomHeight);
     const insights = useDashboardSelector(selectInsightsMap);
-    const { ErrorComponent } = useDashboardComponentsContext({ ErrorComponent: CustomError });
     const isExport = useDashboardSelector(selectIsExport);
 
     const getInsightByRef = useCallback(
@@ -121,12 +122,12 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
                 section
                     .modifyItems(polluteWidgetRefsWithBothIdAndUri(getInsightByRef))
                     .modifyItems(
-                        validateItemsSize(getInsightByRef, settings.enableKDWidgetCustomHeight!),
+                        validateItemsSize(getInsightByRef, enableWidgetCustomHeight),
                         selectAllItemsWithInsights,
                     ),
             )
             .build();
-    }, [layout, isExport, getInsightByRef]);
+    }, [layout, isExport, getInsightByRef, enableWidgetCustomHeight]);
 
     const widgetRenderer = useCallback<IDashboardLayoutWidgetRenderer<ExtendedDashboardWidget>>(
         (renderProps) => {
@@ -150,7 +151,7 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
             layout={transformedLayout}
             itemKeyGetter={itemKeyGetter}
             widgetRenderer={widgetRenderer}
-            enableCustomHeight={settings.enableKDWidgetCustomHeight}
+            enableCustomHeight={enableWidgetCustomHeight}
             sectionHeaderRenderer={RenderModeAwareDashboardLayoutSectionHeaderRenderer}
         />
     );

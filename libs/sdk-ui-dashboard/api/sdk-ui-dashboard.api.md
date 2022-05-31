@@ -4707,6 +4707,9 @@ export const selectEnableKPIDashboardSchedule: OutputSelector<DashboardState, bo
 // @public
 export const selectEnableKPIDashboardScheduleRecipients: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
+// @internal
+export const selectEnableWidgetCustomHeight: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
+
 // @alpha (undocumented)
 export const selectExecutionResult: (state: DashboardState, id: string | number) => IExecutionResultEnvelope | undefined;
 
