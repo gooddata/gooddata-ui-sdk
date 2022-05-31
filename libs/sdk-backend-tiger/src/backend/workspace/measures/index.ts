@@ -70,7 +70,13 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
             return { type: regexToken.type, value: regexToken.value };
         }
         const [type, id] = regexToken.value.split("/");
-        if (type === "metric" || type === "fact" || type === "attribute" || type === "label") {
+        if (
+            type === "metric" ||
+            type === "fact" ||
+            type === "attribute" ||
+            type === "label" ||
+            type === "dataset"
+        ) {
             return this.resolveObjectToken(id, type, metric.included || [], metric.data.id);
         }
         throw new Error(`Cannot resolve title of object type ${type}`);
@@ -78,7 +84,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
 
     private resolveObjectToken(
         objectId: string,
-        objectType: "metric" | "fact" | "attribute" | "label",
+        objectType: "metric" | "fact" | "attribute" | "label" | "dataset",
         includedObjects: ReadonlyArray<any>,
         identifier: string,
     ): IMeasureExpressionToken {
@@ -94,6 +100,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
             fact: "fact",
             attribute: "attribute",
             label: "attribute",
+            dataset: "dataSet",
         };
 
         const value = includedObject?.attributes?.title || `${objectType}/${objectId}`;
