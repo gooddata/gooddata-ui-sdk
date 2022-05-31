@@ -6,10 +6,19 @@ import {
     IFilterContextDefinition,
     isTempFilterContext,
     IAccessControlAware,
+    isDashboardDateFilter,
+    isDashboardAttributeFilter,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { DashboardState } from "../types";
 import isUndefined from "lodash/isUndefined";
+import { selectLayout } from "../layout/layoutSelectors";
+import {
+    selectFilterContextAttributeFilters,
+    selectFilterContextDateFilter,
+} from "../filterContext/filterContextSelectors";
+import { isDashboardLayoutEmpty } from "@gooddata/sdk-backend-spi";
+import isEqual from "lodash/isEqual";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -154,16 +163,6 @@ export const selectDashboardUriRef = createSelector(selectDashboardUri, (uri) =>
  */
 export const selectIsNewDashboard = createSelector(selectDashboardRef, isUndefined);
 
-/**
- * Selects a boolean indication if he dashboard has any changes compared to the persisted version (if any)
- *
- * @internal
- */
-export const selectIsDashboardDirty = createSelector(selectPersistedDashboard, () => {
-    // will be implemented in RAIL-4108
-    return true;
-});
-
 //
 //
 //
@@ -233,4 +232,157 @@ export const selectDashboardShareInfo = createSelector(
         shareStatus,
         isLocked,
     }),
+);
+
+//
+//
+//
+
+/**
+ * Selects persisted FilterContextItems - that is the FilterContextItems that were used to initialize
+ * the original filters of the dashboard component during the initial load of the dashboard.
+ *
+ * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
+ * been persisted (typically newly created dashboard being edited).
+ */
+const selectPersistedDashboardFilterContextFilters = createSelector(
+    selectPersistedDashboardFilterContext,
+    (persistedFilterContext) => {
+        return persistedFilterContext?.filters;
+    },
+);
+
+/**
+ * Selects persisted IDashboardDateFilter - that is the IDashboardDateFilter that were used to initialize
+ * the original filters of the dashboard component during the initial load of the dashboard.
+ *
+ * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
+ * been persisted (typically newly created dashboard being edited).
+ */
+const selectPersistedDashboardFilterContextDateFilter = createSelector(
+    selectPersistedDashboardFilterContextFilters,
+    (persistedFilters) => {
+        return (persistedFilters ?? []).find(isDashboardDateFilter);
+    },
+);
+
+/**
+ * Selects persisted IDashboardAttributeFilters - that is the IDashboardAttributeFilters that were used to initialize
+ * the original filters of the dashboard component during the initial load of the dashboard.
+ *
+ * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
+ * been persisted (typically newly created dashboard being edited).
+ */
+const selectPersistedDashboardFilterContextAttributeFilters = createSelector(
+    selectPersistedDashboardFilterContextFilters,
+    (persistedFilters) => {
+        return (persistedFilters ?? []).filter(isDashboardAttributeFilter);
+    },
+);
+
+/**
+ * Selects persisted title - that is the title that was used to initialize the rest
+ * of the dashboard state of the dashboard component during the initial load of the dashboard.
+ *
+ * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
+ * been persisted (typically newly created dashboard being edited).
+ */
+const selectPersistedDashboardTitle = createSelector(selectSelf, (state) => {
+    return state.persistedDashboard?.title;
+});
+
+/**
+ * Selects persisted layout - that is the IDashboardLayout object that was used to initialize the rest
+ * of the dashboard state of the dashboard component during the initial load of the dashboard.
+ *
+ * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
+ * been persisted (typically newly created dashboard being edited).
+ */
+const selectPersistedDashboardLayout = createSelector(selectSelf, (state) => {
+    return state.persistedDashboard?.layout;
+});
+
+/**
+ * Selects a boolean indication if he dashboard has any changes to the dashboard filter compared to the persisted version (if any)
+ *
+ * @internal
+ */
+export const selectIsDateFilterChanged = createSelector(
+    selectPersistedDashboardFilterContextDateFilter,
+    selectFilterContextDateFilter,
+    (persistedDateFilter, currentDateFilter) => {
+        return !isEqual(persistedDateFilter, currentDateFilter);
+    },
+);
+
+/**
+ * Selects a boolean indication if he dashboard has any changes to the attribute filters compared to the persisted version (if any)
+ *
+ * @internal
+ */
+export const selectIsAttributeFiltersChanged = createSelector(
+    selectPersistedDashboardFilterContextAttributeFilters,
+    selectFilterContextAttributeFilters,
+    (persistedAttributeFilters, currentAttributeFilters) => {
+        return !isEqual(persistedAttributeFilters, currentAttributeFilters);
+    },
+);
+
+/**
+ * Selects a boolean indication if he dashboard has any changes to the any of the filters compared to the persisted version (if any)
+ *
+ * @internal
+ */
+export const selectIsFiltersChanged = createSelector(
+    selectIsDateFilterChanged,
+    selectIsAttributeFiltersChanged,
+    (isDateFilterChanged, isAttributeFiltersChanged) => {
+        return isDateFilterChanged || isAttributeFiltersChanged;
+    },
+);
+
+/**
+ * Selects a boolean indication if he dashboard has any changes to the title compared to the persisted version (if any)
+ *
+ * @internal
+ */
+export const selectIsTitleChanged = createSelector(
+    selectPersistedDashboardTitle,
+    selectDashboardTitle,
+    (persistedTitle, currentTitle) => {
+        return currentTitle !== persistedTitle;
+    },
+);
+
+/**
+ * Selects a boolean indication if he dashboard has any changes to the layout compared to the persisted version (if any)
+ *
+ * @internal
+ */
+export const selectIsLayoutChanged = createSelector(
+    selectPersistedDashboardLayout,
+    selectLayout,
+    (persistedLayout, currentLayout) => {
+        return !isEqual(currentLayout, persistedLayout);
+    },
+);
+
+/**
+ * Selects a boolean indication if he dashboard has any changes compared to the persisted version (if any)
+ *
+ * @internal
+ */
+export const selectIsDashboardDirty = createSelector(
+    selectIsNewDashboard,
+    selectLayout,
+    selectIsFiltersChanged,
+    selectIsTitleChanged,
+    selectIsLayoutChanged,
+    (isNew, layout, isFiltersChanged, isTitleChanged, isLayoutChanged) => {
+        if (isNew) {
+            return !isDashboardLayoutEmpty(layout);
+        }
+
+        return [isFiltersChanged, isTitleChanged, isLayoutChanged].some(Boolean);
+    },
 );
