@@ -43,7 +43,7 @@ describe("AttributeDropdown@next", () => {
 
     // we have to wait for the debounced onSearch
     const waitForDebounce = () =>
-        new Promise((resolve) => {
+        new Promise<void>((resolve) => {
             setTimeout(() => {
                 resolve();
             }, 300);
@@ -188,7 +188,7 @@ describe("AttributeDropdown@next", () => {
         await waitForDebounce();
 
         wrapper.update();
-        expect(wrapper.find("LegacyInvertableList").prop("searchString")).toBe("CompuSci");
+        expect(wrapper.find("InvertableList").prop("searchString")).toBe("CompuSci");
 
         /**
          * Debounce is needed here because we need to slow down the cancelation;
@@ -202,7 +202,7 @@ describe("AttributeDropdown@next", () => {
 
         await waitForAsync();
         wrapper.update();
-        expect(wrapper.find("LegacyInvertableList").prop("searchString")).toBe("");
+        expect(wrapper.find("InvertableList").prop("searchString")).toBe("");
     });
 
     it("should render dropdown button customized title with selected items and count", async () => {

@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { Component } from "react";
 import { injectIntl, IntlShape } from "react-intl";
 import cx from "classnames";
@@ -43,6 +43,7 @@ export interface IMultiSelectListProps<T> {
     renderItem: (props: IMultiSelectRenderItemProps<T>) => React.ReactNode;
 
     tagName?: string;
+    listClassNames?: string;
 }
 
 class MultiSelectListCore<T> extends Component<IMultiSelectListProps<T>> {
@@ -57,7 +58,10 @@ class MultiSelectListCore<T> extends Component<IMultiSelectListProps<T>> {
             onScrollEnd,
             renderItem,
             selectedItems,
+            listClassNames,
         } = this.props;
+
+        const classNames = cx("is-multiselect", listClassNames ? listClassNames : "");
 
         return (
             <div className="gd-flex-item-stretch-mobile gd-flex-row-container-mobile">
@@ -68,7 +72,7 @@ class MultiSelectListCore<T> extends Component<IMultiSelectListProps<T>> {
                     className="gd-flex-item-stretch-mobile"
                 >
                     <List
-                        className="is-multiselect"
+                        className={classNames}
                         width={width}
                         height={height}
                         items={items}
@@ -77,7 +81,9 @@ class MultiSelectListCore<T> extends Component<IMultiSelectListProps<T>> {
                         renderItem={({ item }) => {
                             return renderItem({
                                 item,
-                                isSelected: selectedItems.some((_item) => _item === item),
+                                isSelected: this.props.isSelected
+                                    ? this.props.isSelected(item)
+                                    : selectedItems.some((_item) => _item === item),
                             });
                         }}
                         onScrollEnd={onScrollEnd}

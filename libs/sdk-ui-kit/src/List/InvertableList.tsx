@@ -1,6 +1,6 @@
 // (C) 2007-2022 GoodData Corporation
 import React, { Component } from "react";
-import { FormattedMessage, injectIntl, IntlShape } from "react-intl";
+import { FormattedMessage, IntlShape } from "react-intl";
 import cx from "classnames";
 import keyBy from "lodash/keyBy";
 import values from "lodash/values";
@@ -338,6 +338,7 @@ export class InvertableList<T> extends Component<IInvertableListProps<T>, IInver
         return (
             <MultiSelectList
                 items={items}
+                selectedItems={selectedItems}
                 itemsCount={filteredItemsCount}
                 renderItem={({ isSelected, item }) => {
                     return renderItem({
@@ -353,6 +354,7 @@ export class InvertableList<T> extends Component<IInvertableListProps<T>, IInver
                 onSelectNone={this.onSelectNone}
                 onScrollEnd={onScrollEnd}
                 tagName={tagName}
+                listClassNames={"gd-infinite-list"}
             />
         );
     };
@@ -362,9 +364,3 @@ export class InvertableList<T> extends Component<IInvertableListProps<T>, IInver
         return renderLoading({ height });
     };
 }
-
-/**
- * @internal
- */
-const InvertableListWithIntl = injectIntl(InvertableList);
-export default InvertableListWithIntl;

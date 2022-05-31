@@ -24,7 +24,7 @@ const AttributeFilterButtonDefaultDropdownBody: React.FC<IAttributeFilterButtonD
     const { allElementsFiltered, onApplyButtonClicked, closeDropdown, hasNoData, bodyProps } = props;
 
     const intl = useIntl();
-    // function renderDefaultBody(bodyProps: IAttributeDropdownBodyProps, closeDropdown: () => void) {
+
     return allElementsFiltered ? (
         <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
             {(isMobile) => (

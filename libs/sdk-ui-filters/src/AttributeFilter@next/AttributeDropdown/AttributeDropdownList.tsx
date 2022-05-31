@@ -1,18 +1,21 @@
 // (C) 2019-2022 GoodData Corporation
 import React, { useCallback } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
+
+import { InvertableList, LoadingMask } from "@gooddata/sdk-ui-kit";
 import { IAttributeElement } from "@gooddata/sdk-model";
-import { LegacyInvertableList, LoadingMask } from "@gooddata/sdk-ui-kit";
 
 import { AttributeFilterItem } from "./AttributeFilterItem";
+
 import { AttributeListItem, isNonEmptyListItem } from "./types";
 
 const ITEM_HEIGHT = 28;
 const MOBILE_LIST_ITEM_HEIGHT = 40;
 export const MAX_SELECTION_SIZE = 500;
 const VISIBLE_ITEMS_COUNT = 10;
+const INTERNAL_LIST_WIDTH = 214;
 
-const ListLoading = () => <LoadingMask height={306} />;
+const ListLoading = (props: { height: number }) => <LoadingMask height={props.height} />;
 
 const ListError = () => (
     <div className="gd-message error">
@@ -49,10 +52,18 @@ export const AttributeDropdownList: React.FC<IAttributeDropdownListProps> = ({
     searchString,
     isMobile,
 }) => {
+    const intl = useIntl();
+
     const getItemKey = useCallback((i: AttributeListItem) => {
-        const isSelectionByUri = !!selectedItems[0]?.uri;
-        return isNonEmptyListItem(i) ? (isSelectionByUri ? i.uri : i.title) : "empty";
+        return isNonEmptyListItem(i) ? (i.uri ? i.uri : i.title) : "empty";
     }, []);
+
+    const onScrollEnd = useCallback(
+        (visibleRowsStartIndex: number, visibleRowsEndIndex: number) => {
+            onRangeChange(searchString, visibleRowsStartIndex, visibleRowsEndIndex);
+        },
+        [onRangeChange, searchString],
+    );
 
     if (error) {
         return <ListError />;
@@ -61,25 +72,31 @@ export const AttributeDropdownList: React.FC<IAttributeDropdownListProps> = ({
     const itemHeight = isMobile ? MOBILE_LIST_ITEM_HEIGHT : ITEM_HEIGHT;
 
     return (
-        <LegacyInvertableList
+        <InvertableList<AttributeListItem>
+            intl={intl}
             items={items}
             itemsCount={totalCount}
             filteredItemsCount={totalCount}
-            selection={selectedItems}
-            isLoading={isLoading}
-            isLoadingClass={ListLoading}
-            noItemsFound={!items.length}
+            selectedItems={selectedItems}
             isInverted={isInverted}
             showSearchField={true}
-            onSearch={onSearch}
             searchString={searchString}
-            rowItem={<AttributeFilterItem />}
+            isLoading={isLoading}
+            noItemsFound={!items.length}
             maxSelectionSize={MAX_SELECTION_SIZE}
             itemHeight={itemHeight}
             height={itemHeight * VISIBLE_ITEMS_COUNT}
-            onRangeChange={onRangeChange}
+            width={INTERNAL_LIST_WIDTH}
+            renderItem={(props) => {
+                return <AttributeFilterItem {...props} />;
+            }}
+            renderLoading={(props: { height: number }) => {
+                return <ListLoading height={props.height} />;
+            }}
+            onSearch={onSearch}
             onSelect={onSelect}
             getItemKey={getItemKey}
+            onScrollEnd={onScrollEnd}
         />
     );
 };
