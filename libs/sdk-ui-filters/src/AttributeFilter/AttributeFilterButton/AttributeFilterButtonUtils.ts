@@ -150,6 +150,10 @@ export const getSubtitle = (props: GetSubtitleProps) => {
         return getAllTitle(ownProps.intl);
     }
 
+    if (ownProps.originalTotalCount === 0) {
+        return getNoneTitleIntl(ownProps.intl);
+    }
+
     const displayForm = getObjRef(ownProps.currentFilter, ownProps.identifier);
     if (state.uriToAttributeElementMap.size > 0 && !isNil(ownProps.originalTotalCount) && displayForm) {
         /**
