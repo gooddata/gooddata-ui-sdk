@@ -22,12 +22,12 @@ export class TigerOrganization implements IOrganization {
             };
         }
 
-        // TODO: replace with direct call of TigerClient (once methods are generated from OpenAPI)
-        const response = await this.authCall((client) => client.axios.get("/api/v1/profile"));
-        const organizationData: { organizationName: string; organizationId: string } = response.data;
+        const { organizationName, organizationId } = await this.authCall((client) =>
+            client.profile.getCurrent(),
+        );
         return {
-            id: organizationData.organizationId,
-            title: organizationData.organizationName,
+            id: organizationId,
+            title: organizationName,
         };
     }
 
@@ -40,13 +40,9 @@ export class TigerOrganizations implements IOrganizations {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard) {}
 
     public async getCurrentOrganization(): Promise<IOrganization> {
-        // TODO: replace with direct call of TigerClient (once methods are generated from OpenAPI)
-        const response = await this.authCall((client) => client.axios.get("/api/v1/profile"));
-        const organizationData: { organizationName: string; organizationId: string } = response.data;
-
-        const organizationId = organizationData.organizationId;
-        const organizationName = organizationData.organizationName;
-
+        const { organizationName, organizationId } = await this.authCall((client) =>
+            client.profile.getCurrent(),
+        );
         return new TigerOrganization(this.authCall, organizationId, organizationName);
     }
 }

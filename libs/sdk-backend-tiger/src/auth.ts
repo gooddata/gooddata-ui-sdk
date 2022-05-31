@@ -8,14 +8,9 @@ import {
     NotAuthenticated,
     NotAuthenticatedHandler,
 } from "@gooddata/sdk-backend-spi";
-import { ITigerClient, setAxiosAuthorizationToken } from "@gooddata/api-client-tiger";
+import { ITigerClient, setAxiosAuthorizationToken, IUserProfile } from "@gooddata/api-client-tiger";
 
 import { convertApiError } from "./utils/errorHandling";
-
-type TigerUserProfile = {
-    name?: string;
-    userId: string;
-};
 
 /**
  * Base for other IAuthenticationProvider implementations.
@@ -51,14 +46,11 @@ export abstract class TigerAuthProviderBase implements IAuthenticationProvider {
         };
     }
 
-    /*
-     * TODO: this API is not yet part of OAS spec. eventually replace it with call to api-tiger-client
-     */
-    private async loadProfile(context: IAuthenticationContext): Promise<TigerUserProfile> {
+    private async loadProfile(context: IAuthenticationContext): Promise<IUserProfile> {
         const client = context.client as ITigerClient;
 
         try {
-            return (await client.axios.get<TigerUserProfile>("/api/v1/profile")).data;
+            return await client.profile.getCurrent();
         } catch (err) {
             throw convertApiError(err);
         }
