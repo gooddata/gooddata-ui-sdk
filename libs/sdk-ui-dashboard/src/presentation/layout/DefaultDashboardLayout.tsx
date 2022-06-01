@@ -3,25 +3,21 @@ import React, { useCallback, useMemo } from "react";
 import {
     ObjRef,
     IInsight,
-    insightId,
-    insightUri,
     objRefToString,
     isWidget,
-    widgetUri,
-    widgetId,
-    isInsightWidget,
     IDashboardLayout,
-    IDashboardWidget,
+    IDashboardLayoutItem,
 } from "@gooddata/sdk-model";
+import { LRUCache } from "@gooddata/util";
 
 import {
-    selectSettings,
     useDashboardSelector,
     selectIsExport,
     selectIsLayoutEmpty,
     selectLayout,
     ExtendedDashboardWidget,
     selectInsightsMap,
+    selectEnableWidgetCustomHeight,
 } from "../../model";
 import { useDashboardComponentsContext } from "../dashboardContexts";
 
@@ -31,14 +27,11 @@ import { IDashboardLayoutProps } from "./types";
 import {
     DashboardLayout,
     DashboardLayoutBuilder,
-    DashboardLayoutItemModifications,
-    IDashboardLayoutItemFacade,
     IDashboardLayoutItemKeyGetter,
-    IDashboardLayoutItemsFacade,
     IDashboardLayoutWidgetRenderer,
-    validateDashboardLayoutWidgetSize,
 } from "./DefaultDashboardLayoutRenderer";
 import { RenderModeAwareDashboardLayoutSectionHeaderRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionHeaderRenderer";
+import { getMemoizedWidgetSanitizer } from "./DefaultDashboardLayoutUtils";
 
 /**
  * Get dashboard layout for exports.
@@ -77,12 +70,6 @@ function getDashboardLayoutForExport(
     return dashLayout.build();
 }
 
-function selectAllItemsWithInsights<TWidget = IDashboardWidget>(
-    items: IDashboardLayoutItemsFacade<TWidget>,
-): IDashboardLayoutItemFacade<TWidget>[] | IDashboardLayoutItemFacade<TWidget> | undefined {
-    return items.filter((item) => item.isInsightWidgetItem());
-}
-
 const itemKeyGetter: IDashboardLayoutItemKeyGetter<ExtendedDashboardWidget> = (keyGetterProps) => {
     const widget = keyGetterProps.item.widget();
     if (isWidget(widget)) {
@@ -97,11 +84,12 @@ const itemKeyGetter: IDashboardLayoutItemKeyGetter<ExtendedDashboardWidget> = (k
 export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Element => {
     const { onFiltersChange, onDrill, onError, ErrorComponent: CustomError } = props;
 
+    const { ErrorComponent } = useDashboardComponentsContext({ ErrorComponent: CustomError });
+
     const layout = useDashboardSelector(selectLayout);
     const isLayoutEmpty = useDashboardSelector(selectIsLayoutEmpty);
-    const settings = useDashboardSelector(selectSettings);
+    const enableWidgetCustomHeight = useDashboardSelector(selectEnableWidgetCustomHeight);
     const insights = useDashboardSelector(selectInsightsMap);
-    const { ErrorComponent } = useDashboardComponentsContext({ ErrorComponent: CustomError });
     const isExport = useDashboardSelector(selectIsExport);
 
     const getInsightByRef = useCallback(
@@ -111,6 +99,12 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
         [insights],
     );
 
+    const sanitizeWidgets = useMemo(() => {
+        // keep the cache local so that it is cleared when the dashboard changes for example and this component is remounted
+        const cache = new LRUCache<IDashboardLayoutItem<ExtendedDashboardWidget>>({ maxSize: 100 });
+        return getMemoizedWidgetSanitizer(cache);
+    }, []);
+
     const transformedLayout = useMemo(() => {
         if (isExport) {
             return getDashboardLayoutForExport(layout);
@@ -118,15 +112,10 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
 
         return DashboardLayoutBuilder.for(layout)
             .modifySections((section) =>
-                section
-                    .modifyItems(polluteWidgetRefsWithBothIdAndUri(getInsightByRef))
-                    .modifyItems(
-                        validateItemsSize(getInsightByRef, settings.enableKDWidgetCustomHeight!),
-                        selectAllItemsWithInsights,
-                    ),
+                section.modifyItems(sanitizeWidgets(getInsightByRef, enableWidgetCustomHeight)),
             )
             .build();
-    }, [layout, isExport, getInsightByRef]);
+    }, [layout, isExport, getInsightByRef, enableWidgetCustomHeight, sanitizeWidgets]);
 
     const widgetRenderer = useCallback<IDashboardLayoutWidgetRenderer<ExtendedDashboardWidget>>(
         (renderProps) => {
@@ -150,88 +139,8 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
             layout={transformedLayout}
             itemKeyGetter={itemKeyGetter}
             widgetRenderer={widgetRenderer}
-            enableCustomHeight={settings.enableKDWidgetCustomHeight}
+            enableCustomHeight={enableWidgetCustomHeight}
             sectionHeaderRenderer={RenderModeAwareDashboardLayoutSectionHeaderRenderer}
         />
     );
 };
-
-/**
- * Ensure that areObjRefsEqual() and other predicates will be working with uncontrolled user ref inputs in custom layout transformation and/or custom widget/item renderers
- */
-function polluteWidgetRefsWithBothIdAndUri<TWidget = IDashboardWidget>(
-    getInsightByRef: (insightRef: ObjRef) => IInsight | undefined,
-): DashboardLayoutItemModifications<TWidget> {
-    return (item) =>
-        item.widget((c) => {
-            let updatedContent = c;
-            if (isWidget(updatedContent)) {
-                updatedContent = {
-                    ...updatedContent,
-                    ref: {
-                        ...updatedContent.ref,
-                        uri: widgetUri(updatedContent),
-                        identifier: widgetId(updatedContent),
-                    },
-                };
-            }
-            if (isInsightWidget(updatedContent)) {
-                const insight = getInsightByRef(updatedContent.insight);
-                // sometimes this seems to be called sooner than insights are loaded leading to invariant errors
-                // since the behavior is nearly impossible to replicate reliably, let's be defensive here
-                if (insight) {
-                    updatedContent = {
-                        ...updatedContent,
-                        insight: {
-                            ...updatedContent.insight,
-                            uri: insightUri(insight),
-                            identifier: insightId(insight),
-                        },
-                    };
-                }
-            }
-
-            return updatedContent;
-        });
-}
-
-function validateItemsSize<TWidget = IDashboardWidget>(
-    getInsightByRef: (insightRef: ObjRef) => IInsight | undefined,
-    enableKDWidgetCustomHeight: boolean,
-): DashboardLayoutItemModifications<TWidget> {
-    return (item) => {
-        const widget = item.facade().widget();
-        if (isInsightWidget(widget)) {
-            const insight = getInsightByRef(widget.insight);
-            const currentWidth = item.facade().size().xl.gridWidth;
-            const currentHeight = item.facade().size().xl.gridHeight;
-            const { validWidth, validHeight } = validateDashboardLayoutWidgetSize(
-                currentWidth,
-                currentHeight,
-                "insight",
-                insight!,
-                { enableKDWidgetCustomHeight },
-            );
-            let validatedItem = item;
-            if (currentWidth !== validWidth) {
-                validatedItem = validatedItem.size({
-                    xl: {
-                        ...validatedItem.facade().size().xl,
-                        gridWidth: validWidth,
-                    },
-                });
-            }
-            if (currentHeight !== validHeight) {
-                validatedItem = validatedItem.size({
-                    xl: {
-                        ...validatedItem.facade().size().xl,
-                        gridHeight: validHeight,
-                    },
-                });
-            }
-
-            return validatedItem;
-        }
-        return item;
-    };
-}

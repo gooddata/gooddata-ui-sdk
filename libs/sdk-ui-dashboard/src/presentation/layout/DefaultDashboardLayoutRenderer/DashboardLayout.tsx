@@ -16,6 +16,14 @@ import { DASHBOARD_LAYOUT_GRID_CONFIGURATION } from "../../constants";
 
 setConfiguration(DASHBOARD_LAYOUT_GRID_CONFIGURATION);
 
+const removeHeights = <TWidget,>(layout: IDashboardLayout<TWidget>, enableCustomHeight: boolean) => {
+    if (enableCustomHeight) {
+        return layout;
+    }
+
+    return getLayoutWithoutGridHeights(layout);
+};
+
 /**
  * DashboardLayout is customizable component for rendering {@link IDashboardLayout}.
  *
@@ -36,14 +44,6 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
         onMouseLeave,
         enableCustomHeight,
     } = props;
-
-    const removeHeights = (layout: IDashboardLayout<TWidget>, enableCustomHeight: boolean) => {
-        if (enableCustomHeight) {
-            return layout;
-        }
-
-        return getLayoutWithoutGridHeights(layout);
-    };
 
     const { layoutFacade, resizedItemPositions } = useMemo(() => {
         const updatedLayout = removeHeights(layout, !!enableCustomHeight);

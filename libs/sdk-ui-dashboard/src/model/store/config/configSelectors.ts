@@ -303,3 +303,12 @@ export const selectDashboardEditModeDevRollout = createSelector(selectConfig, (s
 export const selectEnableAnalyticalDashboardPermissions = createSelector(selectConfig, (state) => {
     return state.settings?.enableAnalyticalDashboardPermissions ?? false;
 });
+
+/**
+ * Returns whether custom widget heights are enabled
+ *
+ * @internal
+ */
+export const selectEnableWidgetCustomHeight = createSelector(selectConfig, (state) => {
+    return state.settings?.enableKDWidgetCustomHeight ?? false;
+});

@@ -13,6 +13,7 @@ import {
 } from "@gooddata/sdk-model";
 import {
     ExtendedDashboardWidget,
+    selectEnableWidgetCustomHeight,
     selectInsightsMap,
     selectSettings,
     useDashboardSelector,
@@ -82,6 +83,8 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     const { item, screen, DefaultWidgetRenderer, onDrill, onFiltersChange, onError } = props;
     const insights = useDashboardSelector(selectInsightsMap);
     const settings = useDashboardSelector(selectSettings);
+    const enableWidgetCustomHeight = useDashboardSelector(selectEnableWidgetCustomHeight);
+
     const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext();
     // TODO: we should probably do something more meaningful when item has no widget; should that even
     //  be allowed? undefined widget will make things explode down the line away so..
@@ -94,7 +97,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
             : undefined;
 
     const allowOverflow = !!currentSize.heightAsRatio;
-    const className = settings.enableKDWidgetCustomHeight ? "custom-height" : undefined;
+    const className = enableWidgetCustomHeight ? "custom-height" : undefined;
     const index = getWidgetIndex(item);
 
     return (
