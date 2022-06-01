@@ -1,7 +1,7 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { IntlProvider, createIntl, IntlShape } from "react-intl";
-import { ITranslations, messagesMap } from "./IntlWrapper";
+import { ITranslations, messagesMap } from "./messagesMap";
 import { DefaultLocale, ILocale } from "./Locale";
 import { wrapDisplayName } from "../react/wrapDisplayName";
 
