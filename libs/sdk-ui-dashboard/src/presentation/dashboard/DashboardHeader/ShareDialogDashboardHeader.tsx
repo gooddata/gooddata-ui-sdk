@@ -1,5 +1,5 @@
-// (C) 2020 GoodData Corporation
-import React, { useCallback, useMemo } from "react";
+// (C) 2020-2022 GoodData Corporation
+import React, { useCallback } from "react";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import {
     useDashboardSelector,
@@ -25,10 +25,6 @@ const useShareDialogDashboardHeader = () => {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
 
-    const closeShareDialog = useMemo(() => {
-        return () => dispatch(uiActions.closeShareDialog());
-    }, [dispatch, uiActions]);
-
     const { run: runChangeSharing } = useDashboardCommandProcessing({
         commandCreator: changeSharing,
         successEvent: "GDC.DASH/EVT.SHARING.CHANGED",
@@ -40,6 +36,8 @@ const useShareDialogDashboardHeader = () => {
             addError({ id: "messages.sharingChangedError.general" });
         },
     });
+
+    const closeShareDialog = useCallback(() => dispatch(uiActions.closeShareDialog()), [dispatch]);
 
     const onCloseShareDialog = useCallback(() => {
         closeShareDialog();
@@ -56,7 +54,7 @@ const useShareDialogDashboardHeader = () => {
     const onErrorShareDialog = useCallback(() => {
         dispatch(uiActions.closeShareDialog());
         addError({ id: "messages.sharingDialogError.general" });
-    }, [dispatch, addError, uiActions]);
+    }, [dispatch, addError]);
 
     return {
         backend,

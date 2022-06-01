@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { CSSProperties } from "react";
 import cx from "classnames";
 import { IDashboardLayoutWidgetRenderProps } from "./interfaces";
@@ -41,7 +41,7 @@ export function DashboardLayoutWidgetRenderer(props: IDashboardLayoutWidgetRende
         }
 
         return computedStyle;
-    }, [heightAsRatio, debug, screen, height, minHeight, isResizedByLayoutSizingStrategy]);
+    }, [minHeight, height, allowOverflow, debug, heightAsRatio, isResizedByLayoutSizingStrategy]);
 
     const getClassNames = () => {
         return cx("gd-fluidlayout-column-container", className, {
