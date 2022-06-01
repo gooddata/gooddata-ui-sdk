@@ -12,7 +12,12 @@ import {
     isInsightWidget,
     IDashboardLayout,
     IDashboardWidget,
+    IDashboardLayoutItem,
 } from "@gooddata/sdk-model";
+import flow from "lodash/flow";
+import invariant from "ts-invariant";
+import { LRUCache } from "@gooddata/util";
+import stringify from "json-stable-stringify";
 
 import {
     useDashboardSelector,
@@ -32,14 +37,12 @@ import {
     DashboardLayout,
     DashboardLayoutBuilder,
     DashboardLayoutItemModifications,
-    IDashboardLayoutItemFacade,
+    IDashboardLayoutItemBuilder,
     IDashboardLayoutItemKeyGetter,
-    IDashboardLayoutItemsFacade,
     IDashboardLayoutWidgetRenderer,
     validateDashboardLayoutWidgetSize,
 } from "./DefaultDashboardLayoutRenderer";
 import { RenderModeAwareDashboardLayoutSectionHeaderRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionHeaderRenderer";
-import invariant from "ts-invariant";
 
 /**
  * Get dashboard layout for exports.
@@ -78,12 +81,6 @@ function getDashboardLayoutForExport(
     return dashLayout.build();
 }
 
-function selectAllItemsWithInsights<TWidget = IDashboardWidget>(
-    items: IDashboardLayoutItemsFacade<TWidget>,
-): IDashboardLayoutItemFacade<TWidget>[] | IDashboardLayoutItemFacade<TWidget> | undefined {
-    return items.filter((item) => item.isInsightWidgetItem());
-}
-
 const itemKeyGetter: IDashboardLayoutItemKeyGetter<ExtendedDashboardWidget> = (keyGetterProps) => {
     const widget = keyGetterProps.item.widget();
     if (isWidget(widget)) {
@@ -120,12 +117,7 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
 
         return DashboardLayoutBuilder.for(layout)
             .modifySections((section) =>
-                section
-                    .modifyItems(polluteWidgetRefsWithBothIdAndUri(getInsightByRef))
-                    .modifyItems(
-                        validateItemsSize(getInsightByRef, enableWidgetCustomHeight),
-                        selectAllItemsWithInsights,
-                    ),
+                section.modifyItems(sanitizeWidgets(getInsightByRef, enableWidgetCustomHeight)),
             )
             .build();
     }, [layout, isExport, getInsightByRef, enableWidgetCustomHeight]);
@@ -157,6 +149,35 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
         />
     );
 };
+
+/**
+ * We need to aggressively memoize the widget sanitization results in order to prevent expensive re-renders
+ * down the line - we need to keep the widgets referentially equal whenever they are not changed.
+ */
+const sanitizationCache = new LRUCache<IDashboardLayoutItem<ExtendedDashboardWidget>>({ maxSize: 100 });
+
+function sanitizeWidgets(
+    getInsightByRef: (insightRef: ObjRef) => IInsight | undefined,
+    enableKDWidgetCustomHeight: boolean,
+): DashboardLayoutItemModifications<ExtendedDashboardWidget> {
+    return (item) => {
+        const widget = item.facade().widget();
+        const insightAvailable = isInsightWidget(widget) && !!getInsightByRef(widget.insight);
+        // we need to check if the result was made with insight available or not, it might change the result
+        // of polluteWidgetRefsWithBothIdAndUri which touches the insight as well
+        const cacheKey = `${stringify(item.facade().raw(), { space: 0 })}__${insightAvailable}`;
+
+        if (!sanitizationCache.has(cacheKey)) {
+            const resultBuilder: IDashboardLayoutItemBuilder<ExtendedDashboardWidget> = flow(
+                polluteWidgetRefsWithBothIdAndUri(getInsightByRef),
+                validateItemsSize(getInsightByRef, enableKDWidgetCustomHeight),
+            )(item);
+            sanitizationCache.set(cacheKey, resultBuilder.build());
+        }
+
+        return item.setItem(sanitizationCache.get(cacheKey)!);
+    };
+}
 
 /**
  * Ensure that areObjRefsEqual() and other predicates will be working with uncontrolled user ref inputs in custom layout transformation and/or custom widget/item renderers
