@@ -103,6 +103,7 @@
         "eslint-plugin-react-hooks": "^4.5.0",
         "eslint-plugin-react": "^7.20.5",
         "eslint-plugin-sonarjs": "^0.13.0",
+        "eslint-plugin-tsdoc": "^0.2.14",
         "foundation-sites": "^5.5.3",
         "jest": "^27.5.1",
         "jest-enzyme": "^7.1.2",
@@ -117,7 +118,6 @@
         "stylelint-checkstyle-formatter": "^0.1.2",
         "stylelint-config-prettier": "^8.0.2",
         "ts-jest": "^27.0.5",
-        "typescript": "4.0.2",
-        "eslint-plugin-tsdoc": "^0.2.14"
+        "typescript": "4.0.2"
     }
 }
