@@ -10,26 +10,41 @@ import { ShareDialogDashboardHeader } from "./ShareDialogDashboardHeader";
 import { ScheduledEmailDialogProvider } from "./ScheduledEmailDialogProvider";
 import { DeleteDialog, useDeleteDialogProps } from "../../deleteDialog";
 
+// these wrapper components are here to prevent the whole DashboardHeader from re-rendering whenever some
+// of the sub-components' props change. by isolating the hooks more, we make sure only the really changed component re-renders.
+const DeleteDialogWrapper = () => {
+    const deleteDialogProps = useDeleteDialogProps();
+    return <DeleteDialog {...deleteDialogProps} />;
+};
+
+const SaveAsDialogWrapper = () => {
+    const saveAsDialogProps = useSaveAsDialogProps();
+    return <SaveAsDialog {...saveAsDialogProps} />;
+};
+
+const TopBarWrapper = () => {
+    const topBarProps = useTopBarProps();
+    return <TopBar {...topBarProps} />;
+};
+
+const FilterBarWrapper = () => {
+    const filterBarProps = useFilterBarProps();
+    return <FilterBar {...filterBarProps} />;
+};
+
 // split the header parts of the dashboard so that changes to their state
 // (e.g. opening email dialog) do not re-render the dashboard body
 export const DashboardHeader = (): JSX.Element => {
-    const deleteDialogProps = useDeleteDialogProps();
-    const saveAsDialogProps = useSaveAsDialogProps();
-
-    const filterBarProps = useFilterBarProps();
-    const topBarProps = useTopBarProps();
-
     return (
         <>
             <ToastMessages />
             <ExportDialogProvider />
             <ScheduledEmailDialogProvider />
             <ShareDialogDashboardHeader />
-            <DeleteDialog {...deleteDialogProps} />
-            <SaveAsDialog {...saveAsDialogProps} />
-
-            <TopBar {...topBarProps} />
-            <FilterBar {...filterBarProps} />
+            <DeleteDialogWrapper />
+            <SaveAsDialogWrapper />
+            <TopBarWrapper />
+            <FilterBarWrapper />
         </>
     );
 };
