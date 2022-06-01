@@ -39,6 +39,7 @@ import {
     validateDashboardLayoutWidgetSize,
 } from "./DefaultDashboardLayoutRenderer";
 import { RenderModeAwareDashboardLayoutSectionHeaderRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionHeaderRenderer";
+import invariant from "ts-invariant";
 
 /**
  * Get dashboard layout for exports.
@@ -204,34 +205,27 @@ function validateItemsSize<TWidget = IDashboardWidget>(
         const widget = item.facade().widget();
         if (isInsightWidget(widget)) {
             const insight = getInsightByRef(widget.insight);
-            const currentWidth = item.facade().size().xl.gridWidth;
-            const currentHeight = item.facade().size().xl.gridHeight;
+            invariant(insight, "Inconsistent insight store");
+            const currentSize = item.facade().size().xl;
+            const { gridWidth: currentWidth, gridHeight: currentHeight } = currentSize;
             const { validWidth, validHeight } = validateDashboardLayoutWidgetSize(
                 currentWidth,
                 currentHeight,
                 "insight",
-                insight!,
+                insight,
                 { enableKDWidgetCustomHeight },
             );
-            let validatedItem = item;
-            if (currentWidth !== validWidth) {
-                validatedItem = validatedItem.size({
+            if (currentWidth !== validWidth || currentHeight !== validHeight) {
+                const gridWidthProp = currentWidth !== validWidth ? { gridWidth: validWidth } : {};
+                const gridHeightProp = currentHeight !== validHeight ? { gridHeight: validHeight } : {};
+                return item.size({
                     xl: {
-                        ...validatedItem.facade().size().xl,
-                        gridWidth: validWidth,
+                        ...currentSize,
+                        ...gridWidthProp,
+                        ...gridHeightProp,
                     },
                 });
             }
-            if (currentHeight !== validHeight) {
-                validatedItem = validatedItem.size({
-                    xl: {
-                        ...validatedItem.facade().size().xl,
-                        gridHeight: validHeight,
-                    },
-                });
-            }
-
-            return validatedItem;
         }
         return item;
     };
