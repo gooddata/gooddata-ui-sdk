@@ -69,13 +69,13 @@
         "eslint-plugin-no-only-tests": "^2.4.0",
         "eslint-plugin-prettier": "^4.0.0",
         "eslint-plugin-sonarjs": "^0.13.0",
+        "eslint-plugin-tsdoc": "^0.2.14",
         "jest-junit": "^3.0.0",
         "jest": "^27.5.1",
         "mkdirp": "^1.0.4",
         "prettier": "~2.5.0",
         "ts-jest": "^27.0.5",
-        "typescript": "4.0.2",
-        "eslint-plugin-tsdoc": "^0.2.14"
+        "typescript": "4.0.2"
     },
     "bin": {
         "i18n-toolkit": "index.js"
