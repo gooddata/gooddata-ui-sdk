@@ -3,21 +3,12 @@ import React, { useCallback, useMemo } from "react";
 import {
     ObjRef,
     IInsight,
-    insightId,
-    insightUri,
     objRefToString,
     isWidget,
-    widgetUri,
-    widgetId,
-    isInsightWidget,
     IDashboardLayout,
-    IDashboardWidget,
     IDashboardLayoutItem,
 } from "@gooddata/sdk-model";
-import flow from "lodash/flow";
-import invariant from "ts-invariant";
 import { LRUCache } from "@gooddata/util";
-import stringify from "json-stable-stringify";
 
 import {
     useDashboardSelector,
@@ -36,13 +27,11 @@ import { IDashboardLayoutProps } from "./types";
 import {
     DashboardLayout,
     DashboardLayoutBuilder,
-    DashboardLayoutItemModifications,
-    IDashboardLayoutItemBuilder,
     IDashboardLayoutItemKeyGetter,
     IDashboardLayoutWidgetRenderer,
-    validateDashboardLayoutWidgetSize,
 } from "./DefaultDashboardLayoutRenderer";
 import { RenderModeAwareDashboardLayoutSectionHeaderRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionHeaderRenderer";
+import { getMemoizedWidgetSanitizer } from "./DefaultDashboardLayoutUtils";
 
 /**
  * Get dashboard layout for exports.
@@ -110,6 +99,12 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
         [insights],
     );
 
+    const sanitizeWidgets = useMemo(() => {
+        // keep the cache local so that it is cleared when the dashboard changes for example and this component is remounted
+        const cache = new LRUCache<IDashboardLayoutItem<ExtendedDashboardWidget>>({ maxSize: 100 });
+        return getMemoizedWidgetSanitizer(cache);
+    }, []);
+
     const transformedLayout = useMemo(() => {
         if (isExport) {
             return getDashboardLayoutForExport(layout);
@@ -120,7 +115,7 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
                 section.modifyItems(sanitizeWidgets(getInsightByRef, enableWidgetCustomHeight)),
             )
             .build();
-    }, [layout, isExport, getInsightByRef, enableWidgetCustomHeight]);
+    }, [layout, isExport, getInsightByRef, enableWidgetCustomHeight, sanitizeWidgets]);
 
     const widgetRenderer = useCallback<IDashboardLayoutWidgetRenderer<ExtendedDashboardWidget>>(
         (renderProps) => {
@@ -149,105 +144,3 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
         />
     );
 };
-
-/**
- * We need to aggressively memoize the widget sanitization results in order to prevent expensive re-renders
- * down the line - we need to keep the widgets referentially equal whenever they are not changed.
- */
-const sanitizationCache = new LRUCache<IDashboardLayoutItem<ExtendedDashboardWidget>>({ maxSize: 100 });
-
-function sanitizeWidgets(
-    getInsightByRef: (insightRef: ObjRef) => IInsight | undefined,
-    enableKDWidgetCustomHeight: boolean,
-): DashboardLayoutItemModifications<ExtendedDashboardWidget> {
-    return (item) => {
-        const widget = item.facade().widget();
-        const insightAvailable = isInsightWidget(widget) && !!getInsightByRef(widget.insight);
-        // we need to check if the result was made with insight available or not, it might change the result
-        // of polluteWidgetRefsWithBothIdAndUri which touches the insight as well
-        const cacheKey = `${stringify(item.facade().raw(), { space: 0 })}__${insightAvailable}`;
-
-        if (!sanitizationCache.has(cacheKey)) {
-            const resultBuilder: IDashboardLayoutItemBuilder<ExtendedDashboardWidget> = flow(
-                polluteWidgetRefsWithBothIdAndUri(getInsightByRef),
-                validateItemsSize(getInsightByRef, enableKDWidgetCustomHeight),
-            )(item);
-            sanitizationCache.set(cacheKey, resultBuilder.build());
-        }
-
-        return item.setItem(sanitizationCache.get(cacheKey)!);
-    };
-}
-
-/**
- * Ensure that areObjRefsEqual() and other predicates will be working with uncontrolled user ref inputs in custom layout transformation and/or custom widget/item renderers
- */
-function polluteWidgetRefsWithBothIdAndUri<TWidget = IDashboardWidget>(
-    getInsightByRef: (insightRef: ObjRef) => IInsight | undefined,
-): DashboardLayoutItemModifications<TWidget> {
-    return (item) =>
-        item.widget((c) => {
-            let updatedContent = c;
-            if (isWidget(updatedContent)) {
-                updatedContent = {
-                    ...updatedContent,
-                    ref: {
-                        ...updatedContent.ref,
-                        uri: widgetUri(updatedContent),
-                        identifier: widgetId(updatedContent),
-                    },
-                };
-            }
-            if (isInsightWidget(updatedContent)) {
-                const insight = getInsightByRef(updatedContent.insight);
-                // sometimes this seems to be called sooner than insights are loaded leading to invariant errors
-                // since the behavior is nearly impossible to replicate reliably, let's be defensive here
-                if (insight) {
-                    updatedContent = {
-                        ...updatedContent,
-                        insight: {
-                            ...updatedContent.insight,
-                            uri: insightUri(insight),
-                            identifier: insightId(insight),
-                        },
-                    };
-                }
-            }
-
-            return updatedContent;
-        });
-}
-
-function validateItemsSize<TWidget = IDashboardWidget>(
-    getInsightByRef: (insightRef: ObjRef) => IInsight | undefined,
-    enableKDWidgetCustomHeight: boolean,
-): DashboardLayoutItemModifications<TWidget> {
-    return (item) => {
-        const widget = item.facade().widget();
-        if (isInsightWidget(widget)) {
-            const insight = getInsightByRef(widget.insight);
-            invariant(insight, "Inconsistent insight store");
-            const currentSize = item.facade().size().xl;
-            const { gridWidth: currentWidth, gridHeight: currentHeight } = currentSize;
-            const { validWidth, validHeight } = validateDashboardLayoutWidgetSize(
-                currentWidth,
-                currentHeight,
-                "insight",
-                insight,
-                { enableKDWidgetCustomHeight },
-            );
-            if (currentWidth !== validWidth || currentHeight !== validHeight) {
-                const gridWidthProp = currentWidth !== validWidth ? { gridWidth: validWidth } : {};
-                const gridHeightProp = currentHeight !== validHeight ? { gridHeight: validHeight } : {};
-                return item.size({
-                    xl: {
-                        ...currentSize,
-                        ...gridWidthProp,
-                        ...gridHeightProp,
-                    },
-                });
-            }
-        }
-        return item;
-    };
-}
