@@ -1546,6 +1546,7 @@ export interface IWorkspaceAccessControlService {
 export interface IWorkspaceAttributesService {
     elements(): IElementsQueryFactory;
     getAttribute(ref: ObjRef): Promise<IAttributeMetadataObject_2>;
+    getAttributeByDisplayForm(ref: ObjRef): Promise<IAttributeMetadataObject_2>;
     getAttributeDatasetMeta(ref: ObjRef): Promise<IMetadataObject_2>;
     getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject_2>;
     getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject_2[]>;

@@ -69,6 +69,10 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
         );
     };
 
+    public getAttributeByDisplayForm = async (_ref: ObjRef): Promise<IAttributeMetadataObject> => {
+        throw new NotSupported("not supported");
+    };
+
     public async getCommonAttributes(attributeRefs: ObjRef[]): Promise<ObjRef[]> {
         const key = objRefsToStringKey(attributeRefs);
         const response = this.config.getCommonAttributesResponses?.[key];

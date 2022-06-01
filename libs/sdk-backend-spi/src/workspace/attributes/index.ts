@@ -45,6 +45,14 @@ export interface IWorkspaceAttributesService {
     getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]>;
 
     /**
+     * Gets metadata of the attribute for particular display form reference.
+     *
+     * @param ref - ref of the display form to retrieve attribute for
+     * @returns promise of attribute metadata object
+     */
+    getAttributeByDisplayForm(ref: ObjRef): Promise<IAttributeMetadataObject>;
+
+    /**
      * Gets metadata of the attribute.
      *
      * @param ref - ref of the attribute to retrieve
