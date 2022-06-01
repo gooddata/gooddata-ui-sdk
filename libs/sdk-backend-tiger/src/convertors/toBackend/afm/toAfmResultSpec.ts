@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 import { AFM, AfmExecution, AttributeItem, MeasureItem, ResultSpec } from "@gooddata/api-client-tiger";
 import { convertMeasure } from "./MeasureConverter";
@@ -27,7 +27,10 @@ function convertAFM(def: IExecutionDefinition): AFM {
 }
 
 function convertResultSpec(def: IExecutionDefinition): ResultSpec {
-    return { dimensions: convertDimensions(def), grandTotals: convertTotals(def) };
+    return {
+        dimensions: convertDimensions(def),
+        totals: convertTotals(def),
+    };
 }
 
 /**

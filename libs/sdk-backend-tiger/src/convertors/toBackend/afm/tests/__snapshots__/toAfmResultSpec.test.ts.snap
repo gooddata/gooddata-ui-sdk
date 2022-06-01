@@ -94,7 +94,7 @@ Object {
   },
   "resultSpec": Object {
     "dimensions": Array [],
-    "grandTotals": Array [],
+    "totals": Array [],
   },
   "settings": Object {},
 }
@@ -110,7 +110,7 @@ Object {
   },
   "resultSpec": Object {
     "dimensions": Array [],
-    "grandTotals": Array [],
+    "totals": Array [],
   },
   "settings": Object {},
 }
@@ -146,7 +146,7 @@ Object {
   },
   "resultSpec": Object {
     "dimensions": Array [],
-    "grandTotals": Array [],
+    "totals": Array [],
   },
   "settings": Object {},
 }
@@ -169,7 +169,7 @@ Object {
         "localIdentifier": "dim_0",
       },
     ],
-    "grandTotals": Array [],
+    "totals": Array [],
   },
   "settings": Object {},
 }
@@ -185,7 +185,7 @@ Object {
   },
   "resultSpec": Object {
     "dimensions": Array [],
-    "grandTotals": Array [],
+    "totals": Array [],
   },
   "settings": Object {},
 }
@@ -201,7 +201,7 @@ Object {
   },
   "resultSpec": Object {
     "dimensions": Array [],
-    "grandTotals": Array [],
+    "totals": Array [],
   },
   "settings": Object {},
 }

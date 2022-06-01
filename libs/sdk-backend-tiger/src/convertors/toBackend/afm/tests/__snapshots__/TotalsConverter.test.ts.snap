@@ -4,16 +4,16 @@ exports[`convertTotals should correctly convert attributes in first dim and meas
 Array [
   Object {
     "function": "SUM",
-    "includedDimensions": Object {
-      "dim_1": Object {
-        "dimensionAttributesValues": Object {
-          "measureGroup": Array [
-            "m1",
-          ],
-        },
+    "localIdentifier": "total_sum_m1_by_localAttr1_0",
+    "metric": "m1",
+    "totalDimensions": Array [
+      Object {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": Array [
+          "measureGroup",
+        ],
       },
-    },
-    "localIdentifier": "total_0_sum",
+    ],
   },
 ]
 `;
@@ -22,16 +22,17 @@ exports[`convertTotals should correctly convert measure group and attribute in o
 Array [
   Object {
     "function": "SUM",
-    "includedDimensions": Object {
-      "dim_0": Object {
-        "dimensionAttributesValues": Object {
-          "measureGroup": Array [
-            "m1",
-          ],
-        },
+    "localIdentifier": "total_sum_m1_by_localAttr1_1",
+    "metric": "m1",
+    "totalDimensions": Array [
+      Object {
+        "dimensionIdentifier": "dim_0",
+        "totalDimensionItems": Array [
+          "measureGroup",
+          "localAttr2",
+        ],
       },
-    },
-    "localIdentifier": "total_1_sum",
+    ],
   },
 ]
 `;
@@ -40,78 +41,139 @@ exports[`convertTotals should correctly convert multiple totals with various fun
 Array [
   Object {
     "function": "SUM",
-    "includedDimensions": Object {
-      "dim_1": Object {
-        "dimensionAttributesValues": Object {
-          "measureGroup": Array [
-            "m1",
-            "m2",
-          ],
-        },
+    "localIdentifier": "total_sum_m1_by_localAttr1_0",
+    "metric": "m1",
+    "totalDimensions": Array [
+      Object {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": Array [
+          "measureGroup",
+        ],
       },
-    },
-    "localIdentifier": "total_0_sum",
+    ],
+  },
+  Object {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m2_by_localAttr1_0",
+    "metric": "m2",
+    "totalDimensions": Array [
+      Object {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": Array [
+          "measureGroup",
+        ],
+      },
+    ],
   },
   Object {
     "function": "MIN",
-    "includedDimensions": Object {
-      "dim_1": Object {
-        "dimensionAttributesValues": Object {
-          "measureGroup": Array [
-            "m1",
-          ],
-        },
+    "localIdentifier": "total_min_m1_by_localAttr1_0",
+    "metric": "m1",
+    "totalDimensions": Array [
+      Object {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": Array [
+          "measureGroup",
+        ],
       },
-    },
-    "localIdentifier": "total_0_min",
+    ],
   },
   Object {
     "function": "MAX",
-    "includedDimensions": Object {
-      "dim_1": Object {
-        "dimensionAttributesValues": Object {
-          "measureGroup": Array [
-            "m2",
-          ],
-        },
+    "localIdentifier": "total_max_m2_by_localAttr1_0",
+    "metric": "m2",
+    "totalDimensions": Array [
+      Object {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": Array [
+          "measureGroup",
+        ],
       },
-    },
-    "localIdentifier": "total_0_max",
+    ],
   },
 ]
 `;
 
 exports[`convertTotals should correctly convert no totals 1`] = `Array []`;
 
+exports[`convertTotals should correctly convert subtotal 1`] = `
+Array [
+  Object {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m1_by_localAttr1_0",
+    "metric": "m1",
+    "totalDimensions": Array [
+      Object {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": Array [
+          "localAttr3",
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+  Object {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m1_by_localAttr2_0",
+    "metric": "m1",
+    "totalDimensions": Array [
+      Object {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": Array [
+          "localAttr3",
+          "measureGroup",
+        ],
+      },
+      Object {
+        "dimensionIdentifier": "dim_0",
+        "totalDimensionItems": Array [
+          "localAttr1",
+        ],
+      },
+    ],
+  },
+]
+`;
+
 exports[`convertTotals should correctly convert three dimensions 1`] = `
 Array [
   Object {
     "function": "SUM",
-    "includedDimensions": Object {
-      "dim_1": Object {
-        "dimensionAttributesValues": Object {
-          "measureGroup": Array [
-            "m1",
-          ],
-        },
+    "localIdentifier": "total_sum_m1_by_localAttr1_0",
+    "metric": "m1",
+    "totalDimensions": Array [
+      Object {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": Array [
+          "measureGroup",
+        ],
       },
-      "dim_2": null,
-    },
-    "localIdentifier": "total_0_sum",
+      Object {
+        "dimensionIdentifier": "dim_2",
+        "totalDimensionItems": Array [
+          "localAttr2",
+        ],
+      },
+    ],
   },
   Object {
     "function": "SUM",
-    "includedDimensions": Object {
-      "dim_0": null,
-      "dim_1": Object {
-        "dimensionAttributesValues": Object {
-          "measureGroup": Array [
-            "m1",
-          ],
-        },
+    "localIdentifier": "total_sum_m1_by_localAttr2_2",
+    "metric": "m1",
+    "totalDimensions": Array [
+      Object {
+        "dimensionIdentifier": "dim_0",
+        "totalDimensionItems": Array [
+          "localAttr1",
+        ],
       },
-    },
-    "localIdentifier": "total_2_sum",
+      Object {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": Array [
+          "measureGroup",
+        ],
+      },
+    ],
   },
 ]
 `;
@@ -120,18 +182,105 @@ exports[`convertTotals should correctly convert three totals with the same funct
 Array [
   Object {
     "function": "SUM",
-    "includedDimensions": Object {
-      "dim_1": Object {
-        "dimensionAttributesValues": Object {
-          "measureGroup": Array [
-            "m1",
-            "m2",
-            "m3",
-          ],
-        },
+    "localIdentifier": "total_sum_m1_by_localAttr1_0",
+    "metric": "m1",
+    "totalDimensions": Array [
+      Object {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": Array [
+          "localAttr3",
+          "measureGroup",
+        ],
       },
-    },
-    "localIdentifier": "total_0_sum",
+    ],
+  },
+  Object {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m2_by_localAttr1_0",
+    "metric": "m2",
+    "totalDimensions": Array [
+      Object {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": Array [
+          "localAttr3",
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+  Object {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m3_by_localAttr1_0",
+    "metric": "m3",
+    "totalDimensions": Array [
+      Object {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": Array [
+          "localAttr3",
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+]
+`;
+
+exports[`convertTotals should correctly convert total on dimension with measure group 1`] = `
+Array [
+  Object {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m1_by_localAttr1_0",
+    "metric": "m1",
+    "totalDimensions": Array [
+      Object {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": Array [
+          "localAttr3",
+        ],
+      },
+      Object {
+        "dimensionIdentifier": "dim_0",
+        "totalDimensionItems": Array [
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+]
+`;
+
+exports[`convertTotals should correctly convert total on single dimension result spec 1`] = `
+Array [
+  Object {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m1_by_localAttr1_0",
+    "metric": "m1",
+    "totalDimensions": Array [
+      Object {
+        "dimensionIdentifier": "dim_0",
+        "totalDimensionItems": Array [
+          "measureGroup",
+        ],
+      },
+    ],
+  },
+]
+`;
+
+exports[`convertTotals should correctly convert total without any measure group 1`] = `
+Array [
+  Object {
+    "function": "SUM",
+    "localIdentifier": "total_sum_m1_by_localAttr1_0",
+    "metric": "m1",
+    "totalDimensions": Array [
+      Object {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": Array [
+          "localAttr3",
+        ],
+      },
+    ],
   },
 ]
 `;
@@ -140,39 +289,33 @@ exports[`convertTotals should correctly convert two totals with different functi
 Array [
   Object {
     "function": "SUM",
-    "includedDimensions": Object {
-      "dim_1": Object {
-        "dimensionAttributesValues": Object {
-          "measureGroup": Array [
-            "m1",
-          ],
-        },
+    "localIdentifier": "total_sum_m1_by_localAttr1_0",
+    "metric": "m1",
+    "totalDimensions": Array [
+      Object {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": Array [
+          "localAttr3",
+          "measureGroup",
+        ],
       },
-    },
-    "localIdentifier": "total_0_sum",
+    ],
   },
   Object {
     "function": "MIN",
-    "includedDimensions": Object {
-      "dim_1": Object {
-        "dimensionAttributesValues": Object {
-          "measureGroup": Array [
-            "m1",
-          ],
-        },
+    "localIdentifier": "total_min_m1_by_localAttr1_0",
+    "metric": "m1",
+    "totalDimensions": Array [
+      Object {
+        "dimensionIdentifier": "dim_1",
+        "totalDimensionItems": Array [
+          "localAttr3",
+          "measureGroup",
+        ],
       },
-    },
-    "localIdentifier": "total_0_min",
+    ],
   },
 ]
 `;
 
 exports[`convertTotals should fail on converting native total 1`] = `"Tiger backend does not support native totals."`;
-
-exports[`convertTotals should fail on converting subtotal 1`] = `"Tiger backend does not support subtotals."`;
-
-exports[`convertTotals should fail on converting total on dimension with measure group 1`] = `"Grand total must be defined opposite to some dimension containing \\"measure group\\"."`;
-
-exports[`convertTotals should fail on converting total on single dimension result spec 1`] = `"Grand total must be defined opposite to some dimension containing \\"measure group\\"."`;
-
-exports[`convertTotals should fail on converting total without any measure group 1`] = `"Grand total must be defined opposite to some dimension containing \\"measure group\\"."`;

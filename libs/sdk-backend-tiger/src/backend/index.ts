@@ -46,9 +46,9 @@ import packageJson from "../../package.json";
 const CAPABILITIES: IBackendCapabilities = {
     hasTypeScopedIdentifiers: true,
     canCalculateGrandTotals: true,
-    canCalculateSubTotals: false,
+    canCalculateSubTotals: true,
     canCalculateNativeTotals: false,
-    canCalculateTotals: false,
+    canCalculateTotals: true,
     canExportCsv: false,
     canExportXlsx: false,
     canSortData: false,

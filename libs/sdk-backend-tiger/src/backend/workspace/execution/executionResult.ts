@@ -15,12 +15,11 @@ import {
 import { IExecutionDefinition, DataValue, IDimensionDescriptor, IResultHeader } from "@gooddata/sdk-model";
 import SparkMD5 from "spark-md5";
 import { transformResultDimensions } from "../../../convertors/fromBackend/afm/dimensions";
-import {
-    transformExecutionResult,
-    transformGrandTotalData,
-} from "../../../convertors/fromBackend/afm/result";
+import { transformExecutionResult } from "../../../convertors/fromBackend/afm/result";
 import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types";
 import { TigerAuthenticatedCallGuard } from "../../../types";
+import { transformGrandTotalData } from "../../../convertors/fromBackend/afm/GrandTotalsConverter";
+import { getTransformDimensionHeaders } from "../../../convertors/fromBackend/afm/DimensionHeaderConverter";
 
 const TIGER_PAGE_SIZE_LIMIT = 1000;
 
@@ -144,7 +143,9 @@ class TigerDataView implements IDataView {
         this.result = result;
         this.definition = result.definition;
 
-        const transformedResult = transformExecutionResult(execResult, result.dimensions, dateFormatter);
+        const transformDimensionHeaders = getTransformDimensionHeaders(result.dimensions, dateFormatter);
+
+        const transformedResult = transformExecutionResult(execResult, transformDimensionHeaders);
 
         this.data = transformedResult.data;
         this.headerItems = transformedResult.headerItems;
@@ -152,7 +153,12 @@ class TigerDataView implements IDataView {
         this.count = transformedResult.count;
         this.totalCount = transformedResult.total;
 
-        this.totals = transformGrandTotalData(result.definition, execResult.grandTotals ?? []);
+        this.totals = transformGrandTotalData(
+            execResult.grandTotals ?? [],
+            result.definition,
+            transformedResult.headerItems,
+            transformDimensionHeaders,
+        );
 
         this._fingerprint = `${result.fingerprint()}/${this.offset.join(",")}-${this.count.join(",")}`;
     }
