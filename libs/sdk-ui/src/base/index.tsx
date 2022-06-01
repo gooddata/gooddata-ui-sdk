@@ -167,7 +167,8 @@ export { usePrevious } from "./react/usePrevious";
 
 export { ILocale, DefaultLocale } from "./localization/Locale";
 export { getTranslation, getIntl } from "./localization/IntlStore";
-export { IntlWrapper, IIntlWrapperProps, messagesMap, ITranslations } from "./localization/IntlWrapper";
+export { IntlWrapper, IIntlWrapperProps } from "./localization/IntlWrapper";
+export { messagesMap, ITranslations } from "./localization/messagesMap";
 export {
     TranslationsProvider,
     IntlTranslationsProvider,

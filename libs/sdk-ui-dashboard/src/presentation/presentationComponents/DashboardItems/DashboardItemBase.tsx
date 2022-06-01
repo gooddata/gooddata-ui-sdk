@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 
 import { DashboardItemContent } from "./DashboardItemContent";
@@ -43,15 +43,17 @@ export interface IDashboardItemBaseProps {
     contentRef?: React.Ref<HTMLDivElement>;
 }
 
+const noopRender = () => null;
+
 export const DashboardItemBase: React.FC<IDashboardItemBaseProps> = ({
     children,
     contentClassName,
     visualizationClassName,
-    renderHeadline = () => null,
-    renderBeforeVisualization = () => null,
-    renderAfterVisualization = () => null,
-    renderBeforeContent = () => null,
-    renderAfterContent = () => null,
+    renderHeadline = noopRender,
+    renderBeforeVisualization = noopRender,
+    renderAfterVisualization = noopRender,
+    renderBeforeContent = noopRender,
+    renderAfterContent = noopRender,
     contentRef,
 }) => {
     return (

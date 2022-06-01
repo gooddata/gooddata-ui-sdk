@@ -68,7 +68,7 @@ export const DefaultDashboardWidget = (props: IDashboardWidgetProps): JSX.Elemen
                 onError(error, executionId);
             },
         });
-    }, [effectiveBackend, dispatchEvent]);
+    }, [effectiveBackend, dispatchEvent, widgetRef]);
 
     if (!isDashboardWidget(widget)) {
         throw new UnexpectedError(

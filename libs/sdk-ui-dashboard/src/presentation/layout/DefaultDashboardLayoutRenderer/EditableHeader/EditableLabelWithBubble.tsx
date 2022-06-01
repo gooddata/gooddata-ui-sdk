@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Bubble, EditableLabel } from "@gooddata/sdk-ui-kit";
 import { useIntl } from "react-intl";
 
@@ -39,46 +39,39 @@ export function EditableLabelWithBubble({
     const [currentValue, setCurrentValue] = useState(value);
     const [editing, setEditing] = useState(false);
 
-    const bubbleMessage = useMemo(() => {
-        const charactersCountLeft = maxLength - currentValue.length;
-        const maximumCharactersCount = maxLength;
-        return intl.formatMessage(
-            { id: "layout.header.characters.left" },
-            { charactersCountLeft, maximumCharactersCount },
-        );
-    }, [maxLength, currentValue, intl]);
+    const charactersCountLeft = maxLength - currentValue.length;
+    const maximumCharactersCount = maxLength;
+    const bubbleMessage = intl.formatMessage(
+        { id: "layout.header.characters.left" },
+        { currentCharactersCount: charactersCountLeft, maximumCharactersCount },
+    );
 
-    const isBubbleVisible = useMemo(() => {
-        const currentValueLength = currentValue.length;
-        return editing && maxLength - currentValueLength <= warningLimit;
-    }, [currentValue, editing, maxLength, warningLimit]);
+    const currentValueLength = currentValue.length;
+    const isBubbleVisible = editing && maxLength - currentValueLength <= warningLimit;
 
     const onStart = useCallback(() => {
         setEditing(true);
         onEditingStart();
-    }, [setEditing, onEditingStart]);
+    }, [onEditingStart]);
 
-    const onCancelCallback = () => {
+    const onCancelCallback = useCallback(() => {
         setEditing(true);
         setCurrentValue(value);
         onCancel();
-    };
+    }, [onCancel, value]);
 
     const onSubmitCallback = useCallback(
-        (value: string) => {
+        (newValue: string) => {
             setEditing(true);
-            setCurrentValue(value);
-            onSubmit(value);
+            setCurrentValue(newValue);
+            onSubmit(newValue);
         },
-        [setEditing, setCurrentValue, onSubmit],
+        [onSubmit],
     );
 
-    const onChange = useCallback(
-        (value: string) => {
-            setCurrentValue(value);
-        },
-        [setCurrentValue],
-    );
+    const onChange = useCallback((newValue: string) => {
+        setCurrentValue(newValue);
+    }, []);
 
     return (
         <>

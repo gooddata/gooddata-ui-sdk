@@ -6,7 +6,7 @@ import {
     removeAllWordingTranslationsWithSpecialSuffix,
 } from "../utils";
 import { IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { ITranslations } from "../../../localization/IntlWrapper";
+import { ITranslations } from "../../../localization/messagesMap";
 
 const mockTranslation: ITranslations = {
     "mock.translation|insight": "Insight",

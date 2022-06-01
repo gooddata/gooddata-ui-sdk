@@ -32,6 +32,6 @@
         },
         "moduleResolution": "node"
     },
-    "include": ["src", "typings"],
+    "include": ["src/index.tsx", "typings"],
     "exclude": ["**/node_modules", "dist"]
 }

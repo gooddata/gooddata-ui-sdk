@@ -1,44 +1,11 @@
 // (C) 2007-2022 GoodData Corporation
 import React, { useMemo } from "react";
 import { IntlProvider } from "react-intl";
-import { translationUtils } from "@gooddata/util";
 import { DefaultLocale } from "./Locale";
 import { pickCorrectWording } from "./TranslationsCustomizationProvider/utils";
 
-import enUS from "./bundles/en-US.json";
-import deDE from "./bundles/de-DE.json";
-import esES from "./bundles/es-ES.json";
-import frFR from "./bundles/fr-FR.json";
-import jaJP from "./bundles/ja-JP.json";
-import nlNL from "./bundles/nl-NL.json";
-import ptBR from "./bundles/pt-BR.json";
-import ptPT from "./bundles/pt-PT.json";
-import zhHans from "./bundles/zh-Hans.json";
-import ruRU from "./bundles/ru-RU.json";
 import { IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-
-/**
- * @internal
- */
-export interface ITranslations {
-    [key: string]: string;
-}
-
-/**
- * @internal
- */
-export const messagesMap: { [locale: string]: ITranslations } = {
-    "en-US": translationUtils.removeMetadata(enUS),
-    "de-DE": deDE,
-    "es-ES": esES,
-    "fr-FR": frFR,
-    "ja-JP": jaJP,
-    "nl-NL": nlNL,
-    "pt-BR": ptBR,
-    "pt-PT": ptPT,
-    "zh-Hans": zhHans,
-    "ru-RU": ruRU,
-};
+import { messagesMap } from "./messagesMap";
 
 /**
  * @internal
@@ -58,10 +25,7 @@ export const IntlWrapper: React.FC<IIntlWrapperProps> = ({ locale = DefaultLocal
      */
     const settings = window.gdSettings as IWorkspaceSettings;
 
-    const messages = useMemo(
-        () => pickCorrectWording(messagesMap[locale], settings),
-        [locale, settings, messagesMap],
-    );
+    const messages = useMemo(() => pickCorrectWording(messagesMap[locale], settings), [locale, settings]);
 
     return (
         <IntlProvider locale={locale} messages={messages}>

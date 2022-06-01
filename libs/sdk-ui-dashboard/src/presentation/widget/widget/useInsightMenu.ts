@@ -94,7 +94,7 @@ export const useInsightMenu = (config: {
         return insightMenuItemsProvider
             ? insightMenuItemsProvider(insight, widget, defaultMenuItems, closeMenu)
             : defaultMenuItems;
-    }, [insight, widget, defaultMenuItems]);
+    }, [insightMenuItemsProvider, insight, widget, defaultMenuItems, closeMenu]);
 
     return { menuItems, isMenuOpen, openMenu, closeMenu };
 };

@@ -102,7 +102,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
 
     const onScheduleExport = useCallback(() => {
         onScheduleEmailingOpen(widgetRef);
-    }, [widgetRef]);
+    }, [onScheduleEmailingOpen, widgetRef]);
     const scheduleExportEnabled = !isCustomWidget(widget);
 
     const { closeMenu, isMenuOpen, menuItems, openMenu } = useInsightMenu({
