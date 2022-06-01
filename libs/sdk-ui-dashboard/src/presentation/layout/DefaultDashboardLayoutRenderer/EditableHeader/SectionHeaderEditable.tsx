@@ -41,20 +41,20 @@ export function SectionHeaderEditable(props: ISectionHeaderEditOwnProps): JSX.El
     );
     const changeTitle = useCallback(
         (title: string) => dispatch(changeLayoutSectionHeader(index, { title }, true)),
-        [dispatch],
+        [dispatch, index],
     );
     const changeDescription = useCallback(
         (description: string) => dispatch(changeLayoutSectionHeader(index, { description }, true)),
-        [dispatch],
+        [dispatch, index],
     );
 
-    const onFocus = () => {
+    const onFocus = useCallback(() => {
         setActiveHeaderIndex(index);
-    };
+    }, [index, setActiveHeaderIndex]);
 
-    const onBlur = () => {
+    const onBlur = useCallback(() => {
         setActiveHeaderIndex(null);
-    };
+    }, [setActiveHeaderIndex]);
 
     const onTitleSubmit = useCallback(
         (title: string) => {
