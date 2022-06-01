@@ -1,8 +1,13 @@
-// (C) 2020 GoodData Corporation
-import React, { useState } from "react";
+// (C) 2020-2022 GoodData Corporation
+import React, { useCallback, useMemo, useState } from "react";
 import last from "lodash/last";
 import { selectLocale, useDashboardSelector } from "../../../../model";
-import { DrillStep, getDrillDownAttributeTitle } from "../../../drill";
+import {
+    DrillStep,
+    getDrillDownAttributeTitle,
+    OnDrillDownSuccess,
+    OnDrillToInsightSuccess,
+} from "../../../drill";
 import { IDrillDownDefinition, isDrillDownDefinition } from "../../../../types";
 import { getDrillOriginLocalIdentifier } from "../../../../_staging/drills/drillingUtils";
 import { DashboardInsightWithDrillSelect } from "./Insight/DashboardInsightWithDrillSelect";
@@ -18,30 +23,42 @@ export const DashboardInsightWithDrillDialog = (props: IDashboardInsightProps): 
     const insight = activeDrillStep?.insight;
     const widget = props.widget;
 
-    const breadcrumbs = drillSteps
-        .filter((s) => isDrillDownDefinition(s.drillDefinition))
-        .map((s) =>
-            getDrillDownAttributeTitle(
-                getDrillOriginLocalIdentifier(s.drillDefinition as IDrillDownDefinition),
-                s.drillEvent,
-            ),
-        );
+    const breadcrumbs = useMemo(
+        () =>
+            drillSteps
+                .filter((s) => isDrillDownDefinition(s.drillDefinition))
+                .map((s) =>
+                    getDrillDownAttributeTitle(
+                        getDrillOriginLocalIdentifier(s.drillDefinition as IDrillDownDefinition),
+                        s.drillEvent,
+                    ),
+                ),
+        [drillSteps],
+    );
 
     const locale = useDashboardSelector(selectLocale);
 
-    const setNextDrillStep = (drillStep: DrillStep) => {
+    const setNextDrillStep = useCallback((drillStep: DrillStep) => {
         setDrillSteps((s) => [...s, drillStep]);
-    };
+    }, []);
 
-    const goBack = () => setDrillSteps(([firstDrill]) => [firstDrill]);
-    const onClose = () => setDrillSteps([]);
+    const goBack = useCallback(() => setDrillSteps(([firstDrill]) => [firstDrill]), []);
+    const onClose = useCallback(() => setDrillSteps([]), []);
+    const onDrillDown = useCallback<OnDrillDownSuccess>(
+        (evt) => setNextDrillStep(evt.payload),
+        [setNextDrillStep],
+    );
+    const onDrillToInsight = useCallback<OnDrillToInsightSuccess>(
+        (evt) => setNextDrillStep(evt.payload),
+        [setNextDrillStep],
+    );
 
     return (
         <>
             <DashboardInsightWithDrillSelect
                 {...props}
-                onDrillDown={(evt) => setNextDrillStep(evt.payload)}
-                onDrillToInsight={(evt) => setNextDrillStep(evt.payload)}
+                onDrillDown={onDrillDown}
+                onDrillToInsight={onDrillToInsight}
             />
             {activeDrillStep && (
                 <InsightDrillDialog
@@ -49,7 +66,7 @@ export const DashboardInsightWithDrillDialog = (props: IDashboardInsightProps): 
                     breadcrumbs={breadcrumbs}
                     widget={widget!}
                     insight={insight!}
-                    onDrillDown={(evt) => setNextDrillStep(evt.payload)}
+                    onDrillDown={onDrillDown}
                     onBackButtonClick={goBack}
                     onClose={onClose}
                 />
