@@ -1211,5 +1211,36 @@
         "value": "Drop to remove",
         "comment": "",
         "limit": 0
+    },
+    "addPanel.newItem": {
+        "value": "New item",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationsList.dragToAdd": {
+        "value": "Drag to add",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationsList.savedVisualizations|insight": {
+        "value": "Saved insights",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationsList.savedVisualizations|report": {
+        "value": "Saved reports",
+        "comment": "",
+        "translate": false,
+        "limit": 0
+    },
+    "filterBar.filter.addFilterPlaceholder": {
+        "value": "Drag {icon} here",
+        "comment": "Do not translate variable enclosed in {}.",
+        "limit": 0
+    },
+    "filterBar.filter.dropzone.tooltip": {
+        "value": "Drag the attribute filter here.",
+        "comment": "",
+        "limit": 0
     }
 }

@@ -28,6 +28,7 @@ import { IDashboardDateFilterConfig, IFilterBarProps } from "../types";
 import { DefaultFilterBarContainer } from "./DefaultFilterBarContainer";
 import { HiddenFilterBar } from "./HiddenFilterBar";
 import { AttributeFilterDropZoneHint, DraggableAttributeFilter } from "../../dragAndDrop";
+import { AttributeFilterDropZone } from "../../dragAndDrop/draggableAttributeFilter/AttributeFilterDropZone";
 
 /**
  * @alpha
@@ -119,6 +120,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                     />
                 );
             })}
+            <AttributeFilterDropZone />
         </DefaultFilterBarContainer>
     );
 }
