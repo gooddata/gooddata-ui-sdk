@@ -4370,14 +4370,14 @@ packages:
       pretty-hrtime: 1.0.3
     dev: false
 
-  /@storybook/preset-scss/1.0.3_38bc45ab7db8c377403c4bd9a6223848:
+  /@storybook/preset-scss/1.0.3_e30c4b898a7c521267618f8df83f9552:
     resolution: {integrity: sha512-o9Iz6wxPeNENrQa2mKlsDKynBfqU2uWaRP80HeWp4TkGgf7/x3DVF2O7yi9N0x/PI1qzzTTpxlQ90D62XmpiTw==}
     peerDependencies:
       css-loader: '*'
       sass-loader: '*'
       style-loader: '*'
     dependencies:
-      css-loader: 5.2.7
+      css-loader: 6.7.1
       sass-loader: 10.2.1
       style-loader: 1.3.0
     dev: false
@@ -8532,24 +8532,6 @@ packages:
       webpack: 4.46.0
     dev: false
 
-  /css-loader/5.2.7:
-    resolution: {integrity: sha512-Q7mOvpBNBG7YrVGMxRxcBJZFL75o+cH2abNASdibkj/fffYD8qWbInZrD0S9ccI6vZclF3DsHE7njGlLtaHbhg==}
-    engines: {node: '>= 10.13.0'}
-    peerDependencies:
-      webpack: ^4.27.0 || ^5.0.0
-    dependencies:
-      icss-utils: 5.1.0_postcss@8.4.12
-      loader-utils: 2.0.2
-      postcss: 8.4.12
-      postcss-modules-extract-imports: 3.0.0_postcss@8.4.12
-      postcss-modules-local-by-default: 4.0.0_postcss@8.4.12
-      postcss-modules-scope: 3.0.0_postcss@8.4.12
-      postcss-modules-values: 4.0.0_postcss@8.4.12
-      postcss-value-parser: 4.2.0
-      schema-utils: 3.1.1
-      semver: 7.3.6
-    dev: false
-
   /css-loader/5.2.7_webpack@5.72.0:
     resolution: {integrity: sha512-Q7mOvpBNBG7YrVGMxRxcBJZFL75o+cH2abNASdibkj/fffYD8qWbInZrD0S9ccI6vZclF3DsHE7njGlLtaHbhg==}
     engines: {node: '>= 10.13.0'}
@@ -8565,6 +8547,39 @@ packages:
       postcss-modules-values: 4.0.0_postcss@8.4.12
       postcss-value-parser: 4.2.0
       schema-utils: 3.1.1
+      semver: 7.3.6
+      webpack: 5.72.0
+    dev: false
+
+  /css-loader/6.7.1:
+    resolution: {integrity: sha512-yB5CNFa14MbPJcomwNh3wLThtkZgcNyI2bNMRt8iE5Z8Vwl7f8vQXFAzn2HDOJvtDq2NTZBUGMSUNNyrv3/+cw==}
+    engines: {node: '>= 12.13.0'}
+    peerDependencies:
+      webpack: ^5.0.0
+    dependencies:
+      icss-utils: 5.1.0_postcss@8.4.12
+      postcss: 8.4.12
+      postcss-modules-extract-imports: 3.0.0_postcss@8.4.12
+      postcss-modules-local-by-default: 4.0.0_postcss@8.4.12
+      postcss-modules-scope: 3.0.0_postcss@8.4.12
+      postcss-modules-values: 4.0.0_postcss@8.4.12
+      postcss-value-parser: 4.2.0
+      semver: 7.3.6
+    dev: false
+
+  /css-loader/6.7.1_webpack@5.72.0:
+    resolution: {integrity: sha512-yB5CNFa14MbPJcomwNh3wLThtkZgcNyI2bNMRt8iE5Z8Vwl7f8vQXFAzn2HDOJvtDq2NTZBUGMSUNNyrv3/+cw==}
+    engines: {node: '>= 12.13.0'}
+    peerDependencies:
+      webpack: ^5.0.0
+    dependencies:
+      icss-utils: 5.1.0_postcss@8.4.12
+      postcss: 8.4.12
+      postcss-modules-extract-imports: 3.0.0_postcss@8.4.12
+      postcss-modules-local-by-default: 4.0.0_postcss@8.4.12
+      postcss-modules-scope: 3.0.0_postcss@8.4.12
+      postcss-modules-values: 4.0.0_postcss@8.4.12
+      postcss-value-parser: 4.2.0
       semver: 7.3.6
       webpack: 5.72.0_webpack-cli@4.9.2
     dev: false
@@ -22347,7 +22362,7 @@ packages:
     dev: false
 
   file:projects/dashboard-plugin-template.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-hEGLTE6qOKi5oBxMmRwMIi2/ssUi7xwjkQ/A4AANIfYu2lXnYwIHHUYSuglIl1VJThxLDAvx7yQXUmP/Ds99QQ==, tarball: file:projects/dashboard-plugin-template.tgz}
+    resolution: {integrity: sha512-sBjdvDb4h9ReVZn40wRF5Xj6sjI+ztR51BFhq0iM05t73jKSXRbIM/NLaxnglNWn1C+0fdMRLOnabrkQTabmuA==, tarball: file:projects/dashboard-plugin-template.tgz}
     id: file:projects/dashboard-plugin-template.tgz
     name: '@rush-temp/dashboard-plugin-template'
     version: 0.0.0
@@ -22369,7 +22384,7 @@ packages:
       babel-loader: 8.2.4_acba72ea4bf9d339cdfcd8f55cdb7006
       case-sensitive-paths-webpack-plugin: 2.4.0
       concurrently: 6.5.1
-      css-loader: 5.2.7_webpack@5.72.0
+      css-loader: 6.7.1_webpack@5.72.0
       dependency-cruiser: 10.9.0
       dotenv: 10.0.0
       dotenv-webpack: 7.1.0_webpack@5.72.0
@@ -22425,7 +22440,7 @@ packages:
     dev: false
 
   file:projects/dashboard-plugin-tests.tgz:
-    resolution: {integrity: sha512-vP80Qze+skDOPYIbru/oT3muQHImtCZbmOT331/z4RYpAK3/LdNcNvplMM1Q92TbnN1c0prAP+DSNN78LCJz+w==, tarball: file:projects/dashboard-plugin-tests.tgz}
+    resolution: {integrity: sha512-L1oGlZeaGm9FOz81IOvOght7qYAH+9YCNhvVQe1bsUvvuXMKLcGU9g4ImtBV18Zcj5FL8eSp7vjyQ7WHdMhXew==, tarball: file:projects/dashboard-plugin-tests.tgz}
     name: '@rush-temp/dashboard-plugin-tests'
     version: 0.0.0
     dependencies:
@@ -22461,7 +22476,7 @@ packages:
       clean-webpack-plugin: 3.0.0_webpack@5.72.0
       compression-webpack-plugin: 7.1.2_webpack@5.72.0
       concurrently: 6.5.1
-      css-loader: 5.2.7_webpack@5.72.0
+      css-loader: 6.7.1_webpack@5.72.0
       cypress: 7.7.0
       dependency-cruiser: 10.9.0
       dotenv: 10.0.0
@@ -22708,7 +22723,7 @@ packages:
     dev: false
 
   file:projects/playground.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-XPOerCWaRassnrh0bHBe5c8mYk4YkUqi2QltNAbrs/A4OlCBxJNItkB4KGsi7PogUWHV+zdca3tGZsCUpChXhg==, tarball: file:projects/playground.tgz}
+    resolution: {integrity: sha512-nGhezUYWbzknT3Gsoqqr6uILkhG2w676I4HZpDrDuKm94/WdnmBEsyRbazhTPgh5qm1Gf37l1GbUfHyHIUt+QQ==, tarball: file:projects/playground.tgz}
     id: file:projects/playground.tgz
     name: '@rush-temp/playground'
     version: 0.0.0
@@ -22739,7 +22754,7 @@ packages:
       circular-dependency-plugin: 5.2.2_webpack@5.72.0
       clean-webpack-plugin: 3.0.0_webpack@5.72.0
       compression-webpack-plugin: 7.1.2_webpack@5.72.0
-      css-loader: 5.2.7_webpack@5.72.0
+      css-loader: 6.7.1_webpack@5.72.0
       dotenv-webpack: 7.1.0_webpack@5.72.0
       eslint: 8.12.0
       eslint-plugin-header: 3.1.1_eslint@8.12.0
@@ -23228,7 +23243,7 @@ packages:
     dev: false
 
   file:projects/sdk-examples.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-P4kQcEHYaDMGAfzZMcWiOzKT/mtFTTibHeMbrjelj+j+u9r6TmVC93VvmhHxtAKCt0T0CFJKRDTx83EPTrHPWg==, tarball: file:projects/sdk-examples.tgz}
+    resolution: {integrity: sha512-tyLdZExcElNYAVQTCjx7mjFQYeJ/6VjW3BxnYZXalKAO8qDTWdZ5RaDLivvFfnbGh8mQ87VIoJ5N0/ii4PBhLA==, tarball: file:projects/sdk-examples.tgz}
     id: file:projects/sdk-examples.tgz
     name: '@rush-temp/sdk-examples'
     version: 0.0.0
@@ -23270,7 +23285,7 @@ packages:
       clean-webpack-plugin: 3.0.0_webpack@5.72.0
       commander: 8.3.0
       compression-webpack-plugin: 7.1.2_webpack@5.72.0
-      css-loader: 5.2.7_webpack@5.72.0
+      css-loader: 6.7.1_webpack@5.72.0
       dotenv-webpack: 7.1.0_webpack@5.72.0
       eslint: 8.12.0
       eslint-plugin-header: 3.1.1_eslint@8.12.0
@@ -24178,7 +24193,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-tests-e2e.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-8w9wNmAOJ2orvHmdPuClxbgtr4c8BtYYedtXilyWTfWPAzhfWXzdqC9q6V/rN1bevum4sg96BQDA2de0EN0qJA==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
+    resolution: {integrity: sha512-1tUqtZbUvkRuY3+acldTMCNNMfSghgff5ZhfA8TiUxgFjga/eEn9vXVujD0EvTOM84Y83Q2m2RKJEERfwpv+OA==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
     id: file:projects/sdk-ui-tests-e2e.tgz
     name: '@rush-temp/sdk-ui-tests-e2e'
     version: 0.0.0
@@ -24214,7 +24229,7 @@ packages:
       circular-dependency-plugin: 5.2.2_webpack@5.72.0
       clean-webpack-plugin: 3.0.0_webpack@5.72.0
       compression-webpack-plugin: 7.1.2_webpack@5.72.0
-      css-loader: 5.2.7_webpack@5.72.0
+      css-loader: 6.7.1_webpack@5.72.0
       cypress: 7.7.0
       cypress-real-events: 1.7.0_cypress@7.7.0
       dependency-cruiser: 10.9.0
@@ -24280,7 +24295,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-tests.tgz:
-    resolution: {integrity: sha512-1g5GF5cTZYItSbe1iBFZakrjZh7tqqE+pKhaBDYZtBtafLP1JGE6VIeWQeNllECWBKja8uQWrrcxTAeK36XMJg==, tarball: file:projects/sdk-ui-tests.tgz}
+    resolution: {integrity: sha512-rvheFsrNK6L6jbX53XDmCF+lkDBf+IfxBqyf62iLd0KfZCEeHtlEFETHRvyKa0fFK8bGs9YZMSYDGyzdA4ReLg==, tarball: file:projects/sdk-ui-tests.tgz}
     name: '@rush-temp/sdk-ui-tests'
     version: 0.0.0
     dependencies:
@@ -24298,7 +24313,7 @@ packages:
       '@storybook/addons': 6.5.6_react-dom@17.0.2+react@17.0.2
       '@storybook/builder-webpack5': 6.5.6_56a8b41080d40451c6ac9c939a1a4cac
       '@storybook/manager-webpack5': 6.5.6_56a8b41080d40451c6ac9c939a1a4cac
-      '@storybook/preset-scss': 1.0.3_38bc45ab7db8c377403c4bd9a6223848
+      '@storybook/preset-scss': 1.0.3_e30c4b898a7c521267618f8df83f9552
       '@storybook/react': 6.5.6_f239f9bd7292a17fb3a340a296a3be96
       '@storybook/theming': 6.5.6_react-dom@17.0.2+react@17.0.2
       '@types/enzyme': 3.10.11
@@ -24318,7 +24333,7 @@ packages:
       babel-plugin-require-context-hook: 1.0.0
       babel-runtime: 6.26.0
       core-js: 2.6.12
-      css-loader: 5.2.7
+      css-loader: 6.7.1
       dependency-cruiser: 10.9.0
       enzyme: 3.11.0
       eslint: 8.12.0

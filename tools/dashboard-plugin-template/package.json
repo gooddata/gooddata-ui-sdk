@@ -93,7 +93,7 @@
         "babel-loader": "^8.0.5",
         "case-sensitive-paths-webpack-plugin": "^2.4.0",
         "concurrently": "^6.0.2",
-        "css-loader": "^5.2.4",
+        "css-loader": "^6.7.1",
         "dependency-cruiser": "^10.1.1",
         "dotenv-webpack": "^7.0.2",
         "dotenv": "^10.0.0",
