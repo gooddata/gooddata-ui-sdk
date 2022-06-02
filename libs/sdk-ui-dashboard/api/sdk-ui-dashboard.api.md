@@ -3098,6 +3098,16 @@ export interface IInsightBodyProps extends Partial<IVisualizationCallbacks> {
     workspace: string;
 }
 
+// @internal (undocumented)
+export interface IInsightListProps {
+    // (undocumented)
+    height: number;
+    // (undocumented)
+    noDataButton?: INoDataButton;
+    // (undocumented)
+    searchAutofocus?: boolean;
+}
+
 // @alpha (undocumented)
 export type IInsightMenuItem = IInsightMenuItemButton | IInsightMenuItemSeparator;
 
@@ -3218,6 +3228,16 @@ export interface InitializeDashboardPayload {
 // @public
 export const InitialLoadCorrelationId = "initialLoad";
 
+// @internal (undocumented)
+export interface INoDataButton {
+    // (undocumented)
+    className: string;
+    // (undocumented)
+    onClick?: () => void;
+    // (undocumented)
+    value?: string;
+}
+
 // @alpha (undocumented)
 export interface InsightAttributesMeta {
     attributes: ReadonlyArray<IAttributeMetadataObject>;
@@ -3242,6 +3262,9 @@ export interface InsightDateDatasets {
     readonly usedInAttributes: ReadonlyArray<ICatalogDateDataset | undefined>;
     readonly usedInDateFilters: ReadonlyArray<ICatalogDateDataset>;
 }
+
+// @internal (undocumented)
+export const InsightList: React_2.FC<IInsightListProps>;
 
 // @alpha (undocumented)
 export type InsightMenuButtonComponentProvider = (insight: IInsight, widget: IInsightWidget) => CustomDashboardInsightMenuButtonComponent;

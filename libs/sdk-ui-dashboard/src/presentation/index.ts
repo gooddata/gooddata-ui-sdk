@@ -13,4 +13,5 @@ export * from "./saveAs";
 export * from "./topBar";
 export * from "./widget";
 export * from "./shareDialog";
+export * from "./insightList";
 export { translations } from "./localization";
