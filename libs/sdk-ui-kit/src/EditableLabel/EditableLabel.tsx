@@ -246,7 +246,11 @@ export class EditableLabelInner extends Component<IEditableLabelInnerProps, IEdi
     }
 
     renderEditableLabelEdit(): ReactNode {
-        return this.props.textareaInOverlay ? this.renderTextAreaInOverlay() : this.renderTextarea();
+        return this.props.textareaInOverlay
+            ? this.renderTextAreaInOverlay()
+            : this.renderTextarea(
+                  this.root.current.clientWidth ? { width: this.root.current.clientWidth } : {},
+              );
     }
 
     render(): ReactNode {
