@@ -4370,7 +4370,7 @@ packages:
       pretty-hrtime: 1.0.3
     dev: false
 
-  /@storybook/preset-scss/1.0.3_e30c4b898a7c521267618f8df83f9552:
+  /@storybook/preset-scss/1.0.3_e4243774cfda5d3ea82443523e49d757:
     resolution: {integrity: sha512-o9Iz6wxPeNENrQa2mKlsDKynBfqU2uWaRP80HeWp4TkGgf7/x3DVF2O7yi9N0x/PI1qzzTTpxlQ90D62XmpiTw==}
     peerDependencies:
       css-loader: '*'
@@ -4379,7 +4379,7 @@ packages:
     dependencies:
       css-loader: 6.7.1
       sass-loader: 10.2.1
-      style-loader: 1.3.0
+      style-loader: 3.3.1
     dev: false
 
   /@storybook/preview-web/6.5.6_react-dom@17.0.2+react@17.0.2:
@@ -19355,16 +19355,6 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
-  /style-loader/1.3.0:
-    resolution: {integrity: sha512-V7TCORko8rs9rIqkSrlMfkqA63DfoGBBJmK1kKGCcSi+BWb4cqz0SRsnp4l6rU5iwOEd0/2ePv68SV22VXon4Q==}
-    engines: {node: '>= 8.9.0'}
-    peerDependencies:
-      webpack: ^4.0.0 || ^5.0.0
-    dependencies:
-      loader-utils: 2.0.2
-      schema-utils: 2.7.1
-    dev: false
-
   /style-loader/1.3.0_webpack@4.46.0:
     resolution: {integrity: sha512-V7TCORko8rs9rIqkSrlMfkqA63DfoGBBJmK1kKGCcSi+BWb4cqz0SRsnp4l6rU5iwOEd0/2ePv68SV22VXon4Q==}
     engines: {node: '>= 8.9.0'}
@@ -19376,17 +19366,6 @@ packages:
       webpack: 4.46.0
     dev: false
 
-  /style-loader/1.3.0_webpack@5.72.0:
-    resolution: {integrity: sha512-V7TCORko8rs9rIqkSrlMfkqA63DfoGBBJmK1kKGCcSi+BWb4cqz0SRsnp4l6rU5iwOEd0/2ePv68SV22VXon4Q==}
-    engines: {node: '>= 8.9.0'}
-    peerDependencies:
-      webpack: ^4.0.0 || ^5.0.0
-    dependencies:
-      loader-utils: 2.0.2
-      schema-utils: 2.7.1
-      webpack: 5.72.0_webpack-cli@4.9.2
-    dev: false
-
   /style-loader/2.0.0_webpack@5.72.0:
     resolution: {integrity: sha512-Z0gYUJmzZ6ZdRUqpg1r8GsaFKypE+3xAzuFeMuoHgjc9KZv3wMyCRjQIWEbhoFSq7+7yoHXySDJyyWQaPajeiQ==}
     engines: {node: '>= 10.13.0'}
@@ -19396,6 +19375,22 @@ packages:
       loader-utils: 2.0.2
       schema-utils: 3.1.1
       webpack: 5.72.0
+    dev: false
+
+  /style-loader/3.3.1:
+    resolution: {integrity: sha512-GPcQ+LDJbrcxHORTRes6Jy2sfvK2kS6hpSfI/fXhPt+spVzxF6LJ1dHLN9zIGmVaaP044YKaIatFaufENRiDoQ==}
+    engines: {node: '>= 12.13.0'}
+    peerDependencies:
+      webpack: ^5.0.0
+    dev: false
+
+  /style-loader/3.3.1_webpack@5.72.0:
+    resolution: {integrity: sha512-GPcQ+LDJbrcxHORTRes6Jy2sfvK2kS6hpSfI/fXhPt+spVzxF6LJ1dHLN9zIGmVaaP044YKaIatFaufENRiDoQ==}
+    engines: {node: '>= 12.13.0'}
+    peerDependencies:
+      webpack: ^5.0.0
+    dependencies:
+      webpack: 5.72.0_webpack-cli@4.9.2
     dev: false
 
   /style-search/0.1.0:
@@ -22362,7 +22357,7 @@ packages:
     dev: false
 
   file:projects/dashboard-plugin-template.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-sBjdvDb4h9ReVZn40wRF5Xj6sjI+ztR51BFhq0iM05t73jKSXRbIM/NLaxnglNWn1C+0fdMRLOnabrkQTabmuA==, tarball: file:projects/dashboard-plugin-template.tgz}
+    resolution: {integrity: sha512-GbDeeRxLTnM44mmsWuGU0EzjKR+E1RcMYbsRbM+VHR03rAJ0TMf12EMoUf/WktZrV8n6OUUxZfISo3RrUXfNCA==, tarball: file:projects/dashboard-plugin-template.tgz}
     id: file:projects/dashboard-plugin-template.tgz
     name: '@rush-temp/dashboard-plugin-template'
     version: 0.0.0
@@ -22412,7 +22407,7 @@ packages:
       react-dom: 17.0.2_react@17.0.2
       react-intl: 5.24.8_react@17.0.2+typescript@4.0.2
       source-map-loader: 2.0.2_webpack@5.72.0
-      style-loader: 1.3.0_webpack@5.72.0
+      style-loader: 3.3.1_webpack@5.72.0
       ts-jest: 27.1.4_04d0a0d69bd2aca5362e207508aff12f
       ts-loader: 8.3.0_typescript@4.0.2+webpack@5.72.0
       tslib: 2.3.1
@@ -22440,7 +22435,7 @@ packages:
     dev: false
 
   file:projects/dashboard-plugin-tests.tgz:
-    resolution: {integrity: sha512-L1oGlZeaGm9FOz81IOvOght7qYAH+9YCNhvVQe1bsUvvuXMKLcGU9g4ImtBV18Zcj5FL8eSp7vjyQ7WHdMhXew==, tarball: file:projects/dashboard-plugin-tests.tgz}
+    resolution: {integrity: sha512-LBoOiGNyML9rAymijpG1WQ/rwicICnAyOsLIelgHD7PQY0Cp5rtGBcwQPK3a9XW/y7+Nxo4rUsPVQo6hHvd0wg==, tarball: file:projects/dashboard-plugin-tests.tgz}
     name: '@rush-temp/dashboard-plugin-tests'
     version: 0.0.0
     dependencies:
@@ -22506,7 +22501,7 @@ packages:
       react-intl: 5.24.8_react@17.0.2+typescript@4.0.2
       source-map-loader: 2.0.2_webpack@5.72.0
       speed-measure-webpack-plugin: 1.5.0_webpack@5.72.0
-      style-loader: 1.3.0_webpack@5.72.0
+      style-loader: 3.3.1_webpack@5.72.0
       ts-jest: 27.1.4_04d0a0d69bd2aca5362e207508aff12f
       ts-node: 10.7.0_b04f371f35f79618750bcd4cb7cf2198
       tslib: 2.3.1
@@ -22723,7 +22718,7 @@ packages:
     dev: false
 
   file:projects/playground.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-nGhezUYWbzknT3Gsoqqr6uILkhG2w676I4HZpDrDuKm94/WdnmBEsyRbazhTPgh5qm1Gf37l1GbUfHyHIUt+QQ==, tarball: file:projects/playground.tgz}
+    resolution: {integrity: sha512-Li7x2xyVyaO7lDTlG/XyEXJFIwutjQBNpxF3npARS8LZWn9YqsCMWNthXVByUJMvRPtrvOb0Mk7kj4J4OrynJg==, tarball: file:projects/playground.tgz}
     id: file:projects/playground.tgz
     name: '@rush-temp/playground'
     version: 0.0.0
@@ -22780,7 +22775,7 @@ packages:
       sass-loader: 10.2.1_sass@1.50.0+webpack@5.72.0
       source-map-loader: 2.0.2_webpack@5.72.0
       speed-measure-webpack-plugin: 1.5.0_webpack@5.72.0
-      style-loader: 1.3.0_webpack@5.72.0
+      style-loader: 3.3.1_webpack@5.72.0
       ts-invariant: 0.7.5
       tslib: 2.3.1
       typescript: 4.0.2
@@ -23243,7 +23238,7 @@ packages:
     dev: false
 
   file:projects/sdk-examples.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-tyLdZExcElNYAVQTCjx7mjFQYeJ/6VjW3BxnYZXalKAO8qDTWdZ5RaDLivvFfnbGh8mQ87VIoJ5N0/ii4PBhLA==, tarball: file:projects/sdk-examples.tgz}
+    resolution: {integrity: sha512-EIiCNn6LBZdjN6INI13UAzrPmYMeu9rD8ahv2W8V0GSEM5zlhWlK8aY5EBhgNCf6I15Jbch2GVoZOFhjXLqACg==, tarball: file:projects/sdk-examples.tgz}
     id: file:projects/sdk-examples.tgz
     name: '@rush-temp/sdk-examples'
     version: 0.0.0
@@ -23325,7 +23320,7 @@ packages:
       sass-loader: 10.2.1_sass@1.50.0+webpack@5.72.0
       source-map-loader: 2.0.2_webpack@5.72.0
       speed-measure-webpack-plugin: 1.5.0_webpack@5.72.0
-      style-loader: 1.3.0_webpack@5.72.0
+      style-loader: 3.3.1_webpack@5.72.0
       styled-jsx: 4.0.1_@babel+core@7.17.9+react@17.0.2
       testcafe: 1.18.5
       ts-invariant: 0.7.5
@@ -24193,7 +24188,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-tests-e2e.tgz_ts-node@10.7.0:
-    resolution: {integrity: sha512-1tUqtZbUvkRuY3+acldTMCNNMfSghgff5ZhfA8TiUxgFjga/eEn9vXVujD0EvTOM84Y83Q2m2RKJEERfwpv+OA==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
+    resolution: {integrity: sha512-JZZZM1Nn/eG89lhnzMgUPi+kSWydevIVWGatz/RrbUQrLqn2MSEDSHTcJGcV5vHu+5g3o+qXVfZHmG018FFS2A==, tarball: file:projects/sdk-ui-tests-e2e.tgz}
     id: file:projects/sdk-ui-tests-e2e.tgz
     name: '@rush-temp/sdk-ui-tests-e2e'
     version: 0.0.0
@@ -24266,7 +24261,7 @@ packages:
       sass-loader: 10.2.1_e3a10481b6e5cbf93aa3f98fa5ee62a3
       source-map-loader: 2.0.2_webpack@5.72.0
       speed-measure-webpack-plugin: 1.5.0_webpack@5.72.0
-      style-loader: 1.3.0_webpack@5.72.0
+      style-loader: 3.3.1_webpack@5.72.0
       styled-jsx: 4.0.1_@babel+core@7.17.9+react@17.0.2
       tslib: 2.3.1
       typescript: 4.0.2
@@ -24295,7 +24290,7 @@ packages:
     dev: false
 
   file:projects/sdk-ui-tests.tgz:
-    resolution: {integrity: sha512-rvheFsrNK6L6jbX53XDmCF+lkDBf+IfxBqyf62iLd0KfZCEeHtlEFETHRvyKa0fFK8bGs9YZMSYDGyzdA4ReLg==, tarball: file:projects/sdk-ui-tests.tgz}
+    resolution: {integrity: sha512-RmPDqbv4dpTLI/2/8lTT9VLJOUENHuVRoz6JVnlpN3H/qXcCM5mxJO/FZEJtQusAdnNMILOpdbyw2RvGltRK1g==, tarball: file:projects/sdk-ui-tests.tgz}
     name: '@rush-temp/sdk-ui-tests'
     version: 0.0.0
     dependencies:
@@ -24313,7 +24308,7 @@ packages:
       '@storybook/addons': 6.5.6_react-dom@17.0.2+react@17.0.2
       '@storybook/builder-webpack5': 6.5.6_56a8b41080d40451c6ac9c939a1a4cac
       '@storybook/manager-webpack5': 6.5.6_56a8b41080d40451c6ac9c939a1a4cac
-      '@storybook/preset-scss': 1.0.3_e30c4b898a7c521267618f8df83f9552
+      '@storybook/preset-scss': 1.0.3_e4243774cfda5d3ea82443523e49d757
       '@storybook/react': 6.5.6_f239f9bd7292a17fb3a340a296a3be96
       '@storybook/theming': 6.5.6_react-dom@17.0.2+react@17.0.2
       '@types/enzyme': 3.10.11
@@ -24361,7 +24356,7 @@ packages:
       react-responsive: 8.2.0_react@17.0.2
       sass-loader: 10.2.1
       spark-md5: 3.0.2
-      style-loader: 1.3.0
+      style-loader: 3.3.1
       stylelint: 13.13.1
       stylelint-checkstyle-formatter: 0.1.2
       stylelint-config-prettier: 8.0.2_stylelint@13.13.1
