@@ -148,11 +148,14 @@ module.exports = (_env, argv) => {
             ...commonConfig,
             entry: "./src/index",
             name: "harness",
+            ignoreWarnings: [/Failed to parse source map/], // some of the dependencies have invalid source maps, we do not care that much
             devServer: {
-                contentBase: path.join(__dirname, "dist"),
+                static: {
+                    directory: path.join(__dirname, "dist"),
+                },
                 port: PORT,
-                proxy,
                 host: "127.0.0.1",
+                proxy,
                 https: protocol === "https:",
             },
             plugins: [

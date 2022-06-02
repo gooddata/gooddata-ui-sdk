@@ -1,3 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 export { AuthContext, AuthProvider, useAuth, useBackend } from "./context";
-export { IAuthState, IAuthContext, AuthStatus } from "./types";
+export { AuthStatus } from "./types";
+export type { IAuthState, IAuthContext } from "./types";
