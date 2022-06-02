@@ -231,6 +231,14 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@storybook/builder-webpack5",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@storybook/manager-webpack5",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@storybook/preset-scss",
       "allowedCategories": [ "production" ]
     },
