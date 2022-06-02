@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import tigerFactory, {
     TigerTokenAuthProvider,
     ContextDeferredAuthProvider,
@@ -7,6 +7,10 @@ import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 export function hasCredentialsSetup(): boolean {
     return !!process.env.TIGER_API_TOKEN;
+}
+
+export function needsAuthentication(): boolean {
+    return true;
 }
 
 function getBackend(): IAnalyticalBackend {
