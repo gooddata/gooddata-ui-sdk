@@ -159,12 +159,16 @@ module.exports = async (env, argv) => {
                 },
             ],
         },
+        ignoreWarnings: [/Failed to parse source map/], // some of the dependencies have invalid source maps, we do not care that much
         devServer: {
-            contentBase: path.join(__dirname, "dist"),
+            static: {
+                directory: path.join(__dirname, "dist"),
+            },
+            devMiddleware: {
+                stats: "errors-only",
+            },
             historyApiFallback: true,
-            compress: true,
             port: 8999,
-            stats: "errors-only",
             liveReload: true,
             proxy,
         },
