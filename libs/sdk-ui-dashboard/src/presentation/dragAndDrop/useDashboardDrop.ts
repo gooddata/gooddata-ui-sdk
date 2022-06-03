@@ -11,6 +11,7 @@ type DashboardDropTargetHookSpec<DragObject, CollectedProps> = Pick<
 const basicDropCollect = (monitor: DropTargetMonitor) => ({
     isOver: monitor.isOver(),
     canDrop: monitor.canDrop(),
+    itemType: monitor.getItemType() as DraggableItemType,
 });
 
 export function useDashboardDrop<

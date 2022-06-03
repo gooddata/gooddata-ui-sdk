@@ -14,6 +14,8 @@ import {
 import { selectBackendCapabilities } from "../backendCapabilities/backendCapabilitiesSelectors";
 import { DashboardState } from "../types";
 import { createDisplayFormMap } from "../../../_staging/catalog/displayFormMap";
+import isEmpty from "lodash/isEmpty";
+import negate from "lodash/negate";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -26,6 +28,11 @@ const selectSelf = createSelector(
 export const selectCatalogAttributes = createSelector(selectSelf, (state) => {
     return state.attributes ?? [];
 });
+
+/**
+ * @alpha
+ */
+export const selectHasCatalogAttributes = createSelector(selectCatalogAttributes, negate(isEmpty));
 
 /**
  * @public

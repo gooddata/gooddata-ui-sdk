@@ -3,7 +3,7 @@ import cx from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { removeAttributeFilter, useDashboardDispatch } from "../../model";
-import { DEBUG_SHOW_DROP_ZONES } from "./config";
+import { getDropZoneDebugStyle } from "./debug";
 import { useDashboardDrop } from "./useDashboardDrop";
 
 export function DeleteDropZone() {
@@ -27,7 +27,7 @@ export function DeleteDropZone() {
         "gd-dropzone-over": isOver,
     });
 
-    const debugStyle = DEBUG_SHOW_DROP_ZONES && isOver ? { backgroundColor: "rgba(0, 255, 0, 0.4)" } : {};
+    const debugStyle = getDropZoneDebugStyle({ isOver });
 
     return (
         <div className={className} ref={dropRef} style={debugStyle}>

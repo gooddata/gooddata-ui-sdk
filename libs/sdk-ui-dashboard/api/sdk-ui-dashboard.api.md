@@ -158,6 +158,9 @@ export interface AddAttributeFilter extends IDashboardCommand {
 // @alpha
 export function addAttributeFilter(displayForm: ObjRef, index: number, correlationId?: string): AddAttributeFilter;
 
+// @internal (undocumented)
+export function AddAttributeFilterButton({ className, isOpen }: IAddAttributeFilterButtonProps): JSX.Element;
+
 // @alpha
 export interface AddAttributeFilterPayload {
     // (undocumented)
@@ -167,6 +170,15 @@ export interface AddAttributeFilterPayload {
     readonly initialIsNegativeSelection?: boolean;
     readonly initialSelection?: IAttributeElements;
     readonly parentFilters?: ReadonlyArray<IDashboardAttributeFilterParent>;
+}
+
+// @internal (undocumented)
+export function AddAttributeFilterPlaceholder({ disabled }: AddAttributeFilterPlaceholderProps): JSX.Element;
+
+// @internal (undocumented)
+export interface AddAttributeFilterPlaceholderProps {
+    // (undocumented)
+    disabled?: boolean;
 }
 
 // @alpha
@@ -262,6 +274,7 @@ export type AttributeFilterDraggableComponent = {
 
 // @internal (undocumented)
 export type AttributeFilterDraggableItem = {
+    type: "attributeFilter";
     filter: IDashboardAttributeFilter;
     filterIndex: number;
 };
@@ -269,8 +282,16 @@ export type AttributeFilterDraggableItem = {
 // @internal (undocumented)
 export type AttributeFilterDraggingComponent = ComponentType<IAttributeFilterDraggingComponentProps>;
 
+// @internal (undocumented)
+export type AttributeFilterPlaceholderDraggableItem = {
+    type: "attributeFilter-placeholder";
+};
+
 // @public
 export type AttributeFilterSelectionType = "IN" | "NOT_IN";
+
+// @internal (undocumented)
+export function AttributesDropdown({ className, bodyClassName, onClose, onSelect, }: IAttributesDropdownProps): JSX.Element;
 
 // @alpha (undocumented)
 export interface BackendCapabilitiesState {
@@ -681,6 +702,7 @@ export type CustomDraggableComponent = {
 
 // @internal (undocumented)
 export type CustomDraggableItem = {
+    type: "custom";
     [key: string]: any;
 };
 
@@ -2128,11 +2150,15 @@ export type DraggableComponent = {
 };
 
 // @internal (undocumented)
-export type DraggableItemType = "attributeFilter" | "widget" | "custom";
+export type DraggableItem = AttributeFilterDraggableItem | AttributeFilterPlaceholderDraggableItem | CustomDraggableItem | WidgetDraggableItem;
+
+// @internal (undocumented)
+export type DraggableItemType = "attributeFilter" | "attributeFilter-placeholder" | "widget" | "custom";
 
 // @internal (undocumented)
 export type DraggableItemTypeMapping = {
     attributeFilter: AttributeFilterDraggableItem;
+    "attributeFilter-placeholder": AttributeFilterPlaceholderDraggableItem;
     custom: CustomDraggableItem;
     widget: WidgetDraggableItem;
 };
@@ -2532,10 +2558,30 @@ export const HiddenTitle: () => JSX.Element | null;
 export const HiddenTopBar: (_props: ITopBarProps) => JSX.Element | null;
 
 // @internal (undocumented)
+export interface IAddAttributeFilterButtonProps {
+    // (undocumented)
+    className: string;
+    // (undocumented)
+    isOpen: boolean;
+}
+
+// @internal (undocumented)
 export type IAttributeFilterDraggingComponentProps = {
     itemType: "attributeFilter";
     item: AttributeFilterDraggableItem;
 };
+
+// @internal (undocumented)
+export interface IAttributesDropdownProps {
+    // (undocumented)
+    bodyClassName?: string;
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    onClose: () => void;
+    // (undocumented)
+    onSelect: (item: ICatalogAttribute) => void;
+}
 
 // @alpha
 export interface IBrokenAlertFilterBasicInfo<TFilter extends FilterContextItem = FilterContextItem> {
@@ -3307,6 +3353,12 @@ export interface IResolvedFilterValues {
     // (undocumented)
     dateFilters: ResolvedDateFilterValues;
 }
+
+// @internal (undocumented)
+export function isAttributeFilterDraggableItem(item: any): item is AttributeFilterDraggableItem;
+
+// @internal (undocumented)
+export function isAttributeFilterPlaceholderDraggableItem(item: any): item is AttributeFilterPlaceholderDraggableItem;
 
 // @alpha (undocumented)
 export interface ISaveAsDialogProps {
@@ -5715,6 +5767,7 @@ export interface WidgetConfigPanelProps {
 
 // @internal (undocumented)
 export type WidgetDraggableItem = {
+    type: "widget";
     widget: never;
 };
 

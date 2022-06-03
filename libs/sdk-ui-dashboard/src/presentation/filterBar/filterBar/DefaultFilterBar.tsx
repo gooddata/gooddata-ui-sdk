@@ -1,5 +1,5 @@
 // (C) 2021-2022 GoodData Corporation
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import partition from "lodash/partition";
 import {
     IDashboardAttributeFilter,
@@ -9,6 +9,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import {
+    addAttributeFilter,
     changeAttributeFilterSelection,
     changeDateFilterSelection,
     clearDateFilterSelection,
@@ -29,6 +30,8 @@ import { DefaultFilterBarContainer } from "./DefaultFilterBarContainer";
 import { HiddenFilterBar } from "./HiddenFilterBar";
 import { AttributeFilterDropZoneHint, DraggableAttributeFilter } from "../../dragAndDrop";
 import { AttributeFilterDropZone } from "../../dragAndDrop/draggableAttributeFilter/AttributeFilterDropZone";
+import { AttributesDropdown } from "../attributeFilter/addAttributeFilter/AttributesDropdown";
+import { ICatalogAttribute } from "@gooddata/sdk-model";
 
 /**
  * @alpha
@@ -71,12 +74,26 @@ export const useFilterBarProps = (): IFilterBarProps => {
  */
 export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
     const { filters, onAttributeFilterChanged, onDateFilterChanged } = props;
+
     const customFilterName = useDashboardSelector(selectEffectiveDateFilterTitle);
     const availableGranularities = useDashboardSelector(selectEffectiveDateFilterAvailableGranularities);
     const dateFilterOptions = useDashboardSelector(selectEffectiveDateFilterOptions);
     const dateFilterMode = useDashboardSelector(selectEffectiveDateFilterMode);
     const isExport = useDashboardSelector(selectIsExport);
     const { DashboardAttributeFilterComponentProvider } = useDashboardComponentsContext();
+
+    const [addedFilterIndex, setAddedFilterIndex] = useState<number>();
+    const clearAddedFilterIndex = useCallback(() => setAddedFilterIndex(undefined), []);
+
+    const dispatch = useDashboardDispatch();
+
+    const onAttributeFilterSelect = function (item: ICatalogAttribute) {
+        if (!addedFilterIndex) {
+            return;
+        }
+
+        dispatch(addAttributeFilter(item.defaultDisplayForm, addedFilterIndex));
+    };
 
     if (isExport) {
         return <HiddenFilterBar {...props} />;
@@ -103,7 +120,12 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                             config={dateFilterComponentConfig}
                             readonly={dateFilterMode === "readonly"}
                         />
-                        <AttributeFilterDropZoneHint placement="outside" targetIndex={0} />
+                        <AttributeFilterDropZoneHint
+                            placement="outside"
+                            hintPosition="next"
+                            targetIndex={0}
+                            onAddAttributePlaceholder={setAddedFilterIndex}
+                        />
                     </>
                 )}
             </div>
@@ -111,16 +133,35 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                 const CustomAttributeFilterComponent = DashboardAttributeFilterComponentProvider(filter);
 
                 return (
-                    <DraggableAttributeFilter
-                        key={objRefToString(filter.attributeFilter.displayForm)}
-                        filter={filter}
-                        filterIndex={filterIndex}
-                        FilterComponent={CustomAttributeFilterComponent}
-                        onAttributeFilterChanged={onAttributeFilterChanged}
-                    />
+                    <React.Fragment key={objRefToString(filter.attributeFilter.displayForm)}>
+                        {filterIndex === addedFilterIndex && (
+                            <AttributesDropdown
+                                onClose={clearAddedFilterIndex}
+                                onSelect={onAttributeFilterSelect}
+                            />
+                        )}
+                        <DraggableAttributeFilter
+                            filter={filter}
+                            filterIndex={filterIndex}
+                            FilterComponent={CustomAttributeFilterComponent}
+                            onAttributeFilterChanged={onAttributeFilterChanged}
+                            onAttributeFilterAdded={setAddedFilterIndex}
+                        />
+                    </React.Fragment>
                 );
             })}
-            <AttributeFilterDropZone />
+            {attributeFilters.length === addedFilterIndex && (
+                <AttributesDropdown onClose={clearAddedFilterIndex} onSelect={onAttributeFilterSelect} />
+            )}
+            <AttributeFilterDropZone onDrop={() => setAddedFilterIndex(attributeFilters.length)} />
+            <div style={{ position: "relative", flexGrow: 1, height: "55px" }}>
+                <AttributeFilterDropZoneHint
+                    placement="outside"
+                    hintPosition="prev"
+                    acceptPlaceholder={false}
+                    targetIndex={attributeFilters.length - 1}
+                />
+            </div>
         </DefaultFilterBarContainer>
     );
 }

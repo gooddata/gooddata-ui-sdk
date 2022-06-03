@@ -1217,6 +1217,21 @@
         "comment": "",
         "limit": 0
     },
+    "addPanel.attributeFilter": {
+        "value": "Attribute Filter",
+        "comment": "",
+        "limit": 0
+    },
+    "addPanel.attributeFilter.tooltip.no_attributes": {
+        "value": "The attribute filter requires an attribute.",
+        "comment": "",
+        "limit": 0
+    },
+    "addPanel.attributeFilter.tooltip.no_attributes.link": {
+        "value": "Learn more",
+        "comment": "",
+        "limit": 0
+    },
     "visualizationsList.dragToAdd": {
         "value": "Drag to add",
         "comment": "",
@@ -1231,6 +1246,11 @@
         "value": "Saved reports",
         "comment": "",
         "translate": false,
+        "limit": 0
+    },
+    "filterBar.filter.drop": {
+        "value": "drop to add",
+        "comment": "",
         "limit": 0
     },
     "filterBar.filter.addFilterPlaceholder": {

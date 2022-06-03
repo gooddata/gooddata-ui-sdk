@@ -4,6 +4,7 @@ import React from "react";
 
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
+import { CreatableAttributeFilter } from "./CreationalPanelItems/CreatableAttributeFilter";
 
 interface ICreationPanelProps {
     isSticky: boolean;
@@ -24,7 +25,9 @@ export const CreationPanel: React.FC<ICreationPanelProps> = ({ isSticky = false 
                     <Typography tagName="h3">
                         <FormattedMessage id="addPanel.newItem" />
                     </Typography>
-                    <div className="add-item-panel"></div>
+                    <div className="add-item-panel">
+                        <CreatableAttributeFilter />
+                    </div>
                 </div>
                 <div className="configuration-category configuration-category-vis drag-to-add flex-panel-item-stretch">
                     <Typography tagName="h3">
