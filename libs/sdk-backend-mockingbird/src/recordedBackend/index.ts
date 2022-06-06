@@ -31,7 +31,6 @@ import {
     ValidationContext,
     IOrganizations,
     IDateFilterConfigsQueryResult,
-    IUser,
     IWorkspaceUserGroupsQuery,
     IWorkspaceAccessControlService,
 } from "@gooddata/sdk-backend-spi";
@@ -42,6 +41,7 @@ import {
     ITheme,
     IWorkspacePermissions,
     IOrganizationDescriptor,
+    IUser,
 } from "@gooddata/sdk-model";
 import { RecordedExecutionFactory } from "./execution";
 import { RecordedBackendConfig, RecordingIndex } from "./types";

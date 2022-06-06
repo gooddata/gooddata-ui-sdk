@@ -1,13 +1,11 @@
 // (C) 2021-2022 GoodData Corporation
-
 import {
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
-    IElementsQueryFactory,
     IMetadataObject,
-    IWorkspaceAttributesService,
-} from "@gooddata/sdk-backend-spi";
-import { ObjRef } from "@gooddata/sdk-model";
+    ObjRef,
+} from "@gooddata/sdk-model";
+import { IElementsQueryFactory, IWorkspaceAttributesService } from "@gooddata/sdk-backend-spi";
 
 /**
  * @alpha

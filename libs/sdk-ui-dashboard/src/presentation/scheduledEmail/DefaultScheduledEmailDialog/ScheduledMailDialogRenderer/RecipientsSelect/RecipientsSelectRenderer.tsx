@@ -1,5 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 /* eslint-disable import/named,import/namespace */
+import { IUser, areObjRefsEqual } from "@gooddata/sdk-model";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import CreatableSelect from "react-select/creatable";
@@ -17,7 +18,7 @@ import debounce from "lodash/debounce";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
 import includes from "lodash/includes";
-import { IUser, IWorkspaceUsersQueryOptions } from "@gooddata/sdk-backend-spi";
+import { IWorkspaceUsersQueryOptions } from "@gooddata/sdk-backend-spi";
 import { Bubble, BubbleHoverTrigger, Message, LoadingMask, IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 import { isEmail } from "../../utils/validate";
@@ -32,7 +33,6 @@ import {
     getScheduledEmailRecipientEmail,
     getScheduledEmailRecipientUniqueIdentifier,
 } from "../../utils/scheduledMailRecipients";
-import { areObjRefsEqual } from "@gooddata/sdk-model";
 
 const MAXIMUM_RECIPIENTS_RECEIVE = 60;
 const DELAY_TIME = 500;
