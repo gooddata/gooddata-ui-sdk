@@ -17,7 +17,7 @@ const selectSelf = createSelector(
  *
  * See {@link @gooddata/sdk-backend-spi#WorkspacePermission} for all available permissions.
  *
- * If the permission is not supported by GoodData.CN backend, the selector always returns `false` value.
+ * If the permission is not supported by GoodData Cloud and GoodData.CN backends, the selector always returns `false` value.
  *
  * In case you need multiple permissions available in your application, use common selector.
  *

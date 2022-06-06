@@ -44,7 +44,7 @@ program
     .option("--config <path>", `Custom config file (default ${DEFAULT_CONFIG_FILE_NAME})`)
     .option(
         "--backend <backend>",
-        "Indicates type of the backend that runs on the hostname. Can be either bear or tiger. Default: bear",
+        "Indicates type of the backend that runs on the hostname. Can be either bear for the GoodData platform or tiger for GoodData Cloud or GoodData.CN. Default: bear",
     )
     .option("--accept-untrusted-ssl", "Allows to run the tool with host, that has untrusted ssl certificate")
     .parse(process.argv);
