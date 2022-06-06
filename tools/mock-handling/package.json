@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/mock-handling",
-    "version": "8.10.0-alpha.125",
+    "version": "8.10.0-alpha.126",
     "author": "GoodData",
     "description": "GoodData SDK Mock data capture and management tool",
     "repository": {
@@ -40,10 +40,10 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/api-model-bear": "^8.10.0-alpha.125",
-        "@gooddata/sdk-backend-bear": "^8.10.0-alpha.125",
-        "@gooddata/sdk-backend-spi": "^8.10.0-alpha.125",
-        "@gooddata/sdk-model": "^8.10.0-alpha.125",
+        "@gooddata/api-model-bear": "^8.10.0-alpha.126",
+        "@gooddata/sdk-backend-bear": "^8.10.0-alpha.126",
+        "@gooddata/sdk-backend-spi": "^8.10.0-alpha.126",
+        "@gooddata/sdk-model": "^8.10.0-alpha.126",
         "chalk": "^4.1.1",
         "commander": "^8.1.0",
         "inquirer": "^7.3.3",
