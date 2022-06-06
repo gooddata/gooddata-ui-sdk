@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import { getAttributesDisplayForms } from "@gooddata/api-model-bear";
 import { XhrModule } from "./xhr";
@@ -20,7 +20,7 @@ import { LdmModule } from "./ldm";
  * @remarks
  * The package is used by `@gooddata/sdk-backend-bear`, which you should use instead of directly using `@gooddata/api-client-bear` whenever possible.
  *
- * For the similar package for GoodData.CN, see `@gooddata/api-client-tiger`.
+ * For the similar package for GoodData Cloud and GoodData.CN, see `@gooddata/api-client-tiger`.
  *
  * @packageDocumentation
  */

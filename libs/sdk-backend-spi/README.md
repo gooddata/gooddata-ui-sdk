@@ -6,7 +6,7 @@ The interface defines functionality to be implemented for a particular backend t
 
 The Analytical Backend SPI for the GoodData platform (codename `bear` in [`@gooddata/sdk-backend-bear`](https://www.npmjs.com/package/@gooddata/sdk-backend-bear)) is fully implemented.
 
-The Analytical Backend SPI for GoodData.CN (codename `tiger` in [`@gooddata/sdk-backend-tiger`](https://www.npmjs.com/package/@gooddata/sdk-backend-tiger)) is almost fully implemented.
+The Analytical Backend SPI for GoodData Cloud and GoodData.CN (joint codename `tiger` in [`@gooddata/sdk-backend-tiger`](https://www.npmjs.com/package/@gooddata/sdk-backend-tiger)) is almost fully implemented.
 
 ## License
 

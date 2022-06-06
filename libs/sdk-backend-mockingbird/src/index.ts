@@ -4,7 +4,7 @@
  *
  * @remarks
  * For the GoodData platform version, see `@gooddata/sdk-backend-bear`.
- * For the GoodData.CN version, see `@gooddata/sdk-backend-tiger`.
+ * For the GoodData Cloud and GoodData.CN version, see `@gooddata/sdk-backend-tiger`.
  *
  * @packageDocumentation
  */

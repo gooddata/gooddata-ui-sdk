@@ -2,7 +2,7 @@
     "name": "@gooddata/sdk-backend-bear",
     "version": "8.10.0-alpha.125",
     "author": "GoodData",
-    "description": "GoodData Backend SPI implementation for the Bear platform",
+    "description": "GoodData Backend SPI implementation for the GoodData platform",
     "repository": {
         "type": "git",
         "url": "https://github.com/gooddata/gooddata-ui-sdk.git",

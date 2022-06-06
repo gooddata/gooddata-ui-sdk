@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 /**
- * This package provides low-level functions for communication with GoodData.CN.
+ * This package provides low-level functions for communication with GoodData Cloud and GoodData.CN.
  *
  * @remarks
  * The package is used by `@gooddata/sdk-backend-tiger`, which you should use instead of directly using

@@ -1,6 +1,6 @@
-# GoodData.CN REST API Client
+# GoodData Cloud and GoodData.CN REST API Client
 
-Client is generated with [openapi-generator](https://github.com/OpenAPITools/openapi-generator) using [typescript-axios](https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator/src/main/resources/typescript-axios) module, according to GoodData.CN [OpenAPI specification](https://github.com/OAI/OpenAPI-Specification).
+Client is generated with [openapi-generator](https://github.com/OpenAPITools/openapi-generator) using [typescript-axios](https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator/src/main/resources/typescript-axios) module, according to GoodData Cloud and GoodData.CN [OpenAPI specification](https://github.com/OAI/OpenAPI-Specification).
 
 ## How to generate client
 

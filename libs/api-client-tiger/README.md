@@ -1,8 +1,8 @@
-# GoodData.CN REST API Client
+# GoodData Cloud and GoodData.CN REST API Client
 
 ## Introduction
 
-This package provides a thin REST API Client for [GoodData.CN](https://sdk.gooddata.com/gooddata-ui/docs/cloudnative_introduction.html) (codename `tiger`). The API client is useful for specific,
+This package provides a thin REST API Client for [GoodData Cloud](https://sdk.gooddata.com/gooddata-ui/docs/cloud_introduction.html) and [GoodData.CN](https://sdk.gooddata.com/gooddata-ui/docs/cloudnative_introduction.html) (joint codename `tiger`). The API client is useful for specific,
 low-level tasks targeting the platform. It can be used to develop small applications for either browser or the node.js
 environment. The responsibilities of the API client are mostly about exposing REST API endpoints as asynchronous function calls.
 

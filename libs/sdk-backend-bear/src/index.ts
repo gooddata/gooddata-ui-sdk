@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 /**
  * This package provides the Analytical Backend implementation for the GoodData platform.
  *
@@ -7,7 +7,7 @@
  * yourself with low-level details. The functionality includes but is not limited to:
  * setting and creating metadata objects, running executions, getting settings, getting available workspaces, and more.
  *
- * For the similar package for GoodData.CN, see `@gooddata/sdk-backend-tiger`.
+ * For similar package for GoodData Cloud and GoodData.CN, see `@gooddata/sdk-backend-tiger`.
  *
  * @packageDocumentation
  */
