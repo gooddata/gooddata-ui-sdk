@@ -1,18 +1,17 @@
 // (C) 2021-2022 GoodData Corporation
 import { PayloadAction } from "@reduxjs/toolkit";
-import { IAttributeElement, IAttributeElements, ObjRef } from "@gooddata/sdk-model";
+import { IAttributeElement } from "@gooddata/sdk-model";
 import identity from "lodash/identity";
 
 import { AttributeFilterReducer } from "../state";
+import { ILoadAttributeElementsOptions } from "./effects";
 
 const attributeElementsRequest: AttributeFilterReducer<
-    PayloadAction<{
-        displayFormRef: ObjRef;
-        elements?: IAttributeElements;
-        offset?: number;
-        limit?: number;
-        correlationId: string;
-    }>
+    PayloadAction<
+        Omit<ILoadAttributeElementsOptions, "displayFormRef"> & {
+            correlationId: string;
+        }
+    >
 > = identity;
 
 const attributeElementsSuccess: AttributeFilterReducer<
@@ -21,26 +20,47 @@ const attributeElementsSuccess: AttributeFilterReducer<
         totalCount: number;
         correlationId: string;
     }>
-> = identity;
+> = (state, action) => {
+    if (!state.attributeElementsMap) {
+        state.attributeElementsMap = {};
+    }
+
+    action.payload.attributeElements.forEach((el) => {
+        if (!state.attributeElementsMap[el.uri]) {
+            state.attributeElementsMap[el.uri] = el;
+        }
+    });
+};
 
 const attributeElementsError: AttributeFilterReducer<PayloadAction<{ error: any; correlationId: string }>> =
     identity;
+
+const attributeElementsCancelRequest: AttributeFilterReducer = identity;
 
 const attributeElementsCancel: AttributeFilterReducer<PayloadAction<{ correlationId: string }>> = identity;
 
 const setAttributeElements: AttributeFilterReducer<
     PayloadAction<{
         attributeElements: IAttributeElement[];
+    }>
+> = (state, action) => {
+    state.attributeElements = action.payload.attributeElements.map((el) => el.uri);
+};
+
+const setAttributeElementsTotalCount: AttributeFilterReducer<
+    PayloadAction<{
         totalCount: number;
     }>
 > = (state, action) => {
-    state.attributeElements = action.payload.attributeElements;
     state.attributeElementsTotalCount = action.payload.totalCount;
 };
 
-const resetAttributeElements: AttributeFilterReducer = (state) => {
-    state.attributeElementsTotalCount = undefined;
-    state.attributeElements = undefined;
+const setAttributeElementsTotalCountWithCurrentSettings: AttributeFilterReducer<
+    PayloadAction<{
+        totalCount: number;
+    }>
+> = (state, action) => {
+    state.attributeElementsTotalCountWithCurrentSettings = action.payload.totalCount;
 };
 
 /**
@@ -50,9 +70,10 @@ export const attributeElementsReducers = {
     attributeElementsRequest,
     attributeElementsSuccess,
     attributeElementsError,
+    attributeElementsCancelRequest,
     attributeElementsCancel,
 
     setAttributeElements,
-
-    resetAttributeElements,
+    setAttributeElementsTotalCount,
+    setAttributeElementsTotalCountWithCurrentSettings,
 };

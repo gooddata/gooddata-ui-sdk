@@ -5,9 +5,12 @@ import { AttributeFilterStoreContext } from "../types";
 /**
  * @internal
  */
-export async function loadAttribute(
+export async function loadAttributeByDisplayForm(
     context: AttributeFilterStoreContext,
-    ref: ObjRef,
+    displayFormRef: ObjRef,
 ): Promise<IAttributeMetadataObject> {
-    return context.backend.workspace(context.workspace).attributes().getAttribute(ref);
+    return context.backend
+        .workspace(context.workspace)
+        .attributes()
+        .getAttributeByDisplayForm(displayFormRef);
 }

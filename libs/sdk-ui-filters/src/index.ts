@@ -76,5 +76,36 @@ export {
     IAttributeDropdownItem,
     ICustomGranularitySelection,
 } from "./RankingFilter/types";
-export { AttributeFilterLoader } from "./AttributeFilterLoader";
-export * from "./AttributeFilterHandler";
+
+export {
+    newAttributeFilterHandler,
+    // Base
+    Correlation,
+    Loadable,
+    LoadableError,
+    LoadableLoading,
+    LoadablePending,
+    LoadableSuccess,
+    LoadableStatus,
+    CallbackRegistration,
+    Callback,
+    CallbackPayload,
+    Unsubscribe,
+    // Loaders
+    IElementsLoadResult,
+    IAttributeLoader,
+    IAttributeElementLoader,
+    IAttributeFilterLoader,
+    // Single selection
+    ISingleSelectionHandler,
+    IStagedSingleSelectionHandler,
+    // Multi selection
+    InvertableSelection,
+    IInvertableSelectionHandler,
+    IStagedInvertableSelectionHandler,
+    // Handlers
+    InvertableAttributeElementSelection,
+    IAttributeFilterHandler,
+    ISingleSelectAttributeFilterHandler,
+    IMultiSelectAttributeFilterHandler,
+} from "./AttributeFilterLoader";

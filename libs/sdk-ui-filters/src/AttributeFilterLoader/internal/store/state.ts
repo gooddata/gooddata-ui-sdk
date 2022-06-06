@@ -2,34 +2,45 @@
 import { CaseReducer, AnyAction } from "@reduxjs/toolkit";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
-    IAttributeDisplayFormMetadataObject,
     IAttributeElement,
-    IAttributeFilter,
+    ObjRef,
     IAttributeMetadataObject,
     IMeasure,
     IRelativeDateFilter,
     SortDirection,
 } from "@gooddata/sdk-model";
+import { LoadableStatus } from "../../types";
 
 /**
  * @internal
  */
 export interface AttributeFilterState {
-    // Attribute filter component state
-    attributeFilter?: IAttributeFilter;
-    isInverted?: boolean;
-    selectedAttributeElements?: IAttributeElement[];
+    displayForm?: ObjRef;
+    elementsForm?: "uris" | "values";
 
-    // Backend data / metadata
-    displayForm?: IAttributeDisplayFormMetadataObject;
+    // Selection
+    commitedSelection?: string[];
+    isCommitedSelectionInverted?: boolean;
+    workingSelection?: string[];
+    isWorkingSelectionInverted?: boolean;
+
+    // Loaded attribute of the display form
     attribute?: IAttributeMetadataObject;
-    attributeElements?: IAttributeElement[];
+    attributeError?: any;
+    attributeStatus?: LoadableStatus;
+
+    // Loaded attribute elements cache
+    attributeElementsMap?: Record<string, IAttributeElement>;
+
+    // Loaded attribute elements
+    attributeElements?: string[];
     attributeElementsTotalCount?: number;
+    attributeElementsTotalCountWithCurrentSettings?: number;
 
     // Load attribute elements options
     search?: string;
-    // limit?: number;
-    // offset?: number;
+    limit?: number;
+    offset?: number;
     sortDirection?: SortDirection;
     attributeFilters?: IElementsQueryAttributeFilter[];
     measureFilters?: IMeasure[];

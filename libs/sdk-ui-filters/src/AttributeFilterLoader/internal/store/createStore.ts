@@ -1,5 +1,5 @@
 // (C) 2022 GoodData Corporation
-import { Action, configureStore, Middleware } from "@reduxjs/toolkit";
+import { Action, AnyAction, configureStore, Middleware } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
 import { sliceReducer } from "./slice";
 import { rootSaga } from "./rootSaga";
@@ -10,13 +10,18 @@ import { AttributeFilterStore, AttributeFilterStoreContext } from "./types";
 // take effects are not working anymore, but we may want to listen for actions,
 // that can be fired even during the "cleanup" phase, after the cancelation.
 const eventListeningMiddleware =
-    (eventListener: (action: Action, nextState: AttributeFilterState) => void): Middleware =>
+    (
+        eventListener: (
+            action: Action,
+            selectFromNextState: <T>(selector: (state: AttributeFilterState) => T) => T,
+        ) => void,
+    ): Middleware =>
     (store) =>
     (next) =>
     (action) => {
         // First dispatch the action, so we have already updated store in the event listeners.
         const result = next(action);
-        eventListener(result, store.getState());
+        eventListener(result, (selector) => selector(store.getState()));
         return result;
     };
 
@@ -33,7 +38,6 @@ export function createAttributeFilterStore(context: AttributeFilterStoreContext)
     const store = configureStore({
         preloadedState: {
             ...initialState,
-            attributeFilter: context.attributeFilter,
         },
         reducer: sliceReducer,
         middleware: (getDefaultMiddleware) => {
@@ -46,8 +50,15 @@ export function createAttributeFilterStore(context: AttributeFilterStoreContext)
     const rootSagaTask = sagaMiddleware.run(rootSaga);
 
     return {
-        store,
-        rootSagaTask,
         context,
+        cancelRootSaga: () => {
+            rootSagaTask.cancel();
+        },
+        dispatch: (action: AnyAction) => {
+            store.dispatch(action);
+        },
+        select: (selector) => {
+            return selector(store.getState());
+        },
     };
 }

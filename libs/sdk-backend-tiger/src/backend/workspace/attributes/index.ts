@@ -161,7 +161,19 @@ function loadAttributeByDisplayForm(
                 headers: jsonApiHeaders,
             },
         )
-        .then((res) => convertAttributesWithSideloadedLabels(res.data)[0]);
+        .then((res) => {
+            const convertedLabel = convertAttributesWithSideloadedLabels(res.data)[0];
+
+            if (!convertedLabel) {
+                throw new UnexpectedResponseError(
+                    `The displayForm with id ${ref.identifier} was not found`,
+                    404,
+                    convertedLabel,
+                );
+            }
+
+            return convertedLabel;
+        });
 }
 
 function loadAttributes(client: ITigerClient, workspaceId: string): Promise<IAttributeMetadataObject[]> {
