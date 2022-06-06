@@ -22,6 +22,7 @@ export interface IThemeProviderProps {
     backend?: IAnalyticalBackend;
     enableComplementaryPalette?: boolean;
     modifier?: ThemeModifier;
+    removeGlobalStylesOnUnmout?: boolean;
     theme?: ITheme;
     workspace?: string;
 }

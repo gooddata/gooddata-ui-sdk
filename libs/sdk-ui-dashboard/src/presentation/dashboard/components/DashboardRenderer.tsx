@@ -131,6 +131,10 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                 modifier={props.themeModifier ?? defaultDashboardThemeModifier}
                 backend={backend}
                 workspace={workspace}
+                // Do not remove global theme styles on unmount, if the theme is provided as a prop,
+                // and the theme loading is disabled.
+                // This avoids flickering of the theme, when switching between the dashboard plugin engine and the default engine.
+                removeGlobalStylesOnUnmout={!props.disableThemeLoading}
             >
                 {dashboardRender}
             </ThemeProvider>
