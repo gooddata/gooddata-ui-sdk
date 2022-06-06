@@ -8,11 +8,11 @@ import {
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     uriRef,
+    IMeasureDescriptor,
 } from "@gooddata/sdk-model";
 import { ReferenceData } from "@gooddata/reference-workspace";
 import { Department, Region, Won } from "@gooddata/reference-workspace/dist/md/full";
 import { IDrillEventIntersectionElement, IDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
-import { IMeasureDescriptor } from "@gooddata/sdk-model";
 
 export const targetUri = "target-uri";
 

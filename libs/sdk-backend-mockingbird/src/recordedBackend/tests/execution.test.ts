@@ -2,9 +2,8 @@
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { DataViewAll, dataViewWindow, recordedDataView } from "../execution";
-import { isIdentifierRef, isUriRef, ObjRef } from "@gooddata/sdk-model";
+import { isIdentifierRef, isUriRef, ObjRef, isAttributeDescriptor } from "@gooddata/sdk-model";
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
-import { isAttributeDescriptor } from "@gooddata/sdk-model";
 import { recordedBackend } from "../index";
 
 describe("recordedDataView", () => {

@@ -1,9 +1,14 @@
 // (C) 2021-2022 GoodData Corporation
 
 import { IDashboardCommand } from "./base";
-import { isObjRef, ObjRef, ObjRefInScope, VisualizationProperties } from "@gooddata/sdk-model";
+import {
+    isObjRef,
+    ObjRef,
+    ObjRefInScope,
+    VisualizationProperties,
+    InsightDrillDefinition,
+} from "@gooddata/sdk-model";
 import { FilterOpReplaceAll, WidgetFilterOperation, WidgetHeader } from "../types/widgetTypes";
-import { InsightDrillDefinition } from "@gooddata/sdk-model";
 import { IExportConfig } from "../types/exportTypes";
 
 /**

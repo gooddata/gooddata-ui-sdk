@@ -11,8 +11,6 @@ import {
     isCatalogAttribute,
     isCatalogFact,
     isCatalogMeasure,
-} from "@gooddata/sdk-model";
-import {
     IAttributeOrMeasure,
     IInsightDefinition,
     ObjRef,

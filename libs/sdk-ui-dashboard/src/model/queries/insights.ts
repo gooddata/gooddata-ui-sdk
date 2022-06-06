@@ -1,7 +1,9 @@
 // (C) 2021-2022 GoodData Corporation
 import { IDashboardQuery } from "./base";
-import { IInsight, InsightDisplayFormUsage, ObjRef } from "@gooddata/sdk-model";
 import {
+    IInsight,
+    InsightDisplayFormUsage,
+    ObjRef,
     ICatalogDateDataset,
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
