@@ -5,8 +5,8 @@ import {
     IInsight,
     ISortItem,
     VisualizationProperties,
+    IWidget,
 } from "@gooddata/sdk-model";
-import { IWidget } from "@gooddata/sdk-model";
 import { newInsightWidget } from "@gooddata/sdk-backend-base";
 
 import { ColorMapping } from "../../fixLegacyElementUris";

@@ -2,8 +2,9 @@
 import { ISeparators } from "@gooddata/numberjs";
 import isEmpty from "lodash/isEmpty";
 import { IAnalyticalBackend, IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { ISettings, ITheme } from "@gooddata/sdk-model";
 import {
+    ISettings,
+    ITheme,
     IColorPalette,
     IInsight,
     IInsightDefinition,

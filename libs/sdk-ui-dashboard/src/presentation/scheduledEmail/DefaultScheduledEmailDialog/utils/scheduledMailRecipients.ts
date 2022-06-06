@@ -1,5 +1,5 @@
-// (C) 2019-2021 GoodData Corporation
-import { userFullName } from "@gooddata/sdk-backend-spi";
+// (C) 2019-2022 GoodData Corporation
+import { userFullName } from "@gooddata/sdk-model";
 import { IScheduleEmailRecipient, isScheduleEmailExistingRecipient } from "../interfaces";
 
 export const getScheduledEmailRecipientUniqueIdentifier = (recipient: IScheduleEmailRecipient): string =>

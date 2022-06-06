@@ -3,6 +3,7 @@ module.exports = {
     root: true,
     ignorePatterns: ["**/dist/**/*.*"],
     rules: {
+        "no-duplicate-imports": "error",
         "@typescript-eslint/array-type": "off",
         "@typescript-eslint/ban-ts-comment": ["error", { "ts-expect-error": "allow-with-description" }],
         "@typescript-eslint/ban-types": [

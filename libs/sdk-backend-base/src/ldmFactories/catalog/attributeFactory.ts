@@ -1,7 +1,10 @@
 // (C) 2019-2022 GoodData Corporation
 import identity from "lodash/identity";
-import { AttributeModifications, IAttribute, newAttribute, ObjRef } from "@gooddata/sdk-model";
 import {
+    AttributeModifications,
+    IAttribute,
+    newAttribute,
+    ObjRef,
     ICatalogAttribute,
     IAttributeDisplayFormMetadataObject,
     isAttributeDisplayFormMetadataObject,

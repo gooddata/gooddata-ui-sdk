@@ -5,10 +5,13 @@ import {
     ErrorComponent as DefaultError,
     LoadingComponent as DefaultLoading,
 } from "@gooddata/sdk-ui";
-import { OverlayController, ToastMessageContextProvider } from "@gooddata/sdk-ui-kit";
+import {
+    OverlayController,
+    ToastMessageContextProvider,
+    OverlayControllerProvider,
+} from "@gooddata/sdk-ui-kit";
 import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
 import React from "react";
-import { OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 import { DashboardStoreProvider } from "../../../model";
 import {
     ExportDialogContextProvider,

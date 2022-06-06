@@ -1,5 +1,6 @@
 // (C) 2020-2022 GoodData Corporation
-import { IUser, IUserService, IUserSettingsService } from "@gooddata/sdk-backend-spi";
+import { IUser } from "@gooddata/sdk-model";
+import { IUserService, IUserSettingsService } from "@gooddata/sdk-backend-spi";
 import { TigerUserSettingsService } from "./settings";
 import { TigerAuthenticatedCallGuard } from "../../types";
 import { convertUser } from "../../convertors/fromBackend/UsersConverter";
