@@ -2,7 +2,7 @@
     "name": "@gooddata/api-client-tiger",
     "version": "8.10.0-alpha.125",
     "author": "GoodData",
-    "description": "API Client for the Tiger backend",
+    "description": "API Client for GoodData Cloud and GoodData.CN",
     "repository": {
         "type": "git",
         "url": "https://github.com/gooddata/gooddata-ui-sdk.git",

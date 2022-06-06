@@ -2,7 +2,7 @@
     "name": "@gooddata/sdk-backend-tiger",
     "version": "8.10.0-alpha.125",
     "author": "GoodData",
-    "description": "GoodData Backend SPI implementation for the Tiger platform",
+    "description": "GoodData Backend SPI implementation for GoodData Cloud and GoodData.CN",
     "repository": {
         "type": "git",
         "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
