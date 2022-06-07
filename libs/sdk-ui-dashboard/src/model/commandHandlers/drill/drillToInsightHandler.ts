@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 import { DashboardContext } from "../../types/commonTypes";
@@ -22,6 +22,7 @@ export function* drillToInsightHandler(
     const insightWithDrillsApplied = addIntersectionFiltersToInsight(
         insight,
         drillEvent.drillContext.intersection!,
+        ctx.backend.capabilities.supportsElementUris ?? true,
     );
 
     return drillToInsightResolved(

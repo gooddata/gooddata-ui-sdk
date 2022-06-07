@@ -37,11 +37,16 @@ export class ColumnChartDescriptor extends BaseChartDescriptor implements IVisua
         return (params) => new PluggableColumnChart(params);
     }
 
-    public applyDrillDown(insight: IInsight, drillDownContext: IDrillDownContext): IInsight {
+    public applyDrillDown(
+        insight: IInsight,
+        drillDownContext: IDrillDownContext,
+        backendSupportsElementUris: boolean,
+    ): IInsight {
         const withFilters = this.addFiltersForColumnBar(
             insight,
             drillDownContext.drillDefinition,
             drillDownContext.event,
+            backendSupportsElementUris,
         );
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
@@ -83,11 +88,16 @@ export class ColumnChartDescriptor extends BaseChartDescriptor implements IVisua
         return hasStackByAttributes ? arrayUtils.shiftArrayRight(intersection) : intersection;
     }
 
-    private addFiltersForColumnBar(insight: IInsight, drillConfig: IDrillDownDefinition, event: IDrillEvent) {
+    private addFiltersForColumnBar(
+        insight: IInsight,
+        drillConfig: IDrillDownDefinition,
+        event: IDrillEvent,
+        backendSupportsElementUris: boolean,
+    ) {
         const clicked = drillDownFromAttributeLocalId(drillConfig);
 
         const reorderedIntersection = this.adjustIntersectionForColumnBar(insight, event);
         const cutIntersection = getIntersectionPartAfter(reorderedIntersection, clicked);
-        return addIntersectionFiltersToInsight(insight, cutIntersection);
+        return addIntersectionFiltersToInsight(insight, cutIntersection, backendSupportsElementUris);
     }
 }

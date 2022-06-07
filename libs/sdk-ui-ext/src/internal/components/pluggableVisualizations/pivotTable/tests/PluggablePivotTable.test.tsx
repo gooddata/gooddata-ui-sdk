@@ -88,6 +88,7 @@ describe("PluggablePivotTable", () => {
                     drillDefinition: getInsightWithDrillDownApplied.drillConfig,
                     event: createDrillEvent("column", getInsightWithDrillDownApplied.intersection),
                 },
+                true,
             );
 
             expect(result).toEqual(getInsightWithDrillDownApplied.expectedInsight);
@@ -101,6 +102,7 @@ describe("PluggablePivotTable", () => {
                     drillDefinition: getInsightWithDrillDownApplied.drillConfig,
                     event: createDrillEvent("column", getInsightWithDrillDownApplied.intersection),
                 },
+                true,
             );
 
             expect(result).toEqual(getInsightWithDrillDownApplied.expectedInsightWithTotals);

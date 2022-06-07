@@ -324,7 +324,11 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         sourceVisualization: IInsight,
         drillDownContext: IDrillDownContext,
     ): IInsight {
-        return this.visualization.getInsightWithDrillDownApplied(sourceVisualization, drillDownContext);
+        return this.visualization.getInsightWithDrillDownApplied(
+            sourceVisualization,
+            drillDownContext,
+            this.props.backend.capabilities.supportsElementUris ?? true,
+        );
     }
 
     public getExecution() {

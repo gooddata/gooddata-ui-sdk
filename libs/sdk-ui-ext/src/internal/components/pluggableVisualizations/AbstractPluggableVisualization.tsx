@@ -300,12 +300,14 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
      *
      * @param sourceVisualization - drill down source {@link IInsight}
      * @param _drillDownContext - drill context (unused in this implementation)
+     * @param _backendSupportsElementUris - whether backend supports elements by uri (unused in this implementation)
      * @returns the `sourceVisualization`
      * @see {@link IVisualization.getInsightWithDrillDownApplied} for more information
      */
     public getInsightWithDrillDownApplied(
         sourceVisualization: IInsight,
         _drillDownContext: IDrillDownContext,
+        _backendSupportsElementUris: boolean,
     ): IInsight {
         return sourceVisualization;
     }

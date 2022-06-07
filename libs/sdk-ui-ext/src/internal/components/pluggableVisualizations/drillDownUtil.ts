@@ -117,15 +117,23 @@ export function sanitizeTableProperties(insight: IInsight): IInsight {
     return removePropertiesForRemovedAttributes(insight);
 }
 
-export function convertIntersectionToFilters(intersections: IDrillEventIntersectionElement[]): IFilter[] {
+export function convertIntersectionToFilters(
+    intersections: IDrillEventIntersectionElement[],
+    backendSupportsElementUris: boolean = true,
+): IFilter[] {
     return intersections
         .map((intersection) => intersection.header)
         .filter(isDrillIntersectionAttributeItem)
-        .map((header) =>
-            newPositiveAttributeFilter(header.attributeHeader.ref, {
-                uris: [header.attributeHeaderItem.uri],
-            }),
-        );
+        .map((header) => {
+            if (backendSupportsElementUris) {
+                return newPositiveAttributeFilter(header.attributeHeader.ref, {
+                    uris: [header.attributeHeaderItem.uri],
+                });
+            }
+            return newPositiveAttributeFilter(header.attributeHeader.ref, {
+                values: [header.attributeHeaderItem.name],
+            });
+        });
 }
 
 export function reverseAndTrimIntersection(
@@ -147,8 +155,9 @@ export function reverseAndTrimIntersection(
 export function addIntersectionFiltersToInsight(
     source: IInsight,
     intersection: IDrillEventIntersectionElement[],
+    backendSupportsElementUris: boolean,
 ): IInsight {
-    const filters = convertIntersectionToFilters(intersection);
+    const filters = convertIntersectionToFilters(intersection, backendSupportsElementUris);
     const resultFilters = [...source.insight.filters, ...filters];
 
     return insightSetFilters(source, resultFilters);

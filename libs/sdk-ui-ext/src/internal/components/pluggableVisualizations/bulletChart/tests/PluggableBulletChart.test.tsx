@@ -621,10 +621,14 @@ describe("PluggableBulletChart", () => {
                     "first",
                 );
 
-                const result: IInsight = chart.getInsightWithDrillDownApplied(sourceInsight, {
-                    drillDefinition,
-                    event: createDrillEvent("bullet", drillIntersection),
-                });
+                const result: IInsight = chart.getInsightWithDrillDownApplied(
+                    sourceInsight,
+                    {
+                        drillDefinition,
+                        event: createDrillEvent("bullet", drillIntersection),
+                    },
+                    true,
+                );
 
                 expect(result).toEqual(expectedInsight);
             },

@@ -86,6 +86,7 @@ export function* drillToDashboardHandler(
     const drillIntersectionFilters = convertIntersectionToAttributeFilters(
         cmd.payload.drillEvent.drillContext.intersection!,
         dateAttributes.map((dA) => dA.attribute.ref),
+        ctx.backend.capabilities.supportsElementUris ?? true,
     );
 
     // concat everything, order is important – drill filters must go first
@@ -168,13 +169,21 @@ function filterIntersection(
 export function convertIntersectionToAttributeFilters(
     intersection: IDrillEventIntersectionElement[],
     dateDataSetsAttributesRefs: ObjRef[],
+    backendSupportsElementUris: boolean,
 ): IAttributeFilter[] {
     return intersection
         .map((i) => i.header)
         .filter((i: DrillEventIntersectionElementHeader) => filterIntersection(i, dateDataSetsAttributesRefs))
         .filter(isDrillIntersectionAttributeItem)
-        .map(
-            (h: IDrillIntersectionAttributeItem): IAttributeFilter =>
-                newPositiveAttributeFilter(h.attributeHeader.ref, { uris: [h.attributeHeaderItem.uri] }),
-        );
+        .map((h: IDrillIntersectionAttributeItem): IAttributeFilter => {
+            if (backendSupportsElementUris) {
+                return newPositiveAttributeFilter(h.attributeHeader.ref, {
+                    uris: [h.attributeHeaderItem.uri],
+                });
+            } else {
+                return newPositiveAttributeFilter(h.attributeHeader.ref, {
+                    values: [h.attributeHeaderItem.name],
+                });
+            }
+        });
 }

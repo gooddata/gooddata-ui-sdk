@@ -614,10 +614,14 @@ describe("PluggableLineChart", () => {
                     "first",
                 );
 
-                const result: IInsight = chart.getInsightWithDrillDownApplied(sourceInsight, {
-                    drillDefinition,
-                    event: createDrillEvent("treemap", drillIntersection),
-                });
+                const result: IInsight = chart.getInsightWithDrillDownApplied(
+                    sourceInsight,
+                    {
+                        drillDefinition,
+                        event: createDrillEvent("treemap", drillIntersection),
+                    },
+                    true,
+                );
 
                 expect(result).toEqual(expectedInsight);
             },

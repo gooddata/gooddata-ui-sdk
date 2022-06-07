@@ -154,9 +154,14 @@ export interface IVisualizationDescriptor {
      *
      * @param insight - {@link @gooddata/sdk-model#IInsight} to be used for the the drill down application
      * @param drillDownContext - drill down configuration used to properly create the result
+     * @param backendSupportsElementUris - whether current backend supports elements by uri. Affects how filters for insight are created
      * @returns {@link @gooddata/sdk-model#IInsight} with modified buckets and filters according to the provided drill down context.
      */
-    applyDrillDown(insight: IInsight, drillDownContext: IDrillDownContext): IInsight;
+    applyDrillDown(
+        insight: IInsight,
+        drillDownContext: IDrillDownContext,
+        backendSupportsElementUris: boolean,
+    ): IInsight;
 
     /**
      * When called, returns a source code that can be used to embed the visualization in a custom application.

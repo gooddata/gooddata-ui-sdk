@@ -263,6 +263,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
     public getInsightWithDrillDownApplied(
         sourceVisualization: IInsight,
         drillDownContext: IDrillDownContext,
+        backendSupportsElementUris: boolean,
     ): IInsight {
         const drillDownInsight = modifyBucketsAttributesForDrillDown(
             sourceVisualization,
@@ -271,6 +272,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         const drillDownInsightWithFilters = addIntersectionFiltersToInsight(
             drillDownInsight,
             drillDownContext.event.drillContext.intersection,
+            backendSupportsElementUris,
         );
         return sanitizeTableProperties(insightSanitize(drillDownInsightWithFilters));
     }

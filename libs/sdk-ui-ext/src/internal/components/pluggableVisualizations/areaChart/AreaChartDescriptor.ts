@@ -34,11 +34,16 @@ export class AreaChartDescriptor extends BigChartDescriptor implements IVisualiz
         return (params) => new PluggableAreaChart(params);
     }
 
-    public applyDrillDown(insight: IInsight, drillDownContext: IDrillDownContext): IInsight {
+    public applyDrillDown(
+        insight: IInsight,
+        drillDownContext: IDrillDownContext,
+        backendSupportsElementUris: boolean,
+    ): IInsight {
         const withFilters = this.addFilters(
             insight,
             drillDownContext.drillDefinition,
             drillDownContext.event,
+            backendSupportsElementUris,
         );
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
@@ -69,8 +74,13 @@ export class AreaChartDescriptor extends BigChartDescriptor implements IVisualiz
         };
     }
 
-    private addFilters(source: IInsight, drillConfig: IDrillDownDefinition, event: IDrillEvent) {
+    private addFilters(
+        source: IInsight,
+        drillConfig: IDrillDownDefinition,
+        event: IDrillEvent,
+        backendSupportsElementUris: boolean,
+    ) {
         const cutIntersection = reverseAndTrimIntersection(drillConfig, event.drillContext.intersection);
-        return addIntersectionFiltersToInsight(source, cutIntersection);
+        return addIntersectionFiltersToInsight(source, cutIntersection, backendSupportsElementUris);
     }
 }
