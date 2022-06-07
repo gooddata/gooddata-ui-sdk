@@ -5,17 +5,18 @@ import {
     IUserWorkspaceSettings,
 } from "@gooddata/sdk-backend-spi";
 import { TigerAuthenticatedCallGuard } from "../../../types";
+import { TigerFeaturesService } from "../../features";
 import { DefaultUiSettings, DefaultUserSettings } from "../../uiSettings";
 
 export class TigerWorkspaceSettings implements IWorkspaceSettingsService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
 
     public getSettings(): Promise<IWorkspaceSettings> {
-        return this.authCall(async (_client) => {
+        return this.authCall(async (client) => {
             const {
                 data: { meta: config },
             } = (
-                await _client.entities.getEntityWorkspaces({
+                await client.entities.getEntityWorkspaces({
                     id: this.workspace,
                     metaInclude: ["config"],
                 })
@@ -30,12 +31,13 @@ export class TigerWorkspaceSettings implements IWorkspaceSettingsService {
     }
 
     public getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings> {
-        return this.authCall(async (_client, ctx) => {
-            const principal = await ctx.getPrincipal();
+        return this.authCall(async (client) => {
+            const profile = await client.profile.getCurrent();
+            const features = await new TigerFeaturesService(this.authCall).getFeatures(profile);
             const {
                 data: { meta: config },
             } = (
-                await _client.entities.getEntityWorkspaces({
+                await client.entities.getEntityWorkspaces({
                     id: this.workspace,
                     metaInclude: ["config"],
                 })
@@ -43,9 +45,10 @@ export class TigerWorkspaceSettings implements IWorkspaceSettingsService {
 
             return {
                 ...DefaultUserSettings,
-                userId: principal.userId,
+                userId: profile.userId,
                 workspace: this.workspace,
                 ...config?.config,
+                ...features,
             };
         });
     }
