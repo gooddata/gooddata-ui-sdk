@@ -810,6 +810,7 @@ export interface DeclarativeOrganizationInfo {
     name: string;
     oauthClientId?: string;
     oauthClientSecret?: string;
+    oauthIssuerId?: string;
     oauthIssuerLocation?: string;
     permissions: Array<DeclarativeOrganizationPermission>;
 }
@@ -1215,7 +1216,7 @@ export const EntitiesApiAxiosParamCreator: (configuration?: MetadataConfiguratio
     createEntityDashboardPlugins: (workspaceId: string, jsonApiDashboardPluginInDocument: JsonApiDashboardPluginInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityDataSources: (jsonApiDataSourceInDocument: JsonApiDataSourceInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityFilterContexts: (workspaceId: string, jsonApiFilterContextInDocument: JsonApiFilterContextInDocument, include?: ("attributes" | "labels" | "datasets" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
-    createEntityMetrics: (workspaceId: string, jsonApiMetricInDocument: JsonApiMetricInDocument, include?: ("attributes" | "facts" | "labels" | "metrics" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityMetrics: (workspaceId: string, jsonApiMetricInDocument: JsonApiMetricInDocument, include?: ("attributes" | "facts" | "labels" | "metrics" | "datasets" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityUserGroups: (jsonApiUserGroupInDocument: JsonApiUserGroupInDocument, include?: ("ALL" | "userGroups" | "parents")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityUsers: (jsonApiUserInDocument: JsonApiUserInDocument, include?: ("ALL" | "userGroups")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityVisualizationObjects: (workspaceId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, include?: ("attributes" | "facts" | "labels" | "metrics" | "datasets" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -1292,7 +1293,7 @@ export const EntitiesApiAxiosParamCreator: (configuration?: MetadataConfiguratio
     } | undefined, filter?: string | undefined, include?: ("attributes" | "attribute" | "ALL")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesMetrics: (workspaceId: string, predicate?: {
         [key: string]: object;
-    } | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "labels" | "metrics" | "ALL")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    } | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "labels" | "metrics" | "datasets" | "ALL")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesUserGroups: (predicate?: {
         [key: string]: object;
     } | undefined, filter?: string | undefined, include?: ("ALL" | "userGroups" | "parents")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -1354,7 +1355,7 @@ export const EntitiesApiAxiosParamCreator: (configuration?: MetadataConfiguratio
     } | undefined, filter?: string | undefined, include?: ("attributes" | "attribute" | "ALL")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityMetrics: (workspaceId: string, objectId: string, predicate?: {
         [key: string]: object;
-    } | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "labels" | "metrics" | "ALL")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    } | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "labels" | "metrics" | "datasets" | "ALL")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityOrganizations: (id: string, predicate?: {
         [key: string]: object;
     } | undefined, filter?: string | undefined, include?: ("ALL" | "userGroups" | "users" | "bootstrapUser" | "bootstrapUserGroup")[] | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -1394,7 +1395,7 @@ export const EntitiesApiAxiosParamCreator: (configuration?: MetadataConfiguratio
     } | undefined, filter?: string | undefined, include?: ("attributes" | "labels" | "datasets" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityMetrics: (workspaceId: string, objectId: string, jsonApiMetricPatchDocument: JsonApiMetricPatchDocument, predicate?: {
         [key: string]: object;
-    } | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "labels" | "metrics" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    } | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "labels" | "metrics" | "datasets" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityOrganizations: (id: string, jsonApiOrganizationPatchDocument: JsonApiOrganizationPatchDocument, predicate?: {
         [key: string]: object;
     } | undefined, filter?: string | undefined, include?: ("ALL" | "userGroups" | "users" | "bootstrapUser" | "bootstrapUserGroup")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -1430,7 +1431,7 @@ export const EntitiesApiAxiosParamCreator: (configuration?: MetadataConfiguratio
     } | undefined, filter?: string | undefined, include?: ("attributes" | "labels" | "datasets" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityMetrics: (workspaceId: string, objectId: string, jsonApiMetricInDocument: JsonApiMetricInDocument, predicate?: {
         [key: string]: object;
-    } | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "labels" | "metrics" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    } | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "labels" | "metrics" | "datasets" | "ALL")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityOrganizations: (id: string, jsonApiOrganizationInDocument: JsonApiOrganizationInDocument, predicate?: {
         [key: string]: object;
     } | undefined, filter?: string | undefined, include?: ("ALL" | "userGroups" | "users" | "bootstrapUser" | "bootstrapUserGroup")[] | undefined, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -1484,7 +1485,7 @@ export interface EntitiesApiCreateEntityFilterContextsRequest {
 
 // @public
 export interface EntitiesApiCreateEntityMetricsRequest {
-    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">;
+    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
     readonly jsonApiMetricInDocument: JsonApiMetricInDocument;
     readonly workspaceId: string;
 }
@@ -1727,7 +1728,7 @@ export const EntitiesApiFp: (configuration?: MetadataConfiguration | undefined) 
     createEntityDashboardPlugins(workspaceId: string, jsonApiDashboardPluginInDocument: JsonApiDashboardPluginInDocument, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDashboardPluginOutDocument>>;
     createEntityDataSources(jsonApiDataSourceInDocument: JsonApiDataSourceInDocument, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceOutDocument>>;
     createEntityFilterContexts(workspaceId: string, jsonApiFilterContextInDocument: JsonApiFilterContextInDocument, include?: ("attributes" | "labels" | "datasets" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiFilterContextOutDocument>>;
-    createEntityMetrics(workspaceId: string, jsonApiMetricInDocument: JsonApiMetricInDocument, include?: ("attributes" | "facts" | "labels" | "metrics" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiMetricOutDocument>>;
+    createEntityMetrics(workspaceId: string, jsonApiMetricInDocument: JsonApiMetricInDocument, include?: ("attributes" | "facts" | "labels" | "metrics" | "datasets" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiMetricOutDocument>>;
     createEntityUserGroups(jsonApiUserGroupInDocument: JsonApiUserGroupInDocument, include?: ("ALL" | "userGroups" | "parents")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserGroupOutDocument>>;
     createEntityUsers(jsonApiUserInDocument: JsonApiUserInDocument, include?: ("ALL" | "userGroups")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserOutDocument>>;
     createEntityVisualizationObjects(workspaceId: string, jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument, include?: ("attributes" | "facts" | "labels" | "metrics" | "datasets" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiVisualizationObjectOutDocument>>;
@@ -1804,7 +1805,7 @@ export const EntitiesApiFp: (configuration?: MetadataConfiguration | undefined) 
     } | undefined, filter?: string | undefined, include?: ("attributes" | "attribute" | "ALL")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiLabelOutList>>;
     getAllEntitiesMetrics(workspaceId: string, predicate?: {
         [key: string]: object;
-    } | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "labels" | "metrics" | "ALL")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiMetricOutList>>;
+    } | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "labels" | "metrics" | "datasets" | "ALL")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiMetricOutList>>;
     getAllEntitiesUserGroups(predicate?: {
         [key: string]: object;
     } | undefined, filter?: string | undefined, include?: ("ALL" | "userGroups" | "parents")[] | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserGroupOutList>>;
@@ -1866,7 +1867,7 @@ export const EntitiesApiFp: (configuration?: MetadataConfiguration | undefined) 
     } | undefined, filter?: string | undefined, include?: ("attributes" | "attribute" | "ALL")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiLabelOutDocument>>;
     getEntityMetrics(workspaceId: string, objectId: string, predicate?: {
         [key: string]: object;
-    } | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "labels" | "metrics" | "ALL")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiMetricOutDocument>>;
+    } | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "labels" | "metrics" | "datasets" | "ALL")[] | undefined, xGDCVALIDATERELATIONS?: boolean | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiMetricOutDocument>>;
     getEntityOrganizations(id: string, predicate?: {
         [key: string]: object;
     } | undefined, filter?: string | undefined, include?: ("ALL" | "userGroups" | "users" | "bootstrapUser" | "bootstrapUserGroup")[] | undefined, metaInclude?: ("all" | "ALL" | "permissions")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationOutDocument>>;
@@ -1906,7 +1907,7 @@ export const EntitiesApiFp: (configuration?: MetadataConfiguration | undefined) 
     } | undefined, filter?: string | undefined, include?: ("attributes" | "labels" | "datasets" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiFilterContextOutDocument>>;
     patchEntityMetrics(workspaceId: string, objectId: string, jsonApiMetricPatchDocument: JsonApiMetricPatchDocument, predicate?: {
         [key: string]: object;
-    } | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "labels" | "metrics" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiMetricOutDocument>>;
+    } | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "labels" | "metrics" | "datasets" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiMetricOutDocument>>;
     patchEntityOrganizations(id: string, jsonApiOrganizationPatchDocument: JsonApiOrganizationPatchDocument, predicate?: {
         [key: string]: object;
     } | undefined, filter?: string | undefined, include?: ("ALL" | "userGroups" | "users" | "bootstrapUser" | "bootstrapUserGroup")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationOutDocument>>;
@@ -1942,7 +1943,7 @@ export const EntitiesApiFp: (configuration?: MetadataConfiguration | undefined) 
     } | undefined, filter?: string | undefined, include?: ("attributes" | "labels" | "datasets" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiFilterContextOutDocument>>;
     updateEntityMetrics(workspaceId: string, objectId: string, jsonApiMetricInDocument: JsonApiMetricInDocument, predicate?: {
         [key: string]: object;
-    } | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "labels" | "metrics" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiMetricOutDocument>>;
+    } | undefined, filter?: string | undefined, include?: ("attributes" | "facts" | "labels" | "metrics" | "datasets" | "ALL")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiMetricOutDocument>>;
     updateEntityOrganizations(id: string, jsonApiOrganizationInDocument: JsonApiOrganizationInDocument, predicate?: {
         [key: string]: object;
     } | undefined, filter?: string | undefined, include?: ("ALL" | "userGroups" | "users" | "bootstrapUser" | "bootstrapUserGroup")[] | undefined, options?: AxiosRequestConfig | undefined): Promise<(axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationOutDocument>>;
@@ -2122,7 +2123,7 @@ export interface EntitiesApiGetAllEntitiesLabelsRequest {
 // @public
 export interface EntitiesApiGetAllEntitiesMetricsRequest {
     readonly filter?: string;
-    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">;
+    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
     readonly page?: number;
     readonly predicate?: {
         [key: string]: object;
@@ -2356,7 +2357,7 @@ export interface EntitiesApiGetEntityLabelsRequest {
 // @public
 export interface EntitiesApiGetEntityMetricsRequest {
     readonly filter?: string;
-    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">;
+    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
     readonly objectId: string;
     readonly predicate?: {
         [key: string]: object;
@@ -2685,7 +2686,7 @@ export interface EntitiesApiPatchEntityFilterContextsRequest {
 // @public
 export interface EntitiesApiPatchEntityMetricsRequest {
     readonly filter?: string;
-    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">;
+    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
     readonly jsonApiMetricPatchDocument: JsonApiMetricPatchDocument;
     readonly objectId: string;
     readonly predicate?: {
@@ -2820,7 +2821,7 @@ export interface EntitiesApiUpdateEntityFilterContextsRequest {
 // @public
 export interface EntitiesApiUpdateEntityMetricsRequest {
     readonly filter?: string;
-    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">;
+    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
     readonly jsonApiMetricInDocument: JsonApiMetricInDocument;
     readonly objectId: string;
     readonly predicate?: {
@@ -3472,7 +3473,7 @@ export type JsonApiAttributeToOneLinkage = JsonApiAttributeLinkage;
 
 // @public
 export interface JsonApiCookieSecurityConfigurationIn {
-    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
     id: string;
     type: JsonApiCookieSecurityConfigurationInTypeEnum;
 }
@@ -3492,15 +3493,9 @@ export type JsonApiCookieSecurityConfigurationInTypeEnum = typeof JsonApiCookieS
 
 // @public
 export interface JsonApiCookieSecurityConfigurationOut {
-    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
     id: string;
     type: JsonApiCookieSecurityConfigurationOutTypeEnum;
-}
-
-// @public
-export interface JsonApiCookieSecurityConfigurationOutAttributes {
-    lastRotation?: string;
-    rotationInterval?: string;
 }
 
 // @public
@@ -3519,9 +3514,15 @@ export type JsonApiCookieSecurityConfigurationOutTypeEnum = typeof JsonApiCookie
 
 // @public
 export interface JsonApiCookieSecurityConfigurationPatch {
-    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
     id: string;
     type: JsonApiCookieSecurityConfigurationPatchTypeEnum;
+}
+
+// @public
+export interface JsonApiCookieSecurityConfigurationPatchAttributes {
+    lastRotation?: string;
+    rotationInterval?: string;
 }
 
 // @public
@@ -4509,7 +4510,7 @@ export interface JsonApiMetricOutDocument {
 }
 
 // @public
-export type JsonApiMetricOutIncludes = JsonApiAttributeOutWithLinks | JsonApiFactOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks;
+export type JsonApiMetricOutIncludes = JsonApiAttributeOutWithLinks | JsonApiDatasetOutWithLinks | JsonApiFactOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks;
 
 // @public
 export interface JsonApiMetricOutList {
@@ -4521,6 +4522,7 @@ export interface JsonApiMetricOutList {
 // @public
 export interface JsonApiMetricOutRelationships {
     attributes?: JsonApiDatasetOutRelationshipsAttributes;
+    datasets?: JsonApiAnalyticalDashboardOutRelationshipsDatasets;
     facts?: JsonApiDatasetOutRelationshipsFacts;
     labels?: JsonApiAnalyticalDashboardOutRelationshipsLabels;
     metrics?: JsonApiAnalyticalDashboardOutRelationshipsMetrics;
@@ -4582,20 +4584,9 @@ export type JsonApiMetricPatchTypeEnum = typeof JsonApiMetricPatchTypeEnum[keyof
 
 // @public
 export interface JsonApiOrganizationIn {
-    attributes?: JsonApiOrganizationInAttributes;
+    attributes?: JsonApiOrganizationPatchAttributes;
     id: string;
     type: JsonApiOrganizationInTypeEnum;
-}
-
-// @public
-export interface JsonApiOrganizationInAttributes {
-    allowedOrigins?: Array<string>;
-    earlyAccess?: string;
-    hostname?: string;
-    name?: string;
-    oauthClientId?: string;
-    oauthClientSecret?: string;
-    oauthIssuerLocation?: string;
 }
 
 // @public
@@ -4627,6 +4618,7 @@ export interface JsonApiOrganizationOutAttributes {
     hostname?: string;
     name?: string;
     oauthClientId?: string;
+    oauthIssuerId?: string;
     oauthIssuerLocation?: string;
 }
 
@@ -4679,9 +4671,21 @@ export type JsonApiOrganizationOutTypeEnum = typeof JsonApiOrganizationOutTypeEn
 
 // @public
 export interface JsonApiOrganizationPatch {
-    attributes?: JsonApiOrganizationInAttributes;
+    attributes?: JsonApiOrganizationPatchAttributes;
     id: string;
     type: JsonApiOrganizationPatchTypeEnum;
+}
+
+// @public
+export interface JsonApiOrganizationPatchAttributes {
+    allowedOrigins?: Array<string>;
+    earlyAccess?: string;
+    hostname?: string;
+    name?: string;
+    oauthClientId?: string;
+    oauthClientSecret?: string;
+    oauthIssuerId?: string;
+    oauthIssuerLocation?: string;
 }
 
 // @public
@@ -4700,23 +4704,13 @@ export type JsonApiOrganizationPatchTypeEnum = typeof JsonApiOrganizationPatchTy
 // @public
 export interface JsonApiUserGroupIn {
     id: string;
-    relationships?: JsonApiUserGroupInRelationships;
+    relationships?: JsonApiUserGroupPatchRelationships;
     type: JsonApiUserGroupInTypeEnum;
 }
 
 // @public
 export interface JsonApiUserGroupInDocument {
     data: JsonApiUserGroupIn;
-}
-
-// @public
-export interface JsonApiUserGroupInRelationships {
-    parents?: JsonApiUserGroupInRelationshipsParents;
-}
-
-// @public
-export interface JsonApiUserGroupInRelationshipsParents {
-    data: Array<JsonApiUserGroupLinkage>;
 }
 
 // @public (undocumented)
@@ -4744,7 +4738,7 @@ export type JsonApiUserGroupLinkageTypeEnum = typeof JsonApiUserGroupLinkageType
 // @public
 export interface JsonApiUserGroupOut {
     id: string;
-    relationships?: JsonApiUserGroupInRelationships;
+    relationships?: JsonApiUserGroupPatchRelationships;
     type: JsonApiUserGroupOutTypeEnum;
 }
 
@@ -4774,7 +4768,7 @@ export type JsonApiUserGroupOutTypeEnum = typeof JsonApiUserGroupOutTypeEnum[key
 export interface JsonApiUserGroupOutWithLinks {
     id: string;
     links?: ObjectLinks;
-    relationships?: JsonApiUserGroupInRelationships;
+    relationships?: JsonApiUserGroupPatchRelationships;
     type: JsonApiUserGroupOutWithLinksTypeEnum;
 }
 
@@ -4789,13 +4783,23 @@ export type JsonApiUserGroupOutWithLinksTypeEnum = typeof JsonApiUserGroupOutWit
 // @public
 export interface JsonApiUserGroupPatch {
     id: string;
-    relationships?: JsonApiUserGroupInRelationships;
+    relationships?: JsonApiUserGroupPatchRelationships;
     type: JsonApiUserGroupPatchTypeEnum;
 }
 
 // @public
 export interface JsonApiUserGroupPatchDocument {
     data: JsonApiUserGroupPatch;
+}
+
+// @public
+export interface JsonApiUserGroupPatchRelationships {
+    parents?: JsonApiUserGroupPatchRelationshipsParents;
+}
+
+// @public
+export interface JsonApiUserGroupPatchRelationshipsParents {
+    data: Array<JsonApiUserGroupLinkage>;
 }
 
 // @public (undocumented)
@@ -4811,25 +4815,15 @@ export type JsonApiUserGroupToOneLinkage = JsonApiUserGroupLinkage;
 
 // @public
 export interface JsonApiUserIn {
-    attributes?: JsonApiUserInAttributes;
+    attributes?: JsonApiUserPatchAttributes;
     id: string;
-    relationships?: JsonApiUserInRelationships;
+    relationships?: JsonApiUserPatchRelationships;
     type: JsonApiUserInTypeEnum;
-}
-
-// @public
-export interface JsonApiUserInAttributes {
-    authenticationId?: string;
 }
 
 // @public
 export interface JsonApiUserInDocument {
     data: JsonApiUserIn;
-}
-
-// @public
-export interface JsonApiUserInRelationships {
-    userGroups?: JsonApiUserGroupInRelationshipsParents;
 }
 
 // @public (undocumented)
@@ -4856,9 +4850,9 @@ export type JsonApiUserLinkageTypeEnum = typeof JsonApiUserLinkageTypeEnum[keyof
 
 // @public
 export interface JsonApiUserOut {
-    attributes?: JsonApiUserInAttributes;
+    attributes?: JsonApiUserPatchAttributes;
     id: string;
-    relationships?: JsonApiUserInRelationships;
+    relationships?: JsonApiUserPatchRelationships;
     type: JsonApiUserOutTypeEnum;
 }
 
@@ -4886,10 +4880,10 @@ export type JsonApiUserOutTypeEnum = typeof JsonApiUserOutTypeEnum[keyof typeof 
 
 // @public
 export interface JsonApiUserOutWithLinks {
-    attributes?: JsonApiUserInAttributes;
+    attributes?: JsonApiUserPatchAttributes;
     id: string;
     links?: ObjectLinks;
-    relationships?: JsonApiUserInRelationships;
+    relationships?: JsonApiUserPatchRelationships;
     type: JsonApiUserOutWithLinksTypeEnum;
 }
 
@@ -4903,15 +4897,25 @@ export type JsonApiUserOutWithLinksTypeEnum = typeof JsonApiUserOutWithLinksType
 
 // @public
 export interface JsonApiUserPatch {
-    attributes?: JsonApiUserInAttributes;
+    attributes?: JsonApiUserPatchAttributes;
     id: string;
-    relationships?: JsonApiUserInRelationships;
+    relationships?: JsonApiUserPatchRelationships;
     type: JsonApiUserPatchTypeEnum;
+}
+
+// @public
+export interface JsonApiUserPatchAttributes {
+    authenticationId?: string;
 }
 
 // @public
 export interface JsonApiUserPatchDocument {
     data: JsonApiUserPatch;
+}
+
+// @public
+export interface JsonApiUserPatchRelationships {
+    userGroups?: JsonApiUserGroupPatchRelationshipsParents;
 }
 
 // @public (undocumented)
@@ -4963,34 +4967,22 @@ export type JsonApiVisualizationObjectLinkageTypeEnum = typeof JsonApiVisualizat
 export interface JsonApiVisualizationObjectOut {
     attributes?: JsonApiAnalyticalDashboardOutAttributes;
     id: string;
-    relationships?: JsonApiVisualizationObjectOutRelationships;
+    relationships?: JsonApiMetricOutRelationships;
     type: JsonApiVisualizationObjectOutTypeEnum;
 }
 
 // @public
 export interface JsonApiVisualizationObjectOutDocument {
     data: JsonApiVisualizationObjectOut;
-    included?: Array<JsonApiVisualizationObjectOutIncludes>;
+    included?: Array<JsonApiMetricOutIncludes>;
     links?: ObjectLinks;
 }
 
 // @public
-export type JsonApiVisualizationObjectOutIncludes = JsonApiAttributeOutWithLinks | JsonApiDatasetOutWithLinks | JsonApiFactOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks;
-
-// @public
 export interface JsonApiVisualizationObjectOutList {
     data: Array<JsonApiVisualizationObjectOutWithLinks>;
-    included?: Array<JsonApiVisualizationObjectOutIncludes>;
+    included?: Array<JsonApiMetricOutIncludes>;
     links?: ListLinks;
-}
-
-// @public
-export interface JsonApiVisualizationObjectOutRelationships {
-    attributes?: JsonApiDatasetOutRelationshipsAttributes;
-    datasets?: JsonApiAnalyticalDashboardOutRelationshipsDatasets;
-    facts?: JsonApiDatasetOutRelationshipsFacts;
-    labels?: JsonApiAnalyticalDashboardOutRelationshipsLabels;
-    metrics?: JsonApiAnalyticalDashboardOutRelationshipsMetrics;
 }
 
 // @public (undocumented)
@@ -5006,7 +4998,7 @@ export interface JsonApiVisualizationObjectOutWithLinks {
     attributes?: JsonApiAnalyticalDashboardOutAttributes;
     id: string;
     links?: ObjectLinks;
-    relationships?: JsonApiVisualizationObjectOutRelationships;
+    relationships?: JsonApiMetricOutRelationships;
     type: JsonApiVisualizationObjectOutWithLinksTypeEnum;
 }
 
@@ -5241,31 +5233,15 @@ export type JsonApiWorkspaceDataFilterToOneLinkage = JsonApiWorkspaceDataFilterL
 
 // @public
 export interface JsonApiWorkspaceIn {
-    attributes?: JsonApiWorkspaceInAttributes;
+    attributes?: JsonApiWorkspacePatchAttributes;
     id: string;
-    relationships?: JsonApiWorkspaceInRelationships;
+    relationships?: JsonApiWorkspacePatchRelationships;
     type: JsonApiWorkspaceInTypeEnum;
-}
-
-// @public
-export interface JsonApiWorkspaceInAttributes {
-    earlyAccess?: string;
-    name?: string;
 }
 
 // @public
 export interface JsonApiWorkspaceInDocument {
     data: JsonApiWorkspaceIn;
-}
-
-// @public
-export interface JsonApiWorkspaceInRelationships {
-    parent?: JsonApiWorkspaceInRelationshipsParent;
-}
-
-// @public
-export interface JsonApiWorkspaceInRelationshipsParent {
-    data: JsonApiWorkspaceToOneLinkage | null;
 }
 
 // @public (undocumented)
@@ -5292,10 +5268,10 @@ export type JsonApiWorkspaceLinkageTypeEnum = typeof JsonApiWorkspaceLinkageType
 
 // @public
 export interface JsonApiWorkspaceOut {
-    attributes?: JsonApiWorkspaceInAttributes;
+    attributes?: JsonApiWorkspacePatchAttributes;
     id: string;
     meta?: JsonApiWorkspaceOutMeta;
-    relationships?: JsonApiWorkspaceInRelationships;
+    relationships?: JsonApiWorkspacePatchRelationships;
     type: JsonApiWorkspaceOutTypeEnum;
 }
 
@@ -5345,11 +5321,11 @@ export type JsonApiWorkspaceOutTypeEnum = typeof JsonApiWorkspaceOutTypeEnum[key
 
 // @public
 export interface JsonApiWorkspaceOutWithLinks {
-    attributes?: JsonApiWorkspaceInAttributes;
+    attributes?: JsonApiWorkspacePatchAttributes;
     id: string;
     links?: ObjectLinks;
     meta?: JsonApiWorkspaceOutMeta;
-    relationships?: JsonApiWorkspaceInRelationships;
+    relationships?: JsonApiWorkspacePatchRelationships;
     type: JsonApiWorkspaceOutWithLinksTypeEnum;
 }
 
@@ -5363,15 +5339,31 @@ export type JsonApiWorkspaceOutWithLinksTypeEnum = typeof JsonApiWorkspaceOutWit
 
 // @public
 export interface JsonApiWorkspacePatch {
-    attributes?: JsonApiWorkspaceInAttributes;
+    attributes?: JsonApiWorkspacePatchAttributes;
     id: string;
-    relationships?: JsonApiWorkspaceInRelationships;
+    relationships?: JsonApiWorkspacePatchRelationships;
     type: JsonApiWorkspacePatchTypeEnum;
+}
+
+// @public
+export interface JsonApiWorkspacePatchAttributes {
+    earlyAccess?: string;
+    name?: string;
 }
 
 // @public
 export interface JsonApiWorkspacePatchDocument {
     data: JsonApiWorkspacePatch;
+}
+
+// @public
+export interface JsonApiWorkspacePatchRelationships {
+    parent?: JsonApiWorkspacePatchRelationshipsParent;
+}
+
+// @public
+export interface JsonApiWorkspacePatchRelationshipsParent {
+    data: JsonApiWorkspaceToOneLinkage | null;
 }
 
 // @public (undocumented)

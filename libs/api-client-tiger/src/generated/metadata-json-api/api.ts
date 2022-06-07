@@ -912,6 +912,12 @@ export interface DeclarativeOrganizationInfo {
      * @memberof DeclarativeOrganizationInfo
      */
     earlyAccess?: string;
+    /**
+     * Any string identifying the OIDC provider. This value is used as suffix for OAuth2 callback (redirect) URL. If not defined, the standard callback URL is used. This value is valid only for external OIDC providers, not for the internal DEX provider.
+     * @type {string}
+     * @memberof DeclarativeOrganizationInfo
+     */
+    oauthIssuerId?: string;
 }
 /**
  * Definition of a permission assigned to a user/user-group.
@@ -2477,10 +2483,10 @@ export interface JsonApiCookieSecurityConfigurationIn {
     id: string;
     /**
      *
-     * @type {JsonApiCookieSecurityConfigurationOutAttributes}
+     * @type {JsonApiCookieSecurityConfigurationPatchAttributes}
      * @memberof JsonApiCookieSecurityConfigurationIn
      */
-    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
 }
 
 export const JsonApiCookieSecurityConfigurationInTypeEnum = {
@@ -2523,10 +2529,10 @@ export interface JsonApiCookieSecurityConfigurationOut {
     id: string;
     /**
      *
-     * @type {JsonApiCookieSecurityConfigurationOutAttributes}
+     * @type {JsonApiCookieSecurityConfigurationPatchAttributes}
      * @memberof JsonApiCookieSecurityConfigurationOut
      */
-    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
 }
 
 export const JsonApiCookieSecurityConfigurationOutTypeEnum = {
@@ -2536,25 +2542,6 @@ export const JsonApiCookieSecurityConfigurationOutTypeEnum = {
 export type JsonApiCookieSecurityConfigurationOutTypeEnum =
     typeof JsonApiCookieSecurityConfigurationOutTypeEnum[keyof typeof JsonApiCookieSecurityConfigurationOutTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiCookieSecurityConfigurationOutAttributes
- */
-export interface JsonApiCookieSecurityConfigurationOutAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiCookieSecurityConfigurationOutAttributes
-     */
-    lastRotation?: string;
-    /**
-     * Length of interval between automatic rotations expressed in format of ISO 8601 duration
-     * @type {string}
-     * @memberof JsonApiCookieSecurityConfigurationOutAttributes
-     */
-    rotationInterval?: string;
-}
 /**
  *
  * @export
@@ -2594,10 +2581,10 @@ export interface JsonApiCookieSecurityConfigurationPatch {
     id: string;
     /**
      *
-     * @type {JsonApiCookieSecurityConfigurationOutAttributes}
+     * @type {JsonApiCookieSecurityConfigurationPatchAttributes}
      * @memberof JsonApiCookieSecurityConfigurationPatch
      */
-    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
 }
 
 export const JsonApiCookieSecurityConfigurationPatchTypeEnum = {
@@ -2607,6 +2594,25 @@ export const JsonApiCookieSecurityConfigurationPatchTypeEnum = {
 export type JsonApiCookieSecurityConfigurationPatchTypeEnum =
     typeof JsonApiCookieSecurityConfigurationPatchTypeEnum[keyof typeof JsonApiCookieSecurityConfigurationPatchTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiCookieSecurityConfigurationPatchAttributes
+ */
+export interface JsonApiCookieSecurityConfigurationPatchAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiCookieSecurityConfigurationPatchAttributes
+     */
+    lastRotation?: string;
+    /**
+     * Length of interval between automatic rotations expressed in format of ISO 8601 duration
+     * @type {string}
+     * @memberof JsonApiCookieSecurityConfigurationPatchAttributes
+     */
+    rotationInterval?: string;
+}
 /**
  *
  * @export
@@ -5128,6 +5134,7 @@ export interface JsonApiMetricOutDocument {
  */
 export type JsonApiMetricOutIncludes =
     | JsonApiAttributeOutWithLinks
+    | JsonApiDatasetOutWithLinks
     | JsonApiFactOutWithLinks
     | JsonApiLabelOutWithLinks
     | JsonApiMetricOutWithLinks;
@@ -5187,6 +5194,12 @@ export interface JsonApiMetricOutRelationships {
      * @memberof JsonApiMetricOutRelationships
      */
     metrics?: JsonApiAnalyticalDashboardOutRelationshipsMetrics;
+    /**
+     *
+     * @type {JsonApiAnalyticalDashboardOutRelationshipsDatasets}
+     * @memberof JsonApiMetricOutRelationships
+     */
+    datasets?: JsonApiAnalyticalDashboardOutRelationshipsDatasets;
 }
 /**
  *
@@ -5336,10 +5349,10 @@ export interface JsonApiOrganizationIn {
     id: string;
     /**
      *
-     * @type {JsonApiOrganizationInAttributes}
+     * @type {JsonApiOrganizationPatchAttributes}
      * @memberof JsonApiOrganizationIn
      */
-    attributes?: JsonApiOrganizationInAttributes;
+    attributes?: JsonApiOrganizationPatchAttributes;
 }
 
 export const JsonApiOrganizationInTypeEnum = {
@@ -5349,55 +5362,6 @@ export const JsonApiOrganizationInTypeEnum = {
 export type JsonApiOrganizationInTypeEnum =
     typeof JsonApiOrganizationInTypeEnum[keyof typeof JsonApiOrganizationInTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiOrganizationInAttributes
- */
-export interface JsonApiOrganizationInAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiOrganizationInAttributes
-     */
-    name?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiOrganizationInAttributes
-     */
-    hostname?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof JsonApiOrganizationInAttributes
-     */
-    allowedOrigins?: Array<string>;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiOrganizationInAttributes
-     */
-    oauthIssuerLocation?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiOrganizationInAttributes
-     */
-    oauthClientId?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiOrganizationInAttributes
-     */
-    oauthClientSecret?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiOrganizationInAttributes
-     */
-    earlyAccess?: string;
-}
 /**
  *
  * @export
@@ -5498,6 +5462,12 @@ export interface JsonApiOrganizationOutAttributes {
      * @memberof JsonApiOrganizationOutAttributes
      */
     earlyAccess?: string;
+    /**
+     * Any string identifying the OIDC provider. This value is used as suffix for OAuth2 callback (redirect) URL. If not defined, the standard callback URL is used. This value is valid only for external OIDC providers, not for the internal DEX provider.
+     * @type {string}
+     * @memberof JsonApiOrganizationOutAttributes
+     */
+    oauthIssuerId?: string;
 }
 /**
  *
@@ -5616,10 +5586,10 @@ export interface JsonApiOrganizationPatch {
     id: string;
     /**
      *
-     * @type {JsonApiOrganizationInAttributes}
+     * @type {JsonApiOrganizationPatchAttributes}
      * @memberof JsonApiOrganizationPatch
      */
-    attributes?: JsonApiOrganizationInAttributes;
+    attributes?: JsonApiOrganizationPatchAttributes;
 }
 
 export const JsonApiOrganizationPatchTypeEnum = {
@@ -5629,6 +5599,61 @@ export const JsonApiOrganizationPatchTypeEnum = {
 export type JsonApiOrganizationPatchTypeEnum =
     typeof JsonApiOrganizationPatchTypeEnum[keyof typeof JsonApiOrganizationPatchTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiOrganizationPatchAttributes
+ */
+export interface JsonApiOrganizationPatchAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationPatchAttributes
+     */
+    name?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationPatchAttributes
+     */
+    hostname?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof JsonApiOrganizationPatchAttributes
+     */
+    allowedOrigins?: Array<string>;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationPatchAttributes
+     */
+    oauthIssuerLocation?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationPatchAttributes
+     */
+    oauthClientId?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationPatchAttributes
+     */
+    oauthClientSecret?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationPatchAttributes
+     */
+    earlyAccess?: string;
+    /**
+     * Any string identifying the OIDC provider. This value is used as suffix for OAuth2 callback (redirect) URL. If not defined, the standard callback URL is used. This value is valid only for external OIDC providers, not for the internal DEX provider.
+     * @type {string}
+     * @memberof JsonApiOrganizationPatchAttributes
+     */
+    oauthIssuerId?: string;
+}
 /**
  *
  * @export
@@ -5662,10 +5687,10 @@ export interface JsonApiUserGroupIn {
     id: string;
     /**
      *
-     * @type {JsonApiUserGroupInRelationships}
+     * @type {JsonApiUserGroupPatchRelationships}
      * @memberof JsonApiUserGroupIn
      */
-    relationships?: JsonApiUserGroupInRelationships;
+    relationships?: JsonApiUserGroupPatchRelationships;
 }
 
 export const JsonApiUserGroupInTypeEnum = {
@@ -5687,32 +5712,6 @@ export interface JsonApiUserGroupInDocument {
      * @memberof JsonApiUserGroupInDocument
      */
     data: JsonApiUserGroupIn;
-}
-/**
- *
- * @export
- * @interface JsonApiUserGroupInRelationships
- */
-export interface JsonApiUserGroupInRelationships {
-    /**
-     *
-     * @type {JsonApiUserGroupInRelationshipsParents}
-     * @memberof JsonApiUserGroupInRelationships
-     */
-    parents?: JsonApiUserGroupInRelationshipsParents;
-}
-/**
- *
- * @export
- * @interface JsonApiUserGroupInRelationshipsParents
- */
-export interface JsonApiUserGroupInRelationshipsParents {
-    /**
-     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
-     * @type {Array<JsonApiUserGroupLinkage>}
-     * @memberof JsonApiUserGroupInRelationshipsParents
-     */
-    data: Array<JsonApiUserGroupLinkage>;
 }
 /**
  * The \\\"type\\\" and \\\"id\\\" to non-empty members.
@@ -5761,10 +5760,10 @@ export interface JsonApiUserGroupOut {
     id: string;
     /**
      *
-     * @type {JsonApiUserGroupInRelationships}
+     * @type {JsonApiUserGroupPatchRelationships}
      * @memberof JsonApiUserGroupOut
      */
-    relationships?: JsonApiUserGroupInRelationships;
+    relationships?: JsonApiUserGroupPatchRelationships;
 }
 
 export const JsonApiUserGroupOutTypeEnum = {
@@ -5844,10 +5843,10 @@ export interface JsonApiUserGroupOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiUserGroupInRelationships}
+     * @type {JsonApiUserGroupPatchRelationships}
      * @memberof JsonApiUserGroupOutWithLinks
      */
-    relationships?: JsonApiUserGroupInRelationships;
+    relationships?: JsonApiUserGroupPatchRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -5883,10 +5882,10 @@ export interface JsonApiUserGroupPatch {
     id: string;
     /**
      *
-     * @type {JsonApiUserGroupInRelationships}
+     * @type {JsonApiUserGroupPatchRelationships}
      * @memberof JsonApiUserGroupPatch
      */
-    relationships?: JsonApiUserGroupInRelationships;
+    relationships?: JsonApiUserGroupPatchRelationships;
 }
 
 export const JsonApiUserGroupPatchTypeEnum = {
@@ -5908,6 +5907,32 @@ export interface JsonApiUserGroupPatchDocument {
      * @memberof JsonApiUserGroupPatchDocument
      */
     data: JsonApiUserGroupPatch;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiUserGroupPatchRelationships
+ */
+export interface JsonApiUserGroupPatchRelationships {
+    /**
+     *
+     * @type {JsonApiUserGroupPatchRelationshipsParents}
+     * @memberof JsonApiUserGroupPatchRelationships
+     */
+    parents?: JsonApiUserGroupPatchRelationshipsParents;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiUserGroupPatchRelationshipsParents
+ */
+export interface JsonApiUserGroupPatchRelationshipsParents {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     * @type {Array<JsonApiUserGroupLinkage>}
+     * @memberof JsonApiUserGroupPatchRelationshipsParents
+     */
+    data: Array<JsonApiUserGroupLinkage>;
 }
 /**
  * @type JsonApiUserGroupToOneLinkage
@@ -5936,16 +5961,16 @@ export interface JsonApiUserIn {
     id: string;
     /**
      *
-     * @type {JsonApiUserInAttributes}
+     * @type {JsonApiUserPatchAttributes}
      * @memberof JsonApiUserIn
      */
-    attributes?: JsonApiUserInAttributes;
+    attributes?: JsonApiUserPatchAttributes;
     /**
      *
-     * @type {JsonApiUserInRelationships}
+     * @type {JsonApiUserPatchRelationships}
      * @memberof JsonApiUserIn
      */
-    relationships?: JsonApiUserInRelationships;
+    relationships?: JsonApiUserPatchRelationships;
 }
 
 export const JsonApiUserInTypeEnum = {
@@ -5954,19 +5979,6 @@ export const JsonApiUserInTypeEnum = {
 
 export type JsonApiUserInTypeEnum = typeof JsonApiUserInTypeEnum[keyof typeof JsonApiUserInTypeEnum];
 
-/**
- *
- * @export
- * @interface JsonApiUserInAttributes
- */
-export interface JsonApiUserInAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiUserInAttributes
-     */
-    authenticationId?: string;
-}
 /**
  *
  * @export
@@ -5979,19 +5991,6 @@ export interface JsonApiUserInDocument {
      * @memberof JsonApiUserInDocument
      */
     data: JsonApiUserIn;
-}
-/**
- *
- * @export
- * @interface JsonApiUserInRelationships
- */
-export interface JsonApiUserInRelationships {
-    /**
-     *
-     * @type {JsonApiUserGroupInRelationshipsParents}
-     * @memberof JsonApiUserInRelationships
-     */
-    userGroups?: JsonApiUserGroupInRelationshipsParents;
 }
 /**
  * The \\\"type\\\" and \\\"id\\\" to non-empty members.
@@ -6040,16 +6039,16 @@ export interface JsonApiUserOut {
     id: string;
     /**
      *
-     * @type {JsonApiUserInAttributes}
+     * @type {JsonApiUserPatchAttributes}
      * @memberof JsonApiUserOut
      */
-    attributes?: JsonApiUserInAttributes;
+    attributes?: JsonApiUserPatchAttributes;
     /**
      *
-     * @type {JsonApiUserInRelationships}
+     * @type {JsonApiUserPatchRelationships}
      * @memberof JsonApiUserOut
      */
-    relationships?: JsonApiUserInRelationships;
+    relationships?: JsonApiUserPatchRelationships;
 }
 
 export const JsonApiUserOutTypeEnum = {
@@ -6128,16 +6127,16 @@ export interface JsonApiUserOutWithLinks {
     id: string;
     /**
      *
-     * @type {JsonApiUserInAttributes}
+     * @type {JsonApiUserPatchAttributes}
      * @memberof JsonApiUserOutWithLinks
      */
-    attributes?: JsonApiUserInAttributes;
+    attributes?: JsonApiUserPatchAttributes;
     /**
      *
-     * @type {JsonApiUserInRelationships}
+     * @type {JsonApiUserPatchRelationships}
      * @memberof JsonApiUserOutWithLinks
      */
-    relationships?: JsonApiUserInRelationships;
+    relationships?: JsonApiUserPatchRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -6173,16 +6172,16 @@ export interface JsonApiUserPatch {
     id: string;
     /**
      *
-     * @type {JsonApiUserInAttributes}
+     * @type {JsonApiUserPatchAttributes}
      * @memberof JsonApiUserPatch
      */
-    attributes?: JsonApiUserInAttributes;
+    attributes?: JsonApiUserPatchAttributes;
     /**
      *
-     * @type {JsonApiUserInRelationships}
+     * @type {JsonApiUserPatchRelationships}
      * @memberof JsonApiUserPatch
      */
-    relationships?: JsonApiUserInRelationships;
+    relationships?: JsonApiUserPatchRelationships;
 }
 
 export const JsonApiUserPatchTypeEnum = {
@@ -6191,6 +6190,19 @@ export const JsonApiUserPatchTypeEnum = {
 
 export type JsonApiUserPatchTypeEnum = typeof JsonApiUserPatchTypeEnum[keyof typeof JsonApiUserPatchTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface JsonApiUserPatchAttributes
+ */
+export interface JsonApiUserPatchAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiUserPatchAttributes
+     */
+    authenticationId?: string;
+}
 /**
  *
  * @export
@@ -6203,6 +6215,19 @@ export interface JsonApiUserPatchDocument {
      * @memberof JsonApiUserPatchDocument
      */
     data: JsonApiUserPatch;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiUserPatchRelationships
+ */
+export interface JsonApiUserPatchRelationships {
+    /**
+     *
+     * @type {JsonApiUserGroupPatchRelationshipsParents}
+     * @memberof JsonApiUserPatchRelationships
+     */
+    userGroups?: JsonApiUserGroupPatchRelationshipsParents;
 }
 /**
  * @type JsonApiUserToOneLinkage
@@ -6310,10 +6335,10 @@ export interface JsonApiVisualizationObjectOut {
     attributes?: JsonApiAnalyticalDashboardOutAttributes;
     /**
      *
-     * @type {JsonApiVisualizationObjectOutRelationships}
+     * @type {JsonApiMetricOutRelationships}
      * @memberof JsonApiVisualizationObjectOut
      */
-    relationships?: JsonApiVisualizationObjectOutRelationships;
+    relationships?: JsonApiMetricOutRelationships;
 }
 
 export const JsonApiVisualizationObjectOutTypeEnum = {
@@ -6343,22 +6368,11 @@ export interface JsonApiVisualizationObjectOutDocument {
     links?: ObjectLinks;
     /**
      * Included resources
-     * @type {Array<JsonApiVisualizationObjectOutIncludes>}
+     * @type {Array<JsonApiMetricOutIncludes>}
      * @memberof JsonApiVisualizationObjectOutDocument
      */
-    included?: Array<JsonApiVisualizationObjectOutIncludes>;
+    included?: Array<JsonApiMetricOutIncludes>;
 }
-/**
- * @type JsonApiVisualizationObjectOutIncludes
- * @export
- */
-export type JsonApiVisualizationObjectOutIncludes =
-    | JsonApiAttributeOutWithLinks
-    | JsonApiDatasetOutWithLinks
-    | JsonApiFactOutWithLinks
-    | JsonApiLabelOutWithLinks
-    | JsonApiMetricOutWithLinks;
-
 /**
  * A JSON:API document with a list of resources
  * @export
@@ -6379,47 +6393,10 @@ export interface JsonApiVisualizationObjectOutList {
     links?: ListLinks;
     /**
      * Included resources
-     * @type {Array<JsonApiVisualizationObjectOutIncludes>}
+     * @type {Array<JsonApiMetricOutIncludes>}
      * @memberof JsonApiVisualizationObjectOutList
      */
-    included?: Array<JsonApiVisualizationObjectOutIncludes>;
-}
-/**
- *
- * @export
- * @interface JsonApiVisualizationObjectOutRelationships
- */
-export interface JsonApiVisualizationObjectOutRelationships {
-    /**
-     *
-     * @type {JsonApiDatasetOutRelationshipsFacts}
-     * @memberof JsonApiVisualizationObjectOutRelationships
-     */
-    facts?: JsonApiDatasetOutRelationshipsFacts;
-    /**
-     *
-     * @type {JsonApiDatasetOutRelationshipsAttributes}
-     * @memberof JsonApiVisualizationObjectOutRelationships
-     */
-    attributes?: JsonApiDatasetOutRelationshipsAttributes;
-    /**
-     *
-     * @type {JsonApiAnalyticalDashboardOutRelationshipsLabels}
-     * @memberof JsonApiVisualizationObjectOutRelationships
-     */
-    labels?: JsonApiAnalyticalDashboardOutRelationshipsLabels;
-    /**
-     *
-     * @type {JsonApiAnalyticalDashboardOutRelationshipsMetrics}
-     * @memberof JsonApiVisualizationObjectOutRelationships
-     */
-    metrics?: JsonApiAnalyticalDashboardOutRelationshipsMetrics;
-    /**
-     *
-     * @type {JsonApiAnalyticalDashboardOutRelationshipsDatasets}
-     * @memberof JsonApiVisualizationObjectOutRelationships
-     */
-    datasets?: JsonApiAnalyticalDashboardOutRelationshipsDatasets;
+    included?: Array<JsonApiMetricOutIncludes>;
 }
 /**
  *
@@ -6447,10 +6424,10 @@ export interface JsonApiVisualizationObjectOutWithLinks {
     attributes?: JsonApiAnalyticalDashboardOutAttributes;
     /**
      *
-     * @type {JsonApiVisualizationObjectOutRelationships}
+     * @type {JsonApiMetricOutRelationships}
      * @memberof JsonApiVisualizationObjectOutWithLinks
      */
-    relationships?: JsonApiVisualizationObjectOutRelationships;
+    relationships?: JsonApiMetricOutRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -7067,16 +7044,16 @@ export interface JsonApiWorkspaceIn {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceInAttributes}
+     * @type {JsonApiWorkspacePatchAttributes}
      * @memberof JsonApiWorkspaceIn
      */
-    attributes?: JsonApiWorkspaceInAttributes;
+    attributes?: JsonApiWorkspacePatchAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceInRelationships}
+     * @type {JsonApiWorkspacePatchRelationships}
      * @memberof JsonApiWorkspaceIn
      */
-    relationships?: JsonApiWorkspaceInRelationships;
+    relationships?: JsonApiWorkspacePatchRelationships;
 }
 
 export const JsonApiWorkspaceInTypeEnum = {
@@ -7089,25 +7066,6 @@ export type JsonApiWorkspaceInTypeEnum =
 /**
  *
  * @export
- * @interface JsonApiWorkspaceInAttributes
- */
-export interface JsonApiWorkspaceInAttributes {
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceInAttributes
-     */
-    name?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof JsonApiWorkspaceInAttributes
-     */
-    earlyAccess?: string;
-}
-/**
- *
- * @export
  * @interface JsonApiWorkspaceInDocument
  */
 export interface JsonApiWorkspaceInDocument {
@@ -7117,32 +7075,6 @@ export interface JsonApiWorkspaceInDocument {
      * @memberof JsonApiWorkspaceInDocument
      */
     data: JsonApiWorkspaceIn;
-}
-/**
- *
- * @export
- * @interface JsonApiWorkspaceInRelationships
- */
-export interface JsonApiWorkspaceInRelationships {
-    /**
-     *
-     * @type {JsonApiWorkspaceInRelationshipsParent}
-     * @memberof JsonApiWorkspaceInRelationships
-     */
-    parent?: JsonApiWorkspaceInRelationshipsParent;
-}
-/**
- *
- * @export
- * @interface JsonApiWorkspaceInRelationshipsParent
- */
-export interface JsonApiWorkspaceInRelationshipsParent {
-    /**
-     *
-     * @type {JsonApiWorkspaceToOneLinkage}
-     * @memberof JsonApiWorkspaceInRelationshipsParent
-     */
-    data: JsonApiWorkspaceToOneLinkage | null;
 }
 /**
  * The \\\"type\\\" and \\\"id\\\" to non-empty members.
@@ -7197,16 +7129,16 @@ export interface JsonApiWorkspaceOut {
     meta?: JsonApiWorkspaceOutMeta;
     /**
      *
-     * @type {JsonApiWorkspaceInAttributes}
+     * @type {JsonApiWorkspacePatchAttributes}
      * @memberof JsonApiWorkspaceOut
      */
-    attributes?: JsonApiWorkspaceInAttributes;
+    attributes?: JsonApiWorkspacePatchAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceInRelationships}
+     * @type {JsonApiWorkspacePatchRelationships}
      * @memberof JsonApiWorkspaceOut
      */
-    relationships?: JsonApiWorkspaceInRelationships;
+    relationships?: JsonApiWorkspacePatchRelationships;
 }
 
 export const JsonApiWorkspaceOutTypeEnum = {
@@ -7340,16 +7272,16 @@ export interface JsonApiWorkspaceOutWithLinks {
     meta?: JsonApiWorkspaceOutMeta;
     /**
      *
-     * @type {JsonApiWorkspaceInAttributes}
+     * @type {JsonApiWorkspacePatchAttributes}
      * @memberof JsonApiWorkspaceOutWithLinks
      */
-    attributes?: JsonApiWorkspaceInAttributes;
+    attributes?: JsonApiWorkspacePatchAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceInRelationships}
+     * @type {JsonApiWorkspacePatchRelationships}
      * @memberof JsonApiWorkspaceOutWithLinks
      */
-    relationships?: JsonApiWorkspaceInRelationships;
+    relationships?: JsonApiWorkspacePatchRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -7385,16 +7317,16 @@ export interface JsonApiWorkspacePatch {
     id: string;
     /**
      *
-     * @type {JsonApiWorkspaceInAttributes}
+     * @type {JsonApiWorkspacePatchAttributes}
      * @memberof JsonApiWorkspacePatch
      */
-    attributes?: JsonApiWorkspaceInAttributes;
+    attributes?: JsonApiWorkspacePatchAttributes;
     /**
      *
-     * @type {JsonApiWorkspaceInRelationships}
+     * @type {JsonApiWorkspacePatchRelationships}
      * @memberof JsonApiWorkspacePatch
      */
-    relationships?: JsonApiWorkspaceInRelationships;
+    relationships?: JsonApiWorkspacePatchRelationships;
 }
 
 export const JsonApiWorkspacePatchTypeEnum = {
@@ -7407,6 +7339,25 @@ export type JsonApiWorkspacePatchTypeEnum =
 /**
  *
  * @export
+ * @interface JsonApiWorkspacePatchAttributes
+ */
+export interface JsonApiWorkspacePatchAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspacePatchAttributes
+     */
+    name?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiWorkspacePatchAttributes
+     */
+    earlyAccess?: string;
+}
+/**
+ *
+ * @export
  * @interface JsonApiWorkspacePatchDocument
  */
 export interface JsonApiWorkspacePatchDocument {
@@ -7416,6 +7367,32 @@ export interface JsonApiWorkspacePatchDocument {
      * @memberof JsonApiWorkspacePatchDocument
      */
     data: JsonApiWorkspacePatch;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspacePatchRelationships
+ */
+export interface JsonApiWorkspacePatchRelationships {
+    /**
+     *
+     * @type {JsonApiWorkspacePatchRelationshipsParent}
+     * @memberof JsonApiWorkspacePatchRelationships
+     */
+    parent?: JsonApiWorkspacePatchRelationshipsParent;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiWorkspacePatchRelationshipsParent
+ */
+export interface JsonApiWorkspacePatchRelationshipsParent {
+    /**
+     *
+     * @type {JsonApiWorkspaceToOneLinkage}
+     * @memberof JsonApiWorkspacePatchRelationshipsParent
+     */
+    data: JsonApiWorkspaceToOneLinkage | null;
 }
 /**
  * @type JsonApiWorkspaceToOneLinkage
@@ -8206,14 +8183,14 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          *
          * @param {string} workspaceId
          * @param {JsonApiMetricInDocument} jsonApiMetricInDocument
-         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         createEntityMetrics: async (
             workspaceId: string,
             jsonApiMetricInDocument: JsonApiMetricInDocument,
-            include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">,
+            include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
@@ -10054,7 +10031,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} workspaceId
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
-         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
          * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -10066,7 +10043,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             workspaceId: string,
             predicate?: { [key: string]: object },
             filter?: string,
-            include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">,
+            include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">,
             page?: number,
             size?: number,
             sort?: Array<string>,
@@ -11463,7 +11440,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} objectId
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
-         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -11473,7 +11450,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             objectId: string,
             predicate?: { [key: string]: object },
             filter?: string,
-            include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">,
+            include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
@@ -12399,7 +12376,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {JsonApiMetricPatchDocument} jsonApiMetricPatchDocument
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
-         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -12409,7 +12386,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             jsonApiMetricPatchDocument: JsonApiMetricPatchDocument,
             predicate?: { [key: string]: object },
             filter?: string,
-            include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">,
+            include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
@@ -13302,7 +13279,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
          * @param {JsonApiMetricInDocument} jsonApiMetricInDocument
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
-         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -13312,7 +13289,7 @@ export const EntitiesApiAxiosParamCreator = function (configuration?: Configurat
             jsonApiMetricInDocument: JsonApiMetricInDocument,
             predicate?: { [key: string]: object },
             filter?: string,
-            include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">,
+            include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
@@ -13944,14 +13921,14 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          *
          * @param {string} workspaceId
          * @param {JsonApiMetricInDocument} jsonApiMetricInDocument
-         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async createEntityMetrics(
             workspaceId: string,
             jsonApiMetricInDocument: JsonApiMetricInDocument,
-            include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">,
+            include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiMetricOutDocument>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createEntityMetrics(
@@ -14760,7 +14737,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} workspaceId
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
-         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
          * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -14772,7 +14749,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             workspaceId: string,
             predicate?: { [key: string]: object },
             filter?: string,
-            include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">,
+            include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">,
             page?: number,
             size?: number,
             sort?: Array<string>,
@@ -15423,7 +15400,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {string} objectId
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
-         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {boolean} [xGDCVALIDATERELATIONS]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -15433,7 +15410,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             objectId: string,
             predicate?: { [key: string]: object },
             filter?: string,
-            include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">,
+            include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">,
             xGDCVALIDATERELATIONS?: boolean,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiMetricOutDocument>> {
@@ -15839,7 +15816,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {JsonApiMetricPatchDocument} jsonApiMetricPatchDocument
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
-         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -15849,7 +15826,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             jsonApiMetricPatchDocument: JsonApiMetricPatchDocument,
             predicate?: { [key: string]: object },
             filter?: string,
-            include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">,
+            include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiMetricOutDocument>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchEntityMetrics(
@@ -16211,7 +16188,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
          * @param {JsonApiMetricInDocument} jsonApiMetricInDocument
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
          * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
-         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -16221,7 +16198,7 @@ export const EntitiesApiFp = function (configuration?: Configuration) {
             jsonApiMetricInDocument: JsonApiMetricInDocument,
             predicate?: { [key: string]: object },
             filter?: string,
-            include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">,
+            include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiMetricOutDocument>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateEntityMetrics(
@@ -19483,10 +19460,10 @@ export interface EntitiesApiCreateEntityMetricsRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'ALL'>}
+     * @type {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>}
      * @memberof EntitiesApiCreateEntityMetrics
      */
-    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">;
+    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
 }
 
 /**
@@ -20675,10 +20652,10 @@ export interface EntitiesApiGetAllEntitiesMetricsRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'ALL'>}
+     * @type {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>}
      * @memberof EntitiesApiGetAllEntitiesMetrics
      */
-    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">;
+    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
 
     /**
      * Zero-based page index (0..N)
@@ -21629,10 +21606,10 @@ export interface EntitiesApiGetEntityMetricsRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'ALL'>}
+     * @type {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>}
      * @memberof EntitiesApiGetEntityMetrics
      */
-    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">;
+    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
 
     /**
      *
@@ -22219,10 +22196,10 @@ export interface EntitiesApiPatchEntityMetricsRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'ALL'>}
+     * @type {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>}
      * @memberof EntitiesApiPatchEntityMetrics
      */
-    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">;
+    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
 }
 
 /**
@@ -22753,10 +22730,10 @@ export interface EntitiesApiUpdateEntityMetricsRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'ALL'>}
+     * @type {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'ALL'>}
      * @memberof EntitiesApiUpdateEntityMetrics
      */
-    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "ALL">;
+    readonly include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets" | "ALL">;
 }
 
 /**
