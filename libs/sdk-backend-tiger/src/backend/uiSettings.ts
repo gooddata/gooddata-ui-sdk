@@ -1,6 +1,7 @@
 // (C) 2020-2022 GoodData Corporation
 import { IUserSettings } from "@gooddata/sdk-backend-spi";
 import { ISettings } from "@gooddata/sdk-model";
+import { DefaultFeatureFlags } from "./uiFeatures";
 
 /**
  * Tiger does not yet have endpoints for settings. All the UI-specific
@@ -28,7 +29,6 @@ export const DefaultUiSettings: ISettings = {
     enableHidingOfDataPoints: true,
     enableAdCatalogRefresh: true,
     enableAdRankingFilter: true,
-    enableMultipleDates: true,
     enableDomainHomepage: true,
     enableKPIDashboardDependentFilters: false,
     enableKDWidgetCustomHeight: true,
@@ -71,9 +71,6 @@ export const DefaultUiSettings: ISettings = {
     // enable the plugin-ready Dashboard component in gdc-dashboards
     dashboardComponentDevRollout: true,
 
-    // disable edit mode in gdc-dashboards during development
-    dashboardEditModeDevRollout: false,
-
     enableRenamingProjectToWorkspace: true,
     enableRenamingMeasureToMetric: true,
 
@@ -84,6 +81,8 @@ export const DefaultUiSettings: ISettings = {
     enableAxisNameConfiguration: true,
     enableDataSourceManagement: true,
     enableAdFloatingDateRangeFilter: true,
+
+    ...DefaultFeatureFlags,
 };
 
 /**

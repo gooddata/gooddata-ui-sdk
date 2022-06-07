@@ -2938,6 +2938,11 @@ export interface ExecutionSettings {
     dataSamplingPercentage?: number;
 }
 
+// @public (undocumented)
+export type FeatureContext = {
+    earlyAccess: string;
+};
+
 // @public
 export interface FilterBy {
     labelType: FilterByLabelTypeEnum;
@@ -3001,6 +3006,18 @@ export interface HeaderGroup {
     headers: Array<ExecutionResultHeader>;
 }
 
+// @public (undocumented)
+export interface ILiveFeatures {
+    // (undocumented)
+    live: {
+        configuration: {
+            host: string;
+            key: string;
+        };
+        context: FeatureContext;
+    };
+}
+
 // @public
 export interface InlineFilterDefinition {
     inline: InlineFilterDefinitionInline;
@@ -3044,6 +3061,15 @@ export function isResultMeasureHeader(header: ExecutionResultHeader): header is 
 export function isResultTotalHeader(header: ExecutionResultHeader): header is TotalExecutionResultHeader;
 
 // @public (undocumented)
+export interface IStaticFeatures {
+    // (undocumented)
+    static: {
+        items: Record<string, string>;
+        context: FeatureContext;
+    };
+}
+
+// @public (undocumented)
 export function isVisualizationObjectsItem(visualizationObject: unknown): visualizationObject is JsonApiVisualizationObjectOutWithLinks;
 
 // @public (undocumented)
@@ -3071,6 +3097,8 @@ export interface ITigerClient {
 
 // @public (undocumented)
 export interface IUserProfile {
+    // (undocumented)
+    features?: ILiveFeatures | IStaticFeatures;
     // (undocumented)
     links: {
         user: string;

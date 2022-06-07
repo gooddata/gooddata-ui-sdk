@@ -22,7 +22,14 @@ import {
     MetadataRequestArgs,
     tigerEntitiesObjectsClientFactory,
 } from "./entitiesObjects";
-import { tigerProfileClientFactory, IUserProfile, ProfileApiInterface } from "./profile";
+import {
+    tigerProfileClientFactory,
+    IUserProfile,
+    ProfileApiInterface,
+    ILiveFeatures,
+    IStaticFeatures,
+    FeatureContext,
+} from "./profile";
 
 export {
     tigerExecutionClientFactory,
@@ -43,6 +50,9 @@ export {
     LabelElementsRequestArgs,
     ProfileApiInterface,
     IUserProfile,
+    ILiveFeatures,
+    IStaticFeatures,
+    FeatureContext,
 };
 
 export interface ITigerClient {

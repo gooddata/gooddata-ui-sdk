@@ -1,6 +1,26 @@
 // (C) 2019-2022 GoodData Corporation
 import { AxiosInstance } from "axios";
 
+export type FeatureContext = {
+    earlyAccess: string;
+};
+
+export interface ILiveFeatures {
+    live: {
+        configuration: {
+            host: string;
+            key: string;
+        };
+        context: FeatureContext;
+    };
+}
+export interface IStaticFeatures {
+    static: {
+        items: Record<string, string>;
+        context: FeatureContext;
+    };
+}
+
 export interface IUserProfile {
     name: string;
     userId: string;
@@ -10,6 +30,7 @@ export interface IUserProfile {
         user: string;
         organization: string;
     };
+    features?: ILiveFeatures | IStaticFeatures;
 }
 
 export interface ProfileApiInterface {
