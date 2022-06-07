@@ -52,7 +52,7 @@ export type Alignment = {
 };
 
 // @internal (undocumented)
-export const AppHeader: React_2.ComponentType<Pick<WithIntlProps<IAppHeaderProps & WrappedComponentProps<"intl">>, "className" | "forwardedRef" | "helpMenuDropdownAlignPoints" | "onMenuItemClick" | "helpRedirectUrl" | "userName" | "onUpsellButtonClick" | "logoHref" | "accountMenuItems" | "helpMenuItems" | "menuItemsGroups" | "onLogoClick" | "badges" | "logoUrl" | "logoTitle" | "documentationUrl" | "workspacePicker" | "headerColor" | "headerTextColor" | "activeColor" | "disableHelpDropdown" | "onHelpClick" | "showStaticHelpMenu" | "showUpsellButton">>;
+export const AppHeader: React_2.ComponentType<Pick<WithIntlProps<IAppHeaderProps & WrappedComponentProps<"intl">>, "className" | "forwardedRef" | "helpMenuDropdownAlignPoints" | "onMenuItemClick" | "helpRedirectUrl" | "userName" | "onUpsellButtonClick" | "logoHref" | "accountMenuItems" | "helpMenuItems" | "menuItemsGroups" | "onLogoClick" | "badges" | "logoUrl" | "logoTitle" | "documentationUrl" | "workspacePicker" | "headerColor" | "headerTextColor" | "activeColor" | "expiredDate" | "disableHelpDropdown" | "onHelpClick" | "showStaticHelpMenu" | "showUpsellButton">>;
 
 // @internal (undocumented)
 export type ArrowDirections = Record<string, string>;
@@ -694,6 +694,8 @@ export interface IAppHeaderProps {
     disableHelpDropdown?: boolean;
     // (undocumented)
     documentationUrl?: string;
+    // (undocumented)
+    expiredDate?: string;
     // (undocumented)
     headerColor?: string;
     // (undocumented)

@@ -308,6 +308,17 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
     }
 }
 
+.gd-header-expiration-date {
+    display: flex;
+    align-items: center;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+    color: inherit;
+    opacity: 0.8;
+    margin-right: 3px;
+}
+
 .gd-header-project-wrapper {
     display: flex;
     flex: 1 1 $gd-header-project-width;
