@@ -2,14 +2,12 @@
 import React from "react";
 import { useDashboardDrag } from "../useDashboardDrag";
 import classNames from "classnames";
-import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider";
+import { useDashboardSelector } from "../../../model";
 import { selectIsInEditMode } from "../../../model/store/ui/uiSelectors";
-
-export type CustomDashboardAttributeFilterPlaceholderComponentProps = {
-    disabled: boolean;
-};
-export type CustomDashboardAttributeFilterPlaceholderComponent =
-    React.ComponentType<CustomDashboardAttributeFilterPlaceholderComponentProps>;
+import {
+    CustomDashboardAttributeFilterPlaceholderComponent,
+    CustomDashboardAttributeFilterPlaceholderComponentProps,
+} from "../types";
 
 type DraggableAttributeFilterPlaceholderProps = {
     PlaceholderComponent: CustomDashboardAttributeFilterPlaceholderComponent;

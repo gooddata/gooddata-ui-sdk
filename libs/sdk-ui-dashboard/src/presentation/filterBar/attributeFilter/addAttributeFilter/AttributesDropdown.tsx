@@ -8,8 +8,7 @@ import { ICatalogAttribute } from "@gooddata/sdk-model";
 import debounce from "lodash/debounce";
 
 import { AddAttributeFilterButton } from "./AddAttributeFilterButton";
-import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider";
-import { selectCatalogAttributes } from "../../../../model/store/catalog/catalogSelectors";
+import { useDashboardSelector, selectCatalogAttributes } from "../../../../model";
 
 interface IAttributeListItemProps {
     item?: ICatalogAttribute;
@@ -130,7 +129,12 @@ export function AttributesDropdown({
         [onClose],
     );
 
-    const dropdownClassName = cx(className, "s-attribute_select", "attribute-filter-dropdown");
+    const dropdownClassName = cx(
+        className,
+        "s-attribute_select",
+        "attribute-filter-dropdown",
+        "add-attribute-filter-dropdown",
+    );
 
     const filteredMeasures = searchQuery
         ? attributes.filter((a) => a.attribute.title.toLowerCase().includes(searchQuery.toLowerCase()))

@@ -6,24 +6,25 @@ import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { useDashboardDrop } from "../useDashboardDrop";
-import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider";
+import { useDashboardSelector } from "../../../model";
 import { selectIsInEditMode } from "../../../model/store/ui/uiSelectors";
 import { getDropZoneDebugStyle } from "../debug";
 
 export type AttributeFilterDropZoneProps = {
-    onDrop: () => void;
+    targetIndex: number;
+    onDrop: (targetIndex: number) => void;
 };
 
-export function AttributeFilterDropZone({ onDrop }: AttributeFilterDropZoneProps) {
+export function AttributeFilterDropZone({ targetIndex, onDrop }: AttributeFilterDropZoneProps) {
     const theme = useTheme();
     const isEditMode = useDashboardSelector(selectIsInEditMode);
 
     const [{ canDrop, isOver, itemType }, dropRef] = useDashboardDrop(
         ["attributeFilter", "attributeFilter-placeholder"],
         {
-            drop: onDrop,
+            drop: () => onDrop(targetIndex),
         },
-        [],
+        [targetIndex],
     );
 
     const isDraggingAttribute = itemType !== undefined && itemType === "attributeFilter";

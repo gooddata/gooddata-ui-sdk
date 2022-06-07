@@ -125,6 +125,12 @@ export interface DashboardConfig {
     isExport?: boolean;
 
     /**
+     * When dashboard is white labeled, we hide GD links and branding.
+     * @internal
+     */
+    isWhiteLabeled?: boolean;
+
+    /**
      * Disables default dashboard drills.
      *
      * @remarks

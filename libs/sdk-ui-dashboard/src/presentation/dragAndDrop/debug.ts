@@ -1,6 +1,6 @@
 // (C) 2022 GoodData Corporation
 
-export const DEBUG_SHOW_DROP_ZONES = true;
+export const DEBUG_SHOW_DROP_ZONES = false;
 
 export function getDropZoneDebugStyle({ isOver = false }) {
     if (!DEBUG_SHOW_DROP_ZONES) {

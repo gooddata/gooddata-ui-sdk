@@ -9,15 +9,16 @@ import { useIntl } from "react-intl";
 export interface IAddAttributeFilterButtonProps {
     className: string;
     isOpen: boolean;
+    title?: string;
 }
 
 /**
  * @internal
  */
-export function AddAttributeFilterButton({ className, isOpen }: IAddAttributeFilterButtonProps) {
+export function AddAttributeFilterButton({ className, isOpen, title }: IAddAttributeFilterButtonProps) {
     const intl = useIntl();
 
-    const title = intl.formatMessage({ id: "addPanel.attributeFilter" });
+    title = title ?? intl.formatMessage({ id: "addPanel.attributeFilter" });
     const rootClassNames = cx(className, "is-loaded", {
         "is-active": isOpen,
     });

@@ -1,15 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
-import React, { useCallback, useState } from "react";
-import partition from "lodash/partition";
+import { IDashboardAttributeFilter, IDashboardDateFilter, objRefToString } from "@gooddata/sdk-model";
+import React, { useCallback } from "react";
 import {
-    IDashboardAttributeFilter,
-    IDashboardDateFilter,
-    isDashboardDateFilter,
-    objRefToString,
-} from "@gooddata/sdk-model";
-
-import {
-    addAttributeFilter,
     changeAttributeFilterSelection,
     changeDateFilterSelection,
     clearDateFilterSelection,
@@ -23,15 +15,20 @@ import {
     useDashboardSelector,
 } from "../../../model";
 import { useDashboardComponentsContext } from "../../dashboardContexts";
+import {
+    AttributeFilterDropZone,
+    AttributeFilterDropZoneHint,
+    DraggableAttributeFilter,
+} from "../../dragAndDrop";
+import { AttributesDropdown } from "../attributeFilter/addAttributeFilter/AttributesDropdown";
 import { DashboardDateFilter, HiddenDashboardDateFilter } from "../dateFilter";
 import { IDashboardDateFilterConfig, IFilterBarProps } from "../types";
-
 import { DefaultFilterBarContainer } from "./DefaultFilterBarContainer";
+import {
+    isFilterBarAttributeFilterPlaceholder,
+    useFiltersWithAddedPlaceholder,
+} from "./useFiltersWithAddedPlaceholder";
 import { HiddenFilterBar } from "./HiddenFilterBar";
-import { AttributeFilterDropZoneHint, DraggableAttributeFilter } from "../../dragAndDrop";
-import { AttributeFilterDropZone } from "../../dragAndDrop/draggableAttributeFilter/AttributeFilterDropZone";
-import { AttributesDropdown } from "../attributeFilter/addAttributeFilter/AttributesDropdown";
-import { ICatalogAttribute } from "@gooddata/sdk-model";
 
 /**
  * @alpha
@@ -75,6 +72,11 @@ export const useFilterBarProps = (): IFilterBarProps => {
 export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
     const { filters, onAttributeFilterChanged, onDateFilterChanged } = props;
 
+    const [
+        { dateFilter, attributeFiltersWithPlaceholder, attributeFiltersCount },
+        { addAttributeFilterPlaceholder, closeAttributeSelection, selectAttributeFilter },
+    ] = useFiltersWithAddedPlaceholder(filters);
+
     const customFilterName = useDashboardSelector(selectEffectiveDateFilterTitle);
     const availableGranularities = useDashboardSelector(selectEffectiveDateFilterAvailableGranularities);
     const dateFilterOptions = useDashboardSelector(selectEffectiveDateFilterOptions);
@@ -82,24 +84,9 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
     const isExport = useDashboardSelector(selectIsExport);
     const { DashboardAttributeFilterComponentProvider } = useDashboardComponentsContext();
 
-    const [addedFilterIndex, setAddedFilterIndex] = useState<number>();
-    const clearAddedFilterIndex = useCallback(() => setAddedFilterIndex(undefined), []);
-
-    const dispatch = useDashboardDispatch();
-
-    const onAttributeFilterSelect = function (item: ICatalogAttribute) {
-        if (!addedFilterIndex) {
-            return;
-        }
-
-        dispatch(addAttributeFilter(item.defaultDisplayForm, addedFilterIndex));
-    };
-
     if (isExport) {
         return <HiddenFilterBar {...props} />;
     }
-
-    const [[dateFilter], attributeFilters] = partition(filters, isDashboardDateFilter);
 
     const dateFilterComponentConfig: IDashboardDateFilterConfig = {
         availableGranularities,
@@ -124,42 +111,46 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                             placement="outside"
                             hintPosition="next"
                             targetIndex={0}
-                            onAddAttributePlaceholder={setAddedFilterIndex}
+                            onAddAttributePlaceholder={addAttributeFilterPlaceholder}
                         />
                     </>
                 )}
             </div>
-            {attributeFilters.map((filter, filterIndex) => {
-                const CustomAttributeFilterComponent = DashboardAttributeFilterComponentProvider(filter);
+            {attributeFiltersWithPlaceholder.map((filterOrPlaceholder) => {
+                if (isFilterBarAttributeFilterPlaceholder(filterOrPlaceholder)) {
+                    return (
+                        <AttributesDropdown
+                            key={filterOrPlaceholder.filterIndex}
+                            onClose={closeAttributeSelection}
+                            onSelect={selectAttributeFilter}
+                        />
+                    );
+                } else {
+                    const { filter, filterIndex } = filterOrPlaceholder;
+                    const CustomAttributeFilterComponent = DashboardAttributeFilterComponentProvider(filter);
 
-                return (
-                    <React.Fragment key={objRefToString(filter.attributeFilter.displayForm)}>
-                        {filterIndex === addedFilterIndex && (
-                            <AttributesDropdown
-                                onClose={clearAddedFilterIndex}
-                                onSelect={onAttributeFilterSelect}
-                            />
-                        )}
+                    return (
                         <DraggableAttributeFilter
+                            key={objRefToString(filter.attributeFilter.displayForm)}
                             filter={filter}
                             filterIndex={filterIndex}
                             FilterComponent={CustomAttributeFilterComponent}
                             onAttributeFilterChanged={onAttributeFilterChanged}
-                            onAttributeFilterAdded={setAddedFilterIndex}
+                            onAttributeFilterAdded={addAttributeFilterPlaceholder}
                         />
-                    </React.Fragment>
-                );
+                    );
+                }
             })}
-            {attributeFilters.length === addedFilterIndex && (
-                <AttributesDropdown onClose={clearAddedFilterIndex} onSelect={onAttributeFilterSelect} />
-            )}
-            <AttributeFilterDropZone onDrop={() => setAddedFilterIndex(attributeFilters.length)} />
-            <div style={{ position: "relative", flexGrow: 1, height: "55px" }}>
+            <AttributeFilterDropZone
+                targetIndex={attributeFiltersCount}
+                onDrop={addAttributeFilterPlaceholder}
+            />
+            <div className="filter-bar-dropzone-container">
                 <AttributeFilterDropZoneHint
                     placement="outside"
                     hintPosition="prev"
                     acceptPlaceholder={false}
-                    targetIndex={attributeFilters.length - 1}
+                    targetIndex={attributeFiltersCount - 1}
                 />
             </div>
         </DefaultFilterBarContainer>

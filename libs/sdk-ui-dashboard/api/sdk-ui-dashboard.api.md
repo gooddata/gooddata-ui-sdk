@@ -159,7 +159,7 @@ export interface AddAttributeFilter extends IDashboardCommand {
 export function addAttributeFilter(displayForm: ObjRef, index: number, correlationId?: string): AddAttributeFilter;
 
 // @internal (undocumented)
-export function AddAttributeFilterButton({ className, isOpen }: IAddAttributeFilterButtonProps): JSX.Element;
+export function AddAttributeFilterButton({ className, isOpen, title }: IAddAttributeFilterButtonProps): JSX.Element;
 
 // @alpha
 export interface AddAttributeFilterPayload {
@@ -673,6 +673,14 @@ export interface CustomComponentBase<TMainProps> {
 // @alpha (undocumented)
 export type CustomDashboardAttributeFilterComponent = ComponentType<IDashboardAttributeFilterProps>;
 
+// @internal (undocumented)
+export type CustomDashboardAttributeFilterPlaceholderComponent = React.ComponentType<CustomDashboardAttributeFilterPlaceholderComponentProps>;
+
+// @internal (undocumented)
+export type CustomDashboardAttributeFilterPlaceholderComponentProps = {
+    disabled: boolean;
+};
+
 // @alpha (undocumented)
 export type CustomDashboardDateFilterComponent = ComponentType<IDashboardDateFilterProps>;
 
@@ -951,6 +959,8 @@ export interface DashboardConfig {
     isEmbedded?: boolean;
     isExport?: boolean;
     isReadOnly?: boolean;
+    // @internal
+    isWhiteLabeled?: boolean;
     locale?: ILocale;
     mapboxToken?: string;
     menuButtonItemsVisibility?: IMenuButtonItemsVisibility;
@@ -2563,6 +2573,8 @@ export interface IAddAttributeFilterButtonProps {
     className: string;
     // (undocumented)
     isOpen: boolean;
+    // (undocumented)
+    title?: string;
 }
 
 // @internal (undocumented)

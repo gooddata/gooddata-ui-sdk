@@ -178,6 +178,7 @@ function applyConfigDefaults<T extends DashboardConfig>(config: T) {
         isReadOnly: config.isReadOnly ?? false,
         isEmbedded: config.isEmbedded ?? false,
         isExport: config.isExport ?? false,
+        isWhiteLabeled: config.isWhiteLabeled ?? false,
         disableDefaultDrills: config.disableDefaultDrills ?? false,
         enableFilterValuesResolutionInDrillEvents: config.enableFilterValuesResolutionInDrillEvents ?? false,
         menuButtonItemsVisibility: config.menuButtonItemsVisibility ?? {},

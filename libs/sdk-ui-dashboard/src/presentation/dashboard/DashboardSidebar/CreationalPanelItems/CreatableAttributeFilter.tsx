@@ -4,14 +4,13 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 import { DraggableAttributeFilterPlaceholder } from "../../../dragAndDrop";
 import { AddAttributeFilterPlaceholder } from "../../../filterBar";
-import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider";
+import { useDashboardSelector } from "../../../../model";
 import { selectHasCatalogAttributes } from "../../../../model/store/catalog/catalogSelectors";
+import { selectIsWhiteLabeled } from "../../../../model/store/config/configSelectors";
 
 export function CreatableAttributeFilter() {
     const hasAttributes = useDashboardSelector(selectHasCatalogAttributes);
-
-    // TODO add dashboard config like config.isWhiteLabeled?
-    const isBranded = false;
+    const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
 
     const disabled = !hasAttributes;
 
@@ -19,7 +18,7 @@ export function CreatableAttributeFilter() {
         <div>
             <FormattedMessage id="addPanel.attributeFilter.tooltip.no_attributes" />
             &nbsp;
-            {!isBranded && (
+            {!isWhiteLabeled && (
                 <a
                     href="https://help.gooddata.com/display/doc/Attributes+in+Logical+Data+Models"
                     rel="noopener noreferrer"

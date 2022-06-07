@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import invariant from "ts-invariant";
@@ -32,6 +32,20 @@ export function* addAttributeFilterHandler(
         selectFilterContextAttributeFilters,
     );
 
+    const resolvedDisplayForm: SagaReturnType<typeof resolveDisplayFormMetadata> = yield call(
+        resolveDisplayFormMetadata,
+        ctx,
+        [displayForm],
+    );
+
+    if (!isEmpty(resolvedDisplayForm.missing)) {
+        throw invalidArgumentsProvided(
+            ctx,
+            cmd,
+            `Attempting to add filter for a non-existing display form ${objRefToString(displayForm)}.`,
+        );
+    }
+
     const canBeAdded: PromiseFnReturnType<typeof canFilterBeAdded> = yield call(
         canFilterBeAdded,
         ctx,
@@ -44,20 +58,6 @@ export function* addAttributeFilterHandler(
             ctx,
             cmd,
             `Filter for the displayForm ${objRefToString(displayForm)} already exists in the filter context.`,
-        );
-    }
-
-    const resolvedDisplayForm: SagaReturnType<typeof resolveDisplayFormMetadata> = yield call(
-        resolveDisplayFormMetadata,
-        ctx,
-        [displayForm],
-    );
-
-    if (!isEmpty(resolvedDisplayForm.missing)) {
-        throw invalidArgumentsProvided(
-            ctx,
-            cmd,
-            `Attempting to add filter for a non-existing display form ${objRefToString(displayForm)}.`,
         );
     }
 

@@ -73,3 +73,16 @@ export type DraggableItemTypeMapping = {
     custom: CustomDraggableItem;
     widget: WidgetDraggableItem;
 };
+
+/**
+ * @internal
+ */
+export type CustomDashboardAttributeFilterPlaceholderComponentProps = {
+    disabled: boolean;
+};
+
+/**
+ * @internal
+ */
+export type CustomDashboardAttributeFilterPlaceholderComponent =
+    React.ComponentType<CustomDashboardAttributeFilterPlaceholderComponentProps>;

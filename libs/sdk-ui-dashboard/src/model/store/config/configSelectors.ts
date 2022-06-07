@@ -129,6 +129,15 @@ export const selectIsExport = createSelector(selectConfig, (state) => {
 });
 
 /**
+ * Returns whether the Dashboard is white labeled.
+ *
+ * @internal
+ */
+export const selectIsWhiteLabeled = createSelector(selectConfig, (state) => {
+    return state.isWhiteLabeled;
+});
+
+/**
  * Returns whether the default drills configured on the widgets or implicit drills (eg. drill down) are disabled.
  * This option does not affect drilling enabled by drillableItems.
  *

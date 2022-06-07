@@ -12,13 +12,20 @@ export async function canFilterBeAdded(
         return true;
     }
 
-    const [addedDisplayForm, ...existingDisplayForms] = await ctx.backend
+    const loadAddedDisplayForm = ctx.backend
         .workspace(ctx.workspace)
         .attributes()
-        .getAttributeDisplayForms([
-            addedDisplayFormRef,
-            ...allFilters.map((item) => item.attributeFilter.displayForm),
-        ]);
+        .getAttributeDisplayForm(addedDisplayFormRef);
+
+    const loadExistingDisplayForms = ctx.backend
+        .workspace(ctx.workspace)
+        .attributes()
+        .getAttributeDisplayForms(allFilters.map((item) => item.attributeFilter.displayForm));
+
+    const [addedDisplayForm, existingDisplayForms] = await Promise.all([
+        loadAddedDisplayForm,
+        loadExistingDisplayForms,
+    ]);
 
     return !existingDisplayForms.some((existing) => areObjRefsEqual(existing, addedDisplayForm));
 }
