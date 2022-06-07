@@ -989,13 +989,6 @@ export interface Dimension {
 }
 
 // @public
-export interface DimensionAttributesValues {
-    properties: {
-        [key: string]: Array<string>;
-    };
-}
-
-// @public
 export interface DimensionHeader {
     headerGroups: Array<HeaderGroup>;
 }
@@ -2925,8 +2918,9 @@ export interface ExecutionResult {
 
 // @public
 export interface ExecutionResultGrandTotal {
-    data?: object;
-    localIdentifier: string;
+    data: Array<object>;
+    dimensionHeaders: Array<DimensionHeader>;
+    totalDimensions: Array<string>;
 }
 
 // @public
@@ -2997,25 +2991,6 @@ export const GrainIdentifierTypeEnum: {
 export type GrainIdentifierTypeEnum = typeof GrainIdentifierTypeEnum[keyof typeof GrainIdentifierTypeEnum];
 
 // @public
-export interface GrandTotal {
-    function: GrandTotalFunctionEnum;
-    includedDimensions: IncludedDimensions;
-    localIdentifier: string;
-}
-
-// @public (undocumented)
-export const GrandTotalFunctionEnum: {
-    readonly SUM: "SUM";
-    readonly MIN: "MIN";
-    readonly MAX: "MAX";
-    readonly AVG: "AVG";
-    readonly MED: "MED";
-};
-
-// @public (undocumented)
-export type GrandTotalFunctionEnum = typeof GrandTotalFunctionEnum[keyof typeof GrandTotalFunctionEnum];
-
-// @public
 export interface GranularitiesFormatting {
     titleBase: string;
     titlePattern: string;
@@ -3024,18 +2999,6 @@ export interface GranularitiesFormatting {
 // @public
 export interface HeaderGroup {
     headers: Array<ExecutionResultHeader>;
-}
-
-// @public
-export interface IncludedDimensionProps {
-    dimensionAttributesValues: DimensionAttributesValues;
-}
-
-// @public
-export interface IncludedDimensions {
-    properties?: {
-        [key: string]: IncludedDimensionProps;
-    } | null;
 }
 
 // @public
@@ -3076,6 +3039,9 @@ export function isResultAttributeHeader(header: ExecutionResultHeader): header i
 
 // @public (undocumented)
 export function isResultMeasureHeader(header: ExecutionResultHeader): header is MeasureExecutionResultHeader;
+
+// @public (undocumented)
+export function isResultTotalHeader(header: ExecutionResultHeader): header is TotalExecutionResultHeader;
 
 // @public (undocumented)
 export function isVisualizationObjectsItem(visualizationObject: unknown): visualizationObject is JsonApiVisualizationObjectOutWithLinks;
@@ -6049,7 +6015,7 @@ export type ResultDimensionHeader = ResultDimension["headers"][number];
 // @public
 export interface ResultSpec {
     dimensions: Array<Dimension>;
-    grandTotals?: Array<GrandTotal>;
+    totals?: Array<Total>;
 }
 
 // @public
@@ -6175,9 +6141,35 @@ export const tigerProfileClientFactory: (axios: AxiosInstance) => ProfileApiInte
 export const tigerValidObjectsClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "computeValidObjects">;
 
 // @public
+export interface Total {
+    function: TotalFunctionEnum;
+    localIdentifier: string;
+    metric: string;
+    totalDimensions: Array<TotalDimension>;
+}
+
+// @public
+export interface TotalDimension {
+    dimensionIdentifier: string;
+    totalDimensionItems: Array<string>;
+}
+
+// @public
 export interface TotalExecutionResultHeader {
     totalHeader: TotalResultHeader;
 }
+
+// @public (undocumented)
+export const TotalFunctionEnum: {
+    readonly SUM: "SUM";
+    readonly MIN: "MIN";
+    readonly MAX: "MAX";
+    readonly AVG: "AVG";
+    readonly MED: "MED";
+};
+
+// @public (undocumented)
+export type TotalFunctionEnum = typeof TotalFunctionEnum[keyof typeof TotalFunctionEnum];
 
 // @public
 export interface TotalResultHeader {

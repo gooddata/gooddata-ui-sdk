@@ -7,6 +7,7 @@ import {
     ExecutionResultHeader,
     ResultDimension,
     MeasureExecutionResultHeader,
+    TotalExecutionResultHeader,
 } from "../generated/afm-rest-api";
 import {
     JsonApiFilterContextIn,
@@ -38,6 +39,10 @@ export function isResultAttributeHeader(
 
 export function isResultMeasureHeader(header: ExecutionResultHeader): header is MeasureExecutionResultHeader {
     return (header as MeasureExecutionResultHeader).measureHeader !== undefined;
+}
+
+export function isResultTotalHeader(header: ExecutionResultHeader): header is TotalExecutionResultHeader {
+    return (header as TotalExecutionResultHeader).totalHeader !== undefined;
 }
 
 export function isVisualizationObjectsItem(

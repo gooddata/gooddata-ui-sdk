@@ -99,53 +99,7 @@
                 }
             }
         },
-        "/api/v1/actions/workspaces/{workspaceId}/execution/afm/computeValidObjects": {
-            "post": {
-                "tags": ["actions"],
-                "summary": "Valid objects",
-                "description": "Returns list containing attributes, facts, or metrics, which can be added to given AFM while still keeping it computable.",
-                "operationId": "computeValidObjects",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "description": "Workspace identifier",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/AfmValidObjectsQuery"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "List of attributes, facts and metrics valid with respect to given AFM.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/AfmValidObjectsResponse"
-                                }
-                            }
-                        }
-                    }
-                },
-                "x-gdc-security-info": {
-                    "permissions": ["ANALYZE"],
-                    "description": "Permissions required to analyze data."
-                }
-            }
-        },
-        "/api/actions/workspaces/{workspaceId}/execution/afm/explain": {
+        "/api/v1/actions/workspaces/{workspaceId}/execution/afm/explain": {
             "post": {
                 "tags": ["actions"],
                 "summary": "AFM explain resource.",
@@ -216,7 +170,7 @@
                 }
             }
         },
-        "/api/actions/workspaces/{workspaceId}/execution/afm/execute": {
+        "/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute": {
             "post": {
                 "tags": ["actions"],
                 "summary": "Executes analytical request and returns link to the result",
@@ -281,7 +235,53 @@
                 }
             }
         },
-        "/api/actions/workspaces/{workspaceId}/execution/afm/execute/result/{resultId}": {
+        "/api/v1/actions/workspaces/{workspaceId}/execution/afm/computeValidObjects": {
+            "post": {
+                "tags": ["actions"],
+                "summary": "Valid objects",
+                "description": "Returns list containing attributes, facts, or metrics, which can be added to given AFM while still keeping it computable.",
+                "operationId": "computeValidObjects",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AfmValidObjectsQuery"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "List of attributes, facts and metrics valid with respect to given AFM.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AfmValidObjectsResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["ANALYZE"],
+                    "description": "Permissions required to analyze data."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute/result/{resultId}": {
             "get": {
                 "tags": ["actions"],
                 "summary": "Get a single execution result",
@@ -612,6 +612,21 @@
                     }
                 ]
             },
+            "AfmExecution": {
+                "required": ["execution", "resultSpec"],
+                "type": "object",
+                "properties": {
+                    "execution": {
+                        "$ref": "#/components/schemas/AFM"
+                    },
+                    "resultSpec": {
+                        "$ref": "#/components/schemas/ResultSpec"
+                    },
+                    "settings": {
+                        "$ref": "#/components/schemas/ExecutionSettings"
+                    }
+                }
+            },
             "AfmIdentifier": {
                 "type": "object",
                 "oneOf": [
@@ -752,26 +767,6 @@
                     }
                 }
             },
-            "AfmValidObjectsQuery": {
-                "required": ["afm", "types"],
-                "type": "object",
-                "properties": {
-                    "types": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "example": "facts",
-                        "items": {
-                            "type": "string",
-                            "example": "facts",
-                            "enum": ["facts", "attributes", "measures", "UNRECOGNIZED"]
-                        }
-                    },
-                    "afm": {
-                        "$ref": "#/components/schemas/AFM"
-                    }
-                },
-                "description": "Entity holding AFM and list of object types whose validity should be computed."
-            },
             "ArithmeticMeasureDefinition": {
                 "required": ["arithmeticMeasure"],
                 "type": "object",
@@ -880,6 +875,50 @@
                 },
                 "description": "Filter the result by comparing specified metric to given constant value, using given comparison operator."
             },
+            "DataColumnLocator": {
+                "required": ["properties"],
+                "type": "object",
+                "properties": {
+                    "properties": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string",
+                            "description": "Mapping from dimension items (either 'localIdentifier' from 'AttributeItem', or \"measureGroup\") to their respective values. This effectively specifies the path (location) of the data column used for sorting. Therefore values for all dimension items must be specified.",
+                            "example": "{\"status\":\"lost\",\"measureGroup\":\"m1\"}"
+                        },
+                        "description": "Mapping from dimension items (either 'localIdentifier' from 'AttributeItem', or \"measureGroup\") to their respective values. This effectively specifies the path (location) of the data column used for sorting. Therefore values for all dimension items must be specified.",
+                        "example": {
+                            "status": "lost",
+                            "measureGroup": "m1"
+                        }
+                    }
+                },
+                "description": "Mapping from dimension items (either 'localIdentifier' from 'AttributeItem', or \"measureGroup\") to their respective values. This effectively specifies the path (location) of the data column used for sorting. Therefore values for all dimension items must be specified.",
+                "example": {
+                    "dim2": {
+                        "status": "lost",
+                        "measureGroup": "m1"
+                    }
+                }
+            },
+            "DataColumnLocators": {
+                "type": "object",
+                "properties": {
+                    "properties": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/components/schemas/DataColumnLocator"
+                        },
+                        "description": "Mapping from dimensions to data column locators. Locators for each dimension opposite to the sorted one must be specified.",
+                        "example": {
+                            "dim2": {
+                                "status": "lost",
+                                "measureGroup": "m1"
+                            }
+                        }
+                    }
+                }
+            },
             "DateFilter": {
                 "type": "object",
                 "description": "Abstract filter definition type for dates",
@@ -891,6 +930,49 @@
                         "$ref": "#/components/schemas/RelativeDateFilter"
                     }
                 ]
+            },
+            "Dimension": {
+                "required": ["itemIdentifiers"],
+                "type": "object",
+                "properties": {
+                    "localIdentifier": {
+                        "pattern": "^[.a-zA-Z0-9_-]+$",
+                        "type": "string",
+                        "description": "Dimension identification within requests. Other entities can reference this dimension by this value.",
+                        "example": "firstDimension"
+                    },
+                    "itemIdentifiers": {
+                        "type": "array",
+                        "description": "List of items in current dimension. Can reference 'localIdentifier' from 'AttributeItem', or special pseudo attribute \"measureGroup\" representing list of metrics.",
+                        "example": ["attribute_1", "measureGroup"],
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "sorting": {
+                        "type": "array",
+                        "description": "List of sorting rules. From most relevant to least relevant (less relevant rule is applied, when more relevant rule compares items as equal).",
+                        "items": {
+                            "$ref": "#/components/schemas/SortKey"
+                        }
+                    }
+                },
+                "description": "Single dimension description."
+            },
+            "ExecutionSettings": {
+                "type": "object",
+                "properties": {
+                    "dataSamplingPercentage": {
+                        "maximum": 100,
+                        "exclusiveMaximum": true,
+                        "minimum": 0,
+                        "exclusiveMinimum": true,
+                        "type": "number",
+                        "description": "Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.",
+                        "format": "float"
+                    }
+                },
+                "description": "Various setting affecting the process of ADM execution or its result"
             },
             "FilterDefinition": {
                 "type": "object",
@@ -994,7 +1076,7 @@
                     "localIdentifier": {
                         "pattern": "^[.a-zA-Z0-9_-]+$",
                         "type": "string",
-                        "example": "sampleAutoGenerated0123_ID"
+                        "example": "metric_1"
                     },
                     "definition": {
                         "$ref": "#/components/schemas/MeasureDefinition"
@@ -1259,6 +1341,25 @@
                 },
                 "description": "A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension."
             },
+            "ResultSpec": {
+                "required": ["dimensions"],
+                "type": "object",
+                "properties": {
+                    "dimensions": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Dimension"
+                        }
+                    },
+                    "totals": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Total"
+                        }
+                    }
+                },
+                "description": "Specifies how the result data will be formatted (```dimensions```) and which additional data shall be computed (```grandTotals```)."
+            },
             "SimpleMeasureDefinition": {
                 "required": ["measure"],
                 "type": "object",
@@ -1301,207 +1402,6 @@
                         }
                     }
                 }
-            },
-            "AfmValidObjectsResponse": {
-                "required": ["items"],
-                "type": "object",
-                "properties": {
-                    "items": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/RestApiIdentifier"
-                        }
-                    }
-                },
-                "description": "All objects of specified types valid with respect to given AFM."
-            },
-            "AfmExecution": {
-                "required": ["execution", "resultSpec"],
-                "type": "object",
-                "properties": {
-                    "execution": {
-                        "$ref": "#/components/schemas/AFM"
-                    },
-                    "resultSpec": {
-                        "$ref": "#/components/schemas/ResultSpec"
-                    },
-                    "settings": {
-                        "$ref": "#/components/schemas/ExecutionSettings"
-                    }
-                }
-            },
-            "DataColumnLocator": {
-                "required": ["properties"],
-                "type": "object",
-                "properties": {
-                    "properties": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "type": "string",
-                            "description": "Mapping from dimension items (either 'localIdentifier' from 'AttributeItem', or \"measureGroup\") to their respective values. This effectively specifies the path (location) of the data column used for sorting. Therefore values for all dimension items must be specified.",
-                            "example": "{\"status\":\"lost\",\"measureGroup\":\"m1\"}"
-                        },
-                        "description": "Mapping from dimension items (either 'localIdentifier' from 'AttributeItem', or \"measureGroup\") to their respective values. This effectively specifies the path (location) of the data column used for sorting. Therefore values for all dimension items must be specified.",
-                        "example": {
-                            "status": "lost",
-                            "measureGroup": "m1"
-                        }
-                    }
-                },
-                "description": "Mapping from dimension items (either 'localIdentifier' from 'AttributeItem', or \"measureGroup\") to their respective values. This effectively specifies the path (location) of the data column used for sorting. Therefore values for all dimension items must be specified.",
-                "example": {
-                    "dim2": {
-                        "status": "lost",
-                        "measureGroup": "m1"
-                    }
-                }
-            },
-            "DataColumnLocators": {
-                "type": "object",
-                "properties": {
-                    "properties": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "$ref": "#/components/schemas/DataColumnLocator"
-                        },
-                        "description": "Mapping from dimensions to data column locators. Locators for each dimension opposite to the sorted one must be specified.",
-                        "example": {
-                            "dim2": {
-                                "status": "lost",
-                                "measureGroup": "m1"
-                            }
-                        }
-                    }
-                }
-            },
-            "Dimension": {
-                "required": ["itemIdentifiers"],
-                "type": "object",
-                "properties": {
-                    "localIdentifier": {
-                        "pattern": "^[.a-zA-Z0-9_-]+$",
-                        "type": "string",
-                        "description": "Dimension identification within requests. Other entities can reference this dimension by this value.",
-                        "example": "firstDimension"
-                    },
-                    "itemIdentifiers": {
-                        "type": "array",
-                        "description": "List of items in current dimension. Can reference 'localIdentifier' from 'AttributeItem', or special pseudo attribute \"measureGroup\" representing list of metrics.",
-                        "example": ["attribute1", "measureGroup"],
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "sorting": {
-                        "type": "array",
-                        "description": "List of sorting rules. From most relevant to least relevant (less relevant rule is applied, when more relevant rule compares items as equal).",
-                        "items": {
-                            "$ref": "#/components/schemas/SortKey"
-                        }
-                    }
-                },
-                "description": "Single dimension description."
-            },
-            "DimensionAttributesValues": {
-                "required": ["properties"],
-                "type": "object",
-                "properties": {
-                    "properties": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                },
-                "description": "Allows to customize for which attribute values the grand total will be computed. If the values for particular attribute are not specified then the totals for all values are computed. Note that this also covers the case of individual metrics (treated as values of the \"measureGroup\" pseudo attribute).",
-                "example": {
-                    "measureGroup": ["m1"],
-                    "status": ["Lost", "Won"]
-                }
-            },
-            "ExecutionSettings": {
-                "type": "object",
-                "properties": {
-                    "dataSamplingPercentage": {
-                        "maximum": 100,
-                        "exclusiveMaximum": true,
-                        "minimum": 0,
-                        "exclusiveMinimum": true,
-                        "type": "number",
-                        "description": "Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.",
-                        "format": "float"
-                    }
-                },
-                "description": "Various setting affecting the process of ADM execution or its result"
-            },
-            "GrandTotal": {
-                "required": ["function", "includedDimensions", "localIdentifier"],
-                "type": "object",
-                "properties": {
-                    "localIdentifier": {
-                        "type": "string",
-                        "description": "Grand total identification within this request. The corresponding data in the result are expected to be matched using this identifier.",
-                        "example": "firstGrandTotal"
-                    },
-                    "function": {
-                        "type": "string",
-                        "description": "Aggregation function for grand total computation.",
-                        "example": "SUM",
-                        "enum": ["SUM", "MIN", "MAX", "AVG", "MED"]
-                    },
-                    "includedDimensions": {
-                        "$ref": "#/components/schemas/IncludedDimensions"
-                    }
-                },
-                "description": "Definition of a grand total. Grand total data will be computed into a separate section of the result structure so that client has more options how to visualize them."
-            },
-            "IncludedDimensionProps": {
-                "required": ["dimensionAttributesValues"],
-                "type": "object",
-                "properties": {
-                    "dimensionAttributesValues": {
-                        "$ref": "#/components/schemas/DimensionAttributesValues"
-                    }
-                },
-                "description": "Mapping specifying dimensions on which this grand total will be computed. Dimensions are referenced via their localIdentifiers. Optionally one can specify also the values (properties) of the dimensions' attributes (see DimensionAttributesValues).",
-                "nullable": true,
-                "example": "{\"dim1\": null, \"dim2\": {\"dimensionAttributesValues\": {\"measureGroup\": [\"m1\"]}}"
-            },
-            "IncludedDimensions": {
-                "type": "object",
-                "properties": {
-                    "properties": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "$ref": "#/components/schemas/IncludedDimensionProps"
-                        },
-                        "description": "Mapping specifying dimensions on which this grand total will be computed. Dimensions are referenced via their localIdentifiers. Optionally one can specify also the values (properties) of the dimensions' attributes (see DimensionAttributesValues).",
-                        "nullable": true,
-                        "example": "{\"dim1\": null, \"dim2\": {\"dimensionAttributesValues\": {\"measureGroup\": [\"m1\"]}}"
-                    }
-                }
-            },
-            "ResultSpec": {
-                "required": ["dimensions"],
-                "type": "object",
-                "properties": {
-                    "dimensions": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/Dimension"
-                        }
-                    },
-                    "grandTotals": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/GrandTotal"
-                        }
-                    }
-                },
-                "description": "Specifies how the result data will be formatted (```dimensions```) and which additional data shall be computed (```grandTotals```)."
             },
             "SortKey": {
                 "type": "object",
@@ -1564,6 +1464,56 @@
                     }
                 },
                 "description": "Sorting rule for sorting by measure value."
+            },
+            "Total": {
+                "required": ["function", "localIdentifier", "metric", "totalDimensions"],
+                "type": "object",
+                "properties": {
+                    "localIdentifier": {
+                        "type": "string",
+                        "description": "Total identification within this request. Used e.g. in sorting by a total.",
+                        "example": "firstTotal"
+                    },
+                    "function": {
+                        "type": "string",
+                        "description": "Aggregation function to compute the total.",
+                        "example": "SUM",
+                        "enum": ["SUM", "MIN", "MAX", "AVG", "MED"]
+                    },
+                    "metric": {
+                        "type": "string",
+                        "description": "The metric for which the total will be computed",
+                        "example": "metric_1"
+                    },
+                    "totalDimensions": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TotalDimension"
+                        }
+                    }
+                },
+                "description": "Definition of a total. There are two types of totals: grand totals and subtotals. Grand total data will be returned in a separate section of the result structure while subtotals are fully integrated into the main result data. The mechanism for this distinction is automatic and it's described in `TotalDimension`"
+            },
+            "TotalDimension": {
+                "required": ["dimensionIdentifier", "totalDimensionItems"],
+                "type": "object",
+                "properties": {
+                    "dimensionIdentifier": {
+                        "pattern": "^[.a-zA-Z0-9_-]+$",
+                        "type": "string",
+                        "description": "An identifier of a dimension for which the total will be computed.",
+                        "example": "firstDimension"
+                    },
+                    "totalDimensionItems": {
+                        "type": "array",
+                        "description": "List of dimension items which will be used for total computation. The total is a grand total in this dimension if the list is empty or it includes the first dimension item from the dimension definition, and its data and header will be returned in a separate `ExecutionResultGrandTotal` structure. Otherwise, it is a subtotal and the data will be integrated into the main result.",
+                        "example": ["measureGroup"],
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "description": "A list of dimensions across which the total will be computed. Total headers for only these dimensions will be returned in the result."
             },
             "AfmExecutionResponse": {
                 "required": ["executionResponse"],
@@ -1708,6 +1658,39 @@
             "ResultDimensionHeader": {
                 "type": "object"
             },
+            "AfmValidObjectsQuery": {
+                "required": ["afm", "types"],
+                "type": "object",
+                "properties": {
+                    "types": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "example": "facts",
+                        "items": {
+                            "type": "string",
+                            "example": "facts",
+                            "enum": ["facts", "attributes", "measures", "UNRECOGNIZED"]
+                        }
+                    },
+                    "afm": {
+                        "$ref": "#/components/schemas/AFM"
+                    }
+                },
+                "description": "Entity holding AFM and list of object types whose validity should be computed."
+            },
+            "AfmValidObjectsResponse": {
+                "required": ["items"],
+                "type": "object",
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/RestApiIdentifier"
+                        }
+                    }
+                },
+                "description": "All objects of specified types valid with respect to given AFM."
+            },
             "AttributeExecutionResultHeader": {
                 "required": ["attributeHeader"],
                 "type": "object",
@@ -1772,7 +1755,6 @@
                     },
                     "grandTotals": {
                         "type": "array",
-                        "description": "An array with grand totals data corresponding to grand totals definition in result spec.",
                         "items": {
                             "$ref": "#/components/schemas/ExecutionResultGrandTotal"
                         }
@@ -1784,19 +1766,37 @@
                 "description": "Contains the result of an AFM execution."
             },
             "ExecutionResultGrandTotal": {
-                "required": ["localIdentifier"],
+                "required": ["data", "dimensionHeaders", "totalDimensions"],
                 "type": "object",
                 "properties": {
-                    "localIdentifier": {
-                        "type": "string",
-                        "description": "Grand total identification within this request. The corresponding data in the result are expected to be matched using this identifier.",
-                        "example": "firstGrandTotal"
-                    },
                     "data": {
-                        "type": "object"
+                        "type": "array",
+                        "description": "A multi-dimensional array of computed results. The most common one being a 2-dimensional array. The arrays can be composed of Double or null values.",
+                        "example": [
+                            [1, 2.5],
+                            [-1.3, 3.14]
+                        ],
+                        "items": {
+                            "type": "object"
+                        }
+                    },
+                    "dimensionHeaders": {
+                        "type": "array",
+                        "description": "Contains headers for a subset of `totalDimensions` in which the totals are grand totals.",
+                        "items": {
+                            "$ref": "#/components/schemas/DimensionHeader"
+                        }
+                    },
+                    "totalDimensions": {
+                        "type": "array",
+                        "description": "Dimensions of the grand totals.",
+                        "items": {
+                            "type": "string",
+                            "description": "Dimensions of the grand totals."
+                        }
                     }
                 },
-                "description": "Contains the data related to a grand total, including the reference to localIdentifier as specified in result spec."
+                "description": "Contains the data of grand totals with the same dimensions."
             },
             "ExecutionResultHeader": {
                 "type": "object",
@@ -1916,11 +1916,6 @@
                         "description": "An relative URI that identifies the problem type. When dereferenced, it should provide human-readable documentation for the problem type (e.g., using HTML).",
                         "format": "uri"
                     },
-                    "traceId": {
-                        "type": "string",
-                        "description": "Unique trace id used in open-tracing (semantics of transactions in distributed systems). Can be used to correlate client error with concrete request processing in the system.",
-                        "example": "5202292772879600441"
-                    },
                     "title": {
                         "type": "string",
                         "description": "A short, summary of the problem type. Written in english and readable for engineers (usually not suited for non technical stakeholders and not localized).",
@@ -1928,6 +1923,11 @@
                     },
                     "status": {
                         "$ref": "#/components/schemas/StatusType"
+                    },
+                    "traceId": {
+                        "type": "string",
+                        "description": "Unique trace id used in open-tracing (semantics of transactions in distributed systems). Can be used to correlate client error with concrete request processing in the system.",
+                        "example": "5202292772879600441"
                     },
                     "detail": {
                         "type": "string",

@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import {
     defWithDimensions,
@@ -69,7 +69,10 @@ const Test9 = defWithDimensions(
     newDimension(["localAttr1"], [TotalSum1]),
     newDimension(["localAttr3"]),
 );
-const Test10 = defWithDimensions(emptyDef("test"), newDimension(["localAttr1", "localAttr2"], [TotalSum1]));
+const Test10 = defWithDimensions(
+    emptyDef("test"),
+    newDimension(["localAttr1", "localAttr2", MeasureGroupIdentifier], [TotalSum1]),
+);
 const Test11 = defWithDimensions(
     emptyDef("test"),
     newDimension(["localAttr1", "localAttr2"], [TotalNat1]),
@@ -85,14 +88,12 @@ describe("convertTotals", () => {
         ["three totals with the same function", Test4],
         ["multiple totals with various functions", Test5],
         ["three dimensions", Test6],
-    ];
-    const ErrorScenarios: Array<[string, IExecutionDefinition]> = [
         ["subtotal", Test7],
         ["total on dimension with measure group", Test8],
         ["total without any measure group", Test9],
         ["total on single dimension result spec", Test10],
-        ["native total", Test11],
     ];
+    const ErrorScenarios: Array<[string, IExecutionDefinition]> = [["native total", Test11]];
 
     it.each(Scenarios)("should correctly convert %s", (_desc, def) => {
         expect(convertTotals(def)).toMatchSnapshot();

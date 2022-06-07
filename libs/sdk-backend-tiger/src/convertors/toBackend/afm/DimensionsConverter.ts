@@ -1,9 +1,9 @@
 // (C) 2007-2022 GoodData Corporation
 import {
     Dimension,
+    SortKeyAttribute,
     SortKeyAttributeAttributeDirectionEnum,
     SortKeyAttributeAttributeSortTypeEnum,
-    SortKeyAttribute,
     SortKeyValue,
 } from "@gooddata/api-client-tiger";
 import {
@@ -189,6 +189,10 @@ function dimensionsWithSorts(dims: Dimension[], sorts: ISortItem[]): Dimension[]
     return merge(dims, sorting);
 }
 
+export function dimensionLocalIdentifier(idx: number): string {
+    return `dim_${idx}`;
+}
+
 /**
  * Converts data in execution definition into dimension specifications for tiger. The tiger specifics
  * are that dimensions have localIds and that sorting is specified per-dimension.
@@ -198,7 +202,7 @@ function dimensionsWithSorts(dims: Dimension[], sorts: ISortItem[]): Dimension[]
 export function convertDimensions(def: IExecutionDefinition): Dimension[] {
     const dimensionsWithoutSorts: Dimension[] = def.dimensions.map((dim, idx) => {
         return {
-            localIdentifier: `dim_${idx}`, // FIXME synchronize with convertTotals
+            localIdentifier: dimensionLocalIdentifier(idx),
             itemIdentifiers: dim.itemIdentifiers,
         };
     });

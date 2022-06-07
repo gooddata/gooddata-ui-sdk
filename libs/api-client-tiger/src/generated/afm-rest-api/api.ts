@@ -741,19 +741,6 @@ export interface Dimension {
     sorting?: Array<SortKey>;
 }
 /**
- * Allows to customize for which attribute values the grand total will be computed. If the values for particular attribute are not specified then the totals for all values are computed. Note that this also covers the case of individual metrics (treated as values of the \"measureGroup\" pseudo attribute).
- * @export
- * @interface DimensionAttributesValues
- */
-export interface DimensionAttributesValues {
-    /**
-     *
-     * @type {{ [key: string]: Array<string>; }}
-     * @memberof DimensionAttributesValues
-     */
-    properties: { [key: string]: Array<string> };
-}
-/**
  * Contains the dimension-specific header information.
  * @export
  * @interface DimensionHeader
@@ -926,7 +913,7 @@ export interface ExecutionResult {
      */
     dimensionHeaders: Array<DimensionHeader>;
     /**
-     * An array with grand totals data corresponding to grand totals definition in result spec.
+     *
      * @type {Array<ExecutionResultGrandTotal>}
      * @memberof ExecutionResult
      */
@@ -939,23 +926,29 @@ export interface ExecutionResult {
     paging: ExecutionResultPaging;
 }
 /**
- * Contains the data related to a grand total, including the reference to localIdentifier as specified in result spec.
+ * Contains the data of grand totals with the same dimensions.
  * @export
  * @interface ExecutionResultGrandTotal
  */
 export interface ExecutionResultGrandTotal {
     /**
-     * Grand total identification within this request. The corresponding data in the result are expected to be matched using this identifier.
-     * @type {string}
+     * A multi-dimensional array of computed results. The most common one being a 2-dimensional array. The arrays can be composed of Double or null values.
+     * @type {Array<object>}
      * @memberof ExecutionResultGrandTotal
      */
-    localIdentifier: string;
+    data: Array<object>;
     /**
-     *
-     * @type {object}
+     * Contains headers for a subset of `totalDimensions` in which the totals are grand totals.
+     * @type {Array<DimensionHeader>}
      * @memberof ExecutionResultGrandTotal
      */
-    data?: object;
+    dimensionHeaders: Array<DimensionHeader>;
+    /**
+     * Dimensions of the grand totals.
+     * @type {Array<string>}
+     * @memberof ExecutionResultGrandTotal
+     */
+    totalDimensions: Array<string>;
 }
 /**
  * @type ExecutionResultHeader
@@ -1049,42 +1042,6 @@ export type FilterDefinition =
 export type FilterDefinitionForSimpleMeasure = AttributeFilter | DateFilter;
 
 /**
- * Definition of a grand total. Grand total data will be computed into a separate section of the result structure so that client has more options how to visualize them.
- * @export
- * @interface GrandTotal
- */
-export interface GrandTotal {
-    /**
-     * Grand total identification within this request. The corresponding data in the result are expected to be matched using this identifier.
-     * @type {string}
-     * @memberof GrandTotal
-     */
-    localIdentifier: string;
-    /**
-     * Aggregation function for grand total computation.
-     * @type {string}
-     * @memberof GrandTotal
-     */
-    function: GrandTotalFunctionEnum;
-    /**
-     *
-     * @type {IncludedDimensions}
-     * @memberof GrandTotal
-     */
-    includedDimensions: IncludedDimensions;
-}
-
-export const GrandTotalFunctionEnum = {
-    SUM: "SUM",
-    MIN: "MIN",
-    MAX: "MAX",
-    AVG: "AVG",
-    MED: "MED",
-} as const;
-
-export type GrandTotalFunctionEnum = typeof GrandTotalFunctionEnum[keyof typeof GrandTotalFunctionEnum];
-
-/**
  * Contains the information specific for a group of headers. These groups correlate to attributes and metric groups.
  * @export
  * @interface HeaderGroup
@@ -1096,32 +1053,6 @@ export interface HeaderGroup {
      * @memberof HeaderGroup
      */
     headers: Array<ExecutionResultHeader>;
-}
-/**
- * Mapping specifying dimensions on which this grand total will be computed. Dimensions are referenced via their localIdentifiers. Optionally one can specify also the values (properties) of the dimensions\' attributes (see DimensionAttributesValues).
- * @export
- * @interface IncludedDimensionProps
- */
-export interface IncludedDimensionProps {
-    /**
-     *
-     * @type {DimensionAttributesValues}
-     * @memberof IncludedDimensionProps
-     */
-    dimensionAttributesValues: DimensionAttributesValues;
-}
-/**
- *
- * @export
- * @interface IncludedDimensions
- */
-export interface IncludedDimensions {
-    /**
-     * Mapping specifying dimensions on which this grand total will be computed. Dimensions are referenced via their localIdentifiers. Optionally one can specify also the values (properties) of the dimensions\' attributes (see DimensionAttributesValues).
-     * @type {{ [key: string]: IncludedDimensionProps; }}
-     * @memberof IncludedDimensions
-     */
-    properties?: { [key: string]: IncludedDimensionProps } | null;
 }
 /**
  * Filter in form of direct MAQL query.
@@ -1516,12 +1447,6 @@ export interface Problem {
      */
     type: string;
     /**
-     * Unique trace id used in open-tracing (semantics of transactions in distributed systems). Can be used to correlate client error with concrete request processing in the system.
-     * @type {string}
-     * @memberof Problem
-     */
-    traceId: string;
-    /**
      * A short, summary of the problem type. Written in english and readable for engineers (usually not suited for non technical stakeholders and not localized).
      * @type {string}
      * @memberof Problem
@@ -1533,6 +1458,12 @@ export interface Problem {
      * @memberof Problem
      */
     status: StatusType;
+    /**
+     * Unique trace id used in open-tracing (semantics of transactions in distributed systems). Can be used to correlate client error with concrete request processing in the system.
+     * @type {string}
+     * @memberof Problem
+     */
+    traceId: string;
     /**
      * A human readable explanation specific to this occurrence of the problem.
      * @type {string}
@@ -1776,10 +1707,10 @@ export interface ResultSpec {
     dimensions: Array<Dimension>;
     /**
      *
-     * @type {Array<GrandTotal>}
+     * @type {Array<Total>}
      * @memberof ResultSpec
      */
-    grandTotals?: Array<GrandTotal>;
+    totals?: Array<Total>;
 }
 /**
  *
@@ -1964,6 +1895,67 @@ export interface StatusType {
     reasonPhrase?: string;
 }
 /**
+ * Definition of a total. There are two types of totals: grand totals and subtotals. Grand total data will be returned in a separate section of the result structure while subtotals are fully integrated into the main result data. The mechanism for this distinction is automatic and it\'s described in `TotalDimension`
+ * @export
+ * @interface Total
+ */
+export interface Total {
+    /**
+     * Total identification within this request. Used e.g. in sorting by a total.
+     * @type {string}
+     * @memberof Total
+     */
+    localIdentifier: string;
+    /**
+     * Aggregation function to compute the total.
+     * @type {string}
+     * @memberof Total
+     */
+    function: TotalFunctionEnum;
+    /**
+     * The metric for which the total will be computed
+     * @type {string}
+     * @memberof Total
+     */
+    metric: string;
+    /**
+     *
+     * @type {Array<TotalDimension>}
+     * @memberof Total
+     */
+    totalDimensions: Array<TotalDimension>;
+}
+
+export const TotalFunctionEnum = {
+    SUM: "SUM",
+    MIN: "MIN",
+    MAX: "MAX",
+    AVG: "AVG",
+    MED: "MED",
+} as const;
+
+export type TotalFunctionEnum = typeof TotalFunctionEnum[keyof typeof TotalFunctionEnum];
+
+/**
+ * A list of dimensions across which the total will be computed. Total headers for only these dimensions will be returned in the result.
+ * @export
+ * @interface TotalDimension
+ */
+export interface TotalDimension {
+    /**
+     * An identifier of a dimension for which the total will be computed.
+     * @type {string}
+     * @memberof TotalDimension
+     */
+    dimensionIdentifier: string;
+    /**
+     * List of dimension items which will be used for total computation. The total is a grand total in this dimension if the list is empty or it includes the first dimension item from the dimension definition, and its data and header will be returned in a separate `ExecutionResultGrandTotal` structure. Otherwise, it is a subtotal and the data will be integrated into the main result.
+     * @type {Array<string>}
+     * @memberof TotalDimension
+     */
+    totalDimensionItems: Array<string>;
+}
+/**
  *
  * @export
  * @interface TotalExecutionResultHeader
@@ -2088,7 +2080,7 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             assertParamExists("computeReport", "workspaceId", workspaceId);
             // verify required parameter 'afmExecution' is not null or undefined
             assertParamExists("computeReport", "afmExecution", afmExecution);
-            const localVarPath = `/api/actions/workspaces/{workspaceId}/execution/afm/execute`.replace(
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
@@ -2213,7 +2205,7 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             assertParamExists("explainAFM", "workspaceId", workspaceId);
             // verify required parameter 'afmExecution' is not null or undefined
             assertParamExists("explainAFM", "afmExecution", afmExecution);
-            const localVarPath = `/api/actions/workspaces/{workspaceId}/execution/afm/explain`.replace(
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/afm/explain`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
@@ -2274,7 +2266,7 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             // verify required parameter 'resultId' is not null or undefined
             assertParamExists("retrieveResult", "resultId", resultId);
             const localVarPath =
-                `/api/actions/workspaces/{workspaceId}/execution/afm/execute/result/{resultId}`
+                `/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute/result/{resultId}`
                     .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                     .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
