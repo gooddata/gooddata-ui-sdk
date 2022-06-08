@@ -34,7 +34,7 @@ import { WithIntlProps } from 'react-intl';
 import { WrappedComponentProps } from 'react-intl';
 
 // @internal (undocumented)
-export function addIntersectionFiltersToInsight(source: IInsight, intersection: IDrillEventIntersectionElement[]): IInsight;
+export function addIntersectionFiltersToInsight(source: IInsight, intersection: IDrillEventIntersectionElement[], backendSupportsElementUris: boolean): IInsight;
 
 // @public
 export function clearInsightViewCaches(): void;
@@ -78,7 +78,7 @@ export function getInsightSizeInfo(insight: IInsightDefinition, settings: ISetti
 export function getInsightVisualizationMeta(insight: IInsightDefinition): IVisualizationMeta;
 
 // @internal (undocumented)
-export function getInsightWithAppliedDrillDown(insight: IInsight, drillEvent: IDrillEvent, drillDefinition: IDrillDownDefinition): IInsight;
+export function getInsightWithAppliedDrillDown(insight: IInsight, drillEvent: IDrillEvent, drillDefinition: IDrillDownDefinition, backendSupportsElementUris: boolean): IInsight;
 
 // @beta
 export interface IDrillDownDefinition {

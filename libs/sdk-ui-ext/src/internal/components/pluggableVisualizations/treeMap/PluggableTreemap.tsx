@@ -183,13 +183,27 @@ export class PluggableTreemap extends PluggableBaseChart {
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
-    private addFilters(source: IInsight, drillConfig: IDrillDownDefinition, event: IDrillEvent) {
+    private addFilters(
+        source: IInsight,
+        drillConfig: IDrillDownDefinition,
+        event: IDrillEvent,
+        backendSupportsElementUris: boolean,
+    ) {
         const cutIntersection = reverseAndTrimIntersection(drillConfig, event.drillContext.intersection);
-        return addIntersectionFiltersToInsight(source, cutIntersection);
+        return addIntersectionFiltersToInsight(source, cutIntersection, backendSupportsElementUris);
     }
 
-    public getInsightWithDrillDownApplied(source: IInsight, drillDownContext: IDrillDownContext): IInsight {
-        const withFilters = this.addFilters(source, drillDownContext.drillDefinition, drillDownContext.event);
+    public getInsightWithDrillDownApplied(
+        source: IInsight,
+        drillDownContext: IDrillDownContext,
+        backendSupportsElementUris: boolean,
+    ): IInsight {
+        const withFilters = this.addFilters(
+            source,
+            drillDownContext.drillDefinition,
+            drillDownContext.event,
+            backendSupportsElementUris,
+        );
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
 

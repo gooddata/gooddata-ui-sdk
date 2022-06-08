@@ -57,7 +57,11 @@ export class PivotTableDescriptor extends BaseChartDescriptor implements IVisual
         };
     }
 
-    public applyDrillDown(insight: IInsight, drillDownContext: IDrillDownContext): IInsight {
+    public applyDrillDown(
+        insight: IInsight,
+        drillDownContext: IDrillDownContext,
+        backendSupportsElementUris: boolean,
+    ): IInsight {
         const drillDownInsight = modifyBucketsAttributesForDrillDown(
             insight,
             drillDownContext.drillDefinition,
@@ -65,6 +69,7 @@ export class PivotTableDescriptor extends BaseChartDescriptor implements IVisual
         const drillDownInsightWithFilters = addIntersectionFiltersToInsight(
             drillDownInsight,
             drillDownContext.event.drillContext.intersection,
+            backendSupportsElementUris,
         );
         return sanitizeTableProperties(insightSanitize(drillDownInsightWithFilters));
     }

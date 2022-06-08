@@ -37,11 +37,16 @@ export class BarChartDescriptor extends BaseChartDescriptor implements IVisualiz
         return (params) => new PluggableBarChart(params);
     }
 
-    public applyDrillDown(source: IInsight, drillDownContext: IDrillDownContext): IInsight {
+    public applyDrillDown(
+        source: IInsight,
+        drillDownContext: IDrillDownContext,
+        backendSupportsElementUris: boolean,
+    ): IInsight {
         const withFilters = this.addFiltersForColumnBar(
             source,
             drillDownContext.drillDefinition,
             drillDownContext.event,
+            backendSupportsElementUris,
         );
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
@@ -83,11 +88,16 @@ export class BarChartDescriptor extends BaseChartDescriptor implements IVisualiz
         return hasStackByAttributes ? arrayUtils.shiftArrayRight(intersection) : intersection;
     }
 
-    private addFiltersForColumnBar(source: IInsight, drillConfig: IDrillDownDefinition, event: IDrillEvent) {
+    private addFiltersForColumnBar(
+        source: IInsight,
+        drillConfig: IDrillDownDefinition,
+        event: IDrillEvent,
+        backendSupportsElementUris: boolean,
+    ) {
         const clicked = drillDownFromAttributeLocalId(drillConfig);
 
         const reorderedIntersection = this.adjustIntersectionForColumnBar(source, event);
         const cutIntersection = getIntersectionPartAfter(reorderedIntersection, clicked);
-        return addIntersectionFiltersToInsight(source, cutIntersection);
+        return addIntersectionFiltersToInsight(source, cutIntersection, backendSupportsElementUris);
     }
 }

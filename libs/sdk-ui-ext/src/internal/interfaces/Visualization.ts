@@ -401,9 +401,14 @@ export interface IVisualization {
      *
      * @param source - {@link IInsight} to be used for the the Drill Down execution
      * @param drillDownContext - Drill Down configuration used to properly create the result
+     * @param backendSupportsElementUris - whether current backend supports elements by uri. Affects how filters for insight are created
      * @returns `source` as the Drill Down target {@link IInsight}
      */
-    getInsightWithDrillDownApplied(source: IInsight, drillDownContext: IDrillDownContext): IInsight;
+    getInsightWithDrillDownApplied(
+        source: IInsight,
+        drillDownContext: IDrillDownContext,
+        backendSupportsElementUris: boolean,
+    ): IInsight;
 
     /**
      * Called whenever inputs for default sorts calculation changed and it should provide current sort and also all valid available sorts for actual reference point/properties

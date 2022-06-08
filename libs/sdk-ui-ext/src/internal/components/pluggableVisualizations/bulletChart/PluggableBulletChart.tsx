@@ -130,18 +130,28 @@ export class PluggableBulletChart extends PluggableBaseChart {
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
-    private addFiltersForBullet(source: IInsight, drillConfig: IDrillDownDefinition, event: IDrillEvent) {
+    private addFiltersForBullet(
+        source: IInsight,
+        drillConfig: IDrillDownDefinition,
+        event: IDrillEvent,
+        backendSupportsElementUris: boolean,
+    ) {
         const clicked = drillDownFromAttributeLocalId(drillConfig);
 
         const cutIntersection = getIntersectionPartAfter(event.drillContext.intersection, clicked);
-        return addIntersectionFiltersToInsight(source, cutIntersection);
+        return addIntersectionFiltersToInsight(source, cutIntersection, backendSupportsElementUris);
     }
 
-    public getInsightWithDrillDownApplied(source: IInsight, drillDownContext: IDrillDownContext): IInsight {
+    public getInsightWithDrillDownApplied(
+        source: IInsight,
+        drillDownContext: IDrillDownContext,
+        backendSupportsElementUris: boolean,
+    ): IInsight {
         const withFilters = this.addFiltersForBullet(
             source,
             drillDownContext.drillDefinition,
             drillDownContext.event,
+            backendSupportsElementUris,
         );
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }

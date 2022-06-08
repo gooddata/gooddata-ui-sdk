@@ -562,10 +562,14 @@ describe("PluggableColumnBarCharts", () => {
                     "first",
                 );
 
-                const result: IInsight = columnChart.getInsightWithDrillDownApplied(sourceInsight, {
-                    drillDefinition,
-                    event: createDrillEvent("column", drillIntersection),
-                });
+                const result: IInsight = columnChart.getInsightWithDrillDownApplied(
+                    sourceInsight,
+                    {
+                        drillDefinition,
+                        event: createDrillEvent("column", drillIntersection),
+                    },
+                    true,
+                );
 
                 expect(result).toEqual(expectedInsight);
             },

@@ -30,11 +30,16 @@ export class BulletChartDescriptor extends BaseChartDescriptor implements IVisua
         return (params) => new PluggableBulletChart(params);
     }
 
-    public applyDrillDown(insight: IInsight, drillDownContext: IDrillDownContext): IInsight {
+    public applyDrillDown(
+        insight: IInsight,
+        drillDownContext: IDrillDownContext,
+        backendSupportsElementUris: boolean,
+    ): IInsight {
         const withFilters = this.addFiltersForBullet(
             insight,
             drillDownContext.drillDefinition,
             drillDownContext.event,
+            backendSupportsElementUris,
         );
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
@@ -72,10 +77,15 @@ export class BulletChartDescriptor extends BaseChartDescriptor implements IVisua
         };
     }
 
-    private addFiltersForBullet(insight: IInsight, drillConfig: IDrillDownDefinition, event: IDrillEvent) {
+    private addFiltersForBullet(
+        insight: IInsight,
+        drillConfig: IDrillDownDefinition,
+        event: IDrillEvent,
+        backendSupportsElementUris: boolean,
+    ) {
         const clicked = drillDownFromAttributeLocalId(drillConfig);
 
         const cutIntersection = getIntersectionPartAfter(event.drillContext.intersection, clicked);
-        return addIntersectionFiltersToInsight(insight, cutIntersection);
+        return addIntersectionFiltersToInsight(insight, cutIntersection, backendSupportsElementUris);
     }
 }

@@ -65,11 +65,16 @@ export function getInsightWithAppliedDrillDown(
     insight: IInsight,
     drillEvent: IDrillEvent,
     drillDefinition: IDrillDownDefinition,
+    backendSupportsElementUris: boolean,
 ): IInsight {
-    return FullVisualizationCatalog.forInsight(insight).applyDrillDown(insight, {
-        drillDefinition,
-        event: drillEvent,
-    });
+    return FullVisualizationCatalog.forInsight(insight).applyDrillDown(
+        insight,
+        {
+            drillDefinition,
+            event: drillEvent,
+        },
+        backendSupportsElementUris,
+    );
 }
 
 /**

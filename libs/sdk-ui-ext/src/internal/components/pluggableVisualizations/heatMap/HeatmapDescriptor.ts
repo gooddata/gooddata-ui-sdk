@@ -30,11 +30,16 @@ export class HeatmapDescriptor extends BigChartDescriptor implements IVisualizat
         return (params) => new PluggableHeatmap(params);
     }
 
-    public applyDrillDown(insight: IInsight, drillDownContext: IDrillDownContext): IInsight {
+    public applyDrillDown(
+        insight: IInsight,
+        drillDownContext: IDrillDownContext,
+        backendSupportsElementUris: boolean,
+    ): IInsight {
         const withFilters = this.addFilters(
             insight,
             drillDownContext.drillDefinition,
             drillDownContext.event,
+            backendSupportsElementUris,
         );
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
@@ -65,13 +70,18 @@ export class HeatmapDescriptor extends BigChartDescriptor implements IVisualizat
         };
     }
 
-    private addFilters(source: IInsight, drillConfig: IDrillDownDefinition, event: IDrillEvent) {
+    private addFilters(
+        source: IInsight,
+        drillConfig: IDrillDownDefinition,
+        event: IDrillEvent,
+        backendSupportsElementUris: boolean,
+    ) {
         const clicked = drillDownFromAttributeLocalId(drillConfig);
         const cutIntersection = (event.drillContext.intersection || []).filter(
             (i) =>
                 isDrillIntersectionAttributeItem(i.header) &&
                 i.header.attributeHeader.localIdentifier === clicked,
         );
-        return addIntersectionFiltersToInsight(source, cutIntersection);
+        return addIntersectionFiltersToInsight(source, cutIntersection, backendSupportsElementUris);
     }
 }

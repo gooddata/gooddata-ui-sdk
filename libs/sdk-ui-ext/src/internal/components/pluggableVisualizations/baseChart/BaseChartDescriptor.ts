@@ -61,9 +61,17 @@ export abstract class BaseChartDescriptor implements IVisualizationDescriptor {
         return MAX_VISUALIZATION_HEIGHT;
     }
 
-    public applyDrillDown(insight: IInsight, drillDownContext: IDrillDownContext): IInsight {
+    public applyDrillDown(
+        insight: IInsight,
+        drillDownContext: IDrillDownContext,
+        backendSupportsElementUris: boolean,
+    ): IInsight {
         const intersection = drillDownContext.event.drillContext.intersection;
-        const withFilters = addIntersectionFiltersToInsight(insight, intersection);
+        const withFilters = addIntersectionFiltersToInsight(
+            insight,
+            intersection,
+            backendSupportsElementUris,
+        );
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
 }

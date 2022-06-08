@@ -527,10 +527,14 @@ describe("PluggableBaseChart", () => {
                     "first",
                 );
 
-                const result: IInsight = bulletChart.getInsightWithDrillDownApplied(sourceInsight, {
-                    drillDefinition,
-                    event: createDrillEvent("column", drillIntersection),
-                });
+                const result: IInsight = bulletChart.getInsightWithDrillDownApplied(
+                    sourceInsight,
+                    {
+                        drillDefinition,
+                        event: createDrillEvent("column", drillIntersection),
+                    },
+                    true,
+                );
 
                 expect(result).toEqual(expectedInsight);
             },
