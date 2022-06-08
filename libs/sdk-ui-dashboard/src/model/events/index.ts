@@ -90,6 +90,7 @@ import {
     DashboardDrillToLegacyDashboardResolved,
     DashboardDrillableItemsChanged,
 } from "./drill";
+import { DashboardRenderModeChanged } from "./ui";
 
 export {
     IDashboardEvent,
@@ -364,6 +365,12 @@ export {
     isDashboardRenderResolved,
 } from "./render";
 
+export {
+    DashboardRenderModeChanged,
+    DashboardRenderModeChangedPayload,
+    isDashboardRenderModeChanged,
+} from "./ui";
+
 /**
  * Union type that contains all available built-in dashboard events.
  *
@@ -389,6 +396,7 @@ export type DashboardEvents =
     | DashboardCopySaved
     | DashboardRenamed
     | DashboardWasReset
+    | DashboardRenderModeChanged
     | DashboardExportToPdfRequested
     | DashboardExportToPdfResolved
     | DashboardRenderRequested
