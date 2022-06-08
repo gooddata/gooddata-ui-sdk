@@ -184,6 +184,7 @@ Object {
   "isEmbedded": false,
   "isExport": false,
   "isReadOnly": false,
+  "isWhiteLabeled": false,
   "locale": "en-US",
   "mapboxToken": undefined,
   "menuButtonItemsVisibility": Object {},

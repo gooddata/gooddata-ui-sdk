@@ -1,10 +1,56 @@
+@import "variables";
+
 .gd-sidebar-container {
     position: sticky;
     top: 0;
     width: 230px;
     height: 100vh;
+    border-right: $nav-border;
+}
 
-    .configuration-panel {
-        width: 100%;
+.add-item-panel {
+    padding: 0 7px;
+}
+
+.add-item-placeholder {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 47px;
+    padding: 0 10px 0 50px;
+    border: 1px solid transparentize($dialog-border, 1);
+    border-radius: 2px;
+    font-size: 12px;
+    line-height: 14px;
+    color: $gd-color-text;
+    cursor: pointer;
+
+    &.disabled {
+        color: $gd-color-disabled;
+        cursor: default;
+        user-select: none;
+    }
+
+    &:hover:not(.disabled) {
+        border-color: var(--gd-palette-complementary-5, transparentize($dialog-border, 0.5));
+        box-shadow: 0 1px 3px 0 $button-shadow-lighter, 0 2px 9px 0 $button-shadow-darker;
+        background: var(--gd-palette-complementary-0-t10, transparentize($default-gd-color-white, 0.05));
+    }
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        display: block;
+        flex: 0 0 auto;
+        width: 50px;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    span {
+        flex: 1 1 auto;
     }
 }

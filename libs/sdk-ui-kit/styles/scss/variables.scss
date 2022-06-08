@@ -113,6 +113,9 @@ $is-negative-focused-background: var(
     mix($gd-color-negative, $default-gd-color-text-light, 90%)
 );
 
+$navigation-bg: var(--gd-palette-complementary-1, #303442);
+$navigation-active-item-bg: var(--gd-palette-complementary-0, #131c28);
+
 // other
 $gd-rounded-small: 4px;
 
