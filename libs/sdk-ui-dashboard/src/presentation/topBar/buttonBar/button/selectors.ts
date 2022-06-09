@@ -11,6 +11,7 @@ import {
     selectIsLayoutEmpty,
     selectIsReadOnly,
     selectListedDashboardsMap,
+    selectIsInEditMode,
 } from "../../../../model";
 import {
     selectDashboardEditModeDevRollout,
@@ -26,7 +27,6 @@ import {
     selectSupportsAccessControlCapability,
     selectSupportsHierarchicalWorkspacesCapability,
 } from "../../../../model/store/backendCapabilities/backendCapabilitiesSelectors";
-import { selectIsInEditMode } from "../../../../model/store/ui/uiSelectors";
 
 export const selectIsEditModeEnable = createSelector(
     selectDashboardEditModeDevRollout,

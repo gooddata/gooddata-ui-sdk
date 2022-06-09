@@ -1,7 +1,6 @@
 // (C) 2022 GoodData Corporation
 import React, { ComponentPropsWithRef, ComponentType } from "react";
-import { useDashboardSelector } from "../../model";
-import { selectRenderMode } from "../../model/store/ui/uiSelectors";
+import { useDashboardSelector, selectRenderMode } from "../../model";
 import { RenderMode } from "../../types";
 
 /**

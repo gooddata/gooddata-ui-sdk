@@ -3,9 +3,13 @@
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 import { Button } from "@gooddata/sdk-ui-kit";
-import { selectIsDashboardSaving, useDashboardDispatch, useDashboardSelector } from "../../../../../model";
+import {
+    selectIsDashboardSaving,
+    selectIsInEditMode,
+    useDashboardDispatch,
+    useDashboardSelector,
+} from "../../../../../model";
 import { ICancelButtonProps } from "./types";
-import { selectIsInEditMode } from "../../../../../model/store/ui/uiSelectors";
 import { cancelEditRenderMode } from "../../../../../model/commands/ui";
 
 /**

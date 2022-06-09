@@ -8,11 +8,11 @@ import {
     saveDashboard,
     selectIsDashboardSaving,
     selectIsLayoutEmpty,
+    selectIsInEditMode,
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../../model";
 import { ISaveButtonProps } from "./types";
-import { selectIsInEditMode } from "../../../../../model/store/ui/uiSelectors";
 import { cancelEditRenderMode } from "../../../../../model/commands/ui";
 import { selectCanSaveDashboard, selectIsPrivateDashboard } from "../selectors";
 import { selectEnableAnalyticalDashboardPermissions } from "../../../../../model/store/config/configSelectors";
