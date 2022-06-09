@@ -57,6 +57,10 @@ export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
         });
     }
 
+    public getAttributeByDisplayForm(ref: ObjRef): Promise<IAttributeMetadataObject> {
+        return this.authCall(async (client) => loadAttributeByDisplayForm(client, this.workspace, ref));
+    }
+
     public getAttributes(refs: ObjRef[]): Promise<IAttributeMetadataObject[]> {
         return this.authCall(async (client) => {
             const allAttributes = await loadAttributes(client, this.workspace);
@@ -137,6 +141,39 @@ function loadAttribute(
             },
         )
         .then((res) => convertAttributeWithSideloadedLabels(res.data));
+}
+
+function loadAttributeByDisplayForm(
+    client: ITigerClient,
+    workspaceId: string,
+    ref: ObjRef,
+): Promise<IAttributeMetadataObject> {
+    invariant(isIdentifierRef(ref), "tiger backend only supports referencing by identifier");
+
+    return client.entities
+        .getAllEntitiesAttributes(
+            {
+                workspaceId,
+                filter: `labels.id==${ref.identifier}`,
+                include: ["labels"],
+            },
+            {
+                headers: jsonApiHeaders,
+            },
+        )
+        .then((res) => {
+            const convertedLabel = convertAttributesWithSideloadedLabels(res.data)[0];
+
+            if (!convertedLabel) {
+                throw new UnexpectedResponseError(
+                    `The displayForm with id ${ref.identifier} was not found`,
+                    404,
+                    convertedLabel,
+                );
+            }
+
+            return convertedLabel;
+        });
 }
 
 function loadAttributes(client: ITigerClient, workspaceId: string): Promise<IAttributeMetadataObject[]> {

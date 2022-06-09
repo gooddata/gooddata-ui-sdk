@@ -10,4 +10,9 @@ export const selectAttribute = createSelector(selectState, (state) => state.attr
 /**
  * @internal
  */
+export const selectAttributeStatus = createSelector(selectState, (state) => state.attributeStatus);
+
+/**
+ * @internal
+ */
 export const selectAttributeError = createSelector(selectState, (state) => state.attributeError);

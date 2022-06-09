@@ -1,17 +1,25 @@
 // (C) 2022 GoodData Corporation
-import { IElementsQueryResult } from "@gooddata/sdk-backend-spi";
-import { IAttributeElements, ObjRef } from "@gooddata/sdk-model";
+import {
+    ElementsQueryOptionsElementsSpecification,
+    IElementsQueryAttributeFilter,
+    IElementsQueryResult,
+} from "@gooddata/sdk-backend-spi";
+import { IMeasure, IRelativeDateFilter, ObjRef } from "@gooddata/sdk-model";
 
 import { AttributeFilterStoreContext } from "../types";
 
 /**
  * @internal
  */
-interface ILoadAttributeElementsOptions {
+export interface ILoadAttributeElementsOptions {
     displayFormRef: ObjRef;
-    elements?: IAttributeElements;
     offset?: number;
     limit?: number;
+    search?: string;
+    limitingAttributeFilters?: IElementsQueryAttributeFilter[];
+    limitingMeasures?: IMeasure[];
+    limitingDateFilters?: IRelativeDateFilter[];
+    elements?: ElementsQueryOptionsElementsSpecification;
 }
 
 /**
@@ -19,27 +27,38 @@ interface ILoadAttributeElementsOptions {
  */
 export async function loadAttributeElements(
     context: AttributeFilterStoreContext,
-    { displayFormRef, elements, offset, limit }: ILoadAttributeElementsOptions,
+    {
+        displayFormRef,
+        limit,
+        offset,
+        limitingAttributeFilters,
+        limitingDateFilters,
+        limitingMeasures,
+        search,
+        elements,
+    }: ILoadAttributeElementsOptions,
 ): Promise<IElementsQueryResult> {
-    let elementsLoader = context.backend
-        .workspace(context.workspace)
-        .attributes()
-        .elements()
-        .forDisplayForm(displayFormRef);
+    const { backend, workspace } = context;
 
-    if (elements) {
-        elementsLoader = elementsLoader.withOptions({
-            elements,
-        });
-    }
-
-    if (offset) {
-        elementsLoader = elementsLoader.withOffset(offset);
-    }
-
+    let loader = backend.workspace(workspace).attributes().elements().forDisplayForm(displayFormRef);
     if (limit) {
-        elementsLoader = elementsLoader.withLimit(limit);
+        loader = loader.withLimit(limit);
+    }
+    if (offset) {
+        loader = loader.withOffset(limit);
+    }
+    if (search || elements) {
+        loader = loader.withOptions({ filter: search, elements });
+    }
+    if (limitingDateFilters) {
+        loader = loader.withDateFilters(limitingDateFilters);
+    }
+    if (limitingAttributeFilters) {
+        loader = loader.withAttributeFilters(limitingAttributeFilters);
+    }
+    if (limitingMeasures) {
+        loader = loader.withMeasures(limitingMeasures);
     }
 
-    return elementsLoader.query();
+    return loader.query();
 }

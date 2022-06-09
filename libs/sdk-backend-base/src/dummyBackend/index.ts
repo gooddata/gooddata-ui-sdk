@@ -499,6 +499,9 @@ class DummyWorkspaceAttributesService implements IWorkspaceAttributesService {
     getAttribute(_ref: ObjRef): Promise<IAttributeMetadataObject> {
         throw new NotSupported("not supported");
     }
+    getAttributeByDisplayForm(_ref: ObjRef): Promise<IAttributeMetadataObject> {
+        throw new NotSupported("not supported");
+    }
     getAttributes(_refs: ObjRef[]): Promise<IAttributeMetadataObject[]> {
         throw new NotSupported("not supported");
     }
