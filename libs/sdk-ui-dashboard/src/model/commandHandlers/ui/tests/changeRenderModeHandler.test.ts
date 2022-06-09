@@ -2,7 +2,7 @@
 
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures";
-import { selectRenderMode } from "../../../store/ui/uiSelectors";
+import { selectRenderMode } from "../../../store";
 import { changeRenderMode, initializeDashboard } from "../../../commands";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures";
 import { cancelEditRenderMode, switchToEditRenderMode } from "../../../commands/ui";

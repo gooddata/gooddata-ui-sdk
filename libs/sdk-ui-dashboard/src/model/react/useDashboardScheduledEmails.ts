@@ -8,6 +8,7 @@ import {
     selectDashboardRef,
     selectEnableInsightExportScheduling,
     selectEnableKPIDashboardSchedule,
+    selectIsInViewMode,
     selectIsReadOnly,
     selectIsScheduleEmailDialogOpen,
     selectIsScheduleEmailManagementDialogOpen,
@@ -15,7 +16,6 @@ import {
     uiActions,
 } from "../store";
 import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider";
-import { selectIsInViewMode } from "../store/ui/uiSelectors";
 
 /**
  * Hook that handles schedule emailing dialogs.

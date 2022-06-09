@@ -9,6 +9,8 @@ import {
     selectIsLayoutEmpty,
     selectIsReadOnly,
     selectMenuButtonItemsVisibility,
+    selectIsInEditMode,
+    selectIsInViewMode,
     uiActions,
     useDashboardCommandProcessing,
     useDashboardDispatch,
@@ -20,7 +22,6 @@ import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import { useCallback, useMemo, useRef } from "react";
 import { downloadFile } from "../../../_staging/fileUtils/downloadFile";
 import { isProtectedDataError } from "@gooddata/sdk-backend-spi";
-import { selectIsInEditMode, selectIsInViewMode } from "../../../model/store/ui/uiSelectors";
 import { IMenuButtonItem } from "../../topBar/types";
 import { selectIsSaveAsNewButtonHidden } from "../../../model/store/config/configSelectors";
 

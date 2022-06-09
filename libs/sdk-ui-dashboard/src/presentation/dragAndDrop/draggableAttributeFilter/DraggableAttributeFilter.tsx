@@ -2,8 +2,7 @@
 import React from "react";
 import { IDashboardAttributeFilter } from "@gooddata/sdk-model";
 import classNames from "classnames";
-import { useDashboardSelector } from "../../../model";
-import { selectIsInEditMode } from "../../../model/store/ui/uiSelectors";
+import { useDashboardSelector, selectIsInEditMode } from "../../../model";
 import { AttributeFilterDropZoneHint } from "./AttributeFilterDropZoneHint";
 import { CustomDashboardAttributeFilterComponent } from "../../filterBar/types";
 import { useDashboardDrag } from "../useDashboardDrag";

@@ -6,8 +6,7 @@ import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { useDashboardDrop } from "../useDashboardDrop";
-import { useDashboardSelector } from "../../../model";
-import { selectIsInEditMode } from "../../../model/store/ui/uiSelectors";
+import { useDashboardSelector, selectIsInEditMode } from "../../../model";
 import { getDropZoneDebugStyle } from "../debug";
 
 export type AttributeFilterDropZoneProps = {

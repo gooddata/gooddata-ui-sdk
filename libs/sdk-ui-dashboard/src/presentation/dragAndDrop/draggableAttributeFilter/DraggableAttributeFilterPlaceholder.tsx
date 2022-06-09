@@ -2,8 +2,7 @@
 import React from "react";
 import { useDashboardDrag } from "../useDashboardDrag";
 import classNames from "classnames";
-import { useDashboardSelector } from "../../../model";
-import { selectIsInEditMode } from "../../../model/store/ui/uiSelectors";
+import { useDashboardSelector, selectIsInEditMode } from "../../../model";
 import {
     CustomDashboardAttributeFilterPlaceholderComponent,
     CustomDashboardAttributeFilterPlaceholderComponentProps,

@@ -181,6 +181,9 @@ export {
     selectIsKpiAlertHighlightedByWidgetRef,
     selectMenuButtonItemsVisibility,
     selectScheduleEmailDialogDefaultAttachment,
+    selectRenderMode,
+    selectIsInEditMode,
+    selectIsInViewMode,
 } from "./ui/uiSelectors";
 export { uiActions } from "./ui";
 

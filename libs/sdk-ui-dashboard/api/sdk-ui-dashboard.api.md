@@ -4885,6 +4885,12 @@ export const selectIsExecutionResultReadyForExportByRef: (ref: ObjRef) => Output
 // @internal
 export const selectIsExport: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
+// @internal (undocumented)
+export const selectIsInEditMode: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
+
+// @internal (undocumented)
+export const selectIsInViewMode: OutputSelector<DashboardState, boolean, (res: UiState) => boolean>;
+
 // @alpha (undocumented)
 export const selectIsKpiAlertHighlightedByWidgetRef: (ref: ObjRef | undefined) => (state: DashboardState) => boolean;
 
@@ -4947,6 +4953,9 @@ export const selectPersistedDashboard: OutputSelector<DashboardState, IDashboard
 
 // @public
 export const selectPlatformEdition: OutputSelector<DashboardState, PlatformEdition, (res: ResolvedDashboardConfig) => PlatformEdition>;
+
+// @internal (undocumented)
+export const selectRenderMode: OutputSelector<DashboardState, RenderMode, (res: UiState) => RenderMode>;
 
 // @alpha (undocumented)
 export const selectScheduleEmailDialogDefaultAttachment: OutputSelector<DashboardState, UriRef | IdentifierRef | undefined, (res: UiState) => UriRef | IdentifierRef | undefined>;
