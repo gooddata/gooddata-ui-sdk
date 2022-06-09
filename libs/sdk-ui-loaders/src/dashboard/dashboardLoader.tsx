@@ -44,14 +44,16 @@ import { isPluginCompatibleWithDashboardEngine } from "./loadingStrategies/deter
 /**
  * @public
  */
-export type DashboardEngineLoader = (dashboard: IDashboardWithReferences) => Promise<IDashboardEngine>;
+export type DashboardEngineLoader = (
+    dashboard: IDashboardWithReferences | undefined,
+) => Promise<IDashboardEngine>;
 
 /**
  * @public
  */
 export type DashboardPluginsLoader = (
     ctx: DashboardContext,
-    dashboard: IDashboardWithReferences,
+    dashboard: IDashboardWithReferences | undefined,
     options?: IDashboardPluginsLoaderOptions,
 ) => Promise<LoadedPlugin[]>;
 
@@ -60,7 +62,7 @@ export type DashboardPluginsLoader = (
  */
 export type DashboardBeforeLoad = (
     ctx: DashboardContext,
-    dashboard: IDashboardWithReferences,
+    dashboard: IDashboardWithReferences | undefined,
 ) => Promise<void>;
 
 /**
@@ -211,7 +213,7 @@ export class DashboardLoader implements IDashboardLoader {
 
     private loadParts = async (
         ctx: DashboardContext,
-        dashboardWithPlugins: IDashboardWithReferences,
+        dashboardWithPlugins: IDashboardWithReferences | undefined,
         config: DashboardLoaderConfig = this.config,
         beforeExternalPluginLoaded: BeforePluginsLoadedCallback,
     ): Promise<[IDashboardEngine, IDashboardPluginContract_V1[]]> => {
@@ -260,10 +262,6 @@ export class DashboardLoader implements IDashboardLoader {
         const dashboardRef = typeof dashboard === "string" ? idRef(dashboard) : dashboard;
 
         invariant(backend, "DashboardLoader is not configured with an instance of Analytical Backend.");
-        invariant(
-            dashboardRef,
-            "DashboardLoader is not configured with a reference to dashboard that it should load.",
-        );
 
         const [workspace, clientWorkspace] = await this.resolveWorkspace(backend);
         invariant(workspace, "DashboardLoader is not configured with workspace to use and loader.");
@@ -271,12 +269,14 @@ export class DashboardLoader implements IDashboardLoader {
         // eslint-disable-next-line no-console
         console.debug("Loading the dashboard...");
 
-        const dashboardWithPlugins: IDashboardWithReferences = await backend
-            .workspace(workspace)
-            .dashboards()
-            .getDashboardWithReferences(dashboardRef, filterContextRef, { loadUserData: true }, [
-                "dashboardPlugin",
-            ]);
+        const dashboardWithPlugins =
+            dashboardRef &&
+            (await backend
+                .workspace(workspace)
+                .dashboards()
+                .getDashboardWithReferences(dashboardRef, filterContextRef, { loadUserData: true }, [
+                    "dashboardPlugin",
+                ]));
 
         const ctx: DashboardContext = {
             backend,
@@ -290,7 +290,8 @@ export class DashboardLoader implements IDashboardLoader {
         // eslint-disable-next-line no-console
         console.debug("Validating the plugins...");
 
-        const pluginsAreValid = await validatePluginsBeforeLoading(ctx, dashboardWithPlugins);
+        const pluginsAreValid =
+            !dashboardWithPlugins || (await validatePluginsBeforeLoading(ctx, dashboardWithPlugins));
         if (!pluginsAreValid) {
             // eslint-disable-next-line no-console
             console.error(
@@ -326,7 +327,7 @@ export class DashboardLoader implements IDashboardLoader {
             config: dashboardConfig,
             ...extensionProps,
             workspace,
-            dashboard: dashboardWithPlugins.dashboard,
+            dashboard: dashboardWithPlugins?.dashboard,
         };
 
         /*
