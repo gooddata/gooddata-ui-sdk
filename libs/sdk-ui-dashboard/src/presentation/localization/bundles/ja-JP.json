@@ -211,5 +211,13 @@
     "controlButtons.saveAndPublish.disable.empty.title": "空のダッシュボードは保存できません",
     "controlButtons.saveAndPublish.disable.noChanges.title": "保存する変更はありません",
     "controlButtons.saving.value": "保存しています…",
-    "save.as.new": "新規として保存"
+    "gs.visualizationsList.tabs.all": "すべて",
+    "gs.visualizationsList.tabs.my": "自分が作成",
+    "gs.visualizationsList.loading": "読み込んでいます…",
+    "visualizationsList.noInsights": "このワークスペースにはインサイトがありません。",
+    "visualizationsList.noUserInsights": "作成されたインサイトはありません。",
+    "visualizationsList.noVisualizationsFound": "一致する解析はありません。",
+    "search_insights": "全検索…",
+    "save.as.new": "新規として保存",
+    "addPanel.deleteItem": "ドロップして削除"
 }

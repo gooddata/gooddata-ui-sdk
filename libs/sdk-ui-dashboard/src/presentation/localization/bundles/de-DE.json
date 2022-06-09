@@ -211,5 +211,13 @@
     "controlButtons.saveAndPublish.disable.empty.title": "Leere Dashboards können nicht gespeichert werden",
     "controlButtons.saveAndPublish.disable.noChanges.title": "Es gibt keine Änderungen, die gespeichert werden könnten",
     "controlButtons.saving.value": "Speichert…",
-    "save.as.new": "Als neu speichern"
+    "gs.visualizationsList.tabs.all": "alle",
+    "gs.visualizationsList.tabs.my": "von mir erstellt",
+    "gs.visualizationsList.loading": "Lädt…",
+    "visualizationsList.noInsights": "Dieser Workspace enthält keine Betrachtungen.",
+    "visualizationsList.noUserInsights": "Keine Betrachtungen erstellt.",
+    "visualizationsList.noVisualizationsFound": "Keine übereinstimmende Betrachtung.",
+    "search_insights": "Alle durchsuchen…",
+    "save.as.new": "Als neu speichern",
+    "addPanel.deleteItem": "Zum Entfernen loslassen"
 }

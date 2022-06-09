@@ -211,5 +211,13 @@
     "controlButtons.saveAndPublish.disable.empty.title": "Пустой дашборд нельзя сохранить",
     "controlButtons.saveAndPublish.disable.noChanges.title": "Нет изменений для сохранения",
     "controlButtons.saving.value": "Сохранение…",
-    "save.as.new": "Сохранить как новую"
+    "gs.visualizationsList.tabs.all": "все",
+    "gs.visualizationsList.tabs.my": "создано мной",
+    "gs.visualizationsList.loading": "Загрузка…",
+    "visualizationsList.noInsights": "Эта рабочая область не содержит анализов.",
+    "visualizationsList.noUserInsights": "Нет созданных анализов.",
+    "visualizationsList.noVisualizationsFound": "Нет подходящего анализа.",
+    "search_insights": "Поиск по всем анализам…",
+    "save.as.new": "Сохранить как новую",
+    "addPanel.deleteItem": "Сбросьте, чтобы удалить"
 }

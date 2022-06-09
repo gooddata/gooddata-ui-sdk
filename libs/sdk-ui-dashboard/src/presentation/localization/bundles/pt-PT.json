@@ -211,5 +211,13 @@
     "controlButtons.saveAndPublish.disable.empty.title": "Não é possível guardar um dashboard vazio",
     "controlButtons.saveAndPublish.disable.noChanges.title": "Não há alterações para guardar",
     "controlButtons.saving.value": "A guardar…",
-    "save.as.new": "Guardar como novo"
+    "gs.visualizationsList.tabs.all": "todos",
+    "gs.visualizationsList.tabs.my": "criadas por mim",
+    "gs.visualizationsList.loading": "A carregar…",
+    "visualizationsList.noInsights": "Esta área de trabalho não contém quaisquer insights.",
+    "visualizationsList.noUserInsights": "Nenhuns insights criados.",
+    "visualizationsList.noVisualizationsFound": "Nenhum insight correspondente.",
+    "search_insights": "Pesquisar todos os insights…",
+    "save.as.new": "Guardar como novo",
+    "addPanel.deleteItem": "Largar para remover"
 }

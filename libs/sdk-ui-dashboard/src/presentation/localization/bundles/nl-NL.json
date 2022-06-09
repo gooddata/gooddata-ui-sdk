@@ -211,5 +211,13 @@
     "controlButtons.saveAndPublish.disable.empty.title": "Een leeg dashboard kan niet worden opgeslagen",
     "controlButtons.saveAndPublish.disable.noChanges.title": "Er zijn geen wijzigingen om op te slaan",
     "controlButtons.saving.value": "Opslaan…",
-    "save.as.new": "Opslaan als nieuw"
+    "gs.visualizationsList.tabs.all": "alle",
+    "gs.visualizationsList.tabs.my": "door mij aangemaakt",
+    "gs.visualizationsList.loading": "Laden…",
+    "visualizationsList.noInsights": "Deze werkruimte bevat geen inzichten.",
+    "visualizationsList.noUserInsights": "Geen inzichten gemaakt.",
+    "visualizationsList.noVisualizationsFound": "Geen overeenkomstig inzicht.",
+    "search_insights": "Alle doorzoeken…",
+    "save.as.new": "Opslaan als nieuw",
+    "addPanel.deleteItem": "Laat los om te verwijderen"
 }
