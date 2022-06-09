@@ -366,6 +366,26 @@
         "comment": "",
         "limit": 0
     },
+    "gs.header.countdown.numberOfDaysLeft": {
+        "value": "{number} days left",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.header.countdown.numberOfMonthsLeft": {
+        "value": "{number} months left",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.header.countdown.oneMonthLeft": {
+        "value": "1 month left",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.header.countdown.lastDay": {
+        "value": "This is your last day",
+        "comment": "",
+        "limit": 0
+    },
     "measure.title.suffix.same_period_year_ago": {
         "value": "SP year ago",
         "comment": "",
