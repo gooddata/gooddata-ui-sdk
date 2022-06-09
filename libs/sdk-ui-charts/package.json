@@ -57,8 +57,10 @@
         "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
         "stylelint": "stylelint '**/*.scss'",
         "stylelint-ci": "stylelint '**/*.scss' --custom-formatter=node_modules/stylelint-checkstyle-formatter > ./ci/results/stylelint-results.xml",
-        "validate": "npm run dep-cruiser && npm run eslint && npm run stylelint && npm run prettier-check",
-        "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run stylelint-ci && npm run prettier-check"
+        "validate": "npm run dep-cruiser && npm run eslint && npm run stylelint && npm run validate-locales && npm run prettier-check",
+        "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run stylelint-ci && npm run validate-locales-ci && npm run prettier-check",
+        "validate-locales": "cd ../sdk-ui && npm run validate-locales",
+        "validate-locales-ci": "cd ../sdk-ui && npm run validate-locales-ci"
     },
     "dependencies": {
         "@gooddata/numberjs": "^4.0.2",
