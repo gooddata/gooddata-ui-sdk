@@ -13,7 +13,6 @@ export const DefaultUiSettings: ISettings = {
     cellMergedByDefault: true,
     enableMetricDateFilter: true,
     enableAnalyticalDesignerExport: true,
-    enableComboChart: true,
     enableNewADFilterBar: true,
     enableMeasureValueFilters: true,
     // geochart must be disabled for now on tiger backend due to missing mapbox token infrastructure there (RAIL-3058)
