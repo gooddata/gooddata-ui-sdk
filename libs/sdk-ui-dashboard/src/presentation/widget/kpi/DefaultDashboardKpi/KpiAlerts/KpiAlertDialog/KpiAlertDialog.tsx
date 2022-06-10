@@ -1,5 +1,5 @@
 // (C) 2007-2022 GoodData Corporation
-import React, { Component } from "react";
+import React, { Component, ReactText } from "react";
 import isEqual from "lodash/isEqual";
 import last from "lodash/last";
 import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
@@ -173,10 +173,6 @@ export class KpiAlertDialog extends Component<
         );
     }
 
-    formatMessage(id: string, options?: Record<string, any>): string {
-        return this.props.intl.formatMessage({ id }, options);
-    }
-
     renderAttributeFiltersInfo(): React.ReactNode {
         const { alert, filters } = this.props;
 
@@ -218,11 +214,12 @@ export class KpiAlertDialog extends Component<
     }
 
     renderDeleteLink(): React.ReactNode {
-        if (this.props.alert) {
-            const isDeleting = this.props.alertDeletingStatus === "inProgress";
+        const { alert, alertDeletingStatus, intl } = this.props;
+        if (alert) {
+            const isDeleting = alertDeletingStatus === "inProgress";
             const deleteButtonTitle = isDeleting
-                ? this.formatMessage("kpiAlertDialog.deleting")
-                : this.formatMessage("kpiAlertDialog.delete");
+                ? intl.formatMessage({ id: "kpiAlertDialog.deleting" })
+                : intl.formatMessage({ id: "kpiAlertDialog.delete" });
 
             return (
                 <Button
@@ -239,18 +236,20 @@ export class KpiAlertDialog extends Component<
     }
 
     renderUpdateButton(): React.ReactNode {
-        if (this.props.alert) {
-            const isUpdating = this.props.alertUpdatingStatus === "inProgress";
+        const { alert, alertUpdatingStatus, intl, onAlertDialogUpdateClick } = this.props;
+
+        if (alert) {
+            const isUpdating = alertUpdatingStatus === "inProgress";
             const updateButtonTitle = isUpdating
-                ? this.formatMessage("kpiAlertDialog.updatingTitle")
-                : this.formatMessage("kpiAlertDialog.updateBrokenTitle");
+                ? intl.formatMessage({ id: "kpiAlertDialog.updatingTitle" })
+                : intl.formatMessage({ id: "kpiAlertDialog.updateBrokenTitle" });
 
             return (
                 <Button
                     key="update-button"
                     className="s-update-button gd-button-action save-button"
                     value={updateButtonTitle}
-                    onClick={this.props.onAlertDialogUpdateClick}
+                    onClick={onAlertDialogUpdateClick}
                     disabled={isUpdating}
                 />
             );
@@ -280,9 +279,17 @@ export class KpiAlertDialog extends Component<
     }
 
     renderDialogContent(): React.ReactNode {
-        const { isAlertDialogOpening, isAlertLoading, isKpiFormatLoading } = this.props;
+        const {
+            isAlertDialogOpening,
+            isAlertLoading,
+            thresholdPlaceholder,
+            isKpiFormatLoading,
+            intl,
+            brokenAlertFilters,
+            userEmail,
+        } = this.props;
 
-        const { threshold } = this.state;
+        const { threshold, alertType } = this.state;
 
         if (isAlertDialogOpening || isAlertLoading || isKpiFormatLoading) {
             return (
@@ -292,7 +299,7 @@ export class KpiAlertDialog extends Component<
             );
         }
 
-        if (this.props.brokenAlertFilters?.length) {
+        if (brokenAlertFilters?.length) {
             return <div className="kpi-alert-dialog-content">{this.renderBrokenAlert()}</div>;
         }
 
@@ -301,7 +308,7 @@ export class KpiAlertDialog extends Component<
         const hasError = !this.isAlertValid() && !this.isAlertEmpty();
 
         const emailMe = (
-            <span className="underline-dotted" title={this.props.userEmail}>
+            <span className="underline-dotted" title={userEmail}>
                 <FormattedMessage id="kpiAlertDialog.emailMe" />
             </span>
         );
@@ -313,8 +320,8 @@ export class KpiAlertDialog extends Component<
                 </div>
 
                 <KpiAlertDialogWhenTriggeredPicker
-                    whenTriggered={this.state.alertType}
-                    intl={this.props.intl}
+                    whenTriggered={alertType}
+                    intl={intl}
                     onWhenTriggeredChange={this.onSelect}
                 />
 
@@ -324,13 +331,10 @@ export class KpiAlertDialog extends Component<
                         hasError={hasError}
                         isSmall
                         maxlength={16}
-                        onChange={
-                            // TODO: type the Input so that it has string value for "text" and similar types
-                            this.onChange as any
-                        }
+                        onChange={this.onChange}
                         onEscKeyPress={this.closeDialog}
                         onEnterKeyPress={this.saveKpiAlert}
-                        placeholder={this.props.thresholdPlaceholder}
+                        placeholder={thresholdPlaceholder}
                         ref={this.threshold}
                         suffix={inputSuffix}
                         value={threshold}
@@ -353,7 +357,7 @@ export class KpiAlertDialog extends Component<
                     />
                     <Button
                         className="gd-button-secondary cancel-button s-cancel_button"
-                        value={this.formatMessage("cancel")}
+                        value={intl.formatMessage({ id: "cancel" })}
                         onClick={this.onCancelClick}
                     />
                     {this.renderDeleteLink()}
@@ -379,9 +383,8 @@ export class KpiAlertDialog extends Component<
     }
 
     renderFiltersMessage(): React.ReactNode {
-        const emailInfo = this.formatMessage("kpiAlertDialog.emailInfo", {
-            userEmail: this.props.userEmail,
-        });
+        const { intl, userEmail } = this.props;
+        const emailInfo = intl.formatMessage({ id: "kpiAlertDialog.emailInfo" }, { userEmail });
 
         return (
             <div>
@@ -477,15 +480,19 @@ export class KpiAlertDialog extends Component<
     }
 
     getUpdateOrSetTitle(): string {
-        return this.props.alert
-            ? this.formatMessage("kpiAlertDialog.updateTitle")
-            : this.formatMessage("kpiAlertDialog.setTitle");
+        const { alert, intl } = this.props;
+
+        return alert
+            ? intl.formatMessage({ id: "kpiAlertDialog.updateTitle" })
+            : intl.formatMessage({ id: "kpiAlertDialog.setTitle" });
     }
 
     getUpdatingOrSavingTitle(): string {
-        return this.props.alert
-            ? this.formatMessage("kpiAlertDialog.updatingTitle")
-            : this.formatMessage("kpiAlertDialog.settingTitle");
+        const { alert, intl } = this.props;
+
+        return alert
+            ? intl.formatMessage({ id: "kpiAlertDialog.updatingTitle" })
+            : intl.formatMessage({ id: "kpiAlertDialog.settingTitle" });
     }
 
     isThresholdRepresentingPercent(props = this.props): boolean {
@@ -523,8 +530,8 @@ export class KpiAlertDialog extends Component<
         this.setState({ alertType });
     };
 
-    onChange = (value: string): void => {
-        this.setState({ threshold: value });
+    onChange = (value: string | ReactText): void => {
+        this.setState({ threshold: value.toString() });
     };
 
     saveKpiAlert = (): void => {

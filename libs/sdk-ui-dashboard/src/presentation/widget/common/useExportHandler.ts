@@ -1,9 +1,10 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import { useCallback, useRef } from "react";
 import { isProtectedDataError } from "@gooddata/sdk-backend-spi";
 import { IExtendedExportConfig } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import { downloadFile } from "../../../_staging/fileUtils/downloadFile";
+import { messages } from "../../../locales";
 
 type ExportHandler = (
     exportFunction: (config: IExtendedExportConfig) => Promise<string>,
@@ -16,7 +17,7 @@ export const useExportHandler = (): ExportHandler => {
     return useCallback<ExportHandler>(async (exportFunction, exportConfig) => {
         try {
             lastExportMessageId.current = addProgress(
-                { id: "messages.exportResultStart" },
+                messages.messagesExportResultStart,
                 // make sure the message stays there until removed by either success or error
                 { duration: 0 },
             );
@@ -26,7 +27,7 @@ export const useExportHandler = (): ExportHandler => {
             if (lastExportMessageId.current) {
                 removeMessage(lastExportMessageId.current);
             }
-            addSuccess({ id: "messages.exportResultSuccess" });
+            addSuccess(messages.messagesExportResultSuccess);
 
             downloadFile(exportResultUri);
         } catch (err) {
@@ -35,9 +36,9 @@ export const useExportHandler = (): ExportHandler => {
             }
 
             if (isProtectedDataError(err)) {
-                addError({ id: "messages.exportResultRestrictedError" });
+                addError(messages.messagesExportResultRestrictedError);
             } else {
-                addError({ id: "messages.exportResultError" });
+                addError(messages.messagesExportResultError);
             }
         }
     }, []);

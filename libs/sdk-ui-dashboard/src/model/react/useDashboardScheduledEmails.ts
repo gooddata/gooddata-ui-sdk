@@ -16,6 +16,7 @@ import {
     uiActions,
 } from "../store";
 import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider";
+import { messages } from "../../locales";
 
 /**
  * Hook that handles schedule emailing dialogs.
@@ -82,25 +83,25 @@ export const useDashboardScheduledEmails = () => {
 
     const onScheduleEmailingCreateError = useCallback(() => {
         closeScheduleEmailingDialog();
-        addError({ id: "dialogs.schedule.email.submit.error" });
+        addError(messages.scheduleEmailSubmitError);
     }, []);
 
     const onScheduleEmailingCreateSuccess = useCallback(() => {
         closeScheduleEmailingDialog();
-        addSuccess({ id: "dialogs.schedule.email.submit.success" });
+        addSuccess(messages.scheduleEmailSubmitSuccess);
         resetScheduledEmailDefaultAttachment();
     }, []);
 
     const onScheduleEmailingSaveError = useCallback(() => {
         closeScheduleEmailingDialog();
-        addError({ id: "dialogs.schedule.email.save.error" });
+        addError(messages.scheduleEmailSaveError);
         setScheduledEmailToEdit(undefined);
     }, []);
 
     const onScheduleEmailingSaveSuccess = useCallback(() => {
         closeScheduleEmailingDialog();
         openScheduleEmailingManagementDialog();
-        addSuccess({ id: "dialogs.schedule.email.save.success" });
+        addSuccess(messages.scheduleEmailSaveSuccess);
         setScheduledEmailToEdit(undefined);
     }, []);
 
@@ -112,7 +113,7 @@ export const useDashboardScheduledEmails = () => {
     }, []);
 
     const onScheduleEmailingManagementDeleteSuccess = useCallback(() => {
-        addSuccess({ id: "dialogs.schedule.email.delete.success" });
+        addSuccess(messages.scheduleEmailDeleteSuccess);
     }, []);
 
     const onScheduleEmailingManagementAdd = useCallback(() => {
@@ -132,12 +133,12 @@ export const useDashboardScheduledEmails = () => {
 
     const onScheduleEmailingManagementLoadingError = useCallback(() => {
         closeScheduleEmailingManagementDialog();
-        addError({ id: "dialogs.schedule.management.load.error" });
+        addError(messages.scheduleManagementLoadError);
     }, []);
 
     const onScheduleEmailingManagementDeleteError = useCallback(() => {
         closeScheduleEmailingManagementDialog();
-        addError({ id: "dialogs.schedule.management.delete.error" });
+        addError(messages.scheduleManagementDeleteError);
     }, []);
 
     return {

@@ -326,24 +326,21 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
     }
 
     public render(): React.ReactNode {
-        const { intl, onCancel, editSchedule } = this.props;
+        const { intl, onCancel, editSchedule, enableWidgetExportScheduling } = this.props;
+        const { alignment, isValidScheduleEmailData } = this.state;
         const alignPoints = [
             {
-                align: this.state.alignment,
+                align: alignment,
             },
         ];
 
         const isSubmitDisabled =
-            !this.state.isValidScheduleEmailData ||
+            !isValidScheduleEmailData ||
             (editSchedule &&
                 // in editing mode wait for email addresses to be processed by this.identifyWorkspaceRecipients() and check whether anything changed
                 (!this.getUsersCancellable?.getHasFulfilled() ||
                     isEqual(omit(this.originalEditState, "alignment"), omit(this.state, "alignment"))));
 
-        const submitButtonTranslationId = `dialogs.schedule.email.${editSchedule ? "save" : "submit"}`;
-        const headingTranslationId = this.props.enableWidgetExportScheduling
-            ? "dialogs.schedule.email.heading"
-            : "dialogs.schedule.email.headline";
         return (
             <Overlay
                 alignPoints={alignPoints}
@@ -355,9 +352,17 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
                 <ConfirmDialogBase
                     className="gd-schedule-email-dialog s-gd-schedule-email-dialog"
                     isPositive={true}
-                    headline={intl.formatMessage({ id: headingTranslationId })}
+                    headline={
+                        enableWidgetExportScheduling
+                            ? intl.formatMessage({ id: "dialogs.schedule.email.heading" })
+                            : intl.formatMessage({ id: "dialogs.schedule.email.headline" })
+                    }
                     cancelButtonText={intl.formatMessage({ id: "cancel" })}
-                    submitButtonText={intl.formatMessage({ id: submitButtonTranslationId })}
+                    submitButtonText={
+                        editSchedule
+                            ? intl.formatMessage({ id: `dialogs.schedule.email.save` })
+                            : intl.formatMessage({ id: `dialogs.schedule.email.submit` })
+                    }
                     isSubmitDisabled={isSubmitDisabled}
                     submitOnEnterKey={false}
                     onCancel={onCancel}

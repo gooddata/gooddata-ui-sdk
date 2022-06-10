@@ -50,10 +50,6 @@ export const useInsightMenu = (config: {
     const defaultMenuItems = useMemo<IInsightMenuItem[]>(() => {
         const useLegacyMenu = !insightMenuItemsProvider;
 
-        const bubbleMessageKey = isDataError(execution?.error)
-            ? "options.menu.unsupported.error"
-            : "options.menu.unsupported.loading";
-
         const defaultMenuItemsGetter = useLegacyMenu
             ? getDefaultLegacyInsightMenuItems
             : getDefaultInsightMenuItems;
@@ -75,7 +71,9 @@ export const useInsightMenu = (config: {
                 onScheduleExport();
             },
             isScheduleExportVisible,
-            tooltipMessage: intl.formatMessage({ id: bubbleMessageKey }),
+            tooltipMessage: isDataError(execution?.error)
+                ? intl.formatMessage({ id: "options.menu.unsupported.error" })
+                : intl.formatMessage({ id: "options.menu.unsupported.loading" }),
         });
     }, [
         insightMenuItemsProvider,

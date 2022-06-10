@@ -1,7 +1,27 @@
 {
-    "messages.longSaving": {
-        "value": "Saving is taking longer than expected, please wait…",
+    "loading": {
+        "value": "Loading…",
         "comment": "Use '…' as one character, not 3 dots ('...').",
+        "limit": 0
+    },
+    "apply": {
+        "value": "Apply",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.list.cancel": {
+        "value": "Cancel",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.list.apply": {
+        "value": "Apply",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.list.only": {
+        "value": "Only",
+        "comment": "",
         "limit": 0
     },
     "messages.dashboardSaveSuccess": {
@@ -205,6 +225,16 @@
         "comment": "",
         "limit": 0
     },
+    "filters.minute.previousPeriod": {
+        "value": "prev. minute",
+        "comment": "",
+        "limit": 0
+    },
+    "filters.hour.previousPeriod": {
+        "value": "prev. hour",
+        "comment": "",
+        "limit": 0
+    },
     "filters.day.previousPeriod": {
         "value": "prev. {n, plural, one {day} other {#d}}",
         "comment": "In '{n, plural, one {DAY} other {#D}}' translate only uppercase words. Keep number placeholder '#' as is. Do not put dot character after period abbreviation (correct '{#d}', wrong '{#d.}').",
@@ -238,31 +268,6 @@
     "filters.alertMessage.relativePreset.inPeriod": {
         "value": "in period {calendarIcon} {range}",
         "comment": "Don't translate placeholders '{calendarIcon}', '{range}'. Example text: 'in period (calendar) from 2 months ago to 2 months ahead'",
-        "limit": 0
-    },
-    "filters.alertMessage.relativePreset.range.day": {
-        "value": "{n, plural, =0 {this day} =1 {last day} other {last # days}}",
-        "comment": "In '{n, plural, =0 {THIS DAY} =1 {LAST DAY} other {LAST # DAYS}}' translate only uppercase words. Keep number placeholder '#' as is.",
-        "limit": 0
-    },
-    "filters.alertMessage.relativePreset.range.week": {
-        "value": "{n, plural, =0 {this week} =1 {last week} other {last # weeks}}",
-        "comment": "In '{n, plural, =0 {THIS WEEK} =1 {LAST WEEK} other {LAST # WEEKS}}' translate only uppercase words. Keep number placeholder '#' as is.",
-        "limit": 0
-    },
-    "filters.alertMessage.relativePreset.range.month": {
-        "value": "{n, plural, =0 {this month} =1 {last month} other {last # months}}",
-        "comment": "In '{n, plural, =0 {THIS MONTH} =1 {LAST MONTH} other {LAST # MONTHS}}' translate only uppercase words. Keep number placeholder '#' as is.",
-        "limit": 0
-    },
-    "filters.alertMessage.relativePreset.range.quarter": {
-        "value": "{n, plural, =0 {this quarter} =1 {last quarter} other {last # quarters}}",
-        "comment": "In '{n, plural, =0 {THIS QUARTER} =1 {LAST QUARTER} other {LAST # QUARTERS}}' translate only uppercase words. Keep number placeholder '#' as is.",
-        "limit": 0
-    },
-    "filters.alertMessage.relativePreset.range.year": {
-        "value": "{n, plural, =0 {this year} =1 {last year} other {last # years}}",
-        "comment": "In '{n, plural, =0 {THIS YEAR} =1 {LAST YEAR} other {LAST # YEARS}}' translate only uppercase words. Keep number placeholder '#' as is.",
         "limit": 0
     },
     "kpi.noData": {
@@ -315,11 +320,6 @@
         "comment": "Message for button to add reports to the export, if there are no reports.",
         "limit": 0,
         "translate": false
-    },
-    "dialogs.schedule.email.attachment.format": {
-        "value": "Format options",
-        "comment": "Label of a button that opens format configuration",
-        "limit": 0
     },
     "dialogs.schedule.email.attachment.select.dashboard.header": {
         "value": "Dashboard (PDF)",
@@ -745,26 +745,6 @@
         "comment": "Don't translate placeholder '{numFilters}'. In '{numFilters, select, 1 {FILTER} other {FILTERS}}' translate only uppercase words.",
         "limit": 0
     },
-    "kpiAlertDialog.unsaved.changes.headline": {
-        "value": "Leave the KPI dashboard?",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.unsaved.changes.message": {
-        "value": "There are unpublished changes that will be lost.",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.unsaved.changes.leave.anyway": {
-        "value": "Leave anyway",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.unsaved.changes.stay": {
-        "value": "Stay",
-        "comment": "",
-        "limit": 0
-    },
     "messages.exportResultError": {
         "value": "Failed to export the data. Try again later.",
         "comment": "Error dialog. Exporting insight to the file fails.",
@@ -1151,11 +1131,6 @@
     "gs.visualizationsList.tabs.my": {
         "value": "created by me",
         "comment": "",
-        "limit": 0
-    },
-    "gs.visualizationsList.loading": {
-        "value": "Loading…",
-        "comment": "Use '…' as one character, not 3 dots ('...').",
         "limit": 0
     },
     "visualizationsList.noInsights|insight": {

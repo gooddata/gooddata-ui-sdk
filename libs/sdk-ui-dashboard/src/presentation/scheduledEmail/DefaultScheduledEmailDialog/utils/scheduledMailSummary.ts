@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { IntlShape } from "react-intl";
 import invariant from "ts-invariant";
 
@@ -6,6 +6,7 @@ import { IScheduleEmailRepeatTime, IScheduleEmailRepeatFrequency, IScheduleEmail
 import { REPEAT_TYPES, REPEAT_FREQUENCIES, FREQUENCY_TYPE, REPEAT_EXECUTE_ON } from "../constants";
 
 import { getDayName, getWeek, getDate } from "./datetime";
+import { messages } from "../../../../locales";
 
 const AM = "AM";
 const PM = "PM";
@@ -27,10 +28,7 @@ function getScheduledEmailRepeatString(
     const day = getDayName(startDate);
     const week = getWeek(startDate);
     if (!isCustomRepeatType) {
-        return intl.formatMessage(
-            { id: `dialogs.schedule.email.repeats.types.${repeatType}` },
-            { day, week },
-        );
+        return intl.formatMessage(messages[`scheduleDialogEmailRepeats_${repeatType}`], { day, week });
     }
 
     const every = intl.formatMessage({
@@ -38,9 +36,7 @@ function getScheduledEmailRepeatString(
     });
     const repeatFrequencyType = getRepeatFrequencyType(repeatFrequency);
     const frequencies = intl.formatMessage(
-        {
-            id: `dialogs.schedule.email.repeats.frequencies.${repeatFrequencyType}`,
-        },
+        messages[`scheduleDialogEmailRepeatsFrequencies_${repeatFrequencyType}`],
         {
             n: repeatPeriod,
         },
@@ -52,16 +48,11 @@ function getScheduledEmailRepeatString(
 
     const executeOn =
         repeatFrequencyType !== REPEAT_FREQUENCIES.DAY
-            ? intl.formatMessage(
-                  {
-                      id: `dialogs.schedule.email.repeats.execute.on.${appliedRepeatExecuteOn}`,
-                  },
-                  {
-                      date: getDate(startDate),
-                      day: getDayName(startDate),
-                      week: getWeek(startDate),
-                  },
-              )
+            ? intl.formatMessage(messages[`scheduleDialogEmailRepeatsExecuteOn_${appliedRepeatExecuteOn}`], {
+                  date: getDate(startDate),
+                  day: getDayName(startDate),
+                  week: getWeek(startDate),
+              })
             : "";
     // every 2 months on the first Friday
     return `${every} ${repeatPeriod} ${frequencies} ${executeOn}`.trim();

@@ -14,6 +14,7 @@ import {
 } from "../../../model";
 import { ShareDialog, ISharingApplyPayload } from "../../shareDialog";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { messages } from "../../../locales";
 
 const useShareDialogDashboardHeader = () => {
     const dispatch = useDashboardDispatch();
@@ -30,10 +31,10 @@ const useShareDialogDashboardHeader = () => {
         successEvent: "GDC.DASH/EVT.SHARING.CHANGED",
         errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
         onSuccess: () => {
-            addSuccess({ id: "messages.sharingChangedSuccess" });
+            addSuccess(messages.messagesSharingChangedSuccess);
         },
         onError: () => {
-            addError({ id: "messages.sharingChangedError.general" });
+            addError(messages.messagesSharingChangedError);
         },
     });
 
@@ -53,7 +54,7 @@ const useShareDialogDashboardHeader = () => {
 
     const onErrorShareDialog = useCallback(() => {
         dispatch(uiActions.closeShareDialog());
-        addError({ id: "messages.sharingDialogError.general" });
+        addError(messages.messagesSharingDialogError);
     }, [dispatch, addError]);
 
     return {

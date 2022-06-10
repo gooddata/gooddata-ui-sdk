@@ -24,6 +24,7 @@ import { downloadFile } from "../../../_staging/fileUtils/downloadFile";
 import { isProtectedDataError } from "@gooddata/sdk-backend-spi";
 import { IMenuButtonItem } from "../../topBar/types";
 import { selectIsSaveAsNewButtonHidden } from "../../../model/store/config/configSelectors";
+import { messages } from "../../../locales";
 
 /**
  * @internal
@@ -46,7 +47,7 @@ export const useDefaultMenuItems = function (): IMenuButtonItem[] {
         errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
         onBeforeRun: () => {
             lastExportMessageId.current = addProgress(
-                { id: "messages.exportResultStart" },
+                messages.messagesExportResultStart,
                 // make sure the message stays there until removed by either success or error
                 { duration: 0 },
             );
@@ -55,7 +56,7 @@ export const useDefaultMenuItems = function (): IMenuButtonItem[] {
             if (lastExportMessageId.current) {
                 removeMessage(lastExportMessageId.current);
             }
-            addSuccess({ id: "messages.exportResultSuccess" });
+            addSuccess(messages.messagesExportResultSuccess);
             downloadFile(e.payload.resultUri);
         },
         onError: (err) => {
@@ -64,9 +65,9 @@ export const useDefaultMenuItems = function (): IMenuButtonItem[] {
             }
 
             if (isProtectedDataError(err)) {
-                addError({ id: "messages.exportResultRestrictedError" });
+                addError(messages.messagesExportResultRestrictedError);
             } else {
-                addError({ id: "messages.exportResultError" });
+                addError(messages.messagesExportResultError);
             }
         },
     });
