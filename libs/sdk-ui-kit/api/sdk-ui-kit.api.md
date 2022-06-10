@@ -445,6 +445,11 @@ export enum ENUM_KEY_CODE {
 }
 
 // @internal (undocumented)
+export const ErrorOverlay: React_2.FC<WithIntlProps<IErrorOverlayProps & WrappedComponentProps<"intl">>> & {
+    WrappedComponent: React_2.ComponentType<IErrorOverlayProps & WrappedComponentProps<"intl">>;
+};
+
+// @internal (undocumented)
 export const ExportDialog: {
     (props: IExportDialogBaseProps): JSX.Element;
     defaultProps: IExportDialogBaseProps;
@@ -1015,6 +1020,7 @@ export const Icon: {
     Success: FC<IIconProps>;
     Token: FC<IIconProps>;
     Origin: FC<IIconProps>;
+    Leave: FC<IIconProps>;
 };
 
 // @internal (undocumented)
@@ -1447,6 +1453,26 @@ export type IEmbedInsightDialogBaseProps = {
     onCodeLanguageChange: (codeLanguage: CodeLanguageType) => void;
     onCodeOptionChange: (codeOption: CodeOptionType) => void;
 };
+
+// @internal (undocumented)
+export interface IErrorOverlayProps {
+    // (undocumented)
+    buttonTitle?: string;
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    icon?: ReactNode;
+    // (undocumented)
+    onButtonClick?: () => void;
+    // (undocumented)
+    showButton?: boolean;
+    // (undocumented)
+    showIcon?: boolean;
+    // (undocumented)
+    text?: ReactNode;
+    // (undocumented)
+    title?: ReactNode;
+}
 
 // @internal (undocumented)
 export interface IExportDialogBaseProps extends IDialogBaseProps {
