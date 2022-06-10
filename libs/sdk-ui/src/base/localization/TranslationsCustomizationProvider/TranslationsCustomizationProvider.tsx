@@ -1,12 +1,11 @@
 // (C) 2021-2022 GoodData Corporation
-import React, { useMemo } from "react";
 import { IAnalyticalBackend, IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import React, { useEffect, useState } from "react";
 import { useBackend } from "../../react/BackendContext";
 import { useWorkspace } from "../../react/WorkspaceContext";
 import { TranslationsCustomizationContextProvider } from "./Context";
 import { getWorkspaceSettingsLoader } from "./workspaceSettingsLoader";
 import { pickCorrectWording } from "./utils";
-import { useCancelablePromise } from "../../react/useCancelablePromise";
 
 declare global {
     interface Window {
@@ -75,38 +74,34 @@ export const TranslationsCustomizationProvider: React.FC<ITranslationsCustomizat
 }) => {
     const backend = useBackend(backendParam);
     const workspace = useWorkspace(workspaceParam);
+    const [translations, setTranslations] = useState(() => customize(translationsParam));
+    const [isLoading, setIsLoading] = useState(false);
 
-    const { status, result: settings } = useCancelablePromise(
-        {
-            promise:
-                backend && workspace
-                    ? () => {
-                          /**
-                           * Load the settings using a centralized loader with cache to prevent duplicate network requests.
-                           */
-                          const loader = getWorkspaceSettingsLoader();
-                          return loader.load(backend, workspace);
-                      }
-                    : undefined,
-            onSuccess: (settings) => {
-                /**
-                 * Because of issues described in the ticket FET-855, we decided to use this workaround.
-                 * After the issues that are described in the ticket are solved or at least reduced,
-                 * this workaround can be removed.
-                 */
-                window.gdSettings = settings;
-            },
-        },
-        [backend, workspace, translationsParam],
-    );
+    useEffect(() => {
+        const fetchSettings = async () => {
+            if (!backend || !workspace) {
+                return;
+            }
+            setIsLoading(true);
 
-    const translations = useMemo(() => {
-        return customize(translationsParam, settings);
-    }, [customize, settings, translationsParam]);
+            /**
+             * Load the settings using a centralized loader with cache to prevent duplicate network requests.
+             */
+            const loader = getWorkspaceSettingsLoader();
+            const settings = await loader.load(backend, workspace);
 
-    const isLoading = !!(
-        (status === "loading" || (backend && workspace && status === "pending")) // only consider pending as loading if there is a chance we will load at all
-    );
+            /**
+             * Because of issues described in the ticket FET-855, we decided to use this workaround.
+             * After the issues that are described in the ticket are solved or at least reduced,
+             * this workaround can be removed.
+             */
+            window.gdSettings = settings;
+            setTranslations(customize(translationsParam, settings));
+            setIsLoading(false);
+        };
+
+        fetchSettings();
+    }, [backend, workspace, translationsParam]);
 
     return (
         <TranslationsCustomizationContextProvider
