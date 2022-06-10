@@ -24,8 +24,8 @@ import { IDashboardPluginsLoaderOptions, LoadedPlugin, ModuleFederationIntegrati
  */
 export const adaptiveDashboardEngineLoaderFactory =
     (moduleFederationIntegration: ModuleFederationIntegration) =>
-    (dashboard: IDashboardWithReferences): Promise<IDashboardEngine> => {
-        if (!isEmpty(dashboard.references.plugins)) {
+    (dashboard: IDashboardWithReferences | undefined): Promise<IDashboardEngine> => {
+        if (dashboard && !isEmpty(dashboard.references.plugins)) {
             return dynamicDashboardEngineLoader(dashboard, moduleFederationIntegration);
         }
 
@@ -45,10 +45,10 @@ export const adaptiveDashboardPluginLoaderFactory =
     (moduleFederationIntegration: ModuleFederationIntegration) =>
     (
         ctx: DashboardContext,
-        dashboard: IDashboardWithReferences,
+        dashboard: IDashboardWithReferences | undefined,
         options?: IDashboardPluginsLoaderOptions,
     ): Promise<LoadedPlugin[]> => {
-        if (!isEmpty(dashboard.references.plugins)) {
+        if (dashboard && !isEmpty(dashboard.references.plugins)) {
             options?.beforePluginsLoaded({ externalPluginsCount: dashboard.references.plugins.length });
             return dynamicDashboardPluginLoader(ctx, dashboard, moduleFederationIntegration);
         }
@@ -67,8 +67,8 @@ export const adaptiveDashboardPluginLoaderFactory =
  */
 export const adaptiveDashboardBeforeLoadFactory =
     (_moduleFederationIntegration: ModuleFederationIntegration) =>
-    (ctx: DashboardContext, dashboard: IDashboardWithReferences): Promise<void> => {
-        if (!isEmpty(dashboard.references.plugins)) {
+    (ctx: DashboardContext, dashboard: IDashboardWithReferences | undefined): Promise<void> => {
+        if (dashboard && !isEmpty(dashboard.references.plugins)) {
             return dynamicDashboardBeforeLoad(ctx, dashboard);
         }
 

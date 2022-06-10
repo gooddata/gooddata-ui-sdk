@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { DashboardContext, IDashboardEngine, newDashboardEngine } from "@gooddata/sdk-ui-dashboard";
@@ -11,7 +11,9 @@ import { LoadedPlugin } from "../types";
  * @param _dashboard - ignored
  * @internal
  */
-export function staticDashboardEngineLoader(_dashboard: IDashboardWithReferences): Promise<IDashboardEngine> {
+export function staticDashboardEngineLoader(
+    _dashboard: IDashboardWithReferences | undefined,
+): Promise<IDashboardEngine> {
     return Promise.resolve(newDashboardEngine());
 }
 
@@ -29,7 +31,7 @@ export function staticDashboardEngineLoader(_dashboard: IDashboardWithReferences
  */
 export function noopDashboardPluginLoader(
     _ctx: DashboardContext,
-    _dashboard: IDashboardWithReferences,
+    _dashboard: IDashboardWithReferences | undefined,
 ): Promise<LoadedPlugin[]> {
     return Promise.resolve([]);
 }
@@ -47,7 +49,7 @@ export function noopDashboardPluginLoader(
  */
 export function noopDashboardBeforeLoad(
     _ctx: DashboardContext,
-    _dashboard: IDashboardWithReferences,
+    _dashboard: IDashboardWithReferences | undefined,
 ): Promise<void> {
     return Promise.resolve();
 }

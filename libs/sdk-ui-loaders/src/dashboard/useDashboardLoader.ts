@@ -115,14 +115,16 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
 
         // eslint-disable-next-line no-console
         console.log(
-            `Dashboard loader initialized in ${loadingMode} mode to load ${objRefToString(dashboardRef)}.`,
+            `Dashboard loader initialized in ${loadingMode} mode to load ${
+                dashboardRef ? objRefToString(dashboardRef) : "empty dashboard"
+            }.`,
         );
 
         return loader;
     }, [
         backend,
         workspace,
-        serializeObjRef(dashboardRef),
+        dashboardRef && serializeObjRef(dashboardRef),
         filterContextRef,
         config,
         permissions,
