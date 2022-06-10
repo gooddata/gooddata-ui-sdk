@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React from "react";
 import { BubbleHoverTrigger, Bubble } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
@@ -8,32 +8,45 @@ import { IShareStatusProps } from "./types";
  * @alpha
  */
 export const ShareStatusIndicator = (props: IShareStatusProps): JSX.Element => {
-    let icon, text, tooltip;
-    if (props.shareStatus !== "private") {
-        icon = "gd-icon-users";
-        text = "header.shareStatus.shared.text";
-        tooltip = "header.shareStatus.shared.tooltip";
-    } else {
-        icon = "gd-icon-invisible";
-        text = "header.shareStatus.private.text";
-        if (props.isUnderStrictControl) {
-            tooltip = "header.shareStatus.private.strict.tooltip";
-        } else {
-            tooltip = "header.shareStatus.private.not.strict.tooltip";
-        }
-    }
+    const { icon, text, tooltip } = getShareStatusData(props);
 
     return (
         <div className="s-share-status gd-share-status">
             <BubbleHoverTrigger>
                 <div className="gd-share-indicator">
                     <i className={`gd-share-icon ${icon}`} />
-                    <FormattedMessage id={text} />
+                    {text}
                 </div>
                 <Bubble alignPoints={[{ align: "bc tl" }]} alignTo={`.gd-share-icon`}>
-                    <FormattedMessage id={tooltip} />
+                    {tooltip}
                 </Bubble>
             </BubbleHoverTrigger>
         </div>
     );
 };
+
+function getShareStatusData(props: IShareStatusProps): {
+    icon: string;
+    text: React.ReactElement;
+    tooltip: React.ReactElement;
+} {
+    const { shareStatus, isUnderStrictControl } = props;
+
+    if (shareStatus !== "private") {
+        return {
+            icon: "gd-icon-users",
+            text: <FormattedMessage id="header.shareStatus.shared.text" />,
+            tooltip: <FormattedMessage id="header.shareStatus.shared.tooltip" />,
+        };
+    }
+
+    return {
+        icon: "gd-icon-invisible",
+        text: <FormattedMessage id="header.shareStatus.private.text" />,
+        tooltip: isUnderStrictControl ? (
+            <FormattedMessage id="header.shareStatus.private.strict.tooltip" />
+        ) : (
+            <FormattedMessage id="header.shareStatus.private.not.strict.tooltip" />
+        ),
+    };
+}

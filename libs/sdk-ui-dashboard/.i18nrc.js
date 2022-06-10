@@ -4,7 +4,7 @@ module.exports = {
     intl: true,
     html: true,
     insightToReport: true,
-    usage: false,
+    usage: true,
     debug: false,
     source: "src/**/*.{ts,js,tsx,jsx}",
     rules: [

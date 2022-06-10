@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
@@ -30,11 +30,11 @@ const KpiAlertDialogBrokenFiltersSection: React.FC<IKpiAlertDialogBrokenFiltersS
     return (
         <div className="filter-section">
             <div className="filter-section-headline">
-                <FormattedMessage
-                    id={
-                        type === "deleted" ? "kpiAlertDialog.removedFilters" : "kpiAlertDialog.ignoredFilters"
-                    }
-                />
+                {type === "deleted" ? (
+                    <FormattedMessage id="kpiAlertDialog.removedFilters" />
+                ) : (
+                    <FormattedMessage id="kpiAlertDialog.ignoredFilters" />
+                )}
             </div>
             <div className={contentClassNames}>
                 {filters.map((filter) => {

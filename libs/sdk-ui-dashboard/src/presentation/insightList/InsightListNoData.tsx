@@ -30,13 +30,11 @@ export const InsightListNoData: React.FC<IVisualizationListNoDataProps> = ({
             ) : (
                 <>
                     <span className="s-visualization-list-no-data-message">
-                        <FormattedMessage
-                            id={
-                                isUserInsights
-                                    ? "visualizationsList.noUserInsights"
-                                    : "visualizationsList.noInsights"
-                            }
-                        />
+                        {isUserInsights ? (
+                            <FormattedMessage id="visualizationsList.noUserInsights" />
+                        ) : (
+                            <FormattedMessage id="visualizationsList.noInsights" />
+                        )}
                     </span>{" "}
                     {button && (
                         <Button

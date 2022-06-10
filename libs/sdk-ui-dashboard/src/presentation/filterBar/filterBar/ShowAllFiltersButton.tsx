@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -27,7 +27,11 @@ export const ShowAllFiltersButton: React.FC<IShowAllFiltersButtonProps> = ({
                 onClick={() => onToggle(!isFilterBarExpanded)}
             >
                 <span className="gd-button-text gd-label">
-                    <FormattedMessage id={isFilterBarExpanded ? "filterBar.showLess" : "filterBar.showAll"} />
+                    {isFilterBarExpanded ? (
+                        <FormattedMessage id="filterBar.showLess" />
+                    ) : (
+                        <FormattedMessage id="filterBar.showAll" />
+                    )}
                     <i className={`gd-button-icon gd-icon ${icon}`} />
                 </span>
             </button>

@@ -6,11 +6,6 @@ import { Dropdown, DropdownButton, DropdownList, ShortenedText } from "@gooddata
 import { IWidgetAlertDefinition } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
 
-const kpiAlertTypeItems = [
-    { title: "kpiAlertDialog.threshold.above", id: "aboveThreshold" },
-    { title: "kpiAlertDialog.threshold.below", id: "underThreshold" },
-];
-
 interface IKpiAlertDialogWhenTriggeredPickerProps extends WrappedComponentProps {
     whenTriggered: IWidgetAlertDefinition["whenTriggered"];
     onWhenTriggeredChange: (whenTriggered: IWidgetAlertDefinition["whenTriggered"]) => void;
@@ -22,11 +17,10 @@ export const KpiAlertDialogWhenTriggeredPicker: React.FC<IKpiAlertDialogWhenTrig
     whenTriggered,
 }) => {
     const alertTypeItems = useMemo(
-        () =>
-            kpiAlertTypeItems.map((item) => ({
-                ...item,
-                title: intl.formatMessage({ id: item.title }),
-            })),
+        () => [
+            { title: intl.formatMessage({ id: "kpiAlertDialog.threshold.above" }), id: "aboveThreshold" },
+            { title: intl.formatMessage({ id: "kpiAlertDialog.threshold.below" }), id: "underThreshold" },
+        ],
         [intl],
     );
 

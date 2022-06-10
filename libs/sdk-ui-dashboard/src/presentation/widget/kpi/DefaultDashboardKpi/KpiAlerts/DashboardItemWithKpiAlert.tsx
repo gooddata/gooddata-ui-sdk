@@ -221,18 +221,6 @@ export class DashboardItemWithKpiAlert extends Component<
             !this.props.canSetAlert ||
             (isAlertingTemporarilyDisabled && !this.props.alert)
         ) {
-            const bubbleMessage = this.props.isReadOnlyMode ? (
-                <FormattedMessage id="kpi.alertBox.disabledInReadOnly" />
-            ) : (
-                <FormattedMessage
-                    id={
-                        !isAlertingTemporarilyDisabled
-                            ? "kpi.alertBox.unverifiedEmail"
-                            : "visualization.alert_not_supported"
-                    }
-                />
-            );
-
             return (
                 <BubbleHoverTrigger
                     showDelay={0}
@@ -242,7 +230,7 @@ export class DashboardItemWithKpiAlert extends Component<
                 >
                     {/* no children here since alert icon is only a styled div with classes ^^^ */}
                     <Bubble className="bubble-primary" alignPoints={disabledBubbleAlignPoints}>
-                        {bubbleMessage}
+                        {this.getBubbleMessage(isAlertingTemporarilyDisabled)}
                     </Bubble>
                 </BubbleHoverTrigger>
             );
@@ -292,6 +280,19 @@ export class DashboardItemWithKpiAlert extends Component<
             content,
             kpi,
         };
+    }
+
+    getBubbleMessage(isAlertingTemporarilyDisabled: boolean): React.ReactElement {
+        const { isReadOnlyMode } = this.props;
+
+        if (isReadOnlyMode) {
+            return <FormattedMessage id="kpi.alertBox.disabledInReadOnly" />;
+        }
+
+        if (isAlertingTemporarilyDisabled) {
+            return <FormattedMessage id="visualization.alert_not_supported" />;
+        }
+        return <FormattedMessage id="kpi.alertBox.unverifiedEmail" />;
     }
 
     render(): JSX.Element {

@@ -18,9 +18,7 @@ import { InsightListItem, DropdownList } from "@gooddata/sdk-ui-kit";
 import { InsightListNoData } from "./InsightListNoData";
 import { selectCurrentUserRef, useDashboardSelector } from "../../model";
 import { IInsightListProps } from "./types";
-
-const INSIGHT_DROPDOWN_MY_TAB_ID = "gs.visualizationsList.tabs.my";
-const INSIGHT_DROPDOWN_ALL_TAB_ID = "gs.visualizationsList.tabs.all";
+import { messages } from "../../locales";
 
 const ITEMS_PER_PAGE = 50;
 const ITEM_HEIGHT = 40;
@@ -41,7 +39,7 @@ export function getInsightListSourceItem(insight: IInsight): IInsightListItem {
     };
 }
 
-const dropdownTabsTranslationIds = [{ id: INSIGHT_DROPDOWN_MY_TAB_ID }, { id: INSIGHT_DROPDOWN_ALL_TAB_ID }];
+const dropdownTabsTranslationIds = [messages.tabsMy, messages.tabsAll];
 
 /**
  * @internal
@@ -54,7 +52,7 @@ export const InsightList: React.FC<IInsightListProps> = ({ height, searchAutofoc
     const [initialLoadCompleted, setInitialLoadCompleted] = useState(false);
     const [pagesToLoad, setPagesToLoad] = useState<number[]>([0]); // first page loaded
     const [search, setSearch] = useState("");
-    const [selectedTabId, setSelectedTabId] = useState(INSIGHT_DROPDOWN_MY_TAB_ID);
+    const [selectedTabId, setSelectedTabId] = useState(messages.tabsMy.id);
     const userRef = useDashboardSelector(selectCurrentUserRef);
     const userUri = isUriRef(userRef) ? userRef.uri : undefined;
 
@@ -62,7 +60,7 @@ export const InsightList: React.FC<IInsightListProps> = ({ height, searchAutofoc
         limit: ITEMS_PER_PAGE,
         offset: pageNumber * ITEMS_PER_PAGE,
         title: search,
-        author: selectedTabId === INSIGHT_DROPDOWN_MY_TAB_ID && !search ? userUri : undefined,
+        author: selectedTabId === messages.tabsMy.id && !search ? userUri : undefined,
     }));
 
     const {
@@ -101,7 +99,7 @@ export const InsightList: React.FC<IInsightListProps> = ({ height, searchAutofoc
             setInitialLoadCompleted(true);
             if (totalInsightsCount === 0) {
                 // when the user has no insights of their own, switch to the All tab
-                setSelectedTabId(INSIGHT_DROPDOWN_ALL_TAB_ID);
+                setSelectedTabId(messages.tabsAll.id);
             }
         }
     }, [initialLoadCompleted, totalInsightsCount]);
@@ -175,7 +173,7 @@ export const InsightList: React.FC<IInsightListProps> = ({ height, searchAutofoc
             }}
             renderNoData={({ hasNoMatchingData }) => (
                 <InsightListNoData
-                    isUserInsights={selectedTabId === INSIGHT_DROPDOWN_MY_TAB_ID}
+                    isUserInsights={selectedTabId === messages.tabsMy.id}
                     hasNoMatchingData={hasNoMatchingData}
                     button={noDataButton}
                 />

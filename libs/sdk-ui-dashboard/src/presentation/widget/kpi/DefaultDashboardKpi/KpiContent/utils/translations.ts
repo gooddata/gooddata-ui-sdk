@@ -10,32 +10,31 @@ import {
     IKpiComparisonTypeComparison,
 } from "@gooddata/sdk-model";
 
-const granularityIntlCodes: {
-    [key in DateFilterGranularity]: string;
-} = {
-    "GDC.time.minute": "minute",
-    "GDC.time.hour": "hour",
-    "GDC.time.date": "day",
-    "GDC.time.week_us": "week",
-    "GDC.time.month": "month",
-    "GDC.time.quarter": "quarter",
-    "GDC.time.year": "year",
-};
-
 const getGeneralKpiPopLabel = (intl: IntlShape): string =>
     intl.formatMessage({ id: "filters.allTime.previousPeriod" });
 
 const getRelativeFilterKpiPopLabel = (filter: IRelativeDateFilter, intl: IntlShape): string => {
     const { from, to, granularity } = relativeDateFilterValues(filter);
-    const intlGranularity = granularityIntlCodes[granularity];
-    if (!intlGranularity) {
-        return "";
-    }
+    const n = Math.abs(to - from) + 1;
 
-    return intl.formatMessage(
-        { id: `filters.${intlGranularity}.previousPeriod` },
-        { n: Math.abs(to - from) + 1 },
-    );
+    switch (granularity as DateFilterGranularity) {
+        case "GDC.time.minute":
+            return intl.formatMessage({ id: `filters.minute.previousPeriod` }, { n });
+        case "GDC.time.hour":
+            return intl.formatMessage({ id: `filters.hour.previousPeriod` }, { n });
+        case "GDC.time.date":
+            return intl.formatMessage({ id: `filters.day.previousPeriod` }, { n });
+        case "GDC.time.week_us":
+            return intl.formatMessage({ id: `filters.week.previousPeriod` }, { n });
+        case "GDC.time.month":
+            return intl.formatMessage({ id: `filters.month.previousPeriod` }, { n });
+        case "GDC.time.quarter":
+            return intl.formatMessage({ id: `filters.quarter.previousPeriod` }, { n });
+        case "GDC.time.year":
+            return intl.formatMessage({ id: `filters.year.previousPeriod` }, { n });
+        default:
+            return "";
+    }
 };
 
 export const getKpiPopLabel = (

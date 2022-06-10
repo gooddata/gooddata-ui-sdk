@@ -7,6 +7,7 @@ import first from "lodash/first";
 import noop from "lodash/noop";
 import { IntlWrapper } from "../../localization";
 import { DASHBOARD_TITLE_MAX_LENGTH } from "../../constants";
+import { messages } from "../../../locales";
 
 interface ISaveAsNewDashboardDialogState {
     dashboardTitle: string;
@@ -83,9 +84,9 @@ export class SaveAsNewDashboardDialog extends React.PureComponent<
         const { isKpiWidgetEnabled, isScheduleEmailsEnabled, intl } = this.props;
         const messageId = first(
             compact([
-                isKpiWidgetEnabled && isScheduleEmailsEnabled && "dialogs.save.as.new.alertsAndEmailsMessage",
-                isKpiWidgetEnabled && !isScheduleEmailsEnabled && "dialogs.save.as.new.alertsMessage",
-                !isKpiWidgetEnabled && isScheduleEmailsEnabled && "dialogs.save.as.new.emailsMessage",
+                isKpiWidgetEnabled && isScheduleEmailsEnabled && messages.saveAsNewAlertsAndEmailsMessage.id,
+                isKpiWidgetEnabled && !isScheduleEmailsEnabled && messages.saveAsNewAlertsMessage.id,
+                !isKpiWidgetEnabled && isScheduleEmailsEnabled && messages.saveAsNewEmailsMessage.id,
             ]),
         );
 

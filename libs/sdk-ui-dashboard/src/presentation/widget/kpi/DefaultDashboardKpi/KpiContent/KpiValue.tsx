@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React, { PureComponent } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
@@ -78,12 +78,13 @@ class KpiValue extends PureComponent<IKpiValueProps & WrappedComponentProps> {
     }
 
     renderValue() {
-        const { isLoading, error, disableKpiDrillUnderline, enableCompactSize, clientHeight } = this.props;
+        const { isLoading, error, disableKpiDrillUnderline, enableCompactSize, clientHeight, intl } =
+            this.props;
         if (isLoading) {
             return <LoadingDots className={"kpi-value-loading gd-loading-dots-centered"} />;
         }
 
-        const value = error ? this.formatMessage("error") : this.renderFormattedValue();
+        const value = error ? intl.formatMessage({ id: "error" }) : this.renderFormattedValue();
         const valueClassNames = cx("kpi-value-value", "s-kpi-value", {
             "kpi-link-style-underline": !disableKpiDrillUnderline,
         });
@@ -126,6 +127,8 @@ class KpiValue extends PureComponent<IKpiValueProps & WrappedComponentProps> {
     }
 
     getTitle() {
+        const { intl } = this.props;
+
         if (this.props.isLoading) {
             return "";
         }
@@ -135,14 +138,10 @@ class KpiValue extends PureComponent<IKpiValueProps & WrappedComponentProps> {
         }
 
         if (this.isValueUnhandledNull()) {
-            return this.formatMessage("kpi.noData");
+            return intl.formatMessage({ id: "kpi.noData" });
         }
 
         return "";
-    }
-
-    formatMessage(id: string) {
-        return this.props.intl.formatMessage({ id });
     }
 }
 

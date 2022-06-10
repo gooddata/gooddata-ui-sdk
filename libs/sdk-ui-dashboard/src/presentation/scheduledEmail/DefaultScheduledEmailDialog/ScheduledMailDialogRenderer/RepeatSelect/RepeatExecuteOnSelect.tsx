@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import * as React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { Dropdown, DropdownList, DropdownButton, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
@@ -7,6 +7,7 @@ import invariant from "ts-invariant";
 import { IDropdownItem } from "../../interfaces";
 import { DEFAULT_DROPDOWN_ALIGN_POINTS, DEFAULT_DROPDOWN_ZINDEX, REPEAT_EXECUTE_ON } from "../../constants";
 import { getDate, getIntlDayName, getWeek } from "../../utils/datetime";
+import { messages } from "../../../../../locales";
 
 const DROPDOWN_WIDTH = 154;
 
@@ -62,16 +63,11 @@ class RenderRepeatExecuteOnSelect extends React.PureComponent<IRepeatExecuteOnSe
         const { intl, startDate } = this.props;
         return {
             id: repeatExecuteOn,
-            title: intl.formatMessage(
-                {
-                    id: `dialogs.schedule.email.repeats.execute.on.${repeatExecuteOn}`,
-                },
-                {
-                    date: getDate(startDate),
-                    day: getIntlDayName(intl, startDate),
-                    week: getWeek(startDate),
-                },
-            ),
+            title: intl.formatMessage(messages[`scheduleDialogEmailRepeatsExecuteOn_${repeatExecuteOn}`], {
+                date: getDate(startDate),
+                day: getIntlDayName(intl, startDate),
+                week: getWeek(startDate),
+            }),
         };
     };
 

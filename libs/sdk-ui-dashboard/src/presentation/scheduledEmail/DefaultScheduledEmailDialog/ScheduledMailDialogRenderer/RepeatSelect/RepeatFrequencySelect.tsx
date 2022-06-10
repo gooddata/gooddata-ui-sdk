@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import * as React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { Dropdown, DropdownList, DropdownButton, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
@@ -6,6 +6,7 @@ import invariant from "ts-invariant";
 
 import { IDropdownItem } from "../../interfaces";
 import { DEFAULT_DROPDOWN_ALIGN_POINTS, DEFAULT_DROPDOWN_ZINDEX, FREQUENCY_TYPE } from "../../constants";
+import { messages } from "../../../../../locales";
 
 const DROPDOWN_WIDTH = 100;
 
@@ -61,14 +62,9 @@ class RenderRepeatFrequencySelect extends React.PureComponent<IRepeatFrequencySe
         const { intl, repeatPeriod } = this.props;
         return {
             id: repeatFrequency,
-            title: intl.formatMessage(
-                {
-                    id: `dialogs.schedule.email.repeats.frequencies.${repeatFrequency}`,
-                },
-                {
-                    n: repeatPeriod,
-                },
-            ),
+            title: intl.formatMessage(messages[`scheduleDialogEmailRepeatsFrequencies_${repeatFrequency}`], {
+                n: repeatPeriod,
+            }),
         };
     };
 

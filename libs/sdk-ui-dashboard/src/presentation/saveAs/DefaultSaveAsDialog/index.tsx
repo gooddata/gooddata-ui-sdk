@@ -1,9 +1,10 @@
 // (C) 2019-2022 GoodData Corporation
 import React, { useCallback } from "react";
+import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import { ISaveAsDialogProps } from "../types";
 import { useSaveAs } from "./useSaveAs";
 import { SaveAsDialogRenderer } from "./SaveAsDialogRenderer";
-import { useToastMessage } from "@gooddata/sdk-ui-kit";
+import { messages } from "../../../locales";
 import {
     selectIsSaveAsDialogOpen,
     uiActions,
@@ -24,12 +25,12 @@ export function useSaveAsDialogProps(): ISaveAsDialogProps {
 
     const onSaveAsError = useCallback(() => {
         closeSaveAsDialog();
-        addError({ id: "messages.dashboardSaveFailed" });
+        addError(messages.messagesDashboardSaveFailed);
     }, []);
 
     const onSaveAsSuccess = useCallback(() => {
         closeSaveAsDialog();
-        addSuccess({ id: "messages.dashboardSaveSuccess" });
+        addSuccess(messages.messagesDashboardSaveSuccess);
     }, []);
 
     const onSaveAsCancel = useCallback(() => {

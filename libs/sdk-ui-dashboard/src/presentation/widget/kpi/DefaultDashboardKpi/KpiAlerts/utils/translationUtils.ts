@@ -14,6 +14,7 @@ import {
     DateFilterGranularity,
     IDashboardDateFilter,
 } from "@gooddata/sdk-model";
+import { messages } from "../../../../../../locales";
 
 export type KpiAlertTranslationData = {
     rangeText: string;
@@ -72,7 +73,7 @@ function getIntlIdRoot(filter: IDateFilter | IDashboardDateFilter): string {
     const metadata = filterMetadata(filter);
 
     if (metadata.type === "absolute") {
-        return "filters.alertMessage.relativePreset.inPeriod";
+        return messages.alertMessageRelativePresetInPeriod.id;
     }
 
     const hasOneBoundToday = metadata.from === 0 || metadata.to === 0; // e.g. last 4 months, next 6 days
@@ -80,8 +81,8 @@ function getIntlIdRoot(filter: IDateFilter | IDashboardDateFilter): string {
     const isNextOneX = metadata.from === 1 && metadata.to === 1; // e.g. next month
 
     return hasOneBoundToday || isLastOneX || isNextOneX
-        ? "filters.alertMessage.relativePreset"
-        : "filters.alertMessage.relativePreset.inPeriod";
+        ? messages.alertMessageRelativePreset.id
+        : messages.alertMessageRelativePresetInPeriod.id;
 }
 
 export function getKpiAlertTranslationData(

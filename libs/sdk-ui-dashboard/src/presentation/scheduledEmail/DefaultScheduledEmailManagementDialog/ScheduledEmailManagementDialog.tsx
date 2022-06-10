@@ -9,9 +9,7 @@ import { useScheduledEmailManagement } from "./useScheduledEmailManagement";
 import { DeleteScheduleConfirmDialog } from "./DeleteScheduleConfirmDialog";
 import { selectCurrentUser, useDashboardSelector, selectCanManageScheduledMail } from "../../../model";
 import { areObjRefsEqual, IScheduledMail } from "@gooddata/sdk-model";
-
-const USER_TAB_ID = "dialogs.schedule.management.tab.user";
-const ALL_TAB_ID = "dialogs.schedule.management.tab.all";
+import { messages } from "../../../locales";
 
 /**
  * @alpha
@@ -22,7 +20,7 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
     const [isLoading, setIsLoading] = useState(true);
     const [scheduledEmailsByUser, setScheduledEmailsByUser] = useState<IScheduledMail[]>([]);
     const [scheduledEmails, setScheduledEmails] = useState<IScheduledMail[]>([]);
-    const [selectedTabId, setSelectedTabId] = useState(USER_TAB_ID);
+    const [selectedTabId, setSelectedTabId] = useState(messages.scheduleManagementTabUser.id);
     const [isFirstLoaded, setIsFirstLoaded] = useState(true);
     const canManageScheduledMail = useDashboardSelector(selectCanManageScheduledMail);
     const currentUser = useDashboardSelector(selectCurrentUser);
@@ -37,7 +35,7 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
 
         if (isFirstLoaded) {
             if (emailsByUser.length === 0 && canManageScheduledMail) {
-                setSelectedTabId(ALL_TAB_ID);
+                setSelectedTabId(messages.scheduleManagementTabAll.id);
             }
             setIsFirstLoaded(false);
         }
@@ -68,9 +66,9 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
     });
 
     const noSchedulesMessageId =
-        selectedTabId === ALL_TAB_ID
-            ? "dialogs.schedule.management.noSchedules"
-            : "dialogs.schedule.management.noSchedules.byUser";
+        selectedTabId === messages.scheduleManagementTabAll.id
+            ? messages.scheduleManagementNoSchedules.id
+            : messages.scheduleManagementNoSchedulesByUser.id;
 
     return (
         <>
@@ -87,7 +85,7 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
                 {!isFirstLoaded && canManageScheduledMail && (
                     <Tabs
                         className="gd-scheduled-email-management-dialog-tabs"
-                        tabs={[{ id: USER_TAB_ID }, { id: ALL_TAB_ID }]}
+                        tabs={[messages.scheduleManagementTabUser, messages.scheduleManagementTabAll]}
                         selectedTabId={selectedTabId}
                         onTabSelect={handleTabChange}
                     />
@@ -98,7 +96,9 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
                         onEdit={handleScheduleEdit}
                         isLoading={isLoading}
                         scheduledEmails={
-                            selectedTabId === ALL_TAB_ID ? scheduledEmails : scheduledEmailsByUser
+                            selectedTabId === messages.scheduleManagementTabAll.id
+                                ? scheduledEmails
+                                : scheduledEmailsByUser
                         }
                         currentUserEmail={currentUser?.email}
                         noSchedulesMessageId={noSchedulesMessageId}

@@ -33,6 +33,7 @@ import {
     getScheduledEmailRecipientEmail,
     getScheduledEmailRecipientUniqueIdentifier,
 } from "../../utils/scheduledMailRecipients";
+import { messages } from "../../../../../locales";
 
 const MAXIMUM_RECIPIENTS_RECEIVE = 60;
 const DELAY_TIME = 500;
@@ -333,7 +334,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
             return this.renderErrorValueContainer(
                 email,
                 removeIcon,
-                "options.menu.schedule.email.recipient.invalid",
+                messages.scheduleEmailOptionRecepientInvalid.id,
             );
         }
         // don't allow adding external recipients to schedules created by somebody else than the current user
@@ -345,7 +346,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
             return this.renderErrorValueContainer(
                 email,
                 removeIcon,
-                "options.menu.schedule.email.recipient.external.not.allowed",
+                messages.scheduleEmailOptionRecepientExternalNotAllowed.id,
             );
         }
 

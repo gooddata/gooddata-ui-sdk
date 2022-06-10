@@ -18,6 +18,7 @@ import { selectCanSaveDashboard, selectIsPrivateDashboard } from "../selectors";
 import { selectEnableAnalyticalDashboardPermissions } from "../../../../../model/store/config/configSelectors";
 import { selectIsDashboardDirty, selectIsNewDashboard } from "../../../../../model/store/meta/metaSelectors";
 import noop from "lodash/noop";
+import { messages } from "../../../../../locales";
 
 /**
  * @internal
@@ -45,28 +46,28 @@ export function useSaveButtonProps(): ISaveButtonProps {
     const isEnabled = isNewDashboard ? !isEmptyDashboard : isDashboardDirty;
 
     const buttonValue = arePermissionsEnabled
-        ? "controlButtons.save.value"
-        : "controlButtons.saveAndPublish.value";
+        ? messages.controlButtonsSaveValue
+        : messages.controlButtonsSaveAndPublishValue;
 
-    let buttonTitle = "controlButtons.saveAndPublish.title";
+    let buttonTitle = messages.controlButtonsSaveAndPublishTitle;
     if (isPrivateDashboard) {
-        buttonTitle = "controlButtons.saveAsPrivate.title";
+        buttonTitle = messages.controlButtonsSaveAsPrivateTitle;
     }
 
     if (!canSaveDashboard) {
-        buttonTitle = "controlButtons.saveAndPublish.disable.noChanges.title";
+        buttonTitle = messages.controlButtonsSaveAndPublishNoChanges;
     }
 
     if (isEmptyDashboard) {
-        buttonTitle = "controlButtons.saveAndPublish.disable.empty.title";
+        buttonTitle = messages.controlButtonsSaveAndPublishEmpty;
     }
 
     return {
         isVisible,
         isEnabled,
         isSaving,
-        buttonValue: { id: buttonValue },
-        buttonTitle: { id: buttonTitle },
+        buttonValue,
+        buttonTitle,
         onSaveClick,
     };
 }
