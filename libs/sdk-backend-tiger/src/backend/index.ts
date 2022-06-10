@@ -104,6 +104,7 @@ export type TigerBackendConfig = {
 type TigerSpecificFunctions = {
     isCommunityEdition?: () => Promise<boolean>;
     isOrganizationAdmin?: () => Promise<boolean>;
+    organizationExpiredDate?: () => Promise<string>;
 };
 
 /**
@@ -177,6 +178,16 @@ export class TigerBackend implements IAnalyticalBackend {
                         return isOrganizationManage(orgPermissions);
                     } catch {
                         return false;
+                    }
+                },
+                organizationExpiredDate: async () => {
+                    try {
+                        return await this.authApiCall(async (sdk) => {
+                            const response = await sdk.entities.getAllEntitiesEntitlements({});
+                            return response.data.data[0]?.attributes?.expiry || "";
+                        });
+                    } catch {
+                        return "";
                     }
                 },
             };
