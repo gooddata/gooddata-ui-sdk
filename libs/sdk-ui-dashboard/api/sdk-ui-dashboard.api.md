@@ -2039,6 +2039,7 @@ export interface DashboardWidgetExecutionSucceededPayload {
 // @alpha (undocumented)
 export interface DateFilterConfigState {
     dateFilterConfig?: IDashboardDateFilterConfig_2;
+    dateFilterConfigValidationWarnings?: DateFilterValidationResult[];
     effectiveDateFilterConfig?: IDateFilterConfig;
     isUsingDashboardOverrides?: boolean;
 }
@@ -4737,6 +4738,9 @@ export const selectDateFilterConfig: OutputSelector<DashboardState, IDateFilterC
 
 // @alpha
 export const selectDateFilterConfigOverrides: OutputSelector<DashboardState, IDashboardDateFilterConfig_2 | undefined, (res: DateFilterConfigState) => IDashboardDateFilterConfig_2 | undefined>;
+
+// @alpha
+export const selectDateFilterConfigValidationWarnings: OutputSelector<DashboardState, DateFilterValidationResult[], (res: DateFilterConfigState) => DateFilterValidationResult[]>;
 
 // @public
 export const selectDateFormat: OutputSelector<DashboardState, string | undefined, (res: ResolvedDashboardConfig) => string | undefined>;

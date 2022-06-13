@@ -16,6 +16,7 @@ import {
     IAccessGrantee,
 } from "@gooddata/sdk-model";
 import { IDrillEvent, OnFiredDrillEvent } from "@gooddata/sdk-ui";
+import { DateFilterConfigValidationResult } from "./_staging/dateFilterConfig/validation";
 
 // TODO consider adding FilterContextItem to this union so that user can use either sdk-model or FilterContextItem variants of the filters
 /**
@@ -189,3 +190,8 @@ export interface IMenuButtonItemsVisibility {
  * @internal
  */
 export type RenderMode = "view" | "edit";
+
+/**
+ * @public
+ */
+export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | DateFilterConfigValidationResult;

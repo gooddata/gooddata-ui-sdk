@@ -105,7 +105,6 @@ export {
 export {
     DateFilterValidationFailed,
     DateFilterValidationFailedPayload,
-    DateFilterValidationResult,
     DashboardInitialized,
     DashboardInitializedPayload,
     DashboardDeinitialized,

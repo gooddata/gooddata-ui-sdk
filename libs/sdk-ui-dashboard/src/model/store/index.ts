@@ -107,6 +107,7 @@ export {
     selectEffectiveDateFilterMode,
     selectEffectiveDateFilterOptions,
     selectEffectiveDateFilterAvailableGranularities,
+    selectDateFilterConfigValidationWarnings,
 } from "./dateFilterConfig/dateFilterConfigSelectors";
 export {
     selectInsights,

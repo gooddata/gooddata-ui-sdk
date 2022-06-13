@@ -1,6 +1,7 @@
 // (C) 2021-2022 GoodData Corporation
 
 import { IDateFilterConfig, IDashboardDateFilterConfig } from "@gooddata/sdk-model";
+import { DateFilterValidationResult } from "../../../types";
 
 /**
  * @alpha
@@ -27,10 +28,21 @@ export interface DateFilterConfigState {
      * resulted in valid config.
      */
     isUsingDashboardOverrides?: boolean;
+
+    /**
+     * Warnings result of the date filter validation if any.
+     *
+     * @remarks
+     * When loading a date filter configuration, it can have some issues that we surface (e.g. having zero visible items).
+     * These are not blocking though, if any issue is encountered, the config falls back to something sane.
+     * The reason for storing this here is mainly for us to be able to show a warning when some issues are detected.
+     */
+    dateFilterConfigValidationWarnings?: DateFilterValidationResult[];
 }
 
 export const dateFilterConfigInitialState: DateFilterConfigState = {
     dateFilterConfig: undefined,
     effectiveDateFilterConfig: undefined,
     isUsingDashboardOverrides: undefined,
+    dateFilterConfigValidationWarnings: undefined,
 };

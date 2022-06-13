@@ -127,3 +127,15 @@ export const selectEffectiveDateFilterMode = createSelector(
         return dashboardOverrides?.mode ?? "active";
     },
 );
+
+/**
+ * Returns the date filter config validation result warnings indicating any problems encountered during the date filter config resolution.
+ *
+ * @alpha
+ */
+export const selectDateFilterConfigValidationWarnings = createSelector(
+    selectSelf,
+    (dateFilterConfigState) => {
+        return dateFilterConfigState.dateFilterConfigValidationWarnings ?? [];
+    },
+);

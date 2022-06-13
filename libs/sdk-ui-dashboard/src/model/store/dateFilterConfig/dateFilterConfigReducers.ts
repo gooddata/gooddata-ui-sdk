@@ -3,6 +3,7 @@
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { DateFilterConfigState } from "./dateFilterConfigState";
 import { IDateFilterConfig, IDashboardDateFilterConfig } from "@gooddata/sdk-model";
+import { DateFilterValidationResult } from "../../../types";
 
 type DateFilterConfigReducer<A extends Action> = CaseReducer<DateFilterConfigState, A>;
 
@@ -37,6 +38,21 @@ const setDateFilterConfig: DateFilterConfigReducer<PayloadAction<SetDateFilterCo
     state.isUsingDashboardOverrides = isUsingDashboardOverrides;
 };
 
+const addDateFilterConfigValidationWarning: DateFilterConfigReducer<
+    PayloadAction<DateFilterValidationResult>
+> = (state, action) => {
+    if (!state.dateFilterConfigValidationWarnings) {
+        state.dateFilterConfigValidationWarnings = [];
+    }
+    state.dateFilterConfigValidationWarnings.push(action.payload);
+};
+
+const clearDateFilterConfigValidationWarning: DateFilterConfigReducer<PayloadAction> = (state) => {
+    state.dateFilterConfigValidationWarnings = [];
+};
+
 export const dateFilterConfigReducers = {
     setDateFilterConfig,
+    addDateFilterConfigValidationWarning,
+    clearDateFilterConfigValidationWarning,
 };
