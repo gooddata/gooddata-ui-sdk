@@ -445,9 +445,10 @@ export enum ENUM_KEY_CODE {
 }
 
 // @internal (undocumented)
-export const ErrorOverlay: React_2.FC<WithIntlProps<IErrorOverlayProps & WrappedComponentProps<"intl">>> & {
-    WrappedComponent: React_2.ComponentType<IErrorOverlayProps & WrappedComponentProps<"intl">>;
-};
+export class ErrorOverlay extends React_2.PureComponent<IErrorOverlayProps> {
+    // (undocumented)
+    render(): React_2.ReactNode;
+}
 
 // @internal (undocumented)
 export const ExportDialog: {
@@ -1462,6 +1463,8 @@ export interface IErrorOverlayProps {
     className?: string;
     // (undocumented)
     icon?: ReactNode;
+    // (undocumented)
+    locale?: string;
     // (undocumented)
     onButtonClick?: () => void;
     // (undocumented)

@@ -7,6 +7,7 @@ import { Button } from "../Button";
 import { Icon } from "../Icon";
 import { Typography } from "../Typography";
 import { Overlay } from "./Overlay";
+import { IntlWrapper } from "@gooddata/sdk-ui";
 
 /**
  * @internal
@@ -20,6 +21,7 @@ export interface IErrorOverlayProps {
     buttonTitle?: string;
     onButtonClick?: () => void;
     className?: string;
+    locale?: string;
 }
 
 const ErrorOverlayCore: React.VFC<IErrorOverlayProps & WrappedComponentProps> = (props) => {
@@ -73,7 +75,17 @@ const ErrorOverlayCore: React.VFC<IErrorOverlayProps & WrappedComponentProps> = 
     );
 };
 
+const ErrorOverlayWithIntl = injectIntl(ErrorOverlayCore);
+
 /**
  * @internal
  */
-export const ErrorOverlay = injectIntl(ErrorOverlayCore);
+export class ErrorOverlay extends React.PureComponent<IErrorOverlayProps> {
+    public render(): React.ReactNode {
+        return (
+            <IntlWrapper locale={this.props.locale}>
+                <ErrorOverlayWithIntl {...this.props} />
+            </IntlWrapper>
+        );
+    }
+}
