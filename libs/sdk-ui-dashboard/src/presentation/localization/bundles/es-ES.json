@@ -211,5 +211,13 @@
     "controlButtons.saveAndPublish.disable.empty.title": "No se puede guardar un panel vacío",
     "controlButtons.saveAndPublish.disable.noChanges.title": "No hay cambios que guardar",
     "controlButtons.saving.value": "Guardando…",
-    "save.as.new": "Guardar como nuevo"
+    "gs.visualizationsList.tabs.all": "todo",
+    "gs.visualizationsList.tabs.my": "creado por mí",
+    "gs.visualizationsList.loading": "Cargando…",
+    "visualizationsList.noInsights": "Este espacio de trabajo no contiene perspectivas.",
+    "visualizationsList.noUserInsights": "No se ha creado ninguna perspectiva.",
+    "visualizationsList.noVisualizationsFound": "No coincide ninguna perspectiva.",
+    "search_insights": "Buscar perspectivas…",
+    "save.as.new": "Guardar como nuevo",
+    "addPanel.deleteItem": "Arrastre para eliminar"
 }

@@ -211,5 +211,13 @@
     "controlButtons.saveAndPublish.disable.empty.title": "Impossible d'enregistrer un tableau de bord vide",
     "controlButtons.saveAndPublish.disable.noChanges.title": "Il n'y a aucun changement à enregistrer",
     "controlButtons.saving.value": "Enregistrement en cours…",
-    "save.as.new": "Enregistrer sous un nouveau nom"
+    "gs.visualizationsList.tabs.all": "tout",
+    "gs.visualizationsList.tabs.my": "créées par moi",
+    "gs.visualizationsList.loading": "Chargement en cours…",
+    "visualizationsList.noInsights": "Cet espace de travail ne contient aucune perception.",
+    "visualizationsList.noUserInsights": "Aucune perception créée.",
+    "visualizationsList.noVisualizationsFound": "Aucune perception correspondante.",
+    "search_insights": "Rechercher tout…",
+    "save.as.new": "Enregistrer sous un nouveau nom",
+    "addPanel.deleteItem": "Déposer pour supprimer"
 }

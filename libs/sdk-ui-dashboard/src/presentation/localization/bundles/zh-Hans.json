@@ -211,5 +211,13 @@
     "controlButtons.saveAndPublish.disable.empty.title": "无法保存空的控制面板",
     "controlButtons.saveAndPublish.disable.noChanges.title": "没有要保存的更改",
     "controlButtons.saving.value": "正在保存…",
-    "save.as.new": "另存为新的"
+    "gs.visualizationsList.tabs.all": "全部",
+    "gs.visualizationsList.tabs.my": "由我创建",
+    "gs.visualizationsList.loading": "正在加载…",
+    "visualizationsList.noInsights": "该工作区不包含任何洞察。",
+    "visualizationsList.noUserInsights": "未创建任何洞察。",
+    "visualizationsList.noVisualizationsFound": "未找到匹配的洞察。",
+    "search_insights": "搜索所有洞察…",
+    "save.as.new": "另存为新的",
+    "addPanel.deleteItem": "放置以删除"
 }
