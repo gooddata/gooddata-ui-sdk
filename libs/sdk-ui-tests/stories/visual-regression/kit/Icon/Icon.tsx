@@ -224,6 +224,9 @@ const IconsTest: React.FC = () => {
                     <IconWrapper name="Token">
                         <Icon.Token color="#0f0" />
                     </IconWrapper>
+                    <IconWrapper name="Leave">
+                        <Icon.Leave color="#00f" width={18} height={18} />
+                    </IconWrapper>
                 </ColumnWrapper>
             </RowWrapper>
         </div>

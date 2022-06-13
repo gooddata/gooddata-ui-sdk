@@ -30,3 +30,34 @@
 .gd-overlay-content {
     @include default-styles();
 }
+
+.gd-error-overlay-content {
+    .modalityPlugin-mask-visible {
+        z-index: 10001;
+    }
+}
+
+.gd-error-overlay {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    .gd-error-overlay-icon {
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        margin-bottom: 10px;
+    }
+
+    .gd-error-overlay-text {
+        font-size: 14px;
+        line-height: 23px;
+    }
+
+    .gd-error-overlay-button {
+        margin-top: 20px;
+    }
+}

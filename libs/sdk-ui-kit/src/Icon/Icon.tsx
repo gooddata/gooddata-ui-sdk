@@ -59,6 +59,7 @@ import { Geo } from "./icons/InsightIcons/Geo";
 import { EmbedCodeIcon } from "./icons/EmbedCodeIcon";
 import { Origin } from "./icons/Origin";
 import { Token } from "./icons/Token";
+import { Leave } from "./icons/Leave";
 
 /**
  * @internal
@@ -124,6 +125,7 @@ export const Icon = {
     Success,
     Token,
     Origin,
+    Leave,
 };
 
 export { IRowsIconProps };

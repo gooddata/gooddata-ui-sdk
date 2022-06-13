@@ -10,3 +10,4 @@ export {
     useOverlayController,
     useOverlayZIndex,
 } from "./OverlayContext";
+export { ErrorOverlay, IErrorOverlayProps } from "./ErrorOverlay";

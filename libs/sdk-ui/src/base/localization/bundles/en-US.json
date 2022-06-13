@@ -1654,5 +1654,20 @@
         "value": "Complete list of embedding properties",
         "comment": "Link to documentation of used component and all component properties",
         "limit": 0
+    },
+    "error.overlay.login": {
+        "value": "Login",
+        "comment": "",
+        "limit": 0
+    },
+    "error.overlay.title": {
+        "value": "You have been logged out",
+        "comment": "",
+        "limit": 0
+    },
+    "error.overlay.text": {
+        "value": "Please log back in to continue your work.",
+        "comment": "",
+        "limit": 0
     }
 }
