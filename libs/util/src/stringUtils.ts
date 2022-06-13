@@ -35,8 +35,7 @@ export function shortenText(value: string, options: IShortenTextOptions = {}): s
  * @internal
  */
 export function escapeRegExp(value: string): string {
-    // eslint-disable-next-line no-useless-escape
-    return value.replace(/([.*+?^${}()|\[\]\/\\])/g, "\\$1");
+    return value.replace(/([.*+?^${}()|[\]/\\])/g, "\\$1");
 }
 
 /**
@@ -79,12 +78,12 @@ export function simplifyText(value: string | number | null): string {
  */
 export function parseStringToArray(str: string): string[] | null {
     if (str) {
-        if (str.match(/^\[]$/)) {
+        if (str.match(/^\[\]$/)) {
             // empty array of tags []
             return [];
         }
 
-        if (str.match(/^\[[a-zA-Z0-9 ]+(,(?=[^ ])[a-zA-Z0-9 ]+)*]$/)) {
+        if (str.match(/^\[[a-zA-Z0-9 ]+(,(?=[^ ])[a-zA-Z0-9 ]+)*\]$/)) {
             // [foo], [foo,bar]
             return str.slice(1, -1).split(",");
         }

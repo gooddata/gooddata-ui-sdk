@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { GdcUser } from "@gooddata/api-model-bear";
 import { IAuthenticatedPrincipal, UnexpectedError, UnexpectedResponseError } from "@gooddata/sdk-backend-spi";
 import { Identifier, isIdentifierRef, isUriRef, IUser, ObjRef, Uri } from "@gooddata/sdk-model";
@@ -86,8 +86,7 @@ export const userLoginMd5FromAuthenticatedPrincipal = async (
  * @param uri - URI to get objectId from
  */
 export const getObjectIdFromUri = (uri: string): string => {
-    // eslint-disable-next-line no-useless-escape
-    const match = /\/obj\/([^$\/\?]*)/.exec(uri);
+    const match = /\/obj\/([^$/?]*)/.exec(uri);
     return match ? match[1] : "";
 };
 

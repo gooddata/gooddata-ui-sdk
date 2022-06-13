@@ -130,6 +130,7 @@
         "eslint-plugin-prettier": "^4.0.0",
         "eslint-plugin-react": "^7.20.5",
         "eslint-plugin-react-hooks": "^4.5.0",
+        "eslint-plugin-regexp": "^1.7.0",
         "eslint-plugin-sonarjs": "^0.13.0",
         "eslint-plugin-tsdoc": "^0.2.14",
         "foundation-sites": "^5.5.3",

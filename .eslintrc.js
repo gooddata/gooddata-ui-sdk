@@ -37,6 +37,11 @@ module.exports = {
         // some of these findings are not actionable in a reasonable time
         "sonarjs/cognitive-complexity": "warn",
         "tsdoc/syntax": "error",
+        // these rules can make some regexes much less readable
+        "regexp/prefer-d": "off",
+        "regexp/prefer-w": "off",
+        // this rule is in direct conflict with the regexp plugin
+        "no-useless-escape": "off",
     },
     overrides: [
         {

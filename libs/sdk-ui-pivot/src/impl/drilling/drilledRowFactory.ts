@@ -9,7 +9,9 @@ import { IGridRow } from "../data/resultTypes";
  * @deprecated this is linked to deprecated API
  */
 function extractIdsFromAttributeElementUri(uri: string): (string | null)[] {
-    const [, attributeId, , attributeValueId = null] = uri.match(/obj\/([^/]*)(\/elements\?id=)?(.*)?$/)!;
+    // no reasonable way to avoid the super-linear backtracking right now
+    // eslint-disable-next-line regexp/no-super-linear-backtracking
+    const [, attributeId, , attributeValueId = null] = uri.match(/obj\/([^/]*)(\/elements\?id=)?(.*)$/)!;
 
     return [attributeId, attributeValueId];
 }

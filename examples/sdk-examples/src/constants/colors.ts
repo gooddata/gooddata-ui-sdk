@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 export const DEFAULT_COLOR_PALETTE = [
     "rgb(20,178,226)",
     "rgb(0,193,141)",
@@ -25,7 +25,7 @@ export const DEFAULT_COLOR_PALETTE = [
     "rgb(239,197,194)",
 ].map(
     (color) =>
-        `#${/rgb\(([\d]*),([\d]*),([\d]*)\)/
+        `#${/rgb\((\d*),(\d*),(\d*)\)/
             .exec(color)!
             .slice(1)
             // eslint-disable-next-line sonarjs/no-nested-template-literals

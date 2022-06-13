@@ -2,7 +2,7 @@
 import has from "lodash/has";
 import deburr from "lodash/deburr";
 
-const NonAlphaNumRegex = /[^\w\d$]+/g;
+const NonAlphaNumRegex = /[^\w$]+/g;
 
 /**
  * Given a string, returns a version of it that is safe to be used as a variable identifier in TypeScript.
