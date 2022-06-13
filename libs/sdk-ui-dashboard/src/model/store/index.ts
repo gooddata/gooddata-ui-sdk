@@ -37,6 +37,7 @@ export {
     selectEnableKPIDashboardImplicitDrillDown,
     selectHideKpiDrillInEmbedded,
     selectEnableWidgetCustomHeight,
+    selectEnableRenamingProjectToWorkspace,
 } from "./config/configSelectors";
 export { PermissionsState } from "./permissions/permissionsState";
 export {

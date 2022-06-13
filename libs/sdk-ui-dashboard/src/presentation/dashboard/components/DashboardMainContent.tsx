@@ -10,6 +10,7 @@ import {
 import { DEFAULT_FILTER_BAR_HEIGHT } from "../../constants";
 import { DashboardLayout } from "../../layout";
 import { IDashboardProps } from "../types";
+import { DateFilterConfigWarnings } from "./DateFilterConfigWarnings";
 
 export const DashboardMainContent: React.FC<IDashboardProps> = () => {
     const isFilterBarExpanded = useDashboardSelector(selectFilterBarExpanded);
@@ -28,6 +29,7 @@ export const DashboardMainContent: React.FC<IDashboardProps> = () => {
     return (
         <div className="gd-flex-item-stretch dash-section dash-section-kpis" style={dashSectionStyles}>
             <div className="gd-flex-container root-flex-maincontent">
+                <DateFilterConfigWarnings />
                 <DashboardLayout onFiltersChange={onFiltersChange} />
             </div>
         </div>

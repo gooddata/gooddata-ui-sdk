@@ -321,3 +321,12 @@ export const selectEnableAnalyticalDashboardPermissions = createSelector(selectC
 export const selectEnableWidgetCustomHeight = createSelector(selectConfig, (state) => {
     return state.settings?.enableKDWidgetCustomHeight ?? false;
 });
+
+/**
+ * Returns whether we should call workspaces workspaces (true) or projects (false).
+ *
+ * @internal
+ */
+export const selectEnableRenamingProjectToWorkspace = createSelector(selectConfig, (state) => {
+    return !!(state.settings?.enableRenamingProjectToWorkspace ?? true);
+});

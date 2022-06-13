@@ -4815,6 +4815,9 @@ export const selectEnableKPIDashboardSchedule: OutputSelector<DashboardState, bo
 export const selectEnableKPIDashboardScheduleRecipients: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @internal
+export const selectEnableRenamingProjectToWorkspace: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
+
+// @internal
 export const selectEnableWidgetCustomHeight: OutputSelector<DashboardState, boolean, (res: ResolvedDashboardConfig) => boolean>;
 
 // @alpha (undocumented)
