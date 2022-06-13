@@ -5111,6 +5111,10 @@ setActiveHeaderIndex: CaseReducer<UiState, {
 payload: number | null;
 type: string;
 }>;
+selectWidget: CaseReducer<UiState, {
+payload: UriRef | IdentifierRef | undefined;
+type: string;
+}>;
 }>;
 
 // @alpha (undocumented)
@@ -5150,6 +5154,8 @@ export interface UiState {
     scheduleEmailManagementDialog: {
         open: boolean;
     };
+    // (undocumented)
+    selectedWidgetRef: ObjRef | undefined;
     // (undocumented)
     shareDialog: {
         open: boolean;

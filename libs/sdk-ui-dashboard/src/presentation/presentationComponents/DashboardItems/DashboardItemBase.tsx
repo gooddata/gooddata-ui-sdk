@@ -3,6 +3,7 @@ import React from "react";
 
 import { DashboardItemContent } from "./DashboardItemContent";
 import { DashboardItemContentWrapper } from "./DashboardItemContentWrapper";
+import { ObjRef } from "@gooddata/sdk-model";
 
 export interface IDashboardItemBaseProps {
     /**
@@ -41,6 +42,9 @@ export interface IDashboardItemBaseProps {
      * Ref forwarded to the main content container.
      */
     contentRef?: React.Ref<HTMLDivElement>;
+
+    isSelectable?: boolean;
+    objRef?: ObjRef;
 }
 
 const noopRender = () => null;
@@ -55,13 +59,20 @@ export const DashboardItemBase: React.FC<IDashboardItemBaseProps> = ({
     renderBeforeContent = noopRender,
     renderAfterContent = noopRender,
     contentRef,
+    isSelectable = false,
+    objRef,
 }) => {
     return (
         <DashboardItemContentWrapper>
             {({ clientWidth, clientHeight }) => (
                 <>
                     {renderBeforeContent()}
-                    <DashboardItemContent className={contentClassName} ref={contentRef}>
+                    <DashboardItemContent
+                        className={contentClassName}
+                        ref={contentRef}
+                        isSelectable={isSelectable}
+                        objRef={objRef}
+                    >
                         {renderBeforeVisualization()}
                         <div className={visualizationClassName}>
                             {renderHeadline(clientHeight)}

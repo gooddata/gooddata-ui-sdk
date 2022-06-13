@@ -17,6 +17,7 @@ import {
     isCustomWidget,
     useDashboardScheduledEmails,
     selectCanExportReport,
+    selectIsInEditMode,
 } from "../../../model";
 import {
     DashboardItem,
@@ -135,6 +136,8 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         [InsightMenuComponentProvider, insight, widget],
     );
 
+    const isEditMode = useDashboardSelector(selectIsInEditMode);
+
     return (
         <DashboardItem
             className={cx(
@@ -146,6 +149,8 @@ const DefaultDashboardInsightWidgetCore: React.FC<
             screen={screen}
         >
             <DashboardItemVisualization
+                isSelectable={isEditMode}
+                objRef={insight.insight.ref}
                 renderHeadline={(clientHeight) =>
                     !widget.configuration?.hideTitle && (
                         <DashboardItemHeadline title={widget.title} clientHeight={clientHeight} />

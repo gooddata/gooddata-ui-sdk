@@ -148,3 +148,8 @@ export const selectIsInEditMode = createSelector(selectSelf, (state) => state.re
  * @internal
  */
 export const selectActiveHeaderIndex = createSelector(selectSelf, (state) => state.activeHeaderIndex);
+
+/**
+ * @internal
+ */
+export const selectSelectedWidgetRef = createSelector(selectSelf, (state) => state.selectedWidgetRef);

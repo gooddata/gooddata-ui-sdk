@@ -7,6 +7,7 @@ import { createDefaultFilterContext } from "../../../../_staging/dashboard/defau
 import { layoutActions } from "../../../store/layout";
 import { insightsActions } from "../../../store/insights";
 import { metaActions } from "../../../store/meta";
+import { uiActions } from "../../../store/ui";
 import {
     areObjRefsEqual,
     IInsight,
@@ -174,5 +175,6 @@ export function* actionsToInitializeExistingDashboard(
         metaActions.setMeta({
             dashboard,
         }),
+        uiActions.selectWidget(undefined),
     ];
 }
