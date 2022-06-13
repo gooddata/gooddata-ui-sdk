@@ -26,8 +26,8 @@ const TOKEN_TYPE_REGEXP_PAIRS: Array<[ExpressionTokenType, RegExp]> = [
     ["number", /^[+-]?((\d+(\.\d*)?)|(\.\d+))/],
     ["bracket", /^[()]+/],
     ["identifier", /^\{[^}]+\}/],
-    ["element_uri", /^\[[a-zA-Z0-9\\/]+elements\?id=\d+]/],
-    ["uri", /^\[[a-zA-Z0-9\\/]+]/],
+    ["element_uri", /^\[[a-zA-Z0-9\\/]+elements\?id=\d+\]/],
+    ["uri", /^\[[a-zA-Z0-9\\/]+\]/],
     ["comment", /#[^\n]*/],
 ];
 

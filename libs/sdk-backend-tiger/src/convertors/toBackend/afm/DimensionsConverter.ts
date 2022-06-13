@@ -70,7 +70,9 @@ function convertAttributeSortType(sortItem: ISortItem): SortKeyAttributeAttribut
  * user who specified primaryLabelValue directly, it has logic to fall back to using the uri as-is.
  */
 function extractItemValueFromElement(elementUri: string): string {
-    const parsedUri = elementUri.match(/obj\/([^/]*)(\/elements\?id=)?(.*)?$/);
+    // no reasonable way to avoid the super-linear backtracking right now
+    // eslint-disable-next-line regexp/no-super-linear-backtracking
+    const parsedUri = elementUri.match(/obj\/([^/]*)(\/elements\?id=)?(.*)$/);
 
     if (parsedUri?.[3]) {
         return parsedUri[3];

@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import { isUriRef, ObjRef, Uri, isIdentifierRef, Identifier } from "@gooddata/sdk-model";
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import { TigerAuthenticatedCallGuard } from "../types";
@@ -37,8 +37,7 @@ export const objRefToIdentifier = async (
 
     // for now fake this as there is no API endpoint this could call
     // uses the fact that md objects have uris ending like /{md object type}/id
-    // eslint-disable-next-line no-useless-escape
-    const regex = /\/([^\/]+)\/?$/;
+    const regex = /\/([^/]+)\/?$/;
     const matches = regex.exec(ref.uri);
     if (!matches) {
         throw new UnexpectedError(`Unexpected URI: "${ref.uri}"`);

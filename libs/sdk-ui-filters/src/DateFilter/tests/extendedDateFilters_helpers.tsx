@@ -280,7 +280,7 @@ export const getSelectedItemText = (wrapper: WrapperType) => {
 // relative presets
 
 const getLocalIdentifierFromItem = (item: string) => {
-    return item.toUpperCase().replace(new RegExp("-", "g"), "_");
+    return item.toUpperCase().replace(/-/g, "_");
 };
 
 export const getPresetByItem = (item: string, relativePreset: any[]) => {

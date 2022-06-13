@@ -602,7 +602,9 @@ export function measureFormat(measure: IMeasure): string | undefined {
  */
 export function isMeasureFormatInPercent(measureOrFormat: IMeasure | string): boolean {
     const format = isMeasure(measureOrFormat) ? measureFormat(measureOrFormat) : measureOrFormat;
-    return !!format && /^([^;]*)%([^;]*)[;]*$/.test(format.trim().replace(/\\%/g, ""));
+    // no reasonable way to avoid the super-linear backtracking right now
+    // eslint-disable-next-line regexp/no-super-linear-backtracking
+    return !!format && /^[^;]*%[^;]*;*$/.test(format.trim().replace(/\\%/g, ""));
 }
 
 /**

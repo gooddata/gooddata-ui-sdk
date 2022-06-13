@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2022 GoodData Corporation
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { ISeparators } from "@gooddata/sdk-ui";
@@ -12,10 +12,12 @@ const formattingRules = {
         { regex: /"(?:[^\\]|\\.)*?"/, token: "string" },
         { regex: /(?:black|blue|cyan|green|magenta|red|yellow|white)\b/i, token: "keyword" },
         {
-            regex: /(backgroundColor|color)(=)([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})/i,
+            regex: /(backgroundColor|color)(=)([a-f0-9]{6}|[a-f0-9]{3})/i,
             token: ["variable-4", null, "keyword"],
         },
         {
+            // disabling for legibility
+            // eslint-disable-next-line regexp/prefer-character-class
             regex: /(<|>|=|>=|<=)(-?)(\d*(\.|,)?\d+|Null)/i,
             token: ["variable-5", "variable-5", "variable-5"],
         },

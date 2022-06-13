@@ -126,7 +126,7 @@ export async function dynamicDashboardBeforeLoad(
 }
 
 function moduleNameFromUrl(url: string): string {
-    const moduleName = /.*\/(.+)\.js/.exec(url)?.[1];
+    const moduleName = /.*\/([^/]+)\.js$/.exec(url)?.[1];
     invariant(moduleName, "Invalid plugin URL provided, it must point to the root .js file");
     return moduleName;
 }

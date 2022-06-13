@@ -635,6 +635,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "eslint-plugin-regexp",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
       "name": "eslint-plugin-sonarjs",
       "allowedCategories": [ "examples", "production", "tools" ]
     },

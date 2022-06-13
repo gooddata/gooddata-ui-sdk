@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import isNil from "lodash/isNil";
 import isObject from "lodash/isObject";
@@ -112,7 +112,7 @@ export const handleHeadPolling = (
     });
 };
 
-const REG_URI_OBJ = /\/gdc\/md\/(\S+)\/obj\/\d+/;
+const REG_URI_OBJ = /\/gdc\/md\/\S+\/obj\/\d+/;
 
 /**
  * Tests whether the provided string looks like a URI of a metadata object on GoodData platform

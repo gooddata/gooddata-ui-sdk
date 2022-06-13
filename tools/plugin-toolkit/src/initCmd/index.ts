@@ -105,19 +105,19 @@ function performReplacementsInFiles(dir: string, config: InitCmdActionConfig): P
         ],
         "README.md": [
             {
-                regex: /{{packageManager}}/g,
+                regex: /\{\{packageManager\}\}/g,
                 value: packageManager,
             },
             {
-                regex: /{{pluginIdentifier}}/g,
+                regex: /\{\{pluginIdentifier\}\}/g,
                 value: pluginIdentifier,
             },
             {
-                regex: /{{language}}/g,
+                regex: /\{\{language\}\}/g,
                 value: language,
             },
             {
-                regex: /{{protocol}}/g,
+                regex: /\{\{protocol\}\}/g,
                 value: protocol ?? "https:",
             },
         ],

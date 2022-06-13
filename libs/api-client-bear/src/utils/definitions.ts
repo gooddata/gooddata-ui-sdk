@@ -1,8 +1,8 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import difference from "lodash/difference";
 import map from "lodash/map";
 
-const IDENTIFIER_REGEX = /{\S+}/g;
+const IDENTIFIER_REGEX = /\{\S+\}/g;
 
 export interface IMetric {
     metricDefinition: {

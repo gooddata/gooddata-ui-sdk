@@ -27,8 +27,8 @@ function matchAll(regex: RegExp, text: string): RegExpExecArray[] {
     return matches;
 }
 
-const identifierSplitRegexp = /({attribute_title\(.*?\)})/g;
-const identifierMatchRegexp = /{attribute_title\((.*?)\)}/g;
+const identifierSplitRegexp = /(\{attribute_title\(.*?\)\})/g;
+const identifierMatchRegexp = /\{attribute_title\((.*?)\)\}/g;
 
 const identifierToPlaceholder = (ref: IdentifierRef) => `{attribute_title(${ref.identifier})}`;
 

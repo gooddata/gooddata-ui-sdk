@@ -1,7 +1,7 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import has from "lodash/has";
 
-const NonAlphaNumRegex = /[^\w\d$]+/g;
+const NonAlphaNumRegex = /[^\w$]+/g;
 
 function titleToVariableName(title: string): string {
     /*
