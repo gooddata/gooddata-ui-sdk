@@ -164,7 +164,7 @@ class AttributeElementsCore extends React.PureComponent<IAttributeElementsProps,
                 .forDisplayForm(displayForm)
                 .withOffset(offset || 0)
                 .withLimit(limit || 50)
-                .withOptions(options)
+                .withOptions(options ?? {})
                 .withAttributeFilters(filters ?? [])
                 .query();
 

@@ -13,6 +13,7 @@ import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeElement } from '@gooddata/sdk-model';
+import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IBackendCapabilities } from '@gooddata/sdk-backend-spi';
 import { ICatalogAttribute } from '@gooddata/sdk-model';
 import { ICatalogDateDataset } from '@gooddata/sdk-model';
@@ -22,9 +23,13 @@ import { ICatalogMeasure } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDashboardWithReferences } from '@gooddata/sdk-backend-spi';
 import { IDataView } from '@gooddata/sdk-backend-spi';
+import { IDateFilter } from '@gooddata/sdk-model';
 import { IDateFilterConfig } from '@gooddata/sdk-model';
+import { Identifier } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
+import { IMeasure } from '@gooddata/sdk-model';
+import { IMeasureDefinition } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
@@ -35,6 +40,16 @@ import { IWorkspaceUser } from '@gooddata/sdk-model';
 import { IWorkspaceUserGroup } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { ValidationContext } from '@gooddata/sdk-backend-spi';
+
+// @internal (undocumented)
+export type AttributeElementsFiltering = {
+    attributeFilters?: Record<Identifier, AttributeElementsFilteringPredicate<IAttributeFilter>>;
+    dateFilters?: Record<Identifier, AttributeElementsFilteringPredicate<IDateFilter>>;
+    measures?: Record<Identifier, AttributeElementsFilteringPredicate<IMeasure>>;
+};
+
+// @internal (undocumented)
+export type AttributeElementsFilteringPredicate<T> = (item: IAttributeElement, index: number, scopingItem: T) => boolean;
 
 // @internal (undocumented)
 export type CatalogRecording = {
@@ -156,6 +171,15 @@ export type NamedDataView = {
     dataView: IDataView;
 };
 
+// @internal (undocumented)
+export function newAttributeFilterLimitingItem(attributeFilter: IAttributeFilter, predicate: AttributeElementsFilteringPredicate<IAttributeFilter>): Record<Identifier, AttributeElementsFilteringPredicate<IAttributeFilter>>;
+
+// @internal (undocumented)
+export function newDateFilterLimitingItem(dateFilter: IDateFilter, predicate: AttributeElementsFilteringPredicate<IDateFilter>): Record<Identifier, AttributeElementsFilteringPredicate<IDateFilter>>;
+
+// @internal (undocumented)
+export function newMeasureLimitingItem(measure: IMeasure<IMeasureDefinition>, predicate: AttributeElementsFilteringPredicate<IMeasure>): Record<Identifier, AttributeElementsFilteringPredicate<IMeasure>>;
+
 // @internal
 export function objRefsToStringKey(refs: ObjRef[]): string;
 
@@ -181,6 +205,7 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
         availableDateDatasets?: (datasets: ICatalogDateDataset[]) => ICatalogDateDataset[];
     };
     userManagement?: IUserManagement;
+    attributeElementsFiltering?: AttributeElementsFiltering;
 };
 
 // @internal

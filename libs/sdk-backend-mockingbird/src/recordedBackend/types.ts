@@ -27,6 +27,10 @@ import {
     IWorkspaceUserGroup,
     ITheme,
     AccessGranteeDetail,
+    IAttributeFilter,
+    IDateFilter,
+    IMeasure,
+    Identifier,
 } from "@gooddata/sdk-model";
 
 /**
@@ -118,6 +122,11 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
      * Specify currently authenticated user or workspace users or groups or access to the objects
      */
     userManagement?: IUserManagement;
+
+    /**
+     * Specify how attribute elements should be filtered when using limiting measures or filters.
+     */
+    attributeElementsFiltering?: AttributeElementsFiltering;
 };
 
 /**
@@ -257,3 +266,21 @@ export type SecuritySettingsPluginUrlValidator = (url: string, workspace: string
  * @internal
  */
 export type SecuritySettingsOrganizationScope = (organizationId: string) => string;
+
+/**
+ * @internal
+ */
+export type AttributeElementsFilteringPredicate<T> = (
+    item: IAttributeElement,
+    index: number,
+    scopingItem: T,
+) => boolean;
+
+/**
+ * @internal
+ */
+export type AttributeElementsFiltering = {
+    attributeFilters?: Record<Identifier, AttributeElementsFilteringPredicate<IAttributeFilter>>;
+    dateFilters?: Record<Identifier, AttributeElementsFilteringPredicate<IDateFilter>>;
+    measures?: Record<Identifier, AttributeElementsFilteringPredicate<IMeasure>>;
+};

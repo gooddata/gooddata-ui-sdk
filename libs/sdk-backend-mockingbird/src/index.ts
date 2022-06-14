@@ -31,6 +31,8 @@ export {
     IUsers,
     IAccessControl,
     IUserManagement,
+    AttributeElementsFiltering,
+    AttributeElementsFilteringPredicate,
 } from "./recordedBackend/types";
 
 export {
@@ -43,6 +45,12 @@ export {
     DataViewFirstPage,
     NamedDataView,
 } from "./recordedBackend/execution";
+
+export {
+    newAttributeFilterLimitingItem,
+    newDateFilterLimitingItem,
+    newMeasureLimitingItem,
+} from "./recordedBackend/elementsUtils";
 
 export { CompositeBackendPart, compositeBackend } from "./compositeBackend/index";
 
