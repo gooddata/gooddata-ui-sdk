@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { attributeDisplayFormRef } from "@gooddata/sdk-model";
 import React from "react";
@@ -43,7 +43,7 @@ describe("AttributeDropdown", () => {
 
     // we have to wait for the debounced onSearch
     const waitForDebounce = () =>
-        new Promise((resolve) => {
+        new Promise<void>((resolve) => {
             setTimeout(() => {
                 resolve();
             }, 300);

@@ -29,7 +29,7 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
     constructor(private recordings: RecordingIndex, private config: RecordedBackendConfig) {}
 
     public elements(): IElementsQueryFactory {
-        return new RecordedElementQueryFactory(this.recordings);
+        return new RecordedElementQueryFactory(this.recordings, this.config);
     }
 
     public getAttributeDisplayForm = async (ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject> => {

@@ -9,8 +9,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { RecordedBackendConfig } from "./types";
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
-import { ObjRef, IWorkspaceUser, AccessGranteeDetail, IAccessGrantee } from "@gooddata/sdk-model";
-import noop from "lodash/noop";
+import { ObjRef, IWorkspaceUser, AccessGranteeDetail } from "@gooddata/sdk-model";
 
 /**
  * @internal
@@ -36,8 +35,8 @@ export function recordedAccessControlFactory(
 
             return Promise.resolve(result);
         },
-        grantAccess: noop as (sharedObject: ObjRef, grantees: IAccessGrantee[]) => Promise<void>,
-        revokeAccess: noop as (sharedObject: ObjRef, grantess: IAccessGrantee[]) => Promise<void>,
+        grantAccess: () => Promise.resolve(),
+        revokeAccess: () => Promise.resolve(),
     };
 }
 

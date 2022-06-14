@@ -9,6 +9,7 @@ import {
     UnexpectedResponseError,
     IFilterElementsQuery,
     FilterWithResolvableElements,
+    IElementsQueryAttributeFilter,
 } from "@gooddata/sdk-backend-spi";
 import {
     filterAttributeElements,
@@ -18,19 +19,24 @@ import {
     isUriRef,
     ObjRef,
     IAttributeElement,
+    IRelativeDateFilter,
+    IMeasure,
 } from "@gooddata/sdk-model";
-import { RecordingIndex } from "./types";
+import { RecordedBackendConfig, RecordingIndex } from "./types";
 import { identifierToRecording } from "./utils";
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
+import flow from "lodash/fp/flow";
+import invariant from "ts-invariant";
+import { resolveLimitingItems, resolveSelectedElements, resolveStringFilter } from "./elementsUtils";
 
 /**
  * @internal
  */
 export class RecordedElementQueryFactory implements IElementsQueryFactory {
-    constructor(private recordings: RecordingIndex) {}
+    constructor(private recordings: RecordingIndex, private readonly config: RecordedBackendConfig) {}
 
     public forDisplayForm(ref: ObjRef): IElementsQuery {
-        return new RecordedElements(ref, this.recordings);
+        return new RecordedElements(ref, this.recordings, this.config);
     }
 
     public forFilter(filter: FilterWithResolvableElements): IFilterElementsQuery {
@@ -42,8 +48,15 @@ class RecordedElements implements IElementsQuery {
     private limit = 50;
     private offset = 0;
     private options: IElementsQueryOptions = {};
+    private attributeFilters: IElementsQueryAttributeFilter[] = [];
+    private dateFilters: IRelativeDateFilter[] = [];
+    private measures: IMeasure[] = [];
 
-    constructor(private ref: ObjRef, private recordings: RecordingIndex) {}
+    constructor(
+        private ref: ObjRef,
+        private recordings: RecordingIndex,
+        private readonly config: RecordedBackendConfig,
+    ) {}
 
     public query(): Promise<IElementsQueryResult> {
         if (!this.recordings.metadata || !this.recordings.metadata.displayForms) {
@@ -63,52 +76,50 @@ class RecordedElements implements IElementsQuery {
             );
         }
 
-        let elements = recording.elements;
-        const { filter } = this.options;
-
-        if (filter !== undefined) {
-            elements = elements.filter((item) => item.title.toLowerCase().includes(filter.toLowerCase()));
-        }
+        const elements = flow(
+            // resolve limiting items first so that they do not need to care about the other filters
+            // and have nice indexes for the limiting strategies
+            resolveLimitingItems(
+                this.config.attributeElementsFiltering,
+                this.attributeFilters,
+                this.dateFilters,
+                this.measures,
+            ),
+            resolveSelectedElements(this.options.elements),
+            resolveStringFilter(this.options.filter),
+        )(recording.elements);
 
         return Promise.resolve(new InMemoryPaging<IAttributeElement>(elements, this.limit, this.offset));
     }
 
-    public withLimit(limit: number): IElementsQuery {
-        if (limit <= 0) {
-            throw new Error("Limit must be positive number");
-        }
-
+    public withLimit(limit: number): this {
+        invariant(limit > 0, "Limit must be positive number");
         this.limit = limit;
-
         return this;
     }
 
-    public withOffset(offset: number): IElementsQuery {
+    public withOffset(offset: number): this {
         this.offset = offset;
-
         return this;
     }
 
-    public withOptions(options: IElementsQueryOptions): IElementsQuery {
-        this.options = options;
-
+    public withOptions(options: IElementsQueryOptions): this {
+        this.options = options ?? {};
         return this;
     }
 
-    public withDateFilters(): IElementsQuery {
-        // eslint-disable-next-line no-console
-        console.warn("recorded backend does not support withDateFilters yet, ignoring...");
-        return this;
-    }
-    public withAttributeFilters(): IElementsQuery {
-        // eslint-disable-next-line no-console
-        console.warn("recorded backend does not support withAttributeFilters yet, ignoring...");
+    public withDateFilters(filters: IRelativeDateFilter[]): this {
+        this.dateFilters = filters ?? [];
         return this;
     }
 
-    public withMeasures(): IElementsQuery {
-        // eslint-disable-next-line no-console
-        console.warn("recorded backend does not support withMeasures yet, ignoring...");
+    public withAttributeFilters(filters: IElementsQueryAttributeFilter[]): this {
+        this.attributeFilters = filters ?? [];
+        return this;
+    }
+
+    public withMeasures(measures: IMeasure[]): this {
+        this.measures = measures ?? [];
         return this;
     }
 }
@@ -123,20 +134,15 @@ class RecordedFilterElements implements IFilterElementsQuery {
     }
 
     // eslint-disable-next-line sonarjs/no-identical-functions
-    public withLimit(limit: number): IFilterElementsQuery {
-        if (limit <= 0) {
-            throw new Error("Limit must be positive number");
-        }
-
+    public withLimit(limit: number): this {
+        invariant(limit > 0, "Limit must be positive number");
         this.limit = limit;
-
         return this;
     }
 
     // eslint-disable-next-line sonarjs/no-identical-functions
-    public withOffset(offset: number): IFilterElementsQuery {
+    public withOffset(offset: number): this {
         this.offset = offset;
-
         return this;
     }
 
