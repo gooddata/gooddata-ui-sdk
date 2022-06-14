@@ -184,7 +184,10 @@ export class TigerBackend implements IAnalyticalBackend {
                     try {
                         return await this.authApiCall(async (sdk) => {
                             const response = await sdk.entities.getAllEntitiesEntitlements({});
-                            return response.data.data[0]?.attributes?.expiry || "";
+                            const contractEntitlement = response.data.data.find(
+                                (item) => item.id === "Contract",
+                            );
+                            return contractEntitlement?.attributes?.expiry || "";
                         });
                     } catch {
                         return "";
