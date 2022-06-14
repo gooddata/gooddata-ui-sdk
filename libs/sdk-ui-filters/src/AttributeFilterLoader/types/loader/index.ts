@@ -1,5 +1,6 @@
 // (C) 2022 GoodData Corporation
 import { IAttributeFilter } from "@gooddata/sdk-model";
+import { CallbackRegistration } from "../common";
 import { IAttributeLoader } from "./attribute";
 import { IAttributeElementLoader } from "./elements";
 
@@ -15,4 +16,12 @@ export interface IAttributeFilterLoader extends IAttributeLoader, IAttributeElem
      * Get the effective filter.
      */
     getFilter(): IAttributeFilter;
+
+    //
+    // callbacks
+    //
+    onInitStart: CallbackRegistration;
+    onInitSuccess: CallbackRegistration;
+    onInitError: CallbackRegistration<{ error: Error }>;
+    onInitCancel: CallbackRegistration;
 }

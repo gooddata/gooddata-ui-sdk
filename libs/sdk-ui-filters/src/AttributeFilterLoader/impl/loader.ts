@@ -56,7 +56,6 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
 
     protected constructor(config: IAttributeFilterHandlerConfig) {
         this.bridge = new AttributeFilterReduxBridge(config);
-        this.bridge.init();
     }
 
     // manipulators
@@ -156,5 +155,21 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
 
     onAttributeLoadCancel: CallbackRegistration = (cb) => {
         return this.bridge.onAttributeLoadCancel(cb);
+    };
+
+    onInitStart: CallbackRegistration = (cb) => {
+        return this.bridge.onInitStart(cb);
+    };
+
+    onInitSuccess: CallbackRegistration = (cb) => {
+        return this.bridge.onInitSuccess(cb);
+    };
+
+    onInitError: CallbackRegistration<{ error: Error }> = (cb) => {
+        return this.bridge.onInitError(cb);
+    };
+
+    onInitCancel: CallbackRegistration = (cb) => {
+        return this.bridge.onInitCancel(cb);
     };
 }

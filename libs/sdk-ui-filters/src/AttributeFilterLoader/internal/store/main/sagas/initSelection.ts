@@ -1,12 +1,11 @@
 // (C) 2022 GoodData Corporation
 import { v4 as uuidv4 } from "uuid";
 import { SagaIterator } from "redux-saga";
-import { put, select, take, race } from "redux-saga/effects";
-import { AnyAction } from "@reduxjs/toolkit";
-
-import { selectAttributeFilterElements } from "../selectors";
+import { put, select, call, SagaReturnType } from "redux-saga/effects";
+import { asyncRequestSaga } from "../../common/asyncRequestSaga";
 import { selectIsCommitedSelectionInverted } from "../../selection/selectors";
 import { actions } from "../../slice";
+import { selectAttributeFilterElements } from "../selectors";
 
 /**
  * @internal
@@ -20,30 +19,15 @@ export function* initSelectionSaga(): SagaIterator<void> {
         selectAttributeFilterElements,
     );
 
-    yield put(actions.attributeElementsRequest({ correlationId, elements }));
+    const loadSelection = () =>
+        asyncRequestSaga(
+            actions.attributeElementsRequest({ correlationId, elements }),
+            actions.attributeElementsSuccess.match,
+            actions.attributeElementsError.match,
+            actions.attributeElementsCancelRequest({ correlationId }),
+        );
 
-    const {
-        success,
-        error,
-        canceled,
-    }: {
-        success: ReturnType<typeof actions.attributeElementsSuccess>;
-        error: ReturnType<typeof actions.attributeElementsError>;
-        canceled: ReturnType<typeof actions.attributeElementsCancel>;
-    } = yield race({
-        success: take(
-            (a: AnyAction) =>
-                actions.attributeElementsSuccess.match(a) && a.payload.correlationId === correlationId,
-        ),
-        error: take(
-            (a: AnyAction) =>
-                actions.attributeElementsError.match(a) && a.payload.correlationId === correlationId,
-        ),
-        canceled: take(
-            (a: AnyAction) =>
-                actions.attributeElementsCancel.match(a) && a.payload.correlationId === correlationId,
-        ),
-    });
+    const { success }: SagaReturnType<typeof loadSelection> = yield call(loadSelection);
 
     if (success) {
         yield put(
@@ -52,7 +36,5 @@ export function* initSelectionSaga(): SagaIterator<void> {
                 isInverted,
             }),
         );
-    } else if (error || canceled) {
-        // Handle cleanup?
     }
 }

@@ -85,14 +85,11 @@ export class AttributeFilterReduxBridge {
             backend: config.backend,
             workspace: config.workspace,
             attributeFilter: config.filter,
-            eventListener: (action, state) => {
-                this.callbacks.eventListener(action, state);
+            eventListener: (action, select) => {
+                this.callbacks.eventListener(action, select);
             },
         });
-    };
-
-    init = (): void => {
-        this.redux.dispatch(actions.init());
+        this.redux.dispatch(actions.init({ attributeFilter: config.filter }));
     };
 
     reset = (): void => {
@@ -110,7 +107,9 @@ export class AttributeFilterReduxBridge {
     };
 
     loadElementsRange = (offset: number, limit: number, correlation: Correlation = uuid()): void => {
-        this.redux.dispatch(actions.loadElementsRangeRequest({ limit, offset, correlationId: correlation }));
+        this.redux.dispatch(
+            actions.loadElementsRangeRequest({ options: { limit, offset }, correlationId: correlation }),
+        );
     };
 
     cancelElementLoad(): void {
@@ -122,15 +121,15 @@ export class AttributeFilterReduxBridge {
     };
 
     setLimitingMeasures = (filters: IMeasure[]): void => {
-        this.redux.dispatch(actions.setMeasureFilters({ filters }));
+        this.redux.dispatch(actions.setLimitingMeasures({ filters }));
     };
 
     setLimitingAttributeFilters = (filters: IElementsQueryAttributeFilter[]): void => {
-        this.redux.dispatch(actions.setAttributeFilters({ filters }));
+        this.redux.dispatch(actions.setLimitingAttributeFilters({ filters }));
     };
 
     setLimitingDateFilters = (filters: IRelativeDateFilter[]): void => {
-        this.redux.dispatch(actions.setDateFilters({ filters }));
+        this.redux.dispatch(actions.setLimitingDateFilters({ filters }));
     };
 
     getSearch = (): string => {
@@ -297,5 +296,21 @@ export class AttributeFilterReduxBridge {
 
     onAttributeLoadCancel: CallbackRegistration = (cb) => {
         return this.callbacks.registerCallback(cb, this.callbacks.registrations.attributeLoadCancel);
+    };
+
+    onInitStart: CallbackRegistration = (cb) => {
+        return this.callbacks.registerCallback(cb, this.callbacks.registrations.initStart);
+    };
+
+    onInitSuccess: CallbackRegistration = (cb) => {
+        return this.callbacks.registerCallback(cb, this.callbacks.registrations.initSuccess);
+    };
+
+    onInitError: CallbackRegistration<{ error: Error }> = (cb) => {
+        return this.callbacks.registerCallback(cb, this.callbacks.registrations.initError);
+    };
+
+    onInitCancel: CallbackRegistration = (cb) => {
+        return this.callbacks.registerCallback(cb, this.callbacks.registrations.initCancel);
     };
 }

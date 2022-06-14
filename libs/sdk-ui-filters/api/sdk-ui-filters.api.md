@@ -304,6 +304,16 @@ export type IAttributeFilterHandler = IMultiSelectAttributeFilterHandler | ISing
 // @alpha
 export interface IAttributeFilterLoader extends IAttributeLoader, IAttributeElementLoader {
     getFilter(): IAttributeFilter;
+    // (undocumented)
+    onInitCancel: CallbackRegistration;
+    // (undocumented)
+    onInitError: CallbackRegistration<{
+        error: Error;
+    }>;
+    // (undocumented)
+    onInitStart: CallbackRegistration;
+    // (undocumented)
+    onInitSuccess: CallbackRegistration;
 }
 
 // @public (undocumented)

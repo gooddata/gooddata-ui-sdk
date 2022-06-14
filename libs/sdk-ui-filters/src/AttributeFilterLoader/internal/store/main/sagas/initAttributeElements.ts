@@ -1,9 +1,9 @@
 // (C) 2022 GoodData Corporation
 import { v4 as uuidv4 } from "uuid";
 import { SagaIterator } from "redux-saga";
-import { put, take, race } from "redux-saga/effects";
-import { AnyAction } from "@reduxjs/toolkit";
+import { put, call, SagaReturnType } from "redux-saga/effects";
 
+import { asyncRequestSaga } from "../../common/asyncRequestSaga";
 import { actions } from "../../slice";
 
 /**
@@ -12,30 +12,15 @@ import { actions } from "../../slice";
 export function* initAttributeElementsSaga(): SagaIterator<void> {
     const correlationId = `init_paging_${uuidv4()}`;
 
-    yield put(actions.attributeElementsRequest({ correlationId, offset: 0, limit: 550 }));
+    const loadElements = () =>
+        asyncRequestSaga(
+            actions.attributeElementsRequest({ correlationId, offset: 0, limit: 550 }),
+            actions.attributeElementsSuccess.match,
+            actions.attributeElementsError.match,
+            actions.attributeElementsCancelRequest({ correlationId }),
+        );
 
-    const {
-        success,
-        error,
-        canceled,
-    }: {
-        success: ReturnType<typeof actions.attributeElementsSuccess>;
-        error: ReturnType<typeof actions.attributeElementsError>;
-        canceled: ReturnType<typeof actions.attributeElementsCancel>;
-    } = yield race({
-        success: take(
-            (a: AnyAction) =>
-                actions.attributeElementsSuccess.match(a) && a.payload.correlationId === correlationId,
-        ),
-        error: take(
-            (a: AnyAction) =>
-                actions.attributeElementsError.match(a) && a.payload.correlationId === correlationId,
-        ),
-        canceled: take(
-            (a: AnyAction) =>
-                actions.attributeElementsCancel.match(a) && a.payload.correlationId === correlationId,
-        ),
-    });
+    const { success }: SagaReturnType<typeof loadElements> = yield call(loadElements);
 
     if (success) {
         yield put(
@@ -55,7 +40,5 @@ export function* initAttributeElementsSaga(): SagaIterator<void> {
                 totalCount: success.payload.totalCount,
             }),
         );
-    } else if (error || canceled) {
-        // Handle cleanup?
     }
 }
