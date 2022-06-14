@@ -27,7 +27,7 @@ import { identifierToRecording } from "./utils";
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 import flow from "lodash/fp/flow";
 import invariant from "ts-invariant";
-import { resolveLimitingItems } from "./elementsUtils";
+import { resolveLimitingItems, resolveSelectedElements, resolveStringFilter } from "./elementsUtils";
 
 /**
  * @internal
@@ -43,14 +43,6 @@ export class RecordedElementQueryFactory implements IElementsQueryFactory {
         return new RecordedFilterElements(filter, this.recordings);
     }
 }
-
-const resolveStringFilter =
-    (filter: string | undefined) =>
-    (elements: IAttributeElement[]): IAttributeElement[] => {
-        return filter
-            ? elements.filter((item) => item.title.toLowerCase().includes(filter.toLowerCase()))
-            : elements;
-    };
 
 class RecordedElements implements IElementsQuery {
     private limit = 50;
@@ -85,13 +77,15 @@ class RecordedElements implements IElementsQuery {
         }
 
         const elements = flow(
-            // resolve limiting items first so that they do not need to care about the string filter
+            // resolve limiting items first so that they do not need to care about the other filters
+            // and have nice indexes for the limiting strategies
             resolveLimitingItems(
                 this.config.attributeElementsFiltering,
                 this.attributeFilters,
                 this.dateFilters,
                 this.measures,
             ),
+            resolveSelectedElements(this.options.elements),
             resolveStringFilter(this.options.filter),
         )(recording.elements);
 

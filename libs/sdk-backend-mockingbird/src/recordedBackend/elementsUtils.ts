@@ -1,6 +1,12 @@
 // (C) 2022 GoodData Corporation
 
-import { NotImplemented, IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
+import {
+    NotImplemented,
+    IElementsQueryAttributeFilter,
+    ElementsQueryOptionsElementsSpecification,
+    isElementsQueryOptionsElementsByPrimaryDisplayFormValue,
+    isElementsQueryOptionsElementsByValue,
+} from "@gooddata/sdk-backend-spi";
 import {
     filterObjRef,
     isUriRef,
@@ -79,6 +85,34 @@ export const resolveLimitingItems =
         // and then intersect the results by uris, this effectively ANDs the filters
         return filteredIndividually.length
             ? intersectionBy(...filteredIndividually, (element) => element.uri)
+            : elements;
+    };
+
+export const resolveSelectedElements =
+    (selectedElements: ElementsQueryOptionsElementsSpecification | undefined) =>
+    (elements: IAttributeElement[]): IAttributeElement[] => {
+        if (!selectedElements) {
+            return elements;
+        }
+
+        if (isElementsQueryOptionsElementsByPrimaryDisplayFormValue(selectedElements)) {
+            throw new NotImplemented("Elements by primary display form value are not supported yet");
+        }
+
+        if (isElementsQueryOptionsElementsByValue(selectedElements)) {
+            return elements.filter((element) =>
+                selectedElements.values.some((value) => element.title === value),
+            );
+        }
+
+        return elements.filter((element) => selectedElements.uris.some((uri) => element.uri === uri));
+    };
+
+export const resolveStringFilter =
+    (filter: string | undefined) =>
+    (elements: IAttributeElement[]): IAttributeElement[] => {
+        return filter
+            ? elements.filter((item) => item.title.toLowerCase().includes(filter.toLowerCase()))
             : elements;
     };
 
