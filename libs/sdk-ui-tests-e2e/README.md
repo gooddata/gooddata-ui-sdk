@@ -19,8 +19,8 @@ Tests in this library verify various go-through scenarios for GoodData.UI compon
 -   run `npm run run-scenarios-local` to run the testing application. The application will run on port 9500
 -   run `npm run cypress` to start cypress local instance
 
-The test application runs on `http://localhost:9500/gooddata-ui-sdk#<resolver-hash>`, to show the Scenario you want to test, replace the `<resolver-hash>` variable
-with the hash respective to you Scenario. You can find all available hashes in the `ComponentResolver.tsx`.
+The test application runs on `http://localhost:9500/gooddata-ui-sdk/?scenario=<scenario-key>`, to show the Scenario you want to test, replace the `<scenario-key>` variable
+with the value of respective Scenario key. You can find all available keys in the `ComponentResolver.tsx`.
 
 To log in to the scenario app, visit `http://localhost:9500/gdc/account/login`
 
