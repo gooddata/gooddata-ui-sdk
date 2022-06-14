@@ -34,6 +34,7 @@
 .gd-error-overlay-content {
     .modalityPlugin-mask-visible {
         z-index: 10001;
+        opacity: 0.95;
     }
 }
 
@@ -53,8 +54,9 @@
     }
 
     .gd-error-overlay-text {
-        font-size: 14px;
         line-height: 23px;
+        color: $gd-color-text;
+        font-size: 14px;
     }
 
     .gd-error-overlay-button {
