@@ -3,7 +3,7 @@ import clone from "lodash/clone";
 import includes from "lodash/includes";
 import isNil from "lodash/isNil";
 import setWith from "lodash/setWith";
-import { numberFormat } from "@gooddata/numberjs";
+import { ISeparators, numberFormat } from "@gooddata/numberjs";
 import escape from "lodash/escape";
 import isEqual from "lodash/fp/isEqual";
 import unescape from "lodash/unescape";
@@ -166,8 +166,31 @@ export const unwrap = (wrappedObject: unknown): any => {
     return wrappedObject[Object.keys(wrappedObject)[0]];
 };
 
-export function percentFormatter(value: number): string {
-    return isNil(value) ? "" : `${parseFloat(value.toFixed(2))}%`;
+const getNumberWithGivenDecimals = (value: number, decimalNumbers: number) =>
+    decimalNumbers === 0 ? `${Math.round(value)}%` : `${parseFloat(value.toFixed(decimalNumbers))}%`;
+
+const getNumberOfFormatDecimals = (format: string, decimalSeparator: string): number => {
+    const splittedFormat = format.split(decimalSeparator);
+
+    if (splittedFormat.length !== 2) {
+        return 0;
+    }
+
+    return Array.from(splittedFormat[1]).reduce(
+        (numberOfDecimals, letter) => (letter === "0" ? numberOfDecimals + 1 : numberOfDecimals),
+        0,
+    );
+};
+
+export function percentFormatter(value: number, format?: string, separators?: ISeparators): string {
+    if (isNil(value)) {
+        return "";
+    }
+
+    const isPercentageFormat = format && format.trim().slice(-1) === "%" && separators;
+    const numberOfDecimals = isPercentageFormat ? getNumberOfFormatDecimals(format, separators.decimal) : 2;
+
+    return getNumberWithGivenDecimals(value, numberOfDecimals);
 }
 
 export const isCssMultiLineTruncationSupported = (): boolean => {
