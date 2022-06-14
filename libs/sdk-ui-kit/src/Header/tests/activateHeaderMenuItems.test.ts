@@ -20,7 +20,7 @@ describe("activateHeaderMenuItems", () => {
 
     beforeAll(() => {
         items = generateHeaderMenuItemsGroups(
-            getAccountMenuFeatureFlagsMock(true, true, false, true, "enterprise", false),
+            getAccountMenuFeatureFlagsMock(true, true, false, true, true, "enterprise", false),
             getWorkspacePermissionsMock(true, true),
             true,
             "TestWorkspaceId",
