@@ -2,8 +2,7 @@
 
 import { IInsight, ObjRef, IDashboard, IWorkspacePermissions } from "@gooddata/sdk-model";
 
-import { DateFilterConfigValidationResult } from "../../_staging/dateFilterConfig/validation";
-import { ISharingProperties } from "../../types";
+import { DateFilterValidationResult, ISharingProperties } from "../../types";
 import { DashboardConfig, DashboardContext } from "../types/commonTypes";
 
 import { IDashboardEvent } from "./base";
@@ -416,11 +415,6 @@ export const isDashboardDeleted = eventGuard<DashboardDeleted>("GDC.DASH/EVT.DEL
 //
 //
 //
-
-/**
- * @public
- */
-export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | DateFilterConfigValidationResult;
 
 /**
  * Payload of the {@link DateFilterValidationFailed} event.

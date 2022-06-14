@@ -270,6 +270,41 @@
         "comment": "Don't translate placeholders '{calendarIcon}', '{range}'. Example text: 'in period (calendar) from 2 months ago to 2 months ahead'",
         "limit": 0
     },
+    "filters.config.warning.multipleProjectConfigs": {
+        "value": "There is more than one project date filter configuration associated with this project. The first one was used.",
+        "comment": "Displayed if there is more than one project date filter configuration associated with the project.",
+        "limit": 0
+    },
+    "filters.config.warning.multipleWorkspacesConfigs": {
+        "value": "There is more than one workspace date filter configuration associated with this workspace. The first one was used.",
+        "comment": "Displayed if there is more than one workspace date filter configuration associated with the workspace.",
+        "limit": 0
+    },
+    "filters.config.warning.selectedFilterNotValid": {
+        "value": "The default filter option is not valid, using the first option available instead.",
+        "comment": "Displayed if the default option for new dashboards is not valid.",
+        "limit": 0
+    },
+    "filters.config.warning.allOptionsHidden": {
+        "value": "The dashboard date filter configuration was ignored because it would have hidden all the filter options.",
+        "comment": "Displayed if applying a dashboard config would make all the filter options hidden.",
+        "limit": 0
+    },
+    "filters.config.warning.conflictingIdentifiers": {
+        "value": "The dashboard date filter configuration was ignored because it contains date filter options with identical identifiers.",
+        "comment": "Displayed if applying a dashboard config would make it contain more than one option with the same identifier.",
+        "limit": 0
+    },
+    "filters.config.warning.notAvailable": {
+        "value": "The project date filter configuration is either not defined or you do not have the permissions to access it.",
+        "comment": "Displayed if there is an error getting the project level config.",
+        "limit": 0
+    },
+    "filters.config.warning.workspace.notAvailable": {
+        "value": "The workspace date filter configuration is either not defined or you do not have the permissions to access it.",
+        "comment": "Displayed if there is an error getting the workspace level config.",
+        "limit": 0
+    },
     "kpi.noData": {
         "value": "No data for current filter settings. Try changing the filters.",
         "comment": "",

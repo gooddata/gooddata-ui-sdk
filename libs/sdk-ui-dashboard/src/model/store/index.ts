@@ -37,6 +37,7 @@ export {
     selectEnableKPIDashboardImplicitDrillDown,
     selectHideKpiDrillInEmbedded,
     selectEnableWidgetCustomHeight,
+    selectEnableRenamingProjectToWorkspace,
 } from "./config/configSelectors";
 export { PermissionsState } from "./permissions/permissionsState";
 export {
@@ -107,6 +108,7 @@ export {
     selectEffectiveDateFilterMode,
     selectEffectiveDateFilterOptions,
     selectEffectiveDateFilterAvailableGranularities,
+    selectDateFilterConfigValidationWarnings,
 } from "./dateFilterConfig/dateFilterConfigSelectors";
 export {
     selectInsights,

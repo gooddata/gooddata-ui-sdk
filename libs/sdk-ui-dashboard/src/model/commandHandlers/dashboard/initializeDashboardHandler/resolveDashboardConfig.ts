@@ -1,6 +1,6 @@
 // (C) 2021-2022 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { all, call } from "redux-saga/effects";
+import { all, call, put } from "redux-saga/effects";
 import { IDateFilterConfigsQueryResult, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { ILocale } from "@gooddata/sdk-ui";
 import { IColorPalette, ISeparators, ISettings } from "@gooddata/sdk-model";
@@ -11,6 +11,8 @@ import { stripUserAndWorkspaceProps } from "../../../../_staging/settings/conver
 import { InitializeDashboard } from "../../../commands/dashboard";
 import { dateFilterValidationFailed } from "../../../events/dashboard";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher";
+import { dateFilterConfigActions } from "../../../store/dateFilterConfig";
+import { DateFilterValidationResult } from "../../../../types";
 import {
     DashboardConfig,
     DashboardContext,
@@ -51,6 +53,15 @@ function loadColorPalette(ctx: DashboardContext): Promise<IColorPalette> {
     return backend.workspace(workspace).styling().getColorPalette();
 }
 
+function* onDateFilterConfigValidationError(
+    ctx: DashboardContext,
+    validationResult: DateFilterValidationResult,
+    correlationId?: string,
+) {
+    yield dispatchDashboardEvent(dateFilterValidationFailed(ctx, validationResult, correlationId));
+    yield put(dateFilterConfigActions.addDateFilterConfigValidationWarning(validationResult));
+}
+
 function* resolveDateFilterConfig(ctx: DashboardContext, config: DashboardConfig, cmd: InitializeDashboard) {
     if (config.dateFilterConfig !== undefined) {
         return config.dateFilterConfig;
@@ -59,13 +70,13 @@ function* resolveDateFilterConfig(ctx: DashboardContext, config: DashboardConfig
     const result: PromiseFnReturnType<typeof loadDateFilterConfig> = yield call(loadDateFilterConfig, ctx);
 
     if ((result?.totalCount ?? 0) > 1) {
-        yield dispatchDashboardEvent(dateFilterValidationFailed(ctx, "TOO_MANY_CONFIGS", cmd.correlationId));
+        yield call(onDateFilterConfigValidationError, ctx, "TOO_MANY_CONFIGS", cmd.correlationId);
     }
 
     const firstConfig = result?.items[0];
 
     if (!firstConfig) {
-        yield dispatchDashboardEvent(dateFilterValidationFailed(ctx, "NO_CONFIG", cmd.correlationId));
+        yield call(onDateFilterConfigValidationError, ctx, "NO_CONFIG", cmd.correlationId);
     }
 
     return result?.items[0] ?? defaultDateFilterConfig;
@@ -114,6 +125,8 @@ export function* resolveDashboardConfig(
         payload: { config = {} },
     } = cmd;
 
+    yield put(dateFilterConfigActions.clearDateFilterConfigValidationWarning());
+
     if (isResolvedConfig(config)) {
         /*
          * Config coming in props is fully specified. There is nothing to do. Bail out immediately.
@@ -151,7 +164,7 @@ export function* resolveDashboardConfig(
     );
 
     if (configValidation !== "Valid") {
-        yield dispatchDashboardEvent(dateFilterValidationFailed(ctx, configValidation, cmd.correlationId));
+        yield call(onDateFilterConfigValidationError, ctx, configValidation, cmd.correlationId);
     }
 
     const configWithDefaults = applyConfigDefaults(config);
