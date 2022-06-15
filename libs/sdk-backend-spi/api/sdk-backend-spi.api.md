@@ -124,6 +124,7 @@ export const AnalyticalBackendErrorTypes: {
     NOT_SUPPORTED: string;
     NOT_IMPLEMENTED: string;
     NOT_AUTHENTICATED: string;
+    LIMIT_REACHED: string;
 };
 
 // @public
@@ -1213,6 +1214,9 @@ export const isLegacyKpiWithComparison: typeof isKpiWithComparison;
 // @alpha @deprecated
 export const isLegacyKpiWithoutComparison: typeof isKpiWithoutComparison;
 
+// @public
+export function isLimitReached(obj: unknown): obj is LimitReached;
+
 // @public @deprecated
 export const isMeasureDescriptor: typeof m.isMeasureDescriptor;
 
@@ -1790,6 +1794,11 @@ export function layoutWidgets<TWidget extends IDashboardWidget_2>(layout: IDashb
 
 // @alpha
 export function layoutWidgetsWithPaths<TWidget extends IDashboardWidget_2>(layout: IDashboardLayout_2<TWidget>): IWidgetWithLayoutPath<TWidget>[];
+
+// @public
+export class LimitReached extends AnalyticalBackendError {
+    constructor(message: string, cause?: Error);
+}
 
 // @alpha @deprecated
 export type ListedDashboardAvailability = m.ListedDashboardAvailability;

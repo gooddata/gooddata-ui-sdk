@@ -324,6 +324,10 @@ export class TigerBackend implements IAnalyticalBackend {
                             return result.data.data?.meta?.permissions || [];
                         });
                     } catch (error) {
+                        if ([404, 403].includes(error?.response?.status)) {
+                            // temporary - 404 gets returned if you are not org admin
+                            return [];
+                        }
                         throw convertApiError(error);
                     }
                 },
