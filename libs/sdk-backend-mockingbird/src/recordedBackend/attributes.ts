@@ -63,14 +63,25 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
             throw new UnexpectedResponseError(`No attribute recording ${objRefToString(ref)}`, 404, {});
         }
 
-        const { title, uri, id, production, description } = recording.attribute;
-        return newAttributeMetadataObject(ref, (a) =>
-            a.title(title).uri(uri).production(Boolean(production)).id(id).description(description),
-        );
+        return this.sanitizeAttribute(recording.attribute);
     };
 
-    public getAttributeByDisplayForm = async (_ref: ObjRef): Promise<IAttributeMetadataObject> => {
-        throw new NotSupported("not supported");
+    public getAttributeByDisplayForm = async (ref: ObjRef): Promise<IAttributeMetadataObject> => {
+        if (!this.recordings.metadata || !this.recordings.metadata.catalog) {
+            throw new UnexpectedResponseError("No recordings", 404, {});
+        }
+
+        const recording = this.recordings.metadata.catalog.items
+            .filter(isCatalogAttribute)
+            .find((wrappedAttribute) => {
+                return wrappedAttribute.displayForms.some((df) => areObjRefsEqual(df.ref, ref));
+            });
+
+        if (!recording) {
+            throw new UnexpectedResponseError(`No attribute recording ${objRefToString(ref)}`, 404, {});
+        }
+
+        return this.sanitizeAttribute(recording.attribute);
     };
 
     public async getCommonAttributes(attributeRefs: ObjRef[]): Promise<ObjRef[]> {
@@ -110,5 +121,18 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
 
     public getAttributeDatasetMeta(_: ObjRef): Promise<IMetadataObject> {
         throw new NotSupported("not supported");
+    }
+
+    private sanitizeAttribute(attribute: IAttributeMetadataObject): IAttributeMetadataObject {
+        const { ref, title, uri, id, production, description, displayForms } = attribute;
+        return newAttributeMetadataObject(ref, (a) =>
+            a
+                .title(title)
+                .uri(uri)
+                .production(Boolean(production))
+                .id(id)
+                .description(description)
+                .displayForms(displayForms),
+        );
     }
 }
