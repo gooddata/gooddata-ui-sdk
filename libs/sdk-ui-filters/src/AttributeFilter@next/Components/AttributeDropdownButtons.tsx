@@ -1,6 +1,6 @@
 // (C) 2019-2022 GoodData Corporation
 import React from "react";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import { Button } from "@gooddata/sdk-ui-kit";
 
 interface IAttributeDropdownButtonsProps {
@@ -9,12 +9,13 @@ interface IAttributeDropdownButtonsProps {
     applyDisabled?: boolean;
 }
 
-const AttributeDropdownButtonsWrapped: React.FC<IAttributeDropdownButtonsProps & WrappedComponentProps> = ({
+export const AttributeDropdownButtons: React.VFC<IAttributeDropdownButtonsProps> = ({
     applyDisabled,
-    intl,
     onApplyButtonClicked,
     onCloseButtonClicked,
 }) => {
+    const intl = useIntl();
+
     const cancelText = intl.formatMessage({ id: "gs.list.cancel" });
     const applyText = intl.formatMessage({ id: "gs.list.apply" });
     return (
@@ -35,5 +36,3 @@ const AttributeDropdownButtonsWrapped: React.FC<IAttributeDropdownButtonsProps &
         </div>
     );
 };
-
-export const AttributeDropdownButtons = injectIntl(AttributeDropdownButtonsWrapped);

@@ -12,7 +12,7 @@ import {
 import {
     IAttributeDropdownBodyExtendedProps,
     IAttributeDropdownBodyProps,
-} from "./AttributeDropdown/AttributeDropdownBody";
+} from "./Components/AttributeDropdownBody";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
 import {
@@ -33,7 +33,7 @@ import invariant from "ts-invariant";
 import stringify from "json-stable-stringify";
 import { useAttributeFilterButtonState } from "./AttributeFilterButton/hooks/useAttributeFilterButtonState";
 import { ATTRIBUTE_FILTER_BUTTON_LIMIT } from "./AttributeFilterButton/constants";
-import AttributeFilterButtonDefaultError from "./AttributeFilterButton/components/AttributeFilterButtonDefaultError";
+import { AttributeFilterError } from "./Components/AttributeFilterError";
 import { useAttributeFilterButtonTotalCount } from "./AttributeFilterButton/hooks/useAttributeFilterButtonTotalCount";
 import { useParentFilterTitles } from "./AttributeFilterButton/hooks/useParentFilterTitles";
 import { useLoadMissingData } from "./AttributeFilterButton/hooks/useLoadMissingData";
@@ -49,7 +49,7 @@ import { useFetchInitialElements } from "./AttributeFilterButton/hooks/useFetchI
 import { useOriginalTotalElementsCount } from "./AttributeFilterButton/hooks/useOriginalTotalElementsCount";
 import { useAttribute } from "./AttributeFilterButton/hooks/useAttribute";
 import { useOnErrorCallback } from "./AttributeFilterButton/hooks/useOnErrorCallback";
-import AttributeFilterButtonDropdown from "./AttributeFilterButton/components/AttributeFilterButtonDropdown";
+import AttributeFilterButtonDropdown from "./Components/AttributeFilterButtonDropdown";
 
 /**
  * @internal
@@ -470,7 +470,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
 };
 
 AttributeFilterButtonCore.defaultProps = {
-    FilterError: AttributeFilterButtonDefaultError,
+    FilterError: AttributeFilterError,
 };
 
 const IntlAttributeFilterButton = withContexts(injectIntl(AttributeFilterButtonCore));

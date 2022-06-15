@@ -1,15 +1,12 @@
 // (C) 2022 GoodData Corporation
 import React from "react";
-import { MediaQueries } from "../../../constants";
-import AttributeFilterButtonDropdownButton from "./AttributeFilterButtonDropdownButton";
+import { MediaQueries } from "../../constants";
+import { AttributeFilterButton } from "./AttributeFilterButton";
 import { Dropdown } from "@gooddata/sdk-ui-kit";
 import MediaQuery from "react-responsive";
 import { IAttributeElement } from "@gooddata/sdk-model";
-import AttributeFilterButtonDefaultDropdownBody from "./AttributeFilterButtonDefaultDropdownBody";
-import {
-    IAttributeDropdownBodyExtendedProps,
-    IAttributeDropdownBodyProps,
-} from "../../AttributeDropdown/AttributeDropdownBody";
+import { AttributeFilterButtonDefaultDropdownBody } from "./AttributeFilterButtonDefaultDropdownBody";
+import { IAttributeDropdownBodyExtendedProps, IAttributeDropdownBodyProps } from "./AttributeDropdownBody";
 import noop from "lodash/noop";
 
 interface IAttributeFilterButtonDropdownProps {
@@ -73,17 +70,16 @@ const AttributeFilterButtonDropdown: React.FC<IAttributeFilterButtonDropdownProp
             renderButton={({ toggleDropdown }) => (
                 <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
                     {(isMobile) => (
-                        <span onClick={toggleDropdown}>
-                            <AttributeFilterButtonDropdownButton
-                                isFiltering={isFiltering}
-                                isOpen={isDropdownOpen}
-                                isMobile={isMobile}
-                                title={title}
-                                subtitleText={subtitle}
-                                subtitleItemCount={selectedFilterOptions.length}
-                                isLoaded={!isOriginalTotalCountLoading}
-                            />
-                        </span>
+                        <AttributeFilterButton
+                            isFiltering={isFiltering}
+                            isOpen={isDropdownOpen}
+                            isMobile={isMobile}
+                            title={title}
+                            subtitleText={subtitle}
+                            subtitleItemCount={selectedFilterOptions.length}
+                            isLoaded={!isOriginalTotalCountLoading}
+                            onClick={toggleDropdown}
+                        />
                     )}
                 </MediaQuery>
             )}

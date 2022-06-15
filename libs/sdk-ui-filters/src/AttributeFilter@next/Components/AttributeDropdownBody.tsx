@@ -3,8 +3,8 @@ import React from "react";
 
 import { AttributeDropdownList } from "./AttributeDropdownList";
 import { AttributeDropdownButtons } from "./AttributeDropdownButtons";
-import { AttributeDropdownItemsFilteredBody } from "./AttributeDropdownItemsFilteredBody";
-import { AttributeListItem } from "./types";
+import { AttributeDropdownItemsFiltered } from "./AttributeDropdownItemsFiltered";
+import { AttributeListItem } from "../types";
 import { ObjRef, IAttributeElement } from "@gooddata/sdk-model";
 import { WrappedComponentProps } from "react-intl";
 
@@ -49,17 +49,17 @@ export interface IAttributeDropdownBodyProps {
  * @internal
  */
 export interface IAttributeDropdownBodyExtendedProps extends IAttributeDropdownBodyProps {
-    deleteFilter?: () => void;
+    deleteFilter?: () => void; //TOTO this callback is not needed should be part of customization of dropdown buttons
     isLoaded?: boolean;
     isElementsLoading?: boolean;
     width?: number;
     listItemClass?: React.ComponentType<IAttributeDropdownListItemProps>;
     maxSelectionSize?: number;
     showConfigurationButton?: boolean;
-    onConfigurationChange?: () => void;
-    showDeleteButton?: boolean;
+    onConfigurationChange?: () => void; //TODO separate this should be done by customization Dropdown body
+    showDeleteButton?: boolean; //TODO separate this should be done by customization dropdown buttons
     isMobile?: boolean;
-    attributeFilterRef?: ObjRef;
+    attributeFilterRef?: ObjRef; //TODO not sure why this is needed
 }
 
 export const AttributeDropdownBody: React.FC<IAttributeDropdownBodyExtendedProps> = ({
@@ -95,7 +95,7 @@ export const AttributeDropdownBody: React.FC<IAttributeDropdownBodyExtendedProps
                 onSelect={onSelect}
                 isMobile={isMobile}
             />
-            <AttributeDropdownItemsFilteredBody
+            <AttributeDropdownItemsFiltered
                 parentFilterTitles={parentFilterTitles}
                 showItemsFilteredMessage={showItemsFilteredMessage}
             />

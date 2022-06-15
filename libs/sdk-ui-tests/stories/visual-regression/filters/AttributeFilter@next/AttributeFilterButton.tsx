@@ -16,97 +16,73 @@ const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 const backend = StorybookBackend();
 
 storiesOf(`${FilterStories}@next/AttributeFilterButton`)
-    .add(
-        "full-featured",
-        () => {
-            return (
-                <div style={wrapperStyle} className="screenshot-target">
+    .add("full-featured", () => {
+        return (
+            <div style={wrapperStyle} className="screenshot-target">
+                <AttributeFilterButton
+                    backend={backend}
+                    workspace={ReferenceWorkspaceId}
+                    filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
+                    onApply={action("on-apply")}
+                />
+            </div>
+        );
+    })
+    .add("All item filtered", () => {
+        //TODO there is bug, when all item is filtered than title is "All except CompuSci, Educationly, Explorer, Grammar Plus, PhoenixSoft, PhoenixSoft, TouchAll, WonderKid"
+        // but  I guess should be NONE
+        // should discuss with UX
+        return (
+            <div style={wrapperStyle} className="screenshot-target">
+                <AttributeFilterButton
+                    backend={backend}
+                    workspace={ReferenceWorkspaceId}
+                    filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [
+                        "CompuSci",
+                        "Educationly",
+                        "Explorer",
+                        "Grammar Plus",
+                        "PhoenixSoft",
+                        "PhoenixSoft",
+                        "TouchAll",
+                        "WonderKid",
+                    ])}
+                    onApply={action("on-apply")}
+                />
+            </div>
+        );
+    })
+    .add("not fit into content", () => {
+        return (
+            <div style={wrapperStyle} className="screenshot-target">
+                <div
+                    style={{
+                        display: "grid",
+                        gridTemplateColumns: "repeat(auto-fit, 60px)",
+                        height: 200,
+                        width: 120,
+                    }}
+                >
                     <AttributeFilterButton
                         backend={backend}
                         workspace={ReferenceWorkspaceId}
                         filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
                         onApply={action("on-apply")}
                     />
+                    <div style={{ padding: 4 }}>Second</div>
                 </div>
-            );
-        },
-        /* {
-            screenshots: {
-                closed: {},
-                opened: {
-                    clickSelector: ".s-attribute-filter",
-                    postInteractionWait: LongPostInteractionTimeout,
-                },
-                "select-all": {
-                    clickSelectors: [".s-attribute-filter", ".s-select_all"],
-                    postInteractionWait: LongPostInteractionTimeout,
-                },
-            },
-        },*/
-    )
-    .add(
-        "not fit into content",
-        () => {
-            return (
-                <div style={wrapperStyle} className="screenshot-target">
-                    <div
-                        style={{
-                            display: "grid",
-                            gridTemplateColumns: "repeat(auto-fit, 60px)",
-                            height: 200,
-                            width: 120,
-                        }}
-                    >
-                        <AttributeFilterButton
-                            backend={backend}
-                            workspace={ReferenceWorkspaceId}
-                            filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
-                            onApply={action("on-apply")}
-                        />
-                        <div style={{ padding: 4 }}>Second</div>
-                    </div>
-                </div>
-            );
-        },
-        /*{
-            screenshots: {
-                closed: {},
-                opened: {
-                    clickSelector: ".s-attribute-filter",
-                    postInteractionWait: LongPostInteractionTimeout,
-                },
-                "select-all": {
-                    clickSelectors: [".s-attribute-filter", ".s-select_all"],
-                    postInteractionWait: LongPostInteractionTimeout,
-                },
-            },
-        },*/
-    )
-    .add(
-        "themed",
-        () => {
-            return wrapWithTheme(
-                <div style={wrapperStyle} className="screenshot-target">
-                    <AttributeFilterButton
-                        backend={backend}
-                        workspace={ReferenceWorkspaceId}
-                        filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
-                        onApply={action("on-apply")}
-                    />
-                </div>,
-            );
-        },
-        /* {
-            screenshots: {
-                closed: {},
-                opened: {
-                    clickSelector: ".s-attribute-filter",
-                    postInteractionWait: LongPostInteractionTimeout,
-                },
-                "select-all": {
-                    clickSelectors: [".s-attribute-filter", ".s-select_all"],
-                    postInteractionWait: LongPostInteractionTimeout,
-                },
-            },
-        },*/
-    );
+            </div>
+        );
+    })
+    .add("themed", () => {
+        return wrapWithTheme(
+            <div style={wrapperStyle} className="screenshot-target">
+                <AttributeFilterButton
+                    backend={backend}
+                    workspace={ReferenceWorkspaceId}
+                    filter={newNegativeAttributeFilter(ReferenceMd.Product.Name, [])}
+                    onApply={action("on-apply")}
+                />
+            </div>,
+        );
+    });

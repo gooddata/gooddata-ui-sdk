@@ -7,7 +7,7 @@ import { IAttributeElement } from "@gooddata/sdk-model";
 
 import { AttributeFilterItem } from "./AttributeFilterItem";
 
-import { AttributeListItem, isNonEmptyListItem } from "./types";
+import { AttributeListItem, isNonEmptyListItem } from "../types";
 
 const ITEM_HEIGHT = 28;
 const MOBILE_LIST_ITEM_HEIGHT = 40;
@@ -65,6 +65,7 @@ export const AttributeDropdownList: React.FC<IAttributeDropdownListProps> = ({
         [onRangeChange, searchString],
     );
 
+    //TODO do we need this check here ? Maybe it will be better do it on upper level
     if (error) {
         return <ListError />;
     }

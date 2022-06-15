@@ -3,7 +3,7 @@ import React, { useCallback } from "react";
 import cx from "classnames";
 import camelCase from "lodash/camelCase";
 import { IInvertableListRenderItemProps } from "@gooddata/sdk-ui-kit";
-import { AttributeListItem, isEmptyListItem } from "./types";
+import { AttributeListItem, isEmptyListItem } from "../types";
 
 export type IAttributeFilterItemProps = IInvertableListRenderItemProps<AttributeListItem>;
 
@@ -12,7 +12,7 @@ export const AttributeFilterItem: React.VFC<IAttributeFilterItemProps> = (props)
 
     const onItemClick = useCallback(() => {
         onSelect(item);
-    }, [onSelect]);
+    }, [onSelect, item]);
 
     if (!item || isEmptyListItem(item)) {
         return <div className="gd-list-item gd-list-item-not-loaded"> loading ...</div>;

@@ -9,7 +9,7 @@ import noop from "lodash/noop";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
 import { AttributeDropdown } from "../AttributeDropdown";
-import { AttributeFilterItem } from "../AttributeFilterItem";
+import { AttributeFilterItem } from "../../Components/AttributeFilterItem";
 
 /*
  * TODO: find a common place for this; possibly test support lib?

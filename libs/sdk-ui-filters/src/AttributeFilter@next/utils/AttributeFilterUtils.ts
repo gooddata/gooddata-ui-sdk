@@ -8,7 +8,7 @@ import {
     EmptyListItem,
     IElementQueryResultWithEmptyItems,
     isNonEmptyListItem,
-} from "../AttributeDropdown/types";
+} from "../types";
 import {
     filterAttributeElements,
     filterIsEmpty,

@@ -1,7 +1,7 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { mount } from "enzyme";
-import { AttributeFilterItem, IAttributeFilterItemProps } from "../AttributeFilterItem";
+import { AttributeFilterItem, IAttributeFilterItemProps } from "../../Components/AttributeFilterItem";
 
 describe("AttributeFilterItem@next", () => {
     function renderComponent(item: IAttributeFilterItemProps = createEmptyItem()) {
