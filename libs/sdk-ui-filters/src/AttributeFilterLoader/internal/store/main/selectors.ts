@@ -34,6 +34,11 @@ export const selectLimitingDateFilters = createSelector(selectState, (state) => 
 /**
  * @internal
  */
+export const selectHiddenElements = createSelector(selectState, (state) => state.hiddenElements ?? []);
+
+/**
+ * @internal
+ */
 export const selectAttributeFilterDisplayForm = createSelector(selectState, (state) => state.displayForm);
 
 /**
@@ -48,7 +53,7 @@ export const selectAttributeFilterElements = createSelector(
     selectAttributeFilterElementsForm,
     selectCommitedSelection,
     (elementsForm, selection): IAttributeElements =>
-        elementsForm === "uris" ? { uris: selection } : { values: selection },
+        elementsForm === "uris" ? { uris: selection } : { values: selection }, // TODO: DHO take hidden elements into account
 );
 
 /**

@@ -16,10 +16,9 @@ import {
 } from "@gooddata/sdk-model";
 import { ILoadAttributeElementsOptions } from "../attributeElements/effects";
 
-const init: AttributeFilterReducer<PayloadAction<{ attributeFilter: IAttributeFilter }>> = (
-    state,
-    action,
-) => {
+const init: AttributeFilterReducer<
+    PayloadAction<{ attributeFilter: IAttributeFilter; hiddenElements?: string[] }>
+> = (state, action) => {
     state.displayForm = filterObjRef(action.payload.attributeFilter);
     const elements = filterAttributeElements(action.payload.attributeFilter);
     state.elementsForm = isAttributeElementsByValue(elements) ? "values" : "uris";
@@ -29,6 +28,7 @@ const init: AttributeFilterReducer<PayloadAction<{ attributeFilter: IAttributeFi
     const isInverted = isNegativeAttributeFilter(action.payload.attributeFilter);
     state.isCommitedSelectionInverted = isInverted;
     state.isWorkingSelectionInverted = isInverted;
+    state.hiddenElements = action.payload.hiddenElements;
 };
 
 const initSuccess: AttributeFilterReducer = identity;
@@ -67,6 +67,13 @@ const setLimitingDateFilters: AttributeFilterReducer<PayloadAction<{ filters: IR
     action,
 ) => {
     state.limitingDateFilters = action.payload.filters;
+};
+
+const setHiddenElements: AttributeFilterReducer<PayloadAction<{ hiddenElements: string[] | undefined }>> = (
+    state,
+    action,
+) => {
+    state.hiddenElements = action.payload.hiddenElements;
 };
 
 const loadElementsRangeRequest: AttributeFilterReducer<
@@ -109,6 +116,7 @@ export const mainReducers = {
     setLimitingAttributeFilters,
     setLimitingMeasures,
     setLimitingDateFilters,
+    setHiddenElements,
     //
     loadElementsRangeRequest,
     loadElementsRangeSuccess,

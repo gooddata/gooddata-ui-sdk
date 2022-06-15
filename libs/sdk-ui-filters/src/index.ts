@@ -96,13 +96,18 @@ export {
     IAttributeLoader,
     IAttributeElementLoader,
     IAttributeFilterLoader,
+    // Options
+    IAttributeFilterHandlerOptions,
+    IAttributeFilterHandlerOptionsBase,
     // Single selection
     ISingleSelectionHandler,
     IStagedSingleSelectionHandler,
+    ISingleSelectAttributeFilterHandlerOptions,
     // Multi selection
     InvertableSelection,
     IInvertableSelectionHandler,
     IStagedInvertableSelectionHandler,
+    IMultiSelectAttributeFilterHandlerOptions,
     // Handlers
     InvertableAttributeElementSelection,
     IAttributeFilterHandler,

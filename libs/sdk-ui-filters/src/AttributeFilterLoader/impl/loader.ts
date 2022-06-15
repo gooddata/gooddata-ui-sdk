@@ -46,6 +46,7 @@ export interface IAttributeFilterHandlerConfig {
     readonly backend: IAnalyticalBackend;
     readonly workspace: string;
     readonly filter: IAttributeFilter;
+    readonly hiddenElements?: string[];
 }
 
 /**
