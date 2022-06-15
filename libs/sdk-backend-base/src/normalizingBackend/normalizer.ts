@@ -23,6 +23,7 @@ import {
     measureFormat,
     MeasureGroupIdentifier,
     measureLocalId,
+    measureMasterIdentifier,
     measureTitle,
     measureValueFilterCondition,
     modifyAttribute,
@@ -115,7 +116,16 @@ export class Denormalizer {
             } else if (isMeasureDescriptor(value)) {
                 const localIdentifier = this.originalLocalId(value.measureHeaderItem.localIdentifier);
                 const measure = this.originalMeasures[localIdentifier]!;
-                const format = measureFormat(measure) || value.measureHeaderItem.format;
+                const master = measureMasterIdentifier(measure);
+                /**
+                 * Measure format is taken from its description stored in normalizer.
+                 * Otherwise, it is taken from source measure to derived ones.
+                 * Lastly, it takes the default value from measureHeaderItem.
+                 */
+                const format =
+                    measureFormat(measure) ||
+                    (master && measureFormat(this.originalMeasures[master])) ||
+                    value.measureHeaderItem.format;
                 const name = this.originalMeasureTitle(measure, value.measureHeaderItem.name);
 
                 return {

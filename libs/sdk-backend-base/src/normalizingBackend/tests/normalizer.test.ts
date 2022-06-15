@@ -3,8 +3,10 @@
 import {
     defaultDimensionsGenerator,
     defWithDimensions,
+    idRef,
     IExecutionDefinition,
     IMeasure,
+    IMeasureGroupDescriptor,
     IMeasureValueFilter,
     measureFilters,
     measureLocalId,
@@ -17,12 +19,13 @@ import {
     newBucket,
     newDefForBuckets,
     newDefForItems,
+    newMeasure,
     newMeasureValueFilter,
     newNegativeAttributeFilter,
     newRankingFilter,
 } from "@gooddata/sdk-model";
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
-import { Normalizer } from "../normalizer";
+import { Denormalizer, Normalizer } from "../normalizer";
 
 // cannot be constructed using model functions - so doing this
 const EmptyMvf = (measure: IMeasure): IMeasureValueFilter => {
@@ -216,5 +219,78 @@ describe("Normalizer", () => {
         expect(measureMasterIdentifier(result.normalized.measures[0])).toEqual(
             measureLocalId(result.normalized.measures[1]),
         );
+    });
+});
+
+describe("Denormalizer", () => {
+    const DEFAULT_FORMAT = "______";
+    const NORMALIZED_DIMS = [
+        {
+            headers: [
+                {
+                    measureGroupHeader: {
+                        items: [
+                            {
+                                measureHeaderItem: {
+                                    localIdentifier: "m_acugFHNJgsBy",
+                                    name: "",
+                                    format: DEFAULT_FORMAT,
+                                },
+                            },
+                            {
+                                measureHeaderItem: {
+                                    localIdentifier: "m_m_acugFHNJgsBy_closed.year",
+                                    name: "",
+                                    format: DEFAULT_FORMAT,
+                                },
+                            },
+                            {
+                                measureHeaderItem: {
+                                    localIdentifier: "m_m_acugFHNJgsBy_previous_period",
+                                    name: "",
+                                    format: DEFAULT_FORMAT,
+                                },
+                            },
+                        ],
+                    },
+                },
+            ],
+        },
+    ];
+
+    it("should assign default formatting to derived measures", () => {
+        const def = newDefForItems("test", [
+            newMeasure(idRef("acugFHNJgsBy", "measure")),
+            ReferenceMdExt.WonPopClosedYear,
+            ReferenceMdExt.WonPreviousPeriod,
+        ]);
+
+        const result = Denormalizer.from(Normalizer.normalize(def)).denormalizeDimDescriptors(
+            NORMALIZED_DIMS,
+        );
+
+        (result[0].headers[0] as IMeasureGroupDescriptor).measureGroupHeader.items.map((elem) => {
+            expect(elem.measureHeaderItem.format).toEqual(DEFAULT_FORMAT);
+        });
+    });
+
+    it("should assign formatting to derived measures from master", () => {
+        const FORMAT = "<#.#!>";
+        const formattedMasterMeasure = newMeasure(idRef("acugFHNJgsBy", "measure"));
+        formattedMasterMeasure.measure.format = FORMAT;
+
+        const def = newDefForItems("test", [
+            formattedMasterMeasure,
+            ReferenceMdExt.WonPopClosedYear,
+            ReferenceMdExt.WonPreviousPeriod,
+        ]);
+
+        const result = Denormalizer.from(Normalizer.normalize(def)).denormalizeDimDescriptors(
+            NORMALIZED_DIMS,
+        );
+
+        (result[0].headers[0] as IMeasureGroupDescriptor).measureGroupHeader.items.map((elem) => {
+            expect(elem.measureHeaderItem.format).toEqual(FORMAT);
+        });
     });
 });
