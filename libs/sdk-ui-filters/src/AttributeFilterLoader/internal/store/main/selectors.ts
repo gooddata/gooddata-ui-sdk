@@ -16,12 +16,20 @@ export const selectSearch = createSelector(selectState, (state) => state.search)
 /**
  * @internal
  */
-export const selectLimit = createSelector(selectState, (state) => state.limit);
+export const selectLimitingAttributeFilters = createSelector(
+    selectState,
+    (state) => state.limitingAttributeFilters,
+);
 
 /**
  * @internal
  */
-export const selectOffset = createSelector(selectState, (state) => state.offset);
+export const selectLimitingMeasureFilters = createSelector(selectState, (state) => state.limitingMeasures);
+
+/**
+ * @internal
+ */
+export const selectLimitingDateFilters = createSelector(selectState, (state) => state.limitingDateFilters);
 
 /**
  * @internal

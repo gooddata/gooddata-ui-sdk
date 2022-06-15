@@ -19,6 +19,8 @@ const attributeElementsSuccess: AttributeFilterReducer<
         attributeElements: IAttributeElement[];
         totalCount: number;
         correlationId: string;
+        limit: number;
+        offset: number;
     }>
 > = (state, action) => {
     if (!state.attributeElementsMap) {
@@ -35,7 +37,8 @@ const attributeElementsSuccess: AttributeFilterReducer<
 const attributeElementsError: AttributeFilterReducer<PayloadAction<{ error: any; correlationId: string }>> =
     identity;
 
-const attributeElementsCancelRequest: AttributeFilterReducer = identity;
+const attributeElementsCancelRequest: AttributeFilterReducer<PayloadAction<{ correlationId: string }>> =
+    identity;
 
 const attributeElementsCancel: AttributeFilterReducer<PayloadAction<{ correlationId: string }>> = identity;
 

@@ -7,7 +7,6 @@ import {
     IAttributeMetadataObject,
     IMeasure,
     IRelativeDateFilter,
-    SortDirection,
 } from "@gooddata/sdk-model";
 import { LoadableStatus } from "../../types";
 
@@ -39,12 +38,9 @@ export interface AttributeFilterState {
 
     // Load attribute elements options
     search?: string;
-    limit?: number;
-    offset?: number;
-    sortDirection?: SortDirection;
-    attributeFilters?: IElementsQueryAttributeFilter[];
-    measureFilters?: IMeasure[];
-    dateFilter?: IRelativeDateFilter[];
+    limitingAttributeFilters?: IElementsQueryAttributeFilter[];
+    limitingMeasures?: IMeasure[];
+    limitingDateFilters?: IRelativeDateFilter[];
 }
 
 /**

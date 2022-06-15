@@ -28,7 +28,8 @@ function* attributeElementsRequestSaga({
                 ...options,
                 displayFormRef,
             }),
-        isCancelRequest: actions.attributeElementsCancelRequest.match,
+        isCancelRequest: (a) =>
+            actions.attributeElementsCancelRequest.match(a) && a.payload.correlationId === correlationId,
     });
 
     const { success, error, canceled }: SagaReturnType<typeof cancelableElementsLoad> = yield call(
@@ -41,6 +42,8 @@ function* attributeElementsRequestSaga({
                 correlationId,
                 attributeElements: success.items,
                 totalCount: success.totalCount,
+                limit: options.limit,
+                offset: options.offset,
             }),
         );
     } else if (error) {

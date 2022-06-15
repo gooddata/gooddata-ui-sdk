@@ -24,7 +24,7 @@ const attributeError: AttributeFilterReducer<PayloadAction<{ error: any; correla
     state.attributeError = action.payload.error;
 };
 
-const attributeCancelRequest: AttributeFilterReducer = identity;
+const attributeCancelRequest: AttributeFilterReducer<PayloadAction<{ correlationId: string }>> = identity;
 
 const attributeCancel: AttributeFilterReducer<PayloadAction<{ correlationId: string }>> = identity;
 
@@ -40,6 +40,6 @@ export const attributeReducers = {
     attributeSuccess,
     attributeError,
     attributeCancelRequest,
-    attributeCancel, // should this be an error?
+    attributeCancel,
     attributeReset,
 };

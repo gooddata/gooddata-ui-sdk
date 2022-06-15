@@ -1,7 +1,7 @@
 // (C) 2022 GoodData Corporation
 import { AnyAction } from "@reduxjs/toolkit";
 import { SagaIterator } from "redux-saga";
-import { call, race, take, cancelled, getContext } from "redux-saga/effects";
+import { call, race, take, getContext } from "redux-saga/effects";
 
 import { AttributeFilterStoreContext } from "../types";
 
@@ -45,21 +45,20 @@ export type ICancelableEffectResult<TResult> =
 /**
  * @internal
  */
-export function cancelableEffect<TResult, TCancelAction extends AnyAction>({
+export function cancelableEffect<TResult>({
     effect,
     isCancelRequest,
 }: {
     effect: () => Promise<TResult>;
-    isCancelRequest: (action: AnyAction) => action is TCancelAction;
+    isCancelRequest: (action: AnyAction) => boolean;
 }): () => SagaIterator<ICancelableEffectResult<TResult>> {
     return function* () {
         try {
             const {
                 success,
-                canceled,
             }: {
                 success: TResult;
-                canceled: TCancelAction;
+                canceled: AnyAction;
             } = yield race({
                 success: call(effect),
                 canceled: take(isCancelRequest),
@@ -71,12 +70,6 @@ export function cancelableEffect<TResult, TCancelAction extends AnyAction>({
                     error: undefined,
                     canceled: false as const,
                 };
-            } else if (canceled) {
-                return {
-                    success: undefined,
-                    error: undefined,
-                    canceled: true as const,
-                };
             }
         } catch (error) {
             return {
@@ -84,15 +77,12 @@ export function cancelableEffect<TResult, TCancelAction extends AnyAction>({
                 error,
                 canceled: false as const,
             };
-        } finally {
-            if (yield cancelled()) {
-                // eslint-disable-next-line no-unsafe-finally
-                return {
-                    canceled: true as const,
-                    success: undefined,
-                    error: undefined,
-                };
-            }
         }
+
+        return {
+            canceled: true as const,
+            success: undefined,
+            error: undefined,
+        };
     };
 }

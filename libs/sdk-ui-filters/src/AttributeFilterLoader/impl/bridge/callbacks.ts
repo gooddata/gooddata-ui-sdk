@@ -8,13 +8,19 @@ import {
     IElementsLoadResult,
 } from "../../types/common";
 import { InvertableAttributeElementSelection } from "../../types";
-import { actions, selectLimit, selectOffset } from "../../internal";
+import { actions } from "../../internal";
 import { newCallbackHandler } from "../common";
 import { AttributeFilterEventListener } from "../../internal/store/types";
 import { selectInvertableCommitedSelection, selectInvertableWorkingSelection } from "./selectors";
 
 const newCallbackRegistrations = () => {
     return {
+        // Init
+        initStart: newCallbackHandler(),
+        initSuccess: newCallbackHandler(),
+        initError: newCallbackHandler<{ error: Error }>(),
+        initCancel: newCallbackHandler(),
+
         // Attribute
         attributeLoadStart: newCallbackHandler(),
         attributeLoadSuccess: newCallbackHandler<{ attribute: IAttributeMetadataObject }>(),
@@ -70,29 +76,37 @@ export const newAttributeFilterCallbacks = () => {
         newCallbackRegistrationsWithGlobalUnsubscribe();
 
     const eventListener: AttributeFilterEventListener = (action, select) => {
+        // Init
+
+        if (actions.init.match(action)) {
+            registrations.initStart.invoke({});
+        } else if (actions.initSuccess.match(action)) {
+            registrations.initSuccess.invoke({});
+        } else if (actions.initError.match(action)) {
+            registrations.initError.invoke({
+                error: action.payload.error,
+            });
+        } else if (actions.initCancel.match(action)) {
+            registrations.initCancel.invoke({});
+        }
+
         // Attribute
 
         if (actions.attributeRequest.match(action)) {
             registrations.attributeLoadStart.invoke({
                 correlation: action.payload.correlationId,
             });
-        }
-
-        if (actions.attributeSuccess.match(action)) {
+        } else if (actions.attributeSuccess.match(action)) {
             registrations.attributeLoadSuccess.invoke({
                 attribute: action.payload.attribute,
                 correlation: action.payload.correlationId,
             });
-        }
-
-        if (actions.attributeError.match(action)) {
+        } else if (actions.attributeError.match(action)) {
             registrations.attributeLoadError.invoke({
                 error: action.payload.error,
                 correlation: action.payload.correlationId,
             });
-        }
-
-        if (actions.attributeCancel.match(action)) {
+        } else if (actions.attributeCancel.match(action)) {
             registrations.attributeLoadCancel.invoke({
                 correlation: action.payload.correlationId,
             });
@@ -100,30 +114,24 @@ export const newAttributeFilterCallbacks = () => {
 
         // Attribute Elements
 
-        if (actions.attributeElementsRequest.match(action)) {
+        if (actions.loadElementsRangeRequest.match(action)) {
             registrations.elementsRangeLoadStart.invoke({
                 correlation: action.payload.correlationId,
             });
-        }
-
-        if (actions.attributeElementsSuccess.match(action)) {
+        } else if (actions.loadElementsRangeSuccess.match(action)) {
             registrations.elementsRangeLoadSuccess.invoke({
                 items: action.payload.attributeElements,
-                limit: select(selectLimit),
-                offset: select(selectOffset),
+                limit: action.payload.limit,
+                offset: action.payload.offset,
                 totalCount: action.payload.totalCount,
                 correlation: action.payload.correlationId,
             });
-        }
-
-        if (actions.attributeElementsError.match(action)) {
+        } else if (actions.loadElementsRangeError.match(action)) {
             registrations.elementsRangeLoadError.invoke({
                 error: action.payload.error,
                 correlation: action.payload.correlationId,
             });
-        }
-
-        if (actions.attributeElementsCancel.match(action)) {
+        } else if (actions.loadElementsRangeCancel.match(action)) {
             registrations.elementsRangeLoadCancel.invoke({
                 correlation: action.payload.correlationId,
             });

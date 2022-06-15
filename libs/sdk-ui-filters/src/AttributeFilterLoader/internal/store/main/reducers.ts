@@ -30,6 +30,11 @@ const init: AttributeFilterReducer<PayloadAction<{ attributeFilter: IAttributeFi
     state.isCommitedSelectionInverted = isInverted;
     state.isWorkingSelectionInverted = isInverted;
 };
+
+const initSuccess: AttributeFilterReducer = identity;
+const initError: AttributeFilterReducer<PayloadAction<{ error: any }>> = identity;
+const initCancel: AttributeFilterReducer = identity;
+
 const reset: AttributeFilterReducer = identity;
 
 const setDisplayForm: AttributeFilterReducer<PayloadAction<{ search: string }>> = (state, action) => {
@@ -44,43 +49,48 @@ const setSearch: AttributeFilterReducer<PayloadAction<{ search: string }>> = (st
     state.search = action.payload.search;
 };
 
-const setAttributeFilters: AttributeFilterReducer<
+const setLimitingAttributeFilters: AttributeFilterReducer<
     PayloadAction<{ filters: IElementsQueryAttributeFilter[] }>
 > = (state, action) => {
-    state.attributeFilters = action.payload.filters;
+    state.limitingAttributeFilters = action.payload.filters;
 };
 
-const setMeasureFilters: AttributeFilterReducer<PayloadAction<{ filters: IMeasure[] }>> = (state, action) => {
-    state.measureFilters = action.payload.filters;
-};
-
-const setDateFilters: AttributeFilterReducer<PayloadAction<{ filters: IRelativeDateFilter[] }>> = (
+const setLimitingMeasures: AttributeFilterReducer<PayloadAction<{ filters: IMeasure[] }>> = (
     state,
     action,
 ) => {
-    state.dateFilter = action.payload.filters;
+    state.limitingMeasures = action.payload.filters;
+};
+
+const setLimitingDateFilters: AttributeFilterReducer<PayloadAction<{ filters: IRelativeDateFilter[] }>> = (
+    state,
+    action,
+) => {
+    state.limitingDateFilters = action.payload.filters;
 };
 
 const loadElementsRangeRequest: AttributeFilterReducer<
-    PayloadAction<
-        Omit<ILoadAttributeElementsOptions, "displayFormRef"> & {
-            correlationId: string;
-        }
-    >
+    PayloadAction<{
+        options: Omit<ILoadAttributeElementsOptions, "displayFormRef">;
+        correlationId?: string;
+    }>
 > = identity;
 
 const loadElementsRangeSuccess: AttributeFilterReducer<
     PayloadAction<{
         attributeElements: IAttributeElement[];
         totalCount: number;
-        correlationId: string;
+        correlationId?: string;
+        limit: number;
+        offset: number;
     }>
 > = identity;
 
 const loadElementsRangeError: AttributeFilterReducer<PayloadAction<{ error: any; correlationId: string }>> =
     identity;
 
-const loadElementsRangeCancelRequest: AttributeFilterReducer = identity;
+const loadElementsRangeCancelRequest: AttributeFilterReducer<PayloadAction<{ correlationId: string }>> =
+    identity;
 
 const loadElementsRangeCancel: AttributeFilterReducer<PayloadAction<{ correlationId: string }>> = identity;
 
@@ -89,17 +99,22 @@ const loadElementsRangeCancel: AttributeFilterReducer<PayloadAction<{ correlatio
  */
 export const mainReducers = {
     init,
-    reset,
+    initSuccess,
+    initError,
+    initCancel,
+    //
     setDisplayForm,
     setElementsForm,
     setSearch,
-    setAttributeFilters,
-    setMeasureFilters,
-    setDateFilters,
+    setLimitingAttributeFilters,
+    setLimitingMeasures,
+    setLimitingDateFilters,
     //
     loadElementsRangeRequest,
     loadElementsRangeSuccess,
     loadElementsRangeError,
     loadElementsRangeCancelRequest,
     loadElementsRangeCancel,
+    //
+    reset,
 };

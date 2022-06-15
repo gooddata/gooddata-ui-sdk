@@ -18,7 +18,10 @@ export const getElementsByKeys = (keys: string[], elementsMap: Record<string, IA
 /**
  * @internal
  */
-export const selectAttributeElementKeys = createSelector(selectState, (state) => state.attributeElements);
+export const selectAttributeElementKeys = createSelector(
+    selectState,
+    (state) => state.attributeElements ?? [],
+);
 
 /**
  * @internal
