@@ -16,6 +16,7 @@ export const AnalyticalBackendErrorTypes = {
     NOT_SUPPORTED: "NS",
     NOT_IMPLEMENTED: "NI!",
     NOT_AUTHENTICATED: "NAuth",
+    LIMIT_REACHED: "LR",
 };
 
 /**
@@ -175,6 +176,18 @@ export class NotAuthenticated extends AnalyticalBackendError {
 }
 
 /**
+ * This exception is thrown when the limit of objects that can be created on backend is reached, for example
+ * if no more workspaces can be created because of the plan limits.
+ *
+ * @public
+ */
+export class LimitReached extends AnalyticalBackendError {
+    constructor(message: string, cause?: Error) {
+        super(message, AnalyticalBackendErrorTypes.LIMIT_REACHED, cause);
+    }
+}
+
+/**
  * Error converter
  *
  * @public
@@ -260,4 +273,13 @@ export function isNotImplemented(obj: unknown): obj is NotImplemented {
  */
 export function isNotAuthenticated(obj: unknown): obj is NotAuthenticated {
     return isAnalyticalBackendError(obj) && obj.abeType === AnalyticalBackendErrorTypes.NOT_AUTHENTICATED;
+}
+
+/**
+ * Type guard checking whether input is an instance of {@link LimitReached}
+ *
+ * @public
+ */
+export function isLimitReached(obj: unknown): obj is LimitReached {
+    return isAnalyticalBackendError(obj) && obj.abeType === AnalyticalBackendErrorTypes.LIMIT_REACHED;
 }

@@ -1,9 +1,10 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2022 GoodData Corporation
 import {
     AnalyticalBackendError,
     isAnalyticalBackendError,
     NotAuthenticated,
     UnexpectedError,
+    LimitReached,
 } from "@gooddata/sdk-backend-spi";
 import { AxiosError } from "axios";
 
@@ -16,6 +17,12 @@ export function convertApiError(error: Error): AnalyticalBackendError {
 
     if (notAuthenticated) {
         throw notAuthenticated;
+    }
+
+    const limitReached = createLimitReachedError(error);
+
+    if (limitReached) {
+        throw limitReached;
     }
 
     return new UnexpectedError("An unexpected error has occurred", error);
@@ -40,4 +47,14 @@ export function createNotAuthenticatedError(error: Error): NotAuthenticated | un
     };
 
     return exc;
+}
+
+function createLimitReachedError(error: Error): LimitReached | undefined {
+    const axiosErrorResponse = (error as AxiosError).response;
+
+    if (!axiosErrorResponse || axiosErrorResponse.status !== 413) {
+        return;
+    }
+
+    return new LimitReached("The limit reached. Upgrade your plan to create more objects.", error);
 }

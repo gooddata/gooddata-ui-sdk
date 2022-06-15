@@ -81,6 +81,7 @@ export {
     NotImplemented,
     NotAuthenticated,
     NotAuthenticatedReason,
+    LimitReached,
     ErrorConverter,
     isAnalyticalBackendError,
     isNoDataError,
@@ -91,6 +92,7 @@ export {
     isNotSupported,
     isNotImplemented,
     isNotAuthenticated,
+    isLimitReached,
     AuthenticationFlow,
     AnalyticalBackendErrorTypes,
 } from "./errors";
