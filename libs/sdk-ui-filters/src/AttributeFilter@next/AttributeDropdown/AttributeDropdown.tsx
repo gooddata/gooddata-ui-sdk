@@ -10,15 +10,15 @@ import cx from "classnames";
 import debounce from "lodash/debounce";
 import noop from "lodash/noop";
 
-import { AttributeDropdownBody } from "./AttributeDropdownBody";
-import { MAX_SELECTION_SIZE } from "./AttributeDropdownList";
+import { AttributeDropdownBody } from "../Components/AttributeDropdownBody";
+import { MAX_SELECTION_SIZE } from "../Components/AttributeDropdownList";
 import { mergeElementQueryResults } from "./mergeElementQueryResults";
 import {
     AttributeListItem,
     EmptyListItem,
     IElementQueryResultWithEmptyItems,
     isNonEmptyListItem,
-} from "./types";
+} from "../types";
 
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
@@ -30,7 +30,7 @@ import {
     showItemsFilteredMessage,
     updateSelectedOptionsWithData,
 } from "../utils/AttributeFilterUtils";
-import { AttributeDropdownAllFilteredOutBody } from "./AttributeDropdownAllFilteredOutBody";
+import { AttributeDropdownAllFilteredOutBody } from "../Components/AttributeDropdownAllFilteredOutBody";
 import MediaQuery from "react-responsive";
 import { MediaQueries } from "../../constants";
 
@@ -89,6 +89,7 @@ export interface IAttributeDropdownState {
     items: AttributeListItem[];
 }
 
+//TODO this component should be removed used in AttributeFilter and this component should be unified with AttributeFilterButton
 export class AttributeDropdownCore extends React.PureComponent<
     IAttributeDropdownProps,
     IAttributeDropdownState

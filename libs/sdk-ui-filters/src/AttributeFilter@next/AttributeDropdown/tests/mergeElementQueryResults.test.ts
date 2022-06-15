@@ -2,7 +2,7 @@
 import { IElementsQueryResult } from "@gooddata/sdk-backend-spi";
 
 import { mergeElementQueryResults } from "../mergeElementQueryResults";
-import { emptyListItem } from "../types";
+import { emptyListItem } from "../../types";
 
 describe("mergeElementQueryResults@next", () => {
     it("should handle empty current elements", () => {

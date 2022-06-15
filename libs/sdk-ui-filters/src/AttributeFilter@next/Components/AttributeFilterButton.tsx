@@ -4,25 +4,35 @@ import { stringUtils } from "@gooddata/util";
 import isEmpty from "lodash/isEmpty";
 import cx from "classnames";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
-import { ATTRIBUTE_FILTER_BITTON_TOOLTIP_ALIGN_POINT } from "../constants";
 
-export interface IAttributeFilterButtonDropdownButtonProps {
+export const ALIGN_POINT = [
+    { align: "tc bc", offset: { x: 0, y: -2 } },
+    { align: "cc tc", offset: { x: 0, y: 10 } },
+    { align: "bl tr", offset: { x: -2, y: -8 } },
+];
+
+export interface IAttributeFilterButtonProps {
     isMobile?: boolean;
     isOpen?: boolean;
     title: string;
     subtitleText: string;
-    subtitleItemCount: number;
+    subtitleItemCount: number; //TODO rename it
     isFiltering?: boolean;
     isLoaded?: boolean;
+    onClick: () => void;
 }
 
-const AttributeFilterButtonDropdownButton: React.FC<IAttributeFilterButtonDropdownButtonProps> = (props) => {
-    const { isMobile, isOpen, title, subtitleItemCount, subtitleText, isFiltering, isLoaded } = props;
+export const AttributeFilterButton: React.VFC<IAttributeFilterButtonProps> = (props) => {
+    const { isMobile, isOpen, title, subtitleItemCount, subtitleText, isFiltering, isLoaded, onClick } =
+        props;
 
     const subtitleSelectedItemsRef = useRef(null);
     const [displayItemCount, setDisplayItemCount] = useState(false);
+
+    //TODO remove it
     const [subtitle, setSubtitle] = useState("");
 
+    //TODO use Memo
     useEffect(() => {
         if (!isEmpty(subtitleText) && subtitleText !== subtitle) {
             setSubtitle(subtitleText);
@@ -55,11 +65,12 @@ const AttributeFilterButtonDropdownButton: React.FC<IAttributeFilterButtonDropdo
                     "is-loaded": isLoaded,
                 },
             )}
+            onClick={onClick}
         >
             <div className="button-content">
                 <div className="button-title__next">
                     <ShortenedText
-                        tooltipAlignPoints={ATTRIBUTE_FILTER_BITTON_TOOLTIP_ALIGN_POINT}
+                        tooltipAlignPoints={ALIGN_POINT}
                         className={"s-attribute-filter-button-title"}
                     >
                         {title}
@@ -80,5 +91,3 @@ const AttributeFilterButtonDropdownButton: React.FC<IAttributeFilterButtonDropdo
         </div>
     );
 };
-
-export default AttributeFilterButtonDropdownButton;

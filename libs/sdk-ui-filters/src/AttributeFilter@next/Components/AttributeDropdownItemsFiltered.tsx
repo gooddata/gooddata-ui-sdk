@@ -1,12 +1,24 @@
 // (C) 2021-2022 GoodData Corporation
-import React from "react";
+import React, { useMemo } from "react";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
 
-export const AttributeDropdownItemsFilteredBody: React.FC<{
+const ALIGN_POINTS = [{ align: "bc tl" }, { align: "tc bl" }];
+const ARROW_OFFSETS = { "bc tl": [-100, 10], "tc bl": [-100, -10] };
+
+export interface IAttributeDropdownItemsFilteredProps {
     parentFilterTitles: string[];
     showItemsFilteredMessage: boolean;
-}> = ({ parentFilterTitles, showItemsFilteredMessage }) => {
+}
+
+//TODO Rename to ItemsFilteredMessage
+export const AttributeDropdownItemsFiltered: React.FC<IAttributeDropdownItemsFilteredProps> = (props) => {
+    const { parentFilterTitles, showItemsFilteredMessage } = props;
+
+    const tooltipItems = useMemo(() => {
+        return parentFilterTitles ? parentFilterTitles.join(", ") : "";
+    }, [parentFilterTitles]);
+
     if (!parentFilterTitles || !showItemsFilteredMessage) {
         return null;
     }
@@ -16,17 +28,18 @@ export const AttributeDropdownItemsFilteredBody: React.FC<{
             <BubbleHoverTrigger showDelay={0} hideDelay={0}>
                 <div className="gd-filtered-message__next">
                     <FormattedMessage id="attributesDropdown.itemsFiltered" />
+                    {/*TODO fix position of icon (Depends on parent style) */}
                     <span className="gd-icon-circle-question" />
                 </div>
                 <Bubble
                     className={`bubble-primary gd-attribute-filter-dropdown-bubble__next s-attribute-filter-dropdown-bubble`}
-                    alignPoints={[{ align: "bc tl" }, { align: "tc bl" }]}
-                    arrowOffsets={{ "bc tl": [-100, 10], "tc bl": [-100, -10] }}
+                    alignPoints={ALIGN_POINTS}
+                    arrowOffsets={ARROW_OFFSETS}
                 >
                     <FormattedMessage
                         id="attributesDropdown.itemsFiltered.tooltip"
                         values={{
-                            filters: parentFilterTitles.join(", "),
+                            filters: tooltipItems,
                             strong: (chunks: string) => <strong>{chunks}</strong>,
                         }}
                     />
