@@ -9,6 +9,7 @@ import drilling from "./drilling";
 import experimental from "./experimental";
 import theming from "./theming";
 import responsive from "./responsive";
+import reversedStacking from "./reversedStacking";
 
 export default [
     base,
@@ -19,5 +20,6 @@ export default [
     stacking,
     experimental,
     theming,
+    reversedStacking,
     ...responsive,
 ];

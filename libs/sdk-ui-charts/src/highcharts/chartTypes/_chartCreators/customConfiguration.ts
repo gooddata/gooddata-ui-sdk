@@ -1287,6 +1287,23 @@ function getZoomingAndPanningConfiguration(
         : undefined;
 }
 
+function getReversedStacking(chartOptions: IChartOptions, _config: any, chartConfig: IChartConfig) {
+    const hasAnyStackOptionSelected =
+        chartConfig?.stackMeasures ||
+        chartConfig?.stackMeasuresToPercent ||
+        chartOptions?.hasStackByAttribute;
+    const shouldReverseStacking =
+        isBarChart(chartConfig?.type) && chartConfig?.enableReversedStacking && hasAnyStackOptionSelected;
+
+    return {
+        yAxis: [
+            {
+                reversedStacks: shouldReverseStacking ? false : true,
+            },
+        ],
+    };
+}
+
 export function getCustomizedConfiguration(
     chartOptions: IChartOptions,
     chartConfig?: IChartConfig,
@@ -1313,6 +1330,7 @@ export function getCustomizedConfiguration(
         getAxisLabelConfigurationForDualBarChart,
         getTargetCursorConfigurationForBulletChart,
         getZoomingAndPanningConfiguration,
+        getReversedStacking,
     ];
     const commonData = configurators.reduce((config: HighchartsOptions, configurator: any) => {
         return merge(config, configurator(chartOptions, config, chartConfig, drillConfig, intl, theme));

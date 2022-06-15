@@ -49,4 +49,9 @@ export const ScenarioGroupNames = {
      * Group for legend responsive scenarios
      */
     LegendResponsive: ["customization", "legend responsive"],
+
+    /**
+     * Group for reversed stacking scenarios
+     */
+    StackingReverse: "stacking reversed",
 };

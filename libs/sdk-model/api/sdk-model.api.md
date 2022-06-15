@@ -2047,6 +2047,7 @@ export interface ISettings {
     enableMultipleDates?: boolean;
     enablePushpinGeoChart?: boolean;
     enableRenamingMeasureToMetric?: boolean;
+    enableReversedStacking?: boolean;
     enableTableColumnsAutoResizing?: boolean;
     enableTableColumnsGrowToFit?: boolean;
     enableTableColumnsManualResizing?: boolean;
