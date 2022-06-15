@@ -51,6 +51,7 @@ function tigerFactory(config?: IAnalyticalBackendConfig, implConfig?: any): IAna
 
 export default tigerFactory;
 export { AnonymousAuthProvider } from "@gooddata/sdk-backend-base";
+export { DeclarativeModel, GenerateLdmRequest, DeclarativePdm } from "@gooddata/api-client-tiger";
 export {
     ContextDeferredAuthProvider,
     TigerTokenAuthProvider,
@@ -58,3 +59,13 @@ export {
     createTigerAuthenticationUrl,
     redirectToTigerAuthentication,
 } from "./auth";
+export {
+    TigerSpecificFunctions,
+    IApiToken,
+    IApiTokenExtended,
+    IDataSource,
+    ScanRequest,
+    ScanResult,
+    PublishPdmResult,
+    Entitlement,
+} from "./backend";

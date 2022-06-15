@@ -6,12 +6,20 @@
 
 import { AnonymousAuthProvider } from '@gooddata/sdk-backend-base';
 import { AuthenticationFlow } from '@gooddata/sdk-backend-spi';
+import { DeclarativeModel } from '@gooddata/api-client-tiger';
+import { DeclarativePdm } from '@gooddata/api-client-tiger';
+import { DeclarativeTables } from '@gooddata/api-client-tiger';
+import { GenerateLdmRequest } from '@gooddata/api-client-tiger';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { IAuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
 import { ITigerClient } from '@gooddata/api-client-tiger';
+import { JsonApiDataSourceInDocument } from '@gooddata/api-client-tiger';
+import { JsonApiOrganizationOutMetaPermissionsEnum } from '@gooddata/api-client-tiger';
+import { LayoutApiPutWorkspaceLayoutRequest } from '@gooddata/api-client-tiger';
+import { LayoutApiSetPdmLayoutRequest } from '@gooddata/api-client-tiger';
 import { NotAuthenticated } from '@gooddata/sdk-backend-spi';
 import { NotAuthenticatedHandler } from '@gooddata/sdk-backend-spi';
 
@@ -29,8 +37,72 @@ export class ContextDeferredAuthProvider extends TigerAuthProviderBase {
 // @public
 export function createTigerAuthenticationUrl(backend: IAnalyticalBackend, authenticationFlow: AuthenticationFlow, location: Location): string;
 
+export { DeclarativeModel }
+
+export { DeclarativePdm }
+
+// @internal (undocumented)
+export interface Entitlement {
+    // (undocumented)
+    expiry?: string;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    value?: string;
+}
+
+export { GenerateLdmRequest }
+
+// @internal (undocumented)
+export interface IApiToken {
+    // (undocumented)
+    id: string;
+}
+
+// @internal (undocumented)
+export interface IApiTokenExtended extends IApiToken {
+    // (undocumented)
+    bearerToken: string | undefined;
+}
+
+// @internal
+export interface IDataSource {
+    // (undocumented)
+    entity: JsonApiDataSourceInDocument;
+    // (undocumented)
+    pdm: DeclarativePdm;
+}
+
+// @internal (undocumented)
+export interface PublishPdmResult {
+    // (undocumented)
+    status: string;
+}
+
 // @public
 export function redirectToTigerAuthentication(context: IAuthenticationContext, error: NotAuthenticated): void;
+
+// @internal (undocumented)
+export interface ScanRequest {
+    // (undocumented)
+    scanTables: boolean;
+    // (undocumented)
+    scanViews: boolean;
+    // (undocumented)
+    schemata: string[];
+    // (undocumented)
+    separator: string;
+    // (undocumented)
+    tablePrefix: string;
+    // (undocumented)
+    viewPrefix: string;
+}
+
+// @internal (undocumented)
+export interface ScanResult {
+    // (undocumented)
+    pdm: DeclarativeTables;
+}
 
 // @public
 export abstract class TigerAuthProviderBase implements IAuthenticationProvider {
@@ -48,17 +120,43 @@ export abstract class TigerAuthProviderBase implements IAuthenticationProvider {
 
 // @public
 function tigerFactory(config?: IAnalyticalBackendConfig, implConfig?: any): IAnalyticalBackend;
-
 export default tigerFactory;
+
+// @internal
+export type TigerSpecificFunctions = {
+    isCommunityEdition?: () => Promise<boolean>;
+    isOrganizationAdmin?: () => Promise<boolean>;
+    organizationExpiredDate?: () => Promise<string>;
+    getOrganizationAllowedOrigins?: (organizationId: string) => Promise<string[]>;
+    getOrganizationPermissions?: (organizationId: string) => Promise<Array<JsonApiOrganizationOutMetaPermissionsEnum>>;
+    updateOrganizationAllowedOrigins?: (organizationId: string, updatedOrigins: string[]) => Promise<string[]>;
+    getDeploymentVersion?: () => Promise<string>;
+    getAllApiTokens?: (userId: string) => Promise<IApiToken[]>;
+    generateApiToken?: (userId: string, tokenId: string) => Promise<IApiTokenExtended | undefined>;
+    deleteApiToken?: (userId: string, tokenId: string) => Promise<void>;
+    someDataSourcesExists?: (filter?: string) => Promise<boolean>;
+    generateLogicalModel?: (dataSourceId: string, generateLogicalModelRequest: GenerateLdmRequest) => Promise<DeclarativeModel>;
+    scanDataSource?: (dataSourceId: string, scanRequest: ScanRequest) => Promise<ScanResult>;
+    publishPdm?: (dataSourceId: string, declarativePdm: DeclarativePdm) => Promise<PublishPdmResult>;
+    createDemoDataSource?: (sampleDataSource: JsonApiDataSourceInDocument) => Promise<string>;
+    setPdmLayout?: (requestParameters: LayoutApiSetPdmLayoutRequest) => Promise<void>;
+    createWorkspace?: (id: string, name: string) => Promise<string>;
+    deleteWorkspace?: (id: string) => Promise<void>;
+    canDeleteWorkspace?: (id: string) => Promise<boolean>;
+    getWorkspaceLogicalModel?: (id: string) => Promise<DeclarativeModel>;
+    getEntitlements?: () => Promise<Array<Entitlement>>;
+    putWorkspaceLayout?: (requestParameters: LayoutApiPutWorkspaceLayoutRequest) => Promise<void>;
+};
 
 // @public
 export class TigerTokenAuthProvider extends TigerAuthProviderBase {
-    constructor(apiToken: string);
+    constructor(apiToken: string, notAuthenticatedHandler?: NotAuthenticatedHandler | undefined);
     // (undocumented)
     authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal>;
     // (undocumented)
     initializeClient(client: ITigerClient): void;
+    // (undocumented)
+    onNotAuthenticated: (context: IAuthenticationContext, error: NotAuthenticated) => void;
 }
-
 
 ```

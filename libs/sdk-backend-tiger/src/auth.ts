@@ -70,13 +70,20 @@ export abstract class TigerAuthProviderBase implements IAuthenticationProvider {
  * @public
  */
 export class TigerTokenAuthProvider extends TigerAuthProviderBase {
-    public constructor(private readonly apiToken: string) {
+    public constructor(
+        private readonly apiToken: string,
+        private readonly notAuthenticatedHandler?: NotAuthenticatedHandler,
+    ) {
         super();
     }
 
     public initializeClient(client: ITigerClient): void {
         setAxiosAuthorizationToken(client.axios, this.apiToken);
     }
+
+    public onNotAuthenticated = (context: IAuthenticationContext, error: NotAuthenticated): void => {
+        this.notAuthenticatedHandler?.(context, error);
+    };
 
     public async authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal> {
         await this.obtainCurrentPrincipal(context);
