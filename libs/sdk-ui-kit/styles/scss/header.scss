@@ -272,9 +272,9 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
 }
 
 .gd-header-menu-item {
-    box-sizing: content-box;
+    box-sizing: border-box;
     display: inline-block;
-    height: 41px;
+    height: $gd-header-height;
     padding: 0 9px;
     line-height: 43px;
     cursor: pointer;
