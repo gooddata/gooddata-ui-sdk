@@ -1,7 +1,11 @@
 // (C) 2022 GoodData Corporation
 import { CallbackRegistration } from "../types/common";
-import { IMultiSelectAttributeFilterHandler, InvertableAttributeElementSelection } from "../types";
-import { AttributeFilterLoader, IAttributeFilterHandlerConfig } from "./loader";
+import {
+    IAttributeFilterHandlerConfig,
+    IMultiSelectAttributeFilterHandler,
+    InvertableAttributeElementSelection,
+} from "../types";
+import { AttributeFilterLoader } from "./loader";
 
 /**
  * @internal

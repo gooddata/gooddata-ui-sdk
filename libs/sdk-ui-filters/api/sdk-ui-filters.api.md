@@ -302,6 +302,14 @@ export type IAttributeFilterButtonProps = IAttributeFilterButtonOwnProps & Wrapp
 export type IAttributeFilterHandler = IMultiSelectAttributeFilterHandler | ISingleSelectAttributeFilterHandler;
 
 // @alpha
+export type IAttributeFilterHandlerOptions = ISingleSelectAttributeFilterHandlerOptions | IMultiSelectAttributeFilterHandlerOptions;
+
+// @alpha
+export interface IAttributeFilterHandlerOptionsBase {
+    hiddenElements?: string[];
+}
+
+// @alpha
 export interface IAttributeFilterLoader extends IAttributeLoader, IAttributeElementLoader {
     getFilter(): IAttributeFilter;
     // (undocumented)
@@ -554,6 +562,12 @@ export interface IMessageTranslator {
 export interface IMultiSelectAttributeFilterHandler extends IAttributeFilterLoader, IStagedInvertableSelectionHandler<InvertableAttributeElementSelection> {
 }
 
+// @alpha
+export interface IMultiSelectAttributeFilterHandlerOptions extends IAttributeFilterHandlerOptionsBase {
+    // (undocumented)
+    selectionMode: "multi";
+}
+
 // @alpha (undocumented)
 export type InvertableAttributeElementSelection = InvertableSelection<IAttributeElement>;
 
@@ -625,6 +639,12 @@ export const isEmptyListItem: (item: Partial<AttributeListItem>) => item is Empt
 
 // @alpha
 export interface ISingleSelectAttributeFilterHandler extends IAttributeFilterLoader, IStagedSingleSelectionHandler<IAttributeElement | undefined> {
+}
+
+// @alpha
+export interface ISingleSelectAttributeFilterHandlerOptions extends IAttributeFilterHandlerOptionsBase {
+    // (undocumented)
+    selectionMode: "single";
 }
 
 // @alpha
@@ -748,14 +768,10 @@ export class MeasureValueFilterDropdown extends React_2.PureComponent<IMeasureVa
 }
 
 // @alpha (undocumented)
-export function newAttributeFilterHandler(backend: IAnalyticalBackend, workspace: string, filter: IAttributeFilter, options: {
-    selectionMode: "single";
-}): ISingleSelectAttributeFilterHandler;
+export function newAttributeFilterHandler(backend: IAnalyticalBackend, workspace: string, filter: IAttributeFilter, options: ISingleSelectAttributeFilterHandlerOptions): ISingleSelectAttributeFilterHandler;
 
 // @alpha (undocumented)
-export function newAttributeFilterHandler(backend: IAnalyticalBackend, workspace: string, filter: IAttributeFilter, options: {
-    selectionMode: "multi";
-}): IMultiSelectAttributeFilterHandler;
+export function newAttributeFilterHandler(backend: IAnalyticalBackend, workspace: string, filter: IAttributeFilter, options: IMultiSelectAttributeFilterHandlerOptions): IMultiSelectAttributeFilterHandler;
 
 // @beta (undocumented)
 export const RankingFilter: React_2.FC<IRankingFilterProps>;

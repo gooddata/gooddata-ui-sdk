@@ -21,7 +21,7 @@ import {
     Loadable,
     LoadableStatus,
 } from "../../types/common";
-import { InvertableAttributeElementSelection } from "../../types";
+import { IAttributeFilterHandlerConfig, InvertableAttributeElementSelection } from "../../types";
 import {
     actions,
     AttributeFilterStore,
@@ -61,15 +61,6 @@ export interface ElementsLoadConfig {
 /**
  * @internal
  */
-export interface IAttributeFilterHandlerConfig {
-    readonly backend: IAnalyticalBackend;
-    readonly workspace: string;
-    readonly filter: IAttributeFilter;
-}
-
-/**
- * @internal
- */
 export class AttributeFilterReduxBridge {
     private redux: AttributeFilterStore;
 
@@ -89,7 +80,9 @@ export class AttributeFilterReduxBridge {
                 this.callbacks.eventListener(action, select);
             },
         });
-        this.redux.dispatch(actions.init({ attributeFilter: config.filter }));
+        this.redux.dispatch(
+            actions.init({ attributeFilter: config.filter, hiddenElements: config.hiddenElements }),
+        );
     };
 
     reset = (): void => {

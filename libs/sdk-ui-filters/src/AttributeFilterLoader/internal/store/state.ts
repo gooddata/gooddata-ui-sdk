@@ -41,6 +41,7 @@ export interface AttributeFilterState {
     limitingAttributeFilters?: IElementsQueryAttributeFilter[];
     limitingMeasures?: IMeasure[];
     limitingDateFilters?: IRelativeDateFilter[];
+    hiddenElements?: string[];
 }
 
 /**

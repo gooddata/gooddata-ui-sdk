@@ -1,4 +1,5 @@
 // (C) 2022 GoodData Corporation
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IAttributeFilter } from "@gooddata/sdk-model";
 import { CallbackRegistration } from "../common";
 import { IAttributeLoader } from "./attribute";
@@ -24,4 +25,14 @@ export interface IAttributeFilterLoader extends IAttributeLoader, IAttributeElem
     onInitSuccess: CallbackRegistration;
     onInitError: CallbackRegistration<{ error: Error }>;
     onInitCancel: CallbackRegistration;
+}
+
+/**
+ * @internal
+ */
+export interface IAttributeFilterHandlerConfig {
+    readonly backend: IAnalyticalBackend;
+    readonly workspace: string;
+    readonly filter: IAttributeFilter;
+    readonly hiddenElements?: string[];
 }

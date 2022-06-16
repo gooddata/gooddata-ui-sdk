@@ -4,7 +4,15 @@ import {
     IElementsQueryAttributeFilter,
     IElementsQueryResult,
 } from "@gooddata/sdk-backend-spi";
-import { IMeasure, IRelativeDateFilter, ObjRef } from "@gooddata/sdk-model";
+import {
+    attributeElementsIsEmpty,
+    IAttributeElements,
+    IAttributeMetadataObject,
+    IMeasure,
+    IRelativeDateFilter,
+    newNegativeAttributeFilter,
+    ObjRef,
+} from "@gooddata/sdk-model";
 
 import { AttributeFilterStoreContext } from "../types";
 
@@ -37,6 +45,10 @@ export async function loadAttributeElements(
         search,
         elements,
     }: ILoadAttributeElementsOptions,
+    hiddenElementsInfo: {
+        hiddenElements: IAttributeElements;
+        attribute: IAttributeMetadataObject;
+    },
 ): Promise<IElementsQueryResult> {
     const { backend, workspace } = context;
 
@@ -45,7 +57,7 @@ export async function loadAttributeElements(
         loader = loader.withLimit(limit);
     }
     if (offset) {
-        loader = loader.withOffset(limit);
+        loader = loader.withOffset(offset);
     }
     if (search || elements) {
         loader = loader.withOptions({ filter: search, elements });
@@ -53,12 +65,41 @@ export async function loadAttributeElements(
     if (limitingDateFilters) {
         loader = loader.withDateFilters(limitingDateFilters);
     }
-    if (limitingAttributeFilters) {
-        loader = loader.withAttributeFilters(limitingAttributeFilters);
+
+    const effectiveLimitingAttributeFilters = getLimitingAttributeFilters(
+        displayFormRef,
+        limitingAttributeFilters,
+        hiddenElementsInfo.hiddenElements,
+        hiddenElementsInfo.attribute,
+    );
+
+    if (effectiveLimitingAttributeFilters.length) {
+        loader = loader.withAttributeFilters(effectiveLimitingAttributeFilters);
     }
+
     if (limitingMeasures) {
         loader = loader.withMeasures(limitingMeasures);
     }
 
     return loader.query();
+}
+
+function getLimitingAttributeFilters(
+    displayFormRef: ObjRef,
+    limitingAttributeFilters: IElementsQueryAttributeFilter[] | undefined,
+    hiddenElements: IAttributeElements,
+    attribute: IAttributeMetadataObject,
+): IElementsQueryAttributeFilter[] {
+    if (attributeElementsIsEmpty(hiddenElements)) {
+        return limitingAttributeFilters ?? [];
+    }
+
+    // add a virtual parent filter to get rid of the hidden elements
+    // this is the only way that does not mess up offsets since it is handled by the server "natively"
+    const hiddenElementsVirtualFilter: IElementsQueryAttributeFilter = {
+        attributeFilter: newNegativeAttributeFilter(displayFormRef, hiddenElements),
+        overAttribute: attribute.ref,
+    };
+
+    return [hiddenElementsVirtualFilter, ...(limitingAttributeFilters ?? [])];
 }
