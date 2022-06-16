@@ -2,7 +2,8 @@
 import { SagaIterator } from "redux-saga";
 import { call, put, select, SagaReturnType, takeEvery } from "redux-saga/effects";
 
-import { selectAttributeFilterDisplayForm } from "../main/selectors";
+import { selectAttributeFilterDisplayForm, selectHiddenElementsAsAttributeElements } from "../main/selectors";
+import { selectAttribute } from "../attribute/selectors";
 import { cancelableEffect, getAttributeFilterContext } from "../common/sagas";
 import { actions } from "../slice";
 import { loadAttributeElements } from "./effects";
@@ -22,12 +23,24 @@ function* attributeElementsRequestSaga({
         selectAttributeFilterDisplayForm,
     );
 
+    const hiddenElements: ReturnType<typeof selectHiddenElementsAsAttributeElements> = yield select(
+        selectHiddenElementsAsAttributeElements,
+    );
+    const attribute: ReturnType<typeof selectAttribute> = yield select(selectAttribute);
+
     const cancelableElementsLoad = cancelableEffect({
         effect: () =>
-            loadAttributeElements(context, {
-                ...options,
-                displayFormRef,
-            }),
+            loadAttributeElements(
+                context,
+                {
+                    ...options,
+                    displayFormRef,
+                },
+                {
+                    hiddenElements,
+                    attribute,
+                },
+            ),
         isCancelRequest: (a) =>
             actions.attributeElementsCancelRequest.match(a) && a.payload.correlationId === correlationId,
     });

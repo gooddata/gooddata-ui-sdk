@@ -16,9 +16,12 @@ import {
 } from "@gooddata/sdk-model";
 import { ILoadAttributeElementsOptions } from "../attributeElements/effects";
 
-const init: AttributeFilterReducer<
-    PayloadAction<{ attributeFilter: IAttributeFilter; hiddenElements?: string[] }>
-> = (state, action) => {
+/**
+ * @internal
+ */
+export type InitActionPayload = { attributeFilter: IAttributeFilter; hiddenElements?: string[] };
+
+const init: AttributeFilterReducer<PayloadAction<InitActionPayload>> = (state, action) => {
     state.displayForm = filterObjRef(action.payload.attributeFilter);
     const elements = filterAttributeElements(action.payload.attributeFilter);
     state.elementsForm = isAttributeElementsByValue(elements) ? "values" : "uris";

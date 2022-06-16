@@ -15,6 +15,14 @@ import {
  * @alpha
  */
 export interface IAttributeFilterHandlerOptionsBase {
+    /**
+     * If specified, these will be excluded from the elements available for selection and will also be removed from the resulting filter.
+     * This effectively behaves as if those elements were not part of the underlying display form.
+     *
+     * @remarks
+     * The meaning of the items is determined by the way the filter is specified: if the filter uses URIs,
+     * then these are also interpreted as URIs, analogously with values.
+     */
     hiddenElements?: string[];
 }
 

@@ -20,7 +20,7 @@ import {
     Loadable,
     LoadableStatus,
 } from "../types/common";
-import { IAttributeFilterLoader } from "../types";
+import { IAttributeFilterHandlerConfig, IAttributeFilterLoader } from "../types";
 import { AttributeFilterReduxBridge } from "./bridge";
 
 /**
@@ -37,16 +37,6 @@ export interface ElementsLoadConfig {
     limitingMeasures?: IMeasure[];
     limitingDateFilters?: IRelativeDateFilter[];
     elements?: ElementsQueryOptionsElementsSpecification;
-}
-
-/**
- * @internal
- */
-export interface IAttributeFilterHandlerConfig {
-    readonly backend: IAnalyticalBackend;
-    readonly workspace: string;
-    readonly filter: IAttributeFilter;
-    readonly hiddenElements?: string[];
 }
 
 /**

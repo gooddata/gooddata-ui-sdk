@@ -8,8 +8,12 @@ import {
     isAttributeElementsByRef,
     isPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
-import { CallbackRegistration, ISingleSelectAttributeFilterHandler } from "../types";
-import { AttributeFilterLoader, IAttributeFilterHandlerConfig } from "./loader";
+import {
+    CallbackRegistration,
+    IAttributeFilterHandlerConfig,
+    ISingleSelectAttributeFilterHandler,
+} from "../types";
+import { AttributeFilterLoader } from "./loader";
 
 /**
  * @internal

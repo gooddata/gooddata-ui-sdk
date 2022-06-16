@@ -5,8 +5,16 @@ import {
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 import { createSelector } from "@reduxjs/toolkit";
+import difference from "lodash/difference";
+import union from "lodash/union";
+
 import { selectState } from "../common/selectors";
 import { selectCommitedSelection, selectIsCommitedSelectionInverted } from "../selection/selectors";
+
+/**
+ * @internal
+ */
+export const selectAttributeFilterElementsForm = createSelector(selectState, (state) => state.elementsForm);
 
 /**
  * @internal
@@ -39,12 +47,17 @@ export const selectHiddenElements = createSelector(selectState, (state) => state
 /**
  * @internal
  */
-export const selectAttributeFilterDisplayForm = createSelector(selectState, (state) => state.displayForm);
+export const selectHiddenElementsAsAttributeElements = createSelector(
+    selectAttributeFilterElementsForm,
+    selectHiddenElements,
+    (elementsForm, hiddenElements) =>
+        elementsForm === "uris" ? { uris: hiddenElements } : { values: hiddenElements },
+);
 
 /**
  * @internal
  */
-export const selectAttributeFilterElementsForm = createSelector(selectState, (state) => state.elementsForm);
+export const selectAttributeFilterDisplayForm = createSelector(selectState, (state) => state.displayForm);
 
 /**
  * @internal
@@ -53,7 +66,24 @@ export const selectAttributeFilterElements = createSelector(
     selectAttributeFilterElementsForm,
     selectCommitedSelection,
     (elementsForm, selection): IAttributeElements =>
-        elementsForm === "uris" ? { uris: selection } : { values: selection }, // TODO: DHO take hidden elements into account
+        elementsForm === "uris" ? { uris: selection } : { values: selection },
+);
+
+/**
+ * @internal
+ */
+export const selectAttributeFilterElementsWithHiddenElementsResolved = createSelector(
+    selectAttributeFilterElementsForm,
+    selectCommitedSelection,
+    selectIsCommitedSelectionInverted,
+    selectHiddenElements,
+    (elementsForm, selection, isInverted, hiddenElements): IAttributeElements => {
+        const updatedSelection = isInverted
+            ? union(selection, hiddenElements)
+            : difference(selection, hiddenElements);
+
+        return elementsForm === "uris" ? { uris: updatedSelection } : { values: updatedSelection };
+    },
 );
 
 /**
@@ -62,7 +92,7 @@ export const selectAttributeFilterElements = createSelector(
 export const selectAttributeFilter = createSelector(
     selectAttributeFilterDisplayForm,
     selectIsCommitedSelectionInverted,
-    selectAttributeFilterElements,
+    selectAttributeFilterElementsWithHiddenElementsResolved,
     (displayForm, isInverted, elements) =>
         isInverted
             ? newNegativeAttributeFilter(displayForm, elements)
