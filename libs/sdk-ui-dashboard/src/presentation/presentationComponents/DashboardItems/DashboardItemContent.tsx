@@ -3,8 +3,12 @@ import React, { forwardRef } from "react";
 import isEqual from "lodash/isEqual";
 import noop from "lodash/noop";
 import cx from "classnames";
-import { useDashboardDispatch, useDashboardSelector, uiActions } from "../../../model";
-import { selectSelectedWidgetRef } from "../../../model/store/ui/uiSelectors";
+import {
+    useDashboardDispatch,
+    useDashboardSelector,
+    uiActions,
+    selectSelectedWidgetRef,
+} from "../../../model";
 import { ObjRef } from "@gooddata/sdk-model";
 
 interface IDashboardItemContentProps {
@@ -19,18 +23,17 @@ export const DashboardItemContent = forwardRef<HTMLDivElement, IDashboardItemCon
         const selectedWidget = useDashboardSelector(selectSelectedWidgetRef);
         const dispatch = useDashboardDispatch();
 
-        if (isSelectable) {
-            className += " is-selectable";
-        }
-
-        if (isEqual(selectedWidget, objRef)) {
-            className += " is-selected";
-        }
-
         const onClick = isSelectable ? () => objRef && dispatch(uiActions.selectWidget(objRef)) : noop;
 
         return (
-            <div className={cx("dash-item-content", className)} ref={ref} onClick={onClick}>
+            <div
+                className={cx("dash-item-content", className, {
+                    "is-selectable": isSelectable,
+                    "is-selected": isEqual(selectedWidget, objRef),
+                })}
+                ref={ref}
+                onClick={onClick}
+            >
                 {children}
             </div>
         );

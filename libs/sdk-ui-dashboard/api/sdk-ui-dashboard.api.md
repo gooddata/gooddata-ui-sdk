@@ -4960,6 +4960,9 @@ export const selectRenderMode: OutputSelector<DashboardState, RenderMode, (res: 
 // @alpha (undocumented)
 export const selectScheduleEmailDialogDefaultAttachment: OutputSelector<DashboardState, UriRef | IdentifierRef | undefined, (res: UiState) => UriRef | IdentifierRef | undefined>;
 
+// @internal (undocumented)
+export const selectSelectedWidgetRef: OutputSelector<DashboardState, UriRef | IdentifierRef | undefined, (res: UiState) => UriRef | IdentifierRef | undefined>;
+
 // @public
 export const selectSeparators: OutputSelector<DashboardState, ISeparators, (res: ResolvedDashboardConfig) => ISeparators>;
 

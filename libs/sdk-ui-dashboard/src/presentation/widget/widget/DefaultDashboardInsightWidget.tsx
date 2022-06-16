@@ -150,7 +150,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         >
             <DashboardItemVisualization
                 isSelectable={isEditMode}
-                objRef={insight.insight.ref}
+                objRef={widget.ref}
                 renderHeadline={(clientHeight) =>
                     !widget.configuration?.hideTitle && (
                         <DashboardItemHeadline title={widget.title} clientHeight={clientHeight} />
