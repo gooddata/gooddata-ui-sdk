@@ -146,16 +146,25 @@ function getEarlyAccessValue<T>(
     strategies: StrategiesDef[],
     earlyAccessValue: string = "",
 ): T {
-    const earlyAccessStrategy = strategies.find((item) => item.attributes.find(findEarlyAccess));
-    const earlyAccess = earlyAccessStrategy ? earlyAccessStrategy.attributes.find(findEarlyAccess) : null;
+    const earlyAccessStrategies = strategies.filter((item) => item.attributes.find(findEarlyAccess));
 
-    if (earlyAccessStrategy && earlyAccess) {
-        const values = (earlyAccess.values || [earlyAccess.value]).filter(Boolean) as Array<string>;
-        if (earlyAccess.conditional === "EQUALS" && values.includes(earlyAccessValue)) {
-            return earlyAccessStrategy.value;
-        }
-        if (earlyAccess.conditional === "NOT_EQUALS" && !values.includes(earlyAccessValue)) {
-            return earlyAccessStrategy.value;
+    if (earlyAccessStrategies.length > 0) {
+        for (let s = 0; s < earlyAccessStrategies.length; s++) {
+            const earlyAccessStrategy = earlyAccessStrategies[s];
+            const earlyAccesses = earlyAccessStrategy
+                ? earlyAccessStrategy.attributes.filter(findEarlyAccess)
+                : [];
+
+            for (let i = 0; i < earlyAccesses.length; i++) {
+                const earlyAccess = earlyAccesses[i];
+                const values = (earlyAccess.values || [earlyAccess.value]).filter(Boolean) as Array<string>;
+                if (earlyAccess.conditional === "EQUALS" && values.includes(earlyAccessValue)) {
+                    return earlyAccessStrategy.value;
+                }
+                if (earlyAccess.conditional === "NOT_EQUALS" && !values.includes(earlyAccessValue)) {
+                    return earlyAccessStrategy.value;
+                }
+            }
         }
     }
     return defaultValue;
