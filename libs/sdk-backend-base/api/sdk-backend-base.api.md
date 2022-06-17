@@ -220,6 +220,7 @@ export type CacheControl = {
     resetCatalogs: () => void;
     resetSecuritySettings: () => void;
     resetAttributes: () => void;
+    resetWorkspaceSettings: () => void;
     resetAll: () => void;
 };
 
@@ -235,6 +236,7 @@ export type CachingConfiguration = {
     maxSecuritySettingsOrgUrlsAge: number | undefined;
     maxAttributeWorkspaces: number | undefined;
     maxAttributeDisplayFormsPerWorkspace: number | undefined;
+    maxWorkspaceSettings: number | undefined;
 };
 
 // @beta
@@ -1008,6 +1010,6 @@ export interface WorkspaceSettingsConfiguration {
 }
 
 // @alpha (undocumented)
-export type WorkspaceSettingsDecoratorFactory = (settings: IWorkspaceSettingsService) => IWorkspaceSettingsService;
+export type WorkspaceSettingsDecoratorFactory = (settings: IWorkspaceSettingsService, workspace: string) => IWorkspaceSettingsService;
 
 ```

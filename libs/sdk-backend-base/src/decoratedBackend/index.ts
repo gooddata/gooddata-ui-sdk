@@ -168,7 +168,7 @@ class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
         const { workspaceSettings } = this.factories;
 
         if (workspaceSettings) {
-            return workspaceSettings(this.decorated.settings());
+            return workspaceSettings(this.decorated.settings(), this.workspace);
         }
 
         return this.decorated.settings();
@@ -260,6 +260,7 @@ export type SecuritySettingsDecoratorFactory = (
  */
 export type WorkspaceSettingsDecoratorFactory = (
     settings: IWorkspaceSettingsService,
+    workspace: string,
 ) => IWorkspaceSettingsService;
 
 /**
