@@ -10,7 +10,6 @@ import {
 } from "@ag-grid-community/all-modules";
 import { v4 as uuidv4 } from "uuid";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { defTotals } from "@gooddata/sdk-model";
 import { AgGridReact } from "@ag-grid-community/react";
 import React from "react";
 import { injectIntl } from "react-intl";
@@ -29,12 +28,11 @@ import {
 } from "@gooddata/sdk-ui";
 import { ThemeContextProvider, withTheme } from "@gooddata/sdk-ui-theme-provider";
 import { getUpdatedColumnTotals } from "./impl/structure/headers/aggregationsMenuHelper";
-import { getScrollbarWidth } from "./impl/utils";
+import { getScrollbarWidth, sanitizeDefTotals } from "./impl/utils";
 import { IScrollPosition } from "./impl/stickyRowHandler";
 
 import { DefaultColumnWidth, ICorePivotTableProps, IMenu } from "./publicTypes";
 import { ColumnWidthItem } from "./columnWidths";
-import cloneDeep from "lodash/cloneDeep";
 import isEqual from "lodash/isEqual";
 import noop from "lodash/noop";
 import debounce from "lodash/debounce";
@@ -50,6 +48,7 @@ import { createGridOptions } from "./impl/gridOptions";
 import { TableFacadeInitializer } from "./impl/tableFacadeInitializer";
 import { ICorePivotTableState, InternalTableState } from "./tableState";
 import { isColumnAutoresizeEnabled } from "./impl/resizing/columnSizing";
+import cloneDeep from "lodash/cloneDeep";
 
 const DEFAULT_COLUMN_WIDTH = 200;
 const WATCHING_TABLE_RENDERED_INTERVAL = 500;
@@ -208,7 +207,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
 
         this.state = {
             readyToRender: false,
-            columnTotals: cloneDeep(defTotals(execution.definition, 0)),
+            columnTotals: cloneDeep(sanitizeDefTotals(execution.definition)),
             desiredHeight: config!.maxHeight,
             resized: false,
         };
@@ -270,7 +269,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         this.setState(
             {
                 readyToRender: false,
-                columnTotals: cloneDeep(defTotals(execution.definition, 0)),
+                columnTotals: cloneDeep(sanitizeDefTotals(execution.definition)),
                 error: undefined,
                 desiredHeight: this.props.config!.maxHeight,
                 resized: false,
@@ -640,13 +639,21 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
 
         const sortItems = this.internal.table.createSortItems(event.columnApi.getAllColumns()!);
 
+        // Changing sort may cause subtotals to no longer be reasonably placed - remove them if that is the case
+        const totals = sanitizeDefTotals(this.getExecutionDefinition(), sortItems);
+
         // eslint-disable-next-line no-console
         console.debug("onSortChanged", sortItems);
 
         this.pushDataGuard({
             properties: {
                 sortItems,
+                totals,
             },
+        });
+
+        this.setState({ columnTotals: totals }, () => {
+            this.internal.table?.refreshData();
         });
     };
 
