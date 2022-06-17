@@ -1,7 +1,7 @@
 // (C) 2007-2022 GoodData Corporation
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { areObjRefsEqual, ObjRef, IAttributeElement } from "@gooddata/sdk-model";
+import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
 import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 import { IAnalyticalBackend, IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
@@ -17,6 +17,7 @@ import {
     AttributeListItem,
     EmptyListItem,
     IElementQueryResultWithEmptyItems,
+    IListItem,
     isNonEmptyListItem,
 } from "../types";
 
@@ -31,8 +32,6 @@ import {
     updateSelectedOptionsWithData,
 } from "../utils/AttributeFilterUtils";
 import { AttributeDropdownAllFilteredOutBody } from "../Components/AttributeDropdownAllFilteredOutBody";
-import MediaQuery from "react-responsive";
-import { MediaQueries } from "../../constants";
 
 const LIMIT = MAX_SELECTION_SIZE + 50;
 
@@ -51,10 +50,10 @@ export interface IAttributeDropdownOwnProps {
     workspace: string;
     displayForm: ObjRef;
 
-    selectedItems?: Array<Partial<IAttributeElement>>;
+    selectedItems?: Array<Partial<IListItem>>;
     isInverted?: boolean;
 
-    onApply: (selectedItems: IAttributeElement[], isInverted: boolean) => void;
+    onApply: (selectedItems: IListItem[], isInverted: boolean) => void;
     fullscreenOnMobile?: boolean;
     isMobile?: boolean;
     titleWithSelection?: boolean;
@@ -70,10 +69,10 @@ type IAttributeDropdownProps = IAttributeDropdownOwnProps & WrappedComponentProp
 export interface IAttributeDropdownState {
     validElements?: IElementQueryResultWithEmptyItems;
 
-    selectedItems: Array<IAttributeElement>;
+    selectedItems: Array<IListItem>;
     isInverted: boolean;
 
-    prevSelectedItems: Array<IAttributeElement>;
+    prevSelectedItems: Array<IListItem>;
     prevIsInverted: boolean;
     firstLoad: boolean;
 
@@ -188,12 +187,12 @@ export class AttributeDropdownCore extends React.PureComponent<
         const isQueryOutOfBounds = offset + limit > currentElements.length;
         const isMissingDataInWindow = currentElements
             .slice(offset, offset + limit)
-            .some((e: IAttributeElement | EmptyListItem) => (e as EmptyListItem).empty);
+            .some((e: IListItem | EmptyListItem) => (e as EmptyListItem).empty);
 
         const hasAllData =
             validElements &&
             currentElements.length === validElements.totalCount &&
-            !currentElements.some((e: IAttributeElement | EmptyListItem) => (e as EmptyListItem).empty);
+            !currentElements.some((e: IListItem | EmptyListItem) => (e as EmptyListItem).empty);
 
         const needsLoading = !hasAllData && (isQueryOutOfBounds || isMissingDataInWindow);
 
@@ -338,7 +337,7 @@ export class AttributeDropdownCore extends React.PureComponent<
         this.backupSelection(callback);
     };
 
-    private onSelect = (selectedItems: IAttributeElement[], isInverted: boolean) => {
+    private onSelect = (selectedItems: IListItem[], isInverted: boolean) => {
         this.setState({
             selectedItems,
             isInverted,
@@ -356,7 +355,7 @@ export class AttributeDropdownCore extends React.PureComponent<
         const nonEmptyItems = items.filter(isNonEmptyListItem);
         nonEmptyItems.forEach((item) => {
             if (isEmpty(item.title)) {
-                // @ts-expect-error TODO: SDK8: this is evil; mutating the items of readonly array; need to find a conceptual way to do this
+                // TODO: SDK8: this is evil; mutating the items of readonly array; need to find a conceptual way to do this
                 item.title = emptyHeaderString;
             }
         });
@@ -382,16 +381,11 @@ export class AttributeDropdownCore extends React.PureComponent<
         );
 
         return !isEmpty(this.props.parentFilterTitles) && isAllFiltered ? (
-            <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
-                {(isMobile) => (
-                    <AttributeDropdownAllFilteredOutBody
-                        parentFilterTitles={this.props.parentFilterTitles}
-                        onApplyButtonClick={() => this.onApplyButtonClicked(closeDropdown)}
-                        onCancelButtonClick={() => closeDropdown()}
-                        isMobile={isMobile}
-                    />
-                )}
-            </MediaQuery>
+            <AttributeDropdownAllFilteredOutBody
+                parentFilterTitles={this.props.parentFilterTitles}
+                onApplyButtonClick={() => this.onApplyButtonClicked(closeDropdown)}
+                onCancelButtonClick={() => closeDropdown()}
+            />
         ) : (
             <AttributeDropdownBody
                 error={error}

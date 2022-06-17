@@ -1,20 +1,19 @@
 // (C) 2021-2022 GoodData Corporation
 import React from "react";
 import { AttributeDropdownButtons } from "./AttributeDropdownButtons";
-import { BubbleHoverTrigger, Bubble } from "@gooddata/sdk-ui-kit";
+import { BubbleHoverTrigger, Bubble, useMediaQuery } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
 
+const ALIGN_POINTS = [{ align: "bc tc" }];
+const ARROW_OFFSETS = { "bc tc": [0, 15] };
 export interface IAttributeDropdownAllFilteredOutBodyProps {
-    isMobile?: boolean;
     parentFilterTitles: string[];
     onApplyButtonClick: () => void;
     onCancelButtonClick: () => void;
 }
 
-// TODO isolate css and comp independent
 // TODO remove buttons and callback
 // TODO rename to message something
-// TODO fix position of ico and bubble
 
 /**
  * @internal
@@ -22,7 +21,9 @@ export interface IAttributeDropdownAllFilteredOutBodyProps {
 export const AttributeDropdownAllFilteredOutBody: React.FC<IAttributeDropdownAllFilteredOutBodyProps> = (
     props,
 ) => {
-    const { isMobile, parentFilterTitles, onApplyButtonClick, onCancelButtonClick } = props;
+    const { onApplyButtonClick, onCancelButtonClick, parentFilterTitles } = props;
+
+    const isMobile = useMediaQuery("mobileDevice");
 
     return (
         <div className="gd-attribute-filter-overlay__next" style={{ width: isMobile ? "auto" : "245px" }}>
@@ -34,8 +35,8 @@ export const AttributeDropdownAllFilteredOutBody: React.FC<IAttributeDropdownAll
                     </div>
                     <Bubble
                         className={`bubble-primary gd-attribute-filter-dropdown-bubble__next s-attribute-filter-dropdown-bubble`}
-                        alignPoints={[{ align: "bc tc" }]}
-                        arrowOffsets={{ "bc tc": [0, 15] }}
+                        alignPoints={ALIGN_POINTS}
+                        arrowOffsets={ARROW_OFFSETS}
                     >
                         <FormattedMessage
                             id="attributesDropdown.itemsFiltered.tooltip"

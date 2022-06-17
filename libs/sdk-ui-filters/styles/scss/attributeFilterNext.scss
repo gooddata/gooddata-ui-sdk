@@ -28,12 +28,12 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
 .gd-attribute-filter-overlay__next {
     padding: 16px 8px 8px 8px;
     max-width: 245px;
-    // TODO: Importing Messages doesn't work. Error styles are termporarily hardcoded here
+
     .gd-message {
         position: relative;
         box-sizing: border-box;
         display: inline-block;
-        max-width: 100%;
+        width: 100%;
         padding: 4px 8px 4px 10px;
         min-height: 1px;
         border-radius: 3px;
@@ -298,10 +298,11 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
     cursor: default;
 
     .gd-filtered-message__next {
-        margin-left: -20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         .gd-icon-circle-question {
-            position: absolute;
             top: 22px;
             padding: 5px;
 
@@ -371,15 +372,15 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
     }
 
     .gd-filtered-message__next {
-        position: relative;
-        z-index: 2;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
         padding: 6px 5px;
         color: $gd-color-state-blank;
         background: $gd-color-white;
         font-size: 12px;
 
         .gd-icon-circle-question {
-            position: absolute;
             top: 1px;
             padding: 5px;
         }

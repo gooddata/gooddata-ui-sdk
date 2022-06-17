@@ -10,6 +10,7 @@ import { action } from "@storybook/addon-actions";
 import { AttributeFilterItem } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/Components/AttributeFilterItem";
 import { EmptyListItem } from "@gooddata/sdk-ui-filters/dist/AttributeFilter@next/types";
 import { wrapWithTheme } from "../../../themeWrapper";
+import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
 
 const item: IAttributeElement = {
     title: "Item title",
@@ -27,38 +28,40 @@ const longTitleItem: IAttributeElement = {
 
 const AttributeFilterItemExamples = (): JSX.Element => {
     return (
-        <div style={{ width: 300 }}>
-            <div className="library-component screenshot-target">
-                <h4>AttributeFilterItem unselected</h4>
-                <AttributeFilterItem
-                    item={item}
-                    isSelected={false}
-                    onSelect={action("onSelect")}
-                    onSelectOnly={action("onSelectOnly")}
-                />
-                <h4>AttributeFilterItem selected</h4>
-                <AttributeFilterItem
-                    item={item}
-                    isSelected={true}
-                    onSelect={action("onSelect")}
-                    onSelectOnly={action("onSelectOnly")}
-                />
-                <h4>AttributeFilterItem empty</h4>
-                <AttributeFilterItem
-                    item={emptyItem}
-                    isSelected={false}
-                    onSelect={action("onSelect")}
-                    onSelectOnly={action("onSelectOnly")}
-                />
-                <h4>AttributeFilterItem long title </h4>
-                <AttributeFilterItem
-                    item={longTitleItem}
-                    isSelected={false}
-                    onSelect={action("onSelect")}
-                    onSelectOnly={action("onSelectOnly")}
-                />
+        <InternalIntlWrapper>
+            <div style={{ width: 300 }}>
+                <div className="library-component screenshot-target">
+                    <h4>AttributeFilterItem unselected</h4>
+                    <AttributeFilterItem
+                        item={item}
+                        isSelected={false}
+                        onSelect={action("onSelect")}
+                        onSelectOnly={action("onSelectOnly")}
+                    />
+                    <h4>AttributeFilterItem selected</h4>
+                    <AttributeFilterItem
+                        item={item}
+                        isSelected={true}
+                        onSelect={action("onSelect")}
+                        onSelectOnly={action("onSelectOnly")}
+                    />
+                    <h4>AttributeFilterItem empty</h4>
+                    <AttributeFilterItem
+                        item={emptyItem}
+                        isSelected={false}
+                        onSelect={action("onSelect")}
+                        onSelectOnly={action("onSelectOnly")}
+                    />
+                    <h4>AttributeFilterItem long title </h4>
+                    <AttributeFilterItem
+                        item={longTitleItem}
+                        isSelected={false}
+                        onSelect={action("onSelect")}
+                        onSelectOnly={action("onSelectOnly")}
+                    />
+                </div>
             </div>
-        </div>
+        </InternalIntlWrapper>
     );
 };
 

@@ -1,6 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
 import { IPagedResource } from "@gooddata/sdk-backend-spi";
-import { IAttributeElement } from "@gooddata/sdk-model";
 
 export const emptyListItem: EmptyListItem = { empty: true };
 
@@ -10,10 +9,16 @@ export const emptyListItem: EmptyListItem = { empty: true };
 export interface EmptyListItem {
     empty: true;
 }
+
+export interface IListItem {
+    title: string;
+    uri: string; //TODO rename to ky and check mappings
+}
+
 /**
  * @internal
  */
-export type AttributeListItem = IAttributeElement | EmptyListItem;
+export type AttributeListItem = IListItem | EmptyListItem;
 
 /**
  * @internal
@@ -24,7 +29,7 @@ export const isEmptyListItem = (item: unknown): item is EmptyListItem =>
 /**
  * @internal
  */
-export const isNonEmptyListItem = (item: unknown): item is IAttributeElement =>
+export const isNonEmptyListItem = (item: unknown): item is IListItem =>
     item && !(item as EmptyListItem).empty;
 
 export type IElementQueryResultWithEmptyItems = IPagedResource<AttributeListItem>;

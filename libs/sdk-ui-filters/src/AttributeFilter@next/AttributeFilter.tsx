@@ -10,7 +10,6 @@ import {
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     ObjRef,
-    IAttributeElement,
 } from "@gooddata/sdk-model";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
@@ -37,6 +36,7 @@ import {
 } from "./utils/AttributeFilterUtils";
 import invariant from "ts-invariant";
 import stringify from "json-stable-stringify";
+import { IListItem } from "./types";
 
 /**
  * @internal
@@ -228,7 +228,7 @@ const AttributeFilterCore: React.FC<IAttributeFilterProps> = (props) => {
         [props.backend, props.workspace, stringify(resolvedParentFilters)],
     );
 
-    const onFilterApply = (selectedItems: IAttributeElement[], isInverted: boolean) => {
+    const onFilterApply = (selectedItems: IListItem[], isInverted: boolean) => {
         const useUriElements =
             currentFilter && isAttributeElementsByRef(filterAttributeElements(currentFilter));
 
@@ -252,7 +252,7 @@ const AttributeFilterCore: React.FC<IAttributeFilterProps> = (props) => {
         if (attributeError || parentFilterTitlesError) {
             onError(attributeError || parentFilterTitlesError);
         }
-    }, [attributeError, parentFilterTitlesError]);
+    }, [onError, attributeError, parentFilterTitlesError]);
 
     const getInitialDropdownSelection = () => {
         if (!currentFilter) {
