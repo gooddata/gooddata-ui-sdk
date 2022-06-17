@@ -942,6 +942,47 @@ describe("getCustomizedConfiguration", () => {
                     expect(result).toBe(expected);
                 },
             );
+
+            const testNumber = 25.012345678;
+            const roundingNumber = 25.654321;
+            it.each([
+                ["with 0 decimals", testNumber, "#,##0%", "25%"],
+                ["with 0 decimals but rounded up", roundingNumber, "#,##0%", "26%"],
+                ["with given decimals", testNumber, "#,##0.000%", "25.012%"],
+                ["with given decimals", testNumber, "#,##0.0000%", "25.0123%"],
+                [
+                    "with given decimals even though there is a white space",
+                    testNumber,
+                    "#,##0.0000% ",
+                    "25.0123%",
+                ],
+                [
+                    "with default decimals since last character is not '%'",
+                    testNumber,
+                    "#,##0.0000%_",
+                    "25.01%",
+                ],
+                [
+                    "with default decimals since the format does not contain '%'",
+                    testNumber,
+                    "#,##0.0000",
+                    "25.01%",
+                ],
+            ])(
+                "should format data labels to percentage %s",
+                (_state: string, input: number, format: string, expected: string) => {
+                    const dataLabel = {
+                        separators: { decimal: ".", thousand: "," },
+                        percentage: input,
+                        stackMeasuresToPercent: true,
+                        series: {
+                            data: [{ format }],
+                        },
+                    };
+                    const result = percentageDataLabelFormatter.call(dataLabel);
+                    expect(result).toBe(expected);
+                },
+            );
         });
     });
 
