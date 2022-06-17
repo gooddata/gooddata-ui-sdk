@@ -8,7 +8,11 @@ options = {
 
         depCruiser.isolatedSubmodule("constants", "src/presentation/constants"),
         depCruiser.isolatedSubmodule("localization", "src/presentation/localization"),
-        depCruiser.isolatedSubmodule("presentationComponents", "src/presentation/presentationComponents"),
+        depCruiser.moduleWithDependencies(
+            "presentationComponents",
+            "src/presentation/presentationComponents",
+            ["src/model"],
+        ),
 
         // TODO: RAIL-3611
         // depCruiser.moduleWithDependencies("_staging", "src/_staging",["src/types.ts"]),

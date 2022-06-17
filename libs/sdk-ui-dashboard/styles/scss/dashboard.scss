@@ -124,6 +124,21 @@
             }
         }
     }
+
+    .is-selectable {
+        cursor: pointer;
+
+        &.dash-item-content:hover {
+            border-color: $is-focused-background;
+        }
+
+        &.is-selected.dash-item-content {
+            border-color: $gd-palette-primary-base;
+            &:hover {
+                border-color: $gd-palette-primary-base;
+            }
+        }
+    }
 }
 
 @keyframes alert-highlighted {

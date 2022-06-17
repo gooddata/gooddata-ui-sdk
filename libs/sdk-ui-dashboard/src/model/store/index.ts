@@ -186,6 +186,7 @@ export {
     selectRenderMode,
     selectIsInEditMode,
     selectIsInViewMode,
+    selectSelectedWidgetRef,
 } from "./ui/uiSelectors";
 export { uiActions } from "./ui";
 
