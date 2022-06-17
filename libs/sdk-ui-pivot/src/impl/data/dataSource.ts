@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import { IntlShape } from "react-intl";
 import { IDataView, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { ColDef, GridApi, IDatasource, IGetRowsParams } from "@ag-grid-community/all-modules";
@@ -165,7 +165,7 @@ export class AgGridDatasource implements IDatasource {
                     .then((data) => {
                         const dataView = this.config.dataViewTransform(data);
                         const dv = DataViewFacade.for(dataView);
-                        this.gridApiProvider()?.setInfiniteRowCount(dataView.totalCount[0]);
+                        this.gridApiProvider()?.setRowCount(dataView.totalCount[0]);
                         this.currentSorts = dv.meta().effectiveSortItems();
 
                         // Table descriptors contain information about effective totals (e.g. totals set for the
@@ -262,7 +262,7 @@ export class AgGridDatasource implements IDatasource {
 function isSortedByFirstAttribute(tableDescriptor: TableDescriptor, sortingCols: ColDef[]): boolean {
     if (!sortingCols.length) {
         // this is somewhat dangerous assumption: no explicit sort == sorted by first col
-        //  (bear backend behaves thusly)
+        //  (bear and tiger backend behaves thusly)
         return true;
     }
 
@@ -277,7 +277,7 @@ function isDataViewSortedByFirstAttribute(dv: DataViewFacade): boolean {
     const { sortBy } = dv.definition;
     if (!sortBy || !sortBy.length) {
         // this is somewhat dangerous assumption: no explicit sort == sorted by first col
-        //  (bear backend behaves thusly)
+        //  (bear and tiger backend behaves thusly)
         return true;
     }
 

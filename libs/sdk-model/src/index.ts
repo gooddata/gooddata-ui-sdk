@@ -390,7 +390,7 @@ export {
 
 export { newInsightDefinition, InsightDefinitionBuilder, InsightModifications } from "./insight/factory";
 
-export { insightSanitize } from "./insight/sanitization";
+export { insightSanitize, sanitizeBucketTotals } from "./insight/sanitization";
 
 export { factoryNotationFor } from "./execution/objectFactoryNotation";
 
