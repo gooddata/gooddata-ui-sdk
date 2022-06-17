@@ -1,5 +1,13 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import once from "lodash/once";
+import {
+    bucketsFind,
+    IExecutionDefinition,
+    ISortItem,
+    ITotal,
+    sanitizeBucketTotals,
+} from "@gooddata/sdk-model";
+import { BucketNames } from "@gooddata/sdk-ui";
 
 function getScrollbarWidthBody(): number {
     const outer = document.createElement("div");
@@ -34,4 +42,16 @@ export async function sleep(delay: number): Promise<void> {
     return new Promise((resolve) => {
         setTimeout(resolve, delay);
     });
+}
+
+/**
+ * Remove invalid totals from an execution definition given a list of sort items
+ *
+ * @param definition - an execution definition to sanitize
+ * @param sortItems - a specification of the sort, if not provided definition.sortBy will be used
+ */
+export function sanitizeDefTotals(definition: IExecutionDefinition, sortItems?: ISortItem[]): ITotal[] {
+    const { buckets, sortBy } = definition;
+    const attributeBucket = bucketsFind(buckets, BucketNames.ATTRIBUTE);
+    return attributeBucket ? sanitizeBucketTotals(attributeBucket, sortItems ?? sortBy) : [];
 }
