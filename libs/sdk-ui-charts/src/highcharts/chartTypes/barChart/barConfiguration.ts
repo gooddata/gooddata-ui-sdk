@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import { HighchartsOptions } from "../../../highcharts/lib";
 import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration";

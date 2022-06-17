@@ -218,6 +218,10 @@ export interface IChartConfig {
      */
     enableChartSorting?: boolean;
 
+    /**
+     * Enables change order of stacked items in bar chart.
+     */
+    enableReversedStacking?: boolean;
     //
     //
     //

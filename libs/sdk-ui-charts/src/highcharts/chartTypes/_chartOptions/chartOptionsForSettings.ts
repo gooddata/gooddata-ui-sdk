@@ -27,6 +27,10 @@ export function updateConfigWithSettings(config: IChartConfig, settings: ISettin
         if (settings.enableChartsSorting) {
             updatedConfig = { ...updatedConfig, enableChartSorting: true };
         }
+
+        if (settings.enableReversedStacking) {
+            updatedConfig = { ...updatedConfig, enableReversedStacking: true };
+        }
     }
 
     return updatedConfig;

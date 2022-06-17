@@ -225,6 +225,11 @@ export interface ISettings {
     enableDataSourceManagement?: boolean;
 
     /**
+     * Enable reverse the order of stacked items in bar chart.
+     */
+    enableReversedStacking?: boolean;
+
+    /**
      * Enable floating data range form with excluded period control in AD date filter
      */
     enableAdFloatingDateRangeFilter?: boolean;

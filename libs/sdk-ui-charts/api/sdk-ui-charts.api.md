@@ -196,6 +196,7 @@ export interface IChartConfig {
     enableChartSorting?: boolean;
     enableCompactSize?: boolean;
     enableJoinedAttributeAxisName?: boolean;
+    enableReversedStacking?: boolean;
     forceDisableDrillOnAxes?: boolean;
     grid?: IGridConfig;
     legend?: ILegendConfig;
