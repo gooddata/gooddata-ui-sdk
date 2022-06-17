@@ -17,17 +17,17 @@ import {
     isNegativeAttributeFilter,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
-    IAttributeElement,
 } from "@gooddata/sdk-model";
 import { UseCancelablePromiseStatus } from "@gooddata/sdk-ui";
 import isEmpty from "lodash/isEmpty";
 import { IntlShape } from "react-intl";
 import isNil from "lodash/isNil";
+import { IListItem } from "../types";
 
 /**
  * Gets the selection from the initial {@link @gooddata/sdk-model#IAttributeFilter} object.
  */
-export const getInitialSelectedOptions = (currentFilter: IAttributeFilter): IAttributeElement[] => {
+export const getInitialSelectedOptions = (currentFilter: IAttributeFilter): IListItem[] => {
     // the as any cast is ok here, the data will get fixed once the element load completes
     // this serves only to have some initial state here so that when full element data is loaded
     // it automatically sets the props.filter.elements as selected
@@ -72,7 +72,7 @@ export const getBackend = (backend: IAnalyticalBackend, props: any) => {
 export const createFilter = (
     filter: IAttributeFilter,
     isInverted: boolean,
-    selectedFilterOptions: IAttributeElement[],
+    selectedFilterOptions: IListItem[],
     identifier: string,
     emptyFilter = false,
 ) => {
@@ -96,7 +96,7 @@ export const createFilter = (
  */
 export const getNumberOfSelectedItems = (
     originalTotalCount: number,
-    filterOptions: IAttributeElement[],
+    filterOptions: IListItem[],
     isInverted: boolean,
 ) => {
     if (isInverted) {
@@ -122,8 +122,8 @@ interface GetSubtitleProps {
     state: {
         isInverted: boolean;
         isFiltering: boolean;
-        selectedFilterOptions: IAttributeElement[];
-        uriToAttributeElementMap: Map<string, IAttributeElement>;
+        selectedFilterOptions: IListItem[];
+        uriToAttributeElementMap: Map<string, IListItem>;
         searchString: string;
         firstLoad: boolean;
     };

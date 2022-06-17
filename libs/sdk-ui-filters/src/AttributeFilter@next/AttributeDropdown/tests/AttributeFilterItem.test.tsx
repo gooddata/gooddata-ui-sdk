@@ -2,10 +2,15 @@
 import React from "react";
 import { mount } from "enzyme";
 import { AttributeFilterItem, IAttributeFilterItemProps } from "../../Components/AttributeFilterItem";
+import { IntlWrapper } from "@gooddata/sdk-ui";
 
 describe("AttributeFilterItem@next", () => {
     function renderComponent(item: IAttributeFilterItemProps = createEmptyItem()) {
-        return mount(<AttributeFilterItem {...item} />);
+        return mount(
+            <IntlWrapper locale="en-US">
+                <AttributeFilterItem {...item} />
+            </IntlWrapper>,
+        );
     }
 
     function createItem(): IAttributeFilterItemProps {
@@ -40,8 +45,8 @@ describe("AttributeFilterItem@next", () => {
         const item = createItem();
 
         const wrapper = renderComponent(item);
-        expect(wrapper.find(".gd-input-checkbox")).toHaveLength(1);
-        expect(wrapper.text()).toEqual("A");
+        expect(wrapper.find(".s-attribute-filter-list-item-title")).toHaveLength(1);
+        expect(wrapper.find(".s-attribute-filter-list-item-title").text()).toEqual("A");
     });
 
     it("should dispatch callback on checkbox change", () => {

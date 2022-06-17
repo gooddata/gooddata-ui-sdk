@@ -1,10 +1,10 @@
 // (C) 2022 GoodData Corporation
 
 import { IAnalyticalBackend, IElementsQueryResult } from "@gooddata/sdk-backend-spi";
-import { IElementQueryResultWithEmptyItems, isNonEmptyListItem } from "../../types";
+import { IElementQueryResultWithEmptyItems, IListItem, isNonEmptyListItem } from "../../types";
 import { useCallback, useEffect, useState } from "react";
 import { ATTRIBUTE_FILTER_BUTTON_LIMIT } from "../constants";
-import { IAttributeFilter, IAttributeElement } from "@gooddata/sdk-model";
+import { IAttributeFilter } from "@gooddata/sdk-model";
 import {
     checkFilterSetupForBackend,
     getInitialIsInverted,
@@ -17,8 +17,8 @@ import compact from "lodash/compact";
 import debounce from "lodash/debounce";
 
 export interface IAttributeFilterButtonState {
-    selectedFilterOptions: IAttributeElement[];
-    appliedFilterOptions: IAttributeElement[];
+    selectedFilterOptions: IListItem[];
+    appliedFilterOptions: IListItem[];
     isInverted: boolean;
     appliedIsInverted: boolean;
     firstLoad: boolean;
@@ -27,7 +27,7 @@ export interface IAttributeFilterButtonState {
     limit: number;
     isDropdownOpen: boolean;
     validOptions: IElementQueryResultWithEmptyItems;
-    uriToAttributeElementMap: Map<string, IAttributeElement>;
+    uriToAttributeElementMap: Map<string, IListItem>;
     isFiltering: boolean;
     /**
      * This flag simulates previous value for `searchString` value. If the search string changes, it will force
@@ -69,7 +69,7 @@ export const useAttributeFilterButtonState = (
             limit: ATTRIBUTE_FILTER_BUTTON_LIMIT,
             isDropdownOpen: false,
             validOptions: null,
-            uriToAttributeElementMap: new Map<string, IAttributeElement>(),
+            uriToAttributeElementMap: new Map<string, IListItem>(),
             isFiltering: false,
             needsReloadAfterSearch: false,
         };
@@ -117,7 +117,7 @@ export const useAttributeFilterButtonState = (
         setState((prevState) => {
             return {
                 ...prevState,
-                uriToAttributeElementMap: new Map<string, IAttributeElement>(),
+                uriToAttributeElementMap: new Map<string, IListItem>(),
             };
         });
     };
@@ -204,7 +204,7 @@ export const useAttributeFilterButtonState = (
         [],
     );
 
-    const onElementSelect = (selectedFilterOptions: IAttributeElement[], isInverted: boolean) => {
+    const onElementSelect = (selectedFilterOptions: IListItem[], isInverted: boolean) => {
         setState((s) => ({
             ...s,
             selectedFilterOptions: selectedFilterOptions,

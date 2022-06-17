@@ -4,9 +4,15 @@ import React from "react";
 import { AttributeDropdownList } from "./AttributeDropdownList";
 import { AttributeDropdownButtons } from "./AttributeDropdownButtons";
 import { AttributeDropdownItemsFiltered } from "./AttributeDropdownItemsFiltered";
-import { AttributeListItem } from "../types";
-import { ObjRef, IAttributeElement } from "@gooddata/sdk-model";
-import { WrappedComponentProps } from "react-intl";
+import { AttributeListItem, IListItem } from "../types";
+import { ObjRef } from "@gooddata/sdk-model";
+import { FormattedMessage, WrappedComponentProps } from "react-intl";
+
+const ListError = () => (
+    <div className="gd-message error">
+        <FormattedMessage id="gs.list.error" />
+    </div>
+);
 
 /**
  * @internal
@@ -27,7 +33,7 @@ export interface IAttributeDropdownListItemProps extends WrappedComponentProps {
 export interface IAttributeDropdownBodyProps {
     items: AttributeListItem[];
     totalCount: number;
-    selectedItems: Array<IAttributeElement>;
+    selectedItems: Array<IListItem>;
     isInverted: boolean;
     isLoading: boolean;
     isFullWidth?: boolean;
@@ -37,7 +43,7 @@ export interface IAttributeDropdownBodyProps {
     searchString: string;
     onSearch: (searchString: string) => void;
 
-    onSelect: (selectedItems: IAttributeElement[], isInverted: boolean) => void;
+    onSelect: (selectedItems: IListItem[], isInverted: boolean) => void;
     onRangeChange: (searchString: string, from: number, to: number) => void;
     onApplyButtonClicked: () => void;
     onCloseButtonClicked: () => void;
@@ -58,7 +64,6 @@ export interface IAttributeDropdownBodyExtendedProps extends IAttributeDropdownB
     showConfigurationButton?: boolean;
     onConfigurationChange?: () => void; //TODO separate this should be done by customization Dropdown body
     showDeleteButton?: boolean; //TODO separate this should be done by customization dropdown buttons
-    isMobile?: boolean;
     attributeFilterRef?: ObjRef; //TODO not sure why this is needed
 }
 
@@ -78,23 +83,25 @@ export const AttributeDropdownBody: React.FC<IAttributeDropdownBodyExtendedProps
     onCloseButtonClicked,
     parentFilterTitles,
     showItemsFilteredMessage,
-    isMobile,
 }) => {
     return (
         <div className="gd-attribute-filter-overlay__next">
-            <AttributeDropdownList
-                error={error}
-                isLoading={isLoading}
-                items={items}
-                isInverted={isInverted}
-                onRangeChange={onRangeChange}
-                selectedItems={selectedItems}
-                totalCount={totalCount}
-                onSearch={onSearch}
-                searchString={searchString}
-                onSelect={onSelect}
-                isMobile={isMobile}
-            />
+            {error ? (
+                <ListError />
+            ) : (
+                <AttributeDropdownList
+                    isLoading={isLoading}
+                    items={items}
+                    isInverted={isInverted}
+                    onRangeChange={onRangeChange}
+                    selectedItems={selectedItems}
+                    totalCount={totalCount}
+                    onSearch={onSearch}
+                    searchString={searchString}
+                    onSelect={onSelect}
+                />
+            )}
+
             <AttributeDropdownItemsFiltered
                 parentFilterTitles={parentFilterTitles}
                 showItemsFilteredMessage={showItemsFilteredMessage}

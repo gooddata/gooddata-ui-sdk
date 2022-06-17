@@ -34,6 +34,11 @@
         "comment": "",
         "limit": 0
     },
+    "gs.list.search.placeholder": {
+        "value": "Search...",
+        "comment": "Placeholder text in search input filed.",
+        "limit": 0
+    },
     "gs.list.notAvailableAbbreviation": {
         "value": "N/A",
         "comment": "Stands for 'Not Available",

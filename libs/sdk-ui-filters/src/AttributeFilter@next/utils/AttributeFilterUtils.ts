@@ -7,6 +7,7 @@ import {
     AttributeListItem,
     EmptyListItem,
     IElementQueryResultWithEmptyItems,
+    IListItem,
     isNonEmptyListItem,
 } from "../types";
 import {
@@ -19,7 +20,6 @@ import {
     isAttributeElementsByRef,
     isAttributeElementsByValue,
     ObjRef,
-    IAttributeElement,
 } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 
@@ -56,8 +56,8 @@ export const getNoneTitleIntl = (intl: IntlShape): string => {
 };
 
 export const getItemsTitles = (
-    selectedFilterOptions: IAttributeElement[],
-    elementTitles: Map<string, IAttributeElement>,
+    selectedFilterOptions: IListItem[],
+    elementTitles: Map<string, IListItem>,
     isElementsByRef: boolean,
     emptyTitle?: string,
 ): string => {
@@ -76,10 +76,10 @@ export const getItemsTitles = (
 };
 
 export const updateSelectedOptionsWithDataByMap = (
-    selection: Array<Partial<IAttributeElement>>,
-    validElements: Map<string, IAttributeElement>,
+    selection: Array<Partial<IListItem>>,
+    validElements: Map<string, IListItem>,
     isElementsByRef: boolean,
-): Array<IAttributeElement> => {
+): Array<IListItem> => {
     return selection.map((selectedItem) => {
         const key = isElementsByRef ? selectedItem.uri : selectedItem.title;
         return validElements.get(key);
@@ -87,9 +87,9 @@ export const updateSelectedOptionsWithDataByMap = (
 };
 
 export const updateSelectedOptionsWithData = (
-    selection: Array<Partial<IAttributeElement>>,
+    selection: Array<Partial<IListItem>>,
     items: AttributeListItem[],
-): Array<IAttributeElement> => {
+): Array<IListItem> => {
     /**
      * For original AttributeFilter we need to handle empty `items` property as a indicator, that items
      * should not be changed and should be extended by the missing `uri` or `title` property (if needed)
@@ -105,7 +105,7 @@ export const updateSelectedOptionsWithData = (
             };
         });
     }
-    const createFullItem = (item: Partial<IAttributeElement>): IAttributeElement => ({
+    const createFullItem = (item: Partial<IListItem>): IListItem => ({
         uri: item.uri ?? "",
         title: item.title ?? "",
     });
@@ -166,12 +166,12 @@ export function needsLoading(
     const isQueryOutOfBound = offset + limit > currentElements.length;
     const isMissingDataInWindow = currentElements
         .slice(offset, offset + limit)
-        .some((e: IAttributeElement | EmptyListItem) => (e as EmptyListItem).empty);
+        .some((e: IListItem | EmptyListItem) => (e as EmptyListItem).empty);
 
     const hasAllData =
         validElements &&
         currentElements.length === validElements.totalCount &&
-        !currentElements.some((e: IAttributeElement | EmptyListItem) => (e as EmptyListItem).empty);
+        !currentElements.some((e: IListItem | EmptyListItem) => (e as EmptyListItem).empty);
 
     return !hasAllData && (isQueryOutOfBound || isMissingDataInWindow);
 }
@@ -248,16 +248,16 @@ export const isParentFilteringEnabled = (backend: IAnalyticalBackend): boolean =
 
 export function attributeElementsToAttributeElementArray(
     elements: IAttributeElements,
-): Array<Partial<IAttributeElement>> {
+): Array<Partial<IListItem>> {
     if (isAttributeElementsByValue(elements)) {
         return elements.values.map(
-            (title): Partial<IAttributeElement> => ({
+            (title): Partial<IListItem> => ({
                 title,
             }),
         );
     } else if (isAttributeElementsByRef(elements)) {
         return elements.uris.map(
-            (uri): Partial<IAttributeElement> => ({
+            (uri): Partial<IListItem> => ({
                 uri,
             }),
         );

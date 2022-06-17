@@ -18,7 +18,6 @@ const AttributeFilterButtonExamples = (): JSX.Element => {
                 <div className="library-component screenshot-target">
                     <h4>AttributeFilterButton closed</h4>
                     <AttributeFilterButton
-                        isMobile={false}
                         isOpen={false}
                         title={attributeTitle}
                         subtitleText={"All"}
@@ -29,7 +28,6 @@ const AttributeFilterButtonExamples = (): JSX.Element => {
                     />
                     <h4>AttributeFilterButton opened</h4>
                     <AttributeFilterButton
-                        isMobile={false}
                         isOpen={true}
                         title={attributeTitle}
                         subtitleText={"All"}
@@ -40,7 +38,6 @@ const AttributeFilterButtonExamples = (): JSX.Element => {
                     />
                     <h4>AttributeFilterButton filtering</h4>
                     <AttributeFilterButton
-                        isMobile={false}
                         isOpen={false}
                         title={attributeTitle}
                         subtitleText={"All"}
@@ -51,7 +48,6 @@ const AttributeFilterButtonExamples = (): JSX.Element => {
                     />
                     <h4>AttributeFilterButton long subtitle and item count 3</h4>
                     <AttributeFilterButton
-                        isMobile={false}
                         isOpen={false}
                         title={attributeTitle}
                         subtitleText={"All except Educationally, PhoenixSoft, WonderKid"}
@@ -63,7 +59,6 @@ const AttributeFilterButtonExamples = (): JSX.Element => {
                     <h4>AttributeFilterButton shortened title</h4>
                     <div style={{ width: 100 }}>
                         <AttributeFilterButton
-                            isMobile={false}
                             isOpen={false}
                             title={"Long Attribute name"}
                             subtitleText={"All except Educationally, PhoenixSoft, WonderKid"}
@@ -76,7 +71,6 @@ const AttributeFilterButtonExamples = (): JSX.Element => {
                     <h4>AttributeFilterButton not fit in container</h4>
                     <div style={{ width: 60 }}>
                         <AttributeFilterButton
-                            isMobile={false}
                             isOpen={false}
                             title={attributeTitle}
                             subtitleText={"All except Educationally, PhoenixSoft, WonderKid"}
@@ -99,7 +93,6 @@ export const AttributeFilterButtonMobileExamples = (): JSX.Element => {
             <div className="library-component screenshot-target">
                 <h4>AttributeFilterButton closed</h4>
                 <AttributeFilterButton
-                    isMobile={true}
                     isOpen={false}
                     title={attributeTitle}
                     subtitleText={"All"}
@@ -110,7 +103,6 @@ export const AttributeFilterButtonMobileExamples = (): JSX.Element => {
                 />
                 <h4>AttributeFilterButton opened</h4>
                 <AttributeFilterButton
-                    isMobile={true}
                     isOpen={true}
                     title={attributeTitle}
                     subtitleText={"All"}
@@ -127,5 +119,3 @@ export const AttributeFilterButtonMobileExamples = (): JSX.Element => {
 storiesOf(`${FilterStories}@next/Components/AttributeFilterButton`)
     .add("full-featured", () => <AttributeFilterButtonExamples />, {})
     .add("themed", () => wrapWithTheme(<AttributeFilterButtonExamples />), {});
-//TODO fix mobile view or remove it
-// .add("mobile", () => <AttributeFilterButtonMobileExamples />, { screenshot: true });

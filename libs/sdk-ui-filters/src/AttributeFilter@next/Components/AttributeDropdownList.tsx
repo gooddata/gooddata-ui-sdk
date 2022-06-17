@@ -1,13 +1,12 @@
 // (C) 2019-2022 GoodData Corporation
 import React, { useCallback } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
-import { InvertableList, LoadingMask } from "@gooddata/sdk-ui-kit";
-import { IAttributeElement } from "@gooddata/sdk-model";
+import { InvertableList, LoadingMask, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
 import { AttributeFilterItem } from "./AttributeFilterItem";
 
-import { AttributeListItem, isNonEmptyListItem } from "../types";
+import { AttributeListItem, IListItem, isNonEmptyListItem } from "../types";
 
 const ITEM_HEIGHT = 28;
 const MOBILE_LIST_ITEM_HEIGHT = 40;
@@ -17,32 +16,23 @@ const INTERNAL_LIST_WIDTH = 214;
 
 const ListLoading = (props: { height: number }) => <LoadingMask height={props.height} />;
 
-const ListError = () => (
-    <div className="gd-message error">
-        <FormattedMessage id="gs.list.error" />
-    </div>
-);
-
 interface IAttributeDropdownListProps {
     items: AttributeListItem[];
     totalCount: number;
-    selectedItems: Array<IAttributeElement>;
+    selectedItems: Array<IListItem>;
     isInverted: boolean;
     isLoading: boolean;
-    error?: any;
 
     searchString: string;
     onSearch: (searchString: string) => void;
 
-    onSelect: (selectedItems: IAttributeElement[], isInverted: boolean) => void;
+    onSelect: (selectedItems: IListItem[], isInverted: boolean) => void;
     onRangeChange: (searchString: string, from: number, to: number) => void;
-    isMobile?: boolean;
 }
 
 export const AttributeDropdownList: React.FC<IAttributeDropdownListProps> = ({
     items,
     totalCount,
-    error,
     isLoading,
     selectedItems,
     isInverted,
@@ -50,9 +40,9 @@ export const AttributeDropdownList: React.FC<IAttributeDropdownListProps> = ({
     onSelect,
     onSearch,
     searchString,
-    isMobile,
 }) => {
     const intl = useIntl();
+    const isMobile = useMediaQuery("mobileDevice");
 
     const getItemKey = useCallback((i: AttributeListItem) => {
         return isNonEmptyListItem(i) ? (i.uri ? i.uri : i.title) : "empty";
@@ -64,11 +54,6 @@ export const AttributeDropdownList: React.FC<IAttributeDropdownListProps> = ({
         },
         [onRangeChange, searchString],
     );
-
-    //TODO do we need this check here ? Maybe it will be better do it on upper level
-    if (error) {
-        return <ListError />;
-    }
 
     const itemHeight = isMobile ? MOBILE_LIST_ITEM_HEIGHT : ITEM_HEIGHT;
 
@@ -88,6 +73,7 @@ export const AttributeDropdownList: React.FC<IAttributeDropdownListProps> = ({
             itemHeight={itemHeight}
             height={itemHeight * VISIBLE_ITEMS_COUNT}
             width={INTERNAL_LIST_WIDTH}
+            smallSearch={true}
             renderItem={(props) => {
                 return <AttributeFilterItem {...props} />;
             }}
@@ -98,6 +84,7 @@ export const AttributeDropdownList: React.FC<IAttributeDropdownListProps> = ({
             onSelect={onSelect}
             getItemKey={getItemKey}
             onScrollEnd={onScrollEnd}
+            searchPlaceholder={intl.formatMessage({ id: "gs.list.search.placeholder" })}
         />
     );
 };

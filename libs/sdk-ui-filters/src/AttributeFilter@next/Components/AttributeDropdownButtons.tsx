@@ -18,6 +18,7 @@ export const AttributeDropdownButtons: React.VFC<IAttributeDropdownButtonsProps>
 
     const cancelText = intl.formatMessage({ id: "gs.list.cancel" });
     const applyText = intl.formatMessage({ id: "gs.list.apply" });
+
     return (
         <div className="gd-attribute-filter-actions__next">
             <Button

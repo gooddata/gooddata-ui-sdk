@@ -16,7 +16,6 @@ const AttributeDropdownAllFilteredOutBodyExamples = (): JSX.Element => {
                 <div className="library-component screenshot-target">
                     <h4>AttributeDropdownAllFilteredOutBody</h4>
                     <AttributeDropdownAllFilteredOutBody
-                        isMobile={true}
                         parentFilterTitles={["aaa", "bbb"]}
                         onApplyButtonClick={action("onApplyButtonClick")}
                         onCancelButtonClick={action("onCancelButtonClick")}

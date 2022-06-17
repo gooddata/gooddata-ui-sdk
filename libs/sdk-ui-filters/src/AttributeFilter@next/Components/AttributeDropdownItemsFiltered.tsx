@@ -15,7 +15,7 @@ export interface IAttributeDropdownItemsFilteredProps {
 export const AttributeDropdownItemsFiltered: React.FC<IAttributeDropdownItemsFilteredProps> = (props) => {
     const { parentFilterTitles, showItemsFilteredMessage } = props;
 
-    const tooltipItems = useMemo(() => {
+    const tooltipText = useMemo(() => {
         return parentFilterTitles ? parentFilterTitles.join(", ") : "";
     }, [parentFilterTitles]);
 
@@ -28,7 +28,6 @@ export const AttributeDropdownItemsFiltered: React.FC<IAttributeDropdownItemsFil
             <BubbleHoverTrigger showDelay={0} hideDelay={0}>
                 <div className="gd-filtered-message__next">
                     <FormattedMessage id="attributesDropdown.itemsFiltered" />
-                    {/*TODO fix position of icon (Depends on parent style) */}
                     <span className="gd-icon-circle-question" />
                 </div>
                 <Bubble
@@ -39,7 +38,7 @@ export const AttributeDropdownItemsFiltered: React.FC<IAttributeDropdownItemsFil
                     <FormattedMessage
                         id="attributesDropdown.itemsFiltered.tooltip"
                         values={{
-                            filters: tooltipItems,
+                            filters: tooltipText,
                             strong: (chunks: string) => <strong>{chunks}</strong>,
                         }}
                     />

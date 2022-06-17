@@ -8,12 +8,8 @@ import stringify from "json-stable-stringify";
 import { getObjRef } from "../../utils/AttributeFilterUtils";
 import { AttributeFilterButtonContextProps } from "./types";
 import { IAttributeFilterButtonState } from "./useAttributeFilterButtonState";
-import {
-    filterAttributeElements,
-    IAttributeFilter,
-    isAttributeElementsByRef,
-    IAttributeElement,
-} from "@gooddata/sdk-model";
+import { filterAttributeElements, IAttributeFilter, isAttributeElementsByRef } from "@gooddata/sdk-model";
+import { IListItem } from "../../types";
 
 interface IUseFetchInitialElementsProps {
     context: Omit<AttributeFilterButtonContextProps, "filterObjRef">;
@@ -23,7 +19,7 @@ interface IUseFetchInitialElementsProps {
 }
 
 const prepareElementsTitleQuery = (
-    appliedElements: IAttributeElement[],
+    appliedElements: IListItem[],
     backend: IAnalyticalBackend,
     workspace: string,
     currentFilter: IAttributeFilter,
